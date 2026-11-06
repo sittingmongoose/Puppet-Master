@@ -2646,6 +2646,17 @@ class WhatEachRunAlsoReports(LandingRun):
         self.assertIn("--row-report must name a file outside the repository", self.stderr)
         self.assertFalse((self.repo / "rows.json").exists())
 
+    def test_a_bucket_id_holding_a_newline_stays_on_one_line(self):
+        """A real validator's YAML error holds newlines, and the error is part of the bucket's id."""
+        odd = {"path": "Plans/B.md", "error": "mapping values are not allowed here\n  in line 7"}
+        self.stub(gates={"lint_path_refs": [odd], "gone_soon": [{"path": "Plans/C.md", "error": "first\nsecond"}]})
+        self.record()
+        self.touch("Plans/Touched.md")
+        self.stub(gates={"lint_path_refs": [odd]})
+        _code, out = self.compare()
+        self.assertIn("  [gone] run-gates|gone_soon|first\\nsecond|Plans/C.md\n", out)
+        self.assertIn("  [count] run-gates|lint_path_refs|mapping values are not allowed here\\n  in line 7|Plans/B.md  1\n", out)
+
     def test_the_baseline_holds_none_of_it_and_recording_prints_none_of_it(self):
         self.stub(gates={"lint_path_refs": [self.row("#1")]})
         code, out = self.run_main("--record-baseline", "--baseline", "baseline.json")

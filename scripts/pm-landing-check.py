@@ -1162,6 +1162,10 @@ def listed_totals(check: str, report: dict[str, Any]) -> dict[str, int]:
     }
 
 
+def escape_newlines(text: str) -> str:
+    return text.replace("\\", "\\\\").replace("\n", "\\n")
+
+
 def subcheck_totals(
     counts: dict[str, dict[str, dict[str, int]]],
     listed: dict[str, dict[str, int]],
@@ -2133,14 +2137,15 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         for row in infrastructure:
             print(describe_infrastructure(row))
         print(f"Gone since the baseline (nothing to do): {len(resolved)}")
+        # One line each: a validator's error text can hold a newline, and it is part of the bucket's id.
         for name in resolved:
-            print(f"  [gone] {name}")
+            print(f"  [gone] {escape_newlines(name)}")
         print(f"Subcheck totals this run: {len(totals)}")
         for name, total in totals.items():
             print(f"  [total] {name}  {'timed out' if total is None else total}")
         print(f"Bucket counts this run: {len(seen_buckets)}")
         for name, count in sorted(seen_buckets.items()):
-            print(f"  [count] {name}  {count}")
+            print(f"  [count] {escape_newlines(name)}  {count}")
         print()
         if not reported and not grown and not subcheck_growth:
             if infrastructure:
