@@ -346,6 +346,20 @@ them by error kind.
 
 A bucket of one of these kinds that grew is staleness too, so it does not stop the landing either.
 
+**A renamed line-range shard (T32).** A `missing_ref` is a stale artifact evidence hash in another form,
+and counts as staleness, when all of these hold, read from the checkout: the reference comes from sealed
+evidence (its `path` is under `Plans/.evidence/`); its target is a line-range shard directly under
+`Plans/_shards/<document>/` (`NNN-lines-A-B.md`) that no longer exists; and that document's current
+`manifest.json` still holds a shard with the same `shard_id` under another line-range name, and that shard
+exists. Documents sharded by line count (JSON documents among them) rename a shard whenever an edit adds or
+removes lines, so the sealed evidence names the old range until the reseal refreshes it (the Q5 landing,
+2026-11-05: `002-lines-201-235.md` became `002-lines-201-237.md`). A `missing_ref` bucket that grew is
+staleness only when its rows that are not renamed shards are no more than the baseline held. Every other
+`missing_ref` keeps its class: a deleted unit (the manifest holds no shard with that id), a missing path that
+is not a line-range shard, and a reference from a file that is not sealed evidence. `renamed_shard_ref` in
+the script is the rule; `tests/test_pm_landing_check.py` `RenamedShardStaleness` reproduces the Q5 case and
+the three negatives.
+
 Deliberately not on the list: the shard and index kinds such as `shard_hash_stale` and
 `stale_generated_index_artifact`, because a branch that edits canon regenerates those and a stale one
 is the branch's to fix; `event_authority_currentness_audit_unavailable`, which says the ignored audit

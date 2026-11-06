@@ -494,7 +494,7 @@ def normalize(check: str, subcheck: str, failure: Any, root: Path) -> dict[str, 
         "error": error,
         "path": path,
         "fields": rest,
-        "stale": is_staleness(error, scrubbed),
+        "stale": is_staleness(error, scrubbed) or renamed_shard_ref(error, raw, root),
         # The unscrubbed failure, for the branch-path match only. Scrubbing replaces the measured
         # `actual`/`expected` with a type tag, and some failures name a document only inside those
         # lists, so matching against the scrubbed fields would miss them. Keys starting with an
@@ -517,6 +517,60 @@ def is_staleness(error: str, scrubbed: dict[str, Any]) -> bool:
         return True
     detail = scrubbed.get("detail")
     return isinstance(detail, str) and STALENESS_DETAIL_MARKER in detail
+
+
+# A line-range shard name: the document's shard ordinal and the source lines it holds. JSON and other
+# documents sharded by line count are named this way, so an edit that adds or removes lines renames
+# the shard while its ordinal stays.
+LINE_RANGE_SHARD_RE = re.compile(r"^(\d+)-lines-\d+-\d+\.md$")
+SEALED_EVIDENCE_PREFIX = "Plans/.evidence/"
+SHARDS_PREFIX = "Plans/_shards/"
+
+
+def renamed_shard_ref(error: str, raw: Any, root: Path) -> bool:
+    """A `missing_ref` from sealed evidence to a regenerated shard whose line-range name changed.
+
+    It is governance staleness, the same kind of thing as `artifact_hash_stale` on that evidence: the
+    reseal refreshes the evidence's artifact list. All of these must hold, read from the checkout:
+    - the failure is a `missing_ref` whose referring file (`path`) is sealed evidence under Plans/.evidence/;
+    - its target (`artifact_ref`, else `artifact`, else `ref`) is a line-range shard, directly under
+      Plans/_shards/<document>/, that no longer exists;
+    - that document's current manifest still holds a shard with the same ordinal (`shard_id`), under
+      another line-range name, and that shard exists.
+    Any other `missing_ref` (a deleted unit, a missing path outside the shards, a reference from a
+    file that is not sealed evidence) keeps its class.
+    """
+    if error != "missing_ref" or not isinstance(raw, dict):
+        return False
+    source = raw.get("path")
+    target = next((raw[k] for k in ("artifact_ref", "artifact", "ref") if isinstance(raw.get(k), str)), None)
+    if not isinstance(source, str) or not source.startswith(SEALED_EVIDENCE_PREFIX) or not isinstance(target, str):
+        return False
+    parts = target.split("/")
+    if not target.startswith(SHARDS_PREFIX) or len(parts) != 4 or not parts[2] or ".." in parts:
+        return False
+    match = LINE_RANGE_SHARD_RE.fullmatch(parts[3])
+    if not match or (root / target).exists():
+        return False
+    manifest_path = root / "Plans" / "_shards" / parts[2] / "manifest.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    shards = manifest.get("shards") if isinstance(manifest, dict) else None
+    if not isinstance(shards, list):
+        return False
+    ordinal = match.group(1)
+    for shard in shards:
+        if not isinstance(shard, dict) or shard.get("shard_id") != ordinal:
+            continue
+        path = shard.get("path")
+        if (isinstance(path, str) and path != target and path.startswith(SHARDS_PREFIX + parts[2] + "/")
+                and len(path.split("/")) == 4 and LINE_RANGE_SHARD_RE.fullmatch(path.split("/")[3])
+                and LINE_RANGE_SHARD_RE.fullmatch(path.split("/")[3]).group(1) == ordinal
+                and (root / path).is_file()):
+            return True
+    return False
 
 
 def excused_by_kind(on_branch: list[dict[str, Any]]) -> dict[str, int]:
@@ -750,23 +804,30 @@ def exit_code(
     return 2 if blocking else 1
 
 
-def grown_buckets(seen: dict[str, int], baseline: dict[str, int]) -> list[dict[str, Any]]:
+def grown_buckets(seen: dict[str, int], baseline: dict[str, int],
+                  renamed: dict[str, int] | None = None) -> list[dict[str, Any]]:
     """Buckets that hold more failures than the baseline recorded.
 
     A bucket the baseline has never seen is left out: its failures are already named one by one in
     the new set, and reporting the bucket as well would say the same thing twice. This is the only
     way growth inside a bucket the baseline matches by count alone can be seen.
+
+    `renamed` counts, per bucket, the `missing_ref` rows that are renamed-shard staleness
+    (renamed_shard_ref). A `missing_ref` bucket grew by staleness alone when its other rows are no
+    more than the baseline held; any other growth keeps its class.
     """
     rows = []
     for name in sorted(seen):
         if name not in baseline or seen[name] <= baseline[name]:
             continue
         error = name.split("|")[2]
+        by_rename = error == "missing_ref" and renamed is not None and seen[name] - renamed.get(name, 0) <= baseline[name]
         rows.append({
             "bucket": name,
             "baseline_count": baseline[name],
             "count": seen[name],
-            "stale": is_staleness_kind(error),
+            "stale": is_staleness_kind(error) or by_rename,
+            **({"renamed_shard_refs": renamed.get(name, 0)} if by_rename else {}),
         })
     return rows
 
@@ -1840,11 +1901,14 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     pre_existing: list[dict[str, Any]] = []
     changed_on_branch = 0
     seen_buckets: dict[str, int] = {}
+    renamed_buckets: dict[str, int] = {}
     for item in items:
         name = bucket_of(item)
         fresh = False
         if (item["check"], item["subcheck"]) not in partial:
             seen_buckets[name] = seen_buckets.get(name, 0) + 1
+            if item["error"] == "missing_ref" and item["stale"]:
+                renamed_buckets[name] = renamed_buckets.get(name, 0) + 1
             fingerprints = known.get(name, set())
             fresh = fingerprints is not None and item["key"].rsplit("|", 1)[1] not in fingerprints
         # Rule 2: a failure that is not staleness, in a bucket the baseline holds whose count has not
@@ -1877,7 +1941,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                             if (item["check"], item["subcheck"]) == (row["check"], row["subcheck"]))
             row["classes"] = dict(sorted(tally.items(), key=lambda pair: (-pair[1], pair[0])))
 
-    grown = grown_buckets(seen_buckets, baseline_counts)
+    grown = grown_buckets(seen_buckets, baseline_counts, renamed_buckets)
     subcheck_growth = grown_subchecks(compared, baseline.get("checks") or {})
     for row in subcheck_growth:
         row["stale"] = readiness_counter_is_staleness(row, items, run_counts, baseline_counts,

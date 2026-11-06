@@ -260,6 +260,85 @@ ALL_REPORTS = {
 }
 
 
+class RenamedShardStaleness(unittest.TestCase):
+    """T32: a `missing_ref` from sealed evidence to a regenerated shard whose line-range name changed is
+    staleness (the Q5 landing, 2026-11-05: its bucket grew 1 -> 3 and stopped the landing). Every other
+    `missing_ref` keeps its class: a deleted unit, a missing non-shard path, a reference from a file that
+    is not sealed evidence."""
+
+    EVIDENCE = "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json"
+    OLD = "Plans/_shards/prd_planning_runtime_contracts/002-lines-201-235.md"
+    NEW = "Plans/_shards/prd_planning_runtime_contracts/002-lines-201-237.md"
+    OLD_SCHEMA = "Plans/_shards/prd_planning_runtime_contracts.schema/004-lines-601-637.md"
+    NEW_SCHEMA = "Plans/_shards/prd_planning_runtime_contracts.schema/004-lines-601-646.md"
+
+    def setUp(self):
+        self.root = Path(tempfile.mkdtemp(prefix="landing-renamed-shard-"))
+        self.addCleanup(shutil.rmtree, self.root)
+        self.manifest("prd_planning_runtime_contracts", [("001", "001-lines-1-200.md"), ("002", "002-lines-201-237.md")])
+        self.manifest("prd_planning_runtime_contracts.schema", [("004", "004-lines-601-646.md")])
+
+    def manifest(self, doc, shards):
+        folder = self.root / "Plans" / "_shards" / doc
+        folder.mkdir(parents=True, exist_ok=True)
+        rows = []
+        for shard_id, name in shards:
+            (folder / name).write_text("shard\n")
+            rows.append({"shard_id": shard_id, "path": f"Plans/_shards/{doc}/{name}", "split_rule": "line-count-200"})
+        (folder / "manifest.json").write_text(json.dumps({"schema_id": "pm.plan_shards.manifest.v1", "shards": rows}))
+
+    def ref(self, target, source=None):
+        source = source or self.EVIDENCE
+        return {"path": source, "artifact": target, "artifact_ref": target, "error": "missing_ref"}
+
+    def stale(self, failure):
+        return M.normalize("run-gates", "validate_evidence", failure, self.root)["stale"]
+
+    def test_q5_renamed_line_range_shards_are_staleness(self):
+        self.assertTrue(self.stale(self.ref(self.OLD)))
+        self.assertTrue(self.stale(self.ref(self.OLD_SCHEMA)))
+
+    def test_q5_bucket_growth_by_renamed_shards_does_not_stop_the_landing(self):
+        unrelated = self.ref("Plans/_shards/gone_doc/001-lines-1-200.md")
+        items = [M.normalize("audit-governance", "evidence", f, self.root) for f in (unrelated, self.ref(self.OLD), self.ref(self.OLD_SCHEMA))]
+        name = M.bucket_of(items[0])
+        self.assertTrue(all(M.bucket_of(item) == name for item in items))
+        renamed = {name: sum(1 for item in items if item["stale"])}
+        rows = M.grown_buckets({name: 3}, {name: 1}, renamed)
+        self.assertEqual(len(rows), 1)
+        self.assertTrue(rows[0]["stale"])
+        self.assertEqual(M.blocking_items([], rows, []), [])
+        # The same growth without the rename rule (the tool before T32) stopped the landing.
+        self.assertFalse(M.grown_buckets({name: 3}, {name: 1})[0]["stale"])
+
+    def test_growth_beyond_the_renamed_shards_still_stops_the_landing(self):
+        name = M.bucket_of(M.normalize("audit-governance", "evidence", self.ref(self.OLD), self.root))
+        rows = M.grown_buckets({name: 4}, {name: 1}, {name: 2})
+        self.assertFalse(rows[0]["stale"])
+        self.assertEqual(len(M.blocking_items([], rows, [])), 1)
+
+    def test_a_deleted_unit_is_not_staleness(self):
+        # the document's manifest no longer holds shard 002 at all
+        self.manifest("prd_planning_runtime_contracts", [("001", "001-lines-1-200.md")])
+        self.assertFalse(self.stale(self.ref(self.OLD)))
+
+    def test_a_missing_non_shard_path_is_not_staleness(self):
+        self.assertFalse(self.stale(self.ref("Plans/prd_planning_runtime_contracts.md")))
+        self.assertFalse(self.stale(self.ref("Plans/.plan_index/plan_units.jsonl")))
+
+    def test_a_reference_from_a_file_that_is_not_sealed_evidence_is_not_staleness(self):
+        self.assertFalse(self.stale(self.ref(self.OLD, source="Plans/plan_graph.json")))
+        self.assertFalse(self.stale({"path": self.OLD, "error": "missing_ref"}))
+
+    def test_a_renamed_slug_shard_is_not_a_line_range_rename(self):
+        self.manifest("some_doc", [("013", "013-8.-testing-renamed.md")])
+        self.assertFalse(self.stale(self.ref("Plans/_shards/some_doc/013-8.-testing.md")))
+
+    def test_another_error_kind_keeps_its_class(self):
+        failure = dict(self.ref(self.OLD), error="missing_artifact")
+        self.assertFalse(self.stale(failure))
+
+
 class BaselineDiff(unittest.TestCase):
     def setUp(self):
         self.items, self.baseline = baseline_from(ALL_REPORTS)
