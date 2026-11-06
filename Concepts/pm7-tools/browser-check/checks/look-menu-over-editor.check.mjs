@@ -7,7 +7,8 @@
 // must reach it, and the two layers keep the product's order: a press in the editor closes the menu, Adjust NieR in the
 // menu gives way to the open editor, a ? in the menu shows its note over the editor (the FO-81 recheck: at the wide sizes
 // the note went to Pip's stage under the editor), and Escape closes the menu, then the editor, wherever focus is (a menu
-// option, the editor, or the page's body after a press on the menu's padding). Ten looks (the editor stays open when the
+// option, the editor, or the page's body after a press on the menu's padding); and, before the editor opens, Escape from
+// the page's body closes the open menu (FO-89; on 611e505ecf nothing heard it). Ten looks (the editor stays open when the
 // look changes, so it can be open in every look), widths 1920x1080, 1390, 1024, 860, 740x768 and 1280x500, both motion
 // preferences, both surfaces. Fails on main 0adb197992 (the editor paints over the menu).
 //   --set size=1920x1080,740x768   --set look=nier-light   --set motion=no-preference,reduce,attribute
@@ -39,7 +40,23 @@ async function cell(t, surface, w, h) {
 			}, [...look.split('-'), motion]);
 			await f.waitForTimeout(1600);
 			await f.waitForFunction(() => !O55.nierLook.busy(), null, { timeout: 15000 }).catch(() => {});
-			await f.evaluate(() => { O55.ui.go('look', { noHistory: true }); O55.nierLook.adjust(); });
+			/* FO-89, the editor closed: the menu open, a real press on its own padding (focus falls to the page's body),
+			   then Escape closes the menu (on 611e505ecf nothing heard it) */
+			await f.evaluate(() => O55.ui.go('look', { noHistory: true }));
+			await f.waitForTimeout(400);
+			try {
+				await f.locator('#pm-o55-onboarding .o55-head .o55-lookbtn').click();
+				await f.waitForFunction(() => O55.S.lookOpen && !!document.querySelector('#pm-o55-onboarding .o55-lookmenu'), null, { timeout: 5000 });
+				await f.waitForTimeout(250);
+				const pad0 = await f.evaluate(() => { const r = document.querySelector('#pm-o55-onboarding .o55-lookmenu').getBoundingClientRect(); return { x: r.left + 4, y: r.top + r.height / 2 }; });
+				const fe0 = f === t.page.mainFrame() ? null : await f.frameElement(), off0 = fe0 ? await fe0.boundingBox() : { x: 0, y: 0 };
+				await t.page.mouse.click(off0.x + pad0.x, off0.y + pad0.y); await f.waitForTimeout(250);
+				const b0 = await f.evaluate(() => ({ body: document.activeElement === document.body, menu: !!O55.S.lookOpen, panel: O55.nierLook.panelOpen() }));
+				await t.page.keyboard.press('Escape'); await f.waitForTimeout(250);
+				const b1 = await f.evaluate(() => ({ menu: !!O55.S.lookOpen && !!document.querySelector('#pm-o55-onboarding .o55-lookmenu'), win: !!O55.S.open, look: !!document.activeElement?.matches('.o55-lookbtn') }));
+				await t.check(`FO-89 Escape from the page body closes the menu with the editor closed ${tag}`, b0.body && b0.menu && !b0.panel && !b1.menu && b1.win && b1.look, JSON.stringify({ before: b0, after: b1 }));
+			} catch (e) { await t.check(`FO-89 Escape from the page body closes the menu with the editor closed ${tag}`, false, String(e && e.message || e).split('\n')[0]); }
+			await f.evaluate(() => { if (O55.S.lookOpen) { O55.S.lookOpen = false; O55.ui.refresh(); } O55.nierLook.adjust(); });
 			const opened = await f.waitForFunction(() => {
 				const p = document.querySelector('#pm-o55-onboarding .o55-win > .o55-nierpanel');
 				return !!p && O55.nierLook.panelOpen() && p.getBoundingClientRect().height > 100;

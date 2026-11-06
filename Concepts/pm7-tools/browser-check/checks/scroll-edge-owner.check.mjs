@@ -23,6 +23,8 @@ async function cell(t, surface, w, h) {
 			await t.page.mouse.move(2, 2);
 			await f.evaluate(([fam, mode, m]) => { document.documentElement.setAttribute('data-motion', m === 'attribute' ? 'reduced' : 'full'); O55.S.lookOpen = false; O55.ui.applyLook(fam, mode); }, [...look.split('-'), motion]);
 			await f.waitForTimeout(1600);
+			/* NieR's reboot moment covers the window until it lifts (O55.nierLook.busy, #o55np-reboot) */
+			await f.waitForFunction(() => !O55.nierLook.busy() && !document.getElementById('o55np-reboot'), null, { timeout: 15000 }).catch(() => {});
 			for (const screen of ['s-ready', 'look']) {
 				const tag = `${screen} ${look} ${motion} ${surface} ${w}x${h}`;
 				await f.evaluate((s) => {

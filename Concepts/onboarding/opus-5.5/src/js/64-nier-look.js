@@ -319,13 +319,8 @@
       if (!inside) return;
       /* the look menu open over the editor is the topmost layer and closes first, wherever focus is (FO-81 recheck: with
          focus fallen to the page's body, a press on the menu's padding or a note's words, this closed the editor under the
-         open menu): from inside the window the window's own Escape closes it (60-ui-core.js onKey), from the body this */
-      if (S.lookOpen) {
-        if (root && root.contains(t)) return;
-        e.preventDefault(); e.stopPropagation();
-        if (O55.ui.act('lookMenu')) { const b = root && root.querySelector('.o55-lookbtn'); if (b) b.focus({ preventScroll: true }); }
-        return;
-      }
+         open menu): the window's own Escape closes it, from inside the window and from the body (60-ui-core.js, FO-89) */
+      if (S.lookOpen) return;
       e.preventDefault(); e.stopPropagation(); closePanel();
     };
     const onClickHost = (e) => { if (e.target.closest && e.target.closest('[data-o55-nierpanel="done"]')) { e.preventDefault(); closePanel(); } };

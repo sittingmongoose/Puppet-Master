@@ -62,6 +62,9 @@
     root.addEventListener('input', onInput);
     root.addEventListener('change', onInput);
     ['keydown', 'keyup', 'keypress'].forEach((ev) => root.addEventListener(ev, onKey));
+    /* the look menu closes on Escape wherever focus is: a press on its own padding or on a note's words leaves focus on
+       the page's body, where the window's own keys never hear it (FO-89); the window's Escape (onKey) closes the menu */
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && S.open && S.lookOpen && (e.target === document.body || e.target === document.documentElement)) onKey(e); });
     root.addEventListener('pointerdown', (e) => { if (e.target.closest('.o55-scrim')) nudge(); });
     /* Input never waits for a performance (hero spec section 1 rule 7): a press or a key while the stage or the skin is
        still playing a moment snaps it to its end state. Caught on the way down, never prevented, so it still acts. */
