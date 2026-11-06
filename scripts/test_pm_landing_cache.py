@@ -219,6 +219,12 @@ def v_sleep(args):
     return report_status("sleep", [], text=text)
 
 
+def v_git_files_slow(args):
+    out = git("ls-files", "--cached", "--others", "--exclude-standard", "-z").stdout
+    time.sleep(1.5)
+    return report_status("git-files-slow", [], files=out)
+
+
 def v_scratch(args):
     with tempfile.TemporaryDirectory() as tmp:
         (Path(tmp) / "x.txt").write_text("x")
@@ -235,7 +241,7 @@ COMMANDS = {"validate-evidence": v_a, "validate-auto-decisions": v_b, "validate-
             "absent": v_absent, "stat-size": v_stat_size, "link": v_link, "listed-link": v_listed_link, "env": v_env,
             "git-files": v_git_files, "git-origin": v_git_origin, "git-head": v_git_head, "git-batch": v_git_batch,
             "git-write": v_git_write, "git-selftest": v_git_selftest, "writes": v_writes, "timeout-row": v_timeout_row,
-            "killed": v_killed, "crash": v_crash, "sleep": v_sleep, "scratch": v_scratch, "unicode": v_unicode,
+            "killed": v_killed, "crash": v_crash, "sleep": v_sleep, "git-files-slow": v_git_files_slow, "scratch": v_scratch, "unicode": v_unicode,
             "run-gates": cmd_run_gates, "audit-governance": cmd_audit_governance}
 
 
@@ -475,6 +481,22 @@ class ReadingATrace(unittest.TestCase):
         trace = self.read('10 execve("/usr/bin/git", ["git", "ls-tree", ...], 0x7 /* 1 var */) = 0')
         self.assertTrue(trace.reasons)
 
+    def test_a_pid_that_comes_back_is_not_still_git(self):
+        trace = self.read('10 execve("/usr/bin/git", ["git", "status"], 0x7 /* 1 var */) = 0', '10 +++ exited with 0 +++',
+                          '10 openat(AT_FDCWD</repo>, "a.md", O_RDONLY) = 3</repo/a.md>')
+        self.assertEqual(trace.reads, {("file", "@ROOT/a.md")})
+
+    def test_a_log_cut_short_is_not_believed(self):
+        with tempfile.TemporaryDirectory() as folder:
+            log = Path(folder) / "t.log"
+            log.write_text('10 openat(AT_FDCWD</repo>, "a", O_RDONLY) = 3</repo/a>\n')
+            self.assertIn("does not reach the end", " ".join(C.read_trace(log, self.root, ()).reasons))
+            log.write_text('10 openat(AT_FDCWD</repo>, "a", O_RDONLY) = 3</repo/a>\n10 +++ exited with 1 +++\n')
+            trace = C.read_trace(log, self.root, ())
+            self.assertEqual((trace.reasons, trace.exit_code), ([], 1))
+            log.write_text("")
+            self.assertTrue(C.read_trace(log, self.root, ()).reasons)
+
     def test_an_exec_that_found_nothing_is_no_input(self):
         trace = self.read('10 execve("/opt/git", ["git", "x"], 0x7 /* 1 var */) = -1 ENOENT (No such file or directory)')
         self.assertEqual((trace.git, trace.reasons, trace.reads), ([], [], set()))
@@ -526,6 +548,13 @@ class WhatTheCheckedScriptsRead(unittest.TestCase):
         pattern = re.compile(r"st_mtime|st_ctime|st_atime|getmtime|getctime|getatime")
         hits = [path.name for path in self.scripts() if pattern.search(path.read_text(encoding="utf-8", errors="replace"))]
         self.assertEqual(hits, [])
+
+    def test_no_validator_reads_a_files_mode_or_stdin(self):
+        """Mode bits differ between the mount and local disk and are not in the key; stdin is not traced. These two
+        are not validators: the governance seal keeps a file's mode when it rewrites it, pm7-where reads a pipe."""
+        pattern = re.compile(r"\.st_mode|os\.access\(|\bX_OK\b|stat\.S_I|sys\.stdin")
+        hits = [path.name for path in self.scripts() if pattern.search(path.read_text(encoding="utf-8", errors="replace"))]
+        self.assertEqual(sorted(hits), ["pm-governance-seal.py", "pm7-where.py"])
 
     def test_the_clock_only_fills_timestamp_fields(self):
         pattern = re.compile(r"datetime\.now\(|datetime\.utcnow\(|date\.today\(|time\.time\(\)|time\.time_ns\(\)")
@@ -760,6 +789,20 @@ class WhatIsNeverStored(Fixture):
         self.assertEqual(list(self.cache.rglob("r-*.json.gz")), [])
         self.assertEqual(self.status("sleep"), "fresh")
 
+    def test_a_file_appearing_after_a_validator_asked_git_for_the_list(self):
+        argv = [sys.executable, str(MODULE_PATH), "exec", "--root", str(self.root), "--cache-dir", str(self.cache), "--stats", str(self.stats),
+                "--label", "unit", "--race-margin-ms", "0", "--", sys.executable, "scripts/pm-plans-verify.py", "git-files-slow"]
+        proc = subprocess.Popen(argv, cwd=self.root, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        time.sleep(1.0)
+        self.write("appeared.txt", "after git answered\n")
+        proc.wait()
+        row = json.loads(self.stats.read_text().splitlines()[0])
+        self.assertEqual(row["status"], "never", row)
+        self.assertIn("moved while it ran", row["detail"])
+        row, _code, out = self.unit("git-files-slow")
+        self.assertEqual(row["status"], "fresh")
+        self.assertIn("appeared.txt", json.loads(out)["files"])
+
     def test_without_strace_everything_runs_and_nothing_is_stored(self):
         bin_dir = self.scratch / "nostrace"
         bin_dir.mkdir()
@@ -787,6 +830,25 @@ class TheStore(Fixture):
         self.status("validate-evidence")
         self.entries("m-*.json.gz")[0].write_bytes(b"nope")
         self.assertEqual(self.status("validate-evidence"), "fresh")
+
+    def test_a_value_measured_before_a_unit_ran_is_not_filed_under_its_result(self):
+        """The hole a per-process memo would open: unit one measures a.txt, a.txt changes, unit two reads the new
+        bytes. Its entry must say the new bytes, or going back to the old ones would hand back the wrong result."""
+        fingerprints = C.Fingerprints(self.root)
+        store = C.Store(self.cache, self.root, fingerprints, 0)
+        self.assertEqual(fingerprints.value("file", "@ROOT/a.txt"), fingerprints.values_of([("file", "@ROOT/a.txt")])["file @ROOT/a.txt"])
+        old = fingerprints.value("file", "@ROOT/a.txt")
+        self.write("a.txt", "the second state\n")
+        trace = C.Trace(reads={("file", "@ROOT/a.txt")}, exit_code=0)
+        digest, why = store.store("k" * 16, ["python"], trace, {"stdout": "result of the second state", "returncode": 0}, time.time_ns(), 0.1, "c")
+        self.assertEqual(why, "")
+        self.assertNotEqual(fingerprints.values[("file", "@ROOT/a.txt")], old)
+        self.assertEqual(fingerprints.moved, ["@ROOT/a.txt"])
+        self.assertIn("@ROOT/a.txt", fingerprints.changed())
+        self.write("a.txt", "fine\n")
+        fresh = C.Fingerprints(self.root)
+        entry, _why, _changed, _total = C.Store(self.cache, self.root, fresh).lookup("k" * 16)
+        self.assertIsNone(entry, "the old bytes must not find the second state's result")
 
     def test_an_entry_whose_inputs_do_not_match_its_name_is_not_believed(self):
         self.status("validate-evidence")
@@ -970,7 +1032,7 @@ class ThroughTheLandingCheck(Fixture):
         self.assertTrue(rows)
         self.assertTrue(all(line.lstrip().startswith("[cache]") for line in rows), rows)
         self.assertTrue(all(re.search(r"key [0-9a-f]{16}-[0-9a-f]{16}", line) for line in rows), rows)
-        for part in ("run-gates/validate_evidence", "audit-governance/evidence", "plan-migration-validate/plan-migration-validate",
+        for part in ("run-gates/validate_evidence", "audit-governance/evidence", "plan-migration-validate",
                      "export/validate-plan-graph"):
             self.assertTrue(any(part in line for line in rows), (part, rows))
 
@@ -1030,7 +1092,7 @@ class ThroughTheLandingCheck(Fixture):
         self.git("commit", "-q", "-m", "x")
         time.sleep(C.RACE_MARGIN_NS / 1e9 + 0.1)
         code, out, _err = self.cached()
-        self.assertIn("[fresh] plan-migration-validate/plan-migration-validate", out)
+        self.assertIn("[fresh] plan-migration-validate", out)
         self.assertIn("[cache] run-gates/validate_auto_decisions", out)
         self.assertEqual(code, 2)
 

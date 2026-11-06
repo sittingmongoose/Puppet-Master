@@ -615,6 +615,60 @@ If `--record-baseline` refuses with exit 3 because a subcheck timed out, rerun i
 `--subcheck-timeout-seconds`, for example `--subcheck-timeout-seconds 1200`, before committing the
 follow-up and releasing the landing lock.
 
+## The result cache
+
+`python3 scripts/pm-landing-check.py --base origin/main --cache` reuses a validator's run when everything it read is
+unchanged. It is opt-in: the default and `--no-cache` take the paths they always took and never load
+`scripts/pm_landing_cache.py`; `--no-cache` wins over `--cache`. `--record-baseline --cache` refuses with exit 3, because a
+baseline comes from a run in which every check really ran. The module's docstring is the design; this is what a lander reads.
+
+**What is reused.** One validator command, `pm-plans-verify.py <command> <arguments>` or `pm-plan-migration.py validate`. Both
+aggregates and the exports run the same 37 commands, so even a cold run runs each once, not up to three times. The aggregates
+themselves always run, their code unchanged: `pm_landing_cache.py` loads `pm-plans-verify.py`, which it does not edit, and
+wraps only `run_validator_subprocess`, so on a hit the aggregate reads the report the subcheck wrote last time, as if it had
+just written it. `verify_spec_lock`, which run-gates runs in-process, always runs. An export found in the cache is the same
+lookup made again: if the tree moved since the aggregate, it misses and the export runs, so the total and row comparisons
+above still see that.
+
+**The key is measured.** The tree id is not what a validator reads: `iter_repo_files` asks git about untracked files,
+`pm-audit-closure.py` asks about HEAD's history, `pm-plan-index.py` reads `origin/main`, `pm_evidence_paths.py` reads
+`PM_EVIDENCE_MAP`, and some read gitignored audit and evidence files. A cold run is traced with `strace -f`, and a unit's inputs
+are what it did: bytes of each file opened, presence, type and size of each path stat-ed, bytes of a `.py` that was only stat-ed
+(the importer does that when its `.pyc` is valid), names and types in each folder listed, each symlink's target, and each git
+command, run again at lookup. A validator that feeds git on stdin, or runs more than 64 git commands (`validate-audit-closure`,
+437), is keyed on the repository's state instead: which clone, HEAD, every ref, the index, so a fetch reruns it. Also in the key:
+the environment minus session noise (`ENV_IGNORED`, which a test proves no script reads), Python, git and this module's bytes.
+Not in the key, because tests prove no script uses them: file times, modes, stdin, and the clock except in timestamp fields.
+Also left out: `--report`'s path and `--subcheck-timeout-seconds`. The bound decides whether a run finishes, not what a finished
+run says, and a rerun with a larger bound after a timeout should reuse what did finish.
+
+**Never stored**, so it just runs (`[never]` in the header, with the reason): a trace that is cut short or has a line the reader
+cannot read, a process killed under it, a read that failed with EIO, ESTALE or the like, a write outside scratch, a git command
+that may write, a timeout row in its report, an exit other than 0 or 1, or an input that changed about when it ran. Without
+`strace` nothing new is stored. A damaged entry is a miss. The cache can only ever cost a rerun. If an input moves during a cached
+run, so that its parts may have seen two states, the check stops with exit 3 before it judges anything.
+
+**In the report.** The header says how many validator runs came from the cache, then one line each: `[cache]` with its key and
+when and at which commit it was recorded, `[fresh]` with what made it miss (`input changed: Plans/x.md and 3 more`), `[never]` with
+why. `--json` carries the same as `cache`, and `--keep-check-reports DIR` adds `DIR/cache.json`. `python3
+scripts/pm_landing_cache.py compare DIR_A DIR_B` says whether two kept folders hold the same results, ignoring only when they ran
+and in which checkout.
+
+**Where.** `~/.cache/pm-landing-cache` (`--cache-dir`), capped at 2 GB (`--cache-max-mb`), least recently used out first, entries
+written atomically. Local rather than on the mount, because the mount is what every other agent is waiting on, and because any
+entry can be rebuilt. It may be deleted at any time. Results carry over between checkouts on one machine: a checkout's path is
+replaced by a token in what is stored and in the key. Anything that differs between the two, such as a real audit folder against
+the clean worktree's temporary link, is an input like any other and misses.
+
+**What this cannot see.** A validator that uses something the tests above do not catch and strace does not show: a new input
+kind, say a socket, shows up as an unknown call and stops the unit only if it names a path. A transient failure inside a `read()`
+(strace is not watching reads) that a validator turns into a failure row is remembered until an input changes: use `--no-cache`
+if a result looks wrong for no reason. A run with a hit is only as fresh as its inputs say, so a lander who wants the old guarantee
+that everything ran passes nothing, which remains the default.
+
+**Stopping bar**, written before the first review: a finding about this cache stops work only if it is shown on real inputs that a
+`--cache` run reached a different verdict than a run without it. Everything else goes on the tool-issues list.
+
 ## Related branch
 
 `plans/acceptance-and-landing-baseline-20260917` records the decisions behind this rule, DL-059 and

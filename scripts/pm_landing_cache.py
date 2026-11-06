@@ -69,6 +69,7 @@ MAX_GIT_REPLAYS = 64
 # A file whose ctime is this close to a unit's start, or later, may have changed after the unit read it.
 # 10 ms of skew measured against the NFS mount on 2026-11-06.
 RACE_MARGIN_NS = 2_000_000_000
+MIN_TRACE_FREE_BYTES = 256 * 1024 * 1024
 AGGREGATES = {"run-gates", "audit-governance"}
 AGGREGATE_CHILD_ENV = "PM_PLANS_VERIFY_AGGREGATE_CHILD"
 INFRASTRUCTURE_ERRORS = ("subprocess_timeout", "subcheck_timeout")
@@ -238,6 +239,7 @@ class Trace:
     which: dict[str, str] = field(default_factory=dict)
     reasons: list[str] = field(default_factory=list)
     lines: int = 0
+    exit_code: int | None = None
 
     def refuse(self, reason: str) -> None:
         if reason not in self.reasons and len(self.reasons) < 8:
@@ -256,6 +258,7 @@ class TraceReader:
         self.git_pids: set[int] = set()
         self.created_dirs: set[str] = set()
         self.resolved_dirs: dict[str, str] = {}
+        self.first_pid: int | None = None
 
     def token(self, path: str) -> str:
         if path == self.root:
@@ -278,9 +281,15 @@ class TraceReader:
                 continue
             pid = int(pid_text)
             rest = rest.lstrip()
+            if self.first_pid is None:
+                self.first_pid = pid
             if rest.startswith("+++"):
                 if "killed by" in rest:
                     self.trace.refuse(f"a process it started was {rest.strip('+ ')}")
+                exited = re.search(r"exited with (\d+)", rest)
+                if exited and pid == self.first_pid:
+                    self.trace.exit_code = int(exited.group(1))
+                out.append((pid, "+++exit", "", ""))
                 continue
             if rest.startswith("---"):
                 continue
@@ -375,6 +384,11 @@ class TraceReader:
 
     def apply(self, pid: int, name: str, arguments: str, result: str) -> None:
         if name in PROCESS_SYSCALLS:
+            return
+        if name == "+++exit":
+            # A pid can come back as another program in a long run; what it was does not come with it.
+            self.git_pids.discard(pid)
+            self.cwd.pop(pid, None)
             return
         failed = result.startswith("-1 ")
         error = result.split()[1] if failed and len(result.split()) > 1 else None
@@ -603,6 +617,11 @@ def read_trace(log: Path, root: Path, scratch: Iterable[str]) -> Trace:
         trace = reader.read_lines(handle)
     if not trace.lines:
         trace.refuse("the trace is empty")
+    elif trace.exit_code is None:
+        # A log cut short lists fewer reads than the run made, which would make a key too easy to match.
+        trace.refuse("the trace does not reach the end of the command")
+    if shutil.disk_usage(log.parent).free < MIN_TRACE_FREE_BYTES:
+        trace.refuse("the disk the trace is written to is nearly full, so the trace may have gaps")
     return trace
 
 
@@ -657,7 +676,7 @@ class Fingerprints:
         self.root = root
         self.values: dict[tuple[str, str], str] = {}
         self.signatures: dict[tuple[str, str], tuple[int, ...] | None] = {}
-        self.git_cache: dict[str, str] = {}
+        self.moved: list[str] = []
 
     def real(self, token: str) -> str:
         if token == ROOT_TOKEN:
@@ -674,6 +693,18 @@ class Fingerprints:
 
     def values_of(self, inputs: Iterable[tuple[str, str]]) -> dict[str, str]:
         return {f"{kind} {token}": self.value(kind, token) for kind, token in inputs}
+
+    def refreshed(self, inputs: Iterable[tuple[str, str]]) -> dict[str, str]:
+        """The values now, for what a unit that just ran read. A value measured earlier in this process says
+        nothing about what it saw: storing that one would file its result under bytes it never read."""
+        out: dict[str, str] = {}
+        for kind, token in inputs:
+            key = (kind, token)
+            if key in self.values and not self.still_current(kind, token):
+                self.moved.append(token)
+                del self.values[key]
+            out[f"{kind} {token}"] = self.value(kind, token)
+        return out
 
     def measure(self, kind: str, token: str) -> str:
         if kind == "git":
@@ -701,9 +732,10 @@ class Fingerprints:
             digest = hashlib.sha256()
             try:
                 before = os.stat(path)
-                if stat.S_ISDIR(before.st_mode):
+                if not stat.S_ISREG(before.st_mode):
+                    # Not bytes to hash, and a FIFO would block: its type is what can be told about it.
                     self.signatures[(kind, token)] = None
-                    return "dir"
+                    return "dir" if stat.S_ISDIR(before.st_mode) else f"other:{stat.S_IFMT(before.st_mode)}"
                 with open(path, "rb") as handle:
                     while chunk := handle.read(1 << 20):
                         digest.update(chunk)
@@ -777,31 +809,29 @@ class Fingerprints:
             digest.update(f"{code}\0".encode() + out + b"\0")
         return "state:" + digest.hexdigest()
 
+    def still_current(self, kind: str, token: str) -> bool:
+        """Whether a measured value still holds. A file by its stat, whose ctime no tool can set back; a listing by
+        reading it again, because creating `__pycache__` or the temporary audit link touches a folder's times
+        without changing what a validator sees; the rest by measuring again."""
+        value = self.values[(kind, token)]
+        expected = self.signatures.get((kind, token))
+        if kind in {"file", "stat", "lstat"} and expected is not None:
+            try:
+                status = os.stat(self.real(token)) if kind != "lstat" else os.lstat(self.real(token))
+            except OSError:
+                return False
+            return self.signature(status) == expected
+        return self.measure(kind, token) == value
+
     def changed(self) -> list[str]:
-        """What moved since it was measured. A listing is read again, because creating `__pycache__` or the
-        temporary audit link touches a folder's times without changing what a validator sees."""
-        out: list[str] = []
-        for (kind, token), value in sorted(self.values.items()):
-            if kind == "list":
-                if self.list_value(kind, token, self.real(token)) != value:
-                    out.append(token)
-            elif kind == "link":
-                if self.measure(kind, token) != value:
-                    out.append(token)
-            elif kind in {"file", "stat", "lstat"}:
-                expected = self.signatures.get((kind, token))
-                if expected is None:
-                    if self.measure(kind, token) != value:
-                        out.append(token)
-                    continue
-                try:
-                    path = self.real(token)
-                    status = os.stat(path) if kind != "lstat" else os.lstat(path)
-                except OSError:
-                    out.append(token)
-                    continue
-                if self.signature(status) != expected:
-                    out.append(token)
+        """What moved since it was measured: read once at the end of a process, so a run that mixed two states
+        stops instead of being judged."""
+        out = list(self.moved)
+        for (kind, token) in sorted(self.values):
+            if kind in {"git", "gitstate", "which"}:
+                continue
+            if not self.still_current(kind, token):
+                out.append(token)
         return out
 
 
@@ -1009,7 +1039,7 @@ class Store:
         inputs += [("git", canonical(entry)) for entry in git]
         if needs_state:
             inputs.append(("gitstate", "state"))
-        values = self.fingerprints.values_of(inputs)
+        values = self.fingerprints.refreshed(inputs)
         unstable = [key_name for key_name, value in values.items() if value.startswith("unstable:")]
         if unstable:
             return "", f"an input was changing while it was hashed: {self.short_name(unstable[0].split(' ', 1)[1])}"
@@ -1081,7 +1111,7 @@ class Runner:
         self.identity = tool_identity()
         self.commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True,
                                      check=False).stdout.strip()
-        self.git_state_at_start: str | None = None
+        self.watch_at_start: str | None = None
 
     def note(self, unit: Unit) -> Unit:
         if self.stats is not None:
@@ -1096,7 +1126,8 @@ class Runner:
     def lookup(self, name: str, argv: list[str], environment: dict[str, str]) -> tuple[dict[str, Any] | None, Unit]:
         """The entry and a noted unit on a hit; (None, a unit to finish) on a miss."""
         key, _command = self.key_of(argv, environment)
-        unit = Unit(label=f"{self.label}/{name}" if self.label else name, status="never", key=key[:16])
+        label = name if not self.label or name == self.label else f"{self.label}/{name}"
+        unit = Unit(label=label, status="never", key=key[:16])
         try:
             entry, why, changed, total = self.store.lookup(key)
         except Exception as exc:  # noqa: BLE001 - a broken cache costs a rerun, nothing else.
@@ -1135,9 +1166,10 @@ class Runner:
                 trace_reasons.append(f"it exited with {code}")
             if not (outputs.get("report") or outputs.get("stdout")):
                 trace_reasons.append("it wrote no report")
-            if (trace.git or trace.git_needs_state) and self.git_state_at_start is not None:
-                if Fingerprints(self.root).git_state() != self.git_state_at_start:
-                    trace_reasons.append("the repository's HEAD, refs or index moved while it ran")
+            if trace.exit_code != code:
+                trace_reasons.append(f"the trace ends with exit {trace.exit_code} but the command gave {code}")
+            if (trace.git or trace.git_needs_state) and self.repository_watch() != self.watch_at_start:
+                trace_reasons.append("the repository's HEAD, refs, index or file list moved while it ran")
             if trace_reasons:
                 unit.status, unit.detail = "never", trace_reasons[0]
                 return self.note(unit)
@@ -1158,8 +1190,17 @@ class Runner:
         unit.detail = self.tracer.problem or "it could not be traced"
         self.note(unit)
 
+    def repository_watch(self) -> str:
+        """What a git command in a unit could have answered from. A git command is replayed after the unit ends, and
+        a file added after the unit asked would be in the replay and not in the result, so a unit that used git is
+        stored only if this did not move from before the first unit this process ran to after that unit."""
+        fingerprints = Fingerprints(self.root)
+        code, out = fingerprints.run_git(["ls-files", "--cached", "--others", "--exclude-standard", "-z"], str(self.root))
+        return f"{fingerprints.git_state()}:{code}:{hashlib.sha256(out).hexdigest()}"
+
     def start_git_watch(self) -> None:
-        self.git_state_at_start = Fingerprints(self.root).git_state()
+        if self.watch_at_start is None:
+            self.watch_at_start = self.repository_watch()
 
     def whole_command(self, name: str, argv: list[str]) -> int:
         """A unit that is one whole command: pm-plan-migration.py validate. Prints what it printed, exits as it did."""
@@ -1194,9 +1235,9 @@ class Runner:
             raise RuntimeError(f"{script} cannot be loaded")
         module = importlib.util.module_from_spec(spec)
         sys.modules[spec.name] = module
+        sys.path[0] = str(script.parent)
         spec.loader.exec_module(module)
         original = module.run_validator_subprocess
-        self.start_git_watch()
 
         def spawn(check_name, child_argv, *, timeout_seconds, extra_failure_fields=None, aggregate_child=False):
             return self.spawn_subcheck(original, check_name, child_argv, timeout_seconds, extra_failure_fields, aggregate_child)
@@ -1228,6 +1269,7 @@ class Runner:
             result = run_plain()
             self.untraced(unit)
             return result
+        self.start_git_watch()
         with tempfile.TemporaryDirectory(prefix="pm-landing-cache-trace-") as scratch:
             log = Path(scratch) / "trace.log"
             started_ns, started = time.time_ns(), time.monotonic()
