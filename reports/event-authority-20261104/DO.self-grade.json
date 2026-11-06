@@ -230,7 +230,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-680 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-680 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -241,11 +241,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -704,7 +704,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-681 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+          "finding": "OSI-681 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -715,11 +715,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1193,7 +1193,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-682 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+          "finding": "OSI-682 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -1204,11 +1204,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1668,7 +1668,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-683 explicitly binds this exact-family criterion in the assessed source; static contract/oracles pass, native execution remains NOT_RUN.",
+          "finding": "OSI-683 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -1679,11 +1679,11 @@
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "held_after_fix",
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2126,7 +2126,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-684 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-684 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -2137,11 +2137,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2576,7 +2576,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-685 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-685 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -2587,11 +2587,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3026,7 +3026,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-686 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-686 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -3037,11 +3037,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3476,7 +3476,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-687 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-687 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -3487,11 +3487,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3926,7 +3926,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-688 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-688 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -3937,11 +3937,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4376,7 +4376,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-689 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-689 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -4387,11 +4387,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4826,7 +4826,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-690 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-690 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -4837,11 +4837,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5276,7 +5276,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-691 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-691 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -5287,11 +5287,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5726,7 +5726,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-692 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-692 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -5737,11 +5737,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6176,7 +6176,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-693 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-693 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -6187,11 +6187,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6626,7 +6626,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-694 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-694 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -6637,11 +6637,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -7076,7 +7076,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-695 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-695 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -7087,11 +7087,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -7526,7 +7526,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-696 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-696 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -7537,11 +7537,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -7976,7 +7976,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-697 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-697 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -7987,11 +7987,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -8426,7 +8426,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-698 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-698 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -8437,11 +8437,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -8876,7 +8876,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-699 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-699 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -8887,11 +8887,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -9326,7 +9326,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-700 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-700 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -9337,11 +9337,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -9776,7 +9776,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-701 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-701 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -9787,11 +9787,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -10226,7 +10226,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-702 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-702 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -10237,11 +10237,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -10676,7 +10676,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-703 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-703 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -10687,11 +10687,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -11126,7 +11126,7 @@
         "consumers_checkpoints": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "OSI-704 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes the frontier's copies of the covered event's bytes (last frame end, segment scanned-through and durable end offsets, durable bytes SHA-256) and the segment and frame they are read from, with a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
+          "finding": "OSI-704 binds this family's reader and its SP-278 EventRecord-index checkpoint. The static checkpoint oracle recomputes every frontier copy of the covered event's bytes and every frontier and birth-anchor copy of its sequence number (coverage, last frame, segment, segment name and anchor first, through and count), compares each by exact type, refuses a null last frame with its own code, and has a single-defect negative per predicate on every positive; native execution remains NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -11137,11 +11137,11 @@
             }
           ],
           "prior": {
-            "source": "reports/event-authority-20261104/DO.md at 35ba68b6d0 (DO-P1F-03), carried from cycle 8",
+            "source": "reports/event-authority-20261104/DO.md at 37c1176bec (DO-P1F04)",
             "status": "PASS"
           },
           "change": "held_after_fix",
-          "change_reason": "DO-P1F04 (13a0753acb + a0b3c1695a): at 35ba68b6d0 checkpoint_errors read none of the four coverage copies, and this family's retained and compatibility positives held another event's bytes in them, so the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. coverage_copy_errors now refuses each copy that is not the event's own bytes, each with its own code and single-defect negative, recapture_history refreshes the copies, and the positives are regenerated. Cutting any one predicate flips only its own negatives. It holds PASS. Native execution stays NOT_RUN."
+          "change_reason": "DO-P1F05 (05a18b3a05 + 593ad58879): at 37c1176bec checkpoint_errors read none of the segment's or the birth anchor's sequence copies or the segment name's sequence fields, compared the coverage-level ones with Python != under one shared code with no negative, and raised TypeError on the schema-valid null last frame. So a forged sequence copy in this family's checkpoint was accepted, and the recorded PASS claimed more than the oracle showed; by the rubric it read PARTIAL there. sequence_copy_errors now refuses each of the twelve copies that is not the event's sequence (or a count of one), each with its own code and a single-defect negative on every positive; the null last frame and the last event id have their own codes and negatives; recapture_history derives the copies; and cutting any one predicate flips only its own negatives under the complete checker. It holds PASS. Native execution stays NOT_RUN."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -11390,7 +11390,8 @@
     "DO-C8-02-regressions": "5fca2287053362c2ccf8fe7f471161329ad1f3ca",
     "shared-corpus-dependency": "23971fcea36d9b879f35e5ae1a984ebb6c2832e0",
     "DO-P1F-03": "ad933eede3a444c7649ddadb4577f1e215cccfe9",
-    "DO-P1F04": "13a0753acb + a0b3c1695a"
+    "DO-P1F04": "13a0753acb + a0b3c1695a",
+    "DO-P1F05": "05a18b3a05 + 593ad58879"
   },
   "shared_sweep_items": [
     "DO-C8-N1",
@@ -11410,6 +11411,37 @@
     "scope": "retention and consumers_checkpoints of the 22 non-board families only; every other cell, and both cells of the three crew.board_* families, are carried unchanged",
     "families": [
       "config.validation.failed",
+      "parser.error",
+      "phase.force_completed",
+      "subagent.budget_warning",
+      "subagent.cancelled",
+      "subagent.completed",
+      "subagent.context_warning",
+      "subagent.escalated",
+      "subagent.failed",
+      "subagent.message_received",
+      "subagent.message_sent",
+      "subagent.model_switched",
+      "subagent.output_truncated",
+      "subagent.paused",
+      "subagent.progress",
+      "subagent.resumed",
+      "subagent.retried",
+      "subagent.spawned",
+      "subagent.started",
+      "subagent.timeout",
+      "subagent.tool_called",
+      "subagent.tool_completed"
+    ],
+    "status_counts_changed": false
+  },
+  "do_p1f5_regrade": {
+    "scope": "consumers_checkpoints of all 25 families only; every other cell is carried unchanged (no fixture, retention rule, recipe, compatibility or withdrawal rule changed)",
+    "families": [
+      "config.validation.failed",
+      "crew.board_message_posted",
+      "crew.board_message_read",
+      "crew.board_messages_archived",
       "parser.error",
       "phase.force_completed",
       "subagent.budget_warning",
