@@ -2673,6 +2673,9 @@ def cmd_lock(cfg: Config, args: argparse.Namespace) -> int:
         holder = parse_holder(read_holder_text(cfg) or "")
         if holder.get("agent") != args.name:
             raise Refused(f"the lock is held by {holder.get('agent')!r}, not {args.name!r}: not released")
+        if batch_landed(cfg, holder):
+            raise Refused(f"not released: this batch landed something and still owes its close and any follow-up. Close it: "
+                          f"`{close_command(holder['batch-start'])}`")
         shutil.rmtree(cfg.held)
         print("released")
         return EXIT_OK

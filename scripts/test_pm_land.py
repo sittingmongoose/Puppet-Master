@@ -2745,6 +2745,39 @@ class BatchClearingTests(Base):
         self.assertIn("--batch-close", result.stderr)
         self.assertIn("by-hand", self.h.holder())
 
+    def test_lock_release_refuses_while_the_batch_owes_its_follow_up(self):
+        """Review N2. Released, the next plain lander would land with no follow-up and nothing said about it."""
+        self.h.branch("fix/a", {"Plans/doc-a.md": "a\n"})
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        start = self.batch_start()
+        result = self.h.tool("lock", "release", "--name", "lander-fix/a")
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn(f"run --batch-close --batch-start {start}", result.stderr)
+        self.assertTrue(self.h.held())
+        self.assertEqual(self.batch_start(), start)
+        waiting = self.land("fix/b", "--wait-timeout", "0.3")
+        self.assertEqual(self.h.state("fix/b")["stop"]["code"], "lock_wait_timeout", waiting.stdout)
+        closed = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "lander-fix/a")
+        self.assertEqual(closed.returncode, 0, closed.stdout + closed.stderr)
+        self.assertEqual(len(self.h.calls("snapshot")), 1)
+        self.assertFalse(self.h.held())
+
+    def test_lock_release_refuses_when_main_moved_past_a_batch_with_no_rows(self):
+        start = self.h.origin_main()
+        self.h.commit_to_main("src/other.txt", "o\n")
+        self.h.fetch_shared()
+        self.h.hand_lock(f"agent: by-hand\nbatch-start: {start}\n")
+        self.assertEqual(self.h.tool("lock", "release", "--name", "by-hand").returncode, 2)
+        self.assertTrue(self.h.held())
+
+    def test_lock_release_of_a_batch_that_landed_nothing_goes_through(self):
+        start = self.h.origin_main()
+        self.h.hand_lock(f"agent: by-hand\nbatch-start: {start}\n")
+        result = self.h.tool("lock", "release", "--name", "by-hand")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertFalse(self.h.held())
+
     def test_closing_a_dead_hand_batch_needs_no_hand_over(self):
         start = self.h.origin_main()
         self.h.hand_lock(f"agent: by-hand\nbatch-start: {start}\nbatch-landing: fix/old {start}\n", age=91 * 60)

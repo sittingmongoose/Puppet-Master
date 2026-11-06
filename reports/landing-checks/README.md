@@ -734,7 +734,8 @@ the tool cannot see that mail. Any other live holder stops the lander with `batc
 **A dead batch is closed, not cleared.** A dead holder whose `holder.txt` names a `batch-start` is cleared only if
 nothing landed in it. If a row says something did, or `origin/main` has moved past that SHA, a plain lander, or
 `lock take`, stops and prints `run --batch-close --batch-start <sha>`, because clearing it would lose the batch's
-follow-up. The close takes the lock over as above.
+follow-up. The close takes the lock over as above. `lock release` refuses in the same way, even for the batch's own
+holder.
 
 **Hand-opened batches.** The tool reads a hand lander's rows as `batch-landing: <branch> <sha>`, one per landing, so
 that both limits hold. With no `batch-first-push:` line, the two hours count from the first row's commit time, which
