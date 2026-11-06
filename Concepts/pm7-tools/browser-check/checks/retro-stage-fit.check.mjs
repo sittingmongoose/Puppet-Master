@@ -810,6 +810,49 @@ async function bubbleClear(t, mode) {
 	}
 	await t.viewport(1920, 1080);
 }
+// N1's film: --set film=bubble --record <mp4> (both surfaces in one film, or --set sandbox= one). A recording keeps the
+// window's size, so the page sits in a frame of it resized as a window would be (the normal surface in a side-by-side
+// frame, the sandbox in its own frame): c-ready opened at 740x768, and opened at 1920x1080 then resized to 740x768, in
+// Retro Dark (--set look=retro-light,retro-dark for more), --set reps=3 times; each marked '<look> <route> rep <n>' as the
+// size settles, then judged as above at 2 s and 2.5 s later. With --grep "clear of the bubble" (the other cases are not films).
+async function filmBubble(t, mode) {
+	let f, size;
+	if (mode === 'normal') {
+		await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
+		const href = await t.root.evaluate(() => location.href);
+		[f] = await t.openSideBySide([{ url: href, width: 1920, height: 1080, label: 'N1 normal: c-ready, the page in a frame resized as a window would be' }]);
+		size = (w, h) => t.window.evaluate(([w, h]) => { const i = document.getElementById('__bc_side_0'); i.style.width = w + 'px'; i.style.height = h + 'px'; }, [w, h]);
+	} else {
+		f = await t.app.open({ sandbox: true, onboarding: true, query: 'o55=screen=welcome' });
+		size = (w, h) => t.window.evaluate(([w, h]) => { const i = [...document.querySelectorAll('iframe')].find((x) => x.hasAttribute('sandbox')); i.style.width = w + 'px'; i.style.height = h + 'px'; i.style.flex = 'none'; }, [w, h]);
+	}
+	await f.waitForFunction(() => !!window.O55 && !!O55.S && !!O55.S.root, null, { timeout: 60000 });
+	await t.emulate({ reducedMotion: 'no-preference' });
+	const reps = +t.args.reps || 3;
+	for (const look of t.args.look ? String(t.args.look).split(',') : ['retro-dark']) for (let i = 1; i <= reps; i++) for (const route of ['fresh', 'resize']) {
+		const tag = `film ${mode} ${look} c-ready ${route === 'resize' ? '1920x1080 -> ' : 'fresh '}740x768 rep ${i}`;
+		await size(route === 'resize' ? 1920 : 740, route === 'resize' ? 1080 : 768);
+		await f.waitForTimeout(600);
+		await stageLook(t, f, look);
+		await f.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'c-ready' }));
+		await f.waitForTimeout(1500);
+		await t.check(`${tag}: Pip wakes on the pointer's arrival`, await arrive(t, f), 'still asleep after 4 s');
+		await restOnStage(t, f);
+		await f.waitForTimeout(3200);
+		if (route === 'resize') await size(740, 768);
+		await t.mark(`${look} ${route} rep ${i}`);
+		await f.waitForTimeout(2000);
+		for (const [when, gap] of [['at 2 s', 0], ['2.5 s later', 2500]]) {
+			if (gap) await f.waitForTimeout(gap);
+			const r = await f.evaluate(`(${BUBBLE_SAMPLE.toString()})(1000, ${JSON.stringify(INK_OVERLAP.toString())})`);
+			const why = JSON.stringify(r), at = `${tag} ${when}`;
+			await t.check(`${at}: sampled awake, the bubble and the server shown`, !r.err && r.n > 5 && !r.asleep && r.bubbleFrames > 5 && r.serverFrames > 5, why);
+			await t.check(`${at}: no prop under Pip's bubble`, !r.err && r.hits === 0, why);
+			await t.check(`${at}: no prop painted over Pip's head`, !r.err && r.ink <= 4, `${r.ink} px²; ${why}`);
+			t.log(`${at}: ${why}`);
+		}
+	}
+}
 
 // --set film=1: for a recording (which refuses viewport changes), the page in one frame of the window, resized by its
 // frame: Name in each Retro look (--set look=retro-light for one), down through the layouts and back up, each size marked
@@ -892,7 +935,7 @@ export const tests = {
 	'frozen rendering negative sandbox': on('sandbox', frozenRigid),
 	'ink overlap probe normal': on('normal', async (t, mode) => probeFixture(t, await frameFor(t, mode), mode)),
 	'ink overlap probe sandbox': on('sandbox', async (t, mode) => probeFixture(t, await frameFor(t, mode), mode)),
-	'retro stage fit normal': (t) => (t.args.film === 'relayout' ? on('normal', filmRelayout)(t) : t.args.film ? film(t) : on('normal', fit)(t)),
+	'retro stage fit normal': (t) => (t.args.film === 'relayout' ? on('normal', filmRelayout)(t) : t.args.film === 'bubble' ? t.check('not run: the bubble film is its own case', true) : t.args.film ? film(t) : on('normal', fit)(t)),
 	'retro stage fit sandbox': (t) => (t.args.film === 'relayout' ? on('sandbox', filmRelayout)(t) : t.args.film ? t.check('not run: the film is of the normal surface', true) : on('sandbox', fit)(t)),
 	'retro props every screen normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', everyScreen)(t)),
 	'retro props every screen sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', everyScreen)(t)),
@@ -904,6 +947,6 @@ export const tests = {
 	'awake motion over props sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', awakeMotion)(t)),
 	'swing at a screen change normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', swingAtChange)(t)),
 	'swing at a screen change sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', swingAtChange)(t)),
-	'c-ready props clear of the bubble normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', bubbleClear)(t)),
-	'c-ready props clear of the bubble sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', bubbleClear)(t))
+	'c-ready props clear of the bubble normal': (t) => (t.args.film === 'bubble' ? on('normal', filmBubble)(t) : t.args.film ? t.check('not run under film', true) : on('normal', bubbleClear)(t)),
+	'c-ready props clear of the bubble sandbox': (t) => (t.args.film === 'bubble' ? on('sandbox', filmBubble)(t) : t.args.film ? t.check('not run under film', true) : on('sandbox', bubbleClear)(t))
 };
