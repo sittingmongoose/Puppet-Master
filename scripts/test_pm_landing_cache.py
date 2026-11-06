@@ -669,6 +669,8 @@ class TheRealSpawnPath(unittest.TestCase):
             sys.path[:] = saved
 
     def test_a_cheap_real_validator_comes_back_the_same_from_the_cache_and_without_it(self):
+        # On a fresh tree the child would create this, so `scripts` would change as the unit ran, and it would not be stored.
+        (REPO / "scripts" / "__pycache__").mkdir(exist_ok=True)
         with tempfile.TemporaryDirectory(prefix="landing-cache-real-") as folder:
             stats = Path(folder) / "units.jsonl"
             runner = C.Runner(REPO, Path(folder) / "cache", stats, "run-gates", 0)
@@ -812,7 +814,10 @@ class NegativesOnOneValidator(Fixture):
         subprocess.run([sys.executable, "scripts/pm-plans-verify.py", "helper"], cwd=self.root, check=True, capture_output=True)
         self.assertEqual(self.status("helper"), "fresh")
         self.assertEqual(self.status("helper"), "cache")
-        self.write("scripts/helper_mod.py", "VALUE = 2\n")
+        path = self.write("scripts/helper_mod.py", "VALUE = 2\n")
+        # The same size in the same second as the compile leaves the .pyc valid, in plain Python too: move the time on.
+        ahead = path.stat().st_mtime + 2
+        os.utime(path, (ahead, ahead))
         row, _code, out = self.unit("helper")
         self.assertEqual(row["status"], "fresh", row)
         self.assertEqual(json.loads(out)["value"], 2)
