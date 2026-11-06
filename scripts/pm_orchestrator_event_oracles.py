@@ -1068,10 +1068,13 @@ def sequence_gap_errors(event, coverage):
     event, so it cannot hold the covered event's own sequence; and a gap's first id is not after its last."""
     sequence = event['sequence_id']
     gaps = coverage['sequence_gaps']
+    # Exact type: a bound that is not an integer (1.0, "1", true, null) makes no ordered range; it is refused as an
+    # unordered gap, never compared numerically.
+    ordered = lambda gap: type(gap['first_sequence_id']) is int and type(gap['last_sequence_id']) is int
     errors = []
-    if any(gap['first_sequence_id'] <= sequence <= gap['last_sequence_id'] for gap in gaps):
+    if any(ordered(gap) and gap['first_sequence_id'] <= sequence <= gap['last_sequence_id'] for gap in gaps):
         errors.append('index_coverage_sequence_gap_retained')
-    if any(gap['first_sequence_id'] > gap['last_sequence_id'] for gap in gaps):
+    if any(not ordered(gap) or gap['first_sequence_id'] > gap['last_sequence_id'] for gap in gaps):
         errors.append('index_coverage_sequence_gap_order')
     return errors
 
@@ -1928,7 +1931,24 @@ P1F06_TYPE_FORMS = (
     ('index_anchor_sequence_gaps_sha256', 'read.checkpoint.generations.*.anchor.sequence_gaps_sha256', ('null', 'upper', 'trailing_lf')),
     ('index_generation_id', 'read.checkpoint.generations.*.generation_id', ('null', 'upper', 'trailing_lf')),
     ('index_generation_dataset_name', 'read.checkpoint.generations.*.index_dataset_name', ('null', 'trailing_lf')),
+    # The name's form is joined to the segment's state: the state written another way.
+    ('index_coverage_segment_name_state', 'read.checkpoint.generations.*.frontier.coverage.segments[].state',
+     ('null', 'upper', 'trailing_lf')),
+    # The generation id, rewritten consistently in every copy (rekey), in a form the recipe never gives.
+    ('index_generation_id_recipe', 'read.checkpoint.generations{key}', ('upper', 'trailing_lf')),
+    # On the compaction control: its origin, and its translation's target selection.
+    ('index_generation_translation_origin', 'read.checkpoint.generations.*.origin', ('null', 'upper', 'trailing_lf')),
+    ('index_translation_target_selection', 'read.checkpoint.generations.*.translation.target_selection_sha256',
+     ('null', 'upper', 'trailing_lf')),
+    # On a legal gap below the event: either bound in another type is an unordered gap.
+    ('index_coverage_sequence_gap_order', 'read.checkpoint.generations.*.frontier.coverage.sequence_gaps[].first_sequence_id',
+     ('float', 'string', 'bool', 'null')),
+    ('index_coverage_sequence_gap_order', 'read.checkpoint.generations.*.frontier.coverage.sequence_gaps[].last_sequence_id',
+     ('float', 'string', 'bool', 'null')),
 )
+# A form's holder when the positives leave it null or empty: the compaction control or the gap control.
+TYPE_FORM_CARRIERS = {'.translation.': lambda case: compaction_control(case), '.origin': lambda case: compaction_control(case),
+                      '.sequence_gaps[].': lambda case: gap_control(case)}
 
 
 def type_form(value, form):
@@ -1962,6 +1982,23 @@ def path_holder(case, path):
     return target, (0 if last == '[]' else last)
 
 
+def type_form_case(case, code, path, form):
+    """The case (or its carrier control) with the copy at `path` in another representation and every other copy kept:
+    the generation id is rewritten in all its copies, and the segment name in all three."""
+    carrier = next((build for marker, build in TYPE_FORM_CARRIERS.items() if marker in path), None)
+    bad = carrier(case) if carrier is not None else copy.deepcopy(case)
+    if path.endswith('{key}'):
+        rekey(bad, type_form(bad['read']['checkpoint']['current_generation_id'], form))
+        return bad
+    holder, field = path_holder(bad, path)
+    value = type_form(holder[field], form)
+    holder[field] = value
+    if code == 'index_coverage_segment_name_generation':
+        coverage = frontier_coverage(bad)
+        coverage['segments'][0]['segment_name'] = bad['read']['row']['source_locator']['segment_name'] = value
+    return bad
+
+
 def p1f06_type_form_checks(fixtures, schema, owner_module):
     """Exact type: each new guard alone refuses every other representation of its copy; through checkpoint_errors the
     strict checkpoint schema refuses what it does not admit, the weaker row schema adds `index_row_schema` beside the
@@ -1973,14 +2010,7 @@ def p1f06_type_form_checks(fixtures, schema, owner_module):
     for case in fixtures['event_cases']:
         for code, path, forms in P1F06_TYPE_FORMS:
             for form in forms:
-                bad = copy.deepcopy(case)
-                holder, field = path_holder(bad, path)
-                value = type_form(holder[field], form)
-                holder[field] = value
-                if code == 'index_coverage_segment_name_generation':
-                    # Every copy of the name carries the form, so the generation field is the only defect.
-                    coverage = frontier_coverage(bad)
-                    coverage['segments'][0]['segment_name'] = bad['read']['row']['source_locator']['segment_name'] = value
+                bad = type_form_case(case, code, path, form)
                 assert p1f06_guard_alone(code, bad) == [code], (case['case_id'], path, form, p1f06_guard_alone(code, bad))
                 checks += 1
                 try:
