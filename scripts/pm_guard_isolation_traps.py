@@ -263,6 +263,8 @@ def exercise(g, memory, *, scratch=None):
             with tempfile.TemporaryDirectory(prefix='guardtool-b-trap-', dir=scratch) as directory:
                 root = Path(directory)
                 if trap['kind'] in ('code', 'schema'):
+                    # T48: standard-library bindings a flagged checker would replace; the engine must never run it
+                    untouched = {name: getattr(importlib.import_module(name.rpartition('.')[0]), name.rpartition('.')[2]) for name in trap.get('stdlib_untouched', [])}
                     try:
                         suite = _code_suite(g, trap, root) if trap['kind'] == 'code' else _schema_suite(g, trap, root)
                         if trap.get('random_seed') is not None:
@@ -270,13 +272,13 @@ def exercise(g, memory, *, scratch=None):
                             saved_random = random.getstate()
                             random.seed(trap['random_seed'])
                             try:
-                                result = g.run(suite, memory=memory)
+                                result = g.run(suite, memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
                             finally:
                                 random.setstate(saved_random)
                         else:
-                            result = g.run(suite, memory=memory)
+                            result = g.run(suite, memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
                         if trap.get('repeat'):
-                            row['repeat_report'] = g.run(suite, memory=memory)
+                            row['repeat_report'] = g.run(suite, memory=memory, demonstrate_runtime=bool(trap.get('runtime_behind_static')))
                         if trap.get('state_observation'):
                             observations = []
                             for cut in (False, True):
@@ -292,7 +294,15 @@ def exercise(g, memory, *, scratch=None):
                             row['observation'] = observations
                     except g.IsolationError as exc:
                         result = {'status': 'FAIL', 'failures': [{'kind': 'construction_refused', 'error': str(exc)}], 'rows': []}
+                    moved = []
+                    for name, original in untouched.items():
+                        module = importlib.import_module(name.rpartition('.')[0])
+                        if getattr(module, name.rpartition('.')[2]) is not original:
+                            moved.append(name)
+                            setattr(module, name.rpartition('.')[2], original)     # (put back for the traps after it)
                     row['report'] = result
+                    if moved:
+                        row['stdlib_replaced'] = moved
                     failures = {f['kind'] for f in result['failures']}
                     required = set(trap.get('failure_kinds', []))
                     row['caught'] = result['status'] == trap.get('status', 'FAIL') and required <= failures
@@ -304,6 +314,13 @@ def exercise(g, memory, *, scratch=None):
                         row['caught'] = row['caught'] and any(s['kind'] == trap['static_kind'] and not s['non_guard'] for s in result.get('static', {}).get('sites', []))
                     if trap.get('static_error_kind'):
                         row['caught'] = row['caught'] and any(e['kind'] == trap['static_error_kind'] for e in result.get('static', {}).get('errors', []))
+                    # T48: no case ran (and, before the factory, no factory either), and no standard-library binding moved
+                    if 'max_evaluations' in trap:
+                        row['caught'] = row['caught'] and result.get('evaluations', 0) <= trap['max_evaluations']
+                    if 'max_factories' in trap:
+                        row['caught'] = row['caught'] and result.get('factories', 0) <= trap['max_factories']
+                    if trap.get('stdlib_untouched'):
+                        row['caught'] = row['caught'] and not moved
                     if trap.get('runtime_type'):
                         row['caught'] = row['caught'] and any(e.get('type') == trap['runtime_type'] for e in result.get('runtime', []))
                     if trap.get('protocol_contains'):

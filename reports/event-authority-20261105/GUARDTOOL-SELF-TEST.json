@@ -2,7 +2,7 @@
   "version": 2,
   "method": "B: guard tables",
   "status": "PASS",
-  "caught": 316,
+  "caught": 328,
   "skipped": 0,
   "traps": [
     {
@@ -1583,6 +1583,66 @@
     {
       "id": "TB2-U1-inplace-temporary",
       "expected": "C8-U1: an in-place += on an input list, undone before return, is seen at the checkpoint after the binary operation.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-kwlist-read",
+      "expected": "T48 (TOOLBATCH2 pre-check finding 3): keyword.kwlist is a list a case can write and a later case read while the certified module looks unchanged; a module.attr read of a certified module must hand out an immutable or certified value.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-algorithms-available-read",
+      "expected": "T48: hashlib.algorithms_available is a set: mutable public data of a certified module, refused.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-default-encoder-read",
+      "expected": "T48: json._default_encoder is an instance whose fields set json.dumps's defaults: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-default-decoder-read",
+      "expected": "T48: json._default_decoder is an instance whose fields set json.loads's defaults: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-template-class-read",
+      "expected": "T48: string.Template is a Python class (its delimiter and pattern are class attributes a case could set): refused.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-textwrapper-class-read",
+      "expected": "T48: textwrap.TextWrapper is a Python class: refused.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-jsondecodeerror-class-read",
+      "expected": "T48: json.JSONDecodeError is a Python class (mutable); only classes CPython marks immutable are accepted.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-enum-member-read",
+      "expected": "T48: an Enum member is an instance that accepts new attributes (re.I.x = 1 succeeds): refused.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-certified-values-control",
+      "expected": "T48 controls: a str and a float literal, builtin functions of a module (math.sqrt, hashlib.sha256), standard-library functions (json.dumps, textwrap.dedent) and two classes CPython marks immutable (itertools.chain, operator.itemgetter, the stated widening) still certify.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-R1b-kwlist-noop-reset",
+      "expected": "T48 (pre-check finding 3, R1b): a no-op reset declared as the seam of a keyword.kwlist write lets a cross-case write earn credit while the certified module looks unchanged (in a fresh process x-bad alone is accepted). The seam's write reaches a certified binding: refused, before the factory runs.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-R3-setattr-json-never-runs",
+      "expected": "T48 (the pre-check's observation): setattr(json, 'dumps', len) in the checker is an unwaivable external_binding_write; the engine runs no case after it, so the engine's own json.dumps is never replaced.",
+      "caught": true
+    },
+    {
+      "id": "TB3-T48-setattr-json-in-factory-never-runs",
+      "expected": "T48: the same write in the factory body: found by the table-independent scan before the factory first runs, so the factory never executes either.",
       "caught": true
     }
   ]

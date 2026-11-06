@@ -229,7 +229,8 @@
       "failure_kinds": [
         "untracked_refusal",
         "table_protocol_error"
-      ]
+      ],
+      "runtime_behind_static": true
     },
     {
       "id": "duplicate-distinct-invariants",
@@ -1335,7 +1336,8 @@
       "failure_kinds": [
         "untracked_refusal",
         "table_protocol_error"
-      ]
+      ],
+      "runtime_behind_static": true
     },
     {
       "id": "predicate-invalid-return",
@@ -1411,7 +1413,8 @@
       ],
       "failure_kinds": [
         "table_protocol_error"
-      ]
+      ],
+      "runtime_behind_static": true
     },
     {
       "id": "shared-context",
@@ -3381,7 +3384,8 @@
       ],
       "protocol_contains": "mutated input/context",
       "state_observation": "order",
-      "alias_fixture": false
+      "alias_fixture": false,
+      "runtime_behind_static": true
     },
     {
       "id": "B4-alias-topology",
@@ -3423,7 +3427,8 @@
       ],
       "protocol_contains": "mutated input/context",
       "state_observation": "alias",
-      "alias_fixture": true
+      "alias_fixture": true,
+      "runtime_behind_static": true
     },
     {
       "id": "B4-context-order",
@@ -3451,7 +3456,8 @@
       "failure_kinds": [
         "table_protocol_error"
       ],
-      "protocol_contains": "mutated input/context"
+      "protocol_contains": "mutated input/context",
+      "runtime_behind_static": true
     },
     {
       "id": "B4-temporary-restored-input",
@@ -3479,7 +3485,8 @@
       "failure_kinds": [
         "table_protocol_error"
       ],
-      "protocol_contains": "mutated input/context"
+      "protocol_contains": "mutated input/context",
+      "runtime_behind_static": true
     },
     {
       "id": "B4-mutating-helper",
@@ -3522,7 +3529,8 @@
       ],
       "protocol_contains": "mutated input/context",
       "static_error_kind": "predicate_purity_uncertified",
-      "alias_fixture": true
+      "alias_fixture": true,
+      "runtime_behind_static": true
     },
     {
       "id": "B4-dormant-mutation",
@@ -3591,7 +3599,8 @@
       "failure_kinds": [
         "table_protocol_error"
       ],
-      "protocol_contains": "registered predicate entered outside"
+      "protocol_contains": "registered predicate entered outside",
+      "runtime_behind_static": true
     },
     {
       "id": "B5-direct-duplicate",
@@ -3633,7 +3642,8 @@
           ],
           "evidence": "Both table sites enforce the same x predicate; direct entry must still fail."
         }
-      ]
+      ],
+      "runtime_behind_static": true
     },
     {
       "id": "B5-nested-table-control",
@@ -3672,7 +3682,8 @@
       "failure_kinds": [
         "table_protocol_error"
       ],
-      "protocol_contains": "nested guard evaluation"
+      "protocol_contains": "nested guard evaluation",
+      "runtime_behind_static": true
     },
     {
       "id": "B5-alias-call",
@@ -3711,7 +3722,8 @@
       "failure_kinds": [
         "table_protocol_error"
       ],
-      "protocol_contains": "registered predicate entered outside"
+      "protocol_contains": "registered predicate entered outside",
+      "runtime_behind_static": true
     },
     {
       "id": "B5-checker-direct-entry",
@@ -3787,7 +3799,8 @@
           "source": "Methods()",
           "reason": "Fresh per-case source-backed receiver; no acceptance decision."
         }
-      ]
+      ],
+      "runtime_behind_static": true
     },
     {
       "id": "B1-exact-exception-propagation",
@@ -3943,7 +3956,8 @@
       "failure_kinds": [
         "table_protocol_error"
       ],
-      "protocol_contains": "outside authorized engine entry"
+      "protocol_contains": "outside authorized engine entry",
+      "runtime_behind_static": true
     },
     {
       "id": "B4-factory-order-repair",
@@ -16796,7 +16810,8 @@
           "defect": "Change only /x."
         }
       ],
-      "protocol_contains": "mutated input/context"
+      "protocol_contains": "mutated input/context",
+      "runtime_behind_static": true
     },
     {
       "id": "TB2-U1-subscript-store-temporary",
@@ -16829,7 +16844,8 @@
           "defect": "Change only /x."
         }
       ],
-      "protocol_contains": "mutated input/context"
+      "protocol_contains": "mutated input/context",
+      "runtime_behind_static": true
     },
     {
       "id": "TB2-U1-inplace-temporary",
@@ -16864,7 +16880,465 @@
           "defect": "Change only /x."
         }
       ],
-      "protocol_contains": "mutated input/context"
+      "protocol_contains": "mutated input/context",
+      "runtime_behind_static": true
+    },
+    {
+      "id": "TB3-T48-kwlist-read",
+      "kind": "code",
+      "expected": "T48 (TOOLBATCH2 pre-check finding 3): keyword.kwlist is a list a case can write and a later case read while the certified module looks unchanged; a module.attr read of a certified module must hand out an immutable or certified value.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_mutable_read",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import keyword\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and keyword.kwlist is not None else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ]
+    },
+    {
+      "id": "TB3-T48-algorithms-available-read",
+      "kind": "code",
+      "expected": "T48: hashlib.algorithms_available is a set: mutable public data of a certified module, refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_mutable_read",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import hashlib\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and hashlib.algorithms_available is not None else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ]
+    },
+    {
+      "id": "TB3-T48-default-encoder-read",
+      "kind": "code",
+      "expected": "T48: json._default_encoder is an instance whose fields set json.dumps's defaults: refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_mutable_read",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import json\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and json._default_encoder is not None else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ]
+    },
+    {
+      "id": "TB3-T48-default-decoder-read",
+      "kind": "code",
+      "expected": "T48: json._default_decoder is an instance whose fields set json.loads's defaults: refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_mutable_read",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import json\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and json._default_decoder is not None else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ]
+    },
+    {
+      "id": "TB3-T48-template-class-read",
+      "kind": "code",
+      "expected": "T48: string.Template is a Python class (its delimiter and pattern are class attributes a case could set): refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_mutable_read",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import string\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and string.Template is not None else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ]
+    },
+    {
+      "id": "TB3-T48-textwrapper-class-read",
+      "kind": "code",
+      "expected": "T48: textwrap.TextWrapper is a Python class: refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_mutable_read",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import textwrap\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and textwrap.TextWrapper is not None else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ]
+    },
+    {
+      "id": "TB3-T48-jsondecodeerror-class-read",
+      "kind": "code",
+      "expected": "T48: json.JSONDecodeError is a Python class (mutable); only classes CPython marks immutable are accepted.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_mutable_read",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import json\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and json.JSONDecodeError is not None else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ]
+    },
+    {
+      "id": "TB3-T48-enum-member-read",
+      "kind": "code",
+      "expected": "T48: an Enum member is an instance that accepts new attributes (re.I.x = 1 succeeds): refused.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_mutable_read",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import re\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and re.IGNORECASE is not None else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ]
+    },
+    {
+      "id": "TB3-T48-certified-values-control",
+      "kind": "code",
+      "expected": "T48 controls: a str and a float literal, builtin functions of a module (math.sqrt, hashlib.sha256), standard-library functions (json.dumps, textwrap.dedent) and two classes CPython marks immutable (itertools.chain, operator.itemgetter, the stated widening) still certify.",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "import hashlib\nimport itertools\nimport json\nimport math\nimport operator\nimport string\nimport textwrap\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and (string.ascii_letters, math.pi, math.sqrt, hashlib.sha256, json.dumps, textwrap.dedent, itertools.chain, operator.itemgetter) is not None else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "proved_rows": 1
+    },
+    {
+      "id": "TB3-T48-R1b-kwlist-noop-reset",
+      "kind": "code",
+      "expected": "T48 (pre-check finding 3, R1b): a no-op reset declared as the seam of a keyword.kwlist write lets a cross-case write earn credit while the certified module looks unchanged (in a fresh process x-bad alone is accepted). The seam's write reaches a certified binding: refused, before the factory runs.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "reset_seam_certified_write",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import keyword\nimport pm_guard_isolation as g\n\ndef reset():\n    return True\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 and 'armed' in keyword.kwlist else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        if value['arm']:\n            keyword.kwlist.append('armed')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "arm": 1
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "arm": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x and the arm flag."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['arm']:\n    keyword.kwlist.append('armed')",
+          "reason": "Route diagnostic bookkeeping on the declared arm flag; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "keyword.kwlist",
+          "reason": "Read the bookkeeping list."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "keyword.kwlist.append",
+          "reason": "Bound append of the bookkeeping list."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['arm']",
+          "reason": "Read the declared present arm field."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "mutation_or_error_write",
+          "source": "keyword.kwlist.append('armed')",
+          "reason": "Diagnostic bookkeeping; not a product refusal."
+        }
+      ],
+      "reset_function": "reset",
+      "reset_seams": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "shared_state_write",
+          "source": "keyword.kwlist.append('armed')",
+          "reason": "Reviewed reset owns this bookkeeping write."
+        }
+      ]
+    },
+    {
+      "id": "TB3-T48-R3-setattr-json-never-runs",
+      "kind": "code",
+      "expected": "T48 (the pre-check's observation): setattr(json, 'dumps', len) in the checker is an unwaivable external_binding_write; the engine runs no case after it, so the engine's own json.dumps is never replaced.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_write",
+      "max_evaluations": 0,
+      "stdlib_untouched": [
+        "json.dumps"
+      ],
+      "source": "import json\nimport pm_guard_isolation as g\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        setattr(json, 'dumps', len)\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ]
+    },
+    {
+      "id": "TB3-T48-setattr-json-in-factory-never-runs",
+      "kind": "code",
+      "expected": "T48: the same write in the factory body: found by the table-independent scan before the factory first runs, so the factory never executes either.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_write",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "stdlib_untouched": [
+        "json.dumps"
+      ],
+      "source": "import json\nimport pm_guard_isolation as g\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    setattr(json, 'dumps', len)\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ]
     }
   ]
 }

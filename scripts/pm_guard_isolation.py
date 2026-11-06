@@ -101,6 +101,44 @@ def _immutable_literal(value):
     return type(value) in (type(None), bool, int, float, complex, str, bytes) or type(value) is tuple and all(_immutable_literal(v) for v in value)
 
 
+def _stdlib_path(filename):
+    if not filename:
+        return False
+    location = Path(filename).resolve()
+    return any(location.is_relative_to(d) for d in _STDLIB_DIRS) and not any(location.is_relative_to(d) for d in _SITE_DIRS)
+
+
+def _certified_module_value(value, root):
+    """T48 (tool batch 3, TOOLBATCH2 pre-check finding 3): what a certified standard-library module may hand out
+    through a `module.attr` read, so that certifying the module by identity, without walking it, stays sound. The
+    module's own public data is shared by every case in the process: a case that can reach a mutable value through
+    `module.attr` can write it, and a later case can read it, while the certified module looks unchanged
+    (keyword.kwlist, hashlib.algorithms_available, json._default_encoder and _default_decoder, string.Template,
+    textwrap.TextWrapper). Accepted, as (kind, label): an immutable literal or a frozenset of immutable literals; a
+    builtin function of a module (its __self__ a module or None, never a bound method of an object); a Python function
+    defined in the standard library with no attributes of its own and only immutable literal defaults; and any other
+    certified external binding (a compiled pattern, a typing form, an allowlisted module). One widening past the
+    pre-check's list, with its traps: a class CPython marks immutable (Py_TPFLAGS_IMMUTABLETYPE: itertools.chain,
+    operator.itemgetter, functools.partial, struct.Struct), whose attributes cannot be set or deleted, so it holds no
+    state a case could leave behind. Everything else is refused: lists, sets, dicts, instances (Enum members
+    included: re.I accepts new attributes) and every other class (string.Template, textwrap.TextWrapper,
+    json.JSONDecodeError)."""
+    if _immutable_literal(value) or type(value) is frozenset and all(_immutable_literal(v) for v in value):
+        return ('literal', type(value).__name__)
+    if type(value) is types.BuiltinFunctionType and (value.__self__ is None or type(value.__self__) is types.ModuleType):
+        return ('builtin-function', getattr(value, '__qualname__', '?'))
+    if type(value) is types.FunctionType and _stdlib_path(value.__code__.co_filename) and not vars(value) and value.__closure__ is None and (
+            value.__defaults__ is None or all(_immutable_literal(v) for v in value.__defaults__)) and (
+            not value.__kwdefaults__ or all(_immutable_literal(v) for v in value.__kwdefaults__.values())):
+        return ('stdlib-function', value.__qualname__)
+    if type(value) is type and value.__flags__ & _IMMUTABLE_TYPE_FLAG:
+        return ('immutable-type', value.__qualname__)
+    return _certified_external(value, root)
+
+
+_IMMUTABLE_TYPE_FLAG = 1 << 8      # Py_TPFLAGS_IMMUTABLETYPE (CPython 3.10 and later)
+
+
 def _literal_enum(cls, root):
     """A repository Enum whose members are immutable literals, with enum's own machinery only: the metaclass is
     EnumType itself, the bases are one of _LITERAL_ENUM_BASES, its namespace holds members and enum's internal
@@ -1984,6 +2022,30 @@ def static_scan(suite, table):
                 if not read:
                     errors.append({'kind': 'external_binding_escape', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(parent) if parent is not None else node.id,
                                    'certified_as': certified[node.id], 'reason': 'a certified module is only read as module.attribute (a literal Enum also as a call or isinstance target); aliased or passed on, it could be written through'})
+                elif certified[node.id] == 'stdlib-module' and isinstance(parent, ast.Attribute) and parent.value is node:
+                    # T48: what the read hands out must itself be immutable or certified, in every loaded instance
+                    missing = object()
+                    handed = [vars(vars(m)[node.id]).get(parent.attr, missing) for m in loaded_here]
+                    kinds = [None if v is missing else _certified_module_value(v, root) for v in handed]
+                    if any(k is None for k in kinds):
+                        value = handed[kinds.index(None)]
+                        errors.append({'kind': 'external_binding_mutable_read', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(parent),
+                                       'value_type': 'missing' if value is missing else type(value).__name__,
+                                       'reason': 'a certified module is certified without walking it, so a value read from it must itself be immutable or certified (an immutable literal or frozenset, a builtin or standard-library function, a compiled pattern); a list, set, dict, instance or class read from it is shared mutable state across cases'})
+        # T48: a reset seam whose write reaches a certified binding is refused: the binding is certified without
+        # walking it, so the snapshot cannot see what the reset left behind (R1b: a no-op reset over a keyword.kwlist write)
+        for key, (declaration, _) in reset_allowed.items():
+            if key[0] != str(path):
+                continue
+            try:
+                seam = ast.parse(declaration.source)
+            except SyntaxError:
+                continue
+            reached = sorted({part.id for part in ast.walk(seam) if isinstance(part, ast.Name) and part.id in certified})
+            if reached:
+                errors.append({'kind': 'reset_seam_certified_write', 'path': _relative(path, root), 'function': declaration.function, 'source': declaration.source,
+                               'certified': {name: certified[name] for name in reached},
+                               'reason': 'a reset seam may not write through a certified immutable binding: certification does not walk it, so state the reset failed to restore would be invisible'})
         # A function's implicit None return is also a possible rejecting return.
         for node in ast.walk(tree):
             if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
@@ -2882,8 +2944,25 @@ def _fixture_copy(value, memo=None):
     raise IsolationError('unsupported fixture data (construct checker state in the factory): ' + type(value).__name__)
 
 
-def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
-    """Serial, fresh factory for EVERY case, predicate, cut and restoration."""
+class _StaticStop(Exception):
+    """T48: an unwaivable static error stops the run before any case executes."""
+
+
+# Static errors that do not depend on the guard table, so a scan made before the factory first runs finds them as the
+# full scan does: each marks code the engine will not execute in its own process (a write through a certified binding,
+# dynamic code, the table's private state, a module it cannot resolve or scan).
+STATIC_STOP_KINDS = frozenset({'dynamic_code_or_import', 'table_private_state', 'external_binding_write', 'external_binding_escape',
+                               'external_binding_rebound', 'external_binding_mutable_read', 'reset_seam_certified_write', 'star_import',
+                               'uncertified_import_binding', 'unscannable_module', 'unknown_statement'})
+
+
+def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None, demonstrate_runtime=False):
+    """Serial, fresh factory for EVERY case, predicate, cut and restoration.
+
+    An unwaivable static error stops the run before any case executes (T48). demonstrate_runtime=True is for the
+    self-test's own traps only, which show the runtime defense (purity checks, untracked refusals) catching what
+    the static scan also refuses: the run then goes on past static errors, still FAILs, and says so in the report.
+    The adapter command line never sets it."""
     gate = memory or MemoryGate()
     report = {'version': 2, 'method': 'B: guard tables', 'suite': suite.name, 'status': 'FAIL',
               'tool_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
@@ -2966,6 +3045,14 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
                                for s in report['static']['sites'] if s['non_guard'] and s.get('exception_operation')}
             if report['static']['status'] != 'PASS':
                 fail('hidden_static_sites', sites=[s['id'] for s in report['static']['sites'] if not s['non_guard']], errors=report['static']['errors'])
+            # T48 (the TOOLBATCH2 pre-check's observation): an unwaivable static error stops the run here, after the
+            # factory built the table and before any case runs: a flagged write such as setattr(json, 'dumps', len)
+            # never executes in the engine's process. (Before, baselines still ran to show both defenses.)
+            if report['static']['errors'] and demonstrate_runtime:
+                report['static_stop_waived'] = 'self-test demonstration of the runtime defense'
+            elif report['static']['errors']:
+                fail('static_error_stop', stage='after the factory, before any case', errors=sorted({e['kind'] for e in report['static']['errors']}))
+                raise _StaticStop()
         objects = _state_objects(case, root)
         for obj in objects:
             prior = retained.get(id(obj))
@@ -3141,6 +3228,16 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
             raise IsolationError('expected Method B Suite')
         if not suite.controls:
             raise IsolationError('at least one complete-path valid control is required')
+        # T48: the table-independent static errors are found before the factory first runs, so checker code the
+        # engine will not execute never runs in its process, the factory included.
+        early = static_scan(suite, GuardTable([]))
+        stops = [e for e in early['errors'] if e['kind'] in STATIC_STOP_KINDS]
+        if stops and not demonstrate_runtime:
+            # (the table-dependent errors an empty table produces are left out: only the stop kinds are reported)
+            report['static'] = {**early, 'status': 'FAIL', 'errors': stops, 'stage': 'before the factory: table-independent errors only'}
+            fail('hidden_static_sites', sites=[], errors=stops)
+            fail('static_error_stop', stage='before the factory', errors=sorted({e['kind'] for e in stops}))
+            raise _StaticStop()
         initial = fresh(_fixture_copy(suite.controls[0].value))
         guards = dict(initial.table.guards)
         report['inventory'] = signature
@@ -3355,6 +3452,9 @@ def run(suite: Suite, *, memory: MemoryGate | None = None, progress=None):
             fail('unproved_guards', guards=report['unproved_guards'])
         if not report['failures']:
             report['status'] = 'PASS'
+    except _StaticStop:
+        # (no case ran: every guard of the table, when the factory had built it, stays unproved)
+        report['inventory'] = report['inventory'] or (signature or [])
     except BaseException as exc:
         fail('state_shared_across_cases' if 'state_shared_across_cases' in str(exc) else 'infrastructure_or_declaration', error=type(exc).__name__ + ': ' + str(exc))
     finally:
