@@ -1148,3 +1148,37 @@ Evidence directory: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/
 | `results/tb2-lane-trial.log` | `0334a60bd90df68d7f460f76e151e1be74e76602782a121e00c940d7a0cbf1ba` |
 | `results/time-base.json` | `652dc3ae81e5be59f24a96b6fee11775a0c2840574506dff97ee7d1d839069bb` |
 | `results/time-new.json` | `af672d903f25a98754052b05bac6764592e94840f95e1db799f52beefab2d762` |
+
+## Tool batch 3: findings and responses
+
+**TOOLBATCH2 pre-check finding 3 (C8-U2) and its observation are fixed; nothing is disputed.** Base: `8f868c1eda`. Fix: `8ca874e47f` on `plans/ea-guardtool-20261105`. Every finding here is HYPOTHETICAL (a synthetic suite); every real-lane credit was right before and is right now.
+
+| Finding | Location, cause and fix | Evidence |
+|---|---|---|
+| **Finding 3: certified modules hand out mutable data — fixed** | `_certified_module_value`, `static_scan` (the certified-binding discipline). A certified standard-library module is certified by identity, without walking it, so its public data is shared by every case unseen: `keyword.kwlist` (a list), `hashlib.algorithms_available` (a set), `json._default_encoder` and `_default_decoder` (instances that set `json.dumps`'s and `json.loads`'s defaults), `string.Template` and `textwrap.TextWrapper` (classes with settable attributes). Every `module.attr` read of a certified module must now hand out, in every loaded instance, an immutable literal or a frozenset of them, a builtin function of a module (never a bound method of an object), a standard-library function with no attributes, closure or mutable defaults, a class CPython marks immutable, or another certified binding (a compiled pattern). Anything else is `external_binding_mutable_read`, unwaivable. | 8 refusal traps: `TB3-T48-kwlist-read`, `-algorithms-available-read`, `-default-encoder-read`, `-default-decoder-read`, `-template-class-read`, `-textwrapper-class-read`, `-jsondecodeerror-class-read`, `-enum-member-read`. On `8f868c1eda` each passes with guard `x` credited; now each is refused before the factory runs (0 evaluations). Control `TB3-T48-certified-values-control` (a str and a float, `math.sqrt`, `hashlib.sha256`, `json.dumps`, `textwrap.dedent`, `itertools.chain`, `operator.itemgetter`) credits on both. |
+| **Finding 3: a no-op reset seam over a certified write (R1b) — fixed** | `static_scan`. A reset seam whose declared source names a certified binding is `reset_seam_certified_write`, unwaivable: certification does not walk the binding, so what the reset failed to restore would be invisible. | `TB3-T48-R1b-kwlist-noop-reset` (the pre-check's R1b, as written): on `8f868c1eda` PASS with `x` credited; now refused with `reset_seam_certified_write` and `external_binding_mutable_read`, no factory and no case run. |
+| **Observation: a static error did not stop the run — fixed** | `run`, `STATIC_STOP_KINDS`. Before the factory first runs, the table-independent part of the scan (dynamic code, the table's private state, writes, escapes and rebinding of certified bindings, mutable reads, reset seams that reach a certified binding, star imports, unresolved or unscannable modules, unknown statements) stops the run with `static_error_stop`: neither the factory nor any case runs. After the factory builds the table, the full scan's other errors stop the run the same way, before any case. Before, baselines still ran "to demonstrate both defenses". The self-test's 17 traps that show the runtime defense behind a static refusal (`missing-table-entry`, `predicate-exception`, the `B4-*` and `B5-*` purity traps, `TB2-U1-*-temporary`) carry `runtime_behind_static` and run with `run(..., demonstrate_runtime=True)`, which still fails and records `static_stop_waived`; the adapter command line never sets it, so their expectations are unchanged. | `TB3-T48-R3-setattr-json-never-runs` (the pre-check's R3) and `TB3-T48-setattr-json-in-factory-never-runs`: on `8f868c1eda` both replace the engine's own `json.dumps` (the first after 8 evaluations, the second in the factory); now 0 evaluations (and 0 factories for the second) and `json.dumps` is untouched. The trap runner checks `max_evaluations`, `max_factories` and `stdlib_untouched`. |
+
+**Soundness: every widening.** One widening past the pre-check's list: a class CPython marks immutable (`Py_TPFLAGS_IMMUTABLETYPE`) is accepted at a certified `module.attr` read, because setting or deleting an attribute on it raises `TypeError`, so a case can leave nothing on it. Its traps: `TB3-T48-certified-values-control` (accepted: `itertools.chain`, `operator.itemgetter`) and `-template-class-read`, `-textwrapper-class-read`, `-jsondecodeerror-class-read` (refused: Python classes), `-enum-member-read` (refused: `re.I.x = 1` succeeds, so Enum members are mutable instances). Everything else in this batch narrows.
+
+### Rerun results
+
+| Check | `8f868c1eda` | Now |
+|---|---|---|
+| Self-test | 316/316 | **328/328** (316 + 12 `TB3-T48-*`); 38 s |
+| The 12 new traps on the base engine | 9 refusals pass with credit; both setattr traps replace the engine's `json.dumps`; control credits | all caught; control credits |
+| Real-lane trial (`lane_trial_tb2.py`, lane `e66effc3aa`, adapter `ec625912…`) | 11 rows match ground truth | **11 rows match ground truth**, the same credit row by row; M0 full case with all controls 5/5 in 95.5 s, 0.284 s per evaluation |
+| DG6B, normal and `-O` | PASS 7/7, 176 evaluations, 49 matrix cells, 56 traces, 0 divergences | the same |
+| Standalone flat copy, every program path, the share and worktree roots denied | PASS | PASS, 328 caught, 0 denied attempts |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH3/guard/`.
+
+| File | SHA-256 |
+|---|---|
+| `probes/new-traps.json` | `fb942706e7682ccfd18a82d7d8cfff32943ad3e08c473c5de8f14625b592d1e9` |
+| `probes/run_one.py` | `0d67776699f0c476d43e4c0ceaa62ae6bc5cca6386fc8f89c65dbb053164f257` |
+| `probes/lane_trial_tb2.py` | `e7f6d08e16f6a89739d4af24f0d55e6aed96ca9eb5d9d8c016e04659232d38c6` |
+| `results/new-traps-base-fix.jsonl` | `4cf268864de5812d46dcd4a9363f46315dd6de1daeb8cca03f2c699140147c6f` |
+| `results/lane-trial-tb3.json` | `1c84f1fb13909f50911ef31f57b61302b4e933a798b33dbd25d1e91573ff1f22` |
+| `results/selftest-final.json.gz` | `8fcb8d08545e55e7039a50bfc2874fec25b86673236abcebd19caf661e36c29f` |
+| `results/dg6b.summary.jsonl` | `aafe0ee66456c835d0c7fd7872b7a20f6ab26cc0de5dc1c3c2f104bb9b0f74ae` |
