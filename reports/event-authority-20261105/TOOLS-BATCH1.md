@@ -225,3 +225,28 @@ Evidence directory: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-2
 | `verify-witness.py` | `6151d0213e02380167ae021a7958daf10006ea94582ce5df0244fd43d82e5a30` |
 | `audit-witness.py` | `0768029b3f718fe87fbe26ffa526ddaa4c12c1543ef177dc0bca3f67b3336129` |
 | `prepare-witness-report.py` | `42a15df80a25554218a5bae83b412bb1a2488bb4f9d5b021ac90745932549af6` |
+
+## Tool batch 2 (TOOL-ISSUES T32-T36): findings and responses
+
+**C8-W1, C8-W2 and C8-W3 are fixed; none is disputed.** Base: `570100dabcf2b0354910c2d359e2667bce71b8ad`. Both shape findings were hypothetical (no instance in the real owner documents); a false pass on a real ledger blocks, and none changed.
+
+| Finding | Location, cause and fix | Regression evidence |
+|---|---|---|
+| **C8-W1 — fixed** | `scripts/pm-ledger-compile-witness.py` (`unit_head`, `any_head`, `INDENTED_UNIT_HEAD`, `INDENTED_ID_HEAD`, `SETEXT_UNDER`, `unsupported_forms`). Headings were anchored at column 0 with no wrapper, so `   ## AA-001 — Again`, `## **AA-001** — …` and a setext heading naming a target were neither definitions nor refused. An ATX heading may now be indented up to three spaces and its ID wrapped in `**ID**`, `__ID__` or `[ID]`: it is the same heading, so a second one is a duplicate. Indented and wrapped forms are read only outside fences; column-0 headings keep their reading everywhere, so no real result moves. A setext heading (a paragraph over an `===` or `---` underline) that names a targeted ID is refused as `setext_heading`; a list item or block quote over `---` is a thematic break, and YAML front matter is skipped. | `tb2-indented-heading-duplicate-is-a-definition`, `-bold-wrapped-…`, `-underscore-wrapped-…`, `-bracket-wrapped-…`, `tb2-setext-equals-heading-is-refused`, `tb2-setext-dash-heading-is-refused`: all six exit 0 (pass) on the base tool and are caught now. Controls: `tb2-indented-heading-inside-fence-control`, `tb2-four-space-heading-is-code-control`, `tb2-list-item-over-thematic-break-control`. |
+| **C8-W2 — fixed** | `fences_in`, `FENCE_OPEN`, `unit_head`, `any_head`. A fence closed on any line starting with the same three characters, at any indentation, info string or not, and a heading line inside a fence counted as a heading definition, which is what gave the cycle-8 four-backtick fixture its false `ambiguous_owner_unit`. Fences now follow CommonMark: an opener of three or more backticks or tildes indented at most three spaces (a backtick opener's info holds no backtick); a closer of the same character, at least as long, indented at most three spaces, with only spaces after it; an unclosed fence runs to the end. A heading line inside a fence is code, never a definition (a fenced `plan_unit_id` line still is a declaration). | `tb2-closer-with-info-string-does-not-close`, `tb2-shorter-closer-does-not-close` (both refused at the base too, as `plan_unit_id_outside_fence`; now the fence is read whole and the second definition is the finding), `tb2-four-space-fence-is-not-a-fence` (at the base a second definition; now indented code, so its `plan_unit_id` line is outside any fence). Controls: `tb2-longer-fence-holds-a-shorter-one-control`, `tb2-heading-inside-longer-fence-is-code-control` (a false `ambiguous_owner_unit` at the base). |
+| **C8-W3 — documented** | `scripts/ledger-compile-witness/README.md`. A `plan_unit_id: AA-001  # comment` line inside a fence is refused as `unparsed_plan_unit_id_line`; the README says so and to put the comment on its own line. The heading and fence rules above are documented there too. | Existing `unparsed-plan-unit-id-line-is-refused`. |
+
+### Rerun results
+
+| Check | Result |
+|---|---|
+| **Regressions** | **140/140**, exit 0 (126 at the base plus 14 new). `-O` gives byte-identical JSON. `unittest` 7/7. On the base tool the corpus gives 130/140: the 6 C8-W1 shapes falsely pass there, the 3 C8-W2 shapes fail closed with another form, and the heading-in-fence control gives a false finding; the other 4 controls pass on both. |
+| **Real ledgers** | All 39 from `origin/main` `0adb197992` (`Plans/ledgers/v2` plus the 96 top-level Plans documents), read-only, base and new witness: **byte-identical scan output** (18 vacuous, 11 findings, 5 no-queue, 3 input errors, 2 pass; configuration findings, W1 rows, W2 and W3 firings). |
+| **Whole owner corpus** | Every top-level Plans document with every ID it names targeted: 7,783 definitions, identical `definitions_in` and `unsupported_forms` in all 96 documents. One fence list changes: `FileSafe.md`, where an 8-space-indented ``` line inside a Rust code block used to close the outer fence at line 1256; the outer fence now runs to its real closer at 1270. No definition or refusal changes. |
+| **Cycle-7 driver** | `witness_adjacent.py`: 36 rows, unchanged from cycle 8. |
+| **Cycle-8 shape probe** | `witness_c8.py`, 8 shapes: the bold, bracket, indented and setext duplicates now exit 2 (exit 0 in cycle 8); the four-backtick fence with an inner closer and heading now exits 0 (a false finding in cycle 8); the indented stray fence, the trailing YAML comment and the two-space fence keep their result. |
+| **Standalone, mount denied** | Flat copy (tool and trap helper) under `python3 -I` with the share, the source clone and both worktree roots denied: exit 0, 140/140, 0 denied attempts. |
+
+**Scope.** Witness, trap helper, README and this report. No owner Markdown, registry, Decision Log, Spec Lock, generated shard, index or evidence, `.gitignore`, `main` push, pm-mail or subagent.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH2/witness/`.
