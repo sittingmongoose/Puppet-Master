@@ -1444,8 +1444,10 @@
         if (trig) trig.addEventListener('click', function (ev) { ev.stopPropagation(); if (wrap.classList.contains('open')) closeSub(wrap); else openSub(wrap); });
       });
       ctx.addEventListener('keydown', function (ev) {
-        if (ev.key === 'ArrowRight') { var w = ev.target.closest('.fm-ctx-wrap[data-sub]'); if (w) { openSub(w); var f = w.querySelector('.fm-ctx-sub .fm-ctx-item'); if (f) f.focus(); ev.preventDefault(); } }
-        else if (ev.key === 'ArrowLeft' || ev.key === 'Escape') { var o = ctx.querySelector('.fm-ctx-wrap.open'); if (o) { closeSub(o); var t = o.querySelector(':scope > .fm-ctx-item'); if (t) t.focus(); ev.preventDefault(); } }
+        if (ev.key === 'ArrowRight') { var w = ev.target.closest('.fm-ctx-wrap[data-sub]'); if (w) { if (!w.classList.contains('open')) { closeAllSub(); openSub(w); } var f = w.querySelector('.fm-ctx-sub .fm-ctx-item'); if (f) f.focus(); ev.preventDefault(); } }
+        /* ArrowLeft or Escape inside a branch closes that branch, back on its item; from the menu's own items Escape
+           closes the menu (a branch the pointer opened goes with it) (FO-93) */
+        else if (ev.key === 'ArrowLeft' || ev.key === 'Escape') { var o = ev.target.closest && ev.target.closest('.fm-ctx-sub') ? ev.target.closest('.fm-ctx-wrap[data-sub]') : null; if (o) { closeSub(o); var t = o.querySelector(':scope > .fm-ctx-item'); if (t) t.focus(); ev.preventDefault(); } }
       });
       ctx.addEventListener('pm-ctx-open', closeAllSub);
       /* a pick closes File actions through PMMenu, as a wrapper's menu closes on its pick (FO-84c): an enabled item
