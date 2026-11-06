@@ -218,10 +218,12 @@ class Harness:
                 proc.wait()
             if proc.stdout:
                 proc.stdout.close()
+        # A stub outliving a killed run would sleep on, then write into this folder after it is gone. Only a
+        # process this harness's stubs recorded, still running in this folder, is stopped.
         for row in self.calls():
             try:
                 pid = int(row["pid"])
-                if M.pid_start(pid) and "stub" in Path(f"/proc/{pid}/cmdline").read_text():
+                if M.pid_start(pid) and os.readlink(f"/proc/{pid}/cwd").startswith(str(self.tmp)):
                     os.kill(pid, signal.SIGKILL)
             except (OSError, ValueError):
                 pass
