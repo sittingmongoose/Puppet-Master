@@ -60,7 +60,7 @@
  *   18 NieR's Pod 042 is clear of the jump chip, the bar, the queue, the decision panel and the composer (3 sizes,
  *      every thread, transcript top and bottom), of transcript buttons at the bottom, and faded back over any it passes;
  *      each view is judged once the Pod has settled (T40, FO-80). --selftest pod-never-shy (the fade has no effect) and
- *      --selftest pod-late-shy (the Pod fades 1.5 s late) are real overlaps a person would see, and must fail it.
+ *      --selftest pod-late-shy (the fade starts 5 s late) are real overlaps a person would see, and must fail it.
  *   19 the chat header's status word wears its mark's tone (nine statuses; three themes).
  *   console: no warnings, errors or page errors.
  *
@@ -1682,11 +1682,9 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
         if (kind === 'pod-never-shy') {
           const st = document.createElement('style'); st.textContent = '#o55np-pod, #o55np-pod[data-shy] { opacity: 1 !important; transition: none !important; }'; document.head.appendChild(st);
         } else {
-          /* data-shy arrives 1.5 s after the page sets it: the Pod stays opaque over the control that long */
-          const hold = new WeakSet();
-          new MutationObserver(list => { for (const m of list) { const pod = m.target;
-            if (pod.hasAttribute('data-shy') && !hold.has(pod)) { hold.add(pod); pod.removeAttribute('data-shy'); setTimeout(() => { pod.setAttribute('data-shy', ''); setTimeout(() => hold.delete(pod), 2000); }, 1500); } } })
-            .observe(document.documentElement, { subtree: true, attributes: true, attributeFilter: ['data-shy'] });
+          /* the page sets data-shy on time, but the fade starts 5 s late: the Pod stays opaque over the control longer
+             than the 3 s settle bound, so the check judges it as it stands and must fail */
+          const st = document.createElement('style'); st.textContent = '#o55np-pod[data-shy] { transition-delay: 5s !important; }'; document.head.appendChild(st);
         }
       }, SELFTEST);
       const ids = await p.evaluate(() => [...document.querySelectorAll('.thread-row')].map(r => r.dataset.id));
