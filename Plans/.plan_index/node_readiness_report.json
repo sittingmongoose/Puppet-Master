@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18877,
+    "depends_on_edge_count": 19061,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22087,
-    "node_count": 7496,
+    "edge_count": 22271,
+    "node_count": 7518,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-06T11:16:45Z",
+  "generated_at_utc": "2026-11-06T13:11:56Z",
   "gui_related_units": {
-    "count": 3815,
+    "count": 3837,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3834,6 +3834,50 @@
         }
       },
       {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-637",
+        "source_location": {
+          "heading": "ACD-637 - Chat Thread Lifecycle, Context Lens, Thread Worktree And Context Detail Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 29066,
+          "line": 29068,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-638",
+        "source_location": {
+          "heading": "ACD-638 - Chat Message, Code-Block, Rewind Revert And Message Details Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 29924,
+          "line": 29926,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-639",
+        "source_location": {
+          "heading": "ACD-639 - Chat Web Family And Stop Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 30319,
+          "line": 30321,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-640",
+        "source_location": {
+          "heading": "ACD-640 - Chat Vision Bridge Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 30685,
+          "line": 30687,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Azure_DevOps_Integration.md",
         "plan_unit_id": "ADO-001",
         "source_location": {
@@ -4347,6 +4391,17 @@
           "heading_level": 3,
           "heading_line": 2994,
           "line": 2996,
+          "path": "Plans/assistant-memory-subsystem.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-memory-subsystem.md",
+        "plan_unit_id": "AMS-141",
+        "source_location": {
+          "heading": "AMS-141 - Assistant Memory Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 3154,
+          "line": 3156,
           "path": "Plans/assistant-memory-subsystem.md"
         }
       },
@@ -7244,6 +7299,28 @@
         }
       },
       {
+        "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+        "plan_unit_id": "CRAU-115",
+        "source_location": {
+          "heading": "CRAU-115 - Docker Registry Kubernetes Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 6980,
+          "line": 6982,
+          "path": "Plans/Containers_Registry_and_Unraid.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+        "plan_unit_id": "CRAU-116",
+        "source_location": {
+          "heading": "CRAU-116 - Docker Hosts Run And Container Open Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 9004,
+          "line": 9006,
+          "path": "Plans/Containers_Registry_and_Unraid.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Commands_System.md",
         "plan_unit_id": "CS-003",
         "source_location": {
@@ -7999,6 +8076,17 @@
           "heading_level": 3,
           "heading_line": 10564,
           "line": 10566,
+          "path": "Plans/Commands_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Commands_System.md",
+        "plan_unit_id": "CS-125",
+        "source_location": {
+          "heading": "CS-125 - Debug Investigation Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 10728,
+          "line": 10730,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -13543,6 +13631,17 @@
           "heading_level": 3,
           "heading_line": 8872,
           "line": 8874,
+          "path": "Plans/Executor_Protocol.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Executor_Protocol.md",
+        "plan_unit_id": "EP-236",
+        "source_location": {
+          "heading": "EP-236 - Runtime Recovery Command Payload Definitions (UCC-089..UCC-095)",
+          "heading_level": 3,
+          "heading_line": 9147,
+          "line": 9149,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -21566,6 +21665,39 @@
         }
       },
       {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-716",
+        "source_location": {
+          "heading": "F3-716 - Search Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 50378,
+          "line": 50380,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-717",
+        "source_location": {
+          "heading": "F3-717 - Notifications And Sounds Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 50790,
+          "line": 50792,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-718",
+        "source_location": {
+          "heading": "F3-718 - Teacher Guided GUI Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 51287,
+          "line": 51289,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Forge_Integrations.md",
         "plan_unit_id": "FGI-001",
         "source_location": {
@@ -23300,6 +23432,17 @@
           "heading_level": 3,
           "heading_line": 8289,
           "line": 8291,
+          "path": "Plans/Goal_Runtime_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Goal_Runtime_System.md",
+        "plan_unit_id": "GRS-218",
+        "source_location": {
+          "heading": "GRS-218 - Goal Mode Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 8361,
+          "line": 8363,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -27891,6 +28034,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Orchestrator_Page.md",
+        "plan_unit_id": "OP-049",
+        "source_location": {
+          "heading": "OP-049 - History Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 2981,
+          "line": 2983,
+          "path": "Plans/Orchestrator_Page.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Cursor_Origin_Integration.md",
         "plan_unit_id": "ORI-001",
         "source_location": {
@@ -29475,6 +29629,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+        "plan_unit_id": "PNC-037",
+        "source_location": {
+          "heading": "PNC-037 - Plan Compile Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 1754,
+          "line": 1756,
+          "path": "Plans/Plan_To_Node_Compilation.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Provider_OpenCode.md",
         "plan_unit_id": "PO-008",
         "source_location": {
@@ -30109,6 +30274,17 @@
           "heading_level": 3,
           "heading_line": 1047,
           "line": 1049,
+          "path": "Plans/PRD_Builder.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/PRD_Builder.md",
+        "plan_unit_id": "PRDB-024",
+        "source_location": {
+          "heading": "PRDB-024 - PRD Builder Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 1108,
+          "line": 1110,
           "path": "Plans/PRD_Builder.md"
         }
       },
@@ -31180,6 +31356,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Planning_Wizard.md",
+        "plan_unit_id": "PWIZ-109",
+        "source_location": {
+          "heading": "PWIZ-109 - Planning Wizard Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 4152,
+          "line": 4154,
+          "path": "Plans/Planning_Wizard.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
         "plan_unit_id": "RAP-002",
         "source_location": {
@@ -31682,6 +31869,17 @@
           "heading_level": 3,
           "heading_line": 3158,
           "line": 3160,
+          "path": "Plans/Runtime_Artifacts_Panel.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+        "plan_unit_id": "RAP-129",
+        "source_location": {
+          "heading": "RAP-129 - Runtime Artifacts Navigation Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 3269,
+          "line": 3271,
           "path": "Plans/Runtime_Artifacts_Panel.md"
         }
       },
@@ -34150,6 +34348,28 @@
         }
       },
       {
+        "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "plan_unit_id": "SMPFS-328",
+        "source_location": {
+          "heading": "SMPFS-328 - Browser command payload definitions",
+          "heading_level": 3,
+          "heading_line": 13365,
+          "line": 13367,
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "plan_unit_id": "SMPFS-329",
+        "source_location": {
+          "heading": "SMPFS-329 - Terminal, dev-session and catalog command payload definitions",
+          "heading_level": 3,
+          "heading_line": 14063,
+          "line": 14065,
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        }
+      },
+      {
         "owner_doc": "Plans/storage-plan.md",
         "plan_unit_id": "SP-001",
         "source_location": {
@@ -36478,6 +36698,17 @@
           "heading_level": 3,
           "heading_line": 2205,
           "line": 2207,
+          "path": "Plans/Settings_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Settings_System.md",
+        "plan_unit_id": "SSYS-076",
+        "source_location": {
+          "heading": "SSYS-076 - Settings Route Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 5656,
+          "line": 5658,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -40970,6 +41201,17 @@
         }
       },
       {
+        "owner_doc": "Plans/WorktreeGitImprovement.md",
+        "plan_unit_id": "W-095",
+        "source_location": {
+          "heading": "W-095 - Project-Scope Worktree Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 5792,
+          "line": 5794,
+          "path": "Plans/WorktreeGitImprovement.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Wiring_Matrix.md",
         "plan_unit_id": "WM-002",
         "source_location": {
@@ -41989,10 +42231,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7496,
+  "plan_unit_count": 7518,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2813,
+      "high": 2835,
       "low": 9,
       "medium": 34,
       "standard": 4640
@@ -42649,7 +42891,7 @@
       "command_or_term_drift": 1,
       "command_override_visibility_drift": 1,
       "command_owner_boundary_drift": 1,
-      "command_payload_shape_drift": 2,
+      "command_payload_shape_drift": 24,
       "command_permission_precedence_drift": 1,
       "command_persona_resolution_drift": 1,
       "command_precondition_drift": 1,
@@ -46143,7 +46385,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7277,
+      "accepted": 7299,
       "retired": 196,
       "superseded": 23
     },
@@ -46162,7 +46404,7 @@
       "capability_matrix": 1,
       "command_binding": 20,
       "command_catalog": 3,
-      "command_contract": 61,
+      "command_contract": 83,
       "command_disposition": 4,
       "command_registration": 1,
       "command_registry": 4,
@@ -46310,31 +46552,31 @@
       {
         "actual": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
         "error": "pnc019_source_hash_stale",
-        "expected": "6e6004f19709d7c9df7c211b786fbfa97cfa3e1dcf11e6befbf69fb621e7a77b",
+        "expected": "30794912c967f901eaa5ef1eebdc75dc71d0f6d9566083446a7566bcba9382a8",
         "source_path": "Plans/Plan_To_Node_Compilation.md"
       },
       {
         "actual": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
         "error": "pnc019_source_hash_stale",
-        "expected": "79283d3bca2817d9938a91ae294e40f949d206dc26b3a19dc7ed8207ab30f276",
+        "expected": "6641b3b4ed69012ae2bc0bc38c82149677fdaf5a00f7f6add2c2b9fcfa4c744b",
         "source_path": "Plans/Planning_Wizard.md"
       },
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "18ef187b558dadb4f429dd076afc8327f6d4522c80f1c9ff103a560d89754636",
+        "expected": "11972653b14d23c33803c0fc7daf3992e0c3c95fc004448ae184f04ee83cff69",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "860f27ab0e44a3817daf74ef55416f5773bf78644e735f19ba2892827990c3d7",
+        "expected": "44d9dc13437e91eea78fbfe4113e847fc82e5bd23f4528c340ba572d0dcd87da",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
         "actual": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7",
         "error": "pnc019_source_hash_stale",
-        "expected": "8e52e94127f5b4f633ce1318ba4657387074733a183c7ef1e6d7809e1f7f09f2",
+        "expected": "f2e90b9692f2ed62fd9987f90202926be34a52835686dc08b76734f8a82016ca",
         "source_path": "Plans/Orchestrator_Page.md"
       },
       {
@@ -46346,7 +46588,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "98447d333cdf4ff30fb4c1d473a5de432863a5fa3efd88c564112e55c376d1fc",
+        "expected": "7acfa2706c7c0b39a02e3d2ddbe34b92e509035c1e31d0dd6bf79d08914b7291",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
@@ -46395,6 +46637,10 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Contracts_V0.md"
       },
       {
@@ -46427,7 +46673,19 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Orchestrator_Page.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/PRD_Builder.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Plan_Document_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Plan_To_Node_Compilation.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46444,6 +46702,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Run_Modes.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Runtime_Artifacts_Panel.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46471,7 +46733,15 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/WorktreeGitImprovement.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/assistant-chat-design.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/assistant-memory-subsystem.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
