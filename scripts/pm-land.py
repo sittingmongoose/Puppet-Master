@@ -2183,7 +2183,8 @@ def plan_lines(cfg: Config, st: Dict[str, Any]) -> List[str]:
     lock = {
         None: f"mkdir {cfg.held}   (first in line in {cfg.queue_dir}; holder.txt with host, pid, heartbeat every minute)",
         "open": f"mkdir {cfg.held}   (as above, and holder.txt gets batch-start: <origin/main full SHA> after the fetch)",
-    }.get(role, f"take over {cfg.held} from the last lander: holder.txt must name this batch-start; rewrite it")
+    }.get(role, f"take over {cfg.held} from batch-idle or a dead holder (from a live hand holder: --handed-over-by): "
+                "holder.txt must name this batch-start; rewrite it")
     lines = ["# Steps, in the rule's order (`--checks-local` differs only where noted):", f"lock:        {lock}"]
     if branch is None:
         lines += [f"fetch:       git -C {shared} fetch origin"]
