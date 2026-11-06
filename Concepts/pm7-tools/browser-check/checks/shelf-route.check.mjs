@@ -49,10 +49,14 @@ export default async function (t) {
     };
     const hit = (e, kind) => (input === '*' || input === kind) && !!e.target.closest?.('#sidePanelSlot') && (tab === '*' || pane(e) === tab);
     const stop = e => { window.__blockedContext++; e.preventDefault(); e.stopImmediatePropagation(); };
-    window.addEventListener('contextmenu', e => { if (hit(e, 'mouse')) stop(e); }, true);
+    // A key can also raise its own contextmenu event (Windows sends one on the Menu key's keyup), so the
+    // contextmenu that follows a key, with no pointer press in between, belongs to that key's route.
+    let key = null;
+    window.addEventListener('pointerdown', () => { key = null; }, true);
+    window.addEventListener('contextmenu', e => { if (hit(e, key || 'mouse')) stop(e); }, true);
     window.addEventListener('keydown', e => {
-      const kind = e.key === 'F10' && e.shiftKey ? 'shift-f10' : e.key === 'ContextMenu' ? 'menu-key' : null;
-      if (kind && hit(e, kind)) stop(e);
+      key = e.key === 'F10' && e.shiftKey ? 'shift-f10' : e.key === 'ContextMenu' ? 'menu-key' : null;
+      if (key && hit(e, key)) stop(e);
     }, true);
   }, String(t.args.blockContext));
   // Sabotage: --set blockPopup=<css selector> stops clicks and Enter/Space/ArrowDown on matching side-panel triggers;
