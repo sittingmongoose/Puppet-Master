@@ -2454,19 +2454,21 @@ def check_random_edits(repo, test_names, count=RANDOM_EDITS):
     raw = (repo / REL).read_bytes()
     before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
     table_raw = (repo / COVERAGE).read_bytes()
+    pristine = json.loads(table_raw)
     frozen = frozen_source(repo)
     crlf = b'\r\n' in raw
     rules, kinds = Counter(), Counter()
     for kind, line, altered in random_line_edits(raw.decode().replace('\r\n', '\n'), count):
         altered_raw = altered.replace('\n', '\r\n').encode() if crlf else altered.encode()
-        table = json.loads(table_raw)
+        table = copy.deepcopy(pristine)
         try:
             validate_coverage(altered_raw, before, table, test_names, frozen=frozen)
         except AssertionError as exc:
             rules[refusal_rule(str(exc))] += 1
         else:
             raise AssertionError('random edit passed coverage with the table unchanged: %s at V:%d' % (kind, line))
-        assert encoded(table) == table_raw, 'coverage check changed the table'
+        # The table the check read is the committed one, unchanged; the file's bytes are checked after the loop.
+        assert table == pristine, 'coverage check changed the table'
         kinds[kind] += 1
     assert sum(kinds.values()) == count and (repo / COVERAGE).read_bytes() == table_raw
     return {'edits': count, 'by_kind': dict(sorted(kinds.items())), 'refused_by': dict(sorted(rules.items()))}
