@@ -88,6 +88,8 @@
     // the command line at the foot of the tube types what the scene is doing
     cmd(text) {
       if (!this.hudEl || text === this.cmdText) return;
+      /* (a new layout: the line as it read, whole, and its ok, without typing or a sound: SW-23) */
+      const kept = !!this.relayout && text === this.cmdWas;
       this.cmdText = text;
       const inp = this.hudEl.querySelector('.pst-term-in'), ok = this.hudEl.querySelector('.pst-term-ok');
       if (!inp) return;
@@ -96,7 +98,7 @@
       const tty = this.tube === 'teletype';
       ok.textContent = '';
       const s = text || '';
-      if (this.reduced) { inp.textContent = s; this.headTo(); return; }
+      if (this.reduced || kept) { inp.textContent = s; if (kept && this.okWas) ok.textContent = this.okWas; this.headTo(); return; }
       inp.textContent = ''; this.headTo();
       if (tty && s) this.sfx('decode', { len: s.length });
       if (!s) return;
@@ -132,8 +134,20 @@
     powerOn() {
       if (this.reduced) return;
       const s = this.screen;
+      this.onAt = performance.now(); if (this.content) this.content.style.animationDelay = '';
       s.classList.remove('pst-on', 'pst-off', 'pst-degauss'); void s.offsetWidth; s.classList.add('pst-on');
       setTimeout(() => this.sfx('powerOn'), 20);
+    },
+    /* a new layout rebuilds the tube, which is already on: the look's entrance is not played again (SW-23: the paper fed
+       in anew on every resize past a layout's edge). One still powering on carries on where it was, without a sound */
+    stayOn() {
+      if (this.reduced || !this.onAt) return;
+      const t = performance.now() - this.onAt;
+      if (t >= 2000) return;
+      const s = this.screen;
+      s.classList.remove('pst-off', 'pst-degauss');
+      if (this.content) this.content.style.animationDelay = `${-Math.round(t)}ms`;
+      s.classList.add('pst-on');
     },
     powerOff() {
       if (!this.tube || this.reduced) return;

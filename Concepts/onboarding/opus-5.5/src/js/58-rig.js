@@ -114,7 +114,8 @@
     }
     /* ------------------------------------------------------- building */
     build() {
-      const root = this.root, w = PW.WORLDS[this.theme] || PW.WORLDS['basic-dark'], Lay = this.L = LAYOUTS[this.layoutName];
+      const root = this.root, w = PW.WORLDS[this.theme] || PW.WORLDS['basic-dark'], L0 = this.L0 = LAYOUTS[this.layoutName], Lay = this.L = Object.create(L0); /* (Pip's own size on it: setPipK) */
+      this.pipK = 1;
       this.dirty = true;
       /* Pip's voice and music follow the look's kit (15-sound-pip.js) */
       const vo = snd(); if (vo && vo.setTheme) vo.setTheme(this.theme);
@@ -206,9 +207,10 @@
         + '<span class="pst-tip-h"></span><span class="pst-tip-t" aria-hidden="true"></span><span class="pst-tip-sr o55-sr"></span>';
       if (w.fam !== 'nier') this.tipBox = div('pst-tip', this.overlay, tipHtml);
       else { const nt = this.hudEl.querySelector('.pst-ntip'); nt.innerHTML = tipHtml; }
+
       this.buildPip();
       // A retained note uses the pose that setLayout() just cleared.
-      if (this.tipData) this.showTip(true);
+      if (this.tipData) { this.showTip(true); if (this.relayout && this.tipEl()) this.tipEl().getAnimations().forEach((a) => a.finish()); }
       // re-create the props that were on stage, in the new material
       const keep = [...this.props.values()];
       this.props.clear();
@@ -216,7 +218,8 @@
       this.ghosts = [];
       this.syncDefs();
       this.measure(); this.remeasureAt = now() + 0.9; /* (and once the window's opening has settled) */
-      if (this.tube) this.powerOn();
+      /* the look's entrance plays on first show and on a look switch, not on a new layout (stayOn, SW-23) */
+      if (this.tube) { if (this.relayout) this.stayOn(); else this.powerOn(); }
     }
     syncDefs() { this.defs.innerHTML = this.backDefs + this.pen.defs(); }
     hudHtml() {
@@ -251,7 +254,9 @@
       if (!this.ps) {
         this.ps = { C: { x: Lay.ctl[0], y: Lay.ctl[1], vx: 0, vy: 0 }, Ct: { x: Lay.ctl[0], y: Lay.ctl[1] }, th: 0, thv: 0, dy: 0, dyv: 0, tilt: 0, tiltv: 0, tiltT: 0, phi: 0, phiv: 0,
           sx: 1, sy: 1, sv: 0, look: [0, 0], lookT: [0, 0], blink: 1, nextBlink: 2, asleep: false };
+        this.pipAt = Lay.ctl; this.pipOff = [0, 0]; /* (its spot, not yet fitted to what a person can see: pipFit) */
       }
+      this.pipBB = null;
       this.gPip.innerHTML = '';
       this.pstrs = [0, 1].map(() => el('path', { class: 'pst-str', fill: 'none', 'stroke-linecap': 'round' }, this.gPip));
       this.pglow = [0, 1].map(() => el('path', { class: 'pst-power', fill: 'none', 'stroke-linecap': 'round' }, this.gPip));
@@ -523,9 +528,18 @@
           const hit = (ax, ay) => obs.find((o) => X0 + ax < o[2] && X1 + ax > o[0] && Y0 + ay < o[3] && Y1 + ay > o[1]);
           const o = hit(0, 0); if (!o) break;
           const inside = (ax, ay) => X0 + ax >= v.x0 + pad - .5 && X1 + ax <= v.x1 - pad + .5 && Y0 + ay >= v.y0 + pad - .5 && Y1 + ay <= v.y1 - pad + .5;
-          const c = [[0, o[3] - Y0], [0, o[1] - Y1], [o[0] - X1, 0], [o[2] - X0, 0], [o[0] - X1, o[3] - Y0], [o[2] - X0, o[3] - Y0], [o[0] - X1, o[1] - Y1], [o[2] - X0, o[1] - Y1]]
-            .filter(([ax, ay]) => inside(ax, ay) && !hit(ax, ay)).sort((p, q) => Math.hypot(p[0], p[1]) - Math.hypot(q[0], q[1]));
-          if (c.length) { dx += c[0][0]; dy += c[0][1]; break; }
+          const best = (list) => list.filter(([ax, ay]) => inside(ax, ay) && !hit(ax, ay)).sort((p, q) => Math.hypot(p[0], p[1]) - Math.hypot(q[0], q[1]))[0];
+          let c = best([[0, o[3] - Y0], [0, o[1] - Y1], [o[0] - X1, 0], [o[2] - X0, 0], [o[0] - X1, o[3] - Y0], [o[2] - X0, o[3] - Y0], [o[0] - X1, o[1] - Y1], [o[2] - X0, o[1] - Y1]]);
+          /* (and where no way off the box it meets is clear, the ways past the others too, each edge of each box across and
+             down: Retro Dark's c-ready at 740, the server under the bubble that claimed its place, Pip's head on its left,
+             the laptop on its right and the tube's foot below; the only ways tried were round the bubble, so it was drawn
+             smaller and smaller under it, still under it (N1, astra-review-retro-3). Past the laptop it hangs whole) */
+          if (!c) {
+            const xs = [0], ys = [0];
+            obs.forEach((q) => { xs.push(q[0] - X1, q[2] - X0); ys.push(q[1] - Y1, q[3] - Y0); });
+            c = best(xs.flatMap((ax) => ys.map((ay) => [ax, ay])));
+          }
+          if (c) { dx += c[0]; dy += c[1]; break; }
           if (g <= .66) break;
           g *= .9; f = f0 * g; lo = L0 * g; hi = H0 * g; tp = T0 * g; bt = B0 * g;
         }
@@ -538,20 +552,163 @@
            (the name's sign and the service's mark at a short window); it moves the least way that clears them all,
            inside the pane, and is drawn a little smaller only when no way does */
         const obs = []; if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
+        /* (and off Pip's head where it hangs at rest: Retro's crop pushed a sign in from its cut side over Pip, FO-50) */
+        const pk = this.pipKeep; if (pk && pr.op > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
         this.props.forEach((q) => { if (q !== pr && q.box && q.placedN === this.renderN && q.op > .05 && q.state !== 'out') obs.push([q.box[0] - 4, q.box[1] - 4, q.box[2] + 4, q.box[3] + 4]); });
         const g = clear(obs);
         pr.restOff = { dx: dx - dxEdge, dy, g };
-      } else if (pr.state === 'out' && pr.restOff) {
+      } else if (pr.state === 'out') {
         /* a prop that leaves keeps the way it was moved off the box and its neighbours at rest: dropping it at once made the
            prop jump up to 8 px in the frame it began to leave, into NieR's box at 740 (FO-34 kind) */
-        const o = pr.restOff; f *= o.g; lo *= o.g; hi *= o.g; tp *= o.g; bt *= o.g; dx += o.dx; dy = o.dy;
+        const o = pr.restOff || { dx: 0, dy: 0, g: 1 }; f *= o.g; lo *= o.g; hi *= o.g; tp *= o.g; bt *= o.g; dx += o.dx; dy = o.dy;
         /* ...and makes way, as a prop at rest does, for a speech box that cannot move: a bubble that found nowhere clear
            and claimed a place over it (Retro's 740 banner on Name > Safe: between Pip's face and the leaving sign there
            was no room, so the bubble claimed the sign's place and the sign faded out under it for 8-13 frames), or NieR's
            box. The move is kept for the rest of its way out, which holdUnder then keeps below the box */
-        if (this.keepOff && pr.op > .05) { const g = clear([this.keepOff]); pr.restOff = { dx: dx - dxEdge, dy, g: o.g * g }; }
+        const obs = [];
+        if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
+        const pk = this.pipKeep;
+        if (pk && pr.op > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
+        // Keep each correction through the exit; releasing it on the next frame snaps the sign back into Pip.
+        if (obs.length) { const g = clear(obs); pr.restOff = { dx: dx - dxEdge, dy, g: o.g * g }; }
       }
       return { dx, dy, f, box: [hx + lo + dx, hy + tp + dy, hx + hi + dx, hy + bt + dy] };
+    }
+    /* how far Pip's spot (the hand's, at) must move for the hand and Pip, hanging at rest, to sit whole inside the pane's
+       visible span with the props' margin. Retro's tube slices the scene to fill the pane: a short window's crop left
+       Pip's spot (84 units) off the tube altogether (FO-37), and the narrow strip's cut the hand at the top. Pip's box is
+       its own drawing's (the hand's and the head's), placed as render() places them; the margin narrows where the span
+       is barely tall enough, and where it is not, the hand stays whole */
+    pipFit(at) {
+      const v = this.vis, Lay = this.L, L0 = this.L0 || Lay;
+      if (!v || !this.gCtl || !this.gHead) return [0, 0];
+      if (!this.pipBB) { const c = this.boxOf(this.gCtl), h = this.boxOf(this.gHead); if (!c || !c[2] || !h || !h[2]) return [0, 0]; this.pipBB = { c, h }; }
+      const { c, h } = this.pipBB;
+      const lo = Math.min(c[0], h[0]) - 32, hi = Math.max(c[0] + c[2], h[0] + h[2]) - 32;
+      const into = (a0, a1, v0, v1) => {
+        const pad = clamp((v1 - v0 - (a1 - a0)) / 2, 0, 8); let d = 0;
+        if (a1 > v1 - pad) d = v1 - pad - a1;
+        if (a0 + d < v0 + pad) d = v0 + pad - a0;
+        return d;
+      };
+      /* Pip hangs below the stage's own words over its column (Retro's title line, NieR's unit line: the bar crossed
+         Retro Light's SETUP LOG at 740, FO-55). The lead's ruling: Pip is drawn smaller only where those words cut its
+         span, and never under 80% of its size. Under the words it takes the largest size that keeps its 8-unit margins
+         (.82 in Retro Light at 740), at least .8, narrowing the margins only if .8 needs it; at its size elsewhere. If
+         not even .8 fits under the words, it hangs in the nearest column clear of them inside the crop, at its size;
+         only with no such column is it drawn at .8 under them. One size for the span, at once, never animated */
+      const s0 = L0.s, tall0 = L0.rope + (h[1] + h[3] - 31.5 - (c[1] - 14.5)) * s0;
+      const col = (x) => { const d = into(x + lo * s0, x + hi * s0, v.x0, v.x1); return [x + d + lo * s0 - 4, x + d + hi * s0 + 4]; };
+      const over = (x) => { const [X0, X1] = col(x); return (this.hdr || []).filter((w) => w.x1 > X0 && w.x0 < X1 && w.y1 > v.y0); };
+      let ax = at[0], y0 = v.y0, k = 1;
+      const ws = over(ax);
+      if (ws.length) {
+        const yw = Math.max(...ws.map((w) => w.y1));
+        if (v.y1 - yw >= .8 * tall0) { y0 = yw; k = clamp((v.y1 - yw - 16) / tall0, .8, 1); }
+        else {
+          const [X0, X1] = col(ax), right = Math.max(...ws.map((w) => w.x1)) + 4 - X0, left = Math.min(...ws.map((w) => w.x0)) - 4 - X1;
+          const clear = [right, left].filter((d) => X0 + d >= v.x0 && X1 + d <= v.x1 && !over(ax + d).length).sort((p, q) => Math.abs(p) - Math.abs(q));
+          if (clear.length) ax += clear[0];
+          else { y0 = yw; k = .8; }
+        }
+      }
+      if (Math.abs(k - (this.pipK || 1)) > .002) this.setPipK(k);
+      const s = Lay.s, dy = into(at[1] + (c[1] - 14.5) * s, at[1] + Lay.rope + (h[1] + h[3] - 31.5) * s, y0, v.y1);
+      /* (and the bar rocks, while Pip works, only as far as the room above it: its ends rose 2.6 px past Retro Dark's tube
+         at 740 on Creating, the span there barely holding Pip at rest) */
+      const room = at[1] + dy + (c[1] - 14.5) * s - y0, halfW = Math.max(Math.abs(c[0] - 32), Math.abs(c[0] + c[2] - 32)) * s;
+      this.rockMax = Math.min(.12, Math.asin(clamp(room / (halfW || 1), 0, 1)));
+      return [ax - at[0] + into(ax + lo * s, ax + hi * s, v.x0, v.x1), dy];
+    }
+    /* Pip drawn at k of its layout's size: its drawing and the rope it hangs on, and the strings' rest lengths */
+    setPipK(k) {
+      const L0 = this.L0, Lay = this.L;
+      this.pipK = k;
+      if (k === 1) { delete Lay.s; delete Lay.rope; } else { Lay.s = L0.s * k; Lay.rope = L0.rope * k; }
+      if (this.barPts && this.headPts) {
+        const rest = this.solveStrings({ C: { x: Lay.ctl[0], y: Lay.ctl[1] }, phi: 0, H: this.headAt(Lay.ctl[0], Lay.ctl[1], 0, 0), ang: 0, sx: 1, sy: 1 });
+        this.restLen = rest.map((r) => Math.hypot(r.E[0] - r.T[0], r.E[1] - r.T[1]));
+      }
+      this.dirty = true;
+    }
+    /* how far Pip's drawn head reaches around the point it hangs from, turned by ang (asleep it tilts), in stage units:
+       [left, top, right, bottom]; null until it has been measured */
+    pipReach(ang) {
+      if (!this.pipBB || !this.vis) return null;
+      const h = this.pipBB.h, s = this.L.s, c = Math.cos(ang || 0), n = Math.sin(ang || 0);
+      const p = [[h[0], h[1]], [h[0] + h[2], h[1]], [h[0], h[1] + h[3]], [h[0] + h[2], h[1] + h[3]]].map(([x, y]) => { const u = (x - 32) * s, v = (y - 31.5) * s; return [u * c - v * n, u * n + v * c]; });
+      return [Math.min(...p.map((q) => q[0])), Math.min(...p.map((q) => q[1])), Math.max(...p.map((q) => q[0])), Math.max(...p.map((q) => q[1]))];
+    }
+    /* how far a damped swing under way (angle x, speed v; x'' = -w2 x - d x', as step() swings Pip and the props) carries
+       before it turns: its next peak, or where it is if that is further, in rad */
+    swingAmp(x, v, w, d) {
+      const sg = d / 2, wd = Math.sqrt(Math.max(1e-6, w * w - sg * sg)), B = (v + sg * x) / wd, R = Math.hypot(x, B);
+      if (R < 1e-5) return 0;
+      const phi = Math.atan2(x, B), q = Math.atan(wd / sg) - phi, t1 = (q - Math.PI * Math.floor(q / Math.PI)) / wd;
+      return Math.max(Math.abs(x), R * Math.exp(-sg * t1) * Math.abs(Math.sin(wd * t1 + phi)));
+    }
+    /* how hard an idle swing may push Pip (dir: which way): the largest kick to the swing's speed whose swing, with the one
+       already under way, keeps the head's box off every prop still painted, by more than fit()'s margin: where it
+       is drawn, where it will hang at rest (a prop still being lowered in counts at its place) and as far as its own
+       swing carries it. Measured where a prop was drawn at the kick, Glass Light's forge on Online details at 860 was not
+       counted while it was lowered in after the screen changed, or was counted swung away, and swung back under the head
+       as Pip swung to it (48 px2, retro-c3's awake guard) */
+    swingRoom(dir) {
+      const ps = this.ps, F = this.fam, near = [];
+      if (!ps || !this.pipKeep) return .5;
+      this.props.forEach((p) => {
+        if (!p.box || (p.state === 'out' && !(+p.el.getAttribute('opacity') > .05))) return;
+        const b = p.box, tg = this.propTarget(p), len = Math.max(0, p.len), L = Math.max(0, tg.len);
+        const dx = tg.ax - (p.ax + Math.sin(p.a) * len), dy = tg.len - Math.cos(p.a) * len;
+        const sw = Math.sin(this.swingAmp(p.a, p.av, F.pw * Math.sqrt(170 / Math.max(30, L)), F.pdamp)) * L, m = 5;
+        near.push([Math.min(b[0], b[0] + dx - sw) - m, Math.min(b[1], b[1] + dy) - m, Math.max(b[2], b[2] + dx + sw) + m, Math.max(b[3], b[3] + dy) + m]);
+      });
+      const clear = (k) => { const h = this.pipHead(this.swingAmp(ps.th, ps.thv + dir * k, F.w, F.damp)); return !h || !near.some((o) => h[0] < o[2] && h[2] > o[0] && h[1] < o[3] && h[3] > o[1]); };
+      if (clear(.5)) return .5;
+      if (!clear(0)) return 0;
+      let lo = 0, hi = .5;
+      for (let i = 0; i < 10; i++) { const k = (lo + hi) / 2; if (clear(k)) lo = k; else hi = k; }
+      return lo;
+    }
+    /* Pip's head where it hangs at rest from the hand's spot, on the floor it rests on: the box the props keep off (fit);
+       swing: the swing's reach, rad (by default the one under way); now: the head as render() draws it this frame */
+    pipHead(swing, now) {
+      const ps = this.ps, Lay = this.L, s = Lay.s;
+      if (!ps || !this.pipReach(ps.tiltT)) return null;
+      const box = (cx, cy, ang, th) => {
+        const r = this.pipReach(ang);
+        let y = cy + Math.cos(th || 0) * Lay.rope; const x = cx + Math.sin(th || 0) * Lay.rope;
+        if (y + 28 * s > Lay.ground - 2) y = Lay.ground - 2 - 28 * s;
+        if (y + r[3] > this.vis.y1) y = this.vis.y1 - r[3];
+        return [x + r[0], y + r[1], x + r[2], y + r[3]];
+      };
+      const join = (a, c) => [Math.min(a[0], c[0]), Math.min(a[1], c[1]), Math.max(a[2], c[2]), Math.max(a[3], c[3])];
+      let b = box(ps.Ct.x, ps.Ct.y, ps.tiltT);
+      /* (and, while the hand travels to a new spot, as Pip wakes and rises from the floor, the head where it hangs now:
+         the box takes its whole way, so a sign beside where it rises to is not under it as it comes. Retro Dark Name 860
+         showed 40 px2 painted as Pip woke, sol-review-retro-1's awake guard. Not within the idle drift, so resting props
+         do not shift as Pip sways) */
+      if (Math.hypot(ps.C.x - ps.Ct.x, ps.C.y - ps.Ct.y) > 8) b = join(b, box(ps.C.x, ps.C.y, ps.tilt + ps.th * .9, ps.th));
+      /* (and the room its idle drift takes, awake: a sign beside the resting head was under it as it swayed, Retro Dark 860) */
+      const F = this.fam, still = this.reduced || !!O55.motion.lowResource || !H.part('sway-and-physics');
+      /* (and the room the swing under way takes, to its next peak either side, the head turned with it as render() turns
+         it: a prop lowered in, or swinging back, beside a swinging Pip keeps off its head, as off the resting one) */
+      const A = still ? 0 : swing != null ? swing : this.swingAmp(ps.th, ps.thv, F.w, F.damp);
+      if (A > .002) [-1, -.5, .5, 1].forEach((q) => { b = join(b, box(ps.Ct.x, ps.Ct.y, ps.tiltT + A * q * .9, A * q)); });
+      const sw = still ? 0 : F.sway * (ps.asleep ? .2 : 1), bob = still || !F.bob ? 0 : F.bob * .6;
+      b = [b[0] - sw, b[1] - bob, b[2] + sw, b[3] + bob];
+      /* (and the head where it is drawn now, turned, stretched and lifted as render() draws it: with no room to swing Pip
+         wiggled, and the turn took its head 4 units past that box into the forge held at its edge as the forge swung in,
+         Glass Light 860, retro-c4) */
+      if (now) {
+        const h = this.pipBB.h, c = Math.cos(now.ang), n = Math.sin(now.ang);
+        const p = [[h[0], h[1]], [h[0] + h[2], h[1]], [h[0], h[1] + h[3]], [h[0] + h[2], h[1] + h[3]]].map(([x, y]) => {
+          const u = (x - 32) * now.sx * s, v = ((y - 59.5) * now.sy + 28) * s;
+          return [now.H[0] + u * c - v * n, now.H[1] + u * n + v * c];
+        });
+        b = join(b, [Math.min(...p.map((q) => q[0])), Math.min(...p.map((q) => q[1])), Math.max(...p.map((q) => q[0])), Math.max(...p.map((q) => q[1]))]);
+      }
+      return b;
     }
     /* Creating's and Protect's stack of blocks stands on the lowest floor a person can see, and is drawn closer and
        smaller when it would rise past the pane's top or into a speech box that cannot move (Retro's tube crops the floor
@@ -636,7 +793,10 @@
       const at = pip.at ? (Array.isArray(pip.at) ? pip.at : { left: [Lay.ctl[0] - 30 * (Lay.s / 2.3), Lay.ctl[1]], home: Lay.ctl }[pip.at] || Lay.ctl) : Lay.ctl;
       // asleep: the hand lowers until Pip rests on the floor (kept while the wake is pending)
       const asleep = pip.pose === 'asleep' || !!this.sleepZ;
-      this.ps.Ct.x = at[0]; this.ps.Ct.y = at[1] + (asleep ? Lay.rope * .72 : 0);
+      /* (its spot fitted to what a person can see, as the props are: pipFit) */
+      this.work = !!pip.work; /* (before the fit: how far the bar may rock) */
+      const fo = this.pipOff = this.pipFit(at); this.pipAt = at;
+      this.ps.Ct.x = at[0] + fo[0]; this.ps.Ct.y = at[1] + fo[1] + (asleep ? Lay.rope * .72 : 0);
       this.ps.asleep = asleep;
       this.ps.tiltT = pip.tilt != null ? pip.tilt : this.ps.asleep ? -.2 : 0;
       this.work = !!pip.work; this.power = pip.power || 0;
@@ -649,7 +809,12 @@
          55-scenes.js) is not the screen's speech now, because the operation moved on or its inputs changed. Such a line
          gives way at once, whichever path said it (the screen's line, a fault, a cheer); FO-41 */
       const fresh = spec.sayNow || !this.ownerLive(this.sayOwner) || (spec.screen != null && spec.screen !== this.lastScreen); this.lastScreen = spec.screen;
-      if (spec.say !== undefined && !this.sleepZ) this.say(spec.say, null, fresh, spec.sayOwner);
+      if (spec.say !== undefined && !this.sleepZ) {
+        // A layout rebuild retains the line without replaying it, adopting its current live owner.
+        if (this.relayout && spec.say && spec.say === this.saying && this.ownerLive(spec.sayOwner)) {
+          this.sayOwner = spec.sayOwner || null; this.sayKept(spec.say);
+        } else this.say(spec.say, null, fresh, spec.sayOwner);
+      }
       this.hudTarget(spec.target, spec.label);
       if (this.tube) this.cmd(spec.cmd || null);
       if (this.famName === 'nier' && this.hudEl && spec.label) this.decode(spec.label);
@@ -720,6 +885,17 @@
       off.textContent = text; b.classList.add('typing');
       this.typeT = H.typer(text.length, cps, (i) => { on.textContent = text.slice(0, i); off.textContent = text.slice(i); },
         { paused: () => !this.live(), done: () => b.classList.remove('typing') });
+    }
+    /* a new layout: the line Pip has said stays on the new bubble, whole and at once: not typed or voiced again, its box
+       not popping in again (SW-23). Its time on screen runs on from when it was said */
+    sayKept(text) {
+      const b = this.bubble;
+      clearTimeout(this.sayT); this.sayNext = null;
+      if (this.typeT) this.typeT.cancel();
+      b.classList.remove('typing'); b.classList.add('on');
+      b.getAnimations().forEach((a) => a.finish());
+      this.btext.innerHTML = '<span class="pst-bt-on"></span><span class="pst-bt-off"></span>';
+      this.btext.firstChild.textContent = text;
     }
     // the line in Pip's voice (O55.sound.pip through O55.pipVoice): { ms, cps } for the typing
     voice(text, mood) {
@@ -829,7 +1005,26 @@
       }
       /* (and the viewport: a short window can scroll the stage partly out of view) */
       vl = Math.max(vl, -r0.left / sx); vr = Math.min(vr, (window.innerWidth - r0.left) / sx); vt = Math.max(vt, -r0.top / sx); vb = Math.min(vb, (window.innerHeight - r0.top) / sx);
+      /* (and what the stage paints over the scene at its foot: Retro Light's printer, its platen, bail and head across the
+         paper, and a tube's command line. A sign at the pane's foot kept its lower line behind the roller, A3-6. Read
+         from the layout, not the painted box: the paper feeding in and the tube's degauss move them for a moment) */
+      const atop = (n) => { let y = 0; for (let e = n; e && e !== this.screen; e = e.offsetParent) y += e.offsetTop; return y; };
+      this.screen.querySelectorAll(':scope > .pst-printer, :scope > .pst-printer > *, .pst-term-cmd').forEach((n) => { if (n.offsetHeight) vb = Math.min(vb, atop(n)); });
+      /* (and the stage's own words at its top, Retro's title line and NieR's unit line, each where it is written: Pip
+         hangs below the ones over its column, pipFit, FO-55) */
+      const aleft = (n) => { let x = 0; for (let e = n; e && e !== this.screen; e = e.offsetParent) x += e.offsetLeft; return x; };
+      this.hdr = [];
+      if (this.hudEl && k > 0) this.hudEl.querySelectorAll('.pst-term-top > span, .pst-ntop > span').forEach((n) => {
+        if (!n.offsetWidth || !n.textContent.trim()) return;
+        const x = aleft(n);
+        this.hdr.push({ x0: (x - this.map.ox) / k, x1: (x + n.offsetWidth - this.map.ox) / k, y1: (atop(n) + n.offsetHeight - this.map.oy) / k });
+      });
       this.vis = k > 0 && vr > vl && vb > vt ? { x0: (vl - this.map.ox) / k, x1: (vr - this.map.ox) / k, y0: (vt - this.map.oy) / k, y1: (vb - this.map.oy) / k } : null;
+      /* Pip's spot follows the new span at once, the hand and Pip together, so a resize does not swing it (pipFit) */
+      if (this.ps && this.pipAt) {
+        const o = this.pipOff || [0, 0], f = this.pipOff = this.pipFit(this.pipAt), ps = this.ps, dx = f[0] - o[0], dy = f[1] - o[1];
+        if (dx || dy) { ps.Ct.x += dx; ps.Ct.y += dy; ps.C.x += dx; ps.C.y += dy; }
+      }
       this.nierBox = null;
       this.dirty = true; this.frameT = -1e9; if (this.svg && this.kick) this.kick(); /* (a resize redraws the props in their new room, at once: past Retro's stepped gate too) */
       this.headTo();
@@ -887,7 +1082,13 @@
         const ps = this.ps, f = this.famName, acts = ['wiggle'].concat(f !== 'nier' ? ['swing'] : [], pointer.t > 0 ? [] : ['up', 'side']);
         const pick = acts[Math.floor(Math.random() * acts.length)];
         if (pick === 'up') { this.idleLook = [0, -2.4]; this.idleUntil = this.t + 1.3; this.ps.tiltv -= .8; }
-        else if (pick === 'swing') { ps.thv += (Math.random() > .5 ? 1 : -1) * .5; this.sfx('swing', { x: ps.C.x, intensity: .35 }); }
+        else if (pick === 'swing') {
+          /* (as far as the room beside the head allows: a swing carried Glass's head .15 rad into the forge beside it on
+             Online details at 860, 24 px2 painted, the awake guard of sol-review-retro-1; with no room, a wiggle) */
+          const dir = Math.random() > .5 ? 1 : -1, kick = Math.min(.5, this.swingRoom(dir));
+          if (kick > .08) { ps.thv += dir * kick; this.sfx('swing', { x: ps.C.x, intensity: .35 * kick / .5 }); }
+          else ps.tiltv += dir * 3;
+        }
         else if (pick === 'wiggle') ps.tiltv += (Math.random() > .5 ? 1 : -1) * 3;
         else { this.idleLook = [Math.random() > .5 ? 2.2 : -2.2, .3]; this.idleUntil = this.t + 1.1; }
       }
@@ -922,7 +1123,7 @@
       if (red) { ps.tilt = ps.tiltT; ps.phi = 0; }
       else {
         const tA = 90 * (ps.tiltT - ps.tilt) - 10 * ps.tiltv; ps.tiltv += tA * dt; ps.tilt += ps.tiltv * dt;
-        const phiT = this.work ? Math.sin(this.t * 4.2) * .12 : ps.asleep ? .08 : 0;
+        const phiT = this.work ? Math.sin(this.t * 4.2) * (this.rockMax == null ? .12 : this.rockMax) : ps.asleep ? .08 : 0;
         ps.phi += (phiT - ps.phi) * Math.min(1, dt * 6);
       }
       // eyes follow what Pip is looking at
@@ -977,6 +1178,9 @@
       // asleep: the head rests on the floor and the strings go slack
       const headH = 28 * Lay.s;
       if (H[1] + headH > Lay.ground - 2) { H = [H[0], Lay.ground - 2 - headH]; }
+      /* (and on the lowest floor a person can see: a narrow window's Retro tube crops the stage's floor away, FO-51) */
+      const reach = this.pipReach(ang);
+      if (reach && H[1] + reach[3] > this.vis.y1) H = [H[0], this.vis.y1 - reach[3]];
       this.H = H; this.ang = ang;
       // breathing: Pip's head swells a touch, slower when it sleeps
       const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
@@ -1020,6 +1224,7 @@
          that lands before it talks is already below it) */
       if (f === 'nier') { const nb = this.boxInScene(this.bubble, 6); if (nb) this.nierBox = nb; }
       this.keepOff = f === 'nier' ? this.nierBox || null : this.bubbleKeepOff || null;
+      this.pipKeep = this.pipHead(null, { H, ang, sx, sy });
       this.renderN = (this.renderN || 0) + 1;
       this.props.forEach((pr) => this.placeProp(pr));
       // particles
@@ -1152,7 +1357,7 @@
     setTheme(theme) {
       if (theme === this.theme) return;
       this.theme = theme;
-      this.booted = false;
+      this.booted = false; this.decoded = null;
       this.root.classList.add('pst-swap');
       this.build();
       this.direct(this.spec);
@@ -1166,7 +1371,14 @@
     setLayout(name) {
       if (name === this.layoutName) return;
       this.layoutName = name; this.ps = null;
-      this.build(); this.direct(this.spec); this.render(); /* (drawn in its pose before it can be painted, as setTheme) */
+      /* a new layout rebuilds the stage in its new shape; what it already shows stays as it was, finished: the tube on,
+         Pip's line whole, the command line and NieR's label as they read. No entrance plays again (SW-23) */
+      const okEl = this.hudEl && this.hudEl.querySelector('.pst-term-ok');
+      this.cmdWas = this.cmdText; this.okWas = okEl ? okEl.textContent : '';
+      this.relayout = true;
+      try { this.build(); this.direct(this.spec); } finally { this.relayout = false; }
+      this.render(); /* (drawn in its pose before it can be painted, as setTheme: group 1, FO-40; without it the new head
+         painted unposed at the stage's corner for a frame or two once no entrance covered the rebuild, SW-23) */
     }
     setReduced(r) { if (this.reduced === !!r) return; this.reduced = !!r; this.root.dataset.reduced = r ? '1' : '0'; this.dirty = true; this.kick(); }
     // something on the screen is being pointed at: Pip turns to it rather than to the pointer
