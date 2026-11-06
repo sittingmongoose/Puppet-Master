@@ -270,7 +270,7 @@ html .o55-demo[data-o55-narrow] .o55-demopill { width: 20px; height: 44px; paddi
 .o55-lookswatch i:nth-child(2) { background: var(--accent-magenta); }
 .o55-lookswatch i:nth-child(3) { background: var(--surface); border: 1px solid var(--border); }
 .o55-lookswatch[data-theme^="retro"] i { border-radius: 0; }
-.o55-lookmodes { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 3px; border-radius: 10px; background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
+.o55-lookmodes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 3px; border-radius: 10px; background: color-mix(in srgb, var(--text-primary) 6%, transparent); }
 .o55-lookmodes button { height: 28px; border: 0; border-radius: 8px; background: transparent; color: var(--text-secondary); font: 600 12.5px/1 var(--body-font); cursor: pointer; }
 .o55-lookmodes button.o55-on { background: var(--surface); color: var(--text-primary); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); }
 #pm-o55-onboarding[data-family="retro"] .o55-lookmenu, .o55t-root[data-family="retro"] .o55-lookmenu { border-radius: 0; border: 2px solid var(--text-primary); animation-timing-function: steps(3, end); }

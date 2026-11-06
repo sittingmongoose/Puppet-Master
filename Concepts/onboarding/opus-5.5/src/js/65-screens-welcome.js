@@ -83,7 +83,7 @@
       /* Light / Dark (and, while NieR is the look, Adjust NieR at the line's end) above the five tiles, which fit the
          first view at every window size (10-window.css, the look screen's tile sizes) */
       const adjust = adjustNier(th);
-      return `<div class="o55-lookgrid" data-key="lookgrid"><div class="o55-lookmode" data-key="mode">${C.segmented({ do: 'pickMode', value: th.mode, label: T('look.modeLabel'), options: [{ v: 'light', label: T('look.light'), glyph: 'spark' }, { v: 'dark', label: T('look.dark'), glyph: 'history' }] })}${adjust ? `<span class="o55-lookmode-adjust">${adjust}</span>` : ''}</div>`
+      return `<div class="o55-lookgrid" data-key="lookgrid"><div class="o55-lookmode" data-key="mode">${C.segmented({ do: 'pickMode', value: th.selectedMode, label: T('look.modeLabel'), options: [{ v: 'light', label: T('look.light'), glyph: 'spark' }, { v: 'dark', label: T('look.dark'), glyph: 'history' }, { v: 'auto', label: T('look.auto'), glyph: 'auto' }] })}${adjust ? `<span class="o55-lookmode-adjust">${adjust}</span>` : ''}</div>`
         + `<div class="o55-tiles" role="radiogroup" aria-label="${U.esc(T('look.title'))}" data-key="tiles">${tiles}</div>`
         + FAMS.map((f) => O55.tips.explainer('pickFamily:' + f)).join('') + (th.chosen === 'nier' ? O55.tips.explainer('adjustNier') : '') + '</div>';
     },
@@ -128,12 +128,12 @@
         /* in the picked look's own voice (NieR's kit for NieR) */
         O55.sound.play('select', { family: f });
         O55.ui.charm(el, T('look.families.' + f + '.name'), 'spark');
-        O55.ui.applyLook(f, O55.theme().mode, el);
+        O55.ui.applyLook(f, O55.theme().selectedMode, el);
       },
       pickMode(S, m, el) { ack(el, 'button'); O55.ui.applyLook(O55.theme().chosen, m, el); },
       next(S) { O55.ui.go('where'); },
       /* (an older key: NieR is a look now) */
-      pickNier(S, arg, el) { O55.ui.applyLook('nier', O55.theme().mode, el); },
+      pickNier(S, arg, el) { O55.ui.applyLook('nier', O55.theme().selectedMode, el); },
       adjustNier(S, arg, el) { O55.nierLook.adjust(el); }
     }
   });

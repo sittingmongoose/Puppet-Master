@@ -1,6 +1,6 @@
 /* O55.lookMenu — the look can be changed at any point: a palette button beside the sound button (the onboarding window's
    header and the Guided Tour's bar) opens a small menu of the five looks (Basic, Friendly, Glass, Retro and NieR: NieR is
-   the fifth theme since the PM7 build's QA round 2, Q22), Light / Dark, and, while NieR is chosen, Adjust NieR. In
+   the fifth theme since the PM7 build's QA round 2, Q22), Light / Dark / Auto, and, while NieR is chosen, Adjust NieR. In
    onboarding the choice is the same as on "Pick a look" (a preview until the look is saved with the new Project); in
    the tour, after setup, it is saved at once through Settings. Each option shows its own look's colours (its swatch
    carries data-theme; NieR's its preview scope). One column, every ? on its own row's line (Q5: two columns pushed the
@@ -27,15 +27,15 @@
         : `<span class="o55-lookswatch" data-theme="${f}-${th.mode}" aria-hidden="true"><i></i><i></i><i></i></span>`);
       const opt = (f) => `<button type="button" class="o55-lookopt${f === th.chosen ? ' o55-on' : ''}" ${attr}="lookFamily" data-arg="${f}" role="menuitemradio" aria-checked="${f === th.chosen}"${by('lookFamily:' + f)} data-pm-hover-exempt="true">`
         + `${swatch(f)}<span class="o55-lookname">${U.esc(T('look.families.' + f + '.name'))}</span></button>`;
-      const mode = (m) => `<button type="button" class="${m === th.mode ? 'o55-on' : ''}" ${attr}="lookMode" data-arg="${m}" role="menuitemradio" aria-checked="${m === th.mode}"${by('lookMode:' + m)} data-pm-hover-exempt="true">${U.esc(T('look.' + m))}</button>`;
+      const mode = (m) => `<button type="button" class="${m === th.selectedMode ? 'o55-on' : ''}" ${attr}="lookMode" data-arg="${m}" role="menuitemradio" aria-checked="${m === th.selectedMode}"${by('lookMode:' + m)} data-pm-hover-exempt="true">${U.esc(T('look.' + m))}</button>`;
       /* in onboarding each choice has its ? (O55.tips: pip.tips.chrome), its note under the menu; the tour's bar has none */
       const tips = attr === 'data-o55-do' && !!O55.tips;
       const tq = tips ? (id) => O55.tips.q(id, { cls: 'o55-tipq-menu' }) : () => '';
       const nier = th.chosen === 'nier' && !!O55.nierLook;
-      const ids = FAMILIES.map((f) => 'lookFamily:' + f).concat(['lookMode:light', 'lookMode:dark']).concat(nier ? ['lookNierAdjust:nier-adjust'] : []);
+      const ids = FAMILIES.map((f) => 'lookFamily:' + f).concat(['lookMode:light', 'lookMode:dark', 'lookMode:auto']).concat(nier ? ['lookNierAdjust:nier-adjust'] : []);
       const notes = tips ? ids.map((id) => O55.tips.explainer(id)).join('') : '';
       return `<div class="o55-lookmenu" role="menu" aria-label="${U.esc(T('chrome.look'))}"><div class="o55-lookopts">${FAMILIES.map((f) => `<span class="o55-opt o55-opt-menu${f === th.chosen ? ' o55-opt-on' : ''}">${opt(f)}${tq('lookFamily:' + f)}</span>`).join('')}</div>`
-        + `<div class="o55-opt o55-opt-menu o55-lookmoderow"><div class="o55-lookmodes" role="group" aria-label="${U.esc(T('look.modeLabel'))}">${mode('light')}${mode('dark')}</div>${tq('lookMode:' + th.mode)}</div>`
+        + `<div class="o55-opt o55-opt-menu o55-lookmoderow"><div class="o55-lookmodes" role="group" aria-label="${U.esc(T('look.modeLabel'))}">${mode('light')}${mode('dark')}${mode('auto')}</div>${tq('lookMode:' + th.selectedMode)}</div>`
         + (nier ? this.adjustRow(attr, tq) : '') + notes + '</div>';
     },
     /* Adjust NieR: NieR's own options (its parts and background), a row of the menu while NieR is the look */
@@ -47,7 +47,7 @@
     /* the host's lookNierAdjust (and an old lookNier, now a pick of the NieR look): O55.nierLook */
     nier(action, el) {
       const L = O55.nierLook; if (!L) return false;
-      if (action === 'lookNier') return L.pick ? L.pick('nier', O55.theme().mode, el) : L.toggle('lookMenu', el);
+      if (action === 'lookNier') return L.pick ? L.pick('nier', O55.theme().selectedMode, el) : L.toggle('lookMenu', el);
       if (action === 'lookNierAdjust') return !!L.adjust(el);
       return false;
     },

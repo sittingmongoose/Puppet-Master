@@ -61,7 +61,8 @@
     if (!id) return null;
     const scr = screen || (O55.S && O55.S.sess && O55.S.sess.screen) || '';
     const maps = [tipMap(scr), tipMap('common'), tipMap('chrome')].filter(Boolean);
-    const p = String(id).split(':'), tries = [String(id)];
+    // Auto on the look screen uses the header's shared system-following copy in both wordings.
+    const p = String(id).split(':'), tries = [id === 'pickMode:auto' ? 'lookMode:auto' : String(id)];
     if (p[0] === 'field' && p.length > 2) tries.push('field:' + p[1]);
     if (p.length > 1 && p[0] !== 'field' && p[0] !== 'group') tries.push(p[0], 'group:' + p[0]);
     /* two versions (21-talk.js): `text` in Plain English, `expert` (and `expertTitle`) with the real names */

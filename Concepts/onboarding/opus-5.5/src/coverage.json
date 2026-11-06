@@ -1,9 +1,11 @@
 {
- "generated_from": "Plans/product_onboarding_contracts.schema.json at d6b9619fe3 (t3/plans/pm7-plans-canon, DL-273)",
+ "generated_from": "Plans/product_onboarding_contracts.schema.json",
  "setup_plan_fields": 63,
- "conditionals": 32,
+ "conditionals": 33,
  "unmapped_fields": [],
- "unmapped_conditionals": [],
+ "unmapped_conditionals": [
+  32
+ ],
  "fields": [
   {
    "field": "schema_id",
@@ -32,8 +34,8 @@
   },
   {
    "field": "theme_mode",
-   "schema": "enum [\"light\", \"dark\"]",
-   "mapped": "look: Light / Dark"
+   "schema": "enum [\"light\", \"dark\", \"auto\"]",
+   "mapped": "look: Light / Dark / Auto"
   },
   {
    "field": "project_mode",
@@ -755,6 +757,17 @@
    ],
    "else": null,
    "mapped": "away > My own web address (new Server): make the settings file, or use a proxy I already run"
+  },
+  {
+   "n": 32,
+   "if": [
+    "project_mode in [\"new\", \"existing_local\", \"existing_online\", \"restore\"]"
+   ],
+   "then": [
+    "local_history=true"
+   ],
+   "else": null,
+   "mapped": null
   }
  ],
  "screens": {
