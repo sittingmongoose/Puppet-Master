@@ -1058,7 +1058,9 @@ class Lander:
         batch["landings"] = rows
 
     def adopt_batch_lock(self) -> None:
-        """Inside a batch the lock passes by pm-mail; knowing the full batch-start SHA is the handover."""
+        """Inside a batch the lock passes only by pm-mail, which the tool cannot see, and the batch-start SHA can be read
+        from holder.txt, so knowing it is no hand-over. Taken over from batch-idle, a dead holder or one's own name; from a
+        stopped or hand holder only with --handed-over-by naming it; from a holder landing right now, never."""
         st = self.st
         batch = st["batch"]
         verdict = judge_holder(self.cfg)

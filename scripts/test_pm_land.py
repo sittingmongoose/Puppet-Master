@@ -2951,6 +2951,14 @@ class StoppedMemberTests(Base):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
 
+class HandOverWordingTests(unittest.TestCase):
+    def test_adoptions_docstring_says_the_sha_is_no_hand_over(self):
+        """Review N6: it said knowing the SHA was the hand-over, the opposite of the README."""
+        text = M.Lander.adopt_batch_lock.__doc__
+        self.assertIn("knowing it is no hand-over", text)
+        self.assertNotIn("is the handover", text)
+
+
 class MainAheadTests(Base):
     """L4: the lock is never released while the shared checkout's main is ahead of origin."""
 
