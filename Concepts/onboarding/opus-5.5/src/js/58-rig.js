@@ -528,9 +528,18 @@
           const hit = (ax, ay) => obs.find((o) => X0 + ax < o[2] && X1 + ax > o[0] && Y0 + ay < o[3] && Y1 + ay > o[1]);
           const o = hit(0, 0); if (!o) break;
           const inside = (ax, ay) => X0 + ax >= v.x0 + pad - .5 && X1 + ax <= v.x1 - pad + .5 && Y0 + ay >= v.y0 + pad - .5 && Y1 + ay <= v.y1 - pad + .5;
-          const c = [[0, o[3] - Y0], [0, o[1] - Y1], [o[0] - X1, 0], [o[2] - X0, 0], [o[0] - X1, o[3] - Y0], [o[2] - X0, o[3] - Y0], [o[0] - X1, o[1] - Y1], [o[2] - X0, o[1] - Y1]]
-            .filter(([ax, ay]) => inside(ax, ay) && !hit(ax, ay)).sort((p, q) => Math.hypot(p[0], p[1]) - Math.hypot(q[0], q[1]));
-          if (c.length) { dx += c[0][0]; dy += c[0][1]; break; }
+          const best = (list) => list.filter(([ax, ay]) => inside(ax, ay) && !hit(ax, ay)).sort((p, q) => Math.hypot(p[0], p[1]) - Math.hypot(q[0], q[1]))[0];
+          let c = best([[0, o[3] - Y0], [0, o[1] - Y1], [o[0] - X1, 0], [o[2] - X0, 0], [o[0] - X1, o[3] - Y0], [o[2] - X0, o[3] - Y0], [o[0] - X1, o[1] - Y1], [o[2] - X0, o[1] - Y1]]);
+          /* (and where no way off the box it meets is clear, the ways past the others too, each edge of each box across and
+             down: Retro Dark's c-ready at 740, the server under the bubble that claimed its place, Pip's head on its left,
+             the laptop on its right and the tube's foot below; the only ways tried were round the bubble, so it was drawn
+             smaller and smaller under it, still under it (N1, astra-review-retro-3). Past the laptop it hangs whole) */
+          if (!c) {
+            const xs = [0], ys = [0];
+            obs.forEach((q) => { xs.push(q[0] - X1, q[2] - X0); ys.push(q[1] - Y1, q[3] - Y0); });
+            c = best(xs.flatMap((ax) => ys.map((ay) => [ax, ay])));
+          }
+          if (c) { dx += c[0]; dy += c[1]; break; }
           if (g <= .66) break;
           g *= .9; f = f0 * g; lo = L0 * g; hi = H0 * g; tp = T0 * g; bt = B0 * g;
         }
