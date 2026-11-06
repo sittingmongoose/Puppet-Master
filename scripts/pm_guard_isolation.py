@@ -138,6 +138,207 @@ def _certified_module_value(value, root):
 
 _IMMUTABLE_TYPE_FLAG = 1 << 8      # Py_TPFLAGS_IMMUTABLETYPE (CPython 3.10 and later)
 
+_MISSING_HOP = object()
+_C_DESCRIPTORS = (types.MethodDescriptorType, types.ClassMethodDescriptorType, types.WrapperDescriptorType,
+                  types.GetSetDescriptorType, types.MemberDescriptorType)
+
+
+def _immutable_type(cls):
+    return type(cls) is type and bool(cls.__flags__ & _IMMUTABLE_TYPE_FLAG)
+
+
+def _chain_hop_value(value, root):
+    """T61: what a hop of a certified module's attribute chain may reach (`module.a.b`, each hop read statically).
+    The first hop's rule (_certified_module_value), less modules: a module handed out by a module or by any later hop
+    is refused, so no chain passes its first hop to reach another module's state (textwrap.re, re.functools). Two
+    additions for later hops, both immutable: a C method, class-method, slot, getset or member descriptor of a class
+    CPython marks immutable (str.upper as `string.ascii_letters.upper`, itertools.chain.from_iterable), and a builtin
+    method bound to an immutable literal or to such a class. Everything else is refused."""
+    if type(value) is types.ModuleType:
+        return None
+    if type(value) in _C_DESCRIPTORS and _immutable_type(getattr(value, '__objclass__', None)):
+        return ('immutable-type-descriptor', getattr(value, '__qualname__', '?'))
+    if type(value) is types.BuiltinMethodType and value.__self__ is not None and type(value.__self__) is not types.ModuleType and (
+            _immutable_literal(value.__self__) or _immutable_type(value.__self__)):
+        return ('bound-immutable-method', getattr(value, '__qualname__', '?'))
+    return _certified_module_value(value, root)
+
+
+def _chain_problem(modules, attrs, root):
+    """T61 (tool batch 4, REVIEW-etools-tb3-opus finding 1): judge every hop of an attribute chain rooted at a certified
+    module, in every loaded instance of it. A dunder at any hop is refused (__globals__ hands out a module's namespace:
+    json.dumps.__globals__ let a case write into the engine's own json); each hop is read statically (a module's own
+    namespace, else inspect.getattr_static, so no property or __getattr__ runs) and must be what _chain_hop_value
+    accepts. Returns (hop index, attribute, why) for the first refused hop, else None."""
+    current = list(modules)
+    for index, attr in enumerate(attrs):
+        if attr.startswith('__') and attr.endswith('__'):
+            return index, attr, 'a dunder attribute'
+        reached = [vars(v).get(attr, _MISSING_HOP) if type(v) is types.ModuleType else inspect.getattr_static(v, attr, _MISSING_HOP) for v in current]
+        for got in reached:
+            if got is _MISSING_HOP:
+                return index, attr, 'missing'
+            if _chain_hop_value(got, root) is None:
+                return index, attr, 'a module' if type(got) is types.ModuleType else type(got).__name__
+        current = reached
+    return None
+
+
+class StaticStopBeforeImport(IsolationError):
+    """T61: a checker's source closure holds a static stop error found from its text alone, so nothing of it was imported."""
+    def __init__(self, report):
+        super().__init__('static_error_stop before import: ' + ', '.join(sorted({e['kind'] for e in report['static']['errors']})))
+        self.report = report
+
+
+# (the names static_scan's dynamic-code rule reads, less compile, which it exempts for the standard library's own)
+_PRESCAN_SENSITIVE = frozenset({'eval', 'exec', '__import__', 'getattr', 'globals', 'locals', 'vars', 'import_module',
+                                'spec_from_file_location', 'settrace', 'setprofile', 'run_module', 'run_path', 'gettrace',
+                                'getprofile', '__builtins__'})
+
+
+def prescan_sources(start, *, search=None, reset_seams=()):
+    """T61 (REVIEW-etools-tb3-opus finding 2): before a checker module is imported (the adapter command line, the trap
+    loader), its text and the text of every repository module it imports (found from the import statements, resolved
+    without executing anything outside the standard library) are scanned for the table-independent stop errors the text
+    alone shows: a write through a name bound to an allowlisted standard-library module (an attribute or item store or
+    delete rooted at it), such a name used other than as `module.attribute` (an escape), a refused hop of an attribute
+    chain rooted at it (_chain_problem), a star import, and any read of a dynamic-code or reflection name (eval, exec,
+    getattr, setattr, vars, globals, __import__, import_module and the rest). Module-level code then never runs before
+    the static stop: before, `json.tb3_review_marker = 1` at a checker's top level ran at import, while the stop came
+    after. The first hop of a chain is judged as static_scan judges it (external_binding_mutable_read), a later hop or a
+    module at any hop as external_binding_chain_read. reset_seams, the declared sources of the start file's reset seams
+    when they are known before the import (the trap loader knows them), are held to static_scan's rule: a seam naming a
+    certified binding is reset_seam_certified_write. The full static scan still runs after the import; this one can only
+    stop a run, never credit one. Returns the errors (empty when the closure is clean)."""
+    start = Path(start).resolve()
+    trusted = {Path(__file__).resolve()}
+    search = [str(start.parent), *(search if search is not None else sys.path)]
+    pending, seen, errors = [start], set(), []
+    # the repository the checker lives in: the nearest directory above it holding .git, else its own directory; only
+    # modules inside it are followed (third-party code, wherever it is installed, is the full scan's to resolve)
+    home = next((d for d in [start.parent, *start.parents] if (d / '.git').exists()), start.parent)
+    def local(spec):
+        origin = getattr(spec, 'origin', None)
+        if not origin or origin in ('built-in', 'frozen') or not origin.endswith('.py'):
+            return None
+        location = Path(origin).resolve()
+        if location in trusted or not location.is_relative_to(home) or _stdlib_path(str(location)) or any(location.is_relative_to(d) for d in _SITE_DIRS):
+            return None
+        return location
+    while pending:
+        path = pending.pop()
+        if path in seen:
+            continue
+        seen.add(path)
+        try:
+            tree = ast.parse(path.read_bytes(), filename=str(path))
+        except (OSError, SyntaxError, ValueError) as exc:
+            errors.append({'kind': 'unscannable_module', 'path': str(path), 'reason': type(exc).__name__ + ': ' + str(exc)})
+            continue
+        parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
+        certified = {}
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    top = alias.name.split('.')[0]
+                    bound = alias.asname or top
+                    if (alias.asname and alias.name in STDLIB_IMMUTABLE_MODULES) or (not alias.asname and top in STDLIB_IMMUTABLE_MODULES):
+                        certified[bound] = alias.name if alias.asname else top
+                    for name in [alias.name] + ['.'.join(alias.name.split('.')[:i]) for i in range(1, alias.name.count('.') + 1)]:
+                        try:
+                            spec = importlib.machinery.PathFinder.find_spec(name, search)
+                        except (ImportError, ValueError):
+                            spec = None
+                        found = local(spec)
+                        if found:
+                            pending.append(found)
+            elif isinstance(node, ast.ImportFrom):
+                if any(alias.name == '*' for alias in node.names):
+                    errors.append({'kind': 'star_import', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(node)})
+                base = node.module or ''
+                where = [str(path.parent)] if node.level else search
+                for name in [base] + [base + '.' + alias.name for alias in node.names if base]:
+                    if not name:
+                        continue
+                    try:
+                        spec = importlib.machinery.PathFinder.find_spec(name, where)
+                    except (ImportError, ValueError):
+                        spec = None
+                    found = local(spec)
+                    if found:
+                        pending.append(found)
+                if not node.level and base in STDLIB_IMMUTABLE_MODULES:
+                    for alias in node.names:
+                        try:
+                            value = getattr(importlib.import_module(base), alias.name)
+                        except (ImportError, AttributeError):
+                            continue
+                        if type(value) is types.ModuleType and _stdlib_immutable_module(value):
+                            certified[alias.asname or alias.name] = value.__name__
+        modules = {}
+        for name, module_name in certified.items():
+            try:
+                module = importlib.import_module(module_name)
+            except ImportError:
+                continue
+            if _stdlib_immutable_module(module):
+                modules[name] = module
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and node.id in _PRESCAN_SENSITIVE:
+                errors.append({'kind': 'dynamic_code_or_import', 'path': str(path), 'line': node.lineno, 'source': node.id})
+            if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in ('setattr', 'delattr') and node.args:
+                first = node.args[0]
+                while isinstance(first, (ast.Attribute, ast.Subscript)):
+                    first = first.value
+                if isinstance(first, ast.Name) and first.id in modules:
+                    errors.append({'kind': 'external_binding_write', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(node)})
+            if not (isinstance(node, ast.Name) and node.id in modules):
+                continue
+            if isinstance(parents.get(node), ast.Call) and parents[node].func is not node and isinstance(parents[node].func, ast.Name) and parents[node].func.id in ('setattr', 'delattr'):
+                continue
+            parent = parents.get(node)
+            if isinstance(node.ctx, ast.Store) or isinstance(node.ctx, ast.Del):
+                if not isinstance(parent, (ast.Import, ast.ImportFrom)):
+                    errors.append({'kind': 'external_binding_rebound', 'path': str(path), 'line': node.lineno, 'source': node.id})
+                continue
+            if not (isinstance(parent, ast.Attribute) and parent.value is node):
+                errors.append({'kind': 'external_binding_escape', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(parent) if parent is not None else node.id})
+                continue
+            chain, top = [], node
+            while isinstance(parents.get(top), ast.Attribute) and parents[top].value is top:
+                top = parents[top]
+                chain.append(top)
+            loads = [a for a in chain if isinstance(a.ctx, ast.Load)]
+            if len(loads) != len(chain) or isinstance(parents.get(top), ast.Subscript) and parents[top].value is top and isinstance(parents[top].ctx, (ast.Store, ast.Del)):
+                errors.append({'kind': 'external_binding_write', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(parents.get(top) or top)})
+                continue
+            if isinstance(parents.get(top), ast.Call) and parents[top].func is top and isinstance(top, ast.Attribute) and top.attr in ('__setattr__', '__delattr__', '__setitem__', '__delitem__', 'update', 'pop', 'clear', 'setdefault', '__iadd__', '__ior__', 'append', 'extend', 'add', 'remove', 'insert'):
+                errors.append({'kind': 'external_binding_write', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(parents[top])})
+            problem = _chain_problem([modules[node.id]], [a.attr for a in chain], start.parent)
+            if problem:
+                index, attr, why = problem
+                first = index == 0 and why not in ('a module', 'a dunder attribute')
+                errors.append({'kind': 'external_binding_mutable_read' if first else 'external_binding_chain_read', 'path': str(path), 'line': node.lineno,
+                               'source': ast.unparse(chain[index]), 'hop': index, 'reason': why})
+        if path == start:
+            for source in reset_seams:
+                try:
+                    seam = ast.parse(source)
+                except SyntaxError:
+                    continue
+                reached = sorted({part.id for part in ast.walk(seam) if isinstance(part, ast.Name) and part.id in modules})
+                if reached:
+                    errors.append({'kind': 'reset_seam_certified_write', 'path': str(path), 'source': source, 'certified': reached})
+    return errors
+
+
+def prescan_report(errors, stage='before import'):
+    return {'version': 2, 'status': 'FAIL', 'evaluations': 0, 'factories': 0, 'rows': [], 'runtime': [],
+            'static': {'status': 'FAIL', 'errors': errors, 'sites': [], 'stage': stage},
+            'failures': [{'kind': 'hidden_static_sites', 'sites': [], 'errors': errors},
+                         {'kind': 'static_error_stop', 'stage': stage, 'errors': sorted({e['kind'] for e in errors})}]}
+
 
 def _literal_enum(cls, root):
     """A repository Enum whose members are immutable literals, with enum's own machinery only: the metaclass is
@@ -2032,6 +2233,19 @@ def static_scan(suite, table):
                         errors.append({'kind': 'external_binding_mutable_read', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(parent),
                                        'value_type': 'missing' if value is missing else type(value).__name__,
                                        'reason': 'a certified module is certified without walking it, so a value read from it must itself be immutable or certified (an immutable literal or frozenset, a builtin or standard-library function, a compiled pattern); a list, set, dict, instance or class read from it is shared mutable state across cases'})
+                    else:
+                        # T61: every hop of the chain, not the first only (textwrap.re._cache, re.functools.__all__,
+                        # json.dumps.__globals__ each passed its first hop and reached shared state)
+                        chain, top = [parent], parent
+                        while isinstance(parents.get(top), ast.Attribute) and parents[top].value is top and isinstance(parents[top].ctx, ast.Load):
+                            top = parents[top]
+                            chain.append(top)
+                        problem = _chain_problem([vars(m)[node.id] for m in loaded_here], [a.attr for a in chain], root)
+                        if problem:
+                            index, attr, why = problem
+                            errors.append({'kind': 'external_binding_chain_read', 'path': _relative(path, root), 'line': node.lineno, 'source': ast.unparse(chain[index]),
+                                           'hop': index, 'value_type': why,
+                                           'reason': 'every hop of an attribute chain rooted at a certified module must itself be immutable or certified, never a module (a module handed out by a module is certified by no one here) and never a dunder (__globals__, __dict__, __closure__ and the like hand out namespaces and cells)'})
         # T48: a reset seam whose write reaches a certified binding is refused: the binding is certified without
         # walking it, so the snapshot cannot see what the reset left behind (R1b: a no-op reset over a keyword.kwlist write)
         for key, (declaration, _) in reset_allowed.items():
@@ -2952,7 +3166,7 @@ class _StaticStop(Exception):
 # full scan does: each marks code the engine will not execute in its own process (a write through a certified binding,
 # dynamic code, the table's private state, a module it cannot resolve or scan).
 STATIC_STOP_KINDS = frozenset({'dynamic_code_or_import', 'table_private_state', 'external_binding_write', 'external_binding_escape',
-                               'external_binding_rebound', 'external_binding_mutable_read', 'reset_seam_certified_write', 'star_import',
+                               'external_binding_rebound', 'external_binding_mutable_read', 'external_binding_chain_read', 'reset_seam_certified_write', 'star_import',
                                'uncertified_import_binding', 'unscannable_module', 'unknown_statement'})
 
 
@@ -3528,11 +3742,16 @@ def main(argv=None):
             path, sep, factory = args.adapter.rpartition(':')
             if not sep:
                 raise IsolationError('--adapter requires file:factory')
-            spec = importlib.util.spec_from_file_location('_guard_isolation_adapter', path)
-            module = importlib.util.module_from_spec(spec)
-            sys.modules[spec.name] = module
-            spec.loader.exec_module(module)
-            report = run(getattr(module, factory)(), memory=memory)
+            # T61: the adapter's source closure is scanned from its text before anything of it is imported
+            stops = [e for e in prescan_sources(Path(path)) if e['kind'] in STATIC_STOP_KINDS]
+            if stops:
+                report = prescan_report(stops)
+            else:
+                spec = importlib.util.spec_from_file_location('_guard_isolation_adapter', path)
+                module = importlib.util.module_from_spec(spec)
+                sys.modules[spec.name] = module
+                spec.loader.exec_module(module)
+                report = run(getattr(module, factory)(), memory=memory)
     except BaseException as exc:
         report = {'version': 2, 'status': 'FAIL', 'failures': [{'kind': 'setup', 'error': type(exc).__name__ + ': ' + str(exc)}]}
     body = json.dumps(report, indent=2, sort_keys=True) + '\n'

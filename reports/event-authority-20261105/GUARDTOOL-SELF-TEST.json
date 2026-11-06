@@ -2,7 +2,7 @@
   "version": 2,
   "method": "B: guard tables",
   "status": "PASS",
-  "caught": 328,
+  "caught": 335,
   "skipped": 0,
   "traps": [
     {
@@ -1643,6 +1643,41 @@
     {
       "id": "TB3-T48-setattr-json-in-factory-never-runs",
       "expected": "T48: the same write in the factory body: found by the table-independent scan before the factory first runs, so the factory never executes either.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-G07-textwrap-re-cache",
+      "expected": "T61 (REVIEW-etools-tb3-opus finding 1, G07): the predicate reads textwrap.re._cache and the armed control fills re's compile cache (re.compile, a declared call), so x-bad alone is accepted only after the control ran: a chain from a certified module reaches shared state past its first hop. textwrap.re hands out a module: refused before import (external_binding_chain_read), no factory and no case.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-G07b-textwrap-re-all-iadd",
+      "expected": "T61 (G07b): the predicate reads textwrap.re.__all__ and the armed control appends to it through __iadd__. Refused before import (a module hop and a dunder hop), no factory and no case.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-G07c-alias-noop-reset",
+      "expected": "T61 (G07c): textwrap.re.__all__ bound to a local name, appended to, and declared as a reset seam over a no-op reset. The chain read itself is refused before import, so the alias and the seam never matter.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-G10-re-functools-all",
+      "expected": "T61 (G10): re.functools.__all__ read by the predicate and appended to by the armed control. re.functools hands out a module: refused before import.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-G11-dumps-globals",
+      "expected": "T61 (G11): json.dumps.__globals__ is json's own namespace; the armed control wrote 'tb3_armed' into it and the predicate read it. A dunder at the second hop: refused before import, and json never gains the name.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-G08-module-level-write",
+      "expected": "T61 (REVIEW-etools-tb3-opus finding 2, G08): json.tb3_review_marker = 1 at the checker's top level ran at import, before the static stop. The checker's text is now scanned before it is imported: refused (external_binding_write), nothing imported, and json never gains the name.",
+      "caught": true
+    },
+    {
+      "id": "TB4-T61-chain-control",
+      "expected": "T61 controls: chains past a certified module's first hop that reach only immutable things still certify: a method of a str (string.ascii_letters.upper, a descriptor of an immutable class), a class method of an immutable class (itertools.chain.from_iterable) and a method of a float (math.pi.is_integer).",
       "caught": true
     }
   ]

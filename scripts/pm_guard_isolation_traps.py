@@ -37,6 +37,13 @@ def _code_suite(g, trap, root):
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(source)
     sys.path[:0] = [str(root / p) for p in trap.get('extra_paths', [])] + [str(root)]
+    # T61: the trap's source closure is scanned from its text before it is imported, as the adapter command line does
+    # (the traps that demonstrate the runtime defense behind a static refusal are imported as before)
+    if not trap.get('runtime_behind_static'):
+        seams = [d['source'] for d in trap.get('reset_seams', []) if d.get('path') == 'subject.py']
+        stops = [e for e in g.prescan_sources(path, reset_seams=seams) if e['kind'] in g.STATIC_STOP_KINDS]
+        if stops:
+            raise g.StaticStopBeforeImport(g.prescan_report(stops))
     module = _load(path, '_method_b_subject', bool(trap.get('builtin_override')))
     if trap.get('builtin_override'):
         override = trap['builtin_override']
@@ -292,6 +299,8 @@ def exercise(g, memory, *, scratch=None):
                                     'aliased': value.get('left') is value.get('right') if 'left' in value else None,
                                     'snapshot_unchanged': before == g._data_snapshot(value)})
                             row['observation'] = observations
+                    except g.StaticStopBeforeImport as exc:
+                        result = exc.report
                     except g.IsolationError as exc:
                         result = {'status': 'FAIL', 'failures': [{'kind': 'construction_refused', 'error': str(exc)}], 'rows': []}
                     moved = []
@@ -321,6 +330,14 @@ def exercise(g, memory, *, scratch=None):
                         row['caught'] = row['caught'] and result.get('factories', 0) <= trap['max_factories']
                     if trap.get('stdlib_untouched'):
                         row['caught'] = row['caught'] and not moved
+                    # T61: a name a flagged checker's module-level code would have added to a standard-library module
+                    added = [name for name in trap.get('stdlib_absent', []) if hasattr(importlib.import_module(name.rpartition('.')[0]), name.rpartition('.')[2])]
+                    for name in added:
+                        delattr(importlib.import_module(name.rpartition('.')[0]), name.rpartition('.')[2])     # (taken away for the traps after it)
+                    if trap.get('stdlib_absent'):
+                        row['caught'] = row['caught'] and not added
+                        if added:
+                            row['stdlib_added'] = added
                     if trap.get('runtime_type'):
                         row['caught'] = row['caught'] and any(e.get('type') == trap['runtime_type'] for e in result.get('runtime', []))
                     if trap.get('protocol_contains'):

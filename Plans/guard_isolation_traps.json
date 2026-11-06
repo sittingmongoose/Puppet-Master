@@ -17339,6 +17339,471 @@
           "defect": "Change only /x."
         }
       ]
+    },
+    {
+      "id": "TB4-T61-G07-textwrap-re-cache",
+      "kind": "code",
+      "expected": "T61 (REVIEW-etools-tb3-opus finding 1, G07): the predicate reads textwrap.re._cache and the armed control fills re's compile cache (re.compile, a declared call), so x-bad alone is accepted only after the control ran: a chain from a certified module reaches shared state past its first hop. textwrap.re hands out a module: refused before import (external_binding_chain_read), no factory and no case.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_chain_read",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import re\nimport textwrap\nimport pm_guard_isolation as g\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 and (str, 'armed-tb3-review', 0) in textwrap.re._cache else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        if value['arm']:\n            re.compile('armed-tb3-review')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "arm": 1
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "arm": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x and the arm flag."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "re.compile('armed-tb3-review')",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['arm']:\n    re.compile('armed-tb3-review')",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['arm']",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "re.compile",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        }
+      ]
+    },
+    {
+      "id": "TB4-T61-G07b-textwrap-re-all-iadd",
+      "kind": "code",
+      "expected": "T61 (G07b): the predicate reads textwrap.re.__all__ and the armed control appends to it through __iadd__. Refused before import (a module hop and a dunder hop), no factory and no case.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_chain_read",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import textwrap\nimport pm_guard_isolation as g\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 and 'armed' in textwrap.re.__all__ else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        if value['arm']:\n            textwrap.re.__all__.__iadd__(['armed'])\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "arm": 1
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "arm": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x and the arm flag."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "textwrap.re.__all__.__iadd__(['armed'])",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['arm']:\n    textwrap.re.__all__.__iadd__(['armed'])",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['arm']",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "textwrap.re.__all__.__iadd__",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "textwrap.re.__all__",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "textwrap.re",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        }
+      ]
+    },
+    {
+      "id": "TB4-T61-G07c-alias-noop-reset",
+      "kind": "code",
+      "expected": "T61 (G07c): textwrap.re.__all__ bound to a local name, appended to, and declared as a reset seam over a no-op reset. The chain read itself is refused before import, so the alias and the seam never matter.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_chain_read",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import textwrap\nimport pm_guard_isolation as g\n\ndef reset():\n    return True\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 and 'armed' in textwrap.re.__all__ else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        cache = textwrap.re.__all__\n        if value['arm']:\n            cache.append('armed')\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "arm": 1
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "arm": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x and the arm flag."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "mutation_or_error_write",
+          "source": "cache.append('armed')",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['arm']:\n    cache.append('armed')",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "textwrap.re.__all__",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['arm']",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "textwrap.re",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "cache.append",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        }
+      ],
+      "reset_function": "reset",
+      "reset_seams": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "shared_state_write",
+          "source": "cache.append('armed')",
+          "reason": "Reviewer probe declaration."
+        }
+      ]
+    },
+    {
+      "id": "TB4-T61-G10-re-functools-all",
+      "kind": "code",
+      "expected": "T61 (G10): re.functools.__all__ read by the predicate and appended to by the armed control. re.functools hands out a module: refused before import.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_chain_read",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import re\nimport pm_guard_isolation as g\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 and 'armed' in re.functools.__all__ else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        if value['arm']:\n            re.functools.__all__.__iadd__(['armed'])\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "arm": 1
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "arm": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x and the arm flag."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "re.functools.__all__.__iadd__(['armed'])",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['arm']:\n    re.functools.__all__.__iadd__(['armed'])",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['arm']",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "re.functools.__all__.__iadd__",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "re.functools.__all__",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "re.functools",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        }
+      ]
+    },
+    {
+      "id": "TB4-T61-G11-dumps-globals",
+      "kind": "code",
+      "expected": "T61 (G11): json.dumps.__globals__ is json's own namespace; the armed control wrote 'tb3_armed' into it and the predicate read it. A dunder at the second hop: refused before import, and json never gains the name.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_chain_read",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "stdlib_absent": [
+        "json.tb3_armed"
+      ],
+      "source": "import json\nimport pm_guard_isolation as g\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 and 'tb3_armed' in json.dumps.__globals__ else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        if value['arm']:\n            json.dumps.__globals__.__ior__({'tb3_armed': 1})\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "arm": 1
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "arm": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x and the arm flag."
+        }
+      ],
+      "non_guards": [
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "call_review",
+          "source": "json.dumps.__globals__.__ior__({'tb3_armed': 1})",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "if value['arm']:\n    json.dumps.__globals__.__ior__({'tb3_armed': 1})",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "value['arm']",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "json.dumps.__globals__.__ior__",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "json.dumps.__globals__",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        },
+        {
+          "path": "subject.py",
+          "function": "factory.check",
+          "kind": "data_operation",
+          "source": "json.dumps",
+          "reason": "Reviewer probe: declared bookkeeping; no acceptance decision."
+        }
+      ]
+    },
+    {
+      "id": "TB4-T61-G08-module-level-write",
+      "kind": "code",
+      "expected": "T61 (REVIEW-etools-tb3-opus finding 2, G08): json.tb3_review_marker = 1 at the checker's top level ran at import, before the static stop. The checker's text is now scanned before it is imported: refused (external_binding_write), nothing imported, and json never gains the name.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_write",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "stdlib_absent": [
+        "json.tb3_review_marker"
+      ],
+      "source": "import json\nimport pm_guard_isolation as g\n\njson.tb3_review_marker = 1\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x and the arm flag."
+        }
+      ]
+    },
+    {
+      "id": "TB4-T61-chain-control",
+      "kind": "code",
+      "expected": "T61 controls: chains past a certified module's first hop that reach only immutable things still certify: a method of a str (string.ascii_letters.upper, a descriptor of an immutable class), a class method of an immutable class (itertools.chain.from_iterable) and a method of a float (math.pi.is_integer).",
+      "status": "PASS",
+      "failure_kinds": [],
+      "source": "import itertools\nimport math\nimport string\nimport pm_guard_isolation as g\n\ndef px(value, context):\n    return 'bad_x' if value['x'] < 0 and (string.ascii_letters.upper, itertools.chain.from_iterable, math.pi.is_integer) is not None else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', px)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "bad-x",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "proved_rows": 1
     }
   ]
 }
