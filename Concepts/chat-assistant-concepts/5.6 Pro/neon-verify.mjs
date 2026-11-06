@@ -539,7 +539,8 @@ await sec('live surfaces', async () => {
     await setTheme(p, 'basic-dark');
     await p.evaluate(() => { window.PM56_DEMO.selectThread('query'); window.PM56_DEMO.startWorking(); window.PM56_DEMO.setVariant(1, 5); });
     await p.waitForTimeout(1200);
-    const bar = await p.evaluate(() => [...document.querySelectorAll('.activity-item[data-hover-domain]')].map(e => {
+    /* the live strip only: the wrap's hidden fit sizer (FO-76) holds two unanimated copies of every item */
+    const bar = await p.evaluate(() => [...document.querySelectorAll('.activity-wrap > :is(.activity-bar, .pm56-activity-bar) > .activity-item[data-hover-domain]')].map(e => {
       const s = e.querySelector('svg.nx'), d = e.dataset.hoverDomain;
       return { domain: d, tone: document.documentElement.getAttribute('data-ab-' + d), anim: s ? getComputedStyle(s).animationName : null };
     }));
@@ -1694,7 +1695,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
             const P = pod.getBoundingClientRect();
             const hit = e => { const q = e.getBoundingClientRect(); if (q.width < 1 || q.height < 1) return 0; const ix = Math.max(0, Math.min(P.right, q.right) - Math.max(P.left, q.left)), iy = Math.max(0, Math.min(P.bottom, q.bottom) - Math.max(P.top, q.top)); return ix * iy > .5 ? Math.round(ix) + 'x' + Math.round(iy) : 0; };
             const out = [];
-            for (const e of document.querySelectorAll('.jump-bottom, .activity-item, .send-queue-row button, .decision-host button, .chat-stage > .composer')) { const k = hit(e); if (k) out.push(String(e.className).slice(0, 30) + ' ' + k); }
+            for (const e of document.querySelectorAll('.jump-bottom, .activity-wrap > :is(.activity-bar, .pm56-activity-bar) > .activity-item, .send-queue-row button, .decision-host button, .chat-stage > .composer')) { const k = hit(e); if (k) out.push(String(e.className).slice(0, 30) + ' ' + k); }
             /* transcript controls: none under the Pod at the bottom (its resting place); scrolled up, content passes
                under it, and then the Pod must have faded back (data-shy, opacity <= .2) */
             const tr = document.querySelector('.transcript').getBoundingClientRect(), under = [];

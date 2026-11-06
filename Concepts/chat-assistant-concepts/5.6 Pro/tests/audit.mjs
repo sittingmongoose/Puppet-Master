@@ -226,13 +226,13 @@ await safe('Context More Details contains required metrics',async()=>{
 
 for(const domain of ['goal','todo','subagents','changes','artifacts']){
   await safe(`Activity hover preview: ${domain}`,async()=>{
-    const b=page.locator(`[data-hover-domain="${domain}"]`);await b.hover();
+    const b=page.locator(`.activity-wrap > :is(.activity-bar, .pm56-activity-bar) > [data-hover-domain="${domain}"]`);await b.hover();
     const preview=page.locator('.hover-card.ab-card[role="dialog"]');
     await preview.waitFor({state:'visible'});await inViewport('.hover-card.ab-card',`${domain} hover`);
     if((await preview.getAttribute('data-domain'))!==domain)throw new Error(`Preview did not target ${domain}`);
   });
   await safe(`Activity click opens focused Status Board: ${domain}`,async()=>{
-    await page.locator(`[data-hover-domain="${domain}"]`).click();await page.locator('.activity-panel').waitFor({state:'visible'});
+    await page.locator(`.activity-wrap > :is(.activity-bar, .pm56-activity-bar) > [data-hover-domain="${domain}"]`).click();await page.locator('.activity-panel').waitFor({state:'visible'});
     const panel=page.locator('.activity-panel');
     if((await panel.getAttribute('data-variant'))!=='1')throw new Error('Status Board is not the default');
     if((await panel.getAttribute('data-scope'))!=='focus')throw new Error('Activity bar did not open focused scope');
@@ -244,10 +244,10 @@ for(const domain of ['goal','todo','subagents','changes','artifacts']){
 }
 
 await safe('Activity Detail Show all and domain drill-down',async()=>{
-  await page.locator('[data-hover-domain="changes"]').click();
+  await page.locator('.activity-wrap > :is(.activity-bar, .pm56-activity-bar) > [data-hover-domain="changes"]').click();
   const panel=page.locator('.activity-panel');
   await panel.locator('[data-action="activity-scope"][data-value="all"]').click();
-  const expected=await page.locator('.activity-item[data-hover-domain]').count();
+  const expected=await page.locator('.activity-wrap > :is(.activity-bar, .pm56-activity-bar) > .activity-item[data-hover-domain]').count();
   const tiles=panel.locator('.pmap-tile');
   if(await tiles.count()!==expected)throw new Error(`Expected ${expected} domain tiles, found ${await tiles.count()}`);
   if((await panel.getAttribute('data-scope'))!=='all')throw new Error('Show all did not change panel scope');
@@ -257,7 +257,7 @@ await safe('Activity Detail Show all and domain drill-down',async()=>{
 });
 
 await safe('Activity Detail pin and unpin',async()=>{
-  await page.locator('[data-hover-domain="goal"]').click();
+  await page.locator('.activity-wrap > :is(.activity-bar, .pm56-activity-bar) > [data-hover-domain="goal"]').click();
   const pinned=await page.evaluate(()=>PM56_DEMO.getState().activity.pinned);if(!pinned)throw new Error('not pinned');
   await page.locator('[data-action="unpin-activity"]').click();
   if(await page.evaluate(()=>PM56_DEMO.getState().activity.pinned))throw new Error('did not unpin');

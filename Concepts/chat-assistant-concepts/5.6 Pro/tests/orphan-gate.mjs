@@ -226,7 +226,7 @@ export async function harvestClasses(browser, html) {
     await tick(120);
     await page.keyboard.press('Escape'); await tick(60);
   }
-  await page.evaluate(() => document.querySelectorAll('.activity-item, [data-hover-domain]')
+  await page.evaluate(() => document.querySelectorAll('.activity-wrap > :is(.activity-bar, .pm56-activity-bar) > .activity-item, [data-hover-domain]:not(.activity-sizer *)')
     .forEach(el => { el.dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
                      el.dispatchEvent(new MouseEvent('mouseover', { bubbles: true })); }))
     .catch(() => {});
