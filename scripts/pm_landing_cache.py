@@ -62,7 +62,6 @@ from typing import Any, Iterable
 SCHEMA = "pm.landing_cache.v1"
 ROOT_TOKEN = "@ROOT"
 OUTPUT_ROOT_TOKEN = "@@PM_LANDING_ROOT@@"
-DEFAULT_MAX_MB = 2048
 MANIFESTS_PER_COMMAND = 8
 # More git commands than this are not replayed one by one; the unit is keyed on the repository's state.
 MAX_GIT_REPLAYS = 64
@@ -1234,9 +1233,8 @@ class Runner:
         sys.stderr.write(proc.stderr)
         return proc.returncode
 
-    def aggregate(self, argv: list[str]) -> int:
-        """run-gates or audit-governance, by their own code, with subcheck spawns going through the cache."""
-        script = self.root / argv[1]
+    def load_aggregate(self, script: Path) -> Any:
+        """pm-plans-verify.py as a module, its code unchanged, with its one spawn function going through the cache."""
         spec = importlib.util.spec_from_file_location("pm_plans_verify_cached_aggregate", script)
         if spec is None or spec.loader is None:
             raise RuntimeError(f"{script} cannot be loaded")
@@ -1250,6 +1248,11 @@ class Runner:
             return self.spawn_subcheck(original, check_name, child_argv, timeout_seconds, extra_failure_fields, aggregate_child)
 
         module.run_validator_subprocess = spawn
+        return module
+
+    def aggregate(self, argv: list[str]) -> int:
+        """run-gates or audit-governance, by their own code, with subcheck spawns going through the cache."""
+        module = self.load_aggregate(self.root / argv[1])
         saved_argv = sys.argv
         sys.argv = [argv[1], *argv[2:]]
         try:

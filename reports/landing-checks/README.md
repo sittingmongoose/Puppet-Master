@@ -623,7 +623,9 @@ unchanged. It is opt-in: the default and `--no-cache` take the paths they always
 baseline comes from a run in which every check really ran. The module's docstring is the design; this is what a lander reads.
 
 **What is reused.** One validator command, `pm-plans-verify.py <command> <arguments>` or `pm-plan-migration.py validate`. Both
-aggregates and the exports run the same 37 commands, so even a cold run runs each once, not up to three times. The aggregates
+aggregates and the exports run the same 38 commands, so even a cold run runs each once, not up to three times. There is one level,
+per command, and no separate entry for a whole check keyed on the tree: that entry would need the same measured inputs, and would
+be lost whenever any one of them moved. The aggregates
 themselves always run, their code unchanged: `pm_landing_cache.py` loads `pm-plans-verify.py`, which it does not edit, and
 wraps only `run_validator_subprocess`, so on a hit the aggregate reads the report the subcheck wrote last time, as if it had
 just written it. `verify_spec_lock`, which run-gates runs in-process, always runs. An export found in the cache is the same
@@ -665,6 +667,18 @@ kind, say a socket, shows up as an unknown call and stops the unit only if it na
 (strace is not watching reads) that a validator turns into a failure row is remembered until an input changes: use `--no-cache`
 if a result looks wrong for no reason. A run with a hit is only as fresh as its inputs say, so a lander who wants the old guarantee
 that everything ran passes nothing, which remains the default.
+
+**What was measured**, 2026-11-06 on the VM's local disk, nice 19, load 15 to 35. Not measured: a full landing check with
+`--cache`, cold, warm or after a one-document change. The rule for such a run (load under 12) was not met in 90 minutes, so what a
+whole run saves is still unknown. Tracing each of the 38 commands once took 1,245 s; the slowest were `validate-plan-migration` 262,
+`validate-audit-closure` 227, `validate-new-contracts` 197, `lint-contractrefs` 173 and `json-syntax` 67. All 38 traces could be read
+and none was refused. One lookup pass over all 57,118 inputs took about 30 s on local disk and 40 s on the mount; a warm run makes
+three, one per process, and shares nothing between them. On 14 cheap real validators: 29 s fresh and traced, 4.8 s from the cache,
+with identical output and exit codes. One byte changed in `Plans/Assistant_Plan_Runtime.md` reran only
+`validate-working-notebook-contracts`; a new file in `Plans/.audits` reran only `lint-path-refs`. From the traces, not from a run: an
+edit of `Plans/assistant-chat-design.md` with its shards and index regenerated reaches 16 of the 38 commands, 986 of the 1,245 s, so
+a one-document change would save little beyond each command running once instead of twice. `validate-new-contracts` (197 s) is the
+one slow command it would spare. Moving HEAD or fetching also reruns `validate-audit-closure`, which is among the 16.
 
 **Stopping bar**, written before the first review: a finding about this cache stops work only if it is shown on real inputs that a
 `--cache` run reached a different verdict than a run without it. Everything else goes on the tool-issues list.

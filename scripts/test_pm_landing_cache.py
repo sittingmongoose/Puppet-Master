@@ -1,12 +1,14 @@
 """The landing check's result cache: run with `python3 -m unittest scripts/test_pm_landing_cache.py`.
 
 Everything here runs against a small real git repository in a temporary folder, with its own validators, the real
-strace and the real pm-landing-check.py. No production input is read and nothing is written to the repository. Most
-tests are negatives: an input changes, and the part that read it has to run again while the others do not.
+strace and the real pm-landing-check.py. The one exception, TheRealSpawnPath, runs one cheap real validator through the
+real pm-plans-verify.py; it reads the checkout and writes nothing to it. Most tests are negatives: an input changes, and
+the part that read it has to run again while the others do not.
 """
 
 from __future__ import annotations
 
+import argparse
 import ast
 import gzip
 import importlib.util
@@ -600,6 +602,50 @@ class ContractWithTheRealScript(unittest.TestCase):
     def test_only_verify_spec_lock_stays_in_process(self):
         text = VERIFY_PATH.read_text(encoding="utf-8")
         self.assertIn('_INPROCESS_AGGREGATE_CHECKS = {"verify_spec_lock"}', text)
+
+
+@unittest.skipUnless(HAS_STRACE, "needs a working strace")
+class TheRealSpawnPath(unittest.TestCase):
+    """The hook on the real script, not the fake one: its own _run_subprocess_check, spawning through the wrapper."""
+
+    def run_subcheck(self, runner, name):
+        saved = list(sys.path)
+        try:
+            module = runner.load_aggregate(VERIFY_PATH)
+            return module, module._run_subprocess_check(name, argparse.Namespace(), timeout_seconds=120)
+        finally:
+            sys.path[:] = saved
+
+    def test_a_cheap_real_validator_comes_back_the_same_from_the_cache_and_without_it(self):
+        with tempfile.TemporaryDirectory(prefix="landing-cache-real-") as folder:
+            stats = Path(folder) / "units.jsonl"
+            runner = C.Runner(REPO, Path(folder) / "cache", stats, "run-gates", 0)
+            module, fresh = self.run_subcheck(runner, "validate_auto_decisions")
+            self.assertEqual(json.loads(stats.read_text().splitlines()[-1])["status"], "fresh", stats.read_text())
+            _module, cached = self.run_subcheck(runner, "validate_auto_decisions")
+            row = json.loads(stats.read_text().splitlines()[-1])
+            self.assertEqual(row["status"], "cache", row)
+            self.assertEqual(row["label"], "run-gates/validate_auto_decisions")
+            # The other aggregate's name for it runs the same command line, so it is the same unit.
+            _module, other = self.run_subcheck(runner, "auto_decisions")
+            self.assertEqual(json.loads(stats.read_text().splitlines()[-1])["status"], "cache")
+            # Without the wrapper: the script's own spawn function, as a run without --cache takes it.
+            spec_plain = importlib.util.spec_from_file_location("pm_plans_verify_plain", VERIFY_PATH)
+            plain_module = importlib.util.module_from_spec(spec_plain)
+            sys.modules[spec_plain.name] = plain_module
+            saved = list(sys.path)
+            try:
+                sys.path.insert(0, str(VERIFY_PATH.parent))
+                spec_plain.loader.exec_module(plain_module)
+                plain = plain_module._run_subprocess_check("validate_auto_decisions", argparse.Namespace(), timeout_seconds=120)
+            finally:
+                sys.path[:] = saved
+                del sys.modules[spec_plain.name]
+            self.assertEqual(C.normalize_report(fresh, None), C.normalize_report(plain, None))
+            self.assertEqual(C.normalize_report(cached, None), C.normalize_report(plain, None))
+            self.assertEqual({key: value for key, value in C.normalize_report(other, None).items() if key != "check"},
+                             {key: value for key, value in C.normalize_report(plain, None).items() if key != "check"})
+            self.assertEqual(other["check"], "auto-decisions")
 
 
 @unittest.skipUnless(HAS_STRACE, "needs a working strace")
