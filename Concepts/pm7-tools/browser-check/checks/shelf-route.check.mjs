@@ -1,4 +1,33 @@
 // SW-42: inventory every shelf menu, including real panel tabs and expanders.
+// Beyond the PMMenu wrappers: every authored side-panel menu (read from the page file, so a
+// menu the shell portals to <body>, such as File actions, still counts), every popup trigger
+// (aria-haspopup, by mouse and Enter), every context-menu route (found by real right-click,
+// Shift+F10 and the Menu key on each focusable row kind), and every nested branch (hover and
+// ArrowRight/ArrowLeft). Source Control is walked in each engine its switch offers.
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+
+const INPUTS = ['mouse', 'shift-f10', 'menu-key'];
+const KEY = { 'shift-f10': 'Shift+F10', 'menu-key': 'ContextMenu' };
+
+// The side panel as the page under test authors it: the same file the kit opens.
+async function authoredSlot(t) {
+  const page = t.args.page ? String(t.args.page) : fileURLToPath(new URL('../../../PMConcept7.html', import.meta.url));
+  const file = /^file:/i.test(page) ? fileURLToPath(page) : /^[a-z][a-z0-9+.-]+:/i.test(page) ? null : path.resolve(page);
+  if (!file) return { file: page, html: null };
+  const html = await readFile(file, 'utf8');
+  const at = html.indexOf('id="sidePanelSlot"');
+  if (at < 0) return { file, html: null };
+  const start = html.lastIndexOf('<aside', at), re = /<(\/?)aside\b/gi;
+  re.lastIndex = start;
+  for (let m, depth = 0; (m = re.exec(html));) {
+    depth += m[1] ? -1 : 1;
+    if (!depth) return { file, html: html.slice(start, html.indexOf('>', m.index) + 1) };
+  }
+  return { file, html: null };
+}
+
 export default async function (t) {
   if (t.args.blockMenu) await t.page.addInitScript(id => {
     window.__blockedShelfMenu = 0;
@@ -8,8 +37,51 @@ export default async function (t) {
       }
     }, true);
   }, t.args.blockMenu);
+  // Sabotage: --set blockContext=<tab|*>:<mouse|shift-f10|menu-key|*> stops that context-menu input
+  // in the named pane before any owner listener sees it.
+  if (t.args.blockContext) await t.page.addInitScript(spec => {
+    const [tab, input] = String(spec).split(':');
+    window.__blockedContext = 0;
+    const pane = e => {
+      const view = e.target.closest?.('.side-panel-view');
+      const on = view && [...view.querySelectorAll('[role="tab"]')].find(x => x.checkVisibility() && (x.classList.contains('active') || x.getAttribute('aria-selected') === 'true'));
+      return on ? (on.dataset.tab || on.dataset.jjTab || on.textContent.trim()) : '';
+    };
+    const hit = (e, kind) => (input === '*' || input === kind) && !!e.target.closest?.('#sidePanelSlot') && (tab === '*' || pane(e) === tab);
+    const stop = e => { window.__blockedContext++; e.preventDefault(); e.stopImmediatePropagation(); };
+    window.addEventListener('contextmenu', e => { if (hit(e, 'mouse')) stop(e); }, true);
+    window.addEventListener('keydown', e => {
+      const kind = e.key === 'F10' && e.shiftKey ? 'shift-f10' : e.key === 'ContextMenu' ? 'menu-key' : null;
+      if (kind && hit(e, kind)) stop(e);
+    }, true);
+  }, String(t.args.blockContext));
+  // Sabotage: --set blockPopup=<css selector> stops clicks and Enter/Space/ArrowDown on matching side-panel triggers.
+  if (t.args.blockPopup) await t.page.addInitScript(sel => {
+    window.__blockedPopup = 0;
+    const hit = e => !!e.target.closest?.(sel)?.closest('#sidePanelSlot');
+    const stop = e => { window.__blockedPopup++; e.preventDefault(); e.stopImmediatePropagation(); };
+    window.addEventListener('click', e => { if (hit(e)) stop(e); }, true);
+    window.addEventListener('keydown', e => { if (['Enter', ' ', 'ArrowDown'].includes(e.key) && hit(e)) stop(e); }, true);
+  }, String(t.args.blockPopup));
+  // Sabotage: --set blockBranch=<item text|*>:<hover|key|*> stops a nested branch opening by pointer or ArrowRight.
+  if (t.args.blockBranch) await t.page.addInitScript(spec => {
+    const cut = spec.lastIndexOf(':'), name = spec.slice(0, cut), input = spec.slice(cut + 1);
+    window.__blockedBranch = 0;
+    const item = n => n && n.nodeType === 1 ? (n.closest('[role^="menuitem"][aria-haspopup]') || n.querySelector(':scope > [role^="menuitem"][aria-haspopup]')) : null;
+    const hit = (e, kind) => { const it = (input === '*' || input === kind) && item(e.target); return !!it && (name === '*' || it.textContent.includes(name)); };
+    for (const type of ['pointerover', 'pointerenter', 'pointermove', 'mouseover', 'mouseenter', 'mousemove'])
+      window.addEventListener(type, e => { if (hit(e, 'hover')) { window.__blockedBranch++; e.stopImmediatePropagation(); } }, true);
+    window.addEventListener('keydown', e => { if (e.key === 'ArrowRight' && hit(e, 'key')) { window.__blockedBranch++; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+  }, String(t.args.blockBranch));
   await t.viewport(Number(t.args.width || 1920),Number(t.args.height || 1080)); const f = await t.app.open();
   if(t.args.look) await t.app.look(t.args.look);
+  const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
+  // Test-only readers: which menus are open, and a stable key for each (id, PMR id, or parent › label).
+  await f.evaluate(() => {
+    const key = m => { const up = m.parentElement && m.parentElement.closest('[role="menu"]'); return m.id || m.dataset.pmrMenu || ((up ? key(up) + ' › ' : '') + (m.getAttribute('aria-label') || 'menu')); };
+    const open = () => [...document.querySelectorAll('[role="menu"]')].filter(m => m.classList.contains('is-open') && !m.classList.contains('is-closing') && m.checkVisibility());
+    window.__shelf = { key, open, keys: () => open().map(key) };
+  });
   // Preserve the original initial-view census; the complete routed inventory below
   // independently includes hidden tabs and collapsed shelves. Zero here is initial-only.
   const expected = {'panel-files':0,'panel-search':1,'panel-source':0,'panel-git':0,
@@ -20,6 +92,11 @@ export default async function (t) {
     'panel-docker':['shCtxMenu'], 'panel-testing':[], 'panel-run':['rdCfgMenu','rdAfAdapter','rdSessMenu','rdBpMode'],
     'panel-agents':[], 'panel-artifacts':['shArtSort']
   };
+  // Floors only: routes found beyond these are exercised automatically; a shrinking census fails.
+  const expectedContext = { 'panel-files': ['explorer', 'changed', 'open'] };
+  const expectedPopups = {
+    'panel-source': ['d-wt-owner', 'd-jj-owner', 'd-jj-cur-more', 'd-jj-hist-more', 'd-jj-bm-move', 'd-jj-bm-more']
+  };
   // Read the actual PMMenu upgrade contract from the loaded page's owner functions.
   // A selector change in product source changes discovery without a test hand list.
   const selectors = await f.evaluate(() => {
@@ -28,6 +105,21 @@ export default async function (t) {
     return {wrap: read(owner.init, 'querySelectorAll'), trigger: read(owner.upgradeWrap, 'querySelector')};
   });
   await t.check('PMMenu upgrade selectors available',!!selectors.wrap && !!selectors.trigger,JSON.stringify(selectors),{hard:true});
+  // Every menu the page authors in the side panel, nested branches included, parsed without running scripts.
+  const slot = await authoredSlot(t);
+  await t.check('authored side panel read from the page under test', !!slot.html && f.url().split('?')[0] === pathToFileURL(slot.file).href,
+    JSON.stringify({ file: slot.file, frame: f.url().split('?')[0] }), { hard: true });
+  const authored = await f.evaluate(html => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const key = m => { const up = m.parentElement && m.parentElement.closest('[role="menu"]'); return m.id || ((up ? key(up) + ' › ' : '') + (m.getAttribute('aria-label') || 'menu')); };
+    return [...doc.querySelectorAll('[role="menu"]')].map(m => {
+      const up = m.parentElement && m.parentElement.closest('[role="menu"]');
+      return { key: key(m), parent: up ? key(up) : null, trigger: !!(m.id && doc.querySelector(`[aria-controls="${CSS.escape(m.id)}"]`)) };
+    });
+  }, slot.html);
+  const authoredTop = authored.filter(m => !m.parent), authoredNested = authored.filter(m => m.parent);
+  await t.check('authored side-panel menu census floor', authoredTop.length >= 15 && authoredNested.length >= 2 && authoredTop.some(m => !m.trigger),
+    JSON.stringify({ top: authoredTop.map(m => m.key), nested: authoredNested.map(m => m.key) }), { hard: true });
   if (t.args.selftest === 'docker') await f.evaluate(() => {
     window.__blockedDocker = 0;
     window.addEventListener('click', e => {
@@ -39,6 +131,69 @@ export default async function (t) {
   const targets = await f.locator('#activityBar .icon[data-target]').evaluateAll(es => es.filter(e => e.getBoundingClientRect().width).map(e=>e.dataset.target));
   await t.check('expected activity routes present', JSON.stringify([...targets].sort()) === JSON.stringify(Object.keys(expected).sort()), JSON.stringify(targets), {hard:true});
   const rows=[]; let reached=0; const routedRows=[];
+  const opened = new Set(), contextRoutes = [], popupRows = [], branchRows = [], branchDone = new Set();
+  // Assert one open menu: items, a reachable first item, its nested branches, then Escape closes it.
+  const assertMenu = async (key, tag, withBranches = true) => {
+    const info = await f.evaluate(async k => {
+      const m = __shelf.open().find(x => __shelf.key(x) === k);
+      if (!m) return null;
+      await Promise.race([Promise.all(m.getAnimations({ subtree: true }).map(a => a.finished.catch(() => {}))), new Promise(r => setTimeout(r, 1500))]);
+      const own = [...m.querySelectorAll('[role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"]')].filter(it => it.closest('[role="menu"]') === m && it.checkVisibility());
+      const first = own[0], r = first?.getBoundingClientRect(), hit = r && document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+      return { items: own.length, firstOnTop: !!hit && (hit === first || first.contains(hit)) };
+    }, key);
+    await t.check(`${tag} has menu items`, !!info && info.items > 0, JSON.stringify(info), { hard: true });
+    await t.check(`${tag} first item is on top`, info.firstOnTop, '', { hard: true });
+    opened.add(key);
+    if (withBranches) await branches(key, tag);
+    await t.page.keyboard.press('Escape');
+    const closed = await f.waitForFunction(k => !__shelf.open().some(m => __shelf.key(m) === k), key, { timeout: 5000 }).then(() => true, () => false);
+    await t.check(`${tag} closes on Escape`, closed, '', { hard: true });
+    await f.waitForFunction(k => ![...document.querySelectorAll('[role="menu"]')].some(m => __shelf.key(m) === k && m.checkVisibility()), key, { timeout: 5000 }).catch(() => {});
+  };
+  // Nested branches: each parent item opens its menu by pointer and by ArrowRight, and ArrowLeft returns.
+  const branches = async (key, tag) => {
+    const items = await f.evaluate(k => {
+      document.querySelectorAll('[data-shelf-branch]').forEach(e => e.removeAttribute('data-shelf-branch'));
+      const m = __shelf.open().find(x => __shelf.key(x) === k);
+      if (!m) return [];
+      return [...m.querySelectorAll('[role^="menuitem"][aria-haspopup]:not([aria-haspopup="false"])')]
+        .filter(it => it.closest('[role="menu"]') === m && it.checkVisibility())
+        .map((it, i) => { it.setAttribute('data-shelf-branch', String(i)); return it.textContent.trim(); });
+    }, key);
+    const rest = f.locator(`[data-shelf-branch-rest]`);
+    for (const [i, label] of items.entries()) {
+      const item = f.locator(`[data-shelf-branch="${i}"]`), btag = `${tag} branch ${label}`;
+      const before = await f.evaluate(() => __shelf.keys());
+      await item.hover();
+      const sub = await f.waitForFunction(b => __shelf.keys().find(k => !b.includes(k)), before, { timeout: 3000 }).then(h => h.jsonValue(), () => null);
+      await t.check(`${btag} opens on hover`, !!sub, JSON.stringify({ blocked: await f.evaluate(() => window.__blockedBranch || 0) }), { hard: true });
+      const subItems = await f.evaluate(k => {
+        const m = __shelf.open().find(x => __shelf.key(x) === k);
+        return m ? [...m.querySelectorAll('[role^="menuitem"]')].filter(it => it.closest('[role="menu"]') === m && it.checkVisibility()).length : 0;
+      }, sub);
+      await t.check(`${btag} has menu items`, subItems > 0, String(subItems), { hard: true });
+      // Point at an item without a branch: the open branch closes, the parent stays.
+      await f.evaluate(k => {
+        const m = __shelf.open().find(x => __shelf.key(x) === k);
+        const plain = m && [...m.querySelectorAll('[role^="menuitem"]:not([aria-haspopup])')].find(it => it.closest('[role="menu"]') === m && it.checkVisibility());
+        plain?.setAttribute('data-shelf-branch-rest', '');
+      }, key);
+      if (await rest.count()) await rest.hover();
+      const left = await f.waitForFunction(k => !__shelf.keys().includes(k), sub, { timeout: 3000 }).then(() => true, () => false);
+      await t.check(`${btag} closes when the pointer moves on`, left, '', { hard: true });
+      await f.evaluate(() => document.querySelectorAll('[data-shelf-branch-rest]').forEach(e => e.removeAttribute('data-shelf-branch-rest')));
+      await item.focus();
+      await t.page.keyboard.press('ArrowRight');
+      const keyed = await f.waitForFunction(s => __shelf.keys().includes(s) && __shelf.key(document.activeElement.closest('[role="menu"]') || document.body) === s, sub, { timeout: 3000 }).then(() => true, () => false);
+      await t.check(`${btag} opens on ArrowRight with focus inside`, keyed, JSON.stringify({ blocked: await f.evaluate(() => window.__blockedBranch || 0) }), { hard: true });
+      await t.page.keyboard.press('ArrowLeft');
+      const back = await f.waitForFunction(([s, i]) => !__shelf.keys().includes(s) && document.activeElement?.getAttribute('data-shelf-branch') === String(i), [sub, i], { timeout: 3000 }).then(() => true, () => false);
+      await t.check(`${btag} closes on ArrowLeft and returns focus`, back, '', { hard: true });
+      opened.add(sub);
+      branchRows.push({ menu: key, label, sub });
+    }
+  };
   for (const target of targets) {
     const icon=f.locator(`#activityBar .icon[data-target="${target}"]`);await icon.click();await f.waitForTimeout(500);
     // Clicking the already selected Files icon folds its panel; a second click opens it.
@@ -71,13 +226,132 @@ export default async function (t) {
       await t.check(target+' shelf '+id+' closes on Escape',await trigger.getAttribute('aria-expanded')==='false','');reached++;
     }
     // Inventory every wrapper PMMenu upgrades, even before its route is visible.
-    const panel=f.locator(`#${target}`), exercised=new Set(), inventory=new Set();
-    const tabs=await panel.locator('[role="tab"][data-tab]').evaluateAll(es=>es.filter(e=>e.checkVisibility()).map(e=>e.dataset.tab));
-    for (const tab of [null,...tabs]) {
+    const panel=f.locator(`#${target}`), exercised=new Set(), inventory=new Set(), popupDone=new Set(), probed=new Set();
+    // Reach a control the way a person does: scroll its own scroller with the wheel when it has one.
+    const reach = async (loc) => {
+      await loc.scrollIntoViewIfNeeded();
+      const scroll = await loc.evaluate(e=>{
+        for(let a=e.parentElement;a;a=a.parentElement)if(a.scrollHeight>a.clientHeight && /auto|scroll/.test(getComputedStyle(a).overflowY)) {
+          a.setAttribute('data-shelf-scroller','');
+          const r=e.getBoundingClientRect(),s=a.getBoundingClientRect();
+          return {delta:r.y+r.height/2-s.y-s.height/2};
+        }
+      });
+      if(scroll) {
+        await panel.locator('[data-shelf-scroller]').hover();
+        await t.page.mouse.wheel(0,scroll.delta);
+        await f.waitForTimeout(150);
+        await panel.locator('[data-shelf-scroller]').evaluate(e=>e.removeAttribute('data-shelf-scroller'));
+      }
+    };
+    // Every popup trigger the panel shows (PMMenu wrappers and the rail skin's own), by mouse and by Enter.
+    const popupCensus = async (state) => {
+      const cands = await panel.evaluate(p => {
+        const hidden = e => { for (let a = e; a; a = a.parentElement) if (getComputedStyle(a).display === 'none') return true; return false; };
+        document.querySelectorAll('[data-shelf-pop]').forEach(e => e.removeAttribute('data-shelf-pop'));
+        const label = e => (e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ');
+        return [...p.querySelectorAll('[aria-haspopup]:not([aria-haspopup="false"])')].filter(e => !e.closest('[role="menu"]')).map((e, i) => {
+          e.setAttribute('data-shelf-pop', String(i));
+          return { i, controls: e.getAttribute('aria-controls'), sig: [e.tagName, [...e.classList].filter(c => !/^(active|selected|open|on|is-|pmr-cur)/.test(c)).sort().join('.'), e.getAttribute('aria-controls') || label(e)].join('|'),
+            hidden: hidden(e), disabled: e.matches(':disabled, [aria-disabled="true"]') };
+        });
+      });
+      for (const c of cands) {
+        const dedupe = c.controls || `${state}|${c.sig}`;
+        if (c.hidden || c.disabled || popupDone.has(dedupe)) continue;
+        popupDone.add(dedupe);
+        const trig = panel.locator(`[data-shelf-pop="${c.i}"]`), tag = `${target} ${state} popup ${c.controls || c.sig}`;
+        await reach(trig);
+        await t.visible(`#${target} [data-shelf-pop="${c.i}"]`, `${tag} reachable`);
+        const got = {};
+        for (const input of ['mouse', 'enter']) {
+          // A wrapper's mouse route is the census above; its keyboard route is new here.
+          if (input === 'mouse' && c.controls && exercised.has(c.controls)) continue;
+          const before = await f.evaluate(() => __shelf.keys());
+          if (input === 'mouse') await trig.click(); else { await trig.focus(); await t.page.keyboard.press('Enter'); }
+          const key = await f.waitForFunction(b => __shelf.keys().find(k => !b.includes(k)), before, { timeout: 5000 }).then(h => h.jsonValue(), () => null);
+          await t.check(`${tag} opens a menu by ${input}`, !!key, JSON.stringify({ blocked: await f.evaluate(() => window.__blockedPopup || 0) }), { hard: true });
+          got[input] = key;
+          await assertMenu(key, `${tag} by ${input}`);
+          if (await trig.getAttribute('aria-expanded') !== null)
+            await t.check(`${tag} by ${input} trigger collapsed after Escape`, await trig.getAttribute('aria-expanded') === 'false', '', { hard: true });
+        }
+        if (got.mouse && got.enter) await t.check(`${tag} mouse and Enter open the same menu`, got.mouse === got.enter, JSON.stringify(got), { hard: true });
+        const identity = c.controls || got.mouse || got.enter;
+        if (c.controls) opened.add(c.controls);
+        popupRows.push({ panel: target, state, sig: c.sig, controls: c.controls, identity, menus: got });
+      }
+    };
+    // Context routes: right-click, Shift+F10 and the Menu key on one of each focusable row kind.
+    const contextCensus = async (state, engine, tab) => {
+      const cands = await panel.evaluate(p => {
+        document.querySelectorAll('[data-shelf-probe]').forEach(e => e.removeAttribute('data-shelf-probe'));
+        const sig = e => e.tagName + '.' + [...e.classList].filter(c => !/^(active|selected|open|on|focus|hover|pmr-cur|is-|has-)/.test(c)).sort().join('.') + '[' + (e.getAttribute('role') || '') + ']';
+        const seen = new Set(), out = [];
+        p.querySelectorAll('[tabindex]:not([tabindex="-1"]), button, a[href], input, select, textarea, summary, [role="treeitem"], [role="row"], [role="option"], [role="listitem"], [role="gridcell"]').forEach(e => {
+          if (e.closest('[role="menu"]') || !e.checkVisibility() || !e.getBoundingClientRect().width) return;
+          const s = sig(e);
+          if (seen.has(s)) return;
+          seen.add(s); e.setAttribute('data-shelf-probe', String(out.length)); out.push(s);
+        });
+        return out;
+      });
+      for (const [i, sig] of cands.entries()) {
+        if (probed.has(`${state}|${sig}`)) continue;
+        probed.add(`${state}|${sig}`);
+        const row = panel.locator(`[data-shelf-probe="${i}"]`), got = {}, unreachable = [];
+        if (!await row.count()) continue;
+        await t.page.mouse.move(2, 2);
+        // One reach per row kind: into view, and the wheel on its scroller only when its centre is not on top.
+        const point = () => row.evaluate(e => {
+          const r = e.getBoundingClientRect(), x = r.x + r.width / 2, y = r.y + r.height / 2, h = document.elementFromPoint(x, y);
+          return { at: h && (h === e || e.contains(h)) ? { x, y } : null, open: __shelf.keys() };
+        });
+        await row.scrollIntoViewIfNeeded();
+        let p = await point();
+        if (!p.at) { await reach(row); p = await point(); }
+        await t.check(`${target} ${state} no menu open before probing ${sig}`, !p.open.length, JSON.stringify(p.open), { hard: true });
+        for (const input of INPUTS) {
+          if (input === 'mouse') {
+            if (!p.at) { unreachable.push(input); continue; }
+            await t.page.mouse.click(off.x + p.at.x, off.y + p.at.y, { button: 'right' });
+          } else { await row.focus(); await t.page.keyboard.press(KEY[input]); }
+          const key = await f.evaluate(async () => { await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); return __shelf.keys()[0] || null; });
+          if (!key) continue;
+          got[input] = key;
+          const tag = `${target} ${state} context ${key} by ${input} on ${sig}`;
+          contextRoutes.push({ panel: target, engine, tab, sig, input, menu: key });
+          // Branches once per pane, input and menu; every route still asserts open, items and Escape.
+          const once = `${state}|${input}|${key}`;
+          await assertMenu(key, tag, !branchDone.has(once));
+          branchDone.add(once);
+        }
+        const menus = INPUTS.map(input => got[input] || null);
+        if (menus.some(Boolean)) await t.check(`${target} ${state} context menu on ${sig} opens by every input`, menus.every(m => m === menus.find(Boolean)),
+          JSON.stringify({ got, unreachable, blocked: await f.evaluate(() => window.__blockedContext || 0) }), { hard: true });
+      }
+    };
+    // Source Control offers an engine switch; walk each engine it offers, then restore the first.
+    const engines = await panel.locator('[data-pm7-scm-engine]').evaluateAll(es => es.filter(e => e.checkVisibility()).map(e => e.dataset.pm7ScmEngine));
+    const tabsSeen = [];
+    for (const engine of (engines.length ? engines : [null])) {
+    if (engine !== null) {
+      const sw = panel.locator(`[data-pm7-scm-engine="${engine}"]`);
+      await sw.click();
+      await t.check(`${target} engine ${engine} selected`, await panel.evaluate((p, en) => p.dataset.scmEngine === en, engine), '', { hard: true });
+      await f.waitForTimeout(400);
+    }
+    const tabs=await panel.locator('[role="tab"]').evaluateAll(es=>{
+      document.querySelectorAll('[data-shelf-tab]').forEach(e=>e.removeAttribute('data-shelf-tab'));
+      return es.filter(e=>e.checkVisibility()).map((e,i)=>{e.setAttribute('data-shelf-tab',String(i));return e.dataset.tab||e.dataset.jjTab||e.textContent.trim();});
+    });
+    tabsSeen.push(...tabs.map(tab => engine ? `${engine}:${tab}` : tab));
+    for (const [ti, tab] of [[null,null],...tabs.entries()]) {
+      const state = [engine, tab].filter(Boolean).join(' ') || 'panel';
       if(tab!==null) {
-        const control=panel.locator(`[role="tab"][data-tab="${tab}"]`);
+        const control=panel.locator(`[data-shelf-tab="${ti}"]`);
         await control.click();
-        await t.check(`${target} tab ${tab} active`,await control.evaluate(e=>e.classList.contains('active')||e.getAttribute('aria-selected')==='true'),'',{hard:true});
+        await t.check(`${target} ${engine ? engine + ' ' : ''}tab ${tab} active`,await control.evaluate(e=>e.classList.contains('active')||e.getAttribute('aria-selected')==='true'),'',{hard:true});
       }
       // Stable handles: the set of collapsed accordions shrinks after each click.
       const heads=await panel.locator('[data-acc] > [data-collapse]').elementHandles();
@@ -112,20 +386,7 @@ export default async function (t) {
             for(let a=e;a;a=a.parentElement)if(getComputedStyle(a).display==='none')return true;
             return false;
           }))continue;
-          await trigger.scrollIntoViewIfNeeded();
-          const scroll = await trigger.evaluate(e=>{
-            for(let a=e.parentElement;a;a=a.parentElement)if(a.scrollHeight>a.clientHeight && /auto|scroll/.test(getComputedStyle(a).overflowY)) {
-              a.setAttribute('data-shelf-scroller','');
-              const r=e.getBoundingClientRect(),s=a.getBoundingClientRect();
-              return {delta:r.y+r.height/2-s.y-s.height/2};
-            }
-          });
-          if(scroll) {
-            await panel.locator('[data-shelf-scroller]').hover();
-            await t.page.mouse.wheel(0,scroll.delta);
-            await f.waitForTimeout(150);
-            await panel.locator('[data-shelf-scroller]').evaluate(e=>e.removeAttribute('data-shelf-scroller'));
-          }
+          await reach(trigger);
           await t.visible(`#${target} [data-shelf-route="${c.index}"]`,`${target} ${c.key} reachable`);
           await trigger.click();
           await t.check(`${target} ${c.key} opens its menu`,await trigger.getAttribute('aria-expanded')==='true',
@@ -149,16 +410,38 @@ export default async function (t) {
         }
       };
       await exercise();
-
+      // The panel's first state is one of its tabs; census each tab once.
+      if (tab !== null || !tabs.length) { await popupCensus(state); await contextCensus(state, engine, tab); }
     }
-    const row={target,tabs,inventory:[...inventory],exercised:[...exercised]};routedRows.push(row);
+    }
+    if (engines.length > 1) {
+      await panel.locator(`[data-pm7-scm-engine="${engines[0]}"]`).click();
+      await t.check(`${target} engine ${engines[0]} restored`, await panel.evaluate((p, en) => p.dataset.scmEngine === en, engines[0]), '', { hard: true });
+    }
+    const row={target,tabs:tabsSeen,inventory:[...inventory],exercised:[...exercised],popups:popupRows.filter(r=>r.panel===target).map(r=>r.identity),context:contextRoutes.filter(r=>r.panel===target).length};routedRows.push(row);
+    exercised.forEach(k => opened.add(k));
     await t.check(target+' routed shelf census',expectedRouted[target].every(k=>inventory.has(k)),JSON.stringify(row),{hard:true});
     await t.check(target+' complete shelf menu inventory exercised',inventory.size===exercised.size&&[...inventory].every(k=>exercised.has(k)),JSON.stringify(row),{hard:true});
+    await t.check(target+' popup menu floor', (expectedPopups[target] || []).every(k => row.popups.includes(k)), JSON.stringify({ floor: expectedPopups[target] || [], popups: row.popups }), { hard: true });
+    for (const tab of expectedContext[target] || []) {
+      const inputs = new Set(contextRoutes.filter(r => r.panel === target && r.tab === tab).map(r => r.input));
+      await t.check(`${target} ${tab} context menu reached by every input`, INPUTS.every(i => inputs.has(i)),
+        JSON.stringify({ inputs: [...inputs], blocked: await f.evaluate(() => window.__blockedContext || 0) }), { hard: true });
+    }
   }
   await t.check('at least 14 known PMMenu identities exercised',new Set(routedRows.flatMap(r=>r.exercised)).size>=14,JSON.stringify(routedRows),{hard:true});
-  t.log(JSON.stringify({initial:rows,routed:routedRows}));
+  t.log(JSON.stringify({initial:rows,routed:routedRows,popups:popupRows,context:contextRoutes,branches:branchRows}));
   if(t.args.blockMenu) await t.check('capture blocker intercepted requested menu',await f.evaluate(()=>window.__blockedShelfMenu)>0,t.args.blockMenu,{hard:true});
   await t.check('workflow Ref route exercised',routedRows.find(r=>r.target==='panel-git')?.exercised.includes('shDispRefCI'),'',{hard:true});
   await t.check('all rail targets inspected and reachable shelf menus exercised',targets.length===Object.keys(expected).length&&reached===Object.values(expected).reduce((a,b)=>a+b,0),JSON.stringify({reached,rows}));
-  await f.evaluate(()=>document.querySelectorAll('[data-shelf-case],[data-shelf-route]').forEach(e=>{e.removeAttribute('data-shelf-case');e.removeAttribute('data-shelf-route');}));
+  // Completeness against the authored census, plus floors for what only a route can show.
+  const missing = authored.filter(m => !opened.has(m.key)).map(m => m.key);
+  await t.check('every authored side-panel menu opened by a real route', !missing.length, JSON.stringify({ missing, opened: [...opened] }));
+  const routes = new Set(contextRoutes.map(r => [r.panel, r.engine, r.tab, r.input].join('|')));
+  await t.check('at least 9 context-menu routes exercised', routes.size >= 9, JSON.stringify([...routes]));
+  await t.check('at least 2 nested menu branches exercised', new Set(branchRows.map(b => b.sub)).size >= 2, JSON.stringify(branchRows));
+  await t.check('at least 6 popup menus beyond the PMMenu wrappers exercised', new Set(popupRows.filter(r => !r.controls).map(r => r.identity)).size >= 6, JSON.stringify(popupRows));
+  for (const [arg, hits] of [['blockContext', '__blockedContext'], ['blockPopup', '__blockedPopup'], ['blockBranch', '__blockedBranch']])
+    if (t.args[arg]) await t.check(`capture blocker ${arg} intercepted input`, await f.evaluate(h => window[h] || 0, hits) > 0, String(t.args[arg]));
+  await f.evaluate(()=>document.querySelectorAll('[data-shelf-case],[data-shelf-route],[data-shelf-pop],[data-shelf-probe],[data-shelf-tab],[data-shelf-branch]').forEach(e=>{for(const a of ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch'])e.removeAttribute(a);}));
 }
