@@ -1162,6 +1162,25 @@ def listed_totals(check: str, report: dict[str, Any]) -> dict[str, int]:
     }
 
 
+def subcheck_totals(
+    counts: dict[str, dict[str, dict[str, int]]],
+    listed: dict[str, dict[str, int]],
+    timed_out: set[tuple[str, str]],
+) -> dict[str, int | None]:
+    """Every subcheck's total in this run by `check/subcheck`, passing ones too; None for one that timed out.
+
+    Reported only, for comparing one run with the next (scripts/pm-land.py does, inside a batch). Nothing here
+    judges it, and the baseline does not record it.
+    """
+    totals: dict[str, int | None] = {}
+    for check in CHECKS:
+        here, others = counts.get(check) or {}, listed.get(check) or {}
+        for name in sorted(set(here) | set(others)):
+            total = None if (check, name) in timed_out else here[name]["reported"] if name in here else others[name]
+            totals[f"{check}/{name or '-'}"] = total
+    return totals
+
+
 def aggregate_subcheck_commands(
     root: Path,
     names: dict[str, set[str]],
@@ -1895,6 +1914,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     )
     reported = [item for item in items if item["key"] in reported_keys]
     blocking = blocking_items(on_branch, grown, subcheck_growth)
+    totals = subcheck_totals(counts, listed, timed_out)
 
     if args.json:
         if not rule_two:
@@ -1939,6 +1959,8 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                 "grown_subchecks": subcheck_growth,
                 "excused_by_kind": excused_by_kind(on_branch),
                 "resolved_buckets": resolved,
+                "subcheck_totals": totals,
+                "bucket_counts": seen_buckets,
                 "infrastructure": infrastructure,
                 "subcheck_timeout_seconds": args.subcheck_timeout_seconds,
                 "kept_check_reports": str(keep_dir) if keep_dir else None,
@@ -2061,6 +2083,14 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
         for row in infrastructure:
             print(describe_infrastructure(row))
         print(f"Gone since the baseline (nothing to do): {len(resolved)}")
+        for name in resolved:
+            print(f"  [gone] {name}")
+        print(f"Subcheck totals this run: {len(totals)}")
+        for name, total in totals.items():
+            print(f"  [total] {name}  {'timed out' if total is None else total}")
+        print(f"Bucket counts this run: {len(seen_buckets)}")
+        for name, count in sorted(seen_buckets.items()):
+            print(f"  [count] {name}  {count}")
         print()
         if not reported and not grown and not subcheck_growth:
             if infrastructure:
