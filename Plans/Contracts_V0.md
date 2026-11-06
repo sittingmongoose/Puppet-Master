@@ -1886,7 +1886,7 @@ Six UICommand registrations for assistant worktree operations. All require `acti
 | `cmd.chat.worktree.pr` | Create PR | `git-pull-request-create` | chat | `activeThreadHasWorktree && projectHasGitHubRemote` |
 | `cmd.chat.worktree.info` | Worktree Info | `info` | chat | `activeThreadHasWorktree` |
 
-Compatibility aliases such as `cmd.chat.worktree.bind_existing`, `cmd.chat.worktree.open_files`, and `cmd.chat.worktree.create_pr` MAY route to the canonical assistant worktree commands above, but they are not replacements for the canonical six command IDs.
+Compatibility aliases such as `cmd.chat.worktree.open_files` and `cmd.chat.worktree.create_pr` MAY route to the canonical assistant worktree commands above, but they are not replacements for the canonical six command IDs. `cmd.chat.worktree.bind_existing` is not an alias and does not route: DL-335 (2026-11-05) retires it, because Plans/UI_Command_Catalog.md UCC-058 says Arbitrary Bind Existing must not be exposed as `cmd.chat.worktree.bind_existing`.
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/assistant-chat-design.md
 
@@ -11250,7 +11250,8 @@ split_recommended: true
 depends_on: [CV-159]
 unblocks: []
 acceptance_criteria:
-  - "cmd.chat.worktree.bind_existing, cmd.chat.worktree.open_files, and cmd.chat.worktree.create_pr may route to canonical assistant worktree commands."
+  - "cmd.chat.worktree.open_files and cmd.chat.worktree.create_pr may route to canonical assistant worktree commands."
+  - "cmd.chat.worktree.bind_existing does not route: it is retired as a non-alias (DL-335; UCC-058 forbids exposing it)."
   - "Aliases normalize through canonical command IDs."
   - "Aliases are not replacements for the canonical six command IDs."
 validation_surfaces:
@@ -11274,6 +11275,8 @@ preserved_exact_tokens:
   - "`alias_of_command_id`"
 compatibility_only_notes:
   - "Compatibility aliases may route to canonical assistant worktree commands."
+stale_retired_dispositions:
+  - "Amended 2026-11-05 (DL-335): cmd.chat.worktree.bind_existing is retired as a non-alias and is no longer listed as a compatibility alias; it has no primary handler, production-wiring row or dispatch alias."
 negative_constraints:
   - "Compatibility aliases are not replacements for the canonical six command IDs."
 owner_hints:

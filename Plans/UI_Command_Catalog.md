@@ -625,6 +625,9 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalG
 | `cmd.docker.build` | Build Image | Compatibility alias for the selected `cmd.docker.build.*` path | `docker_available && build_target_selected` |
 | `cmd.docker.build.select_target` | Select Build Target | Selects Dockerfile, context, target stage, platform, and build mode before build or bake | `docker_available && build_candidate_present` |
 | `cmd.docker.build.run` | Run Build | Runs the selected Docker build path and records last successful build target plus validation snapshot | `docker_available && build_target_selected` |
+| `cmd.docker.build.image` | Build Image (Image Mode) | Build mode `image`: builds the selected Dockerfile target (context, target stage, platforms) as an image, resolving to the persisted selected target rather than a guessed default | `docker_available && build_target_selected` |
+| `cmd.docker.build.compose` | Build Compose Services | Build mode `compose`: builds the services of the selected compose file target, resolving to the persisted selected target rather than a guessed default | `docker_available && build_target_selected` |
+| `cmd.docker.build.bake` | Build With Bake | Build mode `bake`: builds the selected Bake target and platforms, resolving to the persisted selected target rather than a guessed default | `docker_available && bake_target_selected` |
 | `cmd.docker.bake.preview` | Preview Bake | Previews resolved Bake targets and platforms without publishing | `docker_available && bake_file_resolved` |
 | `cmd.docker.bake.run` | Run Bake | Runs the selected `cmd.docker.bake.*` target | `docker_available && bake_target_selected` |
 | `cmd.docker.run` | Run Container | Starts a container from selected image | `docker_available && image_selected` |
@@ -652,10 +655,12 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalG
 | `cmd.docker.create_repository.cancel` | Cancel Repository Creation | Cancels the protected repository creation request without approving image push or registry promotion | `repository_creation_confirmation_visible` |
 | `cmd.docker.registry.promote` | Promote Registry Artifact | Promotes, copies, or retags a digest-first artifact to a selected target registry/repo/tag | `registry_source_resolved && registry_target_allowed` |
 | `cmd.docker.registry.tag_push` | Tag And Push | Applies the approved `/tag/push` action to a digest-first artifact | `registry_target_allowed && permission_allowed` |
-| `cmd.docker.image.push` | Push Image | Compatibility alias for an approved image push through Docker Manager registry publish authority | `image_selected && registry_target_allowed && permission_allowed` |
+| `cmd.docker.image.push` | Push Image | Pushes an approved image through Docker Manager registry publish authority with its own `DockerImagePushV3Request` (UCC-217); amended 2026-11-05 (DL-333), it is a primary command, not a compatibility alias | `image_selected && registry_target_allowed && permission_allowed` |
 | `cmd.docker.drift.compare` | Compare Docker Drift | Compares local Dockerfile, `/compose/bake`, and manifests with last build, publish, or deploy metadata | `docker_project_detected` |
 | `cmd.docker.cleanup.scan` | Scan Cleanup | Dry-runs prune/remove recommendations with protected asset and receipt checks | `docker_available` |
 | `cmd.docker.cleanup.prune` | Prune Selected Assets | Executes approved cleanup targets after dry-run review | `cleanup_targets_selected && permission_allowed` |
+
+Amended 2026-11-05 (DL-333): `cmd.docker.build.select_target`, `cmd.docker.build.run`, `cmd.docker.bake.preview` and `cmd.docker.bake.run` are the current build flow that `Plans/Containers_Registry_and_Unraid.md` section 2A requires (infer the target, prompt when ambiguous, preview, persist the selected target, and resolve a run to it); `cmd.docker.build.image`, `cmd.docker.build.compose` and `cmd.docker.build.bake` are its three build modes. UCC-049 registers all seven, and each has a production wiring row.
 
 The grouped command token `cmd.docker.compose.scenario.save/run/edit/delete` denotes the scenario command family; payloads use the concrete ids above. Legacy Docker rows normalize into canonical `cmd.docker.container.*`, `cmd.docker.compose.*`, `cmd.docker.bake.*`, or registry command families and MUST NOT introduce new payload shapes.
 `cmd.docker.show` and `cmd.docker.switch_subview` are shell/view-state compatibility wrappers for opening Docker Manager and selecting a Docker Manager subview. They do not replace concrete Docker Manager domain-action rows such as build, compose, registry, cleanup, or Kubernetes commands.
@@ -699,7 +704,7 @@ These commands manage repository-level worktree inventory, ownership, safe actio
 | `cmd.git.worktree.create` | Create Worktree | Creates a new git worktree at specified path | `git_available && !worktree_limit_reached` |
 | `cmd.git.worktree.remove` | Remove Worktree | Removes an existing live worktree after confirmation, lineage, safe-point, blocked-state, and cleanup gates pass | `git_available && worktree_selected && worktree_clean && prune_policy_allows && lineage_gate_passed` |
 | `cmd.git.worktree.prune` | Prune Worktree | Prunes eligible stale worktree metadata after active-run, blocked, safe-point, and lineage gates pass | `git_available && worktree_selected && prune_policy_allows && lineage_gate_passed` |
-| `cmd.git.worktree.request_prune` | Request Worktree Prune | Compatibility alias for approval-gated prune/remove request flows | `git_available && worktree_selected` |
+| `cmd.git.worktree.request_prune` | Request Worktree Prune | Requests an approval-gated prune of the selected worktree without mutating it; `cmd.git.worktree.prune` executes only an approved request (GI-041). Amended 2026-11-05 (DL-333): its own command, not a compatibility alias | `git_available && worktree_selected` |
 | `cmd.git.worktree.reuse` | Reuse Worktree | Rebinds a clean, lineage-compatible worktree to a new run/lane/package owner after reuse gates pass | `git_available && worktree_selected && ownership_resolvable && worktree_clean && lineage_gate_passed` |
 | `cmd.git.worktree.recover` | Recover Worktree | Reopens or rebinds a worktree from stored lineage; if ownership cannot be resolved after restart, marks `unknown ownership` rather than unlocking silently | `git_available && worktree_selected` |
 | `cmd.git.worktree.focus_lineage` | Focus Worktree Lineage | Focuses the selected worktree's owner run, branch lineage, receipt, or `/orphaned` tombstone context without mutating it | `git_available && worktree_selected` |
@@ -789,6 +794,8 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integrat
 | `cmd.chat.open_working_notebook` | `{ thread_id }` | No persisted EventRecord family is currently registered; candidate disposition `candidate_not_registered` per Plans/Working_Notebook.md §3 (fail-closed `command_not_registered` until production wiring exists) | Chat notebook entry (thread header/context controls), command palette |
 | `cmd.chat.request_fresh_context` | `{ thread_id }` | No persisted EventRecord family is currently registered; the request records a Prompt_Pipeline transition lifecycle state; candidate disposition `candidate_not_registered`; result vocabulary `requested | deferred | denied` | Context controls, separately labeled from Compact Now |
 
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
 Rules:
 - hover-summary disclosure is passive UI and does not require its own stable command ID
 - choosing `More Details` dispatches `cmd.chat.open_thread_context_details`
@@ -838,6 +845,8 @@ Rules:
 | `cmd.browser.retry` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |
 | `cmd.browser.keep_closed` | `{ browser_session_id }` | `browser.session.closed` | recovery banner, attention center |
 
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
 Amended 2026-10-09 (DL-180): `cmd.browser.open_workspace_preview`'s `target_editor_panel_id?` and `target_editor_group_id?` no longer select a home panel; it places its browser tab through CV-360's placement fields and the one opening module, and emits `workspace.layout_changed` only when a tab is added. `cmd.browser.focus_browser_tab` reveals the tab that hosts the session. `cmd.browser.open_devtools` is the canonical DevTools command and `cmd.browser.devtools.open` its alias (UCC-202). `cmd.browser.detach_browser_tab` has no producer on a panel tab, because no tab pops out (UCC-203).
 
 Capture event rules:
@@ -877,6 +886,8 @@ Amended 2026-10-09 (DL-181): a terminal is one session per tab in the universal 
 | `cmd.terminal.move_pane` (retired 2026-10-09, UCC-201) | moved-pane identity, source and target `/tab/pane/session`, `/pane/session`, section/window target | terminal layout changed | terminal surfaces |
 | `cmd.terminal.close_pane` (retired 2026-10-09, UCC-201) | `terminal_pane_id`, `terminal_session_id?`, `termination_policy?` | terminal layout changed or session stopping | terminal surfaces |
 | `cmd.terminal.restart_replace` | `terminal_session_id`, `/restart/replace` policy, command replay or shell profile hints | terminal session replaced | command cards, terminal surfaces |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 Fields:
 - stable command IDs
@@ -923,6 +934,8 @@ Rules:
 | `cmd.dev.show_problems` | `{ dev_session_id }` | layout/UI state only | Toolbar, Chat, Problems |
 | `cmd.dev.show_ports` | `{ dev_session_id }` | layout/UI state only | Toolbar, Chat, Ports |
 
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
 #### Catalog lifecycle commands
@@ -936,6 +949,8 @@ Rules:
 | `cmd.catalog.install_item` | `{ item_type, item_id, version? }` | `catalog.install.started`, `catalog.install.completed` | Catalog |
 | `cmd.catalog.update_item` | `{ item_type, item_id, target_version? }` | `catalog.update.started`, `catalog.update.completed` | Catalog |
 | `cmd.catalog.remove_item` | `{ item_type, item_id }` | `catalog.remove.started`, `catalog.remove.completed` | Catalog |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
@@ -959,6 +974,8 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 | `cmd.chat.rewind` | `{ thread_id, target_message_id }` | Rewind conversation history only (`conversation-only`); does not restore files. |
 | `cmd.chat.revert` | `{ project_id, thread_id, target_message_id?, repo_id, worktree_id, expected_turn_manifest_sha256, idempotency_key }` | Restore the complete immutable whole-turn mutation manifest through the FileSafe exact-replace journal; omitted `target_message_id` resolves to the latest eligible mutating assistant turn. The command never rewinds conversation state or branches from a conversation restore point. |
 | `cmd.chat.add_file_reference` | `{ project_id, thread_id?, path, line_range? }` | Insert a visible file reference chip into the composer. File-only compatibility alias to `cmd.chat.attachment.add`; a folder reference uses that shared command with `semantic_kind: folder` (FOLDER-001..003). |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Parameters column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 Canonical signature lock: `cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }`.
 
@@ -1104,6 +1121,8 @@ ContractRef: ContractName:Plans/Commands_System.md#7. Reserved built-in slash co
 | `cmd.chat.goal.start` | `{ thread_id, goal_prompt?, source: slash|button|chip|icon|natural_language }` | Goal Runtime event envelope; concrete Goal event names and payload schemas remain owned by Goal_Runtime_System, Contracts_V0, and storage-plan registration. | Assistant Chat composer, Goal chip, command palette |
 | `cmd.chat.goal.update` | `GoalUpdateRequestV2` under CV-342; exact complete replacement and genuine original accepted-change authority | `GoalUpdateResultV2` plus original `goal.updated` v3 custody under GRS-068/SP-299/SIR-049; existing source routes cannot bypass approved-change authority | Assistant Chat composer, Goal status/menu |
 
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Wiring_Matrix.md
 
 ### 2.8 Assistant memory (Gist Review) commands
@@ -1124,6 +1143,8 @@ These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7
 | `cmd.chat.memory.summarize_monthly` | `{ project_id, month? }` | `memory.monthly_summary.started`, `memory.monthly_summary.completed` | Assistant chat Gist Review panel |
 | `cmd.chat.memory.prune_archive` | `{ project_id, policy? }` | `memory.prune_archive.started`, `memory.prune_archive.completed` | Assistant chat Gist Review panel |
 
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Args schema column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
 ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/Contracts_V0.md#7-uicommand
 
 ---
@@ -1133,6 +1154,8 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 |---|---|---|
 | `cmd.artifacts.show_in_usage` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, usage_record_id?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Usage on the referenced artifact/Usage subject through the pre-existing artifact route/open bridge; `route_target.object_kind = usage_event` is required when `usage_event_ref` is available, while `OpenSubject` retains artifact source-realization identity. This row is not the PMConcept7 Ledger attempt branch. |
 | `cmd.artifacts.show_in_ledger` | `{ project_id, route_target, open_subject, artifact_id?, usage_event_ref?, usage_record_id?, ledger_ref?, provider_attempt_ref?, attempt_id?, node_id?, tool_call_id?, trace_ref?, receipt_refs[]?, raw_payload_ref?, run_id?, thread_id? }` | Opens or focuses Ledger on the referenced artifact, receipt, Usage event, or run context through the existing artifact route/open bridge. It remains event-primary when `usage_event_ref` is present and is not widened into the PMConcept7 attempt-primary branch. |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 
 ### Search Command Catalog
@@ -1149,6 +1172,8 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 | `cmd.search.replace_all` | `{ project_id, query_session_id, replacement }` | Apply the replacement across the entire preserved query session after the Search owner validates the current result snapshot and mutation path. |
 | `cmd.search.rebuild_index` | `{ project_id }` | Triggers Search-owned index rebuild while preserving `/replacement` routing for replace-in-files state. |
 | `cmd.search.evict_remote_cache` | `{ project_id, remote_cache_id? }` | Opens confirmed remote cache eviction for `/eviction/search` without bypassing FinalGUISpec indexing settings copy. |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Parameters column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 Rules:
 - Search command routing resolves through `route_target`.
@@ -1181,6 +1206,8 @@ Canonical recovery commands use one shared namespace: `cmd.runtime.*`. Legacy re
 | `skip_node` | `cmd.runtime.skip_node` | `{ run_id, node_id, attempt_id? }` |
 | `abort_run` | `cmd.runtime.abort_run` | `{ run_id }` |
 | `open_details` | `cmd.runtime.open_attempt_details` | `{ run_id, node_id, attempt_id? }` |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the minimum args column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 SCM-targeted retry and `/fresh-attempt` commands support the same worktree reuse policy as restore. `baseline_target` is closed to `safe_point | historical_commit | worktree_head`; the former stale candidate wording is superseded. Conditional payload and effect are exact:
 
@@ -4032,7 +4059,7 @@ plan_unit_id: UCC-049
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Docker Manager command rows define build, bake, container inspect/logs/shell/restart/stop/delete, image inspect/delete/tag/open Dockerfile, context select, and compatibility aliases for build/logs/exec/inspect.
+canonical_text: Docker Manager command rows define build, bake, container inspect/logs/shell/restart/stop/delete, image inspect/delete/tag/open Dockerfile, context select, and compatibility aliases for build/logs/exec/inspect. Amended 2026-11-05 (DL-333), the build flow commands cmd.docker.build.select_target, cmd.docker.build.run, cmd.docker.bake.preview and cmd.docker.bake.run are current and registered here, and cmd.docker.build.image, cmd.docker.build.compose and cmd.docker.build.bake are its three build modes, as Plans/Containers_Registry_and_Unraid.md section 2A requires.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -4078,6 +4105,10 @@ preserved_exact_tokens:
 - cmd.docker.logs
 - cmd.docker.exec
 - cmd.docker.inspect
+- cmd.docker.build.select_target
+- cmd.docker.build.run
+- cmd.docker.bake.preview
+- cmd.docker.bake.run
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
@@ -4197,9 +4228,9 @@ preserved_exact_tokens:
 negative_constraints:
 - Docker Manager registry publish commands must share permission, account, receipt, and lineage checks rather than claiming a separate event family.
 preserved_contractrefs: []
-compatibility_only_notes:
-- cmd.docker.image.push is a compatibility alias for approved image push through Docker Manager registry authority.
-stale_retired_dispositions: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- 'Amended 2026-11-05 (DL-333): cmd.docker.image.push is a primary command with its own DockerImagePushV3Request (UCC-217); the earlier compatibility-alias note for it is withdrawn.'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -4378,8 +4409,9 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md'
 compatibility_only_notes:
-- cmd.git.worktree.open_files, request_prune, and switch are compatibility aliases.
-stale_retired_dispositions: []
+- cmd.git.worktree.open_files and switch are compatibility aliases.
+stale_retired_dispositions:
+- 'Amended 2026-11-05 (DL-333): cmd.git.worktree.request_prune is its own command, the non-mutating approval-request phase of the two-phase prune flow in GI-041; cmd.git.worktree.prune executes only an approved request. The earlier note that listed it with the compatibility aliases is withdrawn.'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -4645,7 +4677,10 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'cmd.chat.worktree.bind_existing: retired non-alias; no primary handler, production-wiring row or dispatch
+  alias, and it does not route to the canonical assistant worktree commands (DL-335, under the negative constraint
+  above).'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -7305,6 +7340,7 @@ canonical_text: History command wrappers cover focus Orchestrator History, switc
   ledger/raw records, include archived, and rebuild projection. Each command carries identity-native payload refs,
   current-project scope, currentness/authority state, stale-projection gating, and non-mutating immutable-history
   semantics.
+  Amended 2026-11-05 under DL-333 (resolution 9b), the History command family is concrete in the History command rows; resume and retry of a historical run use the runtime recovery commands through allowed_action_ids.
 gui_related: true
 gui_classification_reason: Defines user-visible commands/actions for History rows and rebuild controls.
 depends_on:
@@ -7410,6 +7446,22 @@ preserved_exact_tokens:
 - until rebuild succeeds
 - currentness
 - authority
+- cmd.history.focus
+- cmd.history.switch_subview
+- cmd.history.set_include_archived
+- cmd.history.open_row
+- cmd.history.open_artifacts
+- cmd.history.open_evidence
+- cmd.history.compare_versions
+- cmd.history.duplicate_as_draft
+- cmd.history.reopen_in_wizard
+- cmd.history.send_forward
+- cmd.history.export_selected
+- cmd.history.export_bundle
+- cmd.history.export_filtered_view
+- cmd.history.clone_as_new_run
+- cmd.history.inspect_records
+- cmd.history.rebuild_projection
 negative_constraints:
 - Do not reduce historical runs to read-only summaries when the user needs action routes.
 - Do not omit evidence/artifact/Ledger pivots from historical run rows.
@@ -7461,6 +7513,7 @@ canonical_text: Vision bridge command wrappers cover explicit image source selec
   and manage remembered always-accept permission. Commands must show the selected source, avoid ambiguous screenshot
   auto-selection, preserve FileSafe and permission scope, and avoid presenting bridge-derived answers as if the
   non-vision model directly saw the image.
+  Amended 2026-11-05 under DL-333 (resolution 9b), the Vision bridge command family is concrete in the Vision bridge command rows.
 gui_related: true
 gui_classification_reason: Defines inspect/rerun/copy/attach/manage-permission controls for user-visible image bridge
   artifacts.
@@ -7537,6 +7590,13 @@ preserved_exact_tokens:
 - tool id
 - sensitivity/redaction class
 - revocable/resettable
+- cmd.chat.vision_bridge.select_source
+- cmd.chat.vision_bridge.pick_recent_screenshot
+- cmd.chat.vision_bridge.inspect
+- cmd.chat.vision_bridge.rerun
+- cmd.chat.vision_bridge.copy_description
+- cmd.chat.vision_bridge.attach_result
+- cmd.chat.vision_bridge.manage_permission
 negative_constraints:
 - Do not hide bridge outputs inside opaque provider logs only.
 - Do not show the non-vision model's answer as if it directly saw the image when it consumed a derived description.
@@ -7573,11 +7633,16 @@ canonical_text: Teach guided GUI commands include help-icon launch, /teach launc
   UI, and optional Do it execution only for explicitly safe actions. Mutations require confirmation, permission
   gates, and activity transparency. Degraded states include missing target, stale navigation, permission denied,
   unavailable command, model/capability fallback, missing help entry, and user stop, each with a visible next action.
+  Amended 2026-11-05 under DL-333, following DL-127, typing /teach opens the Teach popup through cmd.chat.teach.capture
+  and is not a Teacher launch; the Teacher keeps the help-icon launch and the intent-classified natural-language route
+  of CS-053.
+  Amended 2026-11-05 under DL-333 (resolution 9b), the Teacher guided GUI command family is concrete in the Teacher guided GUI command rows.
 gui_related: true
 gui_classification_reason: Defines user-visible guided action commands, route/highlight controls, mutation confirmation,
   and degraded action handling.
 depends_on:
 - PS-122
+- DL-127
 unblocks:
 - ATS-014
 acceptance_criteria:
@@ -7693,6 +7758,15 @@ preserved_exact_tokens:
 - help entry missing
 - model fallback/clamp
 - user stops
+- cmd.teacher.open_from_help
+- cmd.teacher.continue_in_teacher
+- cmd.teacher.guide.open_route
+- cmd.teacher.guide.focus
+- cmd.teacher.guide.highlight
+- cmd.teacher.guide.scroll_to
+- cmd.teacher.guide.inspect
+- cmd.teacher.explain_current_ui
+- cmd.teacher.guide.do_it
 negative_constraints:
 - Do not reuse an unrelated active chat thread when the help-icon contract says to open a new teaching conversation.
 - Do not launch Teacher without preserving current surface context needed for useful help.
@@ -7907,6 +7981,8 @@ negative_constraints:
 - Do not delete DRY receipt provenance when the user disables the default guard.
 - Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
   authority.
+stale_retired_dispositions:
+- 'cmd.settings.agent_rules.dry_method_default_guard.set: retired source lineage; no primary handler, production-wiring row or dispatch alias (DL-041).'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 - Plans/Wiring_Matrix.md
@@ -8517,6 +8593,10 @@ The command family required by UCC-098 is concrete. Production GUI controls may 
 | `cmd.plan_compile.request_bounded_recompile` | Request bounded recompile | PlanCompileRun id, affected PlanUnit refs, reason, currentness token | Bounded recompile request receipt |
 | `cmd.plan_compile.open_build` | Open Build | PlanCompileRun id, build/run identity, target artifact or route; disabled until `BuildStarted` or resulting build identity exists | Opens resulting build or build artifact route |
 
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Required payload and guard summary column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
+
+Amended 2026-11-05 (DL-333): these 28 catalog ids are canonical. `Plans/prd_planning_runtime_contracts.json` `ui_command_contracts` is keyed by them, records each id it used before in `alias_command_ids` (UCC-230 lists those as compatibility aliases, excluded from production wiring), and adds `cmd.planning_wizard.topic.open` and `cmd.prd_builder.annotation.resolve` from the rows above; `cmd.plan_compile.open_build` takes the PlanCompileRun id these rows name, not a goal run id.
+
 ### Testing capability and visible-session command rows
 
 Testing policy UI is a first-class command surface, not settings prose alone.
@@ -8588,6 +8668,8 @@ Every command in this addendum consumes the closed v2 `UICommandResponse` in `Pl
 | `cmd.orchestrator.resume` | `run_id`, `resume_scope`, `expected_goal_revision`, `wake_reason`, `idempotency_key` | `run_id`, `scheduler_pass_ref?`, `resumed` | `blocked_state_required`, `stale_projection`, `permission_denied` | `scheduler.pass` |
 | `cmd.dashboard.add_widget` | `project_id`, `dashboard_id`, `widget_id`, `layout_slot`, `expected_layout_revision`, `idempotency_key` | `widget_instance_id`, `layout_revision` | `invalid_args`, `stale_projection` | `dashboard.widget_added` |
 | `cmd.dashboard.catalog` | `project_id?`, `surface`, `filter?`, `cache_policy` | `catalog_revision`, `widget_ids[]` | `handler_unavailable`, `invalid_args` | explicit dispatch receipt |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the Payload fields column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 Amended 2026-10-09 (DL-180): `cmd.dashboard.add_widget` is an alias of `cmd.widget.add` (its `dashboard_id` read as `board_id`) and its `dashboard.widget_added` effect is withdrawn (UCC-202). From the home layout `cmd.panel.undock` and `cmd.panel.redock` take only `chat`, into a window (UCC-203).
 
@@ -8746,39 +8828,1568 @@ owner_hints:
 
 This addendum repairs non-runtime UI command catalog rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
 
-- Repairs `sfk-ddc264cdea296caf349adecd`: active semantic-command rows UCC-049 through UCC-105 inherit the strict schema overlay below. Each active row exposes `command_id`, `payload_required`, `payload_optional`, `result_fields`, `error_codes`, `disabled_reason_codes`, and `owner_doc_ref` either through a concrete current `cmd.*` token in its preserved tokens or through the owner-referenced family schema named in the overlay. Rows with prose-only or slash-token source lineage are implementation-ready only through that owner reference, not as free-form handler text. UCC-106 is now an explicit lineage exclusion: its eleven retained `cmd.onboarding.*` command-era tokens are not active commands or aliases; its separate eight packet candidates are rejected as commands, aliases, and handlers; and its current fourteen `ui.onboarding.*` tokens (`ui.onboarding.choose_look` added by DL-153) are typed local UI actions rather than command-schema rows.
+- Repairs `sfk-ddc264cdea296caf349adecd`: active semantic-command rows UCC-049 through UCC-105 inherit the strict schema overlay below. Each active row exposes `command_id`, `payload_required`, `payload_optional`, `result_fields`, `error_codes`, `disabled_reason_codes`, and `owner_doc_ref` either through a concrete current `cmd.*` token in its preserved tokens or through the owner-referenced family schema named in the overlay. Rows with prose-only or slash-token source lineage are implementation-ready only through that owner reference, not as free-form handler text. UCC-106 is now an explicit lineage exclusion: its eleven retained `cmd.onboarding.*` command-era tokens are not active commands or aliases; its separate eight packet candidates are rejected as commands, aliases, and handlers; and its current fourteen `ui.onboarding.*` tokens (`ui.onboarding.choose_look` added by DL-153) are typed local UI actions rather than command-schema rows. Amended 2026-11-05 (DL-333): the owner reference for each active row is the owner-doc typed definition that UCC-230 names, not this catalog.
 - Repairs `sfk-ed92df2325332306b2463b50`: browser production command IDs keep `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent`; `cmd.browser.run_code`, `cmd.browser.evaluate`, legacy `browser_run_code`, and legacy `browser_evaluate` are compatibility-only diagnostic/page-evaluation lineage, not default production browser commands.
 
 ### UCC-049 through UCC-105 strict schema overlay and UCC-106 lineage exclusion
 
-This overlay is the owner reference for every active command row from UCC-049 through UCC-105. It keeps the catalog as the command-ID SSOT while avoiding duplicated payload tables. Implementers MUST resolve each active row through the row range below, then through the row's concrete current `cmd.*` tokens or compatibility notes. UCC-106 does not inherit this command schema; its retained command-era tokens and current typed local actions have the closed disposition stated in the final row below.
+This overlay is the owner reference for every active command row from UCC-049 through UCC-105. It keeps the catalog as the command-ID SSOT while avoiding duplicated payload tables. Implementers MUST resolve each active row through the row range below, then through the row's concrete current `cmd.*` tokens or compatibility notes. UCC-106 does not inherit this command schema; its retained command-era tokens and current typed local actions have the closed disposition stated in the final row below. Amended 2026-11-05 (DL-333): typed payload definitions live in the owner docs that UCC-230 names; this overlay keeps the common fields and closed code sets and stays the command-id and alias authority.
 
 Common fields for every covered row:
 
 - `command_id`: every concrete current `cmd.*` token in the row's `preserved_exact_tokens`, except a token expressly marked retired, source-lineage-only, or non-alias in `compatibility_only_notes` or `stale_retired_dispositions`; grouped or wildcard tokens are family aliases and must normalize to a concrete active `cmd.*` row before dispatch.
 - `payload_required`: `dispatch_id`, `command_id`, `source_surface`, `actor_ref`, and the row-specific identity listed below.
-- `payload_optional`: `route_target?`, `OpenSubject?`, `project_id?`, `repo_id?`, `worktree_id?`, `run_id?`, `attempt_id?`, `node_id?`, `thread_id?`, `usage_event_ref?`, `usage_record_id?`, `provider_attempt_ref?`, `tool_call_id?`, `trace_ref?`, `receipt_ref?`, `receipt_refs[]?`, `raw_payload_ref?`, `query_session_id?`, `selection_ref?`, `confirmation_ref?`, `idempotency_key?`, and family-specific refs allowed by the owner row.
+- `payload_optional`: `route_target?`, `OpenSubject?`, `project_id?`, `repo_id?`, `worktree_id?`, `run_id?`, `attempt_id?`, `node_id?`, `thread_id?`, `usage_event_ref?`, `usage_record_id?`, `provider_attempt_ref?`, `tool_call_id?`, `trace_ref?`, `receipt_ref?`, `receipt_refs[]?`, `raw_payload_ref?`, `query_session_id?`, `selection_ref?`, `confirmation_ref?`, `idempotency_key?`, and family-specific args defined by the owner-doc definition that UCC-230 names.
 - `result_fields`: the shared closed v2 `UICommandResponse` schema in CV-333, consuming the separately owned typed result rather than duplicating its domain fields.
 - `error_codes`: closed to `invalid_route`, `unknown_command`, `invalid_args`, `permission_denied`, `blocked_state_required`, `stale_projection`, `handler_unavailable`, and `internal_error`; family owners may narrow but not expand this set without a new owner-doc row.
 - `disabled_reason_codes`: closed to `unsupported`, `not_configured`, `unauthorized`, `unreachable`, `degraded`, `partial_capability`, `blocked_state_required`, `stale_projection`, and `permission_required`.
-- `owner_doc_ref`: this document plus the family owner named below; no handler may invent unowned payload keys or fabricate `*.command_applied` events.
+- `owner_doc_ref`: the owner-doc definition unit that UCC-230 names for the command; no handler may invent unowned payload keys or fabricate `*.command_applied` events.
 
 | Rows | Family owner reference | Row-specific required identity |
 |---|---|---|
-| `UCC-049` through `UCC-053` | Docker and Kubernetes command families in this catalog; storage and capability details remain with `Plans/FinalGUISpec.md`, `Plans/Wiring_Matrix.md`, `Plans/storage-plan.md`, and `Plans/Tools.md` ContractRefs already carried by the rows. | `container_ref?`, `image_ref?`, `compose_project_ref?`, `kubernetes_context?`, `namespace?`, and `capability_snapshot_ref` for mutating or capability-gated actions. |
-| `UCC-054` through `UCC-055` | Project-scope worktree command family in this catalog. | `repo_id`, `worktree_id?`, `branch_ref?`, `safe_point_id?`, and `worktree_lifecycle_state` when mutating worktree state. |
-| `UCC-056` through `UCC-060` | Assistant chat, context lens, thread worktree, and context-detail command families in this catalog. | `thread_id` plus `message_id?`, `context_lens_mode?`, `worktree_id?`, `usage_detail_ref?`, or `context_projection_ref?` according to the concrete command. |
-| `UCC-061` through `UCC-065` | Browser and preview command family in this catalog. | `browser_session_id?`, `preview_subject_ref?`, `selection_ref?`, `screenshot_ref?`, and `agent_share_scope?` for capture/share/takeover commands. |
-| `UCC-066` through `UCC-072` | Terminal and dev-session command families in this catalog. | `terminal_session_id?`, `pane_id?`, `dev_session_id?`, `command_ref?`, and `layout_target?` for focus, rerun, split, reveal, and recovery commands. |
-| `UCC-073` through `UCC-076` | Chat message, code-block, rewind/revert, and activity-dimension command families in this catalog. | `thread_id`, `message_id?`, `code_block_id?`, `checkpoint_ref?`, and `activity_dimension?` for the concrete action. |
-| `UCC-077` through `UCC-083` | Debug, web/slash dispatcher, web activity, reserved slash alias, and route-mapping command families in this catalog. | `thread_id`, `debug_session_id?`, `web_operation_id?`, `slash_command_id?`, `route_target?`, and `provider_route_ref?`; retired slash labels must normalize before dispatch. |
-| `UCC-084` through `UCC-088` | Memory, artifact side-panel, and search command families in this catalog. | `memory_item_id?`, `artifact_id?`, `ledger_ref?`, `query_session_id?`, `replacement?`, and `index_scope?` as required by the concrete command. |
-| `UCC-089` through `UCC-095` | Runtime recovery command family in this catalog. | `run_id`, `blocked_sequence`, `allowed_action_id`, `node_id?`, `attempt_id?`, `safe_point_id?`, `baseline_ref?`, and `permission_carry_ref?`; pre-attempt blocked rows MUST NOT fabricate an `attempt_id`. |
-| `UCC-096` through `UCC-100` | Goal, Planning Wizard, Plan Compile, discovery-routed search, and history wrapper command families in this catalog. | `goal_id?`, `thread_id?`, `planning_session_id?`, `plan_pack_ref?`, `plan_compile_run_id?`, `history_query_ref?`, and `target_identity_ref?` for the concrete command. |
-| `UCC-101` through `UCC-105` | Vision bridge, Teach, notification/sound, DRY settings, and containerized-host command families in this catalog. UCC-103 expressly excludes retired non-alias `cmd.settings.open_notifications`; current Notifications navigation uses `cmd.settings.open`. | `image_ref?`, `teach_session_id?`, `notification_destination_id?`, `sound_asset_id?`, `settings_key?`, `host_capability_ref?`, and `host_profile_id?` for the concrete current command. |
+| `UCC-049` through `UCC-053` | Docker and Kubernetes command families: `Plans/Containers_Registry_and_Unraid.md` CRAU-115; storage and capability details remain with `Plans/FinalGUISpec.md`, `Plans/Wiring_Matrix.md`, `Plans/storage-plan.md`, and `Plans/Tools.md` ContractRefs already carried by the rows. | `container_ref?`, `image_ref?`, `compose_project_ref?`, `kubernetes_context?`, `namespace?`, and `capability_snapshot_ref` for mutating or capability-gated actions. |
+| `UCC-054` through `UCC-055` | Project-scope worktree command family: `Plans/WorktreeGitImprovement.md` W-095. | `repo_id`, `worktree_id?`, `branch_ref?`, `safe_point_id?`, and `worktree_lifecycle_state` when mutating worktree state. |
+| `UCC-056` through `UCC-060` | Assistant chat, context lens, thread worktree, and context-detail command families: `Plans/assistant-chat-design.md` ACD-637. | `thread_id` plus `message_id?`, `context_lens_mode?`, `worktree_id?`, `usage_detail_ref?`, or `context_projection_ref?` according to the concrete command. |
+| `UCC-061` through `UCC-065` | Browser and preview command family: `Plans/Section15_MVP_Promoted_Features_Spec.md` SMPFS-328. | `browser_session_id?`, `preview_subject_ref?`, `selection_ref?`, `screenshot_ref?`, and `agent_share_scope?` for capture/share/takeover commands. |
+| `UCC-066` through `UCC-072` | Terminal and dev-session command families: `Plans/Section15_MVP_Promoted_Features_Spec.md` SMPFS-329 (terminal, dev-session and catalog lifecycle commands). | `terminal_session_id?`, `pane_id?`, `dev_session_id?`, `command_ref?`, and `layout_target?` for focus, rerun, split, reveal, and recovery commands. |
+| `UCC-073` through `UCC-076` | Chat message, code-block, rewind/revert, and activity-dimension command families: `Plans/assistant-chat-design.md` ACD-638. | `thread_id`, `message_id?`, `code_block_id?`, `checkpoint_ref?`, and `activity_dimension?` for the concrete action. |
+| `UCC-077` through `UCC-083` | Debug, web/slash dispatcher, web activity, reserved slash alias, and route-mapping command families: `Plans/Commands_System.md` CS-125 (`cmd.debug.*`) and `Plans/assistant-chat-design.md` ACD-639 (`cmd.chat.web.*`, `cmd.chat.stop`). | `thread_id`, `debug_session_id?`, `web_operation_id?`, `slash_command_id?`, `route_target?`, and `provider_route_ref?`; retired slash labels must normalize before dispatch. |
+| `UCC-084` through `UCC-088` | Memory, artifact side-panel, and search command families: `Plans/assistant-memory-subsystem.md` AMS-141 (memory), `Plans/Runtime_Artifacts_Panel.md` RAP-129 (artifacts) and `Plans/FinalGUISpec.md` F3-716 (search). | `memory_item_id?`, `artifact_id?`, `ledger_ref?`, `query_session_id?`, `replacement?`, and `index_scope?` as required by the concrete command. |
+| `UCC-089` through `UCC-095` | Runtime recovery command family: `Plans/Executor_Protocol.md` EP-236. | `run_id`, `blocked_sequence`, `allowed_action_id`, `node_id?`, `attempt_id?`, `safe_point_id?`, `baseline_ref?`, and `permission_carry_ref?`; pre-attempt blocked rows MUST NOT fabricate an `attempt_id`. |
+| `UCC-096` through `UCC-100` | Goal, Planning Wizard, Plan Compile, discovery-routed search, and history wrapper command families: `Plans/Goal_Runtime_System.md` GRS-218, `Plans/PRD_Builder.md` PRDB-024, `Plans/Planning_Wizard.md` PWIZ-109 and `Plans/Plan_To_Node_Compilation.md` PNC-037, and `Plans/Orchestrator_Page.md` OP-049 (History); UCC-230 routes each concrete command and its `prose_unit_resolution` records the units that add no command row. | `goal_id?`, `thread_id?`, `planning_session_id?`, `plan_pack_ref?`, `plan_compile_run_id?`, `history_query_ref?`, and `target_identity_ref?` for the concrete command. |
+| `UCC-101` through `UCC-105` | Vision bridge, Teach, notification/sound, DRY settings, and containerized-host command families: `Plans/FinalGUISpec.md` F3-717 (notifications and sounds), `Plans/Settings_System.md` SSYS-076 (`cmd.settings.open`), `Plans/Containers_Registry_and_Unraid.md` CRAU-116 (Docker/Hosts, `cmd.docker.run`, `cmd.docker.container.open`), `Plans/assistant-chat-design.md` ACD-640 (Vision bridge) and `Plans/FinalGUISpec.md` F3-718 (Teacher guided GUI); UCC-230 routes each concrete command and its `prose_unit_resolution` records the units that add no command row. UCC-103 expressly excludes retired non-alias `cmd.settings.open_notifications`; current Notifications navigation uses `cmd.settings.open`. | `image_ref?`, `teach_session_id?`, `notification_destination_id?`, `sound_asset_id?`, `settings_key?`, `host_capability_ref?`, and `host_profile_id?` for the concrete current command. |
 | `UCC-106` | Product Onboarding is owned by `Plans/Planning_Wizard.md` PWIZ-021 through PWIZ-025. Its eleven command-era `cmd.onboarding.*` identifiers are retained source lineage only, its separate eight packet candidate tokens are rejected as commands/aliases/handlers, and its fourteen `ui.onboarding.*` identifiers (`ui.onboarding.choose_look` added by DL-153) are typed owner-local UI actions. | Not applicable: no Onboarding command schema, alias, primary handler, or production-wiring row. Owner-launch actions consume the v2 phase/draft/preflight/Project-commit bindings and target the existing owner's command; local request/result IDs are `pm.product_onboarding.action_request.v2` and `pm.product_onboarding.action_result.v2`. |
 
 Compatibility-only and retired source tokens in these rows remain searchable lineage. They do not become command IDs unless the row's `command_id` rule maps them to a concrete active `cmd.*` value or an explicit `alias_of_command_id`; tokens expressly marked non-alias never normalize or dispatch.
+
+### UCC-230 - Strict Schema Overlay Owner Definition Map
+
+```yaml
+plan_unit_id: UCC-230
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  UCC-230 maps every active command row of the UCC-049 through UCC-105 strict schema overlay to the owner-doc
+  PlanUnit that holds its typed payload definition (DL-333). A definition is one entry of a
+  pm.command_payload_definitions.v1 block: a fenced yaml block whose only top-level key is
+  command_payload_definitions, with no plan_unit_id key, placed directly after the fence of a command_contract
+  PlanUnit in the owner doc that the owners routing below names, and that unit lists every command it defines in
+  preserved_exact_tokens. A definition gives the command's UICommand.args, each field with a type from the closed
+  vocabulary below, a required flag, a default and canon or gap provenance; its command_kind and response_kind;
+  its owner request and its owner result carried by the CV-333 UICommandResponse; and error and disabled-reason
+  codes narrowed from the overlay's closed sets by the error_narrowing rule. It never restates dispatch_id,
+  command_id, source_surface or actor_ref and never changes the canonical type of a common optional field. The
+  expected set is the overlay command_id rule over the concrete tokens of UCC-049 through UCC-105, plus
+  prose_unit_resolution, minus non_definition_tokens, each of which quotes the canon that marks it. A contested
+  command gets no definition until the coordinator rules. Owner disabled states that fall outside the closed set
+  map to closed codes through owner_state_code_map and stay display detail; identity exemptions exist only where
+  this map records them with a decision. The catalog stays the command-id and alias authority and its command rows
+  hold no data shapes. Fields of type timestamp, url or path take no literal default: their default is none,
+  their owners validate syntax at run time, and an owner that needs a literal default first adds its validation to
+  the checker (DL-333 coordinator resolution 11). scripts/pm-command-payload-defs-check.py checks this map against
+  the overlay and every definition against this map.
+gui_related: false
+gui_classification_reason: Records where command payload types live and how they are checked; no GUI behavior changes.
+split_recommended: false
+depends_on: [DL-333, CV-333, UCC-109]
+unblocks: []
+acceptance_criteria:
+  - "Every expected UCC-049..UCC-105 command has exactly one definition, in the owner unit this map routes it to, or is listed in contested."
+  - "row_groups equal the overlay's row-specific identity cells, and envelope equals the overlay's payload_required and payload_optional bullets."
+  - "Every non_definition_tokens entry quotes the canon that marks it, and every token a unit's compatibility or stale note marks is listed."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+  - python3 scripts/pm-command-payload-defs-check.py
+  - python3 scripts/pm-command-payload-defs-check.py --self-test
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_payload_shape_drift
+reasoning_tier: high
+context_scope: ucc_049_105_typed_definitions
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - scripts/pm-command-payload-defs-check.py
+node_compile_hint:
+  mode: command_payload_definition_map
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to closure question Q5"
+  - "pm-mail 1105034552-f6f4 (pm7-build, 2026-11-05): coordinator resolutions 1-10 under that answer"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/DESIGN.md sections 4-6"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/RESOLUTIONS.md"
+preserved_exact_tokens:
+  - UCC-230
+  - pm.command_payload_definitions.v1
+  - command_payload_definitions
+  - command_payload_definition_map
+negative_constraints:
+  - Do not add payload fields to UI_Command_Catalog command rows.
+  - Do not define a payload for an alias, retired, non-alias, source-lineage, outside-range or contested token.
+  - Do not expand the overlay's closed error or disabled-reason sets; map owner states to closed codes instead.
+  - Do not record an identity exemption anywhere but this map, and only with a decision.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Decision_Log.md
+command_payload_definition_map:
+  format: pm.command_payload_definitions.v1
+  overlay_section: UCC-049 through UCC-105 strict schema overlay and UCC-106 lineage exclusion
+  unit_range:
+  - UCC-049
+  - UCC-105
+  type_vocabulary:
+  - id
+  - ref
+  - secret_ref
+  - string
+  - boolean
+  - integer
+  - sha256
+  - timestamp
+  - url
+  - path
+  - enum
+  - const
+  - list
+  - object
+  - contract
+  constraint_keys:
+  - min_length
+  - max_length
+  - pattern
+  - minimum
+  - maximum
+  - min_items
+  - max_items
+  - unique_items
+  conditional_keys:
+  - required_when
+  - forbidden_when
+  contract_ref_forms:
+  - Plans/<file>.schema.json#/$defs/<Name>
+  - Plans/<Doc>.md#<UNIT-ID>
+  - Primitive:RouteTarget
+  - Primitive:OpenSubject
+  - Primitive:ExecutionContext
+  - local:<Name> (a result named in the same definitions block)
+  literal_default_forbidden_types:
+  - timestamp
+  - url
+  - path
+  default_sentinel: none (absent; the handler applies no implied value)
+  error_narrowing:
+    always:
+    - handler_unavailable
+    - internal_error
+    - invalid_args
+    - permission_denied
+    domain_action_or_stale_disabled:
+    - stale_projection
+    blocked_disabled_or_runtime_group:
+    - blocked_state_required
+    navigation_or_route_args:
+    - invalid_route
+    never:
+    - unknown_command
+  envelope:
+    required_not_restated:
+    - dispatch_id
+    - command_id
+    - source_surface
+    - actor_ref
+    common_optional:
+      route_target:
+        type: contract
+        ref: Primitive:RouteTarget
+      OpenSubject:
+        type: contract
+        ref: Primitive:OpenSubject
+      project_id:
+        type: id
+      repo_id:
+        type: id
+      worktree_id:
+        type: id
+      run_id:
+        type: id
+      attempt_id:
+        type: id
+      node_id:
+        type: id
+      thread_id:
+        type: id
+      usage_event_ref:
+        type: ref
+      usage_record_id:
+        type: id
+      provider_attempt_ref:
+        type: ref
+      tool_call_id:
+        type: id
+      trace_ref:
+        type: ref
+      receipt_ref:
+        type: ref
+      receipt_refs:
+        type: list
+        item:
+          type: ref
+      raw_payload_ref:
+        type: ref
+      query_session_id:
+        type: id
+      selection_ref:
+        type: ref
+      confirmation_ref:
+        type: ref
+      idempotency_key:
+        type: string
+        constraints:
+          max_length: 256
+    identity_typing: row-group identity fields ending in _id are type id and in _ref are type ref; they become required
+      only where the overlay marks them required or canon makes the subject mandatory, citing the source
+  row_groups:
+  - id: UCC-049..UCC-053
+    first: UCC-049
+    last: UCC-053
+    required_identity:
+    - field: capability_snapshot_ref
+      when: domain_action
+    optional_identity:
+    - container_ref
+    - image_ref
+    - compose_project_ref
+    - kubernetes_context
+    - namespace
+  - id: UCC-054..UCC-055
+    first: UCC-054
+    last: UCC-055
+    required_identity:
+    - field: repo_id
+      when: always
+    - field: worktree_lifecycle_state
+      when: domain_action
+    optional_identity:
+    - worktree_id
+    - branch_ref
+    - safe_point_id
+  - id: UCC-056..UCC-060
+    first: UCC-056
+    last: UCC-060
+    required_identity:
+    - field: thread_id
+      when: always
+    optional_identity:
+    - message_id
+    - context_lens_mode
+    - worktree_id
+    - usage_detail_ref
+    - context_projection_ref
+  - id: UCC-061..UCC-065
+    first: UCC-061
+    last: UCC-065
+    required_identity: []
+    optional_identity:
+    - browser_session_id
+    - preview_subject_ref
+    - selection_ref
+    - screenshot_ref
+    - agent_share_scope
+  - id: UCC-066..UCC-072
+    first: UCC-066
+    last: UCC-072
+    required_identity: []
+    optional_identity:
+    - terminal_session_id
+    - pane_id
+    - dev_session_id
+    - command_ref
+    - layout_target
+  - id: UCC-073..UCC-076
+    first: UCC-073
+    last: UCC-076
+    required_identity:
+    - field: thread_id
+      when: always
+    optional_identity:
+    - message_id
+    - code_block_id
+    - checkpoint_ref
+    - activity_dimension
+  - id: UCC-077..UCC-083
+    first: UCC-077
+    last: UCC-083
+    required_identity:
+    - field: thread_id
+      when: always
+    optional_identity:
+    - debug_session_id
+    - web_operation_id
+    - slash_command_id
+    - route_target
+    - provider_route_ref
+  - id: UCC-084..UCC-088
+    first: UCC-084
+    last: UCC-088
+    required_identity: []
+    optional_identity:
+    - memory_item_id
+    - artifact_id
+    - ledger_ref
+    - query_session_id
+    - replacement
+    - index_scope
+  - id: UCC-089..UCC-095
+    first: UCC-089
+    last: UCC-095
+    required_identity:
+    - field: run_id
+      when: always
+    - field: blocked_sequence
+      when: always
+    - field: allowed_action_id
+      when: always
+    optional_identity:
+    - node_id
+    - attempt_id
+    - safe_point_id
+    - baseline_ref
+    - permission_carry_ref
+  - id: UCC-096..UCC-100
+    first: UCC-096
+    last: UCC-100
+    required_identity: []
+    optional_identity:
+    - goal_id
+    - thread_id
+    - planning_session_id
+    - plan_pack_ref
+    - plan_compile_run_id
+    - history_query_ref
+    - target_identity_ref
+  - id: UCC-101..UCC-105
+    first: UCC-101
+    last: UCC-105
+    required_identity: []
+    optional_identity:
+    - image_ref
+    - teach_session_id
+    - notification_destination_id
+    - sound_asset_id
+    - settings_key
+    - host_capability_ref
+    - host_profile_id
+  pre_attempt_admissible:
+    field: attempt_id
+    commands:
+    - cmd.runtime.approve
+    - cmd.runtime.decline
+    - cmd.runtime.open_attempt_details
+    - cmd.runtime.replan
+    - cmd.runtime.resume_after_prerequisite
+    - cmd.runtime.skip_node
+    - cmd.runtime.start_fresh_attempt
+    source: References allowed_action_id table (minimum args with attempt_id?) and the Pre-attempt blocked rule;
+      UCC-092
+  owners:
+    routing_rule: an exact exception wins; otherwise the longest namespace (an id starting with cmd.<namespace>.)
+      among the routes of the command's primary row group (the row group of its lowest-numbered token unit, else
+      of its lowest-numbered prose_unit_resolution unit that adds it)
+    units:
+      CRAU-115: Plans/Containers_Registry_and_Unraid.md
+      CRAU-116: Plans/Containers_Registry_and_Unraid.md
+      W-095: Plans/WorktreeGitImprovement.md
+      ACD-637: Plans/assistant-chat-design.md
+      ACD-638: Plans/assistant-chat-design.md
+      ACD-639: Plans/assistant-chat-design.md
+      SMPFS-328: Plans/Section15_MVP_Promoted_Features_Spec.md
+      SMPFS-329: Plans/Section15_MVP_Promoted_Features_Spec.md
+      CS-125: Plans/Commands_System.md
+      AMS-141: Plans/assistant-memory-subsystem.md
+      RAP-129: Plans/Runtime_Artifacts_Panel.md
+      F3-716: Plans/FinalGUISpec.md
+      F3-717: Plans/FinalGUISpec.md
+      EP-236: Plans/Executor_Protocol.md
+      GRS-218: Plans/Goal_Runtime_System.md
+      PRDB-024: Plans/PRD_Builder.md
+      PWIZ-109: Plans/Planning_Wizard.md
+      PNC-037: Plans/Plan_To_Node_Compilation.md
+      SSYS-076: Plans/Settings_System.md
+      OP-049: Plans/Orchestrator_Page.md
+      ACD-640: Plans/assistant-chat-design.md
+      F3-718: Plans/FinalGUISpec.md
+    routes:
+    - row_group: UCC-049..UCC-053
+      namespace: docker
+      unit: CRAU-115
+    - row_group: UCC-054..UCC-055
+      namespace: git.worktree
+      unit: W-095
+    - row_group: UCC-056..UCC-060
+      namespace: chat
+      unit: ACD-637
+    - row_group: UCC-061..UCC-065
+      namespace: browser
+      unit: SMPFS-328
+    - row_group: UCC-066..UCC-072
+      namespace: terminal
+      unit: SMPFS-329
+    - row_group: UCC-066..UCC-072
+      namespace: dev
+      unit: SMPFS-329
+    - row_group: UCC-066..UCC-072
+      namespace: catalog
+      unit: SMPFS-329
+    - row_group: UCC-073..UCC-076
+      namespace: chat
+      unit: ACD-638
+    - row_group: UCC-077..UCC-083
+      namespace: debug
+      unit: CS-125
+    - row_group: UCC-077..UCC-083
+      namespace: chat.web
+      unit: ACD-639
+    - row_group: UCC-084..UCC-088
+      namespace: chat.memory
+      unit: AMS-141
+    - row_group: UCC-084..UCC-088
+      namespace: artifacts
+      unit: RAP-129
+    - row_group: UCC-084..UCC-088
+      namespace: search
+      unit: F3-716
+    - row_group: UCC-089..UCC-095
+      namespace: runtime
+      unit: EP-236
+    - row_group: UCC-096..UCC-100
+      namespace: chat.goal
+      unit: GRS-218
+    - row_group: UCC-096..UCC-100
+      namespace: prd_builder
+      unit: PRDB-024
+    - row_group: UCC-096..UCC-100
+      namespace: planning_wizard
+      unit: PWIZ-109
+    - row_group: UCC-096..UCC-100
+      namespace: plan_compile
+      unit: PNC-037
+    - row_group: UCC-101..UCC-105
+      namespace: notifications
+      unit: F3-717
+    - row_group: UCC-101..UCC-105
+      namespace: sound
+      unit: F3-717
+    - row_group: UCC-101..UCC-105
+      namespace: docker
+      unit: CRAU-116
+    - row_group: UCC-096..UCC-100
+      namespace: history
+      unit: OP-049
+    - row_group: UCC-101..UCC-105
+      namespace: chat.vision_bridge
+      unit: ACD-640
+    - row_group: UCC-101..UCC-105
+      namespace: teacher
+      unit: F3-718
+    exceptions:
+    - command_id: cmd.orchestrator.push_image
+      unit: CRAU-115
+      reason: UCC-051 token in the Orchestrator namespace; the Docker publication contract is CRAU's.
+    - command_id: cmd.docker.run
+      unit: CRAU-116
+      reason: UCC-105 Docker/Hosts id.
+    - command_id: cmd.docker.container.open
+      unit: CRAU-116
+      reason: UCC-105 Docker/Hosts id.
+    - command_id: cmd.chat.stop
+      unit: ACD-639
+      reason: UCC-083 token outside cmd.chat.web.*; chat-owned stop.
+    - command_id: cmd.settings.open
+      unit: SSYS-076
+      reason: UCC-103 token; Settings route owner.
+  prose_unit_resolution:
+  - unit: UCC-053
+    adds: []
+    covers: []
+    basis: 'Rules only: cmd.container.* retires to cmd.docker.* and cmd.docker.k8s.*; adds disabled-state and approval
+      rules to the UCC-049..UCC-052 commands, no new command.'
+  - unit: UCC-055
+    adds: []
+    covers:
+    - cmd.git.worktree.prune
+    - cmd.git.worktree.recover
+    - cmd.git.worktree.remove
+    - cmd.git.worktree.reuse
+    basis: Covers cmd.git.worktree.remove, prune and reuse (its tokens) and recover (recovery); no new command.
+  - unit: UCC-059
+    adds: []
+    covers:
+    - cmd.chat.worktree.create
+    - cmd.chat.worktree.info
+    - cmd.chat.worktree.merge
+    - cmd.chat.worktree.pr
+    - cmd.chat.worktree.remove
+    - cmd.chat.worktree.unbind
+    basis: Guard variables for the six cmd.chat.worktree.* commands; no new command.
+  - unit: UCC-061
+    adds: []
+    covers:
+    - cmd.browser.add_full_screenshot_to_chat
+    - cmd.browser.add_screenshot_to_chat
+    - cmd.browser.add_selection_full_screenshot_to_chat
+    - cmd.browser.add_selection_screenshot_to_chat
+    - cmd.browser.add_selection_to_chat
+    - cmd.browser.detach_browser_tab
+    - cmd.browser.focus_browser_tab
+    - cmd.browser.keep_closed
+    - cmd.browser.let_agent_continue
+    - cmd.browser.open_detached_preview
+    - cmd.browser.open_devtools
+    - cmd.browser.open_workspace_preview
+    - cmd.browser.pause_agent
+    - cmd.browser.pick_element_for_chat
+    - cmd.browser.promote_to_normal_browsing
+    - cmd.browser.reopen
+    - cmd.browser.retry
+    - cmd.browser.revoke_share_with_agent
+    - cmd.browser.share_with_agent
+    - cmd.browser.stop_agent_keep_browser
+    - cmd.browser.take_over
+    - cmd.browser.toggle_devtools_dock
+    - cmd.terminal.open
+    - cmd.terminal.show
+    basis: Ownership boundary over the browser, terminal and dev commands in range; no new command.
+  - unit: UCC-062
+    adds: []
+    covers:
+    - cmd.browser.add_full_screenshot_to_chat
+    - cmd.browser.add_screenshot_to_chat
+    - cmd.browser.add_selection_full_screenshot_to_chat
+    - cmd.browser.add_selection_screenshot_to_chat
+    - cmd.browser.add_selection_to_chat
+    - cmd.browser.detach_browser_tab
+    - cmd.browser.focus_browser_tab
+    - cmd.browser.keep_closed
+    - cmd.browser.let_agent_continue
+    - cmd.browser.open_detached_preview
+    - cmd.browser.open_devtools
+    - cmd.browser.open_workspace_preview
+    - cmd.browser.pause_agent
+    - cmd.browser.pick_element_for_chat
+    - cmd.browser.promote_to_normal_browsing
+    - cmd.browser.reopen
+    - cmd.browser.retry
+    - cmd.browser.revoke_share_with_agent
+    - cmd.browser.share_with_agent
+    - cmd.browser.stop_agent_keep_browser
+    - cmd.browser.take_over
+    - cmd.browser.toggle_devtools_dock
+    basis: cmd.browser.* resolves to the 22 concrete browser rows of UCC-063..UCC-065.
+  - unit: UCC-066
+    adds: []
+    covers:
+    - cmd.terminal.open
+    - cmd.terminal.show
+    basis: Covers cmd.terminal.open and cmd.terminal.show (promotion and handoff).
+  - unit: UCC-068
+    adds: []
+    covers:
+    - cmd.terminal.focus
+    - cmd.terminal.open
+    - cmd.terminal.restart_replace
+    - cmd.terminal.show
+    basis: Covers cmd.terminal.focus, show, open and restart_replace (reuse precedence).
+  - unit: UCC-069
+    adds: []
+    covers:
+    - cmd.terminal.open
+    - cmd.terminal.rerun
+    - cmd.terminal.show
+    basis: Covers cmd.terminal.open, show and rerun (cards).
+  - unit: UCC-076
+    adds: []
+    covers:
+    - cmd.chat.edit_last_user_message
+    - cmd.chat.resend_last_user_message
+    - cmd.chat.revert
+    - cmd.chat.rewind
+    - cmd.chat.stop
+    basis: Covers cmd.chat.stop, edit_last_user_message, resend_last_user_message, rewind and revert; /edit/delete
+      is a shorthand, not a command.
+  - unit: UCC-079
+    adds: []
+    covers:
+    - cmd.chat.web.crawl
+    - cmd.chat.web.extract
+    - cmd.chat.web.fetch
+    - cmd.chat.web.map
+    - cmd.chat.web.research
+    - cmd.chat.web.search
+    basis: Web activity provenance over the six cmd.chat.web.* operations; no new command.
+  - unit: UCC-080
+    adds: []
+    covers:
+    - cmd.chat.stop
+    - cmd.chat.web.crawl
+    - cmd.chat.web.extract
+    - cmd.chat.web.fetch
+    - cmd.chat.web.map
+    - cmd.chat.web.research
+    - cmd.chat.web.search
+    basis: Slash policy over the cmd.chat.web.* operations and cmd.chat.stop; no new command.
+  - unit: UCC-081
+    adds: []
+    covers:
+    - cmd.chat.web.crawl
+    - cmd.chat.web.extract
+    - cmd.chat.web.fetch
+    - cmd.chat.web.help
+    - cmd.chat.web.map
+    - cmd.chat.web.research
+    - cmd.chat.web.search
+    basis: Supplies provider option names for cmd.chat.web.help and the six cmd.chat.web.* operations; no new command.
+  - unit: UCC-082
+    adds: []
+    covers:
+    - cmd.chat.web.crawl
+    - cmd.chat.web.extract
+    - cmd.chat.web.fetch
+    - cmd.chat.web.help
+    - cmd.chat.web.map
+    - cmd.chat.web.research
+    - cmd.chat.web.search
+    basis: Supplies result-shape hints for cmd.chat.web.help and the six cmd.chat.web.* operations; no new command.
+  - unit: UCC-088
+    adds: []
+    covers:
+    - cmd.search.find_in_files
+    - cmd.search.open_result
+    - cmd.search.replace_all
+    - cmd.search.replace_in_files
+    - cmd.search.replace_selected
+    basis: Covers cmd.search.find_in_files, replace_in_files, open_result, replace_selected and replace_all.
+  - unit: UCC-089
+    adds:
+    - cmd.runtime.abort_run
+    - cmd.runtime.replan
+    - cmd.runtime.restore_safe_point_then_retry
+    - cmd.runtime.resume_after_prerequisite
+    - cmd.runtime.skip_node
+    - cmd.runtime.start_fresh_attempt
+    covers: []
+    basis: Maps allowed_action_id tokens through the References table (allowed_action_id -> canonical command id),
+      adding resume_after_prerequisite, restore_safe_point_then_retry, start_fresh_attempt, replan, skip_node and
+      abort_run.
+  - unit: UCC-090
+    adds: []
+    covers:
+    - cmd.runtime.restore_safe_point_then_retry
+    - cmd.runtime.retry_now
+    - cmd.runtime.start_fresh_attempt
+    basis: Rules over the runtime recovery retry and restore commands; no new command.
+  - unit: UCC-092
+    adds: []
+    covers:
+    - cmd.runtime.abandon_recovery
+    - cmd.runtime.abort_run
+    - cmd.runtime.approve
+    - cmd.runtime.decline
+    - cmd.runtime.locate_and_verify_recovery
+    - cmd.runtime.open_attempt_details
+    - cmd.runtime.replan
+    - cmd.runtime.restore_safe_point_then_retry
+    - cmd.runtime.resume_after_prerequisite
+    - cmd.runtime.retry_now
+    - cmd.runtime.skip_node
+    - cmd.runtime.start_fresh_attempt
+    basis: Pre-attempt blocked-sequence identity over the runtime recovery commands; no new command.
+  - unit: UCC-093
+    adds: []
+    covers:
+    - cmd.runtime.abandon_recovery
+    - cmd.runtime.abort_run
+    - cmd.runtime.approve
+    - cmd.runtime.decline
+    - cmd.runtime.locate_and_verify_recovery
+    - cmd.runtime.open_attempt_details
+    - cmd.runtime.replan
+    - cmd.runtime.restore_safe_point_then_retry
+    - cmd.runtime.resume_after_prerequisite
+    - cmd.runtime.retry_now
+    - cmd.runtime.skip_node
+    - cmd.runtime.start_fresh_attempt
+    basis: Recovery verb copy over the runtime recovery commands; no new command.
+  - unit: UCC-094
+    adds:
+    - cmd.runtime.abandon_recovery
+    - cmd.runtime.locate_and_verify_recovery
+    covers:
+    - cmd.runtime.abort_run
+    - cmd.runtime.approve
+    - cmd.runtime.decline
+    - cmd.runtime.open_attempt_details
+    - cmd.runtime.replan
+    - cmd.runtime.restore_safe_point_then_retry
+    - cmd.runtime.resume_after_prerequisite
+    - cmd.runtime.retry_now
+    - cmd.runtime.skip_node
+    - cmd.runtime.start_fresh_attempt
+    basis: cmd.runtime.* covers the runtime recovery commands plus cmd.runtime.locate_and_verify_recovery and cmd.runtime.abandon_recovery
+      from the Known-37 recovery-unavailable catalog rows.
+  - unit: UCC-095
+    adds: []
+    covers:
+    - cmd.runtime.abandon_recovery
+    - cmd.runtime.abort_run
+    - cmd.runtime.approve
+    - cmd.runtime.decline
+    - cmd.runtime.locate_and_verify_recovery
+    - cmd.runtime.open_attempt_details
+    - cmd.runtime.replan
+    - cmd.runtime.restore_safe_point_then_retry
+    - cmd.runtime.resume_after_prerequisite
+    - cmd.runtime.retry_now
+    - cmd.runtime.skip_node
+    - cmd.runtime.start_fresh_attempt
+    basis: Recovery metadata resolver and permission carry-through over the runtime recovery commands; no new command.
+  - unit: UCC-097
+    adds: []
+    covers:
+    - cmd.plan_compile.cancel
+    - cmd.plan_compile.inspect_assignment
+    - cmd.plan_compile.inspect_blocker
+    - cmd.plan_compile.inspect_evidence
+    - cmd.plan_compile.open_build
+    - cmd.plan_compile.pause
+    - cmd.plan_compile.request_bounded_recompile
+    - cmd.plan_compile.resume
+    - cmd.plan_compile.retry
+    - cmd.planning_wizard.amendment.accept
+    - cmd.planning_wizard.approve_and_build
+    - cmd.planning_wizard.start
+    - cmd.planning_wizard.topic.add
+    - cmd.planning_wizard.topic.defer
+    - cmd.planning_wizard.topic.mark_impacted
+    - cmd.planning_wizard.topic.merge
+    - cmd.planning_wizard.topic.open
+    - cmd.planning_wizard.topic.rename
+    - cmd.planning_wizard.topic.reopen
+    - cmd.planning_wizard.topic.reorder
+    - cmd.planning_wizard.topic.split
+    - cmd.prd_builder.annotation.resolve
+    - cmd.prd_builder.annotation.upsert
+    - cmd.prd_builder.answer.upsert
+    - cmd.prd_builder.approve_for_planning_wizard
+    - cmd.prd_builder.conflict.resolve
+    - cmd.prd_builder.pack.reopen
+    - cmd.prd_builder.source.import
+    basis: Covers the 28 rows of Concrete PRD Builder, Planning Wizard, and Plan Compile command rows (UCC-098 adds
+      them).
+  - unit: UCC-098
+    adds:
+    - cmd.plan_compile.cancel
+    - cmd.plan_compile.inspect_assignment
+    - cmd.plan_compile.inspect_blocker
+    - cmd.plan_compile.inspect_evidence
+    - cmd.plan_compile.open_build
+    - cmd.plan_compile.pause
+    - cmd.plan_compile.request_bounded_recompile
+    - cmd.plan_compile.resume
+    - cmd.plan_compile.retry
+    - cmd.planning_wizard.amendment.accept
+    - cmd.planning_wizard.approve_and_build
+    - cmd.planning_wizard.start
+    - cmd.planning_wizard.topic.add
+    - cmd.planning_wizard.topic.defer
+    - cmd.planning_wizard.topic.mark_impacted
+    - cmd.planning_wizard.topic.merge
+    - cmd.planning_wizard.topic.open
+    - cmd.planning_wizard.topic.rename
+    - cmd.planning_wizard.topic.reopen
+    - cmd.planning_wizard.topic.reorder
+    - cmd.planning_wizard.topic.split
+    - cmd.prd_builder.annotation.resolve
+    - cmd.prd_builder.annotation.upsert
+    - cmd.prd_builder.answer.upsert
+    - cmd.prd_builder.approve_for_planning_wizard
+    - cmd.prd_builder.conflict.resolve
+    - cmd.prd_builder.pack.reopen
+    - cmd.prd_builder.source.import
+    covers: []
+    basis: Adds the 28 rows of Concrete PRD Builder, Planning Wizard, and Plan Compile command rows (the command
+      family required by UCC-098 is concrete).
+  - unit: UCC-099
+    adds: []
+    covers:
+    - cmd.search.find_in_files
+    basis: No cmd.discovery.* family is needed; cmd.search.* stays canon. Covers cmd.search.find_in_files.
+  - unit: UCC-100
+    adds: []
+    covers:
+    - cmd.runtime.resume_after_prerequisite
+    - cmd.runtime.retry_now
+    basis: 'Its History actions are minted as concrete tokens (DL-333 resolution 9b). Resume and retry of a historical
+      run add no History command: they map through allowed_action_ids[] to cmd.runtime.resume_after_prerequisite
+      and cmd.runtime.retry_now (Recovery command definitions).'
+  - unit: UCC-104
+    adds: []
+    covers: []
+    basis: Its only token is retired source lineage; the toggle reuses cmd.settings.transaction.preview and .apply
+      (UCC-120, SSYS-018). No command.
+  - unit: UCC-105
+    adds:
+    - cmd.docker.container.open
+    - cmd.docker.host.access.open_app
+    - cmd.docker.host.instance.restart
+    - cmd.docker.host.instance.retain
+    - cmd.docker.host.instance.start
+    - cmd.docker.host.instance.stop
+    - cmd.docker.host.preflight
+    - cmd.docker.host.profile.save
+    - cmd.docker.host.receipt.open
+    - cmd.docker.host.refresh
+    - cmd.docker.host.session.launch
+    - cmd.docker.hosts.open
+    - cmd.docker.run
+    covers:
+    - cmd.docker.cleanup.prune
+    - cmd.docker.cleanup.scan
+    - cmd.docker.container.attach_shell
+    - cmd.docker.container.view_logs
+    basis: Wildcards only; its canonical_text names the Docker/Hosts ids. Adds the 11 host ids, cmd.docker.run and
+      cmd.docker.container.open; covers cmd.docker.container.view_logs, attach_shell, cleanup.scan and cleanup.prune.
+  non_definition_tokens:
+  - token: cmd.browser.*
+    disposition: family_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-062
+      field: stale_retired_dispositions
+      quote: Older /focus/detach/share/revoke shorthand maps only to concrete rows
+  - token: cmd.browser.devtools.open
+    disposition: alias
+    targets:
+    - cmd.browser.open_devtools
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-063
+      field: stale_retired_dispositions
+      quote: cmd.browser.devtools.open is an alias of cmd.browser.open_devtools
+  - token: cmd.chat.add_file_reference
+    disposition: compatibility_alias
+    targets:
+    - cmd.chat.attachment.add
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: File-only compatibility alias to `cmd.chat.attachment.add`
+    note: Target cmd.chat.attachment.add is owned by UCC-156, outside UCC-049..UCC-105; the signature-locked spelling
+      stays.
+  - token: cmd.chat.close_thread_usage
+    disposition: superseded_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-060
+      field: negative_constraints
+      quote: cmd.chat.open_thread_usage, cmd.chat.focus_thread_usage, and cmd.chat.close_thread_usage are superseded
+    note: Normalizes to cmd.nav.open_usage_subject (UCC-109).
+  - token: cmd.chat.focus_thread_usage
+    disposition: superseded_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-060
+      field: negative_constraints
+      quote: cmd.chat.open_thread_usage, cmd.chat.focus_thread_usage, and cmd.chat.close_thread_usage are superseded
+    note: Normalizes to cmd.nav.open_usage_subject (UCC-109).
+  - token: cmd.chat.open_thread_usage
+    disposition: superseded_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-060
+      field: negative_constraints
+      quote: cmd.chat.open_thread_usage, cmd.chat.focus_thread_usage, and cmd.chat.close_thread_usage are superseded
+    note: Normalizes to cmd.nav.open_usage_subject (UCC-109, outside UCC-049..UCC-105).
+  - token: cmd.chat.teach.capture
+    disposition: owned_outside_range
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-102
+      field: canonical_text
+      quote: typing /teach opens the Teach popup through cmd.chat.teach.capture
+    note: The Teach popup command (DL-127, UCC-172); not a Teacher guided GUI command.
+  - token: cmd.chat.worktree.*
+    disposition: family_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-054
+      field: preserved_exact_tokens
+      quote: cmd.chat.worktree.*
+    note: Thread-scoped family; its concrete rows are UCC-058's.
+  - token: cmd.chat.worktree.bind_existing
+    disposition: retired_non_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-058
+      field: stale_retired_dispositions
+      quote: 'cmd.chat.worktree.bind_existing: retired non-alias; no primary handler, production-wiring row or dispatch
+        alias'
+    note: 'Q5 resolution 4 (DL-335): UCC-058 forbids exposing Bind Existing as this command, so it is retired and gets
+      no definition.'
+  - token: cmd.chat.{new,archive,delete,rename,pin,export,search}
+    disposition: family_alias
+    targets:
+    - cmd.chat.new
+    - cmd.chat.archive
+    - cmd.chat.delete
+    - cmd.chat.rename
+    - cmd.chat.pin
+    - cmd.chat.export
+    - cmd.chat.search
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-056
+      field: preserved_exact_tokens
+      quote: cmd.chat.{new,archive,delete,rename,pin,export,search}
+  - token: cmd.container.*
+    disposition: retired
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-053
+      field: stale_retired_dispositions
+      quote: Legacy cmd.container.* references are retired to active cmd.docker.* and cmd.docker.k8s.* namespaces
+  - token: cmd.debug.*
+    disposition: family_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-077
+      field: preserved_exact_tokens
+      quote: cmd.debug.*
+  - token: cmd.docker.*
+    disposition: family_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-105
+      field: preserved_exact_tokens
+      quote: cmd.docker.*
+  - token: cmd.docker.build
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.build.image
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-049
+      field: compatibility_only_notes
+      quote: cmd.docker.build/logs/exec/inspect are compatibility aliases
+    note: 'Cozy Shelves reconciliation: alias-of cmd.docker.build.image (selected path).'
+  - token: cmd.docker.compose.scenario.save/run/edit/delete
+    disposition: family_alias
+    targets:
+    - cmd.docker.compose.scenario.save
+    - cmd.docker.compose.scenario.run
+    - cmd.docker.compose.scenario.edit
+    - cmd.docker.compose.scenario.delete
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-050
+      field: compatibility_only_notes
+      quote: Grouped scenario command token denotes the scenario command family
+  - token: cmd.docker.compose_down
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.compose.down
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: '| `cmd.docker.compose_down` | Compose Down | Compatibility alias for full-compose down |'
+    note: Target cmd.docker.compose.down is owned by UCC-137, outside UCC-049..UCC-105.
+  - token: cmd.docker.compose_up
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.compose.up
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: '| `cmd.docker.compose_up` | alias-of `cmd.docker.compose.up` |'
+    note: Target cmd.docker.compose.up is owned by UCC-137, outside UCC-049..UCC-105.
+  - token: cmd.docker.exec
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.container.attach_shell
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-049
+      field: compatibility_only_notes
+      quote: cmd.docker.build/logs/exec/inspect are compatibility aliases
+  - token: cmd.docker.inspect
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.container.inspect
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-049
+      field: compatibility_only_notes
+      quote: cmd.docker.build/logs/exec/inspect are compatibility aliases
+  - token: cmd.docker.k8s.*
+    disposition: family_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-105
+      field: preserved_exact_tokens
+      quote: cmd.docker.k8s.*
+  - token: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace
+    disposition: family_alias
+    targets:
+    - cmd.docker.k8s.apply
+    - cmd.docker.k8s.diff
+    - cmd.docker.k8s.logs
+    - cmd.docker.k8s.exec
+    - cmd.docker.k8s.port_forward
+    - cmd.docker.k8s.select_context
+    - cmd.docker.k8s.select_namespace
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-052
+      field: preserved_exact_tokens
+      quote: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace
+  - token: cmd.docker.logs
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.container.view_logs
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-049
+      field: compatibility_only_notes
+      quote: cmd.docker.build/logs/exec/inspect are compatibility aliases
+  - token: cmd.docker.restart
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.container.restart
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: '`cmd.docker.restart` becomes a recorded compatibility alias'
+  - token: cmd.docker.set_context
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.context.select
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: '| `cmd.docker.set_context` | alias-of `cmd.docker.context.select` |'
+  - token: cmd.docker.stop
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.container.stop
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: '`cmd.docker.stop` becomes a recorded compatibility alias'
+  - token: cmd.git.worktree.open_files
+    disposition: compatibility_alias
+    targets:
+    - cmd.git.worktree.open
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-054
+      field: compatibility_only_notes
+      quote: cmd.git.worktree.open_files
+  - token: cmd.git.worktree.switch
+    disposition: compatibility_alias
+    targets:
+    - cmd.git.worktree.open
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-054
+      field: compatibility_only_notes
+      quote: and switch are compatibility aliases
+    note: '2.5C: compatibility alias for select plus open until callers migrate.'
+  - token: cmd.k8s.*
+    disposition: compatibility_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-052
+      field: compatibility_only_notes
+      quote: Existing cmd.k8s.*, set_context, and set_namespace rows are compatibility aliases
+  - token: cmd.panel_tab.close
+    disposition: owned_outside_range
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-072
+      field: canonical_text
+      quote: cmd.panel_tab.close ends the tab's session after the terminal kind's close check
+    note: Owned by UCC-200.
+  - token: cmd.plan_compile.retry_stage
+    disposition: compatibility_alias
+    targets:
+    - cmd.plan_compile.retry
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.plan_compile.retry", "alias_command_ids": ["cmd.plan_compile.retry_stage"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.accept_amendment
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.amendment.accept
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.amendment.accept", "alias_command_ids": ["cmd.planning_wizard.accept_amendment"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.add_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.add
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.add", "alias_command_ids": ["cmd.planning_wizard.add_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.defer_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.defer
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.defer", "alias_command_ids": ["cmd.planning_wizard.defer_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.mark_impacted
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.mark_impacted
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.mark_impacted", "alias_command_ids": ["cmd.planning_wizard.mark_impacted"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.merge_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.merge
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.merge", "alias_command_ids": ["cmd.planning_wizard.merge_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.rename_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.rename
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.rename", "alias_command_ids": ["cmd.planning_wizard.rename_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.reopen_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.reopen
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.reopen", "alias_command_ids": ["cmd.planning_wizard.reopen_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.reorder_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.reorder
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.reorder", "alias_command_ids": ["cmd.planning_wizard.reorder_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.split_topic
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.topic.split
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.topic.split", "alias_command_ids": ["cmd.planning_wizard.split_topic"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.planning_wizard.start_from_prd
+    disposition: compatibility_alias
+    targets:
+    - cmd.planning_wizard.start
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.planning_wizard.start", "alias_command_ids": ["cmd.planning_wizard.start_from_prd"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.prd_builder.annotate_source
+    disposition: compatibility_alias
+    targets:
+    - cmd.prd_builder.annotation.upsert
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.prd_builder.annotation.upsert", "alias_command_ids": ["cmd.prd_builder.annotate_source"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.prd_builder.answer_question
+    disposition: compatibility_alias
+    targets:
+    - cmd.prd_builder.answer.upsert
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.prd_builder.answer.upsert", "alias_command_ids": ["cmd.prd_builder.answer_question"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.prd_builder.approve_for_planning
+    disposition: compatibility_alias
+    targets:
+    - cmd.prd_builder.approve_for_planning_wizard
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.prd_builder.approve_for_planning_wizard", "alias_command_ids": ["cmd.prd_builder.approve_for_planning"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.prd_builder.import_sources
+    disposition: compatibility_alias
+    targets:
+    - cmd.prd_builder.source.import
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.prd_builder.source.import", "alias_command_ids": ["cmd.prd_builder.import_sources"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.prd_builder.reopen_pack
+    disposition: compatibility_alias
+    targets:
+    - cmd.prd_builder.pack.reopen
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.prd_builder.pack.reopen", "alias_command_ids": ["cmd.prd_builder.reopen_pack"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.prd_builder.resolve_conflict
+    disposition: compatibility_alias
+    targets:
+    - cmd.prd_builder.conflict.resolve
+    evidence:
+      doc: Plans/prd_planning_runtime_contracts.json
+      quote: '"command_id": "cmd.prd_builder.conflict.resolve", "alias_command_ids": ["cmd.prd_builder.resolve_conflict"]'
+    note: 'Q5 resolution 1: the catalog id is canonical; the runtime contract file records its former id as an alias.'
+  - token: cmd.runtime.*
+    disposition: family_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-089
+      field: stale_retired_dispositions
+      quote: 'Canonical recovery commands use one shared namespace: cmd.runtime.*'
+    note: Legacy recovery command namespaces are deprecated aliases only (UCC-089 compatibility_only_notes).
+  - token: cmd.settings.agent_rules.dry_method_default_guard.set
+    disposition: source_lineage
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-104
+      field: stale_retired_dispositions
+      quote: 'cmd.settings.agent_rules.dry_method_default_guard.set: retired source lineage'
+  - token: cmd.settings.open_notifications
+    disposition: retired_non_alias
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-103
+      field: stale_retired_dispositions
+      quote: 'cmd.settings.open_notifications: retained source lineage only; no primary handler, production-wiring
+        row, or alias'
+  - token: cmd.settings.transaction.apply
+    disposition: owned_outside_range
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-104
+      field: canonical_text
+      quote: reuses cmd.settings.transaction.preview and cmd.settings.transaction.apply from SSYS-018
+    note: Owned by UCC-120 and SSYS-018.
+  - token: cmd.settings.transaction.preview
+    disposition: owned_outside_range
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-104
+      field: canonical_text
+      quote: reuses cmd.settings.transaction.preview and cmd.settings.transaction.apply from SSYS-018
+    note: Owned by UCC-120 and SSYS-018.
+  - token: cmd.terminal.close_pane
+    disposition: retired
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-072
+      field: stale_retired_dispositions
+      quote: termination_policy retires with cmd.terminal.close_pane
+  - token: cmd.terminal.detach
+    disposition: retired
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-067
+      field: stale_retired_dispositions
+      quote: the detach and pane rows retire; replacements in UCC-201
+  - token: cmd.terminal.kill_session
+    disposition: owned_outside_range
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-072
+      field: canonical_text
+      quote: ending a session while keeping its tab is cmd.terminal.terminate_session or cmd.terminal.kill_session
+        (UCC-201)
+    note: Owned by UCC-201.
+  - token: cmd.terminal.move_pane
+    disposition: retired
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-067
+      field: stale_retired_dispositions
+      quote: the detach and pane rows retire; replacements in UCC-201
+  - token: cmd.terminal.split_pane
+    disposition: retired
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-067
+      field: stale_retired_dispositions
+      quote: the detach and pane rows retire; replacements in UCC-201
+  - token: cmd.terminal.terminate_session
+    disposition: owned_outside_range
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-072
+      field: canonical_text
+      quote: ending a session while keeping its tab is cmd.terminal.terminate_session or cmd.terminal.kill_session
+        (UCC-201)
+    note: Owned by UCC-201.
+  - token: cmd.thread.request
+    disposition: owned_outside_range
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-056
+      field: canonical_text
+      quote: Existing cmd.thread.request/spawn Send uses current local previews and receiver authority
+    note: Owned by UCC-145 and UCC-216.
+  owner_state_code_map:
+  - owner_state: activation_not_active
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: actor_not_authorized
+    maps_to: unauthorized
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: annotation_terminal
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: assignment_missing
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: blocker_missing
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: blocking_findings
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: compile_terminal
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: dependency_conflict
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: dependency_order_conflict
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: dirty_worktree
+    maps_to: blocked_state_required
+    sources:
+    - Plans/GitHub_Integration.md#GI-041; GitHub_Integration.md Worktree Topology Commands
+  - owner_state: duplicate_title
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: evidence_missing
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: ledger_sync_blocked
+    maps_to: degraded
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: missing_approver
+    maps_to: permission_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: missing_claims
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: missing_impact_evidence
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: missing_project_context
+    maps_to: not_configured
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: missing_remote
+    maps_to: not_configured
+    sources:
+    - Plans/GitHub_Integration.md#GI-041; GitHub_Integration.md Worktree Topology Commands
+  - owner_state: missing_resource_limit_profile
+    maps_to: not_configured
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: missing_resume_ref
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: missing_source_lineage
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: mutation_already_active
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: no_invalidated_refs
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: operation_in_progress
+    maps_to: blocked_state_required
+    sources:
+    - Plans/GitHub_Integration.md#GI-041; GitHub_Integration.md Worktree Topology Commands
+  - owner_state: pack_missing
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: parser_sandbox_unavailable
+    maps_to: degraded
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: permission_denied
+    maps_to: permission_required
+    sources:
+    - Plans/GitHub_Integration.md#GI-041; GitHub_Integration.md Worktree Topology Commands; Plans/prd_planning_runtime_contracts.json
+      ui_command_contracts disabled_reason_codes
+  - owner_state: projection_stale
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: protected_branch
+    maps_to: blocked_state_required
+    sources:
+    - Plans/GitHub_Integration.md#GI-041; GitHub_Integration.md Worktree Topology Commands
+  - owner_state: required_topic
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: source_coverage_missing
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: source_limit_exceeded
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: source_quarantined
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stage_not_retryable
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stale_acceptance_index
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stale_anchor_unrelocated
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stale_approved_plan_pack
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stale_final_audit_closure
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stale_named_plan
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stale_pack
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stale_planning_run_revision
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stale_planunit_index
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stale_project_context
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stale_source_security_policy
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stale_testing_policy
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stale_topic_map_version
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: stale_workspace
+    maps_to: stale_projection
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: topic_busy
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: topic_not_deferred_or_ready
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: topics_not_ready
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: untracked_files
+    maps_to: blocked_state_required
+    sources:
+    - Plans/GitHub_Integration.md#GI-041; GitHub_Integration.md Worktree Topology Commands
+  - owner_state: zero_incomplete_failed
+    maps_to: blocked_state_required
+    sources:
+    - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  identity_exemptions:
+  - command_id: cmd.runtime.open_queue_analysis
+    field: allowed_action_id
+    decision: DL-333
+    reason: 'Q5 resolution 7: runtime navigation opens a route by run identity (References navigation commands);
+      it carries no blocked episode.'
+  - command_id: cmd.runtime.open_queue_analysis
+    field: blocked_sequence
+    decision: DL-333
+    reason: 'Q5 resolution 7: runtime navigation opens a route by run identity (References navigation commands);
+      it carries no blocked episode.'
+  - command_id: cmd.runtime.open_remediation_lineage
+    field: allowed_action_id
+    decision: DL-333
+    reason: 'Q5 resolution 7: runtime navigation opens a route by run identity (References navigation commands);
+      it carries no blocked episode.'
+  - command_id: cmd.runtime.open_remediation_lineage
+    field: blocked_sequence
+    decision: DL-333
+    reason: 'Q5 resolution 7: runtime navigation opens a route by run identity (References navigation commands);
+      it carries no blocked episode.'
+  - command_id: cmd.runtime.open_safe_point_history
+    field: allowed_action_id
+    decision: DL-333
+    reason: 'Q5 resolution 7: runtime navigation opens a route by run identity (References navigation commands);
+      it carries no blocked episode.'
+  - command_id: cmd.runtime.open_safe_point_history
+    field: blocked_sequence
+    decision: DL-333
+    reason: 'Q5 resolution 7: runtime navigation opens a route by run identity (References navigation commands);
+      it carries no blocked episode.'
+  - command_id: cmd.chat.new
+    field: thread_id
+    decision: DL-333
+    reason: 'Q5 resolution 8: cmd.chat.new runs before a thread exists (thread_id is minted when the first user
+      message commits); it carries draft identity (ChatNewRequestScopeV2).'
+  contested: []
+```
 
 ## Usage GUI Propagation Addendum - 2026-07-09
 
@@ -8851,6 +10462,8 @@ owner_hints:
   - Plans/Wiring_Matrix.md
   - Plans/Contracts_V0.md
 ```
+
+Lineage pointer (DL-333): UCC-109 stays the route payload contract. For `cmd.artifacts.show_in_usage` and `cmd.artifacts.show_in_ledger` its field list is history beside their typed definitions in the owner doc that UCC-230 names, which reference this contract.
 
 ## PMConcept6 Control Census Command Addendum - 2026-07-16
 
@@ -10441,7 +12054,7 @@ Metadata legend for the registration tables: availability classes are `always` (
 | `cmd.docker.container.inspect` | newly registered | |
 | `cmd.docker.container.delete` | canonical (registered below) | UCC-049 preserved token; destructive |
 | `cmd.docker.build` | alias-of `cmd.docker.build.image` (selected path) | existing section 2.5A alias |
-| `cmd.docker.image.push` | alias (existing) | `domain.image_publish` class unchanged |
+| `cmd.docker.image.push` | alias (existing); amended 2026-11-05 (DL-333): primary command | `domain.image_publish` class unchanged; its own `DockerImagePushV3Request` (UCC-217) |
 | `cmd.docker.image.tag` / `cmd.docker.image.inspect` / `cmd.docker.image.delete` | newly registered | delete is destructive |
 | `cmd.docker.compose_up` | alias-of `cmd.docker.compose.up` | alias target adjudicated by UCC-137 below |
 | `cmd.docker.compose.up` / `cmd.docker.compose.down` / `cmd.docker.compose.restart` | newly registered | whole-file group verbs beside the existing subset rows |
@@ -18711,7 +20324,7 @@ canonical_text: 'No project is genuine application scope, with a named fixed Com
   cmd.chat.revoke_investigation_item, cmd.chat.rewind, cmd.chat.run_user_command, cmd.chat.search, cmd.chat.send,
   cmd.chat.settings, cmd.chat.stop, cmd.chat.switch_thread, cmd.chat.toggle_message_details, cmd.chat.web.cancel,
   cmd.chat.web.crawl, cmd.chat.web.extract, cmd.chat.web.fetch, cmd.chat.web.help, cmd.chat.web.map, cmd.chat.web.request_again,
-  cmd.chat.web.research, cmd.chat.web.search, cmd.chat.worktree, cmd.chat.worktree.bind_existing, cmd.chat.worktree.create,
+  cmd.chat.web.research, cmd.chat.web.search, cmd.chat.worktree, cmd.chat.worktree.create,
   cmd.chat.worktree.info, cmd.chat.worktree.merge, cmd.chat.worktree.pr, cmd.chat.worktree.remove, cmd.chat.worktree.unbind,
   cmd.file.copy_full_path, cmd.file.copy_nodes, cmd.file.copy_path, cmd.file.copy_relative_path, cmd.file.cut_nodes,
   cmd.file.delete, cmd.file.expand_capped, cmd.file.new_file, cmd.file.new_folder, cmd.file.open, cmd.file.open_in_system_default,
@@ -18723,7 +20336,9 @@ canonical_text: 'No project is genuine application scope, with a named fixed Com
   cmd.terminal.allow_agent_input, cmd.terminal.deny_agent_input, cmd.terminal.hand_back, cmd.terminal.interrupt,
   cmd.terminal.stop_agent, cmd.terminal.take_over, cmd.terminal.appearance.set, cmd.terminal.appearance.import_scheme,
   cmd.terminal.clear, cmd.terminal.revoke_agent_input, cmd.terminal.send_signal, cmd.chat.queue.send_now,
-  cmd.chat.processes.open. Native availability remains handler_unavailable. Resolve the selected WorkflowScopeV2:
+  cmd.chat.processes.open. cmd.chat.worktree.bind_existing is not one of them: DL-335 retires it as a non-alias
+  because UCC-058 forbids exposing it, and its Touch row TCP-FB-259 stays blocked. Native availability remains
+  handler_unavailable. Resolve the selected WorkflowScopeV2:
   application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required
   thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their
   actual Server scope without fabricating a thread; view-only and metadata reads require only their declared
@@ -19643,3 +21258,56 @@ The binding companion gives the complete local request/result/availability/error
 | `computer.screen` | Plans/Tools.md#T-186 | Plans/computer_use_contracts.schema.json#/$defs/ComputerScreenRequestV1 | Plans/computer_use_contracts.schema.json#/$defs/ComputerScreenResultV1 | Chat screen-tool invocation / admitted app-window / Using the screen of [Computer] / targeted Stop; tools::computer::screen |
 | `computer.pointer` | Plans/Tools.md#T-186 | Plans/computer_use_contracts.schema.json#/$defs/ComputerPointerRequestV1 | Plans/computer_use_contracts.schema.json#/$defs/ComputerPointerResultV1 | Chat screen-tool invocation / admitted app-window / Using the screen of [Computer] / targeted Stop; tools::computer::pointer |
 | `computer.keys` | Plans/Tools.md#T-186 | Plans/computer_use_contracts.schema.json#/$defs/ComputerKeysRequestV1 | Plans/computer_use_contracts.schema.json#/$defs/ComputerKeysResultV1 | Chat screen-tool invocation / admitted app-window / Using the screen of [Computer] / targeted Stop; tools::computer::keys |
+
+## History, Vision Bridge And Teacher Command Rows Addendum - 2026-11-05
+
+Q5 resolution 9b (DL-333): UCC-100, UCC-101 and UCC-102 named these command families without concrete ids. The rows below mint one id for each action those units list, taking each label, description and precondition from the unit and its owners (History: OP-026, OP-027; Vision bridge: T-165, ACD-425, PS-121; Teacher: F3-403, CS-053, CV-297, PS-122). Two listed actions add no History id: resume and retry of a historical run map through `allowed_action_ids[]` to `cmd.runtime.resume_after_prerequisite` and `cmd.runtime.retry_now`, because the Recovery command definitions forbid a surface-local recovery family. Typing /teach opens the Teach popup (DL-127), not the Teacher. The rows hold no data shapes; UCC-230 routes each id to its owner-doc definition (History OP-049, Vision bridge ACD-640, Teacher F3-718).
+
+### History command rows (UCC-100)
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|---|---|---|---|---|
+| `cmd.history.focus` | Open History | Opens or focuses the current project's Orchestrator History tab | `project_selected` | `navigation_wrapper` |
+| `cmd.history.switch_subview` | Switch History Subview | Switches History between its Documents and Runs subviews as view state | `history_visible` | `shell_view` |
+| `cmd.history.set_include_archived` | Include Archived | Shows or hides archived rows inside All history; archived rows keep a visible label | `history_visible && all_history_selected` | `shell_view` |
+| `cmd.history.open_row` | Open | Opens the selected historical document or run by its stable identity, read-only | `history_row_selected` | `navigation_wrapper` |
+| `cmd.history.open_artifacts` | Open Artifacts | Opens the artifacts linked to the selected row | `history_row_selected && row_artifacts_linked` | `navigation_wrapper` |
+| `cmd.history.open_evidence` | Open Evidence | Opens the evidence linked to the selected row | `history_row_selected && row_evidence_linked` | `navigation_wrapper` |
+| `cmd.history.compare_versions` | Compare Versions | Opens the deep compare of the selected document versions: side-by-side rendered diff, metadata and source-lineage pane, and atom/manifest change table; blocked while the projection is stale | `history_document_versions_selected && history_projection_current` | `navigation_wrapper` |
+| `cmd.history.duplicate_as_draft` | Duplicate As Draft | Creates a new draft from the selected historical document; the historical record is not changed | `history_document_selected` | `domain_action` |
+| `cmd.history.reopen_in_wizard` | Reopen In Wizard | Reopens the selected historical document in the Planning Wizard as new mutable state after currentness and authority checks; the record stays immutable | `history_document_selected && history_projection_current && currentness_allows` | `domain_action` |
+| `cmd.history.send_forward` | Send Forward | Sends the selected historical document forward when currentness allows | `history_document_selected && history_projection_current && currentness_allows` | `domain_action` |
+| `cmd.history.export_selected` | Export | Exports the selected row as zip with manifest, JSON, or rendered Markdown, HTML or PDF, under an explicit evidence/redaction profile | `history_row_selected && history_projection_current` | `domain_action` |
+| `cmd.history.export_bundle` | Export Bundle | Exports the multi-selected rows as one bundle with its manifest | `history_rows_multi_selected && history_projection_current` | `domain_action` |
+| `cmd.history.export_filtered_view` | Export Filtered View | Exports the whole filtered view with its active filter context and manifest | `history_visible && history_projection_current` | `domain_action` |
+| `cmd.history.clone_as_new_run` | Clone As New Run | Starts a new run cloned from the selected historical run under a new identity after currentness and authority checks | `history_run_selected && currentness_allows` | `domain_action` |
+| `cmd.history.inspect_records` | Inspect Records | Opens the ledger and raw records behind the selected row for read-only inspection | `history_row_selected` | `navigation_wrapper` |
+| `cmd.history.rebuild_projection` | Rebuild | Rebuilds the History projection from the immutable source records without changing them; compare, export, reopen and send forward stay blocked until it succeeds | `history_visible` | `domain_action` |
+
+### Vision bridge command rows (UCC-101)
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|---|---|---|---|---|
+| `cmd.chat.vision_bridge.select_source` | Select Image Source | Chooses the image the bridge reads from the allowed source classes (current-turn attachment, selected artifact, project file allowed by FileSafe, clipboard image, recent OS screenshot) and shows the selected source | `vision_bridge_available` | `domain_action` |
+| `cmd.chat.vision_bridge.pick_recent_screenshot` | Choose Recent Screenshot | Opens the recent OS screenshot picker and uses the screenshot the user picks; an ambiguous recent screenshot is never chosen silently | `vision_bridge_available && recent_screenshot_access_allowed` | `domain_action` |
+| `cmd.chat.vision_bridge.inspect` | Inspect | Opens the bridge-derived description with its source image or artifact link, provider/model used, and freshness/cache state | `vision_bridge_result_present` | `navigation_wrapper` |
+| `cmd.chat.vision_bridge.rerun` | Rerun With A Question | Runs the bridge again on the same source with the user's question | `vision_bridge_result_present && permission_allowed` | `domain_action` |
+| `cmd.chat.vision_bridge.copy_description` | Copy Description | Copies the derived description to the clipboard | `vision_bridge_result_present` | `shell_view` |
+| `cmd.chat.vision_bridge.attach_result` | Attach Result | Attaches the bridge result to the current turn or run, labelled as bridge-derived | `vision_bridge_result_present && attach_target_available` | `domain_action` |
+| `cmd.chat.vision_bridge.manage_permission` | Manage Always Accept | Opens the remembered always-accept image permission for inspection, narrowing or revocation in its Permissions owner (PS-121) | `remembered_vision_permission_present` | `navigation_wrapper` |
+
+### Teacher guided GUI command rows (UCC-102)
+
+| Command ID | Label | Description | Preconditions | command_kind |
+|---|---|---|---|---|
+| `cmd.teacher.open_from_help` | Ask Teacher | Opens a new Teacher thread from a help icon with the current surface and control context | `help_icon_visible` | `domain_action` |
+| `cmd.teacher.continue_in_teacher` | Continue With Teacher | Hands an intent-classified natural-language request off into a new or selected Teacher thread with the current surface context (CS-053) | `teach_intent_classified` | `domain_action` |
+| `cmd.teacher.guide.open_route` | Open Route | Guided step: opens a canonical route target to show the user where something is | `teacher_guidance_active && route_target_resolvable` | `navigation_wrapper` |
+| `cmd.teacher.guide.focus` | Focus Panel | Guided step: focuses a tab or panel | `teacher_guidance_active && target_present` | `shell_view` |
+| `cmd.teacher.guide.highlight` | Highlight | Guided step: spotlights or outlines a control or region with an anchored caption that does not cover the target | `teacher_guidance_active && target_present` | `shell_view` |
+| `cmd.teacher.guide.scroll_to` | Scroll To Field | Guided step: scrolls to a section or field | `teacher_guidance_active && target_present` | `shell_view` |
+| `cmd.teacher.guide.inspect` | Show Details | Guided step: expands non-mutating details or previews a selection, read-only | `teacher_guidance_active && target_present` | `shell_view` |
+| `cmd.teacher.explain_current_ui` | Explain This Screen | Asks Teacher to explain the current surface in the Teacher thread | `teacher_thread_available` | `domain_action` |
+| `cmd.teacher.guide.do_it` | Do It | Runs an explicitly safe action for the user through its stable command after confirmation and permission gates; a mutation always needs confirmation | `teacher_guidance_active && action_explicitly_safe && confirmation_given` | `domain_action` |
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Wiring_Matrix.md

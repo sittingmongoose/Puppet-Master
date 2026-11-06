@@ -2,9 +2,9 @@
 
 Source: `Plans/Wiring_Matrix.md`
 
-Source lines: L649-L3069
+Source lines: L650-L3071
 
-Source SHA256: `f6a28414ac01dc77d88272b6115e2257fd8fdc72f26efa73bd0920aefbf120e1`
+Source SHA256: `4efcd3485739534c22678ccdfee907f870afd1f43e04aea7e60115e8757f0465`
 
 ---
 
@@ -1625,7 +1625,7 @@ plan_unit_id: WM-025
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: Chat-to-WorktreeManager wiring covers create/remove/bind/list/merge/create-pr flows, auto-create via branching.assistant_auto_worktree, and preservation of thread_id, branch/base refs, worktree_id, and path data flow.
+canonical_text: Chat-to-WorktreeManager wiring covers create/remove/merge/create-pr flows, auto-create via branching.assistant_auto_worktree, and preservation of thread_id, branch/base refs, worktree_id, and path data flow; the Bind Existing list flow (list_worktrees) is retired by DL-335 and not wired.
 gui_related: true
 gui_classification_reason: The unit covers user-visible chat header, dropdown, merge dialog, PR, and Source Control worktree actions.
 split_recommended: false
@@ -1675,7 +1675,8 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Contracts_V0.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Retired 2026-11-05 (DL-335): the Chat dropdown Bind Existing wiring row (WorktreeManager list_worktrees) is removed; UCC-058 forbids exposing Bind Existing as cmd.chat.worktree.bind_existing and W.17 keeps it out of the MVP.'
 owner_hints:
 - Plans/Wiring_Matrix.md
 - Plans/assistant-chat-design.md

@@ -13036,62 +13036,6 @@
       ]
     },
     {
-      "command_id": "cmd.chat.worktree.bind_existing",
-      "owner_ref": "Plans/assistant-chat-design.md#ACD-508",
-      "handler": "handlers::chat::worktree_bind_existing",
-      "request_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
-      "group": "no_project",
-      "gui_consumers": [
-        "Assistant Chat surface"
-      ],
-      "effect": "cmd.chat.worktree.bind_existing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
-      "availability": "Requires an explicitly bound real Project/backend/owner target; this is an actual target requirement, not a blanket app mode gate. No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
-      "permission": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
-      "currentness": "Validate the exact operation-declared source/target refs and revisions/hashes. Mutation/execution rechecks the sole writer/lease, permission and Stop/pause/revocation generations at entry and immediately before effect. Read/navigation/local paths validate their declared read target/source/view generation; they do not demand a write lease merely to inspect. Owner-admitted stale/as-of read-only presentation never claims fresh authority or enables effects. Same idempotency key/digest returns the original result; conflict or dedupe unavailable performs no effect.",
-      "return_contract": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
-      "request_ids": [
-        "A-F06",
-        "A-F07",
-        "C-F01",
-        "B-F04",
-        "B-F05",
-        "B-F06",
-        "B-F07",
-        "B-F08",
-        "B-F09",
-        "B-F10",
-        "B-F11",
-        "B-F12",
-        "C-F02",
-        "C-F03",
-        "C-F04",
-        "C-F05",
-        "C-F10",
-        "C-F11",
-        "D-F05"
-      ],
-      "state_selector": "state.commands.chat_worktree_bind_existing.availability",
-      "disabled_reason_projection": "state.commands.chat_worktree_bind_existing.disabled_reason",
-      "command_kind": "domain_action",
-      "confirmation": "owner_policy",
-      "normalization": {
-        "kind": "canonical",
-        "alias_of_command_id": null
-      },
-      "handler_status": "specified",
-      "availability_until_native_evidence": "handler_unavailable",
-      "expected_event_types": [],
-      "event_policy": "Preserve existing owner admission; no EventRecord is admitted by this binding. Required unadmitted producers block their effects.",
-      "error_schema_ref": "Plans/ui_command_response.schema.json#/$defs/UICommandError",
-      "new_primary": false,
-      "row_id": "catalog.chat_worktree_bind_existing",
-      "contract_status": "scope-aware definition specified; historical resources remain exact; native evidence unproved",
-      "production_row_ids": [
-        "catalog.chat_worktree_bind_existing"
-      ]
-    },
-    {
       "command_id": "cmd.chat.worktree.create",
       "owner_ref": "Plans/assistant-chat-design.md#ACD-508",
       "handler": "handlers::chat::worktree_create",
