@@ -16,6 +16,8 @@ All three witnesses are static text checks; they need no model and make no judgm
 Coverage is the set of atom-to-existing-owner mappings. When no atom reaches an owner, the result is vacuous, never pass,
 even if nominal targets exist and their registries were checked. --allow-empty explicitly permits only that empty result.
 A targeted owner unit with more than one independent definition, in one document or across documents, is a finding.
+A targeted or repaired owner ID named in a form the witness does not parse as a definition is refused, never skipped.
+Same-document DL-* repeats are disclosed with their titles; a repair compares every definition of its unit.
 Reviewed held/ledger-retired token exemptions live in records/compile_witness_exemptions.jsonl. Each needs a matching
 structured token_dispositions entry on the accepted ledger record it cites; missing, active or conflicting entries are refused.
 Exit 0 for pass or explicit --allow-empty, 2 for findings/vacuity, 1 for input/read errors.
@@ -55,7 +57,64 @@ def load_jsonl(path: Path, *, required=False) -> list[dict]:
     return rows
 
 
-PLAN_UNIT_ID = re.compile(r"^\s*plan_unit_id:\s*(" + UNIT_ID_FORM + r")\s*$")
+# A fenced declaration, bare or with matching YAML quotes.
+PLAN_UNIT_ID = re.compile(r"""^\s*plan_unit_id:\s*(?:"(""" + UNIT_ID_FORM + r""")"|'(""" + UNIT_ID_FORM + r""")'|(""" + UNIT_ID_FORM + r"""))\s*$""")
+PLAN_UNIT_LINE = re.compile(r"^\s*plan_unit_id\s*:")
+# The ID itself, not a longer identifier that starts with it (AA-001.2, AA-001-2).
+ID_HEAD = re.compile(r"^(#{1,6})\s+[\"'`]?(" + UNIT_ID_FORM + r")(?![.\w]|-\d)")
+FENCE_OPEN = re.compile(r"^\s*(`{3,}|~{3,})")
+
+
+def declared_id(line: str):
+    match = PLAN_UNIT_ID.match(line)
+    return next((group for group in match.groups() if group), None) if match else None
+
+
+def fences_in(lines: list[str]) -> list[tuple[int, int]]:
+    """Fenced blocks opened by ``` or ~~~ and closed by a line starting with the same three characters."""
+    found, i = [], 0
+    while i < len(lines):
+        opening = FENCE_OPEN.match(lines[i])
+        if not opening:
+            i += 1
+            continue
+        marker = opening.group(1)[0] * 3
+        k = i + 1
+        while k < len(lines) and not lines[k].strip().startswith(marker):
+            k += 1
+        found.append((i, k))
+        i = k + 1
+    return found
+
+
+def unsupported_forms(text: str, ids: set[str]) -> list[dict]:
+    """Headings and declarations that name one of ids in a form the witness does not parse as a definition.
+
+    Supported: a level 2-4 heading 'ID <separator> title' and a fenced 'plan_unit_id: ID' line (bare or quoted).
+    Anything else that names the ID that way is refused, never silently skipped: a heading without a separator,
+    a level 1, 5 or 6 heading, or a plan_unit_id line the grammar cannot read or that sits outside a fence.
+    DL-* IDs are not checked: they supply no owner evidence, and real addendum headings such as
+    "## DL-059 to DL-065 ... Addendum" name decisions without defining them.
+    """
+    ids = {uid for uid in ids if not uid.startswith("DL-")}
+    lines = text.splitlines()
+    fenced = set()
+    for start, stop in fences_in(lines):
+        fenced.update(range(start + 1, stop))
+    out = []
+    for index, line in enumerate(lines):
+        head = ID_HEAD.match(line)
+        if head and head.group(2) in ids and not UNIT_HEAD.match(line):
+            level = len(head.group(1))
+            form = "heading_without_separator" if 2 <= level <= 4 else "heading_level_" + str(level)
+            out.append({"unit": head.group(2), "form": form, "line": index + 1, "text": line.strip()})
+        if PLAN_UNIT_LINE.match(line):
+            named = sorted(uid for uid in set(UNIT_ID.findall(line)) if uid in ids)
+            parsed = declared_id(line)
+            if named and (parsed is None or index not in fenced):
+                out.append({"unit": named[0], "form": "unparsed_plan_unit_id_line" if parsed is None else "plan_unit_id_outside_fence",
+                            "line": index + 1, "text": line.strip()})
+    return out
 
 
 def definitions_in(text: str) -> list[dict]:
@@ -66,19 +125,12 @@ def definitions_in(text: str) -> list[dict]:
     declaring fence is independent, and a fence that declares several IDs is marked so uniqueness can refuse it.
     """
     lines = text.splitlines()
-    fences, fenced, i = [], set(), 0
-    while i < len(lines):
-        if not lines[i].strip().startswith("```"):
-            i += 1
-            continue
-        k = i + 1
-        while k < len(lines) and not lines[k].strip().startswith("```"):
-            k += 1
+    fences, fenced = [], set()
+    for i, k in fences_in(lines):
         fenced.update(range(i, k + 1))
-        ids = [mm.group(1) for mm in (PLAN_UNIT_ID.match(l) for l in lines[i + 1:k]) if mm]
+        ids = [uid for uid in (declared_id(l) for l in lines[i + 1:k]) if uid]
         if ids:
             fences.append((i, k, ids))
-        i = k + 1
     found, sections = [], {}
     i = 0
     while i < len(lines):
@@ -93,14 +145,21 @@ def definitions_in(text: str) -> list[dict]:
         while end < len(lines) and (end in fenced or not ANY_HEAD.match(lines[end]) or len(ANY_HEAD.match(lines[end]).group(1)) > len(m.group(1))):
             end += 1
         block = "\n".join(lines[i:j]).rstrip()
-        found.append({"unit": m.group(2), "form": "heading", "line_start": i + 1, "line_end": j, "text": block})
-        sections.setdefault(m.group(2), []).append([i, end, False])
+        found.append({"unit": m.group(2), "form": "heading", "line_start": i + 1, "line_end": j, "text": block,
+                      "title": m.group(3).strip()})
+        sections.setdefault(m.group(2), []).append([i, end, False, len(found) - 1, j])
         i = j
     for start, stop, ids in fences:
         for uid in ids:
             own = next((s for s in sections.get(uid, ()) if s[0] < start and stop <= s[1] and not s[2]), None) if len(ids) == 1 else None
             if own is not None:
                 own[2] = True
+                if start >= own[4]:
+                    # Under a deeper subheading, outside the heading's own block: still this unit's metadata, so its
+                    # registry is the unit's registry for witnesses 2 and 3.
+                    heading = found[own[3]]
+                    heading["text"] += "\n\n" + "\n".join(lines[start:stop + 1]).rstrip()
+                    heading["metadata_fence_lines"] = [start + 1, min(stop + 1, len(lines))]
                 continue
             found.append({"unit": uid, "form": "fence" if len(ids) == 1 else "multi_id_fence", "line_start": start + 1,
                           "line_end": min(stop + 1, len(lines)), "text": "\n".join(lines[start:stop + 1]).rstrip()})
@@ -116,15 +175,18 @@ def units_in(text: str) -> dict[str, dict]:
 
 
 def registry(block: str) -> list[str]:
-    """preserved_exact_tokens as an inline flow list or a block list."""
-    m = re.search(r"^\s*preserved_exact_tokens:\s*\[(.*?)\]\s*$", block, flags=re.S | re.M)
-    if m:
+    """preserved_exact_tokens as inline flow lists or block lists: every occurrence in the unit, in order.
+
+    A unit's evidence includes its own metadata fence, wherever it sits in the section, so a second registry there
+    is checked as well instead of hiding behind the first.
+    """
+    found = []
+    for m in re.finditer(r"^\s*preserved_exact_tokens:\s*\[(.*?)\]\s*$", block, flags=re.S | re.M):
         parts = re.split(r",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", m.group(1))
-        return [p.strip().strip('"').strip("'") for p in parts if p.strip()]
-    m = re.search(r"^\s*preserved_exact_tokens:\s*\n((?:\s+-\s.*\n?)+)", block, flags=re.M)
-    if m:
-        return [re.sub(r"^\s*-\s*", "", l).strip().strip('"').strip("'") for l in m.group(1).splitlines() if l.strip()]
-    return []
+        found.extend(p.strip().strip('"').strip("'") for p in parts if p.strip())
+    for m in re.finditer(r"^\s*preserved_exact_tokens:\s*\n((?:\s+-\s.*\n?)+)", block, flags=re.M):
+        found.extend(re.sub(r"^\s*-\s*", "", l).strip().strip('"').strip("'") for l in m.group(1).splitlines() if l.strip())
+    return list(dict.fromkeys(found))
 
 
 def prose(block: str) -> str:
@@ -344,47 +406,86 @@ def run(root: Path, ledger_dir: Path, base: str | None = None, *, allow_empty=Fa
             docs.update(strings([item["target_doc"]], qid + " target_doc"))
     docs = sorted(d for d in docs if d.endswith(".md"))
     declared = set().union(*(set(item["targets"]) for item in items.values()))
-    units, placed, config_findings = {}, {}, []
+    records = records_in(findings_md)
+    repair_named = set().union(*(set(record["named_units"]) for record in records))
+    units, placed, occurrences, config_findings, unsupported = {}, {}, {}, [], []
     for doc in docs:
         path = contained(root, doc)
         if not path.is_file():
             config_findings.append({"kind": "missing_owner_document", "path": doc})
             continue
-        for definition in definitions_in(path.read_text(encoding="utf-8")):
+        text = path.read_text(encoding="utf-8")
+        for definition in definitions_in(text):
             uid = definition["unit"]
-            placed.setdefault(uid, []).append({"path": doc, **{key: definition[key] for key in ("form", "line_start", "line_end")}})
+            placed.setdefault(uid, []).append({"path": doc, **{key: definition[key] for key in ("form", "line_start", "line_end")},
+                                               **({"title": definition["title"]} if "title" in definition else {})})
             units.setdefault(uid, {key: definition[key] for key in ("line_start", "line_end", "text")})
+            occurrences.setdefault(uid, []).append(definition["text"])
+        # A targeted or repaired ID named in a form the witness does not parse is refused, never skipped.
+        unsupported.extend({"path": doc, **form} for form in unsupported_forms(text, declared | repair_named))
+    for form in unsupported:
+        config_findings.append({"kind": "unsupported_owner_definition_form", **form})
+    repeated_decisions = []
     for uid in sorted(declared & placed.keys()):
         # DL-* units supply no owner evidence, and a Decision Log may carry a log entry and a PlanUnit under one number.
         same_file_counts = not uid.startswith("DL-") and (len(placed[uid]) > 1 or placed[uid][0]["form"] == "multi_id_fence")
         if same_file_counts or len({place["path"] for place in placed[uid]}) > 1:
             config_findings.append({"kind": "ambiguous_owner_unit", "unit": uid, "definitions": placed[uid]})
+    for uid in sorted((declared | repair_named) & placed.keys()):
+        # The same-document exception is disclosed, with each definition, so a reused number is visible.
+        if uid.startswith("DL-") and len(placed[uid]) > 1 and len({place["path"] for place in placed[uid]}) == 1:
+            # Case, punctuation and a trailing reference list such as "(J-1, J-2)" do not distinguish titles;
+            # whether two remaining titles name one decision needs review.
+            titles = {re.sub(r"[^0-9a-z]+", "", re.sub(r"\s*\([^()]*\)\s*$", "", place["title"]).casefold())
+                      for place in placed[uid] if place.get("title")}
+            repeated_decisions.append({"unit": uid, "path": placed[uid][0]["path"], "definitions": placed[uid],
+                                       "titles_differ": len(titles) > 1})
     for uid in sorted(declared - units.keys()):
         config_findings.append({"kind": "missing_target_unit", "unit": uid})
-    base_units = {}
+    base_units, base_occurrences = {}, {}
     if base:
         for doc in docs:
             text = git_show(root, base, doc)
             if text is not None:
-                base_units.update(units_in(text))
+                for definition in definitions_in(text):
+                    base_units.setdefault(definition["unit"], {key: definition[key] for key in ("line_start", "line_end", "text")})
+                    base_occurrences.setdefault(definition["unit"], []).append(definition["text"])
     cand_atoms = {}
     for correction in corrections:
         for candidate in re.split(r"\s*\+\s*|,\s*", str(correction.get("finding_id", ""))):
             if candidate.strip():
                 cand_atoms.setdefault(candidate.strip(), set()).update(correction.get("source_atom_ids", correction.get("linked_atom_ids", [])))
+    # The ledger's own candidate IDs (record headings and correction finding IDs) share the unit grammar.
+    candidates = set(cand_atoms) | set().union(*(set(record["candidate_ids"]) for record in records))
+    known = units.keys() | base_units.keys() | declared
     w1 = []
-    for record in records_in(findings_md):
+    for record in records:
         linked = set().union(*(cand_atoms.get(cid, set()) for cid in record["candidate_ids"]))
         targets = set().union(*(atom_targets.get(aid, set()) for aid in linked))
-        # Ledger candidate IDs such as RT-01 share the short form, so a short ID names a unit only when one exists.
-        known = units.keys() | base_units.keys() | declared
-        unresolved_short = sorted(uid for uid in record["named_units"] if len(uid.rpartition("-")[2]) < 3 and uid not in known)
-        named_units = sorted(set(record["named_units"]) - set(unresolved_short))
+        # Only a ledger candidate ID that names no unit is set aside, whatever its digit count; any other ID that
+        # resolves to nothing stays named, so it fires as not targeted.
+        unresolved_candidates = sorted(uid for uid in record["named_units"] if uid not in known and uid in candidates)
+        named_units = sorted(set(record["named_units"]) - set(unresolved_candidates))
         not_targeted = sorted(set(named_units) - targets)
-        unchanged = [uid for uid in named_units if base and uid in units and uid in base_units and units[uid]["text"] == base_units[uid]["text"]]
+        # Every occurrence is compared: a repair is unchanged only when no definition of the unit changed.
+        unchanged, changed_occurrences = [], {}
+        for uid in named_units:
+            if not (base and uid in units and uid in base_occurrences):
+                continue
+            now, before = occurrences.get(uid, []), base_occurrences[uid]
+            changed = [{**place, "occurrence": index + 1} for index, place in enumerate(placed.get(uid, []))
+                       if index >= len(before) or now[index] != before[index]]
+            if now == before:
+                unchanged.append(uid)
+            elif len(now) > 1 or len(before) > 1:
+                changed_occurrences[uid] = changed or [{"removed_occurrences": len(before) - len(now)}]
         w1.append({"record": record["heading"], "candidate_ids": record["candidate_ids"], "atoms": sorted(linked),
-                   "queue_targets": sorted(targets), "named_units": named_units, "unresolved_short_ids": unresolved_short, "named_documents": record["named_documents"],
+                   "queue_targets": sorted(targets), "named_units": named_units,
+                   "unresolved_candidate_ids": unresolved_candidates, "unresolved_short_ids": unresolved_candidates,
+                   "named_but_unresolved": sorted(uid for uid in named_units if uid not in known),
+                   "named_documents": record["named_documents"],
                    "named_but_not_targeted": not_targeted, "named_but_unchanged_since_base": unchanged,
+                   "changed_occurrences": changed_occurrences,
                    "unmatched_record": not linked and bool(record["candidate_ids"]), "fires": bool(not_targeted or unchanged)})
     exemptions, exemption_records = token_exemptions(ledger_dir, items, atoms, units)
     companion_text = ""
@@ -438,11 +539,15 @@ def run(root: Path, ledger_dir: Path, base: str | None = None, *, allow_empty=Fa
     return {"schema_id": "pm.ledger_compile_witness.v2", "ledger_id": ledger_dir.name, "base": base, "documents": docs,
             "witness_repairs_vs_targets": w1, "witness_exact_tokens": w2, "witness_registry_hygiene": w3,
             "token_exemptions": exemption_records, "configuration_findings": config_findings,
+            "repeated_decision_units": repeated_decisions,
             "atom_owner_mappings": compiled_mappings, "atoms_without_owner_targets": uncompiled_atoms,
             "vacuous": vacuous, "vacuity_reason": vacuity_reason, "allow_empty": bool(allow_empty),
             "summary": {"records": len(w1), "records_firing": len(fires1), "named_but_not_targeted": sum(len(r["named_but_not_targeted"]) for r in w1),
                         "named_but_unchanged_since_base": sum(len(r["named_but_unchanged_since_base"]) for r in w1),
                         "declared_target_plan_units": len(declared), "registries_checked": len(w3),
+                        "repeated_decision_units": len(repeated_decisions),
+                        "repeated_decision_units_with_different_titles": sum(row["titles_differ"] for row in repeated_decisions),
+                        "unsupported_definition_forms": len(unsupported),
                         "atoms_reaching_an_owner": len({row["atom"] for row in compiled_mappings}),
                         "item_tokens": len(w2), "item_tokens_exempted": len(w2) - len(active),
                         "tokens_missing_from_prose": sum(not row["units_with_token_in_prose"] for row in active),
@@ -498,6 +603,9 @@ def main(argv=None) -> int:
         print(f"  coverage: {s['atoms_reaching_an_owner']} atoms reach an owner ({len(report['atoms_without_owner_targets'])} queue mappings do not); {s['declared_target_plan_units']} declared targets; {s['registries_checked']} owner registries checked; {s['item_tokens_exempted']} item tokens explicitly exempted")
         if report["vacuous"]:
             print(f"  vacuous: {report['vacuity_reason']}")
+        for repeat in report["repeated_decision_units"]:
+            print(f"  disclosed: {repeat['unit']} is defined {len(repeat['definitions'])} times in {repeat['path']}" +
+                  (" under different titles " + str([d.get('title') for d in repeat['definitions']]) if repeat["titles_differ"] else ""))
         for finding in report["configuration_findings"]:
             print("    - " + str(finding))
         print(f"  witness 1 repairs vs targets: {s['records_firing']} of {s['records']} records fire; named-but-not-targeted {s['named_but_not_targeted']}; named-but-unchanged {s['named_but_unchanged_since_base']}")

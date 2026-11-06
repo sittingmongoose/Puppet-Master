@@ -70,7 +70,24 @@ all independent definitions. Duplicates of an untargeted ID are not findings.
 
 `DL-*` units are the one same-document exception, because they supply no owner
 evidence and the Decision Log may carry a log entry and a PlanUnit under one number.
-Across documents they are still findings.
+Across documents they are still findings. The exception is disclosed, never silent:
+`repeated_decision_units` lists every same-document repeat of a targeted or
+repaired `DL-*` unit with each definition's lines and title, and `titles_differ`
+is true when the titles still differ after case, punctuation and a trailing
+reference list such as `(J-1, J-2)` are removed. A person decides whether two
+titles name one decision; the witness only shows them.
+
+Definitions are recognised in two forms: a level 2–4 heading `ID <separator> title`
+(separator `-`, `–`, `—` or `:` followed by a space) and a fenced
+`plan_unit_id: ID` line, bare or with matching single or double quotes, in a
+```` ``` ```` or `~~~` fence. A heading's own metadata fence counts as part of that
+unit's text wherever it sits in the section, so its registry is checked too, and
+every `preserved_exact_tokens` registry in a unit is read, not only the first.
+Any other form that names a targeted or repaired owner ID is refused as
+`unsupported_owner_definition_form` before a pass: a heading without a separator,
+a level 1, 5 or 6 heading, or a `plan_unit_id` line the grammar cannot read or that
+sits outside a fence. Longer identifiers that start with the ID (`AA-001.2`) and
+`DL-*` IDs are not refused.
 
 ## Targets and exact-token scope
 
@@ -84,10 +101,18 @@ findings IDs to atoms; optional `source_shards/findings.md` supplies the existin
 
 Owner headings, fenced declarations and `Repairs` sentences share one identifier
 grammar: a letter-or-digit prefix, a hyphen and any number of digits. Ledger
-candidate IDs such as `RT-01` have the same shape, so an ID with fewer than three
-digits named in a `Repairs` sentence counts as a unit only when it is a declared
-target or has a definition in the owner documents or at the base revision. Other
-short IDs are listed under `unresolved_short_ids` and are not findings.
+candidate IDs such as `RT-01` have the same shape. An ID named in a `Repairs`
+sentence that resolves to no unit (no declared target, no definition now or at
+the base) is set aside only when it is one of the ledger's own candidate IDs: a
+record heading's candidate ID or a correction's `finding_id`. Those are listed
+under `unresolved_candidate_ids` (also kept as `unresolved_short_ids`, its former
+name). Any other unresolved ID, whatever its digit count, stays named, is listed
+under `named_but_unresolved` and fires as `named_but_not_targeted`.
+
+A repair compares **every** definition of the named unit with the base, in order.
+It is reported unchanged, and fires, only when no definition changed;
+`changed_occurrences` names the definitions that did change when a unit has more
+than one.
 
 ```json
 {

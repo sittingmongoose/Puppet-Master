@@ -400,5 +400,83 @@ def exercise(g, *, scratch=None):
         write(f["ledger"] / "source_shards/findings.md", "## Record 1 RT-01\nRepairs AA-001 for RT-01.\n")
     case("unresolved-short-candidate-id-is-disclosed-control", candidate_in_sentence,
          verify=lambda r: r["witness_repairs_vs_targets"][0]["named_units"] == ["AA-001"] and r["witness_repairs_vs_targets"][0]["unresolved_short_ids"] == ["RT-01"])
+
+    # Opus pre-check cycle 7, W7-1: the DL-* same-document exception is disclosed, and repairs compare every occurrence.
+    def decision_log(f, text):
+        f["queue"]["items"][0]["target_plan_unit_ids"].append(text.split()[1].rstrip(":"))
+        f["owner"] = clean + "\n" + text
+    def repeated(unit, differ):
+        def verify(r):
+            rows = [x for x in r["repeated_decision_units"] if x["unit"] == unit]
+            return (len(rows) == 1 and rows[0]["titles_differ"] is differ and len(rows[0]["definitions"]) == 2 and
+                    r["summary"]["repeated_decision_units"] == 1 and not r["configuration_findings"])
+        return verify
+    case("dl-same-document-repeat-is-disclosed", lambda f: decision_log(f, "### DL-005: Completion and promotion model\n\nx\n\n### DL-005 - Node Graph Execution Model\n\ny\n"),
+         verify=repeated("DL-005", True))
+    case("dl-same-document-same-decision-control", lambda f: decision_log(f, "### DL-056: Conflict and merge editors are read-only (E-4)\n\nx\n\n### DL-056 - Conflict And Merge Editors Are Read Only\n\ny\n"),
+         verify=repeated("DL-056", False))
+    DL_BASE = "### DL-059: Branch policies are shown\n\nlog text v1\n\n### DL-059 - Branch Policies Plan Unit\n\nplan text v1\n"
+    def dl_repair(after):
+        def mutate(f):
+            f["base"] = True
+            f["queue"]["items"][0]["target_plan_unit_ids"].append("DL-059")
+            f["base_owner"] = clean + "\n" + DL_BASE
+            f["owner"] = clean + "\n" + after
+            f["reviews"] = [{"correction_id": "corr-1", "finding_id": "RT-01", "source_atom_ids": ["atom-1"]}]
+            write(f["ledger"] / "source_shards/findings.md", "## Record 1 RT-01\nRepairs DL-059.\n")
+        return mutate
+    def changed_occurrence(number):
+        return lambda r: [x["occurrence"] for x in r["witness_repairs_vs_targets"][0]["changed_occurrences"].get("DL-059", [])] == [number] and not r["witness_repairs_vs_targets"][0]["fires"]
+    case("dl-repair-planunit-only-change-is-a-repair", dl_repair(DL_BASE.replace("plan text v1", "plan text v2")), verify=changed_occurrence(2))
+    case("dl-repair-log-only-change-is-reported", dl_repair(DL_BASE.replace("log text v1", "log text v2")), verify=changed_occurrence(1))
+    case("dl-repair-with-no-occurrence-changed-fires", dl_repair(DL_BASE), status="findings", exit_code=2,
+         verify=lambda r: r["witness_repairs_vs_targets"][0]["named_but_unchanged_since_base"] == ["DL-059"])
+
+    # W7-2: an ID that resolves to nothing is treated the same at any digit count; only ledger candidate IDs are set aside.
+    def repair_names(text, finding="RT-01"):
+        def mutate(f):
+            repairs(f, changed=True)
+            f["reviews"][0]["finding_id"] = finding
+            write(f["ledger"] / "source_shards/findings.md", "## Record 1 RT-01\nRepairs " + text + ".\n")
+        return mutate
+    def unresolved_fires(uid):
+        return lambda r: r["witness_repairs_vs_targets"][0]["named_but_not_targeted"] == [uid] and r["witness_repairs_vs_targets"][0]["named_but_unresolved"] == [uid]
+    case("nonexistent-two-digit-repair-id-fires", repair_names("AA-001 and AA-99"), status="findings", exit_code=2, verify=unresolved_fires("AA-99"))
+    case("nonexistent-one-digit-repair-id-fires", repair_names("AA-001 and ZZ-9"), status="findings", exit_code=2, verify=unresolved_fires("ZZ-9"))
+    case("nonexistent-three-digit-repair-id-fires-control", repair_names("AA-001 and AA-999"), status="findings", exit_code=2, verify=unresolved_fires("AA-999"))
+    case("ledger-candidate-id-is-set-aside-control", repair_names("AA-001 for RT-01"),
+         verify=lambda r: r["witness_repairs_vs_targets"][0]["unresolved_candidate_ids"] == ["RT-01"])
+    case("correction-finding-id-is-set-aside-control", repair_names("AA-001 for XY-123", finding="RT-01, XY-123"),
+         verify=lambda r: r["witness_repairs_vs_targets"][0]["unresolved_candidate_ids"] == ["XY-123"] and not r["witness_repairs_vs_targets"][0]["fires"])
+
+    # W7-3: quoted IDs and ~~~ fences are definitions; other forms naming a targeted ID are refused before pass.
+    def unsupported(form, line):
+        return lambda r: [(x["form"], x["line"]) for x in r["configuration_findings"] if x["kind"] == "unsupported_owner_definition_form"] == [(form, line)]
+    quoted_fence = '```yaml\nplan_unit_id: "AA-001"\npreserved_exact_tokens: ["ghost"]\n```\n'
+    tilde_fence = '~~~yaml\nplan_unit_id: AA-001\npreserved_exact_tokens: ["ghost"]\n~~~\n'
+    case("quoted-plan-unit-id-is-a-definition", lambda f: f.update(owner=clean + "\n" + quoted_fence), status="findings", exit_code=2, verify=ambiguous(("heading", 1), ("fence", 10)))
+    case("single-quoted-plan-unit-id-is-a-definition", lambda f: f.update(owner=clean + "\n" + quoted_fence.replace('"AA-001"', "'AA-001'")), status="findings", exit_code=2, verify=ambiguous(("heading", 1), ("fence", 10)))
+    case("quoted-own-metadata-fence-control", lambda f: f.update(owner=clean.replace("plan_unit_id: AA-001", 'plan_unit_id: "AA-001"')), verify=no_ambiguity)
+    case("tilde-fence-is-a-definition", lambda f: f.update(owner=clean + "\n" + tilde_fence), status="findings", exit_code=2, verify=ambiguous(("heading", 1), ("fence", 10)))
+    case("tilde-own-metadata-fence-control", lambda f: f.update(owner=clean.replace("```yaml", "~~~yaml").replace("```\n", "~~~\n")), verify=no_ambiguity)
+    case("heading-without-separator-is-refused", lambda f: f.update(owner=clean + "\n## AA-001 (v2)\n\nRewritten without the token.\n"),
+         status="findings", exit_code=2, verify=unsupported("heading_without_separator", 10))
+    case("level-five-heading-is-refused", lambda f: f.update(owner=clean + "\n##### AA-001 — Again\n\nOther.\n"), status="findings", exit_code=2, verify=unsupported("heading_level_5", 10))
+    case("level-one-heading-is-refused", lambda f: f.update(owner="# AA-001 — Title\n\n" + clean), status="findings", exit_code=2, verify=unsupported("heading_level_1", 1))
+    case("unparsed-plan-unit-id-line-is-refused", lambda f: f.update(owner=clean + "\n```yaml\nplan_unit_id: AA-001 # copy\n```\n"),
+         status="findings", exit_code=2, verify=unsupported("unparsed_plan_unit_id_line", 11))
+    case("dotted-sub-id-heading-control", lambda f: f.update(owner=clean + "\n## AA-001.2 — Sub\n\nOther.\n"), verify=no_ambiguity)
+    def addendum(f):
+        f["queue"]["items"][0]["target_plan_unit_ids"].append("DL-059")
+        f["owner"] = clean + "\n### DL-059 - Decision\n\nText.\n\n## DL-059 to DL-065 Accepted Planning Addendum - 2026-09-18\n\nText.\n"
+    case("decision-addendum-heading-control", addendum, verify=no_ambiguity)
+
+    # W7-4: a unit's own metadata fence under a deeper subheading is part of its evidence.
+    under = "## AA-001 — Owner\n\nRequired live token.\nBODY\n### Notes\n\nMore.\n\n```yaml\nplan_unit_id: AA-001\npreserved_exact_tokens: REG\n```\n"
+    case("own-fence-under-subheading-registry-is-checked",
+         lambda f: f.update(owner=under.replace("BODY", 'preserved_exact_tokens: ["live token"]\n').replace("REG", '["ghost"]')),
+         status="findings", exit_code=2, verify=lambda r: r["witness_registry_hygiene"][0]["entries_absent_from_unit_text"] == ["ghost"])
+    case("own-fence-under-subheading-supplies-registry-control", lambda f: f.update(owner=under.replace("BODY", "").replace("REG", '["live token"]')),
+         verify=lambda r: r["witness_exact_tokens"][0]["units_with_both"] == ["AA-001"] and not r["configuration_findings"])
     return {"schema_id": "pm.ledger_compile_witness.self_test.v1", "status": "pass" if all(row["caught"] for row in rows) else "findings",
             "caught": sum(row["caught"] for row in rows), "tests": rows}
