@@ -2799,6 +2799,15 @@
      step). A request made inside that delivery waits for the next frame's layout, as a fresh observation made there
      would be skipped and reported as a ResizeObserver loop error. */
   var postEl = null, postRO = null, postQ = false, postOn = false, postFns = [], postRunning = false;
+  /* The probe is observed afresh, often from the mutation observer below, which runs inside another observer's delivery
+     when that observer's callback is what changed the page (the title bar's density fold, the chat's re-render). The
+     browser delivers a fresh observation made in a delivery only if it is deeper than every target that delivery's
+     round already handed out; a window resize's first round reaches div.app-shell (depth 4), the probe's own depth, so
+     the probe was skipped, the frame ended with 'ResizeObserver loop completed with undelivered notifications', and the
+     sync ran a frame late (FO-94, every one of those errors). The document root is therefore observed for the page's
+     life: a frame that resizes the window delivers the root in its first round, and a probe observed during that frame
+     is delivered in the same frame. Nothing is done on the root's report itself. */
+  try { if (window.ResizeObserver) new ResizeObserver(function () {}).observe(document.documentElement); } catch (e) { /* none */ }
   function afterLayout(fn) {
     if (!window.ResizeObserver || !document.body) return false;
     if (fn) postFns.push(fn); else postQ = true;
