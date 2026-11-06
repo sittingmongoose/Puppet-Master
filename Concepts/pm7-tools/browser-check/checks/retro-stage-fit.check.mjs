@@ -9,6 +9,9 @@
 // and no resting prop covers Pip's head. Asleep Pip (Welcome before you arrive) rests above the foot at 740 and 1280x500.
 // 'retro props every screen': each setup screen opened fresh at 860, 740 and 1280x500, every resting prop inside the crop,
 // above the foot and off Pip's head (FO-50's c-ready server; the props Retro's crop and the foot band move).
+// 'c-ready props clear of the bubble' (N1): c-ready's props off Pip's bubble and head in both Retro looks, 740 fresh and 1920 -> 740,
+// and fresh at 860, 1024, 1280x800, 1920 and 1280x500. The awake guard's movement reads the head's and hand's rendered matrices
+// (FO-50 c6); 'frozen drawing negative' and 'frozen rendering negative' must be rejected by it.
 // Both surfaces (--set sandbox picks one); --set motion=reduce runs it under Reduced Motion.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/retro-stage-fit.check.mjs --set page=<build>
 const LOOKS = ['retro-light', 'retro-dark'];
@@ -433,7 +436,8 @@ const GEOMETRY = (e, label) => {
 	if (![b.left, b.top, b.right, b.bottom, b.width, b.height].every(Number.isFinite) || b.width <= 0 || b.height <= 0) throw new Error(`${label}: empty or invalid bounds`);
 	const m = e.getScreenCTM(), box = e.getBBox();
 	if (!m || ![m.a, m.b, m.c, m.d, m.e, m.f].every(Number.isFinite) || !Number.isFinite(m.a * m.d - m.b * m.c) || m.a * m.d - m.b * m.c === 0 || ![box.x, box.y, box.width, box.height].every(Number.isFinite) || box.width <= 0 || box.height <= 0) throw new Error(`${label}: invalid SVG geometry`);
-	return b;
+	// (the matrix the browser draws the group with, read once here for the pose below)
+	return { left: b.left, top: b.top, right: b.right, bottom: b.bottom, m };
 };
 const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	const overlap = (0, eval)(`(${probeSource})`), geometry = (0, eval)(`(${geometrySource})`);
@@ -446,9 +450,20 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	let rnd = null, restoreN = 0, prevV = null;
 	const t0 = performance.now();
 	let lastPoseChange = t0, previousPose = null;
-	// These are the SVG transforms render() writes for the head and hand, including turn, lift and squash.
-	// Reading their own attributes excludes the animated stage/background and avoids repeating layout reads.
-	const pose = (s) => [s.gHead, s.gCtl].flatMap((e) => [e.getAttribute('transform'), e.style.transform]);
+	// Pip's pose as it is drawn, not as it is written (FO-50 guard, retro-c6): the head's and the hand's effective
+	// matrices, the ones the browser renders them with (getScreenCTM: the transform attribute render() writes, or a CSS
+	// transform or animation that overrides it), relative to the stage's own SVG, so the pane or the window moving is not
+	// Pip moving. Turn, lift, sway and squash all change them. c5 read the transform attributes, and a CSS transform held
+	// the drawing still while those strings kept changing: 13.5 s of 'movement' passed, sol-review-retro-5's frozen-rigid.
+	// The matrices come from the geometry reads the cell already makes; the stage's own is one more read a frame.
+	const pose = (s, mh, mc) => {
+		const root = s.svg.getScreenCTM();
+		if (!root) throw new Error('stage SVG: no screen matrix');
+		const inv = root.inverse();
+		return [mh, mc].flatMap((m) => { const r = inv.multiply(m); return [r.a, r.b, r.c, r.d, r.e, r.f]; });
+	};
+	// changed: a linear entry by more than .001 (turn, squash) or a translation by more than .01 stage units
+	const moved = (a, b) => a.some((x, i) => Math.abs(x - b[i]) > (i % 6 < 4 ? 1e-3 : 1e-2));
 	while (performance.now() - t0 < ms) {
 		await new Promise((r) => requestAnimationFrame(() => r()));
 		out.n++;
@@ -495,10 +510,10 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 				if (selftest === 'head-detached') s2.gHead.remove();
 			}
 			const hb = R(s2.gHead, 'head');
-			R(s2.gCtl, 'hand');
-			const v = pose(s2);
+			const cb = R(s2.gCtl, 'hand');
+			const v = pose(s2, hb.m, cb.m);
 			if (!previousPose) lastPoseChange = tNow;
-			else if (v.some((x,i) => x !== previousPose[i])) {
+			else if (moved(v, previousPose)) {
 				out.moving++; out.movingMs += Math.min(50, tNow-lastPoseChange); lastPoseChange=tNow;
 			}
 			previousPose = v;
@@ -665,6 +680,136 @@ async function frozenDrawing(t,mode) {
 	await t.check(`${mode}: frozen drawing rejected by 200 ms drawn-pose assertion`,t.args.selftest === 'frozen-drawing' ? r.movingMs>=200 : r.movingMs<200,JSON.stringify(r));
 	t.log(JSON.stringify(r));
 }
+// sol-review-retro-5's independent negative, test-side (its frozen-rigid.html built the same freeze into the rig): the
+// head's and hand's rendered matrices held by a CSS transform at what they were (with !important, over the transform
+// attribute), their insides stilled (no animation, no attribute writes, no face drawn), while render() goes on writing
+// the head's and hand's own transform attributes every drawn frame, and physics, props, background and the idle timer
+// run on. The attribute strings change all the while; what is drawn does not. The guard must reject it: c5's reader of
+// those strings counted 13.5 s of movement here. The case also proves the freeze is what it says: the attributes kept
+// changing (the old reader would have passed it) and the rendered matrices did not. Passes when the guard rejects the
+// freeze; --set selftest=frozen-rigid applies the acceptance predicate instead and must fail. NieR Light c-ready 860, as
+// the review ran it. The built mutant reruns as: --grep "awake motion over props" --set looks=nier-light
+// --set sizes=860x768 --set screens=c-ready --set page=<frozen-rigid.html>, whose c-ready cell must fail its 200 ms.
+async function frozenRigid(t, mode) {
+	await t.viewport(860, 768); const f = await frameFor(t, mode);
+	await t.emulate({ reducedMotion: 'no-preference' }); await stageLook(t, f, 'nier-light');
+	await f.evaluate(() => O55.ui.open({ fresh: true, screen: 'c-ready' })); await arrive(t, f); await f.waitForTimeout(3500);
+	const r = await f.evaluate(async ({ m, i, g }) => {
+		const s = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
+		const groups = [s.gHead, s.gCtl], inner = groups.flatMap((e) => [...e.querySelectorAll('*')]);
+		const freeze = () => {
+			s.renderHead = () => {}; s.animFace = () => {};
+			for (const e of groups) e.style.setProperty('transform', getComputedStyle(e).transform, 'important');
+			for (const c of inner) { c.style.setProperty('animation', 'none', 'important'); c.style.setProperty('transition', 'none', 'important'); c.setAttribute = () => {}; }
+		};
+		const thaw = () => {
+			delete s.renderHead; delete s.animFace;
+			for (const e of groups) e.style.removeProperty('transform');
+			for (const c of inner) { c.style.removeProperty('animation'); c.style.removeProperty('transition'); delete c.setAttribute; }
+		};
+		// what is written and what is drawn, counted beside the guard, each animation frame
+		const seen = { frames: 0, attrs: new Set(), headCss: new Set(), handCss: new Set(), headCtm: new Set() };
+		let on = true;
+		const count = () => {
+			if (!on) return;
+			seen.frames++; seen.attrs.add(s.gHead.getAttribute('transform') + '|' + s.gCtl.getAttribute('transform'));
+			seen.headCss.add(getComputedStyle(s.gHead).transform); seen.handCss.add(getComputedStyle(s.gCtl).transform);
+			const q = s.svg.getScreenCTM().inverse().multiply(s.gHead.getScreenCTM()); seen.headCtm.add([q.a, q.b, q.c, q.d, q.e, q.f].map((v) => v.toFixed(3)).join(','));
+			requestAnimationFrame(count);
+		};
+		freeze();
+		requestAnimationFrame(count);
+		try {
+			const out = await (0, eval)(`(${m})`)(14000, i, g, '', { at: 60, r: .1 });
+			return Object.assign(out, { written: seen.attrs.size, drawnHead: seen.headCss.size, drawnHand: seen.handCss.size, headCtm: seen.headCtm.size, counted: seen.frames });
+		} finally { on = false; thaw(); }
+	}, { m: MOTION.toString(), i: INK_OVERLAP.toString(), g: GEOMETRY.toString() });
+	const why = JSON.stringify({ err: r.err, geometryError: r.geometryError, validPairs: r.validPairs, off: r.off, forced: r.forced, moving: r.moving, movingMs: Math.round(r.movingMs || 0), written: r.written, drawnHead: r.drawnHead, drawnHand: r.drawnHand, headCtm: r.headCtm, counted: r.counted });
+	await t.check(`${mode}: rigid freeze retains valid visible geometry`, !r.err && !r.geometryError && r.validPairs > 0, why);
+	await t.check(`${mode}: rigid freeze retains nominal physics`, r.off === 0 && !!(r.forced && r.forced.fired), why);
+	// (the freeze is real: render() kept writing new head and hand transforms, and none of them was drawn)
+	await t.check(`${mode}: rigid freeze: transform attributes kept changing`, r.written > 20 && r.counted > 100, why);
+	await t.check(`${mode}: rigid freeze: rendered head and hand matrices held still`, r.drawnHead === 1 && r.drawnHand === 1 && r.headCtm === 1, why);
+	await t.check(`${mode}: rigid freeze rejected by 200 ms drawn-pose assertion`, t.args.selftest === 'frozen-rigid' ? r.movingMs >= 200 : r.movingMs < 200, why);
+	t.log(why);
+}
+
+// N1 (astra-review-retro-3): c-ready's props keep off Pip's speech bubble, and off Pip's head. In Retro Dark at 740 the
+// bubble finds no clear place and claims one beside Pip's face; the server, at the bubble's right end with Pip's head on
+// its left (FO-50), the laptop on its right and the tube's foot below (A3-6), was drawn smaller and smaller under the
+// bubble's end and stayed there, 9-16 px, at 2 s and after (457801b0f6). Pinned main 0adb197992 cleared the bubble only
+// by hanging the server over Pip's head. Retro Light and Dark, c-ready opened fresh with Pip woken by the pointer, at 740
+// loaded fresh and resized 1920 -> 740, and loaded fresh at 860, 1024, 1280x800, 1920 and 1280x500: every frame for a
+// second at 2 s after the size settles and again 2.5 s later, no shown prop (opacity over .05) meets the shown bubble
+// (painted boxes, more than .5 px each way), and none paints over Pip's head (the fill/stroke ink reader, 4 px² at most).
+// Fails on 457801b0f6 (the bubble) and on 0adb197992 (the head). --set looks=, --set sizes= (the fresh ones) pick some.
+const BUBBLE_SIZES = [[860, 768], [1024, 768], [1280, 800], [1920, 1080], [1280, 500]];
+const BUBBLE_SAMPLE = async (ms, probeSource) => {
+	const overlap = (0, eval)(`(${probeSource})`);
+	const s = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
+	if (!s) return { err: 'no stage' };
+	const R = (e) => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom]; };
+	const out = { n: 0, bubbleFrames: 0, serverFrames: 0, propFrames: 0, hits: 0, worst: 0, at: null, ink: 0, inkAt: null, asleep: false, low: 0, small: [] };
+	const t0 = performance.now();
+	while (performance.now() - t0 < ms) {
+		await new Promise((r) => requestAnimationFrame(() => r()));
+		out.n++; if (O55.motion.lowResource) out.low++; if (s.sleepZ) out.asleep = true;
+		const props = [...s.props.values()].filter((p) => +p.el.getAttribute('opacity') > .05);
+		out.propFrames += props.length ? 1 : 0;
+		if (props.some((p) => p.spec.kind === 'server')) out.serverFrames++;
+		for (const p of props) {
+			const a = overlap(s.gHead, p.el);
+			if (a > out.ink) { out.ink = a; out.inkAt = { prop: p.spec.kind, t: Math.round(performance.now() - t0), box: p.box && p.box.map(Math.round), keep: s.pipKeep && s.pipKeep.map(Math.round) }; }
+			if (p.restOff && p.restOff.g < 1 && !out.small.includes(p.spec.kind)) out.small.push(p.spec.kind);
+		}
+		const b = s.bubble, shown = b.classList.contains('on') && !!(b.textContent || '').trim() && getComputedStyle(b).visibility !== 'hidden' && +getComputedStyle(b).opacity > .05;
+		if (!shown) continue;
+		out.bubbleFrames++;
+		const bb = R(b);
+		for (const p of props) {
+			const q = R(p.el), dx = Math.min(bb[2], q[2]) - Math.max(bb[0], q[0]), dy = Math.min(bb[3], q[3]) - Math.max(bb[1], q[1]);
+			if (dx > .5 && dy > .5) {
+				out.hits++;
+				if (Math.min(dx, dy) > out.worst) { out.worst = Math.min(dx, dy); out.at = { prop: p.spec.kind, dx: Math.round(dx * 10) / 10, dy: Math.round(dy * 10) / 10, t: Math.round(performance.now() - t0), box: p.box && p.box.map(Math.round), keepOff: s.keepOff && s.keepOff.map(Math.round), restOff: p.restOff }; }
+			}
+		}
+	}
+	return out;
+};
+async function bubbleClear(t, mode) {
+	const reduce = t.args.motion === 'reduce', looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
+	const routes = [['fresh', [740, 768]], ['resize', [740, 768]]].concat((sizesArg(t) || BUBBLE_SIZES).map((s) => ['fresh', s]));
+	await probeFixture(t, await frameFor(t, mode), mode);
+	for (const look of looks) for (const [route, [w, h]] of routes) {
+		const tag = `${mode} ${look} c-ready ${route === 'resize' ? '1920x1080 -> ' : 'fresh '}${w}x${h}`;
+		await t.viewport(route === 'resize' ? 1920 : w, route === 'resize' ? 1080 : h);
+		const f = await frameFor(t, mode);
+		await t.emulate({ reducedMotion: reduce ? 'reduce' : 'no-preference' });
+		await stageLook(t, f, look);
+		await f.evaluate(() => window.O55.ui.open({ fresh: true, screen: 'c-ready' }));
+		await f.waitForFunction(() => !!O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), null, { timeout: 15000 }).catch(() => {});
+		await f.waitForTimeout(1500);
+		await t.check(`${tag}: Pip wakes on the pointer's arrival`, await arrive(t, f), 'still asleep after 4 s', { hard: true });
+		await restOnStage(t, f);
+		await f.waitForTimeout(3200);
+		if (route === 'resize') await t.viewport(w, h);
+		await t.mark(tag);
+		await f.waitForTimeout(2000);
+		for (const [when, gap] of [['at 2 s', 0], ['2.5 s later', 2500]]) {
+			if (gap) await f.waitForTimeout(gap);
+			const r = await f.evaluate(`(${BUBBLE_SAMPLE.toString()})(1000, ${JSON.stringify(INK_OVERLAP.toString())})`);
+			if (r.err) { await t.check(`${tag} ${when}: the stage`, false, r.err); continue; }
+			const why = JSON.stringify(r), at = `${tag} ${when}`;
+			// (preconditions, not skips: Pip awake and talking, the server shown, frames sampled)
+			await t.check(`${at}: sampled awake, the bubble and the server shown`, r.n > 5 && !r.asleep && r.bubbleFrames > 5 && r.serverFrames > 5, why);
+			await t.check(`${at}: no prop under Pip's bubble`, r.hits === 0, why);
+			await t.check(`${at}: no prop painted over Pip's head`, r.ink <= 4, `${r.ink} px²; ${why}`);
+			if (r.hits || r.ink > 4) await t.inFrame(f, () => t.crop(`bubble-${mode}-${look}-${route}-${w}x${h}`, '#pm-o55-onboarding .o55-stage', `${at}: prop under the bubble or over Pip`));
+			else t.log(`${at}: ${why}`);
+		}
+	}
+	await t.viewport(1920, 1080);
+}
 
 // --set film=1: for a recording (which refuses viewport changes), the page in one frame of the window, resized by its
 // frame: Name in each Retro look (--set look=retro-light for one), down through the layouts and back up, each size marked
@@ -743,6 +888,8 @@ export const tests = {
 	'leaving sign head sandbox': on('sandbox',leavingHead),
 	'frozen drawing negative normal': on('normal',frozenDrawing),
 	'frozen drawing negative sandbox': on('sandbox',frozenDrawing),
+	'frozen rendering negative normal': on('normal', frozenRigid),
+	'frozen rendering negative sandbox': on('sandbox', frozenRigid),
 	'ink overlap probe normal': on('normal', async (t, mode) => probeFixture(t, await frameFor(t, mode), mode)),
 	'ink overlap probe sandbox': on('sandbox', async (t, mode) => probeFixture(t, await frameFor(t, mode), mode)),
 	'retro stage fit normal': (t) => (t.args.film === 'relayout' ? on('normal', filmRelayout)(t) : t.args.film ? film(t) : on('normal', fit)(t)),
@@ -756,5 +903,7 @@ export const tests = {
 	'awake motion over props normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', awakeMotion)(t)),
 	'awake motion over props sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', awakeMotion)(t)),
 	'swing at a screen change normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', swingAtChange)(t)),
-	'swing at a screen change sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', swingAtChange)(t))
+	'swing at a screen change sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', swingAtChange)(t)),
+	'c-ready props clear of the bubble normal': (t) => (t.args.film ? t.check('not run under film', true) : on('normal', bubbleClear)(t)),
+	'c-ready props clear of the bubble sandbox': (t) => (t.args.film ? t.check('not run under film', true) : on('sandbox', bubbleClear)(t))
 };
