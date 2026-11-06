@@ -948,3 +948,95 @@ Evidence directory: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-2
 | `cycle2/probes-more.json` | `79878f259f5d0fd98bb267636330f1032172319a2066115e4b80d2abf66241f4` |
 | `cycle2/probes-purity.json` | `282c1ded5566e3eccdb7d15a7739b929df55c810324e5adf833d87e8269ec66d` |
 | `cycle2/probes-adjacent.json` | `44ac67ef872118b2836e0da32728987ca35b4e5147c6b39e6b7590482d5c7e29` |
+
+## Batch 1, Opus pre-check cycle 7: findings and responses
+
+**B7-G1, B7-G2, B7-G3 and B7-G4 are fixed in `56aa137071b06eb44fa2f62e14e7e9c66017ec93`; none is disputed.** Base: `df1306222bf9efe556bd34726a378177493e28ee`. The pre-check's notes N1 and N3 are fixed and N2 is documented. This section supersedes earlier claims about causal credit, class bodies, module reads and unwatched modules. Capability remains **PARTIAL** pending independent review and complete lane adoption.
+
+| Finding | Location, cause and fix | Regression evidence |
+|---|---|---|
+| **B7-G1 — fixed** | `scripts/pm_guard_isolation.py`, `static_scan` (`plain_class`, `name_form`). Every class-body name store and read was automatic, but a class body runs in the mapping its metaclass's `__prepare__` returns, and `enum._EnumDict` raises on a duplicate member. A name store, read, `def` or handler target in a class body is now automatic only when the class has no bases, keywords, decorators or type parameters and `__build_class__` is the unshadowed builtin (`binding:plain-class-name`). Anything else is an obligation. | The review's Enum duplicate and `_sunder_` suites fail with `hidden_static_sites`, zero credit, naming the class-body names; the held-out inputs still raise. The visited suite keeps its runtime refusal. The plain-class duplicate control passes. Traps also cover a redefined member, a repository metaclass, a decorated class and an `object` base. |
+| **B7-G2 — fixed** | `static_scan` (`module_read_form`). A read resolving to the module namespace was certified from the live namespace at scan time, while a dormant `except ... as` under `global` deletes that binding. Module reads are now certified from the syntax alone: the file must bind the name exactly once, by a top-level unconditional assignment, annotated assignment, `def`, `class` or plain import that precedes the statement holding the read. `del`, `global` rebinding, handler, loop and `with` targets, walrus, augmented assignment and star imports all disqualify it. Builtins and import-system attributes have their own written reasons; the live module is consulted only to refuse. | The review's reset-seam suite fails with zero credit, naming only the read of `marker`; the held-out input still raises `NameError`. The visited and local-handler suites keep their refusals. Six traps cover the other excluded bindings, and four controls keep the single-binding, recursive, `__name__` and builtin reads automatic. |
+| **B7-G3 — fixed** | `run`, after the first static scan. A repository module the scan followed was not watched unless `checker_modules` named it. Every module the scan covers must now be named, or the run fails `scanned_module_not_declared` with zero credit; named modules are anchored in both snapshots, as before. | All 12 unnamed helper limits fail `scanned_module_not_declared`, and all 12 named ones fail `state_shared_across_cases`, with zero credit. `C7-unnamed-helper-module-state` and its named pair are traps. |
+| **B7-G4 — fixed** | `GuardTable` records each `require` and `validate` call and the refusal position; `run` (`trace_check`) compares traces. An acceptance under a cut counted as a flip whether or not the cut guard ran. Now the baseline and the row's restoration must have identical traces, and a cut run must repeat the baseline trace up to and including the refusing cut guard; when the cut changes no guard result the whole trace must match. Divergence fails `noncausal_flip` (own negative) or `guard_trace_changed` (any other case) with zero credit. Traces are in the JSON. | None of the 40 random seeds gives a credited flip now; the six the review found (9, 13, 20, 22, 34, 37) fail `noncausal_flip`, and the 11 seeds in which every case took one path in all its runs, and every negative reached its guard, still pass. Traps cover a counter skip, the six seeds, a path that diverges before the cut guard, changed control and restoration paths, and a never-skipping control. |
+
+### The trace check
+
+- **What it compares.** For every cut row and every control and negative: the baseline trace, the cut run's trace and the restoration's trace, each the ordered `require` and `validate` calls with the position of the issued refusal.
+- **Determinism.** Baseline and restoration are two uncut runs of the same case; their traces must be identical.
+- **Attribution.** If the baseline was refused by a cut guard, the cut trace must start with the baseline trace through that refusing call. Otherwise the cut changes no guard result, so the traces must be equal.
+- **What fails closed.** A skipped or never-reached cut guard, any divergence before it, a changed path for any other case, and an unnamed scanned module. Each withholds all credit.
+
+The check uses the existing baseline and restoration runs, so DG6B keeps 176 evaluations and 353 factories, now with 56 trace comparisons, all equal.
+
+### Notes
+
+- **N1 — fixed.** Any read of `eval`, `exec`, `compile`, `__import__`, `getattr`, `globals`, `locals`, `vars` or `__builtins__` is a `dynamic_code_or_import` error, which a `NonGuard` cannot waive. All 14 of the review's forms are now errors (8 at the base); six traps hold the six waivable ones.
+- **N2 — documented.** The adoption guide lists the fail-closed limits ordinary code meets: uncertifiable contexts, repeated subexpressions and names injected after load. The trap runner's shared schema subject now binds its `DOCUMENTS` and `ROOTS` placeholders once in the module, as the new rule requires; no corpus entry changed.
+- **N3 — fixed.** A trap this Python cannot parse is reported under `skipped`, never counted as caught.
+- **N4.** Information only; the review's identity cases keep their results.
+
+The guide's allowlist table is now generated from `TOTAL_FORMS`, so each rule's totality reason in the guide is the tool's own. Its new "Class bodies and module reads" table names a trap for each form that became an obligation. The reviewer warning now covers `id()`, `hash` and `repr`, hash order, `random`, time, environment and I/O, and unwatched module state, and says which of them the trace check catches and which stay review items.
+
+### Rerun results
+
+Each command ran serially from scratch copies of the commits, in another project directory, with a 1 GiB address-space cap and a 6 GiB available-memory floor, on CPython 3.14.4/Linux with jsonschema 4.19.2 and referencing 0.36.2. Every review driver of cycles 2 to 7 ran against both the base and this tool from its own copy, changed only in hard-coded tool or scratch paths.
+
+| Check | Result |
+|---|---|
+| **Self-test** | **266/266 caught**, none skipped. All 225 earlier traps are byte-equal in order, source and expectation, and 41 are new. Under `python3 -O`, which strips `assert` statements, only `runtime-inline-assert` is missed, as it is on the base tool; that trap's refusal is the assert itself. |
+| **New corpus on the base tool** | The base tool still catches all 225 earlier traps. 28 new negatives were credited PASSes there, including every reproducer of the pre-check; 7 new regressions earn no credit there either, and all 6 new controls pass. |
+| **Cycles 2 to 6** | Every suite keeps its status and credit on both tools. Failure kinds are unchanged except in 4 already failing, zero-credit suites that import a repository helper they do not name, which add `scanned_module_not_declared`. The allocator-dependent `identity-probes.py` suites change between any two runs; none gains credit. |
+| **Pre-check drivers (cycle 7)** | Class namespace: the three false passes now fail with zero credit, the control passes. Global handler: the reset-seam false pass now fails, naming only `marker`. Identity: no non-causal credited flip (base: 6 in `identity_adjacent`, the review's six seeds, and 1 in `identity_followup`); every unnamed and named helper limit fails with zero credit. `exec_eval.py`: all 14 forms are dynamic-code errors (base: 8). Scope fuzzer, 20,000 programs, seed 20261105: **0 false passes** (base: 36). `scope_adjacent.py`: no false pass. Changed suites: cycle7/class-namespace.json 3, cycle7/global-handler.json 2, cycle7/identity-adjacent.json 43, cycle7/identity-followup.json 12. |
+| **Worker sweep `scope-sweep.py` (fix 4)** | **0 false passes**; 3146 raising reads refused, 2699 automatic reads that run, 1149 valid reads kept as obligations (base: 2887 and 961). The stricter module rule moves valid reads to obligations; none becomes a false pass. |
+| **Schema replay** | 768 cells: 139 atomic, 530 fail-closed, 99 zero-predicate, as before. |
+| **DG6B example** | Normal and optimized: **7/7 guards**, 49 matrix cells, 176 evaluations, 353 factory constructions, as at the base. The example is unchanged. |
+| **Standalone** | Flat copy from another project with program paths denied: exit 0, 266/266. Strict denial of the share, the source clone and both worktree roots under `python3 -I`: exit 0, 0 denied-path attempts. Explicit `--scratch`: 266/266. |
+| **Evidence audit** | **323 assertions pass**, covering unchanged inputs, zero credit on every changed suite, the reproducers' results on both tools and the DG6B counts. |
+
+**Limits.**
+- **The trace check compares observed runs.** A source that is stable within one process but differs across processes, hosts or dates (`PYTHONHASHSEED` order, a time threshold, an environment variable, a file) gives every run the same trace, and a nondeterministic gate that never fired in the observed runs earns credit. Reviewers must reject declarations whose result can decide whether a guard runs; the guide says so.
+- **The module rule is stricter than Python.** Forward references, conditional and repeated module bindings are valid Python that now need declarations or a restructure.
+- **The sweep and the fuzzer are worker and reviewer lists.** They are evidence, not proofs of completeness.
+- **Only CPython 3.14.4/Linux was exercised.** Lane adoption and governance checks were not run.
+
+**Scope.** Tool, trap runner, corpus, standalone README, adoption guide and compact report companions. No owner Markdown, registry, Decision Log, Spec Lock, generated shard, index or evidence, `.gitignore`, `main` push, pm-mail or subagent.
+
+Evidence directory: `/mnt/Cursor/archive/PuppetMaster-Evidence/event-authority-20261104/drafts/GUARDTOOL/B-fix5/`.
+
+| Evidence under that directory | SHA-256 |
+|---|---|
+| `self-test.json` | `a659d3ee04ebcda72055ee5dc35bf902bd53cccee3afdb82a6785bacee5adaef` |
+| `self-test-optimized.json` | `891f1926f71421e4503e0ed498de692121534109c33d28c6e14b84c17bf78e69` |
+| `new-corpus-on-base-tool.json` | `4960e27f1c0bdb175d59faf7576a1354246bb4e6d92257b641f6f40f63842da8` |
+| `audit-results.json` | `0554cf17b946e18d936e076baf9b5208a69b6fd5740a8b079582bdf70e7584b2` |
+| `commands.json` | `467b4813040e7fb4ac24e0ed89516a1ecee7981bd817b3943f76819a734f7c28` |
+| `guard_isolation_traps.json` | `87f50110d8ac0a38b8f034423959341b8601ca22d4ce49c8d1f1bc2ca88a2882` |
+| `new/dg6b.json` | `1f522a02bbba374d7835478d51d34d687b3f1bf773928f6d8139f67f0e05a864` |
+| `new/dg6b-optimized.json` | `c0c15bae9355f7f5fed2ed215c67ff149472ee48167e53859741924233816540` |
+| `base/dg6b.json` | `d3c63a48be8cebf49028eaa7931dbc4033637363b6702da36d9cf4927e142d3a` |
+| `standalone-guard.stdout` | `1f87c11a8be6d57a4f959fb6848465af3300f21b93ae8567a17b21fd39893c6c` |
+| `standalone-strict-guard.stdout` | `8a33a2da9a523a87869c70a175694649840ae383ae2196411a85932e8c7fe998` |
+| `standalone-strict-guard.stderr` | `dfd559265cc271df123404111ee0484bfa8901746c6333a2228b1219fe2bd06e` |
+| `scratch-override-self-test.json` | `53e77f8ddce7e3046ca0c64d83c84326a8a19a4f8a79847ac3ab1635d80fea5f` |
+| `new/cycle7/class-namespace.json` | `62f90f90527dce5addb44b2cfe7a8002709aaebfd446d5d501996b662d8797a1` |
+| `new/cycle7/global-handler.json` | `3a07294c53f02651964bf0981e2edec01dbcce8dc92af46cddfe8bd30aa84685` |
+| `new/cycle7/identity-adjacent.json` | `0959726bfcf8246e5aa52b41b1eda5c7ca15ad2f4fe5ffa0446905a53e912231` |
+| `new/cycle7/identity-followup.json` | `5866e2a5deba1e18bdca19f0c7ee3da0b0dac55c3df4f4962e292232c7f6a133` |
+| `new/cycle7/scope-adjacent.json` | `3a5288273b7f2bcc8204356645a584170e92721fcafbc198a3f6c90df0c676c0` |
+| `new/cycle7/scope-fuzz.json` | `d6462f52c9b5b8df208b5e8271b11ebafa8fa8a2ed7c7965192065c8b2cd12a4` |
+| `new/cycle7/exec-eval.json` | `32420ce20eefdbafd9a917603935020c8dcf7a187424ae1be38a5ef5760d6a9f` |
+| `base/cycle7/scope-fuzz.json` | `9d364a8abc60fc429d29b13fe71bd79606cf23b174d885e63b3f955a1e271b03` |
+| `base/cycle7/identity-adjacent.json` | `af0d8feffb1251a1c8e9ec50d14c5a584a67f2b8b23b0d355877f55766746200` |
+| `base/cycle7/identity-followup.json` | `f8efedd4698bdd674f0e65e8b3f87c2b77b5e7e0c36e256ac875305e38d7e12c` |
+| `new/cycle6/guard-probes.json` | `7eb8453abe02ede5421a347fe3c40d3d5b6d29f4c45b3d54e6c06b5bf56d6aeb` |
+| `new/cycle6/identity-probes.json` | `1a480e71c51da0dcf5d611908f79ac7f3cc40ea89d2d8f5ba11300510b35c45c` |
+| `new/cycle6/proof-probes.json` | `702f052c7d01e31273da6775f413cd8e76732898c7979f4f52c9202d8619ffed` |
+| `new/cycle6/schema-replay.json` | `92553b804849aecad50fdc6ef5ceac22778f1b9be1b95325741200c92cbb1a79` |
+| `new/fix4/scope-sweep.json` | `3720eb24cb054348c84ac81e3e9913e6504addcfcd55fb166f03fcca44dbcb53` |
+| `base/fix4/scope-sweep.json` | `c36b1a3de6cf8ca046af7ff47016e1152f3b4dd6eefbafa609d889b70d064888` |
+| `run-checks.py` | `14e7b600f70fbdb1b2bc65c4733b27f2c286b7dd2efd3d4e19e149012a7bf75b` |
+| `audit-guard.py` | `a724fe39b5db0b2fd55ccd08380791d8d93e535d33220fa66d90e4b408f02c5e` |
+| `make-corpus.py` | `5eb32912f47394332144861ea881123f1bb7f68d4e12af53b39cc92fafcf3113` |
+| `edit-guard-docs.py` | `7eba01c6c1c65a037187bf9abc6d8992e6a61dea8bd1c0db75cbf8e155d8cf69` |
+| `prepare-guard-report.py` | `7690f3fc1f30962348260333507e91437acea316e95363c5d9375e0f8b0f7beb` |

@@ -2,7 +2,8 @@
   "version": 2,
   "method": "B: guard tables",
   "status": "PASS",
-  "caught": 225,
+  "caught": 266,
+  "skipped": 0,
   "traps": [
     {
       "id": "table-single-swaps",
@@ -1127,6 +1128,211 @@
     {
       "id": "C6-uncertifiable-case-global-fails-closed",
       "expected": "A predicate from a module outside the anchored graph brings in a global that cannot be certified: the relation fails closed with no credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-enum-duplicate-member-dormant",
+      "expected": "An Enum class body binds names through _EnumDict.__setitem__, which raises on a duplicate member: each class-body name operation is an obligation with zero credit, and the original raises when visited.",
+      "caught": true
+    },
+    {
+      "id": "C7-enum-duplicate-member-visited",
+      "expected": "Visiting the same Enum duplicate raises TypeError: refused at runtime as well as statically, with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-enum-sunder-name-dormant",
+      "expected": "An Enum class body refuses a reserved _sunder_ name with ValueError: an obligation with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-enum-method-redefines-member-dormant",
+      "expected": "A def in an Enum body binds its name through the same mapping, which raises on a redefined member: the def is an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C7-repository-metaclass-prepare-dormant",
+      "expected": "A repository metaclass whose __prepare__ mapping raises on a duplicate: the keyword class body names are obligations, and the original raises.",
+      "caught": true
+    },
+    {
+      "id": "C7-plain-class-duplicate-binding-control",
+      "expected": "A class with no bases, keywords or decorators binds into a plain dict: the same duplicate binding stays automatic and runs on both routes.",
+      "caught": true
+    },
+    {
+      "id": "C7-decorated-class-name-is-an-obligation",
+      "expected": "A decorated class is not plain by the rule, so its body names are obligations; nothing raises on this path.",
+      "caught": true
+    },
+    {
+      "id": "C7-class-with-base-name-is-an-obligation",
+      "expected": "Any base, even object, makes the class body names obligations; nothing raises on this path.",
+      "caught": true
+    },
+    {
+      "id": "C7-global-handler-reset-seam-dormant",
+      "expected": "A handler target under global deletes the module binding when the handler ends. The live namespace at scan time held the name; the read is now an obligation with zero credit, and the original raises NameError.",
+      "caught": true
+    },
+    {
+      "id": "C7-global-handler-reset-seam-visited",
+      "expected": "Visiting the same handler deletes the module binding and the read raises NameError: refused at runtime as well as statically.",
+      "caught": true
+    },
+    {
+      "id": "C7-global-handler-without-seam-dormant",
+      "expected": "The same handler without a reviewed reset: the global writes and the read are all sites, as at the base.",
+      "caught": true
+    },
+    {
+      "id": "C7-local-handler-target-deleted",
+      "expected": "A local handler target is deleted when the handler ends: the later read stays an obligation, as at the base.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-loop-target-is-an-obligation",
+      "expected": "A module binding made by a for target is not a single unconditional binding: an obligation, although the loop ran here.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-empty-loop-target",
+      "expected": "A for target over an empty iterable never binds: the read raises NameError and is refused.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-walrus-binding-is-an-obligation",
+      "expected": "A module binding made by an assignment expression is excluded: an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-double-binding-is-an-obligation",
+      "expected": "A module that binds the name twice is excluded, even though both bindings ran: an obligation.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-conditional-binding-is-an-obligation",
+      "expected": "A binding inside a module-level if is conditional: an obligation, although it ran here.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-forward-binding-is-an-obligation",
+      "expected": "A module binding after the statement holding the read is excluded: an obligation, although the module finished loading.",
+      "caught": true
+    },
+    {
+      "id": "C7-module-single-binding-control",
+      "expected": "One top-level unconditional assignment before the def certifies the read.",
+      "caught": true
+    },
+    {
+      "id": "C7-recursive-module-function-control",
+      "expected": "A recursive read in the body of an undecorated module def is certified.",
+      "caught": true
+    },
+    {
+      "id": "C7-loader-name-control",
+      "expected": "A read of __name__, set by the import system before the body runs, stays automatic.",
+      "caught": true
+    },
+    {
+      "id": "C7-builtin-name-control",
+      "expected": "A read of a builtin the module never binds stays automatic.",
+      "caught": true
+    },
+    {
+      "id": "C7-unnamed-helper-module-state",
+      "expected": "A helper module the scan covers but checker_modules does not name keeps a counter that skips the guard on the cut run: the unwatched module fails closed with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-named-helper-module-state",
+      "expected": "The same helper named in checker_modules is watched, and its counter fails the state snapshot.",
+      "caught": true
+    },
+    {
+      "id": "C7-counter-gate-skips-cut-guard",
+      "expected": "A counter outside every watched module skips the guard on the cut run of its own negative: the acceptance does not come from the cut, so the trace check fails it closed as noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-random-gate-skips-cut-guard",
+      "expected": "The global random generator, seeded for a fixed schedule, skips the guard on the cut run: noncausal_flip with zero credit, whatever the source of the nondeterminism.",
+      "caught": true
+    },
+    {
+      "id": "C7-random-gate-skips-cut-guard-seed13",
+      "expected": "Another review seed whose schedule skips the guard on the cut run: noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-random-gate-skips-cut-guard-seed20",
+      "expected": "Another review seed whose schedule skips the guard on the cut run: noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-random-gate-skips-cut-guard-seed22",
+      "expected": "Another review seed whose schedule skips the guard on the cut run: noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-random-gate-skips-cut-guard-seed34",
+      "expected": "Another review seed whose schedule skips the guard on the cut run: noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-random-gate-skips-cut-guard-seed37",
+      "expected": "Another review seed whose schedule skips the guard on the cut run: noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-path-diverges-before-cut-guard",
+      "expected": "The cut run reaches the cut guard by another path, skipping a guard the baseline ran before it: noncausal_flip with zero credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-counter-gate-changes-control-path",
+      "expected": "The guard is skipped on a control cut run: the outcome is the same, but the path changed, so guard_trace_changed withholds credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-counter-gate-changes-restoration-path",
+      "expected": "The guard is skipped on a restoration run: the two uncut runs disagree, so guard_trace_changed withholds credit.",
+      "caught": true
+    },
+    {
+      "id": "C7-counter-gate-never-skips-control",
+      "expected": "The same counter never reaches its limit: every trace agrees and the guard proves normally.",
+      "caught": true
+    },
+    {
+      "id": "C7-eval-read-tuple-index",
+      "expected": "A read of eval or __builtins__ that reaches a call the scan cannot see is a dynamic-code error a NonGuard cannot waive.",
+      "caught": true
+    },
+    {
+      "id": "C7-eval-read-dict-lookup",
+      "expected": "A read of eval or __builtins__ that reaches a call the scan cannot see is a dynamic-code error a NonGuard cannot waive.",
+      "caught": true
+    },
+    {
+      "id": "C7-eval-read-lambda-return",
+      "expected": "A read of eval or __builtins__ that reaches a call the scan cannot see is a dynamic-code error a NonGuard cannot waive.",
+      "caught": true
+    },
+    {
+      "id": "C7-eval-read-builtins-subscript",
+      "expected": "A read of eval or __builtins__ that reaches a call the scan cannot see is a dynamic-code error a NonGuard cannot waive.",
+      "caught": true
+    },
+    {
+      "id": "C7-eval-read-walrus",
+      "expected": "A read of eval or __builtins__ that reaches a call the scan cannot see is a dynamic-code error a NonGuard cannot waive.",
+      "caught": true
+    },
+    {
+      "id": "C7-eval-read-default",
+      "expected": "A read of eval or __builtins__ that reaches a call the scan cannot see is a dynamic-code error a NonGuard cannot waive.",
       "caught": true
     }
   ]
