@@ -323,10 +323,19 @@ export default async function (t) {
     // under its sticky strips (Source Control at 1280x500: a 56 px scroller whose top 40 px lie under the tab strip),
     // so when the press point is not on top, the wheel (over the scroller, at a point that hit-tests to it) moves the
     // press point into the band of the scroller that is exposed. at: the press point inside the element (default: centre).
+    // Stable first, as Playwright's own click waits: the same box on two frames running (an accordion above may still
+    // be opening), at most 1.5 s.
+    const stable = (loc) => loc.evaluate(e => new Promise(res => {
+      const t0 = performance.now(); let last = '', same = 0;
+      const tick = () => { const r = e.getBoundingClientRect(), k = [r.x, r.y, r.width, r.height].join();
+        same = k === last ? same + 1 : 0; last = k; if (same >= 2 || performance.now() - t0 > 1500) res(); else requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+    }));
     const reach = async (loc, at = null) => {
       await loc.scrollIntoViewIfNeeded();
-      let p = null;
+      let p = null, wheeled = false;
       for (let pass = 0; pass < 3; pass++) {
+        await stable(loc);
         p = await loc.evaluate((e, at) => {
           const r = e.getBoundingClientRect(), px = r.x + (at ? at.x : r.width / 2), py = r.y + (at ? at.y : r.height / 2);
           const h0 = document.elementFromPoint(px, py);
@@ -345,11 +354,19 @@ export default async function (t) {
           return { x: px, y: py, onTop: false, hit: h0?.className?.baseVal ?? h0?.className, wheel: { x, y: ty, delta: py - ty } };
         }, at);
         if (p.onTop || !p.wheel || Math.abs(p.wheel.delta) < 1) break;
+        wheeled = true;
         await t.page.mouse.move(off.x + p.wheel.x, off.y + p.wheel.y);
         await t.page.mouse.wheel(0, p.wheel.delta);
         await f.waitForTimeout(150);
       }
-      return p;
+      return { ...p, wheeled };
+    };
+    // Press where reach found the control: Playwright's own click (it re-checks the target and retries while the
+    // layout still moves) when the point was on top already; a real press at the point when the wheel had to bring
+    // it into a scroller's exposed band, where Playwright's actionability check would wait on the strip above it.
+    const pressAt = async (loc, p, opts = {}) => {
+      if (!p.wheeled && p.onTop) await loc.click(opts.at ? { position: opts.at, button: opts.button } : { button: opts.button });
+      else await t.page.mouse.click(off.x + p.x, off.y + p.y, opts.button ? { button: opts.button } : {});
     };
     // A short window (1280x500) can leave a panel's list scroller almost entirely under its strips and cards (Source
     // Control with Publish and review open exposes about 16 px of list). As a person would, fold the panel's expanded
@@ -392,7 +409,7 @@ export default async function (t) {
         const trig = panel.locator(`[data-shelf-pop="${c.i}"]`), tag = `${target} ${state} popup ${c.controls || c.sig}`;
         const tp = await reach(trig);
         await t.check(`${tag} reachable`, tp.onTop, JSON.stringify(tp), { hard: true });
-        const pressTrig = async () => { const q = await reach(trig); await t.page.mouse.click(off.x + q.x, off.y + q.y); };
+        const pressTrig = async () => pressAt(trig, await reach(trig));
         const got = {};
         for (const input of ['mouse', 'enter']) {
           // A wrapper's mouse route is the census above; its keyboard route is new here.
@@ -490,8 +507,8 @@ export default async function (t) {
           // footer (Source Control's Publish card at 1280x500) covers it.
           const hp = await reach(head, {x:8,y:8});
           await t.check(`${target} accordion head on top where it is pressed`, hp.onTop, JSON.stringify(hp), {hard:true});
-          await t.page.mouse.click(off.x + hp.x, off.y + hp.y);
-          await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),'',{hard:true});
+          await pressAt(head, hp, { at: {x:8,y:8} });
+          await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),JSON.stringify(await head.evaluate((e,hp)=>{const r=e.getBoundingClientRect(),h=document.elementFromPoint(hp.x,hp.y);return {text:e.textContent.trim().replace(/\s+/g,' ').slice(0,40),cls:e.className,acc:e.closest('[data-acc]').className,r:[r.x,r.y,r.width,r.height].map(Math.round),hp,hitNow:h?.tagName+'.'+(h?.className?.baseVal??h?.className),own:!!h&&(h===e||e.contains(h))};},hp)),{hard:true});
           opened=true;
         }
         if(!opened)break;
@@ -520,7 +537,7 @@ export default async function (t) {
           }))continue;
           const rp = await reach(trigger);
           await t.visible(`#${target} [data-shelf-route="${c.index}"]`,`${target} ${c.key} reachable`,{scroll:false});
-          await t.page.mouse.click(off.x + rp.x, off.y + rp.y);
+          await pressAt(trigger, rp);
           await t.check(`${target} ${c.key} opens its menu`,await trigger.getAttribute('aria-expanded')==='true',
             JSON.stringify({blocked:t.args.blockMenu||null,hits:await f.evaluate(()=>window.__blockedShelfMenu||0)}),{hard:true});
           const menu=f.locator('.pmr-menu.is-open');
@@ -535,8 +552,7 @@ export default async function (t) {
           if(c.key==='rdCfgMenu' && !await panel.locator('#rdAddForm').isVisible()) {
             // Enter this branch while the launch selector is still in view;
             // later shelf scrolling must not race the menu's scroll-close owner.
-            const lp = await reach(trigger);
-            await t.page.mouse.click(off.x + lp.x, off.y + lp.y);
+            await pressAt(trigger, await reach(trigger));
             await t.check('launch selector reopens for Add Configuration',await trigger.getAttribute('aria-expanded')==='true','',{hard:true});
             await menu.waitFor({state:'visible',timeout:5000});
             await menu.getByRole('menuitem',{name:/Add Configuration/}).click();
