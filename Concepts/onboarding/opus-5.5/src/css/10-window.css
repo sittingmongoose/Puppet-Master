@@ -71,7 +71,11 @@ html:not([data-o55-nier="on"]) :is(#pm-o55-onboarding > .o55-win, .o55t-root > *
 
 /* header + rail */
 .o55-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px; height: 58px; padding: 0 12px 0 18px; border-bottom: 1px solid var(--o55-line);
-  background: color-mix(in srgb, var(--surface) 94%, var(--text-primary) 2%); position: relative; z-index: 3; }
+  background: color-mix(in srgb, var(--surface) 94%, var(--text-primary) 2%); position: relative; z-index: 10; }
+/* (FO-81: the header, and the look menu that drops from it, lie over everything in the window's interior: its screens
+   (z-index 0 to 2), Adjust NieR's panel (3, 13-nier-look.css), which replaces the interior and, at the header's old 3,
+   painted over the open menu because it comes later, and the Safe screen's toast (6). Glass's lens layer (30, drawn
+   over its strips, the menu's Light / Dark among them) and NieR's reboot cover (60) stay above it.) */
 #pm-o55-onboarding[data-family="glass"] .o55-head { background: color-mix(in srgb, #fff 5%, transparent); }
 .o55-brand { display: flex; align-items: center; gap: 9px; font: 700 14px/1 var(--display-font, var(--body-font)); letter-spacing: 0.01em; white-space: nowrap; }
 .o55-logo { color: var(--o55-accent); }
@@ -135,7 +139,11 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-sound[aria-pressed="false"] svg { opacity: 0.7; }
 
 /* body: stage + pane */
-.o55-body { display: grid; grid-template-columns: minmax(300px, 42%) minmax(0, 1fr); min-height: 0; }
+.o55-body { display: grid; grid-template-columns: minmax(300px, 42%) minmax(0, 1fr); min-height: 0; position: relative; z-index: 0; }
+/* (FO-83: the interior is a layer of its own, under the header (10) and Adjust NieR's panel (3, 13-nier-look.css), and
+   Glass draws its strips' lenses inside it (data-lg-lens-host, 60-ui-core.js). In the window's lens layer (30) the lens
+   of a screen the panel covers painted over the editor, and one under the open look menu over the menu, in every frame
+   from the panel's rise to its close; here no lens of the interior can paint above anything the interior lies under.) */
 /* clipped, never scrollable: overflow hidden still makes a scroll container, and Glass's world (its caustics, back ellipse
    and reflection) reaches past the box, so focus, scrollIntoView or scroll anchoring could scroll it and Pip's whole
    painted stage slid ~250 px left and 60 px up inside an unmoved panel (final run FO-15); overflow: clip cannot scroll */
@@ -144,6 +152,13 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-pane > .o55-layer { position: absolute; inset: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr); background: var(--o55-win-bg); } /* the footer's buttons never widen the column past the window */
 #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer { background: transparent; }
 .o55-scroll { display: flex; flex-direction: column; overflow: auto; min-height: 0; overscroll-behavior: contain; scrollbar-width: thin; }
+/* (FO-87: the screen's scroller owns its whole visible box. The footer under it is positioned and painted after it, and
+   Chromium's hit-testing gave the footer the scroller's last visible row, about 1 px above the footer's own top edge, in
+   every look: the bottom row of a control a scroll had just brought to the edge (Retro's Server guest checkbox, a
+   whole-pixel scroll leaving its last 0.39 px under the edge) pressed the footer. As the layer's grid item the scroller
+   takes a z-index with no position, so nothing inside it gets a new containing block; its clip ends where the footer
+   begins, so the footer keeps its own box. The refusal reason the footer floats above itself stays over it.) */
+.o55-pane > .o55-layer > .o55-scroll { z-index: 1; }
 .o55-content { margin-block: auto; padding: 32px var(--o55-pad) 28px; max-width: 640px; width: 100%; box-sizing: border-box; }
 /* centred as a screen comes in, then held where it opened: a line appearing or going inside it grows or shrinks the
    column downward instead of re-centring it in one frame (p76: jumps of 20-29 px; 60-ui-core.js holdColumn) */
@@ -192,7 +207,7 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 #pm-o55-onboarding[data-family="retro"] .o55-btn { border: 2px solid var(--text-primary); text-transform: uppercase; font-family: var(--display-font); font-size: 12.5px; letter-spacing: 0.05em; box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
 #pm-o55-onboarding[data-family="retro"] .o55-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
 #pm-o55-onboarding[data-family="retro"] .o55-btn.o55-ghost { border-color: transparent; box-shadow: none; }
-.o55-reason { position: absolute; right: 22px; bottom: calc(100% + 8px); max-width: 340px; padding: 9px 12px; border-radius: 9px; font-size: 13px; line-height: 1.4; background: var(--text-primary); color: var(--background); opacity: 0; transform: translateY(6px); pointer-events: none; }
+.o55-reason { position: absolute; z-index: 2; right: 22px; bottom: calc(100% + 8px); max-width: 340px; padding: 9px 12px; border-radius: 9px; font-size: 13px; line-height: 1.4; background: var(--text-primary); color: var(--background); opacity: 0; transform: translateY(6px); pointer-events: none; }
 .o55-reason.o55-reason-show { animation: o55-reason 2600ms ease both; }
 @keyframes o55-reason { 0% { opacity: 0; transform: translateY(6px); } 8%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
 

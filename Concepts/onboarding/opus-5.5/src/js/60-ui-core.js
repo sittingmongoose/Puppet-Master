@@ -47,7 +47,8 @@
       + `<div class="o55-headctl"><span class="o55-lookslot"></span><span class="o55-talkslot"></span><span class="o55-soundslot"></span>`
       + `<button type="button" class="o55-iconbtn o55-close" data-o55-do="close" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.close'))}" title="${U.esc(closeTitle())}">`
       + `${U.nx('close', 18, 'control') || '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'}<span>${U.esc(T('chrome.close'))}</span></button></div></header>`
-      + `<div class="o55-body"><div class="o55-stage o55-scene-host"></div><section class="o55-pane"></section></div>`
+      /* the interior holds its own strips' Glass lenses, in its own layer under the header and Adjust NieR (FO-83, 10-window.css) */
+      + `<div class="o55-body" data-lg-lens-host=""><div class="o55-stage o55-scene-host"></div><section class="o55-pane"></section></div>`
       + `<div class="o55-live" aria-live="polite" role="status"></div></div>`;
     document.body.appendChild(root);
     S.root = root;
@@ -61,6 +62,9 @@
     root.addEventListener('input', onInput);
     root.addEventListener('change', onInput);
     ['keydown', 'keyup', 'keypress'].forEach((ev) => root.addEventListener(ev, onKey));
+    /* the look menu closes on Escape wherever focus is: a press on its own padding or on a note's words leaves focus on
+       the page's body, where the window's own keys never hear it (FO-89); the window's Escape (onKey) closes the menu */
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && S.open && S.lookOpen && (e.target === document.body || e.target === document.documentElement)) onKey(e); });
     root.addEventListener('pointerdown', (e) => { if (e.target.closest('.o55-scrim')) nudge(); });
     /* Input never waits for a performance (hero spec section 1 rule 7): a press or a key while the stage or the skin is
        still playing a moment snaps it to its end state. Caught on the way down, never prevented, so it still acts. */
@@ -622,7 +626,9 @@
      never one of them. */
   const MOVED_ON = new Set(['another', 'elsewhere', 'useTailscale', 'useCode', 'useSsh', 'useSmb', 'useAlt', 'tokenOn', 'tokenOff',
     'manualOn', 'manualOff', 'otherAccount', 'cancelAdd', 'cancelSignin', 'skip', 'skipOnline', 'later']);
-  function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit()); }
+  /* (not while Adjust NieR's editor covers the stage: a ? then opens its note in the form, the look menu's own, as the
+     narrow layout does; on the stage it lay under the editor, unseen, FO-81 recheck) */
+  function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit() && !(O55.nierLook && O55.nierLook.panelOpen && O55.nierLook.panelOpen())); }
   O55.pipStage.holdsTip = holdsTip;
 
   /* Hover intent: a choice previews only once the pointer has rested on it for DWELL ms, so moving across the list to
