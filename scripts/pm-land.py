@@ -25,7 +25,10 @@ before the landing it follows is pushed, in the middle of a batch, or to make a 
 
 The landing check's exit codes mean what the rule says: 2 and 3 stop the landing, 0 and 1 continue, and an
 exit 1's report is kept for Jared. An exit 1 with a timed-out subcheck stops here, because the rule says to
-rerun that subcheck on its own and judge it before pushing: `resume --timeouts-judged "<what you found>"`.
+rerun that subcheck on its own and judge it before pushing: `resume --timeouts-judged "<what you found>"`. So
+does one that says to compare changed pre-existing rows with the baseline's: `resume --rows-compared "<what you
+found>"`. A judgement covers the check on record when it was given and no other. A check that crashed (a
+traceback, or a report with no Infrastructure line) said nothing, so no judgement excuses it: `resume` reruns it.
 
 Exit codes of this command: 0 finished, 1 stopped (it says why and what next), 2 refused (bad arguments or
 state), 4 the wait for the lock timed out (nothing changed).
@@ -72,6 +75,10 @@ DEAD_HEARTBEAT_SECONDS = 10 * 60
 HAND_RULE_SECONDS = 90 * 60
 BATCH_MAX_LANDINGS = 4
 BATCH_MAX_SECONDS = 2 * 60 * 60
+MAX_HOLD_SECONDS = 3 * 60 * 60  # the heartbeat stops after this, so a hung run reads as dead by the rules below
+# pm-landing-check.py: rule 2 applies only while the baseline is at most seven days older than the base.
+BASELINE_LIMIT_SECONDS = 7 * 24 * 60 * 60
+BASELINE_MARGIN_SECONDS = 2 * 60 * 60  # a batch's base stays behind origin/main for up to its two hours
 
 EXIT_OK = 0
 EXIT_STOPPED = 1
@@ -97,6 +104,13 @@ AUDIT_INPUTS = (
     "Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_ANSWERS_20260910.json",
     "Plans/.audits/event-authority-2026-08-12/OWNER_DECISION_SHEET_PLAIN_20260909.md",
 )
+# What may reach the landing check through --check-arg. Anything else could change what it judges: --base, --baseline,
+# --record-baseline and --allow-sparse are the rule's to set. "--flag" alone; "--flag=VALUE" or "--flag" "VALUE".
+CHECK_ARG_SWITCHES = ("--cache", "--no-cache")
+CHECK_ARG_VALUES = {"--cache-dir": False, "--cache-max-mb": True, "--subcheck-timeout-seconds": True}  # True: a number
+# Not yet measured: reports/landing-checks/README.md, "Checks in a local copy".
+CHECKS_LOCAL_NOTE = ("--checks-local: this copy's equivalence to the shared-checkout run is not yet measured, so nothing "
+                     "proves it gives the same verdict. It departs from today's rule and stays behind this flag.")
 # A landing that needs a reseal is never part of a batch ("Land in batches").
 RESEAL_PATHS = ("Plans/Spec_Lock.json", "Plans/auto_decisions.jsonl")
 RESEAL_PREFIXES = ("Plans/.evidence/",)
@@ -108,6 +122,103 @@ DEFAULT_PRIORITIES: Dict[str, Any] = {
     "default": 50,
     "rules": [{"match": r"^(pm-fo-|fo-|land/fo-)", "priority": 10, "why": "stream F first (PROGRAM.md)"}],
 }
+
+
+# ---------------------------------------------------------------------------------------------------------
+# What the landing check's text report says. The format is main() in scripts/pm-landing-check.py; a self-test
+# holds these patterns to that script's own source and to its describe().
+# ---------------------------------------------------------------------------------------------------------
+
+REPORT_INFRASTRUCTURE = re.compile(r"^Infrastructure results, not failures of this tree [^:]*: (\d+)", re.M)
+# At the start of a line: a failure row quotes a validator's traceback inside its one-line fields, under "  [".
+REPORT_TRACEBACK = re.compile(r"^(?:  \+ Exception Group )?Traceback \(most recent call last\)", re.M)
+REPORT_COMPARE = re.compile(r"^Nothing reported stops the landing:.*?(\d+) of them with changed content on files this "
+                            r"branch touched, so compare those with the baseline's rows", re.M)
+REPORT_PRE_HEAD = re.compile(r"^Pre-existing, in a baseline bucket whose count has not risen \(never blocks\): (\d+)")
+REPORT_PRE_ROW = re.compile(r"^  \[(pre-existing|improved)\s*\] (.+?)  (\d+) -> (\d+)(?:  (.*))?$")
+REPORT_ROW_WHERE = re.compile(r"^(.*?)  ?\((names .*|content changed)\)$")
+REPORT_COUNTER = re.compile(r"^  \[staleness\] (\S+)  (\d+) -> (\d+) \(the readiness growth counter", re.M)
+
+
+def read_report(text: str) -> Dict[str, Any]:
+    """The parts of a landing check's report the tool acts on. `pre_unread`: rows it could not read, or past the print cap."""
+    infrastructure = REPORT_INFRASTRUCTURE.search(text)
+    compare = REPORT_COMPARE.search(text)
+    pre: Dict[str, Dict[str, Any]] = {}
+    declared = None
+    read = 0
+    unread = False
+    for line in text.splitlines():
+        if declared is None:
+            head = REPORT_PRE_HEAD.match(line)
+            if head:
+                declared = int(head.group(1))
+            continue
+        if line.startswith("Checks whose failure count rose:"):
+            break
+        row = REPORT_PRE_ROW.match(line)
+        if row:
+            tag, bucket, baseline, count, rest = row.groups()
+            where = REPORT_ROW_WHERE.match(rest or "")
+            entry = pre.setdefault(bucket, {"baseline": int(baseline), "count": int(count), "improved": tag == "improved",
+                                            "content_changed": False, "rows": []})
+            entry["content_changed"] = entry["content_changed"] or bool(where and where.group(2) == "content changed")
+            entry["rows"].append(where.group(1) if where else (rest or ""))
+            read += 1
+    if declared is not None and read != declared:
+        unread = True
+    return {
+        "infrastructure": int(infrastructure.group(1)) if infrastructure else None,
+        "crashed": bool(REPORT_TRACEBACK.search(text)),
+        "compare": int(compare.group(1)) if compare else 0,
+        "pre": pre,
+        "pre_unread": unread,
+        "counter": {name: int(reported) for name, _was, reported in REPORT_COUNTER.findall(text)},
+    }
+
+
+def batch_gap(report: Dict[str, Any], earlier: Sequence[Optional[Dict[str, Any]]]) -> Optional[tuple]:
+    """Why this member's report, fine inside the batch, may not hold alone after the earlier members' follow-up.
+
+    Every check in a batch is judged against the baseline from before the batch, so a bucket an earlier member lowered
+    and this one raises again still reads as pre-existing, and a readiness rise is excused by the earlier member's
+    stale row. `earlier` is each earlier member's report digest in order, None where there is none (a hand lander).
+    Returns (stop code, why). What a report did not print cannot be seen: README, "Batches".
+    """
+    if not earlier:
+        return None
+    gone = any(row is None for row in earlier)
+    known = [row for row in earlier if row is not None]
+    mine = report["pre"]
+    if gone or report["pre_unread"] or any(row.get("pre_unread") for row in known):
+        if mine or report["pre_unread"] or report["compare"]:
+            return ("batch_rows_overlap", "this report lists pre-existing rows, and an earlier member's report is missing "
+                                          "or printed only part of its rows, so what they share cannot be told")
+    else:
+        shared = []
+        for bucket, entry in sorted(mine.items()):
+            views = [row for row in known if bucket in row["pre"]]
+            if not any(row["pre"][bucket]["improved"] or row["pre"][bucket]["content_changed"] or row.get("compare")
+                       for row in views):
+                continue
+            # Every member's report lists what the earlier ones touched too, so compare with the latest view.
+            latest = views[-1]["pre"][bucket]
+            if entry["count"] != latest["count"] or set(entry["rows"]) - set(latest["rows"]):
+                shared.append(f"{bucket} ({latest['count']} -> {entry['count']})")
+        if shared:
+            return ("batch_rows_overlap", "pre-existing rows changed in a bucket an earlier member of this batch also "
+                                          "changed, so the baseline's count no longer tells: " + "; ".join(shared[:10]))
+    for name, reported in sorted(report["counter"].items()):
+        if gone:
+            return ("batch_readiness_rise", f"{name}'s rise is judged as staleness, and an earlier member's report is "
+                                            "missing, so what this landing added cannot be told")
+        seen = max((row.get("counter", {}).get(name, -1) for row in known), default=-1)
+        if reported > seen:
+            # A total no higher than an earlier member's is no rise alone either; a higher one may be excused by its rows.
+            return ("batch_readiness_rise", f"{name} rose to {reported} ({'no rise' if seen < 0 else seen} in the earlier "
+                                            "reports) and is judged as staleness, which an earlier member's stale row can "
+                                            "explain; alone it must be explained by this landing's own")
+    return None
 
 
 class Stop(Exception):
@@ -133,6 +244,15 @@ class Refused(Exception):
 
 class LockWaitTimeout(Exception):
     pass
+
+
+class BatchOwesClose(Exception):
+    """The lock's dead holder has a batch that landed something; clearing it would lose the batch's follow-up."""
+
+    def __init__(self, start: str, reason: str):
+        super().__init__(reason)
+        self.start = start
+        self.reason = reason
 
 
 def now_utc() -> datetime:
@@ -216,6 +336,7 @@ class Config:
     min_free_gb: int
     heartbeat_seconds: float
     poll_seconds: float
+    max_hold_seconds: float = MAX_HOLD_SECONDS
 
     @property
     def held(self) -> Path:
@@ -257,6 +378,7 @@ def config_from(args: argparse.Namespace) -> Config:
         min_free_gb=int(os.environ.get("PM_LAND_MIN_FREE_GB") or DEFAULT_MIN_FREE_GB),
         heartbeat_seconds=float(os.environ.get("PM_LAND_HEARTBEAT_SECONDS") or HEARTBEAT_SECONDS),
         poll_seconds=float(getattr(args, "poll_seconds", None) or os.environ.get("PM_LAND_POLL_SECONDS") or 60),
+        max_hold_seconds=float(os.environ.get("PM_LAND_MAX_HOLD_SECONDS") or MAX_HOLD_SECONDS),
     )
 
 
@@ -478,6 +600,18 @@ def waiting_line(cfg: Config) -> List[Dict[str, Any]]:
     return sorted(live, key=ticket_order)
 
 
+def batch_landed(cfg: Config, fields: Dict[str, Any]) -> bool:
+    """holder.txt names a batch-start and something landed in it: a row says so, or main has moved past it."""
+    start = fields.get("batch-start")
+    if not start:
+        return False
+    return bool(fields.get("batch-landing")) or git_out(cfg.shared, "rev-parse", "refs/remotes/origin/main") != start
+
+
+def close_command(start: Any) -> str:
+    return f"python3 scripts/pm-land.py run --batch-close --batch-start {start} --name <you>"
+
+
 def try_take(cfg: Config) -> bool:
     try:
         os.mkdir(cfg.held)
@@ -514,6 +648,8 @@ def acquire_lock(cfg: Config, name: str, branch: Optional[str], priority: int, h
                     write_holder(cfg, holder)
                     return
                 verdict = judge_holder(cfg)
+                if verdict.get("dead") and batch_landed(cfg, verdict["fields"]):
+                    raise BatchOwesClose(verdict["fields"]["batch-start"], verdict["reason"])
                 if verdict.get("dead"):
                     say(f"clearing the lock: {verdict['reason']}")
                     clear_dead_holder(cfg, verdict, name)
@@ -542,7 +678,11 @@ class Heartbeat(threading.Thread):
         self.halt = threading.Event()
 
     def run(self) -> None:
+        began = time.monotonic()
         while not self.halt.wait(self.lander.cfg.heartbeat_seconds):
+            if time.monotonic() - began >= self.lander.cfg.max_hold_seconds:
+                self.lander.hold_ran_out()
+                return
             try:
                 self.lander.beat()
             except OSError:
@@ -570,6 +710,9 @@ def followup_steps(checks_local: bool) -> List[str]:
         body = ["ff", "shard-shared", "landing-check", "push"]
     return head + body + ["fu-remove"]
 
+
+# (state key, what a judgement of that kind covers).
+JUDGEMENTS = (("timeouts_judged", "timed-out subchecks"), ("rows_compared", "changed pre-existing rows"))
 
 TARGET_STEPS = {"fetch", "rebase", "shard-own", "transfer", "dirty-check", "local-prepare", "shard-local",
                 "landing-check-local", "ff", "shard-shared", "landing-check", "push"}
@@ -797,6 +940,16 @@ class Lander:
             self.holder["time"] = self.holder["heartbeat"] = iso()
             write_holder(self.cfg, self.holder)
 
+    def hold_ran_out(self) -> None:
+        """A check can hang with this thread still beating, and then neither rule for a dead holder would ever fire."""
+        hours = self.cfg.max_hold_seconds / 3600
+        say(f"this run has held the lock for {hours:g} h, the maximum: the heartbeat stops, so by the rule for a stuck "
+            "heartbeat the next in line may clear the lock once nothing has been written for 90 minutes")
+        try:
+            queue_log(self.cfg, "max_hold_reached", landing=self.st["id"], agent=self.st["name"], hours=hours)
+        except OSError:
+            pass
+
     def start_heartbeat(self) -> None:
         self.stop_heartbeat()
         self.lock_lost.clear()
@@ -844,6 +997,11 @@ class Lander:
             st["lock"]["token"] = None
             raise Stop("lock_wait_timeout", f"gave up waiting for the lock: {exc}",
                        "`resume` queues again; nothing changed.") from exc
+        except BatchOwesClose as exc:
+            st["lock"]["token"] = None
+            raise Stop("batch_needs_closing", f"the lock's holder is dead ({exc.reason}), and its batch {exc.start} landed "
+                       "something, so clearing it would lose the batch's follow-up. It is closed, not cleared",
+                       f"Close it: `{close_command(exc.start)}`, then `resume` this landing.") from exc
         self.holder = holder
         st["ticket"] = None
         st["status"] = "running"
@@ -874,17 +1032,32 @@ class Lander:
             raise Refused(f"the lock is held but holder.txt names no full batch-start: {fields.get('agent')!r}")
         if batch.get("start") and batch["start"] != start:
             raise Refused(f"--batch-start {batch['start']} is not the open batch's batch-start {start}")
-        if fields.get("state") == "landing" and fields.get("token") != st["lock"].get("token") and \
-                fields.get("tool") == TOOL_TAG and not verdict["dead"]:
-            raise Stop("batch_busy", f"{fields.get('agent')} is landing inside this batch right now",
-                       "Wait for its mail, then `resume`.")
-        batch["start"] = start
-        batch["first_push"] = fields.get("batch-first-push") or batch.get("first_push")
-        batch["landings"] = []
+        ours = bool(st["lock"].get("token")) and fields.get("token") == st["lock"]["token"]
+        agent = fields.get("agent")
+        if not ours and not verdict["dead"]:
+            if fields.get("tool") == TOOL_TAG:
+                if fields.get("state") != "batch-idle":
+                    raise Stop("batch_busy", f"{agent} holds this batch's lock right now (state: {fields.get('state')})",
+                               "Wait for its mail, then `resume`.")
+            elif agent != st["name"]:
+                if not st.get("handed_over_by") or st["handed_over_by"] != agent:
+                    raise Refused(f"{agent!r} holds this batch's lock by hand and may be mid-check, and knowing the batch-start "
+                                  "is no hand-over. Once it has handed the lock to you by pm-mail, pass "
+                                  f"--handed-over-by {agent}")
+                say(f"--handed-over-by {agent}: this asserts that {agent} handed you the lock by pm-mail, as the rule "
+                    "requires. The tool cannot see that mail.")
+                queue_log(self.cfg, "batch_handover_asserted", who=st["name"], by=agent, batch=start)
+        rows = []
         for row in fields.get("batch-landing") or []:
             parts = row.split()
             if len(parts) == 2:
-                batch["landings"].append({"branch": parts[0], "sha": parts[1]})
+                rows.append({"branch": parts[0], "sha": parts[1]})
+            elif batch["role"] != "close":  # closing needs no count, and is what a broken batch needs
+                raise Refused(f"holder.txt has a row the batch limits cannot count: {row!r}. The format is "
+                              "`batch-landing: <branch> <sha>`: correct it, or close the batch")
+        batch["start"] = start
+        batch["first_push"] = fields.get("batch-first-push") or batch.get("first_push")
+        batch["landings"] = rows
         st["lock"]["token"] = uuid.uuid4().hex
         self.rewrite_holder("landing")
         st["lock"]["taken"] = iso()
@@ -983,10 +1156,49 @@ class Lander:
                            "Fetch again; if it persists, the two repositories have different origins.")
         return origin
 
-    def check_batch_limits(self) -> None:
+    def commit_time(self, sha: Any) -> Optional[float]:
+        out = self.git(self.cfg.shared, "show", "-s", "--format=%ct", f"{sha}^{{commit}}", check=False).stdout.strip()
+        return float(out) if out.isdigit() else None
+
+    def baseline_age(self, origin: str) -> Optional[float]:
+        """How old the baseline at origin/main is by commit time, as pm-landing-check.py counts it, measured from the
+        newest commit a landing could make now. None when rule 2 is off anyway (it names no commit, or one not on main's
+        history): a batch and a lone landing are then judged alike."""
+        shown = self.git(self.cfg.shared, "show", f"{origin}:{BASELINE_FILE}", check=False)
+        try:
+            commit = json.loads(shown.stdout).get("commit") if shown.returncode == 0 else None
+        except (ValueError, AttributeError):
+            commit = None
+        if not isinstance(commit, str) or not commit:
+            return None
+        when, newest = self.commit_time(commit), self.commit_time(origin)
+        if when is None or newest is None or not self.is_ancestor(self.cfg.shared, commit, origin):
+            return None
+        return max(newest, time.time()) - when
+
+    def check_batch_limits(self, origin: str) -> None:
         batch = self.st.get("batch")
         if not batch:
             return
+        rows = batch.get("landings") or []
+        close_it = f"Close it with `{close_command(batch['start'])}`, then land this branch."
+        if not rows and batch["role"] != "open" and batch["start"] != origin:
+            raise Stop("batch_rows_missing", f"main has moved past batch-start {batch['start']}, but holder.txt has no "
+                       "`batch-landing: <branch> <sha>` row, so this batch's four landings and two hours cannot be counted",
+                       f"Add the rows, then `resume`; or: {close_it}", keep_lock=True)
+        if rows and not batch.get("first_push"):
+            # A hand-opened batch has no batch-first-push line. Its first landing's commit time stands in, a little early.
+            when = self.commit_time(rows[0]["sha"])
+            if when is None:
+                raise Stop("batch_rows_missing", f"holder.txt's first row names {rows[0]['sha']}, which is no commit here, so "
+                           "this batch's two hours cannot be counted", f"Correct the row, then `resume`; or: {close_it}",
+                           keep_lock=True)
+            batch["first_push"] = iso(datetime.fromtimestamp(when, timezone.utc))
+        age = self.baseline_age(origin) if rows else None
+        if age is not None and age > BASELINE_LIMIT_SECONDS:
+            raise Stop("batch_baseline_past_limit", f"the baseline is now {age / 86400:.2f} days old, past the seven days "
+                       "rule 2 allows, while this batch's base still reads it as current; alone, rule 2 would be off",
+                       close_it, keep_lock=True)
         if len(batch.get("landings") or []) >= BATCH_MAX_LANDINGS:
             raise Stop("batch_full", f"this batch already has {BATCH_MAX_LANDINGS} landings",
                        "Close it with `run --batch-close --batch-start <sha>`, then land this branch.", keep_lock=True)
@@ -1013,13 +1225,19 @@ class Lander:
         batch = st.get("batch")
         if batch:
             if batch["role"] == "open" and not batch.get("landings"):
+                age = self.baseline_age(origin)
+                if age is not None and age > BASELINE_LIMIT_SECONDS - BASELINE_MARGIN_SECONDS:
+                    raise Stop("batch_baseline_near_limit",
+                               f"no batch opens on a baseline {age / 86400:.2f} days old: within two hours of the seven "
+                               "days rule 2 allows, a landing could pass against the batch's base and stop alone",
+                               "`abort` this landing and land it without --batch-open; the follow-up re-records the baseline.")
                 batch["start"] = origin
                 self.rewrite_holder("landing")
                 say(f"batch opened: batch-start {origin}")
             if not valid_full_sha(batch.get("start")) or not self.is_ancestor(self.cfg.shared, batch["start"], origin):
                 raise Stop("batch_start_not_on_main", f"batch-start {batch.get('start')} is not on origin/main {origin}",
                            keep_lock=True)
-            self.check_batch_limits()
+            self.check_batch_limits(origin)
             t["base_arg"] = batch["start"]
         else:
             t["base_arg"] = "origin/main"
@@ -1202,9 +1420,40 @@ class Lander:
 
     def valid_check(self, t: Dict[str, Any], origin: str) -> bool:
         check = t.get("check")
-        return bool(check) and check["sha"] == t.get("sha") and check["origin_main"] == origin \
-            and check["base"] == t.get("base_arg") and check["exit"] in (0, 1) \
-            and (not check.get("timeouts") or bool(self.st.get("timeouts_judged")))
+        if not check or check["sha"] != t.get("sha") or check["origin_main"] != origin or check["base"] != t.get("base_arg"):
+            return False
+        if check["exit"] not in (0, 1) or check.get("batch_close"):
+            return False
+        timeouts = check.get("timeouts") or 0
+        if timeouts < 0 or (timeouts and not self.st.get("timeouts_judged")):  # a crash said nothing: nothing excuses it
+            return False
+        return not check.get("rows_changed") or bool(self.st.get("rows_compared"))
+
+    def record_judgements(self) -> None:
+        """Before the push they excuse: on the record for Jared, even if this run dies straight after it."""
+        for key, what in JUDGEMENTS:
+            text = self.st.get(key)
+            row = f"{what}, as the lander judged it: {text}"
+            if text and row not in self.st.setdefault("for_jared", []):
+                self.for_jared(row)
+
+    def drop_judgements(self, sha: Optional[str]) -> None:
+        """A judgement covers the check on record when it was given. A new check is judged on its own."""
+        for key, what in JUDGEMENTS:
+            text = self.st.get(key)
+            if text:
+                self.for_jared(f"{what}: a judgement given for an earlier check does not cover the new check of "
+                               f"{str(sha)[:12]}: {text}")
+            self.st[key] = None
+
+    def earlier_digests(self) -> List[Optional[Dict[str, Any]]]:
+        """The report digest of each earlier member of this batch, from its state; None for one with no record."""
+        by_sha = {}
+        for doc in load_states(self.cfg):
+            land = doc.get("land") or {}
+            if land.get("pushed_sha") and land.get("check"):
+                by_sha[land["pushed_sha"]] = land["check"].get("digest")
+        return [by_sha.get(row.get("sha")) for row in (self.st.get("batch") or {}).get("landings") or []]
 
     def run_landing_check(self, step: Dict[str, Any], cwd: Any) -> None:
         st = self.st
@@ -1212,6 +1461,7 @@ class Lander:
         if self.valid_check(t, t["origin_main"]):
             say(f"landing check already passed for {t['sha'][:12]} (exit {t['check']['exit']}): not rerun")
             return
+        self.drop_judgements(t.get("sha"))
         self.ensure_lock()
         head = self.rev(cwd, "HEAD")
         if head != t["sha"]:
@@ -1223,28 +1473,52 @@ class Lander:
         if after != head:
             raise Stop("checked_tree_moved", f"{cwd} moved from {head} to {after} during the landing check")
         text = log.read_text(encoding="utf-8", errors="replace")
+        report = read_report(text)
         timeouts = 0
-        if code == 1:
-            match = re.search(r"^Infrastructure results, not failures of this tree [^:]*: (\d+)", text, re.M)
-            timeouts = int(match.group(1)) if match else -1
+        if code in (0, 1) and report["crashed"]:
+            timeouts = -1
+        elif code == 1:
+            timeouts = report["infrastructure"] if report["infrastructure"] is not None else -1
+        batch = st.get("batch")
+        gap = None
+        if code == 1 and timeouts >= 0 and batch and step.get("target") == "land" and batch.get("landings"):
+            gap = batch_gap(report, self.earlier_digests())
         t["check"] = {"sha": head, "tree": self.git(cwd, "rev-parse", f"{head}^{{tree}}").stdout.strip(),
                       "origin_main": t["origin_main"], "base": t["base_arg"], "exit": code, "log": str(log),
-                      "reports": str(keep), "timeouts": timeouts, "cwd": str(cwd)}
+                      "reports": str(keep), "timeouts": timeouts, "cwd": str(cwd),
+                      "rows_changed": report["compare"] if code == 1 else 0, "batch_close": gap[0] if gap else None,
+                      "digest": {key: report[key] for key in ("pre", "pre_unread", "compare", "counter")}}
         self.save()
+        if timeouts < 0:
+            why = "a traceback" if report["crashed"] else "no Infrastructure line"
+            raise Stop("landing_check_crashed",
+                       f"landing check exit {code} with {why} in its report: it did not finish judging, so it says "
+                       f"nothing about this tree, and no judgement excuses that. Report: {log}",
+                       "Fix the cause, then `resume`, which reruns it. Never re-record the baseline for this.")
         if code == 0:
             return
         if code == 1:
+            if gap:
+                raise Stop(gap[0], f"{gap[1]}. Report: {log}")
             tail = "\n".join(text.splitlines()[-4:])
             self.for_jared(f"landing check exit 1 on {head[:12]}: nothing in it stops the landing; report: {log} "
                            f"(full reports: {keep}). Governance staleness in it is a reseal request. Last lines:\n{tail}")
-            if timeouts != 0 and not st.get("timeouts_judged"):
-                what = (f"{timeouts} subcheck(s) timed out" if timeouts > 0
-                        else "this report does not say whether a subcheck timed out")
-                raise Stop("timeouts_need_judgement",
-                           f"landing check exit 1, but {what}. The rule: rerun each on its own and judge what it "
-                           f"reports before pushing main. Report: {log}",
-                           "Rerun them (lines marked [infrastructure]), then `resume --timeouts-judged \"<what you "
-                           "ran and found>\"`.", keep_lock=True)
+            flags = []
+            what = []
+            if timeouts:
+                what.append(f"{timeouts} subcheck(s) timed out, and the rule says to rerun each on its own and judge "
+                            "what it reports before pushing main (lines marked [infrastructure])")
+                flags.append("--timeouts-judged \"<what you ran and found>\"")
+            if report["compare"]:
+                what.append(f"{report['compare']} pre-existing failure(s) changed content on files this branch touched, "
+                            "and the rule says to compare those with the baseline's rows: the same count can hide one "
+                            "failure fixed and another added")
+                flags.append("--rows-compared \"<what you compared and found>\"")
+            if flags:
+                raise Stop("timeouts_need_judgement" if timeouts else "rows_need_comparison",
+                           "landing check exit 1, but " + "; and ".join(what) + f". Report: {log}",
+                           f"Do that, then `resume {' '.join(flags)}`, all in one resume: without "
+                           + ("them" if len(flags) > 1 else "it") + " `resume` runs the check again.", keep_lock=True)
             return
         if code == 2:
             raise Stop("landing_check_blocked", f"landing check exit 2: something it reports stops the landing. Report: {log}",
@@ -1334,6 +1608,9 @@ class Lander:
         t["pushed"] = True
         t["pushed_sha"] = sha
         t["ff_sha"] = None
+        st["main_ahead"] = None
+        for key, _what in JUDGEMENTS:  # spent on this check; record_judgements copied the text before the push
+            st[key] = None
         batch = st.get("batch")
         if step["target"] == "fu":
             st["followup_owed"] = False
@@ -1371,6 +1648,8 @@ class Lander:
                                                   "nothing was pushed", "`resume` reruns the check.")
         if step["target"] == "land" and self.batch_over_limit():
             raise Stop("landing_check_blocked", "this batch passed its two hours during the landing's checks; not pushed")
+        self.record_judgements()
+        self.save()
         self.ensure_lock()
         last = ""
         for attempt in range(3):
@@ -1616,13 +1895,12 @@ class Lander:
 
     def batch_can_close_and_retry(self, stop: Stop, step: Dict[str, Any]) -> bool:
         batch = self.st.get("batch")
-        return bool(batch) and stop.code == "landing_check_blocked" and step.get("target") == "land" \
-            and bool(batch.get("landings"))
+        return bool(batch) and stop.code in ("landing_check_blocked", "batch_rows_overlap", "batch_readiness_rise") \
+            and step.get("target") == "land" and bool(batch.get("landings"))
 
     def close_batch_and_retry(self, stop: Stop, step: Dict[str, Any]) -> None:
         """'Land in batches': don't push; close with the follow-up at the current main, then rerun it alone."""
         st = self.st
-        self.reset_if_ahead()
         self.note(f"this landing stopped inside the batch: {stop.message}")
         self.note("the rule: close the batch with its follow-up at the current main, then rerun this landing alone")
         batch = st["batch"]
@@ -1641,6 +1919,15 @@ class Lander:
         st["steps"] = steps + rows
         self.save()
 
+    def shared_ahead(self) -> Optional[str]:
+        """The shared checkout's HEAD when it holds commits origin/main does not, whoever left them there."""
+        shared = self.cfg.shared
+        head = self.rev(shared, "HEAD", check=False)
+        origin = self.rev(shared, "refs/remotes/origin/main", check=False)
+        if not head or not origin or head == origin or self.is_ancestor(shared, head, origin):
+            return None
+        return head
+
     def after_stop(self, stop: Stop, step: Optional[Dict[str, Any]]) -> None:
         st = self.st
         self.reset_if_ahead()
@@ -1653,10 +1940,12 @@ class Lander:
                       "step": step["name"] if step else None, "when": iso()}
         batch = st.get("batch")
         token_ours = bool(st["lock"].get("token")) and self.holds_lock()
-        keep = token_ours and (stop.keep_lock or st.get("followup_owed") or (batch and (batch.get("landings") or
-                                                                                        batch["role"] != "open")))
+        ahead = st.get("main_ahead") or self.shared_ahead()
+        keep = token_ours and (stop.keep_lock or ahead or st.get("followup_owed")
+                               or (batch and (batch.get("landings") or batch["role"] != "open")))
         if keep:
-            self.idle_holder("batch-idle" if batch else "stopped")
+            # With main ahead, not batch-idle: nobody adopts this batch until main is put back.
+            self.idle_holder("batch-idle" if batch and not ahead else "stopped")
             st["lock"]["held_while_stopped"] = iso()
             how = "kept (no heartbeat, so the 90-minute rule applies)"
         elif token_ours:
@@ -1671,6 +1960,11 @@ class Lander:
         for path in stop.files[:60]:
             print(f"    {path}", flush=True)
         print(f"  lock: {how}", flush=True)
+        if ahead:
+            print(f"  CRITICAL: the shared checkout's main is at {ahead}, ahead of origin"
+                  + (", so the lock is not released until it is back" if keep else "")
+                  + f". See what blocks `git -C {self.cfg.shared} reset --keep origin/main`, then `resume` or `abort`.",
+                  flush=True)
         if st.get("followup_owed"):
             print("  the snapshot and baseline follow-up is still owed.", flush=True)
         if stop.next_step:
@@ -1697,8 +1991,10 @@ class Lander:
                     self.handlers[step["name"]](step)
                 except Stop as stop:
                     if self.batch_can_close_and_retry(stop, step):
-                        self.close_batch_and_retry(stop, step)
-                        continue
+                        self.reset_if_ahead()
+                        if not st.get("main_ahead"):  # a follow-up on a main that cannot be put back would land it
+                            self.close_batch_and_retry(stop, step)
+                            continue
                     self.after_stop(stop, step)
                     return EXIT_STOPPED
                 except Refused:
@@ -1833,6 +2129,10 @@ class Lander:
         passed = bool(t.get("sha")) and self.valid_check(t, origin)
         if ahead and (origin_moved or branch_moved or retaken or not passed):
             self.reset_if_ahead()
+            if st.get("main_ahead"):
+                raise Stop("main_ahead", f"the shared checkout's main is still at {head}, ahead of origin, and git reset "
+                           "--keep origin/main fails, so nothing else can run", "Clear what blocks it, then `resume`.",
+                           keep_lock=True)
             ahead = False
         if origin_moved or branch_moved or retaken:
             self.note(f"moved since this landing last ran: origin/main {t['origin_main'][:12]} -> {origin[:12]}, "
@@ -1994,7 +2294,8 @@ def new_state(cfg: Config, args: argparse.Namespace, branch: Optional[str], work
         "lock": {"token": None}, "ticket": None, "batch": batch, "followup_owed": False, "main_ahead": None,
         "land": {"sha": None, "touched": [], "origin_main": None, "base_arg": None, "ff_sha": None, "pushed": False,
                  "check": None},
-        "fu": None, "local_wt": None, "stop": None, "notes": [], "for_jared": [], "timeouts_judged": None,
+        "fu": None, "local_wt": None, "stop": None, "notes": [], "for_jared": [], "timeouts_judged": None, "rows_compared": None,
+        "handed_over_by": getattr(args, "handed_over_by", None),
         "config": {"shared": str(cfg.shared), "evidence_dir": str(cfg.evidence_dir), "worktree_root": str(cfg.worktree_root),
                    "local_repo": str(cfg.local_repo)},
         "steps": [],
@@ -2006,6 +2307,26 @@ def validate_batch_args(args: argparse.Namespace) -> None:
         raise Refused("--batch-open starts a batch; it does not combine with --batch-start or --batch-close")
     if args.batch_start and not valid_full_sha(args.batch_start):
         raise Refused(f"--batch-start must be a full 40-character SHA, never a moving name: {args.batch_start!r}")
+
+
+def validate_check_args(args: argparse.Namespace) -> None:
+    """What --check-arg passes on: only what cannot change what the landing check judges."""
+    items = list(getattr(args, "check_arg", None) or [])
+    allowed = ", ".join(CHECK_ARG_SWITCHES + tuple(CHECK_ARG_VALUES))
+    index = 0
+    while index < len(items):
+        item = items[index]
+        index += 1
+        name, equals, value = item.partition("=")
+        if name in CHECK_ARG_SWITCHES and not equals:
+            continue
+        if name not in CHECK_ARG_VALUES:
+            raise Refused(f"--check-arg {item!r} is not passed on to the landing check. Only these are: {allowed}")
+        if not equals:
+            value = items[index] if index < len(items) else ""
+            index += 1
+        if not value or value.startswith("-") or (CHECK_ARG_VALUES[name] and not value.isdigit()):
+            raise Refused(f"--check-arg {name} needs " + ("a number" if CHECK_ARG_VALUES[name] else "a value") + f", not {value!r}")
 
 
 def install_signals() -> None:
@@ -2061,9 +2382,12 @@ def runner_alive(st: Dict[str, Any]) -> bool:
 
 def cmd_plan(cfg: Config, args: argparse.Namespace) -> int:
     validate_batch_args(args)
+    validate_check_args(args)
     worktree = find_worktree(cfg, args.branch, args.worktree)
     st = new_state(cfg, args, args.branch, worktree)
     print(f"plan for {args.branch} (nothing below has run; worktree: {worktree or 'NOT FOUND: pass --worktree'})")
+    if st["checks_local"]:
+        print(f"# {CHECKS_LOCAL_NOTE}")
     for line in plan_lines(cfg, st):
         print(line)
     if worktree:
@@ -2077,6 +2401,7 @@ def cmd_plan(cfg: Config, args: argparse.Namespace) -> int:
 
 def cmd_run(cfg: Config, args: argparse.Namespace) -> int:
     validate_batch_args(args)
+    validate_check_args(args)
     if not args.name:
         raise Refused("--name is required: holder.txt names the agent")
     branch = args.branch
@@ -2111,6 +2436,8 @@ def cmd_run(cfg: Config, args: argparse.Namespace) -> int:
     lander.save()
     say(f"landing {st['id']}: {branch or 'closing a batch'} as {st['name']}, priority {st['priority']}"
         + (", checks in a local copy" if st["checks_local"] else ""))
+    if st["checks_local"]:
+        say(CHECKS_LOCAL_NOTE)
     return lander.drive()
 
 
@@ -2130,6 +2457,10 @@ def cmd_resume(cfg: Config, args: argparse.Namespace) -> int:
         st["readjudicated"] = True
     if args.timeouts_judged:
         st["timeouts_judged"] = args.timeouts_judged
+    if args.rows_compared:
+        st["rows_compared"] = args.rows_compared
+    if args.handed_over_by:
+        st["handed_over_by"] = args.handed_over_by
     if args.wait_timeout is not None:
         st["wait_timeout"] = args.wait_timeout
     lander = Lander(cfg, st)
@@ -2170,9 +2501,18 @@ def cmd_abort(cfg: Config, args: argparse.Namespace) -> int:
             pass
         st["ticket"] = None
     lander.reset_if_ahead()
-    if st.get("main_ahead"):
-        print(f"CRITICAL: the shared checkout's main is still ahead at {st['main_ahead']}; fix that by hand "
+    ahead = st.get("main_ahead") or lander.shared_ahead()
+    if ahead:
+        print(f"CRITICAL: the shared checkout's main is still ahead at {ahead}; fix that by hand "
               "(git reset --keep origin/main) before anyone lands.", flush=True)
+        if lander.holds_lock():
+            # The rule's "never left ahead" needs a holder who must fix it. Not aborted, so this landing can be finished.
+            lander.idle_holder("stopped")
+            st["status"] = "stopped"
+            st["runner"] = None
+            lander.save()
+            print("The lock stays held and nothing else was changed. Fix it, then `abort` again.", flush=True)
+            return EXIT_STOPPED
     worktrees = [(st.get("local_wt"), None)]
     fu = st.get("fu") or {}
     if fu.get("worktree") and fu["worktree"] != st.get("local_wt"):
@@ -2207,6 +2547,8 @@ def describe_lock(cfg: Config) -> List[str]:
     if fields.get("batch-start"):
         lines.append(f"  batch-start {fields['batch-start']}: {len(fields.get('batch-landing') or [])} landing(s), "
                      f"first push {fields.get('batch-first-push') or '(none yet)'}")
+        if verdict["dead"] and batch_landed(cfg, fields):
+            lines.append(f"  it landed something, so it is closed, not cleared: {close_command(fields['batch-start'])}")
     return lines
 
 
@@ -2288,6 +2630,9 @@ def cmd_lock(cfg: Config, args: argparse.Namespace) -> int:
         except Interrupted as exc:
             print(f"not taken: {exc}")
             return EXIT_LOCK_TIMEOUT
+        except BatchOwesClose as exc:
+            raise Refused(f"not taken: the lock's holder is dead ({exc.reason}), and its batch {exc.start} landed something. "
+                          f"It is closed, not cleared: `{close_command(exc.start)}`") from exc
         print(f"held: {cfg.held}. No heartbeat: the 90-minute rule applies, as for any hand lander. Release: "
               f"pm-land.py lock release --name {shlex.quote(args.name)}, or rm -r {cfg.held}")
         return EXIT_OK
@@ -2328,7 +2673,11 @@ def build_parser() -> argparse.ArgumentParser:
         item.add_argument("--batch-close", action="store_true", help="close the batch: its one follow-up, then release")
         item.add_argument("--readjudicated", action="store_true", help="you re-read the Plans passages main also changed")
         item.add_argument("--keep-worktree", action="store_true", help="don't remove the branch's worktree afterwards")
-        item.add_argument("--check-arg", action="append", metavar="ARG", help="pass ARG on to the landing check, e.g. --check-arg=--cache")
+        item.add_argument("--handed-over-by", metavar="AGENT",
+                          help="--batch-start from a live hand holder: asserts that AGENT handed you the lock by pm-mail")
+        item.add_argument("--check-arg", action="append", metavar="ARG",
+                          help="pass ARG on to the landing check, e.g. --check-arg=--cache. Only: "
+                               + ", ".join(CHECK_ARG_SWITCHES + tuple(CHECK_ARG_VALUES)))
         item.add_argument("--wait-timeout", type=float, help="seconds to wait for the lock (default: no limit)")
 
     plan = sub.add_parser("plan", parents=[common], help="print every step and its commands; changes nothing")
@@ -2342,6 +2691,8 @@ def build_parser() -> argparse.ArgumentParser:
     resume.add_argument("--branch")
     resume.add_argument("--readjudicated", action="store_true")
     resume.add_argument("--timeouts-judged", metavar="TEXT", help="what you reran for the timed-out subchecks, and what you found")
+    resume.add_argument("--rows-compared", metavar="TEXT", help="what you compared with the baseline's rows, and what you found")
+    resume.add_argument("--handed-over-by", metavar="AGENT", help="the hand lander who handed you the batch's lock by pm-mail")
     resume.add_argument("--wait-timeout", type=float)
     status = sub.add_parser("status", parents=[common], help="lock, queue, landings; readable by anyone")
     status.add_argument("--id")

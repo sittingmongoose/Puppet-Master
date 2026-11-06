@@ -15,6 +15,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import signal
 import stat
@@ -281,8 +282,8 @@ class Harness:
     def shared_head(self) -> str:
         return self.g(self.shared, "rev-parse", "HEAD")
 
-    def commit_to_main(self, rel: str, text: str) -> str:
-        """Another lander: main moves on origin, from outside."""
+    def commit_to_main(self, rel: str, text: str, age: float = 0) -> str:
+        """Another lander: main moves on origin, from outside. `age`: the commit's committer time, seconds ago."""
         other = self.tmp / "other"
         if not other.exists():
             subprocess.run(["git", "clone", "-q", str(self.origin), str(other)], check=True, env=self.env)
@@ -291,7 +292,8 @@ class Harness:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text)
         self.g(other, "add", rel)
-        self.g(other, "commit", "-qm", f"other: {rel}")
+        env = dict(self.env, GIT_COMMITTER_DATE=f"{int(time.time() - age)} +0000") if age else self.env
+        subprocess.run(["git", "-C", str(other), "commit", "-qm", f"other: {rel}"], check=True, env=env)
         self.g(other, "push", "-q", "origin", "main")
         return self.g(other, "rev-parse", "HEAD")
 
@@ -649,7 +651,7 @@ class StopTests(Base):
         self.h.branch("fix/a", {"src/x.txt": "new\n"})
         base = self.h.origin_main()
         self.h.set_plan("landing", [{"exit": 1, "raw": "some other report format"}])
-        self.stopped(self.land("fix/a"), "timeouts_need_judgement")
+        self.stopped(self.land("fix/a"), "landing_check_crashed")
         self.assertEqual(self.h.origin_main(), base)
 
     def test_a_resume_without_judgement_runs_the_check_again(self):
@@ -1291,8 +1293,8 @@ class BatchTests(Base):
     def test_a_batch_older_than_two_hours_takes_no_landing(self):
         self.h.branch("fix/a", {"src/x.txt": "a\n"})
         start = self.h.origin_main()
-        self.h.hand_lock(f"batch-start: {start}\nbatch-first-push: {utc(7300)}\n")
-        result = self.land("fix/a", "--batch-start", start)
+        self.h.hand_lock(f"agent: by-hand\nbatch-start: {start}\nbatch-first-push: {utc(7300)}\n")
+        result = self.land("fix/a", "--batch-start", start, "--handed-over-by", "by-hand")
         self.assertEqual(result.returncode, 1, result.stdout)
         self.assertEqual(self.h.state()["stop"]["code"], "batch_expired")
         self.assertEqual(self.h.origin_main(), start)
@@ -1301,7 +1303,7 @@ class BatchTests(Base):
         self.h.branch("fix/a", {"src/x.txt": "a\n"})
         start = self.h.origin_main()
         self.h.hand_lock(f"agent: by-hand\nbatch-start: {start}\n")
-        result = self.land("fix/a", "--batch-start", start)
+        result = self.land("fix/a", "--batch-start", start, "--handed-over-by", "by-hand")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(self.h.calls("landing")[0]["args"][:2], ["--base", start])
         self.assertEqual(M.parse_holder(self.h.holder())["batch-start"], start)
@@ -1397,9 +1399,9 @@ class BatchTests(Base):
     def test_a_batch_passing_two_hours_during_the_check_closes_and_lands_alone(self):
         self.h.branch("fix/a", {"src/x.txt": "a\n"})
         start = self.h.origin_main()
-        self.h.hand_lock(f"batch-start: {start}\nbatch-first-push: {utc(7195)}\nbatch-landing: fix/old {start}\n")
+        self.h.hand_lock(f"agent: by-hand\nbatch-start: {start}\nbatch-first-push: {utc(7195)}\nbatch-landing: fix/old {start}\n")
         self.h.set_plan("landing", [{"sleep": 7}, {}])
-        result = self.land("fix/a", "--batch-start", start)
+        result = self.land("fix/a", "--batch-start", start, "--handed-over-by", "by-hand")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         landing = self.h.calls("landing")
         self.assertEqual(len(landing), 2)
@@ -1952,6 +1954,949 @@ class LockTests(Base):
         self.assertEqual(self.h.state()["stop"]["code"], "shared_main_ahead")
         self.assertEqual(self.h.origin_main(), base)
         self.assertNotEqual(self.h.shared_head(), base, "not ours to reset")
+
+
+READINESS = "run-gates/validate_implementation_readiness"
+BUCKET = "run-gates/lint-x  missing_ref  src/x.txt"
+
+
+def pre_row(bucket: str, baseline: int, count: int, fields: str = '{"n":1}', where: str = "(names src/x.txt)",
+            tag: str = "pre-existing") -> str:
+    return f"  [{tag:<12}] {bucket}  {baseline} -> {count}  {fields}  {where}"
+
+
+def landing_report(pre=(), more: int = 0, counter=(), compare: int = 0, timeouts: int = 0, tail: str = "") -> str:
+    """A landing check's text report, line for line as main() in scripts/pm-landing-check.py prints it."""
+    lines = ["pm-landing-check: baseline reports/landing-checks/baseline.json recorded at aaaaaaaaaaaa; this checkout is at bbbbbbbbbbbb",
+             "  the baseline is current, so rule 2 applies: its commit aaaaaaaaaaaa is an ancestor of the base", "",
+             "New since the baseline: 0",
+             f"Pre-existing, in a baseline bucket whose count has not risen (never blocks): {len(pre) + more}"]
+    if pre:
+        lines.append("  counted against the baseline recorded at aaaaaaaaaaaa, not against main: a failure main fixed "
+                     "after that commit and this branch brings back reads as pre-existing")
+    lines += list(pre)
+    if more:
+        lines.append(f"  ... {more} more")
+    lines += ["Checks whose failure count rose: 0", f"Subchecks reporting more failures than the baseline: {len(counter)}"]
+    for name, was, now in counter:
+        lines.append(f"  [staleness] {name}  {was} -> {now} (the readiness growth counter: its printed rows show stale "
+                     "readiness rows growing on this branch's files and nothing else new)")
+    lines += ["Naming a path this branch touches: 0",
+              f"Infrastructure results, not failures of this tree (never new, growth or blocking): {timeouts}"]
+    lines += [f"  [infrastructure] run-gates/x{index}  subprocess_timeout (lint-x)  killed after 600 s" for index in range(timeouts)]
+    lines += ["Gone since the baseline (nothing to do): 0", ""]
+    advice = []
+    if pre and compare:
+        advice.append(f"pre-existing failures whose count has not risen, {compare} of them with changed content on files this "
+                      "branch touched, so compare those with the baseline's rows: the same count can hide one failure fixed "
+                      "and another added")
+    elif pre:
+        advice.append("pre-existing failures whose count has not risen, so nothing for this branch to fix")
+    if counter:
+        advice.append("the readiness growth counter of stale readiness rows, so include it in the reseal request to Jared")
+    if advice:
+        lines.append("Nothing reported stops the landing: it is " + "; and ".join(advice) + ".")
+    if tail:
+        lines.append(tail)
+    return "\n".join(lines)
+
+
+CRASH = 'Traceback (most recent call last):\n  File "scripts/pm-landing-check.py", line 9, in main\nKeyError: \'x\''
+
+
+class ReportFormatTests(unittest.TestCase):
+    """Hold what the tool reads to what the real landing check prints: a detector that silently stopped matching
+    would wave through exactly what it exists to stop."""
+
+    @classmethod
+    def setUpClass(cls):
+        path = ROOT / "scripts" / "pm-landing-check.py"
+        spec = importlib.util.spec_from_file_location("pm_landing_check_for_format", path)
+        cls.real = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = cls.real
+        spec.loader.exec_module(cls.real)
+        # The source with adjacent string literals joined, so a phrase split over two lines reads whole.
+        cls.source = re.sub(r"\"\s*\n\s*f?\"", "", path.read_text(encoding="utf-8"))
+
+    def item(self, **fields):
+        return dict({"path": "src/x.txt", "check": "run-gates", "subcheck": "lint-x", "error": "missing_ref", "fields": {"n": 1},
+                     "stale": False, "standing": "pre-existing", "baseline_count": 5, "count": 5}, **fields)
+
+    def test_the_real_describe_prints_rows_the_tool_reads(self):
+        for standing, count in (("pre-existing", 5), ("improved", 4)):
+            for where in ("  (names src/x.txt)", "  (content changed)"):
+                item = self.item(standing=standing, count=count)
+                line = self.real.describe(item, self.real.item_tag(item, True)) + where
+                text = f"Pre-existing, in a baseline bucket whose count has not risen (never blocks): 1\n{line}\nChecks whose failure count rose: 0"
+                entry = M.read_report(text)["pre"]["run-gates/lint-x  missing_ref  src/x.txt"]
+                self.assertEqual((entry["baseline"], entry["count"], entry["improved"]), (5, count, standing == "improved"), line)
+                self.assertEqual(entry["content_changed"], where.endswith("(content changed)"), line)
+                self.assertFalse(M.read_report(text)["pre_unread"], line)
+
+    def test_a_row_with_no_path_is_read_too(self):
+        item = self.item(path=None)
+        line = self.real.describe(item, "pre-existing") + "  (content changed)"
+        text = f"Pre-existing, in a baseline bucket whose count has not risen (never blocks): 1\n{line}\nChecks whose failure count rose: 0"
+        self.assertIn("run-gates/lint-x  missing_ref  (no path)", M.read_report(text)["pre"])
+
+    def test_every_phrase_the_tool_looks_for_is_in_the_real_script(self):
+        for phrase in ("Infrastructure results, not failures of this tree (never new, growth or blocking): ",
+                       "Pre-existing, in a baseline bucket whose count has not risen (never blocks): ",
+                       "Checks whose failure count rose: ",
+                       "Nothing reported stops the landing: it is ",
+                       "of them with changed content on files this branch touched, so compare those with the baseline's rows",
+                       "(the readiness growth counter: its printed rows",
+                       "{row['baseline_reported']} -> {row['reported']}{note}",
+                       'tag = "staleness"',
+                       "more\")"):
+            self.assertIn(phrase, self.source, phrase)
+
+    def test_the_report_helper_here_prints_what_the_tool_reads(self):
+        report = M.read_report(landing_report(pre=[pre_row(BUCKET, 5, 5), pre_row(BUCKET, 5, 5, '{"n":2}')], counter=[(READINESS, 124, 218)],
+                                              compare=2, timeouts=3))
+        self.assertEqual(report["infrastructure"], 3)
+        self.assertEqual(report["compare"], 2)
+        self.assertEqual(report["counter"], {READINESS: 218})
+        self.assertEqual(report["pre"][BUCKET]["rows"], ['{"n":1}', '{"n":2}'])
+        self.assertFalse(report["pre_unread"])
+        self.assertFalse(report["crashed"])
+
+    def test_rows_past_the_print_cap_or_unreadable_are_said_to_be(self):
+        self.assertTrue(M.read_report(landing_report(pre=[pre_row(BUCKET, 5, 5)], more=3))["pre_unread"])
+        text = landing_report(pre=[pre_row(BUCKET, 5, 5)]).replace("  [pre-existing]", "  [some-new-tag]")
+        self.assertTrue(M.read_report(text)["pre_unread"])
+
+    def test_a_traceback_quoted_inside_a_failure_row_is_no_crash(self):
+        """README and pm-landing-check.py: failure details quote validators' tracebacks. Only one that ran here counts."""
+        quoted = pre_row(BUCKET, 5, 5, '{"detail":"Traceback (most recent call last):\\n  File \\"x.py\\""}')
+        self.assertFalse(M.read_report(landing_report(pre=[quoted]))["crashed"])
+        self.assertTrue(M.read_report(landing_report(tail=CRASH))["crashed"])
+        self.assertTrue(M.read_report(landing_report() + "\n  + Exception Group Traceback (most recent call last):\n")["crashed"])
+
+
+class JudgementTests(Base):
+    """L1, L6, L7: a judgement covers the check on record when it was given, and a crash is never excused."""
+
+    def stopped(self, result, code, branch=""):
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertEqual(self.h.state(branch)["stop"]["code"], code, result.stdout)
+
+    def test_l1_a_judgement_does_not_cover_a_new_commits_timeouts(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        base = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 1, "timeouts": 1}, {"exit": 1, "timeouts": 3}])
+        self.stopped(self.land("fix/a"), "timeouts_need_judgement")
+        self.h.commit(wt, {"src/y.txt": "unjudged\n"})
+        result = self.h.tool("resume", "--timeouts-judged", "reran lint-x on the old commit")
+        self.stopped(result, "timeouts_need_judgement")
+        self.assertEqual(self.h.origin_main(), base, "three timeouts nobody judged reached main")
+        self.assertEqual(len(self.h.calls("landing")), 2)
+        state = self.h.state()
+        self.assertIsNone(state["timeouts_judged"])
+        self.assertTrue(any("reran lint-x on the old commit" in row for row in state["for_jared"]), state["for_jared"])
+
+    def test_l1_a_judgement_never_excuses_a_later_crash(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        base = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 1, "timeouts": 1}, {"exit": 1, "raw": "Traceback ..."}])
+        self.stopped(self.land("fix/a"), "timeouts_need_judgement")
+        self.h.commit(wt, {"src/y.txt": "later\n"})
+        self.stopped(self.h.tool("resume", "--timeouts-judged", "reran lint-x"), "landing_check_crashed")
+        self.assertEqual(self.h.origin_main(), base)
+
+    def followup_check_after_a_judgement(self, row: dict, code: str) -> None:
+        wt = self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        self.h.set_plan("landing", [{"exit": 1, "timeouts": 1}, row])
+        self.stopped(self.land("fix/a"), "timeouts_need_judgement")
+        self.stopped(self.h.tool("resume", "--timeouts-judged", "reran lint-x"), code)
+        self.assertEqual(self.h.origin_main(), tip, "the landing itself was judged and pushed; its follow-up was not")
+        state = self.h.state()
+        self.assertFalse(state["fu"]["pushed"])
+        self.assertTrue(self.h.held(), "the follow-up is owed")
+        self.assertIn("timed-out subchecks, as the lander judged it: reran lint-x", state["for_jared"])
+        self.assertIsNone(state["timeouts_judged"])
+
+    def test_l1_a_judgement_does_not_excuse_a_crash_in_the_followup(self):
+        self.followup_check_after_a_judgement({"exit": 1, "raw": "Traceback ..."}, "landing_check_crashed")
+
+    def test_l1_a_judgement_does_not_cover_the_followups_timeouts(self):
+        self.followup_check_after_a_judgement({"exit": 1, "timeouts": 2}, "timeouts_need_judgement")
+
+    def test_l1_control_a_crash_with_no_judgement_stops_too(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        base = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 1, "raw": "Traceback ..."}])
+        self.stopped(self.land("fix/a"), "landing_check_crashed")
+        self.assertEqual(self.h.origin_main(), base)
+
+    def test_l1_a_judgement_given_after_a_crash_does_not_excuse_it_either(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        self.h.set_plan("landing", [{"exit": 1, "raw": "no such line"}, {"exit": 1, "raw": "no such line"}, {"exit": 0}])
+        self.stopped(self.land("fix/a"), "landing_check_crashed")
+        self.stopped(self.h.tool("resume", "--timeouts-judged", "I read it, it looks fine"), "landing_check_crashed")
+        self.assertEqual(len(self.h.calls("landing")), 2, "a crash is rerun, never reused")
+        self.assertEqual(self.h.tool("resume").returncode, 0)
+        self.assertEqual(self.h.origin_main(), tip)
+
+    def test_l1_the_judged_check_itself_is_not_rerun_and_the_text_is_kept(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        self.h.set_plan("landing", [{"exit": 1, "timeouts": 1}])
+        self.stopped(self.land("fix/a"), "timeouts_need_judgement")
+        result = self.h.tool("resume", "--timeouts-judged", "reran lint-x alone: 0 failures")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertEqual(len(self.h.calls("landing")), 1)
+        state = self.h.state()
+        self.assertIsNone(state["timeouts_judged"])
+        self.assertIn("timed-out subchecks, as the lander judged it: reran lint-x alone: 0 failures", state["for_jared"])
+        self.assertIn("reran lint-x alone: 0 failures", result.stdout)
+
+    def test_l1_a_failed_push_with_the_lock_kept_keeps_the_judgement_of_the_same_check(self):
+        wt = self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        self.h.set_plan("landing", [{}, {"exit": 1, "timeouts": 1}])
+        self.stopped(self.land("fix/a"), "timeouts_need_judgement")
+        self.assertEqual(self.h.origin_main(), tip)
+        hook = self.h.origin / "hooks" / "pre-receive"
+        hook.write_text("#!/bin/sh\nexit 1\n")
+        os.chmod(hook, 0o755)
+        self.stopped(self.h.tool("resume", "--timeouts-judged", "reran it"), "push_failed")
+        self.assertEqual(self.h.state()["timeouts_judged"], "reran it", "not spent: nothing was pushed")
+        hook.unlink()
+        result = self.h.tool("resume")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(len(self.h.calls("landing")), 2, "the same check, still judged")
+        self.assertEqual(self.h.g(self.h.origin, "rev-parse", "refs/heads/main^"), tip)
+        self.assertIsNone(self.h.state()["timeouts_judged"])
+
+    def test_l1_a_failed_push_that_gave_the_lock_up_is_checked_and_judged_again(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        self.h.set_plan("landing", [{"exit": 1, "timeouts": 1}, {"exit": 1, "timeouts": 1}])
+        self.stopped(self.land("fix/a"), "timeouts_need_judgement")
+        hook = self.h.origin / "hooks" / "pre-receive"
+        hook.write_text("#!/bin/sh\nexit 1\n")
+        os.chmod(hook, 0o755)
+        self.stopped(self.h.tool("resume", "--timeouts-judged", "reran it"), "push_failed")
+        self.assertFalse(self.h.held())
+        hook.unlink()
+        self.stopped(self.h.tool("resume"), "timeouts_need_judgement")
+        self.assertEqual(len(self.h.calls("landing")), 2)
+        self.assertEqual(self.h.tool("resume", "--timeouts-judged", "reran it again").returncode, 0)
+        self.assertEqual(self.h.origin_main(), tip)
+
+    def test_l6_a_traceback_after_the_infrastructure_line_is_a_crash(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        base = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 1, "raw": landing_report(tail=CRASH)}])
+        self.stopped(self.land("fix/a"), "landing_check_crashed")
+        self.assertEqual(self.h.origin_main(), base)
+        self.assertEqual(self.h.shared_head(), base)
+        self.assertEqual(self.h.state()["land"]["check"]["timeouts"], -1)
+
+    def test_l6_a_traceback_with_exit_0_is_a_crash_too(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        base = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 0, "raw": landing_report(tail=CRASH)}])
+        self.stopped(self.land("fix/a"), "landing_check_crashed")
+        self.assertEqual(self.h.origin_main(), base)
+
+    def test_l6_a_traceback_a_failure_row_quotes_does_not_stop_the_landing(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        quoted = pre_row(BUCKET, 5, 5, '{"detail":"Traceback (most recent call last):\\n  File \\"x.py\\""}')
+        self.h.set_plan("landing", [{"exit": 1, "raw": landing_report(pre=[quoted])}])
+        self.assertEqual(self.land("fix/a").returncode, 0)
+        self.assertFalse(wt.exists())
+
+    def test_l7_changed_rows_stop_for_a_comparison_before_the_push(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        base = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 1, "raw": landing_report(pre=[pre_row(BUCKET, 5, 5)], compare=1)}])
+        result = self.land("fix/a")
+        self.stopped(result, "rows_need_comparison")
+        self.assertIn("--rows-compared", result.stdout)
+        self.assertEqual(self.h.origin_main(), base)
+        self.assertEqual(self.h.shared_head(), base)
+        self.assertTrue(self.h.held(), "as for timeouts: another landing would invalidate the check")
+        result = self.h.tool("resume", "--rows-compared", "one fixed, one added: the added one is pre-existing elsewhere")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertEqual(len(self.h.calls("landing")), 1)
+        state = self.h.state()
+        self.assertIsNone(state["rows_compared"])
+        self.assertTrue(any("one fixed, one added" in row for row in state["for_jared"]))
+
+    def test_l7_pre_existing_rows_with_no_changed_content_do_not_stop(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        self.h.set_plan("landing", [{"exit": 1, "raw": landing_report(pre=[pre_row(BUCKET, 5, 5)])}])
+        self.assertEqual(self.land("fix/a").returncode, 0)
+
+    def test_l7_a_resume_with_no_comparison_runs_the_check_again(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        self.h.set_plan("landing", [{"exit": 1, "raw": landing_report(pre=[pre_row(BUCKET, 5, 5)], compare=1)}, {"exit": 0}])
+        self.stopped(self.land("fix/a"), "rows_need_comparison")
+        self.assertEqual(self.h.tool("resume").returncode, 0)
+        self.assertEqual(len(self.h.calls("landing")), 2)
+        self.assertEqual(self.h.origin_main(), tip)
+
+    def test_l7_a_timeouts_judgement_does_not_answer_a_comparison_or_the_reverse(self):
+        report = landing_report(pre=[pre_row(BUCKET, 5, 5)], compare=1)
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        base = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 1, "raw": report}, {"exit": 1, "raw": report}])
+        self.stopped(self.land("fix/a"), "rows_need_comparison")
+        self.stopped(self.h.tool("resume", "--timeouts-judged", "not what was asked"), "rows_need_comparison")
+        self.assertEqual(self.h.origin_main(), base)
+        self.assertEqual(len(self.h.calls("landing")), 2)
+
+    def test_l7_both_at_once_need_both_answers(self):
+        report = landing_report(pre=[pre_row(BUCKET, 5, 5)], compare=1, timeouts=1)
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        self.h.set_plan("landing", [{"exit": 1, "raw": report}])
+        result = self.land("fix/a")
+        self.stopped(result, "timeouts_need_judgement")
+        self.assertIn("--timeouts-judged", result.stdout)
+        self.assertIn("--rows-compared", result.stdout)
+        result = self.h.tool("resume", "--timeouts-judged", "reran it", "--rows-compared", "compared them")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertEqual(len(self.h.calls("landing")), 1)
+
+    def test_l7_a_changed_row_in_the_followups_report_stops_too(self):
+        wt = self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        self.h.set_plan("landing", [{}, {"exit": 1, "raw": landing_report(pre=[pre_row(BUCKET, 5, 5)], compare=1)}])
+        self.stopped(self.land("fix/a"), "rows_need_comparison")
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertTrue(self.h.held())
+
+
+class BatchGapTests(Base):
+    """R5: a landing that would pass in the batch and stop alone is closed out of the batch and rechecked alone."""
+
+    def batch_start(self) -> str:
+        return M.parse_holder(self.h.holder())["batch-start"]
+
+    def two_members(self, first: str, second: str, *more):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        start = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 1, "raw": first}, {"exit": 1, "raw": second}, *more])
+        result = self.land("fix/a", "--batch-open")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.a_sha = self.h.origin_main()
+        return start, self.land("fix/b", "--batch-start", start)
+
+    def closed_and_alone(self, start: str, result) -> None:
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        landing = self.h.calls("landing")
+        self.assertEqual([row["args"][:2] for row in landing],
+                         [["--base", start], ["--base", start], ["--base", "origin/main"]], result.stdout)
+        self.assertEqual(landing[2]["origin_main"], self.a_sha, "rechecked before fix/b is on main")
+        self.assertFalse(self.h.held(), "the batch closed")
+        self.assertIsNone(self.h.state("fix/b")["batch"])
+
+    def test_class_a_a_bucket_the_earlier_member_lowered_and_this_one_raises(self):
+        """Review R5 class A: 5 -> 4 then 5 -> 5 reads as pre-existing in the batch; alone it is 4 -> 5 and blocks."""
+        start, result = self.two_members(
+            landing_report(pre=[pre_row(BUCKET, 5, 4, tag="improved")]),
+            landing_report(pre=[pre_row(BUCKET, 5, 5, '{"n":6}')], compare=1))
+        self.closed_and_alone(start, result)
+        self.assertIn("also changed", result.stdout)
+
+    def test_rows_changed_by_both_with_the_same_count(self):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        start = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 1, "raw": landing_report(pre=[pre_row(BUCKET, 5, 5, '{"n":6}')], compare=1)},
+                                    {"exit": 1, "raw": landing_report(pre=[pre_row(BUCKET, 5, 5, '{"n":7}')], compare=1)}, {}])
+        first = self.land("fix/a", "--batch-open")
+        self.assertEqual(first.returncode, 1, first.stdout)
+        self.assertEqual(self.h.state("fix/a")["stop"]["code"], "rows_need_comparison", "the first member is judged as alone")
+        self.assertEqual(self.h.tool("resume", "--branch", "fix/a", "--rows-compared", "compared").returncode, 0)
+        self.a_sha = self.h.origin_main()
+        self.closed_and_alone(start, self.land("fix/b", "--batch-start", start))
+
+    def test_a_changed_row_only_listed_again_needs_its_own_comparison_but_stays_in_the_batch(self):
+        row = pre_row(BUCKET, 5, 5, '{"n":6}')
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        start = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 1, "raw": landing_report(pre=[row], compare=1)}, {"exit": 1, "raw": landing_report(pre=[row], compare=1)}])
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 1)
+        self.assertEqual(self.h.tool("resume", "--branch", "fix/a", "--rows-compared", "compared").returncode, 0)
+        second = self.land("fix/b", "--batch-start", start)
+        self.assertEqual(second.returncode, 1, second.stdout)
+        self.assertEqual(self.h.state("fix/b")["stop"]["code"], "rows_need_comparison")
+        self.assertEqual(self.h.state("fix/b")["batch"]["start"], start)
+
+    def test_content_changed_rows_by_both(self):
+        start, result = self.two_members(
+            landing_report(pre=[pre_row(BUCKET, 5, 5, '{"n":6}', "(content changed)")]),
+            landing_report(pre=[pre_row(BUCKET, 5, 5, '{"n":7}', "(content changed)")]))
+        self.closed_and_alone(start, result)
+
+    def test_a_row_the_next_report_only_lists_again_keeps_the_batch(self):
+        """Every report in a batch lists what the earlier members touched, so the same rows are no change."""
+        row = pre_row(BUCKET, 5, 4, tag="improved")
+        start, result = self.two_members(landing_report(pre=[row]), landing_report(pre=[row]))
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertEqual(len(self.h.calls("landing")), 2)
+        self.assertTrue(self.h.held(), "the batch stays open")
+        self.assertEqual(self.batch_start(), start)
+
+    def test_a_bucket_only_this_member_changed_is_judged_not_closed(self):
+        other = "run-gates/lint-y  missing_ref  src/y.txt"
+        start, result = self.two_members(
+            landing_report(pre=[pre_row(BUCKET, 5, 4, tag="improved")]),
+            landing_report(pre=[pre_row(other, 3, 3, where="(names src/y.txt)")], compare=1))
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state("fix/b")["stop"]["code"], "rows_need_comparison")
+        self.assertTrue(self.h.held())
+        self.assertEqual(self.batch_start(), start)
+        self.assertEqual(self.h.tool("resume", "--rows-compared", "compared").returncode, 0)
+        self.assertEqual(len(self.h.calls("landing")), 2)
+        self.assertEqual(self.batch_start(), start, "the batch stays open")
+
+    def test_an_earlier_member_with_no_record_closes_it_on_any_changed_row(self):
+        """A hand lander's report is not on record, so what it changed cannot be told."""
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        start = self.h.origin_main()
+        self.h.hand_lock(f"agent: by-hand\nbatch-start: {start}\nbatch-first-push: {utc(60)}\nbatch-landing: fix/old {start}\n")
+        self.h.set_plan("landing", [{"exit": 1, "raw": landing_report(pre=[pre_row(BUCKET, 5, 5)], compare=1)}, {}])
+        result = self.land("fix/b", "--batch-start", start, "--handed-over-by", "by-hand")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual([row["args"][:2] for row in self.h.calls("landing")], [["--base", start], ["--base", "origin/main"]])
+        self.assertIn("cannot be told", result.stdout)
+
+    def test_rows_past_the_print_cap_close_it(self):
+        start, result = self.two_members(
+            landing_report(pre=[pre_row(BUCKET, 5, 4, tag="improved")]),
+            landing_report(pre=[pre_row(BUCKET, 5, 4, tag="improved")], more=7))
+        self.closed_and_alone(start, result)
+
+    def test_class_b_a_readiness_rise_this_landing_added_closes_it(self):
+        """Review R5 class B: excused in the batch by the earlier member's stale row, alone it needs its own."""
+        start, result = self.two_members(
+            landing_report(counter=[(READINESS, 124, 218)]),
+            landing_report(counter=[(READINESS, 124, 230)]))
+        self.closed_and_alone(start, result)
+        self.assertIn("rose to 230", result.stdout)
+
+    def test_class_b_a_first_rise_in_a_later_member_closes_it(self):
+        start, result = self.two_members(landing_report(), landing_report(counter=[(READINESS, 124, 218)]))
+        self.closed_and_alone(start, result)
+
+    def test_class_b_a_total_no_higher_than_the_earlier_members_is_no_rise_alone_and_keeps_the_batch(self):
+        start, result = self.two_members(
+            landing_report(counter=[(READINESS, 124, 218)]),
+            landing_report(counter=[(READINESS, 124, 218)]))
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertEqual(len(self.h.calls("landing")), 2)
+        self.assertTrue(self.h.held())
+
+    def test_the_first_member_is_judged_as_it_would_be_alone(self):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.set_plan("landing", [{"exit": 1, "raw": landing_report(counter=[(READINESS, 124, 218)])}])
+        result = self.land("fix/a", "--batch-open")
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertEqual(len(self.h.calls("landing")), 1)
+        self.assertTrue(self.h.held())
+
+    def test_a_check_marked_for_closing_is_never_a_passing_check(self):
+        cfg = M.config_from(M.build_parser().parse_args(["status"]))
+        lander = M.Lander(cfg, {"id": "x", "name": "x", "lock": {}, "for_jared": []})
+        t = {"sha": "a", "base_arg": "b", "check": {"sha": "a", "origin_main": "o", "base": "b", "exit": 1, "timeouts": 0}}
+        self.assertTrue(lander.valid_check(t, "o"))
+        t["check"]["batch_close"] = "batch_readiness_rise"
+        self.assertFalse(lander.valid_check(t, "o"))
+
+    def old_baseline(self, age: float) -> str:
+        sha = self.h.commit_to_main("src/old.txt", "old\n", age=age)
+        self.h.commit_to_main(M.BASELINE_FILE, json.dumps({"commit": sha}) + "\n")
+        return sha
+
+    def test_class_c_no_batch_opens_within_two_hours_of_the_baseline_limit(self):
+        self.old_baseline(7 * 86400 - 3600)
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        before = self.h.origin_main()
+        result = self.land("fix/a", "--batch-open")
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state()["stop"]["code"], "batch_baseline_near_limit")
+        self.assertEqual(self.h.origin_main(), before)
+        self.assertEqual(self.h.calls(), [], "refused before any check")
+        self.assertFalse(self.h.held(), "nothing is owed")
+        self.assertEqual(self.h.tool("abort").returncode, 0)
+        self.assertEqual(self.land("fix/a").returncode, 0, "the same landing alone is judged as usual")
+
+    def test_class_c_control_a_batch_opens_with_more_than_two_hours_left(self):
+        self.old_baseline(7 * 86400 - 3 * 3600)
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        self.assertTrue(self.h.held())
+
+    def test_class_c_a_baseline_rule_2_ignores_anyway_opens_one(self):
+        """No commit, or one off main's history: rule 2 is off in a batch and alone, so they are judged alike."""
+        self.h.commit_to_main(M.BASELINE_FILE, json.dumps({"commit": "b" * 40}) + "\n")
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+
+    def test_class_c_a_baseline_past_the_limit_takes_no_further_landing(self):
+        self.old_baseline(7 * 86400 + 3600)
+        start = self.h.origin_main()
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.hand_lock(f"agent: by-hand\nbatch-start: {start}\nbatch-first-push: {utc(60)}\nbatch-landing: fix/old {start}\n")
+        result = self.land("fix/a", "--batch-start", start, "--handed-over-by", "by-hand")
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state("fix/a")["stop"]["code"], "batch_baseline_past_limit")
+        self.assertEqual(self.h.origin_main(), start)
+        self.assertTrue(self.h.held())
+        self.assertIn("--batch-close", result.stdout)
+
+
+class BatchClearingTests(Base):
+    """L2: a dead holder whose batch landed something is closed, not cleared."""
+
+    def batch_start(self) -> str:
+        return M.parse_holder(self.h.holder())["batch-start"]
+
+    def age_holder(self, seconds: float) -> None:
+        path = self.h.lock / "held" / "holder.txt"
+        text = re.sub(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", utc(seconds), path.read_text())
+        path.write_text(text)
+        moment = time.time() - seconds
+        os.utime(path, (moment, moment))
+        os.utime(self.h.lock / "held", (moment, moment))
+
+    def test_an_idle_batch_past_90_minutes_is_not_cleared_and_says_how_to_close(self):
+        self.h.branch("fix/a", {"Plans/doc-a.md": "a\n"})
+        wt_b = self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        start = self.batch_start()
+        a_sha = self.h.origin_main()
+        self.age_holder(2 * 3600)
+        result = self.land("fix/b")
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state("fix/b")["stop"]["code"], "batch_needs_closing")
+        self.assertIn(f"run --batch-close --batch-start {start}", result.stdout)
+        self.assertEqual(self.h.origin_main(), a_sha)
+        self.assertTrue(self.h.held())
+        self.assertEqual(self.batch_start(), start)
+        self.assertEqual(self.h.calls("snapshot"), [])
+        log = self.h.lock / "queue" / "log.jsonl"
+        self.assertFalse(log.exists() and "cleared_dead_holder" in log.read_text())
+        self.assertIn("closed, not cleared", self.h.tool("lock", "status").stdout)
+        closed = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "closer")
+        self.assertEqual(closed.returncode, 0, closed.stdout + closed.stderr)
+        self.assertEqual(len(self.h.calls("snapshot")), 1, "the follow-up is not lost")
+        self.assertFalse(self.h.held())
+        resumed = self.h.tool("resume", "--branch", "fix/b")
+        self.assertEqual(resumed.returncode, 0, resumed.stdout + resumed.stderr)
+        self.assertFalse(wt_b.exists())
+        self.assertEqual(self.h.g(self.h.origin, "show", "refs/heads/main:src/y.txt"), "b")
+
+    def test_a_killed_member_is_closed_by_adoption_not_cleared(self):
+        self.h.branch("fix/a", {"Plans/doc-a.md": "a\n"})
+        self.h.branch("fix/b", {"src/x.txt": "b\n"})
+        self.h.branch("fix/c", {"src/y.txt": "c\n"})
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        start = self.batch_start()
+        crashed = self.land("fix/b", "--batch-start", start, env={"PM_LAND_TEST_CRASH_BEFORE": "finish:"})
+        self.assertEqual(crashed.returncode, 137)
+        self.age_holder(700)
+        result = self.land("fix/c")
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state("fix/c")["stop"]["code"], "batch_needs_closing")
+        closed = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "closer")
+        self.assertEqual(closed.returncode, 0, closed.stdout + closed.stderr)
+        self.assertEqual(len(self.h.calls("snapshot")), 1)
+
+    def test_a_dead_hand_batch_with_rows_is_not_cleared(self):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        start = self.h.origin_main()
+        self.h.hand_lock(f"agent: by-hand\nbatch-start: {start}\nbatch-landing: fix/old {start}\n", age=91 * 60)
+        result = self.land("fix/a")
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state()["stop"]["code"], "batch_needs_closing")
+        self.assertTrue(self.h.held())
+
+    def test_a_dead_hand_batch_with_no_rows_but_main_moved_past_it_is_not_cleared(self):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        start = self.h.origin_main()
+        self.h.commit_to_main("src/other.txt", "o\n")
+        self.h.fetch_shared()
+        self.h.hand_lock(f"agent: by-hand\nbatch-start: {start}\n", age=91 * 60)
+        result = self.land("fix/a")
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state()["stop"]["code"], "batch_needs_closing")
+
+    def test_a_dead_batch_that_landed_nothing_is_cleared_as_before(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        start = self.h.origin_main()
+        self.h.hand_lock(f"agent: by-hand\nbatch-start: {start}\n", age=91 * 60)
+        result = self.land("fix/a")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertIn("cleared_dead_holder", (self.h.lock / "queue" / "log.jsonl").read_text())
+
+    def test_a_hand_lander_taking_the_lock_does_not_clear_it_either(self):
+        start = self.h.origin_main()
+        self.h.hand_lock(f"agent: by-hand\nbatch-start: {start}\nbatch-landing: fix/old {start}\n", age=91 * 60)
+        result = self.h.tool("lock", "take", "--name", "other", "--no-wait")
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn("--batch-close", result.stderr)
+        self.assertIn("by-hand", self.h.holder())
+
+    def test_closing_a_dead_hand_batch_needs_no_hand_over(self):
+        start = self.h.origin_main()
+        self.h.hand_lock(f"agent: by-hand\nbatch-start: {start}\nbatch-landing: fix/old {start}\n", age=91 * 60)
+        result = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "closer")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertFalse(self.h.held())
+
+
+class HandOverTests(Base):
+    """L3: --batch-start takes over only from batch-idle or a dead holder; a live hand holder hands over by pm-mail."""
+
+    def holder_text(self, start: str) -> str:
+        return f"agent: hand-lander\nbranch: fix/h\ntime: {utc()}\nbatch-start: {start}\n"
+
+    def test_a_live_hand_holder_is_not_taken_over_by_knowing_the_sha(self):
+        self.h.branch("fix/b", {"src/x.txt": "b\n"})
+        start = self.h.origin_main()
+        text = self.holder_text(start)
+        self.h.hand_lock(text)
+        result = self.land("fix/b", "--batch-start", start)
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn("--handed-over-by hand-lander", result.stderr)
+        self.assertEqual(self.h.holder(), text, "the hand lander may be mid-check")
+        self.assertEqual(self.h.origin_main(), start)
+        self.assertEqual(self.h.calls(), [])
+
+    def test_the_hand_over_must_name_the_holder(self):
+        self.h.branch("fix/b", {"src/x.txt": "b\n"})
+        start = self.h.origin_main()
+        text = self.holder_text(start)
+        self.h.hand_lock(text)
+        result = self.land("fix/b", "--batch-start", start, "--handed-over-by", "someone-else")
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertEqual(self.h.holder(), text)
+
+    def test_naming_the_holder_says_what_it_asserts_and_logs_it(self):
+        wt = self.h.branch("fix/b", {"src/x.txt": "b\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        start = self.h.origin_main()
+        self.h.hand_lock(self.holder_text(start))
+        result = self.land("fix/b", "--batch-start", start, "--handed-over-by", "hand-lander")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("asserts that hand-lander handed you the lock by pm-mail", result.stdout)
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertIn("batch_handover_asserted", (self.h.lock / "queue" / "log.jsonl").read_text())
+
+    def test_a_dead_hand_holder_needs_no_hand_over(self):
+        wt = self.h.branch("fix/b", {"src/x.txt": "b\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        start = self.h.origin_main()
+        self.h.hand_lock(f"agent: hand-lander\nbatch-start: {start}\n", age=91 * 60)
+        result = self.land("fix/b", "--batch-start", start)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(self.h.origin_main(), tip)
+
+    def test_a_hand_opener_closing_its_own_batch_needs_no_hand_over(self):
+        start = self.h.origin_main()
+        self.h.hand_lock(self.holder_text(start))
+        result = self.h.tool("run", "--batch-close", "--name", "hand-lander")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertFalse(self.h.held())
+
+    def test_a_tool_holder_in_any_state_but_batch_idle_is_busy(self):
+        self.h.branch("fix/b", {"src/x.txt": "b\n"})
+        start = self.h.origin_main()
+        fields = {"agent": "x", "tool": M.TOOL_TAG, "state": "stopped", "host": M.hostname(), "time": utc(), "batch-start": start}
+        self.h.hand_lock("".join(f"{key}: {value}\n" for key, value in fields.items()))
+        result = self.land("fix/b", "--batch-start", start)
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state()["stop"]["code"], "batch_busy")
+
+
+class MainAheadTests(Base):
+    """L4: the lock is never released while the shared checkout's main is ahead of origin."""
+
+    def stuck(self, branch="fix/a", rel="src/x.txt", *extra):
+        result = self.land(branch, *extra)
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state(branch)["stop"]["code"], "landing_check_blocked")
+        self.assertIn("CRITICAL", result.stdout)
+        self.assertTrue(self.h.held(), "released with main ahead of origin")
+        self.assertNotEqual(self.h.shared_head(), self.h.origin_main())
+        self.assertNotIn("heartbeat", self.h.holder())
+        return result
+
+    def test_a_reset_that_fails_keeps_the_lock_and_abort_does_not_release_it(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        base = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 2, "run": "echo dirty >> src/x.txt"}])
+        self.stuck()
+        result = self.h.tool("abort")
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertIn("CRITICAL", result.stdout)
+        self.assertTrue(self.h.held())
+        self.assertEqual(self.h.state()["status"], "stopped", "still this landing's to finish")
+        self.assertNotEqual(self.h.shared_head(), base)
+        self.h.g(self.h.shared, "checkout", "--", "src/x.txt")
+        result = self.h.tool("abort")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(self.h.shared_head(), base)
+        self.assertFalse(self.h.held())
+
+    def test_resume_cannot_go_on_until_main_is_back(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        base = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 2, "run": "echo dirty >> src/x.txt"}, {"exit": 0}])
+        self.stuck()
+        result = self.h.tool("resume")
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state()["stop"]["code"], "main_ahead")
+        self.assertEqual(self.h.origin_main(), base)
+        self.assertTrue(self.h.held())
+        self.assertEqual(len(self.h.calls("landing")), 1)
+        self.h.g(self.h.shared, "checkout", "--", "src/x.txt")
+        result = self.h.tool("resume")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertFalse(self.h.held())
+
+    def test_a_batch_does_not_close_over_a_main_it_cannot_put_back(self):
+        self.h.branch("fix/a", {"Plans/doc-a.md": "a\n"})
+        self.h.branch("fix/b", {"src/x.txt": "b\n"})
+        self.h.branch("fix/c", {"src/y.txt": "c\n"})
+        start = self.h.origin_main()
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        self.h.set_plan("landing", [{"exit": 2, "run": "echo dirty >> src/x.txt"}])
+        self.stuck("fix/b", "src/x.txt", "--batch-start", start)
+        self.assertEqual(self.h.calls("snapshot"), [], "a follow-up on this main would land the stopped commit")
+        self.assertEqual(M.parse_holder(self.h.holder())["state"], "stopped")
+        other = self.land("fix/c", "--batch-start", start)
+        self.assertEqual(other.returncode, 1, other.stdout)
+        self.assertEqual(self.h.state("fix/c")["stop"]["code"], "batch_busy")
+
+    def test_a_main_someone_else_left_ahead_keeps_the_lock_too(self):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.g(self.h.shared, "commit", "-q", "--allow-empty", "-m", "someone's")
+        result = self.land("fix/a")
+        self.assertEqual(self.h.state()["stop"]["code"], "shared_main_ahead")
+        self.assertIn("CRITICAL", result.stdout)
+        self.assertTrue(self.h.held())
+        self.assertEqual(self.h.tool("abort").returncode, 1)
+        self.assertTrue(self.h.held())
+        self.h.g(self.h.shared, "reset", "--keep", "origin/main")
+        self.assertEqual(self.h.tool("abort").returncode, 0)
+        self.assertFalse(self.h.held())
+
+    def test_with_main_back_the_lock_is_released_as_before(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        self.h.set_plan("landing", [{"exit": 2}])
+        self.assertEqual(self.land("fix/a").returncode, 1)
+        self.assertFalse(self.h.held())
+
+
+class CheckArgTests(Base):
+    """L5: --check-arg passes on only what cannot change what the landing check judges."""
+
+    def test_anything_else_is_refused_before_anything_runs(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        before = self.h.origin_main()
+        for bad in (["--check-arg=--record-baseline"], ["--check-arg=--base=HEAD"], ["--check-arg=--base", "--check-arg=HEAD"],
+                    ["--check-arg=--baseline=/x"], ["--check-arg=--allow-sparse"], ["--check-arg=--run-dir=/x"],
+                    ["--check-arg=--keep-check-reports=/x"], ["--check-arg=--json"], ["--check-arg=HEAD"], ["--check-arg=--root=/x"],
+                    ["--check-arg=--cach"], ["--check-arg=--cache=1"], ["--check-arg=--no-cache=1"],
+                    ["--check-arg=--subcheck-timeout-seconds=abc"], ["--check-arg=--subcheck-timeout-seconds"],
+                    ["--check-arg=--cache-max-mb=-1"], ["--check-arg=--cache-dir="],
+                    ["--check-arg=--cache-dir", "--check-arg=--base=HEAD"]):
+            for command in ("run", "plan"):
+                with self.subTest(args=bad, command=command):
+                    result = self.h.tool(command, "fix/a", "--name", "x", *bad)
+                    self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+                    self.assertIn("--check-arg", result.stderr)
+        self.assertEqual(self.h.calls(), [])
+        self.assertFalse(self.h.held())
+        self.assertEqual(self.h.origin_main(), before)
+
+    def test_the_allow_list_reaches_the_landing_check(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        args = ["--check-arg=--cache", "--check-arg=--no-cache", "--check-arg=--cache-dir=/tmp/c", "--check-arg=--cache-max-mb",
+                "--check-arg=100", "--check-arg=--subcheck-timeout-seconds=1200"]
+        result = self.land("fix/a", *args)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        seen = self.h.calls("landing")[0]["args"]
+        for item in ("--cache", "--no-cache", "--cache-dir=/tmp/c", "--cache-max-mb", "100", "--subcheck-timeout-seconds=1200"):
+            self.assertIn(item, seen)
+
+    def test_record_baseline_cannot_turn_a_blocked_landing_into_a_push(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        base = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 2}])
+        self.assertEqual(self.land("fix/a", "--check-arg=--record-baseline").returncode, 2)
+        self.assertEqual(self.h.origin_main(), base)
+        self.assertEqual(self.h.calls("baseline"), [])
+
+
+class MaximumHoldTests(Base):
+    """L8: a hung run's heartbeat stops at the maximum hold, so the rules for a dead holder can fire."""
+
+    def test_the_heartbeat_stops_and_the_holder_then_reads_as_dead(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        self.h.set_plan("landing", [{"sleep": 300}])
+        self.h.start("run", "fix/a", "--name", "x", env={"PM_LAND_MAX_HOLD_SECONDS": "2"})
+        self.h.wait_calls("landing")
+        log = self.h.lock / "queue" / "log.jsonl"
+        end = time.time() + 30
+        while time.time() < end and not (log.exists() and "max_hold_reached" in log.read_text()):
+            time.sleep(0.1)
+        self.assertIn("max_hold_reached", log.read_text())
+        first = self.h.holder()
+        time.sleep(2.5)
+        self.assertEqual(self.h.holder(), first, "nothing may refresh it now, or the 90-minute rule never fires")
+        path = self.h.lock / "held" / "holder.txt"
+        # As 91 minutes on: every time in it has aged, and nothing has rewritten it.
+        path.write_text(re.sub(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", utc(91 * 60), first))
+        moment = time.time() - 91 * 60
+        os.utime(path, (moment, moment))
+        os.utime(self.h.lock / "held", (moment, moment))
+        status = self.h.tool("lock", "status").stdout
+        self.assertIn("PROVEN DEAD", status)
+        self.assertIn("heartbeat stuck", status)
+
+    def test_under_the_maximum_the_heartbeat_goes_on(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        self.h.set_plan("landing", [{"sleep": 300}])
+        self.h.start("run", "fix/a", "--name", "x", env={"PM_LAND_MAX_HOLD_SECONDS": "3600"})
+        self.h.wait_calls("landing")
+        first = M.parse_holder(self.h.holder())["heartbeat"]
+        end = time.time() + 15
+        while time.time() < end and M.parse_holder(self.h.holder())["heartbeat"] == first:
+            time.sleep(0.2)
+        self.assertNotEqual(M.parse_holder(self.h.holder())["heartbeat"], first)
+        self.assertFalse((self.h.lock / "queue" / "log.jsonl").exists())
+
+    def test_the_default_is_three_hours(self):
+        self.assertEqual(M.MAX_HOLD_SECONDS, 3 * 60 * 60)
+
+
+class HandRowTests(Base):
+    """L9: a hand-opened batch's rows, in the format `batch-landing: <branch> <sha>`, count toward both limits."""
+
+    def holder_text(self, start: str, *rows: str) -> str:
+        return f"agent: by-hand\nbatch-start: {start}\n" + "".join(f"batch-landing: {row}\n" for row in rows)
+
+    def join(self, start: str, *extra):
+        return self.land("fix/a", "--batch-start", start, "--handed-over-by", "by-hand", *extra)
+
+    def test_four_hand_rows_fill_the_batch(self):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        start = self.h.origin_main()
+        self.h.hand_lock(self.holder_text(start, *[f"fix/old{index} {start}" for index in range(4)]))
+        result = self.join(start)
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state()["stop"]["code"], "batch_full")
+        self.assertEqual(self.h.origin_main(), start)
+
+    def test_three_hand_rows_leave_room(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        start = self.h.origin_main()
+        self.h.hand_lock(self.holder_text(start, *[f"fix/old{index} {start}" for index in range(3)]))
+        result = self.join(start)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertEqual(len(M.parse_holder(self.h.holder())["batch-landing"]), 4)
+
+    def test_the_two_hours_count_from_the_first_rows_commit(self):
+        start = self.h.origin_main()
+        old = self.h.commit_to_main("src/first.txt", "f\n", age=3 * 3600)
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.hand_lock(self.holder_text(start, f"fix/old {old}"))
+        result = self.join(start)
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state()["stop"]["code"], "batch_expired")
+        self.assertEqual(self.h.origin_main(), old)
+
+    def test_a_recent_first_row_is_inside_the_two_hours_and_its_time_goes_on_record(self):
+        start = self.h.origin_main()
+        recent = self.h.commit_to_main("src/first.txt", "f\n", age=3600)
+        wt = self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        self.h.hand_lock(self.holder_text(start, f"fix/old {recent}"))
+        result = self.join(start)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertIn("batch-first-push", M.parse_holder(self.h.holder()))
+
+    def test_a_row_in_another_shape_is_refused_not_dropped_uncounted(self):
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        start = self.h.origin_main()
+        text = self.holder_text(start, "fix/old")
+        self.h.hand_lock(text)
+        result = self.join(start)
+        self.assertEqual(result.returncode, 2, result.stdout + result.stderr)
+        self.assertIn("batch-landing: <branch> <sha>", result.stderr)
+        self.assertEqual(self.h.holder(), text)
+
+    def test_main_past_batch_start_with_no_rows_cannot_be_counted(self):
+        start = self.h.origin_main()
+        self.h.commit_to_main("src/first.txt", "f\n")
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.hand_lock(self.holder_text(start))
+        result = self.join(start)
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state()["stop"]["code"], "batch_rows_missing")
+        self.assertTrue(self.h.held())
+
+    def test_a_first_row_naming_no_commit_cannot_be_counted(self):
+        start = self.h.origin_main()
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.hand_lock(self.holder_text(start, f"fix/old {'c' * 40}"))
+        result = self.join(start)
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertEqual(self.h.state()["stop"]["code"], "batch_rows_missing")
+
+    def test_a_batch_with_broken_rows_can_still_be_closed(self):
+        start = self.h.origin_main()
+        self.h.hand_lock(self.holder_text(start, "fix/old"), age=91 * 60)
+        result = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "closer")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertFalse(self.h.held())
+
+
+class DocumentedLimitsTests(Base):
+    """L10, L11."""
+
+    def test_the_tools_stopping_bar_is_in_its_readme_section(self):
+        text = (ROOT / "reports" / "landing-checks" / "README.md").read_text(encoding="utf-8")
+        section = text[text.index("## One landing command: `scripts/pm-land.py`"):]
+        section = section[:section.index("\n## ", 1)]
+        self.assertIn("**Stopping bar for this tool**", section)
+        self.assertIn("TOOL-ISSUES", section)
+
+    def test_checks_local_says_its_equivalence_is_not_measured(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        self.assertIn("not yet measured", self.h.tool("plan", "fix/a", "--name", "x", "--checks-local").stdout)
+        self.assertNotIn("not yet measured", self.h.tool("plan", "fix/a", "--name", "x").stdout)
+        result = self.land("fix/a", "--checks-local")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("not yet measured", result.stdout)
+
+    def test_a_landing_in_the_shared_checkout_says_nothing_of_it(self):
+        self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        self.assertNotIn("not yet measured", self.land("fix/a").stdout)
 
 
 class StatusTests(Base):
