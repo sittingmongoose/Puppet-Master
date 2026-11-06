@@ -1,8 +1,8 @@
 {
-  "schema_id": "pm.assurance.ca_seal2.coverage.v4",
+  "schema_id": "pm.assurance.ca_seal2.coverage.v5",
   "validator_sha256": "3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72",
   "base": "17c842445a2623bb0334ba8d6932e7a6bf088967",
-  "inventory": "Astra historical syntax/semantic rows plus exhaustive node-type inventory of all touched function bodies, including inherited August and nested code.",
+  "inventory": "Astra historical syntax/semantic rows; an operator census of all touched function bodies (every node dispatched on its exact AST class, BinOp, AugAssign and UnaryOp also on their operator class), closed by a complete table of the running Python's ast classes; every node on an inserted or changed line of an aligned unit; and every CA-SEAL line of an aligned unit without a counterpart.",
   "sites": [
     {
       "function": "multi_family_receipt_state",
@@ -10660,7 +10660,359 @@
           "eligible_nodes": 10
         }
       },
+      "line_marks": {
+        "multi_family_receipt_state": {
+          "inserted": 0,
+          "changed": 1,
+          "deleted": 0,
+          "replaced": 1
+        },
+        "post_august_validator_pin": {
+          "inserted": 0,
+          "changed": 1,
+          "deleted": 0,
+          "replaced": 1
+        },
+        "main": {
+          "inserted": 18,
+          "changed": 0,
+          "deleted": 0,
+          "replaced": 0
+        },
+        "build_receipt": {
+          "inserted": 10,
+          "changed": 0,
+          "deleted": 0,
+          "replaced": 0
+        },
+        "<module>": {
+          "inserted": 43,
+          "changed": 0,
+          "deleted": 0,
+          "replaced": 0
+        }
+      },
+      "removed_functions": [],
       "preserved_rows_matched": 620
+    },
+    "changed_line_nodes": {
+      "rows": 190,
+      "by_unit": {
+        "<module>": 52,
+        "build_receipt": 49,
+        "main": 81,
+        "multi_family_receipt_state": 5,
+        "post_august_validator_pin": 3
+      },
+      "by_class": {
+        "Assign": 29,
+        "Attribute": 8,
+        "BinOp": 2,
+        "Constant": 46,
+        "Dict": 1,
+        "Expr": 1,
+        "If": 1,
+        "Import": 3,
+        "Name": 78,
+        "SetComp": 2,
+        "Subscript": 15,
+        "Tuple": 1,
+        "alias": 3
+      },
+      "by_outcome": {
+        "data": 189,
+        "structural": 1
+      }
+    },
+    "historical_lines": {
+      "rows": 2,
+      "by_mark": {
+        "deleted": 0,
+        "replaced": 2,
+        "function removed": 0
+      }
+    },
+    "census": {
+      "Add": {
+        "category": "data",
+        "touched_functions": {
+          "AugAssign": 1,
+          "BinOp": 27
+        },
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {
+          "AugAssign": 1,
+          "BinOp": 70
+        }
+      },
+      "And": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "BoolOp": 43
+        },
+        "carried_by_census_row": 43,
+        "unanchored": 0,
+        "validator": {
+          "BoolOp": 61
+        }
+      },
+      "BitAnd": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "BinOp": 9
+        },
+        "carried_by_census_row": 9,
+        "unanchored": 0,
+        "validator": {
+          "BinOp": 11
+        }
+      },
+      "BitOr": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "BinOp": 3
+        },
+        "carried_by_census_row": 3,
+        "unanchored": 0,
+        "validator": {
+          "AugAssign": 2,
+          "BinOp": 15
+        }
+      },
+      "BitXor": {
+        "category": "truth-carrying",
+        "touched_functions": {},
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {}
+      },
+      "Div": {
+        "category": "data",
+        "touched_functions": {
+          "BinOp": 78
+        },
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {
+          "BinOp": 102
+        }
+      },
+      "Eq": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "Compare": 58
+        },
+        "carried_by_census_row": 58,
+        "unanchored": 0,
+        "validator": {
+          "Compare": 69
+        }
+      },
+      "FloorDiv": {
+        "category": "data",
+        "touched_functions": {},
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {}
+      },
+      "Gt": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "Compare": 1
+        },
+        "carried_by_census_row": 1,
+        "unanchored": 0,
+        "validator": {
+          "Compare": 2
+        }
+      },
+      "GtE": {
+        "category": "truth-carrying",
+        "touched_functions": {},
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {
+          "Compare": 1
+        }
+      },
+      "In": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "Compare": 23
+        },
+        "carried_by_census_row": 23,
+        "unanchored": 0,
+        "validator": {
+          "Compare": 43
+        }
+      },
+      "Invert": {
+        "category": "data",
+        "touched_functions": {},
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {}
+      },
+      "Is": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "Compare": 23
+        },
+        "carried_by_census_row": 23,
+        "unanchored": 0,
+        "validator": {
+          "Compare": 28
+        }
+      },
+      "IsNot": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "Compare": 36
+        },
+        "carried_by_census_row": 36,
+        "unanchored": 0,
+        "validator": {
+          "Compare": 51
+        }
+      },
+      "LShift": {
+        "category": "data",
+        "touched_functions": {},
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {}
+      },
+      "Lt": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "Compare": 2
+        },
+        "carried_by_census_row": 2,
+        "unanchored": 0,
+        "validator": {
+          "Compare": 4
+        }
+      },
+      "LtE": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "Compare": 6
+        },
+        "carried_by_census_row": 6,
+        "unanchored": 0,
+        "validator": {
+          "Compare": 7
+        }
+      },
+      "MatMult": {
+        "category": "data",
+        "touched_functions": {},
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {}
+      },
+      "Mod": {
+        "category": "data",
+        "touched_functions": {},
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {}
+      },
+      "Mult": {
+        "category": "data",
+        "touched_functions": {},
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {
+          "BinOp": 1
+        }
+      },
+      "Not": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "UnaryOp": 113
+        },
+        "carried_by_census_row": 113,
+        "unanchored": 0,
+        "validator": {
+          "UnaryOp": 153
+        }
+      },
+      "NotEq": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "Compare": 58
+        },
+        "carried_by_census_row": 58,
+        "unanchored": 0,
+        "validator": {
+          "Compare": 121
+        }
+      },
+      "NotIn": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "Compare": 14
+        },
+        "carried_by_census_row": 14,
+        "unanchored": 0,
+        "validator": {
+          "Compare": 23
+        }
+      },
+      "Or": {
+        "category": "truth-carrying",
+        "touched_functions": {
+          "BoolOp": 67
+        },
+        "carried_by_census_row": 67,
+        "unanchored": 0,
+        "validator": {
+          "BoolOp": 101
+        }
+      },
+      "Pow": {
+        "category": "data",
+        "touched_functions": {},
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {}
+      },
+      "RShift": {
+        "category": "data",
+        "touched_functions": {},
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {}
+      },
+      "Sub": {
+        "category": "data",
+        "touched_functions": {
+          "BinOp": 31
+        },
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {
+          "BinOp": 40
+        }
+      },
+      "UAdd": {
+        "category": "data",
+        "touched_functions": {},
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {}
+      },
+      "USub": {
+        "category": "data",
+        "touched_functions": {},
+        "carried_by_census_row": 0,
+        "unanchored": 0,
+        "validator": {
+          "UnaryOp": 1
+        }
+      }
     }
   },
   "supplement": [
@@ -54813,5 +55165,2316 @@
     "main",
     "build_receipt"
   ],
-  "completeness_claim": "Every Compare, BoolOp, Not, bitwise And/Or/Xor, IfExp, NamedExpr, comprehension filter, match case/guard, Assert, try/except dispatch and Call in all 15 touched functions has an identity. Enumeration has no call-name whitelist and no changed-line filter. Classification cannot suppress enumeration. A preserved August predicate is a computed occurrence, not a row assertion: its claimed CA-SEAL baseline must be the mapped counterpart of its own node, and each historical occurrence may be claimed once."
+  "completeness_claim": "Every Compare, BoolOp, Not, bitwise And/Or/Xor (as the operator of a BinOp or an AugAssign), IfExp, NamedExpr, comprehension filter, match case/guard, Assert, try/except dispatch and Call in all 15 touched functions has an identity. Enumeration has no call-name whitelist and no changed-line filter. Classification cannot suppress enumeration. A preserved August predicate is a computed occurrence, not a row assertion: its claimed CA-SEAL baseline must be the mapped counterpart of its own node, and each historical occurrence may be claimed once. Since round 11 the census dispatches on exact AST classes, and a complete table of the running Python's ast node and operator classes (built for 3.14.4) marks each one truth-carrying, data, structural or refused when present: an unlisted class, a truth-carrying class without a census rule, or a refused class in the validator fails coverage. Every node on an inserted or changed line of an aligned unit (the four aligned functions and the module body outside top-level functions) has a census or changed-line row, and every CA-SEAL line of an aligned unit without a counterpart has a reviewed reason.",
+  "changed_line_nodes": [
+    {
+      "function": "<module>",
+      "line": 16,
+      "column": 0,
+      "end_line": 16,
+      "end_column": 11,
+      "node_class": "Import",
+      "expression": "import math",
+      "site_id": "changed:7377241ebd4c04d56e71f6bb982be77b6c539a14cf8ec2ee524be0d966d74d2d",
+      "outcome": "data",
+      "reason": "Import statement. Import of a module added for the recount. `math` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_json). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 16,
+      "column": 7,
+      "end_line": 16,
+      "end_column": 11,
+      "node_class": "alias",
+      "expression": "math",
+      "site_id": "changed:e1eee8cdc6df8ebc7675296990e553fd4d22eedbff4c655eb2e99d674a75f1d5",
+      "outcome": "data",
+      "reason": "Import alias binding `math`. Import of a module added for the recount. `math` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_json). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 17,
+      "column": 0,
+      "end_line": 17,
+      "end_column": 9,
+      "node_class": "Import",
+      "expression": "import os",
+      "site_id": "changed:52abb57748eba4ff3cd6d66b1178725f0b130addbcbe74a0d98d09b302508d18",
+      "outcome": "data",
+      "reason": "Import statement. Import of a module added for the recount. `os` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_frozen_inputs). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 17,
+      "column": 7,
+      "end_line": 17,
+      "end_column": 9,
+      "node_class": "alias",
+      "expression": "os",
+      "site_id": "changed:9591c875899eb6b959d6237217dd335f1eaebcecc42acb7829cf109dcb17b2ce",
+      "outcome": "data",
+      "reason": "Import alias binding `os`. Import of a module added for the recount. `os` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_frozen_inputs). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 18,
+      "column": 0,
+      "end_line": 18,
+      "end_column": 17,
+      "node_class": "Import",
+      "expression": "import subprocess",
+      "site_id": "changed:81648f899590e26eef841fa88dbb2ab28a346b757b9313a30708046bb18cbc05",
+      "outcome": "data",
+      "reason": "Import statement. Import of a module added for the recount. `subprocess` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_frozen_inputs, recount_source_bytes, recount_validation). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 18,
+      "column": 7,
+      "end_line": 18,
+      "end_column": 17,
+      "node_class": "alias",
+      "expression": "subprocess",
+      "site_id": "changed:3d931b2b8027ac3fabaa1efcae3ecf4f1cfc6741418f3ea151015f37b3d6aa28",
+      "outcome": "data",
+      "reason": "Import alias binding `subprocess`. Import of a module added for the recount. `subprocess` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_frozen_inputs, recount_source_bytes, recount_validation). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 797,
+      "column": 0,
+      "end_line": 797,
+      "end_column": 89,
+      "node_class": "Assign",
+      "expression": "RECOUNT_RECEIPT = 'reports/event-authority-20261104/census-recount-20261104/RECEIPT.json'",
+      "site_id": "changed:e21a2f879f2f049cc86a3c6f3eafb49a13ee211937939b356e94612bac271f83",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `RECOUNT_RECEIPT` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, recount_frozen_inputs, recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 797,
+      "column": 0,
+      "end_line": 797,
+      "end_column": 15,
+      "node_class": "Name",
+      "expression": "RECOUNT_RECEIPT",
+      "site_id": "changed:23a37f3c5da38bd45a16652720a9f64eaf431c3aeb4fe6061b9834ca2ddda935",
+      "outcome": "data",
+      "reason": "Binds `RECOUNT_RECEIPT`. Module-level constant added for the recount. `RECOUNT_RECEIPT` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, recount_frozen_inputs, recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 797,
+      "column": 18,
+      "end_line": 797,
+      "end_column": 89,
+      "node_class": "Constant",
+      "expression": "'reports/event-authority-20261104/census-recount-20261104/RECEIPT.json'",
+      "site_id": "changed:70595dc3771a1a2fab79b34e96620f1b7fc9555539e536be6fded892cb6a6fc0",
+      "outcome": "data",
+      "reason": "Literal 'reports/event-authority-20261104/census-reco...'. Module-level constant added for the recount. `RECOUNT_RECEIPT` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, recount_frozen_inputs, recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 798,
+      "column": 0,
+      "end_line": 798,
+      "end_column": 87,
+      "node_class": "Assign",
+      "expression": "RECOUNT_LIST = 'reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json'",
+      "site_id": "changed:a6e5906ae8791728a5406e7e485ea91ae6b375c0252460759e574d22e7575662",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `RECOUNT_LIST` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, recount_frozen_inputs, recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 798,
+      "column": 0,
+      "end_line": 798,
+      "end_column": 12,
+      "node_class": "Name",
+      "expression": "RECOUNT_LIST",
+      "site_id": "changed:b448385129d192fc1a3b9296a1d2348f498e417cc594b64455cdd94b75ebd71c",
+      "outcome": "data",
+      "reason": "Binds `RECOUNT_LIST`. Module-level constant added for the recount. `RECOUNT_LIST` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, recount_frozen_inputs, recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 798,
+      "column": 15,
+      "end_line": 798,
+      "end_column": 87,
+      "node_class": "Constant",
+      "expression": "'reports/event-authority-20261104/census-recount-20261104/NEW-LIST.json'",
+      "site_id": "changed:d59bd1cb1aa4c5d35f13048df8d3f22d7a0768e85ec36eef9a1b48c7cecf5745",
+      "outcome": "data",
+      "reason": "Literal 'reports/event-authority-20261104/census-reco...'. Module-level constant added for the recount. `RECOUNT_LIST` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, recount_frozen_inputs, recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 799,
+      "column": 0,
+      "end_line": 799,
+      "end_column": 88,
+      "node_class": "Assign",
+      "expression": "RECOUNT_RECEIPT_SHA = '1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5b1a7546b3dbcef09a709'",
+      "site_id": "changed:786e60df424d77b42244e5c017187d00daf4bec221763cd8a00268a1774a5d9b",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `RECOUNT_RECEIPT_SHA` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, recount_frozen_inputs, recount_outcomes, recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 799,
+      "column": 0,
+      "end_line": 799,
+      "end_column": 19,
+      "node_class": "Name",
+      "expression": "RECOUNT_RECEIPT_SHA",
+      "site_id": "changed:60a210efea93c2f15348d57e426de65f10342fcab867ec0bac76c66defa610c7",
+      "outcome": "data",
+      "reason": "Binds `RECOUNT_RECEIPT_SHA`. Module-level constant added for the recount. `RECOUNT_RECEIPT_SHA` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, recount_frozen_inputs, recount_outcomes, recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 799,
+      "column": 22,
+      "end_line": 799,
+      "end_column": 88,
+      "node_class": "Constant",
+      "expression": "'1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5b1a7546b3dbcef09a709'",
+      "site_id": "changed:88f77b05cbc20a39a80c72585a7db3a4e8def88ce9ccd09a95639832efa302c6",
+      "outcome": "data",
+      "reason": "Literal '1d0ef48f472f2a6c521c6879e4c0b6ab0da98467dfe5...'. Module-level constant added for the recount. `RECOUNT_RECEIPT_SHA` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, recount_frozen_inputs, recount_outcomes, recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 800,
+      "column": 0,
+      "end_line": 800,
+      "end_column": 85,
+      "node_class": "Assign",
+      "expression": "RECOUNT_LIST_SHA = '2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c'",
+      "site_id": "changed:5660c81a1f262c013227e8663c38512db53eda8bc980c4f71035e5d69807b8e4",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `RECOUNT_LIST_SHA` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, recount_frozen_inputs, recount_outcomes, recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 800,
+      "column": 0,
+      "end_line": 800,
+      "end_column": 16,
+      "node_class": "Name",
+      "expression": "RECOUNT_LIST_SHA",
+      "site_id": "changed:52c8e454d3fbc5e0fb5ad83d2349952c3588b82311866b477319c8d32fbc1e51",
+      "outcome": "data",
+      "reason": "Binds `RECOUNT_LIST_SHA`. Module-level constant added for the recount. `RECOUNT_LIST_SHA` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, recount_frozen_inputs, recount_outcomes, recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 800,
+      "column": 19,
+      "end_line": 800,
+      "end_column": 85,
+      "node_class": "Constant",
+      "expression": "'2515ae5af31178a7d7a93581e982977bfb803d4494d779c72bebad9e7700376c'",
+      "site_id": "changed:78598fb527e37171360a367ba0157b9cce55941393fbafedbcc5ef288a473ae3",
+      "outcome": "data",
+      "reason": "Literal '2515ae5af31178a7d7a93581e982977bfb803d4494d7...'. Module-level constant added for the recount. `RECOUNT_LIST_SHA` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, recount_frozen_inputs, recount_outcomes, recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 801,
+      "column": 0,
+      "end_line": 801,
+      "end_column": 61,
+      "node_class": "Assign",
+      "expression": "RECOUNT_REVISION = '16acf7594a3fe8559af89491b895f440b314b99e'",
+      "site_id": "changed:4f8fc4f7ae181921eb845359e023a9a096e54025a8fb18062460b813718fc83f",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `RECOUNT_REVISION` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_frozen_inputs). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 801,
+      "column": 0,
+      "end_line": 801,
+      "end_column": 16,
+      "node_class": "Name",
+      "expression": "RECOUNT_REVISION",
+      "site_id": "changed:4d22b03b2ab98c991d2647767e5c44649afc3aadd92a314fa6f21060cdfdade9",
+      "outcome": "data",
+      "reason": "Binds `RECOUNT_REVISION`. Module-level constant added for the recount. `RECOUNT_REVISION` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_frozen_inputs). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 801,
+      "column": 19,
+      "end_line": 801,
+      "end_column": 61,
+      "node_class": "Constant",
+      "expression": "'16acf7594a3fe8559af89491b895f440b314b99e'",
+      "site_id": "changed:2e49756a035f17f03536aeb5df8ba07a12dbefc272d495923d2df592d12e780d",
+      "outcome": "data",
+      "reason": "Literal '16acf7594a3fe8559af89491b895f440b314b99e'. Module-level constant added for the recount. `RECOUNT_REVISION` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_frozen_inputs). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 802,
+      "column": 0,
+      "end_line": 802,
+      "end_column": 69,
+      "node_class": "Assign",
+      "expression": "RECOUNT_RECEIPT_REVISION = 'c53e4199ae94ca853a197354f3f9e7f296cf1efc'",
+      "site_id": "changed:80ccb7d27919b2b9beced3a187212c7f554f2f226c0f52527f2c914ed321125f",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `RECOUNT_RECEIPT_REVISION` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 802,
+      "column": 0,
+      "end_line": 802,
+      "end_column": 24,
+      "node_class": "Name",
+      "expression": "RECOUNT_RECEIPT_REVISION",
+      "site_id": "changed:eb42f01353f60021b2a7d33248ea6bb118c926c0a435887eb1265937852472c5",
+      "outcome": "data",
+      "reason": "Binds `RECOUNT_RECEIPT_REVISION`. Module-level constant added for the recount. `RECOUNT_RECEIPT_REVISION` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 802,
+      "column": 27,
+      "end_line": 802,
+      "end_column": 69,
+      "node_class": "Constant",
+      "expression": "'c53e4199ae94ca853a197354f3f9e7f296cf1efc'",
+      "site_id": "changed:2ba469777e9e902c60483e7ed0060f32e35b743673c30841f6208af7b1822d77",
+      "outcome": "data",
+      "reason": "Literal 'c53e4199ae94ca853a197354f3f9e7f296cf1efc'. Module-level constant added for the recount. `RECOUNT_RECEIPT_REVISION` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 804,
+      "column": 0,
+      "end_line": 804,
+      "end_column": 134,
+      "node_class": "Assign",
+      "expression": "AUGUST_RECEIPT_PATH = 'Plans/.audits/event-authority-2026-08-12/independent-validator/receipts/event_authority_validator_receipt.json'",
+      "site_id": "changed:48b7616ec2d5ad453b7096eee4be250aca1d9c30207a9e49ba9be914f5a46b42",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `AUGUST_RECEIPT_PATH` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 804,
+      "column": 0,
+      "end_line": 804,
+      "end_column": 19,
+      "node_class": "Name",
+      "expression": "AUGUST_RECEIPT_PATH",
+      "site_id": "changed:33acd2993e097205143d60e8d799a0b29e51dafbb916aa5fd1172de449d702c1",
+      "outcome": "data",
+      "reason": "Binds `AUGUST_RECEIPT_PATH`. Module-level constant added for the recount. `AUGUST_RECEIPT_PATH` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 804,
+      "column": 22,
+      "end_line": 804,
+      "end_column": 134,
+      "node_class": "Constant",
+      "expression": "'Plans/.audits/event-authority-2026-08-12/independent-validator/receipts/event_authority_validator_receipt.json'",
+      "site_id": "changed:87ce05ec87474be39d4d32fe076e8b57639447a824f4014964bb5086b8a1bf7f",
+      "outcome": "data",
+      "reason": "Literal 'Plans/.audits/event-authority-2026-08-12/ind...'. Module-level constant added for the recount. `AUGUST_RECEIPT_PATH` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 805,
+      "column": 0,
+      "end_line": 805,
+      "end_column": 68,
+      "node_class": "Assign",
+      "expression": "AUGUST_RECEIPT_REVISION = '17c842445a2623bb0334ba8d6932e7a6bf088967'",
+      "site_id": "changed:e46c092667eda9e073450847df76f2fd1a955fcfb2e8230e9846566c9b2a3bf6",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `AUGUST_RECEIPT_REVISION` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 805,
+      "column": 0,
+      "end_line": 805,
+      "end_column": 23,
+      "node_class": "Name",
+      "expression": "AUGUST_RECEIPT_REVISION",
+      "site_id": "changed:0a9d050cfb04f1ddd72be8364a86548d63b13d8c91c4ddd0b860f71b773ed306",
+      "outcome": "data",
+      "reason": "Binds `AUGUST_RECEIPT_REVISION`. Module-level constant added for the recount. `AUGUST_RECEIPT_REVISION` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 805,
+      "column": 26,
+      "end_line": 805,
+      "end_column": 68,
+      "node_class": "Constant",
+      "expression": "'17c842445a2623bb0334ba8d6932e7a6bf088967'",
+      "site_id": "changed:2eb31d5cb0f458521f3fd5392c4d04b1d42cb948a944fc11431482c73e673866",
+      "outcome": "data",
+      "reason": "Literal '17c842445a2623bb0334ba8d6932e7a6bf088967'. Module-level constant added for the recount. `AUGUST_RECEIPT_REVISION` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 806,
+      "column": 0,
+      "end_line": 806,
+      "end_column": 87,
+      "node_class": "Assign",
+      "expression": "AUGUST_RECEIPT_SHA = '9c75a19775c29ef64cd49084543e11a1a706fcda376b2b176a905928b6fae38e'",
+      "site_id": "changed:f3c20e31defe7c1dea6af258091ed9847dab7bdd8c11b2107e4e3b4e99d7f6cc",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `AUGUST_RECEIPT_SHA` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 806,
+      "column": 0,
+      "end_line": 806,
+      "end_column": 18,
+      "node_class": "Name",
+      "expression": "AUGUST_RECEIPT_SHA",
+      "site_id": "changed:41b4e76d4ed68961a024b3f7bd3bbef6d47eee8ff1fad77d67a80d37f47c1e7c",
+      "outcome": "data",
+      "reason": "Binds `AUGUST_RECEIPT_SHA`. Module-level constant added for the recount. `AUGUST_RECEIPT_SHA` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 806,
+      "column": 21,
+      "end_line": 806,
+      "end_column": 87,
+      "node_class": "Constant",
+      "expression": "'9c75a19775c29ef64cd49084543e11a1a706fcda376b2b176a905928b6fae38e'",
+      "site_id": "changed:818ee568bcb8a2b71a66c24cc8abbe423b957b40f7a96620d40ab1ca02108fe4",
+      "outcome": "data",
+      "reason": "Literal '9c75a19775c29ef64cd49084543e11a1a706fcda376b...'. Module-level constant added for the recount. `AUGUST_RECEIPT_SHA` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_snapshot_pins). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 807,
+      "column": 0,
+      "end_line": 807,
+      "end_column": 83,
+      "node_class": "Assign",
+      "expression": "RECOUNT_CHANGE = 'reports/event-authority-20261105/seal-check-recount-receipt.json'",
+      "site_id": "changed:a508305293486c5ad99a243261592ee1f8275b306b6aa1328c53196cfb28fc23",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `RECOUNT_CHANGE` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, third_change_validator_pin). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 807,
+      "column": 0,
+      "end_line": 807,
+      "end_column": 14,
+      "node_class": "Name",
+      "expression": "RECOUNT_CHANGE",
+      "site_id": "changed:a88c23cc20e6d7b3cc2d699e29eb0cf7896105f2be42635178d1f56ec7414cfe",
+      "outcome": "data",
+      "reason": "Binds `RECOUNT_CHANGE`. Module-level constant added for the recount. `RECOUNT_CHANGE` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, third_change_validator_pin). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 807,
+      "column": 17,
+      "end_line": 807,
+      "end_column": 83,
+      "node_class": "Constant",
+      "expression": "'reports/event-authority-20261105/seal-check-recount-receipt.json'",
+      "site_id": "changed:4fb3fd31b271565fb2f97fc7af0bffd8c3c0280d9d8f7425b59872b7e33d93e1",
+      "outcome": "data",
+      "reason": "Literal 'reports/event-authority-20261105/seal-check-...'. Module-level constant added for the recount. `RECOUNT_CHANGE` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, third_change_validator_pin). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 808,
+      "column": 0,
+      "end_line": 808,
+      "end_column": 42,
+      "node_class": "Assign",
+      "expression": "RECOUNT_AUTHOR = 'codex:CA-SEAL2-20261105'",
+      "site_id": "changed:a23268209beba1709960be5b1a9313c236833d076b7bcbae43ffb72002ce8aea",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `RECOUNT_AUTHOR` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 808,
+      "column": 0,
+      "end_line": 808,
+      "end_column": 14,
+      "node_class": "Name",
+      "expression": "RECOUNT_AUTHOR",
+      "site_id": "changed:277bede295497c417bdf02ea5e1afbb278a91568ff4952fa7188f38a052d6579",
+      "outcome": "data",
+      "reason": "Binds `RECOUNT_AUTHOR`. Module-level constant added for the recount. `RECOUNT_AUTHOR` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 808,
+      "column": 17,
+      "end_line": 808,
+      "end_column": 42,
+      "node_class": "Constant",
+      "expression": "'codex:CA-SEAL2-20261105'",
+      "site_id": "changed:fe8346ab2f4c09540463ed9375ce08ea2de31e72744983be1b85a9c042947522",
+      "outcome": "data",
+      "reason": "Literal 'codex:CA-SEAL2-20261105'. Module-level constant added for the recount. `RECOUNT_AUTHOR` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 809,
+      "column": 0,
+      "end_line": 809,
+      "end_column": 87,
+      "node_class": "Assign",
+      "expression": "RECOUNT_BEFORE_SHA = '319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91'",
+      "site_id": "changed:c90e8fea4f976eef07d6be91a5509cb07f76036963e0732a6b2d7518e843513c",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `RECOUNT_BEFORE_SHA` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, third_change_validator_pin). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 809,
+      "column": 0,
+      "end_line": 809,
+      "end_column": 18,
+      "node_class": "Name",
+      "expression": "RECOUNT_BEFORE_SHA",
+      "site_id": "changed:7422a7bf1801123b1fe370027ea02a7250a588b8e7dc6f4cc2a126438aee6aef",
+      "outcome": "data",
+      "reason": "Binds `RECOUNT_BEFORE_SHA`. Module-level constant added for the recount. `RECOUNT_BEFORE_SHA` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, third_change_validator_pin). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 809,
+      "column": 21,
+      "end_line": 809,
+      "end_column": 87,
+      "node_class": "Constant",
+      "expression": "'319f6bffddb07a36e633fd949146e4ce9149819ea5e817b13897a74314163a91'",
+      "site_id": "changed:a8488c3720d8cf598a8cec65a9d38ef97920c811a3ddfe436174e543c6327201",
+      "outcome": "data",
+      "reason": "Literal '319f6bffddb07a36e633fd949146e4ce9149819ea5e8...'. Module-level constant added for the recount. `RECOUNT_BEFORE_SHA` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state, third_change_validator_pin). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 810,
+      "column": 0,
+      "end_line": 810,
+      "end_column": 53,
+      "node_class": "Assign",
+      "expression": "RECOUNT_OUTCOMES = HOME / 'recount' / 'OUTCOMES.json'",
+      "site_id": "changed:0425f00960e53fdba16eaac00934da7bf60b7b4db637740a7374f47a78c82838",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `RECOUNT_OUTCOMES` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_outcomes). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 810,
+      "column": 0,
+      "end_line": 810,
+      "end_column": 16,
+      "node_class": "Name",
+      "expression": "RECOUNT_OUTCOMES",
+      "site_id": "changed:31c922745b577851f93876bae205ed53aa65bbf3595cf05f974238825d6021c4",
+      "outcome": "data",
+      "reason": "Binds `RECOUNT_OUTCOMES`. Module-level constant added for the recount. `RECOUNT_OUTCOMES` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_outcomes). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 810,
+      "column": 19,
+      "end_line": 810,
+      "end_column": 53,
+      "node_class": "BinOp",
+      "expression": "HOME / 'recount' / 'OUTCOMES.json'",
+      "site_id": "changed:25314aa225a0ec7fd68f16618b3a1738a0a010d9946f8bce07f2516640083439",
+      "outcome": "data",
+      "reason": "Path join `HOME / 'recount' / 'OUTCOMES.json'` (Div), a data operation. Module-level constant added for the recount. `RECOUNT_OUTCOMES` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_outcomes). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 810,
+      "column": 19,
+      "end_line": 810,
+      "end_column": 35,
+      "node_class": "BinOp",
+      "expression": "HOME / 'recount'",
+      "site_id": "changed:d2c41366aa15d0f69d5938e52dc6f06c129aa74fa4d097a192268c98ad61adaa",
+      "outcome": "data",
+      "reason": "Path join `HOME / 'recount'` (Div), a data operation. Module-level constant added for the recount. `RECOUNT_OUTCOMES` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_outcomes). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 810,
+      "column": 19,
+      "end_line": 810,
+      "end_column": 23,
+      "node_class": "Name",
+      "expression": "HOME",
+      "site_id": "changed:8c3b6a41221ed729d8c37a188b90d85db3aab7c724050612c27418ff2c27f985",
+      "outcome": "data",
+      "reason": "Reads `HOME`. Module-level constant added for the recount. `RECOUNT_OUTCOMES` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_outcomes). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 810,
+      "column": 26,
+      "end_line": 810,
+      "end_column": 35,
+      "node_class": "Constant",
+      "expression": "'recount'",
+      "site_id": "changed:e6112f7acc413505f54986ceb10fc1138ad701025faef22ba3e5a9e20401ba85",
+      "outcome": "data",
+      "reason": "Literal 'recount'. Module-level constant added for the recount. `RECOUNT_OUTCOMES` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_outcomes). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 810,
+      "column": 38,
+      "end_line": 810,
+      "end_column": 53,
+      "node_class": "Constant",
+      "expression": "'OUTCOMES.json'",
+      "site_id": "changed:aad77135e092f4b9e8b7425a839974cce9913c7dca9f70d965a9d20cc2ce024f",
+      "outcome": "data",
+      "reason": "Literal 'OUTCOMES.json'. Module-level constant added for the recount. `RECOUNT_OUTCOMES` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_outcomes). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 811,
+      "column": 0,
+      "end_line": 811,
+      "end_column": 129,
+      "node_class": "Assign",
+      "expression": "VALIDATOR_RELATIVE = 'Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py'",
+      "site_id": "changed:e6bcd007115959d379c84c928753da1d8198d085daa42e3deb24026916f22617",
+      "outcome": "data",
+      "reason": "Assignment statement. Module-level constant added for the recount. `VALIDATOR_RELATIVE` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 811,
+      "column": 0,
+      "end_line": 811,
+      "end_column": 18,
+      "node_class": "Name",
+      "expression": "VALIDATOR_RELATIVE",
+      "site_id": "changed:fb12b57cbafa7807e700361f1089c99d8d15b77ea33486fefaaf1cef72a3cb42",
+      "outcome": "data",
+      "reason": "Binds `VALIDATOR_RELATIVE`. Module-level constant added for the recount. `VALIDATOR_RELATIVE` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "<module>",
+      "line": 811,
+      "column": 21,
+      "end_line": 811,
+      "end_column": 129,
+      "node_class": "Constant",
+      "expression": "'Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py'",
+      "site_id": "changed:f9f0487f6e537c44a89117c2db321d59be37af4c23e8a261f60f75bf60056728",
+      "outcome": "data",
+      "reason": "Literal 'Plans/.audits/event-authority-2026-08-12/ind...'. Module-level constant added for the recount. `VALIDATOR_RELATIVE` is new: no CA-SEAL code binds or reads that name, and only functions new since CA-SEAL read it (recount_change_state). No aligned function, and so no preserved predicate, reads it."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2321,
+      "column": 4,
+      "end_line": 2325,
+      "end_column": 86,
+      "node_class": "Assign",
+      "expression": "overall_pass = bool(overall_pass and denom is True and (depth is True) and (not failures) and (type(named.get('recount')) is dict) and (named['recount'].get('complete') is True) and (type(named.get('august_result_before_recount')) is dict) and (named['august_result_before_recount'].get('pass') is True))",
+      "site_id": "changed:383e8bfa461adfece72c094eb09cd848c3723656ff00f759bb7b02812c4f9cf8",
+      "outcome": "data",
+      "reason": "Assignment statement. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2321,
+      "column": 4,
+      "end_line": 2321,
+      "end_column": 16,
+      "node_class": "Name",
+      "expression": "overall_pass",
+      "site_id": "changed:43b03248950d5a73369c9e3c5493211c6b5788b5f85b0d5f51526449a9861115",
+      "outcome": "data",
+      "reason": "Binds `overall_pass`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2321,
+      "column": 19,
+      "end_line": 2321,
+      "end_column": 23,
+      "node_class": "Name",
+      "expression": "bool",
+      "site_id": "changed:cf6ca18cc15a07e3befe8bf2415e465af820c13289ac0f4d5c97a8d9ef0a8d78",
+      "outcome": "data",
+      "reason": "Reads `bool`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2321,
+      "column": 24,
+      "end_line": 2321,
+      "end_column": 36,
+      "node_class": "Name",
+      "expression": "overall_pass",
+      "site_id": "changed:2b55579979121b3dba7d513c8998020015e202bd1899eba735061f212d1b2099",
+      "outcome": "data",
+      "reason": "Reads `overall_pass`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2321,
+      "column": 41,
+      "end_line": 2321,
+      "end_column": 46,
+      "node_class": "Name",
+      "expression": "denom",
+      "site_id": "changed:5ced6cba01df9477775a3315dc6fcb6427d2cbccfac012e3140783235cfbf250",
+      "outcome": "data",
+      "reason": "Reads `denom`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2321,
+      "column": 50,
+      "end_line": 2321,
+      "end_column": 54,
+      "node_class": "Constant",
+      "expression": "True",
+      "site_id": "changed:15e830376ca14826ea870edac2225546ec6aa7e5ef048856edd490161038cb31",
+      "outcome": "data",
+      "reason": "Literal True. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2321,
+      "column": 59,
+      "end_line": 2321,
+      "end_column": 64,
+      "node_class": "Name",
+      "expression": "depth",
+      "site_id": "changed:8f6e1dc5c4cee82a526f36001f6accc061044c94efc94f40b89e9fe9ad182efd",
+      "outcome": "data",
+      "reason": "Reads `depth`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2321,
+      "column": 68,
+      "end_line": 2321,
+      "end_column": 72,
+      "node_class": "Constant",
+      "expression": "True",
+      "site_id": "changed:f135fcb8c98f1a4fd80fc8d32987e4cf696e25b3e7dd3582d7a302816fc5e536",
+      "outcome": "data",
+      "reason": "Literal True. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2321,
+      "column": 81,
+      "end_line": 2321,
+      "end_column": 89,
+      "node_class": "Name",
+      "expression": "failures",
+      "site_id": "changed:c1070e8dd5149786c9388a89ce32ee5397aeccfe83f7af1db650422e808def84",
+      "outcome": "data",
+      "reason": "Reads `failures`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2322,
+      "column": 28,
+      "end_line": 2322,
+      "end_column": 32,
+      "node_class": "Name",
+      "expression": "type",
+      "site_id": "changed:f5fb218c455b8360a1fe96c90f12a66d46b7cb3a8155288c0d4af0ac76a10a24",
+      "outcome": "data",
+      "reason": "Reads `type`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2322,
+      "column": 33,
+      "end_line": 2322,
+      "end_column": 42,
+      "node_class": "Attribute",
+      "expression": "named.get",
+      "site_id": "changed:9b64377bc0720488d6e44bf4d6f3d9817296617f7bccbcda744f6ccb2da451fe",
+      "outcome": "data",
+      "reason": "Attribute lookup `named.get`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2322,
+      "column": 33,
+      "end_line": 2322,
+      "end_column": 38,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:5939d68dbeeae2ead70ac9dc90eac1e03298b06bc6908573ca44d001457ad6ea",
+      "outcome": "data",
+      "reason": "Reads `named`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2322,
+      "column": 43,
+      "end_line": 2322,
+      "end_column": 52,
+      "node_class": "Constant",
+      "expression": "'recount'",
+      "site_id": "changed:0087b93c2c5f61d9302857e3857ad8e25d48b407def4db59efc7901647bd85df",
+      "outcome": "data",
+      "reason": "Literal 'recount'. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2322,
+      "column": 58,
+      "end_line": 2322,
+      "end_column": 62,
+      "node_class": "Name",
+      "expression": "dict",
+      "site_id": "changed:b2fb49e68a7b8eb3eb7ab4da42384267aa43f10fc9db7dfc102fb484e17dd791",
+      "outcome": "data",
+      "reason": "Reads `dict`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2323,
+      "column": 28,
+      "end_line": 2323,
+      "end_column": 48,
+      "node_class": "Attribute",
+      "expression": "named['recount'].get",
+      "site_id": "changed:f46dc282da64f8ced41beaf9e777292ec797b534ec700d1ccda0eabe16788529",
+      "outcome": "data",
+      "reason": "Attribute lookup `named['recount'].get`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2323,
+      "column": 28,
+      "end_line": 2323,
+      "end_column": 33,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:c0e0c1767394e26b308be4239f3be0fdde8bcfb3a66907971dae5697bb2db0f2",
+      "outcome": "data",
+      "reason": "Reads `named`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2323,
+      "column": 28,
+      "end_line": 2323,
+      "end_column": 44,
+      "node_class": "Subscript",
+      "expression": "named['recount']",
+      "site_id": "changed:2761e2ec5176f2755d9169aa1b353a6d9500f9f7c9a1206cf9ece5048c2a5e26",
+      "outcome": "data",
+      "reason": "Item read `named['recount']`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2323,
+      "column": 34,
+      "end_line": 2323,
+      "end_column": 43,
+      "node_class": "Constant",
+      "expression": "'recount'",
+      "site_id": "changed:545266a097f26a136be8d5e1197b88b5d9b432a2779ed318f1ce91c5594a2e94",
+      "outcome": "data",
+      "reason": "Literal 'recount'. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2323,
+      "column": 49,
+      "end_line": 2323,
+      "end_column": 59,
+      "node_class": "Constant",
+      "expression": "'complete'",
+      "site_id": "changed:84ace62265db24848570f1c1de27947be9df780d5db8ab59e8e797fefa60d83a",
+      "outcome": "data",
+      "reason": "Literal 'complete'. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2323,
+      "column": 64,
+      "end_line": 2323,
+      "end_column": 68,
+      "node_class": "Constant",
+      "expression": "True",
+      "site_id": "changed:983346b92476876fbfe2d1dd0a95ff3a2dc4880a45870f01bc7c986b7ec66f92",
+      "outcome": "data",
+      "reason": "Literal True. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2324,
+      "column": 28,
+      "end_line": 2324,
+      "end_column": 32,
+      "node_class": "Name",
+      "expression": "type",
+      "site_id": "changed:2703181b3b7694dbfe40b9af579b003d800bd393844fb0701357d96b455fcb23",
+      "outcome": "data",
+      "reason": "Reads `type`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2324,
+      "column": 33,
+      "end_line": 2324,
+      "end_column": 42,
+      "node_class": "Attribute",
+      "expression": "named.get",
+      "site_id": "changed:ba410577eab5067e0f9a2d5c197f7cf14938bc1cca17a6ca7f95474cb3ed74da",
+      "outcome": "data",
+      "reason": "Attribute lookup `named.get`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2324,
+      "column": 33,
+      "end_line": 2324,
+      "end_column": 38,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:0dd33c5daeb375724d0ca276688b653e7d13f736f42b3264192b9d93167a9a5c",
+      "outcome": "data",
+      "reason": "Reads `named`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2324,
+      "column": 43,
+      "end_line": 2324,
+      "end_column": 73,
+      "node_class": "Constant",
+      "expression": "'august_result_before_recount'",
+      "site_id": "changed:8f698cb8b0367a039b25ee75bb3062117ad1151f42bd902de36584f0b5244e0d",
+      "outcome": "data",
+      "reason": "Literal 'august_result_before_recount'. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2324,
+      "column": 79,
+      "end_line": 2324,
+      "end_column": 83,
+      "node_class": "Name",
+      "expression": "dict",
+      "site_id": "changed:55713c6540480f60df97d068e764951354c424b4e5a6061e1c35a0fdb8190497",
+      "outcome": "data",
+      "reason": "Reads `dict`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2325,
+      "column": 28,
+      "end_line": 2325,
+      "end_column": 69,
+      "node_class": "Attribute",
+      "expression": "named['august_result_before_recount'].get",
+      "site_id": "changed:c67afb2fbe60c020797af83ed92275a05cf60844d257c02888bb88964f849fda",
+      "outcome": "data",
+      "reason": "Attribute lookup `named['august_result_before_recount'].get`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2325,
+      "column": 28,
+      "end_line": 2325,
+      "end_column": 33,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:b3f3af3b8db8916133a96e3711364585ce22cf3c53de59d869ddb6126cae3de5",
+      "outcome": "data",
+      "reason": "Reads `named`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2325,
+      "column": 28,
+      "end_line": 2325,
+      "end_column": 65,
+      "node_class": "Subscript",
+      "expression": "named['august_result_before_recount']",
+      "site_id": "changed:30933aa3acc42404d358ed1ac777b0fccb9610cfbae9d6f0e462416d6e5cc861",
+      "outcome": "data",
+      "reason": "Item read `named['august_result_before_recount']`. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2325,
+      "column": 34,
+      "end_line": 2325,
+      "end_column": 64,
+      "node_class": "Constant",
+      "expression": "'august_result_before_recount'",
+      "site_id": "changed:bf6c296e7563cf70b0be4672d67a41b2e161275f4ed883949e74fb2dd954c15c",
+      "outcome": "data",
+      "reason": "Literal 'august_result_before_recount'. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2325,
+      "column": 70,
+      "end_line": 2325,
+      "end_column": 76,
+      "node_class": "Constant",
+      "expression": "'pass'",
+      "site_id": "changed:6a091ed82bd8376d3d1c8fa97afdfba42c0a680bd5d207e7503e401cd83a7b53",
+      "outcome": "data",
+      "reason": "Literal 'pass'. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2325,
+      "column": 81,
+      "end_line": 2325,
+      "end_column": 85,
+      "node_class": "Constant",
+      "expression": "True",
+      "site_id": "changed:d48c25aaa1f70d5e28a17d3800d31bbf154c6dfa93be4cde486a0319df142eff",
+      "outcome": "data",
+      "reason": "Literal True. Round-9 gate: pass requires overall_pass, denom is True, depth is True, no failures, a dict recount state whose complete is True and a dict August result whose pass is True, all supplied to this one call. Every clause is a census row. Census rows of this statement not preserved from CA-SEAL: Call `bool(overall_pass and denom is True and (depth is True) and ` (V:2321): same-predicate duplicate; BoolOp `overall_pass and denom is True and (depth is True) and (not ` (V:2321): killed by negative_builder_explicit_overall_false; Compare `denom is True` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Compare `depth is True` (V:2321): killed by negative_builder_depth_false; UnaryOp(Not) `not failures` (V:2321): killed by combined_result_boolean_and_single_snapshot_refusals; Call `type(named.get('recount'))` (V:2322): non-predicate data operation; Compare `type(named.get('recount')) is dict` (V:2322): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('recount')` (V:2322): non-predicate data operation; Call `named['recount'].get('complete')` (V:2323): non-predicate data operation; Compare `named['recount'].get('complete') is True` (V:2323): killed by negative_builder_recount_false; Call `type(named.get('august_result_before_recount'))` (V:2324): non-predicate data operation; Compare `type(named.get('august_result_before_recount')) is dict` (V:2324): killed by combined_result_boolean_and_single_snapshot_refusals; Call `named.get('august_result_before_recount')` (V:2324): non-predicate data operation; Call `named['august_result_before_recount'].get('pass')` (V:2325): non-predicate data operation; Compare `named['august_result_before_recount'].get('pass') is True` (V:2325): killed by negative_builder_August_false."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2326,
+      "column": 4,
+      "end_line": 2326,
+      "end_column": 21,
+      "node_class": "Assign",
+      "expression": "pins = dict(pins)",
+      "site_id": "changed:c3809540f3c8a99cf19bcfc7ca5be1fa8c56764ab1c5d809e833356ac8c3160d",
+      "outcome": "data",
+      "reason": "Assignment statement. Copies pins, so the snapshot pins are added without changing the caller's dict; the copy is returned in the receipt as input_pins. Census rows of this statement not preserved from CA-SEAL: Call `dict(pins)` (V:2326): non-predicate data operation."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2326,
+      "column": 4,
+      "end_line": 2326,
+      "end_column": 8,
+      "node_class": "Name",
+      "expression": "pins",
+      "site_id": "changed:f946999db2a509ee8e611279d6b9c43db21e7814ed1434b8d69502d82c6aa832",
+      "outcome": "data",
+      "reason": "Binds `pins`. Copies pins, so the snapshot pins are added without changing the caller's dict; the copy is returned in the receipt as input_pins. Census rows of this statement not preserved from CA-SEAL: Call `dict(pins)` (V:2326): non-predicate data operation."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2326,
+      "column": 11,
+      "end_line": 2326,
+      "end_column": 15,
+      "node_class": "Name",
+      "expression": "dict",
+      "site_id": "changed:4aa8959417ee9ce45c9440c2ba1fa56981ee59baa657829e63cb13925cb55404",
+      "outcome": "data",
+      "reason": "Reads `dict`. Copies pins, so the snapshot pins are added without changing the caller's dict; the copy is returned in the receipt as input_pins. Census rows of this statement not preserved from CA-SEAL: Call `dict(pins)` (V:2326): non-predicate data operation."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2326,
+      "column": 16,
+      "end_line": 2326,
+      "end_column": 20,
+      "node_class": "Name",
+      "expression": "pins",
+      "site_id": "changed:22aa72edc87b4eaf9fe6904d1f28cce73507160cbc5f03b15a5e252b4494e61b",
+      "outcome": "data",
+      "reason": "Reads `pins`. Copies pins, so the snapshot pins are added without changing the caller's dict; the copy is returned in the receipt as input_pins. Census rows of this statement not preserved from CA-SEAL: Call `dict(pins)` (V:2326): non-predicate data operation."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2327,
+      "column": 4,
+      "end_line": 2327,
+      "end_column": 47,
+      "node_class": "Assign",
+      "expression": "pins['snapshots'] = recount_snapshot_pins()",
+      "site_id": "changed:6bebc8b7763589f64cecda4b8326dd695f11028f812c78b542b5e38887f57dab",
+      "outcome": "data",
+      "reason": "Assignment statement. Adds the recount snapshot pins to the receipt's input pins; recount_snapshot_pins() is a census row and nothing reads the pins back to decide pass. Census rows of this statement not preserved from CA-SEAL: Call `recount_snapshot_pins()` (V:2327): non-predicate data operation."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2327,
+      "column": 4,
+      "end_line": 2327,
+      "end_column": 8,
+      "node_class": "Name",
+      "expression": "pins",
+      "site_id": "changed:d302a4942d2ea03219e8a4773d817a0dd94a6e6ad6ef8c443a522f9cc1236db4",
+      "outcome": "data",
+      "reason": "Reads `pins`. Adds the recount snapshot pins to the receipt's input pins; recount_snapshot_pins() is a census row and nothing reads the pins back to decide pass. Census rows of this statement not preserved from CA-SEAL: Call `recount_snapshot_pins()` (V:2327): non-predicate data operation."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2327,
+      "column": 4,
+      "end_line": 2327,
+      "end_column": 21,
+      "node_class": "Subscript",
+      "expression": "pins['snapshots']",
+      "site_id": "changed:a649ee878767e6fc1156e65556744ae8b2e700a674b97cd9c99e45fcf9745ead",
+      "outcome": "data",
+      "reason": "Item target `pins['snapshots']`. Adds the recount snapshot pins to the receipt's input pins; recount_snapshot_pins() is a census row and nothing reads the pins back to decide pass. Census rows of this statement not preserved from CA-SEAL: Call `recount_snapshot_pins()` (V:2327): non-predicate data operation."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2327,
+      "column": 9,
+      "end_line": 2327,
+      "end_column": 20,
+      "node_class": "Constant",
+      "expression": "'snapshots'",
+      "site_id": "changed:f7720e3b5ad7b9e557d0959174141d1069d41cad409c57c207df404e3d7ad92e",
+      "outcome": "data",
+      "reason": "Literal 'snapshots'. Adds the recount snapshot pins to the receipt's input pins; recount_snapshot_pins() is a census row and nothing reads the pins back to decide pass. Census rows of this statement not preserved from CA-SEAL: Call `recount_snapshot_pins()` (V:2327): non-predicate data operation."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2327,
+      "column": 24,
+      "end_line": 2327,
+      "end_column": 45,
+      "node_class": "Name",
+      "expression": "recount_snapshot_pins",
+      "site_id": "changed:9675f0c09ac562d1c6380cb51b1b6f7da4b033602bc43f1901f775b5c2d3f5b3",
+      "outcome": "data",
+      "reason": "Reads `recount_snapshot_pins`. Adds the recount snapshot pins to the receipt's input pins; recount_snapshot_pins() is a census row and nothing reads the pins back to decide pass. Census rows of this statement not preserved from CA-SEAL: Call `recount_snapshot_pins()` (V:2327): non-predicate data operation."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2328,
+      "column": 4,
+      "end_line": 2328,
+      "end_column": 23,
+      "node_class": "Assign",
+      "expression": "named = dict(named)",
+      "site_id": "changed:d0349bcaeb0029e9d93fe0593614007cc39ef0a5f40fd68012015ed35410fecf",
+      "outcome": "data",
+      "reason": "Assignment statement. Copies named, so the certification scope is added without changing the caller's dict; the copy is returned in the receipt as named_checks. Census rows of this statement not preserved from CA-SEAL: Call `dict(named)` (V:2328): non-predicate data operation."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2328,
+      "column": 4,
+      "end_line": 2328,
+      "end_column": 9,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:37e786a5f858d6de9203213af728a7fd31a27faf87ec2c59e64a727f0097c11a",
+      "outcome": "data",
+      "reason": "Binds `named`. Copies named, so the certification scope is added without changing the caller's dict; the copy is returned in the receipt as named_checks. Census rows of this statement not preserved from CA-SEAL: Call `dict(named)` (V:2328): non-predicate data operation."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2328,
+      "column": 12,
+      "end_line": 2328,
+      "end_column": 16,
+      "node_class": "Name",
+      "expression": "dict",
+      "site_id": "changed:6397e7011c7da42ae6649e2097d4177042ff7875fefc9f57a113b4f8b0b09339",
+      "outcome": "data",
+      "reason": "Reads `dict`. Copies named, so the certification scope is added without changing the caller's dict; the copy is returned in the receipt as named_checks. Census rows of this statement not preserved from CA-SEAL: Call `dict(named)` (V:2328): non-predicate data operation."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2328,
+      "column": 17,
+      "end_line": 2328,
+      "end_column": 22,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:2e9456f2856a1941a7fd315162b103a9b12073caca356b1367e6a2ec5b16a274",
+      "outcome": "data",
+      "reason": "Reads `named`. Copies named, so the certification scope is added without changing the caller's dict; the copy is returned in the receipt as named_checks. Census rows of this statement not preserved from CA-SEAL: Call `dict(named)` (V:2328): non-predicate data operation."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2329,
+      "column": 4,
+      "end_line": 2329,
+      "end_column": 66,
+      "node_class": "Assign",
+      "expression": "named['certification_scope'] = 'august_and_recount_in_one_run'",
+      "site_id": "changed:3d0de4b1a2906a080862a8f083a607a5f59eee7f00de6f6a62318e85a47112aa",
+      "outcome": "data",
+      "reason": "Assignment statement. Records the certification scope in the receipt's named checks; nothing in the validator reads it back."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2329,
+      "column": 4,
+      "end_line": 2329,
+      "end_column": 9,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:59b8a771fbf5ffcd262ae14826a99bf19e94b983ae7e448fbe58364c70dacee2",
+      "outcome": "data",
+      "reason": "Reads `named`. Records the certification scope in the receipt's named checks; nothing in the validator reads it back."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2329,
+      "column": 4,
+      "end_line": 2329,
+      "end_column": 32,
+      "node_class": "Subscript",
+      "expression": "named['certification_scope']",
+      "site_id": "changed:e794537a8d8cd36e3d5a130f6636529a8f8de257310bf9237f0a678d666da977",
+      "outcome": "data",
+      "reason": "Item target `named['certification_scope']`. Records the certification scope in the receipt's named checks; nothing in the validator reads it back."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2329,
+      "column": 10,
+      "end_line": 2329,
+      "end_column": 31,
+      "node_class": "Constant",
+      "expression": "'certification_scope'",
+      "site_id": "changed:ca918b0c4a4ed1da0862b92290d3c58554bff0318bdc18be98c55412fde9d4ba",
+      "outcome": "data",
+      "reason": "Literal 'certification_scope'. Records the certification scope in the receipt's named checks; nothing in the validator reads it back."
+    },
+    {
+      "function": "build_receipt",
+      "line": 2329,
+      "column": 35,
+      "end_line": 2329,
+      "end_column": 66,
+      "node_class": "Constant",
+      "expression": "'august_and_recount_in_one_run'",
+      "site_id": "changed:05add1ec92ef5ab6f892ce939d9f224304c2467f4e6a4cddf15f2d5ea7cec645",
+      "outcome": "data",
+      "reason": "Literal 'august_and_recount_in_one_run'. Records the certification scope in the receipt's named checks; nothing in the validator reads it back."
+    },
+    {
+      "function": "main",
+      "line": 2236,
+      "column": 4,
+      "end_line": 2240,
+      "end_column": 5,
+      "node_class": "Assign",
+      "expression": "named['august_result_before_recount'] = {'pass': overall_pass, 'complete_denominator_known': complete_denominator_known, 'contract_depth_complete': contract_depth_complete, 'seal_prerequisites_met': named.get('seal_prerequisites_met')}",
+      "site_id": "changed:2be6051d281b6668c2b99dd4a51253f75dffb23e46e50b10af47d8b07757f1ed",
+      "outcome": "data",
+      "reason": "Assignment statement. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2236,
+      "column": 4,
+      "end_line": 2236,
+      "end_column": 9,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:a40ad8bf65e21d80999aef0f9372134e85fc41b1dca7a73fec856e090fe7dc57",
+      "outcome": "data",
+      "reason": "Reads `named`. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2236,
+      "column": 4,
+      "end_line": 2236,
+      "end_column": 41,
+      "node_class": "Subscript",
+      "expression": "named['august_result_before_recount']",
+      "site_id": "changed:12e5be0d8183ef002793a605fcce7f629b4a5b6cc8c872f0de6954ff09dcc0a1",
+      "outcome": "data",
+      "reason": "Item target `named['august_result_before_recount']`. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2236,
+      "column": 10,
+      "end_line": 2236,
+      "end_column": 40,
+      "node_class": "Constant",
+      "expression": "'august_result_before_recount'",
+      "site_id": "changed:52a69fc155544af64d4cdd903c6d7f139cde087039d9352f38eccbe22e27dbce",
+      "outcome": "data",
+      "reason": "Literal 'august_result_before_recount'. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2236,
+      "column": 44,
+      "end_line": 2240,
+      "end_column": 5,
+      "node_class": "Dict",
+      "expression": "{'pass': overall_pass, 'complete_denominator_known': complete_denominator_known, 'contract_depth_complete': contract_depth_complete, 'seal_prerequisites_met': named.get('seal_prerequisites_met')}",
+      "site_id": "changed:e0a955269ef4fa2c9642e37d40198e76a07f622b4e0332fa7822cc6a56e18261",
+      "outcome": "data",
+      "reason": "Record literal. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2237,
+      "column": 8,
+      "end_line": 2237,
+      "end_column": 14,
+      "node_class": "Constant",
+      "expression": "'pass'",
+      "site_id": "changed:76f2021782e092160e07d79e9e3d38f35eb7a7c2fe985b02eaba89e8e062c18b",
+      "outcome": "data",
+      "reason": "Literal 'pass'. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2237,
+      "column": 16,
+      "end_line": 2237,
+      "end_column": 28,
+      "node_class": "Name",
+      "expression": "overall_pass",
+      "site_id": "changed:39e027366f6dd2616300ab7e953f5d1f6c42ead763f63a2471fdddb36fa9fa3b",
+      "outcome": "data",
+      "reason": "Reads `overall_pass`. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2237,
+      "column": 30,
+      "end_line": 2237,
+      "end_column": 58,
+      "node_class": "Constant",
+      "expression": "'complete_denominator_known'",
+      "site_id": "changed:5497671ce165ef2c0f929921edbe2caadab73cf34d688f191ef52953ff0aa3bd",
+      "outcome": "data",
+      "reason": "Literal 'complete_denominator_known'. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2237,
+      "column": 60,
+      "end_line": 2237,
+      "end_column": 86,
+      "node_class": "Name",
+      "expression": "complete_denominator_known",
+      "site_id": "changed:b71530dab0b08a30864172bb5b8e8d46f8c5f553fc3afeb0be64d7a9cbed46f6",
+      "outcome": "data",
+      "reason": "Reads `complete_denominator_known`. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2238,
+      "column": 8,
+      "end_line": 2238,
+      "end_column": 33,
+      "node_class": "Constant",
+      "expression": "'contract_depth_complete'",
+      "site_id": "changed:009ddb3af130cba143fe35b90eee7ebef674b0b0a763a7dba5edf6da62c12b85",
+      "outcome": "data",
+      "reason": "Literal 'contract_depth_complete'. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2238,
+      "column": 35,
+      "end_line": 2238,
+      "end_column": 58,
+      "node_class": "Name",
+      "expression": "contract_depth_complete",
+      "site_id": "changed:dad2df514f7f8c3eef72c7e567a3a91db697f9d5f806d60b0dd1a2485958e6a6",
+      "outcome": "data",
+      "reason": "Reads `contract_depth_complete`. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2239,
+      "column": 8,
+      "end_line": 2239,
+      "end_column": 32,
+      "node_class": "Constant",
+      "expression": "'seal_prerequisites_met'",
+      "site_id": "changed:9ace9181c25cd9497f8b4f10aca718800a77bc1232e1dd95d6ab1e23f6ad66d5",
+      "outcome": "data",
+      "reason": "Literal 'seal_prerequisites_met'. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2239,
+      "column": 34,
+      "end_line": 2239,
+      "end_column": 43,
+      "node_class": "Attribute",
+      "expression": "named.get",
+      "site_id": "changed:4737ef098b27919029a416e6844f34d1f642dc67852a7de638813a0e5b896e1a",
+      "outcome": "data",
+      "reason": "Attribute lookup `named.get`. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2239,
+      "column": 34,
+      "end_line": 2239,
+      "end_column": 39,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:d2f887a9cca951ba583a03ef72cbe1d9a4e9a1ad11d810c7906de02a7e11366d",
+      "outcome": "data",
+      "reason": "Reads `named`. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2239,
+      "column": 44,
+      "end_line": 2239,
+      "end_column": 68,
+      "node_class": "Constant",
+      "expression": "'seal_prerequisites_met'",
+      "site_id": "changed:f9dcd59f02cbe815badec38264443454e14317d9d91a82034d6f767b9a07c0c3",
+      "outcome": "data",
+      "reason": "Literal 'seal_prerequisites_met'. Records the August result computed above (pass, denominator, depth, seal prerequisites) under named['august_result_before_recount'] before the recount is folded in. build_receipt's round-9 gate requires its pass to be True (V:2324-2325). Census rows of this statement not preserved from CA-SEAL: Call `named.get('seal_prerequisites_met')` (V:2239): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2241,
+      "column": 4,
+      "end_line": 2241,
+      "end_column": 76,
+      "node_class": "Assign",
+      "expression": "recount_state, recount_issues = recount_validation(post_august_admitted)",
+      "site_id": "changed:61e46d8653f2fac4fa3b6d9bfdd11e9700923914c26b26e3bfd841947271e30f",
+      "outcome": "data",
+      "reason": "Assignment statement. Runs recount_validation on the post-August admitted set and unpacks the recount state and its issues; the call is a census row. Census rows of this statement not preserved from CA-SEAL: Call `recount_validation(post_august_admitted)` (V:2241): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2241,
+      "column": 4,
+      "end_line": 2241,
+      "end_column": 17,
+      "node_class": "Name",
+      "expression": "recount_state",
+      "site_id": "changed:ed80aac3e3969931a4441cc4bdfdc87bac8344e7d80ad86d499b82f163da25d1",
+      "outcome": "data",
+      "reason": "Binds `recount_state`. Runs recount_validation on the post-August admitted set and unpacks the recount state and its issues; the call is a census row. Census rows of this statement not preserved from CA-SEAL: Call `recount_validation(post_august_admitted)` (V:2241): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2241,
+      "column": 4,
+      "end_line": 2241,
+      "end_column": 33,
+      "node_class": "Tuple",
+      "expression": "(recount_state, recount_issues)",
+      "site_id": "changed:72fddb962db4cb390ce5acdf81ff6a944f8479d523b44055c04190081052e6b2",
+      "outcome": "data",
+      "reason": "Unpacking target `(recount_state, recount_issues)`. Runs recount_validation on the post-August admitted set and unpacks the recount state and its issues; the call is a census row. Census rows of this statement not preserved from CA-SEAL: Call `recount_validation(post_august_admitted)` (V:2241): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2241,
+      "column": 19,
+      "end_line": 2241,
+      "end_column": 33,
+      "node_class": "Name",
+      "expression": "recount_issues",
+      "site_id": "changed:51f24b429b1b6e2bd0b63381aa96ef5b75b53a35c9007fd56a5cd82d4fc1a2c5",
+      "outcome": "data",
+      "reason": "Binds `recount_issues`. Runs recount_validation on the post-August admitted set and unpacks the recount state and its issues; the call is a census row. Census rows of this statement not preserved from CA-SEAL: Call `recount_validation(post_august_admitted)` (V:2241): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2241,
+      "column": 36,
+      "end_line": 2241,
+      "end_column": 54,
+      "node_class": "Name",
+      "expression": "recount_validation",
+      "site_id": "changed:b6c90794b9f25fa576c74fbd839ecda21a5b2d08058faa58fc9e745406351acc",
+      "outcome": "data",
+      "reason": "Reads `recount_validation`. Runs recount_validation on the post-August admitted set and unpacks the recount state and its issues; the call is a census row. Census rows of this statement not preserved from CA-SEAL: Call `recount_validation(post_august_admitted)` (V:2241): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2241,
+      "column": 55,
+      "end_line": 2241,
+      "end_column": 75,
+      "node_class": "Name",
+      "expression": "post_august_admitted",
+      "site_id": "changed:7ae91ea947c571543da98311490125387cbb5bd694f44361a3cddd7d78b11d2d",
+      "outcome": "data",
+      "reason": "Reads `post_august_admitted`. Runs recount_validation on the post-August admitted set and unpacks the recount state and its issues; the call is a census row. Census rows of this statement not preserved from CA-SEAL: Call `recount_validation(post_august_admitted)` (V:2241): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2242,
+      "column": 4,
+      "end_line": 2242,
+      "end_column": 36,
+      "node_class": "Assign",
+      "expression": "named['recount'] = recount_state",
+      "site_id": "changed:f4dfc6a56ad80769e85fc5713ed7ca0b92189d55dd39b6027c398e8f9c3e4989",
+      "outcome": "data",
+      "reason": "Assignment statement. Stores the recount state for build_receipt's round-9 gate, which requires named['recount'].get('complete') is True (V:2323)."
+    },
+    {
+      "function": "main",
+      "line": 2242,
+      "column": 4,
+      "end_line": 2242,
+      "end_column": 9,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:aaad5638403ea2c4312ded48ed2ab56572c885f5bda47053e5f28eaf4c48b201",
+      "outcome": "data",
+      "reason": "Reads `named`. Stores the recount state for build_receipt's round-9 gate, which requires named['recount'].get('complete') is True (V:2323)."
+    },
+    {
+      "function": "main",
+      "line": 2242,
+      "column": 4,
+      "end_line": 2242,
+      "end_column": 20,
+      "node_class": "Subscript",
+      "expression": "named['recount']",
+      "site_id": "changed:01c936ff5440db2392b079762444c8b8e8e5673246f69ab6526625818086f901",
+      "outcome": "data",
+      "reason": "Item target `named['recount']`. Stores the recount state for build_receipt's round-9 gate, which requires named['recount'].get('complete') is True (V:2323)."
+    },
+    {
+      "function": "main",
+      "line": 2242,
+      "column": 10,
+      "end_line": 2242,
+      "end_column": 19,
+      "node_class": "Constant",
+      "expression": "'recount'",
+      "site_id": "changed:6f41fa6c67ce3b00d9568265f01c7c94723c67babe7ee07b234ae52d79aa101b",
+      "outcome": "data",
+      "reason": "Literal 'recount'. Stores the recount state for build_receipt's round-9 gate, which requires named['recount'].get('complete') is True (V:2323)."
+    },
+    {
+      "function": "main",
+      "line": 2242,
+      "column": 23,
+      "end_line": 2242,
+      "end_column": 36,
+      "node_class": "Name",
+      "expression": "recount_state",
+      "site_id": "changed:7410031970fa8dcc8ff34f30b5bc0185974f59f8bb85c33bc7676af9ec2f0a57",
+      "outcome": "data",
+      "reason": "Reads `recount_state`. Stores the recount state for build_receipt's round-9 gate, which requires named['recount'].get('complete') is True (V:2323)."
+    },
+    {
+      "function": "main",
+      "line": 2243,
+      "column": 4,
+      "end_line": 2243,
+      "end_column": 19,
+      "node_class": "Attribute",
+      "expression": "failures.extend",
+      "site_id": "changed:b4f89e414a07c68201342616e59b4130dd19425120b8f560756b4d34a1c3f849",
+      "outcome": "data",
+      "reason": "Attribute lookup `failures.extend`. Appends the recount issues to failures, so any recount issue blocks pass through the gate's `not failures` (V:2321). Census rows of this statement not preserved from CA-SEAL: Call `failures.extend(recount_issues)` (V:2243): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2243,
+      "column": 4,
+      "end_line": 2243,
+      "end_column": 35,
+      "node_class": "Expr",
+      "expression": "failures.extend(recount_issues)",
+      "site_id": "changed:82c1bc87b958db2fb1c6d5ec095ec8312d8547f778d2e044cdbbcc87377060f6",
+      "outcome": "data",
+      "reason": "Expression statement, evaluated for its effect. Appends the recount issues to failures, so any recount issue blocks pass through the gate's `not failures` (V:2321). Census rows of this statement not preserved from CA-SEAL: Call `failures.extend(recount_issues)` (V:2243): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2243,
+      "column": 4,
+      "end_line": 2243,
+      "end_column": 12,
+      "node_class": "Name",
+      "expression": "failures",
+      "site_id": "changed:0f10383d9286b4adf4fe24bd53e985017458cd46f31624a2e8363308ec850c1a",
+      "outcome": "data",
+      "reason": "Reads `failures`. Appends the recount issues to failures, so any recount issue blocks pass through the gate's `not failures` (V:2321). Census rows of this statement not preserved from CA-SEAL: Call `failures.extend(recount_issues)` (V:2243): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2243,
+      "column": 20,
+      "end_line": 2243,
+      "end_column": 34,
+      "node_class": "Name",
+      "expression": "recount_issues",
+      "site_id": "changed:0eab3c2b3dcaa5c372888f998f9fe6fd2b1439247e186186c5afff97446bdb63",
+      "outcome": "data",
+      "reason": "Reads `recount_issues`. Appends the recount issues to failures, so any recount issue blocks pass through the gate's `not failures` (V:2321). Census rows of this statement not preserved from CA-SEAL: Call `failures.extend(recount_issues)` (V:2243): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2244,
+      "column": 4,
+      "end_line": 2244,
+      "end_column": 89,
+      "node_class": "Assign",
+      "expression": "complete_denominator_known = complete_denominator_known and recount_state['complete']",
+      "site_id": "changed:d021e0feb4ee4546cd1d7287a265b0b99da88c91e7d9b8a21220e797f518fb63",
+      "outcome": "data",
+      "reason": "Assignment statement. Folds recount completion into complete_denominator_known with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `complete_denominator_known and recount_state['complete']` (V:2244): killed by negative_main_August_complete_denominator_known."
+    },
+    {
+      "function": "main",
+      "line": 2244,
+      "column": 4,
+      "end_line": 2244,
+      "end_column": 30,
+      "node_class": "Name",
+      "expression": "complete_denominator_known",
+      "site_id": "changed:940126c6629f158ed51b806daa43b95213940146c2f361f791848670b8846656",
+      "outcome": "data",
+      "reason": "Binds `complete_denominator_known`. Folds recount completion into complete_denominator_known with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `complete_denominator_known and recount_state['complete']` (V:2244): killed by negative_main_August_complete_denominator_known."
+    },
+    {
+      "function": "main",
+      "line": 2244,
+      "column": 33,
+      "end_line": 2244,
+      "end_column": 59,
+      "node_class": "Name",
+      "expression": "complete_denominator_known",
+      "site_id": "changed:25ae4f8c57d32e0b803903040472d3903796e3650525b5987f831ca149830e2d",
+      "outcome": "data",
+      "reason": "Reads `complete_denominator_known`. Folds recount completion into complete_denominator_known with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `complete_denominator_known and recount_state['complete']` (V:2244): killed by negative_main_August_complete_denominator_known."
+    },
+    {
+      "function": "main",
+      "line": 2244,
+      "column": 64,
+      "end_line": 2244,
+      "end_column": 77,
+      "node_class": "Name",
+      "expression": "recount_state",
+      "site_id": "changed:524600734db7df63e57f0305d54aecbb6b342a2d419e45a3647a107da1d6abfb",
+      "outcome": "data",
+      "reason": "Reads `recount_state`. Folds recount completion into complete_denominator_known with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `complete_denominator_known and recount_state['complete']` (V:2244): killed by negative_main_August_complete_denominator_known."
+    },
+    {
+      "function": "main",
+      "line": 2244,
+      "column": 64,
+      "end_line": 2244,
+      "end_column": 89,
+      "node_class": "Subscript",
+      "expression": "recount_state['complete']",
+      "site_id": "changed:e6449e617e1c111b06ebe2496e8e25c41900d01a47d7cdf1a6074039ea04a345",
+      "outcome": "data",
+      "reason": "Item read `recount_state['complete']`. Folds recount completion into complete_denominator_known with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `complete_denominator_known and recount_state['complete']` (V:2244): killed by negative_main_August_complete_denominator_known."
+    },
+    {
+      "function": "main",
+      "line": 2244,
+      "column": 78,
+      "end_line": 2244,
+      "end_column": 88,
+      "node_class": "Constant",
+      "expression": "'complete'",
+      "site_id": "changed:7067e32d3b53fa9e6288f4438c0b092772e496d5b7c6e3ac54eb3f640766a1e5",
+      "outcome": "data",
+      "reason": "Literal 'complete'. Folds recount completion into complete_denominator_known with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `complete_denominator_known and recount_state['complete']` (V:2244): killed by negative_main_August_complete_denominator_known."
+    },
+    {
+      "function": "main",
+      "line": 2245,
+      "column": 4,
+      "end_line": 2245,
+      "end_column": 83,
+      "node_class": "Assign",
+      "expression": "contract_depth_complete = contract_depth_complete and recount_state['complete']",
+      "site_id": "changed:3a2a0a42ff482befe58ba420ff1247f39d0a33804707b26a5c636169ea70ccc6",
+      "outcome": "data",
+      "reason": "Assignment statement. Folds recount completion into contract_depth_complete with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `contract_depth_complete and recount_state['complete']` (V:2245): killed by negative_main_August_contract_depth_complete."
+    },
+    {
+      "function": "main",
+      "line": 2245,
+      "column": 4,
+      "end_line": 2245,
+      "end_column": 27,
+      "node_class": "Name",
+      "expression": "contract_depth_complete",
+      "site_id": "changed:195a4068deca603b34018400b211b4a192759bb1df83d5127402eaea82e33f4b",
+      "outcome": "data",
+      "reason": "Binds `contract_depth_complete`. Folds recount completion into contract_depth_complete with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `contract_depth_complete and recount_state['complete']` (V:2245): killed by negative_main_August_contract_depth_complete."
+    },
+    {
+      "function": "main",
+      "line": 2245,
+      "column": 30,
+      "end_line": 2245,
+      "end_column": 53,
+      "node_class": "Name",
+      "expression": "contract_depth_complete",
+      "site_id": "changed:4e9c36e0de412672f9d2cf179aebacdacfa01c591dab5e8b9c496de7550de159",
+      "outcome": "data",
+      "reason": "Reads `contract_depth_complete`. Folds recount completion into contract_depth_complete with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `contract_depth_complete and recount_state['complete']` (V:2245): killed by negative_main_August_contract_depth_complete."
+    },
+    {
+      "function": "main",
+      "line": 2245,
+      "column": 58,
+      "end_line": 2245,
+      "end_column": 71,
+      "node_class": "Name",
+      "expression": "recount_state",
+      "site_id": "changed:882a73bd9b595aca14626c4d241664283b49408d995b443dc3a42e8e01108c61",
+      "outcome": "data",
+      "reason": "Reads `recount_state`. Folds recount completion into contract_depth_complete with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `contract_depth_complete and recount_state['complete']` (V:2245): killed by negative_main_August_contract_depth_complete."
+    },
+    {
+      "function": "main",
+      "line": 2245,
+      "column": 58,
+      "end_line": 2245,
+      "end_column": 83,
+      "node_class": "Subscript",
+      "expression": "recount_state['complete']",
+      "site_id": "changed:900f830ab4a1a4c8db4333f5cb396978b6523eba6a5189a6905953ad7440cb1a",
+      "outcome": "data",
+      "reason": "Item read `recount_state['complete']`. Folds recount completion into contract_depth_complete with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `contract_depth_complete and recount_state['complete']` (V:2245): killed by negative_main_August_contract_depth_complete."
+    },
+    {
+      "function": "main",
+      "line": 2245,
+      "column": 72,
+      "end_line": 2245,
+      "end_column": 82,
+      "node_class": "Constant",
+      "expression": "'complete'",
+      "site_id": "changed:6ecd5404673fd1f26514b67b9db6e934609d3cfc59bf80608e048d30c19d5b1a",
+      "outcome": "data",
+      "reason": "Literal 'complete'. Folds recount completion into contract_depth_complete with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `contract_depth_complete and recount_state['complete']` (V:2245): killed by negative_main_August_contract_depth_complete."
+    },
+    {
+      "function": "main",
+      "line": 2246,
+      "column": 4,
+      "end_line": 2246,
+      "end_column": 61,
+      "node_class": "Assign",
+      "expression": "overall_pass = overall_pass and recount_state['complete']",
+      "site_id": "changed:af0a1c0c872fa33f11561688764cba62b1ac1ba16769ebc7fae10352be244d3b",
+      "outcome": "data",
+      "reason": "Assignment statement. Folds recount completion into overall_pass with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `overall_pass and recount_state['complete']` (V:2246): killed by negative_main_August_overall_pass."
+    },
+    {
+      "function": "main",
+      "line": 2246,
+      "column": 4,
+      "end_line": 2246,
+      "end_column": 16,
+      "node_class": "Name",
+      "expression": "overall_pass",
+      "site_id": "changed:c05ce92c3a92603b86904af5b71116453e73d0d4d3b1a79b425905d5a29a7b42",
+      "outcome": "data",
+      "reason": "Binds `overall_pass`. Folds recount completion into overall_pass with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `overall_pass and recount_state['complete']` (V:2246): killed by negative_main_August_overall_pass."
+    },
+    {
+      "function": "main",
+      "line": 2246,
+      "column": 19,
+      "end_line": 2246,
+      "end_column": 31,
+      "node_class": "Name",
+      "expression": "overall_pass",
+      "site_id": "changed:d55908663dba28a618a24bd142e116108200ee4a69ced8f0e83dc8e66045d874",
+      "outcome": "data",
+      "reason": "Reads `overall_pass`. Folds recount completion into overall_pass with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `overall_pass and recount_state['complete']` (V:2246): killed by negative_main_August_overall_pass."
+    },
+    {
+      "function": "main",
+      "line": 2246,
+      "column": 36,
+      "end_line": 2246,
+      "end_column": 49,
+      "node_class": "Name",
+      "expression": "recount_state",
+      "site_id": "changed:031141f0b5e546efcbd2782591525307560be7ce09f2c4ae342ceb245e45b748",
+      "outcome": "data",
+      "reason": "Reads `recount_state`. Folds recount completion into overall_pass with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `overall_pass and recount_state['complete']` (V:2246): killed by negative_main_August_overall_pass."
+    },
+    {
+      "function": "main",
+      "line": 2246,
+      "column": 36,
+      "end_line": 2246,
+      "end_column": 61,
+      "node_class": "Subscript",
+      "expression": "recount_state['complete']",
+      "site_id": "changed:abce8846bb69694a061752c710d800439ec4b41e4908a75103e1f2a9ee7edc5c",
+      "outcome": "data",
+      "reason": "Item read `recount_state['complete']`. Folds recount completion into overall_pass with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `overall_pass and recount_state['complete']` (V:2246): killed by negative_main_August_overall_pass."
+    },
+    {
+      "function": "main",
+      "line": 2246,
+      "column": 50,
+      "end_line": 2246,
+      "end_column": 60,
+      "node_class": "Constant",
+      "expression": "'complete'",
+      "site_id": "changed:4b5e5ef6aade5a3cec134356325a03c14bbd831d1a2be187a9de03c581b1f791",
+      "outcome": "data",
+      "reason": "Literal 'complete'. Folds recount completion into overall_pass with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `overall_pass and recount_state['complete']` (V:2246): killed by negative_main_August_overall_pass."
+    },
+    {
+      "function": "main",
+      "line": 2247,
+      "column": 4,
+      "end_line": 2247,
+      "end_column": 99,
+      "node_class": "Assign",
+      "expression": "named['seal_prerequisites_met'] = named['seal_prerequisites_met'] and recount_state['complete']",
+      "site_id": "changed:9fde817e3c2fbe0ceb57244c31d692206f3853dff85e2b1c06c0ff3f22da8e41",
+      "outcome": "data",
+      "reason": "Assignment statement. Folds recount completion into named['seal_prerequisites_met'] with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `named['seal_prerequisites_met'] and recount_state['complete'` (V:2247): killed by negative_main_August_seal_prerequisites_met."
+    },
+    {
+      "function": "main",
+      "line": 2247,
+      "column": 4,
+      "end_line": 2247,
+      "end_column": 9,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:07b915df89547aad884d9888a001f980ce334d9e578be4c431d9519790f61ed1",
+      "outcome": "data",
+      "reason": "Reads `named`. Folds recount completion into named['seal_prerequisites_met'] with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `named['seal_prerequisites_met'] and recount_state['complete'` (V:2247): killed by negative_main_August_seal_prerequisites_met."
+    },
+    {
+      "function": "main",
+      "line": 2247,
+      "column": 4,
+      "end_line": 2247,
+      "end_column": 35,
+      "node_class": "Subscript",
+      "expression": "named['seal_prerequisites_met']",
+      "site_id": "changed:bffc362a1ebb0f800135dd3a59aa220252459f7008a31be9fab416a52c3b196c",
+      "outcome": "data",
+      "reason": "Item target `named['seal_prerequisites_met']`. Folds recount completion into named['seal_prerequisites_met'] with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `named['seal_prerequisites_met'] and recount_state['complete'` (V:2247): killed by negative_main_August_seal_prerequisites_met."
+    },
+    {
+      "function": "main",
+      "line": 2247,
+      "column": 10,
+      "end_line": 2247,
+      "end_column": 34,
+      "node_class": "Constant",
+      "expression": "'seal_prerequisites_met'",
+      "site_id": "changed:4f0ad148503b9f374ef09de14fd5c8bb7d94cf736951eecba4cc9e2d36afcdeb",
+      "outcome": "data",
+      "reason": "Literal 'seal_prerequisites_met'. Folds recount completion into named['seal_prerequisites_met'] with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `named['seal_prerequisites_met'] and recount_state['complete'` (V:2247): killed by negative_main_August_seal_prerequisites_met."
+    },
+    {
+      "function": "main",
+      "line": 2247,
+      "column": 38,
+      "end_line": 2247,
+      "end_column": 43,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:79d3eac321185de7dd891107977e5d57bfe310ea3eff59db1b7200c0ab62e187",
+      "outcome": "data",
+      "reason": "Reads `named`. Folds recount completion into named['seal_prerequisites_met'] with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `named['seal_prerequisites_met'] and recount_state['complete'` (V:2247): killed by negative_main_August_seal_prerequisites_met."
+    },
+    {
+      "function": "main",
+      "line": 2247,
+      "column": 38,
+      "end_line": 2247,
+      "end_column": 69,
+      "node_class": "Subscript",
+      "expression": "named['seal_prerequisites_met']",
+      "site_id": "changed:4a153a8d346695c18637626c5bd3f1a90bfeaa0afce450d98c97c7a1b639df73",
+      "outcome": "data",
+      "reason": "Item read `named['seal_prerequisites_met']`. Folds recount completion into named['seal_prerequisites_met'] with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `named['seal_prerequisites_met'] and recount_state['complete'` (V:2247): killed by negative_main_August_seal_prerequisites_met."
+    },
+    {
+      "function": "main",
+      "line": 2247,
+      "column": 44,
+      "end_line": 2247,
+      "end_column": 68,
+      "node_class": "Constant",
+      "expression": "'seal_prerequisites_met'",
+      "site_id": "changed:701d322c197ded99d82c3e6e7fad4d26f03b139ee869ca553e8dfc84cb0125cd",
+      "outcome": "data",
+      "reason": "Literal 'seal_prerequisites_met'. Folds recount completion into named['seal_prerequisites_met'] with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `named['seal_prerequisites_met'] and recount_state['complete'` (V:2247): killed by negative_main_August_seal_prerequisites_met."
+    },
+    {
+      "function": "main",
+      "line": 2247,
+      "column": 74,
+      "end_line": 2247,
+      "end_column": 87,
+      "node_class": "Name",
+      "expression": "recount_state",
+      "site_id": "changed:3f1418aa03f39f3b8b23b1f4496d9f4266bf1e5f1e08c54358a6707a408c6391",
+      "outcome": "data",
+      "reason": "Reads `recount_state`. Folds recount completion into named['seal_prerequisites_met'] with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `named['seal_prerequisites_met'] and recount_state['complete'` (V:2247): killed by negative_main_August_seal_prerequisites_met."
+    },
+    {
+      "function": "main",
+      "line": 2247,
+      "column": 74,
+      "end_line": 2247,
+      "end_column": 99,
+      "node_class": "Subscript",
+      "expression": "recount_state['complete']",
+      "site_id": "changed:8114f9011875d8ff5a810a97b646eedd35fcc285c51042f2edffa2f2a56e75b9",
+      "outcome": "data",
+      "reason": "Item read `recount_state['complete']`. Folds recount completion into named['seal_prerequisites_met'] with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `named['seal_prerequisites_met'] and recount_state['complete'` (V:2247): killed by negative_main_August_seal_prerequisites_met."
+    },
+    {
+      "function": "main",
+      "line": 2247,
+      "column": 88,
+      "end_line": 2247,
+      "end_column": 98,
+      "node_class": "Constant",
+      "expression": "'complete'",
+      "site_id": "changed:03acb2e0beafa2ffa553c2b8be831acc5016e054464f0f40dc0c95952c15d9fb",
+      "outcome": "data",
+      "reason": "Literal 'complete'. Folds recount completion into named['seal_prerequisites_met'] with `and`; the BoolOp is a census row. Census rows of this statement not preserved from CA-SEAL: BoolOp `named['seal_prerequisites_met'] and recount_state['complete'` (V:2247): killed by negative_main_August_seal_prerequisites_met."
+    },
+    {
+      "function": "main",
+      "line": 2248,
+      "column": 4,
+      "end_line": 2249,
+      "end_column": 93,
+      "node_class": "Assign",
+      "expression": "named['seal_prerequisites_blocking_errors'] = sorted(set(named['seal_prerequisites_blocking_errors']) | {f['error'] for f in recount_issues})",
+      "site_id": "changed:b37c903105321a41d3877fd5e0e8c463397f6cb3c5ca85a22b52ea7da578f35e",
+      "outcome": "data",
+      "reason": "Assignment statement. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2248,
+      "column": 4,
+      "end_line": 2248,
+      "end_column": 9,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:06da509db6e2f09df316724ee79938e867e2d9f8ccca2dfa64d0e76b9725d8b1",
+      "outcome": "data",
+      "reason": "Reads `named`. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2248,
+      "column": 4,
+      "end_line": 2248,
+      "end_column": 47,
+      "node_class": "Subscript",
+      "expression": "named['seal_prerequisites_blocking_errors']",
+      "site_id": "changed:b4a6caf44a1cbe0ffef9e624dec8cdf8114e0881e35a376bdbd5b81fe23eecd7",
+      "outcome": "data",
+      "reason": "Item target `named['seal_prerequisites_blocking_errors']`. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2248,
+      "column": 10,
+      "end_line": 2248,
+      "end_column": 46,
+      "node_class": "Constant",
+      "expression": "'seal_prerequisites_blocking_errors'",
+      "site_id": "changed:d274d34a11651a84e75e7a24d0fd94744777db437a3f426fa5a6fd7270953efe",
+      "outcome": "data",
+      "reason": "Literal 'seal_prerequisites_blocking_errors'. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2248,
+      "column": 50,
+      "end_line": 2248,
+      "end_column": 56,
+      "node_class": "Name",
+      "expression": "sorted",
+      "site_id": "changed:928830f065ba90a17be4ffd924633cf898273ac0f644be352a26423dce6b25fd",
+      "outcome": "data",
+      "reason": "Reads `sorted`. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2248,
+      "column": 57,
+      "end_line": 2248,
+      "end_column": 60,
+      "node_class": "Name",
+      "expression": "set",
+      "site_id": "changed:a71640d78b7fa29fd36c96d960a7ed4a8bf2bbf503995a77c54e253caa4dd19a",
+      "outcome": "data",
+      "reason": "Reads `set`. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2248,
+      "column": 61,
+      "end_line": 2248,
+      "end_column": 66,
+      "node_class": "Name",
+      "expression": "named",
+      "site_id": "changed:5c47344b87ff4cd590c6fc4c7d0ab6084774e0579fecce2cb4e171978a1f7c6d",
+      "outcome": "data",
+      "reason": "Reads `named`. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2248,
+      "column": 61,
+      "end_line": 2248,
+      "end_column": 104,
+      "node_class": "Subscript",
+      "expression": "named['seal_prerequisites_blocking_errors']",
+      "site_id": "changed:077f740e85f0bdc41e3421faea1ab213e27f7049cc2b78ede405f0820144a0e9",
+      "outcome": "data",
+      "reason": "Item read `named['seal_prerequisites_blocking_errors']`. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2248,
+      "column": 67,
+      "end_line": 2248,
+      "end_column": 103,
+      "node_class": "Constant",
+      "expression": "'seal_prerequisites_blocking_errors'",
+      "site_id": "changed:2ade011becfd11e682ff53703f163656e75171032b108f2d3552fa3be6470e51",
+      "outcome": "data",
+      "reason": "Literal 'seal_prerequisites_blocking_errors'. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2249,
+      "column": 56,
+      "end_line": 2249,
+      "end_column": 92,
+      "node_class": "SetComp",
+      "expression": "{f['error'] for f in recount_issues}",
+      "site_id": "changed:04d4b567e668d7308ce1fae06a9b1d3b8e66f5fba5cfa48784679cdf654764aa",
+      "outcome": "data",
+      "reason": "Set comprehension `{f['error'] for f in recount_issues}`. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2249,
+      "column": 57,
+      "end_line": 2249,
+      "end_column": 58,
+      "node_class": "Name",
+      "expression": "f",
+      "site_id": "changed:06b7d4f55e4877715a39ef1f6f1bd917dfe521337049b38bf7f79628ed6fd1af",
+      "outcome": "data",
+      "reason": "Reads `f`. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2249,
+      "column": 57,
+      "end_line": 2249,
+      "end_column": 67,
+      "node_class": "Subscript",
+      "expression": "f['error']",
+      "site_id": "changed:fc81686a78e08af27eec8a93ff5eafc0493fc489477f6aadf3edf68456778a61",
+      "outcome": "data",
+      "reason": "Item read `f['error']`. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2249,
+      "column": 59,
+      "end_line": 2249,
+      "end_column": 66,
+      "node_class": "Constant",
+      "expression": "'error'",
+      "site_id": "changed:076aacd3bea48190e09139f0198632907cd41960d1acd1c15c8edb278805fc72",
+      "outcome": "data",
+      "reason": "Literal 'error'. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2249,
+      "column": 72,
+      "end_line": 2249,
+      "end_column": 73,
+      "node_class": "Name",
+      "expression": "f",
+      "site_id": "changed:401d2748f1376a62bb62352b6cbf6ed7b1e7b681270987de790ab4e669debf8e",
+      "outcome": "data",
+      "reason": "Binds `f`. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2249,
+      "column": 77,
+      "end_line": 2249,
+      "end_column": 91,
+      "node_class": "Name",
+      "expression": "recount_issues",
+      "site_id": "changed:cae5458e2e496bc450ac742c7a2985f13790c183d4c981d853c717b312583d98",
+      "outcome": "data",
+      "reason": "Reads `recount_issues`. Adds the recount issue codes to the seal-prerequisite blocking errors (a set union, the BinOp(BitOr) census row). The list is reported in the receipt's named checks; no gate in the validator reads it. Census rows of this statement not preserved from CA-SEAL: Call `sorted(set(named['seal_prerequisites_blocking_errors']) | {f` (V:2248): non-predicate data operation; BinOp(BitOr) `set(named['seal_prerequisites_blocking_errors']) | {f['error` (V:2248): non-predicate data operation; Call `set(named['seal_prerequisites_blocking_errors'])` (V:2248): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2250,
+      "column": 4,
+      "end_line": 2250,
+      "end_column": 52,
+      "node_class": "Assign",
+      "expression": "fail_errors = {f.get('error') for f in failures}",
+      "site_id": "changed:d34695abacd996dbcacf9f38f0b45272661150f83e8b50c3afe6140c0e3ce54b",
+      "outcome": "data",
+      "reason": "Assignment statement. Recomputes fail_errors after the recount issues joined failures (it was first computed at V:2191). It is read after this line only by the summary print (V:2311, failure_errors). Census rows of this statement not preserved from CA-SEAL: Call `f.get('error')` (V:2250): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2250,
+      "column": 4,
+      "end_line": 2250,
+      "end_column": 15,
+      "node_class": "Name",
+      "expression": "fail_errors",
+      "site_id": "changed:a2f395be12c3b6781e6bf63995a2f35ccd610731ed0ef736ddaa17c84cccd06a",
+      "outcome": "data",
+      "reason": "Binds `fail_errors`. Recomputes fail_errors after the recount issues joined failures (it was first computed at V:2191). It is read after this line only by the summary print (V:2311, failure_errors). Census rows of this statement not preserved from CA-SEAL: Call `f.get('error')` (V:2250): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2250,
+      "column": 18,
+      "end_line": 2250,
+      "end_column": 52,
+      "node_class": "SetComp",
+      "expression": "{f.get('error') for f in failures}",
+      "site_id": "changed:3eb8670746f5014c1502875a2fde3f51bc71c61f6c2296dc776c11ecb6357983",
+      "outcome": "data",
+      "reason": "Set comprehension `{f.get('error') for f in failures}`. Recomputes fail_errors after the recount issues joined failures (it was first computed at V:2191). It is read after this line only by the summary print (V:2311, failure_errors). Census rows of this statement not preserved from CA-SEAL: Call `f.get('error')` (V:2250): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2250,
+      "column": 19,
+      "end_line": 2250,
+      "end_column": 24,
+      "node_class": "Attribute",
+      "expression": "f.get",
+      "site_id": "changed:a07996e07f1a21d82c44fb25e86a7dff93d185cc2b0e7e1cfd80b09cbd888d39",
+      "outcome": "data",
+      "reason": "Attribute lookup `f.get`. Recomputes fail_errors after the recount issues joined failures (it was first computed at V:2191). It is read after this line only by the summary print (V:2311, failure_errors). Census rows of this statement not preserved from CA-SEAL: Call `f.get('error')` (V:2250): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2250,
+      "column": 19,
+      "end_line": 2250,
+      "end_column": 20,
+      "node_class": "Name",
+      "expression": "f",
+      "site_id": "changed:4fafd0174f3df7db862f61ac23c9414d938e8f8250a6b115156bdb56761758b7",
+      "outcome": "data",
+      "reason": "Reads `f`. Recomputes fail_errors after the recount issues joined failures (it was first computed at V:2191). It is read after this line only by the summary print (V:2311, failure_errors). Census rows of this statement not preserved from CA-SEAL: Call `f.get('error')` (V:2250): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2250,
+      "column": 25,
+      "end_line": 2250,
+      "end_column": 32,
+      "node_class": "Constant",
+      "expression": "'error'",
+      "site_id": "changed:a8f60ecee7775f1ba86a1cbcf12eff6e46f5cdf969a331b8895209af40a0ee29",
+      "outcome": "data",
+      "reason": "Literal 'error'. Recomputes fail_errors after the recount issues joined failures (it was first computed at V:2191). It is read after this line only by the summary print (V:2311, failure_errors). Census rows of this statement not preserved from CA-SEAL: Call `f.get('error')` (V:2250): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2250,
+      "column": 38,
+      "end_line": 2250,
+      "end_column": 39,
+      "node_class": "Name",
+      "expression": "f",
+      "site_id": "changed:90533596d00383889e5b618f7d580b1af567c9da8473fc5e1ee3b9fae9143bc2",
+      "outcome": "data",
+      "reason": "Binds `f`. Recomputes fail_errors after the recount issues joined failures (it was first computed at V:2191). It is read after this line only by the summary print (V:2311, failure_errors). Census rows of this statement not preserved from CA-SEAL: Call `f.get('error')` (V:2250): non-predicate data operation."
+    },
+    {
+      "function": "main",
+      "line": 2250,
+      "column": 43,
+      "end_line": 2250,
+      "end_column": 51,
+      "node_class": "Name",
+      "expression": "failures",
+      "site_id": "changed:d55fb509d42540fa1880ad576593c034384f5dd982ba9c154580413835763056",
+      "outcome": "data",
+      "reason": "Reads `failures`. Recomputes fail_errors after the recount issues joined failures (it was first computed at V:2191). It is read after this line only by the summary print (V:2311, failure_errors). Census rows of this statement not preserved from CA-SEAL: Call `f.get('error')` (V:2250): non-predicate data operation."
+    },
+    {
+      "function": "multi_family_receipt_state",
+      "line": 220,
+      "column": 4,
+      "end_line": 237,
+      "end_column": 100,
+      "node_class": "If",
+      "expression": "if not isinstance(receipt, dict) or not isinstance(dl077, dict) or receipt.get('schema_id') != MULTI_FAMILY_RECEIPT_SCHEMA or (receipt.get('authority_ref') != MULTI_FAMILY_AUTHORITY) or (receipt.get('authority_section_sha256') != section_hash) or (receipt.get('validator_before_sha256') != dl077.get('validator_after_sha256')) or (receipt.get('validator_after_sha256') != third_change_validator_pin()) or (not isinstance(prior, dict)) or (prior.get('path') != POST_AUGUST_RECEIPT) or (prior.get('sha256') != sha256_file(REPO / POST_AUGUST_RECEIPT)) or (receipt.get('record_dir') != POST_AUGUST_RECORD_DIR) or (receipt.get('record_schema_id') != POST_AUGUST_RECORD_SCHEMA) or (receipt.get('author_task') != MULTI_FAMILY_AUTHOR) or (not isinstance(lander, str)) or (not lander.strip()) or (receipt.get('seal_applier_forbidden_tasks') != sorted({MULTI_FAMILY_AUTHOR, lander})) or (receipt.get('seal_authorized') is not False) or (receipt.get('admission_authorized') is not False) or (receipt.get('contract_depth_complete') is not False):",
+      "site_id": "changed:3c76c5918eb21d59afc1bb52277446b12bfcdad6f6b5c9ef69619245218fb3a8",
+      "outcome": "structural",
+      "reason": "Guard statement whose header contains a changed line; its truth is carried by its census rows. Guard of multi_family_receipt_state (V:220-237). Its header contains changed line V:225, which compares the receipt's validator_after_sha256 with third_change_validator_pin() where CA-SEAL line 222 hashed the live file. The If test and every clause are census rows; the unchanged clauses keep their computed CA-SEAL counterparts and the V:225 clause is a new occurrence with its own outcome. Census rows of this statement not preserved from CA-SEAL: BoolOp `not isinstance(receipt, dict) or not isinstance(dl077, dict)` (V:220): killed by negative_third_semantic_after_hash; If test `not isinstance(receipt, dict) or not isinstance(dl077, dict)` (V:220): killed by negative_third_semantic_after_hash; Call `receipt.get('validator_after_sha256')` (V:225): non-predicate data operation; Compare `receipt.get('validator_after_sha256') != third_change_valida` (V:225): killed by negative_third_semantic_after_hash; Call `third_change_validator_pin()` (V:225): non-predicate data operation."
+    },
+    {
+      "function": "multi_family_receipt_state",
+      "line": 225,
+      "column": 15,
+      "end_line": 225,
+      "end_column": 26,
+      "node_class": "Attribute",
+      "expression": "receipt.get",
+      "site_id": "changed:03a88d03845616c64cd668dd579fd6351f81b5a07cc8f6b4d5d6895499e2b6bb",
+      "outcome": "data",
+      "reason": "Attribute lookup `receipt.get`. Guard of multi_family_receipt_state (V:220-237). Its header contains changed line V:225, which compares the receipt's validator_after_sha256 with third_change_validator_pin() where CA-SEAL line 222 hashed the live file. The If test and every clause are census rows; the unchanged clauses keep their computed CA-SEAL counterparts and the V:225 clause is a new occurrence with its own outcome. Census rows of this statement not preserved from CA-SEAL: BoolOp `not isinstance(receipt, dict) or not isinstance(dl077, dict)` (V:220): killed by negative_third_semantic_after_hash; If test `not isinstance(receipt, dict) or not isinstance(dl077, dict)` (V:220): killed by negative_third_semantic_after_hash; Call `receipt.get('validator_after_sha256')` (V:225): non-predicate data operation; Compare `receipt.get('validator_after_sha256') != third_change_valida` (V:225): killed by negative_third_semantic_after_hash; Call `third_change_validator_pin()` (V:225): non-predicate data operation."
+    },
+    {
+      "function": "multi_family_receipt_state",
+      "line": 225,
+      "column": 15,
+      "end_line": 225,
+      "end_column": 22,
+      "node_class": "Name",
+      "expression": "receipt",
+      "site_id": "changed:b4136f95a4dd474abe2b0b8b101220bf9b7dc18615c07bce4841bf9fb1378887",
+      "outcome": "data",
+      "reason": "Reads `receipt`. Guard of multi_family_receipt_state (V:220-237). Its header contains changed line V:225, which compares the receipt's validator_after_sha256 with third_change_validator_pin() where CA-SEAL line 222 hashed the live file. The If test and every clause are census rows; the unchanged clauses keep their computed CA-SEAL counterparts and the V:225 clause is a new occurrence with its own outcome. Census rows of this statement not preserved from CA-SEAL: BoolOp `not isinstance(receipt, dict) or not isinstance(dl077, dict)` (V:220): killed by negative_third_semantic_after_hash; If test `not isinstance(receipt, dict) or not isinstance(dl077, dict)` (V:220): killed by negative_third_semantic_after_hash; Call `receipt.get('validator_after_sha256')` (V:225): non-predicate data operation; Compare `receipt.get('validator_after_sha256') != third_change_valida` (V:225): killed by negative_third_semantic_after_hash; Call `third_change_validator_pin()` (V:225): non-predicate data operation."
+    },
+    {
+      "function": "multi_family_receipt_state",
+      "line": 225,
+      "column": 27,
+      "end_line": 225,
+      "end_column": 51,
+      "node_class": "Constant",
+      "expression": "'validator_after_sha256'",
+      "site_id": "changed:76195fb0819fbef5ee9809bcedad2af88fc12fc85ef3f4dbe3425500c3193aff",
+      "outcome": "data",
+      "reason": "Literal 'validator_after_sha256'. Guard of multi_family_receipt_state (V:220-237). Its header contains changed line V:225, which compares the receipt's validator_after_sha256 with third_change_validator_pin() where CA-SEAL line 222 hashed the live file. The If test and every clause are census rows; the unchanged clauses keep their computed CA-SEAL counterparts and the V:225 clause is a new occurrence with its own outcome. Census rows of this statement not preserved from CA-SEAL: BoolOp `not isinstance(receipt, dict) or not isinstance(dl077, dict)` (V:220): killed by negative_third_semantic_after_hash; If test `not isinstance(receipt, dict) or not isinstance(dl077, dict)` (V:220): killed by negative_third_semantic_after_hash; Call `receipt.get('validator_after_sha256')` (V:225): non-predicate data operation; Compare `receipt.get('validator_after_sha256') != third_change_valida` (V:225): killed by negative_third_semantic_after_hash; Call `third_change_validator_pin()` (V:225): non-predicate data operation."
+    },
+    {
+      "function": "multi_family_receipt_state",
+      "line": 225,
+      "column": 56,
+      "end_line": 225,
+      "end_column": 82,
+      "node_class": "Name",
+      "expression": "third_change_validator_pin",
+      "site_id": "changed:8fd42a5b0ebcf11ac0ecb85d42be368710ef05a0dc98a67f8563100666e541db",
+      "outcome": "data",
+      "reason": "Reads `third_change_validator_pin`. Guard of multi_family_receipt_state (V:220-237). Its header contains changed line V:225, which compares the receipt's validator_after_sha256 with third_change_validator_pin() where CA-SEAL line 222 hashed the live file. The If test and every clause are census rows; the unchanged clauses keep their computed CA-SEAL counterparts and the V:225 clause is a new occurrence with its own outcome. Census rows of this statement not preserved from CA-SEAL: BoolOp `not isinstance(receipt, dict) or not isinstance(dl077, dict)` (V:220): killed by negative_third_semantic_after_hash; If test `not isinstance(receipt, dict) or not isinstance(dl077, dict)` (V:220): killed by negative_third_semantic_after_hash; Call `receipt.get('validator_after_sha256')` (V:225): non-predicate data operation; Compare `receipt.get('validator_after_sha256') != third_change_valida` (V:225): killed by negative_third_semantic_after_hash; Call `third_change_validator_pin()` (V:225): non-predicate data operation."
+    },
+    {
+      "function": "post_august_validator_pin",
+      "line": 266,
+      "column": 4,
+      "end_line": 266,
+      "end_column": 44,
+      "node_class": "Assign",
+      "expression": "live_hash = third_change_validator_pin()",
+      "site_id": "changed:a805a2fb8c9238c65ff389cedc4d13b77eeed64e0f628a4a5d54d8550cedbf26",
+      "outcome": "data",
+      "reason": "Assignment statement. live_hash now comes from third_change_validator_pin(), which returns the third change's pinned validator hash only when the fourth receipt and its anchors hold, and otherwise the live file hash; CA-SEAL line 263 hashed the live file directly. live_hash is compared at V:278 and returned at V:287. Census rows of this statement not preserved from CA-SEAL: Call `third_change_validator_pin()` (V:266): non-predicate data operation."
+    },
+    {
+      "function": "post_august_validator_pin",
+      "line": 266,
+      "column": 4,
+      "end_line": 266,
+      "end_column": 13,
+      "node_class": "Name",
+      "expression": "live_hash",
+      "site_id": "changed:7cf56e42beb96f0ad71835eaa48ec303586cfe38948995342fafbaf456baa4b1",
+      "outcome": "data",
+      "reason": "Binds `live_hash`. live_hash now comes from third_change_validator_pin(), which returns the third change's pinned validator hash only when the fourth receipt and its anchors hold, and otherwise the live file hash; CA-SEAL line 263 hashed the live file directly. live_hash is compared at V:278 and returned at V:287. Census rows of this statement not preserved from CA-SEAL: Call `third_change_validator_pin()` (V:266): non-predicate data operation."
+    },
+    {
+      "function": "post_august_validator_pin",
+      "line": 266,
+      "column": 16,
+      "end_line": 266,
+      "end_column": 42,
+      "node_class": "Name",
+      "expression": "third_change_validator_pin",
+      "site_id": "changed:8ad9245e57067088c7a16785839d7b71a41ff6e03102e69404f85127d329ac93",
+      "outcome": "data",
+      "reason": "Reads `third_change_validator_pin`. live_hash now comes from third_change_validator_pin(), which returns the third change's pinned validator hash only when the fourth receipt and its anchors hold, and otherwise the live file hash; CA-SEAL line 263 hashed the live file directly. live_hash is compared at V:278 and returned at V:287. Census rows of this statement not preserved from CA-SEAL: Call `third_change_validator_pin()` (V:266): non-predicate data operation."
+    }
+  ],
+  "historical_lines": [
+    {
+      "function": "multi_family_receipt_state",
+      "baseline_line": 222,
+      "text": "            or receipt.get(\"validator_after_sha256\") != sha256_file(Path(__file__))",
+      "mark": "replaced",
+      "site_id": "historical:8c5e55429e02cc462b611b13ed6f0c6f946da7bc475e59ba2b14cdcd72dbb167",
+      "reason": "CA-SEAL compared the receipt's validator_after_sha256 with the live file hash, sha256_file(Path(__file__)). Replaced in place by V:225, which compares it with third_change_validator_pin(); every node of V:225 has a census or changed-line row."
+    },
+    {
+      "function": "post_august_validator_pin",
+      "baseline_line": 263,
+      "text": "    live_hash = sha256_file(Path(__file__))",
+      "mark": "replaced",
+      "site_id": "historical:72c9d139ae0fba1e4ab5f06f8c1410fd564c105a9504397abb611e9600d38199",
+      "reason": "CA-SEAL hashed the live file into live_hash. Replaced in place by V:266, live_hash = third_change_validator_pin(); its call is a census row and its other nodes have changed-line rows."
+    }
+  ],
+  "ast_classes": {
+    "python_version": "3.14.4",
+    "classes": 133,
+    "by_category": {
+      "truth-carrying": 37,
+      "data": 43,
+      "structural": 29,
+      "refused when present": 24
+    },
+    "table_sha256": "a059dc26d90a5be752e92191efb140778d83246822e9f9b02474f2a73815035b"
+  }
 }

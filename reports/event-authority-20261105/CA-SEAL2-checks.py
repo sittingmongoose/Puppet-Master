@@ -15,6 +15,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tempfile
 
 REL = 'Plans/.audits/event-authority-2026-08-12/independent-validator/pm_event_authority_independent_validator.py'
@@ -28,6 +29,128 @@ def sha(raw): return hashlib.sha256(raw).hexdigest()
 def encoded(doc): return (json.dumps(doc, indent=2) + '\n').encode()
 
 
+def source_lines(text):
+    """Physical source lines numbered as the parser numbers them (CA2-C11-N04).
+
+    The parser reads source with universal newlines: CRLF and a lone CR become
+    LF, and only LF ends a line. Form feed, vertical tab, U+0085, U+2028 and
+    the other characters that str.splitlines() also breaks on do not. The
+    count is checked against the parser itself with a sentinel statement.
+    """
+    text = text.replace('\r\n', '\n').replace('\r', '\n')
+    lines = text.split('\n')
+    terminated = text.endswith('\n')
+    probe = ast.parse(text + ('' if terminated else '\n') + 'pm_line_probe = 0\n').body[-1].lineno
+    assert probe == len(lines) + (0 if terminated else 1), ('line count differs from the parser', probe, len(lines))
+    return lines
+
+
+# Complete AST class table (CA2-C11-B01). Every node and operator class of the
+# running Python's ast module has exactly one category. The coverage test
+# regenerates the class list from ast at run time and refuses any class missing
+# from this table, and any class marked refused that occurs in the validator.
+TRUTH, DATA, STRUCTURAL, REFUSED = 'truth-carrying', 'data', 'structural', 'refused when present'
+CATEGORIES = (TRUTH, DATA, STRUCTURAL, REFUSED)
+AST_TABLE_PYTHON = '3.14.4'
+_ARITHMETIC = ('Arithmetic operator. On Booleans it returns an int, never a bool (True + False == 1), so it does not '
+               'produce a truth value, although a nonzero result is truthy. Deliberate, reviewed exclusion from the '
+               'truth census: on an inserted or changed line of an aligned unit the node needs a changed-line row; in '
+               'a function new since CA-SEAL it is a data operation seen by the corpus, not by this table.')
+_ROW = 'Census row of its own'
+_AST_CLASS_GROUPS = [
+    (STRUCTURAL, 'Abstract grammar category: the parser never produces a node of this exact class.',
+     ['AST', 'mod', 'stmt', 'expr', 'expr_context', 'boolop', 'operator', 'unaryop', 'cmpop', 'excepthandler',
+      'pattern', 'type_ignore', 'type_param', 'slice']),
+    (REFUSED, 'Deprecated compatibility class: the parser never produces it.',
+     ['AugLoad', 'AugStore', 'ExtSlice', 'Index', 'Param', 'Suite']),
+    (STRUCTURAL, 'Root of an exec-mode parse; its statements are walked.', ['Module']),
+    (REFUSED, 'Root of another parse mode; a validator source file never parses to it.',
+     ['Interactive', 'Expression', 'FunctionType']),
+    (TRUTH, _ROW + ': a comparison yields a bool; the row covers every operator of the node.', ['Compare']),
+    (TRUTH, _ROW + ': Boolean and/or; the walker also lists each clause.', ['BoolOp']),
+    (TRUTH, _ROW + ': every call, whatever its name, since its result may be a truth value.', ['Call']),
+    (TRUTH, _ROW + ': a conditional expression selects on a truth value.', ['IfExp']),
+    (TRUTH, _ROW + ': an assignment expression can capture a predicate.', ['NamedExpr']),
+    (TRUTH, _ROW + ' (Assert).', ['Assert']),
+    (TRUTH, 'Its test is a census row (If test).', ['If']),
+    (TRUTH, 'Its test is a census row (While test).', ['While']),
+    (TRUTH, _ROW + ': exception dispatch over the handler list (Try dispatch, TryStar dispatch).', ['Try', 'TryStar']),
+    (TRUTH, _ROW + ' (except dispatch), plus one per alternative (except alternative).', ['ExceptHandler']),
+    (TRUTH, 'Each filter is a census row (comprehension if).', ['comprehension']),
+    (TRUTH, 'Its pattern (match case) and guard (match guard) are census rows.', ['match_case']),
+    (TRUTH, 'Decides whether a case matches; covered by the enclosing match case row, whose expression is the '
+            'whole pattern.', ['MatchValue', 'MatchSingleton', 'MatchSequence', 'MatchMapping', 'MatchClass',
+                               'MatchStar', 'MatchAs', 'MatchOr']),
+    (TRUTH, 'Boolean operator; carried by the census row of its BoolOp.', ['And', 'Or']),
+    (TRUTH, 'Negation yields a bool; census row UnaryOp(Not) wherever it occurs.', ['Not']),
+    (TRUTH, 'On Booleans a bitwise operator returns a bool, so it combines truth values; census row BinOp(<op>) or '
+            'AugAssign(<op>) wherever it occurs.', ['BitAnd', 'BitOr', 'BitXor']),
+    (TRUTH, 'Comparison operator; carried by the census row of its Compare.',
+     ['Eq', 'NotEq', 'Lt', 'LtE', 'Gt', 'GtE', 'Is', 'IsNot', 'In', 'NotIn']),
+    (DATA, _ARITHMETIC, ['Add', 'Sub', 'Mult', 'MatMult', 'Div', 'Mod', 'Pow', 'LShift', 'RShift', 'FloorDiv']),
+    (DATA, 'Unary arithmetic. On a Boolean it returns an int, never a bool; the same deliberate exclusion as the '
+           'binary arithmetic operators.', ['Invert', 'UAdd', 'USub']),
+    (DATA, 'Expression context of a name, attribute, subscript, starred item or display target.',
+     ['Load', 'Store', 'Del']),
+    (DATA, 'Binary operation; its operator class decides: BitAnd, BitOr and BitXor make it a census row, arithmetic '
+           'is data.', ['BinOp']),
+    (DATA, 'Unary operation; its operator class decides: Not makes it a census row, Invert, UAdd and USub are data.',
+     ['UnaryOp']),
+    (DATA, 'In-place update; its operator class decides: BitAnd, BitOr and BitXor make it a census row, arithmetic '
+           'is data.', ['AugAssign']),
+    (DATA, 'Value reference or literal; truth carriers inside it are inventoried in their own right.',
+     ['Attribute', 'Subscript', 'Starred', 'Name', 'Constant', 'Slice']),
+    (DATA, 'Display or string building; truth carriers inside it are inventoried in their own right.',
+     ['Dict', 'Set', 'List', 'Tuple', 'JoinedStr', 'FormattedValue']),
+    (DATA, 'Builds a collection or generator; each filter is a census row through its comprehension.',
+     ['ListComp', 'SetComp', 'DictComp', 'GeneratorExp']),
+    (DATA, 'Binds or removes values; truth carriers in the value are inventoried in their own right.',
+     ['Assign', 'AnnAssign', 'Delete', 'Expr']),
+    (DATA, 'Binds module objects or import aliases to names.', ['Import', 'ImportFrom', 'alias']),
+    (DATA, 'Keyword argument. The JSON parser callbacks object_pairs_hook, parse_constant and parse_float also have '
+           'a census row (parser callback).', ['keyword']),
+    (STRUCTURAL, 'Defines code; its header is a statement header and its body is walked.',
+     ['FunctionDef', 'ClassDef', 'Lambda', 'arguments', 'arg']),
+    (STRUCTURAL, 'Control flow without a test of its own; the values it uses are inventoried in their own right.',
+     ['Return', 'Raise', 'Pass', 'Break', 'Continue', 'For', 'With', 'withitem', 'Match']),
+    (REFUSED, 'Coroutine or generator semantics; the census does not model them.',
+     ['AsyncFunctionDef', 'AsyncFor', 'AsyncWith', 'Await', 'Yield', 'YieldFrom']),
+    (REFUSED, 'Rebinds a name outside the function\'s own scope; the census does not model it.',
+     ['Global', 'Nonlocal']),
+    (REFUSED, 'PEP 695 type parameters and aliases are evaluated lazily; the census does not model them.',
+     ['TypeAlias', 'TypeVar', 'ParamSpec', 'TypeVarTuple']),
+    (REFUSED, 'Produced only with type_comments=True, which this checker never uses.', ['TypeIgnore']),
+    (REFUSED, 'Template strings (3.14) build a Template object; the census does not model them.',
+     ['TemplateStr', 'Interpolation']),
+]
+AST_CLASSES = {}
+for _category, _reason, _names in _AST_CLASS_GROUPS:
+    for _name in _names:
+        assert _name not in AST_CLASSES, ('class listed twice', _name)
+        AST_CLASSES[_name] = (_category, _reason)
+
+
+def ast_class_names():
+    """Every AST node and operator class of the running Python, regenerated at run time."""
+    import _ast
+    names = {name for module in (ast, _ast) for name, value in vars(module).items()
+             if isinstance(value, type) and issubclass(value, ast.AST)}
+    pending = [ast.AST]
+    while pending:
+        cls = pending.pop()
+        if cls.__module__ in ('ast', '_ast'):
+            names.add(cls.__name__)
+        pending.extend(cls.__subclasses__())
+    return sorted(names)
+
+
+def ast_class_summary(table=None):
+    table = AST_CLASSES if table is None else table
+    return {'python_version': AST_TABLE_PYTHON, 'classes': len(table),
+            'by_category': {c: sum(v[0] == c for v in table.values()) for c in CATEGORIES},
+            'table_sha256': sha(json.dumps({k: list(v) for k, v in table.items()}, sort_keys=True).encode())}
+
+
 def predicate_sites(source, before):
     """Astra 3 inventory rules, with touched functions/lines derived from the diff.
 
@@ -38,7 +161,7 @@ def predicate_sites(source, before):
     previous = {n.name: n for n in ast.parse(before).body if isinstance(n, ast.FunctionDef)}
     added_lines = set()
     for tag, _, _, start, end in difflib.SequenceMatcher(
-            None, before.splitlines(), source.splitlines(), autojunk=False).get_opcodes():
+            None, source_lines(before), source_lines(source), autojunk=False).get_opcodes():
         if tag in {'insert', 'replace'}:
             added_lines.update(range(start + 1, end + 1))
     rows = {}
@@ -136,36 +259,115 @@ def supplement_identity(function, node, expression, node_type):
                 site_id='supplement:' + sha(json.dumps(identity, sort_keys=True).encode()))
 
 
+def _own_row(n):
+    return [(n, ast.unparse(n), type(n).__name__)]
+
+
+def _dispatch_row(n):
+    # Dispatch identity excludes handler bodies; those are walked
+    # independently. Each handler and each alternative also has a row.
+    return [(n, repr([ast.unparse(h.type) if h.type else '*' for h in n.handlers]), type(n).__name__ + ' dispatch')]
+
+
+def _handler_rows(n):
+    alternatives = n.type.elts if isinstance(n.type, ast.Tuple) else [n.type]
+    return [(n, ast.unparse(n.type) if n.type else '*', 'except dispatch')] + [
+        (alternative or n, ast.unparse(alternative) if alternative else '*', 'except alternative')
+        for alternative in alternatives]
+
+
+def _case_rows(n):
+    return [(n.pattern, ast.unparse(n.pattern), 'match case')] + (
+        [(n.guard, ast.unparse(n.guard), 'match guard')] if n.guard is not None else [])
+
+
+# Census rules, keyed by exact class name. Every truth-carrying class of
+# AST_CLASSES has exactly one mechanism: a rule here, the operator rule on
+# OPERATOR_PARENTS, or the row of the node that always contains it (BoolOp,
+# Compare, match case). ast_class_problems() checks that agreement.
+CENSUS_RULES = {
+    'Compare': _own_row, 'BoolOp': _own_row, 'Call': _own_row, 'IfExp': _own_row,
+    'NamedExpr': _own_row, 'Assert': _own_row,
+    'If': lambda n: [(n.test, ast.unparse(n.test), 'If test')],
+    'While': lambda n: [(n.test, ast.unparse(n.test), 'While test')],
+    'comprehension': lambda n: [(test, ast.unparse(test), 'comprehension if') for test in n.ifs],
+    'match_case': _case_rows,
+    'Try': _dispatch_row, 'TryStar': _dispatch_row, 'ExceptHandler': _handler_rows,
+}
+# A data class whose truth depends on its operator: wherever it occurs, a
+# truth-carrying operator makes the node a census row, '<parent>(<operator>)'.
+OPERATOR_PARENTS = ('BinOp', 'AugAssign', 'UnaryOp')
+PARSER_CALLBACKS = {'object_pairs_hook', 'parse_constant', 'parse_float'}
+DATA_RULES = {'keyword': lambda n: [(n, n.arg + '=' + ast.unparse(n.value), 'parser callback')]
+              if n.arg in PARSER_CALLBACKS else []}
+
+
+def category(name, table=None):
+    # An unknown class counts as truth-carrying (it yields a row nobody lists)
+    # and as refused when present; ast_class_problems() names it either way.
+    return (AST_CLASSES if table is None else table).get(name, (None,))[0]
+
+
+def truth_operator(node, table=None):
+    """The truth-carrying operator class of a BinOp, AugAssign or UnaryOp, else None."""
+    if type(node).__name__ not in OPERATOR_PARENTS:
+        return None
+    name = type(node.op).__name__
+    return name if category(name, table) in (TRUTH, None) else None
+
+
 def supplement_nodes(fn):
-    """Yield (anchor node, expression, node type) for every inventoried node of one function."""
+    """Yield (anchor node, expression, node type) for every inventoried node of one function.
+
+    An operator census, not a list of statement shapes: every node is
+    dispatched on its exact class, and BinOp, AugAssign and UnaryOp also on
+    their operator's class, wherever they occur.
+    """
     for n in ast.walk(fn):
-        if isinstance(n, (ast.Compare, ast.BoolOp, ast.Call, ast.IfExp,
-                          ast.NamedExpr, ast.Assert)):
-            yield n, ast.unparse(n), type(n).__name__
-        elif isinstance(n, ast.UnaryOp) and isinstance(n.op, ast.Not):
-            yield n, ast.unparse(n), 'UnaryOp(Not)'
-        elif isinstance(n, ast.BinOp) and isinstance(n.op, (ast.BitAnd, ast.BitOr, ast.BitXor)):
-            yield n, ast.unparse(n), 'BinOp(' + type(n.op).__name__ + ')'
-        elif isinstance(n, (ast.If, ast.While)):
-            yield n.test, ast.unparse(n.test), type(n).__name__ + ' test'
-        elif isinstance(n, ast.comprehension):
-            for test in n.ifs:
-                yield test, ast.unparse(test), 'comprehension if'
-        elif isinstance(n, ast.match_case):
-            yield n.pattern, ast.unparse(n.pattern), 'match case'
-            if n.guard is not None:
-                yield n.guard, ast.unparse(n.guard), 'match guard'
-        elif isinstance(n, (ast.Try, ast.TryStar)):
-            # Dispatch identity excludes handler bodies; those are walked
-            # independently. Each handler and each alternative also has a row.
-            yield n, repr([ast.unparse(h.type) if h.type else '*' for h in n.handlers]), type(n).__name__ + ' dispatch'
-        elif isinstance(n, ast.ExceptHandler):
-            yield n, ast.unparse(n.type) if n.type else '*', 'except dispatch'
-            alternatives = n.type.elts if isinstance(n.type, ast.Tuple) else [n.type]
-            for alternative in alternatives:
-                yield alternative or n, ast.unparse(alternative) if alternative else '*', 'except alternative'
-        elif isinstance(n, ast.keyword) and n.arg in {'object_pairs_hook', 'parse_constant', 'parse_float'}:
-            yield n, n.arg + '=' + ast.unparse(n.value), 'parser callback'
+        name = type(n).__name__
+        for rules in (CENSUS_RULES, DATA_RULES):
+            if name in rules:
+                yield from rules[name](n)
+        op = truth_operator(n)
+        if op is not None:
+            yield n, ast.unparse(n), name + '(' + op + ')'
+
+
+def census_mechanism(name):
+    """How the census inventories a truth-carrying class, or None if it has no mechanism."""
+    if name in CENSUS_RULES:
+        return 'own rule'
+    cls = getattr(ast, name, None)
+    if not isinstance(cls, type):
+        return None
+    if issubclass(cls, ast.operator):
+        return 'operator of BinOp and AugAssign'
+    if issubclass(cls, ast.unaryop):
+        return 'operator of UnaryOp'
+    for base, carrier in ((ast.boolop, 'BoolOp'), (ast.cmpop, 'Compare'), (ast.pattern, 'match_case')):
+        if issubclass(cls, base) and carrier in CENSUS_RULES:
+            return 'carried by the ' + carrier + ' row'
+    return None
+
+
+def ast_class_problems(tree, table=None, python=AST_TABLE_PYTHON):
+    """Closure of the class table: the running ast, the census rules and the validator's own nodes."""
+    table = AST_CLASSES if table is None else table
+    running = ast_class_names()
+    same_minor = tuple(sys.version_info[:2]) == tuple(int(x) for x in python.split('.')[:2])
+    present = Counter(type(n).__name__ for n in ast.walk(tree))
+    return {
+        'missing_from_table': sorted(set(running) - set(table)),
+        # A class the table lists but the running ast lacks is stale only on the
+        # recorded minor version; another version still needs every running class.
+        'not_in_running_ast': sorted(set(table) - set(running)) if same_minor else [],
+        'invalid_entry': sorted(n for n, entry in table.items()
+                                if len(entry) != 2 or entry[0] not in CATEGORIES or not str(entry[1]).strip()),
+        'truth_carrying_without_census_rule': sorted(n for n in set(running) | set(table)
+                                                     if category(n, table) == TRUTH and census_mechanism(n) is None),
+        'census_rule_for_class_not_truth_carrying': sorted(n for n in CENSUS_RULES if category(n, table) != TRUTH),
+        'refused_present': sorted(n for n in present if category(n, table) in (REFUSED, None)),
+    }
 
 
 STATEMENT_BODIES = {'body', 'orelse', 'finalbody', 'handlers', 'cases'}
@@ -240,11 +442,13 @@ def occurrence_map(source, before):
     the same type and expression sits at the mapped position and extent, and its
     enclosing context is unchanged. The map is injective. Nodes on inserted or
     changed lines, in a changed context, or in a function new since CA-SEAL have
-    no counterpart.
+    no counterpart. Line marks for every aligned unit, the module body outside
+    top-level functions included, are reported with the totals.
     """
-    current = {n.name: n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef)}
-    historical = {n.name: n for n in ast.parse(before).body if isinstance(n, ast.FunctionDef)}
-    lines, old_lines = source.splitlines(), before.splitlines()
+    tree, old_tree, units, removed = aligned_units(source, before)
+    aligned = {u['name']: u for u in units}
+    current = {n.name: n for n in tree.body if isinstance(n, ast.FunctionDef)}
+    historical = {n.name: n for n in old_tree.body if isinstance(n, ast.FunctionDef)}
     counterparts, functions, ineligible = {}, {}, Counter()
     for name, fn in current.items():
         old = historical.get(name)
@@ -256,12 +460,7 @@ def occurrence_map(source, before):
                                'nodes': len(nodes), 'eligible_nodes': 0}
             ineligible['function new since CA-SEAL'] += len(nodes)
             continue
-        start = min([fn.lineno] + [d.lineno for d in fn.decorator_list])
-        old_start = min([old.lineno] + [d.lineno for d in old.decorator_list])
-        blocks = [b for b in difflib.SequenceMatcher(
-            None, old_lines[old_start - 1:old.end_lineno], lines[start - 1:fn.end_lineno],
-            autojunk=False).get_matching_blocks() if b.size]
-        line_map = {start + b.b + k: (old_start + b.a + k, i) for i, b in enumerate(blocks) for k in range(b.size)}
+        blocks, line_map = aligned[name]['blocks'], aligned[name]['line_map']
         links, old_links = parent_links(fn), parent_links(old)
         index = {}
         for node, expression, node_type in supplement_nodes(old):
@@ -288,8 +487,211 @@ def occurrence_map(source, before):
               'aligned_lines': sum(f['aligned_lines'] for f in functions.values()),
               'eligible_nodes': len(counterparts),
               'ineligible_nodes': dict(sorted(ineligible.items())),
-              'functions': functions}
+              'functions': functions,
+              'line_marks': {u['name']: {mark: len(lines) for mark, lines in u['marks'].items()} for u in units},
+              'removed_functions': [name for name, _ in removed]}
     return counterparts, totals
+
+
+MODULE_UNIT = '<module>'
+TOP_LEVEL_DEFS = (ast.FunctionDef, ast.AsyncFunctionDef)
+
+
+def function_span(fn):
+    return min([fn.lineno] + [d.lineno for d in fn.decorator_list]), fn.end_lineno
+
+
+def align_lines(old_numbers, old_lines, new_numbers, new_lines):
+    """difflib alignment of two line sequences, given by their 1-based line numbers.
+
+    Returns the matching blocks, a line map {current line: (CA-SEAL line,
+    block index)} and the line marks: current lines inserted or changed, and
+    CA-SEAL lines deleted or replaced.
+    """
+    matcher = difflib.SequenceMatcher(None, [old_lines[i - 1] for i in old_numbers],
+                                      [new_lines[i - 1] for i in new_numbers], autojunk=False)
+    blocks = [b for b in matcher.get_matching_blocks() if b.size]
+    line_map = {new_numbers[b.b + k]: (old_numbers[b.a + k], i) for i, b in enumerate(blocks) for k in range(b.size)}
+    marks = {'inserted': [], 'changed': [], 'deleted': [], 'replaced': []}
+    for tag, a1, a2, b1, b2 in matcher.get_opcodes():
+        if tag in ('insert', 'replace'):
+            marks['inserted' if tag == 'insert' else 'changed'].extend(new_numbers[b1:b2])
+        if tag in ('delete', 'replace'):
+            marks['deleted' if tag == 'delete' else 'replaced'].extend(old_numbers[a1:a2])
+    return blocks, line_map, marks
+
+
+@lru_cache(maxsize=4)
+def aligned_units(source, before):
+    """CA-SEAL units aligned line by line (do not mutate the result).
+
+    A unit is either a touched top-level function that exists by name at
+    CA-SEAL (decorators and signature included), or the module body outside
+    all top-level function definitions, '<module>'. Functions new since CA-SEAL
+    are not units. Returns (tree, CA-SEAL tree, units, CA-SEAL functions whose
+    name no longer exists, with their line spans).
+    """
+    tree, old_tree = ast.parse(source), ast.parse(before)
+    lines, old_lines = source_lines(source), source_lines(before)
+    current = {n.name: n for n in tree.body if isinstance(n, ast.FunctionDef)}
+    historical = {n.name: n for n in old_tree.body if isinstance(n, ast.FunctionDef)}
+    units = []
+    for name, fn in current.items():
+        old = historical.get(name)
+        if old is None or ast.dump(old) == ast.dump(fn):
+            continue
+        (start, end), (old_start, old_end) = function_span(fn), function_span(old)
+        blocks, line_map, marks = align_lines(list(range(old_start, old_end + 1)), old_lines,
+                                              list(range(start, end + 1)), lines)
+        units.append({'name': name, 'fn': fn, 'old': old, 'roots': [fn],
+                      'blocks': blocks, 'line_map': line_map, 'marks': marks})
+
+    def outside(t, count):
+        inside = set()
+        for n in t.body:
+            if isinstance(n, TOP_LEVEL_DEFS):
+                first, last = function_span(n)
+                inside.update(range(first, last + 1))
+        return [i for i in range(1, count + 1) if i not in inside]
+    blocks, line_map, marks = align_lines(outside(old_tree, len(old_lines)), old_lines,
+                                          outside(tree, len(lines)), lines)
+    units.append({'name': MODULE_UNIT, 'fn': None, 'old': None,
+                  'roots': [n for n in tree.body if not isinstance(n, TOP_LEVEL_DEFS)],
+                  'blocks': blocks, 'line_map': line_map, 'marks': marks})
+    removed = [(name, function_span(old)) for name, old in historical.items() if name not in current]
+    return tree, old_tree, units, removed
+
+
+def node_span(node):
+    return header_span(node) if isinstance(node, (ast.stmt, ast.excepthandler)) else (node.lineno, node.end_lineno)
+
+
+def node_text(node):
+    """Source form of a node; a statement with nested bodies is given by its header only."""
+    if STATEMENT_BODIES & set(node._fields):
+        node = copy.copy(node)
+        for field in STATEMENT_BODIES & set(node._fields):
+            setattr(node, field, [])
+    return ast.unparse(node)
+
+
+CHANGED_IDENTITY = ('function', 'line', 'column', 'end_line', 'end_column', 'node_class', 'expression')
+HISTORICAL_IDENTITY = ('function', 'baseline_line', 'text', 'mark')
+
+
+def changed_line_inventory(source, before):
+    """Every node on an inserted or changed line of an aligned unit (N02, option A).
+
+    A node is on such a line if its span (a statement's header span) meets one.
+    Nodes that anchor a census row already have their identity and outcome
+    there; every other node needs a changed-line row, data or structural as its
+    class is. A truth-carrying node whose truth no census row carries (possible
+    only in the module unit) is refused: required outcome REFUSED.
+    """
+    tree, _, units, _ = aligned_units(source, before)
+    rows = {}
+    for unit in units:
+        changed = set(unit['marks']['inserted']) | set(unit['marks']['changed'])
+        if not changed:
+            continue
+        anchors = {id(a) for a, _, _ in supplement_nodes(unit['fn'])} if unit['fn'] is not None else set()
+        carried = set()
+        for root in unit['roots']:
+            for n in ast.walk(root):
+                anchored = [a for a, _, _ in CENSUS_RULES.get(type(n).__name__, lambda n: [])(n)]
+                if anchored and all(id(a) in anchors for a in anchored):
+                    carried.add(id(n))
+                if isinstance(n, ast.match_case) and id(n.pattern) in anchors:
+                    carried.update(id(p) for p in ast.walk(n.pattern))
+        for root in unit['roots']:
+            for n in ast.walk(root):
+                if getattr(n, 'lineno', None) is None or id(n) in anchors:
+                    continue
+                first, last = node_span(n)
+                if not changed.intersection(range(first, last + 1)):
+                    continue
+                name = type(n).__name__
+                kind = category(name)
+                if kind == TRUTH:
+                    required = STRUCTURAL if id(n) in carried else REFUSED
+                elif truth_operator(n) is not None or (name == 'keyword' and n.arg in PARSER_CALLBACKS):
+                    required = REFUSED
+                else:
+                    required = kind if kind in (DATA, STRUCTURAL) else REFUSED
+                identity = {'function': unit['name'], 'line': n.lineno, 'column': n.col_offset,
+                            'end_line': n.end_lineno, 'end_column': n.end_col_offset,
+                            'node_class': name, 'expression': node_text(n)}
+                site = 'changed:' + sha(json.dumps(identity, sort_keys=True).encode())
+                assert site not in rows, ('ambiguous changed-line node', site)
+                rows[site] = dict(identity, site_id=site, required_outcome=required)
+    return rows
+
+
+def historical_line_inventory(source, before):
+    """Every CA-SEAL line of an aligned unit with no current counterpart line.
+
+    Marked 'deleted' or 'replaced' by the unit's alignment, or 'function
+    removed' when a CA-SEAL top-level function no longer exists by name. Each
+    needs a reviewed reason.
+    """
+    _, _, units, removed = aligned_units(source, before)
+    old_lines = source_lines(before)
+    rows = {}
+    def add(function, line, mark):
+        identity = {'function': function, 'baseline_line': line, 'text': old_lines[line - 1], 'mark': mark}
+        site = 'historical:' + sha(json.dumps(identity, sort_keys=True).encode())
+        rows[site] = dict(identity, site_id=site)
+    for unit in units:
+        for mark in ('deleted', 'replaced'):
+            for line in unit['marks'][mark]:
+                add(unit['name'], line, mark)
+    for name, (first, last) in removed:
+        for line in range(first, last + 1):
+            add(name, line, 'function removed')
+    return rows
+
+
+OPERATOR_BASES = (ast.boolop, ast.operator, ast.unaryop, ast.cmpop)
+
+
+def census_totals(source, before):
+    """Operator census: every operator occurrence in the touched functions, by parent node.
+
+    A truth-carrying operator must sit in a node that anchors a census row
+    ('carried_by_census_row'); 'unanchored' counts the occurrences that do not (the coverage test
+    requires zero). Whole-validator occurrences are given for context.
+    """
+    tree = ast.parse(source)
+    previous = {n.name: n for n in ast.parse(before).body if isinstance(n, ast.FunctionDef)}
+    touched = [n for n in tree.body if isinstance(n, ast.FunctionDef)
+               and (n.name not in previous or ast.dump(previous[n.name]) != ast.dump(n))]
+    def operators(node):
+        if isinstance(node, (ast.BinOp, ast.AugAssign, ast.UnaryOp, ast.BoolOp)):
+            return [node.op]
+        return list(node.ops) if isinstance(node, ast.Compare) else []
+    census = {}
+    for fn in touched:
+        anchors = {id(a) for a, _, _ in supplement_nodes(fn)}
+        for n in ast.walk(fn):
+            for op in operators(n):
+                entry = census.setdefault(type(op).__name__, {'category': category(type(op).__name__),
+                                                              'occurrences': Counter(), 'carried': 0,
+                                                              'unanchored': 0})
+                entry['occurrences'][type(n).__name__] += 1
+                if entry['category'] == TRUTH:
+                    entry['carried' if id(n) in anchors else 'unanchored'] += 1
+    whole = {}
+    for n in ast.walk(tree):
+        for op in operators(n):
+            whole.setdefault(type(op).__name__, Counter())[type(n).__name__] += 1
+    every = {name for name in AST_CLASSES if isinstance(getattr(ast, name, None), type) and getattr(ast, name) not in
+             OPERATOR_BASES and issubclass(getattr(ast, name), OPERATOR_BASES)}
+    names = sorted(every | set(census) | set(whole))
+    return {name: {'category': category(name),
+                   'touched_functions': dict(sorted(census.get(name, {}).get('occurrences', Counter()).items())),
+                   'carried_by_census_row': census.get(name, {}).get('carried', 0),
+                   'unanchored': census.get(name, {}).get('unanchored', 0),
+                   'validator': dict(sorted(whole.get(name, Counter()).items()))} for name in names}
 
 
 def check_coverage(repo, test_names):
@@ -309,7 +711,38 @@ def coverage_model(source, before):
     previous_nodes = {r['site_id']: r for r in previous}
     assert set(counterparts.values()) <= set(previous_nodes), 'occurrence map names no historical node'
     return ({r['site_id']: r for r in actual + supplement}, touched, previous_nodes,
-            counterparts, occurrence_totals)
+            counterparts, occurrence_totals, changed_line_inventory(source, before),
+            historical_line_inventory(source, before), census_totals(source, before))
+
+
+def changed_line_totals(rows):
+    return {'rows': len(rows), 'by_unit': dict(sorted(Counter(r['function'] for r in rows).items())),
+            'by_class': dict(sorted(Counter(r['node_class'] for r in rows).items())),
+            'by_outcome': dict(sorted(Counter(r['outcome'] for r in rows).items()))}
+
+
+def historical_line_totals(rows):
+    return {'rows': len(rows), 'by_mark': {m: sum(r['mark'] == m for r in rows)
+                                           for m in ('deleted', 'replaced', 'function removed')}}
+
+
+def refresh_totals(table, raw, before):
+    """Recompute every recorded count and digest the coverage test checks, from the table's own rows."""
+    expected, touched, _, _, occurrence_totals, _, _, census = coverage_model(raw.decode(), before)
+    rows = table['sites'] + table['supplement']
+    table['touched_functions'] = touched
+    table['validator_sha256'] = sha(raw)
+    table['ast_classes'] = ast_class_summary()
+    table['totals'].update(
+        walker_sites=len(table['sites']),
+        supplement_rows=sum(s.startswith('supplement:') for s in expected), combined_sites=len(expected),
+        outcomes=dict(Counter(r['outcome'] for r in rows)),
+        node_types=dict(Counter(r['node_type'] for r in table['supplement'])),
+        node_outcomes=dict(Counter(r['outcome'] for r in table['supplement'])),
+        occurrence_map=dict(occurrence_totals, preserved_rows_matched=sum(r['outcome'] == PRESERVED for r in rows)),
+        changed_line_nodes=changed_line_totals(table['changed_line_nodes']),
+        historical_lines=historical_line_totals(table['historical_lines']), census=census)
+    return table
 
 
 def preservation_problems(rows, counterparts):
@@ -322,9 +755,15 @@ def preservation_problems(rows, counterparts):
             'occurrence_claimed_twice': sorted(str(b) for b, n in claims.items() if n > 1)}
 
 
-def validate_coverage(raw, before, table, test_names):
+def validate_coverage(raw, before, table, test_names, ast_classes=None):
     source = raw.decode()
-    expected, touched, previous_nodes, counterparts, occurrence_totals = coverage_model(source, before)
+    # The class table closes the census: an unlisted class, a truth-carrying
+    # class without a census mechanism, or a refused class in V fails first.
+    classes = ast_class_problems(ast.parse(source), ast_classes)
+    assert not any(classes.values()), 'ast class table ' + json.dumps(classes, sort_keys=True)
+    assert table['ast_classes'] == ast_class_summary(ast_classes), 'changed ast class table summary'
+    (expected, touched, previous_nodes, counterparts, occurrence_totals,
+     changed, historical, census) = coverage_model(source, before)
     assert table['touched_functions'] == touched, 'changed touched-function inventory'
     rows = table['sites'] + table['supplement']
     recorded = {row['site_id']: row for row in rows}
@@ -357,6 +796,34 @@ def validate_coverage(raw, before, table, test_names):
     assert table['totals']['occurrence_map'] == dict(
         occurrence_totals, preserved_rows_matched=sum(r['outcome'] == 'preserved August predicate' for r in rows)), \
         'changed occurrence-map totals'
+    # N02, option A: every node on an inserted or changed line of an aligned
+    # unit has a row, and every CA-SEAL line without a counterpart a reason.
+    refused = sorted(s for s, r in changed.items() if r['required_outcome'] == REFUSED)
+    assert not refused, 'truth-carrying node on a changed line without a census row ' + repr(refused)
+    changed_rows = {row['site_id']: row for row in table['changed_line_nodes']}
+    assert len(changed_rows) == len(table['changed_line_nodes']), 'duplicate changed-line row'
+    missing, stale = set(changed) - set(changed_rows), set(changed_rows) - set(changed)
+    assert not missing and not stale, ('changed-line nodes missing=' + repr(sorted(missing))
+                                       + ' stale=' + repr(sorted(stale)))
+    for site, identity in changed.items():
+        row = changed_rows[site]
+        assert all(row.get(k) == identity[k] for k in CHANGED_IDENTITY), ('changed changed-line row', site)
+        assert row['outcome'] == identity['required_outcome'], ('changed-line outcome', site, row['outcome'])
+        assert isinstance(row.get('reason'), str) and row['reason'].strip(), ('missing changed-line reason', site)
+    historical_rows = {row['site_id']: row for row in table['historical_lines']}
+    assert len(historical_rows) == len(table['historical_lines']), 'duplicate historical-line record'
+    missing, stale = set(historical) - set(historical_rows), set(historical_rows) - set(historical)
+    assert not missing and not stale, ('historical lines missing=' + repr(sorted(missing))
+                                       + ' stale=' + repr(sorted(stale)))
+    for site, identity in historical.items():
+        row = historical_rows[site]
+        assert all(row.get(k) == identity[k] for k in HISTORICAL_IDENTITY), ('changed historical record', site)
+        assert isinstance(row.get('reason'), str) and row['reason'].strip(), ('missing historical reason', site)
+    unanchored = {op: c['unanchored'] for op, c in census.items() if c['unanchored']}
+    assert not unanchored, ('truth-carrying operator without a census row', unanchored)
+    assert table['totals']['census'] == census, 'changed operator census totals'
+    assert table['totals']['changed_line_nodes'] == changed_line_totals(table['changed_line_nodes'])
+    assert table['totals']['historical_lines'] == historical_line_totals(table['historical_lines'])
     assert len(table['prior_survivors']) == 84
     assert table['validator_sha256'] == sha(raw), 'validator is not frozen'
     assert table['totals']['walker_sites'] == len(table['sites'])
@@ -382,20 +849,13 @@ def insertion_probe(raw, before, table_raw, test_names, statement, return_functi
     fn = next(n for n in ast.parse(source).body
               if isinstance(n, ast.FunctionDef) and n.name == return_function)
     line = next(n.lineno for n in fn.body if isinstance(n, ast.Return))
-    lines = source.splitlines(keepends=True)
-    lines.insert(line - 1, '    ' + statement + '\n')
-    altered = ''.join(lines)
+    lines = source_lines(source)
+    lines.insert(line - 1, '    ' + statement)
+    altered = '\n'.join(lines)
     table = json.loads(table_raw)
     # Rebase existing byte/line metadata only. No new row, classification or
     # outcome is supplied for the inserted nodes.
-    for group in ('sites', 'supplement'):
-        for row in table[group]:
-            if 'line' not in row:
-                continue
-            if row['line'] >= line:
-                row['line'] += 1
-            identity = {k: row[k] for k in ('function', 'line', 'column', 'expression', 'kind')}
-            row['site_id'] = row['site_id'].split(':')[0] + ':' + sha(json.dumps(identity, sort_keys=True).encode())
+    rebase_lines(table, lambda n: n + 1 if n >= line else n)
     altered_raw = altered.replace('\n', '\r\n').encode() if b'\r\n' in raw else altered.encode()
     table['validator_sha256'] = sha(altered_raw)
     walker = predicate_sites(altered, before)
@@ -413,6 +873,36 @@ def insertion_probe(raw, before, table_raw, test_names, statement, return_functi
     return missing
 
 
+def rebase_lines(table, move):
+    """Carry every row's current-line metadata through move(line) -> new line or None; drop rows that vanish.
+
+    Site ids are recomputed from the moved identity. CA-SEAL baseline lines and
+    historical-line records refer to CA-SEAL and never move.
+    """
+    for group in ('sites', 'supplement'):
+        kept = []
+        for row in table[group]:
+            if 'line' in row:
+                line = move(row['line'])
+                if line is None:
+                    continue
+                row['line'] = line
+                identity = {k: row[k] for k in ('function', 'line', 'column', 'expression', 'kind')}
+                row['site_id'] = row['site_id'].split(':')[0] + ':' + sha(json.dumps(identity, sort_keys=True).encode())
+            kept.append(row)
+        table[group] = kept
+    kept = []
+    for row in table['changed_line_nodes']:
+        first, last = move(row['line']), move(row['end_line'])
+        if first is None or last is None:
+            continue
+        row['line'], row['end_line'] = first, last
+        row['site_id'] = 'changed:' + sha(json.dumps({k: row[k] for k in CHANGED_IDENTITY}, sort_keys=True).encode())
+        kept.append(row)
+    table['changed_line_nodes'] = kept
+    return table
+
+
 PRESERVED = 'preserved August predicate'
 PRESERVATION_PROBES = ('rebinding_inserted_call', 'inserted_sole_claim', 'duplicate_claim',
                        'changed_occurrence', 'changed_enclosing_header')
@@ -427,12 +917,13 @@ def forged_preservation(raw, before, table_raw, label):
     changed expression. Any other new node copies the preserved row whose
     function, column, expression and node type it shares: the recheck's
     rebinding. Other new nodes and new walker identities get a forged 'implied'
-    row, which round 9 also accepted. Every count is
-    regenerated, so only the occurrence check can refuse the result. Returns
+    row, which round 9 also accepted. Changed-line rows and historical-line
+    records are forged and every count is regenerated, so only the occurrence
+    check can refuse the result. Returns
     (edited bytes, forged table, preservation problems the refusal must name).
     """
     source = raw.decode().replace('\r\n', '\n')
-    lines = source.splitlines(keepends=True)
+    lines = source_lines(source)
     functions = {n.name: n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef)}
     table = json.loads(table_raw)
     def preserved(function, expression, node_type, column=None):
@@ -447,7 +938,7 @@ def forged_preservation(raw, before, table_raw, label):
         # The recheck's witness: an inserted call labelled with V:220's baseline.
         fn = functions['multi_family_receipt_state']
         shifted = next(n.lineno for n in fn.body if isinstance(n, ast.Return))
-        lines.insert(shifted - 1, '    probe = isinstance(receipt, dict)\n')
+        lines.insert(shifted - 1, '    probe = isinstance(receipt, dict)')
         original, = preserved('multi_family_receipt_state', 'isinstance(receipt, dict)', 'Call', 12)
         at = ast.Name(id='probe', lineno=shifted, col_offset=12)
         inserted = supplement_identity('multi_family_receipt_state', at, 'isinstance(receipt, dict)', 'Call')
@@ -488,15 +979,8 @@ def forged_preservation(raw, before, table_raw, label):
         assert expect['not_an_unchanged_occurrence']
     else:
         raise ValueError('unknown preservation probe ' + label)
-    altered = ''.join(lines)
-    for group in ('sites', 'supplement'):
-        for row in table[group]:
-            if 'line' not in row:
-                continue
-            if shifted is not None and row['line'] >= shifted:
-                row['line'] += 1
-            identity = {k: row[k] for k in ('function', 'line', 'column', 'expression', 'kind')}
-            row['site_id'] = row['site_id'].split(':')[0] + ':' + sha(json.dumps(identity, sort_keys=True).encode())
+    altered = '\n'.join(lines)
+    rebase_lines(table, lambda n: n + 1 if shifted is not None and n >= shifted else n)
     walker = predicate_sites(altered, before)
     supplement, _ = predicate_supplement(altered, before, walker)
     expected = {r['site_id'] for r in walker + supplement}
@@ -524,15 +1008,10 @@ def forged_preservation(raw, before, table_raw, label):
     if claim:
         claim(table)
     altered_raw = altered.replace('\n', '\r\n').encode() if b'\r\n' in raw else altered.encode()
-    rows = table['sites'] + table['supplement']
-    counterparts, occurrence_totals = occurrence_map(altered_raw.decode(), before)
-    table['validator_sha256'] = sha(altered_raw)
-    table['totals'].update(
-        walker_sites=len(table['sites']), supplement_rows=len(supplement), combined_sites=len(expected),
-        outcomes=dict(Counter(r['outcome'] for r in rows)),
-        node_types=dict(Counter(r['node_type'] for r in table['supplement'])),
-        node_outcomes=dict(Counter(r['outcome'] for r in table['supplement'])),
-        occurrence_map=dict(occurrence_totals, preserved_rows_matched=sum(r['outcome'] == PRESERVED for r in rows)))
+    # Round 11: the changed-line rows and historical-line records the edit
+    # needs are forged too, so the occurrence check is still the only refusal.
+    forge_records(altered_raw, before, table, label)
+    refresh_totals(table, altered_raw, before)
     return altered_raw, table, expect
 
 
@@ -555,6 +1034,231 @@ def preservation_probe(raw, before, table_raw, test_names, label):
     for key, sites in expect.items():
         assert set(sites) <= set(problems[key]) and (sites or not problems[key]), (label, key, problems)
     return problems
+
+
+FORGED = 'Forged probe row.'
+
+
+def forge_records(raw, before, table, label, groups=('changed_line_nodes', 'historical_lines')):
+    """Forge what an edit needs in the round-11 groups: a row for every missing identity, stale rows dropped.
+
+    A forged changed-line row takes the outcome its class requires (data for a
+    refused node, which the coverage test refuses before it reads any row).
+    """
+    _, _, _, _, _, changed, historical, _ = coverage_model(raw.decode(), before)
+    for group, expected in (('changed_line_nodes', changed), ('historical_lines', historical)):
+        if group not in groups:
+            continue
+        kept = [r for r in table[group] if r['site_id'] in expected]
+        recorded = {r['site_id'] for r in kept}
+        for site, identity in expected.items():
+            if site in recorded:
+                continue
+            row = {k: v for k, v in identity.items() if k != 'required_outcome'}
+            if group == 'changed_line_nodes':
+                row['outcome'] = identity['required_outcome'] if identity['required_outcome'] != REFUSED else DATA
+            kept.append(dict(row, reason=FORGED))
+        table[group] = kept
+    return table
+
+
+def forge_census(raw, before, table, label):
+    """Forge the walker and census rows an edit needs, and repair every preservation claim the map now refuses."""
+    expected, _, previous_nodes, counterparts, _, _, _, _ = coverage_model(raw.decode(), before)
+    recorded = {r['site_id'] for r in table['sites'] + table['supplement']}
+    for group, prefixes in (('sites', ('syntax:', 'semantic:')), ('supplement', ('supplement:',))):
+        table[group] = [r for r in table[group] if r['site_id'] in expected] + [
+            dict(identity, outcome='implied', reason=FORGED, evidence=[{'probe': label}])
+            for site, identity in expected.items() if site.startswith(prefixes) and site not in recorded]
+    for row in table['supplement']:
+        if row['outcome'] != PRESERVED or counterparts.get(row['site_id']) == row.get('baseline_site_id'):
+            continue
+        if row['site_id'] in counterparts:
+            baseline = previous_nodes[counterparts[row['site_id']]]
+            row.update(baseline_site_id=baseline['site_id'], baseline_line=baseline['line'])
+        else:
+            for key in [k for k in row if k.startswith('baseline_')]:
+                del row[key]
+            row.update(outcome='implied', reason=FORGED)
+    return table
+
+
+# Round-11 edit probes. Each edits a scratch copy of V, rebases every row's
+# line metadata through a whole-file alignment, forges every group except the
+# one under test and regenerates every count, so only that group's rule can
+# refuse. (label: group left unforged, expected refusal prefix, description.)
+EDIT_PROBES = {
+    'census_augassign_bitor': ('census', 'coverage sites missing=',
+                               "recount_validation: state['complete'] |= True before the return"),
+    'census_augassign_bitand': ('census', 'coverage sites missing=',
+                                "recount_validation: state['complete'] &= True before the return"),
+    'census_augassign_bitxor': ('census', 'coverage sites missing=',
+                                "recount_validation: state['complete'] ^= True before the return"),
+    'census_hidden_builder_bitor': ('census', 'coverage sites missing=', 'build_receipt: overall_pass |= '
+                                    '{"review_extra": False, **named}["review_extra"] after the round-9 gate'),
+    'census_hidden_builder_bitand': ('census', 'coverage sites missing=', 'build_receipt: the same with &='),
+    'census_hidden_builder_bitxor': ('census', 'coverage sites missing=', 'build_receipt: the same with ^='),
+    'changed_truncated_input': ('changed_line_nodes', 'changed-line nodes missing=',
+                                'post_august_validator_pin: anchors = anchors[:1] before the preserved guard'),
+    'changed_rebound_input': ('changed_line_nodes', 'changed-line nodes missing=',
+                              'main: actual_ets = expected_ets before the preserved partition comparison'),
+    'changed_inserted_continue': ('changed_line_nodes', 'changed-line nodes missing=',
+                                  'main: continue at the top of the partition loop'),
+    'changed_module_rebinding': ('changed_line_nodes', 'changed-line nodes missing=',
+                                 'module: POST_AUGUST_RECEIPT = MULTI_FAMILY_RECEIPT after MULTI_FAMILY_AUTHOR'),
+    'changed_module_truth_carrier': ('changed_line_nodes', 'truth-carrying node on a changed line without a census row ',
+                                     'module: PM_PROBE = isinstance(HOME, Path) after MULTI_FAMILY_AUTHOR'),
+    'deleted_preserved_guard': ('historical_lines', 'historical lines missing=',
+                                'main: the preserved if actual_ets != expected_ets block deleted in place'),
+    'refused_class_present': ('none', 'ast class table ',
+                              'recount_validation: global PM_PROBE as its first statement'),
+}
+_AUG = {'bitor': '|=', 'bitand': '&=', 'bitxor': '^='}
+
+
+def edit_probe_source(source, label):
+    """Scratch source for one edit probe: (altered LF source, edited current lines, deleted current lines)."""
+    lines = source_lines(source)
+    tree = ast.parse(source)
+    functions = {n.name: n for n in tree.body if isinstance(n, ast.FunctionDef)}
+    def find(function, text):
+        fn = functions[function]
+        return next(i for i in range(fn.lineno, fn.end_lineno + 1) if lines[i - 1].strip() == text)
+    def insert(line, text):
+        return '\n'.join(lines[:line - 1] + [text] + lines[line - 1:]), [line], []
+    kind = label.rsplit('_', 1)[-1]
+    if label.startswith('census_augassign_'):
+        ret = next(n.lineno for n in functions['recount_validation'].body if isinstance(n, ast.Return))
+        return insert(ret, "    state['complete'] " + _AUG[kind] + ' True')
+    if label.startswith('census_hidden_builder_'):
+        gate = find('build_receipt', 'and named["august_result_before_recount"].get("pass") is True)')
+        return insert(gate + 1, '    overall_pass ' + _AUG[kind] + ' {"review_extra": False, **named}["review_extra"]')
+    loop = find('main', 'for cat, expected_ets in independent_partition.items():')
+    if label == 'changed_truncated_input':
+        return insert(find('post_august_validator_pin', 'if (isinstance(receipt, dict) and isinstance(dl077, dict)'),
+                      '        anchors = anchors[:1]')
+    if label == 'changed_rebound_input':
+        assert lines[loop + 1].strip() == 'if actual_ets != expected_ets:'
+        return insert(loop + 2, '        actual_ets = expected_ets')
+    if label == 'changed_inserted_continue':
+        return insert(loop + 1, '        continue')
+    if label in ('changed_module_rebinding', 'changed_module_truth_carrier'):
+        at = next(i for i, text in enumerate(lines, 1) if text.startswith('MULTI_FAMILY_AUTHOR = '))
+        text = 'POST_AUGUST_RECEIPT = MULTI_FAMILY_RECEIPT' if label.endswith('rebinding') else 'PM_PROBE = isinstance(HOME, Path)'
+        return insert(at + 1, text)
+    if label == 'deleted_preserved_guard':
+        start = loop + 2
+        end = next(i for i in range(start + 1, start + 20) if lines[i - 1].strip() == '})')
+        return '\n'.join(lines[:start - 1] + lines[end:]), [], list(range(start, end + 1))
+    if label == 'refused_class_present':
+        return insert(functions['recount_validation'].body[0].lineno, '    global PM_PROBE')
+    raise ValueError('unknown edit probe ' + label)
+
+
+def check_edit_probe(repo, test_names, label):
+    raw = (repo / REL).read_bytes()
+    before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
+    return edit_probe(raw, before, (repo / COVERAGE).read_bytes(), frozenset(test_names), label)
+
+
+def edit_probe(raw, before, table_raw, test_names, label):
+    """Run one edit probe; return the refusal and the identities it must name."""
+    group, prefix, _ = EDIT_PROBES[label]
+    source = raw.decode()
+    old_lines = source_lines(source)
+    altered, edited, deleted = edit_probe_source(source, label)
+    altered_raw = altered.replace('\n', '\r\n').encode() if b'\r\n' in raw else altered.encode()
+    line_map = {}
+    for b in difflib.SequenceMatcher(None, old_lines, source_lines(altered), autojunk=False).get_matching_blocks():
+        for k in range(b.size):
+            line_map[b.a + k + 1] = b.b + k + 1
+    table = rebase_lines(json.loads(table_raw), line_map.get)
+    table['validator_sha256'] = sha(altered_raw)
+    if group != 'census':
+        forge_census(altered_raw, before, table, label)
+    forge_records(altered_raw, before, table, label,
+                  [g for g in ('changed_line_nodes', 'historical_lines') if g != group])
+    refresh_totals(table, altered_raw, before)
+    expected, _, _, _, _, changed, historical, _ = coverage_model(altered_raw.decode(), before)
+    if group == 'census':
+        named = sorted(s for s, r in expected.items() if r.get('line') in edited)
+        assert named and all(expected[s]['node_type'].startswith('AugAssign(') for s in named), named
+    elif group == 'changed_line_nodes':
+        named = sorted(s for s, r in changed.items() if r['line'] in edited)
+        if prefix.startswith('truth-carrying'):
+            named = sorted(s for s in named if changed[s]['required_outcome'] == REFUSED)
+        assert named, label
+    elif group == 'historical_lines':
+        assert deleted and not set(deleted) & set(line_map), deleted
+        named = sorted(s for s, r in historical.items() if r['mark'] == 'deleted')
+        assert len(named) == len(deleted) and sorted(historical[s]['text'] for s in named) == sorted(
+            old_lines[n - 1] for n in deleted), (named, deleted)
+    else:
+        named = []
+    try:
+        validate_coverage(altered_raw, before, table, test_names)
+    except AssertionError as exc:
+        message = str(exc)
+    else:
+        raise AssertionError('edit probe passed coverage: ' + label)
+    assert message.startswith(prefix), (label, message[:400])
+    if group == 'none':
+        assert json.loads(message[len(prefix):])['refused_present'] == ['Global'], message
+    else:
+        assert all(s in message for s in named), (label, named, message[:400])
+        if group == 'census':
+            # The census identity alone refuses: every other inserted node is forged.
+            assert message == 'coverage sites missing=' + repr(named) + ' stale=[]', message[:400]
+        if group == 'changed_line_nodes' and not prefix.startswith('truth-carrying'):
+            assert message == 'changed-line nodes missing=' + repr(named) + ' stale=[]', message[:400]
+        if group == 'historical_lines':
+            assert message == 'historical lines missing=' + repr(named) + ' stale=[]', message[:400]
+    return {'label': label, 'refusal': message[:240], 'named': named}
+
+
+# (edit of the class table, the problems the refusal must name and nothing else).
+# A class missing from the table that V uses also counts as refused when present.
+CLASS_TABLE_PROBES = {
+    'ast_class_removed': (lambda t: {k: v for k, v in t.items() if k != 'AugAssign'},
+                          {'missing_from_table': ['AugAssign'], 'refused_present': ['AugAssign']}),
+    'ast_truth_class_without_rule': (lambda t: dict(t, Subscript=(TRUTH, 'Synthetic probe entry.')),
+                                     {'truth_carrying_without_census_rule': ['Subscript']}),
+    'ast_rule_for_data_class': (lambda t: dict(t, Call=(DATA, 'Synthetic probe entry.')),
+                                {'census_rule_for_class_not_truth_carrying': ['Call']}),
+}
+
+
+def check_class_table_probe(repo, test_names, label):
+    """A synthetic edit of the class table, with V and the coverage table unchanged, must fail coverage."""
+    edit, named = CLASS_TABLE_PROBES[label]
+    before = subprocess.check_output(['git', '-C', str(repo), 'show', SEAL_BASE + ':' + REL]).decode()
+    table = json.loads((repo / COVERAGE).read_bytes())
+    prefix = 'ast class table '
+    try:
+        validate_coverage((repo / REL).read_bytes(), before, table, test_names, ast_classes=edit(AST_CLASSES))
+    except AssertionError as exc:
+        assert str(exc).startswith(prefix), str(exc)[:400]
+        problems = json.loads(str(exc)[len(prefix):])
+    else:
+        raise AssertionError('edited class table passed coverage: ' + label)
+    assert {k: v for k, v in problems.items() if v} == named, problems
+    return problems
+
+
+def check_ast_class_table(repo):
+    """The committed class table against the running ast and the validator."""
+    raw = (repo / REL).read_bytes()
+    tree = ast.parse(raw.decode())
+    problems = ast_class_problems(tree)
+    assert not any(problems.values()), problems
+    running = ast_class_names()
+    assert set(running) == set(AST_CLASSES), sorted(set(running) ^ set(AST_CLASSES))
+    present = {type(n).__name__ for n in ast.walk(tree)}
+    assert not any(category(n) == REFUSED for n in present)
+    truth = sorted(n for n, (c, _) in AST_CLASSES.items() if c == TRUTH)
+    assert all(census_mechanism(n) for n in truth), truth
+    return {'python': sys.version.split()[0], 'table_built_for': AST_TABLE_PYTHON, 'classes': len(running),
+            'summary': ast_class_summary()}
 
 
 def check_occurrence_map():
@@ -610,6 +1314,66 @@ def kept(x):
                                           'changed handler list': 1, 'function new since CA-SEAL': 1,
                                           'inserted or changed line': 8}, totals
     assert len(rows) == 15 and len(set(counterparts.values())) == 3, (len(rows), counterparts)
+    # Round 11 (N02, option A): the same edit's line marks, changed-line rows
+    # and CA-SEAL lines without a counterpart, the removed function included.
+    assert totals['line_marks']['kept'] == {'inserted': 4, 'changed': 3, 'deleted': 0, 'replaced': 3}, totals
+    assert totals['removed_functions'] == ['gone'], totals
+    changed = sorted((r['line'], r['node_class'], r['required_outcome'])
+                     for r in changed_line_inventory(source, before).values())
+    assert changed == [(7, 'Assign', DATA), (7, 'Name', DATA), (7, 'Name', DATA), (7, 'Name', DATA), (7, 'Name', DATA),
+                       (8, 'Assign', DATA), (8, 'Name', DATA), (8, 'Name', DATA), (8, 'Name', DATA), (8, 'Name', DATA),
+                       (10, 'Pass', STRUCTURAL), (13, 'If', STRUCTURAL), (13, 'Name', DATA),
+                       (19, 'Name', DATA), (19, 'Name', DATA), (19, 'Name', DATA), (19, 'Name', DATA),
+                       (19, 'Return', STRUCTURAL)], changed
+    historical = sorted((r['function'], r['baseline_line'], r['mark'])
+                        for r in historical_line_inventory(source, before).values())
+    assert historical == [('gone', 14, 'function removed'), ('gone', 15, 'function removed'),
+                          ('kept', 5, 'replaced'), ('kept', 9, 'replaced'), ('kept', 11, 'replaced')], historical
+
+    def mapped(source, before):
+        counterparts, _ = occurrence_map(source, before)
+        old = {r['site_id']: r for r in predicate_supplement(before, '', [])[0]}
+        return sorted((r['line'], r['expression'], old[counterparts[r['site_id']]]['line'])
+                      for r in predicate_supplement(source, before, [])[0] if r['site_id'] in counterparts)
+    def records(source, before):
+        return (sorted((r['function'], r['line'], r['node_class'], r['required_outcome'])
+                       for r in changed_line_inventory(source, before).values()),
+                sorted((r['function'], r['baseline_line'], r['mark'])
+                       for r in historical_line_inventory(source, before).values()))
+    # N04: lines are counted as the parser counts them. A form feed inside a
+    # string does not end a line (str.splitlines() would say it does), and a
+    # lone carriage return does.
+    before = "def kept(x):\n    a = isinstance(x, dict)\n    b = isinstance(x, list)\n    return a\n"
+    feed = "def kept(x):\n    s = 'p\x0cq'\n    a = isinstance(x, dict)\n    b = isinstance(x, list)\n    return a\n"
+    assert feed.splitlines().index('    a = isinstance(x, dict)') + 1 == 4
+    assert source_lines(feed).index('    a = isinstance(x, dict)') + 1 == 3
+    assert mapped(feed, before) == [(3, 'isinstance(x, dict)', 2), (4, 'isinstance(x, list)', 3)], mapped(feed, before)
+    assert records(feed, before) == ([('kept', 2, 'Assign', DATA), ('kept', 2, 'Constant', DATA),
+                                      ('kept', 2, 'Name', DATA)], []), records(feed, before)
+    copied = "def kept(x):\n    s = 'p\x0cq'\n    a = isinstance(x, dict)\n    a = isinstance(x, dict)\n    return a\n"
+    assert mapped(copied, before) == [(3, 'isinstance(x, dict)', 2)], mapped(copied, before)
+    assert records(copied, before)[1] == [('kept', 3, 'replaced')], records(copied, before)
+    lone = "def kept(x):\r    s = 1\n    a = isinstance(x, dict)\n    b = isinstance(x, list)\n    return a\n"
+    assert mapped(lone, before) == [(3, 'isinstance(x, dict)', 2), (4, 'isinstance(x, list)', 3)], mapped(lone, before)
+    # N02: a deleted decorator is a CA-SEAL line without a counterpart; a
+    # changed one puts the function header on a changed line.
+    before = "@negate\ndef kept(x):\n    a = isinstance(x, dict)\n    return a\n"
+    removed = "def kept(x):\n    a = isinstance(x, dict)\n    return a\n"
+    assert records(removed, before) == ([], [('kept', 1, 'deleted')]), records(removed, before)
+    other = "@other\ndef kept(x):\n    a = isinstance(x, dict)\n    return a\n"
+    assert records(other, before) == ([('kept', 1, 'Name', DATA), ('kept', 2, 'FunctionDef', STRUCTURAL)],
+                                      [('kept', 1, 'replaced')]), records(other, before)
+    # The module body outside top-level functions is an aligned unit too; a
+    # truth carrier there has no census row and is refused.
+    before = "LIMIT = 1\n\n\ndef kept(x):\n    return isinstance(x, dict)\n"
+    module = "LIMIT = 1\nLIMIT = 2\nFLAG = isinstance(LIMIT, int)\n\n\ndef kept(x):\n    return isinstance(x, dict)\n"
+    assert records(module, before) == ([
+        ('<module>', 2, 'Assign', DATA), ('<module>', 2, 'Constant', DATA), ('<module>', 2, 'Name', DATA),
+        ('<module>', 3, 'Assign', DATA), ('<module>', 3, 'Call', REFUSED), ('<module>', 3, 'Name', DATA),
+        ('<module>', 3, 'Name', DATA), ('<module>', 3, 'Name', DATA), ('<module>', 3, 'Name', DATA)], []), \
+        records(module, before)
+    gone = "\n\ndef kept(x):\n    return isinstance(x, dict)\n"
+    assert records(gone, before) == ([], [('<module>', 1, 'deleted')]), records(gone, before)
 
 
 def check_node_types():
@@ -635,15 +1399,34 @@ def check_node_types():
             return choice
     def nested():
         return unknown_predicate(flag)
+    flag &= assigned
+    flag |= assigned
+    flag ^= assigned
+    flag += assigned
+    difference = flag - assigned
+    while flag:
+        break
+    try:
+        pass
+    except* ValueError:
+        pass
 """
     rows, _ = predicate_supplement(source, '', [])
     required = {'Call', 'BinOp(BitAnd)', 'BinOp(BitOr)', 'BinOp(BitXor)', 'UnaryOp(Not)',
                 'BoolOp', 'Compare', 'IfExp', 'NamedExpr', 'comprehension if', 'Assert',
-                'Try dispatch', 'except dispatch', 'except alternative', 'match case', 'match guard'}
-    assert required <= {r['node_type'] for r in rows}
+                'Try dispatch', 'except dispatch', 'except alternative', 'match case', 'match guard',
+                'AugAssign(BitAnd)', 'AugAssign(BitOr)', 'AugAssign(BitXor)', 'While test', 'TryStar dispatch'}
+    types = Counter(r['node_type'] for r in rows)
+    assert required <= set(types), sorted(required - set(types))
+    # Arithmetic is the table's deliberate data exclusion, in either statement shape.
+    assert not {'AugAssign(Add)', 'BinOp(Sub)'} & set(types), types
+    assert all(types['AugAssign(' + op + ')'] == 1 for op in ('BitAnd', 'BitOr', 'BitXor')), types
     calls = [n for n in ast.walk(ast.parse(source)) if isinstance(n, ast.Call)]
     assert sum(r['node_type'] == 'Call' for r in rows) == len(calls)
     assert any(r['expression'] == 'unknown_predicate(flag)' for r in rows)
+    census = census_totals(source, '')
+    assert not any(c['unanchored'] for c in census.values()), census
+    assert census['BitOr']['touched_functions'] == {'AugAssign': 1, 'BinOp': 1}, census['BitOr']
 
 
 def run(repo, output, source_map, apply_cut=None):
@@ -1537,6 +2320,7 @@ def run(repo, output, source_map, apply_cut=None):
                 if value is None: os.environ.pop(key, None)
                 else: os.environ[key] = value
     record('positive_complete_predicate_coverage', lambda: check_coverage(repo, {r['name'] for r in results}))
+    record('positive_ast_class_table', lambda: check_ast_class_table(repo))
     record('positive_exhaustive_node_type_inventory', check_node_types)
     record('positive_occurrence_map_controls', check_occurrence_map)
     for label in PRESERVATION_PROBES:
@@ -1549,6 +2333,13 @@ def run(repo, output, source_map, apply_cut=None):
     ]:
         record('negative_unlisted_' + label, lambda statement=statement, function=function:
                check_insertion_probe(repo, {r['name'] for r in results}, statement, function))
+    # Round 11: the operator census, changed lines and deleted lines, the module
+    # unit, and the class table; each must fail coverage on its own rule.
+    for label in EDIT_PROBES:
+        record('negative_' + label, lambda label=label: check_edit_probe(repo, {r['name'] for r in results}, label))
+    for label in CLASS_TABLE_PROBES:
+        record('negative_' + label, lambda label=label:
+               check_class_table_probe(repo, {r['name'] for r in results}, label))
     summary = {'status': 'pass' if all(r['pass'] for r in results) else 'fail', 'checks': len(results),
                'passed': sum(r['pass'] for r in results), 'failed': sum(not r['pass'] for r in results),
                'real_frozen_source_custody': custody, 'results': results,
