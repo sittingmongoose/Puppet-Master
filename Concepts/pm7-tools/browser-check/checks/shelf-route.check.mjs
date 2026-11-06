@@ -496,6 +496,9 @@ export default async function (t) {
             .filter(([x, y]) => { const h = document.elementFromPoint(x, y), own = !!h && (h === e || e.contains(h)); if (!own && h && !cover) cover = h; return own; }).length;
           // Only the panel's own layout (its strips and cards) asks for room; a tooltip or a menu over the control does not.
           const view = e.closest('.side-panel-view'), coverIn = !!cover && !!view && view.contains(cover);
+          // (T69: what covers it and what it covers, for makeRoom to fold only the region holding the cover)
+          document.querySelectorAll('[data-shelf-cover], [data-shelf-covered]').forEach(x => { x.removeAttribute('data-shelf-cover'); x.removeAttribute('data-shelf-covered'); });
+          if (cover) { cover.setAttribute('data-shelf-cover', ''); e.setAttribute('data-shelf-covered', ''); }
           const coverOf = cover ? cover.tagName + '.' + String(cover.className?.baseVal ?? cover.className).trim().split(/\s+/).slice(0, 2).join('.') : null;
           const what = (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40);
           if (h0 && (h0 === e || e.contains(h0))) return { x: px, y: py, onTop: true, hits, what, coverIn, coverOf };
@@ -560,6 +563,10 @@ export default async function (t) {
     // a control the census must press is covered (reach above), fold the panel's expanded regions outside its scrollers
     // as a person would (real presses on aria-expanded="true" controls that are not tabs or popup triggers), assert each
     // fold took, and say which control asked for the room. Returns how many folded; a second call finds none.
+    // T69 (opus-recheck-kit8 finding B): only the expanded region that holds what covers the control folds (the nearest
+    // ancestor of the expanded control that contains the cover and not the covered control), never every expanded region
+    // of the panel; and a fold that hides a popup trigger the census would press fails by name (hard), so nothing the
+    // census walks is skipped at this size while it is covered at no other.
     const makeRoom = async (state, why) => {
       folding = true;
       try {
@@ -567,15 +574,23 @@ export default async function (t) {
           document.querySelectorAll('[data-shelf-fold]').forEach(e => e.removeAttribute('data-shelf-fold'));
           // The panel's regions outside every scroller (the panel itself counts when it scrolls); never a row of a tree or list.
           const scs = [p, ...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY) && a.checkVisibility() && a.clientHeight > 0);
+          const cover = document.querySelector('[data-shelf-cover]'), covered = document.querySelector('[data-shelf-covered]');
+          document.querySelectorAll('[data-shelf-fold-region]').forEach(e => e.removeAttribute('data-shelf-fold-region'));
+          const regionOf = e => { if (!cover) return null; for (let a = e; a && a !== p; a = a.parentElement) if (a.contains(cover) && !(covered && a.contains(covered))) return a; return null; };
           return [...p.querySelectorAll('[aria-expanded="true"]')].filter(e => e.checkVisibility() && !/^(tab|treeitem|row|option|gridcell|listitem)$/.test(e.getAttribute('role') || '') && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
-            .map((e, i) => { e.setAttribute('data-shelf-fold', String(i)); return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60) }; });
+            .map(e => ({ e, region: regionOf(e) })).filter(x => x.region)
+            .map(({ e, region }, i) => { e.setAttribute('data-shelf-fold', String(i)); region.setAttribute('data-shelf-fold-region', String(i));
+              return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60), region: (region.tagName + '.' + String(region.className?.baseVal ?? region.className).trim().split(/\s+/).slice(0, 2).join('.')).slice(0, 60) }; });
         });
+        const triggersIn = (i) => panel.evaluate((p, i) => { const r = p.querySelector(`[data-shelf-fold-region="${i}"]`); return r ? [...r.querySelectorAll('[aria-haspopup]:not([aria-haspopup="false"])')].filter(e => e.checkVisibility()).map(e => e.getAttribute('aria-controls') || (e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ').slice(0, 40)) : []; }, i);
         for (const fo of folds) {
-          const ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), fp = await reach(ctl);
+          const ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), before = await triggersIn(fo.i), fp = await reach(ctl);
           await t.page.mouse.click(off.x + fp.x, off.y + fp.y);
           const folded = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'false', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
           await t.check(`${target} ${state} short panel: pressing its expanded control (${fo.label}) folds it to make room for the list`, folded,
             JSON.stringify({ fold: fo, covered: { what: why.what, onTop: why.onTop, hits: why.hits, by: why.coverOf } }), { hard: true });
+          const after = await triggersIn(fo.i), hidden = before.filter(x => !after.includes(x));
+          await t.check(`${target} ${state} short panel: the folded region (${fo.region}) hid no popup trigger the census walks`, !hidden.length, JSON.stringify({ hidden, before }), { hard: true });
         }
         if (folds.length) await f.waitForTimeout(500);
         return folds.length;
