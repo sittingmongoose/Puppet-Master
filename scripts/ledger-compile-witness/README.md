@@ -109,6 +109,16 @@ C8-W1 and C8-W2):
 - A `plan_unit_id: AA-001  # comment` line inside a fence does not match the grammar
   (bare or quoted ID, nothing after it) and is refused as `unparsed_plan_unit_id_line`
   (C8-W3). Put a comment on its own line.
+- Containers and HTML (tool batch 3, T49). A fence opened in a list item ends with the
+  item, at the first non-blank line indented less than the item's content column; when
+  that line is itself a fence closer (a closer less indented than its item), CommonMark
+  opens a new fence there, and the form is refused as `list_fence_closer_outdented` if
+  the lines after it name a targeted ID. An HTML block or comment (CommonMark's seven
+  kinds) is raw HTML: no heading or fence inside it counts, and a unit heading inside
+  one is refused as `heading_in_html_block`. A unit heading inside a blockquote or a
+  list item (on its marker line or a continuation line) is refused as
+  `heading_in_blockquote` or `heading_in_list_item`. Write unit headings at the top
+  level.
 
 ## Targets and exact-token scope
 

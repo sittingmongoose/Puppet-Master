@@ -104,22 +104,156 @@ def declared_id(line: str):
     return next((group for group in match.groups() if group), None) if match else None
 
 
-def fences_in(lines: list[str]) -> list[tuple[int, int]]:
-    """Fenced blocks by the CommonMark rules (C8-W2): opener and closer indented at most three spaces, the closer
-    the opener's character, at least as long, with no info string; a backtick opener's info has no backtick."""
-    found, i = [], 0
-    while i < len(lines):
-        opening = FENCE_OPEN.match(lines[i])
-        if not opening or (opening.group(2)[0] == "`" and "`" in opening.group(3)):
-            i += 1
+# T49 (tool batch 3): CommonMark containers and HTML blocks. A list item's marker, and the HTML block starts
+# (CommonMark 4.6, kinds 1-7) with the condition that ends each. A line inside an HTML block is raw HTML: never a
+# heading or a fence opener.
+LIST_ITEM = re.compile(r"^( {0,3})([-*+]|\d{1,9}[.)])([ \t]+|$)")
+QUOTE_MARK = re.compile(r"^ {0,3}> ?")
+HTML_BLOCK_TAGS = ("address|article|aside|base|basefont|blockquote|body|caption|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|"
+                   "fieldset|figcaption|figure|footer|form|frame|frameset|h1|h2|h3|h4|h5|h6|head|header|hr|html|iframe|legend|li|link|"
+                   "main|menu|menuitem|nav|noframes|ol|optgroup|option|p|param|search|section|summary|table|tbody|td|tfoot|th|thead|"
+                   "title|tr|track|ul")
+HTML_ENDED = (   # kinds 1-5: the block runs to the first line holding the end marker (the start line included)
+    (re.compile(r"^ {0,3}<(?:script|pre|style|textarea)(?=[ \t>]|$)", re.I), re.compile(r"</(?:script|pre|style|textarea)>", re.I)),
+    (re.compile(r"^ {0,3}<!--"), re.compile(r"-->")),
+    (re.compile(r"^ {0,3}<\?"), re.compile(r"\?>")),
+    (re.compile(r"^ {0,3}<![A-Za-z]"), re.compile(r">")),
+    (re.compile(r"^ {0,3}<!\[CDATA\["), re.compile(r"\]\]>")),
+)
+HTML_BLANK_ENDED = re.compile(r"^ {0,3}</?(?:" + HTML_BLOCK_TAGS + r")(?=[ \t]|/?>|$)", re.I)    # kind 6: to a blank line
+# kind 7: a whole open or closing tag alone on its line, to a blank line; it cannot interrupt a paragraph
+HTML_TAG_LINE = re.compile(r"^ {0,3}(?:<[A-Za-z][A-Za-z0-9-]*(?:[ \t]+[A-Za-z_:][A-Za-z0-9_.:-]*(?:[ \t]*=[ \t]*(?:[^ \t\"'=<>`]+|'[^']*'|\"[^\"]*\"))?)*[ \t]*/?>"
+                           r"|</[A-Za-z][A-Za-z0-9-]*[ \t]*>)[ \t]*$")
+
+
+def _indent(line: str) -> int:
+    return len(line) - len(line.lstrip(" "))
+
+
+def _item_content_column(item, line: str) -> int:
+    """Where a list item's content starts: past the marker and its spaces (one space if the item is empty or the
+    marker is followed by five or more spaces, which start indented code)."""
+    gap = len(item.group(3).expandtabs(4))
+    if not line[len(item.group(0)):].strip() or gap >= 5:
+        gap = 1
+    return len(item.group(1)) + len(item.group(2)) + gap
+
+
+def list_item_column(lines: list[str], i: int):
+    """The content column of the list item line i continues, or None (T49). Walks back over blank lines and lines
+    indented past column 0 to the nearest list-item marker line; line i continues that item only when it is indented
+    to at least the item's content column. A non-marker line at column 0 ends the walk."""
+    ind = _indent(lines[i])
+    if ind == 0:
+        return None
+    for j in range(i - 1, -1, -1):
+        line = lines[j]
+        if not line.strip():
             continue
-        closer = re.compile(r"^ {0,3}" + re.escape(opening.group(2)[0]) + "{" + str(len(opening.group(2))) + r",}[ \t]*$")
-        k = i + 1
-        while k < len(lines) and not closer.match(lines[k]):
-            k += 1
-        found.append((i, k))
-        i = k + 1
-    return found
+        item = LIST_ITEM.match(line)
+        if item:
+            column = _item_content_column(item, line)
+            return column if column <= ind else None
+        if _indent(line) == 0:
+            return None
+    return None
+
+
+def blocks_in(lines: list[str]) -> dict:
+    """Fenced and HTML blocks in document order, by the CommonMark rules (C8-W2, T49).
+
+    fences: (opener, stop, closer): the content is lines opener+1 .. stop-1; closer is the closer's line, or None
+    for a fence that ran to the end of the document or ended with its list item. A fence opener is indented at most
+    three spaces, past the content column of the list item it is in (or on the item's own marker line), is three or
+    more backticks or tildes, and a backtick opener's info string holds no backtick. The closer is the same character,
+    at least as long, indented at most three spaces past that column, with nothing after it but spaces. A fence opened
+    in a list item ends with the item, at the first non-blank line indented less than its content column; when that
+    line is itself a fence closer (its closer less indented than its item), CommonMark opens a new fence there, at
+    the outer level, and the pair is listed in 'outdented_closers'.
+    html: (start, end), both lines included. An HTML block starts outside any fence (kind 7 not inside a paragraph)
+    and runs to its end condition: kinds 1-5 the line holding the end marker, kinds 6 and 7 the line before the next
+    blank line. It holds no fence and no heading."""
+    fences, html, outdented = [], [], []
+    i, paragraph = 0, False
+    while i < len(lines):
+        line = lines[i]
+        column, opening = None, None
+        item = LIST_ITEM.match(line)
+        if item and FENCE_OPEN.match(line[len(item.group(0)):]):
+            column = len(item.group(0))
+            opening = FENCE_OPEN.match(line[column:])
+        else:
+            inside = list_item_column(lines, i)
+            if inside is not None:
+                if _indent(line) <= inside + 3:
+                    column, opening = inside, FENCE_OPEN.match(line[inside:])
+            else:
+                opening = FENCE_OPEN.match(line)
+        if opening and not (opening.group(2)[0] == "`" and "`" in opening.group(3)):
+            closer = re.compile(r"^ {0,3}" + re.escape(opening.group(2)[0]) + "{" + str(len(opening.group(2))) + r",}[ \t]*$")
+            k, close = i + 1, None
+            while k < len(lines):
+                here = lines[k]
+                if column is not None and here.strip() and _indent(here) < column:
+                    if closer.match(here):
+                        outdented.append((i, k))
+                    break
+                if closer.match(here[column:] if column is not None else here):
+                    close = k
+                    break
+                k += 1
+            fences.append((i, k, close))
+            i = k + 1 if close is not None else k
+            paragraph = False
+            continue
+        ended = next((done for begin, done in HTML_ENDED if begin.match(line)), None)
+        begin = None
+        if ended is not None:
+            begin = next(b for b, d in HTML_ENDED if d is ended).match(line).end()
+        if ended is not None or HTML_BLANK_ENDED.match(line) or (not paragraph and HTML_TAG_LINE.match(line)):
+            k = i
+            if ended is not None:
+                while k < len(lines) and not ended.search(lines[k], begin if k == i else 0):
+                    k += 1
+                k = min(k, len(lines) - 1)
+            else:
+                while k + 1 < len(lines) and lines[k + 1].strip():
+                    k += 1
+            html.append((i, k))
+            i, paragraph = k + 1, False
+            continue
+        paragraph = bool(line.strip()) and not any_head(line) and not SETEXT_UNDER.match(line)
+        i += 1
+    return {"fences": fences, "html": html, "outdented_closers": outdented}
+
+
+def fences_in(lines: list[str]) -> list[tuple[int, int]]:
+    """Fenced blocks (C8-W2, T49; see blocks_in) as (opener, stop): the content is lines opener+1 .. stop-1, and
+    stop is the closer's line when the fence has one."""
+    return [(start, stop) for start, stop, _ in blocks_in(lines)["fences"]]
+
+
+def html_lines_in(lines: list[str]) -> set[int]:
+    """Every line inside an HTML block (T49)."""
+    return {index for start, end in blocks_in(lines)["html"] for index in range(start, end + 1)}
+
+
+def container_heading(lines: list[str], index: int):
+    """(form, the line as the container shows it) when line index is inside a blockquote or a list item (T49), else
+    None. A blockquote line loses its > markers; a list marker line loses its marker; a continuation line of a list
+    item loses the item's content indentation."""
+    line = lines[index]
+    if QUOTE_MARK.match(line):
+        while QUOTE_MARK.match(line):
+            line = QUOTE_MARK.sub("", line, count=1)
+        return "heading_in_blockquote", line
+    item = LIST_ITEM.match(line)
+    if item:
+        return "heading_in_list_item", line[len(item.group(0)):]
+    column = list_item_column(lines, index)
+    if column is not None:
+        return "heading_in_list_item", line[column:]
+    return None
 
 
 def unsupported_forms(text: str, ids: set[str]) -> list[dict]:
@@ -133,11 +267,45 @@ def unsupported_forms(text: str, ids: set[str]) -> list[dict]:
     """
     ids = {uid for uid in ids if not uid.startswith("DL-")}
     lines = text.splitlines()
+    blocks = blocks_in(lines)
     fenced = set()
-    for start, stop in fences_in(lines):
+    for start, stop, _ in blocks["fences"]:
         fenced.update(range(start + 1, stop))
+    html = {index for start, end in blocks["html"] for index in range(start, end + 1)}
     out = []
+    def heading_id(line):
+        head = ID_HEAD.match(line) or INDENTED_ID_HEAD.match(line)
+        return head.group(2) if head and head.group(2) in ids else None
+    # T49: a fence opened in a list item whose closer is less indented than the item: CommonMark ends the fence with
+    # the item and opens a new one at the closer, so the lines after it are read two ways; refused when they name a
+    # targeted ID as a heading or a declaration.
+    for start, outer in blocks["outdented_closers"]:
+        named = None
+        for k in range(outer, len(lines)):
+            named = heading_id(lines[k]) or (next((u for u in UNIT_ID.findall(lines[k]) if u in ids), None) if PLAN_UNIT_LINE.match(lines[k]) else None)
+            if named:
+                break
+        if named:
+            out.append({"unit": named, "form": "list_fence_closer_outdented", "line": outer + 1,
+                        "text": lines[outer].strip(), "fence_opened_at": start + 1})
     for index, line in enumerate(lines):
+        if index in html:
+            # T49: an HTML block or comment is raw HTML to CommonMark; a unit heading inside one is refused
+            head = unit_head(line)
+            uid = heading_id(line) or (head[1] if head else None)
+            if uid in ids:
+                out.append({"unit": uid, "form": "heading_in_html_block", "line": index + 1, "text": line.strip()})
+            continue
+        if index not in fenced:
+            # T49: a heading inside a blockquote or a list item (on its marker line or a continuation line) is
+            # neither parsed as a unit nor skipped: refused
+            inside = container_heading(lines, index)
+            if inside:
+                form, shown = inside
+                uid = heading_id(shown.lstrip(" ")) if _indent(shown) <= 3 else None
+                if uid:
+                    out.append({"unit": uid, "form": form, "line": index + 1, "text": line.strip()})
+                    continue
         head = None if index in fenced else ID_HEAD.match(line) or INDENTED_ID_HEAD.match(line)
         if head and head.group(2) in ids and not unit_head(line, index in fenced):
             level = len(head.group(1))
@@ -152,7 +320,7 @@ def unsupported_forms(text: str, ids: set[str]) -> list[dict]:
         # C8-W1: a setext heading (a paragraph over an = or - underline) that names a targeted ID is refused.
         if index and index not in fenced and SETEXT_UNDER.match(line):
             start = index
-            while start > 0 and lines[start - 1].strip() and start - 1 not in fenced and not any_head(lines[start - 1]) \
+            while start > 0 and lines[start - 1].strip() and start - 1 not in fenced and start - 1 not in html and not any_head(lines[start - 1]) \
                     and not FENCE_OPEN.match(lines[start - 1]) and not SETEXT_UNDER.match(lines[start - 1]):
                 start -= 1
             paragraph = lines[start:index]
@@ -173,11 +341,17 @@ def definitions_in(text: str) -> list[dict]:
     """
     lines = text.splitlines()
     fences, fenced = [], set()
-    for i, k in fences_in(lines):
-        fenced.update(range(i, k + 1))
+    blocks = blocks_in(lines)
+    for i, k, close in blocks["fences"]:
+        # the opener, the content, and the closer when there is one (a fence that ended with its list item stops
+        # before the line that ended it, which is read on its own: T49)
+        last = close if close is not None else k - 1 if k < len(lines) else k
+        fenced.update(range(i, last + 1))
         ids = [uid for uid in (declared_id(l) for l in lines[i + 1:k]) if uid]
         if ids:
-            fences.append((i, k, ids))
+            fences.append((i, last, ids))
+    # T49: an HTML block's lines are raw HTML, never a heading
+    fenced.update(index for start, end in blocks["html"] for index in range(start, end + 1))
     found, sections = [], {}
     i = 0
     while i < len(lines):

@@ -508,5 +508,31 @@ def exercise(g, *, scratch=None):
          lambda f: f.update(owner=clean + "\n````md\n```\nexample\n```\n## AA-001 — Example heading inside the fence\n````\n"), verify=no_ambiguity)
     case("tb2-four-space-fence-is-not-a-fence", lambda f: f.update(owner=clean + "\n    ```yaml\n    plan_unit_id: AA-001\n    ```\n"),
          status="findings", exit_code=2, verify=unsupported("plan_unit_id_outside_fence", 11))
+    # Tool batch 3, T49 (TOOLBATCH2 pre-check finding 4): CommonMark containers and HTML blocks. A unit heading inside
+    # an HTML block or comment, a blockquote or a list item is refused; a fence opened in a list item ends with the
+    # item; a list-item fence whose closer is less indented than the item is refused when the lines after it name a
+    # target. Each refusal fails on the batch-2 witness (a phantom or a missed unit) and is caught now.
+    def has_forms(*pairs):
+        return lambda r: set(pairs) <= {(x["form"], x["line"]) for x in r["configuration_findings"] if x["kind"] == "unsupported_owner_definition_form"}
+    commented = "<!--\n" + clean + "-->\n"
+    case("tb3-unit-inside-html-comment-is-refused", lambda f: f.update(owner=commented),
+         status="vacuous_with_findings", exit_code=2, verify=lambda r: has_forms(("heading_in_html_block", 2))(r) and any(x["kind"] == "missing_target_unit" for x in r["configuration_findings"]))
+    in_div = "<div>\n## AA-001 — Owner\nRequired live token.\n```yaml\nplan_unit_id: AA-001\npreserved_exact_tokens: [\"live token\"]\n```\n</div>\n"
+    case("tb3-unit-inside-html-div-is-refused", lambda f: f.update(owner=in_div),
+         status="vacuous_with_findings", exit_code=2, verify=lambda r: has_forms(("heading_in_html_block", 2))(r) and any(x["kind"] == "missing_target_unit" for x in r["configuration_findings"]))
+    case("tb3-second-heading-inside-html-block-is-refused", lambda f: f.update(owner=clean + "\n<details>\n## AA-001 — Again\n</details>\n"),
+         status="findings", exit_code=2, verify=unsupported("heading_in_html_block", 11))
+    case("tb3-heading-in-blockquote-is-refused", lambda f: f.update(owner=clean + "\n> ## AA-001 — Quoted\n"),
+         status="findings", exit_code=2, verify=unsupported("heading_in_blockquote", 10))
+    case("tb3-heading-on-list-marker-line-is-refused", lambda f: f.update(owner=clean + "\n- ## AA-001 — Listed\n"),
+         status="findings", exit_code=2, verify=unsupported("heading_in_list_item", 10))
+    case("tb3-heading-in-list-continuation-is-refused", lambda f: f.update(owner=clean + "\n- item\n\n  ## AA-001 — Listed\n"),
+         status="findings", exit_code=2, verify=has_forms(("heading_in_list_item", 12)))
+    case("tb3-list-fence-ends-with-its-item-control", lambda f: f.update(owner="- item\n\n  ```\n" + clean),
+         verify=lambda r: not r["configuration_findings"] and r["witness_exact_tokens"][0]["units_with_both"] == ["AA-001"])
+    case("tb3-list-fence-closed-by-outdented-closer-is-refused", lambda f: f.update(owner="- item\n  ```\n  code\n```\n" + clean),
+         status="findings", exit_code=2, verify=unsupported("list_fence_closer_outdented", 4))
+    case("tb3-list-fence-closed-inside-its-item-control", lambda f: f.update(owner="- item\n\n  ```\n  ## AA-001 — Example\n  ```\n\n" + clean), verify=no_ambiguity)
+    case("tb3-html-comment-on-one-line-control", lambda f: f.update(owner="<!-- note -->\n" + clean), verify=no_ambiguity)
     return {"schema_id": "pm.ledger_compile_witness.self_test.v1", "status": "pass" if all(row["caught"] for row in rows) else "findings",
             "caught": sum(row["caught"] for row in rows), "tests": rows}
