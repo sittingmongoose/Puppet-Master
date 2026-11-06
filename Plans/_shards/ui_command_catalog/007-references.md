@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1158-L1261
+Source lines: L1183-L1288
 
-Source SHA256: `212f3634ee38453d53ee6294b83f1280bb82aeef9426394b0ba303c6f76ab24a`
+Source SHA256: `98447d333cdf4ff30fb4c1d473a5de432863a5fa3efd88c564112e55c376d1fc`
 
 ---
 
@@ -34,6 +34,8 @@ Canonical recovery commands use one shared namespace: `cmd.runtime.*`. Legacy re
 | `skip_node` | `cmd.runtime.skip_node` | `{ run_id, node_id, attempt_id? }` |
 | `abort_run` | `cmd.runtime.abort_run` | `{ run_id }` |
 | `open_details` | `cmd.runtime.open_attempt_details` | `{ run_id, node_id, attempt_id? }` |
+
+Lineage pointer (DL-333): for each command here that UCC-230 routes, the minimum args column above is history; the command's typed args are its owner-doc definition, which UCC-230 names.
 
 SCM-targeted retry and `/fresh-attempt` commands support the same worktree reuse policy as restore. `baseline_target` is closed to `safe_point | historical_commit | worktree_head`; the former stale candidate wording is superseded. Conditional payload and effect are exact:
 

@@ -931,7 +931,9 @@ class CommandsShortcutsCensusTests(unittest.TestCase):
         production_actions = {entry["ui_command_id"] for entry in matrix["entries"].values()}
         registry = json.loads((ROOT / "Plans/touch_closure.json").read_text(encoding="utf-8"))
         kinds = {row[3]: row[2] for row in registry["rows"]}
-        self.assertEqual(len(matrix["entries"]), 1300)
+        # 1300, +32 DL-333 resolution 9b History/Vision bridge/Teacher rows, -1 DL-335
+        # catalog.chat_worktree_bind_existing (retired; UCC-058 forbids exposing it).
+        self.assertEqual(len(matrix["entries"]), 1331)
         for action in self.ALL:
             with self.subTest(action=action):
                 self.assertEqual(kinds[action], "ui_action")

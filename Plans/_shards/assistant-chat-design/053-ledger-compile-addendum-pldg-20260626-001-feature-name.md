@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L23429-L23805
+Source lines: L23429-L23807
 
-Source SHA256: `286c122ca3de84e4f6e7e3bfc7e476e3732a05f2be6594add4ee6244789f01f2`
+Source SHA256: `d8416202d71866909a534630a1aa3fcfba8e9fee408134822f864c8f55d03973`
 
 ---
 
@@ -158,7 +158,9 @@ canonical_text: Teach is the feature and Teacher is the Persona used inside it. 
   role/persona badge, model/context/source chips, thread summary/state, activity cards, and handoff disclosure.
   Teach durable memory capture stays distinct from one-off Teacher-guided instruction; eligible answers may offer
   Save as taught memory through an explicit capture card with scope, source, secret-safety, conflict/supersession,
-  Save/Cancel, and later inspect/narrow/supersede/revoke/unlock actions.
+  Save/Cancel, and later inspect/narrow/supersede/revoke/unlock actions. Amended 2026-11-05 under DL-333, following
+  DL-127, typing /teach opens the Teach popup through cmd.chat.teach.capture, not the Teacher; the Teacher is summoned
+  through help icons and the natural-language summons above.
 gui_related: true
 gui_classification_reason: Defines Teacher-in-chat threads, help launches, activity cards, capture UI, and thread
   states.

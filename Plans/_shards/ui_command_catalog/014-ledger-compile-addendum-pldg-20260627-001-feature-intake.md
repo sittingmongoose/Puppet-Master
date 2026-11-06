@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L7732-L7915
+Source lines: L7806-L7991
 
-Source SHA256: `212f3634ee38453d53ee6294b83f1280bb82aeef9426394b0ba303c6f76ab24a`
+Source SHA256: `98447d333cdf4ff30fb4c1d473a5de432863a5fa3efd88c564112e55c376d1fc`
 
 ---
 
@@ -186,6 +186,8 @@ negative_constraints:
 - Do not delete DRY receipt provenance when the user disables the default guard.
 - Do not replace a required real target with focus, a synthetic Project, an empty identity or borrowed app/source
   authority.
+stale_retired_dispositions:
+- 'cmd.settings.agent_rules.dry_method_default_guard.set: retired source lineage; no primary handler, production-wiring row or dispatch alias (DL-041).'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 - Plans/Wiring_Matrix.md

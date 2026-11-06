@@ -504,10 +504,11 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Git
 |---|---|---|---|
 | Chat header button `Create Worktree` | WorktreeManager `create_worktree` | User clicks header button or `cmd.chat.worktree.create` | thread_id, branch_name, base_ref → worktree_id, path |
 | Chat dropdown `Remove Worktree` | WorktreeManager `remove_worktree` | User confirms removal | worktree_id → success/error |
-| Chat dropdown `Bind Existing` | WorktreeManager `list_worktrees` | User opens bind dialog | → unbound worktree list |
 | Chat merge dialog | WorktreeManager `merge_worktree` | User confirms merge | worktree_id, target_branch, strategy → result |
 | Chat merge dialog | WorktreeManager `create_pr` | User clicks Create PR | worktree_id, branch, target → pr_url |
 | Auto-create (thread creation) | WorktreeManager `create_worktree` | `branching.assistant_auto_worktree` is true | thread_id, auto-generated branch name |
+
+Retired 2026-11-05 (DL-335): the former `Chat dropdown Bind Existing` → WorktreeManager `list_worktrees` row (open a bind dialog, return the unbound worktree list) is removed and is not wired. UCC-058 says Bind Existing must not be exposed as `cmd.chat.worktree.bind_existing`, and assistant-chat-design W.17 keeps Bind Existing out of the MVP; no surface offers it.
 
 **Chat ↔ Source Control wiring:**
 
@@ -2263,7 +2264,7 @@ plan_unit_id: WM-025
 unit_type: requirement
 status: accepted
 owner_doc: Plans/Wiring_Matrix.md
-canonical_text: Chat-to-WorktreeManager wiring covers create/remove/bind/list/merge/create-pr flows, auto-create via branching.assistant_auto_worktree, and preservation of thread_id, branch/base refs, worktree_id, and path data flow.
+canonical_text: Chat-to-WorktreeManager wiring covers create/remove/merge/create-pr flows, auto-create via branching.assistant_auto_worktree, and preservation of thread_id, branch/base refs, worktree_id, and path data flow; the Bind Existing list flow (list_worktrees) is retired by DL-335 and not wired.
 gui_related: true
 gui_classification_reason: The unit covers user-visible chat header, dropdown, merge dialog, PR, and Source Control worktree actions.
 split_recommended: false
@@ -2313,7 +2314,8 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Contracts_V0.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'Retired 2026-11-05 (DL-335): the Chat dropdown Bind Existing wiring row (WorktreeManager list_worktrees) is removed; UCC-058 forbids exposing Bind Existing as cmd.chat.worktree.bind_existing and W.17 keeps it out of the MVP.'
 owner_hints:
 - Plans/Wiring_Matrix.md
 - Plans/assistant-chat-design.md
@@ -8515,7 +8517,7 @@ canonical_text: 'No project is genuine application scope, with a named fixed Com
   cmd.chat.revoke_investigation_item, cmd.chat.rewind, cmd.chat.run_user_command, cmd.chat.search, cmd.chat.send,
   cmd.chat.settings, cmd.chat.stop, cmd.chat.switch_thread, cmd.chat.toggle_message_details, cmd.chat.web.cancel,
   cmd.chat.web.crawl, cmd.chat.web.extract, cmd.chat.web.fetch, cmd.chat.web.help, cmd.chat.web.map, cmd.chat.web.request_again,
-  cmd.chat.web.research, cmd.chat.web.search, cmd.chat.worktree, cmd.chat.worktree.bind_existing, cmd.chat.worktree.create,
+  cmd.chat.web.research, cmd.chat.web.search, cmd.chat.worktree, cmd.chat.worktree.create,
   cmd.chat.worktree.info, cmd.chat.worktree.merge, cmd.chat.worktree.pr, cmd.chat.worktree.remove, cmd.chat.worktree.unbind,
   cmd.file.copy_full_path, cmd.file.copy_nodes, cmd.file.copy_path, cmd.file.copy_relative_path, cmd.file.cut_nodes,
   cmd.file.delete, cmd.file.expand_capped, cmd.file.new_file, cmd.file.new_folder, cmd.file.open, cmd.file.open_in_system_default,
@@ -8527,7 +8529,9 @@ canonical_text: 'No project is genuine application scope, with a named fixed Com
   cmd.terminal.allow_agent_input, cmd.terminal.deny_agent_input, cmd.terminal.hand_back, cmd.terminal.interrupt,
   cmd.terminal.stop_agent, cmd.terminal.take_over, cmd.terminal.appearance.set, cmd.terminal.appearance.import_scheme,
   cmd.terminal.clear, cmd.terminal.revoke_agent_input, cmd.terminal.send_signal, cmd.chat.queue.send_now,
-  cmd.chat.processes.open. Native availability remains handler_unavailable. Resolve the selected WorkflowScopeV2:
+  cmd.chat.processes.open. cmd.chat.worktree.bind_existing is not one of them: DL-335 retires it as a non-alias
+  because UCC-058 forbids exposing it, and its Touch row TCP-FB-259 stays blocked. Native availability remains
+  handler_unavailable. Resolve the selected WorkflowScopeV2:
   application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required
   thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their
   actual Server scope without fabricating a thread; view-only and metadata reads require only their declared

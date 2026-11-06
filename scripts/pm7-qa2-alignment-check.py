@@ -53,7 +53,9 @@ def check():
             "QA2 family-source anchors differ")
     require(len(read("settings_inventory.json")["settings"]) == 1017, "QA2 plus reviewed refresh Settings census differs")
     require(len(read("glyph_catalog.json")["status_marks"]) == 22, "QA2 invented a status key")
-    require(len(read("Wiring_Matrix.production.json")["entries"]) == 1300, "QA2/DL-270 plus refresh production wiring union differs")
+    # 1300 plus the 32 DL-333 resolution 9b History, Vision bridge and Teacher rows (2026-11-05),
+    # less catalog.chat_worktree_bind_existing: DL-335 retires that command because UCC-058 forbids exposing it.
+    require(len(read("Wiring_Matrix.production.json")["entries"]) == 1331, "QA2/DL-270 plus refresh plus DL-333 less DL-335 production wiring union differs")
     actor = read("glyph_catalog.json")["qa2_actor_presentation"]
     require(actor["you"]["silhouette"] == "person_alone" and not actor["you"]["marionette_cross"]
             and not actor["you"]["puppet_strings"] and actor["wand"]["glyph_id"] == "wand",

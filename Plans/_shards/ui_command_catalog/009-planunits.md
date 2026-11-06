@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L1269-L7085
+Source lines: L1296-L7120
 
-Source SHA256: `212f3634ee38453d53ee6294b83f1280bb82aeef9426394b0ba303c6f76ab24a`
+Source SHA256: `98447d333cdf4ff30fb4c1d473a5de432863a5fa3efd88c564112e55c376d1fc`
 
 ---
 
@@ -2774,7 +2774,7 @@ plan_unit_id: UCC-049
 unit_type: requirement
 status: accepted
 owner_doc: Plans/UI_Command_Catalog.md
-canonical_text: Docker Manager command rows define build, bake, container inspect/logs/shell/restart/stop/delete, image inspect/delete/tag/open Dockerfile, context select, and compatibility aliases for build/logs/exec/inspect.
+canonical_text: Docker Manager command rows define build, bake, container inspect/logs/shell/restart/stop/delete, image inspect/delete/tag/open Dockerfile, context select, and compatibility aliases for build/logs/exec/inspect. Amended 2026-11-05 (DL-333), the build flow commands cmd.docker.build.select_target, cmd.docker.build.run, cmd.docker.bake.preview and cmd.docker.bake.run are current and registered here, and cmd.docker.build.image, cmd.docker.build.compose and cmd.docker.build.bake are its three build modes, as Plans/Containers_Registry_and_Unraid.md section 2A requires.
 gui_related: true
 gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
 split_recommended: false
@@ -2820,6 +2820,10 @@ preserved_exact_tokens:
 - cmd.docker.logs
 - cmd.docker.exec
 - cmd.docker.inspect
+- cmd.docker.build.select_target
+- cmd.docker.build.run
+- cmd.docker.bake.preview
+- cmd.docker.bake.run
 negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
@@ -2939,9 +2943,9 @@ preserved_exact_tokens:
 negative_constraints:
 - Docker Manager registry publish commands must share permission, account, receipt, and lineage checks rather than claiming a separate event family.
 preserved_contractrefs: []
-compatibility_only_notes:
-- cmd.docker.image.push is a compatibility alias for approved image push through Docker Manager registry authority.
-stale_retired_dispositions: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- 'Amended 2026-11-05 (DL-333): cmd.docker.image.push is a primary command with its own DockerImagePushV3Request (UCC-217); the earlier compatibility-alias note for it is withdrawn.'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -3120,8 +3124,9 @@ negative_constraints: []
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md'
 compatibility_only_notes:
-- cmd.git.worktree.open_files, request_prune, and switch are compatibility aliases.
-stale_retired_dispositions: []
+- cmd.git.worktree.open_files and switch are compatibility aliases.
+stale_retired_dispositions:
+- 'Amended 2026-11-05 (DL-333): cmd.git.worktree.request_prune is its own command, the non-mutating approval-request phase of the two-phase prune flow in GI-041; cmd.git.worktree.prune executes only an approved request. The earlier note that listed it with the compatibility aliases is withdrawn.'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```
@@ -3387,7 +3392,10 @@ negative_constraints:
 preserved_contractrefs:
 - 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md'
 compatibility_only_notes: []
-stale_retired_dispositions: []
+stale_retired_dispositions:
+- 'cmd.chat.worktree.bind_existing: retired non-alias; no primary handler, production-wiring row or dispatch
+  alias, and it does not route to the canonical assistant worktree commands (DL-335, under the negative constraint
+  above).'
 owner_hints:
 - Plans/UI_Command_Catalog.md
 ```

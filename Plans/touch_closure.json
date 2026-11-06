@@ -21005,60 +21005,45 @@
     {
       "profile_id": "TCP-FB-259",
       "requirement_refs": [
-        "Plans/assistant-chat-design.md#ACD-508",
-        "Plans/UI_Command_Catalog.md#UCC-216",
-        "Plans/Wiring_Matrix.md#WM-102"
+        "Plans/UI_Command_Catalog.md#UCC-058",
+        "Plans/Decision_Log.md#DL-335",
+        "Plans/Contracts_V0.md#CV-160"
       ],
-      "owner_plan": "Plans/assistant-chat-design.md",
-      "plan_unit": "ACD-508",
+      "owner_plan": "Plans/UI_Command_Catalog.md",
+      "plan_unit": "UCC-058",
       "dry_contract_ref": "Plans/DRY_Rules.md#DR-087",
-      "payload_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2",
-      "result_schema_ref": "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2",
+      "payload_schema_ref": "absent_retired_non_alias",
+      "result_schema_ref": "absent_retired_non_alias",
       "error_schema_ref": "Plans/ui_command_response.schema.json#/$defs/UICommandError",
-      "availability_rule": "Requires an explicitly bound real Project/backend/owner target; this is an actual target requirement, not a blanket app mode gate. No project is genuine application scope, with a named fixed Computer after first message, lazy visible chat folder and no invented Project/Vault. Admit ordinary files/browser/editor/terminal/tools/notebook/history/recovery under exact app roots and owner versions, retaining private notebook/memory isolation and counterpart limits. Six projects.* read tools return explicit requested/looked_in/not_looked_in/partial coverage; source read grants do not authorize writes. Existing cmd.thread.request/spawn Send uses current local previews and receiver authority; maximum three automatic round trips. Two equal conversion choices share one manifest/copy-check/cutover/report/Undo engine; stop/fence Goal/Crew/Plan/timers and use linked destination records by default. No new work plus seven days bounds chat Undo, not independent canonical custody. Screen use is off until exact chat/app/controller/disclosure admission, with one targeted Stop. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority. Resolve the selected WorkflowScopeV2: application has an actual Server/Computer, scope_partition=app and project_id=null, with owner-required thread or pre-message draft and Host/root identity. Server-owned pause/trust/home operations use their actual Server scope without fabricating a thread; view-only and metadata reads require only their declared owner targets. Project operations use actual immutable Project identity. Never use focus, an empty ID, a sentinel Project, HOME or CWD as authority.",
-      "permission_gate": "Permissions PS-144–148 alone composes actual human|mode|build_grant evidence with retained FileSafe, trust, secrets, capabilities, root and parent/receiver ceilings. An app chat or copied receipt conveys no Project mutation/build-grant authority.",
-      "disabled_reason_rule": "Closed per-action selected owner reasons: invalid_request, command_not_registered, handler_unavailable, owner_unavailable, source_unavailable, target_not_found, wrong_scope, stale_projection, stale_revision, stale_currentness, stale_preview, permission_denied, read_only, target_not_answering, retained_approval, active_work_not_stopped, manual_stop_latched, application_automation_paused, app_automation_pause_unavailable, recovery_required, idempotency_conflict, dedupe_unavailable, undo_ineligible. A local/view/read path uses only its applicable reasons. Missing intrinsic Project target is distinct from valid application scope.",
-      "handler_owner": "handlers::chat::worktree_bind_existing",
-      "handler_status": "specified",
-      "wiring_status": "specified",
-      "production_or_simulation": "Production contract intention only; all executable/native/storage/event/rendered/accessibility/restart evidence remains unproved. Scope-aware definitions are specified; native adoption remains unproved.",
+      "availability_rule": "Never available. DL-335 retires cmd.chat.worktree.bind_existing as a non-alias because UCC-058 forbids exposing Arbitrary Bind Existing as that command; no surface offers it.",
+      "permission_gate": "Grants no permission and no worktree, Project or filesystem authority.",
+      "disabled_reason_rule": "No control renders it, so it has no disabled reason. A stray dispatch is refused with UICommandError code unknown_command and reaches no handler.",
+      "handler_owner": "No handler: retired non-alias (DL-335, UCC-058); handlers::chat::worktree_bind_existing is not planned.",
+      "handler_status": "absent",
+      "wiring_status": "absent",
+      "production_or_simulation": "Blocked retirement: no projects-refresh binding row, production-wiring row, handler or dispatch alias exists, and none may be added.",
       "gui_triggers": [
-        "Assistant Chat surface"
+        "None: no GUI control exposes it (UCC-058)."
       ],
-      "return_route": "Preserve initiating Client, captured source scope/object, invocation/correlation token, route, focus, context revision and continuation generation/expiry; return the exact owner result, refusal or paused recovery there. Never retarget to a newly focused tab. A late capture, attachment or draft insertion preserves both the originating thread AND composer destination, or refuses before draft mutation.",
+      "return_route": "No dispatch, so nothing returns.",
       "reverse_consumers": [
-        "Plans/assistant-chat-design.md",
-        "Plans/FinalGUISpec.md",
         "Plans/UI_Command_Catalog.md",
-        "Plans/Commands_System.md",
-        "Plans/Wiring_Matrix.md",
-        "Plans/projects_refresh_command_bindings.json"
+        "Plans/Wiring_Matrix.production.exclusions.json",
+        "Plans/Decision_Log.md"
       ],
-      "event_refs": [
-        "No new EventRecord admission; existing precise owner version/admission disposition retained."
-      ],
-      "receipt_refs": [
-        "Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2"
-      ],
-      "observable_work": [
-        "Existing owner ObservableWork/History only; local previews create none."
-      ],
-      "persistence_refs": [
-        "Plans/assistant-chat-design.md#ACD-508",
-        "Plans/storage-plan.md#SP-349",
-        "cmd.chat.worktree.bind_existing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
-      ],
+      "event_refs": [],
+      "receipt_refs": [],
+      "observable_work": [],
+      "persistence_refs": [],
       "migration_refs": [
-        "Preserve historical Project resources/keys/hash/replay; explicit selected scope-aware sibling only. N25 uses linked birth by default; no private immutable rebind."
+        "cmd.chat.worktree.bind_existing stays catalog lineage only (UCC-058 negative constraint); TCP-FB-259 keeps its number (DL-335)."
       ],
       "test_refs": [
-        "Plans/projects_refresh_command_bindings.json",
         "scripts/pm-touch-closure-verify.py",
-        "scripts/pm-projects-refresh-contracts.py",
-        "tests/test_pm_touch_closure_source.py"
+        "scripts/pm_wiring_inventory.py"
       ],
       "evidence_refs": [
-        "NOT_RUN: native dispatch, handler, storage/accepted source, event admission, visual/motion/accessibility and readiness. Static draft verification only."
+        "blocked_retired_non_alias"
       ],
       "command_ids": [
         "cmd.chat.worktree.bind_existing"
@@ -46898,8 +46883,8 @@
       "TCP-FB-259",
       "command",
       "cmd.chat.worktree.bind_existing",
-      "partial",
-      "Partial design closure only; selected request/result/schema/source/permission/Stop/return joins and real native evidence are required. cmd.chat.worktree.bind_existing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+      "blocked",
+      "Retired non-alias (DL-335): UCC-058 says Arbitrary Bind Existing must not be exposed as cmd.chat.worktree.bind_existing. It has no projects-refresh binding row, production-wiring row, handler or dispatch alias, and no control renders it. The row stays blocked so that TCP-FB-259 and every later TCP-FB number keep their ids."
     ],
     [
       "TOUCH-FB-163",
