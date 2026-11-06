@@ -1617,6 +1617,15 @@ class GuardTests(Base):
         self.assert_stops("checked_commit_mismatch", lander.h_push, step)
         self.assertEqual(self.h.origin_main(), base, "nothing pushed")
 
+    def test_push_requires_the_exact_commit_even_with_the_same_tree(self):
+        self.h.g(self.h.shared, "fetch", "-q", "origin")
+        wt = self.h.wts / "same-tree"
+        self.h.g(self.h.shared, "worktree", "add", "-q", "-b", "fix/a", str(wt), "origin/main")
+        self.h.g(wt, "commit", "-q", "--allow-empty", "-m", "same tree, another commit")
+        lander, st = self.lander(wt)
+        step = self.checked_state(st, self.h.g(wt, "rev-parse", "HEAD"))
+        self.assert_stops("checked_commit_mismatch", lander.h_push, step)
+
     def test_push_requires_the_shared_tree_to_be_the_checked_tree(self):
         wt = self.h.branch("fix/a", {"src/x.txt": "new\n"}, repo=self.h.shared)
         lander, st = self.lander(wt)
