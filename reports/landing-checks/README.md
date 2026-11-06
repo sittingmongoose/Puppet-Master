@@ -356,9 +356,15 @@ removes lines, so the sealed evidence names the old range until the reseal refre
 2026-11-05: `002-lines-201-235.md` became `002-lines-201-237.md`). A `missing_ref` bucket that grew is
 staleness only when its rows that are not renamed shards are no more than the baseline held. Every other
 `missing_ref` keeps its class: a deleted unit (the manifest holds no shard with that id), a missing path that
-is not a line-range shard, and a reference from a file that is not sealed evidence. `renamed_shard_ref` in
-the script is the rule; `tests/test_pm_landing_check.py` `RenamedShardStaleness` reproduces the Q5 case and
-the three negatives.
+is not a line-range shard, and a reference from a file that is not sealed evidence. Three more conditions
+come from git (T53): both paths must be relative and in their normal form (`Plans/.evidence/../x` is not
+evidence), the branch must not have changed the evidence file itself (it is not in
+`git diff --name-only <base>..HEAD`: generated evidence changes only in a reseal, so a reference the branch
+wrote into it is the branch's own), and the old target must have existed at the base
+(`git cat-file -e <base>:<target>`: a range name that never existed is not a rename). With no base, as when
+recording the baseline, the rule never applies. `renamed_shard_ref` and `RenameContext` in the script are
+the rule; `tests/test_pm_landing_check.py` `RenamedShardStaleness` reproduces the Q5 case against a git base
+and the negatives, P6 and P8 among them.
 
 Deliberately not on the list: the shard and index kinds such as `shard_hash_stale` and
 `stale_generated_index_artifact`, because a branch that edits canon regenerates those and a stale one
