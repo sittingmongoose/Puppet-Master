@@ -128,28 +128,44 @@ async function cell(t, surface, w, h) {
 			   outside it does; Adjust NieR in the menu gives way to the editor already open; Escape closes the menu, then
 			   the editor, then (not tried here) the window */
 			const st = () => f.evaluate(() => ({ menu: !!O55.S.lookOpen && !!document.querySelector('#pm-o55-onboarding .o55-lookmenu'), panel: O55.nierLook.panelOpen(), win: !!O55.S.open, focus: document.activeElement?.matches('.o55-lookbtn') ? 'look' : document.activeElement?.matches('.o55-nierpanel-h') ? 'heading' : document.activeElement?.className || document.activeElement?.tagName }));
-			const pressAt = async (sel) => {
-				const pt = await f.locator(sel).first().evaluate((e) => { e.scrollIntoView({ block: 'nearest', inline: 'nearest' }); const b = e.getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; });
+			const click = async (pt) => {
 				const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
 				await t.page.mouse.click(off.x + pt.x, off.y + pt.y); await f.waitForTimeout(250);
 			};
-			await pressAt('#pm-o55-onboarding .o55-nierpanel-h');
-			const s1 = await st();
-			await t.check(`FO-81 a press in the editor closes the menu and keeps the editor ${tag}`, !s1.menu && s1.panel && s1.win, JSON.stringify(s1));
-			await f.locator('#pm-o55-onboarding .o55-head .o55-lookbtn').click(); await f.waitForTimeout(250);
-			if (fam === 'nier') {
-				await pressAt('#pm-o55-onboarding .o55-lookmenu .o55-looknier-adjust');
-				const s2 = await st();
-				await t.check(`FO-81 Adjust NieR in the menu gives way to the open editor ${tag}`, !s2.menu && s2.panel && s2.focus === 'heading', JSON.stringify(s2));
-				await f.locator('#pm-o55-onboarding .o55-head .o55-lookbtn').click(); await f.waitForTimeout(250);
+			const centre = (sel) => f.locator(sel).first().evaluate((e) => { e.scrollIntoView({ block: 'nearest', inline: 'nearest' }); const b = e.getBoundingClientRect(); return { x: b.x + b.width / 2, y: b.y + b.height / 2 }; });
+			/* a point of the editor the open menu does not cover (the menu lies over part of the editor's head where the
+			   header's controls sit far enough left: NieR at 1024 and 740) */
+			const inEditor = () => f.evaluate(() => {
+				const p = document.querySelector('#pm-o55-onboarding .o55-nierpanel'), h = p.querySelector('.o55-nierpanel-h').getBoundingClientRect(), y = h.top + h.height / 2;
+				for (let x = p.getBoundingClientRect().left + 8; x < h.right; x += 6) { const e = document.elementFromPoint(x, y); if (e && p.contains(e) && !e.closest('button, a[href], input, select, textarea')) return { x, y }; }
+				return null;
+			});
+			try {
+				const at = await inEditor();
+				await t.check(`FO-81 the editor shows beside the open menu ${tag}`, !!at, JSON.stringify(at), { hard: false });
+				if (at) {
+					await click(at);
+					const s1 = await st();
+					await t.check(`FO-81 a press in the editor closes the menu and keeps the editor ${tag}`, !s1.menu && s1.panel && s1.win, JSON.stringify({ at, ...s1 }));
+				}
+				if (!(await st()).menu) { await f.locator('#pm-o55-onboarding .o55-head .o55-lookbtn').click(); await f.waitForTimeout(250); }
+				if (fam === 'nier') {
+					await click(await centre('#pm-o55-onboarding .o55-lookmenu .o55-looknier-adjust'));
+					const s2 = await st();
+					await t.check(`FO-81 Adjust NieR in the menu gives way to the open editor ${tag}`, !s2.menu && s2.panel && s2.focus === 'heading', JSON.stringify(s2));
+					if (!(await st()).menu) { await f.locator('#pm-o55-onboarding .o55-head .o55-lookbtn').click(); await f.waitForTimeout(250); }
+				}
+				const s3a = await st();
+				await t.page.keyboard.press('Escape'); await f.waitForTimeout(250);
+				const s3 = await st();
+				await t.check(`FO-81 Escape closes the menu first and keeps the editor ${tag}`, s3a.menu && !s3.menu && s3.panel && s3.win && s3.focus === 'look', JSON.stringify({ before: s3a, after: s3 }));
+				await t.page.keyboard.press('Escape'); await f.waitForTimeout(250);
+				const s4 = await st();
+				await t.check(`FO-81 a second Escape closes the editor and keeps the window ${tag}`, !s4.menu && !s4.panel && s4.win, JSON.stringify(s4));
+			} catch (e) {
+				/* a step that cannot run fails here, and the next look starts clean */
+				await t.check(`FO-81 menu and editor order runs ${tag}`, false, String(e && e.message || e).split('\n')[0]);
 			}
-			const s3a = await st();
-			await t.page.keyboard.press('Escape'); await f.waitForTimeout(250);
-			const s3 = await st();
-			await t.check(`FO-81 Escape closes the menu first and keeps the editor ${tag}`, s3a.menu && !s3.menu && s3.panel && s3.win && s3.focus === 'look', JSON.stringify({ before: s3a, after: s3 }));
-			await t.page.keyboard.press('Escape'); await f.waitForTimeout(250);
-			const s4 = await st();
-			await t.check(`FO-81 a second Escape closes the editor and keeps the window ${tag}`, !s4.menu && !s4.panel && s4.win, JSON.stringify(s4));
 		}
 	}
 	await f.evaluate(() => { O55.nierLook.closePanel({ silent: true }); O55.S.lookOpen = false; document.documentElement.setAttribute('data-motion', 'full'); });
