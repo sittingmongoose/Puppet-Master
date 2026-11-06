@@ -5777,7 +5777,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
            non-zero, and any harness reading them saw three permanent zeros as
            measurements. They now point at what renderActivityBar,
            renderMenu and the artifact renderers actually produce. */
-        activityDomains: qa('.activity-item[data-hover-domain]').length,
+        // The live strip only: the hidden fit sizer holds two more copies of every item.
+        activityDomains: qa('.activity-wrap > .activity-bar > .activity-item[data-hover-domain]').length,
         artifacts: qa('[data-artifact-id]').length,
         menus: qa('.overlay-menu').length,
         decisionVisible: Boolean(q('.decision-host:not([hidden])')?.textContent?.trim()),

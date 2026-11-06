@@ -5,11 +5,11 @@
 import pod from './pod-clearance.check.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
 
-const frames = (f, n = 3) => f.evaluate(async n => { for (let i = 0; i < n; i++) await new Promise(requestAnimationFrame); }, n);
+export const frames = (f, n = 3) => f.evaluate(async n => { for (let i = 0; i < n; i++) await new Promise(requestAnimationFrame); }, n);
 const rerender = f => f.evaluate(() => { PM56_DEMO.setVariant(3, 1); PM56_DEMO.setVariant(3, 0); });
 
 // Installed in the page once per load: the live strip's state and the clone oracle.
-function installOracle() {
+export function installOracle() {
   if (window.__fo76) return;
   const live = () => { const bar = document.querySelector('#pmRoot .activity-bar, #pmRoot .pm56-activity-bar'); return { bar, wrap: bar.parentElement }; };
   // The wrap's content box, unrounded (the product's sizer reads the same box through inherited padding).
@@ -59,14 +59,73 @@ function installOracle() {
   const unwatch = () => { mo?.disconnect(); mo = null; return changes; };
   window.__fo76 = { read, boundary, boxes, watch, unwatch, needsAt: needs, host: () => window.PM56_HOST ? PM56_HOST.root() : document.body };
 }
-const readFit = async f => { await f.evaluate(installOracle); return f.evaluate(() => __fo76.read()); };
+export const readFit = async f => { await f.evaluate(installOracle); return f.evaluate(() => __fo76.read()); };
 
 // The product rule with its 8 px hysteresis, judged by the oracle: a decided width must have the decided tier; inside
 // a hysteresis band either tier passes. No overflow anywhere.
-const valid = r => r.scroll <= r.width + 1 &&
+export const valid = r => r.scroll <= r.width + 1 &&
   (r.available >= r.need + 8 ? r.tier === 0 && r.labels : r.available + 0.5 < r.need ? r.tier >= 1 && !r.labels : true) &&
   (r.tier === 0 || (r.available + 0.5 < r.compactNeed ? r.tier === 2 : r.available >= r.compactNeed + 8 && r.available + 0.5 < r.need ? r.tier === 1 : true));
-const strip = r => JSON.stringify({ ...r, available: +r.available.toFixed(2), need: +r.need.toFixed(2), compactNeed: +r.compactNeed.toFixed(2) });
+export const strip = r => JSON.stringify({ ...r, available: +r.available.toFixed(2), need: +r.need.toFixed(2), compactNeed: +r.compactNeed.toFixed(2) });
+
+// A real drag of the column handle across the label boundary, 1 px per two frames, down 32 px and back; returns its
+// summary after the check. `onStep(step, previous)` runs after each sampled step (the film companion marks there).
+export async function boundaryDrag(t, f, label, onStep) {
+  const setWidth = async w => { await f.evaluate(w => PMW.chatCol.setWidth(w), w); await t.settle(); };
+  const b = await f.evaluate(() => __fo76.boundary());
+  if (b.boundary == null) { await t.check(`label boundary found ${label}`, false, JSON.stringify(b)); return null; }
+  // Map content width to column width at the current history width, then start 20 px above the boundary.
+  const fit0 = await readFit(f), w0 = await f.evaluate(() => PMW.chatCol.widthPx());
+  const offset = w0 - fit0.available, top = Math.round(b.boundary + 20 + offset), bottom = Math.round(b.boundary - 12 + offset);
+  await setWidth(top); await f.waitForTimeout(400);
+  const start = await readFit(f);
+  const p = await f.locator('#chatResizer').boundingBox();
+  if (!p) throw Error('Chat resizer absent');
+  const x0 = p.x + p.width / 2, y0 = p.y + p.height / 2;
+  const input = await t.page.context().newCDPSession(t.page);
+  await input.send('Input.setInterceptDrags', { enabled: true });
+  const steps = [];
+  let dir = 0;
+  await f.evaluate(() => __fo76.watch());
+  await t.page.mouse.move(x0, y0); await t.page.mouse.down();
+  try {
+    // Learn which way the handle widens the column (dir 1: moving left widens it), then walk 1 px per frame down
+    // to `bottom` and back to `top`.
+    await t.page.mouse.move(x0 - 4, y0); await frames(f, 2);
+    dir = Math.sign((await f.evaluate(() => document.querySelector('#chatPanel').getBoundingClientRect().width)) - start.chat);
+    if (!dir) throw Error('Chat handle did not move the column: ' + JSON.stringify(start));
+    const targets = [];
+    for (let w = top; w >= bottom; w--) targets.push(w);
+    for (let w = bottom + 1; w <= top; w++) targets.push(w);
+    for (const w of targets) {
+      await t.page.mouse.move(x0 - (w - top) * dir, y0);
+      await frames(f, 2);
+      steps.push({ target: w, ...await readFit(f) });
+      if (onStep) await onStep(steps[steps.length - 1], steps[steps.length - 2]);
+    }
+  } finally { await t.page.mouse.up(); await input.send('Input.setInterceptDrags', { enabled: false }); await input.detach(); }
+  const changes = await f.evaluate(() => __fo76.unwatch());
+  // Hold 60 frames after release: no self-induced change.
+  await f.evaluate(() => __fo76.watch()); await frames(f, 60);
+  const held = await f.evaluate(() => __fo76.unwatch());
+  const end = await readFit(f);
+  const half = steps.findIndex(s => s.target === bottom) + 1, down = steps.slice(0, half), up = steps.slice(half);
+  const flips = list => list.reduce((n, s, i) => n + (i && s.tier !== list[i - 1].tier ? 1 : 0), 0);
+  const where = (list, from, to) => list.findIndex((s, i) => i && list[i - 1].tier === from && s.tier === to);
+  const dn = where(down, 0, 1), upAt = where(up, 1, 0);
+  const near = (s, edge) => Math.abs(s.available - edge) <= 1.5;
+  const summary = { label, boundary: b.boundary, top, bottom, dir, start: start.tier, end: end.tier, changes, held,
+    held_all: steps.every(s => s.resizing), range: Math.max(...steps.map(s => s.chat)) - Math.min(...steps.map(s => s.chat)),
+    downAt: dn >= 0 ? { available: down[dn].available, need: down[dn].need } : null, upAt: upAt >= 0 ? { available: up[upAt].available, need: up[upAt].need } : null,
+    invalid: steps.filter(s => !valid(s)).map(s => JSON.parse(strip(s))).slice(0, 4) };
+  t.log(JSON.stringify(summary));
+  await t.check(`label boundary drag ${label}`,
+    start.tier === 0 && summary.held_all && summary.range >= 25 && summary.invalid.length === 0 &&
+    flips(down) === 1 && flips(up) === 1 && changes.length === 2 && held.length === 0 && end.tier === 0 && end.labels &&
+    dn >= 0 && near(down[dn], down[dn].need - 0.5) && upAt >= 0 && near(up[upAt], up[upAt].need + 8),
+    JSON.stringify(summary));
+  return summary;
+}
 
 export default async function(t) {
   const previous = { width: t.args.width, only: t.args.only };
@@ -154,59 +213,6 @@ export default async function(t) {
 
   // D. Every look, both motion settings: widths across the pseudo-content and container boundaries, a look switch
   // while Chat is hidden, and a real drag of the column handle across the label boundary in both directions.
-  const drag = async (look, motion) => {
-    const b = await f.evaluate(() => __fo76.boundary());
-    if (b.boundary == null) { await t.check(`label boundary found ${look} ${motion}`, false, JSON.stringify(b)); return; }
-    // Map content width to column width at the current history width, then start 20 px above the boundary.
-    const fit0 = await readFit(f), w0 = await f.evaluate(() => PMW.chatCol.widthPx());
-    const offset = w0 - fit0.available, top = Math.round(b.boundary + 20 + offset), bottom = Math.round(b.boundary - 12 + offset);
-    await setWidth(top); await f.waitForTimeout(400);
-    const start = await readFit(f);
-    const p = await f.locator('#chatResizer').boundingBox();
-    if (!p) throw Error('Chat resizer absent');
-    const x0 = p.x + p.width / 2, y0 = p.y + p.height / 2;
-    const input = await t.page.context().newCDPSession(t.page);
-    await input.send('Input.setInterceptDrags', { enabled: true });
-    const steps = [];
-    let dir = 0;
-    await f.evaluate(() => __fo76.watch());
-    await t.page.mouse.move(x0, y0); await t.page.mouse.down();
-    try {
-      // Learn which way the handle widens the column (dir 1: moving left widens it), then walk 1 px per frame down
-      // to `bottom` and back to `top`.
-      await t.page.mouse.move(x0 - 4, y0); await frames(f, 2);
-      dir = Math.sign((await f.evaluate(() => document.querySelector('#chatPanel').getBoundingClientRect().width)) - start.chat);
-      if (!dir) throw Error('Chat handle did not move the column: ' + JSON.stringify(start));
-      const targets = [];
-      for (let w = top; w >= bottom; w--) targets.push(w);
-      for (let w = bottom + 1; w <= top; w++) targets.push(w);
-      for (const w of targets) {
-        await t.page.mouse.move(x0 - (w - top) * dir, y0);
-        await frames(f, 2);
-        steps.push({ target: w, ...await readFit(f) });
-      }
-    } finally { await t.page.mouse.up(); await input.send('Input.setInterceptDrags', { enabled: false }); await input.detach(); }
-    const changes = await f.evaluate(() => __fo76.unwatch());
-    // Hold 60 frames after release: no self-induced change.
-    await f.evaluate(() => __fo76.watch()); await frames(f, 60);
-    const held = await f.evaluate(() => __fo76.unwatch());
-    const end = await readFit(f);
-    const half = steps.findIndex(s => s.target === bottom) + 1, down = steps.slice(0, half), up = steps.slice(half);
-    const flips = list => list.reduce((n, s, i) => n + (i && s.tier !== list[i - 1].tier ? 1 : 0), 0);
-    const where = (list, from, to) => list.findIndex((s, i) => i && list[i - 1].tier === from && s.tier === to);
-    const dn = where(down, 0, 1), upAt = where(up, 1, 0);
-    const near = (s, edge) => Math.abs(s.available - edge) <= 1.5;
-    const summary = { look, motion, boundary: b.boundary, top, bottom, dir, start: start.tier, end: end.tier, changes, held,
-      held_all: steps.every(s => s.resizing), range: Math.max(...steps.map(s => s.chat)) - Math.min(...steps.map(s => s.chat)),
-      downAt: dn >= 0 ? { available: down[dn].available, need: down[dn].need } : null, upAt: upAt >= 0 ? { available: up[upAt].available, need: up[upAt].need } : null,
-      invalid: steps.filter(s => !valid(s)).map(s => JSON.parse(strip(s))).slice(0, 4) };
-    t.log(JSON.stringify(summary));
-    await t.check(`label boundary drag ${look} ${motion}`,
-      start.tier === 0 && summary.held_all && summary.range >= 25 && summary.invalid.length === 0 &&
-      flips(down) === 1 && flips(up) === 1 && changes.length === 2 && held.length === 0 && end.tier === 0 && end.labels &&
-      dn >= 0 && near(down[dn], down[dn].need - 0.5) && upAt >= 0 && near(up[upAt], up[upAt].need + 8),
-      JSON.stringify(summary));
-  };
   const motions = t.args.targeted ? [] : ['no-preference', 'reduce'];
   for (const motion of motions) {
     await t.emulate({ reducedMotion: motion });
@@ -218,7 +224,7 @@ export default async function(t) {
         const fit = await readFit(f);
         await t.check(`live activity fit ${look} ${motion} ${width}`, valid(fit), strip(fit));
       }
-      await drag(look, motion);
+      await boundaryDrag(t, f, `${look} ${motion}`);
       // Look switch while Chat is hidden, then reveal at a width near the next look's boundary region.
       const next = LOOKS[(i + 1) % LOOKS.length];
       await setWidth(660);
