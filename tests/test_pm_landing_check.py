@@ -334,6 +334,47 @@ class RenamedShardStaleness(unittest.TestCase):
         self.assertFalse(rows[0]["stale"])
         self.assertEqual(len(M.blocking_items([], rows, [])), 1)
 
+    # T63 (REVIEW-etools-tb3-opus findings 7 and 8): the branch left the evidence file alone, in its commits read raw
+    # and in the working tree, and the file is no symbolic link
+    def test_an_uncommitted_edit_of_the_evidence_keeps_its_class(self):
+        (self.root / self.EVIDENCE).write_text('{"edited": true}\n')
+        self.assertFalse(self.stale(self.ref(self.OLD)))
+
+    def test_an_untracked_evidence_file_keeps_its_class(self):
+        fresh = "Plans/.evidence/fresh-run/evidence.json"
+        (self.root / fresh).parent.mkdir(parents=True, exist_ok=True)
+        (self.root / fresh).write_text("{}\n")
+        self.assertFalse(self.stale(self.ref(self.OLD, source=fresh)))
+
+    def test_an_evidence_symlink_keeps_its_class(self):
+        real = self.root / "Plans/elsewhere.json"
+        real.write_text("{}\n")
+        link = self.root / "Plans/.evidence/linked/evidence.json"
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(real)
+        git = lambda *a: subprocess.run(["git", *a], cwd=self.root, check=True, capture_output=True)
+        git("add", "Plans/elsewhere.json", "Plans/.evidence/linked/evidence.json")
+        git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "link")
+        context = M.RenameContext(self.root, "HEAD", [self.NEW, self.NEW_SCHEMA])
+        self.assertFalse(self.stale(self.ref(self.OLD, source="Plans/.evidence/linked/evidence.json"), context))
+
+    def test_a_non_ascii_evidence_path_the_branch_edited_keeps_its_class(self):
+        name = "Plans/.evidence/\u00e9t\u00e9/evidence.json"
+        target = self.root / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text("{}\n")
+        git = lambda *a: subprocess.run(["git", *a], cwd=self.root, check=True, capture_output=True)
+        git("add", name)
+        git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "evidence")
+        git("tag", "evidence-base")
+        target.write_text('{"edited": true}\n')
+        git("add", name)
+        git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "branch edit")
+        touched = M.branch_paths(self.root, "evidence-base")
+        self.assertIn(name, touched)
+        context = M.RenameContext(self.root, "base", touched)
+        self.assertFalse(self.stale(self.ref(self.OLD, source=name), context))
+
     def test_a_deleted_unit_is_not_staleness(self):
         # the document's manifest no longer holds shard 002 at all
         self.manifest("prd_planning_runtime_contracts", [("001", "001-lines-1-200.md")])

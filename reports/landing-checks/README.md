@@ -360,7 +360,10 @@ is not a line-range shard, and a reference from a file that is not sealed eviden
 come from git (T53): both paths must be relative and in their normal form (`Plans/.evidence/../x` is not
 evidence), the branch must not have changed the evidence file itself (it is not in
 `git diff --name-only <base>..HEAD`: generated evidence changes only in a reseal, so a reference the branch
-wrote into it is the branch's own), and the old target must have existed at the base
+wrote into it is the branch's own; T63: that list is read with `-z` and `core.quotePath=false`, so a non-ASCII
+path is compared as itself, the working tree must hold no change to the file either (`git status`: not
+modified, staged, deleted or untracked), and neither the file nor a folder above it may be a symbolic link),
+and the old target must have existed at the base
 (`git cat-file -e <base>:<target>`: a range name that never existed is not a rename). With no base, as when
 recording the baseline, the rule never applies. `renamed_shard_ref` and `RenameContext` in the script are
 the rule; `tests/test_pm_landing_check.py` `RenamedShardStaleness` reproduces the Q5 case against a git base

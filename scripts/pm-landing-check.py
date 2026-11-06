@@ -536,6 +536,23 @@ class RenameContext:
     def __init__(self, root: Path, base: str, touched):
         self.root, self.base, self.touched = root, base, frozenset(touched)
         self._at_base: dict[str, bool] = {}
+        self._left: dict[str, bool] = {}
+
+    def left_alone(self, path: str) -> bool:
+        """T63 (REVIEW-etools-tb3-opus findings 7 and 8): the branch left the evidence file alone. It is not among the
+        paths the branch's commits changed (`touched`, read from `git diff --name-only -z`, so a non-ASCII path is
+        compared raw, never in git's quoted form); the working tree holds no change to it either (`git status`: not
+        modified, staged, deleted or untracked); and neither it nor a folder above it is a symbolic link, whose target
+        the branch could edit while the link itself stays unchanged. A git failure answers no."""
+        if path in self.touched:
+            return False
+        if path not in self._left:
+            proc = subprocess.run(["git", "--literal-pathspecs", "-c", "core.quotePath=false", "status", "--porcelain=v1", "-z",
+                                   "--untracked-files=all", "--", path], cwd=self.root, capture_output=True)
+            parts = path.split("/")
+            linked = any((self.root / "/".join(parts[:i])).is_symlink() for i in range(1, len(parts) + 1))
+            self._left[path] = proc.returncode == 0 and not proc.stdout and not linked
+        return self._left[path]
 
     def existed_at_base(self, path: str) -> bool:
         if path not in self._at_base:
@@ -560,7 +577,8 @@ def renamed_shard_ref(error: str, raw: Any, root: Path, context: RenameContext |
     from git:
     - the failure is a `missing_ref` whose referring file (`path`) is sealed evidence under Plans/.evidence/,
       written in its normal form (T53: `Plans/.evidence/../x` is not evidence), and the branch did not
-      change that file (it is not in `git diff --name-only <base>..HEAD`): generated evidence is only
+      change that file (T63, RenameContext.left_alone: it is not in `git diff --name-only -z <base>..HEAD`,
+      the working tree holds no change to it, and it is no symbolic link): generated evidence is only
       rewritten by a reseal, so a branch-edited evidence file's references are the branch's own;
     - its target (`artifact_ref`, else `artifact`, else `ref`) is a line-range shard, directly under
       Plans/_shards/<document>/, in its normal form, that no longer exists, and that did exist at the base
@@ -577,7 +595,7 @@ def renamed_shard_ref(error: str, raw: Any, root: Path, context: RenameContext |
     target = next((raw[k] for k in ("artifact_ref", "artifact", "ref") if isinstance(raw.get(k), str)), None)
     if not isinstance(source, str) or not source.startswith(SEALED_EVIDENCE_PREFIX) or not isinstance(target, str):
         return False
-    if not plain_repository_path(source) or not plain_repository_path(target) or source in context.touched:
+    if not plain_repository_path(source) or not plain_repository_path(target) or not context.left_alone(source):
         return False
     parts = target.split("/")
     if not target.startswith(SHARDS_PREFIX) or len(parts) != 4 or not parts[2] or ".." in parts:
@@ -908,15 +926,17 @@ def reported_count(report: dict[str, Any], subcheck: str, fallback: int) -> int:
 
 
 def branch_paths(root: Path, base: str) -> list[str]:
+    """The paths the branch's commits changed. T63: read with -z (NUL-separated, never quoted) and
+    core.quotePath=false, so a path with non-ASCII characters is the path itself, as every other reader names
+    it, not git's quoted form ("Plans/.evidence/\\303\\251.json")."""
     proc = subprocess.run(
-        ["git", "diff", "--name-only", f"{base}..HEAD"],
+        ["git", "-c", "core.quotePath=false", "diff", "--name-only", "-z", f"{base}..HEAD"],
         cwd=root,
         capture_output=True,
-        text=True,
     )
     if proc.returncode != 0:
-        raise RuntimeError(f"git diff --name-only {base}..HEAD failed: {(proc.stderr or '').strip()}")
-    return sorted({line.strip() for line in proc.stdout.splitlines() if line.strip()})
+        raise RuntimeError(f"git diff --name-only {base}..HEAD failed: {(proc.stderr or b'').decode('utf-8', 'replace').strip()}")
+    return sorted({path for path in proc.stdout.decode("utf-8", "surrogateescape").split("\0") if path})
 
 
 PM7_INVENTORY = "Plans/settings_inventory.json"
