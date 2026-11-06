@@ -247,6 +247,9 @@ html .o55-demo[data-o55-narrow] .o55-demopill { width: 20px; height: 44px; paddi
 .o55-lookbtn.o55-on { color: var(--o55-accent, var(--accent-blue)); background: color-mix(in srgb, var(--o55-accent, var(--accent-blue)) 14%, transparent); }
 .o55-lookmenu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 30; width: 236px; max-width: calc(100vw - 24px); box-sizing: border-box; padding: 8px; display: grid; gap: 8px; border-radius: 14px; border: 1px solid var(--border);
   background: linear-gradient(var(--surface), var(--surface)), var(--background); color: var(--text-primary); box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.5); animation: o55-lookin 180ms cubic-bezier(0.2, 0, 0, 1) both; }
+/* FO-56: keep every note reachable inside the window without moving its header.
+   Intrinsic rows must not shrink when the menu becomes a scroll container. */
+.o55-lookslot .o55-lookmenu { top: var(--o55-look-top); max-height: var(--o55-look-room); overflow-y: auto; overscroll-behavior: contain; grid-auto-rows: max-content; }
 .o55t-lookslot .o55-lookmenu { top: auto; bottom: calc(100% + 12px); }
 @keyframes o55-lookin { from { opacity: 0; transform: translateY(-6px) scale(0.98); } }
 .o55t-lookslot .o55-lookmenu { animation-name: o55-lookup; }

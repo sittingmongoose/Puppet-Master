@@ -325,7 +325,9 @@
     {
       "id": "general.visual.theme",
       "label": "Theme",
-      "desc": "Pick a look: Basic, Friendly, Glass, Retro or NieR. Each has a light and dark version.",
+      "desc": "Pick one of five looks: Basic, Friendly, Retro, Glass or NieR. Light or dark is the only scheme control, offering Light, Dark and Auto. Changing the look preserves the chosen scheme, including Auto.",
+      "presentation_options": ["Basic", "Friendly", "Retro", "Glass", "NieR"],
+      "presentation_contract": "Show only the five family names in Theme. The options below are retained composite storage values for compatibility, not additional visible choices. Map a family pick to its resolved composite value while preserving general.visual.theme-mode; commit the pair atomically. Existing per-Project selections remain intact; no data migration.",
       "type": "select",
       "options": [
         "Basic Dark",
@@ -380,7 +382,7 @@
     {
       "id": "general.visual.theme-mode",
       "label": "Light or dark",
-      "desc": "Switches the chosen theme between light and dark. Match my computer follows your computer, and Theme shows the version you see.",
+      "desc": "The single scheme control for every theme: Light, Dark or Auto (Match my computer). Auto follows your computer while Theme continues to show the chosen family.",
       "type": "select",
       "options": [
         "Light",
@@ -501,7 +503,7 @@
     {
       "id": "general.visual.basic-color-scheme",
       "label": "Light Or Dark (Basic Theme)",
-      "desc": "Picks light, dark, or follow-your-computer coloring when the Basic Modern theme is active. Switches live, no restart. (Superseded by general.visual.theme-mode)",
+      "desc": "Retired visible control by Jared on 2026-11-04 (SW-04): never offer a second scheme menu, including in advanced Basic settings. Retain saved values for compatibility; general.visual.theme-mode is the single Light / Dark / Auto choice for every family. (Superseded by general.visual.theme-mode)",
       "type": "select",
       "options": [
         "Light",
@@ -22250,15 +22252,15 @@
     {
       "id": "planning.verification.repair-budget-exhaustion",
       "label": "When fix attempts run out",
-      "desc": "If repair attempts are used up: stop the work entirely, or finish marked 'degraded' so you know it wasn't fully verified.",
+      "desc": "If repair attempts are used up: stop the work, or stop and ask you to approve finishing with a recorded exception, which is never shown as fully verified.",
       "type": "select",
       "options": [
         "block",
-        "degraded"
+        "ask_exception"
       ],
       "option_labels": {
         "block": "Stop the work",
-        "degraded": "Finish, marked not fully checked"
+        "ask_exception": "Stop and ask me to approve an exception"
       },
       "default": "block",
       "scope": [

@@ -1,3 +1,5 @@
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { onboardingApp } from '../helpers/onboarding-fields.mjs';
 // Back after a change (final-onb BACK-STATE-GAPS-78C, FO-22's class): a finished subflow is invalidated, then Back walks
 // all the way to the start of history and the wizard goes forward again. Every row uses real clicks. A saved session is
@@ -341,7 +343,8 @@ const goOnToReview = async (A) => { for (let i = 0; i < 20; i++) { const s = awa
     else { await A.waitEnabled(s.primary && s.primary.action || 'next').catch(() => {}); await pressOn(A); } await A.sleep(900); } await A.screen('review'); };
 /* a record written on a predecessor page by its own public controls, closed, and carried unchanged to this build (rows 12
    and 16) */
-const oldUrl = (p) => (/^file:/.test(p) ? p : 'file://' + p) + '?o55=fresh&o55scenario=fresh';
+/* (an http(s) or file: address as given; a bare path, relative or a Windows drive path, made a file: URL) */
+const oldUrl = (p) => { const u = /^(https?|file):/i.test(p) ? p : pathToFileURL(path.resolve(p)).href; return u + (u.includes('?') ? '&' : '?') + 'o55=fresh&o55scenario=fresh'; };
 const onOldPage = async (A, page, walk) => { await A.boot(); await A.frame().goto(oldUrl(page)); await A.screen('welcome'); await A.click('start', undefined, 'look'); await A.click('pickFamily', 'basic'); await A.click('pickMode', 'light'); await A.click('next', undefined, 'where');
   await walk(A); await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(900); return A.frame().evaluate(() => JSON.stringify(O55.store.get('onboarding', null))); };
 const resumeRecord = async (A, saved) => { await A.boot(); await A.frame().locator('[data-o55-do="close"]').first().click(); await A.sleep(800);

@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L5446-L27012
 
-Source SHA256: `4cc841071214af7f59a3f0bb3156dfa4d7b7c3e42564e13f9b8b24a742ced53c`
+Source SHA256: `5e31ae60db6d0b015b0d9deba42d940bae1d8f3edb4e4f588b40eac38c7f4cb8`
 
 ---
 
@@ -4027,7 +4027,7 @@ unit_type: requirement
 status: accepted
 owner_doc: Plans/FinalGUISpec.md
 canonical_text: |-
-  The GUI exposes exactly ten built-in theme choices across five families, Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark and NieR Light, with Basic Dark as the bundled factory fallback when no applicable explicit value exists. An existing explicit saved Project selection survives, and a copied Project receives a detached selection snapshot. The former Friendly Dark default and the earlier three-choice Retro Dark/Retro Light/Basic contract are superseded lineage kept findable; all ten variants remain supported. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Resolve the atomic look pair before the first visible frame, including No project. Preserve Q22 migration, retired general.visual.nier-mode, the five-family/ten-variant set and all existing look/animation behavior.
+  The GUI exposes five visible family choices (Basic, Friendly, Glass, Retro, NieR) plus one Light/Dark/Auto control (DL-301), yielding ten resolved built-in variants (Basic Dark, Basic Light, Friendly Dark, Friendly Light, Glass Dark, Glass Light, Retro Dark, Retro Light, NieR Dark and NieR Light), with Basic Dark as the bundled factory fallback when no applicable explicit value exists. An existing explicit saved Project selection survives, and a copied Project receives a detached selection snapshot. The former Friendly Dark default and the earlier three-choice Retro Dark/Retro Light/Basic contract are superseded lineage kept findable; all ten variants remain supported. Amended Q22, Jared 2026-10-30 (DL-257): the fifth NieR family supersedes independent-override wording; SSYS-043 owns migration and retained Adjust controls. SSYS-002/059 and F3-670 supply the single effective result for Default → Everywhere → Computer (Device for screen rows) → Project → existing owner/chat/run/tab levels, with Managed constraints and the declared more-careful/Computer-ceiling exceptions. App contexts omit Project. Own values remain sparse; detached copied own values do not follow their source Project. Resolve the atomic look pair before the first visible frame, including No project. Preserve Q22 migration, retired general.visual.nier-mode, the five-family/ten-variant set and all existing look/animation behavior.
 gui_related: true
 gui_classification_reason: >-
   This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
@@ -4581,8 +4581,8 @@ canonical_text: >-
   removed. The segmented control uses cmd.settings.transaction.preview then cmd.settings.transaction.apply for
   the existing atomic family/mode pair (DL-228); each family pick composes cmd.settings.transaction.preview then
   cmd.settings.transaction.apply for the atomic family/mode pair under SSYS-009. Auto follows OS appearance live
-  for every family including NieR. Settings exposes the same ten variants and existing theme
-  folder/create/import/export actions. Entering NieR uses its one Reboot moment only when the Reboot moment part
+  for every family including NieR. Settings exposes the same five family choices plus one Light/Dark/Auto control (DL-301), resolving to ten
+  variants, and existing theme folder/create/import/export actions. Entering NieR uses its one Reboot moment only when the Reboot moment part
   is installed; otherwise it uses the standard look cover. Leaving NieR and switching Light/Dark within NieR use
   the standard look cover. Reduced Motion keeps the existing calm/instant settle policy. Explicit Play reboot
   moment remains a local rehearsal that changes no setting. Amended Q22, Jared 2026-10-30 (DL-257): the fifth

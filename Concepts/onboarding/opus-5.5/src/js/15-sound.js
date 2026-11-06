@@ -1716,9 +1716,13 @@
       const off = new OfflineAudioContext(2, 1, rate);
       S.ctx = off; S.master = buildMaster(off).master;
       music.rot = Object.assign({}, music.rot); starts.length = 0; active.length = 0; recent = null;
+      const entry = {};
       queue = [{ kit, ev: 'callout', event: 'callout', opts: { variant: 0, intensity: 0.55, pan: 0 },
-        entry: {}, prio: PRIO.callout, at: performance.now() }];
-      flushing = true; flush(); off.startRendering().catch(() => {}); done.add(kit);
+        entry, prio: PRIO.callout, at: performance.now() }];
+      // Offline rehearsal needs no gesture and cannot reach the live device.
+      // The live voice path continues to require ensureContext's gesture gate.
+      flushing = true; flush(off); off.startRendering().catch(() => {});
+      if (entry.played && !entry.error) done.add(kit);
     } catch (_) { /* Preparation never prevents the original live fallback. */ }
     finally {
       S.ctx = saved.ctx; S.master = saved.master; queue = saved.queue; flushing = saved.flushing;
@@ -1741,8 +1745,8 @@
 
   /* one sound: its chain (level and trim, darker when quiet, placed toward the click or where its helper stands) and
      the kit's recipe (or its pre-rendered take) */
-  function voice(item) {
-    const ctx = ensureContext();
+  function voice(item, offlineContext) {
+    const ctx = typeof OfflineAudioContext !== 'undefined' && offlineContext instanceof OfflineAudioContext ? offlineContext : ensureContext();
     if (!ctx || ctx.state === 'closed') { drop(item, 'no-audio'); return null; }
     const { kit, ev, opts, entry } = item, fns = poolOf(kit, ev);
     const vi = opts.variant != null ? Math.max(0, Math.min(fns.length - 1, opts.variant | 0)) : pick(kit, ev, fns.length);
@@ -1813,7 +1817,7 @@
   function chordNote(event, o) {
     return !!(STAGE.has(event) && o.voice != null && lastVoice[event] != null && (o.voice | 0) !== lastVoice[event]);
   }
-  function flush() {
+  function flush(offlineContext) {
     flushing = false;
     const batch = queue; queue = [];
     if (!batch.length) return;
@@ -1832,7 +1836,7 @@
     }
     /* a burst (six sounds in half a second) keeps only what matters; texture, foley and ticks have their own limits */
     if (win.prio < 60 && !BURST_FREE.has(win.event) && starts.length >= 6 && now - starts[starts.length - 6] < 500) { batch.forEach((it) => drop(it, 'busy')); return; }
-    const h = voice(win);
+    const h = voice(win, offlineContext);
     if (h) {
       playedAt[win.event] = m; if ((win.event === 'chapter' || win.event === 'quest') && win.opts.depth >= 4) playedAt.resolve = m;
       if (win.prio >= 75 && !win.layer) big = { m, prio: win.prio, event: win.event };
@@ -1840,8 +1844,8 @@
     if (h && !win.layer) recent = { t: now, prio: win.prio, event: win.event, handle: h, entry: win.entry };
     for (let i = 1; i < batch.length; i++) {
       const it = batch[i];
-      if (!win.layer && layers(win.event, it.event)) { it.layer = true; voice(it); }
-      else if (musicalRepeat(it, win)) voice(it);
+      if (!win.layer && layers(win.event, it.event)) { it.layer = true; voice(it, offlineContext); }
+      else if (musicalRepeat(it, win)) voice(it, offlineContext);
       else drop(it, 'merged', win.event);
     }
   }

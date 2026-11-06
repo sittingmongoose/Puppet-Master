@@ -188,7 +188,7 @@
       if (!r.contains(e.target)) { interruptShow(); return; }
       if (ev === 'keydown' && st.look && st.look.anyKey && !MOD.test(e.key)) { st.keyStop = M.now(); interruptShow(); }
     }, true));
-    window.addEventListener('resize', () => { if (TR.running) { st.fixed = null; place(true); } });
+    window.addEventListener('resize', () => { if (TR.running) { st.fixed = null; place(true); boundLookMenu(); } });
     document.addEventListener('visibilitychange', () => { if (st.root) st.root.toggleAttribute('data-hidden', document.hidden); });
     emit('build', { root: r });
     return r;
@@ -230,6 +230,17 @@
       + (O55.lookMenu ? `<span class="o55t-lookslot">${O55.lookMenu.button('o55t-barbtn o55t-sound', 'data-o55t', st.lookOpen)}${st.lookOpen ? O55.lookMenu.panel('data-o55t') : ''}</span>` : '')
       + O55.sound.buttonHtml('o55t-barbtn o55t-sound').replace('data-o55-do="sound"', 'data-o55t="sound"'));
     bar.querySelector('.o55t-pips').innerHTML = pips;
+    boundLookMenu();
+  }
+  /* The centred tour bar can be wider than a narrow viewport in NieR's tracked type.
+     Keep the popup anchored to its button while bounding its own box to the viewport. */
+  function boundLookMenu() {
+    const menu = st.root && st.root.querySelector('.o55t-lookslot .o55-lookmenu');
+    if (!menu) return;
+    const slot = menu.parentElement.getBoundingClientRect();
+    const width = menu.offsetWidth;
+    const left = Math.max(12, Math.min(slot.right - width, innerWidth - width - 12));
+    menu.style.right = `${slot.right - left - width}px`;
   }
   /* the look menu opens and closes like a sheet, and sounds like one ('sheet', 'unsheet') */
   function lookMenu(open) {
@@ -718,8 +729,8 @@
     if (a === 'sound') { O55.sound.toggle('tour'); renderBar(); return; }
     /* the look, after setup: saved through Settings at once (the tour follows the change) */
     if (a === 'lookMenu') { lookMenu(!st.lookOpen); return; }
-    if (a === 'lookFamily') { O55.lookMenu.save(arg, O55.theme().mode); return; }
-    if (a === 'lookMode') { O55.lookMenu.save(O55.theme().chosen, arg); return; }
+    if (a === 'lookFamily') { O55.lookMenu.save(arg); return; }
+    if (a === 'lookMode') { O55.lookMenu.save(null, arg); return; }
     /* NieR Mode in the look menu: the checkbox and Adjust NieR look (O55.lookMenu.nier, after setup: live) */
     if (a === 'lookNier' || a === 'lookNierAdjust') {
       if (!(O55.lookMenu && O55.lookMenu.nier)) return;

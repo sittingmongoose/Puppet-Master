@@ -79,8 +79,25 @@ def _mask_fast(data, mask):
 
 
 class Browser:
-    def __init__(self, port=9333, width=1600, height=1000, extra=(), headless=True):
+    def __init__(self, port=9333, width=1600, height=1000, extra=(), headless=True, attach=None):
         self.port = port
+        # Attach to a browser someone else started and owns (browser-check exec puts its GPU-checked browser's
+        # endpoint in BROWSER_CHECK_CDP_WS): no launch, no profile, and close() leaves that browser running.
+        # Its flags are its own, so extra and headless are ignored then.
+        attach = attach or os.environ.get('BROWSER_CHECK_CDP_WS')
+        self.proc = None
+        self.targets = []
+        if attach:
+            self.version = {'webSocketDebuggerUrl': attach}
+            self._start(attach)
+            # The same keys /json/version gives a launched browser (perf.py records 'Browser' as chrome)
+            try:
+                v = self.send('Browser.getVersion', timeout=10)
+                self.version.update({'Browser': v.get('product'), 'Protocol-Version': v.get('protocolVersion'),
+                                     'User-Agent': v.get('userAgent'), 'V8-Version': v.get('jsVersion')})
+            except Exception:
+                pass
+            return
         self.profile = os.path.join(HERE if IS_WIN else os.environ.get('PM_PROFILE_DIR', os.path.expanduser('~/pm-scratch')), f'profile-{port}')
         shutil.rmtree(self.profile, ignore_errors=True)
         args = [CHROME, f'--remote-debugging-port={port}', '--remote-allow-origins=*', f'--user-data-dir={self.profile}',
@@ -100,7 +117,10 @@ class Browser:
         if not ver:
             raise RuntimeError('no devtools endpoint')
         self.version = ver
-        self.ws = WS(ver['webSocketDebuggerUrl'])
+        self._start(ver['webSocketDebuggerUrl'])
+
+    def _start(self, ws_url):
+        self.ws = WS(ws_url)
         self.id = 0
         self.pending = {}
         self.listeners = []
@@ -147,9 +167,19 @@ class Browser:
         t = self.send('Target.createTarget', {'url': 'about:blank'})['targetId']
         s = self.send('Target.attachToTarget', {'targetId': t, 'flatten': True})['sessionId']
         pg = Page(self, s, width, height); pg.target = t
+        self.targets.append(t)
         return pg
 
     def close(self):
+        if self.proc is None:
+            # attached: close only the pages this script opened, then let go of the connection
+            for t in self.targets:
+                try: self.send('Target.closeTarget', {'targetId': t}, timeout=5)
+                except Exception: pass
+            self.alive = False
+            try: self.ws.sock.close()
+            except Exception: pass
+            return
         try: self.send('Browser.close', timeout=5)
         except Exception: pass
         self.alive = False
