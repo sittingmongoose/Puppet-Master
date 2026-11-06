@@ -170,8 +170,23 @@ async function arrive(t, f) {
 	return f.waitForFunction(() => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return !!st && !st.sleepZ; }, null, { timeout: 4000 }).then(() => true, () => false);
 }
 
+// the onboarding window's own ready state: open (O55.S.open, its root data-open), its session made (O55.S.sess) and its
+// stage drawn. A freshly loaded page can reach the first look change before the window has opened; applyLook then read
+// S.sess.drafts while S.sess was still null and threw (T43, opus-recheck-retro6). Waited on before any look is applied.
+const OWNER_READY = () => {
+	const O = window.O55, S = O && O.S;
+	return !!(S && S.open && S.sess && S.sess.status === 'active' && S.root && S.root.getAttribute('data-open') === 'true' && O.ui && typeof O.ui.applyLook === 'function' && O.pipStage && O.pipStage.of(S.root.querySelector('.o55-stage')));
+};
+const ownerReady = async (t, f, look) => {
+	if (await f.evaluate(OWNER_READY).catch(() => false)) return true;
+	const t0 = Date.now(), ok = await f.waitForFunction(OWNER_READY, null, { timeout: 15000 }).then(() => true, () => false);
+	t.log(`the onboarding window was not ready when ${look} was to be applied: waited ${Date.now() - t0} ms (${ok ? 'ready' : 'never ready'})`);
+	return ok;
+};
+
 // the look, as the window's look menu picks it (the page's own theme switch does not reach an open setup window)
 async function stageLook(t, f, look) {
+	if (!(await ownerReady(t, f, look))) return t.check(`the onboarding window is open with its session and stage before ${look} is applied`, false, await f.evaluate(() => JSON.stringify({ open: !!(window.O55 && O55.S && O55.S.open), sess: !!(window.O55 && O55.S && O55.S.sess) })).catch((e) => e.message), { hard: true });
 	await f.evaluate(([fam, m]) => window.O55.ui.applyLook(fam, m), look.split('-'));
 	await f.waitForFunction((lk) => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return !!st && st.theme === lk; }, look, { timeout: 15000 }).catch(() => {});
 	const th = await f.evaluate(() => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return st ? st.theme : 'no stage'; });
