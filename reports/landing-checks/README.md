@@ -611,8 +611,11 @@ counter: its rise reads as staleness when a printed stale row names a batch file
 landing 2 caused the rise past the print cap. (C) Baseline age is measured from `batch-start`, up to two hours older
 than `origin/main`. The rule closes all three rather than accepting them: a landing whose report shows changed
 pre-existing rows in a bucket an earlier member also changed, or a readiness growth counter judged as staleness
-above the highest total any earlier member's report showed, is treated like a stopped landing (the batch closes and that landing is rechecked alone), and no batch
-opens within two hours of the seven-day limit. `scripts/pm-land.py` enforces the same.
+above the highest total any earlier member's report showed, is treated like a stopped landing (the batch closes and that landing is rechecked alone), and so is one whose
+`Gone since the baseline` count falls below an earlier member's (a bucket an earlier member emptied has come back,
+which no printed row shows); no batch opens within two hours of the seven-day limit. What stays unseen: a fall
+and rise inside one bucket that no report prints and that leaves the gone count unchanged; the comparison of
+changed rows then remains the lander's guard, as it is for a single landing. `scripts/pm-land.py` enforces the same.
 
 Why: from 2026-11-03 to 2026-11-06 `main` took about 18 follow-ups, about one per Plans landing. The two
 timed from the stream logs held the lock about 26 and 27 minutes each (snapshot about 5 minutes, then
