@@ -368,6 +368,30 @@ export default async function (t) {
       if (!p.wheeled && p.onTop) await loc.click(opts.at ? { position: opts.at, button: opts.button } : { button: opts.button });
       else await t.page.mouse.click(off.x + p.x, off.y + p.y, opts.button ? { button: opts.button } : {});
     };
+    // FO-84d: every disclosure the panel shows outside its scrollers (button[aria-expanded], not a tab or a popup
+    // trigger; Source Control's Publish and review chevron in each engine) folds on one press and unfolds on a second,
+    // and Enter and Space on the focused control do the same.
+    const disclosures = {};
+    const disclosureCensus = async (state) => {
+      const ctls = await panel.evaluate(p => {
+        document.querySelectorAll('[data-shelf-disc]').forEach(e => e.removeAttribute('data-shelf-disc'));
+        const scs = [...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY));
+        return [...p.querySelectorAll('button[aria-expanded]')].filter(e => e.checkVisibility() && e.getAttribute('role') !== 'tab' && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
+          .map((e, i) => { e.setAttribute('data-shelf-disc', String(i)); return { i, label: e.getAttribute('aria-label') || (e.parentElement?.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40) || String(e.className) }; });
+      });
+      disclosures[state] = ctls.length;
+      for (const c of ctls) {
+        const ctl = panel.locator(`[data-shelf-disc="${c.i}"]`), was = await ctl.getAttribute('aria-expanded'), flip = was === 'true' ? 'false' : 'true';
+        const expect = async (want, how) => {
+          const ok = await f.waitForFunction(([e, w]) => e.getAttribute('aria-expanded') === w, [await ctl.elementHandle(), want], { timeout: 2000 }).then(() => true, () => false);
+          await t.check(`${target} ${state} disclosure (${c.label}) ${how} sets aria-expanded=${want}`, ok, '', { hard: true });
+        };
+        await pressAt(ctl, await reach(ctl)); await expect(flip, 'one press');
+        await pressAt(ctl, await reach(ctl)); await expect(was, 'a second press');
+        await ctl.focus(); await t.page.keyboard.press('Enter'); await expect(flip, 'Enter');
+        await t.page.keyboard.press(' '); await expect(was, 'Space');
+      }
+    };
     // A short window (1280x500) can leave a panel's list scroller almost entirely under its strips and cards (Source
     // Control with Publish and review open exposes about 16 px of list). As a person would, fold the panel's expanded
     // regions outside its scrollers (real clicks on aria-expanded="true" controls that are not tabs or popup triggers)
@@ -485,6 +509,7 @@ export default async function (t) {
       await t.check(`${target} engine ${engine} selected`, await panel.evaluate((p, en) => p.dataset.scmEngine === en, engine), '', { hard: true });
       await f.waitForTimeout(400);
     }
+    await disclosureCensus(engine || 'panel');
     await makeRoom(engine || 'panel');
     const tabs=await panel.locator('[role="tab"]').evaluateAll(es=>{
       document.querySelectorAll('[data-shelf-tab]').forEach(e=>e.removeAttribute('data-shelf-tab'));
@@ -576,6 +601,7 @@ export default async function (t) {
     exercised.forEach(k => opened.add(k));
     await t.check(target+' routed shelf census',expectedRouted[target].every(k=>inventory.has(k)),JSON.stringify(row),{hard:true});
     await t.check(target+' complete shelf menu inventory exercised',inventory.size===exercised.size&&[...inventory].every(k=>exercised.has(k)),JSON.stringify(row),{hard:true});
+    if (target === 'panel-source') await t.check(`${target} a disclosure in each engine`, engines.length > 0 && engines.every(en => (disclosures[en] || 0) >= 1), JSON.stringify(disclosures), { hard: true });
     await t.check(target+' popup menu floor', (expectedPopups[target] || []).every(k => row.popups.includes(k)), JSON.stringify({ floor: expectedPopups[target] || [], popups: row.popups }), { hard: true });
     for (const tab of expectedContext[target] || []) {
       const inputs = new Set(contextRoutes.filter(r => r.panel === target && r.tab === tab).map(r => r.input));
@@ -611,5 +637,5 @@ export default async function (t) {
   await t.check('at least 6 popup menus beyond the PMMenu wrappers exercised', new Set(popupRows.filter(r => !r.controls).map(r => r.identity)).size >= 6, JSON.stringify(popupRows));
   for (const [arg, hits] of [['blockContext', '__blockedContext'], ['blockPopup', '__blockedPopup'], ['blockBranch', '__blockedBranch']])
     if (t.args[arg]) await t.check(`capture blocker ${arg} intercepted input`, await f.evaluate(h => window[h] || 0, hits) > 0, String(t.args[arg]));
-  await f.evaluate(()=>document.querySelectorAll('[data-shelf-case],[data-shelf-route],[data-shelf-pop],[data-shelf-probe],[data-shelf-tab],[data-shelf-branch],[data-shelf-pick],[data-shelf-fold]').forEach(e=>{for(const a of ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch','data-shelf-pick','data-shelf-fold'])e.removeAttribute(a);}));
+  await f.evaluate(()=>document.querySelectorAll('[data-shelf-case],[data-shelf-route],[data-shelf-pop],[data-shelf-probe],[data-shelf-tab],[data-shelf-branch],[data-shelf-pick],[data-shelf-fold],[data-shelf-disc]').forEach(e=>{for(const a of ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch','data-shelf-pick','data-shelf-fold','data-shelf-disc'])e.removeAttribute(a);}));
 }
