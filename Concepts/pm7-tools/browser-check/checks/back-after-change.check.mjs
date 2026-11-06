@@ -440,13 +440,25 @@ const clickOrSend = async (A, sel) => { const el = A.frame().locator(sel).filter
 /* another value on the screen, not continued: a card or switch not chosen, else a field typed differently */
 /* the last pick pickOther made, for the walk's took-check (T37): its action and argument, or the field it typed in */
 let LAST_PICK = null;
-/* T37: whether the last pick took. A typed pick took when its field now holds the text typed (a password field
-   is in neither SEL nor ANSWERS: r-unlock's phrase); any other pick when the screen's own selection or the
-   session's answers differ from before it (pre: [ANSWERS, SEL] read just before the pick). */
+/* T37: whether the last pick took. A typed pick took when its field now holds the text typed and (T51, TOOLBATCH2
+   pre-check finding 6) the session's answers follow the field: they differ between the field emptied and the field
+   holding the text (read after any click that revealed the field). A field's DOM value alone is not the app taking
+   it (its bind handler made a no-op, s-wait's server.addr never changed, and the walk passed). ANSWERS holds every input path the
+   product declares (60-ui-core.js INPUTS: r-unlock's restore.typed and restore.bad, s-confirm's server.codeEdited,
+   nas-pmpair's nas.pairing, beside what it already held), so a password field (r-unlock's phrase, in neither SEL nor
+   ANSWERS by value) is seen through its typed flag. A value the product keeps only outside the session (c-pair's
+   code) cannot be shown taken and fails closed; the walk types into none. Any other pick took when the screen's own
+   selection or the session's answers differ from before it (pre: [ANSWERS, SEL] read just before the pick). */
 const pickTook = async (A, pre) => {
-  if (LAST_PICK && LAST_PICK.field) return A.frame().evaluate(([id, v]) => { const i = document.getElementById(id); return !!i && i.value === v; }, [LAST_PICK.field, LAST_PICK.typed]);
+  if (LAST_PICK && LAST_PICK.field) {
+    const holds = await A.frame().evaluate(([id, v]) => { const i = document.getElementById(id); return !!i && i.value === v; }, [LAST_PICK.field, LAST_PICK.typed]);
+    LAST_PICK.held = holds;
+    return holds && LAST_PICK.answersCleared !== JSON.stringify(await A.frame().evaluate(ANSWERS));
+  }
   return JSON.stringify(pre) !== JSON.stringify([await A.frame().evaluate(ANSWERS), await A.frame().evaluate(SEL)]);
 };
+/* why a pick did not take, for the walk's message */
+const tookWhy = () => (LAST_PICK && LAST_PICK.field ? (LAST_PICK.held === false ? 'the field does not hold the text typed' : 'the field holds the text typed but the session\'s answers did not change') : 'neither the screen\'s selection nor the session\'s answers changed');
 const pickOther = async (A, which = 'first', revealed = false) => {
   LAST_PICK = null;
   /* Read choices after the screen's own entrance completes; an entering card can still have opacity zero. */
@@ -480,7 +492,16 @@ const pickOther = async (A, which = 'first', revealed = false) => {
     return null;
   }
   LAST_PICK = c;
-  if (c.field) { c.typed = (c.value || '') + ' changed'; await A.fill(c.field, c.typed); await A.sleep(400); return 'typed ' + c.field; }
+  /* (T51: the field is emptied first and the session's answers read then, so the took-check sees whether the session
+     follows the field: not a click made to reveal it, such as s-wait's address link, and not a flag already set on
+     the way forward, such as r-unlock's restore.typed. A protected field never shows what was typed (r-unlock's
+     phrase reads empty while restore.typed holds), and emptying an empty field sends the product nothing, so such a
+     field gets one character first: the product then sees the field emptied for real) */
+  if (c.field) { c.typed = (c.value || '') + ' changed';
+    if (await A.frame().evaluate((id) => { const i = document.getElementById(id); return !!i && i.value === ''; }, c.field)) { await A.fill(c.field, '.'); await A.sleep(200); }
+    await A.fill(c.field, ''); await A.sleep(250);
+    c.answersCleared = JSON.stringify(await A.frame().evaluate(ANSWERS));
+    await A.fill(c.field, c.typed); await A.sleep(400); return 'typed ' + c.field; }
   /* (the exact element chosen, wherever it is; when something on the page keeps it from a real click, its click event is
      sent instead: this row judges what a pick does, the click-reachability of every control is the audit's) */
   /* A refresh strips test-only attributes. Re-find this same action/argument inside its original surface, so a
@@ -501,11 +522,13 @@ const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.ma
   return { draft: d, connect: [c.manual || false, c.addr || '', c.openProject || null, JSON.stringify(cn)], nasTyped: [n.manual || false, n.addr || '', n.port == null ? null : String(n.port)], addresses: JSON.stringify(canon((S.sess.online || {}).addresses || {})),
     facts: JSON.stringify(canon({ hosts: S.env.here.knownHosts || {}, auth: (S.env.devices || []).map((x) => [x.id, (x.authorized || []).slice().sort()]), nasFacts: S.sess.nasFacts || {} })),
     nas: [n.device || null, n.method || null, n.share || null, n.volume || null, n.at || null, n.profile || null, !!n.trusted, !!n.installed, n.choice ? n.choice.id : null],
-    restore: [r.source || null, r.kit || null, r.cloud || null, r.device || null, r.pick || null, r.reachedFor || null], online: [ol.forge || null, ol.variant || null, ol.wanted === undefined ? null : !!ol.wanted],
+    restore: [r.source || null, r.kit || null, r.cloud || null, r.device || null, r.pick || null, r.reachedFor || null, !!r.typed, !!r.bad], online: [ol.forge || null, ol.variant || null, ol.wanted === undefined ? null : !!ol.wanted],
     backup: [b.dest || null, b.sub || null], ui: [u.where || null, u.whereAt || null, u.begin || null, u.beginSub || null],
     /* (T37: and which waiting guests' words are ticked on s-ready, a pending input Back must take back) */
-    server: (() => { const v = S.sess.server || {}; return [v.kind || null, v.target || null, !!v.manual, v.addr || '', v.platform || null, v.name || '', !!v.selfConfirmed, (v.candidates || []).filter((c) => c.confirmed).map((c) => c.id).sort()]; })(), signin: (() => { const si = S.sess.signin || {}; return [si.state || null, !!si.tokenTyped, si.method || null, si.account || null]; })(),
-    nasPick: [n.key || null, n.user || '', n.userEdit || false], accounts: JSON.stringify(canon(S.sess.forgeAccounts || {})) }; };
+    server: (() => { const v = S.sess.server || {}; return [v.kind || null, v.target || null, !!v.manual, v.addr || '', v.platform || null, v.name || '', !!v.selfConfirmed, (v.candidates || []).filter((c) => c.confirmed).map((c) => c.id).sort(), !!v.codeEdited]; })(), signin: (() => { const si = S.sess.signin || {}; return [si.state || null, !!si.tokenTyped, si.method || null, si.account || null]; })(),
+    /* (T51: the product's declared inputs not held above: nas-pmpair's pairing way, r-unlock's typed and bad flags in
+       restore, s-confirm's codeEdited in server; 60-ui-core.js INPUTS lists each) */
+    nasPick: [n.key || null, n.user || '', n.userEdit || false, n.pairing === undefined ? null : JSON.stringify(n.pairing)], accounts: JSON.stringify(canon(S.sess.forgeAccounts || {})) }; };
 /* Exemptions audited against the renderers, not inferred from NO_TXN (which can still have inputs):
    welcome: no answer; look: appearance applies live and is retained; review: confirmation, Edit leads to input owners.
    nas-identity: trust/stop, settled host fact; nas-install: install/check/retry operations on this completed route.
@@ -578,14 +601,23 @@ async function pickBackWalk(A, bad, label, judged = null) {
          must fail it. The page's handlers come back before Back. */
       if (SELFTEST === 'noop:' + s.screen) await A.frame().evaluate((id) => { const d = O55.screens.defs[id]; window.__kitNoop = Object.assign({}, d.do);
         Object.keys(d.do || {}).forEach((k) => { if (k !== 'back' && k !== 'next') d.do[k] = function () {}; }); }, s.screen);
+      /* T51 negative: --set selftest=nobind:<screen> turns that screen's field bindings (its def.bind handlers) into no-ops
+         for the pick only, so the text lands in the field and the session never sees it (the pre-check's nobind:s-wait);
+         the took-check must fail it. The handlers come back before Back. */
+      if (SELFTEST === 'nobind:' + s.screen) await A.frame().evaluate((id) => { const d = O55.screens.defs[id]; window.__kitNobind = Object.assign({}, d.bind);
+        Object.keys(d.bind || {}).forEach((k) => { d.bind[k] = function () {}; }); }, s.screen);
       did = SELFTEST === 'nopick' || SELFTEST === 'nopick:' + s.screen ? null : await pickOther(A);
       if (SELFTEST === 'noop:' + s.screen) await A.frame().evaluate((id) => { Object.assign(O55.screens.defs[id].do, window.__kitNoop); delete window.__kitNoop; }, s.screen);
+      const nobound = SELFTEST === 'nobind:' + s.screen ? !!(LAST_PICK && LAST_PICK.field) : null;
+      const took = did ? await pickTook(A, pre) : null;
+      if (SELFTEST === 'nobind:' + s.screen) { await A.frame().evaluate((id) => { Object.assign(O55.screens.defs[id].bind, window.__kitNobind); delete window.__kitNobind; }, s.screen);
+        if (!nobound) bad.push(`selftest nobind:${s.screen}: the walk typed nothing on ${s.screen} (${did || 'no pick'}), so the self-test exercised nothing`); }
       if (!did) bad.push(`${label} ${s.screen}: nothing to pick or type on this Back-walk screen, so nothing was checked`);
       /* T37: a pick counts only once it took. An attempted click proves nothing (astra-review-sw41 minor: a no-op project
          click was logged as a pick): the screen's own selection or the session's answers must differ before Back, the
          c-ready project must be the one clicked and not the one before, and a ticked guest's words must have flipped. */
       if (did) {
-        if (!await pickTook(A, pre)) bad.push(`${label} ${s.screen}: ${did}, but ${LAST_PICK && LAST_PICK.field ? 'the field does not hold the text typed' : 'neither the screen\'s selection nor the session\'s answers changed'} before Back, so the pick did not take and nothing was checked`);
+        if (!took) bad.push(`${label} ${s.screen}: ${did}, but ${tookWhy()} before Back, so the pick did not take and nothing was checked`);
         if (s.screen === 'c-ready' && LAST_PICK && LAST_PICK.do === 'pickProject') { const p1 = await A.frame().evaluate(() => O55.S.sess.connect.openProject);
           if (p1 !== LAST_PICK.arg || p1 === pending0) bad.push(`${label} c-ready: ${did}, but the pending project is ${JSON.stringify(p1)} (it was ${JSON.stringify(pending0)}), not the one clicked`); }
         if (s.screen === 's-ready' && LAST_PICK && LAST_PICK.do === 'match') { const c1 = await A.frame().evaluate((id) => !!((O55.S.sess.server.candidates || []).find((c) => c.id === id) || {}).confirmed, LAST_PICK.arg);
@@ -618,6 +650,9 @@ async function pickBackWalk(A, bad, label, judged = null) {
       if (ch.length) bad.push(`${label} ${s.screen}: ${did}, then Back, changed ${ch.map((k) => k === 'draft' ? 'draft(' + Object.keys(Object.assign({}, before.draft, after.draft)).filter((x) => JSON.stringify(before.draft[x]) !== JSON.stringify(after.draft[x])).slice(0, 6).join(', ') + ')' : k + ' ' + JSON.stringify(before[k]) + ' > ' + JSON.stringify(after[k])).join('; ')}`); }
     s = n;
   }
+  /* (T51: a nobind:<screen> self-test on a walk that never reaches that screen exercised nothing, and fails by name:
+     the online-import walk, for one, never shows online-signin, so nobind:online-signin passed there) */
+  if (SELFTEST.startsWith('nobind:') && !seq.includes(SELFTEST.slice(7))) bad.push(`selftest ${SELFTEST}: ${label}'s Back walk never reached ${SELFTEST.slice(7)} (${seq.join(' > ')}), so the self-test exercised nothing`);
   return { seq, picked };
 }
 const filesHere = async (A) => { await A.click('edit', 'name', 'name'); await A.click('change'); await A.click('loc', 'auto'); await A.click('sheet-close').catch(() => {}); await A.sleep(500); await onToReview(A); };
@@ -1263,7 +1298,7 @@ export const tests = {
           await A.click('edit', tg); await A.sleep(700); const sel0 = await A.frame().evaluate(SEL), ansE = await A.frame().evaluate(ANSWERS);
           const did = await pickOther(A, which);
           /* (T37: an Edit pick, too, counts only once it took) */
-          if (did && !await pickTook(A, [ansE, sel0])) bad.push(`21 ${kind} Edit ${tg}: ${did} on ${sel0.screen}, but the pick did not take, so nothing was checked`);
+          if (did && !await pickTook(A, [ansE, sel0])) bad.push(`21 ${kind} Edit ${tg}: ${did} on ${sel0.screen}, but ${tookWhy()}: the pick did not take, so nothing was checked`);
           if (!did) { if (which === 'first') { if (NO_PICK.includes(sel0.screen) || await A.frame().evaluate(NO_PICK_DONE, sel0.screen)) t.log(`21 ${kind} Edit ${tg}: ${sel0.screen} is a verification step, nothing to pick`); else bad.push(`21 ${kind} Edit ${tg}: nothing to pick or type on ${sel0.screen}, so nothing was checked`); }
             for (let i = 0; i < 3 && (await A.snap()).screen !== 'review'; i++) { await pressBack(A); await A.sleep(700); } continue; }
           if ((await A.snap()).screen !== sel0.screen) { bad.push(`21 ${kind} Edit ${tg}: ${did} left ${sel0.screen} for ${(await A.snap()).screen} without Continue`); break; }
