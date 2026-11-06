@@ -6,7 +6,8 @@ import { FIELDS, paintContract, evaluateWitness } from '../helpers/pip-witness.m
 
 const F = Object.fromEntries(FIELDS.map((k, i) => [k, i]));
 const strings = ['', 'friendly-light', 'welcome', 'start', 'Pip missing from the stage', 'animation@pst-svg', 'pstOn@content',
-	'head:clip=none|mask=none|filter=url|attr=', 'controller:clip=none|mask=linear-gradient(transparent, transparent)|filter=|attr='];
+	'head:clip=none|mask=none|filter=url|attr=', 'controller:clip=none|mask=linear-gradient(transparent, transparent)|filter=|attr=',
+	'stage collapsed in an open window', 'stage missing from an open window'];
 const S = (x) => strings.indexOf(x);
 let seq = 0;
 const rec = (o = {}) => {
@@ -32,10 +33,14 @@ assert.ok(why(rec({ sig: S('head:clip=none|mask=none|filter=url|attr=') })).some
 assert.ok(why(rec({ sig: S('controller:clip=none|mask=linear-gradient(transparent, transparent)|filter=|attr=') })).some((x) => /controller:clip=none\|mask=linear-gradient/.test(x))); checks++;
 assert.ok(why(rec({ dim: 0 })).some((x) => /brightness 0/.test(x))); checks++;
 assert.ok(why(rec({ leafArea: 0 })).some((x) => /painted leaves 0/.test(x))); checks++;
+/* T38: an open window's stage collapsed or missing is a lost Pip at its last box, not an absent stage */
+assert.match(why(rec({ gone: 1, why: S('stage collapsed in an open window') }))[0], /stage collapsed in an open window \(judged where Pip last was\)/); checks++;
+assert.match(why(rec({ gone: 1, why: S('stage missing from an open window') }))[0], /stage missing from an open window/); checks++;
+assert.equal(evaluateWitness({ ...w, recs: [...recs, rec({ gone: 1, why: S('stage collapsed in an open window'), placed: 0 })] }).find((a) => /are painted/.test(a.name)).ok, false); checks++;
 /* the whole judgement: one missing-Pip frame among clean ones fails the run's paint assertion */
 const bad = { ...w, recs: [...recs, rec({ gone: 1, why: S('Pip missing from the stage'), placed: 0 })] };
 const paint = (x) => evaluateWitness(x).find((a) => /are painted/.test(a.name));
 assert.equal(paint(w).ok, true); assert.equal(paint(bad).ok, false); checks++;
 /* an own effect ('a') is not a visible frame: not judged by the paint contract */
 assert.equal(paint({ ...w, recs: [...recs, rec({ cls: 'a', why: S('pstOn@content'), opHead: 0 })] }).ok, true); checks++;
-console.log(`PASS ${checks}: clean frame, missing Pip, stray ancestor animation, an unseen head filter, an unseen controller mask, brightness 0, no painted leaves, run judgement, own effect excused`);
+console.log(`PASS ${checks}: clean frame, missing Pip, collapsed stage, missing stage, collapsed stage in a run, stray ancestor animation, an unseen head filter, an unseen controller mask, brightness 0, no painted leaves, run judgement, own effect excused`);

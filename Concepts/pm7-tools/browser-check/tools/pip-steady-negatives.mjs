@@ -3,6 +3,7 @@
 // frame each loss was painted in, in its own look.
 //   node pip-steady-negatives.mjs --page <build.html> --out <fresh-dir> [--looks a,b | none] [--phases welcome]
 //        [--astra <astra mutation-friendly.html>] [--jobs <more.json>] [--url-base http://host:port/dir/ --serve-dir <dir>]
+//        (--looks takes look:kind for the extra losses of pip-steady-mutants.mjs, e.g. friendly-dark:hostscale)
 //        [-- <browser-check args, e.g. --sole>]
 //   node pip-steady-negatives.mjs --rejudge <out-dir>
 // --jobs adds films of pages as they are: [{ "name", "page", "looks", "phases", "sandbox", "marker", "expect" }], marker the
@@ -18,7 +19,7 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { MUTATIONS, mutate } from './pip-steady-mutants.mjs';
+import { MUTATIONS, mutate, kindsOf } from './pip-steady-mutants.mjs';
 import { readWitness, paintContract } from '../helpers/pip-witness.mjs';
 
 const all = process.argv.slice(2), dd = all.indexOf('--'), args = dd < 0 ? all : all.slice(0, dd), extra = dd < 0 ? [] : all.slice(dd + 1);
@@ -31,9 +32,9 @@ const serve = opt('serve-dir'), base = opt('url-base');
 if (!!serve !== !!base) { console.error('--serve-dir and --url-base go together'); process.exit(2); }
 const place = (name, html) => { const dir = serve || path.join(out, 'pages'); fs.mkdirSync(dir, { recursive: true }); fs.writeFileSync(path.join(dir, name), html); return serve ? base.replace(/\/?$/, '/') + name : path.resolve(dir, name); };
 const html = rejudge ? null : fs.readFileSync(page, 'utf8');
-const jobs = rejudge ? JSON.parse(fs.readFileSync(path.join(out, 'jobs.json'), 'utf8')) : (opt('looks') === 'none' ? [] : opt('looks') ? opt('looks').split(',') : Object.keys(MUTATIONS)).map((look, i) => {
-	const { out: m, kind } = mutate(html, look);
-	return { name: `mutant-${look}`, look, kind, page: place(`fo30-mutant-${look}.html`, m), sandbox: opt('sandbox') ?? String(i % 2), phases: opt('phases', 'welcome'), marker: 'PIP_MUTANT ' };
+const jobs = rejudge ? JSON.parse(fs.readFileSync(path.join(out, 'jobs.json'), 'utf8')) : (opt('looks') === 'none' ? [] : opt('looks') ? opt('looks').split(',') : Object.keys(MUTATIONS)).map((spec, i) => {
+	const { look, name } = kindsOf(spec), { out: m, kind } = mutate(html, spec);
+	return { name: `mutant-${name}`, look, kind, page: place(`fo30-mutant-${name}.html`, m), sandbox: opt('sandbox') ?? String(i % 2), phases: opt('phases', 'welcome'), marker: 'PIP_MUTANT ' };
 });
 if (!rejudge && opt('astra')) jobs.unshift({ name: 'astra-friendly-light', look: 'friendly-light', kind: 'opacity (Astra)', page: place('fo30-astra-mutation-friendly.html', fs.readFileSync(opt('astra'), 'utf8')), sandbox: opt('sandbox') ?? '0', phases: 'begin', marker: 'REVIEW_ONE_FRAME ' });
 /* --jobs <file.json>: more negatives, each [{ name, page, looks, phases, sandbox, marker, expect, filmOnly }], one film

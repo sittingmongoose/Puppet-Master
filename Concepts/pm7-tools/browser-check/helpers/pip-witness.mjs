@@ -77,20 +77,26 @@ export function installWitness(cfg) {
 		try { const t = a.effect.getTiming(); if (t.iterations !== 1 || !(t.duration <= 1500)) return null; } catch (_) { return null; }
 		return `${name}@${OWN[name]}`;
 	};
-	const MISSING = 'Pip missing from the stage';
-	/* Pip is expected from the product's own state (the window open, its stage on screen), never from whether Pip's
-	   nodes survived: a head that is gone or detached in an open window is a lost Pip, judged where Pip last was
-	   (astra-review-flash-2 F2). */
+	const MISSING = 'Pip missing from the stage', COLLAPSED = 'stage collapsed in an open window', NOSTAGE = 'stage missing from an open window';
+	const LOST = new Set([MISSING, COLLAPSED, NOSTAGE]);
+	/* Pip is expected from the product's own state (the window open, not in one of the phases the page declares below),
+	   never from whether Pip's nodes survived or from how big they paint: a head that is gone or detached in an open
+	   window is a lost Pip, judged where Pip last was (astra-review-flash-2 F2), and so is an open window's stage that is
+	   missing or painted collapsed (T38, astra-review-flash-3 F1: a scale(0) on the stage host made it "no stage on screen"
+	   and the frame was skipped). The window being closed is read from the product (O55.S.open), its morph and every other
+	   declared phase from the page's own marks, all before any geometry is read. */
 	const classify = (host, S, anims) => {
 		const O5 = window.O55, r = doc.getElementById('pm-o55-onboarding');
-		if (doc.hidden || !O5 || !O5.S || !O5.S.open || !r || !host) return ['o', 'window closed'];
-		const hr = host.getBoundingClientRect(); if (hr.width < 40 || hr.height < 40) return ['o', 'no stage on screen'];
+		if (doc.hidden || !O5 || !O5.S || !O5.S.open) return ['o', 'window closed'];
+		if (!r) return ['v', NOSTAGE];
 		if (r.matches('.o55-opening, .o55-closing')) return ['x', 'window morph'];
 		try { if (typeof window.PM_LOOK_COVERED === 'function' && window.PM_LOOK_COVERED()) return ['x', 'look cover']; } catch (_) { return ['x', 'look cover (unreadable)']; }
 		if (html.hasAttribute('data-o55-vt') || O5.S.vt) return ['x', 'view transition'];
 		if (doc.getElementById('o55np-reboot') || doc.getElementById('o55np-calm')) return ['x', 'NieR plate'];   /* (a selector list costs 1 ms here) */
 		if (window.PM_THEME_TRANSITION && window.PM_THEME_TRANSITION.busy && window.PM_THEME_TRANSITION.busy()) return ['x', 'look cover lift'];
 		if (O5.nierLook && O5.nierLook.busy && O5.nierLook.busy()) return ['x', 'NieR moment'];
+		if (!host) return ['v', NOSTAGE];
+		const hr = host.getBoundingClientRect(); if (hr.width < 40 || hr.height < 40) return ['v', COLLAPSED];
 		if (!S || S.dead || !S.gPip || !S.gHead || !S.gCtl || !S.gPip.isConnected || !S.gHead.isConnected || !S.gCtl.isConnected || !host.contains(S.gHead) || !host.contains(S.gCtl)) return ['v', MISSING];
 		if (S.famName === 'nier' && S.gSlice && S.gSlice.getAttribute('display') !== 'none') return ['a', 'NieR slice'];
 		/* one document.getAnimations() a frame (Element.getAnimations() walks the document's animations on every call) */
@@ -152,9 +158,9 @@ export function installWitness(cfg) {
 		/* calibration: a steady look only; aborted by anything the page declares, a rebuild or a look change */
 		const C = W.cal;
 		if (C) {
-			if (C.phase === 1 && !C.gHead && S && S.gHead && cls === 'v') { C.gHead = S.gHead; C.gCtl = S.gCtl; C.look = S.theme; }
+			if (C.phase === 1 && !C.gHead && S && S.gHead && cls === 'v' && !LOST.has(why)) { C.gHead = S.gHead; C.gCtl = S.gCtl; C.look = S.theme; }
 			const restore = () => { if (C.hidden) { C.gHead.style.visibility = C.oldH; C.gCtl.style.visibility = C.oldC; C.hidden = false; } };
-			if (!C.gHead || !S || S.gHead !== C.gHead || S.gCtl !== C.gCtl || S.theme !== C.look || cls !== 'v') {
+			if (!C.gHead || !S || S.gHead !== C.gHead || S.gCtl !== C.gCtl || S.theme !== C.look || cls !== 'v' || LOST.has(why)) {
 				if (C.gHead) { restore(); W.cal = null; C.done({ ok: false, id: C.id, why: !S ? 'stage gone' : S.gHead !== C.gHead ? 'rig rebuilt' : S.theme !== C.look ? 'look changed' : `${cls}: ${why}` }); }
 			} else {
 				if (C.phase === 1 && C.n >= C.pre) { C.oldH = C.gHead.style.visibility; C.oldC = C.gCtl.style.visibility; C.gHead.style.visibility = 'hidden'; C.gCtl.style.visibility = 'hidden'; C.hidden = true; C.phase = 2; C.n = 0; }
@@ -164,7 +170,7 @@ export function installWitness(cfg) {
 			}
 		}
 		rec[F.cls] = cls; rec[F.why] = str(why); rec[F.foreign] = str(foreign || '');
-		if (why === MISSING) {
+		if (LOST.has(why)) {
 			/* judged where Pip last was, in the look it was in; nothing of it is shown */
 			rec[F.gone] = 1;
 			if (W.last) for (const k of ['look', 'pipTheme', 'screen', 'hx', 'hy', 'hw', 'hh', 'cx', 'cy', 'cw', 'ch']) rec[F[k]] = W.last[k];
@@ -327,7 +333,7 @@ export function paintContract(w) {
 	const B = new Map();
 	for (const [k, a] of base) B.set(k, { leaf: median(a.map((r) => r[F.leafArea])), area: median(a.map((r) => r[F.hw] * r[F.hh])), clip: median(a.map((r) => r[F.clipFrac])), sigs: new Set(a.map((r) => r[F.sig])), n: a.length });
 	const why = (r) => {
-		if (F.gone !== undefined && r[F.gone]) return ['Pip missing from the stage (head or controller gone or detached in an open window)'];
+		if (F.gone !== undefined && r[F.gone]) return [S(r[F.why]) === 'Pip missing from the stage' || !S(r[F.why]) ? 'Pip missing from the stage (head or controller gone or detached in an open window)' : `${S(r[F.why])} (judged where Pip last was)`];
 		const b = B.get(S(r[F.look])), w2 = [];
 		if (F.foreign !== undefined && S(r[F.foreign])) w2.push(`an animation on Pip's ancestors that is not one of the stage's own effects: ${S(r[F.foreign])}`);
 		if (!r[F.headVis]) w2.push('head not shown'); if (!r[F.ctlVis]) w2.push('controller not shown'); if (!r[F.strVis]) w2.push('a string not shown');
