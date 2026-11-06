@@ -629,6 +629,16 @@ export default async function (t) {
           await t.check(`${target} accordion head on top where it is pressed`, hp.onTop, JSON.stringify(hp), {hard:true});
           await pressAt(head, hp, { at: {x:8,y:8} });
           await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),JSON.stringify(await head.evaluate((e,hp)=>{const r=e.getBoundingClientRect(),h=document.elementFromPoint(hp.x,hp.y);return {text:e.textContent.trim().replace(/\s+/g,' ').slice(0,40),cls:e.className,acc:e.closest('[data-acc]').className,r:[r.x,r.y,r.width,r.height].map(Math.round),hp,hitNow:h?.tagName+'.'+(h?.className?.baseVal??h?.className),own:!!h&&(h===e||e.contains(h))};},hp)),{hard:true});
+          // The rail skin scrolls an expander opened near the bottom into view 120 ms after the click, smoothly
+          // (15-jj.js, 30-motion.js revealInView): let its scrollers come to rest before the next press, or the
+          // next head moves under its press point (a slow machine pressed mid-scroll, on the card above).
+          await head.evaluate(e => new Promise(res => {
+            const scs = []; for (let a = e.parentElement; a; a = a.parentElement) if (a.scrollHeight > a.clientHeight) scs.push(a);
+            const t0 = performance.now(); let last = '', same = 0;
+            const tick = () => { const k = scs.map(x => x.scrollTop).join(); same = k === last ? same + 1 : 0; last = k;
+              if ((same >= 12 && performance.now() - t0 > 250) || performance.now() - t0 > 3000) res(); else requestAnimationFrame(tick); };
+            requestAnimationFrame(tick);
+          }));
           opened=true;
         }
         if(!opened)break;
