@@ -1207,3 +1207,27 @@ pm7-build's bar requires hypothetical findings to be fixed in batches, not only 
 The 8 new corpus entries: the 2 binding probes, the 3 encoding and line-ending probes, `negative_coverage_bytes_changed_during_corpus`, `positive_no_assert_statement_in_the_checker` and `positive_receipt_writer_runs_the_hashed_bytes`. Checker SHA-256: `a02acb057f6e9b1c833717d752547acbf5017f0b0eae84e9dbe239f103d9edca`.
 
 Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH3/seal/`: `base_demo.py` and `base-demo.json` (each new probe's scratch V and forged table judged by the base and the fixed `validate_coverage`, and the new table controls by both `module_scope_problems`), and the two corpus logs.
+
+## Tool batch 4: findings and responses (T64)
+
+**REVIEW-etools-tb3-opus findings 9 and 10 are fixed; nothing is disputed.** Base: `6facaeebc7`. Fix: `f8e3b1c1b4` on `plans/ea-seal-check-recount-20261105`. Only the checker (`CA-SEAL2-checks.py`) and the result records change. The frozen validator is byte-identical (SHA-256 `3e98a1651ec84de58bd101d8a45319fb6b1101598a144a08f4b4cb965ea48e72`), and so is the committed coverage table (`cb63253108aa84c347b44fb378e4ba67ce486c5efde311f7e36850d21a6e373f`). Both findings are HYPOTHETICAL: every route adds a call that needs a census row, so the table changes, and V has none of them (`v-scan-fix.json`: 7 module containers, 0 receivers outside a name, attribute or item chain that mention one, 0 loops over a display that holds one). No random-edit generator was written; the committed control (`negative_random_single_line_edits`, 200 edits) runs as before.
+
+| Finding | Location, cause and fix | Control (passes coverage on the base, refused now) |
+|---|---|---|
+| **9: three call-mutation routes left open** | `module_scope_problems`, `mutates_a_module_container`, `origin`. (a) The read-only exemption (`NON_MUTATING_CALLS`) now holds only for a container passed bare: never inside a display, never inside a Boolean, conditional or assignment expression, and never as a keyword value of `dict`, because `max([X])`, `min([X], key=len)`, `next(iter([X]))`, `sorted([X])[0]`, `list([X])[0]` and `dict(a=X)['a']` hand `X` back. (b) A method call's receiver is found with `origin()`, which now follows `BoolOp`, `IfExp`, `NamedExpr`, displays and their items, so `(X or []).clear()`, `(X if c else []).clear()`, `(y := X).clear()` and `[X][0].clear()` are refused. (c) Iterating over a display that holds the container itself binds the loop target (in a `for` or a comprehension) to the container, so `for x in [X]: list.clear(x)` is refused; iterating over the container's elements (`for e in X: out.append(e)`) stays allowed, as V and CA-SEAL use it. | Edit probes, every row forged: `binding_max_display_result_new_function` (`max([EVIDENCE_FIELDS]).clear()`), `binding_boolop_receiver_new_function` (`(EVIDENCE_FIELDS or []).clear()`), `binding_display_iteration_call_new_function` (`for pm_x in [EVIDENCE_FIELDS]: list.clear(pm_x)`). On `6facaeebc7` each passes coverage; now each is refused with `mutates_a_module_container` (`base-demo-tb4.json`). Table snippets judged by both `module_scope_problems`: the review's 16 shapes (`toy-base.json`, `toy-fix.json`) and 8 more (`base-demo-tb4.json`): every mutating shape refused now, none on the base; the controls `for x in [X]: x.clear()` (refused on both) and `for e in X: out.append(e)` with `sorted(X)` (allowed on both) keep their result. |
+| **10: the `-O` record could not show it was made under `-O`** | `run`. The result files record the interpreter (implementation, version, executable) and its flags (`optimize`, `dont_write_bytecode`, `isolated`, `hash_randomization`). | `CA-SEAL2-tb4-results.json` records `optimize: 0`; `CA-SEAL2-tb4-results-optimized.json` records `optimize: 1`; the two files now differ. |
+
+**Soundness:** nothing widens. Each change refuses more; the allowed controls keep their result, and V and CA-SEAL show no problem.
+
+### Rerun results
+
+| Check | Base `6facaeebc7` | Now |
+|---|---|---|
+| Corpus, `python3 -B CA-SEAL2-checks.py --source-map …/resume/source-locations.json` | 247/247 | **250/250**, exit 0, 4 min 29 s (`CA-SEAL2-tb4-results.json`, SHA-256 `9d5078c39cd9e59e4db0dfff7d1666a94d04531c5d869c3239a611959f75694a`); each of the 247 earlier rows is identical to `CA-SEAL2-tb3-results.json` |
+| The same under `python3 -O -B` | 247/247 | **250/250**, exit 0, 5 min 34 s (`CA-SEAL2-tb4-results-optimized.json`, SHA-256 `b05a852a49e96789b1cb9bc35bf3f2b3aa7b162ae48c9445e55d9189b7e5f858`) |
+| `negative_random_single_line_edits` (the committed control, table byte-identical) | pass | pass (200 edits, 200 failed) |
+| Validator, coverage table | `3e98a165…8e72`, `cb632531…373f` | unchanged |
+
+The 3 new corpus entries are the 3 edit probes above. Checker SHA-256: `57ee6e2539e677c336bed5d7f3969b50cfc6c9e77395a68ef1cab960a638a844`.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH4/seal/`: `base_demo_tb4.py` and `base-demo-tb4.json` (each new probe's scratch V and forged table judged by the base and the fixed `validate_coverage`, and the table snippets by both `module_scope_problems`), the review's `toy_module_scope.py` with `toy-base.json` and `toy-fix.json`, `v_scan_readonly.py` with `v-scan-fix.json`, and the two corpus logs with their timings.
