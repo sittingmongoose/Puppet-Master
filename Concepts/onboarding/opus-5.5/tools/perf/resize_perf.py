@@ -1,18 +1,22 @@
 """Resize-drag regression check: Home divider, Chat edge and Left Rail must track the pointer 1:1 without
-long frames. python3 resize_perf.py <page.html> [--themes friendly-dark,...] [--port 9347]
+long frames. python3 resize_perf.py <page.html> --reference <control.html> [--themes friendly-dark,...] [--port 9347]
 
 Frame-by-frame method: an in-page sampler records, per requestAnimationFrame, the last pointer position and
 the resized element's rendered edge, so lag is measured in pixels on the frames the compositor was offered.
 The Left Rail assertion is the regression this file exists for: during a user widen-drag the narrow ladder
 must not cap the slot back to its eased 240px (the width used to oscillate target <-> 240 mid-drag).
 
-GPU: like perf.py this drives real Chrome over CDP, but resize cost is GPU-sensitive, so on the Linux VM it
-keeps the GPU on (DISPLAY/XAUTHORITY + --enable-gpu, per the agent-browser guide) instead of perf.py's
---disable-gpu Linux default. Exits 1 when any assertion fails. Chrome profiles go to ~/pm-scratch."""
-import json, os, sys, time
+GPU: like perf.py this drives real Chrome over CDP on the Linux GPU desktop (DISPLAY/XAUTHORITY and --enable-gpu).
+Exits 1 when any assertion fails. Chrome profiles go to ~/pm-scratch."""
+import json, os, sys, time, subprocess, statistics, hashlib
 from cdp import Browser
 
 args = sys.argv[1:]
+if not args or '--help' in args:
+    print('Usage: resize_perf.py PAGE [--reference CONTROL] [--metrics JSON] [--themes friendly-dark,...] [--port 9347]')
+    print('Without --reference: standalone measurements only, no timing certification. The 200ms drag p95 cap and tracking checks always apply.')
+    print('With --reference: interleaved control/page/page/control timing certification per gesture, plus the same hard 200ms cap.')
+    sys.exit(0)
 page_file = os.path.abspath(args[0])
 opt = lambda k, d=None: args[args.index('--' + k) + 1] if '--' + k in args else d
 THEMES = opt('themes', 'friendly-dark').split(',')
@@ -40,7 +44,7 @@ SAMPLER = r"""
   }
   const loop = (t) => { if (!R.on) return; const r = (R.el && R.el.isConnected) ? R.el.getBoundingClientRect() : null; R.frames.push([t, R.axis === 'y' ? R.lastY : R.lastX, r ? edge(r) : null, r ? r.width : null]); R.raf = requestAnimationFrame(loop); };
   R.start = (el, kind, axis) => { R.el = el; R.kind = kind; R.axis = axis || 'x'; R.frames = []; R.marks = []; R.moves = []; R.on = true; R.raf = requestAnimationFrame(loop); return true; };
-  R.stop = () => { R.on = false; cancelAnimationFrame(R.raf); return { frames: R.frames, marks: R.marks, moves: R.moves }; };
+  R.stop = () => { R.on = false; cancelAnimationFrame(R.raf); return { frames: R.frames, marks: R.marks, moves: R.moves, injectedDelayMoves: window.__moveDelayCount || 0 }; };
   return true;
 })()
 """
@@ -149,36 +153,91 @@ def q(vals, p):
     return s[min(len(s) - 1, int(p * len(s)))] if s else 0.0
 
 
-def idle_gap95(b, url, fam, mode):
-    """The sampler-on floor: this page animates continuously (chat work rings, shimmer) and the sampler
-    itself forces a frame per vsync, so even an untouched page shows a frame-gap p95 well above 16.7ms
-    in this harness. Drag thresholds are judged against this measured floor, not against 60fps theory."""
-    p = b.new_page(W, H)
-    p.goto(url); time.sleep(2.5)
-    p.eval("localStorage.clear(); window.PM_THEME.setFamily(%s, {persist:false}); window.PM_THEME.setMode(%s, {persist:false}); true" % (json.dumps(fam), json.dumps(mode)))
-    time.sleep(1.5)
-    p.eval(SAMPLER)
-    p.eval("window.__rz.start(document.querySelector('#sidePanelSlot'), 'right', 'x')")
-    time.sleep(2.5)
-    raw = p.eval('window.__rz.stop()')
-    p.close()
-    frames = [f for f in raw['frames'] if f[2] is not None]
-    gaps = [b_[0] - a[0] for a, b_ in zip(frames, frames[1:])]
-    return q(gaps, 0.95)
+def relative_gap_measure(frames, down, up):
+    """Compare the drag to idle samples from the same sampler, without bridging the gesture."""
+    drag = [f for f in frames if down <= f[0] <= up]
+    before = [f for f in frames if f[0] < down - 50]
+    after = [f for f in frames if f[0] > up + 800]  # leave the release transition out of the floor
+    idle_gaps = [b[0] - a[0] for group in (before, after) for a, b in zip(group, group[1:])]
+    if len(idle_gaps) < 30:
+        raise ValueError(f'only {len(idle_gaps)} idle frame gaps')
+    if len(drag) < 8:
+        raise ValueError(f'only {len(drag)} drag frames')
+    floor = q(idle_gaps, 0.95)
+    return floor, max(50.0, floor * 2 + 34), q([b[0] - a[0] for a, b in zip(drag, drag[1:])], 0.95)
+
+
+def paired_verdict(reference, target):
+    """Interleaved reference controls host load; a fixed ceiling prevents load hiding stalls."""
+    if len(reference) != 2 or len(target) != 2:
+        raise ValueError('two reference and two target measurements required')
+    ref = statistics.median(reference)
+    observed = statistics.median(target)
+    # Preserve the existing two-frame allowance, but derive it from actual
+    # reference DRAGS, not unrelated idle cadence. Bound even a loaded reference.
+    budget = min(200.0, ref * 2 + 34)
+    return observed <= budget and max(target) <= 200.0, budget, observed
+
+
+def paired_main():
+    reference = opt('reference')
+    if not reference:
+        print('ERROR: timing certification requires --reference <control.html>; idle-only verdicts are unstable under shared-host load', flush=True)
+        return 2
+    rows = []
+    import tempfile
+    with tempfile.TemporaryDirectory(prefix='resize-paired-') as scratch:
+        for i, page in enumerate((reference, page_file, page_file, reference)):
+            metrics = os.path.join(scratch, str(i)+'.json')
+            command = [sys.executable, __file__, page, '--themes', ','.join(THEMES),
+                       '--port', str(PORT), '--single-measurement', '--metrics', metrics]
+            result = subprocess.run(command)
+            if result.returncode or not os.path.exists(metrics):
+                if opt('metrics'):
+                    partial = json.load(open(metrics)) if os.path.exists(metrics) else None
+                    with open(opt('metrics'),'w') as f:
+                        json.dump({'order':['reference','target','target','reference'],
+                                   'measurements':rows+[partial], 'failed_sample':i,
+                                   'exit_code':result.returncode}, f, indent=2)
+                print('FAIL: sample violated a hard check or was invalid (see sample output)', flush=True)
+                return 1
+            rows.append(json.load(open(metrics)))
+    failures = []
+    expected = {theme+' '+surface for theme in THEMES for surface,_,_ in SURFACES}
+    if any(set(row) != expected for row in rows):
+        print('FAIL: incomplete per-gesture paired coverage', flush=True)
+        return 1
+    for key in rows[0]:
+        ref = [rows[i][key]['gap95'] for i in (0,3)]
+        target = [rows[i][key]['gap95'] for i in (1,2)]
+        passed,budget,gap = paired_verdict(ref,target)
+        print(f'{key} reference {ref} target {target} budget {budget:.1f}ms: {"PASS" if passed else "FAIL"}', flush=True)
+        if not passed: failures.append(key)
+    if opt('metrics'):
+        def digest(path):
+            with open(path,'rb') as f: return hashlib.sha256(f.read()).hexdigest()
+        with open(opt('metrics'),'w') as f:
+            json.dump({'reference_sha256':digest(reference),'target_sha256':digest(page_file),'order':['reference','target','target','reference'],'measurements':rows,'failures':failures},f,indent=2)
+    print('FAIL' if failures else 'PASS', flush=True)
+    return int(bool(failures))
 
 
 def main():
+    if '--reference' in args and '--single-measurement' not in args:
+        return paired_main()
+    metrics = {}
+    if os.name == 'nt':
+        raise RuntimeError('Use the browser-check kit on Windows; direct Chrome launches bypass GPU admission')
     b = Browser(port=PORT, width=W, height=H, extra=EXTRA, headless=True)
     failures = []
     try:
+        info = b.send('SystemInfo.getInfo')['gpu']
+        renderer = info.get('auxAttributes', {}).get('glRenderer', '')
+        if not renderer or any(x in renderer.lower() for x in ('swiftshader', 'llvmpipe', 'software')):
+            raise RuntimeError('GPU required; renderer: ' + repr(renderer))
+        print('GPU renderer:', renderer, flush=True)
         url = 'file:///' + page_file.replace('\\', '/') + '?o55=off'
         fam0, mode0 = THEMES[0].split('-')
-        floor = idle_gap95(b, url, fam0, mode0)
-        # p95 gaps land on the vsync grid (16.7ms steps); both the 2.5s floor sample and a single
-        # drag's p95 (over ~70 frames) carry a step of noise each, so the budget allows two grid
-        # steps above twice the floor. The pre-fix build read 133-283ms here, far above either form.
-        gap_budget = max(50.0, floor * 2 + 34)
-        print(f"idle floor gapP95 {floor:.1f}ms -> drag budget {gap_budget:.0f}ms", flush=True)
         for theme in THEMES:
             fam, mode = theme.split('-')
             for surf, dx, dy in SURFACES:
@@ -190,17 +249,24 @@ def main():
                 tgt = p.eval("(%s)(%s)" % (TARGET, json.dumps(surf)))
                 if not tgt:
                     failures.append(f"{theme} {surf}: handle not visible"); p.close(); continue
+                # Sample the same page and sampler immediately before and after this gesture; a single
+                # floor taken at startup cannot represent another theme or changing machine load.
+                time.sleep(2.0)
                 sweep(p, tgt['x'], tgt['y'], dx, dy)
+                time.sleep(1.5)
                 raw = p.eval('window.__rz.stop()')
                 p.close()
                 frames = [f for f in raw['frames'] if f[2] is not None]
                 down = next((m[1] for m in raw['marks'] if m[0] == 'down'), 0)
                 up = next((m[1] for m in raw['marks'] if m[0] == 'up'), float('inf'))
                 drag = [f for f in frames if down <= f[0] <= up]
-                gaps = [b_[0] - a[0] for a, b_ in zip(frames, frames[1:])]
+                try:
+                    floor, gap_budget, gap95 = relative_gap_measure(frames, down, up)
+                except ValueError as exc:
+                    failures.append(f"{theme} {surf}: {exc} — measurement invalid, rerun")
+                    continue
                 span = (frames[-1][0] - frames[0][0]) / 1000 if len(frames) > 1 else 0
                 fps = (len(frames) - 1) / span if span else 0
-                gap95 = q(gaps, 0.95)
                 lags = []
                 if len(drag) > 5:
                     off = drag[0][2] - drag[0][1]
@@ -230,7 +296,7 @@ def main():
                             break
                     if settle_ms is None:
                         settle_ms = after[-1][0] - up
-                print(f"{theme:15s} {surf:8s} fps {fps:5.1f} gapP95 {gap95:6.1f}ms lagP95 {lag95:6.1f}px range {rng:5.0f}px moves/f {mpf:.2f} pickupGap {pickup_gap:5.0f}ms releaseGap {release_gap:5.0f}ms settle {settle_ms if settle_ms is None else round(settle_ms)}ms", flush=True)
+                print(f"{theme:15s} {surf:8s} sampleFps {fps:5.1f} idleP95 {floor:6.1f}ms budget {gap_budget:6.1f}ms dragGapP95 {gap95:6.1f}ms lagP95 {lag95:6.1f}px range {rng:5.0f}px moves/f {mpf:.2f} pickupGap {pickup_gap:5.0f}ms releaseGap {release_gap:5.0f}ms settle {settle_ms if settle_ms is None else round(settle_ms)}ms", flush=True)
                 if drag and mpf < 0.15:
                     failures.append(f"{theme} {surf}: input starved ({mpf:.2f} moves/frame) — measurement invalid, rerun")
                 if settle_ms is not None and settle_ms > 450:
@@ -250,16 +316,19 @@ def main():
                 else:
                     if lag95 > 2:
                         failures.append(f"{theme} {surf}: pointer-to-edge lag p95 {lag95:.1f}px > 2px (1:1 canon)")
-                if gap95 > gap_budget:
-                    failures.append(f"{theme} {surf}: frame gap p95 {gap95:.0f}ms > budget {gap_budget:.0f}ms (2x idle floor)")
+                if gap95 > 200.0:
+                    failures.append(f'{theme} {surf}: drag frame gap p95 {gap95:.1f}ms > absolute 200ms ceiling')
+                metrics[theme+' '+surf] = {'floor':floor,'gap95':gap95,'lag95':lag95,'range':rng,'movesPerFrame':mpf,'injectedDelayMoves':raw.get('injectedDelayMoves',0)}
         wide_both_check(b, url, fam0, mode0, failures)
     finally:
         b.close()
+    if opt('metrics'):
+        with open(opt('metrics'),'w') as f: json.dump(metrics,f)
     if failures:
         print('FAIL')
         for f in failures: print(' -', f)
         return 1
-    print('PASS')
+    print('SAMPLE VALID (timing certification requires the enclosing paired series)')
     return 0
 
 

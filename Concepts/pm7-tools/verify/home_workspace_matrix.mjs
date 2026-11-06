@@ -1,3 +1,7 @@
+// SW-43: preserve historical body; refuse before any legacy launch or output.
+console.error("Retired: use browser-check; see Concepts/pm7-tools/browser-check/README.md GPU tool retirements (SW-43).");
+process.exit(2);
+
 /* PMConcept7 Home Workspace post-audit browser matrix.
  *
  * This runner intentionally operates production controls for Home actions.
