@@ -137,6 +137,7 @@ export default async function (t) {
   await t.check('expected activity routes present', JSON.stringify([...targets].sort()) === JSON.stringify(Object.keys(expected).sort()), JSON.stringify(targets), {hard:true});
   const rows=[]; let reached=0; const routedRows=[];
   const opened = new Set(), contextRoutes = [], popupRows = [], branchRows = [], branchDone = new Set();
+  let current = null;
   // Assert one open menu: items, a reachable first item, its nested branches, then Escape closes it.
   const assertMenu = async (key, tag, withBranches = true) => {
     const info = await f.evaluate(async k => {
@@ -151,10 +152,21 @@ export default async function (t) {
     await t.check(`${tag} first item is on top`, info.firstOnTop, '', { hard: true });
     opened.add(key);
     if (withBranches) await branches(key, tag);
+    const slot = f.locator('#sidePanelSlot'), panelBefore = await slot.isVisible();
     await t.page.keyboard.press('Escape');
     const closed = await f.waitForFunction(k => !__shelf.open().some(m => __shelf.key(m) === k), key, { timeout: 5000 }).then(() => true, () => false);
     await t.check(`${tag} closes on Escape`, closed, '', { hard: true });
     await f.waitForFunction(k => ![...document.querySelectorAll('[role="menu"]')].some(m => __shelf.key(m) === k && m.checkVisibility()), key, { timeout: 5000 }).catch(() => {});
+    // One Escape closes one layer: the side panel the menu came from stays open. Where it does not (the
+    // narrow rail overlay), report it and reopen the panel by its icon so the rest of the census still runs.
+    if (panelBefore) {
+      const kept = await slot.isVisible();
+      await t.check(`${tag} Escape leaves the side panel open`, kept, kept ? '' : 'the side panel closed with the menu');
+      if (!kept) {
+        await f.locator(`#activityBar .icon[data-target="${current}"]`).click();
+        await t.check(`${tag} side panel reopened by its icon`, await slot.isVisible(), '', { hard: true });
+      }
+    }
   };
   // Nested branches: each parent item opens its menu by pointer and by ArrowRight, and ArrowLeft returns.
   const branches = async (key, tag) => {
@@ -203,6 +215,7 @@ export default async function (t) {
   const only = t.args.only ? String(t.args.only).split(',') : null;
   for (const target of targets) {
     if (only && !only.includes(target)) continue;
+    current = target;
     const icon=f.locator(`#activityBar .icon[data-target="${target}"]`);await icon.click();await f.waitForTimeout(500);
     // Clicking the already selected Files icon folds its panel; a second click opens it.
     if(!await f.locator('#sidePanelSlot').isVisible())await icon.click();
