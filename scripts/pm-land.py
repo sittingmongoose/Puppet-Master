@@ -851,6 +851,15 @@ class Lander:
         self.start_heartbeat()
         self.save()
         say(f"lock taken (token {st['lock']['token'][:8]})")
+        self.warn_owed_followups()
+
+    def warn_owed_followups(self) -> None:
+        """A landing that died after its push, and lost the lock, still owes its follow-up. Say so to the next."""
+        for other in load_states(self.cfg):
+            if other.get("id") != self.st["id"] and other.get("followup_owed") and other.get("status") not in FINAL \
+                    and not other.get("batch"):
+                self.for_jared(f"landing {other.get('id')} ({other.get('branch')}) pushed Plans changes and still owes "
+                               "its snapshot and baseline follow-up: `resume` it where it ran, or do it by hand")
 
     def adopt_batch_lock(self) -> None:
         """Inside a batch the lock passes by pm-mail; knowing the full batch-start SHA is the handover."""

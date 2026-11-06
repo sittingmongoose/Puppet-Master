@@ -615,6 +615,149 @@ If `--record-baseline` refuses with exit 3 because a subcheck timed out, rerun i
 `--subcheck-timeout-seconds`, for example `--subcheck-timeout-seconds 1200`, before committing the
 follow-up and releasing the landing lock.
 
+## One landing command: `scripts/pm-land.py` (opt-in)
+
+`pm-land.py` runs the landing rule's steps in the rule's order, resumes after a failure and queues for
+the lock. Nothing changes for anyone who lands by hand: `held/` (mkdir) stays the lock, so hand landers
+and the tool exclude each other, and the rule in `.claude/CLAUDE.md` stays what it is. It runs the same
+checks and treats their exit codes as the rule says; it never refreshes the snapshot or baseline before
+the landing it follows is pushed, in the middle of a batch, or to make a landing pass.
+
+    python3 scripts/pm-land.py plan <branch> --name <you>      # every step and command; changes nothing
+    python3 scripts/pm-land.py run <branch> --name <you>       # land it
+    python3 scripts/pm-land.py status                          # lock, queue, landings; readable by anyone
+    python3 scripts/pm-land.py resume                          # re-verify what moved, then continue
+    python3 scripts/pm-land.py abort                           # release; main is never left ahead of origin
+
+Exit codes: 0 finished, 1 stopped (it says why and what next), 2 refused, 4 the wait for the lock timed out.
+
+**The steps.** The lock (queue, then `mkdir`), `git fetch origin`, `git rebase origin/main` in the branch's
+worktree, the shard check there, the fast-forward in the shared checkout, the shard check there, the
+landing check with `--keep-check-reports` under `<evidence>/<landing id>/`, `git push origin main`, then,
+when `Plans/` changed and no batch stays open, the follow-up below as its own landing (its own landing
+check included), worktree removal and the release.
+
+**The follow-up** is the recipe in "Refreshing it after a Plans landing": a full worktree on local disk at
+the new `main`, not sparse, with the symlink and the ignored `Plans/.audits` inputs copied and compared to
+the shared checkout's by SHA-256; `snapshot-current` with the next free run id; `--record-baseline`, retried
+once at `--subcheck-timeout-seconds 1200` if it refuses for a timeout; one commit of those two paths; then
+the ordinary landing. The readiness audit source is what the landing check selects by itself.
+
+**Where it stops, and what happens to `main` and the lock.** A stop always puts a fast-forward back with
+`git reset --keep origin/main`. The lock is released when nothing is owed, so that a slow repair holds up
+nobody; `resume` then queues, takes it again and starts over at the fetch, as the rule's order requires. It
+is kept, with no heartbeat, so that the 90-minute rule applies, when a follow-up is owed, a batch is open,
+or the landing check needs a judgement.
+
+- A rebase conflict: the rebase is aborted, the branch is unchanged, the files are named. A Plans conflict
+  is the branch owner's to re-adjudicate. It is never resolved here, and derived files are regenerated.
+- `main` changed a `Plans/` document the branch also edits, even with no textual conflict: re-read the
+  passages, as the rule says, then `resume --readjudicated`.
+- A branch with merge commits that is not on `origin/main`: a rebase would flatten them. One that already
+  contains `origin/main` is not rebased at all.
+- Uncommitted changes in the shared checkout in a file the branch touches: hand the branch over.
+- A shard check failure in the shared checkout on files the branch does not touch: it confirms HEAD as the
+  rule says (`git cat-file -e`, the manifest references it), goes on, and reports the files. Anything it
+  cannot read or confirm stops it, including an untracked file another thread left there.
+- Landing check exit 2 or 3, or any exit but 0 and 1: stop. Exit 1: go on, and the report is kept for Jared.
+- **Exit 1 with a timed-out subcheck stops too**, because the rule says to rerun that subcheck on its own and
+  judge it before pushing: `resume --timeouts-judged "<what you ran and found>"`. So does an exit 1 whose
+  report has no `Infrastructure results` line, because a Python traceback also exits 1.
+- The commit it pushes is the commit it checked: before the push it fetches again and requires origin/main,
+  the lock token, HEAD and the tree id to be what the check saw.
+
+**Resume.** The state file is `<lock dir>/state/<landing id>.json`: every step, with the SHAs it saw.
+`resume` stops a check the killed run left behind, reads the lock, `origin/main` and the branch again, and
+starts over wherever it cannot prove a step finished. If `origin/main` or the branch moved, or the lock was
+not this landing's for a while, it starts over at the fetch. If `main` was fast-forwarded but not pushed: with
+a passed check for that commit and base it pushes; otherwise it resets back and reruns. A killed landing check
+simply reruns. A push that reached origin before the run died is proven by origin/main itself. In the follow-up
+it starts over at the worktree, at the current `main`. Resume on the machine that ran it.
+
+**Long runs.** A landing can take an hour or more, longer than a harness allows a command, and T3 stops a
+thread's processes when it restarts. Run it outside the agent:
+
+    long-job start land-x --resume-cmd 'python3 scripts/pm-land.py resume --branch <branch>' \
+        -- python3 scripts/pm-land.py run <branch> --name <you>
+    nohup python3 scripts/pm-land.py run <branch> --name <you> > land-x.log 2>&1 &   # without long-job
+
+`long-job` is `tools/long-job` in the kit. If the run is killed anyway, `resume`.
+
+### Batches
+
+`run <branch> --batch-open` takes the lock, writes `batch-start: <origin/main>` as a full SHA and lands. The
+lock stays held with no process behind it, so the 90-minute rule counts from the latest time in `holder.txt`.
+Hand it over by pm-mail; the next lander runs `run <branch> --batch-start <sha>`. Close with
+`run <branch> --batch-start <sha> --batch-close`, or `run --batch-close --batch-start <sha>` with no branch.
+Every landing check in the batch uses `--base <batch-start>`, and each landing adds its branch and `main` SHA
+to `holder.txt`. There is no snapshot or baseline until the close, when the one follow-up runs if anything in
+the batch touched `Plans/`. At most four landings and two hours from the first push; a landing past either
+limit is refused, and a member whose checks run past the two hours is treated as the next case. A landing the
+check stops inside a batch is not pushed: the batch closes with its follow-up at the current `main`, the lock
+is released, and that landing queues again and is checked alone against the new `origin/main`. A landing that
+touches `Plans/Spec_Lock.json`, `Plans/auto_decisions.jsonl` or `Plans/.evidence/**` is refused in a batch;
+one that needs an exemption the tool cannot see stays the lander's to keep out.
+
+### The lock queue
+
+Beside `held/`, `queue/` holds a ticket per waiting agent (priority, name, branch, host, pid, start time, UTC
+arrival, heartbeat), ordered by priority, then arrival. A ticket holder takes `held/` only when it is first in
+line, and only by `mkdir`. Hand landers do not queue; `mkdir` is what excludes them. A ticket whose process is
+gone loses its place at once, and one with a heartbeat older than 10 minutes loses it until it beats again.
+
+Priorities: a lower number goes first. Stream F's names and branches (`pm-fo-`, `fo-`, `land/fo-`) are 10,
+everyone else 50 (PROGRAM.md, "F gets first call on the landing lock"). `queue/priorities.json`, in the shape
+of `DEFAULT_PRIORITIES` in the script, replaces that table; `--priority N` overrides it for one landing.
+
+While the tool holds the lock, `holder.txt` has host, pid, pid start time and a heartbeat refreshed every
+minute (`time` too, for a hand lander reading it). The rule for a dead holder:
+
+| Holder | Proven dead when |
+|---|---|
+| The tool, heartbeat 10 minutes old or less | never |
+| The tool, older heartbeat, this machine | its pid is gone or has a different start time |
+| The tool, older heartbeat, another machine | ssh answers that the pid is gone or another process; unreachable proves nothing |
+| The tool, stopped or idle in a batch; or by hand | only by the 90-minute rule |
+| Any of them | nothing written for 90 minutes: today's rule |
+
+Only the first in line clears a holder. It renames `held/` aside, compares `holder.txt` with what it judged
+(it puts it back if that changed), and logs who, why and when to `queue/log.jsonl`. If the dead landing left
+`main` fast-forwarded and its state says it never pushed, the next lander resets that back; a `main` ahead of
+origin that no stopped landing owns stops the landing. For hand landers, with no change to the rule:
+
+    python3 scripts/pm-land.py lock status | queue
+    python3 scripts/pm-land.py lock take --name <you> --branch <branch> [--priority N] [--no-wait]
+    python3 scripts/pm-land.py lock release --name <you>
+
+### Checks in a local copy: `run --checks-local`
+
+Not today's rule, so behind this flag. The shard check and the landing check run in a full worktree on local
+disk (`~/pm-worktrees/land-<id>`) at the exact commit, with the ignored inputs compared by SHA-256 to the
+shared checkout's. The shared checkout only fast-forwards and pushes, after they pass: the dirty check and
+the inputs are read again, and the push requires its HEAD and tree to be the checked commit's. `main` is never
+ahead of origin while checks run, and another thread's uncommitted files cannot fail a landing, because the
+shard check reads a clean tree. The follow-up runs its checks in its own worktree the same way. It needs 50 GB
+free (`PM_LAND_MIN_FREE_GB`) and 6.4 GB for the copy.
+
+TIMING-PLACEHOLDER
+
+### Limits
+
+- Linux and macOS (`ps -o stat= -o lstart=`). Not Windows. The default paths are the VM's; elsewhere pass
+  `--shared`, `--lock-dir`, `--evidence-dir`, `--worktree-root` and `--local-repo`, or their `PM_LAND_*` variables.
+- It does not regenerate `_shards` or `.plan_index` after a rebase, send mail or reseal anything. `status` and
+  its final report name what to tell Jared, and a stopped run says what next.
+- `origin/<branch>` is pushed plainly, never forced, so after a rebase that rewrote it, it keeps the old tip
+  until the branch is on `main`.
+- A hand lander ignoring the queue can take the lock ahead of it; that is today's rule, and `mkdir` keeps
+  it safe.
+- A landing killed after its push that loses the lock still owes its follow-up. `status` says so where it ran,
+  and the next tool lander is told, but only its `resume` or a hand follow-up does it.
+- A branch not checked out in any worktree is refused: a rebase needs one.
+
+Self-tests: `python3 scripts/test_pm_land.py`, on throwaway repositories with stubbed checks. No test touches
+the real lock, `main` or the shared checkout.
+
 ## Related branch
 
 `plans/acceptance-and-landing-baseline-20260917` records the decisions behind this rule, DL-059 and

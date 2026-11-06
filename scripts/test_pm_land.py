@@ -547,6 +547,69 @@ class StopTests(Base):
         self.assertEqual(self.h.origin_main(), base)
         self.assertEqual(self.h.shared_head(), base)
 
+    def test_a_resume_after_exit_2_with_nothing_changed_runs_the_check_again(self):
+        wt = self.h.branch("fix/a", {"src/x.txt": "new\n"})
+        base = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": 2}, {"exit": 2}, {"exit": 0}])
+        self.stopped(self.land("fix/a"), "landing_check_blocked")
+        self.stopped(self.h.tool("resume"), "landing_check_blocked")
+        self.assertEqual(self.h.origin_main(), base, "a blocked check is never reused as a pass")
+        self.assertEqual(len(self.h.calls("landing")), 2)
+        self.assertEqual(self.h.tool("resume").returncode, 0)
+        self.assertEqual(self.h.origin_main(), self.h.state()["land"]["pushed_sha"])
+        self.assertFalse(wt.exists())
+
+    def test_a_baseline_naming_another_commit_stops_the_followup(self):
+        wt = self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        self.h.set_plan("baseline", [{"run": "git commit -q --allow-empty -m drift"}])
+        self.stopped(self.land("fix/a"), "baseline_failed")
+        self.assertEqual(self.h.origin_main(), tip, "the landing stands; the follow-up has not landed")
+        self.assertTrue(self.h.held(), "the follow-up is owed, so the lock stays")
+
+    def test_a_failed_snapshot_stops_and_keeps_the_lock(self):
+        wt = self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        self.h.set_plan("snapshot", [{"exit": 1}])
+        self.stopped(self.land("fix/a"), "snapshot_failed")
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertTrue(self.h.held())
+        self.assertNotIn("heartbeat", self.h.holder())
+        self.assertEqual(self.h.calls("baseline"), [], "the baseline comes after the snapshot")
+        self.assertEqual(self.h.tool("resume").returncode, 0)
+        self.assertFalse(self.h.held())
+        self.assertEqual(self.h.g(self.h.origin, "rev-parse", "refs/heads/main^"), tip)
+
+    def test_a_baseline_refused_for_a_timeout_retries_once_with_the_larger_bound(self):
+        self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        self.h.set_plan("baseline", [{"exit": 3, "text": "pm-landing-check: not recording a baseline: these subchecks"}])
+        self.assertEqual(self.land("fix/a").returncode, 0)
+        calls = self.h.calls("baseline")
+        self.assertEqual(len(calls), 2)
+        self.assertIn("1200", calls[1]["args"])
+
+    def test_a_followup_landing_check_that_blocks_stops_and_keeps_the_lock(self):
+        wt = self.h.branch("fix/a", {"Plans/doc-a.md": "new\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        self.h.set_plan("landing", [{}, {"exit": 2}])
+        self.stopped(self.land("fix/a"), "landing_check_blocked")
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertEqual(self.h.shared_head(), tip, "the follow-up's fast-forward is put back too")
+        self.assertTrue(self.h.held())
+        self.assertEqual(self.h.tool("resume").returncode, 0)
+        self.assertEqual(len(self.h.calls("landing")), 3, "with the lock kept, a blocked check is still not reused")
+        self.assertEqual(self.h.g(self.h.origin, "rev-parse", "refs/heads/main^"), tip)
+        self.assertEqual(len(self.h.calls("snapshot")), 1)
+
+    def test_the_next_lander_hears_about_an_owed_followup(self):
+        self.h.branch("fix/a", {"Plans/doc-a.md": "a\n"})
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        self.assertEqual(self.h.tool("run", "fix/a", "--name", "a", env={"PM_LAND_TEST_CRASH_BEFORE": "fu-baseline:fu"}).returncode, 137)
+        shutil.rmtree(self.h.lock / "held")
+        result = self.h.tool("run", "fix/b", "--name", "b")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("still owes", result.stdout)
+
     def test_any_other_exit_is_a_stop(self):
         self.h.branch("fix/a", {"src/x.txt": "new\n"})
         base = self.h.origin_main()
