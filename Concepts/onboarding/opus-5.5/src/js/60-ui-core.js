@@ -86,6 +86,11 @@
       if (hv.byFocus && !to) { hv.byFocus = false; wantHover(null); }
     });
     window.addEventListener('resize', () => { if (S.open) layoutClass(); });
+    /* ...and in the frame the size changes, before it is painted: the root is fixed to the viewport, so its own size is the
+       window's. In a page resized by the page that holds it (a frame in the same process) the window's resize event comes
+       only after that frame, and a slower one after that: the wide two-column window was painted at 740, its stage and
+       Take the guided tour cut at the window's edge, for 0.3-1.8 s (FO-88). T3's sandbox, in its own process, had it at once */
+    new ResizeObserver(() => { if (S.open) layoutClass(); }).observe(root);
     return root;
   }
   /* The window's brand mark is Pip (DL-235, DR-076: the one kit), still (the brand mark never animates) and drawn in the
