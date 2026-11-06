@@ -273,14 +273,31 @@ class RenamedShardStaleness(unittest.TestCase):
     NEW_SCHEMA = "Plans/_shards/prd_planning_runtime_contracts.schema/004-lines-601-646.md"
 
     def setUp(self):
+        # T53: the base revision holds the old range names and the evidence; the working tree is the branch,
+        # where regeneration renamed the shards
         self.root = Path(tempfile.mkdtemp(prefix="landing-renamed-shard-"))
         self.addCleanup(shutil.rmtree, self.root)
+        self.manifest("prd_planning_runtime_contracts", [("001", "001-lines-1-200.md"), ("002", "002-lines-201-235.md")])
+        self.manifest("prd_planning_runtime_contracts.schema", [("004", "004-lines-601-637.md")])
+        evidence = self.root / self.EVIDENCE
+        evidence.parent.mkdir(parents=True, exist_ok=True)
+        evidence.write_text("{}\n")
+        git = lambda *a: subprocess.run(["git", *a], cwd=self.root, check=True, capture_output=True)
+        git("init", "--quiet", "--initial-branch=base")
+        git("add", "-A")
+        git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", "base")
+        git("tag", "base")
+        for old in (self.OLD, self.OLD_SCHEMA):
+            (self.root / old).unlink()
         self.manifest("prd_planning_runtime_contracts", [("001", "001-lines-1-200.md"), ("002", "002-lines-201-237.md")])
         self.manifest("prd_planning_runtime_contracts.schema", [("004", "004-lines-601-646.md")])
+        self.context = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])
 
     def manifest(self, doc, shards):
         folder = self.root / "Plans" / "_shards" / doc
         folder.mkdir(parents=True, exist_ok=True)
+        for stale in folder.glob("*.md"):
+            stale.unlink()
         rows = []
         for shard_id, name in shards:
             (folder / name).write_text("shard\n")
@@ -291,8 +308,8 @@ class RenamedShardStaleness(unittest.TestCase):
         source = source or self.EVIDENCE
         return {"path": source, "artifact": target, "artifact_ref": target, "error": "missing_ref"}
 
-    def stale(self, failure):
-        return M.normalize("run-gates", "validate_evidence", failure, self.root)["stale"]
+    def stale(self, failure, context=None):
+        return M.normalize("run-gates", "validate_evidence", failure, self.root, context or self.context)["stale"]
 
     def test_q5_renamed_line_range_shards_are_staleness(self):
         self.assertTrue(self.stale(self.ref(self.OLD)))
@@ -300,7 +317,7 @@ class RenamedShardStaleness(unittest.TestCase):
 
     def test_q5_bucket_growth_by_renamed_shards_does_not_stop_the_landing(self):
         unrelated = self.ref("Plans/_shards/gone_doc/001-lines-1-200.md")
-        items = [M.normalize("audit-governance", "evidence", f, self.root) for f in (unrelated, self.ref(self.OLD), self.ref(self.OLD_SCHEMA))]
+        items = [M.normalize("audit-governance", "evidence", f, self.root, self.context) for f in (unrelated, self.ref(self.OLD), self.ref(self.OLD_SCHEMA))]
         name = M.bucket_of(items[0])
         self.assertTrue(all(M.bucket_of(item) == name for item in items))
         renamed = {name: sum(1 for item in items if item["stale"])}
@@ -312,7 +329,7 @@ class RenamedShardStaleness(unittest.TestCase):
         self.assertFalse(M.grown_buckets({name: 3}, {name: 1})[0]["stale"])
 
     def test_growth_beyond_the_renamed_shards_still_stops_the_landing(self):
-        name = M.bucket_of(M.normalize("audit-governance", "evidence", self.ref(self.OLD), self.root))
+        name = M.bucket_of(M.normalize("audit-governance", "evidence", self.ref(self.OLD), self.root, self.context))
         rows = M.grown_buckets({name: 4}, {name: 1}, {name: 2})
         self.assertFalse(rows[0]["stale"])
         self.assertEqual(len(M.blocking_items([], rows, [])), 1)
@@ -337,6 +354,33 @@ class RenamedShardStaleness(unittest.TestCase):
     def test_another_error_kind_keeps_its_class(self):
         failure = dict(self.ref(self.OLD), error="missing_artifact")
         self.assertFalse(self.stale(failure))
+
+    # T53 (TOOLBATCH2 pre-check finding 9): the base revision and the branch's own edits.
+    def test_p8_a_range_name_that_never_existed_is_not_staleness(self):
+        # the ordinal 002 still exists, but 002-lines-1-99999.md was never a shard at the base
+        self.assertFalse(self.stale(self.ref("Plans/_shards/prd_planning_runtime_contracts/002-lines-1-99999.md")))
+
+    def test_p8_evidence_the_branch_edited_is_not_staleness(self):
+        edited = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA, self.EVIDENCE])
+        self.assertFalse(self.stale(self.ref(self.OLD), edited))
+
+    def test_p6_a_source_path_that_leaves_the_evidence_folder_is_not_staleness(self):
+        for source in ("Plans/.evidence/../x", "Plans/.evidence/./pm7/evidence.json", "Plans/.evidence//pm7/evidence.json",
+                       "Plans/.evidence/pm7/../../plan_graph.json"):
+            self.assertFalse(self.stale(self.ref(self.OLD, source=source)), source)
+
+    def test_p6_a_target_path_that_is_not_in_its_normal_form_is_not_staleness(self):
+        for target in ("Plans/_shards/prd_planning_runtime_contracts/./002-lines-201-235.md",
+                       "Plans/_shards//prd_planning_runtime_contracts/002-lines-201-235.md"):
+            self.assertFalse(self.stale(self.ref(target)), target)
+
+    def test_without_a_base_the_rule_never_applies(self):
+        self.assertFalse(M.normalize("run-gates", "validate_evidence", self.ref(self.OLD), self.root)["stale"])
+
+    def test_the_base_lookup_is_real_git(self):
+        self.assertTrue(self.context.existed_at_base(self.OLD))
+        self.assertFalse(self.context.existed_at_base(self.NEW))
+        self.assertFalse(M.RenameContext(self.root, "no-such-revision", []).existed_at_base(self.OLD))
 
 
 class BaselineDiff(unittest.TestCase):

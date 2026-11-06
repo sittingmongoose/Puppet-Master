@@ -121,6 +121,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import posixpath
 import re
 import signal
 import subprocess
@@ -476,7 +477,7 @@ def type_tag(value: Any) -> str:
     return "<value>"
 
 
-def normalize(check: str, subcheck: str, failure: Any, root: Path) -> dict[str, Any]:
+def normalize(check: str, subcheck: str, failure: Any, root: Path, context: "RenameContext | None" = None) -> dict[str, Any]:
     """Turn one raw failure into {key, check, subcheck, error, path, fields, stale}."""
     if not isinstance(failure, dict):
         raw: dict[str, Any] = {"error": str(failure)}
@@ -494,7 +495,7 @@ def normalize(check: str, subcheck: str, failure: Any, root: Path) -> dict[str, 
         "error": error,
         "path": path,
         "fields": rest,
-        "stale": is_staleness(error, scrubbed) or renamed_shard_ref(error, raw, root),
+        "stale": is_staleness(error, scrubbed) or renamed_shard_ref(error, raw, root, context),
         # The unscrubbed failure, for the branch-path match only. Scrubbing replaces the measured
         # `actual`/`expected` with a type tag, and some failures name a document only inside those
         # lists, so matching against the scrubbed fields would miss them. Keys starting with an
@@ -527,30 +528,62 @@ SEALED_EVIDENCE_PREFIX = "Plans/.evidence/"
 SHARDS_PREFIX = "Plans/_shards/"
 
 
-def renamed_shard_ref(error: str, raw: Any, root: Path) -> bool:
+class RenameContext:
+    """What the renamed-shard rule needs from git (T53): the base revision, whose files a renamed target
+    must have existed in, and the paths the branch itself changed (`git diff --name-only <base>..HEAD`),
+    which the referring evidence file must not be among. Lookups are cached; a git failure answers no."""
+
+    def __init__(self, root: Path, base: str, touched):
+        self.root, self.base, self.touched = root, base, frozenset(touched)
+        self._at_base: dict[str, bool] = {}
+
+    def existed_at_base(self, path: str) -> bool:
+        if path not in self._at_base:
+            proc = subprocess.run(["git", "cat-file", "-e", f"{self.base}:{path}"], cwd=self.root,
+                                  capture_output=True, text=True)
+            self._at_base[path] = proc.returncode == 0
+        return self._at_base[path]
+
+
+def plain_repository_path(path: str) -> bool:
+    """A relative POSIX path in its normal form (T53): no leading slash or backslash, and no empty, `.` or
+    `..` segment, so `Plans/.evidence/../x` is not under Plans/.evidence/ by its prefix alone."""
+    return (bool(path) and not path.startswith("/") and "\\" not in path and posixpath.normpath(path) == path
+            and all(part not in ("", ".", "..") for part in path.split("/")))
+
+
+def renamed_shard_ref(error: str, raw: Any, root: Path, context: RenameContext | None = None) -> bool:
     """A `missing_ref` from sealed evidence to a regenerated shard whose line-range name changed.
 
     It is governance staleness, the same kind of thing as `artifact_hash_stale` on that evidence: the
-    reseal refreshes the evidence's artifact list. All of these must hold, read from the checkout:
-    - the failure is a `missing_ref` whose referring file (`path`) is sealed evidence under Plans/.evidence/;
+    reseal refreshes the evidence's artifact list. All of these must hold, read from the checkout and
+    from git:
+    - the failure is a `missing_ref` whose referring file (`path`) is sealed evidence under Plans/.evidence/,
+      written in its normal form (T53: `Plans/.evidence/../x` is not evidence), and the branch did not
+      change that file (it is not in `git diff --name-only <base>..HEAD`): generated evidence is only
+      rewritten by a reseal, so a branch-edited evidence file's references are the branch's own;
     - its target (`artifact_ref`, else `artifact`, else `ref`) is a line-range shard, directly under
-      Plans/_shards/<document>/, that no longer exists;
+      Plans/_shards/<document>/, in its normal form, that no longer exists, and that did exist at the base
+      revision (`git cat-file -e <base>:<target>`, T53): a range name that never existed is not a rename;
     - that document's current manifest still holds a shard with the same ordinal (`shard_id`), under
       another line-range name, and that shard exists.
     Any other `missing_ref` (a deleted unit, a missing path outside the shards, a reference from a
-    file that is not sealed evidence) keeps its class.
+    file that is not sealed evidence) keeps its class, and so does every `missing_ref` when there is no
+    base to compare with (no context: --record-baseline).
     """
-    if error != "missing_ref" or not isinstance(raw, dict):
+    if error != "missing_ref" or not isinstance(raw, dict) or context is None:
         return False
     source = raw.get("path")
     target = next((raw[k] for k in ("artifact_ref", "artifact", "ref") if isinstance(raw.get(k), str)), None)
     if not isinstance(source, str) or not source.startswith(SEALED_EVIDENCE_PREFIX) or not isinstance(target, str):
         return False
+    if not plain_repository_path(source) or not plain_repository_path(target) or source in context.touched:
+        return False
     parts = target.split("/")
     if not target.startswith(SHARDS_PREFIX) or len(parts) != 4 or not parts[2] or ".." in parts:
         return False
     match = LINE_RANGE_SHARD_RE.fullmatch(parts[3])
-    if not match or (root / target).exists():
+    if not match or (root / target).exists() or not context.existed_at_base(target):
         return False
     manifest_path = root / "Plans" / "_shards" / parts[2] / "manifest.json"
     try:
@@ -835,7 +868,8 @@ def grown_buckets(seen: dict[str, int], baseline: dict[str, int],
 # ------------------------------------------------------------------------------ reading a report
 
 
-def extract(check: str, report: dict[str, Any], root: Path) -> tuple[list[dict[str, Any]], dict[str, dict[str, int]]]:
+def extract(check: str, report: dict[str, Any], root: Path,
+            context: RenameContext | None = None) -> tuple[list[dict[str, Any]], dict[str, dict[str, int]]]:
     """Return (normalized failures, {subcheck: {"reported": n, "sampled": m}}).
 
     `reported` is the check's own count of failures for that subcheck; `sampled` is how many it
@@ -847,17 +881,17 @@ def extract(check: str, report: dict[str, Any], root: Path) -> tuple[list[dict[s
     if check == "plan-migration-validate":
         failures = report.get("failures") or []
         counts[""] = {"reported": len(failures), "sampled": len(failures)}
-        items.extend(normalize(check, "", failure, root) for failure in failures)
+        items.extend(normalize(check, "", failure, root, context) for failure in failures)
         return items, counts
 
     for block in report.get("failures") or []:
         if not isinstance(block, dict):
-            items.append(normalize(check, "", block, root))
+            items.append(normalize(check, "", block, root, context))
             continue
         subcheck = str(block.get("check", ""))
         sampled = block.get("failures") or []
         counts[subcheck] = {"reported": reported_count(report, subcheck, len(sampled)), "sampled": len(sampled)}
-        items.extend(normalize(check, subcheck, failure, root) for failure in sampled)
+        items.extend(normalize(check, subcheck, failure, root, context) for failure in sampled)
     return items, counts
 
 
@@ -1743,6 +1777,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
     touched: list[str] = []
     currency: dict[str, Any] = {}
     audit_inputs = readiness_audit_inputs(root)
+    rename_context = None
     if not args.record_baseline:
         try:
             baseline = load_baseline(baseline_path)
@@ -1758,6 +1793,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             print(f"pm-landing-check: {exc}", file=sys.stderr)
             return 3
         currency = baseline_currency(root, baseline.get("commit"), args.base)
+        rename_context = RenameContext(root, args.base, touched)
 
     items: list[dict[str, Any]] = []
     counts: dict[str, dict[str, dict[str, int]]] = {}
@@ -1776,7 +1812,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             (keep_dir / f"{check}.json").write_text(
                 json.dumps(report, indent=1, sort_keys=True) + "\n", encoding="utf-8")
         statuses[check] = str(report.get("status", "unknown"))
-        check_items, check_counts = extract(check, report, root)
+        check_items, check_counts = extract(check, report, root, rename_context)
         items.extend(check_items)
         counts[check] = check_counts
         listed[check] = listed_totals(check, report)
