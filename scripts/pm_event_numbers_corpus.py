@@ -9,12 +9,16 @@ date-time module. Date-time code here stays lazy, on date-time routes only.
 Every positive of an API that returns a value carries "returns": the exact
 type-aware value, transcribed independently of the helper and compared through
 typed() below. run_mutations() replays a committed mutation set against the
-number scope; each mutation must make it fail.
+number scope; each mutation must make it fail. Besides the hand-written
+mutations, it enumerates mutation points from the helper's AST (every refusal
+site, every weakening of a refusal guard's predicates, every relational
+boundary) and generates one mutant per point.
 """
 from __future__ import annotations
 
+import ast
 from contextlib import contextmanager
-from dataclasses import dataclass, fields as dataclass_fields, is_dataclass, replace
+from dataclasses import asdict, astuple, dataclass, fields as dataclass_fields, is_dataclass, replace
 from decimal import Decimal
 from functools import lru_cache
 import hashlib
@@ -41,6 +45,29 @@ MUTATION_CLASSES = ("value_rounding", "type_coercion", "dropped_qualification", 
 
 def number_case(case):
     return case["op"] in NUMBER_OPS and not case.get("date_time_profile")
+
+
+def _unique_pairs(pairs):
+    """Duplicate-key refusal for the runner's own inputs, independent of the helper."""
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("duplicate key in runner input: " + repr(key))
+        result[key] = value
+    return result
+
+
+def _int_from_digits(text):
+    """Exact int from decimal digits, independent of the helper and of str() limits."""
+    negative = text.startswith("-")
+    digits = text[1:] if negative else text
+    if not digits or not digits.isascii() or not digits.isdigit():
+        raise ValueError("not a decimal integer: " + repr(text))
+    value = 0
+    for start in range(0, len(digits), 1000):
+        chunk = digits[start:start + 1000]
+        value = value * 10 ** len(chunk) + int(chunk)
+    return -value if negative else value
 
 
 def _decimal_string(n):
@@ -152,10 +179,22 @@ def _at(tree, path):
 
 
 def _value(value):
+    """Corpus input encoding to Python values. Never calls the helper.
+
+    @map builds a map whose keys need not be strings; @code_points builds a
+    string from code points (for lone surrogates, which corpus JSON text written
+    as UTF-8 cannot hold); @repeat repeats a string, binary or array value.
+    """
     if type(value) is dict:
         if set(value) == {"@int"}:
-            import pm_event_numbers as m
-            return m._integer_digits(value["@int"])
+            return _int_from_digits(value["@int"])
+        if set(value) == {"@map"}:
+            return {_value(k): _value(v) for k, v in value["@map"]}
+        if set(value) == {"@code_points"}:
+            return "".join(chr(c) for c in value["@code_points"])
+        if set(value) == {"@repeat"}:
+            item, count = value["@repeat"]
+            return _value(item) * count
         if set(value) == {"@float"}:
             return float(value["@float"])
         if set(value) == {"@decimal"}:
@@ -239,10 +278,37 @@ def _retained(m, case, corpus):
         # carries the same string, and its UTF-8 content still has the original
         # commitment. The specialized verifier adapter below is fixture-only.
         sealed = observed = replace(original, record_bytes=raw.decode())
+    elif scenario in ("string_result_bytes", "string_receipt_bytes"):
+        # Same isolation for the result and receipt carriers: the sealed fixture
+        # holds the same text, so only the exact bytes type gate can refuse.
+        name = scenario.removeprefix("string_")
+        sealed = observed = replace(original, **{name: getattr(original, name).decode()})
+    elif scenario == "untyped_recipe":
+        # Authentic original whose recipe carrier is a plain tuple of the same
+        # values: only the exact RecipeTuple type gate distinguishes it.
+        sealed = observed = replace(original, recipe=astuple(base_recipe))
+    elif scenario == "self_equal_binding":
+        # A caller-shaped binding object that claims equality with anything and
+        # carries the original commitment. Only the exact type gate refuses it.
+        class SelfEqual:
+            source_commitment = binding.source_commitment
+
+            def __eq__(self, other):
+                return True
+
+            def __ne__(self, other):
+                return False
+
+            __hash__ = object.__hash__
+        sealed = observed = replace(original, binding=SelfEqual())
     elif scenario in ("denied", "deleted", "withdrawn", "hold_denied"):
         allow = False
     elif scenario == "truthy_disclosure":
         allow = "true"
+    # Query shape (one defect each): the owner never sees these queries intact.
+    ref = {"empty_ref": "", "nonstring_ref": b"sealed-ref"}.get(scenario, "sealed-ref")
+    if scenario == "dict_expected":
+        expected = asdict(binding)
 
     calls = []
 
@@ -289,7 +355,7 @@ def _retained(m, case, corpus):
         base_recipe: m.FrozenRecipe(verify), current_recipe: m.FrozenRecipe(verify),
         replaced_resources: m.FrozenRecipe(verify),
     })
-    out = dispatcher.resolve("sealed-ref", expected, disclose=lambda b: allow,
+    out = dispatcher.resolve(ref, expected, disclose=lambda b: allow,
                              recipe_override=override)
     return RetainedObservation(out, observed, calls)
 
@@ -388,6 +454,40 @@ def _validate_envelope_datetime(event, route, *, profile="event_record", resourc
         raise
 
 
+def _str_subclass(value):
+    """A Python caller's str subclass instance (an enum member) equal to value.
+
+    JSON request data cannot carry one; the exact-type gates still refuse it.
+    """
+    import enum
+    return enum.StrEnum("Member", {"MEMBER": value}).MEMBER
+
+
+@contextmanager
+def _reported_length(m, target, length):
+    """Fault-injection fixture boundary for widths no test can allocate.
+
+    For one call, the helper module's global len() reports `length` for the
+    exact input object and the true length for everything else. A 1-byte binary
+    then reaches the 2^32 bin32 limit without allocating 4 GiB. Only the length
+    predicate is exercised; the real-length cases cover the emitted bytes.
+    """
+    if length is None:
+        yield
+        return
+    import builtins
+    sentinel = object()
+    previous = m.__dict__.get("len", sentinel)
+    m.len = lambda x: length if x is target else builtins.len(x)
+    try:
+        yield
+    finally:
+        if previous is sentinel:
+            del m.len
+        else:
+            m.len = previous
+
+
 def execute(m, case, corpus):
     op = case["op"]
     if op == "token":
@@ -402,7 +502,8 @@ def execute(m, case, corpus):
     if op == "boolean":
         return Returned("accepted", m.exact_boolean(_value(case["value"])))
     if op == "append_policy":
-        return m.current_append_policy(case["value"])
+        value = _str_subclass(case["value"]) if case.get("value_class") == "str_subclass" else case["value"]
+        return m.current_append_policy(value)
     if op == "parse":
         raw = bytes.fromhex(case["raw_hex"]) if "raw_hex" in case else case["raw"]
         return Returned("accepted", m.loads_exact(raw))
@@ -436,6 +537,8 @@ def execute(m, case, corpus):
         event.update(_value(case.get("changes", {})))
         for field in case.get("remove", []):
             del event[field]
+        if case.get("event_class") == "mapping_proxy":
+            event = types.MappingProxyType(event)  # Complete mapping, but not an exact dict.
         qualification = _qualification(case.get("qualification", {}))
         if case["route"] == "digest":
             return m.producer_semantic_digest(event, **qualification)
@@ -506,10 +609,16 @@ def execute(m, case, corpus):
         event.update(case.get("changes", {}))
         return m.full_value_commitment(_value(case["container"]) if "container" in case else event)
     if op == "physical":
-        return m.storage_value_bytes(_value(case["value"]), profile=case.get("profile", m.EVENT_VALUE)).hex()
+        value = _value(case["value"])
+        with _reported_length(m, value, case.get("reported_length")):
+            out = m.storage_value_bytes(value, profile=case.get("profile", m.EVENT_VALUE))
+        if case.get("output_form") == "head":
+            # Long outputs: the header bytes and the exact total length.
+            return {"head": out[:case.get("head_bytes", 8)].hex(), "length": len(out)}
+        return out.hex()
     if op == "decode":
-        return Returned("accepted", m.decode_storage_value(bytes.fromhex(case["hex"]),
-                                                           profile=case.get("profile", m.EVENT_VALUE)))
+        raw = case["hex"] if case.get("hex_as_text") else bytes.fromhex(case["hex"])
+        return Returned("accepted", m.decode_storage_value(raw, profile=case.get("profile", m.EVENT_VALUE)))
     if op == "history":
         return _retained(m, case, corpus)
     if op == "recipe_constructor":
@@ -523,6 +632,8 @@ def execute(m, case, corpus):
         descriptor = {"byte_size": len(original), "id": blake3.blake3(original).hexdigest(),
                       "media_type": "application/json"}
         descriptor.update(case.get("descriptor", {}))
+        for field in case.get("str_subclass_fields", ()):
+            descriptor[field] = _str_subclass(descriptor[field])
         inline = _value(case["inline"]) if "inline" in case else case.get("route", "inline") == "inline"
         return Returned("accepted", m.verify_payload_bytes(
             raw.decode() if case.get("raw_as_text") else raw, byte_size=descriptor["byte_size"],
@@ -673,7 +784,7 @@ def run_corpus(path, *, scope="all"):
         raise ValueError("unknown self-test scope: " + repr(scope))
     import pm_event_numbers as m
     modules_before = set(sys.modules)
-    corpus = json.loads(Path(path).read_text(), object_pairs_hook=m._unique_object)
+    corpus = json.loads(Path(path).read_text(), object_pairs_hook=_unique_pairs)
     root = Path(__file__).resolve().parents[1]
     cases = corpus["cases"] if scope == "all" else [c for c in corpus["cases"] if number_case(c)]
     inventory_check = None
@@ -734,40 +845,167 @@ def run_corpus(path, *, scope="all"):
                       "No complete lane checker or family admission.")}
 
 
-# The committed mutation set. Each entry is one exact source edit to a number
-# helper, applied in memory to a fresh module; files are never written. The
-# number corpus must fail under every mutation, except declared survivors,
-# whose reasons a reviewer checks.
 
-def _load_module(name, source, file):
+# The committed mutation set. Hand-written entries are one exact source edit to
+# a number helper; generated entries come from the helper's AST. Every mutant
+# is built in memory as a fresh module; files are never written. The number
+# corpus must fail under every mutant, except declared survivors, whose
+# reasons a reviewer checks.
+
+_FLIPPED = {ast.Lt: ast.LtE, ast.LtE: ast.Lt, ast.Gt: ast.GtE, ast.GtE: ast.Gt}
+GENERATED_FAMILIES = {
+    "refusal_site": "Every raise statement and every _refuse(...) call, the only ways the helper emits an "
+                    "error code (returns, lambdas and except handlers included). The mutant disables that one "
+                    "site: a call becomes None, a raise becomes pass.",
+    "refusal_predicate": "Every predicate of the if-guards of a _refuse site (each enclosing if whose body holds "
+                         "it) where dropping that predicate alone weakens the guard: an or-operand at positive "
+                         "polarity becomes False, an and-operand under not becomes True, and an element of a "
+                         "literal tuple scanned by any() is dropped.",
+    "comparison_boundary": "Every <, <=, > and >= in the helper. The mutant flips strictness (< and <=, > "
+                           "and >=), the off-by-one at that width, range or limit boundary.",
+}
+
+
+def _ordered(nodes):
+    return sorted(nodes, key=lambda n: (n.lineno, n.col_offset, n.end_lineno, n.end_col_offset))
+
+
+def _parent_map(tree):
+    parents = {}
+    for node in ast.walk(tree):
+        for child in ast.iter_child_nodes(node):
+            parents[child] = node
+    return parents
+
+
+def _qualname(node, parents):
+    names = []
+    while node in parents:
+        node = parents[node]
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            names.append(node.name)
+    return ".".join(reversed(names)) or "<module>"
+
+
+def _guards(call, parents):
+    """Every if-statement whose body holds this site, innermost first.
+
+    The walk stops at the enclosing function or lambda, and at an if whose else
+    branch holds the site: such a test is type dispatch, not this site's guard.
+    """
+    guards, node = [], call
+    while node in parents:
+        parent = parents[node]
+        if isinstance(parent, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda, ast.ClassDef)):
+            break
+        if isinstance(parent, ast.If):
+            if not any(node is stmt for stmt in parent.body):
+                break
+            guards.append(parent)
+        node = parent
+    return guards
+
+
+def _weakenings(expr, positive):
+    """(action, node, detail) for each single-predicate weakening of a refusal guard."""
+    if isinstance(expr, ast.UnaryOp) and isinstance(expr.op, ast.Not):
+        yield from _weakenings(expr.operand, not positive)
+    elif isinstance(expr, ast.BoolOp):
+        weak = (False if positive else None) if isinstance(expr.op, ast.Or) else (None if positive else True)
+        for operand in expr.values:
+            if weak is not None:
+                yield ("false" if weak is False else "true"), operand, weak
+            yield from _weakenings(operand, positive)
+    elif (isinstance(expr, ast.Call) and isinstance(expr.func, ast.Name) and expr.func.id in ("any", "all")
+          and len(expr.args) == 1 and isinstance(expr.args[0], ast.GeneratorExp)):
+        generator = expr.args[0]
+        yield from _weakenings(generator.elt, positive)
+        scanned = generator.generators[0].iter
+        if isinstance(scanned, ast.Tuple) and len(scanned.elts) > 1 and (expr.func.id == "any") == positive:
+            for position in range(len(scanned.elts)):
+                yield "drop", scanned, position
+
+
+def mutation_points(source):
+    """Every generated mutation point of the helper source, from its AST.
+
+    Keys name the enclosing function, the error code or predicate text and an
+    ordinal, never a line number, so unrelated edits keep them stable.
+    """
+    tree = ast.parse(source)
+    nodes = list(ast.walk(tree))
+    index = {id(node): i for i, node in enumerate(nodes)}
+    parents = _parent_map(tree)
+    points, seen, weakened = [], {}, set()
+
+    def add(family, base, node, **extra):
+        seen[base] = seen.get(base, 0) + 1
+        point = {"key": "%s#%d" % (base, seen[base]), "family": family, "line": node.lineno,
+                 "node": index[id(node)], **extra}
+        points.append(point)
+        return point["key"]
+
+    sites = [n for n in nodes if isinstance(n, ast.Raise) or (
+        isinstance(n, ast.Call) and isinstance(n.func, ast.Name) and n.func.id == "_refuse")]
+    for site in _ordered(sites):
+        if isinstance(site, ast.Raise):
+            reason = "raise"
+        else:
+            arg = site.args[0] if site.args else None
+            reason = arg.value if isinstance(arg, ast.Constant) and type(arg.value) is str else "dynamic"
+        name = _qualname(site, parents)
+        key = add("refusal_site", "site:%s:%s" % (name, reason), site, function=name, reason=reason,
+                  action="disable", text=ast.unparse(site))
+        for guard in (_guards(site, parents) if isinstance(site, ast.Call) else ()):
+            for action, node, detail in _weakenings(guard.test, True):
+                if (id(node), detail) in weakened:
+                    continue  # A guard shared by several sites yields each mutant once.
+                weakened.add((id(node), detail))
+                text = ast.unparse(node.elts[detail]) if action == "drop" else ast.unparse(node)
+                add("refusal_predicate", "predicate:%s:%s %s" % (key, action, text), node, function=name,
+                    reason=reason, action=action, detail=detail, text=text)
+    for compare in _ordered([n for n in nodes if isinstance(n, ast.Compare)]):
+        for position, op in enumerate(compare.ops):
+            if type(op) in _FLIPPED:
+                name = _qualname(compare, parents)
+                text = ast.unparse(compare)
+                add("comparison_boundary", "boundary:%s:%s:%d" % (name, text, position), compare, function=name,
+                    action=type(op).__name__ + "->" + _FLIPPED[type(op)].__name__, detail=position, text=text)
+    return points
+
+
+def _point_code(source, file, point):
+    """Compile the helper with exactly one generated mutation point applied."""
+    tree = ast.parse(source)
+    nodes = list(ast.walk(tree))
+    node = nodes[point["node"]]
+    if node.lineno != point["line"]:
+        raise ValueError("mutation point moved: " + point["key"])
+    if point["family"] == "comparison_boundary":
+        node.ops[point["detail"]] = _FLIPPED[type(node.ops[point["detail"]])]()
+    elif point["action"] == "drop":
+        del node.elts[point["detail"]]
+    else:
+        new = ast.Pass() if isinstance(node, ast.Raise) else ast.Constant(
+            None if point["family"] == "refusal_site" else point["detail"])
+        parent = _parent_map(tree)[node]
+        for field, current in ast.iter_fields(parent):
+            if current is node:
+                setattr(parent, field, ast.copy_location(new, node))
+            elif type(current) is list:
+                for position, item in enumerate(current):
+                    if item is node:
+                        current[position] = ast.copy_location(new, node)
+    ast.fix_missing_locations(tree)
+    return compile(tree, file, "exec")
+
+
+def _load_module(name, code, file):
     module = types.ModuleType(name)
     module.__file__ = file
     sys.modules[name] = module  # dataclasses resolve their module through sys.modules
-    exec(compile(source, file, "exec"), module.__dict__)
+    exec(code, module.__dict__)
     return module
-
-
-@contextmanager
-def _installed(mutation, sources):
-    """Swap the mutant in for pm_event_numbers for one corpus run, then restore."""
-    names = ("pm_event_numbers", "pm_event_index_binding")
-    saved = {name: sys.modules.get(name) for name in names}
-    try:
-        target = mutation["module"]
-        text, file = sources[target]
-        mutated = text.replace(mutation["find"], mutation["replace"])
-        if target == "pm_event_index_binding":
-            _load_module(target, mutated, file)
-            numbers_text, numbers_file = sources["pm_event_numbers"]
-            yield _load_module("pm_event_numbers", numbers_text, numbers_file)
-        else:
-            yield _load_module(target, mutated, file)
-    finally:
-        for name, module in saved.items():
-            if module is None:
-                sys.modules.pop(name, None)
-            else:
-                sys.modules[name] = module
 
 
 @contextmanager
@@ -790,16 +1028,78 @@ def _time_limit(seconds):
         signal.signal(signal.SIGALRM, previous)
 
 
+def _run_mutant(target, build, sources, corpus_path, time_limit):
+    """Build one mutant, run the number corpus under it, restore the modules.
+
+    A mutant that does not build, or a corpus run that raises, is never a catch:
+    it is reported as build_error or runner_exception and fails the self-test.
+    """
+    names = ("pm_event_numbers", "pm_event_index_binding")
+    saved = {name: sys.modules.get(name) for name in names}
+    try:
+        try:
+            code = build()
+            text, file = sources[target]
+            _load_module(target, code, file)
+            if target == "pm_event_index_binding":
+                numbers_text, numbers_file = sources["pm_event_numbers"]
+                _load_module("pm_event_numbers", compile(numbers_text, numbers_file, "exec"), numbers_file)
+        except Exception as error:
+            return {"result": "build_error", "error": type(error).__name__ + ": " + str(error)[:200]}
+        try:
+            with _time_limit(time_limit):
+                outcome = run_corpus(corpus_path, scope="numbers")
+        except Exception as error:
+            return {"result": "runner_exception", "error": type(error).__name__ + ": " + str(error)[:200]}
+        failed = sorted({f["id"] for f in outcome["failures"] if "id" in f})
+        checks = [f["integration_check"] for f in outcome["failures"] if "integration_check" in f]
+        return {"result": "caught" if outcome["status"] == "fail" else "survives", "failed": failed,
+                "failed_checks": checks}
+    finally:
+        for name, module in saved.items():
+            if module is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = module
+
+
+def _judge(row, run, declared, witness, problems, label):
+    """Record one mutant's result and every rule it must satisfy."""
+    row["result"] = run["result"]
+    if run["result"] in ("build_error", "runner_exception"):
+        row["error"] = run["error"]
+        problems.append("%s: %s (%s); never counted as caught" % (label, run["result"], run["error"]))
+        return
+    row.update(failed_cases=len(run["failed"]), failed_case_ids=run["failed"][:12],
+               failed_checks=run["failed_checks"][:12])
+    if declared:
+        row["declared_survivor"] = declared
+        if run["result"] == "caught":
+            problems.append(label + ": declared survivor is now caught; update the set")
+        return
+    if run["result"] != "caught":
+        problems.append(label + ": mutation survived the number corpus")
+        return
+    if witness:
+        row["witness"] = witness
+        row["witness_failed"] = witness in run["failed"]
+        if not row["witness_failed"]:
+            problems.append("%s: witness case %s did not fail" % (label, witness))
+
+
 def run_mutations(corpus_path, mutation_path, *, time_limit=120):
     """Replay the committed mutation set against the number scope.
 
-    Pass means: the intact corpus passes; every (API, class) cell has a mutation
-    or a reasoned not-applicable entry; every mutation applies exactly once and
-    fails the number corpus; and every declared survivor really survives.
+    Pass means: the intact corpus passes; every (API, class) cell has a
+    mutation or a reasoned not-applicable entry; every listed rule has a
+    witnessed hand-written mutation; the AST mutation points match the
+    committed entries exactly (no new, no stale point); every mutant builds,
+    runs and fails the number corpus, with its witness case among the
+    failures; and every declared survivor really survives.
     """
     import pm_event_numbers as intact
     import pm_event_index_binding as binding
-    spec = json.loads(Path(mutation_path).read_text(), object_pairs_hook=intact._unique_object)
+    spec = json.loads(Path(mutation_path).read_text(), object_pairs_hook=_unique_pairs)
     sources = {name: (Path(module.__file__).read_text(), module.__file__)
                for name, module in (("pm_event_numbers", intact), ("pm_event_index_binding", binding))}
     problems = []
@@ -807,9 +1107,11 @@ def run_mutations(corpus_path, mutation_path, *, time_limit=120):
     if baseline["status"] != "pass":
         problems.append("intact number corpus does not pass")
     classes = MUTATION_CLASSES + tuple(spec.get("extra_classes", ()))
-    ids = [mutation["id"] for mutation in spec["mutations"]]
-    if len(ids) != len(set(ids)):
-        problems.append("duplicate mutation ids")
+    by_id = {}
+    for mutation in spec["mutations"]:
+        if mutation["id"] in by_id:
+            problems.append("duplicate mutation id: " + mutation["id"])
+        by_id[mutation["id"]] = mutation
     matrix = {}
     for api, entry in spec["apis"].items():
         if not hasattr(intact, api):
@@ -828,11 +1130,13 @@ def run_mutations(corpus_path, mutation_path, *, time_limit=120):
             if hits:
                 cells[cls] = hits
         matrix[api] = cells
+
     results = []
     for mutation in spec["mutations"]:
         row = {key: mutation[key] for key in ("id", "api", "class", "module")}
-        if mutation.get("source"):
-            row["source"] = mutation["source"]
+        for key in ("source", "rule"):
+            if mutation.get(key):
+                row[key] = mutation[key]
         if mutation["api"] not in spec["apis"] or mutation["class"] not in classes:
             problems.append(mutation["id"] + ": unknown API or class")
         count = sources[mutation["module"]][0].count(mutation["find"]) if mutation["module"] in sources else 0
@@ -841,41 +1145,88 @@ def run_mutations(corpus_path, mutation_path, *, time_limit=120):
             problems.append(mutation["id"] + ": find text must occur exactly once and differ from replace")
             results.append(row)
             continue
-        try:
-            with _time_limit(time_limit), _installed(mutation, sources):
-                outcome = run_corpus(corpus_path, scope="numbers")
-            failed = sorted({f["id"] for f in outcome["failures"] if "id" in f})
-            checks = [f["integration_check"] for f in outcome["failures"] if "integration_check" in f]
-            row.update(caught=outcome["status"] == "fail", failed_cases=len(failed),
-                       failed_case_ids=failed[:12], failed_checks=checks[:12])
-        except Exception as error:  # The CLI would also fail; recorded distinctly.
-            row.update(caught=True, runner_exception=type(error).__name__ + ": " + str(error)[:200])
-        survives = mutation.get("survives")
-        if survives:
-            row["declared_survivor"] = survives
-            if row["caught"]:
-                problems.append(mutation["id"] + ": declared survivor is now caught; update the set")
-        elif not row["caught"]:
-            problems.append(mutation["id"] + ": mutation survived the number corpus")
-        row["result"] = "caught" if row["caught"] else "survives"
+        text, file = sources[mutation["module"]]
+        run = _run_mutant(mutation["module"], lambda: compile(text.replace(mutation["find"], mutation["replace"]),
+                                                              file, "exec"),
+                          sources, corpus_path, time_limit)
+        _judge(row, run, mutation.get("survives"), mutation.get("witness"), problems, mutation["id"])
         results.append(row)
+
+    numbers_text, numbers_file = sources["pm_event_numbers"]
+    points = mutation_points(numbers_text)
+    committed = spec.get("generated", {}).get("points", {})
+    enumerated = {p["key"] for p in points}
+    for key in sorted(enumerated - set(committed)):
+        problems.append("new mutation point without a committed entry: " + key)
+    for key in sorted(set(committed) - enumerated):
+        problems.append("stale committed mutation point (not in the helper's AST): " + key)
+    generated = []
+    for point in points:
+        entry = committed.get(point["key"], {})
+        row = {key: point[key] for key in ("key", "family", "function", "line", "action", "text")}
+        if point.get("reason"):
+            row["reason"] = point["reason"]
+        if point["key"] in committed and bool(entry.get("witness")) == bool(entry.get("survives")):
+            problems.append(point["key"] + ": committed entry needs exactly one of witness or survives")
+        run = _run_mutant("pm_event_numbers", lambda: _point_code(numbers_text, numbers_file, point),
+                          sources, corpus_path, time_limit)
+        _judge(row, run, entry.get("survives"), entry.get("witness"), problems, point["key"])
+        generated.append(row)
+
+    # Each documented rule names hand-written mutation ids or generated point
+    # keys; every one must be caught with its witness case among the failures.
+    rows_by_name = {r["id"]: r for r in results} | {r["key"]: r for r in generated}
+    rules, rule_ids = [], set()
+    for rule in spec.get("rules", []):
+        if rule["id"] in rule_ids:
+            problems.append("duplicate rule id: " + rule["id"])
+        rule_ids.add(rule["id"])
+        missing = sorted(name for name in rule["mutations"] if name not in rows_by_name)
+        if not rule["mutations"] or missing:
+            problems.append("rule %s: no mutation, or unknown mutation %s" % (rule["id"], missing))
+        rows = [rows_by_name[name] for name in rule["mutations"] if name in rows_by_name]
+        for row in rows:
+            if not row.get("witness_failed"):
+                problems.append("rule %s: %s is not caught with a failing witness case"
+                                % (rule["id"], row.get("id", row.get("key"))))
+        caught = bool(rows) and not missing and all(row.get("witness_failed") for row in rows)
+        rules.append({"id": rule["id"], "owner": rule["owner"], "api": rule["api"], "rule": rule["rule"],
+                      "mutations": rule["mutations"], "result": "caught" if caught else "NOT CAUGHT"})
+
+    every = results + generated
     review = [r for r in results if r.get("source") == "review"]
+    review_fix2 = [r for r in results if r.get("source") == "review-fix2"]
+    family_counts = {family: sum(p["family"] == family for p in points) for family in GENERATED_FAMILIES}
     totals = {
         "apis": len(spec["apis"]),
-        "mutations": len(results),
-        "caught": sum(r.get("result") == "caught" for r in results),
-        "survivors": sum(r.get("result") == "survives" for r in results),
-        "declared_survivors": sum("declared_survivor" in r for r in results),
-        "not_applied": sum(r.get("result") == "not_applied" for r in results),
-        "runner_exceptions": sum("runner_exception" in r for r in results),
+        "rules": len(rules),
+        "rules_caught": sum(r["result"] == "caught" for r in rules),
+        "refusal_sites": family_counts["refusal_site"],
+        "refusal_predicates": family_counts["refusal_predicate"],
+        "comparison_boundaries": family_counts["comparison_boundary"],
+        "hand_written_mutations": len(results),
+        "generated_mutations": len(generated),
+        "mutations": len(every),
+        "caught": sum(r.get("result") == "caught" for r in every),
+        "survivors": sum(r.get("result") == "survives" for r in every),
+        "declared_survivors": sum("declared_survivor" in r for r in every),
+        "undeclared_survivors": sum(r.get("result") == "survives" and "declared_survivor" not in r for r in every),
+        "witnessed": sum(bool(r.get("witness_failed")) for r in every),
+        "not_applied": sum(r.get("result") == "not_applied" for r in every),
+        "build_errors": sum(r.get("result") == "build_error" for r in every),
+        "runner_exceptions": sum(r.get("result") == "runner_exception" for r in every),
         "not_applicable_cells": sum(type(v) is str and v.startswith("N/A: ") for cells in matrix.values()
                                     for v in cells.values()),
         "review_mutations": len(review),
         "review_mutations_caught": sum(r.get("result") == "caught" for r in review),
+        "review_fix2_mutations": len(review_fix2),
+        "review_fix2_caught": sum(r.get("result") == "caught" for r in review_fix2),
+        "review_fix2_declared_controls": sum("declared_survivor" in r for r in review_fix2),
     }
     return {"status": "fail" if problems else "pass", "mutation_set": spec["schema_id"],
             "intact": {key: baseline[key] for key in ("status", "corpus_cases", "case_passes",
                                                        "positives", "negatives")} |
                       {"owner_integration_checks": len(baseline["owner_integration_checks"])},
-            "totals": totals, "problems": problems, "matrix": matrix, "mutations": results,
+            "totals": totals, "problems": problems, "generated_families": GENERATED_FAMILIES,
+            "rules": rules, "matrix": matrix, "mutations": results, "generated": generated,
             "self_test_scope": "numbers", "native_authority": "NOT_RUN"}

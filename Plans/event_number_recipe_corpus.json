@@ -24221,6 +24221,841 @@
       "single_defect": "payload_bytes_type"
     },
     {
+      "id": "parse-input-type-number",
+      "op": "parse",
+      "raw": 1,
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "error": "json_input_type",
+      "target_predicate": "json_input_type",
+      "enforcement": "authored",
+      "single_defect": "json_input_type"
+    },
+    {
+      "id": "jcs-decimal-nan",
+      "op": "jcs_value",
+      "value": {
+        "@decimal": "NaN"
+      },
+      "conflicts": [
+        "C02"
+      ],
+      "error": "jcs_nonfinite",
+      "target_predicate": "jcs_nonfinite",
+      "enforcement": "authored",
+      "single_defect": "jcs_nonfinite.decimal"
+    },
+    {
+      "id": "jcs-decimal-negative-infinity",
+      "op": "jcs_value",
+      "value": {
+        "@decimal": "-Infinity"
+      },
+      "conflicts": [
+        "C02"
+      ],
+      "error": "jcs_nonfinite",
+      "target_predicate": "jcs_nonfinite",
+      "enforcement": "authored",
+      "single_defect": "jcs_nonfinite.decimal"
+    },
+    {
+      "id": "jcs-integer-beyond-binary64",
+      "op": "jcs_value",
+      "value": {
+        "@int": "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "conflicts": [
+        "C01",
+        "C02"
+      ],
+      "error": "jcs_binary64",
+      "target_predicate": "jcs_binary64",
+      "enforcement": "authored",
+      "single_defect": "jcs_binary64.overflow"
+    },
+    {
+      "id": "jcs-non-string-key",
+      "op": "jcs_value",
+      "value": {
+        "@map": [
+          [
+            {
+              "@int": "1"
+            },
+            "x"
+          ]
+        ]
+      },
+      "conflicts": [
+        "C02"
+      ],
+      "error": "jcs_key_type",
+      "target_predicate": "jcs_key_type",
+      "enforcement": "authored",
+      "single_defect": "jcs_key_type"
+    },
+    {
+      "id": "jcs-binary-value",
+      "op": "jcs_value",
+      "value": {
+        "a": {
+          "@binary": "78"
+        }
+      },
+      "conflicts": [
+        "C01",
+        "C02"
+      ],
+      "error": "jcs_type",
+      "target_predicate": "jcs_type",
+      "enforcement": "authored",
+      "single_defect": "jcs_type"
+    },
+    {
+      "id": "app-binary-reported-length-4294967296",
+      "op": "physical",
+      "value": {
+        "@binary": "78"
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "reported_length": 4294967296,
+      "fixture_boundary": "Fault-injection fixture boundary: for this one call the runner makes the helper module's len() report 4294967296 for the 1-byte binary input (true length elsewhere), so the bin32 uint32 limit is reached without allocating 4 GiB. Only the length predicate is exercised; real-length cases cover the emitted bytes.",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "physical_length",
+      "target_predicate": "physical_length",
+      "enforcement": "authored",
+      "single_defect": "physical_length"
+    },
+    {
+      "id": "app-binary-reported-length-4294967295",
+      "op": "physical",
+      "value": {
+        "@binary": "78"
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "reported_length": 4294967295,
+      "fixture_boundary": "Fault-injection fixture boundary: for this one call the runner makes the helper module's len() report 4294967295 for the 1-byte binary input (true length elsewhere), so the bin32 uint32 limit is reached without allocating 4 GiB. Only the length predicate is exercised; real-length cases cover the emitted bytes.",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "c6ffffffff78",
+      "target_predicate": "physical.canonical_bytes"
+    },
+    {
+      "id": "physical-non-string-key",
+      "op": "physical",
+      "value": {
+        "@map": [
+          [
+            {
+              "@int": "1"
+            },
+            "x"
+          ]
+        ]
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_key_type",
+      "target_predicate": "physical_key_type",
+      "enforcement": "authored",
+      "single_defect": "physical_key_type"
+    },
+    {
+      "id": "decode-text-input",
+      "op": "decode",
+      "hex": "01",
+      "hex_as_text": true,
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_input_type",
+      "target_predicate": "physical_input_type",
+      "enforcement": "authored",
+      "single_defect": "physical_input_type"
+    },
+    {
+      "id": "history-empty_ref",
+      "op": "history",
+      "scenario": "empty_ref",
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_query",
+      "target_predicate": "original_query",
+      "enforcement": "authored",
+      "single_defect": "original_query.nonempty_ref"
+    },
+    {
+      "id": "history-nonstring_ref",
+      "op": "history",
+      "scenario": "nonstring_ref",
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_query",
+      "target_predicate": "original_query",
+      "enforcement": "authored",
+      "single_defect": "original_query.string_ref"
+    },
+    {
+      "id": "history-dict_expected",
+      "op": "history",
+      "scenario": "dict_expected",
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_query",
+      "target_predicate": "original_query",
+      "enforcement": "authored",
+      "single_defect": "original_query.expected_type"
+    },
+    {
+      "id": "history-untyped_recipe",
+      "op": "history",
+      "scenario": "untyped_recipe",
+      "fixture_boundary": "Authentic sealed original whose recipe carrier is a plain tuple of the same values.",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_selection",
+      "target_predicate": "recipe_selection",
+      "enforcement": "authored",
+      "single_defect": "recipe_selection.type"
+    },
+    {
+      "id": "token-input-type",
+      "op": "token",
+      "raw": 1,
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token.type"
+    },
+    {
+      "id": "append-policy-str-subclass",
+      "op": "append_policy",
+      "value": "append_once",
+      "value_class": "str_subclass",
+      "fixture_boundary": "Python caller's str subclass (StrEnum member) equal to an allowed policy. Decoded JSON request data always arrives as an exact str; the API still refuses the subclass.",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "replay_policy",
+      "target_predicate": "replay_policy",
+      "enforcement": "authored",
+      "single_defect": "replay_policy.exact_str"
+    },
+    {
+      "id": "producer-mapping-proxy-bytes",
+      "op": "producer",
+      "route": "bytes",
+      "event_class": "mapping_proxy",
+      "fixture_boundary": "The complete frozen base event behind a read-only mapping proxy: every field is present, only the exact dict type differs.",
+      "conflicts": [
+        "C01",
+        "C02"
+      ],
+      "error": "producer_projection",
+      "target_predicate": "producer_projection",
+      "enforcement": "authored",
+      "single_defect": "producer_projection.dict"
+    },
+    {
+      "id": "payload-id-type",
+      "op": "payload",
+      "length": 6,
+      "descriptor": {
+        "id": 1
+      },
+      "conflicts": [
+        "C05",
+        "C09"
+      ],
+      "error": "payload_id_type",
+      "target_predicate": "payload_id_type",
+      "enforcement": "authored",
+      "single_defect": "payload_id_type.type"
+    },
+    {
+      "id": "payload-media-str-subclass",
+      "op": "payload",
+      "length": 6,
+      "str_subclass_fields": [
+        "media_type"
+      ],
+      "fixture_boundary": "Descriptor media type is a str subclass equal to the expected media type.",
+      "conflicts": [
+        "C05",
+        "C09"
+      ],
+      "error": "payload_media",
+      "target_predicate": "payload_media",
+      "enforcement": "authored",
+      "single_defect": "payload_media.exact_str"
+    },
+    {
+      "id": "recipe-empty-owner-edition",
+      "op": "recipe_constructor",
+      "field_index": 5,
+      "value": "",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "recipe_tuple",
+      "target_predicate": "recipe_tuple",
+      "enforcement": "authored",
+      "single_defect": "recipe_tuple.nonempty"
+    },
+    {
+      "id": "binding-project-integer-project",
+      "op": "binding_constructor",
+      "changes": {
+        "scope_kind": "project",
+        "project_id": 1
+      },
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_scope",
+      "target_predicate": "original_scope",
+      "enforcement": "authored",
+      "single_defect": "original_scope.project_string"
+    },
+    {
+      "id": "history-self_equal_binding",
+      "op": "history",
+      "scenario": "self_equal_binding",
+      "fixture_boundary": "Caller-shaped binding object claiming equality with any query and carrying the original commitment; only the exact OriginalBinding type gate refuses it.",
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_binding",
+      "target_predicate": "original_binding",
+      "enforcement": "authored",
+      "single_defect": "original_binding.type"
+    },
+    {
+      "id": "history-string_result_bytes",
+      "op": "history",
+      "scenario": "string_result_bytes",
+      "fixture_boundary": "Exact byte-carrier gate: the sealed fixture holds the same text as str, so only the bytes type check can refuse; not native custody proof.",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "original_bytes_type",
+      "target_predicate": "original_bytes_type",
+      "enforcement": "authored",
+      "single_defect": "original_bytes_type.result"
+    },
+    {
+      "id": "history-string_receipt_bytes",
+      "op": "history",
+      "scenario": "string_receipt_bytes",
+      "fixture_boundary": "Exact byte-carrier gate: the sealed fixture holds the same text as str, so only the bytes type check can refuse; not native custody proof.",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "original_bytes_type",
+      "target_predicate": "original_bytes_type",
+      "enforcement": "authored",
+      "single_defect": "original_bytes_type.receipt"
+    },
+    {
+      "id": "app-binary-255",
+      "op": "physical",
+      "value": {
+        "@repeat": [
+          {
+            "@binary": "78"
+          },
+          255
+        ]
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "c4ff787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878",
+      "target_predicate": "physical.minimal_width"
+    },
+    {
+      "id": "app-binary-256",
+      "op": "physical",
+      "value": {
+        "@repeat": [
+          {
+            "@binary": "78"
+          },
+          256
+        ]
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "c5010078787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878",
+      "target_predicate": "physical.minimal_width"
+    },
+    {
+      "id": "app-binary-65535",
+      "op": "physical",
+      "value": {
+        "@repeat": [
+          {
+            "@binary": "78"
+          },
+          65535
+        ]
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "output_form": "head",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": {
+        "head": "c5ffff7878787878",
+        "length": 65538
+      },
+      "target_predicate": "physical.minimal_width"
+    },
+    {
+      "id": "app-binary-65536",
+      "op": "physical",
+      "value": {
+        "@repeat": [
+          {
+            "@binary": "78"
+          },
+          65536
+        ]
+      },
+      "profile": "pm.application.physical_messagepack.v1",
+      "output_form": "head",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": {
+        "head": "c600010000787878",
+        "length": 65541
+      },
+      "target_predicate": "physical.minimal_width"
+    },
+    {
+      "id": "jcs-declared-float-over-integer-carrier",
+      "op": "jcs",
+      "raw": "1",
+      "typed": true,
+      "kind": "float",
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "error": "jcs_kind",
+      "target_predicate": "jcs_kind",
+      "enforcement": "authored",
+      "single_defect": "jcs_kind.declared_over_carrier"
+    },
+    {
+      "id": "physical-map-utf8-order",
+      "op": "physical",
+      "value": {
+        "𐀀": 2,
+        "": 1
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "output": "82a3ee808001a4f090808002",
+      "target_predicate": "physical.map_key_order"
+    },
+    {
+      "id": "physical-binding-map-utf8-order",
+      "op": "physical",
+      "value": {
+        "𐀀": 2,
+        "": 1
+      },
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05"
+      ],
+      "output": "82a3ee808001a4f090808002",
+      "target_predicate": "physical.map_key_order"
+    },
+    {
+      "id": "payload-id-uppercase",
+      "op": "payload",
+      "length": 6,
+      "descriptor": {
+        "id": "26BEBB121169D80246A4531D34864F8092849462DD92D2F2BC88800F23FDBAC7"
+      },
+      "conflicts": [
+        "C05",
+        "C09"
+      ],
+      "error": "payload_id_type",
+      "target_predicate": "payload_id_type",
+      "enforcement": "authored",
+      "single_defect": "payload_id_type.lowercase"
+    },
+    {
+      "id": "binding-application-empty-project",
+      "op": "binding_constructor",
+      "changes": {
+        "project_id": ""
+      },
+      "conflicts": [
+        "C10"
+      ],
+      "error": "original_scope",
+      "target_predicate": "original_scope",
+      "enforcement": "authored",
+      "single_defect": "original_scope.application_null"
+    },
+    {
+      "id": "parse-raw-control-character",
+      "op": "parse",
+      "raw": "\"a\u0001b\"",
+      "conflicts": [
+        "C07",
+        "C08"
+      ],
+      "error": "json_syntax",
+      "target_predicate": "json_syntax",
+      "enforcement": "intrinsic_parser",
+      "single_defect": "json_syntax.control_character"
+    },
+    {
+      "id": "decode-integer-map-key",
+      "op": "decode",
+      "hex": "8101a161",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_decode",
+      "target_predicate": "physical_decode",
+      "enforcement": "intrinsic_parser",
+      "single_defect": "physical_decode.map_key_type"
+    },
+    {
+      "id": "bad-token-'1١'",
+      "op": "token",
+      "raw": "1١",
+      "conflicts": [
+        "C07"
+      ],
+      "error": "integer_token",
+      "target_predicate": "integer_token",
+      "enforcement": "authored",
+      "single_defect": "integer_token.ascii_digits"
+    },
+    {
+      "id": "producer-type-qualified-array-index-bytes",
+      "op": "producer",
+      "route": "bytes",
+      "changes": {
+        "payload": {
+          "n": [
+            {
+              "@float": "1.0"
+            }
+          ]
+        }
+      },
+      "qualification": {
+        "type_sensitive_paths": [
+          [
+            "payload",
+            "n",
+            0
+          ]
+        ]
+      },
+      "conflicts": [
+        "C01",
+        "C02"
+      ],
+      "error": "jcs_kind",
+      "target_predicate": "jcs_kind",
+      "enforcement": "authored",
+      "single_defect": "producer.forwards.array_index_path"
+    },
+    {
+      "id": "jcs-lone-surrogate-string",
+      "op": "jcs_value",
+      "value": {
+        "@code_points": [
+          55296
+        ]
+      },
+      "conflicts": [
+        "C02"
+      ],
+      "error": "unicode_scalar",
+      "target_predicate": "unicode_scalar",
+      "enforcement": "authored",
+      "single_defect": "unicode_scalar.jcs_value"
+    },
+    {
+      "id": "jcs-lone-surrogate-key",
+      "op": "jcs_value",
+      "value": {
+        "@map": [
+          [
+            {
+              "@code_points": [
+                55296
+              ]
+            },
+            1
+          ]
+        ]
+      },
+      "conflicts": [
+        "C02"
+      ],
+      "error": "unicode_scalar",
+      "target_predicate": "unicode_scalar",
+      "enforcement": "authored",
+      "single_defect": "unicode_scalar.jcs_key"
+    },
+    {
+      "id": "physical-lone-surrogate-string",
+      "op": "physical",
+      "value": {
+        "@code_points": [
+          55296
+        ]
+      },
+      "conflicts": [
+        "C05"
+      ],
+      "error": "unicode_scalar",
+      "target_predicate": "unicode_scalar",
+      "enforcement": "authored",
+      "single_defect": "unicode_scalar.physical"
+    },
+    {
+      "id": "physical-str-255",
+      "op": "physical",
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "d9ff616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161",
+      "target_predicate": "physical.minimal_width"
+    },
+    {
+      "id": "physical-str-256",
+      "op": "physical",
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "da010061616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161",
+      "target_predicate": "physical.minimal_width"
+    },
+    {
+      "id": "physical-str-65535",
+      "op": "physical",
+      "value": {
+        "@repeat": [
+          "a",
+          65535
+        ]
+      },
+      "output_form": "head",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": {
+        "head": "daffff6161616161",
+        "length": 65538
+      },
+      "target_predicate": "physical.minimal_width"
+    },
+    {
+      "id": "physical-str-65536",
+      "op": "physical",
+      "value": {
+        "@repeat": [
+          "a",
+          65536
+        ]
+      },
+      "output_form": "head",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": {
+        "head": "db00010000616161",
+        "length": 65541
+      },
+      "target_predicate": "physical.minimal_width"
+    },
+    {
+      "id": "physical-array-15",
+      "op": "physical",
+      "value": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "9fc0c0c0c0c0c0c0c0c0c0c0c0c0c0c0",
+      "target_predicate": "physical.minimal_width"
+    },
+    {
+      "id": "physical-array-16",
+      "op": "physical",
+      "value": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "dc0010c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0c0",
+      "target_predicate": "physical.minimal_width"
+    },
+    {
+      "id": "physical-map-15",
+      "op": "physical",
+      "value": {
+        "o": null,
+        "n": null,
+        "m": null,
+        "l": null,
+        "k": null,
+        "j": null,
+        "i": null,
+        "h": null,
+        "g": null,
+        "f": null,
+        "e": null,
+        "d": null,
+        "c": null,
+        "b": null,
+        "a": null
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "8fa161c0a162c0a163c0a164c0a165c0a166c0a167c0a168c0a169c0a16ac0a16bc0a16cc0a16dc0a16ec0a16fc0",
+      "target_predicate": "physical.minimal_width"
+    },
+    {
+      "id": "physical-map-16",
+      "op": "physical",
+      "value": {
+        "p": null,
+        "o": null,
+        "n": null,
+        "m": null,
+        "l": null,
+        "k": null,
+        "j": null,
+        "i": null,
+        "h": null,
+        "g": null,
+        "f": null,
+        "e": null,
+        "d": null,
+        "c": null,
+        "b": null,
+        "a": null
+      },
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "output": "de0010a161c0a162c0a163c0a164c0a165c0a166c0a167c0a168c0a169c0a16ac0a16bc0a16cc0a16dc0a16ec0a16fc0a170c0",
+      "target_predicate": "physical.minimal_width"
+    },
+    {
+      "id": "jcs-typed-exact-integer",
+      "op": "jcs",
+      "raw": "1",
+      "parser": "exact",
+      "typed": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "1",
+      "target_predicate": "jcs.json_number_lexical_kind"
+    },
+    {
+      "id": "jcs-sign-only-integral-float",
+      "op": "jcs_value",
+      "value": {
+        "@float": "1.0"
+      },
+      "sign": true,
+      "conflicts": [
+        "C07",
+        "C10"
+      ],
+      "output": "1",
+      "target_predicate": "jcs.sign_path_without_kind"
+    },
+    {
       "id": "envelope-embedded-01-root_ref-baseline",
       "op": "envelope_datetime",
       "resource": "embedded-01",
