@@ -6,6 +6,7 @@
 // whether the lens is drawn on top of the editor (the lens area keeps the "pre" pixels while the area round it turns
 // into the editor) or under it (it changes with its surroundings). Record on the VM or Windows:
 //   browser-check run diagnostics/glass-lens-film.check.mjs --record /abs/film.mp4 --set page=<build> [--set cycles=4] [--set marker=1]
+// then: python3 tools/glass-lens-film-reader.py /abs/film.mp4 <run folder> <out.json> --marker   (wrong frames per cycle)
 export default async function (t) {
 	const f = await t.app.open({ onboarding: true, query: 'o55=fresh' });
 	await f.waitForFunction(() => window.O55?.S?.open && !!document.querySelector('#pm-o55-onboarding .o55-lookbtn'), null, { timeout: 30000 });
