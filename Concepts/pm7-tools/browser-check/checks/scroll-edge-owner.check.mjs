@@ -59,7 +59,7 @@ async function cell(t, surface, w, h) {
 				await t.page.mouse.click(off.x + b.x + b.width / 2, off.y + b.y + b.height / 2);
 				await f.waitForTimeout(500);
 				const rr = await f.evaluate(() => {
-					const rs = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-foot .o55-reason.o55-reason-show'); if (!rs) return { reason: false };
+					const rs = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-reason.o55-reason-show'); /* (the layer's own since FO87-N1, no longer the footer's) */ if (!rs) return { reason: false };
 					const q = rs.getBoundingClientRect(), x = q.left + q.width / 2, y = q.top + q.height / 2, old = rs.style.pointerEvents;
 					rs.style.pointerEvents = 'auto'; const e = document.elementFromPoint(x, y); rs.style.pointerEvents = old;
 					const sc = rs.closest('.o55-layer').querySelector(':scope > .o55-scroll'), s = sc.getBoundingClientRect();
