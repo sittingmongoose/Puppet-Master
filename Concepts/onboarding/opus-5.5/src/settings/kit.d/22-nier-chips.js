@@ -119,7 +119,7 @@
       + `<div class="o55nc-presets" role="group" aria-label="Presets">${PRESETS.map(p => `<button type="button" class="o55nc-preset" aria-pressed="false" data-o55nc-preset="${p.id}"><span>${esc(p.label)}</span><small>${esc(p.help)}</small></button>`).join('')}</div>`
       + '<button type="button" class="btn small o55nc-replay" data-o55nc-replay><span>Play reboot moment</span></button><p class="o55nc-replay-why"></p>'
       + '</div></div>'
-      + '<div class="o55nc-off"><p>NieR is not your theme right now. The parts you install here show when you pick it.</p><button type="button" class="btn small primary" data-o55nc-on>Use the NieR theme</button></div>'
+      + '<div class="o55nc-off"><p>NieR is not your theme right now. The parts you install here show when you pick it.</p><button type="button" class="btn small primary" data-o55nc-on><span>Use the NieR theme</span></button></div>'
       + groups
       + `<section class="o55nc-group o55nc-bg"><header class="o55nc-ghead"><h4>Background</h4><span>Behind the app while NieR is your theme</span></header><div class="o55nc-scenes" role="radiogroup" aria-label="NieR background">${tiles}</div></section>`
       + '</div>';
@@ -304,7 +304,7 @@
     const shell = document.createElement('div');
     shell.className = 'o55nc-mount';
     shell.innerHTML = `<p class="pm51-hero-summary o55nc-mount-lead">${esc(opts.lead ? String(opts.lead) : leadFor(store))}</p>` + body(store)
-      + `<footer class="pm51-panel-foot o55nc-mount-foot"><button type="button" class="btn" data-o55nc-done>${esc(say('done', 'Done'))}</button></footer>`;
+      + `<footer class="pm51-panel-foot o55nc-mount-foot"><button type="button" class="btn" data-o55nc-done><span>${esc(say('done', 'Done'))}</span></button></footer>`;
     host.appendChild(shell);
     exemptHover(shell);
     const session = bind(shell, store);

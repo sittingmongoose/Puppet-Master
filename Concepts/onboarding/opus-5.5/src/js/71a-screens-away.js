@@ -87,7 +87,7 @@
         fields += C.note(T('away.proxy.public', { name }), 'warn', 'globe');
         fields += C.details(S, 'proxyneeds', T('away.proxy.needsTitle'), `<ul class="o55-will">${['dns', 'ports', 'cgnat'].map((k) => `<li>${C.small(k === 'dns' ? 'globe' : k === 'ports' ? 'lock' : 'link', 14)}<span>${U.esc(T('away.proxy.needs.' + k, { host: res.ok ? res.url.replace(/^https:\/\//, '') : 'pm.example.com', name }))}</span></li>`).join('')}</ul>`);
         const on = consented(S) && res.ok;
-        fields += `<div class="o55-checkline" data-key="consent"><button type="button" role="checkbox" aria-checked="${on}" class="o55-check${on ? ' is-on' : ''}" data-o55-do="consent" data-pm-hover-exempt="true"${res.ok ? '' : ` aria-disabled="true" data-disabled-reason="${U.esc(T('missing.proxyAddress'))}"`}>${on ? C.small('check', 13) : ''}</button><span>${U.esc(T('away.proxy.consent', { name }))}</span></div>`;
+        fields += `<div class="o55-checkline" data-key="consent"><button type="button" role="checkbox" aria-checked="${on}" class="o55-check${on ? ' is-on' : ''}" data-o55-do="consent" data-pm-hover-exempt="true"${res.ok ? '' : ` aria-disabled="true" data-disabled-reason="${U.esc(T('missing.proxyAddress'))}"`}><span class="o55-checkface" aria-hidden="true">${on ? C.small('check', 13) : ''}</span></button><span>${U.esc(T('away.proxy.consent', { name }))}</span></div>`;
       }
       /* a new Server makes its own link after the commit and shows it then (SCR-05): nothing to paste here */
       if (route === 'remote_link') fields = `<p class="o55-hint" data-key="link-next">${U.esc(T('away.link.next', { name }))}</p>`;
@@ -232,7 +232,7 @@
       const pf = a.state === 'waiting' && st && st.person === 'installed' ? proxyFile(S) : null;
       if (a.state === 'waiting' && st) out += `<p class="o55-hint" data-key="wait-${U.esc(st.key)}">${U.esc(pf ? T('away.setup.px.installWaitHere', { kind: KIND_NAME[d.proxy_kind] || 'Caddy' }) : st.wait || '')}</p>`;
       if (pf) out += `<div class="o55-codeline" data-key="pxfile"><code>${U.esc(pf.text)}</code>${F.copyBtn(pf.text, 'pxfile')}</div>${F.copyNote('pxfile')}`
-        + `<div class="o55-sublinks" data-key="pxdownload">${O55.tips.opt('download:pxfile', `<a class="o55-btn o55-secondary o55-small" data-key="pxdl" download="${U.esc(pf.name)}" href="data:application/octet-stream;charset=utf-8,${encodeURIComponent(pf.text)}" data-pm-hover-exempt="true">${U.esc(T('away.setup.px.download'))}</a>`, 'o55-opt-inline', 'span')}</div>`;
+        + `<div class="o55-sublinks" data-key="pxdownload">${O55.tips.opt('download:pxfile', `<a class="o55-btn o55-secondary o55-small" data-key="pxdl" download="${U.esc(pf.name)}" href="data:application/octet-stream;charset=utf-8,${encodeURIComponent(pf.text)}" data-pm-hover-exempt="true"><span>${U.esc(T('away.setup.px.download'))}</span></a>`, 'o55-opt-inline', 'span')}</div>`;
       if (a.state === 'pending' && st) out += C.note(st.wait || T('server.confirm.pendingHost'), 'info', 'server');
       if (a.link && a.state !== 'failed') out += `<div class="o55-rlink" data-key="rlinkbox"><div class="o55-qrbox" data-key="rqr">${F.qr('rl-' + a.link, 112)}</div><div class="o55-rlink-codes">`
         + `<div class="o55-codeline" data-key="rlink"><code>${U.esc(a.link)}</code>${F.copyBtn(a.link, 'rlink')}</div>`
