@@ -84,7 +84,8 @@ export default async function (t) {
         const collapsed=panel.locator('[data-acc]:not(.open) > [data-collapse]');
         let opened=false;
         for(const head of await collapsed.all()) if(await head.isVisible()) {
-          await head.scrollIntoViewIfNeeded(); await head.click(); opened=true;
+          await head.scrollIntoViewIfNeeded(); await head.press('Enter');
+          await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),'',{hard:true}); opened=true;
         }
         if(!opened)break;
         await t.check(`${target} accordion traversal bounded`,pass<19,'',{hard:true});
@@ -102,8 +103,27 @@ export default async function (t) {
           await t.check(`${target} trigger ${c.index} has stable menu identity`,!!c.key,'',{hard:true});
           inventory.add(c.key);
           const trigger=panel.locator(`[data-shelf-route="${c.index}"]`);
-          if(exercised.has(c.key)||!await trigger.isVisible())continue;
+          if(exercised.has(c.key))continue;
+          // Offscreen content can be skipped by content-visibility. Only an actual
+          // hidden route excludes it; scroll into it before testing reachability.
+          if(await trigger.evaluate(e=>{
+            for(let a=e;a;a=a.parentElement)if(getComputedStyle(a).display==='none')return true;
+            return false;
+          }))continue;
           await trigger.scrollIntoViewIfNeeded();
+          const scroll = await trigger.evaluate(e=>{
+            for(let a=e.parentElement;a;a=a.parentElement)if(a.scrollHeight>a.clientHeight && /auto|scroll/.test(getComputedStyle(a).overflowY)) {
+              a.setAttribute('data-shelf-scroller','');
+              const r=e.getBoundingClientRect(),s=a.getBoundingClientRect();
+              return {delta:r.y+r.height/2-s.y-s.height/2};
+            }
+          });
+          if(scroll) {
+            await panel.locator('[data-shelf-scroller]').hover();
+            await t.page.mouse.wheel(0,scroll.delta);
+            await f.waitForTimeout(150);
+            await panel.locator('[data-shelf-scroller]').evaluate(e=>e.removeAttribute('data-shelf-scroller'));
+          }
           await t.visible(`#${target} [data-shelf-route="${c.index}"]`,`${target} ${c.key} reachable`);
           await trigger.click();
           await t.check(`${target} ${c.key} opens its menu`,await trigger.getAttribute('aria-expanded')==='true',
