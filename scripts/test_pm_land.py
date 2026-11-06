@@ -2071,11 +2071,11 @@ class ReportFormatTests(unittest.TestCase):
                        "Pre-existing, in a baseline bucket whose count has not risen (never blocks): ",
                        "Checks whose failure count rose: ",
                        "Gone since the baseline (nothing to do): ",
-                       'print(f"  [gone] {name}")',
+                       'print(f"  [gone] {escape_newlines(name)}")',
                        'print(f"Subcheck totals this run: {len(totals)}")',
                        """print(f"  [total] {name}  {'timed out' if total is None else total}")""",
                        'print(f"Bucket counts this run: {len(seen_buckets)}")',
-                       'print(f"  [count] {name}  {count}")',
+                       'print(f"  [count] {escape_newlines(name)}  {count}")',
                        "Nothing reported stops the landing: it is ",
                        "of them with changed content on files this branch touched, so compare those with the baseline's rows",
                        "(the readiness growth counter: its printed rows",
@@ -2506,6 +2506,12 @@ class BatchGapTests(Base):
         self.assertEqual(sum(1 for row in self.h.state("fix/b")["notes"] if said in row), 1, "once per landing")
         self.assertTrue(self.h.held(), "the batch stays open, as it did before those lines")
         self.assertEqual(M.parse_holder(self.h.holder())["batch-start"], start)
+
+    def test_an_id_with_an_escaped_newline_is_read_as_one_row(self):
+        report = M.read_report(landing_report(gone=1, gone_ids=["run-gates|x|first\\nsecond|a.md"], totals={"run-gates/x": 1},
+                                              counts={"run-gates|x|first\\nsecond|b.md": 1}))
+        self.assertFalse(report["ids_unread"])
+        self.assertEqual(M.subcheck_of("run-gates|x|first\\nsecond|b.md"), "run-gates/x")
 
     def test_a_gone_count_below_an_earlier_reports_closes_it_on_exit_0_too(self):
         self.h.branch("fix/a", {"src/x.txt": "a\n"})
