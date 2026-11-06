@@ -76,7 +76,7 @@
     "negatives": 6545,
     "labelled_negatives": 6545,
     "passed": 13391,
-    "owner_integration_checks": 319,
+    "owner_integration_checks": 769,
     "finite_case_oracles": "PASS",
     "guard_isolation": "SWEEP_PENDING",
     "result": "PARTIAL",
@@ -1515,7 +1515,8 @@
     "CV-1101.round10": "Round-9 B3 blocked -> source-bound field/value evidence and coherent mutation controls PASS in the stated finite scope; native/lane integration NOT_RUN.",
     "CV-1101.round11": "Cycle-10 B4 BLOCKED -> 4/4 equivalent-pattern negatives and 4/4 corrected positives PASS; source-bound pinned roles and 35 battery controls PASS. Native/lane integration remains NOT_RUN.",
     "CV-1101.round14": "Cycle-13 pre-check LANDING_READY_WITH_NOTES -> N1 (non-deciding citation) and N2 ($dynamicRef rebinding) fixed in the stated finite scope; ten role rows moved to explicit owner-schema review. Native/lane integration remains NOT_RUN.",
-    "CV-1101.round15": "Cycle-14 pre-check NOT_READY -> B1 (citation reached under two dialects) and B2 (dynamic references in a citation) fixed by the static-closure rule and an outright all_refused requirement; N3 year sweep added to the fixed controls; N5 fixed. No row moved. Native/lane integration remains NOT_RUN."
+    "CV-1101.round15": "Cycle-14 pre-check NOT_READY -> B1 (citation reached under two dialects) and B2 (dynamic references in a citation) fixed by the static-closure rule and an outright all_refused requirement; N3 year sweep added to the fixed controls; N5 fixed. No row moved. Native/lane integration remains NOT_RUN.",
+    "CV-1101.round16": "FIX16 gate-bar self-check for the date-time gate: 197 AST sites and 108 owner-statement rows, 280 mutations, 273 caught, 7 declared survivors (equivalent or unreachable). No production change and no row moved. Native/lane integration remains NOT_RUN; no family grade changes."
   },
   "implementation_commit": "ff7caf8d7f62705c86f7dff95635cc867f198702",
   "round1_validation": {
@@ -1571,7 +1572,8 @@
     "B1_round15": "ff7caf8d7f62705c86f7dff95635cc867f198702",
     "B2_round15": "ff7caf8d7f62705c86f7dff95635cc867f198702",
     "N3_round15": "ff7caf8d7f62705c86f7dff95635cc867f198702",
-    "N5_round15": "ff7caf8d7f62705c86f7dff95635cc867f198702"
+    "N5_round15": "ff7caf8d7f62705c86f7dff95635cc867f198702",
+    "gate_bar_round16": "8f8483eae3c23c440169f7798174149156a87a4e"
   },
   "ids_minted_round3": [],
   "round3_validation": {
@@ -4118,5 +4120,385 @@
     "family_grading": "N/A",
     "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15",
     "scope": "Date-time helper fix only: probe, admission checks, the date-time role paragraph of the guide and this report set. No inventory, role record, battery, inventory schema, exclusion, owner prose, registry, Decision Log, Spec Lock, .evidence, .gitignore or number-scope change."
+  },
+  "round16_validation": {
+    "round": 16,
+    "title": "FIX16: gate bar self-check (date-time)",
+    "brief": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/NUMRULE-FIX16.md",
+    "bar": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/GATE-BAR.md",
+    "source_base": "1161543510ac8708f36d5e155e3c4e721b427b11",
+    "implementation_commit": "8f8483eae3c23c440169f7798174149156a87a4e",
+    "production_datetime_code_changed": false,
+    "behaviour_finding": "none; no mutation exposed production behaviour that differs from the owner text",
+    "test_only_notes": [
+      "FIX11 datetime_battery_format_enforced cannot detect a probe without the format checker; kept unchanged, now witnessed by datetime_unit_probe_format_enforced and datetime_unit_deciding_uses_format_checker",
+      "the 7 declared survivors are dead or redundant production code, listed for a cleanup batch"
+    ],
+    "commands": {
+      "self_test": "python3 scripts/pm_event_datetime_mutations.py --self-test",
+      "mutations": "python3 scripts/pm_event_datetime_mutations.py --mutations",
+      "scope_all": "python3 scripts/pm_event_numbers.py --self-test (regression_checks runs every self-check and the five freshness checks)"
+    },
+    "added_files": [
+      "scripts/pm_event_datetime_mutations.py",
+      "scripts/pm_event_datetime_mutations.json",
+      "scripts/pm_event_datetime_selfcheck.py",
+      "scripts/pm_event_datetime_attacks.json"
+    ],
+    "changed_files": [
+      "scripts/pm_event_datetime_admission_checks.py"
+    ],
+    "totals": {
+      "points": 197,
+      "refusal_site": 103,
+      "refusal_predicate": 60,
+      "credit_predicate": 23,
+      "comparison_boundary": 11,
+      "statements": 108,
+      "normative_statements": 82,
+      "statement_rows": 108,
+      "rows_with_rules": 96,
+      "rows_without_mutation": 12,
+      "statements_without_row": 0,
+      "stale_rows": 0,
+      "rules": 72,
+      "rules_caught": 72,
+      "hand_written_mutations": 83,
+      "hand_written_orphans": 0,
+      "generated_mutations": 197,
+      "mutations": 280,
+      "caught": 273,
+      "witnessed": 273,
+      "survivors": 7,
+      "declared_survivors": 7,
+      "undeclared_survivors": 0,
+      "build_errors": 0,
+      "runner_exceptions": 0,
+      "not_applied": 0,
+      "self_checks": 445,
+      "self_checks_passing": 445,
+      "statement_rows_caught": 96,
+      "statement_rows_not_caught": 0
+    },
+    "attacks": 97,
+    "declared_survivors": [
+      {
+        "key": "site:datetime_inventory:decoded_documents:ValueError:empty JSON container#1",
+        "reason": "Equivalent. Every caller passes non-blank text (a file or block that mentions a field or a $-keyword) or treats an empty result exactly as the refusal: _exclusion_schema_paths catches ValueError and continues (no documents either way); validate_inventory's citation read then fails with KeyError (classification_citation_unreadable either way); _source_document falls back to Markdown blocks and gets {} (KeyError, inventory_source_unreadable either way)."
+      },
+      {
+        "key": "predicate:site:datetime_inventory:scan:ValueError:exclusion_purpose_citation_unreadable#1:false not citations#1",
+        "reason": "Equivalent. citations comes from str.split(';'), which always returns at least one element, so not citations is always False."
+      },
+      {
+        "key": "site:datetime_inventory:scan:scan_walk_failed#1",
+        "reason": "Unreachable. The outer handler covers only file.relative_to(root), which cannot fail for a path yielded under root/Plans, and the per-file try whose own handler catches the same exception types. The walk itself runs earlier, inside the exclusion block, where a cycle or broken symlink is reported as scan_exclusions_invalid (witnessed by datetime_unit_scan_symlink_cycle and datetime_unit_scan_broken_symlink)."
+      },
+      {
+        "key": "predicate:site:datetime_inventory:validate_inventory:source_lineage_role_invalid#1:false 'documents' not in document#1",
+        "reason": "Equivalent. The row's pointer was already resolved in the same document (at(document, row['pointer'])); a pointer that matches /documents/N/changes/N/... resolves only if 'documents' is a key, so when the match succeeds the predicate is always False."
+      },
+      {
+        "key": "predicate:site:datetime_inventory:StorageSelection.admit:DatetimeAdmissionError:datetime_schema_unclassified#1:false match[0] is not schema#1",
+        "reason": "Equivalent. StorageSelection.nodes maps id(node) to (node, row) and holds a strong reference to node, so no other live object can share that id; a lookup that hits always returns the same object."
+      },
+      {
+        "key": "predicate:site:datetime_value_probe:_PositivePaths._map:unproven.add#1:true keyword in dialect.VALIDATORS#1",
+        "reason": "Equivalent. REFERENCES is ('$ref',) and every supported dialect (2020-12, 2019-09, draft-07, draft-06) implements $ref, so the predicate is always True where it is evaluated."
+      },
+      {
+        "key": "predicate:site:datetime_value_probe:_PositivePaths._value:unproven.add#1:true keyword in dialect.VALIDATORS#1",
+        "reason": "Equivalent. REFERENCES is ('$ref',) and every supported dialect (2020-12, 2019-09, draft-07, draft-06) implements $ref, so the predicate is always True where it is evaluated."
+      }
+    ],
+    "rows_without_mutation": [
+      {
+        "row": "CV-1101:canonical_text:1.2",
+        "reason": "Ownership or governance statement; no date-time code implements it."
+      },
+      {
+        "row": "CV-1101:canonical_text:3.3",
+        "reason": "Exact instant comparison stays with its existing owners; the date-time code compares no instants."
+      },
+      {
+        "row": "CV-1101:canonical_text:5.4",
+        "reason": "An obligation of each adopting lane at its own boundaries; no shared date-time code implements it."
+      },
+      {
+        "row": "CV-1101:canonical_text:6.1",
+        "reason": "SP-1101 original selection is RetainedDispatcher in pm_event_numbers (number scope, its own rules table); the date-time code supplies only the profiles it selects, whose rules are profile.*."
+      },
+      {
+        "row": "CV-1101:canonical_text:6.4",
+        "reason": "Ownership or governance statement; no date-time code implements it."
+      },
+      {
+        "row": "guide:Shared calls:5.10",
+        "reason": "SP-1101 original selection is RetainedDispatcher in pm_event_numbers (number scope, its own rules table); the date-time code supplies only the profiles it selects, whose rules are profile.*."
+      },
+      {
+        "row": "guide:Shared calls:6.2",
+        "reason": "The scope dispatch is run_corpus in pm_event_numbers_corpus.py (number scope), outside the date-time code; the number scope's check number_scope_imported_no_datetime_code covers --scope numbers."
+      },
+      {
+        "row": "guide:Shared calls:6.6",
+        "reason": "Ownership or governance statement; no date-time code implements it."
+      },
+      {
+        "row": "guide:Shared calls:7.12",
+        "reason": "An obligation of each adopting lane at its own boundaries; no shared date-time code implements it."
+      },
+      {
+        "row": "guide:Shared calls:9.10",
+        "reason": "A count of committed review records, not code; datetime_unit_committed_role_counts checks it and the gate recomputes every record's evidence."
+      },
+      {
+        "row": "guide:Shared calls:9.11",
+        "reason": "A count of committed review records, not code; datetime_unit_committed_role_counts checks it and the gate requires each to decide the string."
+      },
+      {
+        "row": "guide:Shared calls:9.31",
+        "reason": "Ownership or governance statement; no date-time code implements it."
+      }
+    ],
+    "selftest_cli": {
+      "exit": 0,
+      "checks": 450,
+      "failures": []
+    },
+    "full_selftest": {
+      "exit": 0,
+      "cases": 13590,
+      "case_passes": 13590,
+      "checks": 769,
+      "failed_checks": [],
+      "plan_blobs": 8968,
+      "unique_git_reads": 8879
+    },
+    "inventory": {
+      "status": "pass",
+      "nodes": 233,
+      "storage_nodes": 133,
+      "other_owner_nodes": 89,
+      "wildcard_non_timestamp_nodes": 3,
+      "wildcard_non_timestamp_role_nodes": 8,
+      "unclassified_nodes": 0
+    },
+    "cycle14_replay": {
+      "attacks": 78,
+      "variants": 3,
+      "refused": 69,
+      "accepted_as_role": [
+        "control/direct_ref_deciding",
+        "control/allOf_ref_withheld_deciding",
+        "control/every_branch_union_withheld_deciding",
+        "format/ipv4_only",
+        "format/not_datetime_minlen31",
+        "format/datetime_maxlen19",
+        "format/datetime_10digit_fraction",
+        "pattern/unanchored_marker",
+        "maxlen/below_all_timestamps_controls_enum_excluded",
+        "dialect/control_both_2020"
+      ],
+      "passed_without_record": [
+        "replay-c13/control_no_record_ts_accepting",
+        "dialect/union_2020_first_no_record"
+      ],
+      "kept_roles": {
+        "records": 8,
+        "battery_sweep_controls_accepted_by_citations": 0,
+        "production_battery_and_sweep_accepted": 0,
+        "year_sweep": 4743
+      }
+    },
+    "cycle14_coherent_full_gates": {
+      "dialect": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": false,
+        "deciding_nodes": []
+      },
+      "dynamicref": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": true,
+        "deciding_nodes": []
+      },
+      "dynamicref-holder": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": true,
+        "deciding_nodes": []
+      },
+      "year-2027": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": true,
+        "deciding_nodes": []
+      },
+      "n1-witness": {
+        "exit": 1,
+        "errors": [
+          "wildcard_role_review_required"
+        ],
+        "all_refused": false,
+        "deciding_nodes": []
+      }
+    },
+    "cycle13_replay": {
+      "attacks": 51,
+      "refused": 47,
+      "accepted_as_role": [
+        "control_deciding/direct_ref",
+        "control_deciding/allOf_ref",
+        "control_deciding/every_branch_union"
+      ],
+      "passed_without_record": [
+        "control/no_record_ts_accepting"
+      ],
+      "coherent_full_gates": {
+        "vacuous_doc_only": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "ec317b0871aa73fcea6e95a6ba1c546f67e19b80b785c8e9ee9c7ce962115e9f"
+        },
+        "vacuous_member_only": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "d217e2431258a28aa4dddb511c44c5b2097799a5060f6a3c79111412e55984df"
+        },
+        "vacuous_dependentSchemas": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "5735570925de099fcefaf87d0c84c141e49360bb90e32fb2cfa868eae4da44c6"
+        },
+        "vacuous_whole_value": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "74ed381192811442e60cffd425775df6aae005ab141e3ed543505927405c537f"
+        },
+        "irrelevant_if": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "3fe01cf95d870a867ae8735df0044150985ab62abef68ffc59f961387890edfb"
+        },
+        "vacuous_not": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "7bde8b697d7540f0cdefc3a54e6befc7bb7b807b02fbab1da71858a52d3a5d73"
+        },
+        "n2_dynamicRef": {
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "pin": "585ba6125e46245b2b38641751f7bcb42e5dc2f8e81d205a7d55770f97bc77be"
+        }
+      },
+      "literal_cycle12_bypass": {
+        "exit": 1,
+        "failure_kinds": {
+          "inventory_schema": 84
+        }
+      }
+    },
+    "cycle12_replay": {
+      "targeted_probes": 53,
+      "original_probes_same_outcome": 48,
+      "adjacent_refused": 14,
+      "coherent_full_gates": [
+        {
+          "variant": "irrelevant_if",
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "plan_blobs": 8968
+        },
+        {
+          "variant": "vacuous_not",
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ],
+          "plan_blobs": 8968
+        }
+      ],
+      "earlier_full_gates": [
+        {
+          "name": "sibling-full-gate",
+          "exit": 1,
+          "errors": [
+            "wildcard_role_review_required"
+          ]
+        },
+        {
+          "name": "foreign-key-full-gate",
+          "exit": 1,
+          "errors": [
+            "wildcard_role_evidence_changed",
+            "wildcard_role_review_required"
+          ]
+        }
+      ],
+      "original_literal_gates": [
+        {
+          "name": "original-sibling-full-gate",
+          "exit": 1
+        },
+        {
+          "name": "original-foreign-key-full-gate",
+          "exit": 1
+        },
+        {
+          "name": "original-coherent-bypass-full-gate",
+          "exit": 1
+        }
+      ]
+    },
+    "replay_outcomes_equal_fix15": true,
+    "harness_errors": [
+      "cycle-12 driver saved the last check_inventory call (a FIX16 scratch tree); fixed to save the first (the committed tree); run 1 retained in harness-errors/, campaign resumed at full-selftest after a scratch-integrity check"
+    ],
+    "preservation": {
+      "changed": [
+        "scripts/pm_event_datetime_admission_checks.py",
+        "scripts/pm_event_datetime_attacks.json",
+        "scripts/pm_event_datetime_mutations.json",
+        "scripts/pm_event_datetime_mutations.py",
+        "scripts/pm_event_datetime_selfcheck.py"
+      ],
+      "outside_allowed": [],
+      "number_scope_changed": [],
+      "production_changed": [],
+      "plans_changed": [],
+      "gitignore_or_evidence_changed": []
+    },
+    "rows_moved": [],
+    "native_authority": "NOT_RUN",
+    "guard_isolation": "SWEEP_PENDING",
+    "family_grading": "N/A",
+    "evidence_directory": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/",
+    "scope": "Date-time self-check files and this report set only. No production date-time code, inventory, role record, battery, inventory schema, exclusion, adoption guide, number-scope file, owner prose, registry, Decision Log, Spec Lock, .evidence or .gitignore change."
   }
 }

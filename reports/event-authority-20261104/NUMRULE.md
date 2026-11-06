@@ -1904,3 +1904,195 @@ One harness error occurred. The first mutation driver required `dialect_union_dr
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/rebased-head/full-gate.json` | `e8a722e7e20593a945f158ba23938930397c57943a4fc048592fc8621ce9d0ea` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/rebased-head/full-selftest.json` | `c513fe15611901febd1110e60c75229349f8dc108d14ab6426fa5d3b1cc3b296` |
 | `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/harness-errors/run1-campaign.stdout` | `bf2a7eba5431cff473dca04c8ad87f23fd0bd1a0c3c648b2f6c702c069ccbd5d` |
+
+## Gate bar self-check (date-time)
+
+Brief: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/lanes/NUMRULE-FIX16.md`. Bar: `reviews/GATE-BAR.md` ("Same bar for the date-time gate, with its own site and rule lists"). Base `1161543510`; implementation `8f8483eae3`. The date-time gate now has the self-check machinery the number scope built in its fix rounds 3 and 4: sites enumerated from the AST, a rules table derived from the owner text, one hand-written mutation and one corpus case per behaviour rule, and every earlier replay attack as a corpus case. Production behaviour is unchanged: `pm_event_datetime.py`, `pm_event_datetime_inventory.py`, `pm_event_datetime_value_probe.py`, the inventory, the roles, the battery, the inventory schema and the exclusions keep their Git object IDs.
+
+**Totals.**
+
+| Measure | Count |
+|---|---|
+| Enumerated sites (mutation points) | 197: 103 refusal sites, 60 refusal-guard predicates, 23 credit predicates, 11 comparison boundaries |
+| Owner statements extracted | 108 (82 with a normative marker): 35 from CV-1101, 73 from the guide's date-time blocks |
+| Statement rows | 108: 96 name rules, 12 give a reason no mutation applies |
+| Rules | 72, all caught |
+| Mutations | 280: 197 generated, 83 hand-written |
+| Caught, with the committed witness failing | 273 |
+| Survivors | 7, all declared, every reason an equivalence or unreachability (table below) |
+| Build errors, runner exceptions, undeclared survivors | 0, 0, 0 |
+| Self-checks (the date-time corpus of this bar) | 445, all passing on the intact code |
+
+**What was added (date-time files only).**
+- `scripts/pm_event_datetime_mutations.py`: the AST enumeration, the mutant builder and runner, the owner-text rules table and the freshness checks. `--self-test` runs every self-check and the freshness checks; `--mutations` replays every mutant. This is the sibling self-test command: `pm_event_numbers.py --mutations` belongs to the number scope.
+- `scripts/pm_event_datetime_mutations.json`: the committed set. One entry per enumerated point (witness or declared survivor), 83 hand-written mutations, 72 rules and 108 statement rows.
+- `scripts/pm_event_datetime_selfcheck.py`: 445 fine-grained checks, each one named function that runs alone, so a mutant's witness runs in seconds. They call the date-time functions directly: the predicate and its profiles, the format checker, the closed graph and the bound validator over a `StorageSelection` built from explicit rows, the scan over scratch `Plans/` trees, `validate_inventory` and `check_inventory` over one-row scratch inventories, the value probe over one rewritten map, and `reviewed_role` over explicit evidence.
+- `scripts/pm_event_datetime_attacks.json`: the 97 single-map attacks of the cycle-11 to cycle-14 replays.
+- `scripts/pm_event_datetime_admission_checks.py`: `regression_checks` now also runs every self-check and the five freshness checks, so the default `pm_event_numbers.py --self-test` (`--scope all`) fails on a stale site, a refusal alias, an owner statement with no row, a stale row, an unnamed rule or an orphan hand-written mutation.
+
+**1. Enumerated sites.** `mutation_points()` reads the AST of the three date-time modules: the predicate, format checker and runtime admission (`pm_event_datetime`); the scan, the gate, `validate_inventory` and `StorageSelection` (`pm_event_datetime_inventory`); and the value probe with its timestamp-only, deciding, closure, automatic-credit and role checks (`pm_event_datetime_value_probe`). Keys name the module, function, refusal code or predicate text and an ordinal, never a line number. The families:
+- **Refusal sites (103):** every `raise`; every `_refuse(...)` call; every call to a local error sink (a nested function that appends to `errors`: `fail`, `unsupported`); every error record (a dict literal with an `"error"` key); every `errors.extend`; every error-code tuple a function returns (`reviewed_role`); every `"status": "fail"` constant; and every withholding call of the probe (`dependencies.append`, `unproven.add`, `dialects.update`, `dynamic.update`), which records a reason to withhold credit. Each site is keyed by its refusal code, so each code is its own point. The mutant disables that one site.
+- **Refusal-guard predicates (60):** every predicate of an `if` or conditional-expression guard of a refusal site, up to the function, the `else` branch included with the opposite polarity, where dropping that predicate alone makes the refusal fire less often (an or-operand becomes False, an and-operand under `not` becomes True, an element of a literal tuple scanned by `any`/`all` or tested with `in`/`not in` is dropped).
+- **Credit predicates (23):** the date-time gate grants credit, so its weakest direction is a credit guard that fires too often. Every predicate of the guard of a credit site, and of a credit assignment, is weakened so the credit is granted more often: `deciding_nodes` and `timestamp_only_nodes` entries; the `static`, `all_refused`, `automatic`, `credited` and `on_value_path` assignments; and the scan's `used.add` exemption (the exclusion content pin). The credit and withholding names are committed; a name that no longer names a site fails the self-test.
+- **Comparison boundaries (11):** every `<`, `<=`, `>` and `>=`; the mutant flips strictness.
+
+Freshness: a new point with no committed entry, or a committed entry with no point, fails `datetime_gate_bar_sites_fresh`. An aliased or indirect refusal (`_deny = DatetimeAdmissionError`, `add = errors.append`, a refusal name as a string, an import under another name) fails `datetime_gate_bar_no_refusal_alias`. Self-checks `datetime_gate_bar_detects_*` show each detector firing on a planted defect.
+
+How a mutant runs: it is compiled in memory; all three modules are rebuilt as fresh module objects (so no resource-selection or bound-validator cache survives), and its witness runs alone. A witness is a self-check (`check:<name>`) or a date-time corpus case (`case:<id>`). It counts as caught only if that witness fails; a build error or a harness exception is never a catch. A declared survivor must survive all 445 self-checks and all 6,539 date-time corpus cases.
+
+**Declared survivors (7).**
+
+| Point | Reason |
+|---|---|
+| `site:datetime_inventory:decoded_documents:ValueError:empty JSON container#1` | Equivalent. Every caller passes non-blank text (a file or block that mentions a field or a $-keyword) or treats an empty result exactly as the refusal: _exclusion_schema_paths catches ValueError and continues (no documents either way); validate_inventory's citation read then fails with KeyError (classification_citation_unreadable either way); _source_document falls back to Markdown blocks and gets {} (KeyError, inventory_source_unreadable either way). |
+| `predicate:site:datetime_inventory:scan:ValueError:exclusion_purpose_citation_unreadable#1:false not citations#1` | Equivalent. citations comes from str.split(';'), which always returns at least one element, so not citations is always False. |
+| `site:datetime_inventory:scan:scan_walk_failed#1` | Unreachable. The outer handler covers only file.relative_to(root), which cannot fail for a path yielded under root/Plans, and the per-file try whose own handler catches the same exception types. The walk itself runs earlier, inside the exclusion block, where a cycle or broken symlink is reported as scan_exclusions_invalid (witnessed by datetime_unit_scan_symlink_cycle and datetime_unit_scan_broken_symlink). |
+| `predicate:site:datetime_inventory:validate_inventory:source_lineage_role_invalid#1:false 'documents' not in document#1` | Equivalent. The row's pointer was already resolved in the same document (at(document, row['pointer'])); a pointer that matches /documents/N/changes/N/... resolves only if 'documents' is a key, so when the match succeeds the predicate is always False. |
+| `predicate:site:datetime_inventory:StorageSelection.admit:DatetimeAdmissionError:datetime_schema_unclassified#1:false match[0] is not schema#1` | Equivalent. StorageSelection.nodes maps id(node) to (node, row) and holds a strong reference to node, so no other live object can share that id; a lookup that hits always returns the same object. |
+| `predicate:site:datetime_value_probe:_PositivePaths._map:unproven.add#1:true keyword in dialect.VALIDATORS#1` | Equivalent. REFERENCES is ('$ref',) and every supported dialect (2020-12, 2019-09, draft-07, draft-06) implements $ref, so the predicate is always True where it is evaluated. |
+| `predicate:site:datetime_value_probe:_PositivePaths._value:unproven.add#1:true keyword in dialect.VALIDATORS#1` | Equivalent. REFERENCES is ('$ref',) and every supported dialect (2020-12, 2019-09, draft-07, draft-06) implements $ref, so the predicate is always True where it is evaluated. |
+
+Each is dead or redundant code, not a gap in the corpus. None hides a refusal the owner text requires. They are listed for a cleanup batch (TOOL-ISSUES), not removed here: production code must not change in this round.
+
+Discovery added cases where a first pass showed a survivor that was reachable: the descend guard on an unpinned resolver, every `_constraint_sources` and `source_owner_evidence` refusal, the profile-conflict operand for an owner-schema row with the Storage profile, the field-set mismatch in `admit`, an alias resource URI pinned only by the crawl, a string instance reaching an unclassified declaration through `descend`, and the implicit endpoint shadowed by a value node.
+
+**2. Rules table from owner text.** `owner_statements()` re-extracts every sentence of CV-1101 (`canonical_text`, `acceptance_criteria`, `negative_constraints`) and of the guide's date-time blocks, with the number scope's splitter, so both tables split the shared guide identically. The guide blocks are exactly the six the number table excludes as date-time owned (five Shared calls bullets and the Timestamp grammar row); `partition_problems` fails if the two tables ever overlap or leave a block unowned. FIX11's final rule as committed lives in the Shared calls bullet "Before any runtime installation" with the rules of FIX12-FIX15; its rows are `guide:Shared calls:9.*`:
+- FIX11 item 1 (refuses every timestamp: automatic) → 9.9, rule `probe.automatic-credit`;
+- item 2 (any timestamp accepted: explicit, source-bound, fingerprint-pinned review) → 9.23-9.25, rules `role.pinned-fingerprint`, `role.citation-own-graph`, `role.timestamp-review`;
+- item 3 (the battery is a trigger) → 9.7 and 9.21, rules `probe.battery-trigger`, `probe.deciding`.
+
+Every row names rules or gives a reason; every rule lists mutations, every one caught with its witness failing; every hand-written mutation names its rule. `datetime_gate_bar_rules_table_complete` fails on a statement with no row, a stale row (line or text moved), an unknown or unnamed rule, a rule with no mutation, or an orphan mutation.
+
+Rows with no mutation (12):
+
+| Row | Reason |
+|---|---|
+| `CV-1101:canonical_text:1.2` | Ownership or governance statement; no date-time code implements it. |
+| `CV-1101:canonical_text:3.3` | Exact instant comparison stays with its existing owners; the date-time code compares no instants. |
+| `CV-1101:canonical_text:5.4` | An obligation of each adopting lane at its own boundaries; no shared date-time code implements it. |
+| `CV-1101:canonical_text:6.1` | SP-1101 original selection is RetainedDispatcher in pm_event_numbers (number scope, its own rules table); the date-time code supplies only the profiles it selects, whose rules are profile.*. |
+| `CV-1101:canonical_text:6.4` | Ownership or governance statement; no date-time code implements it. |
+| `guide:Shared calls:5.10` | SP-1101 original selection is RetainedDispatcher in pm_event_numbers (number scope, its own rules table); the date-time code supplies only the profiles it selects, whose rules are profile.*. |
+| `guide:Shared calls:6.2` | The scope dispatch is run_corpus in pm_event_numbers_corpus.py (number scope), outside the date-time code; the number scope's check number_scope_imported_no_datetime_code covers --scope numbers. |
+| `guide:Shared calls:6.6` | Ownership or governance statement; no date-time code implements it. |
+| `guide:Shared calls:7.12` | An obligation of each adopting lane at its own boundaries; no shared date-time code implements it. |
+| `guide:Shared calls:9.10` | A count of committed review records, not code; datetime_unit_committed_role_counts checks it and the gate recomputes every record's evidence. |
+| `guide:Shared calls:9.11` | A count of committed review records, not code; datetime_unit_committed_role_counts checks it and the gate requires each to decide the string. |
+| `guide:Shared calls:9.31` | Ownership or governance statement; no date-time code implements it. |
+
+**3. Behaviour rules.** Each rule that is not a refusal has hand-written mutations, each with its own corpus case (a self-check):
+
+| Rule | Hand-written mutations (witness) |
+|---|---|
+| `predicate.whole-string` | `hw-predicate-prefix-match` (`datetime_unit_date_time_trailing_lf`) |
+| `predicate.four-digit-year` | `hw-predicate-five-digit-year` (`datetime_unit_date_time_five_digit_year`) |
+| `predicate.separator` | `hw-predicate-space-separator` (`datetime_unit_date_time_space_separator`); `hw-predicate-uppercase-t-only` (`datetime_unit_date_time_lowercase_t_and_z`) |
+| `predicate.fraction` | `hw-predicate-fraction-ceiling` (`datetime_unit_date_time_forty_digit_fraction`); `hw-predicate-empty-fraction` (`datetime_unit_date_time_empty_fraction`) |
+| `predicate.zone` | `hw-predicate-optional-zone` (`datetime_unit_date_time_missing_zone`); `hw-predicate-uppercase-z-only` (`datetime_unit_date_time_lowercase_t_and_z`) |
+| `predicate.leap-second-instant` | `hw-leap-offset-not-applied` (`datetime_unit_date_time_leap_second_offset_applied`) |
+| `predicate.leap-second-table` | `hw-leap-local-month-end` (`datetime_unit_date_time_leap_second_unannounced_june`); `hw-leap-table-drops-2016` (`datetime_unit_date_time_leap_second_2016`); `hw-leap-table-guesses-2017` (`datetime_unit_date_time_leap_second_unannounced_june`) |
+| `predicate.gregorian-calendar` | `hw-calendar-julian-century` (`datetime_unit_date_time_february_29_century`); `hw-calendar-host-year-range` (`datetime_unit_date_time_year_0000_leap_day`) |
+| `predicate.preserve-string` | `hw-predicate-rewrites-string` (`datetime_unit_date_time_lowercase_t_and_z`) |
+| `profile.event-record-default` | `hw-profile-default-storage` (`datetime_unit_date_time_default_profile_is_event_record`) |
+| `profile.storage-utc-z` | `hw-profile-storage-lowercase-z` (`datetime_unit_date_time_storage_lower_z`) |
+| `profile.no-universal-restriction` | `hw-profile-universal-z` (`datetime_unit_date_time_nonzero_offset`); `hw-profile-universal-nine-digits` (`datetime_unit_date_time_forty_digit_fraction`) |
+| `profile.selection` | `hw-profile-set-loses-coordination` (`datetime_unit_date_time_every_profile_selectable`) |
+| `format.registered-predicate` | `hw-format-name` (`datetime_unit_format_checker_runs_predicate`); `hw-format-raises` (`datetime_unit_format_checker_runs_predicate`); `hw-format-profile-ignored` (`datetime_unit_format_checker_storage_profile`) |
+| `format.type-independent` | `hw-format-non-string` (`datetime_unit_format_checker_non_string_passes`) |
+| `validator.installs-checker` | `hw-validator-no-checker` (`datetime_validator_real_inventory_format_installed`); `hw-validator-profile-ignored` (`datetime_validator_real_inventory_format_installed`) |
+| `composition.storage-utc-z` | `hw-composition-lowercase-z` (`datetime_unit_bound_storage_composition`); `hw-composition-skipped` (`datetime_unit_bound_storage_composition`) |
+| `composition.only-storage-fields` | `hw-composition-extra-field` (`datetime_unit_bound_composition_only_two_fields`) |
+| `composition.dialect-change` | `hw-composition-unbound-after-dialect` (`datetime_unit_bound_composition_survives_dialect_change`) |
+| `composition.preserves-schema` | `hw-composition-drops-original-predicates` (`datetime_unit_bound_preserves_original_predicates`) |
+| `admission.every-object` | `hw-admission-skipped-on-descend` (`datetime_unit_bound_unclassified_nested_reference_refused`) |
+| `admission.pinned-resources` | `hw-admission-no-resource-verification` (`datetime_unit_bound_resource_mutation_refused`); `hw-admission-no-crawl-pins` (`datetime_unit_bound_alias_uri_pinned`) |
+| `admission.closed-registry` | `hw-admission-retrieve-left-installed` (`datetime_unit_closed_graph_missing_resource_refused`) |
+| `admission.dialects` | `hw-dialect-admits-draft4` (`datetime_unit_dialect_unsupported_draft4`); `hw-dialect-default-draft7` (`datetime_unit_dialect_supported_four`) |
+| `admission.unclassified-declaration` | `hw-declaration-required-ignored` (`datetime_unit_bound_unclassified_nested_reference_refused`) |
+| `inventory.owner-schema-no-overlay` | `hw-selection-owner-schema-overlay` (`datetime_unit_bound_owner_schema_no_overlay`) |
+| `scan.universe` | `hw-scan-suffix-filter` (`datetime_unit_scan_utf16`); `hw-scan-skips-directory-symlinks` (`datetime_unit_scan_follows_directory_symlink`) |
+| `scan.decoding` | `hw-scan-utf8-only` (`datetime_unit_scan_utf16`); `hw-scan-escapes-not-decoded` (`datetime_unit_scan_escaped_names`); `hw-scan-fences-not-authoritative` (`datetime_unit_scan_markdown_fence`); `hw-scan-inline-code-ignored` (`datetime_unit_scan_inline_code`) |
+| `scan.property-names-conservative` | `hw-scan-property-names-reference-resolved` (`datetime_unit_scan_property_names_reference_conservative`) |
+| `scan.loadable-never-excluded` | `hw-exclusion-references-ignored` (`datetime_unit_scan_exclusion_referenced_file_forbidden`); `hw-exclusion-schema-roots-ignored` (`datetime_unit_scan_exclusion_loadable_schema_forbidden`) |
+| `inventory.storage-roles` | `hw-storage-class-drops-index` (`datetime_unit_validate_index_row_clean`); `hw-storage-source-identity` (`datetime_unit_validate_storage_identity_event`); `hw-storage-source-index-identity` (`datetime_unit_validate_storage_identity_index`); `hw-storage-source-envelope-required` (`datetime_unit_validate_storage_required_envelope`); `hw-storage-source-publication-required` (`datetime_unit_validate_storage_required_publication`); `hw-storage-source-original-fields` (`datetime_unit_validate_storage_original_fields_pointer`); `hw-storage-source-receipt-required` (`datetime_unit_validate_storage_required_receipt`) |
+| `inventory.named-evidence` | `hw-evidence-refs-not-followed` (`datetime_unit_validate_named_row_clean`); `hw-evidence-combinators-not-followed` (`datetime_unit_named_evidence_follows_combinators`) |
+| `inventory.derived-pin` | `hw-pin-projection-keeps-classification` (`datetime_unit_pin_recomputes_classification`) |
+| `row.classification` | `hw-classification-named-lineage-dropped` (`datetime_unit_validate_lineage_clean`); `hw-classification-role-default` (`datetime_unit_deciding_includes_safe_citation`); `hw-classification-review-ignored` (`datetime_unit_closure_mixed_dialect_union`); `hw-classification-swapped` (`datetime_unit_closure_static_credits`) |
+| `role.no-spelling` | `hw-classification-by-spelling` (`datetime_unit_probe_equivalent_spelling_is_timestamp`) |
+| `probe.battery-trigger` | `hw-probe-format-not-enforced` (`datetime_unit_probe_format_enforced`) |
+| `probe.deciding` | `hw-deciding-format-not-enforced` (`datetime_unit_deciding_uses_format_checker`); `hw-controls-lose-a` (`datetime_unit_deciding_excludes_control`); `hw-implicit-endpoint-dropped` (`datetime_unit_deciding_excludes_implicit_true`) |
+| `probe.map-context` | `hw-probe-contexts-skipped` (`datetime_unit_probe_sibling_context_probed`); `hw-probe-key-context-dropped` (`datetime_unit_probe_all_refused_every_field`) |
+| `probe.all-refused` | `hw-all-refused-first-result-only` (`datetime_unit_probe_all_refused_every_field`) |
+| `probe.positive-paths` | `hw-union-endpoints-union-value` (`datetime_unit_authority_partial_union_value`); `hw-union-endpoints-union-map` (`datetime_unit_authority_partial_union_map`); `hw-not-treated-as-path` (`datetime_unit_authority_not_is_not_a_path`); `hw-then-treated-as-path` (`datetime_unit_authority_then_is_not_a_path`); `hw-draft7-ref-siblings-applied` (`datetime_unit_authority_draft7_ref_siblings_ignored`) |
+| `probe.dynamic-ref-not-a-path` | `hw-dynamic-ref-as-reference` (`datetime_unit_authority_dynamic_ref_not_a_path`) |
+| `probe.other-keywords-review` | `hw-if-counted-as-assertion` (`datetime_unit_authority_if_unproven`); `hw-not-counted-as-annotation` (`datetime_unit_withhold_records_value_keyword`) |
+| `probe.year-sweep` | `hw-sweep-years-short` (`datetime_unit_year_sweep_complete`) |
+| `probe.static-closure` | `hw-credit-dialect-draft7` (`datetime_unit_closure_static_credits`); `hw-dynamic-set-loses-recursive-anchor` (`datetime_unit_closure_recursive_anchor`); `hw-declared-dialect-nearest-only` (`datetime_unit_closure_nested_dialect_inside_draft7`); `hw-closure-row-dialect-dropped` (`datetime_unit_closure_default_dialect_counts`) |
+
+**4. Earlier attacks.** `scripts/pm_event_datetime_attacks.json` holds every single-map attack of the replays: 146 runs (cycle-14 `attacks14.py` 78 and `variants14.py` 3, cycle-13 `attacks.py` 51, cycle-12 `adjacent_checks.py` 14), 86 distinct inputs with no conflicting expectation, plus 11 single-map probes of the cycle-11/12 targeted set (the nine equivalent forms, the dependentSchemas negative and its timestamp review). Each is self-check `datetime_attack_<id>` and reproduces the replay's outcome through the one-row gate. The committed-row targeted probes are self-checks too: the 18 stale role maps, the 8 stale role targets, both foreign same-name citations, the changed battery, and the cycle-14 measure that each kept role's map refuses every year-sweep timestamp. The remaining replay items are the same inputs through the full tree (coherent full gates) or the full self-test, rerun below.
+
+**Findings.** No mutation exposed production behaviour that differs from the owner text. Notes (test-only, not blocking):
+- FIX11's `datetime_battery_format_enforced` cannot detect a probe without the format checker: its value's `const` never equals a battery sample, and every battery and sweep string is a valid timestamp, so format enforcement never changes map acceptance. It stays unchanged (all self-test cases are kept). The map validator's checker is now witnessed through a sibling context (`datetime_unit_probe_format_enforced`, whose derived context "timestamp" is not a date-time), and the per-node deciding checker through `datetime_unit_deciding_uses_format_checker`.
+- The seven declared survivors are dead or redundant production code (table above).
+
+**Replays (from scratch copies, at `8f8483eae3`).**
+Fresh copies of FIX15's drivers on a `git archive` extraction of the cycle-12 input set at `8f8483eae3`, each file checked against its Git blob. Inputs and expectations are unchanged; the only adaptations are heads, paths, the self-test case count, the FIX16 check list and one capture fix (evidence README). Every outcome equals FIX15's. The attack, variant, measure, setup, targeted-probe, adjacent and pin-audit result files are byte-identical to FIX15's, and every full-gate result equals FIX15's apart from the head, I/O and timing fields it records.
+- **Cycle 14** (the Opus pre-check's inputs): 78 attack cases and 3 dialect variants, all as expected. 69 refuse, 10 are accepted as roles, and 2 timestamp-accepting values with no record pass as `other_owner_observation`. The five coherent full gates (B1 dialect, B2 `$dynamicRef` and its holder, N3 year 2027, the cycle-13 N1 witness) exit 1 with `wildcard_role_review_required` alone. In each, `deciding_nodes` is empty and the production `datetime_validator` refuses with `DatetimeAdmissionError: datetime_inventory_invalid`. Kept roles, measured independently: 8 records. Their citations accept 0 battery, control or sweep strings, and production accepts 0 of the battery and of the 4,743 sweep timestamps.
+- **Cycle 13:** all 51 attack cases as expected. 47 refuse, the 3 deciding controls are accepted, and 1 timestamp-accepting value with no record passes. The six coherent full gates and the N2 full gate exit 1 with `wildcard_role_review_required` alone. The literal cycle-12 bypass input exits 1 (84 `inventory_schema` errors).
+- **Cycles 11 and 12:**
+  - **Targeted probes:** 48 of the 48 original probes keep their exact gate outcome, and the 5 added stale-pin probes still fail (53 total).
+  - **Adjacent checks:** 14 of 14 refuse.
+  - **Full gates:** both coherent B7 variants, the sibling and foreign-key gates, and all three literal earlier inputs exit 1.
+  - **Pin audit:** the 18 role pins equal the source recomputation.
+- **Full self-test** (`full_git_checks.py selftest`: the unchanged `run_corpus`, `--scope all`, over all 8,968 committed Plans blobs through the Path I/O adapter):
+  - exit 0, with 13,590 of 13,590 cases;
+  - 769 of 769 integration checks: the 319 FIX15 checks, the 445 self-checks and the 5 freshness checks, so all 450 FIX16 checks are present and passing;
+  - date-time gate `pass` over 233 nodes (133 Storage, 89 other-owner, 3 automatic, 8 roles, 0 unclassified), with 8,879 unique Git reads;
+  - 896 s (FIX15: 642 s). The difference is the 450 added checks.
+
+One harness error occurred. The cycle-12 driver saved the inventory from the *last* `check_inventory` call. The FIX16 self-checks now also call `check_inventory` on one-row scratch trees, so the saved result was a scratch tree's (1 node, `inventory_node_changed`), and `assert_results.py` failed. The fix: the driver now saves the first call, which is the corpus entry point on the committed tree (it records `captured_call`; 233 nodes). The failed run is retained in `harness-errors/`. The campaign resumed at the full self-test after a scratch-integrity check, and that step was rerun from scratch.
+
+**Checks run.**
+
+| Command (at `8f8483eae3`) | Exit | Result |
+|---|---|---|
+| `python3 scripts/pm_event_datetime_mutations.py --mutations` | 0 | 280 mutations. 273 are caught, each by its committed witness failing. The 7 declared survivors each survive all 445 self-checks and all 6,539 date-time corpus cases. 0 build errors, 0 runner exceptions, 0 not applied; `problems` empty. |
+| `python3 scripts/pm_event_datetime_mutations.py --self-test` | 0 | 450 checks (445 self-checks and the 5 freshness checks), 0 failures, 0 freshness problems; 205 s. |
+| `full_git_checks.py selftest` (`pm_event_numbers.py --self-test`, `--scope all`, over the committed tree) | 0 | 13,590 of 13,590 cases, 769 of 769 integration checks; 896 s. |
+| `preservation.py 8f8483eae3` | 0 | Changed since the base: only the five date-time self-check files. The three production modules and the five committed date-time data files keep their Git object IDs. No number-scope, Plans, owner-prose, `.gitignore` or `.evidence` path changed. |
+| `campaign.py` (serial, every checker start with at least 6 GiB available) | 0 | `CAMPAIGN COMPLETE`, 31 steps, each with its expected exit. |
+
+The report commit changes only this report set (`reports/event-authority-20261104/NUMRULE.md`, `.checks.json`, `.self-grade.json`), which no checker reads.
+
+**Scope.** Changed: the five date-time self-check files above and this report set. Unchanged by Git object ID: the three production date-time modules, the inventory, the role records, the battery `a125323b…` and its pin, the inventory schema and the exclusions (inventory pin `5cd2d30c…`); every number-scope file (`scripts/pm_event_numbers.py`, `scripts/pm_event_numbers_corpus.py`, `scripts/pm_event_numbers_mutations.json`, the shared corpus, `scripts/pm_event_index_binding.py`) and the adoption guide; owner prose, registry, Decision Log, Spec Lock, `.evidence` and `.gitignore`. No row moved. Native authority remains NOT_RUN. Guard isolation remains SWEEP_PENDING. No family is graded.
+
+**Limits.**
+- A witness runs alone under its mutant; the bar's claim is that the self-test fails, which the witness failing proves. Survivors are checked against every self-check and every date-time corpus case, not against the full-tree scan, which reads the committed tree and is exercised for scan mutants by scratch trees.
+- Credit and withholding sites are a committed vocabulary of names; the self-test fails when a name stops naming a site, but a credit computed under a new name needs a new entry.
+- The enumeration covers the three production modules. The self-check modules and `admission_checks` are the corpus, not enumerated targets.
+
+**Retained evidence (path plus SHA-256):**
+
+| Evidence | SHA-256 |
+|---|---|
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/mutations-full.json` | `5c86feb72cad9881608e1b5480b5c63ac76d1c0de79eac33b98a94f08e7e7a15` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/mutations-full.stdout` | `7fbf1af414266f909262e228225765e1a9315dbabb235d51dec3449cc8ca1cbe` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/selftest-cli.json` | `0deca923e678bb1165d5dfcdd00d67f256deb60b923240455788b5a7f699d2a7` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/replay-input-blobs.txt` | `7c70d5230bbbe51f070d8a8a1ad8b3ae82d165d6bda377c2067b04863d98a434` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/preservation-8f8483eae3.json` | `78334d3ca6246d0c2f954b538bd6768d7df7a2d75512f3737a1609b6beeea917` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/campaign.json` | `cd0731733cc3be8bf9505a732cc6b36074d573b26ca984d1436aa67d1d948bc0` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/cycle14-replay/cycle14-assertions.json` | `749744fcd666ad091371f3011c6b0bb4b1c945f1ea8a622fa60afe87b81aeb54` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/cycle14-replay/attacks14.json` | `a03f95feeb06992cd738f8f4a7197b66b35f178f931266a3c1d288449ad633b8` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/cycle14-replay/variants14.json` | `af2cd5f490c9522558eb0f4cb94caf9a53f1955d921e9e72a8f2fe35a79500f4` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/cycle14-replay/measure14.json` | `43258777ae39e43714762304c25c2586af8fe48875129e2c77482dba1d6ce4ee` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/precheck-replay/precheck-assertions.json` | `e904830f3ca3d19fa3f6ef120ffebec3108c6b91b08edff41d96c061490fc000` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/precheck-replay/attacks.json` | `eea36566c329b7fd1665e4cd62e5a42aa99862cb877b15018fe6b349937b9cd6` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/precheck-replay/extraction.json` | `cf14d42d433aa06b7646aa5a916ce7995da92bd77fb3175331830aa7a26aced7` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/cycle12-replay/result-assertions.json` | `5c0f65fd5b142d4bd89fc7bcb7d5080408b946332f3d3b9675766fc091ee0bf8` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/cycle12-replay/targeted-checks.json` | `390c38afeaf3a31b197c251c89abc378d94ed9a86e0c9ed437b4f518931c5652` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/cycle12-replay/adjacent-checks.json` | `a082839f21388e0d57149ff0cd863b8247d7ae2706e7358e0d28e16b992caea5` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/cycle12-replay/full-selftest.json` | `0cb71f11f7060e410d6300ec7198acd3bd6f461a24e593f31fae292d8a39738f` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/cycle12-replay/full-selftest-inventory.json` | `79260e35f57a577fb1ac0909631332485a35ebba3fe567cd92dd0caaa77c8433` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/cycle12-replay/full_git_checks.py` | `fb1607da85b182b0b3f4ea129b2ee86756c992d094e7480cf24125ed093469f2` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/harness-errors/run1-campaign.stdout` | `5c948f70f33050765d9dbc9cbd94f4197d38b24c0d2e42d1f96239859f677fba` |
+| `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix16/harness-errors/run1-full-selftest-inventory.json` | `42d2341324aed84c9d88990425b087136fd98f802f0a2fbfe6ee3347e4c96693` |
