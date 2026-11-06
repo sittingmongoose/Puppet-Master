@@ -277,10 +277,21 @@ narrow.installRailPeek = function () {
     if (icon.classList.contains('active') && !peeking) { e.stopPropagation(); e.preventDefault(); ma.setAttribute('data-pmw-rail-peek', ''); return; }
     ma.setAttribute('data-pmw-rail-peek', '');
   }, true);
+  // a press in one of the panel's own menus is a press in the panel: PMR.menu and PMMenu portal their menus to <body>,
+  // so ask each owner what the menu hangs from (FO-84b); a press anywhere else still closes the overlay
+  function panelMenu(node) {
+    var owners = [window.PMR && PMR.menu && PMR.menu.anchorOf, window.PMCozeMenu && PMCozeMenu.ownerOf];
+    for (var i = 0; i < owners.length; i++) {
+      var a = typeof owners[i] === 'function' ? owners[i](node) : null;
+      if (a && a.closest && a.closest('.left-panel')) return true;
+    }
+    return false;
+  }
   doc.addEventListener('pointerdown', function (e) {
     var ma = mainArea();
     if (!ma || !ma.hasAttribute('data-pmw-rail-peek')) return;
     if (e.target.closest && e.target.closest('.left-panel, #fileContextMenu')) return;
+    if (panelMenu(e.target)) return;
     ma.removeAttribute('data-pmw-rail-peek');
   }, true);
   // an Escape a menu over the overlay already spent (PMMenu and PMR.menu mark it with preventDefault) closes only that

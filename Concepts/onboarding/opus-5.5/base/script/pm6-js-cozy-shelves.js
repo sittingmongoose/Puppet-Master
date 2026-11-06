@@ -344,7 +344,17 @@
         if (wrap.closest('#sidePanelSlot') || wrap.closest('#bottomDebugHost')) upgradeWrap(wrap);
       });
     }
-    return { init: init, open: open, close: close, closeAll: closeAll, openAt: openAt, upgradeWrap: upgradeWrap };
+    /* what an open menu holding node belongs to: its trigger, else the home it was portalled from; null when node is in
+       no open menu. The folded rail's overlay (home 44-narrow.js) asks it, so a press in one of the panel's menus is
+       not a press outside the panel (FO-84b). */
+    function ownerOf(node) {
+      var m = null;
+      openMenus.forEach(function (x) { if (!m && x.contains(node)) m = x; });
+      if (!m) return null;
+      var home = m._pmRailHome || m._pmBottomHome;
+      return m._pmTrigger || (home && home.parent) || null;
+    }
+    return { init: init, open: open, close: close, closeAll: closeAll, openAt: openAt, upgradeWrap: upgradeWrap, ownerOf: ownerOf };
   })();
   window.PMCozeMenu = PMMenu;
 

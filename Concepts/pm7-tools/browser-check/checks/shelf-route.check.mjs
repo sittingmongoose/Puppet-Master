@@ -139,7 +139,8 @@ export default async function (t) {
   const opened = new Set(), contextRoutes = [], popupRows = [], branchRows = [], branchDone = new Set();
   let current = null;
   // Assert one open menu: items, a reachable first item, its nested branches, then Escape closes it.
-  const assertMenu = async (key, tag, withBranches = true) => {
+  // reopen: opens the same menu again by the same route, for the pick (FO-84b).
+  const assertMenu = async (key, tag, withBranches = true, reopen = null) => {
     const info = await f.evaluate(async k => {
       const m = __shelf.open().find(x => __shelf.key(x) === k);
       if (!m) return null;
@@ -161,6 +162,32 @@ export default async function (t) {
     // included); once per panel a second Escape must then close that overlay, and its icon reopens it.
     if (panelBefore) await t.check(`${tag} Escape closes the menu and leaves the side panel open`, await slot.isVisible(), '', { hard: true });
     await secondEscape(tag);
+    if (withBranches && reopen) await pickMenu(key, tag, reopen);
+  };
+  // FO-84b: a pick closes the menu and leaves the side panel open (the folded rail's overlay included). The pick is
+  // the menu's selected or checked item when it has one (no state change), else its first enabled command item
+  // (data-demo-action / data-command-id): never an item that opens something in the centre.
+  const pickMenu = async (key, tag, reopen) => {
+    await reopen();
+    const back = await f.waitForFunction(k => __shelf.keys().includes(k), key, { timeout: 5000 }).then(() => true, () => false);
+    await t.check(`${tag} reopens by the same route for a pick`, back, '', { hard: true });
+    const label = await f.evaluate(k => {
+      document.querySelectorAll('[data-shelf-pick]').forEach(e => e.removeAttribute('data-shelf-pick'));
+      const m = __shelf.open().find(x => __shelf.key(x) === k);
+      const own = m ? [...m.querySelectorAll('[role^="menuitem"]')].filter(it => it.closest('[role="menu"]') === m && it.checkVisibility()
+        && !it.hasAttribute('aria-haspopup') && it.getAttribute('aria-disabled') !== 'true' && !it.disabled) : [];
+      const chosen = own.find(it => it.getAttribute('aria-checked') === 'true' || it.getAttribute('aria-selected') === 'true' || it.classList.contains('active') || it.classList.contains('is-selected'))
+        || own.find(it => it.hasAttribute('data-demo-action') || it.hasAttribute('data-command-id'));
+      if (!chosen) return null;
+      chosen.setAttribute('data-shelf-pick', '');
+      return chosen.textContent.trim().replace(/\s+/g, ' ');
+    }, key);
+    await t.check(`${tag} has an item to pick`, !!label, '', { hard: true });
+    await f.locator('[data-shelf-pick]').click();
+    const closed = await f.waitForFunction(k => !__shelf.keys().includes(k), key, { timeout: 5000 }).then(() => true, () => false);
+    await t.check(`${tag} a pick (${label}) closes the menu and leaves the side panel open`, closed && await f.locator('#sidePanelSlot').isVisible(),
+      JSON.stringify({ closed, panel: await f.locator('#sidePanelSlot').isVisible() }), { hard: true });
+    await f.evaluate(() => document.querySelectorAll('[data-shelf-pick]').forEach(e => e.removeAttribute('data-shelf-pick')));
   };
   const secondDone = new Set();
   const secondEscape = async (tag) => {
@@ -254,18 +281,19 @@ export default async function (t) {
     // Reach a control the way a person does: scroll its own scroller with the wheel when it has one.
     const reach = async (loc) => {
       await loc.scrollIntoViewIfNeeded();
+      // The wheel goes where the pointer is: a point of the scroller that hit-tests to it (a short panel's sticky
+      // footer covers the scroller's centre at 1280x500).
       const scroll = await loc.evaluate(e=>{
         for(let a=e.parentElement;a;a=a.parentElement)if(a.scrollHeight>a.clientHeight && /auto|scroll/.test(getComputedStyle(a).overflowY)) {
-          a.setAttribute('data-shelf-scroller','');
-          const r=e.getBoundingClientRect(),s=a.getBoundingClientRect();
-          return {delta:r.y+r.height/2-s.y-s.height/2};
+          const r=e.getBoundingClientRect(),s=a.getBoundingClientRect(),x=s.x+s.width/2;
+          for(let y=s.y+8;y<s.bottom-4;y+=8){const h=document.elementFromPoint(x,y);if(h&&a.contains(h))return {delta:r.y+r.height/2-s.y-s.height/2,x,y};}
+          return null;
         }
       });
       if(scroll) {
-        await panel.locator('[data-shelf-scroller]').hover();
+        await t.page.mouse.move(off.x+scroll.x,off.y+scroll.y);
         await t.page.mouse.wheel(0,scroll.delta);
         await f.waitForTimeout(150);
-        await panel.locator('[data-shelf-scroller]').evaluate(e=>e.removeAttribute('data-shelf-scroller'));
       }
     };
     // Every popup trigger the panel shows (PMMenu wrappers and the rail skin's own), by mouse and by Enter.
@@ -296,7 +324,7 @@ export default async function (t) {
           const key = await f.waitForFunction(b => __shelf.keys().find(k => !b.includes(k)), before, { timeout: 5000 }).then(h => h.jsonValue(), () => null);
           await t.check(`${tag} opens a menu by ${input}`, !!key, JSON.stringify({ blocked: await f.evaluate(() => window.__blockedPopup || 0) }), { hard: true });
           got[input] = key;
-          await assertMenu(key, `${tag} by ${input}`);
+          await assertMenu(key, `${tag} by ${input}`, true, async () => { if (input === 'mouse') await trig.click(); else { await trig.focus(); await t.page.keyboard.press('Enter'); } });
           if (await trig.getAttribute('aria-expanded') !== null)
             await t.check(`${tag} by ${input} trigger collapsed after Escape`, await trig.getAttribute('aria-expanded') === 'false', '', { hard: true });
         }
@@ -347,7 +375,10 @@ export default async function (t) {
           contextRoutes.push({ panel: target, engine, tab, sig, input, menu: key });
           // Branches once per pane, input and menu; every route still asserts open, items and Escape.
           const once = `${state}|${input}|${key}`;
-          await assertMenu(key, tag, !branchDone.has(once));
+          await assertMenu(key, tag, !branchDone.has(once), async () => {
+            if (input === 'mouse') await t.page.mouse.click(off.x + p.at.x, off.y + p.at.y, { button: 'right' });
+            else { await row.focus(); await t.page.keyboard.press(KEY[input]); }
+          });
           branchDone.add(once);
         }
         const menus = INPUTS.map(input => got[input] || null);
@@ -433,14 +464,9 @@ export default async function (t) {
             await t.check('launch selector reopens for Add Configuration',await trigger.getAttribute('aria-expanded')==='true','',{hard:true});
             await menu.waitFor({state:'visible',timeout:5000});
             await menu.getByRole('menuitem',{name:/Add Configuration/}).click();
-            // A pick closes the menu, not the side panel. The folded rail's overlay closes on any press outside
-            // the panel (its exemption covers File actions only); report it and reopen the panel by its icon.
+            // FO-84b: a pick closes the menu, not the side panel (the folded rail's overlay included).
             const kept = await f.locator('#sidePanelSlot').isVisible();
-            await t.check('Run menu pick leaves the side panel open', kept, kept ? '' : 'the side panel closed on the pick');
-            if (!kept) {
-              await f.locator(`#activityBar .icon[data-target="${target}"]`).click();
-              await t.check('Run side panel reopened by its icon', await f.locator('#sidePanelSlot').isVisible(), '', { hard: true });
-            }
+            await t.check('Run Add Configuration pick closes the menu and leaves the side panel open', kept, kept ? '' : 'the side panel closed on the pick', { hard: true });
             await t.check('Run Add Configuration reveals debugger selector',await panel.locator('#rdAddForm').isVisible(),'',{hard:true});
           }
         }
@@ -465,6 +491,20 @@ export default async function (t) {
         JSON.stringify({ inputs: [...inputs], blocked: await f.evaluate(() => window.__blockedContext || 0) }), { hard: true });
     }
   }
+  // FO-84b: the menus' exemption is theirs alone; a click outside the panel and its menus still closes the folded overlay.
+  if (await f.evaluate(() => !!document.querySelector('[data-pmw-rail-peek]'))) {
+    const out = await f.evaluate(() => {
+      const panel = document.querySelector('.left-panel');
+      for (let x = innerWidth - 24; x > innerWidth / 2; x -= 24) for (let y = innerHeight / 2; y < innerHeight - 24; y += 24) {
+        const h = document.elementFromPoint(x, y);
+        if (h && !panel.contains(h) && !h.closest('[role="menu"], [role="dialog"], button, a, input, textarea, [contenteditable]')) return { x, y, on: h.tagName + '.' + h.className };
+      }
+      return null;
+    });
+    await t.check('a plain point outside the side panel exists', !!out, '', { hard: true });
+    await t.page.mouse.click(off.x + out.x, off.y + out.y);
+    await t.check("a click outside the side panel and its menus closes the folded rail's overlay", await f.locator('#sidePanelSlot').isHidden(), JSON.stringify(out), { hard: true });
+  }
   await t.check('at least 14 known PMMenu identities exercised',new Set(routedRows.flatMap(r=>r.exercised)).size>=14,JSON.stringify(routedRows),{hard:true});
   t.log(JSON.stringify({initial:rows,routed:routedRows,popups:popupRows,context:contextRoutes,branches:branchRows}));
   if(t.args.blockMenu) await t.check('capture blocker intercepted requested menu',await f.evaluate(()=>window.__blockedShelfMenu)>0,t.args.blockMenu,{hard:true});
@@ -479,5 +519,5 @@ export default async function (t) {
   await t.check('at least 6 popup menus beyond the PMMenu wrappers exercised', new Set(popupRows.filter(r => !r.controls).map(r => r.identity)).size >= 6, JSON.stringify(popupRows));
   for (const [arg, hits] of [['blockContext', '__blockedContext'], ['blockPopup', '__blockedPopup'], ['blockBranch', '__blockedBranch']])
     if (t.args[arg]) await t.check(`capture blocker ${arg} intercepted input`, await f.evaluate(h => window[h] || 0, hits) > 0, String(t.args[arg]));
-  await f.evaluate(()=>document.querySelectorAll('[data-shelf-case],[data-shelf-route],[data-shelf-pop],[data-shelf-probe],[data-shelf-tab],[data-shelf-branch]').forEach(e=>{for(const a of ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch'])e.removeAttribute(a);}));
+  await f.evaluate(()=>document.querySelectorAll('[data-shelf-case],[data-shelf-route],[data-shelf-pop],[data-shelf-probe],[data-shelf-tab],[data-shelf-branch],[data-shelf-pick]').forEach(e=>{for(const a of ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch'])e.removeAttribute(a);}));
 }
