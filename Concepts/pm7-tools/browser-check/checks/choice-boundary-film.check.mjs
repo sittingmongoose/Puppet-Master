@@ -25,7 +25,8 @@ export default async function(t) {
     const name=`${look} ${motion} ${screen} ${repeat}`,sel='.o55-pane > .o55-layer:not(.o55-out) '+(screen==='where'?'.o55-card[data-arg="server"]':'.o55-tile[data-arg="friendly"]');
     if(t.args.trace)await f.evaluate(sel=>{const t0=performance.now(),out=window.__fo85=[],first=document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)');let tail=null;const tick=()=>{const r=document.getElementById('pm-o55-onboarding'),l=r.querySelector('.o55-pane > .o55-layer:not(.o55-out)'),e=l&&l!==first?l.querySelector(sel.split(' ').pop()):null,b=e&&e.getBoundingClientRect();
      const settled=!!l&&l!==first&&!l.classList.contains('o55-entering')&&!l.classList.contains('o55-hold')&&!r.querySelector('.o55-pane > .o55-layer.o55-out');
-     out.push({t:Math.round(performance.now()-t0),y:b?+b.y.toFixed(3):null,h:b?+b.height.toFixed(3):null,w:b?+b.width.toFixed(3):null,settled});
+     const layers=[...r.querySelectorAll('.o55-pane > .o55-layer')].map(x=>(x.dataset.screen||'?')+':'+[...x.classList].filter(c=>c!=='o55-layer').join('.')).join(' | ');
+     out.push({t:Math.round(performance.now()-t0),y:b?+b.y.toFixed(3):null,h:b?+b.height.toFixed(3):null,w:b?+b.width.toFixed(3):null,settled,...(out.length&&out[out.length-1].layersAt===layers?{}:{layers}),layersAt:layers});
      if(settled&&tail===null)tail=performance.now();if(tail===null||performance.now()-tail<1000)requestAnimationFrame(tick);};requestAnimationFrame(tick);},sel);
     await t.mark(name+' go');
     await f.evaluate(([look,screen])=>{O55.ui.applyLook(...look.split('-'));O55.ui.go(screen,{noHistory:true});},[look,screen]);

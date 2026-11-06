@@ -777,7 +777,10 @@
         if (shown) return; shown = true;
         if (off) off();
         if (gate) releaseStage(); /* a gate shown early (a key, a press, the cap) shows the stage with it */
-        if (!layer.isConnected || layer.classList.contains('o55-out')) return;
+        /* a screen replaced while it was still held was never shown, but the screen before it still leaves now: the
+           newer screen took this one's place, not its predecessor's, so nothing else would ever remove it (FO-85: a
+           second change inside this one's two-frame hold left the old screen painted under the new one for good) */
+        if (!layer.isConnected || layer.classList.contains('o55-out')) { leave(); return; }
         layer.classList.remove('o55-hold');
         /* the screen arrives showing an error (a refused password on the way back): Pip says so as it shows, the oops
            read off the screen that was held until now (Astra M08) */
