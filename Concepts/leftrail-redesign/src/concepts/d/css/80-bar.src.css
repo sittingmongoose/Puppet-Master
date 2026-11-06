@@ -79,11 +79,17 @@
    family, so a ring inside it read at 1.2:1 in Retro and under 3:1 in Basic Light, Friendly Dark and Glass Light, where
    on the bar it reads as it does round an unlit tile. NieR's target brackets take a key focus instead of a ring
    (19-nier-parts.js, as on the toggle), so the ring stands down while that part is on. With the names shown, the
-   name sits 2 px under the tile, so a ring outside the tile would cross it: there the ring goes round the whole item,
-   tile and name, just inside its box, still on the bar's ground with a gap to both. */
+   name sits 1 px under the tile, so a ring outside the tile would cross it: there the ring goes round the whole item,
+   tile and name, just inside its box, still on the bar's ground with a gap to both. Glass sizes the item to its
+   longest name (Pipelines fills it edge to edge), so there the ring stands 1 px outside the item, in the 5 px the bar
+   leaves at each side and the 4 px between items. */
 §B .icon:focus-visible { outline: none; }
 §R:not([data-o55-nier-parts~="brackets"]) #activityBar.collapsed .icon:focus-visible .symbol { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
 §R:not([data-o55-nier-parts~="brackets"]) #activityBar:not(.collapsed) .icon:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+§{glass}R:not([data-o55-nier-parts~="brackets"]) #activityBar:not(.collapsed) .icon:focus-visible { outline-offset: 1px; }
+/* Friendly's item ends 0.2 px under its name, whose font sets a p's tail at the very bottom: 2 px more under the name
+   keep the ring off the tail (F96-1) */
+§{friendly,notnier}R #activityBar:not(.collapsed) .icon .icon-label { padding-bottom: 2px; }
 §R[data-o55-nier="on"] #activityBar > .activity-bar-toggle:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 
 /* drag to reorder or hide: the ghost is the icon's tile lifted off the bar; the drop line is the accent, square in Retro
