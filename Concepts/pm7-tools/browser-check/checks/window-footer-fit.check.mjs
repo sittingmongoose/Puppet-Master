@@ -72,7 +72,7 @@ async function run(t, mode) {
 		}
 		t.log(`${mode}: screens with wide footers (over 380 px at ${from} in Retro Light): ${screens.join(' ')}`);
 	}
-	await t.check(`${mode}: screens to judge`, screens.length > 1, screens.join(' '));
+	await t.check(`${mode}: screens to judge`, t.args.screens ? screens.length > 0 : screens.length > 1, screens.join(' '));
 	for (const look of looks) {
 		await t.viewport(from, 900);
 		f = await t.app.open({ sandbox: mode === 'sandbox', onboarding: true, query: 'o55=screen=welcome', settleMs: 1000 });
