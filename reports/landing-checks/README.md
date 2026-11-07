@@ -579,6 +579,46 @@ and worktree-removal procedure while holding the same landing lock; release it a
 
 ### A batch of landings shares one follow-up (from 2026-11-06)
 
+#### Batch triggers
+
+A batch member after the first is rechecked alone (the batch closes with its follow-up at the current `main`) when any of
+these holds, on exit 0 or 1. They need the landing check's additive report lines (`fix/landing-check-report-ids-20261106`:
+gone-bucket ids, every subcheck's total, per-bucket counts, and `--row-report`); with an older check the narrower triggers
+apply (a gone count below an earlier member's, a readiness counter above the highest earlier total) and the shapes below
+that only the new lines show cannot be seen.
+
+From what moved since the previous member's report, unless exempt:
+1. A bucket the previous report listed as gone is not gone in this one.
+2. A subcheck's total is above the previous report's.
+3. A bucket's count is above the previous report's.
+
+The exemption: a rising subcheck does not close the batch only if every row it added since the previous report, compared by
+row key, is (a) seen: the subcheck is complete in both reports, its rows adding up to its total, because it printed them all
+or is keyed from a complete export whose total matches; (b) governance staleness by the landing check's own test; and (c) this
+member's: it names a path in this member's own range (the previous member's `main` SHA to its own, regenerated and deleted
+paths included) and no other path of the batch.
+
+From the printed rows, with no exemption:
+4. Pre-existing or improved rows differ, by count or text, from the latest earlier report's, in a bucket an earlier report
+   marked changed.
+5. A `(content changed)` row no earlier report listed.
+6. Pre-existing rows past the report's print cap, when this report lists any.
+
+When the batch cannot tell:
+7. An earlier member's report is not on record (a hand landing).
+8. A report's gone ids, totals or counts don't add up.
+9. A rise with no row report.
+
+Unchanged: exit 2 or the two hours running out during its checks closes the batch; a baseline past seven days stops the
+member; changed pre-existing rows or timeouts with no other trigger stop it for judgement.
+
+Measured (2026-11-06, the real landing check on two real one-sentence Plans edits, each check about 25 minutes): the second
+member stayed in the batch; seven subchecks rose by 125 rows, all its own staleness. A real Plans landing still closes the
+batch when it is the first Plans member after non-Plans members (whole-snapshot rows that name no file), when a shard's
+line-range name changes (its `missing_ref` row is not staleness until stream E's rename rule lands), when another row that is
+not staleness appears, when `audit_closure` (printed 100 of 201, no export) rises, or when an export fails or times out.
+Proof and the real reports: `/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/TOOLS/report-ids-proof/`.
+
 Several landings may share this refresh: CLAUDE.md and AGENTS.md, "Land in batches", give the rule.
 Inside a batch every landing check runs with `--base <batch-start>`, the `origin/main` the batch
 began from. Nothing in the script changes for that. It measures the branch by
