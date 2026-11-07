@@ -57,11 +57,11 @@ DETAIL_URI = 'https://pm.invalid/debug/instrumentation_change_detail.schema.json
 
 DETAIL_ROOTS = ('https://pm.invalid/debug/instrumentation_change_detail.schema.json',)
 
-# The detail schema is judged in three exact parts (structure: type, closed
-# members and required list; then the value constraints of the first and second
-# half of its properties), so each part's schema rows are attributed on their
-# own; pm_debug_investigation_transitions.documents() checks the parts recombine
-# to the published definition.
+# The detail schema is judged in four exact parts (structure: type, closed
+# members and required list; then the value constraints of the first, second
+# and third ten of its properties), so each part's schema rows are attributed
+# on their own; pm_debug_investigation_transitions.detail_documents() checks
+# the parts recombine to the published definition.
 DETAIL_VALUES_A_URI = 'https://pm.invalid/debug/instrumentation_change_detail.values_a.schema.json'
 
 DETAIL_VALUES_A_ROOTS = ('https://pm.invalid/debug/instrumentation_change_detail.values_a.schema.json',)
@@ -69,6 +69,10 @@ DETAIL_VALUES_A_ROOTS = ('https://pm.invalid/debug/instrumentation_change_detail
 DETAIL_VALUES_B_URI = 'https://pm.invalid/debug/instrumentation_change_detail.values_b.schema.json'
 
 DETAIL_VALUES_B_ROOTS = ('https://pm.invalid/debug/instrumentation_change_detail.values_b.schema.json',)
+
+DETAIL_VALUES_C_URI = 'https://pm.invalid/debug/instrumentation_change_detail.values_c.schema.json'
+
+DETAIL_VALUES_C_ROOTS = ('https://pm.invalid/debug/instrumentation_change_detail.values_c.schema.json',)
 
 PAYLOAD_URI = 'https://pm.invalid/debug/payload.schema.json'
 

@@ -1,4 +1,4 @@
-"""DDBG guard table: Instrumentation detail values, part A: the value constraints of the first half of the detail properties (DL-429).
+"""DDBG guard table: Instrumentation detail values, part A: the value constraints of the first ten detail properties (DL-429).
 
 Part of the DDBG guard tables; the domain rule and phase order are in
 pm_debug_investigation_guard_constants.py. Every refusal here is a named

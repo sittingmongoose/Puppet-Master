@@ -23,7 +23,7 @@ INPUTS = (FIXTURE, CHECKER, 'Plans/debug_investigation_event_payloads.schema.jso
           'scripts/pm_guard_isolation.py', CONSTANTS, RETAINED,
           *('scripts/pm_debug_investigation_guards_' + phase + '.py' for phase in (
               'admission', 'envelope', 'family', 'instrumentation', 'instrumentation_detail',
-              'instrumentation_detail_values_a', 'instrumentation_detail_values_b',
+              'instrumentation_detail_values_a', 'instrumentation_detail_values_b', 'instrumentation_detail_values_c',
               'instrumentation_source', 'lifecycle', 'payload', 'references', 'retry', 'target_payload')))
 
 

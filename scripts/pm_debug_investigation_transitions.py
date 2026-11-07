@@ -24,6 +24,7 @@ import pm_debug_investigation_guards_instrumentation as instrumentation
 import pm_debug_investigation_guards_instrumentation_detail as instrumentation_detail
 import pm_debug_investigation_guards_instrumentation_detail_values_a as instrumentation_detail_values_a
 import pm_debug_investigation_guards_instrumentation_detail_values_b as instrumentation_detail_values_b
+import pm_debug_investigation_guards_instrumentation_detail_values_c as instrumentation_detail_values_c
 import pm_debug_investigation_guards_instrumentation_source as instrumentation_source
 import pm_debug_investigation_guards_lifecycle as lifecycle
 import pm_debug_investigation_guards_payload as payload
@@ -60,6 +61,7 @@ SCHEMA_CODES = {
     guards.DETAIL_URI: 'invalid_detail',
     guards.DETAIL_VALUES_A_URI: 'invalid_detail',
     guards.DETAIL_VALUES_B_URI: 'invalid_detail',
+    guards.DETAIL_VALUES_C_URI: 'invalid_detail',
     guards.RETRY_URI: 'invalid_retry_request'}
 SCHEMA_LABELS = {
     guards.PAYLOAD_URI: 'payload',
@@ -68,6 +70,7 @@ SCHEMA_LABELS = {
     guards.DETAIL_URI: 'instrumentation_change_detail',
     guards.DETAIL_VALUES_A_URI: 'instrumentation_change_detail',
     guards.DETAIL_VALUES_B_URI: 'instrumentation_change_detail',
+    guards.DETAIL_VALUES_C_URI: 'instrumentation_change_detail',
     guards.RETRY_URI: 'cleanup_retry_request'}
 
 
@@ -112,7 +115,8 @@ def documents(schema):
 DOCUMENT_MODULES = ((lifecycle, ('lifecycle',)), (instrumentation_source, ('instrumentation_source',)),
                     (instrumentation_detail, ('instrumentation_detail',)),
                     (instrumentation_detail_values_a, ('instrumentation_detail_values_a',)),
-                    (instrumentation_detail_values_b, ('instrumentation_detail_values_b',)), (retry, ('retry_request',)),
+                    (instrumentation_detail_values_b, ('instrumentation_detail_values_b',)),
+                    (instrumentation_detail_values_c, ('instrumentation_detail_values_c',)), (retry, ('retry_request',)),
                     (payload, tuple('debug.investigation.' + name for name in FAMILIES if name != 'target_bound')),
                     (target_payload, (TARGET_EVENT,)))
 
@@ -121,24 +125,24 @@ LOADED = {'keys': None}
 
 
 def detail_documents(detail):
-    """The detail definition in three exact parts: structure (every keyword but the
+    """The detail definition in four exact parts: structure (every keyword but the
     property constraints, with each property kept as an empty schema), and the
-    constraints of the first and second half of its properties."""
+    constraints of the first, second and third ten of its properties."""
     keys = list(detail['properties'])
-    half = (len(keys) + 1) // 2
     structure = {key: copy.deepcopy(value) for key, value in detail.items() if key != 'properties'}
     structure['properties'] = {key: {} for key in keys}
-    parts = ({key: copy.deepcopy(detail['properties'][key]) for key in keys[:half]},
-             {key: copy.deepcopy(detail['properties'][key]) for key in keys[half:]})
-    recombined = dict(structure, properties={**parts[0], **parts[1]})
-    if recombined != detail or list(recombined['properties']) != keys or set(parts[0]) & set(parts[1]):
+    groups = (keys[:10], keys[10:20], keys[20:])
+    parts = tuple({key: copy.deepcopy(detail['properties'][key]) for key in group} for group in groups)
+    recombined = dict(structure, properties={key: value for part in parts for key, value in part.items()})
+    if recombined != detail or list(recombined['properties']) != keys or sum(len(part) for part in parts) != len(keys):
         raise ValueError('detail schema parts do not recombine to the published definition')
 
     def wrapped(part):
         return {'$schema': DIALECT, 'properties': {'detail': part}}
     return {'instrumentation_detail': {guards.DETAIL_URI: wrapped(structure)},
             'instrumentation_detail_values_a': {guards.DETAIL_VALUES_A_URI: wrapped({'properties': parts[0]})},
-            'instrumentation_detail_values_b': {guards.DETAIL_VALUES_B_URI: wrapped({'properties': parts[1]})}}
+            'instrumentation_detail_values_b': {guards.DETAIL_VALUES_B_URI: wrapped({'properties': parts[1]})},
+            'instrumentation_detail_values_c': {guards.DETAIL_VALUES_C_URI: wrapped({'properties': parts[2]})}}
 
 
 def load_documents(schema=None, only=None):
@@ -202,7 +206,7 @@ def row_label(row):
     if uri is None:
         return row
     pointer = row.split('#', 1)[1].rsplit('@', 1)[0]
-    if uri in (guards.DETAIL_URI, guards.DETAIL_VALUES_A_URI, guards.DETAIL_VALUES_B_URI):
+    if uri in (guards.DETAIL_URI, guards.DETAIL_VALUES_A_URI, guards.DETAIL_VALUES_B_URI, guards.DETAIL_VALUES_C_URI):
         pointer = pointer[len('/properties/detail'):]
     return SCHEMA_LABELS[uri] + '#' + pointer
 
@@ -219,6 +223,7 @@ PHASE_MEMBERS = {
     'instrumentation_detail': ('detail_records', 'payload'),
     'instrumentation_detail_values_a': ('detail_records', 'payload'),
     'instrumentation_detail_values_b': ('detail_records', 'payload'),
+    'instrumentation_detail_values_c': ('detail_records', 'payload'),
     'instrumentation': ('detail_records', 'instrumentation_source', 'payload')}
 
 
@@ -240,6 +245,7 @@ def phases(case):
                      ('instrumentation_detail', instrumentation_detail.instrumentation_detail_case),
                      ('instrumentation_detail_values_a', instrumentation_detail_values_a.instrumentation_detail_values_a_case),
                      ('instrumentation_detail_values_b', instrumentation_detail_values_b.instrumentation_detail_values_b_case),
+                     ('instrumentation_detail_values_c', instrumentation_detail_values_c.instrumentation_detail_values_c_case),
                      ('instrumentation', instrumentation.instrumentation_case)]
     if event == LIFECYCLE_EVENT:
         sequence.append(('lifecycle', lifecycle.lifecycle_case))
@@ -271,7 +277,8 @@ def lifecycle_refusal(case):
 def instrumentation_refusal(case):
     for factory in (instrumentation_source.instrumentation_source_case, instrumentation_detail.instrumentation_detail_case,
                     instrumentation_detail_values_a.instrumentation_detail_values_a_case,
-                    instrumentation_detail_values_b.instrumentation_detail_values_b_case, instrumentation.instrumentation_case):
+                    instrumentation_detail_values_b.instrumentation_detail_values_b_case,
+                    instrumentation_detail_values_c.instrumentation_detail_values_c_case, instrumentation.instrumentation_case):
         row, code = run_phase(factory, case)
         if row is not None:
             return code
