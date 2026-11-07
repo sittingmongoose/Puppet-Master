@@ -65,6 +65,16 @@ shims.demoFacades = function () {
   }
   if (D.actions && typeof D.actions.register === 'function') {
     D.actions.register('cmd.file.open', fileOpenFromRow);
+    // File actions' Copy path and Open with act on the row the menu was opened for (FO-93b); elsewhere (the rail's own
+    // menus name their file in the arg) they keep the handler they had
+    ['cmd.file.copy_path', 'cmd.file.open_with'].forEach(function (id) {
+      var own = D.actions.get ? D.actions.get(id) : null;
+      D.actions.register(id, function (ctx) {
+        var inMenu = ctx && ctx.el && ctx.el.closest && ctx.el.closest('#fileContextMenu');
+        if (inMenu && ctxRow) return id === 'cmd.file.copy_path' ? copyRowPath(ctx, ctxRow) : openRowWith(ctx, ctxRow);
+        return own ? own(ctx) : { toast: (ctx && ctx.arg) || id };
+      });
+    });
     // reveals go through revealKind (rule 1: an existing tab of the kind is revealed, never a new one per click);
     // PMW.revealKind is defined by bottomPanel below and looked up at click time
     D.actions.register('cmd.terminal.show', terminalAt);
@@ -78,7 +88,25 @@ shims.demoFacades = function () {
    a terminal already in that folder is revealed, else one opens there. With no folder to go on, the existing
    terminal is revealed (or one opened), as the page's own handler did. */
 var PROJECT_CWD = '~/tastebook/api';   // the concept's project root: the home layout's terminals start here
-var ctxRow = null;                     // the row the file context menu was opened on ({ path, folder })
+var ctxRow = null;                     // the row the file context menu was opened on ({ path, folder }), from pm-ctx-open
+/* Copy relative path / Copy full path on that row: the value goes to the clipboard (O55.util.copyText falls back where
+   the clipboard is blocked) and the toast names it */
+function copyRowPath(ctx, row) {
+  var value = /absolute/.test(String(ctx && ctx.arg || '')) ? PROJECT_CWD + '/' + row.path : row.path;
+  try {
+    var U = window.O55 && window.O55.util;
+    if (U && typeof U.copyText === 'function') U.copyText(value);
+    else if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(value).catch(function () {});
+  } catch (_) {}
+  return { ok: true, toast: 'Copied ' + value };
+}
+/* Open with on that row: Source editor opens it as Open does; the other ways name the row in their note */
+var OPEN_WITH_RE = /^cmd\.file\.open_with\s*->\s*(\S+)/;
+function openRowWith(ctx, row) {
+  var m = OPEN_WITH_RE.exec(String(ctx && ctx.arg || '')), how = m ? m[1] : '';
+  if (how === 'source_editor' && !row.folder) return { ok: !!PM_HOME.open({ kind: 'editor', path: row.path, mode: 'keep', where: 'auto' }).ok };
+  return { toast: String(ctx && ctx.arg || 'cmd.file.open_with') + ' \u00b7 ' + row.path };
+}
 function folderOf(path, folder) { path = String(path || '').replace(/\/+$/, ''); return folder ? path : (path.indexOf('/') >= 0 ? path.slice(0, path.lastIndexOf('/')) : ''); }
 function normCwd(p) { return String(p || '').replace(/\/+$/, '').replace(/^(?:~|\/home\/[^\/]+|\/Users\/[^\/]+)(?=\/|$)/, ''); }
 function terminalCwdFor(ctx) {
@@ -141,13 +169,15 @@ shims.fileContextMenu = function () {
   menuEl.style.setProperty('z-index', '10070', 'important');
   menuEl.setAttribute('data-pm-home-body-portal', 'true');
   var target = null;
-  doc.addEventListener('contextmenu', function (e) {
-    /* a contextmenu inside the menu itself (the Menu key's own, at the item holding the focus) keeps its row (FO-93) */
-    if (menuEl.contains(e.target)) return;
-    var row = e.target.closest && e.target.closest('.fm-row[data-path], .fm-openrow[data-path]');
-    target = row ? row.getAttribute('data-path') : null;
-    ctxRow = row ? { path: target, folder: row.getAttribute('data-kind') === 'folder' } : null;
-  }, true);
+  /* the row comes from the menu's owner, for a right-click and for Shift+F10 or the Menu key alike (pm-ctx-open,
+     pm6-js-cozy-shelves.js openFor); a row without a data-path (Changed, Open) is named through the project's file index,
+     as the tree's own open does (FO-93b) */
+  menuEl.addEventListener('pm-ctx-open', function (e) {
+    var row = e.detail || null, own = row && row.el && row.el.getAttribute && row.el.getAttribute('data-path');
+    var path = row && row.path ? (own ? row.path : resolveProjectPath(row.path)) : null;
+    target = path || null;
+    ctxRow = path ? { path: path, folder: !!row.folder } : null;
+  });
   if (!menuEl.querySelector('[data-pmw-open]')) {
     var rows = [
       ['open', 'Open'], ['panel', 'Open in new panel'], ['side', 'Open to the side']
