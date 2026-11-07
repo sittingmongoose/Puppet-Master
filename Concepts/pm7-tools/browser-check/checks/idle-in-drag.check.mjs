@@ -34,7 +34,11 @@
 // finding 1: the product mutants flicker-sync and flicker-task2 passed on both surfaces).
 // --set selftest=leak-<owner>-readd puts a drag class back about 40 ms after it went off after the release, runs up to 6 of
 // that owner's parked callbacks inside it 20 ms later, and takes it off again; it must FAIL (T56, the review's note:
-// readd-after).
+// readd-after). -readd-flicker puts it back the same way, 20 ms later takes it off around the parked callbacks and puts
+// it straight back, and takes it off 20 ms after that; it must FAIL (T94, REVIEW-kit-tb4-a-opus finding 5: the review's
+// readd-flicker passed, because after the release only bodies that entered with a class on were judged). After the release,
+// a drag class put back opens a second hold: from that re-add to the final class-off every body is judged whatever its
+// class, and a class-off inside it followed by another class-on fails on its own.
 //
 // Every callback body is attributed by the request it was admitted under, not by the native job running it (T39): the
 // PM_BUSY.idle request binds its token to the owner that asked, there and then, so a body entered from any queue (a
@@ -259,10 +263,15 @@ const RECORDER = (cfg) => {
 	}, true);
 	// selftest leak-<owner>-readd: 40 ms after the drag classes go off after the release, a drag class goes back on; 20 ms
 	// later up to 6 of that owner's parked callbacks run inside it, and it comes off again (the review's readd-after)
-	const readd = cfg.readd ? { key: cfg.readd.key, done: false, runs: [], onAt: null, offAt: null } : null;
+	const readd = cfg.readd ? { key: cfg.readd.key, flicker: !!cfg.readd.flicker, done: false, runs: [], onAt: null, offAt: null } : null;
 	R.readd = readd;
 	R.readdArm = () => { if (!readd || readd.done) return; readd.done = true;
 		const tokens = parkedOf(readd.key);
+		if (readd.flicker) {
+			st.call(window, () => { document.body.classList.add('pm-resizing'); readd.onAt = performance.now();
+				st.call(window, () => { document.body.classList.remove('pm-resizing'); runTokens(readd, tokens); document.body.classList.add('pm-resizing');
+					st.call(window, () => { document.body.classList.remove('pm-resizing'); readd.offAt = performance.now(); }, 20); }, 20); }, 40);
+			return; }
 		st.call(window, () => { document.body.classList.add('pm-resizing'); readd.onAt = performance.now();
 			st.call(window, () => { runTokens(readd, tokens); document.body.classList.remove('pm-resizing'); readd.offAt = performance.now(); }, 20); }, 40); };
 	R.leak = (key) => { const token = [...tokenOwner.entries()].filter(([, o]) => o === key).map(([t]) => t).pop();
@@ -373,17 +382,23 @@ async function windowEnd(t, f, label, win, readd) {
 	const { offs, ons, now, on } = await f.evaluate(() => { const R = window.__pmIdleRec; return { offs: R.offs, ons: R.ons, now: performance.now(), on: ['pm-resizing', 'pm-ab-dragging', 'pmw-dragging', 'pmu-pointer-op', 'pm7u-pointer-op'].some((c) => document.body.classList.contains(c)) }; });
 	const after = offs.filter((x) => x >= win.upAt), back = ons.filter((x) => x > win.closed);
 	const end = on ? now : (after.length ? after[after.length - 1] : win.closed);
+	// T94: a drag class put back after the release opens a second hold, from that re-add to the final class-off: every body
+	// in it is judged whatever its class, and a class-off inside it followed by another class-on is a blink
+	win.readdAt = back.length ? back[0] : null;
+	win.blinks = win.readdAt === null ? [] : offs.filter((x) => x > win.readdAt && x < end);
 	if (back.length) t.log(`${label}: a drag class came back on ${back.length} time${back.length > 1 ? 's' : ''} after the release (${back.map((x) => `${Math.round(x - win.upAt)} ms after it`).join(', ')}); the window runs to the final class-off, ${Math.round(end - win.upAt)} ms after the release${on ? ' (still on at the end of the wait)' : ''}`);
 	if (readd) { const x = await f.evaluate(() => { const q = window.__pmIdleRec.readd; return { onAt: q.onAt, offAt: q.offAt, runs: q.runs.map((r) => ({ token: r.token, drag: r.drag, at: Math.round(r.at) })) }; });
 		t.log(`SELFTEST ${label}: ${nameOf(readd.key)} parked callbacks run inside a drag class put back after the release: ${x.runs.length} (${JSON.stringify(x)})`);
-		await t.check(`selftest ${label}: the ${nameOf(readd.key)} re-add leak ran a parked callback in a drag class put back after the release`, x.runs.some((r) => r.drag && r.at > win.closed), JSON.stringify({ closed: Math.round(win.closed), ...x })); }
+		await t.check(`selftest ${label}: the ${nameOf(readd.key)} re-add leak ran a parked callback in a drag class put back after the release`, x.runs.some((r) => (readd.flicker ? !r.drag : r.drag) && r.at > win.closed), JSON.stringify({ closed: Math.round(win.closed), ...x })); }
 	return end;
 }
 
 async function judge(t, f, label, win, owners) {
 	// the window: from the press (or the drag class going on) to the final class-off after the release (T46 round 2,
 	// T56). Up to the release everything that entered counts, class on or not; after it, what entered with a class on
-	const inWin = (c) => c.at >= win.began && c.at <= win.end && (c.at < win.upAt || c.drag);
+	const inWin = (c) => c.at >= win.began && c.at <= win.end && (c.at < win.upAt || c.drag || (win.readdAt != null && c.at >= win.readdAt));
+	// T94: a drag class put back after the release stays on until it goes off (no blink inside it)
+	if (win.readdAt != null) await t.check(`${label}: a drag class put back after the release stayed on until it went off`, !win.blinks.length, win.blinks.length ? `${win.blinks.length} class-off${win.blinks.length > 1 ? 's' : ''} followed by another class-on, ${win.blinks.map((x) => `${Math.round(x - win.readdAt)} ms after the re-add`).join(', ')}` : '0');
 	const rec = await f.evaluate(([a, b]) => window.__pmIdleRec.fired.filter((c) => c.at >= a && c.at <= b), [win.began, win.end]);
 	const inside = rec.filter(inWin);
 	const offClass = rec.filter((c) => inWin(c) && !c.drag);
@@ -429,9 +444,9 @@ export const tests = {
 		const release = rm ? { key: rm[1] } : null;
 		const fm = /^leak-(usage|theme|census|glass)-flicker(-task)?$/.exec(selftest);
 		const flicker = fm ? { key: fm[1], task: !!fm[2] } : null;
-		const am = /^leak-(usage|theme|census|glass)-readd$/.exec(selftest);
-		const readd = am ? { key: am[1] } : null;
-		if (selftest) await t.check(`selftest ${selftest} is a known omission or leak`, !!omit || !!leak || !!early || !!release || !!flicker || !!readd, 'omit-<owner> | leak-<owner> | leak-<owner>-early | leak-<owner>-early-promise | leak-<owner>-early-message | leak-<owner>-release | leak-<owner>-flicker | leak-<owner>-flicker-task | leak-<owner>-readd (owner: usage, theme, census, glass)');
+		const am = /^leak-(usage|theme|census|glass)-readd(-flicker)?$/.exec(selftest);
+		const readd = am ? { key: am[1], flicker: !!am[2] } : null;
+		if (selftest) await t.check(`selftest ${selftest} is a known omission or leak`, !!omit || !!leak || !!early || !!release || !!flicker || !!readd, 'omit-<owner> | leak-<owner> | leak-<owner>-early | leak-<owner>-early-promise | leak-<owner>-early-message | leak-<owner>-release | leak-<owner>-flicker | leak-<owner>-flicker-task | leak-<owner>-readd | leak-<owner>-readd-flicker (owner: usage, theme, census, glass)');
 		// Glass prewarm is queued only in a Glass look: a run without one leaves that owner unexercised
 		await t.check('a Glass look is in this run (Glass prewarm owner)', looks.some((l) => /^glass-/.test(l)), `looks ${looks.join(',')}`);
 		const map = await regionsOf(t);
@@ -487,7 +502,7 @@ export const tests = {
 			usage.end = await windowEnd(t, f, `${look} Usage`, usage, readd && keys.includes(readd.key) ? readd : null);
 			await judge(t, f, `${look} Usage`, usage, owners);
 			const { fired, bodies } = await f.evaluate(() => ({ fired: window.__pmIdleRec.fired, bodies: window.__pmIdleRec.bodies }));
-			const during = (j) => fired.filter((c) => c.id === j.id && c.at >= usage.began && c.at <= usage.end && (c.at < usage.upAt || c.drag));
+			const during = (j) => fired.filter((c) => c.id === j.id && c.at >= usage.began && c.at <= usage.end && (c.at < usage.upAt || c.drag || (usage.readdAt != null && c.at >= usage.readdAt)));
 			const after = (j) => fired.some((c) => c.id === j.id && !c.drag && c.at > usage.closed);
 			// the owner's own callback entered inside this job's native delivery after release (and, when the job's first
 			// request was witnessed, it is the function that request wrapped)
