@@ -5805,7 +5805,7 @@ canonical_text: >-
   through the UCC-230 owner_state_code_map (DL-333 resolution 6); the closed set is not expanded.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible project-scope worktree commands (Worktrees rows, Review mode, destructive confirmations, lock actions).
-depends_on: [UCC-230, UCC-054, UCC-055, GI-041, W-007, W-077, W-078, W-082, W-084, DL-333]
+depends_on: [UCC-230, UCC-054, UCC-055, GI-041, W-007, W-075, W-077, W-078, W-082, W-084, DL-333, DL-341]
 unblocks: []
 acceptance_criteria:
   - Every command that UCC-230 routes to W-095 has exactly one definition in the block below.
@@ -5841,8 +5841,6 @@ command_payload_definitions:
     - command_id: cmd.git.worktree.list
       ucc_units: [UCC-054]
       command_kind: shell_view
-      # JUDGMENT: canon states no command_kind. The row only shows the worktree inventory with its
-      # stale/blocked ownership projection state (UI_Command_Catalog.md:694); no durable state changes.
       response_kind: local_projection
       args:
         repo_id:
@@ -5857,15 +5855,26 @@ command_payload_definitions:
         owner_result: none
       error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured]
-      # JUDGMENT: canon names no disabled set for this row; not_configured covers git_available false
-      # (UI_Command_Catalog.md:694). The row renders stale/blocked state instead of being disabled by it.
+      judgments:
+        - key: command_kind
+          choice: shell_view
+          gap_note: >-
+            Canon states no command_kind for this row. The row only shows the worktree inventory with its
+            stale/blocked ownership projection state (UI_Command_Catalog.md:699) and changes no durable state.
+        - key: response_kind
+          choice: local_projection
+          gap_note: >-
+            Follows the shell_view choice: the wiring row catalog.git_worktree_list names no request or result
+            schema, only a no-persist dispatch receipt, so no owner result is carried.
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: >-
+            Canon names no disabled set for this row. not_configured covers git_available false
+            (UI_Command_Catalog.md:699); the row renders stale and blocked state instead of being disabled by it.
       aliases: []
     - command_id: cmd.git.worktree.select
       ucc_units: [UCC-054]
       command_kind: domain_action
-      # JUDGMENT: canon states no command_kind. Selecting a row persists the selected worktree and
-      # filter state per project (UI_Command_Catalog.md:695), like cmd.docker.context.select changing
-      # the persisted target (DESIGN 4.6), and gates every worktree_selected command; not a bare view toggle.
       response_kind: owner_operation
       args:
         repo_id:
@@ -5879,38 +5888,96 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_row_available (UI_Command_Catalog.md:695) per UCC-230 identity rule"
-        worktree_lifecycle_state:
-          type: ref
-          required: true
-          default: none
-          provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when domain_action (UCC-230 row_groups); observed lifecycle state used as the stale_projection freshness guard even though select persists selection, not worktree state"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_row_available (UI_Command_Catalog.md:700) per UCC-230 identity_typing"
         filter_state:
-          type: string
+          type: object
           required: false
           default: none
-          constraints: {max_length: 256}
+          fields:
+            lifecycle_state:
+              type: list
+              required: false
+              default: none
+              item: {type: enum, values: [reserved, active, blocked_preserved, released, orphaned]}
+              constraints: {unique_items: true}
+              provenance: gap
+              gap_note: >-
+                The values are W-075's lifecycle state dimension, spelled as canon spells them
+                (WorktreeGitImprovement.md:5303-5304). Canon names no field for the dimension: lifecycle_state
+                is its snake_case name. unique_items is a choice (a chip is on or off); absent or empty means
+                the dimension does not filter.
+            owner_class:
+              type: list
+              required: false
+              default: none
+              item: {type: enum, values: [thread, orchestrator-lane, manual, agent-role]}
+              constraints: {unique_items: true}
+              provenance: gap
+              gap_note: >-
+                The values are W-075's owner class dimension in canon's own spelling, hyphens kept
+                (WorktreeGitImprovement.md:5304). Canon names no field: owner_class is the dimension's
+                snake_case name; unique_items as for lifecycle_state.
+            row_flags:
+              type: list
+              required: false
+              default: none
+              item: {type: enum, values: [locked, prunable, dirty, repairable]}
+              constraints: {unique_items: true}
+              provenance: gap
+              gap_note: >-
+                The values are W-075's row flags dimension (WorktreeGitImprovement.md:5305). Canon names no
+                field: row_flags is the dimension's snake_case name; unique_items as for lifecycle_state.
+            blocked_reason_family:
+              type: list
+              required: false
+              default: none
+              item: {type: enum, values: [approval-gated, policy-blocked, preflight-blocked, auth-blocked, governance-blocked, stale-data-blocked]}
+              constraints: {unique_items: true}
+              provenance: gap
+              gap_note: >-
+                The values are W-075's blocked-reason family dimension in canon's own spelling
+                (WorktreeGitImprovement.md:5305-5306). Canon names no field: blocked_reason_family is the
+                dimension's snake_case name; unique_items as for lifecycle_state.
           provenance: gap
           gap_note: >-
-            The row says select "persists selected worktree/filter state per project"
-            (UI_Command_Catalog.md:695) but names no field for the filter state. JUDGMENT: an opaque
-            persisted filter token; alternative: a structured filter object, whose facets no canon enumerates.
+            The row says select "persists selected worktree/filter state per project" (UI_Command_Catalog.md:700)
+            and names no field. W-075 fixes the filters: exactly four dimensions with enumerated values, OR within a
+            dimension and AND across dimensions, persisted per project with the panel state
+            (WorktreeGitImprovement.md:5302-5311). The object has one optional list per dimension, and the OR/AND
+            rule is the owner's evaluation of it. The field name filter_state and the dimension field names are not
+            canon. Absent means the persisted filter selection is unchanged.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:WorktreeSelectResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, blocked_state_required, stale_projection]
-      # JUDGMENT: not_configured for git_available false, blocked_state_required for worktree_row_available
-      # false, stale_projection for the 2.0B freshness clause (UI_Command_Catalog.md:695).
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            Canon states no command_kind for this row. Select persists the selected worktree and filter state per
+            project (UI_Command_Catalog.md:700), and that persisted selection gates every worktree_selected
+            command, so it is classed with cmd.docker.context.select (DESIGN 4.6). The other reading, shell_view
+            with a local_projection response like cmd.git.worktree.list, also fits canon: W-075 keeps the selected
+            worktree an owner runtime/view record (WorktreeGitImprovement.md:5317-5318). UCC-230 lists select as a
+            domain_action that does not mutate worktree state (not_mutating, DL-341).
+        - key: omitted:worktree_lifecycle_state
+          choice: omitted
+          gap_note: >-
+            The overlay requires worktree_lifecycle_state only "when mutating worktree state"
+            (UI_Command_Catalog.md:8851), and UCC-230 lists select under not_mutating (DL-341), so the field is
+            left out.
+        - key: disabled_reason_codes
+          choice: [not_configured, blocked_state_required, stale_projection]
+          gap_note: >-
+            Canon names no disabled set for this row. not_configured covers git_available false,
+            blocked_state_required covers worktree_row_available false (UI_Command_Catalog.md:700), and
+            stale_projection is the 2.0B projection-freshness clause.
       aliases: []
     - command_id: cmd.git.worktree.open
       ucc_units: [UCC-054, UCC-058]
       command_kind: navigation_wrapper
-      # JUDGMENT: canon states no command_kind. The row opens or focuses the selected worktree root
-      # (UI_Command_Catalog.md:696), a route/open like cmd.testing.open_receipt; the wiring row records
-      # a route/open disposition (Wiring_Matrix.production.json catalog.git_worktree_open).
       response_kind: local_projection
       args:
         repo_id:
@@ -5924,7 +5991,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:696) per UCC-230 identity rule"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:701) per UCC-230 identity_typing"
         focus_target:
           type: string
           required: false
@@ -5932,31 +5999,43 @@ command_payload_definitions:
           constraints: {min_length: 1, max_length: 256}
           provenance: gap
           gap_note: >-
-            No field names the open focus/target. The alias cmd.git.worktree.open_files supplies a "File
-            Manager focus" argument (UI_Command_Catalog.md:697, :10415) and the retired
-            cmd.git.worktree.open_other folded a "target argument" into open (UI_Command_Catalog.md:10416);
-            neither canon names the field or its values. JUDGMENT: absent means the worktree root itself
-            (the row's default behavior); a string target surface name. Alternative: a typed union of
-            focus targets, which no canon enumerates.
+            No field names the open focus or target. The alias cmd.git.worktree.open_files supplies a "File
+            Manager focus" argument (UI_Command_Catalog.md:702 and the Cozy Shelves alias table row at :12227), and
+            the retired cmd.git.worktree.open_other folded a "target argument" into open (alias table row at
+            :12228); neither names the field or its values. Choice: absent means the worktree root itself (the
+            row's own behavior, :701); present is a target surface name. The bounds 1..256 are not canon. A typed
+            union of focus targets is the alternative, and no canon enumerates one.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_route, invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, blocked_state_required, stale_projection]
-      # JUDGMENT: not_configured for git_available false, blocked_state_required for worktree_selected or
-      # worktree_path_resolvable false (UI_Command_Catalog.md:696), stale_projection per the 2.0B clause.
+      judgments:
+        - key: command_kind
+          choice: navigation_wrapper
+          gap_note: >-
+            Canon states no command_kind for this row. It opens or focuses the selected worktree root
+            (UI_Command_Catalog.md:701), a route/open like cmd.testing.open_receipt.
+        - key: response_kind
+          choice: local_projection
+          gap_note: >-
+            A route/open with no owner result: the wiring row catalog.git_worktree_open names no request or result
+            schema, only a dispatch receipt or route/open disposition.
+        - key: disabled_reason_codes
+          choice: [not_configured, blocked_state_required, stale_projection]
+          gap_note: >-
+            Canon names no disabled set for this row. not_configured covers git_available false,
+            blocked_state_required covers worktree_selected or worktree_path_resolvable false
+            (UI_Command_Catalog.md:701), and stale_projection is the 2.0B clause.
       aliases:
         - {command_id: cmd.git.worktree.open_files, kind: compatibility_alias,
-           source: "UCC-054 compatibility_only_notes; UI_Command_Catalog.md:697, :10415 (open plus File Manager focus argument)"}
+           source: "UCC-054 compatibility_only_notes; UI_Command_Catalog.md:702 and the Cozy Shelves alias table row cmd.git.worktree.open_files (:12227, open plus File Manager focus argument)"}
         - {command_id: cmd.git.worktree.switch, kind: compatibility_alias,
-           source: "UCC-054 compatibility_only_notes; UI_Command_Catalog.md:709 (compatibility alias for select plus open until callers migrate)"}
+           source: "UCC-054 compatibility_only_notes; UI_Command_Catalog.md:714 (compatibility alias for select plus open until callers migrate)"}
     - command_id: cmd.git.worktree.compare
       ucc_units: [UCC-054]
       command_kind: navigation_wrapper
-      # JUDGMENT: canon states no command_kind. The row opens Review mode for the selected worktree
-      # (UI_Command_Catalog.md:698), a route/open into the diff-centric Source Control lens
-      # (WorktreeGitImprovement.md:452); the wiring row records a route/open disposition.
       response_kind: local_projection
       args:
         repo_id:
@@ -5970,7 +6049,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:698) per UCC-230 identity rule"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:703) per UCC-230 identity_typing"
         compare_target:
           type: object
           required: true
@@ -5982,58 +6061,77 @@ command_payload_definitions:
               default: none
               values: [base_branch, other_worktree, pr_target, commit_range]
               provenance: gap
-              gap_note: "the union discriminator; canon names the four members in prose only (UI_Command_Catalog.md:698)"
+              gap_note: "the union discriminator; canon names the four members in prose only (UI_Command_Catalog.md:703), so the field and its value spellings are not canon"
             base_branch:
               type: string
               required: false
               default: none
               constraints: {min_length: 1, max_length: 256}
+              required_when: {field: kind, in: [base_branch]}
               provenance: gap
-              gap_note: "the base branch of the union; no field name in canon"
+              gap_note: "the base branch member; the SCM status payload names a base_branch field (WorktreeGitImprovement.md:297) but gives no type or bounds, and no canon names it as a compare argument; the bounds are not canon"
             other_worktree_id:
               type: id
               required: false
               default: none
+              required_when: {field: kind, in: [other_worktree]}
               provenance: gap
-              gap_note: "the other worktree of the union; no field name in canon"
+              gap_note: "the other-worktree member; no field name in canon"
             pr_target:
               type: ref
               required: false
               default: none
+              required_when: {field: kind, in: [pr_target]}
               provenance: gap
-              gap_note: "the PR target of the union; no field name in canon"
+              gap_note: "the PR target member; no field name in canon"
             commit_range:
               type: object
               required: false
               default: none
+              required_when: {field: kind, in: [commit_range]}
               fields:
-                from_commit: {type: string, required: true, default: none, constraints: {min_length: 40, max_length: 64}, provenance: gap, gap_note: "range start; no field name in canon"}
-                to_commit: {type: string, required: true, default: none, constraints: {min_length: 40, max_length: 64}, provenance: gap, gap_note: "range end; no field name in canon"}
+                from_commit_oid: {type: string, required: true, default: none, constraints: {pattern: "^[0-9a-f]{40}([0-9a-f]{24})?$"}, provenance: gap, gap_note: "range start; no field name in canon, named after canon's *_commit_oid fields (head_commit_oid, baseline_commit_oid, WorktreeGitImprovement.md:297). Full object ids only: 40 hex characters (SHA-1) or 64 (SHA-256); a short id is refused. The pattern is not canon."}
+                to_commit_oid: {type: string, required: true, default: none, constraints: {pattern: "^[0-9a-f]{40}([0-9a-f]{24})?$"}, provenance: gap, gap_note: "range end; as from_commit_oid"}
               provenance: gap
-              gap_note: "the commit range of the union; no field name in canon"
+              gap_note: "the commit-range member; no field name in canon"
           provenance: gap
           gap_note: >-
             The compare target is a union (base branch | another worktree | PR target | commit range,
-            UI_Command_Catalog.md:698) with no field or discriminator anywhere. JUDGMENT: a tagged object
-            with kind plus per-member fields, exactly one member set per kind. Alternatives: (a) the
-            compare_origin ref shape the chat consumer uses for branch-to-branch review
-            (WorktreeGitImprovement.md:121, ACD-058); (b) leaving the target to Review mode settings
-            (WorktreeGitImprovement.md:452) and keeping only the selection. Bounds 40..64 fit a full or
-            short git OID; canon fixes neither.
+            UI_Command_Catalog.md:703). Canon names an optional compare_target in the SCM status payload
+            (WorktreeGitImprovement.md:297) but gives it no shape, discriminator or member fields. Choice: a tagged
+            object, kind plus the one member field that kind requires. Alternatives: (a) the compare_origin ref the
+            chat consumer uses for branch-to-branch review (WorktreeGitImprovement.md:121, ACD-058); (b) leaving the
+            target to Review mode settings (WorktreeGitImprovement.md:452) and keeping only the selection. W-075
+            keeps exact compare targets owner runtime/view records (WorktreeGitImprovement.md:5317-5318), which
+            either reading respects.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_route, invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, blocked_state_required, stale_projection]
-      # JUDGMENT: not_configured for git_available false, blocked_state_required for worktree_selected or
-      # compare_target_resolvable false (UI_Command_Catalog.md:698), stale_projection per the 2.0B clause.
+      judgments:
+        - key: command_kind
+          choice: navigation_wrapper
+          gap_note: >-
+            Canon states no command_kind for this row. It opens Review mode for the selected worktree
+            (UI_Command_Catalog.md:703), a route/open into the diff-centric Source Control lens
+            (WorktreeGitImprovement.md:452).
+        - key: response_kind
+          choice: local_projection
+          gap_note: >-
+            A route/open with no owner result: the wiring row catalog.git_worktree_compare names no request or
+            result schema.
+        - key: disabled_reason_codes
+          choice: [not_configured, blocked_state_required, stale_projection]
+          gap_note: >-
+            Canon names no disabled set for this row. not_configured covers git_available false,
+            blocked_state_required covers worktree_selected or compare_target_resolvable false
+            (UI_Command_Catalog.md:703), and stale_projection is the 2.0B clause.
       aliases: []
     - command_id: cmd.git.worktree.create
       ucc_units: [UCC-054]
       command_kind: domain_action
-      # JUDGMENT: canon states no command_kind. Creating a worktree is a durable mutation
-      # (UI_Command_Catalog.md:699) and W-084 binds child flows to this command.
       response_kind: owner_operation
       args:
         repo_id:
@@ -6043,53 +6141,73 @@ command_payload_definitions:
           provenance: canon
           source: "overlay UCC-054..UCC-055 required identity repo_id (always); UCC-230 envelope common optional repo_id restated required"
         worktree_lifecycle_state:
-          type: ref
+          type: enum
           required: true
           default: none
+          values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when domain_action (UCC-230 row_groups); create mutates worktree state"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.create as mutating (DL-341). Values: the reserved lifecycle state names (WorktreeGitImprovement.md:299) spelled as W-075 spells them (WorktreeGitImprovement.md:5303); :299 also admits Orphaned"
         path:
           type: path
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            The row says "Creates a new git worktree at specified path" (UI_Command_Catalog.md:699) but
-            names no field. JUDGMENT: the caller-specified worktree path, required because the row fixes
-            the location as specified; FileSafe owns normalization at run time (DL-333 resolution 11,
-            no literal default for path).
-        branch:
-          type: string
+            The row says "Creates a new git worktree at specified path" (UI_Command_Catalog.md:704) but names no
+            field. Choice: the caller-specified worktree path, required because the row fixes the location as
+            specified. FileSafe owns normalization at run time (DL-333 resolution 11: no literal default for path).
+        branch_ref:
+          type: ref
           required: false
           default: none
-          constraints: {min_length: 1, max_length: 256}
-          provenance: gap
-          gap_note: >-
-            No canon names the new worktree's branch field. W-007 requires existing branches to be
-            verified and safe ones reused without unsafe deletion, so a branch argument is implied but
-            unnamed. JUDGMENT: absent means the owner derives the branch per W-007.
+          provenance: canon
+          source: "overlay UCC-054..UCC-055 optional identity branch_ref (UCC-230 row_groups; ref per identity_typing); W-007 creation verifies existing branches and reuses safe ones (WorktreeGitImprovement.md:1231)"
         base_ref:
           type: ref
           required: false
           default: none
           provenance: gap
           gap_note: >-
-            W-007 fixes the semantics ("the configured base branch or explicit ref") but names no payload
-            field. JUDGMENT: absent means the configured base branch; present means the explicit ref.
+            W-007 fixes the semantics ("the configured base branch or explicit ref", WorktreeGitImprovement.md:1231)
+            but names no payload field. Choice: absent means the configured base branch; present is the explicit
+            ref.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:WorktreeCreateResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, blocked_state_required, stale_projection]
-      # JUDGMENT: not_configured for git_available false, blocked_state_required for
-      # worktree_limit_reached (UI_Command_Catalog.md:699), stale_projection per the 2.0B clause.
+      disabled_reason_codes: [not_configured, permission_required, blocked_state_required, stale_projection]
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            Canon states no command_kind for this row. Creating a worktree is a durable mutation
+            (UI_Command_Catalog.md:704), UCC-230 lists it as mutating (DL-341), and W-084 binds child flows to this
+            command.
+        - key: field:worktree_lifecycle_state
+          choice: the lifecycle state the new worktree enters
+          gap_note: >-
+            Canon requires the field when a command mutates worktree state but does not say, for create, whether it
+            is an observed or a target state; a worktree that does not exist yet has no observed state, so the
+            field is the state the created worktree enters.
+        - key: field:branch_ref
+          choice: absent means the owner derives the branch per W-007
+          gap_note: >-
+            The overlay names branch_ref as an optional identity of the group, and W-007 implies a branch input
+            (verify existing branches, reuse safe ones), but canon does not say what create does when it is absent.
+        - key: disabled_reason_codes
+          choice: [not_configured, permission_required, blocked_state_required, stale_projection]
+          gap_note: >-
+            The GitHub_Integration Worktree Topology disabled states, which cover cmd.git.worktree.create
+            (GitHub_Integration.md:2115-2117), map through the UCC-230 owner_state_code_map to
+            blocked_state_required (dirty_worktree, untracked_files, protected_branch, operation_in_progress),
+            not_configured (missing_remote) and permission_required (permission_denied). The choice is the rest:
+            not_configured also covers git_available false, blocked_state_required covers worktree_limit_reached
+            (UI_Command_Catalog.md:704), and stale_projection is the 2.0B clause.
       aliases: []
     - command_id: cmd.git.worktree.remove
       ucc_units: [UCC-054, UCC-055]
       command_kind: domain_action
-      # JUDGMENT: canon states no command_kind here; destructive removal after gates
-      # (UI_Command_Catalog.md:705) and the W-078 escalation ladder are durable mutations.
       response_kind: owner_operation
       args:
         repo_id:
@@ -6103,76 +6221,104 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:705) per UCC-230 identity rule"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:705) per UCC-230 identity_typing"
         worktree_lifecycle_state:
-          type: ref
+          type: enum
           required: true
           default: none
+          values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when domain_action (UCC-230 row_groups); remove mutates worktree state"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.remove as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
         safe_point_id:
           type: id
           required: false
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe action rows carry optional safe_point_id (UI_Command_Catalog.md 2.5C rules)"
+          source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe worktree action commands carry optional safe_point_id (UI_Command_Catalog.md:720)"
         target_worktree_id:
           type: id
           required: true
           default: none
           provenance: canon
-          source: "GitHub_Integration.md Worktree Topology Commands destructive confirmation field target_worktree_id (GitHub_Integration.md:2117); the confirm-surface subject, the same worktree as worktree_id"
+          source: "GitHub_Integration.md:2117 Worktree Topology Commands destructive confirmation field target_worktree_id (id per the UCC-230 *_id typing); the confirm-surface subject, the same worktree as worktree_id"
         expected_path:
           type: path
           required: true
           default: none
-          provenance: canon
-          source: "GitHub_Integration.md Worktree Topology Commands destructive confirmation field expected_path (GitHub_Integration.md:2117)"
+          provenance: gap
+          gap_note: "GitHub_Integration.md:2117 names the destructive confirmation field expected_path and makes it required, but states no type. Choice: the vocabulary's path type; FileSafe normalizes it at run time (DL-333 resolution 11)."
         expected_branch:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "GitHub_Integration.md Worktree Topology Commands destructive confirmation field expected_branch (GitHub_Integration.md:2117)"
+          provenance: gap
+          gap_note: "GitHub_Integration.md:2117 names the destructive confirmation field expected_branch and makes it required, but states no type or bounds. Choice: a branch-name string of 1..256 characters."
         confirmation_text:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "GitHub_Integration.md Worktree Topology Commands destructive confirmation field confirmation_text (GitHub_Integration.md:2117)"
+          provenance: gap
+          gap_note: "GitHub_Integration.md:2117 names the destructive confirmation field confirmation_text and makes it required, but states no type or bounds. Choice: a string of 1..256 characters."
         permission_snapshot_id:
           type: id
           required: true
           default: none
           provenance: canon
-          source: "GitHub_Integration.md Worktree Topology Commands destructive confirmation field permission_snapshot_id (GitHub_Integration.md:2117)"
+          source: "GitHub_Integration.md:2117 Worktree Topology Commands destructive confirmation field permission_snapshot_id (id per the UCC-230 *_id typing)"
         override_record_ref:
           type: ref
           required: false
           default: none
           provenance: gap
           gap_note: >-
-            W-078 requires run-owned or blocked_preserved removal to go through "the recorded override
-            policy" with a double confirmation, but no field names the recorded override or its shape.
-            JUDGMENT: a ref to the recorded override record, present only on the override ladder step.
+            Manual remove is forbidden while the worktree is active or blocked_preserved "unless explicit override
+            policy allows it and records the override" (UI_Command_Catalog.md:719; UCC-055 negative_constraints),
+            and W-078 requires run-owned or blocked_preserved removal to go through "the recorded override policy"
+            with a double confirmation (WorktreeGitImprovement.md:5464-5465). No field names the recorded override.
+            Choice: a ref to the recorded override, present only on the override ladder step.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:WorktreeRemoveResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, permission_required, blocked_state_required, stale_projection]
-      # Canon: the Worktree Topology Commands disabled states dirty_worktree, untracked_files,
-      # protected_branch, missing_remote, permission_denied, operation_in_progress
-      # (GitHub_Integration.md:2118) map through the UCC-230 owner_state_code_map to
-      # blocked_state_required, not_configured, permission_required (DL-333 resolution 6); the locked
-      # refusal (W-077) is blocked_state_required; stale_projection per the 2.0B clause.
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            Canon states no command_kind for this row. Removal after gates (UI_Command_Catalog.md:705) and the W-078
+            escalation ladder are durable mutations, and UCC-230 lists remove as mutating (DL-341).
+        - key: field:worktree_lifecycle_state
+          choice: the worktree's lifecycle state as observed at dispatch, which the owner compares before it mutates
+          gap_note: >-
+            Canon requires the field when a command mutates worktree state but does not say whether it is the
+            observed or the target state.
+        - key: omitted:safe_action_lineage
+          choice: omitted
+          gap_note: >-
+            Safe worktree action commands "carry enough repo_id, worktree_id, optional safe_point_id, lane/run/package
+            refs, blocked/recovery lineage, and blocked reason payloads" (UI_Command_Catalog.md:720), but canon names
+            no field for the lane/run/package refs, the lineage or the blocked reason. They are left out: the owner
+            reads them from the worktree's owner record by worktree_id and fences on its lease (W-082), and a field is
+            added when canon names one.
+        - key: disabled_reason_codes
+          choice: [not_configured, permission_required, blocked_state_required, stale_projection]
+          gap_note: >-
+            The Worktree Topology Commands disabled states dirty_worktree, untracked_files, protected_branch,
+            missing_remote, permission_denied and operation_in_progress (GitHub_Integration.md:2117) map through the
+            UCC-230 owner_state_code_map to blocked_state_required, not_configured and permission_required (DL-333
+            resolution 6). The choice is the rest: the W-077 locked refusal and the row's other preconditions
+            (UI_Command_Catalog.md:705) are blocked_state_required, git_available false is not_configured, and
+            stale_projection is the 2.0B clause. Canon conflict: W-078 lets a dirty worktree be removed after a
+            confirmation that previews the dirty paths (WorktreeGitImprovement.md:5463), while the row's precondition
+            worktree_clean (:705) and GI's dirty_worktree disabled state (:2117) block it. The definition takes the
+            row and GI side, so a dirty worktree is blocked_state_required; the owner doc has not reconciled them.
       aliases: []
     - command_id: cmd.git.worktree.prune
       ucc_units: [UCC-054, UCC-055]
       command_kind: domain_action
-      # Canon: destructive prune after gates (UI_Command_Catalog.md:701); domain_action per the family.
       response_kind: owner_operation
       args:
         repo_id:
@@ -6186,75 +6332,107 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:701) per UCC-230 identity rule"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:706) per UCC-230 identity_typing"
         worktree_lifecycle_state:
-          type: ref
+          type: enum
           required: true
           default: none
+          values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when domain_action (UCC-230 row_groups); prune mutates worktree state"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.prune as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
         safe_point_id:
           type: id
           required: false
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe action rows carry optional safe_point_id (UI_Command_Catalog.md 2.5C rules)"
+          source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe worktree action commands carry optional safe_point_id (UI_Command_Catalog.md:720)"
         approved_request_ref:
           type: ref
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            GI-041 makes the approved request the command's subject ("it requires the approved request as
-            its subject"; direct prune execution without an approved request is invalid) but names no field
-            for it. JUDGMENT: a ref to the approved prune request produced by cmd.git.worktree.request_prune.
+            GI-041 makes the approved request the command's subject ("it requires the approved request as its
+            subject"; direct prune execution without an approved request is invalid, GitHub_Integration.md:2500-2504)
+            but names no field. Choice: a ref to the approved prune request that cmd.git.worktree.request_prune
+            produced.
         target_worktree_id:
           type: id
           required: true
           default: none
           provenance: canon
-          source: "GI-041 destructive confirmation field target_worktree_id (GitHub_Integration.md:2491 canonical_text)"
+          source: "GI-041 canonical_text destructive confirmation field target_worktree_id (GitHub_Integration.md:2501; id per the UCC-230 *_id typing)"
         expected_path:
           type: path
           required: true
           default: none
-          provenance: canon
-          source: "GI-041 destructive confirmation field expected_path (GitHub_Integration.md:2491 canonical_text)"
+          provenance: gap
+          gap_note: "GI-041 names the destructive confirmation field expected_path (GitHub_Integration.md:2501) and its acceptance criterion requires all five, but canon states no type. Choice: the vocabulary's path type; FileSafe normalizes it at run time (DL-333 resolution 11)."
         expected_branch:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "GI-041 destructive confirmation field expected_branch (GitHub_Integration.md:2491 canonical_text)"
+          provenance: gap
+          gap_note: "GI-041 names the destructive confirmation field expected_branch (GitHub_Integration.md:2501) but states no type or bounds. Choice: a branch-name string of 1..256 characters."
         confirmation_text:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "GI-041 destructive confirmation field confirmation_text (GitHub_Integration.md:2491 canonical_text)"
+          provenance: gap
+          gap_note: "GI-041 names the destructive confirmation field confirmation_text (GitHub_Integration.md:2501) but states no type or bounds. Choice: a string of 1..256 characters."
         permission_snapshot_id:
           type: id
           required: true
           default: none
           provenance: canon
-          source: "GI-041 destructive confirmation field permission_snapshot_id (GI-041 preserved_exact_tokens; GitHub_Integration.md:2491 canonical_text)"
+          source: "GI-041 canonical_text destructive confirmation field permission_snapshot_id (GitHub_Integration.md:2501; id per the UCC-230 *_id typing)"
+        override_record_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            Manual prune is forbidden while the worktree is active or blocked_preserved "unless explicit override
+            policy allows it and records the override" (UI_Command_Catalog.md:719; UCC-055 negative_constraints;
+            WorktreeGitImprovement.md:299). No field names the recorded override. Choice: a ref to the recorded
+            override, present only when the override policy applies, as on cmd.git.worktree.remove.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:WorktreePruneResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, permission_required, blocked_state_required, stale_projection]
-      # Canon: GI-041's six disabled states map through the UCC-230 owner_state_code_map to
-      # blocked_state_required, not_configured, permission_required (DL-333 resolution 6); the locked
-      # refusal (W-077) is blocked_state_required; stale_projection per the 2.0B clause.
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            Canon states no command_kind for this row. Prune after gates (UI_Command_Catalog.md:706) is a durable
+            mutation, and UCC-230 lists it as mutating (DL-341).
+        - key: field:worktree_lifecycle_state
+          choice: the worktree's lifecycle state as observed at dispatch, which the owner compares before it mutates
+          gap_note: >-
+            Canon requires the field when a command mutates worktree state but does not say whether it is the
+            observed or the target state.
+        - key: omitted:safe_action_lineage
+          choice: omitted
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry lane/run/package refs, blocked/recovery
+            lineage and blocked reason payloads but names no field for them. They are left out: the approved request
+            and the owner record by worktree_id carry them, and a field is added when canon names one.
+        - key: disabled_reason_codes
+          choice: [not_configured, permission_required, blocked_state_required, stale_projection]
+          gap_note: >-
+            GI-041's six disabled states (GitHub_Integration.md:2502-2503) map through the UCC-230
+            owner_state_code_map to blocked_state_required, not_configured and permission_required (DL-333
+            resolution 6). The choice is the rest: the W-077 locked refusal and the row's other preconditions
+            (UI_Command_Catalog.md:706) are blocked_state_required, git_available false is not_configured, and
+            stale_projection is the 2.0B clause.
       aliases: []
     - command_id: cmd.git.worktree.request_prune
       ucc_units: [UCC-054]
       command_kind: domain_action
-      # Canon: its own command since DL-333 resolution 5 (UCC-054 stale_retired_dispositions), the
-      # non-mutating approval-request phase of the two-phase prune flow (GI-041).
       response_kind: owner_operation
       args:
         repo_id:
@@ -6268,29 +6446,37 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:707) per UCC-230 identity rule"
-        worktree_lifecycle_state:
-          type: ref
-          required: true
-          default: none
-          provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when domain_action (UCC-230 row_groups); carried as the observed state for the stale_projection guard even though the command produces a request rather than mutating anything (GI-041)"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:707) per UCC-230 identity_typing"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:WorktreeRequestPruneResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, permission_required, blocked_state_required, stale_projection]
-      # JUDGMENT: canon names no disabled set for this row. GI-041 gates the request form on ownership
-      # badges, admin override policy, prune protection defaults and safe-point awareness; those map to
-      # permission_required and blocked_state_required, plus not_configured for git_available false
-      # (UI_Command_Catalog.md:707) and stale_projection per the 2.0B clause.
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            Canon states no command_kind for this row. It is its own command since DL-333 resolution 5, the
+            approval-request phase of the two-phase prune flow (GI-041): it writes a durable prune request without
+            mutating the worktree, and UCC-230 lists it as a domain_action under not_mutating (DL-341).
+        - key: omitted:worktree_lifecycle_state
+          choice: omitted
+          gap_note: >-
+            The overlay requires worktree_lifecycle_state only "when mutating worktree state"
+            (UI_Command_Catalog.md:8851); the row says the command acts "without mutating it" (:707), GI-041 says
+            "request_prune never mutates worktree state", and UCC-230 lists it under not_mutating (DL-341).
+        - key: disabled_reason_codes
+          choice: [not_configured, permission_required, blocked_state_required, stale_projection]
+          gap_note: >-
+            Canon names no disabled set for this row. GI-041 gates the request form on ownership badges, admin
+            override policy, prune protection defaults and safe-point awareness (GitHub_Integration.md:2497-2498);
+            those map to permission_required and blocked_state_required. not_configured covers git_available false
+            (UI_Command_Catalog.md:707), and stale_projection is the 2.0B clause.
       aliases: []
     - command_id: cmd.git.worktree.reuse
       ucc_units: [UCC-054, UCC-055]
       command_kind: domain_action
-      # JUDGMENT: canon states no command_kind. Rebinding a clean worktree to a new owner after gates
-      # (UI_Command_Catalog.md:703) is a durable ownership mutation.
       response_kind: owner_operation
       args:
         repo_id:
@@ -6304,19 +6490,20 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:703) per UCC-230 identity rule"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:708) per UCC-230 identity_typing"
         worktree_lifecycle_state:
-          type: ref
+          type: enum
           required: true
           default: none
+          values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when domain_action (UCC-230 row_groups); reuse mutates ownership state"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.reuse as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
         safe_point_id:
           type: id
           required: false
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe action rows carry optional safe_point_id (UI_Command_Catalog.md 2.5C rules)"
+          source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe worktree action commands carry optional safe_point_id (UI_Command_Catalog.md:720)"
         new_owner:
           type: object
           required: true
@@ -6328,7 +6515,7 @@ command_payload_definitions:
               default: none
               values: [run, lane, package]
               provenance: gap
-              gap_note: "the owner class of the union; canon words are the prose 'run/lane/package owner' (UI_Command_Catalog.md:703)"
+              gap_note: "the owner class of the union; canon's words are the prose 'run/lane/package owner' (UI_Command_Catalog.md:708), so the field and its value spellings are not canon"
             owner_ref:
               type: ref
               required: true
@@ -6337,25 +6524,55 @@ command_payload_definitions:
               gap_note: "the run, lane or package reference; no field name in canon"
           provenance: gap
           gap_note: >-
-            The new owner is a run | lane | package union (UI_Command_Catalog.md:703) with no field or
-            discriminator. JUDGMENT: a tagged object, kind plus owner_ref. The 2.5C rule that safe
-            actions carry "lane/run/package refs" (UI_Command_Catalog.md 2.5C rules) names the same
-            concepts without field names.
+            The new owner is a run | lane | package union (UI_Command_Catalog.md:708) with no field or
+            discriminator. Choice: a tagged object, kind plus owner_ref. The 2.5C rule that safe actions carry
+            "lane/run/package refs" (UI_Command_Catalog.md:720) names the same concepts without field names.
+        override_record_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            Manual reuse is forbidden while the worktree is active or blocked_preserved "unless explicit override
+            policy allows it and records the override" (UI_Command_Catalog.md:719; UCC-055 negative_constraints),
+            and "Manual /prune/reuse remains blocked while ownership is active or blocked_preserved unless override
+            policy records the ownership change" (WorktreeGitImprovement.md:299). No field names the recorded
+            override. Choice: a ref to the recorded override, present only when the override policy applies, as on
+            cmd.git.worktree.remove.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:WorktreeReuseResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, blocked_state_required, stale_projection]
-      # JUDGMENT: not_configured for git_available false, blocked_state_required for ownership_resolvable,
-      # worktree_clean or lineage_gate_passed false (UI_Command_Catalog.md:703) and the W-077 locked
-      # refusal, stale_projection per the 2.0B clause.
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            Canon states no command_kind for this row. Rebinding a clean worktree to a new owner after gates
+            (UI_Command_Catalog.md:708) is a durable ownership mutation, and UCC-230 lists it as mutating (DL-341).
+        - key: field:worktree_lifecycle_state
+          choice: the worktree's lifecycle state as observed at dispatch, which the owner compares before it mutates
+          gap_note: >-
+            Canon requires the field when a command mutates worktree state but does not say whether it is the
+            observed or the target state.
+        - key: omitted:safe_action_lineage
+          choice: omitted
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry lane/run/package refs, blocked/recovery
+            lineage and blocked reason payloads but names no field for them. new_owner carries the incoming owner;
+            the current owner's lineage is left out because the owner reads it by worktree_id, and a field is added
+            when canon names one.
+        - key: disabled_reason_codes
+          choice: [not_configured, blocked_state_required, stale_projection]
+          gap_note: >-
+            Canon names no disabled set for this row. not_configured covers git_available false;
+            blocked_state_required covers ownership_resolvable, worktree_clean or lineage_gate_passed false
+            (UI_Command_Catalog.md:708) and the W-077 locked refusal; stale_projection is the 2.0B clause.
       aliases: []
     - command_id: cmd.git.worktree.recover
       ucc_units: [UCC-054, UCC-055]
       command_kind: domain_action
-      # JUDGMENT: canon states no command_kind. Reopening or rebinding from stored lineage, with the
-      # unknown ownership marking (UI_Command_Catalog.md:704), is a durable recovery mutation.
       response_kind: owner_operation
       args:
         repo_id:
@@ -6369,27 +6586,48 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:704) per UCC-230 identity rule"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:709) per UCC-230 identity_typing"
         worktree_lifecycle_state:
-          type: ref
+          type: enum
           required: true
           default: none
+          values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when domain_action (UCC-230 row_groups); recover rebinds worktree state"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.recover as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:WorktreeRecoverResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, blocked_state_required, stale_projection]
-      # JUDGMENT: not_configured for git_available false, blocked_state_required for worktree_selected
-      # false (UI_Command_Catalog.md:704), stale_projection per the 2.0B clause.
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            Canon states no command_kind for this row. Reopening or rebinding from stored lineage, with the unknown
+            ownership marking (UI_Command_Catalog.md:709), is a durable recovery mutation, and UCC-230 lists it as
+            mutating (DL-341).
+        - key: field:worktree_lifecycle_state
+          choice: the worktree's lifecycle state as observed at dispatch, which the owner compares before it mutates
+          gap_note: >-
+            Canon requires the field when a command mutates worktree state but does not say whether it is the
+            observed or the target state.
+        - key: omitted:safe_action_lineage
+          choice: omitted
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry lane/run/package refs, blocked/recovery
+            lineage and blocked reason payloads but names no field for them. Recover reads the stored lineage itself
+            (:709), so they are left out, and a field is added when canon names one.
+        - key: disabled_reason_codes
+          choice: [not_configured, blocked_state_required, stale_projection]
+          gap_note: >-
+            Canon names no disabled set for this row. not_configured covers git_available false,
+            blocked_state_required covers worktree_selected false (UI_Command_Catalog.md:709), and stale_projection
+            is the 2.0B clause.
       aliases: []
     - command_id: cmd.git.worktree.focus_lineage
       ucc_units: [UCC-054]
       command_kind: navigation_wrapper
-      # JUDGMENT: canon states no command_kind. The row focuses a lineage context without mutating it
-      # (UI_Command_Catalog.md:705); the wiring row records a route/open disposition.
       response_kind: local_projection
       args:
         repo_id:
@@ -6403,7 +6641,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:705) per UCC-230 identity rule"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:710) per UCC-230 identity_typing"
         lineage_target:
           type: enum
           required: false
@@ -6411,24 +6649,38 @@ command_payload_definitions:
           values: [owner_run, branch_lineage, receipt, orphaned_tombstone]
           provenance: gap
           gap_note: >-
-            Which lineage context to focus ("owner run, branch lineage, receipt, or /orphaned tombstone
-            context", UI_Command_Catalog.md:705) has no field. JUDGMENT: an enum absent when the command
-            focuses the row's default lineage context; orphaned_tombstone spells the "/orphaned" prose
-            token as a snake_case value. Alternative: a typed ref per member.
+            Which lineage context to focus ("owner run, branch lineage, receipt, or /orphaned tombstone context",
+            UI_Command_Catalog.md:710) has no field, and canon spells the members in prose only, so these value
+            spellings are not canon. Choice: an enum, absent when the command focuses the row's default lineage
+            context; orphaned_tombstone stands for the "/orphaned tombstone" prose. A typed ref per member is the
+            alternative.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_route, invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, blocked_state_required, stale_projection]
-      # JUDGMENT: not_configured for git_available false, blocked_state_required for worktree_selected
-      # false (UI_Command_Catalog.md:705), stale_projection per the 2.0B clause.
+      judgments:
+        - key: command_kind
+          choice: navigation_wrapper
+          gap_note: >-
+            Canon states no command_kind for this row. It focuses a lineage context without mutating it
+            (UI_Command_Catalog.md:710), a route/open.
+        - key: response_kind
+          choice: local_projection
+          gap_note: >-
+            A route/open with no owner result: the wiring row catalog.git_worktree_focus_lineage names no request or
+            result schema.
+        - key: disabled_reason_codes
+          choice: [not_configured, blocked_state_required, stale_projection]
+          gap_note: >-
+            Canon names no disabled set for this row. not_configured covers git_available false,
+            blocked_state_required covers worktree_selected false (UI_Command_Catalog.md:710), and stale_projection
+            is the 2.0B clause.
       aliases: []
     - command_id: cmd.git.worktree.release
       ucc_units: [UCC-054]
       command_kind: domain_action
-      # JUDGMENT: canon states no command_kind. Releasing runtime ownership changes durable ownership
-      # eligibility (UI_Command_Catalog.md:706; W-082 release is distinct from physical cleanup).
       response_kind: owner_operation
       args:
         repo_id:
@@ -6442,37 +6694,58 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:706) per UCC-230 identity rule"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:711) per UCC-230 identity_typing"
         worktree_lifecycle_state:
-          type: ref
+          type: enum
           required: true
           default: none
+          values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when domain_action (UCC-230 row_groups); release mutates ownership state"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.release as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
         override_record_ref:
           type: ref
           required: false
           default: none
           provenance: gap
           gap_note: >-
-            The row releases ownership after "lineage-safe completion, archival, or an explicit recorded
-            override" (UI_Command_Catalog.md:706), but no field names the recorded override. JUDGMENT:
-            a ref to the recorded override, present only on the explicit-override path. W-082's release
-            fences (holder, generation, epoch, TopologyGeneration, SourceLocationId) are lease-side
-            checks on the owner record, not named payload fields here.
+            The row releases ownership after "lineage-safe completion, archival, or an explicit recorded override"
+            (UI_Command_Catalog.md:711), but no field names the recorded override. Choice: a ref to the recorded
+            override, present only on the explicit-override path. W-082's release fences (holder, generation, epoch,
+            TopologyGeneration, SourceLocationId) are lease-side checks on the owner record, not payload fields.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:WorktreeReleaseResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, blocked_state_required, stale_projection]
-      # JUDGMENT: not_configured for git_available false, blocked_state_required for worktree_selected
-      # or ownership_resolvable false (UI_Command_Catalog.md:706), stale_projection per the 2.0B clause.
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            Canon states no command_kind for this row. Releasing runtime ownership changes durable ownership
+            eligibility (UI_Command_Catalog.md:711; W-082 keeps release distinct from physical cleanup), and UCC-230
+            lists it as mutating (DL-341).
+        - key: field:worktree_lifecycle_state
+          choice: the worktree's lifecycle state as observed at dispatch, which the owner compares before it mutates
+          gap_note: >-
+            Canon requires the field when a command mutates worktree state but does not say whether it is the
+            observed or the target state.
+        - key: omitted:safe_action_lineage
+          choice: omitted
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry lane/run/package refs, blocked/recovery
+            lineage and blocked reason payloads but names no field for them. They are left out: the owner checks the
+            W-082 lease fences on its own record by worktree_id, and a field is added when canon names one.
+        - key: disabled_reason_codes
+          choice: [not_configured, blocked_state_required, stale_projection]
+          gap_note: >-
+            Canon names no disabled set for this row. not_configured covers git_available false,
+            blocked_state_required covers worktree_selected or ownership_resolvable false (UI_Command_Catalog.md:711),
+            and stale_projection is the 2.0B clause.
       aliases: []
     - command_id: cmd.git.worktree.lock
       ucc_units: [UCC-054]
       command_kind: domain_action
-      # canon: UI_Command_Catalog.md:12162 (Worktree and GitHub PR rows).
       response_kind: owner_operation
       args:
         repo_id:
@@ -6486,32 +6759,44 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:712) per UCC-230 identity rule"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:712; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.lock, :12360) per UCC-230 identity_typing"
         worktree_lifecycle_state:
-          type: ref
+          type: enum
           required: true
           default: none
+          values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when domain_action (UCC-230 row_groups); lock mutates worktree state"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.lock as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
         reason:
           type: string
           required: true
           default: none
           constraints: {min_length: 1}
           provenance: canon
-          source: "W-077: lock requires a reason string, stored and displayed with the lock (WorktreeGitImprovement.md:5408 canonical_text); lock provenance user or run-owned is recorded with the lock"
+          source: "W-077 canonical_text: 'Lock requires a reason string, stored and displayed with the lock' (WorktreeGitImprovement.md:5414); a required reason is non-empty"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:WorktreeLockResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [stale_projection]
-      # canon: UI_Command_Catalog.md:12162 disabled_reasons stale_projection.
+      judgments:
+        - key: field:worktree_lifecycle_state
+          choice: the worktree's lifecycle state as observed at dispatch, which the owner compares before it mutates
+          gap_note: >-
+            Canon requires the field when a command mutates worktree state but does not say whether it is the
+            observed or the target state.
+        - key: omitted:lock_provenance
+          choice: omitted
+          gap_note: >-
+            W-077 says "Every lock records provenance as user or run-owned" (WorktreeGitImprovement.md:5415) but names
+            no field. This command is the user's lock action; run-owned locks are the system's auto-lock while a run,
+            lane or package owns the worktree. So the owner records user provenance from the envelope actor_ref, and
+            the payload carries no provenance field.
       aliases: []
     - command_id: cmd.git.worktree.unlock
       ucc_units: [UCC-054]
       command_kind: domain_action
-      # canon: UI_Command_Catalog.md:12163 (Worktree and GitHub PR rows).
       response_kind: owner_operation
       args:
         repo_id:
@@ -6525,33 +6810,45 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_locked (UI_Command_Catalog.md:713): the locked worktree is the subject, per UCC-230 identity rule"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_locked (UI_Command_Catalog.md:713; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.unlock, :12361): the locked worktree is the subject, per UCC-230 identity_typing"
         worktree_lifecycle_state:
-          type: ref
+          type: enum
           required: true
           default: none
+          values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when domain_action (UCC-230 row_groups); unlock mutates worktree state"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.unlock as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:WorktreeUnlockResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [stale_projection, permission_required]
-      # canon: UI_Command_Catalog.md:12163 disabled_reasons stale_projection, permission_required.
-      # W-077's refusal of a run-owned lock while the owner is live is an owner refusal naming the owner,
-      # not a closed-set disabled code.
+      judgments:
+        - key: field:worktree_lifecycle_state
+          choice: the worktree's lifecycle state as observed at dispatch, which the owner compares before it mutates
+          gap_note: >-
+            Canon requires the field when a command mutates worktree state but does not say whether it is the
+            observed or the target state.
+        - key: error_codes
+          choice: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+          gap_note: >-
+            The narrowing rule adds blocked_state_required only when the disabled reasons include it, and the
+            row's disabled reasons are stale_projection and permission_required (Cozy Shelves row
+            cmd.git.worktree.unlock, UI_Command_Catalog.md:12361). W-077 says unlock of a run-owned lock while the
+            owner is live "is refused with a blocked explanation naming the owner" (WorktreeGitImprovement.md:5418-5419);
+            that refusal happens at dispatch, so blocked_state_required is added for it to travel in.
       aliases: []
   results:
     WorktreeSelectResultV1:
       fields:
         worktree_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the worktree now selected"}
-        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt; the wiring row requires a receipt effect (catalog.git_worktree_select)"}
+        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt; the wiring row requires a receipt effect (catalog.git_worktree_select, cmd.git.worktree.select.dispatch_receipt)"}
     WorktreeCreateResultV1:
       fields:
         worktree_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the created worktree"}
-        path: {type: path, required: true, default: none, provenance: gap, gap_note: "the worktree path as materialized"}
-        branch: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: "the branch the worktree was created on"}
+        worktree_path: {type: path, required: true, default: none, provenance: gap, gap_note: "the worktree path as materialized; named after the SCM status payload field worktree_path (WorktreeGitImprovement.md:297), which states no type"}
+        branch_name: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: "the branch the worktree was created on; named after the SCM status payload field branch_name (WorktreeGitImprovement.md:297), which states no type or bounds"}
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.git_worktree_create)"}
     WorktreeRemoveResultV1:
       fields:
@@ -6568,7 +6865,7 @@ command_payload_definitions:
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.git_worktree_reuse)"}
     WorktreeRecoverResultV1:
       fields:
-        worktree_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the recovered or rebound worktree; ownership may resolve to the unknown ownership marking (UI_Command_Catalog.md:704)"}
+        worktree_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the recovered or rebound worktree; ownership may resolve to the unknown ownership marking (UI_Command_Catalog.md:709)"}
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.git_worktree_recover)"}
     WorktreeReleaseResultV1:
       fields:

@@ -928,6 +928,8 @@ This addendum closes only residual FABLE Critical/High PRD Builder rows for conf
 
 ### PRDB-011 - Conflict, Scoring, Resource Defaults, And Approval Command Contract
 
+Amended 2026-11-07 (DL-333): the user resolution command is now `cmd.prd_builder.conflict.resolve`, with the runtime contract row's fields `conflict_id`, `selected_claim_refs` and `resolution_reason` (`Plans/prd_planning_runtime_contracts.json` `ui_command_contracts`; PRDB-024), and `cmd.prd_builder.resolve_conflict` is its compatibility alias.
+
 ```yaml
 plan_unit_id: PRDB-011
 unit_type: schema_contract
@@ -1125,7 +1127,7 @@ canonical_text: >-
   the strict schema overlay keeps the common envelope and the closed code sets.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible PRD Builder import, answer, annotation, conflict, approval and reopen commands.
-depends_on: [UCC-230, UCC-097, UCC-098, DL-333, CV-333, PRDB-007, PRDB-011]
+depends_on: [UCC-230, UCC-097, UCC-098, DL-333, DL-341, CV-333, PRDB-007, PRDB-011]
 unblocks: []
 acceptance_criteria:
   - Every command that UCC-230 routes to PRDB-024 has exactly one definition in the block below.
@@ -1161,8 +1163,6 @@ command_payload_definitions:
     - command_id: cmd.prd_builder.source.import
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.prd_builder.source.import (command_kind domain_action);
-      # the catalog row's payload summary column is history (DL-333 lineage pointer).
       response_kind: owner_operation
       args:
         workspace_id:
@@ -1196,18 +1196,12 @@ command_payload_definitions:
         owner_result: local:PrdSourceImportResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required, not_configured, permission_required, degraded, stale_projection]
-      # JUDGMENT: the runtime row's disabled_reason_codes (stale_workspace, permission_denied,
-      # stale_source_security_policy, missing_resource_limit_profile, parser_sandbox_unavailable,
-      # source_quarantined, source_limit_exceeded) map through UCC-230 owner_state_code_map to these
-      # closed codes; stale_projection also covers the row's run_source_security_and_resource_preflight_
-      # before_projection_dispatch freshness policy (2.0B clause).
       aliases:
         - {command_id: cmd.prd_builder.import_sources, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.prd_builder.answer.upsert
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.prd_builder.answer.upsert (command_kind domain_action).
       response_kind: owner_operation
       args:
         workspace_id:
@@ -1237,17 +1231,12 @@ command_payload_definitions:
         owner_result: local:PrdAnswerUpsertResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [degraded]
-      # JUDGMENT: the runtime row's ledger_sync_blocked maps to degraded (owner_state_code_map);
-      # stale_projection covers the block_until_ledger_current freshness policy (2.0B clause).
       aliases:
         - {command_id: cmd.prd_builder.answer_question, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.prd_builder.annotation.upsert
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.prd_builder.annotation.upsert (command_kind domain_action);
-      # PRDB-007's annotation_record lists the same fields. The row's actor_ref travels in the
-      # envelope and is not restated (UCC-230 never-restated fields).
       response_kind: owner_operation
       args:
         source_id:
@@ -1255,14 +1244,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "runtime contract payload_contract cmd.prd_builder.annotation.upsert; annotation_record required field source_id (PRDB-007)"
+          source: "runtime contract payload_contract cmd.prd_builder.annotation.upsert; required field source_id of Plans/prd_planning_runtime_contracts.json prd_builder_runtime.records annotation_record (PRDB-007 does not list it); id per the UCC-230 *_id typing"
         document_version:
           type: integer
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            annotation_record requires document_version (PRDB-007) but states no type; JUDGMENT:
+            Plans/prd_planning_runtime_contracts.json prd_builder_runtime.records annotation_record requires document_version (PRDB-007 binds records to the "document version") but states no type; JUDGMENT:
             typed integer as a monotonic version counter; a string form is not ruled out.
         projection_revision:
           type: integer
@@ -1270,7 +1259,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            annotation_record requires projection_revision (PRDB-007) but states no type; JUDGMENT:
+            Plans/prd_planning_runtime_contracts.json prd_builder_runtime.records annotation_record requires projection_revision (PRDB-007 binds records to the "projection revision") but states no type; JUDGMENT:
             typed integer as a monotonic revision counter; a string form is not ruled out.
         action_kind:
           type: string
@@ -1278,7 +1267,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            annotation_record requires action_kind (PRDB-007) and its prose lists the action verbs
+            Plans/prd_planning_runtime_contracts.json prd_builder_runtime.records annotation_record requires action_kind (PRDB-007 lists it too) and PRDB-007 lists the action verbs
             (highlight, comment, ask, request change, replace, remove, move to non-goal, mark unclear,
             show source, challenge source) but fixes no snake_case token set. JUDGMENT: typed string
             pending that enum; the verb list is the semantic range.
@@ -1288,7 +1277,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            annotation_record requires action_payload (PRDB-007, "action-specific payload") with no
+            Plans/prd_planning_runtime_contracts.json prd_builder_runtime.records annotation_record requires action_payload (PRDB-007, "action-specific payload") with no
             field shape, and the closed vocabulary's object type needs named fields canon does not
             give. JUDGMENT: typed as an opaque payload string pending a typed per-action contract;
             a structured object or contract ref stays open.
@@ -1297,26 +1286,32 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "runtime contract payload_contract cmd.prd_builder.annotation.upsert; annotation_record ordered source spans (PRDB-007)"
+          source: "runtime contract payload_contract cmd.prd_builder.annotation.upsert; required field source_span_ref of Plans/prd_planning_runtime_contracts.json prd_builder_runtime.records annotation_record, also listed by PRDB-007 (PRD_Builder.md:560); ref per the UCC-230 *_ref typing"
         start_offset:
           type: integer
           required: true
           default: none
-          provenance: canon
-          source: "runtime contract payload_contract cmd.prd_builder.annotation.upsert; annotation_record start and end offsets (PRDB-007)"
+          provenance: gap
+          gap_note: >-
+            The runtime contract and Plans/prd_planning_runtime_contracts.json prd_builder_runtime.records annotation_record name start_offset, and PRDB-007 lists "start and end offsets", but
+            canon states no type or bound. Choice: an integer offset, as document_version is typed; the unit
+            (character, byte or code point) and a lower bound stay open.
         end_offset:
           type: integer
           required: true
           default: none
-          provenance: canon
-          source: "runtime contract payload_contract cmd.prd_builder.annotation.upsert; annotation_record start and end offsets (PRDB-007)"
+          provenance: gap
+          gap_note: >-
+            The runtime contract and Plans/prd_planning_runtime_contracts.json prd_builder_runtime.records annotation_record name end_offset, and PRDB-007 lists "start and end offsets", but
+            canon states no type or bound. Choice: an integer offset, as document_version is typed; the unit
+            (character, byte or code point) and a lower bound stay open.
         selected_text_hash:
           type: sha256
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            annotation_record requires selected_text_hash (PRDB-007) without naming the algorithm.
+            Plans/prd_planning_runtime_contracts.json prd_builder_runtime.records annotation_record requires selected_text_hash (PRDB-007 lists it too) without naming the algorithm.
             JUDGMENT: typed sha256 to match the vocabulary's hash type and the repository's SHA-256
             convention; the algorithm choice stays open.
         ordering_key:
@@ -1325,7 +1320,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            annotation_record requires ordering_key (PRDB-007, "ordered source spans") with no format.
+            Plans/prd_planning_runtime_contracts.json prd_builder_runtime.records annotation_record requires ordering_key (PRDB-007 lists it, with "ordered source spans") with no format.
             JUDGMENT: typed string with no bounds; the key format stays open.
       owner_request: none
       result:
@@ -1333,17 +1328,12 @@ command_payload_definitions:
         owner_result: local:PrdAnnotationUpsertResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [stale_projection, unauthorized]
-      # JUDGMENT: the runtime row's stale_anchor_unrelocated and projection_stale map to
-      # stale_projection, actor_not_authorized to unauthorized (owner_state_code_map); the row's
-      # remap-or-block freshness policy is the stale_projection clause.
       aliases:
         - {command_id: cmd.prd_builder.annotate_source, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.prd_builder.annotation.resolve
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: fields from the catalog row plus the runtime contract row keyed by this catalog id
-      # (DL-333 resolution 1: the contract file adds this id from the catalog rows).
       response_kind: owner_operation
       args:
         annotation_id:
@@ -1374,16 +1364,10 @@ command_payload_definitions:
         owner_result: local:PrdAnnotationResolveResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required, stale_projection]
-      # JUDGMENT: the runtime row's annotation_terminal maps to blocked_state_required and
-      # stale_anchor_unrelocated to stale_projection (owner_state_code_map).
       aliases: []
     - command_id: cmd.prd_builder.conflict.resolve
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.prd_builder.conflict.resolve (command_kind domain_action).
-      # PRDB-011's older criterion names the alias-era id cmd.prd_builder.resolve_conflict with
-      # prd_id, conflict_id, selected_value, rationale and actor_ref; DL-333 resolution 1 makes the
-      # runtime field list under the catalog id canonical, so that older shape stays with the alias.
       response_kind: owner_operation
       args:
         conflict_id:
@@ -1414,16 +1398,25 @@ command_payload_definitions:
         owner_result: local:PrdConflictResolveResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's missing_claims maps to blocked_state_required
-      # (owner_state_code_map); stale_projection covers block_on_stale_conflict (2.0B clause).
+      judgments:
+        - key: omitted:prd_id
+          choice: omitted
+          gap_note: >-
+            Canon conflict. PRDB-011's acceptance criterion says the user resolution command is
+            cmd.prd_builder.resolve_conflict "with prd_id, conflict_id, selected_value, optional rationale, and
+            actor_ref" (PRD_Builder.md:950). The runtime contract row under the catalog id carries conflict_id,
+            selected_claim_refs and resolution_reason (Plans/prd_planning_runtime_contracts.json
+            ui_command_contracts). DL-333 resolution 1 puts the runtime field list under the catalog id and makes
+            the old id a compatibility alias, so this definition follows the runtime row: prd_id is left out (the
+            ConflictRecord named by conflict_id carries prd_id, PRDB-011), selected_value becomes
+            selected_claim_refs, the rationale becomes the required resolution_reason, and actor_ref stays in the
+            envelope. PRDB-011 now carries an "Amended 2026-11-07 (DL-333)" note pointing here.
       aliases:
         - {command_id: cmd.prd_builder.resolve_conflict, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1); PRDB-011 records the alias-era field set"}
     - command_id: cmd.prd_builder.approve_for_planning_wizard
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.prd_builder.approve_for_planning_wizard (command_kind
-      # domain_action); PRDB-011 names this the canonical approval command.
       response_kind: owner_operation
       args:
         prd_pack_id:
@@ -1452,17 +1445,12 @@ command_payload_definitions:
         owner_result: local:PrdApproveForPlanningWizardResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's blocking_findings and source_coverage_missing map to
-      # blocked_state_required (owner_state_code_map); stale_projection covers
-      # rerun_quality_before_approval (2.0B clause).
       aliases:
         - {command_id: cmd.prd_builder.approve_for_planning, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1); PRDB-011 compatibility alias"}
     - command_id: cmd.prd_builder.pack.reopen
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.prd_builder.pack.reopen (command_kind domain_action); the
-      # history column's "currentness proof" input has no field in the runtime field list.
       response_kind: owner_operation
       args:
         approved_pack_id:
@@ -1486,8 +1474,6 @@ command_payload_definitions:
         owner_result: local:PrdPackReopenResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's pack_missing maps to blocked_state_required
-      # (owner_state_code_map); stale_projection covers load_latest_pack_before_reopen (2.0B clause).
       aliases:
         - {command_id: cmd.prd_builder.reopen_pack, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
@@ -1506,7 +1492,7 @@ command_payload_definitions:
       fields:
         annotation_record_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; no typed result contract"}
         annotation_receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; no typed result contract"}
-        stale_anchor_relocation_receipt_ref_or_null: {type: ref, required: false, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; null when no relocation was needed (PRDB-007 relocation_ref_or_null)"}
+        stale_anchor_relocation_receipt_ref_or_null: {type: ref, required: true, nullable: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; its _or_null name makes it always present and null when no relocation was needed, as annotation_record relocation_ref_or_null (PRDB-007); no typed result contract"}
     PrdAnnotationResolveResultV1:
       fields:
         annotation_resolution_receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; no typed result contract"}
