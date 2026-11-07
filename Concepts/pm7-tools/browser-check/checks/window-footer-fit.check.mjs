@@ -93,7 +93,8 @@ const NEED = () => {
 		c.classList.remove('o55-st'); c.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
 		const k = c.querySelector('.o55nw-keys'); if (k) k.remove();
 		c.setAttribute('aria-hidden', 'true'); c.inert = true;
-		c.style.cssText += ';position:absolute;left:0;top:0;width:max-content;visibility:hidden;pointer-events:none;animation:none;transition:none';
+		/* (and no size containment: c4ba49b137's footer is an inline-size container, whose max-content ignores its contents) */
+		c.style.cssText += ';position:absolute;left:0;top:0;width:max-content;visibility:hidden;pointer-events:none;animation:none;transition:none;container-type:normal;contain:none';
 		layer.appendChild(c); const w = c.getBoundingClientRect().width; c.remove();
 		return Math.round(w * 10) / 10;
 	};
