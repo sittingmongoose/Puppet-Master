@@ -6,6 +6,10 @@
 // was shown and the entry ended (.o55-entering gone), which the reader maps onto the film through the press mark, so it
 // can say, frame by frame, whether the note's box shows its own paint.
 //   browser-check run diagnostics/refusal-note-film.check.mjs --record /abs/film.mp4 --set page=<build> [--set cycles=2]
+// T81 (tool batch 5; astra-review-g6 K3): the fixture asserted only that a press point existed, so two filmed attempts
+// that stayed on Begin or Creating with no note passed it. Now every attempt must reach its screen (AI or Name) with its
+// note shown; one that does not is logged as invalid, with what it reached, and tried again, up to two more times; the
+// reader keeps invalid rows apart. The log also gives when the note was hidden (hideWall), which bounds the reader's window.
 const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
 export default async function (t) {
 	await t.viewport(1280, 500);
@@ -20,8 +24,8 @@ export default async function (t) {
 		await f.evaluate(([fam, mode]) => { document.documentElement.setAttribute('data-motion', 'full'); O55.ui.applyLook(fam, mode); }, look.split('-'));
 		await f.waitForTimeout(1600); await settle();
 		for (let i = 0; i < (Number(t.args.cycles) || 2); i++) {
-			for (const screen of ['ai', 'name']) for (const route of ['press', 'double']) {
-				const tag = `${screen} ${route} ${look} ${i}`;
+			for (const screen of ['ai', 'name']) for (const route of ['press', 'double']) for (let tries = 0; tries < 3; tries++) {
+				const tag = `${screen} ${route} ${look} ${i}${tries ? ` retry ${tries}` : ''}`;
 				let at = null;
 				if (route === 'press') {
 					await f.evaluate((s) => { if (s === 'name') O55.S.draft().project_name = ''; O55.ui.go(s, { noHistory: true }); }, screen);
@@ -36,14 +40,19 @@ export default async function (t) {
 				/* the entry's end, timed in the page from the press */
 				/* wall-clock times, mapped onto the film through the press mark: when the note is shown (it gets o55-reason-show)
 				   and when the entry ends (.o55-entering gone) */
-				await f.evaluate(() => { window.__n1 = { noteWall: null, endWall: null }; const pane = document.querySelector('#pm-o55-onboarding .o55-pane'); const mo = new MutationObserver(() => { const l = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'); if (window.__n1.noteWall == null && l && l.querySelector('.o55-reason.o55-reason-show')) { window.__n1.noteWall = Date.now(); if (!l.classList.contains('o55-entering') && !document.querySelector('#pm-o55-onboarding .o55-layer.o55-out')) window.__n1.endWall = window.__n1.noteWall; } if (window.__n1.noteWall != null && window.__n1.endWall == null && l && !l.classList.contains('o55-entering') && !document.querySelector('#pm-o55-onboarding .o55-layer.o55-out')) window.__n1.endWall = Date.now(); }); mo.observe(pane, { subtree: true, attributes: true, attributeFilter: ['class'], childList: true }); window.__n1.mo = mo; });
+				await f.evaluate(() => { window.__n1 = { noteWall: null, endWall: null, hideWall: null }; const pane = document.querySelector('#pm-o55-onboarding .o55-pane'); const mo = new MutationObserver(() => { const l = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'); if (window.__n1.noteWall != null && window.__n1.hideWall == null && !(l && l.querySelector('.o55-reason.o55-reason-show'))) window.__n1.hideWall = Date.now(); if (window.__n1.noteWall == null && l && l.querySelector('.o55-reason.o55-reason-show')) { window.__n1.noteWall = Date.now(); if (!l.classList.contains('o55-entering') && !document.querySelector('#pm-o55-onboarding .o55-layer.o55-out')) window.__n1.endWall = window.__n1.noteWall; } if (window.__n1.noteWall != null && window.__n1.endWall == null && l && !l.classList.contains('o55-entering') && !document.querySelector('#pm-o55-onboarding .o55-layer.o55-out')) window.__n1.endWall = Date.now(); }); mo.observe(pane, { subtree: true, attributes: true, attributeFilter: ['class'], childList: true }); window.__n1.mo = mo; });
 				await t.mark(`press ${tag}`);
 				if (route === 'press') await t.page.mouse.click(off.x + at.x, off.y + at.y);
 				else { await t.page.mouse.click(off.x + at.x, off.y + at.y); await t.page.waitForTimeout(150); await t.page.mouse.click(off.x + at.x, off.y + at.y, { clickCount: 2 }); }
 				await f.waitForTimeout(2200);
-				const info = await f.evaluate(() => { const rs = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-reason'); window.__n1.mo && window.__n1.mo.disconnect(); if (!rs) return null; const s = getComputedStyle(rs), m = new DOMMatrix(s.transform === 'none' ? undefined : s.transform), q = rs.getBoundingClientRect(), rgb = (c) => (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number); return { rect: [q.x - m.m41, q.y - m.m42, q.width, q.height].map((v) => Math.round(v * 100) / 100), ground: rgb(s.backgroundColor), ink: rgb(s.color), noteWall: window.__n1.noteWall, endWall: window.__n1.endWall, screen: O55.S.sess.screen }; });
-				rows.push({ tag, ...info });
+				const info = await f.evaluate(() => { const rs = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-reason'); window.__n1.mo && window.__n1.mo.disconnect(); if (!rs) return null; const s = getComputedStyle(rs), m = new DOMMatrix(s.transform === 'none' ? undefined : s.transform), q = rs.getBoundingClientRect(), rgb = (c) => (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number); return { rect: [q.x - m.m41, q.y - m.m42, q.width, q.height].map((v) => Math.round(v * 100) / 100), ground: rgb(s.backgroundColor), ink: rgb(s.color), noteWall: window.__n1.noteWall, endWall: window.__n1.endWall, hideWall: window.__n1.hideWall, screen: O55.S.sess.screen }; });
+				const reached = await f.evaluate(() => ({ screen: O55.S.sess.screen, note: window.__n1.noteWall != null }));
+				const valid = reached.screen === screen && reached.note && !!info;
+				rows.push({ tag, ...(info || {}), ...(valid ? {} : { invalid: `reached ${reached.screen}${reached.note ? '' : ', no note shown'}` }) });
+				if (!valid) t.log(`film attempt ${tag} invalid: reached ${reached.screen}${reached.note ? '' : ', no note shown'}${tries < 2 ? '; trying again' : ''}`);
+				await t.check(`film attempt ${tag} reached ${screen} with its note shown${valid || tries < 2 ? '' : ' (after two retries)'}`, valid || tries < 2, JSON.stringify(reached));
 				await settle(); await f.waitForTimeout(600);
+				if (valid) break;
 			}
 		}
 	}
