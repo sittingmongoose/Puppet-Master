@@ -6000,9 +6000,9 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             No field names the open focus or target. The alias cmd.git.worktree.open_files supplies a "File
-            Manager focus" argument (UI_Command_Catalog.md:702 and the Cozy Shelves alias table row at :12333), and
+            Manager focus" argument (UI_Command_Catalog.md:702 and the Cozy Shelves alias table row at :12431), and
             the retired cmd.git.worktree.open_other folded a "target argument" into open (alias table row at
-            :12334); neither names the field or its values. Choice: absent means the worktree root itself (the
+            :12432); neither names the field or its values. Choice: absent means the worktree root itself (the
             row's own behavior, :701); present is a target surface name. The bounds 1..256 are not canon. A typed
             union of focus targets is the alternative, and no canon enumerates one.
       owner_request: none
@@ -6035,11 +6035,11 @@ command_payload_definitions:
             (UI_Command_Catalog.md:714) and names no single target. It is recorded on open, not on select, because
             the alias ends in the open (the select is the selection open already requires, precondition
             worktree_selected, :701), and one alias token is recorded on one definition. open_files is open's alias
-            (:702, :12333). GitHub_Integration.md:2115 lists switch among its Command IDs; the catalog, which keeps
+            (:702, :12431). GitHub_Integration.md:2115 lists switch among its Command IDs; the catalog, which keeps
             aliases, makes it an alias, and this definition follows the catalog.
       aliases:
         - {command_id: cmd.git.worktree.open_files, kind: compatibility_alias,
-           source: "UCC-054 compatibility_only_notes; UI_Command_Catalog.md:702 and the Cozy Shelves alias table row cmd.git.worktree.open_files (:12333, open plus File Manager focus argument)"}
+           source: "UCC-054 compatibility_only_notes; UI_Command_Catalog.md:702 and the Cozy Shelves alias table row cmd.git.worktree.open_files (:12431, open plus File Manager focus argument)"}
         - {command_id: cmd.git.worktree.switch, kind: compatibility_alias,
            source: "UCC-054 compatibility_only_notes; UI_Command_Catalog.md:714 (compatibility alias for select plus open until callers migrate)"}
     - command_id: cmd.git.worktree.compare
@@ -7004,7 +7004,8 @@ command_payload_definitions:
             cmd.git.worktree.reuse's new_owner; absent means the surface observed no run, lane or package owner. The
             owner compares it with its own record before it mutates and refuses a mismatch with stale_projection, so
             a stale view of the owner cannot act. The field names are not canon. The W-082
-            lease fences stay owner-side checks; this field adds what the surface saw.
+            lease fences are left out of this payload (judgment omitted:lease_fences); this field adds what the
+            surface saw.
         expected_lineage_ref:
           type: ref
           required: false
@@ -7047,8 +7048,7 @@ command_payload_definitions:
           gap_note: >-
             The row releases ownership after "lineage-safe completion, archival, or an explicit recorded override"
             (UI_Command_Catalog.md:711), but no field names the recorded override. Choice: a ref to the recorded
-            override, present only on the explicit-override path. W-082's release fences (holder, generation, epoch,
-            TopologyGeneration, SourceLocationId) are lease-side checks on the owner record, not payload fields.
+            override, present only on the explicit-override path.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -7073,6 +7073,17 @@ command_payload_definitions:
             Canon names no disabled set for this row. not_configured covers git_available false,
             blocked_state_required covers worktree_selected or ownership_resolvable false (UI_Command_Catalog.md:711),
             and stale_projection is the 2.0B clause.
+        - key: omitted:lease_fences
+          choice: omitted
+          gap_note: >-
+            W-082 says holder, generation, epoch, topology generation and Source Location "fence every create, attach,
+            renew, capture, merge, release, and cleanup" and that a stale one of them "cannot renew, release"
+            (WorktreeGitImprovement.md:5653, :5666), and the lease section lists release among the actions that
+            "compare all applicable fences" and says "release is idempotent and generation-checked" (:888, :891).
+            Canon does not say whether release's caller presents the fence values (lease_id, holder, generation,
+            epoch, TopologyGeneration, SourceLocationId) or the owner reads them from its own lease record. Choice:
+            left out of this payload; the owner compares them against its lease record and refuses a stale fence
+            without mutation.
       aliases: []
     - command_id: cmd.git.worktree.lock
       ucc_units: [UCC-054]
@@ -7090,7 +7101,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:712; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.lock, :12466) per UCC-230 identity_typing"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:712; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.lock, :12564) per UCC-230 identity_typing"
         worktree_lifecycle_state:
           type: enum
           required: true
@@ -7141,7 +7152,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_locked (UI_Command_Catalog.md:713; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.unlock, :12467): the locked worktree is the subject, per UCC-230 identity_typing"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_locked (UI_Command_Catalog.md:713; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.unlock, :12565): the locked worktree is the subject, per UCC-230 identity_typing"
         worktree_lifecycle_state:
           type: enum
           required: true
@@ -7166,7 +7177,7 @@ command_payload_definitions:
           gap_note: >-
             The narrowing rule adds blocked_state_required only when the disabled reasons include it, and the
             row's disabled reasons are stale_projection and permission_required (Cozy Shelves row
-            cmd.git.worktree.unlock, UI_Command_Catalog.md:12467). W-077 says unlock of a run-owned lock while the
+            cmd.git.worktree.unlock, UI_Command_Catalog.md:12565). W-077 says unlock of a run-owned lock while the
             owner is live "is refused with a blocked explanation naming the owner" (WorktreeGitImprovement.md:5418-5419);
             that refusal happens at dispatch, so blocked_state_required is added for it to travel in.
       aliases: []

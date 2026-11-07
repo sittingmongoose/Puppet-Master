@@ -4226,7 +4226,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "runtime contract payload_contract cmd.planning_wizard.start; guard project_context_current with owner state missing_project_context (owner_state_code_map -> not_configured); input_seed_contract required field project_context_snapshot_ref (planning_wizard_runtime)"
+          source: "runtime contract payload_contract cmd.planning_wizard.start; guard project_context_current with owner state missing_project_context (owner_state_code_map -> not_configured); planning_wizard_runtime input_seed_contracts: project_context_snapshot_ref is a required field of each of the three seed contracts (ApprovedPRDPack, normalized_requirements_pack, assistant_chat_handoff_seed)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -4722,7 +4722,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "runtime contract payload_contract cmd.planning_wizard.approve_and_build; approve_and_build_cas_fields; ApprovedPRDPack seed identity approved_prd_pack_id (planning_wizard_runtime input_seed_contracts)"
+          source: "runtime contract payload_contract cmd.planning_wizard.approve_and_build; approve_and_build_cas_fields; the ApprovedPlanPack identity (PWIZ-010, Planning_Wizard.md:718; PWIZ-014, :819)"
         pack_version:
           type: integer
           required: true
@@ -4745,7 +4745,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "runtime contract payload_contract cmd.planning_wizard.approve_and_build; input_seed_contract required field project_context_snapshot_ref (planning_wizard_runtime)"
+          source: "runtime contract payload_contract cmd.planning_wizard.approve_and_build; planning_wizard_runtime input_seed_contracts: project_context_snapshot_ref is a required field of each of the three seed contracts (ApprovedPRDPack, normalized_requirements_pack, assistant_chat_handoff_seed)"
         project_context_snapshot_hash:
           type: sha256
           required: true
