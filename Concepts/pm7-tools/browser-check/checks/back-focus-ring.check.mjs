@@ -67,6 +67,8 @@ export const tests = {};
 for (const surface of ['normal', 'sandbox']) for (const [w, h] of SIZES) {
 	tests[`FO-97 Back focus ${surface} ${w}x${h}`] = async (t) => {
 		if (t.args.size && !list(t.args.size, []).includes(`${w}x${h}`)) { t.log(`skipped: --set size leaves out ${w}x${h}`); return; }
-		return cell(t, surface, w, h);
+		// T76: the window is put back as the kit opens it, so a check run after this one in the same session does not
+		// inherit this cell's size
+		try { return await cell(t, surface, w, h); } finally { await t.viewport(1920, 1080).catch(() => {}); }
 	};
 }

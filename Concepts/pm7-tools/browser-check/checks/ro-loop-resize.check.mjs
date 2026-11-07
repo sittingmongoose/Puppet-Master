@@ -92,6 +92,9 @@ function wrapResizeObserver() {
 }
 
 async function run(t, mode) {
+	// T76 (tool batch 5; astra-review-g6 K1): run after another check in one session, this inherited its viewport (740 px
+	// after back-focus-ring) and openSideBySide, which needs 1920, threw; it sets its own window first
+	await t.viewport(1920, 1080);
 	await t.page.context().addInitScript(wrapResizeObserver);
 	let f, size;
 	if (mode === 'normal') {
