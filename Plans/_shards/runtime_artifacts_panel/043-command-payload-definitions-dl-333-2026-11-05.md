@@ -4,7 +4,7 @@ Source: `Plans/Runtime_Artifacts_Panel.md`
 
 Source lines: L3267-L3632
 
-Source SHA256: `21389628e0f8719072944f9ea2d361a0b5d3ee49f0b568fca9503a7e442a0127`
+Source SHA256: `c0e8f5a15a05d39b65f109bbfbeca83c982202054f168abf86b562c63f80b6f2`
 
 ---
 
@@ -60,11 +60,7 @@ command_payload_definitions:
     - command_id: cmd.artifacts.show_in_usage
       ucc_units: [UCC-086]
       command_kind: navigation_wrapper
-      # canon: UI_Command_Catalog.md:121 names cmd.artifacts.show_in_usage a navigation_wrapper over
-      # canonical route targeting rather than a layout toggle.
       response_kind: local_projection
-      # Route/open without a typed owner result: the wiring effect is route_open with a route/open
-      # receipt (Wiring_Matrix.production.json entries.catalog.artifacts_show_in_usage).
       args:
         project_id:
           type: id
@@ -85,7 +81,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1155 2.8A row open_subject (UCC-086 preserved token open_subject); UCC-230 envelope canonical name and type; retains the artifact route/open source-realization bridge (UCC-109 canonical text and negative constraint, UI_Command_Catalog.md:10604)"
+          source: "UI_Command_Catalog.md:1155 2.8A row open_subject (UCC-086 preserved token open_subject); UCC-230 envelope canonical name and type; retains the artifact route/open source-realization bridge (UCC-109 canonical text and negative constraint, UI_Command_Catalog.md:10710)"
         artifact_id:
           type: id
           required: false
@@ -165,7 +161,7 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "UCC-109 canonical text and acceptance criterion carry source_class when present for the artifact Usage/Ledger commands (UI_Command_Catalog.md:10604); values from Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_class"
+          source: "UCC-109 canonical text and acceptance criterion carry source_class when present for the artifact Usage/Ledger commands (UI_Command_Catalog.md:10710); values from Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_class"
         source_confidence:
           type: enum
           values: [high, medium, low, unknown]
@@ -179,7 +175,7 @@ command_payload_definitions:
           default: none
           nullable: true
           provenance: canon
-          source: "UCC-109 carries source_authority when present (UI_Command_Catalog.md:10604); Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_authority is $defs/stringOrNull (type string or null)"
+          source: "UCC-109 carries source_authority when present (UI_Command_Catalog.md:10710); Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_authority is $defs/stringOrNull (type string or null)"
         settlement_status:
           type: enum
           values: [observed, streaming_partial, settled, adjusted, failed, unknown]
@@ -200,8 +196,6 @@ command_payload_definitions:
           provenance: canon
           source: "UCC-109 carries projection_health when present; Plans/runtime_artifact_cost_usage.schema.json properties.projection_health is a string"
       owner_request: none
-      # No typed owner request exists: Wiring_Matrix.production.json entries.catalog.artifacts_show_in_usage
-      # states no request_schema_ref; the effect contract is route_open.
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: none
@@ -209,17 +203,19 @@ command_payload_definitions:
       disabled_reason_codes: [stale_projection]
       aliases: []
       judgments:
+        - key: response_kind
+          choice: local_projection
+          gap_note: "Canon names cmd.artifacts.show_in_usage a navigation_wrapper over canonical route targeting rather than a generic layout toggle (UI_Command_Catalog.md:121) but states no response_kind. The wiring row gives no result_schema_ref; its effect contract is route_open with the receipt cmd.artifacts.show_in_usage.route_open_receipt (Wiring_Matrix.production.json entries.catalog.artifacts_show_in_usage.effect_contract), so the route/open response without a typed owner result is chosen."
+        - key: owner_request
+          choice: none
+          gap_note: "The wiring row states no request_schema_ref (Wiring_Matrix.production.json entries.catalog.artifacts_show_in_usage) and no other canon names a typed owner request; the effect contract is route_open."
         - key: disabled_reason_codes
           choice: [stale_projection]
-          gap_note: "No catalog row states disabled reasons for cmd.artifacts.show_in_usage; chosen from the closed set. The wiring row requires a projected state selector and a disabled-reason projection before dispatch (Wiring_Matrix.production.json catalog.artifacts_show_in_usage.disabled_reason_projection), and stale_projection is the closed-set code for a stale usage projection (UCC-109 carries projection_freshness and projection_health, UI_Command_Catalog.md:10604)."
+          gap_note: "No catalog row states disabled reasons for cmd.artifacts.show_in_usage; chosen from the closed set. The wiring row requires a projected state selector and a disabled-reason projection before dispatch (Wiring_Matrix.production.json catalog.artifacts_show_in_usage.disabled_reason_projection), and stale_projection is the closed-set code for a stale usage projection (UCC-109 carries projection_freshness and projection_health, UI_Command_Catalog.md:10710)."
     - command_id: cmd.artifacts.show_in_ledger
       ucc_units: [UCC-086]
       command_kind: navigation_wrapper
-      # canon: UI_Command_Catalog.md:121 names cmd.artifacts.show_in_ledger a navigation_wrapper over
-      # canonical route targeting rather than a layout toggle.
       response_kind: local_projection
-      # Route/open without a typed owner result: the wiring effect is route_open with a route/open
-      # receipt (Wiring_Matrix.production.json entries.catalog.artifacts_show_in_ledger).
       args:
         project_id:
           type: id
@@ -240,7 +236,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1156 2.8A row open_subject (UCC-086 preserved token open_subject); UCC-230 envelope canonical name and type; retains the artifact route/open source-realization bridge (UCC-109 canonical text and negative constraint, UI_Command_Catalog.md:10604)"
+          source: "UI_Command_Catalog.md:1156 2.8A row open_subject (UCC-086 preserved token open_subject); UCC-230 envelope canonical name and type; retains the artifact route/open source-realization bridge (UCC-109 canonical text and negative constraint, UI_Command_Catalog.md:10710)"
         artifact_id:
           type: id
           required: false
@@ -326,7 +322,7 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "UCC-109 canonical text and acceptance criterion carry source_class when present for the artifact Usage/Ledger commands (UI_Command_Catalog.md:10604); values from Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_class"
+          source: "UCC-109 canonical text and acceptance criterion carry source_class when present for the artifact Usage/Ledger commands (UI_Command_Catalog.md:10710); values from Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_class"
         source_confidence:
           type: enum
           values: [high, medium, low, unknown]
@@ -340,7 +336,7 @@ command_payload_definitions:
           default: none
           nullable: true
           provenance: canon
-          source: "UCC-109 carries source_authority when present (UI_Command_Catalog.md:10604); Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_authority is $defs/stringOrNull (type string or null)"
+          source: "UCC-109 carries source_authority when present (UI_Command_Catalog.md:10710); Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_authority is $defs/stringOrNull (type string or null)"
         settlement_status:
           type: enum
           values: [observed, streaming_partial, settled, adjusted, failed, unknown]
@@ -361,8 +357,6 @@ command_payload_definitions:
           provenance: canon
           source: "UCC-109 carries projection_health when present; Plans/runtime_artifact_cost_usage.schema.json properties.projection_health is a string"
       owner_request: none
-      # No typed owner request exists: Wiring_Matrix.production.json entries.catalog.artifacts_show_in_ledger
-      # states no request_schema_ref; the effect contract is route_open.
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: none
@@ -370,7 +364,13 @@ command_payload_definitions:
       disabled_reason_codes: [stale_projection]
       aliases: []
       judgments:
+        - key: response_kind
+          choice: local_projection
+          gap_note: "Canon names cmd.artifacts.show_in_ledger a navigation_wrapper over canonical route targeting rather than a generic layout toggle (UI_Command_Catalog.md:121) but states no response_kind. The wiring row gives no result_schema_ref; its effect contract is route_open with the receipt cmd.artifacts.show_in_ledger.route_open_receipt (Wiring_Matrix.production.json entries.catalog.artifacts_show_in_ledger.effect_contract), so the route/open response without a typed owner result is chosen."
+        - key: owner_request
+          choice: none
+          gap_note: "The wiring row states no request_schema_ref (Wiring_Matrix.production.json entries.catalog.artifacts_show_in_ledger) and no other canon names a typed owner request; the effect contract is route_open."
         - key: disabled_reason_codes
           choice: [stale_projection]
-          gap_note: "No catalog row states disabled reasons for cmd.artifacts.show_in_ledger; chosen from the closed set. The wiring row requires a projected state selector and a disabled-reason projection before dispatch (Wiring_Matrix.production.json catalog.artifacts_show_in_ledger.disabled_reason_projection), and stale_projection is the closed-set code for a stale usage projection (UCC-109 carries projection_freshness and projection_health, UI_Command_Catalog.md:10604)."
+          gap_note: "No catalog row states disabled reasons for cmd.artifacts.show_in_ledger; chosen from the closed set. The wiring row requires a projected state selector and a disabled-reason projection before dispatch (Wiring_Matrix.production.json catalog.artifacts_show_in_ledger.disabled_reason_projection), and stale_projection is the closed-set code for a stale usage projection (UCC-109 carries projection_freshness and projection_health, UI_Command_Catalog.md:10710)."
 ```

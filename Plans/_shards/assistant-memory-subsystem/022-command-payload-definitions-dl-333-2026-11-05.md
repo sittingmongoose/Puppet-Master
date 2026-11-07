@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-memory-subsystem.md`
 
-Source lines: L3152-L3661
+Source lines: L3152-L3743
 
-Source SHA256: `271a105ea54793e0ea0a1cb85a7a7419f76b6fd0bc2c7f47fa32ff16c206ab80`
+Source SHA256: `491fcd9f9b62043680aff28e14e60a048d6f38897f1933bdd4f97eda715d8068`
 
 ---
 
@@ -30,7 +30,11 @@ canonical_text: >-
   cutoffs and keep runs waiting for their application and the remaining definition, review and recording approvals;
   the definitions record that hold as owner state maintenance_cutoffs_pending, which UCC-230 maps to not_configured
   (DL-341). DL-444 and DL-445 keep dedup_sweep unavailable the same way until their answer is applied and the
-  remaining approvals pass. prune_archive's policy can never change DL-447's cutoffs, pin exclusion or DL-402's
+  remaining approvals pass, recorded as owner state dedup_hold_pending, also mapped to not_configured; each of the
+  three definitions ties its owner state to that code in owner_state_codes. The wired owner request
+  ChatOwnerCommandRequestV2 requires a thread_id that the Project-scoped catalog rows do not carry, and the
+  rows require a project_id that AMS-054 app memory leaves null; each definition records both disagreements in
+  its judgments for the chat and memory owners, and chooses no thread_id value. prune_archive's policy can never change DL-447's cutoffs, pin exclusion or DL-402's
   archive-only rule. gist_id is the canon name UCC-230's identity_aliases records for the overlay identity
   memory_item_id, and every judgment is in its definition's judgments list (DL-341).
 gui_related: true
@@ -43,7 +47,7 @@ acceptance_criteria:
   - error_codes and disabled_reason_codes stay inside the overlay's closed sets.
   - summarize_monthly and prune_archive archive only and never delete, and neither archives or merges a pinned memory (DL-402).
   - summarize_monthly and prune_archive stay unavailable with their reason, owner state maintenance_cutoffs_pending mapped to not_configured (UCC-230, DL-341), until approved cutoffs exist and are applied (DL-403, DL-446, DL-447).
-  - dedup_sweep stays unavailable, automatically and from the Memory panel, until the DL-444 and DL-445 answer is applied and all remaining definition, review and recording approvals pass (DL-444, DL-445).
+  - dedup_sweep stays unavailable, automatically and from the Memory panel, with owner state dedup_hold_pending mapped to not_configured (UCC-230, DL-341), until the DL-444 and DL-445 answer is applied and all remaining definition, review and recording approvals pass (DL-444, DL-445).
   - prune_archive's policy can never change DL-447's eligibility test or pin exclusion or DL-402's archive-only rule, and a supplied policy is refused until the memory owner defines its shape.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -86,7 +90,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1133 row args { project_id, gist_id }; UCC-230 common optional project_id made required by the row. The record scope envelope allows project_id=null with Computer/thread identity for app memory (assistant-memory-subsystem.md §3.1, AMS-054); the row marks the arg itself required."
+          source: "UI_Command_Catalog.md:1133 row args { project_id, gist_id }; UCC-230 common optional project_id made required by the row."
         gist_id:
           type: id
           required: true
@@ -101,6 +105,12 @@ command_payload_definitions:
       disabled_reason_codes: [not_configured]
       aliases: []
       judgments:
+        - key: owner_request
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+          gap_note: "The production wiring row names ChatOwnerCommandRequestV2, which requires thread_id (string 1..256, not null; Plans/application_workflow_contracts.schema.json). The 2.8 rows (UI_Command_Catalog.md:1133-1144) are Project-scoped and carry no thread_id, except cmd.chat.memory.preview_capsule's optional thread_id?, and the UCC-084..UCC-088 overlay requires none. Canon does not say who supplies the owner request's thread_id for a Project memory command: not the Memory panel's active thread, not the dispatch envelope, and for a Project-wide maintenance job canon names no thread at all. No value is chosen here: the wired request and the catalog rows disagree, and the chat and memory owners settle whether these commands need a thread or a different owner request."
+        - key: field:project_id
+          choice: required, not nullable
+          gap_note: "The 2.8 rows (UI_Command_Catalog.md:1133-1144) mark project_id required, while the MemoryGist scope envelope allows project_id=null with actual Computer/thread identity for AMS-054 app memory (assistant-memory-subsystem.md §3.1; AMS-054). Choice: the row's side, so these commands act on Project memory only and app memory has no Gist Review or maintenance command until the memory owner decides. The other side, required: true with nullable: true, is not open to this definition: UCC-230 refuses nullable on a restated common optional field, and project_id is one. Canon disagrees here and the memory owner settles it."
         - key: command_kind
           choice: domain_action
           gap_note: "The 2.8 row (UI_Command_Catalog.md:1133) states no command_kind. Verify emits memory.gist.verification_requested and memory.gist.verified or verification_failed, a durable change to the gist."
@@ -182,6 +192,12 @@ command_payload_definitions:
       disabled_reason_codes: [not_configured]
       aliases: []
       judgments:
+        - key: owner_request
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1134) carries no thread_id. Canon does not say who supplies it; no value is chosen here, and the chat and memory owners settle it."
+        - key: field:project_id
+          choice: required, not nullable
+          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1134) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
         - key: command_kind
           choice: domain_action
           gap_note: "The 2.8 row (UI_Command_Catalog.md:1134) states no command_kind. Edit emits memory.gist.updated and writes a new gist version (AMS-048)."
@@ -222,6 +238,12 @@ command_payload_definitions:
       disabled_reason_codes: [not_configured]
       aliases: []
       judgments:
+        - key: owner_request
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1135) carries no thread_id. Canon does not say who supplies it; no value is chosen here, and the chat and memory owners settle it."
+        - key: field:project_id
+          choice: required, not nullable
+          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1135) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
         - key: command_kind
           choice: domain_action
           gap_note: "The 2.8 row (UI_Command_Catalog.md:1135) states no command_kind. Pin emits memory.gist.pinned or memory.gist.unpinned, a durable change to the gist."
@@ -256,6 +278,12 @@ command_payload_definitions:
       disabled_reason_codes: [not_configured]
       aliases: []
       judgments:
+        - key: owner_request
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1136) carries no thread_id. Canon does not say who supplies it; no value is chosen here, and the chat and memory owners settle it."
+        - key: field:project_id
+          choice: required, not nullable
+          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1136) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
         - key: command_kind
           choice: domain_action
           gap_note: "The 2.8 row (UI_Command_Catalog.md:1136) states no command_kind. Discard emits memory.gist.discarded and sets verification_state = Discarded (§5.3)."
@@ -290,6 +318,12 @@ command_payload_definitions:
       disabled_reason_codes: [not_configured]
       aliases: []
       judgments:
+        - key: owner_request
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1137) carries no thread_id. Canon does not say who supplies it; no value is chosen here, and the chat and memory owners settle it."
+        - key: field:project_id
+          choice: required, not nullable
+          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1137) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
         - key: command_kind
           choice: domain_action
           gap_note: "The 2.8 row (UI_Command_Catalog.md:1137) states no command_kind. The toggle sets a ConfigKey and emits settings.updated, a durable settings change."
@@ -324,6 +358,12 @@ command_payload_definitions:
       disabled_reason_codes: [not_configured]
       aliases: []
       judgments:
+        - key: owner_request
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1138) makes thread_id optional. When the caller supplies thread_id it can fill the owner request's; canon does not say what fills it when the caller leaves it out. No value is chosen here, and the chat and memory owners settle it."
+        - key: field:project_id
+          choice: required, not nullable
+          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1138) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
         - key: command_kind
           choice: shell_view
           gap_note: "The 2.8 row (UI_Command_Catalog.md:1138) states no command_kind; it says 'no persisted domain event (preview computation only)', so there is no domain effect to take."
@@ -349,6 +389,12 @@ command_payload_definitions:
       disabled_reason_codes: [not_configured]
       aliases: []
       judgments:
+        - key: owner_request
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1139) carries no thread_id. Canon does not say who supplies it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat and memory owners settle it."
+        - key: field:project_id
+          choice: required, not nullable
+          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1139) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
         - key: command_kind
           choice: domain_action
           gap_note: "The 2.8 row (UI_Command_Catalog.md:1139) states no command_kind. The rebuild emits memory.index.lexical.rebuild.started and .completed and rewrites the derived index."
@@ -374,6 +420,12 @@ command_payload_definitions:
       disabled_reason_codes: [not_configured]
       aliases: []
       judgments:
+        - key: owner_request
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1140) carries no thread_id. Canon does not say who supplies it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat and memory owners settle it."
+        - key: field:project_id
+          choice: required, not nullable
+          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1140) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
         - key: command_kind
           choice: domain_action
           gap_note: "The 2.8 row (UI_Command_Catalog.md:1140) states no command_kind. The rebuild emits memory.index.semantic.rebuild.started and .completed and rewrites the derived index."
@@ -399,6 +451,12 @@ command_payload_definitions:
       disabled_reason_codes: [not_configured]
       aliases: []
       judgments:
+        - key: owner_request
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1141) carries no thread_id. Canon does not say who supplies it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat and memory owners settle it."
+        - key: field:project_id
+          choice: required, not nullable
+          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1141) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
         - key: command_kind
           choice: domain_action
           gap_note: "The 2.8 row (UI_Command_Catalog.md:1141) states no command_kind. The sweep emits memory.verification_sweep.started and .completed and re-evaluates every gist's verification_state."
@@ -422,14 +480,22 @@ command_payload_definitions:
         owner_result: local:MemoryMaintenanceResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured]
+      owner_state_codes:
+        - {owner_state: dedup_hold_pending, code: not_configured}
       aliases: []
       judgments:
+        - key: owner_request
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1142) carries no thread_id. Canon does not say who supplies it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat and memory owners settle it."
+        - key: field:project_id
+          choice: required, not nullable
+          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1142) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
         - key: command_kind
           choice: domain_action
           gap_note: "The 2.8 row (UI_Command_Catalog.md:1142) states no command_kind. The sweep emits memory.dedup_sweep.started and .completed and merges gists."
         - key: disabled_reason_codes
           choice: [not_configured]
-          gap_note: "No catalog row states disabled reasons for the memory commands. Plans/Decision_Log.md#DL-444 and #DL-445 (approved scope) keep automatic jobs and panel buttons unavailable until the answer is applied and all remaining definition, review and recording approvals pass. UCC-230's owner_state_code_map records no owner state for that hold; it is read as not_configured, the code the map gives the parallel cutoffs hold maintenance_cutoffs_pending (DL-403, DL-341 resolution 3). assistant.memory.enabled=false or no memory store (§9.4) is also not_configured."
+          gap_note: "No catalog row states disabled reasons for the memory commands. Plans/Decision_Log.md#DL-444 and #DL-445 (approved scope) keep automatic jobs and panel buttons unavailable until the answer is applied and all remaining definition, review and recording approvals pass. The definition shows that hold as owner state dedup_hold_pending, which UCC-230's owner_state_code_map maps to not_configured (DL-444, DL-445; DL-341). assistant.memory.enabled=false or no memory store (§9.4) is also not_configured."
     - command_id: cmd.chat.memory.summarize_monthly
       ucc_units: [UCC-085]
       command_kind: domain_action
@@ -458,8 +524,16 @@ command_payload_definitions:
         owner_result: local:MemoryMaintenanceResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured]
+      owner_state_codes:
+        - {owner_state: maintenance_cutoffs_pending, code: not_configured}
       aliases: []
       judgments:
+        - key: owner_request
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1143) carries no thread_id. Canon does not say who supplies it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat and memory owners settle it."
+        - key: field:project_id
+          choice: required, not nullable
+          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1143) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
         - key: command_kind
           choice: domain_action
           gap_note: "The 2.8 row (UI_Command_Catalog.md:1143) states no command_kind. The job emits memory.monthly_summary.started and .completed and archives originals."
@@ -496,8 +570,16 @@ command_payload_definitions:
         owner_result: local:MemoryMaintenanceResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured]
+      owner_state_codes:
+        - {owner_state: maintenance_cutoffs_pending, code: not_configured}
       aliases: []
       judgments:
+        - key: owner_request
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
+          gap_note: "As recorded on cmd.chat.memory.verify: the wired ChatOwnerCommandRequestV2 requires a non-null thread_id, and this row (UI_Command_Catalog.md:1144) carries no thread_id. Canon does not say who supplies it, and for this Project-wide maintenance job canon names no thread; no value is chosen here, and the chat and memory owners settle it."
+        - key: field:project_id
+          choice: required, not nullable
+          gap_note: "As recorded on cmd.chat.memory.verify: the row marks project_id required (UI_Command_Catalog.md:1144) while AMS-054 app memory has project_id=null (assistant-memory-subsystem.md §3.1); the row's side is taken, and UCC-230 refuses nullable on a restated common optional field. The memory owner settles the disagreement."
         - key: command_kind
           choice: domain_action
           gap_note: "The 2.8 row (UI_Command_Catalog.md:1144) states no command_kind. The job emits memory.prune_archive.started and .completed and archives memories."

@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L29062-L31287
+Source lines: L29062-L31337
 
-Source SHA256: `f2db76688d9646c0746c0b06525ef4e61a36dacd803b2e3ccb50d29c827bddf4`
+Source SHA256: `62de2726e99ef88851f8b655b5819ed48f28b638cbfad54a81d3387907a53c1f`
 
 ---
 
@@ -94,19 +94,21 @@ command_payload_definitions:
           required_when: {field: place_kind, in: [project]}
           forbidden_when: {field: place_kind, in: [no_project]}
           provenance: canon
-          source: "Plans/assistant_chat_contracts.schema.json#/$defs/ChatNewRequestScopeV2 project_id (string or null; null when place_kind is no_project); UCC-230 envelope common optional project_id narrowed"
+          source: "Plans/assistant_chat_contracts.schema.json#/$defs/ChatNewRequestScopeV2 required project_id (string 1..256 or null); UCC-230 envelope common optional project_id (type id) restated"
         initial_message_ref:
           type: ref
-          required: false
+          required: true
+          nullable: true
           default: none
           provenance: canon
-          source: "Plans/assistant_chat_contracts.schema.json#/$defs/ChatNewRequestScopeV2 initial_message_ref (string 1..256 or null; absent here sends null); the first user message whose commit mints thread_id (UI_Command_Catalog.md:734)"
+          source: "Plans/assistant_chat_contracts.schema.json#/$defs/ChatNewRequestScopeV2 required initial_message_ref (string 1..256 or null); the first user message whose commit mints thread_id (UI_Command_Catalog.md:734)"
         initial_message_sha256:
           type: sha256
-          required: false
+          required: true
+          nullable: true
           default: none
           provenance: canon
-          source: "Plans/assistant_chat_contracts.schema.json#/$defs/ChatNewRequestScopeV2 initial_message_sha256 (pattern ^[0-9a-f]{64}$ or null; absent here sends null), the digest beside initial_message_ref"
+          source: "Plans/assistant_chat_contracts.schema.json#/$defs/ChatNewRequestScopeV2 required initial_message_sha256 (pattern ^[0-9a-f]{64}$ or null), the digest beside initial_message_ref"
         expected_context_revision:
           type: integer
           required: true
@@ -138,6 +140,9 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [not_configured]
           gap_note: "The row's only precondition is chat_available (UI_Command_Catalog.md:734); canon names no disabled code for it, so chat_available false is read as not_configured."
+        - key: field:project_id
+          choice: optional, required when place_kind is project and forbidden when place_kind is no_project
+          gap_note: "ChatNewRequestScopeV2 lists project_id in required as string 1..256 or null and states no rule tying it to place_kind. UCC-230 refuses nullable: true on a restated common optional field, and project_id is one (UCC-230 envelope common_optional), so the definition cannot carry it as required and nullable. Choice: the UICommand arg is absent for a no-Project thread and present for a Project thread, and the handler writes project_id null into the owner request when it is absent. Alternative, once the overlay allows it: required: true, nullable: true, null exactly when place_kind is no_project. Canon disagrees here: the owner request requires the field and the overlay forbids marking the restated common field nullable."
         - key: omitted:initiating_client_id
           choice: omitted
           gap_note: "ChatNewRequestScopeV2 requires initiating_client_id; canon does not say whether the caller or the dispatcher supplies it. Left to the handler, which takes it from the dispatch envelope (source_surface, actor_ref)."
@@ -848,7 +853,7 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18060), and its wiring row (catalog.chat_open_thread_context_details) carries CV-360's placement fields."
+          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18166), and its wiring row (catalog.chat_open_thread_context_details) carries CV-360's placement fields."
         mode:
           type: enum
           values: [preview, keep]
@@ -898,7 +903,7 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18060); a reveal of an open tab never moves it (CV-360)."
+          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18166); a reveal of an open tab never moves it (CV-360)."
         mode:
           type: enum
           values: [preview, keep]
@@ -948,7 +953,7 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18060), and its wiring row (catalog.chat_close_thread_context_details) carries CV-360's placement fields."
+          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18166), and its wiring row (catalog.chat_close_thread_context_details) carries CV-360's placement fields."
         mode:
           type: enum
           values: [preview, keep]
@@ -1084,7 +1089,7 @@ acceptance_criteria:
   - Every command that UCC-230 routes to ACD-638 has exactly one definition in the block below.
   - Every field has a vocabulary type, required, default and provenance; every gap field says what was missing.
   - error_codes and disabled_reason_codes stay inside the overlay's closed sets.
-  - cmd.chat.revert's result keeps the exact FileSafe outcome vocabulary; restored_with_conflicts and partial multi-file success stay invalid.
+  - cmd.chat.revert's result keeps the exact FileSafe outcome vocabulary plus Chat's no_eligible_mutating_turn refusal; restored_with_conflicts and partial multi-file success stay invalid.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
   - python3 scripts/pm-command-payload-defs-check.py
@@ -1482,7 +1487,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "FileSafe restore outcomes the command consumes, plus no_eligible_mutating_turn (UI_Command_Catalog.md:1000-1001; ACD-217)"
+          source: "FileSafe restore outcomes the command consumes, restored_clean | restore_skipped | restore_refused | restore_failed | restore_recovery_required (UI_Command_Catalog.md:1000), plus Chat's refusal no_eligible_mutating_turn (UI_Command_Catalog.md:999; ACD-217, assistant-chat-design.md:14074: no eligible turn returns no_eligible_mutating_turn without a restore transaction)"
         manifest_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "the restored whole-turn mutation manifest; no canon names the result field"}
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.chat_revert)"}
     ChatSoftHistoryMutationResultV1:
@@ -1600,7 +1605,34 @@ command_payload_definitions:
           gap_note: "UCC-081 lists exclude_domains among the advanced provider controls (UI_Command_Catalog.md:1035; WebActionInput search branch). Whether it is a per-call arg is not stated; left out pending the web owner."
         - key: omitted:time_range
           choice: omitted
-          gap_note: "UCC-081 lists time_range, start_date and end_date among the advanced provider controls (UI_Command_Catalog.md:1035; WebActionInput search branch has time_range). Whether they are per-call args is not stated; left out pending the web owner."
+          gap_note: "UCC-081 lists time_range among the advanced provider controls (UI_Command_Catalog.md:1035), and WebActionInput's search branch carries time_range (string). Whether it is a per-call arg is not stated; left out pending the web owner."
+        - key: omitted:start_date
+          choice: omitted
+          gap_note: "UCC-081 lists start_date among the advanced provider controls shown in /web help and settings (UI_Command_Catalog.md:1035); WebActionInput's search branch has no start_date field. Whether it is a per-call arg is not stated; left out pending the web owner."
+        - key: omitted:end_date
+          choice: omitted
+          gap_note: "UCC-081 lists end_date among the advanced provider controls shown in /web help and settings (UI_Command_Catalog.md:1035); WebActionInput's search branch has no end_date field. Whether it is a per-call arg is not stated; left out pending the web owner."
+        - key: omitted:search_depth
+          choice: omitted
+          gap_note: "UCC-081 lists search_depth among the advanced provider controls, with the depth labels ultra-fast, fast, basic and advanced (UI_Command_Catalog.md:1035); WebActionInput's search branch has no search_depth field. Whether it is a per-call arg is not stated; left out pending the web owner."
+        - key: omitted:include_images
+          choice: omitted
+          gap_note: "UCC-081 lists include_images among the advanced provider controls shown in /web help and settings (UI_Command_Catalog.md:1035); WebActionInput's search branch has no include_images field. Whether it is a per-call arg is not stated; left out pending the web owner."
+        - key: omitted:include_raw_content
+          choice: omitted
+          gap_note: "UCC-081 lists conservative include_raw_content among the advanced provider controls (UI_Command_Catalog.md:1035); WebActionInput's search branch has no include_raw_content field. Whether it is a per-call arg is not stated; left out pending the web owner."
+        - key: omitted:chunks_per_source
+          choice: omitted
+          gap_note: "UCC-081 lists chunks_per_source among the advanced provider controls shown in /web help and settings (UI_Command_Catalog.md:1035); WebActionInput's search branch has no chunks_per_source field. Whether it is a per-call arg is not stated; left out pending the web owner."
+        - key: omitted:sources
+          choice: omitted
+          gap_note: "WebActionInput's search branch carries sources (array of strings; Plans/web_operation_contracts.schema.json#/$defs/WebActionInput; Tools.md:709 sources?), but section 5.2 fixes the /web search UI-command schema as { query } (assistant-chat-design.md:341) and UCC-081 does not list it among the provider controls. Whether it is a per-call arg is not stated; left out pending the web owner."
+        - key: omitted:adapter_hint
+          choice: omitted
+          gap_note: "WebActionInput's search branch carries adapter_hint (string; Plans/web_operation_contracts.schema.json#/$defs/WebActionInput; Tools.md:709 adapter_hint?), but section 5.2 fixes the /web search UI-command schema as { query } (assistant-chat-design.md:341) and UCC-081 does not list it among the provider controls. Whether it is a per-call arg is not stated; left out pending the web owner."
+        - key: omitted:cache_policy
+          choice: omitted
+          gap_note: "WebActionInput's search branch carries cache_policy ($ref CachePolicy; Plans/web_operation_contracts.schema.json#/$defs/WebActionInput), but section 5.2 fixes the /web search UI-command schema as { query } (assistant-chat-design.md:341) and UCC-081 does not list it among the provider controls. Whether it is a per-call arg is not stated; left out pending the web owner."
     - command_id: cmd.chat.web.fetch
       ucc_units: [UCC-083, UCC-079, UCC-080, UCC-081, UCC-082]
       command_kind: domain_action
@@ -1743,20 +1775,20 @@ command_payload_definitions:
           default: none
           constraints: {minimum: 1}
           provenance: canon
-          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput crawl branch max_pages (integer, minimum 1); when absent the webcrawl tool default max_pages = 25 applies (Plans/Tools.md:757), owned by Tools.md (UI_Command_Catalog.md:1039)"
+          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput crawl branch max_pages (integer, minimum 1); Plans/Tools.md:757 gives the webcrawl tool's own default execution limit max_pages = 25, owned by Tools.md (UI_Command_Catalog.md:1039)"
         max_depth:
           type: integer
           required: false
           default: none
           constraints: {minimum: 0}
           provenance: canon
-          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput crawl branch max_depth (integer, minimum 0); when absent the webcrawl tool default max_depth = 2 applies (Plans/Tools.md:757)"
+          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput crawl branch max_depth (integer, minimum 0); Plans/Tools.md:757 gives the webcrawl tool's own default execution limit max_depth = 2"
         same_origin_only:
           type: boolean
           required: false
           default: none
           provenance: canon
-          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput crawl branch same_origin_only (boolean); when absent the webcrawl tool default same_origin_only = true applies (Plans/Tools.md:757)"
+          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput crawl branch same_origin_only (boolean); Plans/Tools.md:757 gives the webcrawl tool's own default execution limit same_origin_only = true"
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -1771,6 +1803,15 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [not_configured, unauthorized, unreachable, permission_required]
           gap_note: "Canon names no disabled code for the web rows; read as for cmd.chat.web.search. Crawl is host-scoped (UI_Command_Catalog.md:1038)."
+        - key: field:max_pages
+          choice: optional, no default
+          gap_note: "Plans/Tools.md:757 gives the webcrawl tool's default execution limit max_pages = 25, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: 25 on the arg, which would send the tool default as a caller-supplied value."
+        - key: field:max_depth
+          choice: optional, no default
+          gap_note: "Plans/Tools.md:757 gives the webcrawl tool's default execution limit max_depth = 2, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: 2 on the arg, which would send the tool default as a caller-supplied value."
+        - key: field:same_origin_only
+          choice: optional, no default
+          gap_note: "Plans/Tools.md:757 gives the webcrawl tool's default execution limit same_origin_only = true, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: true on the arg, which would send the tool default as a caller-supplied value."
         - key: omitted:invocation_source
           choice: omitted
           gap_note: "Every web route persists invocation_source (UI_Command_Catalog.md:1028; Plans/web_operation_contracts.schema.json#/$defs/InvocationProvenance). Canon does not say whether it is a UICommand arg; left to the dispatcher, which derives it from source_surface and actor_ref."
@@ -1800,20 +1841,20 @@ command_payload_definitions:
           default: none
           constraints: {minimum: 1}
           provenance: canon
-          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput map branch max_pages (integer, minimum 1); when absent the webmap tool default max_pages = 50 applies (Plans/Tools.md:757)"
+          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput map branch max_pages (integer, minimum 1); Plans/Tools.md:757 gives the webmap tool's own default execution limit max_pages = 50"
         max_depth:
           type: integer
           required: false
           default: none
           constraints: {minimum: 0}
           provenance: canon
-          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput map branch max_depth (integer, minimum 0); when absent the webmap tool default max_depth = 3 applies (Plans/Tools.md:757)"
+          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput map branch max_depth (integer, minimum 0); Plans/Tools.md:757 gives the webmap tool's own default execution limit max_depth = 3"
         same_origin_only:
           type: boolean
           required: false
           default: none
           provenance: canon
-          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput map branch same_origin_only (boolean); when absent the webmap tool default same_origin_only = true applies (Plans/Tools.md:757)"
+          source: "assistant-chat-design.md:341 (section 5.2 crawl/map parameters); Plans/web_operation_contracts.schema.json#/$defs/WebActionInput map branch same_origin_only (boolean); Plans/Tools.md:757 gives the webmap tool's own default execution limit same_origin_only = true"
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -1828,6 +1869,15 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [not_configured, unauthorized, unreachable, permission_required]
           gap_note: "Canon names no disabled code for the web rows; read as for cmd.chat.web.search. Map is host-scoped (UI_Command_Catalog.md:1038)."
+        - key: field:max_pages
+          choice: optional, no default
+          gap_note: "Plans/Tools.md:757 gives the webmap tool's default execution limit max_pages = 50, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: 50 on the arg, which would send the tool default as a caller-supplied value."
+        - key: field:max_depth
+          choice: optional, no default
+          gap_note: "Plans/Tools.md:757 gives the webmap tool's default execution limit max_depth = 3, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: 3 on the arg, which would send the tool default as a caller-supplied value."
+        - key: field:same_origin_only
+          choice: optional, no default
+          gap_note: "Plans/Tools.md:757 gives the webmap tool's default execution limit same_origin_only = true, unless a caller or provider capability contract supplies a narrower effective limit, and detailed crawl limits stay owned by Plans/Tools.md (UI_Command_Catalog.md:1039). Choice: the UICommand arg has no default; when the caller leaves it out, the tool applies its own limit. Alternative: default: true on the arg, which would send the tool default as a caller-supplied value."
         - key: omitted:invocation_source
           choice: omitted
           gap_note: "Every web route persists invocation_source (UI_Command_Catalog.md:1028; Plans/web_operation_contracts.schema.json#/$defs/InvocationProvenance). Canon does not say whether it is a UICommand arg; left to the dispatcher, which derives it from source_surface and actor_ref."
@@ -1984,7 +2034,7 @@ command_payload_definitions:
   definitions:
     - command_id: cmd.chat.vision_bridge.select_source
       ucc_units: [UCC-101]
-      command_kind: domain_action                       # canon: UI_Command_Catalog.md:21489
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         source_class:
@@ -1996,7 +2046,7 @@ command_payload_definitions:
           gap_note: >-
             The row allows five source classes - current-turn attachment, selected artifact,
             project file allowed by FileSafe, clipboard image, recent OS screenshot
-            (UI_Command_Catalog.md:21489) - but no canon names the field or fixes canonical tokens
+            (UI_Command_Catalog.md:21595) - but no canon names the field or fixes canonical tokens
             for the classes. Choice: source_class as an opaque token of 1..64 (bounds chosen here),
             one of those five classes; alternative: a closed enum once an owner fixes the spellings.
             A project-file source still carries FileSafe and artifact permissions (UCC-101 negative
@@ -2008,7 +2058,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row chooses "the image the bridge reads" and shows the selected source
-            (UI_Command_Catalog.md:21489), so a class alone cannot pick one attachment, artifact,
+            (UI_Command_Catalog.md:21595), so a class alone cannot pick one attachment, artifact,
             FileSafe project file or clipboard image. image_ref is the overlay identity for
             UCC-101..UCC-105 (UI_Command_Catalog.md:8860 overlay row, image_ref?), typed ref by UCC-230's
             identity rule, but canon does not say that select_source carries it or for which classes.
@@ -2028,10 +2078,10 @@ command_payload_definitions:
           gap_note: "The production wiring row catalog.chat_vision_bridge_select_source names no request_schema_ref, and no typed owner request exists for the vision bridge yet."
         - key: disabled_reason_codes
           choice: [not_configured]
-          gap_note: "The row's only precondition is vision_bridge_available (UI_Command_Catalog.md:21489) and canon names no disabled code; false is read as not_configured."
+          gap_note: "The row's only precondition is vision_bridge_available (UI_Command_Catalog.md:21595) and canon names no disabled code; false is read as not_configured."
     - command_id: cmd.chat.vision_bridge.pick_recent_screenshot
       ucc_units: [UCC-101]
-      command_kind: domain_action                       # canon: UI_Command_Catalog.md:21490
+      command_kind: domain_action
       response_kind: owner_operation
       args: {}
       owner_request: none
@@ -2044,16 +2094,16 @@ command_payload_definitions:
       judgments:
         - key: omitted:image_ref
           choice: omitted
-          gap_note: "The row opens the recent OS screenshot picker and uses the screenshot the user picks; an ambiguous recent screenshot is never chosen silently (UI_Command_Catalog.md:21490). The picker chooses, so no input names the image; the overlay identity image_ref? is left out."
+          gap_note: "The row opens the recent OS screenshot picker and uses the screenshot the user picks; an ambiguous recent screenshot is never chosen silently (UI_Command_Catalog.md:21596). The picker chooses, so no input names the image; the overlay identity image_ref? is left out."
         - key: owner_request
           choice: none
           gap_note: "The production wiring row catalog.chat_vision_bridge_pick_recent_screenshot names no request_schema_ref, and no typed owner request exists for the vision bridge yet."
         - key: disabled_reason_codes
           choice: [not_configured, permission_required]
-          gap_note: "Canon names no disabled code. vision_bridge_available false is read as not_configured and recent_screenshot_access_allowed false (UI_Command_Catalog.md:21490) as permission_required."
+          gap_note: "Canon names no disabled code. vision_bridge_available false is read as not_configured and recent_screenshot_access_allowed false (UI_Command_Catalog.md:21596) as permission_required."
     - command_id: cmd.chat.vision_bridge.inspect
       ucc_units: [UCC-101]
-      command_kind: navigation_wrapper                  # canon: UI_Command_Catalog.md:21491
+      command_kind: navigation_wrapper
       response_kind: local_projection
       args:
         image_ref:
@@ -2063,7 +2113,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The overlay lists image_ref? for UCC-101..UCC-105 and the row opens the description for
-            the bridge result with its source image or artifact link (UI_Command_Catalog.md:21491);
+            the bridge result with its source image or artifact link (UI_Command_Catalog.md:21597);
             precondition vision_bridge_result_present makes the source subject mandatory per UCC-230
             identity rule, but no canon names the bridge-result identity field. Choice: image_ref
             binds the inspected result to its source image or artifact.
@@ -2077,10 +2127,10 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "The row's only precondition is vision_bridge_result_present (UI_Command_Catalog.md:21491) and canon names no disabled code; false is read as a blocked state."
+          gap_note: "The row's only precondition is vision_bridge_result_present (UI_Command_Catalog.md:21597) and canon names no disabled code; false is read as a blocked state."
     - command_id: cmd.chat.vision_bridge.rerun
       ucc_units: [UCC-101]
-      command_kind: domain_action                       # canon: UI_Command_Catalog.md:21492
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         image_ref:
@@ -2089,7 +2139,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row reruns "on the same source" (UI_Command_Catalog.md:21492); precondition
+            The row reruns "on the same source" (UI_Command_Catalog.md:21598); precondition
             vision_bridge_result_present makes the source subject mandatory per UCC-230 identity
             rule, but no canon names the field. Choice: the overlay identity image_ref carries the
             same source.
@@ -2100,7 +2150,7 @@ command_payload_definitions:
           constraints: {min_length: 1, max_length: 4096}
           provenance: gap
           gap_note: >-
-            The row reruns "with the user's question" (UI_Command_Catalog.md:21492) but names no
+            The row reruns "with the user's question" (UI_Command_Catalog.md:21598) but names no
             field. Choice: question, matching the row's label 'Rerun With A Question'; the bounds
             1..4096 are chosen here, canon states none.
       owner_request: none
@@ -2116,10 +2166,10 @@ command_payload_definitions:
           gap_note: "The production wiring row catalog.chat_vision_bridge_rerun names no request_schema_ref, and no typed owner request exists for the vision bridge yet."
         - key: disabled_reason_codes
           choice: [blocked_state_required, permission_required]
-          gap_note: "Canon names no disabled code. vision_bridge_result_present false (UI_Command_Catalog.md:21492) is read as a blocked state and permission_allowed false as permission_required."
+          gap_note: "Canon names no disabled code. vision_bridge_result_present false (UI_Command_Catalog.md:21598) is read as a blocked state and permission_allowed false as permission_required."
     - command_id: cmd.chat.vision_bridge.copy_description
       ucc_units: [UCC-101]
-      command_kind: shell_view                          # canon: UI_Command_Catalog.md:21493
+      command_kind: shell_view
       response_kind: local_projection
       args:
         image_ref:
@@ -2129,7 +2179,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row copies the derived description of the present bridge result
-            (UI_Command_Catalog.md:21493); precondition vision_bridge_result_present makes the
+            (UI_Command_Catalog.md:21599); precondition vision_bridge_result_present makes the
             source subject mandatory per UCC-230 identity rule, but no canon names the field.
             Choice: the overlay identity image_ref binds the copied description to its source.
       owner_request: none
@@ -2142,10 +2192,10 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "The row's only precondition is vision_bridge_result_present (UI_Command_Catalog.md:21493) and canon names no disabled code; false is read as a blocked state."
+          gap_note: "The row's only precondition is vision_bridge_result_present (UI_Command_Catalog.md:21599) and canon names no disabled code; false is read as a blocked state."
     - command_id: cmd.chat.vision_bridge.attach_result
       ucc_units: [UCC-101]
-      command_kind: domain_action                       # canon: UI_Command_Catalog.md:21494
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         image_ref:
@@ -2154,7 +2204,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row attaches the bridge result of the present source (UI_Command_Catalog.md:21494);
+            The row attaches the bridge result of the present source (UI_Command_Catalog.md:21600);
             precondition vision_bridge_result_present makes the source subject mandatory per UCC-230
             identity rule, but no canon names the field. Choice: the overlay identity image_ref binds
             the attached result to its source.
@@ -2164,7 +2214,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row's target is "the current turn or run" (UI_Command_Catalog.md:21494) and names no
+            The row's target is "the current turn or run" (UI_Command_Catalog.md:21600) and names no
             target field. Choice: the UCC-230 envelope common optional thread_id names the thread whose
             current turn receives the result; canon does not say which target field the row uses.
         run_id:
@@ -2173,7 +2223,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row's target may be "the current ... run" (UI_Command_Catalog.md:21494), and no target
+            The row's target may be "the current ... run" (UI_Command_Catalog.md:21600), and no target
             field is named. Choice: the UCC-230 envelope common optional run_id names the run target.
             Canon states no rule on whether exactly one of thread_id and run_id must be present.
       owner_request: none
@@ -2189,10 +2239,10 @@ command_payload_definitions:
           gap_note: "The production wiring row catalog.chat_vision_bridge_attach_result names no request_schema_ref, and no typed owner request exists for the vision bridge yet."
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "Canon names no disabled code. vision_bridge_result_present and attach_target_available false (UI_Command_Catalog.md:21494) are read as blocked states. The attachment stays labelled bridge-derived (ACD-425)."
+          gap_note: "Canon names no disabled code. vision_bridge_result_present and attach_target_available false (UI_Command_Catalog.md:21600) are read as blocked states. The attachment stays labelled bridge-derived (ACD-425)."
     - command_id: cmd.chat.vision_bridge.manage_permission
       ucc_units: [UCC-101]
-      command_kind: navigation_wrapper                  # canon: UI_Command_Catalog.md:21495
+      command_kind: navigation_wrapper
       response_kind: local_projection
       args:
         image_ref:
@@ -2202,7 +2252,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row opens the remembered always-accept image permission in its Permissions owner
-            (PS-121, UI_Command_Catalog.md:21495) scoped by project, user/account identity, source
+            (PS-121, UI_Command_Catalog.md:21601) scoped by project, user/account identity, source
             class, destination provider/account, provider-family policy, tool id and
             sensitivity/redaction class (UCC-101 preserved tokens), but no canon names a payload
             field; the permission record is inspectable and revocable without passing an image.
@@ -2217,7 +2267,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "The row's only precondition is remembered_vision_permission_present (UI_Command_Catalog.md:21495) and canon names no disabled code; false is read as a blocked state."
+          gap_note: "The row's only precondition is remembered_vision_permission_present (UI_Command_Catalog.md:21601) and canon names no disabled code; false is read as a blocked state."
   results:
     VisionBridgeSelectResultV1:
       fields:

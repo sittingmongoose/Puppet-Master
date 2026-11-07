@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L4150-L4813
+Source lines: L4150-L4849
 
-Source SHA256: `95c588d0c52dab9967530c802868c39be59b12a9ff44c7c7b2cf055d8ba40b16`
+Source SHA256: `7f2dafc4592563d84b438ebd36dab197ae524d14adae1c431d5a6a09e77bd0be`
 
 ---
 
@@ -94,6 +94,9 @@ command_payload_definitions:
         owner_result: local:PlanningWizardStartResultV1
       error_codes: [invalid_route, invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [stale_projection, not_configured]
+      owner_state_codes:
+        - {owner_state: stale_pack, code: stale_projection}
+        - {owner_state: missing_project_context, code: not_configured}
       judgments:
         - key: response_kind
           choice: owner_operation
@@ -137,6 +140,8 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOpenResultV1
       error_codes: [invalid_route, invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [stale_projection]
+      owner_state_codes:
+        - {owner_state: stale_topic_map_version, code: stale_projection}
       judgments:
         - key: response_kind
           choice: owner_operation
@@ -181,6 +186,8 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [degraded]
+      owner_state_codes:
+        - {owner_state: ledger_sync_blocked, code: degraded}
       aliases:
         - {command_id: cmd.planning_wizard.add_topic, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
@@ -219,6 +226,8 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: topic_busy, code: blocked_state_required}
       aliases:
         - {command_id: cmd.planning_wizard.split_topic, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
@@ -249,6 +258,8 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: dependency_conflict, code: blocked_state_required}
       judgments:
         - key: omitted:source_refs
           choice: omitted
@@ -294,6 +305,8 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: duplicate_title, code: blocked_state_required}
       judgments:
         - key: omitted:source_refs
           choice: omitted
@@ -340,6 +353,8 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: dependency_order_conflict, code: blocked_state_required}
       judgments:
         - key: omitted:source_refs
           choice: omitted
@@ -387,6 +402,8 @@ command_payload_definitions:
         owner_result: local:PlanningWizardMarkImpactedResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: missing_impact_evidence, code: blocked_state_required}
       aliases:
         - {command_id: cmd.planning_wizard.mark_impacted, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
@@ -424,6 +441,8 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: required_topic, code: blocked_state_required}
       judgments:
         - key: omitted:source_refs
           choice: omitted
@@ -462,6 +481,8 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: topic_not_deferred_or_ready, code: blocked_state_required}
       judgments:
         - key: omitted:source_refs
           choice: omitted
@@ -504,6 +525,9 @@ command_payload_definitions:
         owner_result: local:PlanningWizardAmendmentAcceptResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required, permission_required]
+      owner_state_codes:
+        - {owner_state: missing_source_lineage, code: blocked_state_required}
+        - {owner_state: missing_approver, code: permission_required}
       aliases:
         - {command_id: cmd.planning_wizard.accept_amendment, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
@@ -629,6 +653,18 @@ command_payload_definitions:
         owner_result: local:PlanningWizardApproveAndBuildResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: topics_not_ready, code: blocked_state_required}
+        - {owner_state: zero_incomplete_failed, code: blocked_state_required}
+        - {owner_state: stale_project_context, code: stale_projection}
+        - {owner_state: stale_planning_run_revision, code: stale_projection}
+        - {owner_state: stale_named_plan, code: stale_projection}
+        - {owner_state: stale_topic_map_version, code: stale_projection}
+        - {owner_state: stale_approved_plan_pack, code: stale_projection}
+        - {owner_state: stale_planunit_index, code: stale_projection}
+        - {owner_state: stale_acceptance_index, code: stale_projection}
+        - {owner_state: stale_testing_policy, code: stale_projection}
+        - {owner_state: stale_final_audit_closure, code: stale_projection}
       judgments:
         - key: field:project_id
           choice: restated required from the envelope's common optional project_id
