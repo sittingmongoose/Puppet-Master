@@ -72,7 +72,12 @@
  *      and set again 90 ms after it returns) and pod-late-attr (data-shy itself set just past the shy step's allowance, the
  *      check plus its slack and the longest frame gap, by one frame and 40 ms) are real overlaps a person would see, and
  *      must fail it; so must pod-shyhost-typo (the page's SHY_HOST reads 'buton') and
- *      pod-declared-slow (the page declares a 2000 ms fade), which run on an edited copy of the page.
+ *      pod-declared-slow (the page declares a 2000 ms fade), which run on an edited copy of the page. T91: 18b measures
+ *      the product's clear wait from the running code (a probe control under the Pod, taken away when data-shy goes on),
+ *      so pod-clear-zero (the canonical line kept in a comment, the code clearing at once) fails it; pod-transcript-inert
+ *      (the transcript inert but painted, so the product's hit test never sees its controls) and pod-chip-slot (the hidden
+ *      jump chip's slot moved under the Pod) must fail 18: only what paints nothing, and FO-76's sizer copies, is left out
+ *      of the transcript count, and the fixed controls are counted visible or not, as before T57.
  *      --cpu <rate> throttles the page's CPU (CDP) for check 18.
  *   19 the chat header's status word wears its mark's tone (nine statuses; three themes).
  *   console: no warnings, errors or page errors.
@@ -142,7 +147,7 @@ const REDUCED = argv.includes('--reduced');
 const SECTION = argVal('--section', null), sectionFilter = SECTION ? new RegExp(SECTION) : null;
 // T40 and T47 negatives for check 18: each makes the Pod overlap a control the way a person would see it.
 const SELFTEST = argVal('--selftest', null);
-if (SELFTEST && !['pod-never-shy', 'pod-late-shy', 'pod-delay-2s', 'pod-twitch', 'pod-rolebutton', 'pod-shyhost-typo', 'pod-declared-slow', 'pod-twitch-alone', 'pod-late-attr'].includes(SELFTEST)) { console.error('neon-verify: unknown --selftest ' + SELFTEST); process.exit(2); }
+if (SELFTEST && !['pod-never-shy', 'pod-late-shy', 'pod-delay-2s', 'pod-twitch', 'pod-rolebutton', 'pod-shyhost-typo', 'pod-declared-slow', 'pod-twitch-alone', 'pod-late-attr', 'pod-transcript-inert', 'pod-chip-slot', 'pod-clear-zero'].includes(SELFTEST)) { console.error('neon-verify: unknown --selftest ' + SELFTEST); process.exit(2); }
 // T47 round 2: a CPU throttle for check 18 (CDP Emulation.setCPUThrottlingRate), so clean runs are shown on a slow host
 const CPU = argVal('--cpu', null);
 if (CPU !== null && !(Number(CPU) >= 1)) { console.error('neon-verify: --cpu takes a rate of 1 or more'); process.exit(2); }
@@ -155,7 +160,10 @@ if (!fs.existsSync(PAGE_FILE)) { console.error('neon-verify: no such file ' + PA
    exactly once, in either of the product's forms (the chat's nier-parts.js or PMConcept7's 70-nier-pod-shy.js). */
 const PAGE_EDITS = {
   'pod-shyhost-typo': [/((?:var|const|let) SHY_HOST = ')button, /g, '$1buton, '],
-  'pod-declared-slow': [/(#o55np-pod \{ transition: opacity )180ms( steps\(2, end\); \})/g, '$12000ms$2']
+  'pod-declared-slow': [/(#o55np-pod \{ transition: opacity )180ms( steps\(2, end\); \})/g, '$12000ms$2'],
+  /* T91 (the batch-4 review's decoy-clear): the canonical clear-wait line is kept in a comment, so 18a still reads 350,
+     and the running code clears data-shy at the next check; 18b measures the clear wait and must fail */
+  'pod-clear-zero': [/\b(podClearAt|clearAt) = now \+ 350;/g, '/* $1 = now + 350; */ $1 = now + 0 ;']
 };
 let FILE = PAGE_FILE, ARGV = argv;
 if (SELFTEST && PAGE_EDITS[SELFTEST]) {
@@ -1721,11 +1729,25 @@ for (const theme of ['basic-dark', 'basic-light', 'retro-light', 'nier-dark'].fi
    Pod for a few frames (at most 150 ms past the deadline at 1x in three clean runs on Nas1, 80 ms at 6x CPU throttling; see KIT-BATCH4). The data-shy step itself keeps
    its per-stretch deadline for the same reason: data-shy is off on a clean page when a control comes under the Pod
    during the clear wait.
-   FO-76: the Activity wrap holds a hidden, inert fit sizer with two copies of every Activity item. A control is counted
-   only when it is live: not inert (inert content is not hit-tested, so the product's own shy test never sees it either)
-   and painted (checkVisibility with visibility and opacity). The copies the broad selector would have found are
-   counted, not judged, and reported (MEASURE). */
+   FO-76: the Activity wrap holds a hidden, inert fit sizer (.activity-wrap > .activity-sizer, visibility hidden) with two
+   copies of every Activity item. T91 (TOOLBATCH4 recheck a, finding 1): T57 left out every inert or unpainted control,
+   which also dropped inert transcript controls that still paint (a transcript left inert passed while pixels showed the
+   Pod opaque over Review; the product's hit test skips inert content, so it never fades back there) and the hidden jump
+   chip, whose slot the Pod must keep clear of, visible or not. So a transcript control is left out only when it paints
+   nothing (checkVisibility with visibility and opacity) or lies in FO-76's sizer; inert alone does not; and the fixed
+   controls (the chip, the bar, the queue, the decision panel, the composer) are counted as the base counted them,
+   visible or not, less the sizer's copies (which their selector does not match either). The copies are counted, not
+   judged, and reported (MEASURE).
+   T91 (finding 3): the clear wait was pinned only by 18a's text match, which a comment satisfies. 18b measures it from
+   the running code, once per window size, after the views: a probe button is put under the Pod's box (inside the chat's
+   .pm56-host when there is one, since PMConcept7's port counts only the chat's controls), one scroll event runs the
+   product's check, and the probe is taken away in the same task as data-shy goes on, with one more scroll event. The
+   product then holds data-shy for its clear wait after that hit (350 ms, plus its 10 ms re-check): 18b fails when it
+   holds it less than POD_EXPECTED.clearMs - POD_CLEAR_SLACK_MS, or more than the clear wait plus its re-check, the shy
+   slack and the longest frame gap of the probe. */
 const POD_SHY_SLACK_MS = 80, POD_FADE_SLACK_MS = 60, POD_TARGET_SLACK = .02;
+/* T91: 18b's lower slack on the measured clear wait (the product reads Date.now, the check performance.now) */
+const POD_CLEAR_SLACK_MS = 20;
 /* T58: past the episode's own deadline, how long the Pod may be above its shy target over a control in one episode */
 const POD_EPISODE_ALLOW_MS = 300;
 /* the values the product is meant to have (70-nier-pod-shy.js and nier-parts.js at the time of T57): the controls its shy
@@ -1750,7 +1772,7 @@ const POD_DECLARED = (() => {
   return { found, drift };
 })();
 if (THEMES.includes('nier-dark')) await sec('pod', async () => {
-  const bad = [], windows = [], unsettled = [], opaque = [], copies = []; let views = 0;
+  const bad = [], windows = [], unsettled = [], opaque = [], copies = [], clears = []; let views = 0;
   check(!POD_DECLARED.drift.length, `18a Pod 042: the page declares the shy values pinned in the check (SHY_HOST, a ${POD_EXPECTED.checkMs} ms check, a ${POD_EXPECTED.clearMs} ms clear wait, a ${POD_EXPECTED.fadeMs} ms fade, opacity ${POD_EXPECTED.target}); the product's shy values changed otherwise: update POD_EXPECTED in a reviewed change to the check`, { drift: POD_DECLARED.drift, found: POD_DECLARED.found });
   const HOST = POD_EXPECTED.shyHost;
   for (const [w, h] of [[1440, 900], [1512, 982], [1920, 1100]]) {
@@ -1818,6 +1840,15 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           };
           Element.prototype.removeAttribute = function (n) { if (isShy(this, n) && held) { cancelAnimationFrame(held); held = 0; } return ra.call(this, n); };
         }
+        /* T91 (the batch-4 review's transcript-inert): the transcript is made inert and stays painted; the product's shy
+           test hit-tests, which skips inert content, so it never fades back over the transcript's controls */
+        else if (kind === 'pod-transcript-inert') {
+          const go = () => { for (const t of document.querySelectorAll('.transcript')) if (!t.inert) t.inert = true; };
+          new MutationObserver(go).observe(document.documentElement, { childList: true, subtree: true }); go();
+        }
+        /* T91: the hidden jump chip's slot is moved back under the Pod (its pre-NieR place); the base counted the slot,
+           visible or not, and T57's live filter dropped it */
+        else if (kind === 'pod-chip-slot') css('html .chat-float > .jump-bottom:not(.is-visible) { right: 10px !important; }');
         else if (kind === 'pod-twitch-alone') {
           let until = 0, running = false, quiet = false;
           const podEl = () => document.getElementById('o55np-pod');
@@ -1850,7 +1881,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
             const ix = Math.min(Pb.right, q.right) - Math.max(Pb.left, q.left), iy = Math.min(Pb.bottom, q.bottom) - Math.max(Pb.top, q.top);
             if (ix < 4 || iy < 4) continue;
             const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity === 0) continue;
-            if (e.closest('[inert]') || !e.checkVisibility({ visibilityProperty: true, opacityProperty: true })) continue; /* FO-76: live controls only */
+            if (!e.checkVisibility({ visibilityProperty: true, opacityProperty: true }) || e.closest('.activity-sizer')) continue; /* T91: what paints nothing, and FO-76's copies; inert alone is counted */
             return (e.textContent || e.className).trim().slice(0, 24) + ' ' + Math.round(ix) + 'x' + Math.round(iy);
           }
           return null;
@@ -1945,18 +1976,20 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
             if (!pod || getComputedStyle(pod).display === 'none') return { nopod: true };
             const P = pod.getBoundingClientRect();
             const hit = e => { const q = e.getBoundingClientRect(); if (q.width < 1 || q.height < 1) return 0; const ix = Math.max(0, Math.min(P.right, q.right) - Math.max(P.left, q.left)), iy = Math.max(0, Math.min(P.bottom, q.bottom) - Math.max(P.top, q.top)); return ix * iy > .5 ? Math.round(ix) + 'x' + Math.round(iy) : 0; };
-            /* FO-76: a control counts only when it is live (not inert, and painted); the hidden inert copies are reported */
-            const live = e => !e.closest('[inert]') && e.checkVisibility({ visibilityProperty: true, opacityProperty: true });
-            const all = [...document.querySelectorAll('.activity-item')], dead = all.filter(e => !live(e));
-            const copies = { items: all.length, notLive: dead.length, notLiveOverPod: dead.filter(e => hit(e)).length, inert: dead.filter(e => e.closest('[inert]')).length };
+            /* T91: a transcript control is left out only when it paints nothing or lies in FO-76's sizer (inert alone is
+               counted); the fixed controls are counted visible or not (the chip's slot), less the sizer's copies */
+            const paints = e => e.checkVisibility({ visibilityProperty: true, opacityProperty: true });
+            const sized = e => !!e.closest('.activity-sizer');
+            const all = [...document.querySelectorAll('.activity-item')], dead = all.filter(e => sized(e) || !paints(e));
+            const copies = { items: all.length, notLive: dead.length, notLiveOverPod: dead.filter(e => hit(e)).length, inert: dead.filter(e => e.closest('[inert]')).length, sizer: all.filter(sized).length };
             const out = [];
-            for (const e of document.querySelectorAll('.jump-bottom, .activity-wrap > :is(.activity-bar, .pm56-activity-bar) > .activity-item, .send-queue-row button, .decision-host button, .chat-stage > .composer')) { if (!live(e)) continue; const k = hit(e); if (k) out.push(String(e.className).slice(0, 30) + ' ' + k); }
+            for (const e of document.querySelectorAll('.jump-bottom, .activity-wrap > :is(.activity-bar, .pm56-activity-bar) > .activity-item, .send-queue-row button, .decision-host button, .chat-stage > .composer')) { if (sized(e)) continue; const k = hit(e); if (k) out.push(String(e.className).slice(0, 30) + ' ' + k); }
             /* transcript controls: none under the Pod at the bottom (its resting place); scrolled up, content passes
                under it, and then the Pod must have faded back (data-shy, opacity <= .2) */
             const tr = document.querySelector('.transcript').getBoundingClientRect(), under = [];
             for (const e of document.querySelector('.transcript').querySelectorAll(HOST)) {
               const q = e.getBoundingClientRect(); if (q.bottom < tr.top || q.top > tr.bottom) continue;
-              const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity === 0 || !live(e)) continue;
+              const cs = getComputedStyle(e); if (cs.visibility === 'hidden' || +cs.opacity === 0 || !paints(e) || sized(e)) continue;
               const q2 = e.getBoundingClientRect(), ix = Math.min(P.right, q2.right) - Math.max(P.left, q2.left), iy = Math.min(P.bottom, q2.bottom) - Math.max(P.top, q2.top);
               if (ix >= 4 && iy >= 4) under.push('transcript ' + (e.textContent || e.className).trim().slice(0, 24) + ' ' + Math.round(ix) + 'x' + Math.round(iy)); /* a sliver under 4 px hides nothing */
             }
@@ -1978,6 +2011,34 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           else if (r.out.length) bad.push(`${w} ${id} ${pos}: ${r.out.join(', ')}${settled.settled ? '' : ' (not settled after 3 s; judged as it stood)'}`);
         }
       }
+      /* T91: 18b, the product's clear wait, measured from the running code (see the comment above) */
+      { const cw = await p.evaluate(async () => {
+          const pod = document.getElementById('o55np-pod'); if (!pod) return { error: 'no Pod' };
+          const until = (pred, ms) => new Promise(res => { const t0 = performance.now(); const f = () => { if (pred()) return res(true); if (performance.now() - t0 > ms) return res(false); requestAnimationFrame(f); }; f(); });
+          if (!await until(() => !pod.hasAttribute('data-shy'), 3000)) return { error: 'data-shy was still on 3 s after the last view' };
+          const host = document.querySelector('.pm56-host') || document.body, r = pod.getBoundingClientRect();
+          if (!(r.width > 0 && r.height > 0)) return { error: 'the Pod has no box' };
+          const b = document.createElement('button'); b.type = 'button'; b.setAttribute('data-nv-clear-probe', ''); b.setAttribute('aria-hidden', 'true'); b.tabIndex = -1;
+          b.style.cssText = 'position:fixed;margin:0;padding:0;border:0;z-index:2147483647;pointer-events:auto;opacity:1;visibility:visible;background:transparent;box-sizing:border-box;';
+          Object.assign(b.style, { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px' });
+          host.appendChild(b);
+          { const q = b.getBoundingClientRect(); b.style.left = (2 * r.left - q.left) + 'px'; b.style.top = (2 * r.top - q.top) + 'px'; }
+          const q = b.getBoundingClientRect();
+          if (!document.elementsFromPoint(r.left + r.width / 2, r.top + r.height / 2).includes(b)) { b.remove(); return { error: `the probe control is not hit at the Pod's centre (probe ${Math.round(q.left)},${Math.round(q.top)} ${Math.round(q.width)}x${Math.round(q.height)}; Pod ${Math.round(r.left)},${Math.round(r.top)})` }; }
+          return await new Promise(done => {
+            const t0 = performance.now(); let onAt = null, last = t0, gap = 0, fin = false;
+            const end = x => { if (fin) return; fin = true; mo.disconnect(); b.remove(); done({ ...x, gap: Math.round(gap) }); };
+            const tick = () => { const now = performance.now(); gap = Math.max(gap, now - last); last = now; if (!fin) requestAnimationFrame(tick); };
+            const mo = new MutationObserver(() => { const now = performance.now();
+              if (pod.hasAttribute('data-shy')) { if (onAt === null) { onAt = now; b.remove(); window.dispatchEvent(new Event('scroll')); } }
+              else if (onAt !== null) end({ onMs: Math.round(onAt - t0), heldMs: Math.round(now - onAt) }); });
+            mo.observe(pod, { attributes: true, attributeFilter: ['data-shy'] });
+            requestAnimationFrame(tick); window.dispatchEvent(new Event('scroll'));
+            setTimeout(() => end({ onMs: onAt === null ? null : Math.round(onAt - t0), heldMs: null, timeout: true }), 4000);
+          });
+        });
+        clears.push({ size: `${w}x${h}`, ...cw });
+        console.log('MEASURE 18b the product\'s clear wait, measured ' + JSON.stringify(clears.at(-1))); }
       const m = await p.evaluate(() => { const M = window.__nvPodOpaque; return { ms: Math.round(M.worst), at: M.worstAt, pastDeadlineMs: Math.round(M.worstLate), pastDeadlineAt: M.worstLateAt, frames: M.frames, longestFrameGap: Math.round(M.gaps.reduce((g, [, d]) => Math.max(g, d), 0)) }; });
       opaque.push({ size: `${w}x${h}`, ...m });
       console.log('MEASURE Pod longest opaque time over a control (measured, not judged) ' + JSON.stringify(opaque.at(-1)));
@@ -1986,6 +2047,9 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       if (!(m.frames > 0)) bad.push(`${w}x${h}: the Pod's fade-back monitor saw no frame`);
     } finally { await shut(p); }
   }
+  { const lo = POD_EXPECTED.clearMs - POD_CLEAR_SLACK_MS, hiOf = c => POD_EXPECTED.clearMs + 10 + POD_SHY_SLACK_MS + (c.gap || 0);
+    const wrong = clears.filter(c => c.error || c.heldMs === null || c.heldMs < lo || c.heldMs > hiOf(c));
+    check(clears.length > 0 && !wrong.length, `18b Pod 042: the product's clear wait, measured from the running code (a probe control under the Pod, taken away as data-shy goes on), is the pinned ${POD_EXPECTED.clearMs} ms: data-shy held at least ${lo} ms and at most ${POD_EXPECTED.clearMs} + 10 ms re-check + ${POD_SHY_SLACK_MS} ms slack + the longest frame gap, at every window size`, { clears, wrong }); }
   check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom, each judged once the Pod has settled; at the bottom no transcript button either; faded back over any it passes, by the product's own steps, at the values pinned in the check: data-shy within ${POD_EXPECTED.checkMs} ms, a fade within ${POD_EXPECTED.fadeMs} ms, then opacity ${POD_EXPECTED.target}; and past each episode's own deadline at most ${POD_EPISODE_ALLOW_MS} ms above it over a control)`, { bad: bad.slice(0, 12), windows, unsettled, opaque, expected: POD_EXPECTED, declared: POD_DECLARED.found, cpu: CPU });
 });
 
