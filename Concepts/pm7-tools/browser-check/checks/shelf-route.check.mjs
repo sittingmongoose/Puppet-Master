@@ -645,6 +645,9 @@ export default async function (t) {
           // The panel's regions outside every scroller (the panel itself counts when it scrolls); never a row of a tree or list.
           const scs = [p, ...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY) && a.checkVisibility() && a.clientHeight > 0);
           const cover = document.querySelector('[data-shelf-cover]'), covered = document.querySelector('[data-shelf-covered]');
+          // (the control this room is for keeps a mark of its own: reaching the fold control below clears data-shelf-covered)
+          document.querySelectorAll('[data-shelf-room-for]').forEach(x => x.removeAttribute('data-shelf-room-for'));
+          covered?.setAttribute('data-shelf-room-for', '');
           document.querySelectorAll('[data-shelf-fold-region]').forEach(e => e.removeAttribute('data-shelf-fold-region'));
           const regionOf = e => { if (!cover) return null; for (let a = e; a && a !== p; a = a.parentElement) if (a.contains(cover) && !(covered && a.contains(covered))) return a; return null; };
           let pairs = [...p.querySelectorAll('[aria-expanded="true"]')].filter(e => e.checkVisibility() && !/^(tab|treeitem|row|option|gridcell|listitem)$/.test(e.getAttribute('role') || '') && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
@@ -694,7 +697,8 @@ export default async function (t) {
           // T98: a fold that hides the control it made room for (the Jujutsu card's own fold, when Technical details in
           // the card is what is covered) gives no room: it is undone at once, and the room is not counted
           await f.waitForTimeout(300);
-          if (!await f.evaluate(() => { const c = document.querySelector('[data-shelf-covered]'); return !!c && c.isConnected && c.checkVisibility(); })) {
+          /* (a control the product re-rendered is not judged here; reaching it again finds the new one) */
+          if (await f.evaluate(() => { const c = document.querySelector('[data-shelf-room-for]'); return !!c && c.isConnected && !c.checkVisibility(); })) {
             t.log(`${target} ${state}: that fold hid ${why.what} itself, so it is undone`);
             await unfold(fr, `${state} (a fold that hid the control it made room for)`);
             done--;
