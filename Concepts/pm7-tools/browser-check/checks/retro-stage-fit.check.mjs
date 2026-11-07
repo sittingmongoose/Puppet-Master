@@ -221,13 +221,14 @@ const READY_STAMP = (src) => {
 		const now = performance.now();
 		if (W.shellAt === null && document.documentElement && document.documentElement.getAttribute('data-pmr-ready') === '1') W.shellAt = now;
 		try { if (W.readyAt === null && ready()) W.readyAt = now; } catch (_) { /* not yet */ }
-		if (W.readyAt === null && now - t0 < 90000) requestAnimationFrame(tick);
+		if ((W.readyAt === null || W.shellAt === null) && now - t0 < 90000) requestAnimationFrame(tick);
 	};
 	document.addEventListener('DOMContentLoaded', () => { const nav = performance.getEntriesByType('navigation')[0]; W.dcl = nav ? nav.domContentLoadedEventStart : performance.now(); tick(); });
 };
 const LATE_BOOT = ([shellMs, openMs]) => {
-	const html = document.documentElement, sa = Element.prototype.setAttribute, t0 = performance.now();
-	html.setAttribute = function (n, v) { if (n === 'data-pmr-ready' && performance.now() - t0 < shellMs) { const el = this; setTimeout(() => sa.call(el, n, v), shellMs - (performance.now() - t0)); return undefined; } return sa.call(this, n, v); };
+	const sa = Element.prototype.setAttribute, t0 = performance.now();
+	/* (the init script runs before the document has its root element: the root's own writes are caught on the prototype) */
+	Element.prototype.setAttribute = function (n, v) { if (n === 'data-pmr-ready' && this === document.documentElement && performance.now() - t0 < shellMs) { const el = this; setTimeout(() => sa.call(el, n, v), shellMs - (performance.now() - t0)); return undefined; } return sa.call(this, n, v); };
 	document.addEventListener('DOMContentLoaded', () => {
 		const ui = window.O55 && window.O55.ui; if (!ui || typeof ui.open !== 'function' || ui.__lateBoot) return;
 		const orig = ui.open; let first = true; ui.__lateBoot = true;
