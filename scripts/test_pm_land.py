@@ -2840,6 +2840,22 @@ class RealReportBatchTests(RealReports, Base):
         self.assertEqual(M.row_count_rises(doc("c|s|e|p|1", "c|s|e|p|2", complete=False), doc("c|s|e|p|1")), [])
         self.assertEqual(M.row_count_rises(None, doc("c|s|e|p|1")), [])
 
+    def test_unseen_a_reshuffled_sample_passes_in_the_batch_and_stops_alone(self):
+        """Review F3, and the README's "What a batch still cannot see". Pinned so that a change to it is seen."""
+        b = [self.row(f"#{number}", "Plans/B.md") for number in range(26)]
+        y = [self.row(f"#{number}", "Plans/Y.md") for number in range(26)]
+        baseline, first, second = (b[:25] + y[:25], 120), (b[:24] + y[:26], 120), (b[:25] + y[:25], 120)
+        edits = ("Plans/A.md", "Plans/B.md")
+        code, text = self.alone(baseline, first, second, edits)
+        self.assertEqual(code, 2, text)
+        one, two = self.reports(baseline, first, second, edits=edits)
+        self.assertEqual(two[0], 1, two[1])
+        self.assertEqual(M.read_report(one[1])["totals"], M.read_report(two[1])["totals"])
+        start, result = self.land_both(one, two)
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertEqual(len(self.h.calls("landing")), 2)
+        self.assertTrue(self.h.held(), "the batch stays open: this is the limit the README names")
+
     def test_control_a_later_member_that_moves_nothing_keeps_the_batch(self):
         kept = self.row("#1", "Plans/Other.md")
         one, two = self.reports([kept, self.row("#2", "Plans/Gone.md")], [kept], [kept])

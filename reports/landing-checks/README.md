@@ -842,6 +842,14 @@ member already added them. A real Plans landing still closes the batch, and is r
   baselines read, nor in this measurement.
 - **An export that fails or times out** in either report, since the subcheck is then not seen.
 
+**What a batch still cannot see,** with every line present. A subcheck that prints only a sample, with no export, keeps its
+total and shuffles which rows it prints, so that a bucket on the member's own file reads lower in the previous report and
+back at the baseline's count in its own. The batch reads that as pre-existing and it passes; alone, against a baseline
+recorded from the lower sample, it is a rise on a touched file and stops. A row report lists no rows for a sample, and
+which rows a sample prints can change with nothing added or removed, so alone is the noisy side here. Today only
+`audit_closure` prints a sample, and it is one bucket at its cap. `test_unseen_a_reshuffled_sample_passes_in_the_batch_and_stops_alone`
+pins it; reopen this if a second subcheck comes to print a sample with no export.
+
 **Against an older `pm-landing-check.py`,** which prints none of those lines, the tool says once per landing that these
 shapes may not be seen, and they do not close the batch, though each would stop alone:
 
