@@ -801,7 +801,8 @@ with its follow-up at the current `main`, and the member is rechecked alone agai
 - **What moved between two reports.** The rows above show only what a report chooses to print, so the check also prints
   every run's gone ids, subcheck totals and bucket counts ("Lines for comparing one run with the next"). A member closes
   the batch when a bucket the previous report listed as gone is not gone in its own, when a subcheck's total or a bucket's
-  count is above the previous report's, or when an earlier member's report is not on record (a hand lander), even on
+  count is above the previous report's (read from the row reports too, since a subcheck the baseline holds as a sample
+  prints no `[count]` line), or when an earlier member's report is not on record (a hand lander), even on
   exit 0, unless the rise is that member's own staleness. Each such rise would show alone after the previous member's
   follow-up, and none shows against the baseline from before the batch. A subcheck that timed out has no total to
   compare; its own stop for a judgement covers it.

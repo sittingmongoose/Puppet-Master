@@ -2803,6 +2803,43 @@ class RealReportBatchTests(RealReports, Base):
         self.assert_closed_and_alone(start, result)
         self.assertIn("rose from 100 to 110", result.stdout)
 
+    def sample_then_complete(self, first_x: int, first_y: int, second_x: int, second_y: int) -> tuple:
+        x = [self.row(f"#{number}", "Plans/X.md") for number in range(20)]
+        y = [self.row(f"#{number}", "Plans/Y.md") for number in range(20)]
+        sample = [self.row(f"#{number}", "Plans/S.md") for number in range(60)]
+        return (sample, 120), x[:first_x] + y[:first_y], x[:second_x] + y[:second_y]
+
+    def test_a_bucket_raised_in_a_subcheck_the_old_baseline_held_as_a_sample_closes(self):
+        """Review F2: partial only because of the baseline, so no [count] line, and the same total. Alone it is exit 2."""
+        baseline, first, second = self.sample_then_complete(10, 10, 11, 9)
+        code, text = self.alone(baseline, first, second, ("Plans/A.md", "Plans/A.md"))
+        self.assertEqual(code, 2, text)
+        self.assertIn("Plans/X.md  10 -> 11", text)
+        one, two = self.reports(baseline, first, second)
+        self.assertEqual((one[0], two[0]), (0, 0))
+        self.assertEqual(M.read_report(two[1])["bucket_counts"], {})
+        self.assertEqual(M.read_report(one[1])["totals"], M.read_report(two[1])["totals"])
+        start, result = self.land_both(one, two)
+        self.assert_closed_and_alone(start, result)
+        self.assertIn("Plans/X.md rose from 10 to 11", result.stdout)
+
+    def test_control_a_bucket_lowered_in_such_a_subcheck_keeps_the_batch(self):
+        baseline, first, second = self.sample_then_complete(10, 10, 9, 10)
+        one, two = self.reports(baseline, first, second)
+        start, result = self.land_both(one, two)
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertEqual(len(self.h.calls("landing")), 2)
+        self.assertTrue(self.h.held())
+
+    def test_row_count_rises_reads_only_subchecks_complete_on_both_sides(self):
+        def doc(*keys, complete=True):
+            return {"subchecks": {"c/s": {"complete": complete, "rows": [{"key": key} for key in keys]}}}
+        self.assertEqual([row[0] for row in M.row_count_rises(doc("c|s|e|p|1", "c|s|e|p|2"), doc("c|s|e|p|1"))], ["c/s"])
+        self.assertEqual(M.row_count_rises(doc("c|s|e|p|2"), doc("c|s|e|p|1")), [], "a swap at the same count")
+        self.assertEqual(M.row_count_rises(doc("c|s|e|p|1", "c|s|e|p|2"), doc("c|s|e|p|1", complete=False)), [])
+        self.assertEqual(M.row_count_rises(doc("c|s|e|p|1", "c|s|e|p|2", complete=False), doc("c|s|e|p|1")), [])
+        self.assertEqual(M.row_count_rises(None, doc("c|s|e|p|1")), [])
+
     def test_control_a_later_member_that_moves_nothing_keeps_the_batch(self):
         kept = self.row("#1", "Plans/Other.md")
         one, two = self.reports([kept, self.row("#2", "Plans/Gone.md")], [kept], [kept])
