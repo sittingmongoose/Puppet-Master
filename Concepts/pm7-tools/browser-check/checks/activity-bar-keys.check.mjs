@@ -182,7 +182,8 @@ async function run(t, w, h) {
   // The painted mark on a control reached by a key. The control is reached by keys first, so the bar scrolls as it
   // will; the focus then steps to the sentinel without scrolling, the rest is captured, and a real Tab from the control
   // before it gives it the focus again with nothing left to scroll. The tile must not move between the two captures.
-  const before = target => { const i = controls.findIndex(c => c.key === target); return i > 0 ? controls[i - 1].key : null; };
+  // the control before it in the bar as it is now (at 1920 the Docker drag puts Docker back just before More)
+  const before = async target => { const now = await f.evaluate(railControls), i = now.findIndex(c => c.key === target); return i > 0 ? now[i - 1].key : null; };
   const focusQuiet = k => f.evaluate(k => { const el = k ? (k === 'activityBarToggle' ? document.getElementById(k) : document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`)) : document.getElementById('fo96-sentinel'); if (el) el.focus({ preventScroll: true }); }, k);
   const painted = async (target) => {
     await sentinel('#activityBar');
@@ -198,7 +199,7 @@ async function run(t, w, h) {
     // with the names shown, the name's own text box and 2 px round it: the mark must not cross or touch its letters
     const L = b.label, lr = L && { x: Math.floor(off.x + L.x) - 2, y: Math.floor(off.y + L.y) - 2, width: Math.ceil(L.w) + 5, height: Math.ceil(L.h) + 5 };
     const r0 = await t.pixels(region), l0 = lr && await t.pixels(lr);
-    await focusQuiet(before(target));
+    await focusQuiet(await before(target));
     await kb.press('Tab');
     await f.waitForTimeout(450);
     const now = await key();
