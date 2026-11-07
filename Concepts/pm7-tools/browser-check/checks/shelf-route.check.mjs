@@ -181,6 +181,9 @@ export default async function (t) {
   await t.check('expected activity routes present', JSON.stringify([...targets].sort()) === JSON.stringify(Object.keys(expected).sort()), JSON.stringify(targets), {hard:true});
   const rows=[]; let reached=0; const routedRows=[];
   const opened = new Set(), contextRoutes = [], popupRows = [], branchRows = [], branchDone = new Set();
+  // T98: the seed of the later walk's middle-row draw (--set seed=<n> replays a run's draw)
+  const shelfSeed = t.args.seed !== undefined ? Number(t.args.seed) >>> 0 : Math.floor(Math.random() * 2 ** 31);
+  t.log(`shelf-route seed ${shelfSeed} (the later walk's middle rows; --set seed=${shelfSeed} replays it)`);
   let current = null;
   // Assert one open menu: items, a reachable first item, its nested branches, then Escape closes it.
   // reopen: opens the same menu again by the same route, for the pick (FO-84b).
@@ -461,7 +464,7 @@ export default async function (t) {
       await t.check(target+' shelf '+id+' closes on Escape',await trigger.getAttribute('aria-expanded')==='false','');reached++;
     }
     // Inventory every wrapper PMMenu upgrades, even before its route is visible.
-    const panel=f.locator(`#${target}`), exercised=new Set(), inventory=new Set(), popupDone=new Set(), probed=new Set();
+    const panel=f.locator(`#${target}`), exercised=new Set(), inventory=new Set(), popupDone=new Set(), probed=new Set(), revealLog=[];
     // Reach a control the way a person does: scroll its own scroller with the wheel when it has one.
     // Reach a control the way a person does, and return where to press it. A short panel's scroller can be mostly
     // under its sticky strips (Source Control at 1280x500: a 56 px scroller whose top 40 px lie under the tab strip),
@@ -480,15 +483,39 @@ export default async function (t) {
     // exposed band), makes room first: the panel's expanded regions outside its scrollers fold (makeRoom), and the
     // control is reached again.
     let roomState = 'panel', folding = false;
+    // T98: the regions folded so far, re-checked at the start of every later census state: a folded region (its fold
+    // control still folded) may hide no census control it did not already hide when it was folded
+    const foldedRegions = [];
+    await f.evaluate(() => { window.foldHidden = (r) => {
+      const sels = '[aria-haspopup]:not([aria-haspopup="false"]), [data-acc] > [data-collapse], button[aria-expanded]:not([role="tab"]):not([aria-haspopup])';
+      const fold = r.querySelector('[data-shelf-fold]');
+      const name = e => (e.getAttribute('aria-controls') || e.getAttribute('aria-label') || e.getAttribute('data-path') || e.textContent || e.className).toString().trim().replace(/\s+/g, ' ').slice(0, 40);
+      return [...r.querySelectorAll(sels)].filter(e => e !== fold && !e.checkVisibility()).map(e => 'control ' + name(e)).concat(__shelf.rows(r).filter(e => !e.checkVisibility()).map(e => 'row ' + __shelf.sig(e))); }; });
+    const recheckFolds = async (state) => {
+      for (const fr of foldedRegions) {
+        const now = await panel.evaluate((p, tag) => { const r = p.querySelector(`[data-shelf-folded="${tag}"]`); if (!r) return null;
+          const fc = r.querySelector('[aria-expanded]'); return { folded: !fc || fc.getAttribute('aria-expanded') === 'false', hidden: foldHidden(r) }; }, fr.tag);
+        if (!now || !now.folded) continue;
+        const fresh = now.hidden.filter(x => !fr.hidden.has(x));
+        await t.check(`${target} ${state}: the region folded in ${fr.state} (${fr.region}) hides no census control it did not hide when it was folded`, !fresh.length, JSON.stringify({ fresh }), { hard: true });
+      }
+    };
     const reach = async (loc, at = null) => {
       // T70 (opus-recheck-kit8 finding C): a failed scroll is no longer swallowed silently. A control that cannot be
       // scrolled to because its side panel (or the folded rail's overlay) closed, or because it is hidden, fails at once
       // and by name; a control the panel's own layout covers still goes on to the wheel and the fold below.
       const scrolled = await loc.scrollIntoViewIfNeeded({ timeout: 3000 }).then(() => null, (e) => String(e && e.message || e).split('\n')[0]);
-      if (scrolled !== null) {
-        const st = await loc.evaluate(e => { const slot = document.getElementById('sidePanelSlot'), view = e.closest('.side-panel-view');
-          return { slot: !!slot && slot.checkVisibility(), view: !view || view.checkVisibility(), shown: e.isConnected && e.checkVisibility(), what: (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40) }; }).catch(() => ({ slot: false, view: false, shown: false, what: 'detached' }));
-        await t.check(`${target} ${roomState}: the control to reach (${st.what}) is in an open, shown side panel when its scroll fails`, st.slot && st.view && st.shown, JSON.stringify({ ...st, scroll: scrolled }), { hard: true });
+      // T98 (TOOLBATCH4 recheck b, finding 12): the side panel's own state is checked at every reach, not only after a
+      // failed scroll: a panel that closes by fading (opacity 0) or by moving off screen keeps its controls 'visible' to
+      // Playwright, so the scroll succeeded and the census went on probing a panel no one could see. The slot and the
+      // control's view must paint (display, visibility and opacity, through every ancestor) and lie on screen, and so must
+      // the control
+      {
+        const st = await loc.evaluate(e => { const slot = document.getElementById('sidePanelSlot'), view = e.closest('.side-panel-view'), V = { opacityProperty: true, visibilityProperty: true };
+          const onScreen = x => { const r = x.getBoundingClientRect(); return r.width > 0 && r.height > 0 && r.right > 0 && r.bottom > 0 && r.left < innerWidth && r.top < innerHeight; };
+          return { slot: !!slot && slot.checkVisibility(V) && onScreen(slot), view: !view || (view.checkVisibility(V) && onScreen(view)), shown: e.isConnected && e.checkVisibility(V), what: (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40) }; }).catch(() => ({ slot: false, view: false, shown: false, what: 'detached' }));
+        if (scrolled !== null || !(st.slot && st.view && st.shown))
+          await t.check(`${target} ${roomState}: the control to reach (${st.what}) is in an open, shown side panel${scrolled !== null ? ' when its scroll fails' : ''}`, st.slot && st.view && st.shown, JSON.stringify({ ...st, scroll: scrolled }), { hard: true });
       }
       let p = null, wheeled = false;
       for (let pass = 0; pass < 3; pass++) {
@@ -590,15 +617,35 @@ export default async function (t) {
             .map(({ e, region }, i) => { e.setAttribute('data-shelf-fold', String(i)); region.setAttribute('data-shelf-fold-region', String(i));
               return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60), region: (region.tagName + '.' + String(region.className?.baseVal ?? region.className).trim().split(/\s+/).slice(0, 2).join('.')).slice(0, 60) }; });
         });
-        const triggersIn = (i) => panel.evaluate((p, i) => { const r = p.querySelector(`[data-shelf-fold-region="${i}"]`); return r ? [...r.querySelectorAll('[aria-haspopup]:not([aria-haspopup="false"])')].filter(e => e.checkVisibility()).map(e => e.getAttribute('aria-controls') || (e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ').slice(0, 40)) : []; }, i);
+        // T98 (TOOLBATCH4 recheck b, finding 11): what the fold may not hide is every control the census presses there
+        // (popup triggers, rows with a context route, accordion heads and disclosures), each marked by element before the
+        // fold and looked up by its mark after it, not by label (two triggers labelled 'More' were one); the fold control
+        // itself is left out. A control of a kind the census already asked in this state is not lost (the census samples a
+        // row kind), and is reported apart
+        const censusIn = (i, mark) => panel.evaluate((p, [i, mark, state, asked]) => {
+          const r = p.querySelector(`[data-shelf-fold-region="${i}"]`); if (!r) return [];
+          const fold = r.querySelector(`[data-shelf-fold="${i}"]`), out = [];
+          const kinds = [['popup trigger', '[aria-haspopup]:not([aria-haspopup="false"])'], ['accordion head', '[data-acc] > [data-collapse]'], ['disclosure', 'button[aria-expanded]:not([role="tab"]):not([aria-haspopup])']];
+          const name = e => (e.getAttribute('aria-controls') || e.getAttribute('aria-label') || e.getAttribute('data-path') || e.textContent || e.className).toString().trim().replace(/\s+/g, ' ').slice(0, 40);
+          for (const [kind, sel] of kinds) for (const e of r.querySelectorAll(sel)) { if (e === fold) continue; out.push({ e, kind }); }
+          for (const e of __shelf.rows(r)) out.push({ e, kind: 'row', sig: __shelf.sig(e) });
+          if (mark) { document.querySelectorAll(`[data-shelf-fold-ctl^="${i}:"]`).forEach(x => x.removeAttribute('data-shelf-fold-ctl'));
+            return out.filter(x => x.e.checkVisibility()).map((x, j) => { x.e.setAttribute('data-shelf-fold-ctl', `${i}:${j}`); return { j, kind: x.kind, sig: x.sig || null, what: name(x.e) }; }); }
+          return [...document.querySelectorAll(`[data-shelf-fold-ctl^="${i}:"]`)].map(e => ({ j: +e.getAttribute('data-shelf-fold-ctl').split(':')[1], shown: e.isConnected && e.checkVisibility() }));
+        }, [i, mark]);
         for (const fo of folds) {
-          const ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), before = await triggersIn(fo.i), fp = await reach(ctl);
+          const ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), before = await censusIn(fo.i, true), fp = await reach(ctl);
           await t.page.mouse.click(off.x + fp.x, off.y + fp.y);
           const folded = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'false', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
           await t.check(`${target} ${state} short panel: pressing its expanded control (${fo.label}) folds it to make room for the list`, folded,
             JSON.stringify({ fold: fo, covered: { what: why.what, onTop: why.onTop, hits: why.hits, by: why.coverOf } }), { hard: true });
-          const after = await triggersIn(fo.i), hidden = before.filter(x => !after.includes(x));
-          await t.check(`${target} ${state} short panel: the folded region (${fo.region}) hid no popup trigger the census walks`, !hidden.length, JSON.stringify({ hidden, before }), { hard: true });
+          const after = new Map((await censusIn(fo.i, false)).map(x => [x.j, x.shown])), gone = before.filter(x => !after.get(x.j));
+          const sampled = gone.filter(x => x.kind === 'row' && probed.has(`${state}|${x.sig}`)), hidden = gone.filter(x => !sampled.includes(x));
+          await t.check(`${target} ${state} short panel: the folded region (${fo.region}) hid no control the census presses (popup triggers, context rows, accordion heads, disclosures; by element)`, !hidden.length, JSON.stringify({ hidden, sampledKindsHidden: sampled.length, before: before.length }), { hard: true });
+          const tag = String(foldedRegions.length);
+          const hiddenNow = await panel.evaluate((p, [i, tag]) => { const r = p.querySelector(`[data-shelf-fold-region="${i}"]`); if (r) r.setAttribute('data-shelf-folded', tag);
+            return r ? foldHidden(r) : []; }, [fo.i, tag]).catch(() => []);
+          foldedRegions.push({ tag, region: fo.region, state, hidden: new Set(hiddenNow) });
         }
         if (folds.length) await f.waitForTimeout(500);
         return folds.length;
@@ -795,14 +842,22 @@ export default async function (t) {
         }
         for (const k of ks) {
           const menu = CTX_INPUTS.map(i => k.got[i]).find(Boolean);
-          const { n, which } = await panel.evaluate((p, s) => {
+          // T98 (TOOLBATCH4 recheck b, finding 10): the census asks a kind's first row and this walk its last, so a dead
+          // route on a middle row passed; a kind of more than two rows also has one middle row asked, picked by the run's
+          // seed (--set seed=<n>, else drawn and logged) and named in the check
+          const picks = await panel.evaluate((p, [s, seed]) => {
             document.querySelectorAll('[data-shelf-later]').forEach(e => e.removeAttribute('data-shelf-later'));
-            const all = __shelf.rows(p).filter(e => __shelf.sig(e) === s), e = all[all.length - 1];
-            e?.setAttribute('data-shelf-later', '');
-            return { n: all.length, which: e ? (e.getAttribute('data-path') || e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ').slice(0, 40) : null };
-          }, k.sig);
+            const all = __shelf.rows(p).filter(e => __shelf.sig(e) === s), name = e => (e.getAttribute('data-path') || e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ').slice(0, 40);
+            let h = seed >>> 0; for (const ch of s) h = Math.imul(h ^ ch.charCodeAt(0), 2654435761) >>> 0;
+            const out = [];
+            if (all.length) { const e = all[all.length - 1]; e.setAttribute('data-shelf-later', '0'); out.push({ i: 0, which: name(e), how: 'the last' }); }
+            if (all.length > 2) { const j = 1 + h % (all.length - 2), e = all[j]; e.setAttribute('data-shelf-later', '1'); out.push({ i: 1, which: name(e), how: `row ${j + 1}, by the seed` }); }
+            return { n: all.length, out };
+          }, [k.sig, shelfSeed]);
+          const n = picks.n;
           await t.check(`${target} ${st} later walk: a ${k.sig} row is still there`, n > 0, '', { hard: true });
-          const row = panel.locator('[data-shelf-later]');
+          for (const pick of picks.out) {
+          const row = panel.locator(`[data-shelf-later="${pick.i}"]`), which = `${pick.which}, ${pick.how}`;
           for (const input of CTX_INPUTS) {
             await restPointer();
             if (input === 'mouse') { const q = await reach(row); await t.page.mouse.click(off.x + q.x, off.y + q.y, { button: 'right' }); }
@@ -813,6 +868,7 @@ export default async function (t) {
             await t.page.keyboard.press('Escape');
             const shut = await f.waitForFunction(() => !__shelf.keys().length, null, { timeout: 5000 }).then(() => true, () => false);
             await t.check(`${target} ${st} later walk: ${k.sig} by ${input} closes on Escape and leaves the side panel open`, shut && await f.locator('#sidePanelSlot').isVisible(), '', { hard: true });
+          }
           }
         }
       }
@@ -850,12 +906,25 @@ export default async function (t) {
           // footer (Source Control's Publish card at 1280x500) covers it.
           const hp = await reach(head, {x:8,y:8});
           await t.check(`${target} accordion head on top where it is pressed`, hp.onTop, JSON.stringify(hp), {hard:true});
-          // T55: listen to the head's own scrollers before the press, so the rail's reveal scroll is seen from its start
-          await head.evaluate(e => { const W = window.__shelfReveal = { at: performance.now(), scs: [] };
+          // T55: listen to the head's own scrollers before the press, so the rail's reveal scroll is seen from its start.
+          // T98 (TOOLBATCH4 recheck b, finding 9): and stamp the click itself (a capture listener on the head), and the
+          // product's own scroll request on each scroller (its scrollBy or scrollTo), since the press's actionability
+          // checks can take longer than the rail's delay. The previous reveal's watch is judged first: a request or a
+          // scroll that came after its wait returned means the wait returned before the rail's own reveal began.
+          const lateReveal = await head.evaluate(() => { const W = window.__shelfReveal; if (!W || !W.done) return null;
+            const late = W.scs.filter(s => s.asked > W.done || s.scrolled > W.done).map(s => ({ el: s.el.className.toString().slice(0, 40), asked: s.asked ? Math.round(s.asked - W.clickAt) : null, scrolled: s.scrolled ? Math.round(s.scrolled - W.clickAt) : null, waitReturned: Math.round(W.done - W.clickAt) }));
+            for (const u of W.undo) u(); W.undo = []; return late; });
+          if (lateReveal) await t.check(`${target} accordion reveal: the previous wait returned after the rail's own reveal began`, !lateReveal.length, JSON.stringify(lateReveal), { hard: true });
+          await head.evaluate(e => { const W = window.__shelfReveal = { at: performance.now(), clickAt: null, done: 0, scs: [], undo: [] };
+            const onClick = () => { if (W.clickAt === null) W.clickAt = performance.now(); };
+            e.addEventListener('click', onClick, { capture: true }); W.undo.push(() => e.removeEventListener('click', onClick, { capture: true }));
             for (let a = e.parentElement; a; a = a.parentElement) if (a.scrollHeight > a.clientHeight) {
-              const s = { el: a, scrolled: 0, ended: 0 }; W.scs.push(s);
+              const s = { el: a, scrolled: 0, ended: 0, asked: 0 }; W.scs.push(s);
               a.addEventListener('scroll', () => { s.scrolled = performance.now(); }, { passive: true });
               a.addEventListener('scrollend', () => { s.ended = performance.now(); }, { passive: true });
+              for (const fn of ['scrollBy', 'scrollTo']) { const own = Object.prototype.hasOwnProperty.call(a, fn), was = a[fn];
+                a[fn] = function (...x) { s.asked = performance.now(); return was.apply(this, x); };
+                W.undo.push(() => { if (own) a[fn] = was; else delete a[fn]; }); }
             } });
           await pressAt(head, hp, { at: {x:8,y:8} });
           await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),JSON.stringify(await head.evaluate((e,hp)=>{const r=e.getBoundingClientRect(),h=document.elementFromPoint(hp.x,hp.y);return {text:e.textContent.trim().replace(/\s+/g,' ').slice(0,40),cls:e.className,acc:e.closest('[data-acc]').className,r:[r.x,r.y,r.width,r.height].map(Math.round),hp,hitNow:h?.tagName+'.'+(h?.className?.baseVal??h?.className),own:!!h&&(h===e||e.contains(h))};},hp)),{hard:true});
@@ -867,28 +936,48 @@ export default async function (t) {
           // frame, and a scroll it starts ends with that scroller's scrollend. So: wait out the delay and two frames, then
           // every head scroller that scrolled since the press must reach its scrollend; one that does not within
           // REVEAL_END_MS fails by name.
+          // T98: the wait runs from the click itself (the head's capture listener), not from before Playwright's press:
+          // the rail's delay is after the click (and the rail's own frame before its timer), then three frames for the
+          // scroll's first frame; then every head scroller the product asked to scroll, or that scrolled, after the click
+          // must reach its scrollend (a request that moved nothing is done once two frames show no scroll). A click that
+          // never reached the head, or a reveal that does not end within REVEAL_END_MS, fails by name.
           const reveal = await head.evaluate((e, [ms, endMs]) => new Promise(res => {
             const W = window.__shelfReveal, reduced = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'reduced';
-            const decide = W.at + (reduced ? 0 : ms);
-            const raf2 = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+            const raf = () => new Promise(r => requestAnimationFrame(r));
             (async () => {
-              while (performance.now() < decide) await new Promise(r => requestAnimationFrame(r));
-              await raf2();
+              const t0 = performance.now();
+              while (W.clickAt === null) { if (performance.now() - t0 > 1000) { W.done = performance.now(); return res({ ok: false, why: 'no click reached the head within 1 s of the press', pressLag: null }); } await raf(); }
+              const decide = W.clickAt + (reduced ? 0 : ms);
+              while (performance.now() < decide) await raf();
+              await raf(); await raf(); await raf();
               const t1 = performance.now();
               for (;;) {
-                const open = W.scs.filter(s => s.scrolled && s.ended < s.scrolled);
-                if (!open.length) return res({ ok: true, ms: Math.round(performance.now() - W.at), scrolled: W.scs.filter(s => s.scrolled).length });
-                if (performance.now() - t1 > endMs) return res({ ok: false, ms: Math.round(performance.now() - W.at), open: open.map(s => s.el.className.toString().slice(0, 40)) });
-                await new Promise(r => requestAnimationFrame(r));
+                const now = performance.now();
+                const open = W.scs.filter(s => {
+                  if (s.scrolled > W.clickAt) return !(s.ended > s.scrolled);
+                  if (s.asked > W.clickAt) return now - s.asked < 50;   /* asked, nothing scrolled yet: give it two or three frames */
+                  return false; });
+                if (!open.length) { W.done = performance.now(); return res({ ok: true, ms: Math.round(W.done - W.clickAt), pressLag: Math.round(W.clickAt - W.at), asked: W.scs.filter(s => s.asked > W.clickAt).map(s => Math.round(s.asked - W.clickAt)), scrolled: W.scs.filter(s => s.scrolled > W.clickAt).length }); }
+                if (now - t1 > endMs) { W.done = performance.now(); return res({ ok: false, ms: Math.round(now - W.clickAt), pressLag: Math.round(W.clickAt - W.at), open: open.map(s => s.el.className.toString().slice(0, 40)) }); }
+                await raf();
               }
             })();
           }), [REVEAL_MS, REVEAL_END_MS]);
           await t.check(`${target} accordion reveal finished (the rail's own scroll ended) before the next press`, reveal.ok, JSON.stringify(reveal), { hard: true });
+          revealLog.push(reveal);
           opened=true;
         }
         if(!opened)break;
         await t.check(`${target} accordion traversal bounded`,pass<19,'',{hard:true});
       }
+      // T98: the last reveal's watch, judged as the next press would judge it (a request or scroll after the wait returned)
+      await f.waitForTimeout(300);
+      const lastLate = await panel.evaluate(() => { const W = window.__shelfReveal; if (!W || !W.done) return null;
+        const late = W.scs.filter(s => s.asked > W.done || s.scrolled > W.done).map(s => ({ el: s.el.className.toString().slice(0, 40), asked: s.asked ? Math.round(s.asked - W.clickAt) : null, scrolled: s.scrolled ? Math.round(s.scrolled - W.clickAt) : null, waitReturned: Math.round(W.done - W.clickAt) }));
+        for (const u of W.undo) u(); W.undo = []; window.__shelfReveal = null; return late; });
+      if (lastLate) await t.check(`${target} accordion reveal: the last wait returned after the rail's own reveal began`, !lastLate.length, JSON.stringify(lastLate), { hard: true });
+      if (revealLog.length) { const lag = revealLog.map(r => r.pressLag).filter(x => x !== null).sort((a, b) => a - b), asked = revealLog.flatMap(r => r.asked || []).sort((a, b) => a - b), med = a => a.length ? a[a.length >> 1] : null;
+        t.log(`${target} accordion reveals (T98): ${revealLog.length} presses, ${asked.length} scroll requests by the rail at ${asked.length ? asked[0] + '-' + asked[asked.length - 1] : '-'} ms after the click (median ${med(asked)}), the click ${med(lag)} ms (median) after the watch began`); }
       for(const head of heads)await head.dispose();
       const discover = async () => panel.locator(selectors.wrap).evaluateAll((ws,sel)=>ws.map((w,i)=>{
         const e=w.querySelector(sel);
@@ -940,7 +1029,7 @@ export default async function (t) {
       };
       await exercise();
       // The panel's first state is one of its tabs; census each tab once.
-      if (tab !== null || !tabs.length) { await popupCensus(state); await contextCensus(state, engine, tab); }
+      if (tab !== null || !tabs.length) { await recheckFolds(state); await popupCensus(state); await contextCensus(state, engine, tab); }
     }
     }
     await laterWalk();
