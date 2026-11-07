@@ -8,36 +8,46 @@ import pm_guard_isolation as g
 
 
 def project_message_message_type_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['message']['message_type']) is not str else None
 
 
 def project_message_priority_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['message']['priority']) is not str else None
 
 
 def project_message_subject_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['message']['subject']) is not str else None
 
 
 def project_message_content_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if value['message']['content'] is not None and type(value['message']['content']) is not str else None
 
 
 def project_message_content_ref_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if value['message']['content_ref'] is not None and type(value['message']['content_ref']) is not dict else None
 
 
 ROWS = (
     ('project_message_message_type_type', '/source/original_input/message_type', 'is a string',
-     'project_original_input_type', project_message_message_type_type, ('message',), 'project_type'),
+     'project_original_input_type', project_message_message_type_type, ('message', 'project_shape_valid'), 'project_type'),
     ('project_message_priority_type', '/source/original_input/priority', 'is a string',
-     'project_original_input_type', project_message_priority_type, ('message',), 'project_type'),
+     'project_original_input_type', project_message_priority_type, ('message', 'project_shape_valid'), 'project_type'),
     ('project_message_subject_type', '/source/original_input/subject', 'is a string',
-     'project_original_input_type', project_message_subject_type, ('message',), 'project_type'),
+     'project_original_input_type', project_message_subject_type, ('message', 'project_shape_valid'), 'project_type'),
     ('project_message_content_type', '/source/original_input/content', 'is a string or null',
-     'project_original_input_type', project_message_content_type, ('message',), 'project_type'),
+     'project_original_input_type', project_message_content_type, ('message', 'project_shape_valid'), 'project_type'),
     ('project_message_content_ref_type', '/source/original_input/content_ref', 'is an object or null',
-     'project_original_input_type', project_message_content_ref_type, ('message',), 'project_type'),
+     'project_original_input_type', project_message_content_ref_type, ('message', 'project_shape_valid'), 'project_type'),
 )
 
 

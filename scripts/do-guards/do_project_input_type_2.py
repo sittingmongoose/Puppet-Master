@@ -8,36 +8,46 @@ import pm_guard_isolation as g
 
 
 def project_source_run_id_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['source']['run_id']) is not str else None
 
 
 def project_source_operation_id_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['source']['operation_id']) is not str else None
 
 
 def project_source_project_id_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['source']['project_id']) is not str else None
 
 
 def project_source_edition_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['source']['edition']) is not str else None
 
 
 def project_source_interface_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['source']['interface']) is not str else None
 
 
 ROWS = (
     ('project_source_run_id_type', '/source/run_id', 'is a string',
-     'project_original_input_type', project_source_run_id_type, ('source',), 'project_type'),
+     'project_original_input_type', project_source_run_id_type, ('source', 'project_shape_valid'), 'project_type'),
     ('project_source_operation_id_type', '/source/operation_id', 'is a string',
-     'project_original_input_type', project_source_operation_id_type, ('source',), 'project_type'),
+     'project_original_input_type', project_source_operation_id_type, ('source', 'project_shape_valid'), 'project_type'),
     ('project_source_project_id_type', '/source/project_id', 'is a string',
-     'project_original_input_type', project_source_project_id_type, ('source',), 'project_type'),
+     'project_original_input_type', project_source_project_id_type, ('source', 'project_shape_valid'), 'project_type'),
     ('project_source_edition_type', '/source/edition', 'is a string',
-     'project_original_input_type', project_source_edition_type, ('source',), 'project_type'),
+     'project_original_input_type', project_source_edition_type, ('source', 'project_shape_valid'), 'project_type'),
     ('project_source_interface_type', '/source/interface', 'is a string',
-     'project_original_input_type', project_source_interface_type, ('source',), 'project_type'),
+     'project_original_input_type', project_source_interface_type, ('source', 'project_shape_valid'), 'project_type'),
 )
 
 

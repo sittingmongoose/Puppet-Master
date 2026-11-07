@@ -8,6 +8,8 @@ import pm_guard_isolation as g
 
 
 def retry_source_retry_cause(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     if value['family'] != 'subagent.retried':
         return None
     producer = value['producer_context']
@@ -15,6 +17,8 @@ def retry_source_retry_cause(value, context):
 
 
 def retry_source_prior_attempt_number(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     if value['family'] != 'subagent.retried':
         return None
     producer = value['producer_context']
@@ -23,6 +27,8 @@ def retry_source_prior_attempt_number(value, context):
 
 
 def retry_source_attempt_number(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     if value['family'] != 'subagent.retried':
         return None
     producer = value['producer_context']
@@ -30,6 +36,8 @@ def retry_source_attempt_number(value, context):
 
 
 def retry_source_child_run_id(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     if value['family'] != 'subagent.retried':
         return None
     producer = value['producer_context']
@@ -37,6 +45,8 @@ def retry_source_child_run_id(value, context):
 
 
 def retry_source_parent_run_id(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     if value['family'] != 'subagent.retried':
         return None
     producer = value['producer_context']
@@ -45,15 +55,15 @@ def retry_source_parent_run_id(value, context):
 
 ROWS = (
     ('retry_source_retry_cause', '/logical_payload/retry_cause', "equals the producer context's (subagent.retried)",
-     'retry_payload_source_predicate', retry_source_retry_cause, ('family', 'payload', 'producer_context'), 'retry_source'),
+     'retry_payload_source_predicate', retry_source_retry_cause, ('family', 'payload', 'producer_context', 'payload_schema_valid'), 'retry_source'),
     ('retry_source_prior_attempt_number', '/logical_payload/prior_attempt_number', "equals the producer context's (subagent.retried)",
-     'retry_payload_source_predicate', retry_source_prior_attempt_number, ('family', 'payload', 'producer_context'), 'retry_source'),
+     'retry_payload_source_predicate', retry_source_prior_attempt_number, ('family', 'payload', 'producer_context', 'payload_schema_valid'), 'retry_source'),
     ('retry_source_attempt_number', '/logical_payload/attempt_number', "equals the producer context's (subagent.retried)",
-     'retry_payload_source_predicate', retry_source_attempt_number, ('family', 'payload', 'producer_context'), 'retry_source'),
+     'retry_payload_source_predicate', retry_source_attempt_number, ('family', 'payload', 'producer_context', 'payload_schema_valid'), 'retry_source'),
     ('retry_source_child_run_id', '/logical_payload/child_run_id', "equals the producer context's (subagent.retried)",
-     'retry_payload_source_predicate', retry_source_child_run_id, ('family', 'payload', 'producer_context'), 'retry_source'),
+     'retry_payload_source_predicate', retry_source_child_run_id, ('family', 'payload', 'producer_context', 'payload_schema_valid'), 'retry_source'),
     ('retry_source_parent_run_id', '/logical_payload/parent_run_id', "equals the producer context's (subagent.retried)",
-     'retry_payload_source_predicate', retry_source_parent_run_id, ('family', 'payload', 'producer_context'), 'retry_source'),
+     'retry_payload_source_predicate', retry_source_parent_run_id, ('family', 'payload', 'producer_context', 'payload_schema_valid'), 'retry_source'),
 )
 
 

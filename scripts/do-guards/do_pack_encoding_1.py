@@ -8,6 +8,8 @@ import pm_guard_isolation as g
 
 
 def pack_encoding(value, context):
+    # The encoding is attempted only for an entry of the right shape, types and media (the lane stops before it
+    # otherwise), so None means "not reached", never a pass of a broken entry.
     return 'payload_pack_encoding' if value['pack_encoding_failed'] is True else None
 
 

@@ -8,39 +8,49 @@ import pm_guard_isolation as g
 
 
 def admission_scope_partition(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return ('historical_original_admission'
             if value['state']['original_admission']['scope_partition'] != value['expected_admission']['scope_partition'] else None)
 
 
 def admission_storage_instance_id(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return ('historical_original_admission'
             if value['state']['original_admission']['storage_instance_id'] != value['expected_admission']['storage_instance_id'] else None)
 
 
 def original_source_sha256(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return ('historical_original_source' if value['state']['original_source_sha256'] != value['expected_original_source_sha256']
             else None)
 
 
 def original_source_ref(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return 'historical_original_source' if value['state']['original_source_ref'] != value['expected_original_source_ref'] else None
 
 
 def original_source_verified(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return 'historical_original_source' if not value['state']['original_source_verified'] else None
 
 
 ROWS = (
     ('admission_scope_partition', '/historical_reader_state/original_admission/scope_partition', "equals the case's partition",
-     'historical_original_admission', admission_scope_partition, ('state', 'expected_admission'), 'admission'),
+     'historical_original_admission', admission_scope_partition, ('state', 'expected_admission', 'historical_state_valid'), 'admission'),
     ('admission_storage_instance_id', '/historical_reader_state/original_admission/storage_instance_id', "equals the payload's storage instance",
-     'historical_original_admission', admission_storage_instance_id, ('state', 'expected_admission'), 'admission'),
+     'historical_original_admission', admission_storage_instance_id, ('state', 'expected_admission', 'historical_state_valid'), 'admission'),
     ('original_source_sha256', '/historical_reader_state/original_source_sha256', 'equals the SHA-256 of the packed event',
-     'historical_original_source', original_source_sha256, ('state', 'expected_original_source_sha256'), 'original_source'),
+     'historical_original_source', original_source_sha256, ('state', 'expected_original_source_sha256', 'historical_state_valid'), 'original_source'),
     ('original_source_ref', '/historical_reader_state/original_source_ref', "equals 'seglog:' + event_id",
-     'historical_original_source', original_source_ref, ('state', 'expected_original_source_ref'), 'original_source'),
+     'historical_original_source', original_source_ref, ('state', 'expected_original_source_ref', 'historical_state_valid'), 'original_source'),
     ('original_source_verified', '/historical_reader_state/original_source_verified', 'is true',
-     'historical_original_source', original_source_verified, ('state',), 'original_source'),
+     'historical_original_source', original_source_verified, ('state', 'historical_state_valid'), 'original_source'),
 )
 
 

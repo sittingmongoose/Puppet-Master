@@ -8,40 +8,50 @@ import pm_guard_isolation as g
 
 
 def admission_written(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return 'historical_original_admission' if not value['state']['original_admission']['admitted_when_written'] else None
 
 
 def admission_event_type(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return ('historical_original_admission' if value['state']['original_admission']['event_type'] != value['expected_admission']['event_type']
             else None)
 
 
 def admission_family_revision(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return ('historical_original_admission'
             if value['state']['original_admission']['family_revision'] != value['expected_admission']['family_revision'] else None)
 
 
 def admission_payload_schema_id(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return ('historical_original_admission'
             if value['state']['original_admission']['payload_schema_id'] != value['expected_admission']['payload_schema_id'] else None)
 
 
 def admission_event_id(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return ('historical_original_admission' if value['state']['original_admission']['event_id'] != value['expected_admission']['event_id']
             else None)
 
 
 ROWS = (
     ('admission_written', '/historical_reader_state/original_admission/admitted_when_written', 'is true',
-     'historical_original_admission', admission_written, ('state',), 'admission'),
+     'historical_original_admission', admission_written, ('state', 'historical_state_valid'), 'admission'),
     ('admission_event_type', '/historical_reader_state/original_admission/event_type', "equals the case's family",
-     'historical_original_admission', admission_event_type, ('state', 'expected_admission'), 'admission'),
+     'historical_original_admission', admission_event_type, ('state', 'expected_admission', 'historical_state_valid'), 'admission'),
     ('admission_family_revision', '/historical_reader_state/original_admission/family_revision', "equals the payload's schema_version",
-     'historical_original_admission', admission_family_revision, ('state', 'expected_admission'), 'admission'),
+     'historical_original_admission', admission_family_revision, ('state', 'expected_admission', 'historical_state_valid'), 'admission'),
     ('admission_payload_schema_id', '/historical_reader_state/original_admission/payload_schema_id', "equals the event's payload_schema_id",
-     'historical_original_admission', admission_payload_schema_id, ('state', 'expected_admission'), 'admission'),
+     'historical_original_admission', admission_payload_schema_id, ('state', 'expected_admission', 'historical_state_valid'), 'admission'),
     ('admission_event_id', '/historical_reader_state/original_admission/event_id', "equals the event's id",
-     'historical_original_admission', admission_event_id, ('state', 'expected_admission'), 'admission'),
+     'historical_original_admission', admission_event_id, ('state', 'expected_admission', 'historical_state_valid'), 'admission'),
 )
 
 

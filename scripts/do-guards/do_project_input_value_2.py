@@ -11,12 +11,16 @@ HEX = '0123456789abcdef'
 
 
 def project_inline_body_value(value, context):
+    if value['project_types_valid'] is not True:
+        return None
     if value['message']['content'] is None:
         return None
     return 'project_original_input_value' if value['content_inline_body'] is not True else None
 
 
 def project_ref_identifier_value(value, context):
+    if value['project_types_valid'] is not True:
+        return None
     ref = value['message']['content_ref']
     if ref is None:
         return None
@@ -26,6 +30,8 @@ def project_ref_identifier_value(value, context):
 
 
 def project_ref_size_value(value, context):
+    if value['project_types_valid'] is not True:
+        return None
     ref = value['message']['content_ref']
     if ref is None:
         return None
@@ -33,6 +39,8 @@ def project_ref_size_value(value, context):
 
 
 def project_ref_media_value(value, context):
+    if value['project_types_valid'] is not True:
+        return None
     ref = value['message']['content_ref']
     if ref is None:
         return None
@@ -41,13 +49,13 @@ def project_ref_media_value(value, context):
 
 ROWS = (
     ('project_inline_body_value', '/source/original_input/content', 'is UTF-8 text of at most 16 KiB',
-     'project_original_input_value', project_inline_body_value, ('message', 'content_inline_body'), 'project_value'),
+     'project_original_input_value', project_inline_body_value, ('message', 'content_inline_body', 'project_types_valid'), 'project_value'),
     ('project_ref_identifier_value', '/source/original_input/content_ref/blake3_id', "full-matches 'blake3:' + 64 lowercase hex",
-     'project_original_input_value', project_ref_identifier_value, ('message',), 'project_value'),
+     'project_original_input_value', project_ref_identifier_value, ('message', 'project_types_valid'), 'project_value'),
     ('project_ref_size_value', '/source/original_input/content_ref/byte_size', 'exceeds 16 KiB (only a large body is a reference)',
-     'project_original_input_value', project_ref_size_value, ('message',), 'project_value'),
+     'project_original_input_value', project_ref_size_value, ('message', 'project_types_valid'), 'project_value'),
     ('project_ref_media_value', '/source/original_input/content_ref/media_type', 'is UTF-8 text',
-     'project_original_input_value', project_ref_media_value, ('message',), 'project_value'),
+     'project_original_input_value', project_ref_media_value, ('message', 'project_types_valid'), 'project_value'),
 )
 
 

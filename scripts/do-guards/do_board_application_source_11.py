@@ -7,37 +7,23 @@ these rows; `scripts/pm-orchestrator-guard-proof.py generate` writes it and `che
 import pm_guard_isolation as g
 
 
-def message_thread_id(value, context):
-    return 'message_thread_id' if value['message']['thread_id'] != value['payload']['thread_id'] else None
+def source_scope_join(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
+    return 'source_original_join' if value['source']['scope'] != value['message']['scope'] else None
 
 
-def message_crew_id(value, context):
-    return 'message_crew_id' if value['message']['crew_id'] != value['payload']['crew_id'] else None
-
-
-def message_run_id(value, context):
-    return 'message_run_id' if value['message']['run_id'] != value['payload']['run_id'] else None
-
-
-def application_message_source(value, context):
-    return 'message_source' if value['payload_message_ids'] != [value['message']['message_id']] else None
-
-
-def wrapper_key_join(value, context):
-    return 'wrapper_key_join' if value['wrapper_key'] != value['expected_wrapper_key'] else None
+def wrapper_scope_join(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
+    return 'source_original_join' if value['wrapper']['scope'] != value['message']['scope'] else None
 
 
 ROWS = (
-    ('message_thread_id', '/source/original_input/thread_id', "equals the payload's",
-     'message_thread_id', message_thread_id, ('message', 'payload'), None),
-    ('message_crew_id', '/source/original_input/crew_id', "equals the payload's",
-     'message_crew_id', message_crew_id, ('message', 'payload'), None),
-    ('message_run_id', '/source/original_input/run_id', "equals the payload's",
-     'message_run_id', message_run_id, ('message', 'payload'), None),
-    ('application_message_source', '/payload/message_ids', "are exactly the original message's id",
-     'message_source', application_message_source, ('payload_message_ids', 'message'), None),
-    ('wrapper_key_join', '/wrapper_key', 'equals the application wrapper key recomputed from the wrapper and message',
-     'wrapper_key_join', wrapper_key_join, ('wrapper_key', 'expected_wrapper_key'), None),
+    ('source_scope_join', '/source/scope', "equals the original message's",
+     'source_original_join', source_scope_join, ('source', 'message', 'board_branch', 'application_shape_valid'), 'original_join'),
+    ('wrapper_scope_join', '/wrapper/scope', "equals the original message's",
+     'source_original_join', wrapper_scope_join, ('wrapper', 'message', 'board_branch', 'application_shape_valid'), 'original_join'),
 )
 
 
@@ -45,19 +31,13 @@ ROWS = (
 
 def factory():
     table = g.GuardTable([
-        g.Guard('message_thread_id', g.Invariant('/source/original_input/thread_id', "equals the payload's"), 'message_thread_id', message_thread_id),
-        g.Guard('message_crew_id', g.Invariant('/source/original_input/crew_id', "equals the payload's"), 'message_crew_id', message_crew_id),
-        g.Guard('message_run_id', g.Invariant('/source/original_input/run_id', "equals the payload's"), 'message_run_id', message_run_id),
-        g.Guard('application_message_source', g.Invariant('/payload/message_ids', "are exactly the original message's id"), 'message_source', application_message_source),
-        g.Guard('wrapper_key_join', g.Invariant('/wrapper_key', 'equals the application wrapper key recomputed from the wrapper and message'), 'wrapper_key_join', wrapper_key_join),
+        g.Guard('source_scope_join', g.Invariant('/source/scope', "equals the original message's"), 'source_original_join', source_scope_join),
+        g.Guard('wrapper_scope_join', g.Invariant('/wrapper/scope', "equals the original message's"), 'source_original_join', wrapper_scope_join),
     ])
     context = None
 
     def check(complete):
-        table.require('message_thread_id', complete, context)
-        table.require('message_crew_id', complete, context)
-        table.require('message_run_id', complete, context)
-        table.require('application_message_source', complete, context)
-        table.require('wrapper_key_join', complete, context)
+        table.require('source_scope_join', complete, context)
+        table.require('wrapper_scope_join', complete, context)
         return True
     return g.Case(table, check, context)

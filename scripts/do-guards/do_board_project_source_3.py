@@ -8,12 +8,14 @@ import pm_guard_isolation as g
 
 
 def project_message_source(value, context):
+    if value['board_branch'] != 'project' or value['project_input_valid'] is not True:
+        return None
     return 'message_source' if value['source'].get('message_ids') != value['payload_message_ids'] else None
 
 
 ROWS = (
     ('project_message_source', '/source/message_ids', "equal the payload's message ids",
-     'message_source', project_message_source, ('source', 'payload_message_ids'), None),
+     'message_source', project_message_source, ('source', 'payload_message_ids', 'board_branch', 'project_input_valid'), None),
 )
 
 

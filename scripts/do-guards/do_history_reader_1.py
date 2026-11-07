@@ -8,37 +8,47 @@ import pm_guard_isolation as g
 
 
 def historical_reader_event_type(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return 'historical_reader_identity' if value['state']['event_type'] != value['family'] else None
 
 
 def historical_reader_id(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return 'historical_reader_identity' if value['state']['reader_id'] != value['expected_reader_id'] else None
 
 
 def historical_reader_not_withdrawn(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return 'historical_reader_withdrawn' if value['state']['reader_status'] == 'withdrawn' else None
 
 
 def historical_reader_published(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return 'historical_reader_withdrawn' if value['state']['publication_state'] != 'published' else None
 
 
 def historical_schema_supported(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return ('historical_schema_unsupported' if value['state']['supported_payload_schema'] != value['event_payload_schema_id']
             else None)
 
 
 ROWS = (
     ('historical_reader_event_type', '/historical_reader_state/event_type', "equals the case's family",
-     'historical_reader_identity', historical_reader_event_type, ('state', 'family'), 'reader_identity'),
+     'historical_reader_identity', historical_reader_event_type, ('state', 'family', 'historical_state_valid'), 'reader_identity'),
     ('historical_reader_id', '/historical_reader_state/reader_id', 'equals reader.orchestrator.{family}.history.v1@1.0.0',
-     'historical_reader_identity', historical_reader_id, ('state', 'expected_reader_id'), 'reader_identity'),
+     'historical_reader_identity', historical_reader_id, ('state', 'expected_reader_id', 'historical_state_valid'), 'reader_identity'),
     ('historical_reader_not_withdrawn', '/historical_reader_state/reader_status', "is not 'withdrawn'",
-     'historical_reader_withdrawn', historical_reader_not_withdrawn, ('state',), 'reader_withdrawn'),
+     'historical_reader_withdrawn', historical_reader_not_withdrawn, ('state', 'historical_state_valid'), 'reader_withdrawn'),
     ('historical_reader_published', '/historical_reader_state/publication_state', "is 'published'",
-     'historical_reader_withdrawn', historical_reader_published, ('state',), 'reader_withdrawn'),
+     'historical_reader_withdrawn', historical_reader_published, ('state', 'historical_state_valid'), 'reader_withdrawn'),
     ('historical_schema_supported', '/historical_reader_state/supported_payload_schema', "equals the event's payload_schema_id",
-     'historical_schema_unsupported', historical_schema_supported, ('state', 'event_payload_schema_id'), None),
+     'historical_schema_unsupported', historical_schema_supported, ('state', 'event_payload_schema_id', 'historical_state_valid'), None),
 )
 
 

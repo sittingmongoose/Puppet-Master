@@ -8,36 +8,46 @@ import pm_guard_isolation as g
 
 
 def wrapper_scope_outer_project_mismatch(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'outer_project_mismatch' if 'outer_project_mismatch' in value['wrapper_scope_failures'] else None
 
 
 def wrapper_scope_project_partition_mismatch(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'project_partition_mismatch' if 'project_partition_mismatch' in value['wrapper_scope_failures'] else None
 
 
 def wrapper_scope_server_scope_mismatch(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'server_scope_mismatch' if 'server_scope_mismatch' in value['wrapper_scope_failures'] else None
 
 
 def wrapper_scope_application_outer_project(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'application_outer_project' if 'application_outer_project' in value['wrapper_scope_failures'] else None
 
 
 def wrapper_scope_application_thread_mismatch(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'application_thread_mismatch' if 'application_thread_mismatch' in value['wrapper_scope_failures'] else None
 
 
 ROWS = (
     ('wrapper_scope_outer_project_mismatch', '/wrapper', 'has no outer_project_mismatch (the shared scope_failures helper)',
-     'outer_project_mismatch', wrapper_scope_outer_project_mismatch, ('wrapper_scope_failures',), None),
+     'outer_project_mismatch', wrapper_scope_outer_project_mismatch, ('wrapper_scope_failures', 'board_branch', 'application_shape_valid'), None),
     ('wrapper_scope_project_partition_mismatch', '/wrapper', 'has no project_partition_mismatch (the shared scope_failures helper)',
-     'project_partition_mismatch', wrapper_scope_project_partition_mismatch, ('wrapper_scope_failures',), None),
+     'project_partition_mismatch', wrapper_scope_project_partition_mismatch, ('wrapper_scope_failures', 'board_branch', 'application_shape_valid'), None),
     ('wrapper_scope_server_scope_mismatch', '/wrapper', 'has no server_scope_mismatch (the shared scope_failures helper)',
-     'server_scope_mismatch', wrapper_scope_server_scope_mismatch, ('wrapper_scope_failures',), None),
+     'server_scope_mismatch', wrapper_scope_server_scope_mismatch, ('wrapper_scope_failures', 'board_branch', 'application_shape_valid'), None),
     ('wrapper_scope_application_outer_project', '/wrapper', 'has no application_outer_project (the shared scope_failures helper)',
-     'application_outer_project', wrapper_scope_application_outer_project, ('wrapper_scope_failures',), None),
+     'application_outer_project', wrapper_scope_application_outer_project, ('wrapper_scope_failures', 'board_branch', 'application_shape_valid'), None),
     ('wrapper_scope_application_thread_mismatch', '/wrapper', 'has no application_thread_mismatch (the shared scope_failures helper)',
-     'application_thread_mismatch', wrapper_scope_application_thread_mismatch, ('wrapper_scope_failures',), None),
+     'application_thread_mismatch', wrapper_scope_application_thread_mismatch, ('wrapper_scope_failures', 'board_branch', 'application_shape_valid'), None),
 )
 
 

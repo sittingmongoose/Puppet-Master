@@ -8,30 +8,40 @@ import pm_guard_isolation as g
 
 
 def posted_project_priority(value, context):
+    if value['board_branch'] != 'project' or value['project_input_valid'] is not True:
+        return None
     if value['event_type'] != 'crew.board_message_posted' or value['payload']['scope'] == 'application':
         return None
     return 'message_priority' if value['message'].get('priority') != value['payload'].get('priority') else None
 
 
 def posted_project_to_agent_id(value, context):
+    if value['board_branch'] != 'project' or value['project_input_valid'] is not True:
+        return None
     if value['event_type'] != 'crew.board_message_posted' or value['payload']['scope'] == 'application':
         return None
     return 'message_to_agent_id' if value['message'].get('to_agent_id') != value['payload'].get('to_agent_id') else None
 
 
 def posted_project_to_agent_type(value, context):
+    if value['board_branch'] != 'project' or value['project_input_valid'] is not True:
+        return None
     if value['event_type'] != 'crew.board_message_posted' or value['payload']['scope'] == 'application':
         return None
     return 'message_to_agent_type' if value['message'].get('to_agent_type') != value['payload'].get('to_agent_type') else None
 
 
 def posted_project_content(value, context):
+    if value['board_branch'] != 'project' or value['project_input_valid'] is not True:
+        return None
     if value['event_type'] != 'crew.board_message_posted' or value['payload']['scope'] == 'application':
         return None
     return 'message_content_join' if value['message'].get('content') != value['payload'].get('content') else None
 
 
 def posted_project_content_ref(value, context):
+    if value['board_branch'] != 'project' or value['project_input_valid'] is not True:
+        return None
     if value['event_type'] != 'crew.board_message_posted' or value['payload']['scope'] == 'application':
         return None
     return 'message_content_join' if value['message'].get('content_ref') != value['payload'].get('content_ref') else None
@@ -39,15 +49,15 @@ def posted_project_content_ref(value, context):
 
 ROWS = (
     ('posted_project_priority', '/source/original_input/priority', "equals the payload's (posted, Project)",
-     'message_priority', posted_project_priority, ('event_type', 'payload', 'message'), None),
+     'message_priority', posted_project_priority, ('event_type', 'payload', 'message', 'board_branch', 'project_input_valid'), None),
     ('posted_project_to_agent_id', '/source/original_input/to_agent_id', "equals the payload's (posted, Project)",
-     'message_to_agent_id', posted_project_to_agent_id, ('event_type', 'payload', 'message'), None),
+     'message_to_agent_id', posted_project_to_agent_id, ('event_type', 'payload', 'message', 'board_branch', 'project_input_valid'), None),
     ('posted_project_to_agent_type', '/source/original_input/to_agent_type', "equals the payload's (posted, Project)",
-     'message_to_agent_type', posted_project_to_agent_type, ('event_type', 'payload', 'message'), None),
+     'message_to_agent_type', posted_project_to_agent_type, ('event_type', 'payload', 'message', 'board_branch', 'project_input_valid'), None),
     ('posted_project_content', '/source/original_input/content', "equals the payload's (posted, Project)",
-     'message_content_join', posted_project_content, ('event_type', 'payload', 'message'), 'content_join'),
+     'message_content_join', posted_project_content, ('event_type', 'payload', 'message', 'board_branch', 'project_input_valid'), 'content_join'),
     ('posted_project_content_ref', '/source/original_input/content_ref', "equals the payload's (posted, Project)",
-     'message_content_join', posted_project_content_ref, ('event_type', 'payload', 'message'), 'content_join'),
+     'message_content_join', posted_project_content_ref, ('event_type', 'payload', 'message', 'board_branch', 'project_input_valid'), 'content_join'),
 )
 
 

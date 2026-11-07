@@ -8,12 +8,14 @@ import pm_guard_isolation as g
 
 
 def event_type_pattern(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     return 'event_type_join' if value['event_type_pattern_valid'] is not True else None
 
 
 ROWS = (
     ('event_type_pattern', '/event/event_type', 'full-matches the dotted family identifier grammar',
-     'event_type_join', event_type_pattern, ('event_type_pattern_valid',), 'event_type_join'),
+     'event_type_join', event_type_pattern, ('event_type_pattern_valid', 'payload_schema_valid'), 'event_type_join'),
 )
 
 

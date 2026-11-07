@@ -8,24 +8,30 @@ import pm_guard_isolation as g
 
 
 def wrapper_scope_wrapper_record_scope_mismatch(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'wrapper_record_scope_mismatch' if 'wrapper_record_scope_mismatch' in value['wrapper_scope_failures'] else None
 
 
 def wrapper_scope_wrapper_record_server_id_mismatch(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'wrapper_record_server_id_mismatch' if 'wrapper_record_server_id_mismatch' in value['wrapper_scope_failures'] else None
 
 
 def wrapper_scope_wrapper_record_storage_instance_id_mismatch(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'wrapper_record_storage_instance_id_mismatch' if 'wrapper_record_storage_instance_id_mismatch' in value['wrapper_scope_failures'] else None
 
 
 ROWS = (
     ('wrapper_scope_wrapper_record_scope_mismatch', '/wrapper', 'has no wrapper_record_scope_mismatch (the shared scope_failures helper)',
-     'wrapper_record_scope_mismatch', wrapper_scope_wrapper_record_scope_mismatch, ('wrapper_scope_failures',), None),
+     'wrapper_record_scope_mismatch', wrapper_scope_wrapper_record_scope_mismatch, ('wrapper_scope_failures', 'board_branch', 'application_shape_valid'), None),
     ('wrapper_scope_wrapper_record_server_id_mismatch', '/wrapper', 'has no wrapper_record_server_id_mismatch (the shared scope_failures helper)',
-     'wrapper_record_server_id_mismatch', wrapper_scope_wrapper_record_server_id_mismatch, ('wrapper_scope_failures',), None),
+     'wrapper_record_server_id_mismatch', wrapper_scope_wrapper_record_server_id_mismatch, ('wrapper_scope_failures', 'board_branch', 'application_shape_valid'), None),
     ('wrapper_scope_wrapper_record_storage_instance_id_mismatch', '/wrapper', 'has no wrapper_record_storage_instance_id_mismatch (the shared scope_failures helper)',
-     'wrapper_record_storage_instance_id_mismatch', wrapper_scope_wrapper_record_storage_instance_id_mismatch, ('wrapper_scope_failures',), None),
+     'wrapper_record_storage_instance_id_mismatch', wrapper_scope_wrapper_record_storage_instance_id_mismatch, ('wrapper_scope_failures', 'board_branch', 'application_shape_valid'), None),
 )
 
 

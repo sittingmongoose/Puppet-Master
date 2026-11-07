@@ -8,24 +8,30 @@ import pm_guard_isolation as g
 
 
 def disclosure_access_allowed(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return 'historical_disclosure_fence' if not value['state']['current_access_allowed'] else None
 
 
 def disclosure_source_present(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return 'historical_disclosure_fence' if value['state']['source_deleted'] else None
 
 
 def disclosure_hold_allows(value, context):
+    if value['historical_state_valid'] is not True:
+        return None
     return 'historical_disclosure_fence' if not value['state']['hold_allows_disclosure'] else None
 
 
 ROWS = (
     ('disclosure_access_allowed', '/historical_reader_state/current_access_allowed', 'is true',
-     'historical_disclosure_fence', disclosure_access_allowed, ('state',), 'disclosure'),
+     'historical_disclosure_fence', disclosure_access_allowed, ('state', 'historical_state_valid'), 'disclosure'),
     ('disclosure_source_present', '/historical_reader_state/source_deleted', 'is false',
-     'historical_disclosure_fence', disclosure_source_present, ('state',), 'disclosure'),
+     'historical_disclosure_fence', disclosure_source_present, ('state', 'historical_state_valid'), 'disclosure'),
     ('disclosure_hold_allows', '/historical_reader_state/hold_allows_disclosure', 'is true',
-     'historical_disclosure_fence', disclosure_hold_allows, ('state',), 'disclosure'),
+     'historical_disclosure_fence', disclosure_hold_allows, ('state', 'historical_state_valid'), 'disclosure'),
 )
 
 

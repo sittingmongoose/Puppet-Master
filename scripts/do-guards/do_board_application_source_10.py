@@ -6,64 +6,24 @@ these rows; `scripts/pm-orchestrator-guard-proof.py generate` writes it and `che
 """
 import pm_guard_isolation as g
 
-REQUIRED_STAGES = ('original_intent', 'accepted_original_source', 'current_owner_and_stop_fence',
-                   'canonical_pending_or_reservation', 'owner_commit')
+
+def source_operation_join(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
+    return 'source_original_join' if value['source']['original_operation_id'] != value['payload']['operation_id'] else None
 
 
-def stage_request_ref(value, context):
-    custody = value['source']['stage_custody']
-    for name in REQUIRED_STAGES:
-        if custody[name]['request_ref'] is None:
-            return 'source_stage_evidence'
-    return None
-
-
-def stage_result_ref(value, context):
-    custody = value['source']['stage_custody']
-    for name in REQUIRED_STAGES:
-        if custody[name]['result_ref'] is None:
-            return 'source_stage_evidence'
-    return None
-
-
-def stage_witness_ref(value, context):
-    custody, witnesses = value['source']['stage_custody'], value['stage_witnesses']
-    for name in REQUIRED_STAGES:
-        proof = custody[name]['custody_evidence']
-        witness = witnesses.get(name, {})
-        if witness.get('ref') != (proof or {}).get('source_ref'):
-            return 'source_stage_evidence'
-    return None
-
-
-def stage_witness_value(value, context):
-    for name in REQUIRED_STAGES:
-        expected = value['stage_expected'][name]
-        if expected['typed_witness'] != expected['typed_expected']:
-            return 'source_stage_evidence'
-    return None
-
-
-def stage_witness_sha256(value, context):
-    custody = value['source']['stage_custody']
-    for name in REQUIRED_STAGES:
-        proof = custody[name]['custody_evidence']
-        if (proof or {}).get('source_sha256') != value['stage_expected'][name]['witness_sha256']:
-            return 'source_stage_evidence'
-    return None
+def source_thread_join(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
+    return 'source_original_join' if value['source']['thread_id'] != value['payload']['thread_id'] else None
 
 
 ROWS = (
-    ('stage_request_ref', '/source/stage_custody/{required}/request_ref', 'is present',
-     'source_stage_evidence', stage_request_ref, ('source',), 'stage_evidence'),
-    ('stage_result_ref', '/source/stage_custody/{required}/result_ref', 'is present',
-     'source_stage_evidence', stage_result_ref, ('source',), 'stage_evidence'),
-    ('stage_witness_ref', '/stage_evidence_witnesses/{required}/ref', "equals the stage evidence's source_ref",
-     'source_stage_evidence', stage_witness_ref, ('source', 'stage_witnesses'), 'stage_evidence'),
-    ('stage_witness_value', '/stage_evidence_witnesses/{required}/value', 'is a typed copy of the stage witness recomputed from the case',
-     'source_stage_evidence', stage_witness_value, ('stage_expected',), 'stage_evidence'),
-    ('stage_witness_sha256', '/source/stage_custody/{required}/custody_evidence/source_sha256', "equals the hash of the stage witness's value",
-     'source_stage_evidence', stage_witness_sha256, ('source', 'stage_expected'), 'stage_evidence'),
+    ('source_operation_join', '/source/original_operation_id', "equals the payload's operation_id",
+     'source_original_join', source_operation_join, ('source', 'payload', 'board_branch', 'application_shape_valid'), 'original_join'),
+    ('source_thread_join', '/source/thread_id', "equals the payload's",
+     'source_original_join', source_thread_join, ('source', 'payload', 'board_branch', 'application_shape_valid'), 'original_join'),
 )
 
 
@@ -71,19 +31,13 @@ ROWS = (
 
 def factory():
     table = g.GuardTable([
-        g.Guard('stage_request_ref', g.Invariant('/source/stage_custody/{required}/request_ref', 'is present'), 'source_stage_evidence', stage_request_ref),
-        g.Guard('stage_result_ref', g.Invariant('/source/stage_custody/{required}/result_ref', 'is present'), 'source_stage_evidence', stage_result_ref),
-        g.Guard('stage_witness_ref', g.Invariant('/stage_evidence_witnesses/{required}/ref', "equals the stage evidence's source_ref"), 'source_stage_evidence', stage_witness_ref),
-        g.Guard('stage_witness_value', g.Invariant('/stage_evidence_witnesses/{required}/value', 'is a typed copy of the stage witness recomputed from the case'), 'source_stage_evidence', stage_witness_value),
-        g.Guard('stage_witness_sha256', g.Invariant('/source/stage_custody/{required}/custody_evidence/source_sha256', "equals the hash of the stage witness's value"), 'source_stage_evidence', stage_witness_sha256),
+        g.Guard('source_operation_join', g.Invariant('/source/original_operation_id', "equals the payload's operation_id"), 'source_original_join', source_operation_join),
+        g.Guard('source_thread_join', g.Invariant('/source/thread_id', "equals the payload's"), 'source_original_join', source_thread_join),
     ])
     context = None
 
     def check(complete):
-        table.require('stage_request_ref', complete, context)
-        table.require('stage_result_ref', complete, context)
-        table.require('stage_witness_ref', complete, context)
-        table.require('stage_witness_value', complete, context)
-        table.require('stage_witness_sha256', complete, context)
+        table.require('source_operation_join', complete, context)
+        table.require('source_thread_join', complete, context)
         return True
     return g.Case(table, check, context)

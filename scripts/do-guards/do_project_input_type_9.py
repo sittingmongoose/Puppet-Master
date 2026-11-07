@@ -10,6 +10,8 @@ REF_FIELDS = {'blake3_id', 'byte_size', 'media_type'}
 
 
 def project_content_ref_members(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     ref = value['message']['content_ref']
     if type(ref) is not dict:
         return None
@@ -17,6 +19,8 @@ def project_content_ref_members(value, context):
 
 
 def project_content_ref_blake3_id_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     ref = value['message']['content_ref']
     if type(ref) is not dict or set(ref.keys()) != REF_FIELDS:
         return None
@@ -24,6 +28,8 @@ def project_content_ref_blake3_id_type(value, context):
 
 
 def project_content_ref_media_type_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     ref = value['message']['content_ref']
     if type(ref) is not dict or set(ref.keys()) != REF_FIELDS:
         return None
@@ -31,6 +37,8 @@ def project_content_ref_media_type_type(value, context):
 
 
 def project_content_ref_byte_size_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     ref = value['message']['content_ref']
     if type(ref) is not dict or set(ref.keys()) != REF_FIELDS:
         return None
@@ -39,13 +47,13 @@ def project_content_ref_byte_size_type(value, context):
 
 ROWS = (
     ('project_content_ref_members', '/source/original_input/content_ref', 'has exactly blake3_id, byte_size and media_type',
-     'project_original_input_type', project_content_ref_members, ('message',), 'project_type'),
+     'project_original_input_type', project_content_ref_members, ('message', 'project_shape_valid'), 'project_type'),
     ('project_content_ref_blake3_id_type', '/source/original_input/content_ref/blake3_id', 'is a string',
-     'project_original_input_type', project_content_ref_blake3_id_type, ('message',), 'project_type'),
+     'project_original_input_type', project_content_ref_blake3_id_type, ('message', 'project_shape_valid'), 'project_type'),
     ('project_content_ref_media_type_type', '/source/original_input/content_ref/media_type', 'is a string',
-     'project_original_input_type', project_content_ref_media_type_type, ('message',), 'project_type'),
+     'project_original_input_type', project_content_ref_media_type_type, ('message', 'project_shape_valid'), 'project_type'),
     ('project_content_ref_byte_size_type', '/source/original_input/content_ref/byte_size', 'is a JSON integer',
-     'project_original_input_type', project_content_ref_byte_size_type, ('message',), 'project_type'),
+     'project_original_input_type', project_content_ref_byte_size_type, ('message', 'project_shape_valid'), 'project_type'),
 )
 
 

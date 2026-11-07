@@ -15,9 +15,10 @@ def inline_payload_size(value, context):
 
 def inline_payload_join(value, context):
     event = value['event']
-    if event['payload_ref'] is not None:
+    if (type(event) is not dict or type(value['logical']) is not dict or type(event.get('payload')) is not dict
+            or event.get('payload_ref') is not None):
         return None
-    return 'inline_payload_join' if event['payload'] != value['logical'] else None
+    return 'inline_payload_join' if event.get('payload') != value['logical'] else None
 
 
 ROWS = (

@@ -8,12 +8,16 @@ import pm_guard_isolation as g
 
 
 def phase_context_object(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     if value['family'] != 'phase.force_completed':
         return None
     return 'phase_context_type' if type(value['producer_context']) is not dict else None
 
 
 def phase_context_max_questions(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     producer = value['producer_context']
     if value['family'] != 'phase.force_completed' or type(producer) is not dict:
         return None
@@ -23,6 +27,8 @@ def phase_context_max_questions(value, context):
 
 
 def phase_context_completion_signal(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     producer = value['producer_context']
     if value['family'] != 'phase.force_completed' or type(producer) is not dict:
         return None
@@ -30,6 +36,8 @@ def phase_context_completion_signal(value, context):
 
 
 def phase_context_phase_state(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     producer = value['producer_context']
     if value['family'] != 'phase.force_completed' or type(producer) is not dict:
         return None
@@ -38,13 +46,13 @@ def phase_context_phase_state(value, context):
 
 ROWS = (
     ('phase_context_object', '/producer_context', 'is an object (phase.force_completed)',
-     'phase_context_type', phase_context_object, ('family', 'producer_context'), 'phase_context_type'),
+     'phase_context_type', phase_context_object, ('family', 'producer_context', 'payload_schema_valid'), 'phase_context_type'),
     ('phase_context_max_questions', '/producer_context/max_questions', 'is a JSON integer (phase.force_completed)',
-     'phase_context_type', phase_context_max_questions, ('family', 'producer_context'), 'phase_context_type'),
+     'phase_context_type', phase_context_max_questions, ('family', 'producer_context', 'payload_schema_valid'), 'phase_context_type'),
     ('phase_context_completion_signal', '/producer_context/completion_signal', 'is a boolean (phase.force_completed)',
-     'phase_context_type', phase_context_completion_signal, ('family', 'producer_context'), 'phase_context_type'),
+     'phase_context_type', phase_context_completion_signal, ('family', 'producer_context', 'payload_schema_valid'), 'phase_context_type'),
     ('phase_context_phase_state', '/producer_context/phase_state', 'is a string (phase.force_completed)',
-     'phase_context_type', phase_context_phase_state, ('family', 'producer_context'), 'phase_context_type'),
+     'phase_context_type', phase_context_phase_state, ('family', 'producer_context', 'payload_schema_valid'), 'phase_context_type'),
 )
 
 

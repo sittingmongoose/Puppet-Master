@@ -8,36 +8,46 @@ import pm_guard_isolation as g
 
 
 def project_message_type_value(value, context):
+    if value['project_types_valid'] is not True:
+        return None
     return 'project_original_input_value' if value['message']['message_type'] not in ('Question', 'Answer', 'Update', 'Request', 'Decision', 'Warning', 'Announcement') else None
 
 
 def project_priority_value(value, context):
+    if value['project_types_valid'] is not True:
+        return None
     return 'project_original_input_value' if value['message']['priority'] not in ('low', 'normal', 'high', 'urgent') else None
 
 
 def project_message_schema_value(value, context):
+    if value['project_types_valid'] is not True:
+        return None
     return 'project_original_input_value' if value['source']['message_schema'] != 'original_project_agent_message' else None
 
 
 def project_created_at_value(value, context):
+    if value['project_types_valid'] is not True:
+        return None
     return 'project_original_input_value' if value['created_at_conforms'] is not True else None
 
 
 def project_body_representation(value, context):
+    if value['project_types_valid'] is not True:
+        return None
     return 'project_original_input_value' if (value['message']['content'] is None) == (value['message']['content_ref'] is None) else None
 
 
 ROWS = (
     ('project_message_type_value', '/source/original_input/message_type', 'is an OSI-247 message type',
-     'project_original_input_value', project_message_type_value, ('message',), 'project_value'),
+     'project_original_input_value', project_message_type_value, ('message', 'project_types_valid'), 'project_value'),
     ('project_priority_value', '/source/original_input/priority', 'is low, normal, high or urgent',
-     'project_original_input_value', project_priority_value, ('message',), 'project_value'),
+     'project_original_input_value', project_priority_value, ('message', 'project_types_valid'), 'project_value'),
     ('project_message_schema_value', '/source/message_schema', "is 'original_project_agent_message'",
-     'project_original_input_value', project_message_schema_value, ('source',), 'project_value'),
+     'project_original_input_value', project_message_schema_value, ('source', 'project_types_valid'), 'project_value'),
     ('project_created_at_value', '/source/original_input/created_at', 'is an RFC 3339 UTC date-time (the lane format checker)',
-     'project_original_input_value', project_created_at_value, ('created_at_conforms',), 'project_value'),
+     'project_original_input_value', project_created_at_value, ('created_at_conforms', 'project_types_valid'), 'project_value'),
     ('project_body_representation', '/source/original_input/content', 'xor content_ref is present',
-     'project_original_input_value', project_body_representation, ('message',), 'project_value'),
+     'project_original_input_value', project_body_representation, ('message', 'project_types_valid'), 'project_value'),
 )
 
 

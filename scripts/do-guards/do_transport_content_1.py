@@ -8,16 +8,17 @@ import pm_guard_isolation as g
 
 
 def content_entry_present(value, context):
-    if 'content_ref' not in value['logical']:
+    logical = value['logical']
+    if type(logical) is not dict or 'content_ref' not in logical:
         return None
     return 'content_reference_join' if not value['content_entry'] else None
 
 
 def content_entry_fields(value, context):
-    entry = value['content_entry']
-    if 'content_ref' not in value['logical'] or not entry or type(entry) is not dict:
+    logical, entry = value['logical'], value['content_entry']
+    if type(logical) is not dict or 'content_ref' not in logical or not entry or type(entry) is not dict:
         return None
-    for key, member in value['logical']['content_ref'].items():
+    for key, member in logical['content_ref'].items():
         if entry.get(key) != member:
             return 'content_reference_join'
     return None

@@ -8,6 +8,8 @@ import pm_guard_isolation as g
 
 
 def retry_transition_allowed(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     if value['family'] != 'subagent.retried':
         return None
     return 'retry_current_transition' if value['retry_transition_allowed'] is not True else None
@@ -15,7 +17,7 @@ def retry_transition_allowed(value, context):
 
 ROWS = (
     ('retry_transition_allowed', '/producer_context', 'is an allowed current retry transition (RETRY_TRANSITION rows)',
-     'retry_current_transition', retry_transition_allowed, ('family', 'retry_transition_allowed'), None),
+     'retry_current_transition', retry_transition_allowed, ('family', 'retry_transition_allowed', 'payload_schema_valid'), None),
 )
 
 

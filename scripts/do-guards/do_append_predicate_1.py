@@ -8,6 +8,8 @@ import pm_guard_isolation as g
 
 
 def phase_force_state_active(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     producer = value['producer_context']
     if value['family'] != 'phase.force_completed' or type(producer) is not dict or type(producer.get('phase_state')) is not str:
         return None
@@ -15,6 +17,8 @@ def phase_force_state_active(value, context):
 
 
 def phase_force_completion_signal(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     producer = value['producer_context']
     if value['family'] != 'phase.force_completed' or type(producer) is not dict or type(producer.get('completion_signal')) is not bool:
         return None
@@ -22,6 +26,8 @@ def phase_force_completion_signal(value, context):
 
 
 def phase_force_question_count(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     if value['family'] != 'phase.force_completed':
         return None
     payload = value['payload']
@@ -29,6 +35,8 @@ def phase_force_question_count(value, context):
 
 
 def phase_force_max_questions(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     producer = value['producer_context']
     if value['family'] != 'phase.force_completed' or type(producer) is not dict:
         return None
@@ -39,6 +47,8 @@ def phase_force_max_questions(value, context):
 
 
 def truncation_grows_output(value, context):
+    if value['payload_schema_valid'] is not True:
+        return None
     if value['family'] != 'subagent.output_truncated':
         return None
     payload = value['payload']
@@ -47,15 +57,15 @@ def truncation_grows_output(value, context):
 
 ROWS = (
     ('phase_force_state_active', '/producer_context/phase_state', "is 'active' (phase.force_completed)",
-     'phase_force_predicate', phase_force_state_active, ('family', 'producer_context'), 'phase_force'),
+     'phase_force_predicate', phase_force_state_active, ('family', 'producer_context', 'payload_schema_valid'), 'phase_force'),
     ('phase_force_completion_signal', '/producer_context/completion_signal', 'is false (phase.force_completed)',
-     'phase_force_predicate', phase_force_completion_signal, ('family', 'producer_context'), 'phase_force'),
+     'phase_force_predicate', phase_force_completion_signal, ('family', 'producer_context', 'payload_schema_valid'), 'phase_force'),
     ('phase_force_question_count', '/logical_payload/question_count', 'exceeds max_questions + 1 (phase.force_completed)',
-     'phase_force_predicate', phase_force_question_count, ('family', 'payload'), 'phase_force'),
+     'phase_force_predicate', phase_force_question_count, ('family', 'payload', 'payload_schema_valid'), 'phase_force'),
     ('phase_force_max_questions', '/producer_context/max_questions', "equals the payload's max_questions (phase.force_completed)",
-     'phase_force_predicate', phase_force_max_questions, ('family', 'producer_context', 'payload'), 'phase_force'),
+     'phase_force_predicate', phase_force_max_questions, ('family', 'producer_context', 'payload', 'payload_schema_valid'), 'phase_force'),
     ('truncation_grows_output', '/logical_payload/truncated_length', 'is at most original_length (subagent.output_truncated)',
-     'truncation_grows_output', truncation_grows_output, ('family', 'payload'), None),
+     'truncation_grows_output', truncation_grows_output, ('family', 'payload', 'payload_schema_valid'), None),
 )
 
 

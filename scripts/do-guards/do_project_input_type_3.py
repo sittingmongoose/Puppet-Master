@@ -8,14 +8,20 @@ import pm_guard_isolation as g
 
 
 def project_source_message_schema_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['source']['message_schema']) is not str else None
 
 
 def project_source_message_ids_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['source']['message_ids']) is not list else None
 
 
 def project_source_message_ids_items(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     ids = value['source']['message_ids']
     if type(ids) is not list:
         return None
@@ -26,24 +32,28 @@ def project_source_message_ids_items(value, context):
 
 
 def project_message_message_id_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['message']['message_id']) is not str else None
 
 
 def project_message_from_agent_id_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['message']['from_agent_id']) is not str else None
 
 
 ROWS = (
     ('project_source_message_schema_type', '/source/message_schema', 'is a string',
-     'project_original_input_type', project_source_message_schema_type, ('source',), 'project_type'),
+     'project_original_input_type', project_source_message_schema_type, ('source', 'project_shape_valid'), 'project_type'),
     ('project_source_message_ids_type', '/source/message_ids', 'is an array',
-     'project_original_input_type', project_source_message_ids_type, ('source',), 'project_type'),
+     'project_original_input_type', project_source_message_ids_type, ('source', 'project_shape_valid'), 'project_type'),
     ('project_source_message_ids_items', '/source/message_ids/*', 'is a string',
-     'project_original_input_type', project_source_message_ids_items, ('source',), 'project_type'),
+     'project_original_input_type', project_source_message_ids_items, ('source', 'project_shape_valid'), 'project_type'),
     ('project_message_message_id_type', '/source/original_input/message_id', 'is a string',
-     'project_original_input_type', project_message_message_id_type, ('message',), 'project_type'),
+     'project_original_input_type', project_message_message_id_type, ('message', 'project_shape_valid'), 'project_type'),
     ('project_message_from_agent_id_type', '/source/original_input/from_agent_id', 'is a string',
-     'project_original_input_type', project_message_from_agent_id_type, ('message',), 'project_type'),
+     'project_original_input_type', project_message_from_agent_id_type, ('message', 'project_shape_valid'), 'project_type'),
 )
 
 

@@ -310,7 +310,8 @@ def phase_context_errors(context):
 def predicate_errors(family, payload, context, retry_allowed):
     """The family producer predicates, through the APPEND_PHASE_CONTEXT, APPEND_PREDICATE, APPEND_RETRY_SOURCE and
     APPEND_RETRY_TRANSITION tables (sweep part 2A), with the original's stops."""
-    view = {'family': family, 'payload': payload, 'producer_context': context}
+    # Reached only with a payload the closed schema accepts (event_errors stops before otherwise).
+    view = {'family': family, 'payload': payload, 'producer_context': context, 'payload_schema_valid': True}
     for table in (guards.APPEND_PHASE_CONTEXT_ROWS, guards.APPEND_PREDICATE_ROWS, guards.APPEND_RETRY_SOURCE_ROWS):
         errors = run_rows(table, view)
         if errors:
@@ -485,10 +486,12 @@ def project_original_input_errors(case, formats):
     """
     source = case['source']
     view = {'source': source, 'message': source.get('original_input') if type(source) is dict else None}
-    for table in (guards.PROJECT_INPUT_SHAPE_ROWS, guards.PROJECT_INPUT_TYPE_ROWS):
+    # Each later stage's rows read the earlier stage's verdict and abstain when it refused, as this checker stops there.
+    for table, verdict in ((guards.PROJECT_INPUT_SHAPE_ROWS, 'project_shape_valid'), (guards.PROJECT_INPUT_TYPE_ROWS, 'project_types_valid')):
         errors = run_rows(table, view)
         if errors:
             return errors
+        view[verdict] = True
     message = view['message']
     view['created_at_conforms'] = formats.conforms(message['created_at'], 'date-time')
     view['content_inline_body'] = inline_body(message['content']) if message['content'] is not None else None
@@ -511,14 +514,7 @@ SELECTED_SHARED_DEFINITIONS = {
 
 def selected_definition_errors(documents):
     """Refuse a change to a selected shared definition, whatever the whole-file pin says (SELECTED_DEFINITION_ROWS)."""
-    selected_sha256 = {}
-    for name, selection in SELECTED_SHARED_DEFINITIONS.items():
-        selected = {x: documents[name].get('$defs', {}).get(x) for x in selection['names']}
-        encoded = json.dumps(selected, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()
-        selected_sha256[name] = hashlib.sha256(encoded).hexdigest()
-    view = {'selected_sha256': selected_sha256,
-            'pinned_sha256': {name: selection['sha256'] for name, selection in SELECTED_SHARED_DEFINITIONS.items()}}
-    return run_rows(guards.SELECTED_DEFINITION_ROWS, view)
+    return run_rows(guards.SELECTED_DEFINITION_ROWS, selected_definition_view(documents))
 
 
 def successor_errors(root):
@@ -843,14 +839,18 @@ def append_full_view(case, schema, identity, retry_allowed, root, formats, histo
 
 
 def transport_full_view(event, logical, packs, ingest_encoding='decoded'):
+    """Every transport view key the input gives, where the lane computes it: nothing past the type stage when the
+    types are wrong (transport_errors stops there)."""
     view = {'event': event, 'logical': logical, 'packs': packs, 'ingest_encoding': ingest_encoding,
-            'transport_encoding_failed': False}
+            'transport_encoding_failed': False, 'payload_entry': None, 'content_entry': None}
+    if run_rows(guards.TRANSPORT_TYPE_ROWS, view):
+        return view
     try:
         view['inline_packed_size'] = len(packed(event['payload']))
         ref = event['payload_ref']
         view['payload_entry'] = packs.get(ref) if ref is not None else None
         view['content_entry'] = packs.get(logical['content_ref']['blake3_id']) if 'content_ref' in logical else None
-    except (TypeError, ValueError, UnicodeError, KeyError, AttributeError):
+    except (TypeError, ValueError, UnicodeError, KeyError):
         view['transport_encoding_failed'] = True
     return view
 
@@ -961,15 +961,17 @@ def application_shape_view(case, root, formats):
     v = selected_validators(root, formats)
     edition = '_v2' if (case['event_type'] == 'crew.board_message_posted' or
                          case['source'].get('schema_id') == 'pm.application_source.coordination_append.v2') else ''
-    return {'source_schema_valid': not list(v['source' + edition].iter_errors(case['source'])),
+    return {'board_branch': 'application', 'source_schema_valid': not list(v['source' + edition].iter_errors(case['source'])),
             'input_schema_valid': not list(v['input' + edition].iter_errors(case['source'].get('original_input'))),
             'wrapper_schema_valid': not list(v['wrapper' + edition].iter_errors(case['wrapper']))}
 
 
 def board_project_view(case):
     payload, source = case['payload'], case['source']
+    # Reached only after project_original_input_errors passed: the branch and that stage's verdict gate the rows.
     return {'payload': payload, 'source': source, 'message': source.get('original_input', {}), 'event_type': case['event_type'],
-            'payload_message_ids': payload.get('message_ids', [payload.get('message_id')])}
+            'payload_message_ids': payload.get('message_ids', [payload.get('message_id')]),
+            'board_branch': 'project', 'project_input_valid': True, 'application_shape_valid': False}
 
 
 def board_application_view(case):
@@ -986,7 +988,9 @@ def board_application_view(case):
         stage_expected[name] = {'typed_witness': typed_text(stage_witness.get('value')),
                                 'typed_expected': typed_text(stage_witness_value(case, name)),
                                 'witness_sha256': semantic_hash('accepted_source', stage_witness.get('value'))}
+    # Reached only after the three application shape rows passed.
     return {'payload': payload, 'source': source, 'message': message, 'wrapper': wrapper, 'event_type': case['event_type'],
+            'board_branch': 'application', 'application_shape_valid': True, 'project_input_valid': False,
             'wrapper_packed_size': len(packed(wrapper)),
             'source_scope_failures': scope_failures(source), 'wrapper_scope_failures': scope_failures(wrapper),
             'typed_wrapper_record': typed_text(wrapper['record']), 'typed_message': typed_text(message),
@@ -1004,6 +1008,17 @@ def board_application_view(case):
             'expected_wrapper_key': prefix + ':'.join(value.encode().hex() for value in (
                 wrapper['storage_instance_id'], wrapper['server_id'], message['thread_id'],
                 message['crew_id'], message['run_id'], message['message_id']))}
+
+
+
+def selected_definition_view(documents):
+    selected_sha256 = {}
+    for name, selection in SELECTED_SHARED_DEFINITIONS.items():
+        selected = {x: documents[name].get('$defs', {}).get(x) for x in selection['names']}
+        encoded = json.dumps(selected, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()
+        selected_sha256[name] = hashlib.sha256(encoded).hexdigest()
+    return {'selected_sha256': selected_sha256,
+            'pinned_sha256': {name: selection['sha256'] for name, selection in SELECTED_SHARED_DEFINITIONS.items()}}
 
 
 def checkpoint_errors(case, root, formats):

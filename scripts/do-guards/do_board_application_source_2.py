@@ -8,36 +8,46 @@ import pm_guard_isolation as g
 
 
 def source_scope_application_scope_identity(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'application_scope_identity' if 'application_scope_identity' in value['source_scope_failures'] else None
 
 
 def source_scope_outer_project_mismatch(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'outer_project_mismatch' if 'outer_project_mismatch' in value['source_scope_failures'] else None
 
 
 def source_scope_project_partition_mismatch(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'project_partition_mismatch' if 'project_partition_mismatch' in value['source_scope_failures'] else None
 
 
 def source_scope_server_scope_mismatch(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'server_scope_mismatch' if 'server_scope_mismatch' in value['source_scope_failures'] else None
 
 
 def source_scope_application_outer_project(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'application_outer_project' if 'application_outer_project' in value['source_scope_failures'] else None
 
 
 ROWS = (
     ('source_scope_application_scope_identity', '/source', 'has no application_scope_identity (the shared scope_failures helper)',
-     'application_scope_identity', source_scope_application_scope_identity, ('source_scope_failures',), None),
+     'application_scope_identity', source_scope_application_scope_identity, ('source_scope_failures', 'board_branch', 'application_shape_valid'), None),
     ('source_scope_outer_project_mismatch', '/source', 'has no outer_project_mismatch (the shared scope_failures helper)',
-     'outer_project_mismatch', source_scope_outer_project_mismatch, ('source_scope_failures',), None),
+     'outer_project_mismatch', source_scope_outer_project_mismatch, ('source_scope_failures', 'board_branch', 'application_shape_valid'), None),
     ('source_scope_project_partition_mismatch', '/source', 'has no project_partition_mismatch (the shared scope_failures helper)',
-     'project_partition_mismatch', source_scope_project_partition_mismatch, ('source_scope_failures',), None),
+     'project_partition_mismatch', source_scope_project_partition_mismatch, ('source_scope_failures', 'board_branch', 'application_shape_valid'), None),
     ('source_scope_server_scope_mismatch', '/source', 'has no server_scope_mismatch (the shared scope_failures helper)',
-     'server_scope_mismatch', source_scope_server_scope_mismatch, ('source_scope_failures',), None),
+     'server_scope_mismatch', source_scope_server_scope_mismatch, ('source_scope_failures', 'board_branch', 'application_shape_valid'), None),
     ('source_scope_application_outer_project', '/source', 'has no application_outer_project (the shared scope_failures helper)',
-     'application_outer_project', source_scope_application_outer_project, ('source_scope_failures',), None),
+     'application_outer_project', source_scope_application_outer_project, ('source_scope_failures', 'board_branch', 'application_shape_valid'), None),
 )
 
 

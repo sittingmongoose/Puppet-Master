@@ -8,36 +8,46 @@ import pm_guard_isolation as g
 
 
 def project_source_run_id_join(value, context):
+    if value['board_branch'] != 'project' or value['project_input_valid'] is not True:
+        return None
     return 'source_run_id' if value['source'].get('run_id') != value['payload'].get('run_id') else None
 
 
 def project_source_operation_id_join(value, context):
+    if value['board_branch'] != 'project' or value['project_input_valid'] is not True:
+        return None
     return 'source_operation_id' if value['source'].get('operation_id') != value['payload'].get('operation_id') else None
 
 
 def project_source_project_id_join(value, context):
+    if value['board_branch'] != 'project' or value['project_input_valid'] is not True:
+        return None
     return 'source_project_id' if value['source'].get('project_id') != value['payload'].get('project_id') else None
 
 
 def project_source_edition(value, context):
+    if value['board_branch'] != 'project' or value['project_input_valid'] is not True:
+        return None
     return 'source_edition' if value['source'].get('edition') != 'original_project_coordination_source' else None
 
 
 def project_source_interface(value, context):
+    if value['board_branch'] != 'project' or value['project_input_valid'] is not True:
+        return None
     return 'source_edition' if value['source'].get('interface') != 'storage.coordination_append.v1@1.0.0' else None
 
 
 ROWS = (
     ('project_source_run_id_join', '/source/run_id', "equals the payload's",
-     'source_run_id', project_source_run_id_join, ('source', 'payload'), None),
+     'source_run_id', project_source_run_id_join, ('source', 'payload', 'board_branch', 'project_input_valid'), None),
     ('project_source_operation_id_join', '/source/operation_id', "equals the payload's",
-     'source_operation_id', project_source_operation_id_join, ('source', 'payload'), None),
+     'source_operation_id', project_source_operation_id_join, ('source', 'payload', 'board_branch', 'project_input_valid'), None),
     ('project_source_project_id_join', '/source/project_id', "equals the payload's",
-     'source_project_id', project_source_project_id_join, ('source', 'payload'), None),
+     'source_project_id', project_source_project_id_join, ('source', 'payload', 'board_branch', 'project_input_valid'), None),
     ('project_source_edition', '/source/edition', "is 'original_project_coordination_source'",
-     'source_edition', project_source_edition, ('source',), 'source_edition'),
+     'source_edition', project_source_edition, ('source', 'board_branch', 'project_input_valid'), 'source_edition'),
     ('project_source_interface', '/source/interface', "is 'storage.coordination_append.v1@1.0.0'",
-     'source_edition', project_source_interface, ('source',), 'source_edition'),
+     'source_edition', project_source_interface, ('source', 'board_branch', 'project_input_valid'), 'source_edition'),
 )
 
 

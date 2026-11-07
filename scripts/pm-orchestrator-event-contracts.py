@@ -288,6 +288,18 @@ def board_storage_checks(schema, fixtures, storage, owner):
     checks += board_member_refusal_checks(schema, fixtures, row, coordination)
     return checks
 
+def guard_table_checks(fixtures):
+    """Sweep part 2A: the guard tables' adapters are current and the whole-table matrix is diagonal (every negative
+    refused by its target row alone, every control by none), with the declared unprovable rows exactly those no
+    negative reaches. The per-suite guard-tool proof is scripts/pm-orchestrator-guard-proof.py run."""
+    spec = importlib.util.spec_from_file_location('do_guard_proof', ROOT / 'scripts/pm-orchestrator-guard-proof.py')
+    proof = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(proof)
+    errors, counts = proof.matrix_errors(fixtures)
+    assert not errors, ('guard_table_matrix', errors[:10])
+    return sum(c['controls'] + c['negatives'] for c in counts.values())
+
+
 def main():
     schema = json.loads((ROOT / 'Plans/orchestrator_event_payloads.schema.json').read_text())
     fixtures = oracles.fixture_loads((ROOT / 'Plans/orchestrator_event_contract_fixtures.json').read_text())
@@ -398,6 +410,7 @@ def main():
         assert oracles.event_errors(bad, schema, identity, retry_allowed, ROOT, UTC_FORMAT) == ['event_join_payload_schema_id'], base['case_id']
         checks += 1
     checks += oracles.check_oracles(fixtures, schema, sys.modules[__name__])
+    checks += guard_table_checks(fixtures)
     print(json.dumps({'status': 'pass', 'families': len(fixtures['contracts']), 'checks': checks, 'native': 'NOT_RUN', 'stopped_facets': []}))
 
 if __name__ == '__main__':

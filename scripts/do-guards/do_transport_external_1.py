@@ -9,34 +9,35 @@ import pm_guard_isolation as g
 
 def external_payload_empty(value, context):
     event = value['event']
-    if event['payload_ref'] is None:
+    if type(event) is not dict or type(event.get('payload')) is not dict or event.get('payload_ref') is None:
         return None
-    return 'external_payload_join' if event['payload'] != {} else None
+    return 'external_payload_join' if event.get('payload') != {} else None
 
 
 def external_entry_present(value, context):
-    if value['event']['payload_ref'] is None:
+    event = value['event']
+    if type(event) is not dict or event.get('payload_ref') is None:
         return None
     return 'external_payload_join' if not value['payload_entry'] else None
 
 
 def external_entry_value(value, context):
-    entry = value['payload_entry']
-    if value['event']['payload_ref'] is None or not entry or type(entry) is not dict:
+    event, entry = value['event'], value['payload_entry']
+    if type(event) is not dict or event.get('payload_ref') is None or not entry or type(entry) is not dict:
         return None
     return 'external_payload_join' if entry.get('value') != value['logical'] else None
 
 
 def external_entry_id(value, context):
-    entry = value['payload_entry']
-    if value['event']['payload_ref'] is None or not entry or type(entry) is not dict:
+    event, entry = value['event'], value['payload_entry']
+    if type(event) is not dict or event.get('payload_ref') is None or not entry or type(entry) is not dict:
         return None
-    return 'external_payload_join' if entry.get('blake3_id') != value['event']['payload_ref'] else None
+    return 'external_payload_join' if entry.get('blake3_id') != event.get('payload_ref') else None
 
 
 def external_entry_media(value, context):
-    entry = value['payload_entry']
-    if value['event']['payload_ref'] is None or not entry or type(entry) is not dict:
+    event, entry = value['event'], value['payload_entry']
+    if type(event) is not dict or event.get('payload_ref') is None or not entry or type(entry) is not dict:
         return None
     return 'external_payload_join' if entry.get('media_type') != 'application/msgpack' else None
 

@@ -8,36 +8,46 @@ import pm_guard_isolation as g
 
 
 def project_source_scope_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['source']['scope']) is not str else None
 
 
 def project_source_storage_instance_id_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['source']['storage_instance_id']) is not str else None
 
 
 def project_source_server_id_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['source']['server_id']) is not str else None
 
 
 def project_source_thread_id_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['source']['thread_id']) is not str else None
 
 
 def project_source_crew_id_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['source']['crew_id']) is not str else None
 
 
 ROWS = (
     ('project_source_scope_type', '/source/scope', 'is a string',
-     'project_original_input_type', project_source_scope_type, ('source',), 'project_type'),
+     'project_original_input_type', project_source_scope_type, ('source', 'project_shape_valid'), 'project_type'),
     ('project_source_storage_instance_id_type', '/source/storage_instance_id', 'is a string',
-     'project_original_input_type', project_source_storage_instance_id_type, ('source',), 'project_type'),
+     'project_original_input_type', project_source_storage_instance_id_type, ('source', 'project_shape_valid'), 'project_type'),
     ('project_source_server_id_type', '/source/server_id', 'is a string',
-     'project_original_input_type', project_source_server_id_type, ('source',), 'project_type'),
+     'project_original_input_type', project_source_server_id_type, ('source', 'project_shape_valid'), 'project_type'),
     ('project_source_thread_id_type', '/source/thread_id', 'is a string',
-     'project_original_input_type', project_source_thread_id_type, ('source',), 'project_type'),
+     'project_original_input_type', project_source_thread_id_type, ('source', 'project_shape_valid'), 'project_type'),
     ('project_source_crew_id_type', '/source/crew_id', 'is a string',
-     'project_original_input_type', project_source_crew_id_type, ('source',), 'project_type'),
+     'project_original_input_type', project_source_crew_id_type, ('source', 'project_shape_valid'), 'project_type'),
 )
 
 

@@ -10,10 +10,14 @@ CONTEXT_FIELDS = {'files', 'operations', 'sender_node', 'related_message_ids'}
 
 
 def project_message_resolved_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     return 'project_original_input_type' if type(value['message']['resolved']) is not bool else None
 
 
 def project_message_read_by_items(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     readers = value['message']['read_by']
     if type(readers) is not list:
         return None
@@ -24,6 +28,8 @@ def project_message_read_by_items(value, context):
 
 
 def project_context_members(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     found = value['message']['context']
     if type(found) is not dict:
         return None
@@ -31,6 +37,8 @@ def project_context_members(value, context):
 
 
 def project_context_sender_node(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     found = value['message']['context']
     if type(found) is not dict or set(found.keys()) != CONTEXT_FIELDS:
         return None
@@ -39,6 +47,8 @@ def project_context_sender_node(value, context):
 
 
 def project_context_files_type(value, context):
+    if value['project_shape_valid'] is not True:
+        return None
     found = value['message']['context']
     if type(found) is not dict or set(found.keys()) != CONTEXT_FIELDS:
         return None
@@ -47,15 +57,15 @@ def project_context_files_type(value, context):
 
 ROWS = (
     ('project_message_resolved_type', '/source/original_input/resolved', 'is a boolean',
-     'project_original_input_type', project_message_resolved_type, ('message',), 'project_type'),
+     'project_original_input_type', project_message_resolved_type, ('message', 'project_shape_valid'), 'project_type'),
     ('project_message_read_by_items', '/source/original_input/read_by/*', 'is a string',
-     'project_original_input_type', project_message_read_by_items, ('message',), 'project_type'),
+     'project_original_input_type', project_message_read_by_items, ('message', 'project_shape_valid'), 'project_type'),
     ('project_context_members', '/source/original_input/context', 'has exactly files, operations, sender_node and related_message_ids',
-     'project_original_input_type', project_context_members, ('message',), 'project_type'),
+     'project_original_input_type', project_context_members, ('message', 'project_shape_valid'), 'project_type'),
     ('project_context_sender_node', '/source/original_input/context/sender_node', 'is a string or null',
-     'project_original_input_type', project_context_sender_node, ('message',), 'project_type'),
+     'project_original_input_type', project_context_sender_node, ('message', 'project_shape_valid'), 'project_type'),
     ('project_context_files_type', '/source/original_input/context/files', 'is an array',
-     'project_original_input_type', project_context_files_type, ('message',), 'project_type'),
+     'project_original_input_type', project_context_files_type, ('message', 'project_shape_valid'), 'project_type'),
 )
 
 

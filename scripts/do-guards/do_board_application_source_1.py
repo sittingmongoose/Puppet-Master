@@ -10,10 +10,14 @@ LIMIT = 16384
 
 
 def application_wrapper_size(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     return 'application_wrapper_over_16k' if value['wrapper_packed_size'] > LIMIT else None
 
 
 def application_body_representation(value, context):
+    if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
+        return None
     message = value['message']
     return ('application_message_body_representation'
             if (message['inline_text'] is None) == (message['blake3_payload_ref'] is None) else None)
@@ -21,9 +25,9 @@ def application_body_representation(value, context):
 
 ROWS = (
     ('application_wrapper_size', '/wrapper', "packs to at most Storage's 16 KiB value limit",
-     'application_wrapper_over_16k', application_wrapper_size, ('wrapper_packed_size',), None),
+     'application_wrapper_over_16k', application_wrapper_size, ('wrapper_packed_size', 'board_branch', 'application_shape_valid'), None),
     ('application_body_representation', '/source/original_input/inline_text', 'xor blake3_payload_ref is present',
-     'application_message_body_representation', application_body_representation, ('message',), None),
+     'application_message_body_representation', application_body_representation, ('message', 'board_branch', 'application_shape_valid'), None),
 )
 
 
