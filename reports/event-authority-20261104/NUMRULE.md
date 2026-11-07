@@ -2353,3 +2353,63 @@ The discovery runs (`t41/discovery/`), the discovery and merge scripts and the r
 
 Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH4/numrule/` (`results/`: the self-test, both replay chunks, their merge, the re-replayed row, the number run, `f7.json.gz` and `f7-targeted.json`, the discovery rows `discover.jsonl` and the survivor reason; `tools/`: the discovery, apply and finding-7 drivers and the run script). The witness of each new point was found with the gate's own `run_mutant` (`tools/discover71.py`: each point's mutant over the survivor suite, likely witnesses first, the gate-bar detection checks last because they fail on the intact tree until the points are committed); 12 points (and the two probe hand-written mutations) that no existing check caught got one of 10 new checks, each shown failing on its mutant alone.
 
+
+
+## Tool batch 5: findings and responses (date-time gate, T102; number scope, T103)
+
+**REVIEW-numrule-tb4-opus: every blind survivor is answered; nothing is disputed.**
+
+- **Base:** `90a50fdf62` on `plans/ea-numrule-20261105`. Worked in one Nas1 worktree; rebased onto the latest origin branch right before the push, no force.
+- **Production code is unchanged:** `pm_event_datetime.py`, `pm_event_datetime_inventory.py`, `pm_event_datetime_value_probe.py`, `pm_event_datetime_admission_checks.py`, `pm_event_numbers.py` and `pm_event_index_binding.py` are byte-identical to the base.
+- **Nothing is REAL:** no new case or check showed a production bug. Each blind survivor was a mutant no case told apart; every new case and check passes on the intact tree and fails on the mutant it answers.
+- **Commits:** `8c21d32796` (T103), `06781186af` (T102), and this report.
+- **Files touched:**
+  - number: `Plans/event_number_recipe_corpus.json`, `scripts/pm_event_numbers_corpus.py`, `scripts/pm_event_numbers_mutations.json`, and the corpus content pin in `scripts/pm_event_datetime_exclusions.json` (recomputed for the 9 new cases: `d1c4b82b…67df` to `4ddcefb1…bad`; without it the committed-tree inventory check fails on the intact tree);
+  - date-time: `scripts/pm_event_datetime_mutations.py`, `.json` and `_selfcheck.py`.
+
+### T103: the number scope (B-N09 to B-N12, B-N14, B-N20)
+
+| Survivor | Location, cause and fix | Evidence |
+|---|---|---|
+| **B-N09 (fail-open): a binding length past uint32 was not refused** | The corpus injected a reported length into `pm_event_numbers` only, never into the SP-278 binding codec where the uint32 header limit is checked. A case may now name `"reported_length_module": "binding"`, and the runner injects into the globals of `binding_bytes`. New cases `physical-binding-array-reported-length-4294967296` (`binding_domain`) and its control `physical-binding-array-reported-length-4294967295` (encodes, `ddffffffff01`). | `review-tb4-B-N09` (rule `binding.domain`): caught by the new case alone |
+| **B-N10: the refusal message** | Owner-equivalent: no owner text names a message format. Pinned by the check `refusal_message_is_its_reason` (`str(Refusal(r)) == r`, `args == (r,)`, `.reason == r` for three reasons). | `review-tb4-B-N10` (rule `refusal.reason-code`): caught by the new check alone |
+| **B-N11 (fail-open): inline flags 0, None and '' were accepted** | One case each: `payload-inline-flag-zero`, `-null`, `-empty-string`, each refused with `boolean_type` (single defect `payload.inline.boolean`). | `review-tb4-B-N11` (rule `boolean.exact`): caught by exactly the three new cases |
+| **B-N12: check order** | Owner-equivalent: CV-1100 names no order for two defects. The case `payload-size-and-media-two-defects` (a wrong size and a wrong media type) pins `payload_size` and says so (`precedence_pinned`). | `review-tb4-B-N12` (rule `payload.exact-media`): caught by the new case alone |
+| **B-N14 (fail-open): a recipe added after install was honoured** | `RetainedDispatcher` installs the exact map it was given. A case may now name `after_install` (`add`, `replace`, `delete`), and the runner changes the caller's map after installation: `history-recipe-added-after-install` (`recipe_unknown`), `-replaced-after-install` and `-deleted-after-install` (the original returned with zero effects, the installed verifier kept). | `review-tb4-B-N14` (rule `dispatch.recipe-unknown`): caught by exactly the three new cases |
+| **B-N20: the CLI's default `--corpus` path** | The check `cli_default_corpus_is_the_committed_corpus` runs the helper's own module code under another name, replaces `self_test` with a stub that records the path it is handed, and runs `main()` with `--self-test --scope numbers` and no `--corpus`: the path must be the committed `Plans/event_number_recipe_corpus.json`. | `review-tb4-B-N20` (rule `cli.exit-status`): caught by the new check alone |
+
+Each `review-tb4-*` mutation is committed with `source: review-toolbatch4`; its `failed_case_ids` or `failed_checks` are exactly the new witnesses, so each survived the base corpus. Four of the six are fail-open (B-N09, B-N11, B-N14 here, B-DT19 below); each has its own cases.
+
+**Soundness:** nothing widens. Nine cases, two checks and six mutations are added; the two runner options (`reported_length_module`, `after_install`) are read only by cases that name them.
+
+### T102: the date-time gate (B-DT11 to B-DT13, B-DT15, B-DT18 to B-DT20, finding 3)
+
+| Survivor | Location, cause and fix | Evidence |
+|---|---|---|
+| **B-DT11: an anonymous resource installed after its wrapper** | `datetime_unit_selection_install_anonymous_after_its_wrapper`: a dictionary first seen inside a wrapper, later installed as its own anonymous resource (no `$id`, no `$schema`), is registered then and admitted; `…_anonymous_after_its_wrapper_changed`: the same resource changed after admission is refused (`datetime_schema_changed_after_admission`). | `hw-tb5-install-wrapper-before-registration` (rule `admission.pinned-resources`) |
+| **B-DT12, B-DT13: refusal precedence** | Owner-equivalent: CV-1101 names no precedence for two defects. Pinned by `datetime_unit_date_time_precedence_leap_second_before_utc_z` (`2016-12-31T23:59:60+01:00` under `storage_utc_z` refuses `date_time_leap_second`) and `…_profile_before_type` (a non-string under an unknown profile refuses `date_time_profile`). | `hw-tb5-utc-z-before-leap-second` (rule `profile.storage-utc-z`), `hw-tb5-type-before-profile` (rule `profile.selection`) |
+| **B-DT15: `code:N` and `html:N` origin spelling** | `datetime_unit_scan_origin_spellings`: the exact origin of each container kind, which keys rows and exclusions: a fence (`fence:N`), indented code (`code:N`), inline code (`code_inline:N:i`), a fence in a list item, an HTML block (`html:N`, unreadable there), a JSONL line (`jsonl:N`) and a schema two serialized strings deep; `datetime_unit_scan_exclusion_at_each_origin_used`: an exclusion at `code:3`, `html:3` and `code_inline:3:1` is used, with no stale exclusion. The respelling `code_block:N` had passed the whole replay; only the committed `code:11` exclusions noticed it, under `--scope all`. | `hw-tb5-block-origin-spelling` (rule `scan.mentioning-container`) |
+| **B-DT18: two byte order marks** | `datetime_unit_scan_decode_two_byte_order_marks`: a UTF-8 file that starts with a second U+FEFF after the BOM the codec consumes is read as its JSON (`decode_text` strips every leading U+FEFF; the choice is pinned). The mutant fails closed: such a file no longer parses. | `hw-tb5-second-bom-kept` (rule `scan.decoding`) |
+| **B-DT19 (fail-open): an exclusion hid a resource reached through `%2E%2E/`** | `_exclusion_schema_paths` already normalises; nothing told it apart. `datetime_unit_scan_exclusion_referenced_through_encoded_dot_dot` (the review's input: `Plans/a/ref.json` refers to `%2E%2E/copy.json`), `…_through_dot` (`./copy.json`) and `…_through_doubled_slash` (`sub//copy.json`): an exclusion of the file such a `$ref` names is refused (`loadable_schema_exclusion_forbidden`). | `hw-tb5-exclusion-paths-not-normalised` (rule `scan.loadable-never-excluded`) |
+| **B-DT20: a nested `:string:` origin split once** | `datetime_unit_source_document_two_strings_deep`: a row two serialized strings deep reads its source document. | `hw-tb5-nested-string-origin-split-once` (rule `inventory.source-owner`) |
+| **Finding 3: one suite** | `survivor_witnesses()` ends with `integration:<name>` for the twelve date-time owner checks `--scope all` runs that are not regression checks (`integration_names()`: `datetime_integration_checks` less `regression_checks`, named once from the intact code): the committed-tree inventory check (`datetime_inventory_complete_and_classified`), the fence-container check, `eventrecord_datetime_valid` and the nine `eventrecord_format_enforced_*` checks. They run once per mutant under the installed mutant and are kept on the context; they come last, so only a mutant that survives everything before them pays for the committed-tree scan. The replay now judges on exactly the `--scope all` date-time suite (B-DT15 had survived the replay and failed only that inventory check). | the suite: 611 self-checks, the date-time corpus cases, the regression checks and 12 integration checks |
+
+Each `hw-tb5-*` mutation is the review's blind edit, committed with its rule and its new witness.
+
+**Soundness:** nothing widens. `survivor_witnesses()` adds 12 witnesses, so a declared survivor must survive more: this only narrows what a survivor may be. `integration:` is a new witness kind committed rows may name (none does); the control is its check: the intact code survives every witness, the 12 integration checks included, so none of them is false on the intact tree. Everything else adds 11 checks and 7 mutations.
+
+### Rerun results
+
+| Check | Base `90a50fdf62` | Now |
+|---|---|---|
+| date-time `--self-test` | pass, 605 checks (600 + 5 freshness) | **pass, 616 checks** (611 + 5), 0 failures, 0 freshness problems; 495 points (production code unchanged, so the same points), 12 declared survivors, 102 hand-written mutations; 2 min 36 s |
+| date-time `--mutations --only hw-tb5-` | — | **7 of 7 caught**, each by its own new check (`witness_failed`), 0 build errors, 0 runner exceptions, `problems` empty; 2 min 41 s |
+| the 12 declared survivors and the control over the 23 new witnesses (11 self-checks, 12 `integration:`), with the gate's `mutation_points`, `point_code` and `run_mutant` (`dt_survivors.py`) | — | **all 13 survive**; 340 to 412 s each, the committed-tree inventory scan most of it |
+| date-time blind replay (the review's 20, `blind_run.py dt`, over `survivor_witnesses()`: 8,025 witnesses: 611 checks, 6,539 cases, 863 regression, 12 integration) | **13/20** caught (B-DT11, 12, 13, 15, 18, 19, 20 survived) | **20/20 caught**; each of the seven by its own new check (B-DT15, 18, 19 and 20 after 111 to 129 s, the rest in seconds); the control survives every witness (1,044 s) |
+| number `--self-test --scope numbers --mutations` | 417: 412 caught, 5 declared survivors, 44 data points; 571 cases | **423: 418 caught, 5 declared survivors**, 0 undeclared, 0 build errors, `problems` empty; 580 cases (304 negatives, 276 positives); 108 of 108 rules, 114 rule rows caught, 80 reason rows; 63 owner checks; 91 s |
+| number blind replay (the review's 20, `blind_run.py num`) | **14/20** (B-N09, 10, 11, 12, 14, 20 survived) | **20/20 caught** (18/20 before B-N10 and B-N12 were pinned) |
+| `--self-test --scope all` | pass, 13,617 cases | **pass, 13,626 of 13,626 cases** (6,939 positives, 6,687 negatives, all labelled), 937 owner integration checks all true, 0 failures; date-time inventory pass with the recomputed pin (233 nodes: 133 Storage, 89 other-owner, 3 automatic, 8 roles, 0 unclassified); 7 min 49 s, 533 MB peak |
+
+The full date-time `--mutations` replay (590 rows, about 2 h 45 min in batch 4) was not rerun. A caught row is judged by its own committed witness alone, and this batch changes no production code and no existing check; the only rows whose judgment changes are the 12 declared survivors, which must now survive 23 more witnesses, and they do (above).
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH5/numrule/` (`results/`: the date-time self-test, the `hw-tb5` replay, the survivors over their new witnesses, both blind replays (the number one before pinning B-N10 and B-N12 too), the number `--mutations` run and the `--scope all` run; `tools/`: the run scripts, `dt_survivors.py` and the review's `blind_run.py`).
