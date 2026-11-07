@@ -583,9 +583,9 @@ and worktree-removal procedure while holding the same landing lock; release it a
 
 A batch member after the first is rechecked alone (the batch closes with its follow-up at the current `main`) when any of
 these holds, on exit 0 or 1. They need the landing check's additive report lines (`fix/landing-check-report-ids-20261106`:
-gone-bucket ids, every subcheck's total, per-bucket counts, and `--row-report`); with an older check the narrower triggers
-apply (a gone count below an earlier member's, a readiness counter above the highest earlier total) and the shapes below
-that only the new lines show cannot be seen.
+gone-bucket ids, every subcheck's total, per-bucket counts, and `--row-report`). Without them there is no batch:
+`scripts/pm-land.py` lands alone, or closes an open batch, on a landing check that does not print those lines, and a hand
+lander on such a check lands alone too.
 
 From what moved since the previous member's report, unless exempt:
 1. A bucket the previous report listed as gone is not gone in this one.
