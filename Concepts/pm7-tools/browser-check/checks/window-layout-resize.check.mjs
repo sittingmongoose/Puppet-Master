@@ -12,6 +12,16 @@
 //    box (the window cut by the viewport), more than 1 px.
 // Also judged: back at 1920x1080 the first frame is wide. Preconditions (never skips): the window was wide before the
 // resize, and frames were read at 740. Fails on 457801b0f6 on the normal surface (the first 740 frame wide in every look).
+// What each surface proves (sol-review-g6): the reader runs inside the page, at the end of each frame the page lays out.
+//  - Normal surface: the page is a frame in the same process as the page around it, which paints the page's frame in the
+//    same frame it composites; what the reader reads is what that frame paints. Its claims are about painted frames
+//    (60 fps films agree: 0 wide frames at 740 on the fix, 12-27 per resize on 457801b0f6, retro-c6 fo88 films).
+//  - Sandbox: T3's frame is out of process. Until the page there commits its first frame at the new size, the browser
+//    shows the frame's previous picture clipped to the new size (the 1920 window cut at the frame's edge: 21-45 frames on
+//    Windows, FO-92, open), and nothing inside the page can see that. Its claims are about the frames the page itself lays
+//    out: its own first frame at 740 is narrow, and so is every later one. The time from the resize to that first frame is
+//    logged ('own first 740 frame N ms after the resize'), not judged. Native proof of the sandbox's first painted frame
+//    needs a film and its frames (tools/stale88b.py in the retro-c6 evidence), and fails on FO-92 until it is fixed.
 // Both surfaces (--set sandbox picks one); --set looks=, --set reps=. Headless or --record (the frames are resized, not
 // the window, so a film shows each resize; each is marked).
 //   browser-check run Concepts/pm7-tools/browser-check/checks/window-layout-resize.check.mjs --set page=<build>
@@ -31,7 +41,7 @@ function install() {
 		const layer = root && root.querySelector('.o55-layer:not(.o55-out)');
 		const foot = layer ? [...layer.querySelectorAll('.o55-foot button')].filter((b) => b.offsetParent && b.getBoundingClientRect().width > 0) : [];
 		const st = root && window.O55 && O55.pipStage && O55.pipStage.of(root.querySelector('.o55-stage'));
-		S.frames.push({ t: performance.now(), w: innerWidth, h: innerHeight, lay: root && root.getAttribute('data-o55-layout'), drawn: st ? st.layoutName : null, win: R(win), stage: R(root && root.querySelector('.o55-stage')), foot: foot.map((b) => ({ name: (b.textContent || '').trim().slice(0, 28), r: R(b) })) });
+		S.frames.push({ t: performance.now(), at: Date.now(), w: innerWidth, h: innerHeight, lay: root && root.getAttribute('data-o55-layout'), drawn: st ? st.layoutName : null, win: R(win), stage: R(root && root.querySelector('.o55-stage')), foot: foot.map((b) => ({ name: (b.textContent || '').trim().slice(0, 28), r: R(b) })) });
 	}).observe(dot);
 	const flip = () => { if (!S.on) { dot.remove(); return; } dot.style.width = dot.style.width === '1px' ? '2px' : '1px'; requestAnimationFrame(flip); };
 	requestAnimationFrame(flip);
@@ -50,10 +60,10 @@ async function run(t, mode) {
 		await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
 		const href = await t.root.evaluate(() => location.href);
 		[f] = await t.openSideBySide([{ url: href, width: 1920, height: 1080, label: 'FO-88 normal: the page in a frame resized as a window would be' }]);
-		size = (w, h) => t.window.evaluate(([w, h]) => { const i = document.getElementById('__bc_side_0'); i.style.width = w + 'px'; i.style.height = h + 'px'; }, [w, h]);
+		size = (w, h) => t.window.evaluate(([w, h]) => { const i = document.getElementById('__bc_side_0'); i.style.width = w + 'px'; i.style.height = h + 'px'; return Date.now(); }, [w, h]);
 	} else {
 		f = await t.app.open({ sandbox: true, onboarding: true, query: 'o55=screen=welcome' });
-		size = (w, h) => t.window.evaluate(([w, h]) => { const i = [...document.querySelectorAll('iframe')].find((x) => x.hasAttribute('sandbox')); i.style.width = w + 'px'; i.style.height = h + 'px'; i.style.flex = 'none'; }, [w, h]);
+		size = (w, h) => t.window.evaluate(([w, h]) => { const i = [...document.querySelectorAll('iframe')].find((x) => x.hasAttribute('sandbox')); i.style.width = w + 'px'; i.style.height = h + 'px'; i.style.flex = 'none'; return Date.now(); }, [w, h]);
 	}
 	await f.waitForFunction(() => !!window.O55 && !!O55.S && !!O55.S.root, null, { timeout: 60000 });
 	await t.emulate({ reducedMotion: t.args.motion === 'reduce' ? 'reduce' : 'no-preference' });
@@ -70,7 +80,7 @@ async function run(t, mode) {
 			await f.evaluate(install);
 			await f.waitForTimeout(150);
 			await t.mark(`${look} rep ${i} 740`);
-			await size(740, 768);
+			const sizedAt = await size(740, 768);
 			await f.waitForTimeout(1500);
 			await t.mark(`${look} rep ${i} 1920`);
 			await size(1920, 1080);
@@ -83,15 +93,22 @@ async function run(t, mode) {
 			   frame late showed the tall stage's scene in the banner, FO88-N1) */
 			const stale = at.filter((x) => x.drawn !== 'banner');
 			const cut = at.map((x) => ({ x, s: past(x, x.stage), b: Math.max(0, ...x.foot.map((q) => past(x, q.r))), who: x.foot.filter((q) => past(x, q.r) > 1).map((q) => q.name) })).filter((c) => c.s > 1 || c.b > 1);
-			const why = JSON.stringify({ frames: fr.length, at740: at.length, first740: at[0] && { lay: at[0].lay, win: at[0].win && at[0].win.map(Math.round), stage: at[0].stage && at[0].stage.map(Math.round) }, wrongLayout: wrong.length, staleStage: stale.length, firstDrawn: at[0] && at[0].drawn, cut: cut.length, worstCut: cut[0] && { stage: Math.round(cut[0].s), button: Math.round(cut[0].b), who: cut[0].who, lay: cut[0].x.lay }, backFirst: back[0] && back[0].lay, footButtons: at[0] ? at[0].foot.map((q) => q.name) : [] });
+			/* (how long after the resize, wall clock, the page laid out its own first frame at 740: before it, the sandbox's
+			   out-of-process frame shows its old picture clipped, FO-92; logged, not judged) */
+			const ownFirst = at[0] ? Math.round(at[0].at - sizedAt) : null;
+			const why = JSON.stringify({ frames: fr.length, at740: at.length, ownFirstMs: ownFirst, first740: at[0] && { lay: at[0].lay, win: at[0].win && at[0].win.map(Math.round), stage: at[0].stage && at[0].stage.map(Math.round) }, wrongLayout: wrong.length, staleStage: stale.length, firstDrawn: at[0] && at[0].drawn, cut: cut.length, worstCut: cut[0] && { stage: Math.round(cut[0].s), button: Math.round(cut[0].b), who: cut[0].who, lay: cut[0].x.lay }, backFirst: back[0] && back[0].lay, footButtons: at[0] ? at[0].foot.map((q) => q.name) : [] });
 			// (preconditions: wide before, frames read at 740, the footer's buttons there)
 			await t.check(`${tag}: wide at 1920x1080 before the resize`, before.length > 0 && before[before.length - 1].lay === 'wide', why);
 			await t.check(`${tag}: frames read at 740x768`, at.length > 1 && at[0].foot.length > 0 && !!at[0].stage, why); /* (a loaded film machine paints few: 2-17 frames in 1.5 s on the VM while it recorded) */
-			await t.check(`${tag}: the first frame at 740x768 is laid out narrow`, !!at[0] && at[0].lay === 'narrow', why);
-			await t.check(`${tag}: every frame at 740x768 is laid out narrow`, wrong.length === 0, why);
-			await t.check(`${tag}: Pip's stage drawn for the narrow window (banner) in every frame at 740x768`, stale.length === 0, why);
-			await t.check(`${tag}: the stage and the footer buttons inside the window in every frame at 740x768`, cut.length === 0, why);
-			await t.check(`${tag}: the first frame back at 1920x1080 is laid out wide`, !!back[0] && back[0].lay === 'wide', why);
+			/* (the claim each surface can make: painted frames in the same process; the page's own frames out of process, where
+			   the browser's clipped old picture before them is FO-92 and not seen here) */
+			const F = mode === 'normal' ? { first: 'the first frame painted', every: 'every frame painted' } : { first: "the page's own first frame laid out (the clipped old picture shown before it is FO-92, not judged)", every: 'every frame the page lays out' };
+			await t.check(`${tag}: ${F.first} at 740x768 is narrow`, !!at[0] && at[0].lay === 'narrow', why);
+			await t.check(`${tag}: ${F.every} at 740x768 is narrow`, wrong.length === 0, why);
+			await t.check(`${tag}: Pip's stage drawn for the narrow window (banner) in ${F.every} at 740x768`, stale.length === 0, why);
+			await t.check(`${tag}: the stage and the footer buttons inside the window in ${F.every} at 740x768`, cut.length === 0, why);
+			await t.check(`${tag}: ${F.first.replace(' (the clipped old picture shown before it is FO-92, not judged)', '')} back at 1920x1080 is wide`, !!back[0] && back[0].lay === 'wide', why);
+			if (mode === 'sandbox') t.log(`${tag}: own first 740 frame ${ownFirst} ms after the resize`);
 			t.log(`${tag}: ${why}`);
 		}
 	}
