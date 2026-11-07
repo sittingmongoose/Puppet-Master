@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L29172
+Source lines: L26794-L29192
 
-Source SHA256: `b32ad84fb95c0e899d007401d255dbd1c4cd14ca85ef21f816f201e7bcbf3ebe`
+Source SHA256: `5e06b4744d73089daf59bcbea277c53a26ee6d6a6359edac2561128035693f8d`
 
 ---
 
@@ -2268,7 +2268,7 @@ status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   DL-341 amends the pm.command_payload_definitions.v1 format and the UCC-230 map in Plans/UI_Command_Catalog.md
-  after rounds 1 and 2 of the blind review of the 275 Q5 command payload definitions (DL-333). In round 1 all five
+  after rounds 1 to 3 of the blind review of the 275 Q5 command payload definitions (DL-333). In round 1 all five
   review slices failed (3 blockers, 27 majors, 42 minors) while scripts/pm-command-payload-defs-check.py passed.
   Part of the cause was the format and the map: writers had nowhere to record a judgment except a YAML comment,
   which no tool reads, the vocabulary had no nullable form and forced snake_case enum values, and the map missed
@@ -2285,9 +2285,12 @@ canonical_text: >-
   define both the node approval shape and the HITL-038 chat-tool shape, through conditional identity exemptions that
   require blocked_sequence and allowed_action_id on every approval_kind branch except chat_tool and forbid them on
   chat_tool; canon names only the chat_tool value of approval_kind, so the definition marks that field a gap. Owner
-  states maintenance_cutoffs_pending (DL-403) and dedup_hold_pending (DL-444, DL-445) map to not_configured, the
-  thirteen CRAU-095 local-runtime reason codes map to closed codes, and a definition may tie the owner states it
-  shows to their codes in owner_state_codes. identity_aliases lets gist_id stand for memory_item_id
+  states maintenance_cutoffs_pending (DL-403, and since the DL-446 and DL-447 cutoffs the hold until their
+  approvals pass) and dedup_hold_pending (DL-444, DL-445) map to not_configured. The thirteen CRAU-095 local-runtime
+  reason codes and the UCC-111 safe-point retry states safe_point_missing and state_changed map to closed codes;
+  canon names those codes without giving them closed codes, so each mapping is a worker's choice under DL-333
+  resolution 6 as the stream C lead applies it, and four CRAU-095 mappings are asked of the CRAU owner
+  (crau_owner_questions). A definition may tie the owner states it shows to their codes in owner_state_codes. identity_aliases lets gist_id stand for memory_item_id
   (UCC-084..UCC-088) and investigation_id for debug_session_id (UCC-077..UCC-083) without renaming canon. Canon
   already decided three further map corrections, made here with their sources: cmd.terminal.focus_session,
   compose.save_scenario, compose.run_scenario, set_context and set_namespace are recorded aliases with no
@@ -2295,7 +2298,7 @@ canonical_text: >-
   they never require attempt_id; and worktree_lifecycle_state is required when a command mutates worktree state, as
   the overlay cell says, rather than for every domain action, so cmd.git.worktree.request_prune, which never mutates
   worktree state (GI-041), does not carry it. This entry was amended in place on 2026-11-07, before it reached main,
-  after round 2 of the review (round_2_changes). Jared's only words remain "approve all" (DL-333). The coordinator's
+  after rounds 2 and 3 of the review (round_2_changes, round_3_changes). Jared's only words remain "approve all" (DL-333). The coordinator's
   ruling, quoted verbatim in coordinator_resolutions, is the only coordinator resolution in this entry; how it was
   applied, the lead's implementation of resolution 2, the workers' own calls, the application of DL-333 resolution 6
   and the lead's proposals are listed separately and labelled by who made them. This entry changes no owner-doc
@@ -2317,12 +2320,15 @@ worker_calls:
   - "P0b worker's call, kept by the lead: the JUDGMENT word rule also matches JUDGEMENT and the plurals; P0c extends it to snake_case compounds such as judgment_basis (round 2 S6 finding 7)."
   - "P0b worker's classification of the worktree commands, kept by the lead: create, lock, prune, recover, release, remove, reuse and unlock mutate worktree state (lock and unlock set the git lock state; unlock's precondition is worktree_locked); request_prune and select do not (select persists per-project selection and filter state, which W-075 keeps an owner runtime/view record)."
   - "P0c worker's calls: the checker enforces that approval_kind is a gap field, and a forbidden_when on the chat_tool branch may not also forbid a branch that requires the field; nullable is refused on a required row-group identity even where an identity exemption lets the definition leave the field out, since an exemption makes the field omissible, not nullable; a [] step in any judgment path must name a list field of the definition; a list choice may not repeat an entry; a whole-line YAML comment is reported against the definition of the next content line; owner_state_code_map may not map one owner state twice; the review-reference rule's list of names, read from the brief's examples and \"and the like\" (the Q5 design's sections and the fix reports' canon-conflict labels included, a future compile review not); the closed code chosen for each CRAU-095 code; and leaving CRAU-095's compatibility vocabulary unmapped (under_dl333_resolution_6)."
+  - "P0d worker's calls (round 3): keeping blocked_state_required for compose_invalid, compose_service_missing, image_missing and k8s_rollout_blocked, where canon reads two ways (crau_owner_questions); the closed codes for the two UCC-111 states, safe_point_missing to blocked_state_required and state_changed to stale_projection; and not adding storage failure, source verification failure or missing explicit confirmation to the map, since canon names them only in prose and no owner-state token spells them (open_owner_questions)."
 canon_decided_changes:
   - "non_definition_tokens: cmd.terminal.focus_session, an alias of cmd.terminal.focus (UCC-202 canonical_text: \"cmd.terminal.focus is canonical and cmd.terminal.focus_session is its alias\"); compose.save_scenario and compose.run_scenario, compatibility aliases of cmd.docker.compose.scenario.save and .run (UCC-137 canonical_text: \"the flat compose.save_scenario and compose.run_scenario spellings recorded as compatibility aliases\"); set_context and set_namespace, compatibility aliases of cmd.docker.k8s.select_context and select_namespace (UCC-137 canonical_text; UCC-052 compatibility_only_notes). Round 1 S1 map items 1-2 and S3 M1."
   - "pre_attempt_admissible: cmd.runtime.locate_and_verify_recovery and cmd.runtime.abandon_recovery (UI_Command_Catalog.md Known-37 recovery-unavailable rows: \"Pre-attempt payloads omit `attempt_id`\"; Commands_System.md: \"Pre-attempt dispatch omits `attempt_id`\"; Contracts_V0.md: \"A pre-attempt request omits `attempt_id`\"). Round 1 S4 U1."
   - "worktree_lifecycle_state: when mutating, as the overlay cell says (\"`worktree_lifecycle_state` when mutating worktree state\"). The map lists create, lock, prune, recover, release, remove, reuse and unlock as mutating and request_prune and select as not mutating, each with its row in the catalog's section 2.5C project-scope git worktree commands table (UCC-054) as evidence; the per-command classification is the P0b worker's call (worker_calls); GI-041 says \"request_prune never mutates worktree state\" and W-075 keeps the selected worktree an owner runtime/view record. A domain_action in the row group that the map lists in neither fails closed, so the rule checks every case the earlier domain_action rule covered. Round 1 S5 M1 and F10."
 under_dl333_resolution_6:
-  - "DL-333 coordinator resolution 6 (owner disabled states outside the overlay's closed set map to closed codes through UCC-230 owner_state_code_map), applied to the thirteen codes of the CRAU-095 canonical local-runtime reason-code base enum, each entry citing CRAU-095; no new ruling. runtime_context_missing, k8s_context_missing, k8s_namespace_missing and access_url_unresolved map to not_configured; runtime_context_unreachable and k8s_context_unreachable to unreachable; buildx_unavailable and bake_unavailable to partial_capability; container_unhealthy to degraded; compose_invalid, compose_service_missing, image_missing and k8s_rollout_blocked to blocked_state_required. CRAU-095's compatibility vocabulary is not a second base enum and is not mapped. Round 2 S1 finding 6 and map item 1."
+  - "DL-333 resolution 6, verbatim with its scope: \"owner disabled states outside the overlay's closed set (the GitHub_Integration worktree states and the prd_planning_runtime_contracts.json codes) map to closed disabled-reason codes through UCC-230 owner_state_code_map; the owner word stays display detail and the closed set is not expanded.\" Its scope names only the GitHub_Integration worktree states and the prd_planning_runtime_contracts.json codes. Extending it to other owner states is the stream C lead's application, not the resolution's words: it rests on UCC-230's general sentence \"Owner disabled states that fall outside the closed set map to closed codes through owner_state_code_map and stay display detail\". No new ruling."
+  - "Applied to the thirteen codes of the CRAU-095 canonical local-runtime reason-code base enum (the stream C lead's P0c task text, round 2 S1 finding 6 and map item 1). CRAU-095 and Containers_Registry_and_Unraid.md section 2B list the names only; every one of the thirteen mappings is the P0c worker's choice from the code's name, and each map entry says so. runtime_context_missing, k8s_context_missing, k8s_namespace_missing and access_url_unresolved map to not_configured; runtime_context_unreachable and k8s_context_unreachable to unreachable; buildx_unavailable and bake_unavailable to partial_capability; container_unhealthy to degraded: nine codes inside the shared Docker/Kubernetes disabled-state taxonomy (UCC-053; UI_Command_Catalog.md section 2.5B). compose_invalid, compose_service_missing, image_missing and k8s_rollout_blocked map to blocked_state_required, outside that taxonomy; their entries cite UCC-053 and section 2.5B beside Containers_Registry_and_Unraid.md section 2B, and the choice is asked of the CRAU owner (crau_owner_questions). Canon passages cited beside a mapping where they exist: section 2A Runtime access URL resolution (access_url_unresolved), section 2A buildx readiness (buildx_unavailable), CRAU-093 (compose_invalid, compose_service_missing), CRAU-099 (runtime_context_missing, runtime_context_unreachable) and section 2B's local-runtime blockers (runtime_context_missing, k8s_context_unreachable, container_unhealthy). CRAU-095's compatibility vocabulary is not a second base enum and is not mapped."
+  - "Applied to the UCC-111 safe-point retry states (the stream C lead's P0d task text, round 3 S4 map item U1): UCC-111 and the Orchestrator safe-point retry row keep the pre-modal disabled reasons safe_point_missing, state_changed, permission_denied and operation_in_progress; the last two were already mapped (GI-041). safe_point_missing maps to blocked_state_required and state_changed to stale_projection, both the P0d worker's choice; the state_changed entry also cites the storage fallback divergence dispositions' closed disabled reasons, which include state_changed."
 lead_proposals:
   - "The stream C lead's proposals, sent to pm7-build at 2026-11-07T15:54Z with \"unless you object\"; no objection arrived. They are the lead's calls, not coordinator resolutions."
   - "Lead proposal 1 (round 2 S2 map item M1): owner state dedup_hold_pending maps to not_configured, as maintenance_cutoffs_pending does. DL-444 and DL-445 keep the duplicate sweep's automatic jobs and panel buttons \"unavailable until your answer is applied and all remaining definition, review and recording approvals pass\"."
@@ -2338,13 +2344,23 @@ round_2_changes:
   - "Shape rules (S6 finding 6): a [] step in a judgment path, omitted:<x>[] included, needs x to be a list field; a when: mutating entry lists not_mutating as well as commands; a list choice has no repeats."
   - "Corrected labels (S6 finding 2): the worktree evidence is the catalog's section 2.5C project-scope git worktree commands table (UCC-054), not GitHub_Integration.md's Worktree Topology Commands; the investigation alias's contract unit is Contracts_V0 CV-123 (section 3.5 Debug investigation events), not CV-294."
   - "Map additions under DL-333 resolution 6 (under_dl333_resolution_6) and the lead's proposals (lead_proposals) are listed above."
+round_3_changes:
+  - "Round 3 (P0d, the stream C lead's task text, after definitions review round 3: r3-opus-S1.md, r3-opus-S2.md, r3-opus-S4.md and r3-opus-S6.md). The coordinator text above is unchanged, and the change is to UCC-230 owner_state_code_map and this entry only; no owner-doc definition changes."
+  - "CRAU-095 sources (S6 finding 3, canon conflict C4; S1 finding 1): each of the thirteen entries now says that CRAU-095 lists the code and gives it no meaning, labels its mapping the P0c worker's choice under DL-333 resolution 6, and cites the canon passage where one exists. The four blocked_state_required mappings keep their code and cite both readings of canon (under_dl333_resolution_6, crau_owner_questions). No mapping changed code. This entry now quotes DL-333 resolution 6 with its scope and labels its extension the lead's application."
+  - "maintenance_cutoffs_pending (S2 map item M1): its sources add DL-446 and DL-447. The cutoffs exist now; what still holds the two maintenance commands is their \"until your answer is applied and all remaining definition, review and recording approvals pass\"."
+  - "Owner states added (S4 map item U1): safe_point_missing to blocked_state_required and state_changed to stale_projection (UCC-111), each the P0d worker's choice under DL-333 resolution 6. Not added: the Known-37 recovery-unavailable rows' storage failure, source verification failure and missing explicit confirmation, which canon names only in prose (open_owner_questions)."
+crau_owner_questions:
+  - "Docker/Kubernetes disabled reasons (asked of the Plans/Containers_Registry_and_Unraid.md owner): may Docker Manager command availability use blocked_state_required, outside the six-family taxonomy of UCC-053 and UI_Command_Catalog.md section 2.5B (Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability), for compose_invalid, compose_service_missing, image_missing and k8s_rollout_blocked? Containers_Registry_and_Unraid.md section 2B calls compose-up failure, unhealthy container, missing Docker context, cluster unreachable and rollout failure local-runtime blockers under a blocked/degraded classification, and CRAU-103 keeps unproven states manual-only, blocked, degraded or partial capability. Until the owner answers, the map keeps blocked_state_required for those four; if the taxonomy is binding, the nearest families are not_configured for the compose and image codes and degraded for k8s_rollout_blocked."
+  - "Do the other nine CRAU-095 mappings (the P0c worker's choice by name) match the owner's meaning, in particular access_url_unresolved to not_configured and buildx_unavailable and bake_unavailable to partial_capability?"
+open_owner_questions:
+  - "Known-37 recovery-unavailable rows (asked of the UI_Command_Catalog.md Known-37 and Contracts_V0 recovery-unavailable owners): the catalog says disabled projections retain \"the exact owner reason, including stale projection, permission/storage failure, operation in progress, source verification failure, or missing explicit confirmation\", but names no owner-state token for storage failure, source verification failure or missing explicit confirmation. The recovery_unavailable_resolution_receipt reason_code enum (Plans/storage_value_registry.json) has storage_read_only, storage_io_exhausted, recovery_source_not_verified and explicit_confirmation_required, which are result reasons, not disabled states. Which tokens are those disabled states? Until an owner names them, the map has no entry for them and the definitions keep their gap-note mappings."
 gui_related: false
 gui_classification_reason: Records how command payload definitions state their judgments and how UCC-230 maps identities; no GUI behavior changes.
 split_recommended: false
-depends_on: [DL-333, HITL-038, DL-403, UCC-202, UCC-137, GI-041, UCC-052, UCC-054, W-075, CV-123, CRAU-095, DL-444, DL-445]
+depends_on: [DL-333, HITL-038, DL-403, UCC-202, UCC-137, GI-041, UCC-052, UCC-054, W-075, CV-123, CRAU-095, DL-444, DL-445, DL-446, DL-447, UCC-053, UCC-111, CRAU-093, CRAU-099]
 unblocks: []
 acceptance_criteria:
-  - "UCC-230 states the judgments list with its aliases key, nullable fields and where they are refused, canon enum spelling, that a definitions block holds no YAML comment and no review or evidence reference, the restated common field rule, the when-mutating rule, identity_aliases, the conditional approve and decline exemptions with the chat_tool branch forbidden and approval_kind a gap, owner_state_codes, owner states maintenance_cutoffs_pending and dedup_hold_pending and the thirteen CRAU-095 codes, and lists the five recorded aliases and the two pre-attempt admissible commands."
+  - "UCC-230 states the judgments list with its aliases key, nullable fields and where they are refused, canon enum spelling, that a definitions block holds no YAML comment and no review or evidence reference, the restated common field rule, the when-mutating rule, identity_aliases, the conditional approve and decline exemptions with the chat_tool branch forbidden and approval_kind a gap, owner_state_codes, owner states maintenance_cutoffs_pending and dedup_hold_pending, the thirteen CRAU-095 codes and the UCC-111 states safe_point_missing and state_changed, each worker-chosen mapping labelled as such, and lists the five recorded aliases and the two pre-attempt admissible commands."
   - "python3 scripts/pm-command-payload-defs-check.py --self-test passes with a passing and a failing case for every rule this entry adds."
   - "This entry edits no owner-doc definitions section; definitions that break a corrected rule are reported to the per-slice fixers."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
@@ -2372,6 +2388,8 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/defs-review/r2-opus-S1.md, r2-opus-S2.md, r2-opus-S3.md, r2-opus-S4.md, r2-opus-S5.md and r2-opus-S6.md (round 2 reviews; S6 reviewed this entry)"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/P0C-BRIEF.md (round 2 changes, the stream C lead's task text)"
   - "Stream C lead to pm7-build, 2026-11-07T15:54Z: lead proposals 1-3, sent with \"unless you object\"; no objection arrived"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/defs-review/r3-opus-S1.md (finding 1), r3-opus-S2.md (map item M1), r3-opus-S4.md (map item U1) and r3-opus-S6.md (finding 3, canon conflict C4) (round 3 reviews)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/P0D-BRIEF.md (round 3 changes, the stream C lead's task text)"
 preserved_exact_tokens:
   - "DL-341"
   - "pm.command_payload_definitions.v1"
@@ -2384,6 +2402,8 @@ preserved_exact_tokens:
   - "chat_tool"
   - "dedup_hold_pending"
   - "owner_state_codes"
+  - "safe_point_missing"
+  - "state_changed"
 owner_hints:
   - Plans/UI_Command_Catalog.md
 ```
