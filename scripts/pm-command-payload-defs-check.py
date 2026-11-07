@@ -115,15 +115,34 @@ FIELD_KEYS = {"type", "required", "default", "values", "value", "item", "fields"
 ITEM_KEYS = {"type", "values", "value", "item", "fields", "ref", "constraints"}
 DEFINITION_KEYS = {"command_id", "ucc_units", "command_kind", "response_kind", "args", "owner_request", "result",
                    "error_codes", "disabled_reason_codes", "aliases", "identity_exemptions", "narrowing_gap_note",
-                   "judgments"}
-# DL-341: a definition records each judgment it makes in `judgments`, never in a YAML comment.
+                   "judgments", "owner_state_codes"}
+# DL-341: a definition records each judgment it makes in `judgments`; a definitions block holds no YAML comment.
 JUDGMENT_ENTRY_KEYS = {"key", "choice", "gap_note"}
-JUDGMENT_FIXED_KEYS = ("command_kind", "response_kind", "disabled_reason_codes", "error_codes", "owner_request", "owner_result")
+JUDGMENT_FIXED_KEYS = ("command_kind", "response_kind", "disabled_reason_codes", "error_codes", "owner_request", "owner_result",
+                       "aliases")
 JUDGMENT_LIST_KEYS = ("disabled_reason_codes", "error_codes")
 JUDGMENT_PATH_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*(?:\[\])?(?:\.[A-Za-z_][A-Za-z0-9_]*(?:\[\])?)*$")
-# The word JUDGMENT in any case (also JUDGEMENT and the plurals): a canon field or a YAML comment that
-# says it is a judgment hides one (DL-341).
-JUDGMENT_WORD_RE = re.compile(r"\bjudge?ments?\b", re.I)
+# DL-341 (P0c, lead proposal): a definition may tie each owner state it shows to the closed code
+# owner_state_code_map gives it.
+OWNER_STATE_CODE_KEYS = {"owner_state", "code"}
+# The word JUDGMENT in any case (also JUDGEMENT, the plurals and inside snake_case compounds such as
+# judgment_basis): a canon field that says it is a judgment hides one (DL-341).
+JUDGMENT_WORD_RE = re.compile(r"(?<![A-Za-z])judge?ments?(?![A-Za-z])", re.I)
+# Review and evidence material named inside a definitions block (DL-341, P0c): canon text stands on
+# canon, so a definition never cites review rounds or findings, fix rounds, review files, the
+# owner-answers folder or the evidence share. Only a unit fence's source_lineage cites evidence.
+REVIEW_REFERENCE_RE = re.compile(
+    r"(?i:\breview(?:er)?s?[\s-]+r\d+\b"
+    r"|\b(?:review|fix)[\s-]+round[\s-]*\d+\b"
+    r"|\bround[\s-]*\d+[\s-]+(?:review|finding|fix)"
+    r"|\br\d+[\s-]+(?:finding|review)"
+    r"|\bfix[\s-]*r\d+\b"
+    r"|\bfix[\s-]+round\b"
+    r"|\br\d+-(?:opus|sol|astra|sonnet|fable)\b"
+    r"|defs-review|owner-answers/|PuppetMaster-Evidence|closure-reaudit"
+    r"|\bR\d+-DECISIONS\b|-(?:BRIEF|REPORT|NOTE)\.md\b"
+    r"|\bcanon\s+conflict\s+C\d+\b)"
+    r"|\bDESIGN(?:\.md)?\s+(?:§\s*|section\s+)?\d")
 REQUIRED_IDENTITY_WHEN = ("always", "domain_action", "mutating")
 IDENTIFIER_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 REQUIRED_DEFINITION_KEYS = {"command_id", "ucc_units", "command_kind", "response_kind", "args", "owner_request",
@@ -675,6 +694,7 @@ class Context:
     exemption_entries: dict[tuple[str, str], dict[str, Any]] = field(default_factory=dict)
     identity_aliases: dict[str, dict[str, str]] = field(default_factory=dict)  # row group -> overlay name -> canon name
     mutating: dict[tuple[str, str], dict[str, set[str]]] = field(default_factory=dict)  # (row group, field) -> lists
+    owner_state_codes: dict[str, str] = field(default_factory=dict)  # owner state -> closed code (owner_state_code_map)
     judgments: dict[str, int] = field(default_factory=dict)
     pre_attempt: tuple[str, set[str]] = ("attempt_id", set())
     excluded: set[str] = field(default_factory=set)
@@ -768,10 +788,11 @@ def evidence_usable(evidence: Any) -> bool:
 def check_mutating_entry(ctx: Context, gid: str, entry: dict[str, Any]) -> bool:
     """A required identity with when: mutating (DL-341) lists, with canon evidence naming each
     command, the commands that mutate the state (they must carry the field) and the domain_action
-    commands of the row group that do not (they need not)."""
+    commands of the row group that do not (they need not). Both lists are required keys; the
+    not_mutating list may be empty only when no domain_action of the group leaves the state alone."""
     rep = ctx.report
     lists: dict[str, set[str]] = {"commands": set(), "not_mutating": set()}
-    ok = isinstance(entry.get("commands"), list) and bool(entry["commands"]) and isinstance(entry.get("not_mutating", []), list)
+    ok = isinstance(entry.get("commands"), list) and bool(entry["commands"]) and isinstance(entry.get("not_mutating"), list)
     if not ok:
         return False
     field_name = str(entry.get("field"))
@@ -962,6 +983,13 @@ def check_map(ctx: Context) -> None:
     for entry in as_list(mp.get("owner_state_code_map")):
         if not isinstance(entry, dict) or str(entry.get("maps_to")) not in ctx.disabled_set or not entry.get("owner_state"):
             rep.add("C09", "map_owner_state_code_invalid", CATALOG, unit=MAP_UNIT, detail=json.dumps(entry, sort_keys=True))
+            continue
+        # A definition's owner_state_codes (DL-341) look an owner state up here, so each is mapped once.
+        state = str(entry["owner_state"])
+        if state in ctx.owner_state_codes:
+            rep.add("C09", "map_owner_state_duplicate", CATALOG, unit=MAP_UNIT, detail=state)
+            continue
+        ctx.owner_state_codes[state] = str(entry["maps_to"])
 
 
 def compute_expected(ctx: Context) -> None:
@@ -1430,41 +1458,54 @@ def same_type(spec: dict[str, Any], canonical: dict[str, Any]) -> bool:
 # ---- definitions
 
 
-def resolve_arg_path(args: dict[str, Any], path: str) -> tuple[bool, bool]:
-    """(parent_found, leaf_found) for a dotted arg path: a segment `name` steps into an object
-    field's `fields`, `name[]` into a list field's `item` (whose `fields` the next segment reads)."""
+PATH_FOUND, PATH_ABSENT, PATH_NO_PARENT, PATH_NOT_A_LIST = "found", "absent", "no_parent", "not_a_list"
+
+
+def resolve_arg_path(args: dict[str, Any], path: str) -> str:
+    """How a dotted arg path resolves: a segment `name` steps into an object field's `fields`,
+    `name[]` into a list field's `item` (whose `fields` the next segment reads). PATH_FOUND: the
+    leaf exists; PATH_ABSENT: its parent exists and it does not; PATH_NO_PARENT: a step before the
+    leaf does not exist; PATH_NOT_A_LIST: a `name[]` step names a field that is not a list of this
+    definition, absent or of another type (DL-341: `[]` only on a list)."""
     fields: Any = args
     segments = path.split(".")
     for index, segment in enumerate(segments):
         last = index == len(segments) - 1
         name, into_item = (segment[:-2], True) if segment.endswith("[]") else (segment, False)
         if not isinstance(fields, dict):
-            return False, False
+            return PATH_NO_PARENT
         spec = fields.get(name)
+        if into_item and (not isinstance(spec, dict) or spec.get("type") != "list"):
+            if isinstance(spec, dict) or last:
+                return PATH_NOT_A_LIST
+            return PATH_NO_PARENT
         if not isinstance(spec, dict):
-            return True if last else False, False
+            return PATH_ABSENT if last else PATH_NO_PARENT
         if into_item:
-            spec = spec.get("item") if spec.get("type") == "list" else None
+            spec = spec.get("item")
             if not isinstance(spec, dict):
-                return True if last else False, False
+                return PATH_ABSENT if last else PATH_NO_PARENT
         if last:
-            return True, True
+            return PATH_FOUND
         fields = spec.get("fields")
-    return False, False
+    return PATH_NO_PARENT
 
 
 def judgment_choice_ok(choice: Any) -> bool:
+    """A non-blank string, or a non-empty list of non-blank strings without repeats."""
     if isinstance(choice, str):
         return bool(choice.strip())
-    return isinstance(choice, list) and bool(choice) and all(isinstance(c, str) and c.strip() for c in choice)
+    return (isinstance(choice, list) and bool(choice) and all(isinstance(c, str) and c.strip() for c in choice)
+            and len(set(choice)) == len(choice))
 
 
 def check_judgments(ctx: Context, definition: dict[str, Any], args: dict[str, Any], where: dict[str, str]) -> int:
     """DL-341 judgments: every entry is {key, choice, gap_note}; key names a part of the definition
-    (one of JUDGMENT_FIXED_KEYS, field:<arg path> that exists, or omitted:<arg path> that does not);
-    choice is what the definition chose and, for a fixed key, equals the definition's own value;
-    gap_note says what canon lacks or where it disagrees; no key repeats; no entry claims provenance.
-    Returns the number of complete judgments."""
+    (one of JUDGMENT_FIXED_KEYS, field:<arg path> that exists, or omitted:<arg path> that does not,
+    a `[]` step only on a list field); choice is what the definition chose and, for a fixed key,
+    equals the definition's own value (for aliases, the alias tokens it records, or none); a list
+    choice has no repeats; gap_note says what canon lacks or where it disagrees; no key repeats; no
+    entry claims provenance. Returns the number of complete judgments."""
     rep = ctx.report
     if "judgments" not in definition:
         return 0
@@ -1513,7 +1554,11 @@ def check_judgments(ctx: Context, definition: dict[str, Any], args: dict[str, An
                 rep.add("C14", "judgment_key_names_nothing", detail=key, **where)
                 key_ok = False
             elif choice_ok:
-                if key in JUDGMENT_LIST_KEYS:
+                if key == "aliases":
+                    # The alias tokens the definition records (DL-341, P0c), or none when it records none.
+                    value = [str(a.get("command_id")) for a in as_list(value) if isinstance(a, dict)]
+                    same = (choice == "none" and not value) or (isinstance(choice, list) and set(choice) == set(value))
+                elif key in JUDGMENT_LIST_KEYS:
                     same = isinstance(choice, list) and isinstance(value, list) and set(choice) == set(map(str, value))
                 else:
                     same = isinstance(choice, str) and isinstance(value, str) and choice == value
@@ -1525,14 +1570,17 @@ def check_judgments(ctx: Context, definition: dict[str, Any], args: dict[str, An
                 rep.add("C14", "judgment_key_form_invalid", detail=key, **where)
                 key_ok = False
             else:
-                parent, leaf = resolve_arg_path(args, path)
-                if form == "field" and not leaf:
+                status = resolve_arg_path(args, path)
+                if status == PATH_NOT_A_LIST:
+                    rep.add("C14", "judgment_key_path_not_a_list", detail=f"{key}: a [] step names a field that is not a list", **where)
+                    key_ok = False
+                elif form == "field" and status != PATH_FOUND:
                     rep.add("C14", "judgment_key_names_nothing", detail=key, **where)
                     key_ok = False
-                elif form == "omitted" and leaf:
+                elif form == "omitted" and status == PATH_FOUND:
                     rep.add("C14", "judgment_omitted_field_present", detail=key, **where)
                     key_ok = False
-                elif form == "omitted" and not parent:
+                elif form == "omitted" and status == PATH_NO_PARENT:
                     rep.add("C14", "judgment_key_names_nothing", detail=f"{key}: no parent field", **where)
                     key_ok = False
         else:
@@ -1541,6 +1589,39 @@ def check_judgments(ctx: Context, definition: dict[str, Any], args: dict[str, An
         if key_ok and gap_ok and choice_ok:
             complete += 1
     return complete
+
+
+def check_owner_state_codes(ctx: Context, definition: dict[str, Any], where: dict[str, str]) -> None:
+    """DL-341 (P0c): the optional owner_state_codes list ties an owner state the definition shows
+    as a disabled reason to its closed code: each entry is {owner_state, code}; the owner state is
+    in UCC-230 owner_state_code_map, the code is the map's code for it, and the code is one of the
+    definition's disabled_reason_codes."""
+    rep = ctx.report
+    if "owner_state_codes" not in definition:
+        return
+    entries = definition["owner_state_codes"]
+    if not isinstance(entries, list) or not entries:
+        rep.add("C14", "owner_state_codes_not_list", detail="a non-empty list, or leave the key out", **where)
+        return
+    disabled = {str(c) for c in as_list(definition.get("disabled_reason_codes"))}
+    seen: set[str] = set()
+    for index, entry in enumerate(entries):
+        label = f"owner_state_codes[{index}]"
+        if (not isinstance(entry, dict) or set(map(str, entry)) != OWNER_STATE_CODE_KEYS
+                or not all(isinstance(entry.get(k), str) and entry[k].strip() for k in OWNER_STATE_CODE_KEYS)):
+            rep.add("C14", "owner_state_code_entry_malformed", detail=f"{label}: needs exactly owner_state and code", **where)
+            continue
+        state, code = entry["owner_state"], entry["code"]
+        if state in seen:
+            rep.add("C14", "owner_state_code_duplicate", detail=state, **where)
+        seen.add(state)
+        mapped = ctx.owner_state_codes.get(state)
+        if mapped is None:
+            rep.add("C09", "owner_state_not_in_map", detail=state, **where)
+        elif code != mapped:
+            rep.add("C09", "owner_state_code_differs_from_map", detail=f"{state}: {code}, map {mapped}", **where)
+        if code not in disabled:
+            rep.add("C09", "owner_state_code_not_in_disabled_reason_codes", detail=f"{state}: {code}", **where)
 
 
 def check_definition(ctx: Context, block: Block, owner_unit: str, definition: Any, results: dict[str, Any],
@@ -1613,12 +1694,19 @@ def check_definition(ctx: Context, block: Block, owner_unit: str, definition: An
     count = check_judgments(ctx, definition, args, where)
     if count:
         ctx.judgments[block.path] = ctx.judgments.get(block.path, 0) + count
+    check_owner_state_codes(ctx, definition, where)
     for name in sorted(set(map(str, args)) & ctx.envelope_required):
         rep.add("C08", "envelope_field_restated", field=name, **where)
     for name in sorted(set(map(str, args)) & set(ctx.common_optional)):
         spec, canonical = args[name], ctx.common_optional[name]
         if isinstance(spec, dict) and isinstance(canonical, dict) and not same_type(spec, canonical):
             rep.add("C08", "common_field_type_changed", field=name, detail=f"canonical {canonical.get('type')}", **where)
+        # A restated common field keeps its canonical type, which is never nullable: neither the
+        # overlay's payload_optional bullet nor UCC-230 common_optional records a nullable common
+        # field, so the checker has no source that could make one nullable (DL-341, P0c).
+        if isinstance(spec, dict) and spec.get("nullable") is True:
+            rep.add("C08", "common_field_nullable", field=name,
+                    detail="no common optional field is nullable in the overlay or UCC-230 common_optional", **where)
 
     exemptions_here: set[str] = set()
     for entry in as_list(definition.get("identity_exemptions")):
@@ -1651,12 +1739,25 @@ def check_definition(ctx: Context, block: Block, owner_unit: str, definition: An
             rep.add("C07", "conditional_exemption_shape_invalid", field=name,
                     detail=f"needs required: false and required_when {{field: {branch_field}, in: [branches other than {exempt_branch}]}}", **where)
             continue
+        # The exempt branch's shape has no such field (HITL-038: cross-variant fields refuse), so the
+        # field is forbidden there and on no branch that requires it (DL-341, P0c).
+        forbid = spec.get("forbidden_when")
+        forbidden = forbid.get("in") if isinstance(forbid, dict) else None
+        if (not isinstance(forbid, dict) or forbid.get("field") != branch_field or not isinstance(forbidden, list)
+                or exempt_branch not in forbidden or any(b in forbidden for b in branches)):
+            rep.add("C07", "conditional_exemption_not_forbidden_on_exempt_branch", field=name,
+                    detail=f"needs forbidden_when {{field: {branch_field}, in: [{exempt_branch}]}}", **where)
         branch_spec = args.get(branch_field)
         offered = branch_spec.get("values") if isinstance(branch_spec, dict) and branch_spec.get("type") == "enum" else None
         if (not isinstance(offered, list) or exempt_branch not in offered or any(b not in offered for b in branches)
                 or branch_spec.get("required") is not True):
             rep.add("C07", "conditional_exemption_branch_not_offered", field=branch_field,
                     detail=f"{branch_field} must be a required enum offering {exempt_branch} and {branches}", **where)
+        elif branch_spec.get("provenance") != "gap":
+            # Canon names only the exempt branch's value (the chat-tool const); the other branches'
+            # values are not canon, so the definition marks the discriminator a gap (DL-341, P0c).
+            rep.add("C07", "conditional_exemption_branch_field_not_gap", field=branch_field,
+                    detail=f"canon names only {exempt_branch}; {branches} are not canon, so {branch_field} is a gap field", **where)
     group = ctx.row_groups.get(group_id or "")
     aliases = ctx.identity_aliases.get(group_id or "", {})
     if group is not None:
@@ -1674,11 +1775,17 @@ def check_definition(ctx: Context, block: Block, owner_unit: str, definition: An
                         rep.add("C07", "mutating_classification_missing", field=name,
                                 detail=f"{group_id}: UCC-230 lists the command neither as mutating nor as not mutating", **where)
                     continue
-            if name in exemptions_here or name in conditional:
-                continue
             # A recorded identity alias's canon name stands for the overlay name (DL-341).
             present = name if name in args else aliases.get(name, name)
             spec = args.get(present)
+            # A required row-group identity is never null: the overlay's identity cells and UCC-230's
+            # row_groups record no nullable identity, so the checker has no source that could make one
+            # nullable; an exemption only lets the definition leave the field out (DL-341, P0c).
+            if isinstance(spec, dict) and spec.get("nullable") is True:
+                rep.add("C07", "required_identity_nullable", field=present,
+                        detail=f"{group_id} when={when}: a required row-group identity is never null", **where)
+            if name in exemptions_here or name in conditional:
+                continue
             if not isinstance(spec, dict) or spec.get("required") is not True:
                 rep.add("C07", "required_identity_missing", field=name, detail=f"{group_id} when={when}", **where)
         identity = {str(e.get("field")) for e in group["required_identity"]} | {str(x) for x in as_list(group.get("optional_identity"))}
@@ -1783,10 +1890,10 @@ def check_definition(ctx: Context, block: Block, owner_unit: str, definition: An
             rep.add("C13", "owner_request_differs_from_wiring", detail=f"wiring {sorted(wired)}", **where)
 
 
-def yaml_comments(text: str) -> list[tuple[int, int, str]]:
-    """The YAML comments of a well-formed fence as (first line, last line, text), 0-based lines.
-    A comment is a `#` at a line start or after a space or tab that no scalar token spans, so a
-    `#` inside a quoted, plain or block scalar is not one. A comment on the line after another
+def yaml_comments(text: str) -> list[tuple[int, int, str, bool]]:
+    """The YAML comments of a well-formed fence as (first line, last line, text, whole-line), 0-based
+    lines. A comment is a `#` at a line start or after a space or tab that no scalar token spans, so
+    a `#` inside a quoted, plain or block scalar is not one. A comment on the line after another
     comment that starts its own line continues it. Empty when the scanner cannot read the text."""
     spans: list[tuple[int, int]] = []
     try:
@@ -1812,13 +1919,13 @@ def yaml_comments(text: str) -> list[tuple[int, int, str]]:
             found.append((number, line[position:], not line[:position].strip()))
             break
         offset += len(line) + 1
-    comments: list[tuple[int, int, str]] = []
+    comments: list[tuple[int, int, str, bool]] = []
     for number, comment, whole in found:
         if comments and whole and comments[-1][1] == number - 1:
-            first, _, joined = comments[-1]
-            comments[-1] = (first, number, joined + " " + comment)
+            first, _, joined, first_whole = comments[-1]
+            comments[-1] = (first, number, joined + " " + comment, first_whole)
         else:
-            comments.append((number, number, comment))
+            comments.append((number, number, comment, whole))
     return comments
 
 
@@ -1846,18 +1953,94 @@ def definition_line_spans(text: str) -> list[tuple[int, int, str]]:
     return spans
 
 
-def check_judgment_comments(ctx: Context, block: Block, base: dict[str, str]) -> None:
-    """DL-341: a YAML comment is invisible to tools, so one that records a judgment (the word
-    JUDGMENT in any case) is a C11 finding; the judgment belongs in the definition's judgments."""
+def comment_definition(spans: list[tuple[int, int, str]], skip_lines: set[int], line_count: int,
+                       first: int, last: int, whole: bool) -> str:
+    """The command_id of the definition a comment belongs to, or "" for the block. An inline
+    comment belongs to the definition its line is in. A whole-line comment belongs to the
+    definition of the next line that is neither blank nor a whole-line comment (skip_lines), so a
+    note written directly above `- command_id: X` is X's, not the previous definition's (a
+    sequence item's end mark is the next item's start line)."""
+    anchor = first
+    if whole:
+        anchor = last + 1
+        while anchor in skip_lines:
+            anchor += 1
+        if anchor >= line_count:
+            return ""
+    return next((c for start, end, c in spans if start <= anchor < max(end, start + 1)), "")
+
+
+def check_block_comments(ctx: Context, block: Block, base: dict[str, str]) -> None:
+    """DL-341: a definitions block holds no YAML comment. A comment is invisible to tools and no
+    word list can tell a recorded choice from a note, so every `#` comment inside the fence is a
+    C11 finding, whatever it says; a judgment belongs in the definition's judgments list, and a
+    citation in the field's source or gap_note."""
     spans = definition_line_spans(block.text)
-    for first, last, comment in yaml_comments(block.text):
-        if not JUDGMENT_WORD_RE.search(comment):
-            continue
-        cmd = next((c for start, end, c in spans if start <= first < max(end, start + 1)), "")
+    lines = block.text.split("\n")
+    comments = yaml_comments(block.text)
+    skip_lines = {n for n, line in enumerate(lines) if not line.strip()}
+    skip_lines |= {n for f, l, _, whole in comments if whole for n in range(f, l + 1)}
+    for first, last, comment, whole in comments:
+        cmd = comment_definition(spans, skip_lines, len(lines), first, last, whole)
         # Doc lines: the fence line is block.line, so block line 0 is block.line + 1.
-        lines = f"{block.line + 1 + first}" + (f"-{block.line + 1 + last}" if last != first else "")
-        rep_detail = f"line {lines}: {normalize_space(comment)[:160]}"
-        ctx.report.add("C11", "judgment_in_yaml_comment", command_id=cmd, detail=rep_detail, **base)
+        doc_lines = f"{block.line + 1 + first}" + (f"-{block.line + 1 + last}" if last != first else "")
+        rep_detail = f"line {doc_lines}: {normalize_space(comment)[:160]}"
+        ctx.report.add("C11", "yaml_comment_in_definitions_block", command_id=cmd, detail=rep_detail, **base)
+
+
+def review_reference_strings(data: Any) -> list[tuple[str, str, str]]:
+    """(command_id, field path, text) for every string in a parsed definitions block, keys and
+    values, that names review or evidence material (REVIEW_REFERENCE_RE). A string inside a
+    definition carries its command_id, one inside a local result `local:<Name>`, any other the
+    block's own path."""
+    found: list[tuple[str, str, str]] = []
+    seen: set[int] = set()
+
+    def walk(value: Any, cmd: str, path: str) -> None:
+        if isinstance(value, (dict, list)):
+            if id(value) in seen:
+                return  # YAML aliases share a node; each is read once (merge keys are refused elsewhere)
+            seen.add(id(value))
+        if isinstance(value, dict):
+            for key, child in value.items():
+                child_path = f"{path}.{key}" if path else str(key)
+                if isinstance(key, str) and REVIEW_REFERENCE_RE.search(key):
+                    found.append((cmd, child_path, key))
+                walk(child, cmd, child_path)
+        elif isinstance(value, list):
+            for index, child in enumerate(value):
+                walk(child, cmd, f"{path}[{index}]")
+        elif isinstance(value, str) and REVIEW_REFERENCE_RE.search(value):
+            found.append((cmd, path, value))
+
+    body = data.get(DEFS_ROOT_KEY) if isinstance(data, dict) else None
+    if not isinstance(body, dict):
+        walk(data, "", "")
+        return found
+    for key, value in body.items():
+        if isinstance(key, str) and REVIEW_REFERENCE_RE.search(key):
+            found.append(("", str(key), key))
+        if key == "definitions" and isinstance(value, list):
+            for index, definition in enumerate(value):
+                cmd = definition.get("command_id") if isinstance(definition, dict) else None
+                walk(definition, cmd if isinstance(cmd, str) else "", "" if isinstance(cmd, str) else f"definitions[{index}]")
+        elif key == "results" and isinstance(value, dict):
+            for name, spec in value.items():
+                walk(spec, f"local:{name}", "")
+        else:
+            walk(value, "", str(key))
+    return found
+
+
+def check_review_references(ctx: Context, block: Block, base: dict[str, str]) -> None:
+    """DL-341: canon text stands on canon. A string in a definitions block that names review or
+    evidence material (review rounds and findings, fix rounds, review files, the owner-answers
+    folder, the evidence share, the Q5 design's sections or the fix reports' canon-conflict labels)
+    is a C11 finding. A unit fence's source_lineage may cite evidence; a definitions block may not."""
+    for cmd, path, text in review_reference_strings(block.data):
+        names = sorted({m.group(0) for m in REVIEW_REFERENCE_RE.finditer(text)})
+        ctx.report.add("C11", "review_reference_in_definitions_block", command_id=cmd, field=path,
+                       detail=f"line {block.line}: names {', '.join(names)}", **base)
 
 
 def check_blocks(ctx: Context) -> dict[str, list[tuple[str, str]]]:
@@ -1880,7 +2063,9 @@ def check_blocks(ctx: Context) -> dict[str, list[tuple[str, str]]]:
             if _block_uses_merge(block.text):
                 rep.add("C14", "block_yaml_merge_not_allowed", detail=f"line {block.line}", **base)
             body_guess = block.data.get(DEFS_ROOT_KEY) if isinstance(block.data, dict) else None
-            check_judgment_comments(ctx, block, {**base, "unit": str(body_guess.get("owner_unit", "")) if isinstance(body_guess, dict) else ""})
+            block_base = {**base, "unit": str(body_guess.get("owner_unit", "")) if isinstance(body_guess, dict) else ""}
+            check_block_comments(ctx, block, block_base)
+            check_review_references(ctx, block, block_base)
             if not isinstance(block.data, dict) or set(block.data) != {"command_payload_definitions"} or not isinstance(block.data["command_payload_definitions"], dict):
                 rep.add("C14", "block_top_level_malformed", detail=f"line {block.line}", **base)
                 continue
@@ -2277,9 +2462,11 @@ def fixture_definitions() -> dict[str, dict[str, Any]]:
                 "approval_kind": {"type": "enum", "values": ["node", "chat_tool"], "required": True, "default": "none",
                                   "provenance": "gap", "gap_note": "fixture: canon's node branch carries no discriminator"},
                 "blocked_sequence": {"type": "integer", "required": False, "default": "none", "constraints": {"minimum": 0},
-                                     "required_when": {"field": "approval_kind", "in": ["node"]}, **canon()},
+                                     "required_when": {"field": "approval_kind", "in": ["node"]},
+                                     "forbidden_when": {"field": "approval_kind", "in": ["chat_tool"]}, **canon()},
                 "allowed_action_id": {"type": "id", "required": False, "default": "none",
-                                      "required_when": {"field": "approval_kind", "in": ["node"]}, **canon()},
+                                      "required_when": {"field": "approval_kind", "in": ["node"]},
+                                      "forbidden_when": {"field": "approval_kind", "in": ["chat_tool"]}, **canon()},
                 "node_id": {"type": "id", "required": False, "default": "none",
                             "required_when": {"field": "approval_kind", "in": ["node"]}, **canon()},
                 "tool_id": {"type": "id", "required": False, "default": "none",
@@ -3152,8 +3339,8 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
                 {"key": "field:no_such_arg", "choice": "x", "gap_note": "x"}), "judgment_key_names_nothing"),
             ("a field judgment key names a nested field that does not exist", lambda fx: judgments(fx).append(
                 {"key": "field:new_tag.inner", "choice": "x", "gap_note": "x"}), "judgment_key_names_nothing"),
-            ("a judgment key outside the allowed forms (aliases)", lambda fx: judgments(fx).append(
-                {"key": "aliases", "choice": "none", "gap_note": "x"}), "judgment_key_form_invalid"),
+            ("a judgment key outside the allowed forms (ucc_units)", lambda fx: judgments(fx).append(
+                {"key": "ucc_units", "choice": "UCC-049", "gap_note": "x"}), "judgment_key_form_invalid"),
             ("a judgment key with a malformed path", lambda fx: judgments(fx).append(
                 {"key": "field:new tag", "choice": "x", "gap_note": "x"}), "judgment_key_form_invalid"),
             ("an omitted judgment names a field the definition has", lambda fx: judgments(fx).append(
@@ -3196,30 +3383,63 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         fx.results["CRAU-115"]["DockerImageTagResultV1"]["fields"]["image_ref"] = {
             "type": "ref", "required": True, "default": "none", "provenance": "canon", "source": "Judgement: the tagged image"}
 
+    @case("fail C11: a canon field whose source says judgment_basis (a snake_case compound)", 1, {"C11"},
+          kinds={"canon_field_marked_judgment"})
+    def _(fx: Fixture) -> None:
+        tag_args(fx)["image_ref"]["source"] = "judgment_basis: required because a tag needs an image"
+
+    @case("pass: a canon field whose source says judge or adjudicated is not marked", 0, set())
+    def _(fx: Fixture) -> None:
+        tag_args(fx)["image_ref"]["source"] = "UCC-049 identity; the owner may judge later; adjudicated in UCC-051"
+
     @case("pass: a gap field whose gap_note contains JUDGMENT", 0, set())
     def _(fx: Fixture) -> None:
         tag_args(fx)["new_tag"]["gap_note"] = "JUDGMENT: no field carried the new tag"
 
-    @case("fail C11: a definitions block with a whole-line YAML comment containing JUDGMENT", 1, {"C11"},
-          kinds={"judgment_in_yaml_comment"})
+    # No YAML comment in a definitions block, whatever it says (DL-341, P0c).
+    def comment_rows(result: dict[str, Any]) -> list[dict[str, Any]]:
+        return [e for e in result["errors"] if e["kind"] == "yaml_comment_in_definitions_block"]
+
+    @case("fail C11: a whole-line YAML comment at the end of a definitions block", 1, {"C11"},
+          kinds={"yaml_comment_in_definitions_block"})
     def _(fx: Fixture) -> None:
         fx.raw_block_suffix["CRAU-116"] = "  # JUDGMENT: fixture comment at the end of the block"
 
-    @case("fail C11: an inline YAML comment containing judgment is found and tied to its definition", 1, {"C11"},
-          kinds={"judgment_in_yaml_comment"},
-          check=lambda r: [e.get("command_id") for e in r["errors"] if e["kind"] == "judgment_in_yaml_comment"] == ["cmd.docker.run"])
+    @case("fail C11: an inline YAML comment is found and tied to its definition", 1, {"C11"},
+          kinds={"yaml_comment_in_definitions_block"},
+          check=lambda r: [e.get("command_id") for e in comment_rows(r)] == ["cmd.docker.run"])
     def _(fx: Fixture) -> None:
         fx.raw_block_replace["CRAU-116"] = [("command_kind: domain_action", "command_kind: domain_action  # a judgment, fixture")]
 
-    @case("fail C11: a two-line YAML comment whose second line says JUDGMENT is one finding", 1, {"C11"},
-          kinds={"judgment_in_yaml_comment"},
-          check=lambda r: len([e for e in r["errors"] if e["kind"] == "judgment_in_yaml_comment"]) == 1)
-    def _(fx: Fixture) -> None:
-        fx.raw_block_replace["CRAU-116"] = [("  - command_id: cmd.docker.run", "  # canon names no kind here;\n  # JUDGMENT: fixture\n  - command_id: cmd.docker.run")]
-
-    @case("pass: a YAML comment without the word is not a finding", 0, set())
+    @case("fail C11: a YAML comment that says no JUDGMENT (a plain canon citation) is still a finding", 1, {"C11"},
+          kinds={"yaml_comment_in_definitions_block"}, check=lambda r: len(comment_rows(r)) == 1)
     def _(fx: Fixture) -> None:
         fx.raw_block_replace["CRAU-116"] = [("command_kind: domain_action", "command_kind: domain_action  # canon: fixture row")]
+
+    @case("fail C11: a two-line YAML comment is one finding", 1, {"C11"},
+          kinds={"yaml_comment_in_definitions_block"}, check=lambda r: len(comment_rows(r)) == 1)
+    def _(fx: Fixture) -> None:
+        fx.raw_block_replace["CRAU-116"] = [("  - command_id: cmd.docker.run", "  # canon names no kind here;\n  # chose domain_action\n  - command_id: cmd.docker.run")]
+
+    @case("fail C11: a whole-line comment directly above a definition is that definition's, not the previous one's", 1, {"C11"},
+          kinds={"yaml_comment_in_definitions_block"},
+          check=lambda r: [e.get("command_id") for e in comment_rows(r)] == ["cmd.runtime.start_fresh_attempt"])
+    def _(fx: Fixture) -> None:
+        fx.raw_block_replace["EP-236"] = [("  - command_id: cmd.runtime.start_fresh_attempt",
+                                           "  # note about start_fresh_attempt\n\n  - command_id: cmd.runtime.start_fresh_attempt")]
+
+    @case("fail C11: a whole-line comment above a key inside a definition stays with that definition", 1, {"C11"},
+          kinds={"yaml_comment_in_definitions_block"},
+          check=lambda r: [e.get("command_id") for e in comment_rows(r)] == ["cmd.runtime.open_queue_analysis"])
+    def _(fx: Fixture) -> None:
+        fx.raw_block_replace["EP-236"] = [("    command_kind: navigation_wrapper",
+                                           "    # note inside open_queue_analysis\n    command_kind: navigation_wrapper")]
+
+    @case("fail C11: a comment above the definitions key belongs to the block, not to a definition", 1, {"C11"},
+          kinds={"yaml_comment_in_definitions_block"},
+          check=lambda r: [e.get("command_id", "") for e in comment_rows(r)] == [""])
+    def _(fx: Fixture) -> None:
+        fx.raw_block_replace["CRAU-116"] = [("  definitions:", "  # shared conventions for this block\n  definitions:")]
 
     @case("pass: '# JUDGMENT' inside a quoted scalar and a block scalar of gap fields is not a comment", 0, set())
     def _(fx: Fixture) -> None:
@@ -3375,8 +3595,11 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
             ("an identity alias whose doc-wide evidence occurs only in UCC-230 itself",
              lambda fx: fx.map["identity_aliases"][0].update(evidence={"doc": CATALOG, "quote": "gist_id names the memory item"}),
              "map_identity_alias_evidence_not_found"),
+            # The quote occurs in UCC-230's own map field and names gist_id, so only the refusal of
+            # UCC-230 as its own evidence can fail this case (round 2 S6 finding 8).
             ("an identity alias whose evidence cites UCC-230 itself",
-             lambda fx: fx.map["identity_aliases"][0].update(evidence={"doc": CATALOG, "unit": MAP_UNIT, "field": "plan_unit_id", "quote": "UCC-230 gist_id"}),
+             lambda fx: fx.map["identity_aliases"][0].update(evidence={"doc": CATALOG, "unit": MAP_UNIT, "field": MAP_KEY,
+                                                                       "quote": "'canon_name': 'gist_id'"}),
              "map_identity_alias_evidence_not_found")]:
         @case(f"fail C07: {label}", 1, {"C07"}, kinds={kind})
         def _(fx: Fixture, mutate_a=mutate_a) -> None:
@@ -3391,6 +3614,7 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         for name in ("blocked_sequence", "allowed_action_id", "node_id"):
             d["args"][name]["required"] = True
             del d["args"][name]["required_when"]
+            d["args"][name].pop("forbidden_when", None)
         del d["args"]["approval_kind"], d["args"]["tool_id"]
         del d["identity_exemptions"]
 
@@ -3433,6 +3657,214 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
           kinds={"map_identity_exemption_malformed"})
     def _(fx: Fixture) -> None:
         del fx.map["identity_exemptions"][2]["exempt_branch"]
+
+    # ---- DL-341 round 2 (Q5 P0c): the chat-tool branch forbids the node-only fields; the node branch
+    # value is a gap.
+    @case("fail C07: approve leaves blocked_sequence allowed on the chat_tool branch (no forbidden_when)", 1, {"C07"},
+          kinds={"conditional_exemption_not_forbidden_on_exempt_branch"},
+          check=lambda r: {e.get("field") for e in r["errors"]} == {"blocked_sequence"})
+    def _(fx: Fixture) -> None:
+        del approve(fx)["args"]["blocked_sequence"]["forbidden_when"]
+
+    @case("fail C07: approve's forbidden_when names a field other than approval_kind", 1, {"C07"},
+          kinds={"conditional_exemption_not_forbidden_on_exempt_branch"})
+    def _(fx: Fixture) -> None:
+        d = approve(fx)
+        d["args"]["allowed_action_id"]["forbidden_when"] = {"field": "run_id", "in": ["chat_tool"]}
+
+    @case("fail C07: approve's forbidden_when also forbids the node branch that requires the field", 1, {"C07"},
+          kinds={"conditional_exemption_not_forbidden_on_exempt_branch"})
+    def _(fx: Fixture) -> None:
+        approve(fx)["args"]["allowed_action_id"]["forbidden_when"]["in"] = ["chat_tool", "node"]
+
+    @case("fail C07: approve marks approval_kind canon although canon names only its chat_tool value", 1, {"C07"},
+          kinds={"conditional_exemption_branch_field_not_gap"})
+    def _(fx: Fixture) -> None:
+        spec = approve(fx)["args"]["approval_kind"]
+        spec.update(provenance="canon", source="fixture")
+        del spec["gap_note"]
+
+    # nullable is refused on a required row-group identity and on a restated common field (DL-341, P0c).
+    @case("fail C07: nullable on a required row-group identity (blocked_sequence)", 1, {"C07"},
+          kinds={"required_identity_nullable"}, check=lambda r: {e.get("field") for e in r["errors"]} == {"blocked_sequence"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.runtime.start_fresh_attempt")["args"]["blocked_sequence"]["nullable"] = True
+
+    @case("fail C07/C08: nullable on run_id, a required identity that is also a common field", 1, {"C07", "C08"},
+          kinds={"required_identity_nullable", "common_field_nullable"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.runtime.start_fresh_attempt")["args"]["run_id"]["nullable"] = True
+
+    @case("fail C07: nullable on a conditionally exempted identity (approve blocked_sequence)", 1, {"C07"},
+          kinds={"required_identity_nullable"})
+    def _(fx: Fixture) -> None:
+        approve(fx)["args"]["blocked_sequence"]["nullable"] = True
+
+    @case("fail C07: nullable on a fully exempted identity the definition still carries", 1, {"C07"},
+          kinds={"required_identity_nullable"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.runtime.open_queue_analysis")["args"]["blocked_sequence"] = {
+            "type": "integer", "required": False, "nullable": True, "default": "none", **canon()}
+
+    @case("fail C07: nullable on a recorded alias's canon name standing for a required identity", 1, {"C07"},
+          kinds={"required_identity_nullable"}, check=lambda r: {e.get("field") for e in r["errors"]} == {"conversation_id"})
+    def _(fx: Fixture) -> None:
+        thread_alias(fx)
+        use_conversation_id(fx)
+        _defs(fx, "cmd.chat.copy_message")["args"]["conversation_id"]["nullable"] = True
+
+    @case("pass: nullable on an optional row-group identity and on an identity whose rule does not apply", 0, set())
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.container.view_logs")["args"]["container_ref"]["nullable"] = True
+        _defs(fx, "cmd.docker.container.view_logs")["args"]["capability_snapshot_ref"] = {
+            "type": "ref", "required": False, "nullable": True, "default": "none", **canon()}
+
+    @case("fail C08: a restated common optional field marked nullable", 1, {"C08"}, kinds={"common_field_nullable"})
+    def _(fx: Fixture) -> None:
+        tag_args(fx)["idempotency_key"] = {"type": "string", "required": False, "nullable": True, "default": "none",
+                                           "constraints": {"max_length": 256}, **canon()}
+
+    @case("fail C08: a restated common optional field nullable with default null", 1, {"C08"}, kinds={"common_field_nullable"})
+    def _(fx: Fixture) -> None:
+        tag_args(fx)["idempotency_key"] = {"type": "string", "required": False, "nullable": True, "default": None, **canon()}
+
+    @case("pass: a restated common optional field kept optional with its canonical type", 0, set())
+    def _(fx: Fixture) -> None:
+        tag_args(fx)["project_id"] = {"type": "id", "required": False, "default": "none", **canon()}
+
+    # Judgment paths: a [] step only on a list field; a list choice has no repeats (DL-341, P0c).
+    @case("fail C14: an omitted judgment steps into [] of a field that is not a list", 1, {"C14"},
+          kinds={"judgment_key_path_not_a_list"})
+    def _(fx: Fixture) -> None:
+        judgments(fx).append({"key": "omitted:new_tag[]", "choice": "omitted", "gap_note": "x"})
+
+    @case("fail C14: a field judgment steps into [] of a field that is not a list", 1, {"C14"},
+          kinds={"judgment_key_path_not_a_list"})
+    def _(fx: Fixture) -> None:
+        judgments(fx).append({"key": "field:new_tag[]", "choice": "x", "gap_note": "x"})
+
+    @case("fail C14: an omitted judgment steps into [] of a field the definition does not have", 1, {"C14"},
+          kinds={"judgment_key_path_not_a_list"})
+    def _(fx: Fixture) -> None:
+        judgments(fx).append({"key": "omitted:no_such_list[]", "choice": "omitted", "gap_note": "x"})
+
+    @case("pass: an omitted field under the item of a list field is counted", 0, set(), check=counted(3))
+    def _(fx: Fixture) -> None:
+        tag_args(fx)["entries"] = {"type": "list", "required": False, "default": "none", **canon(), "item": {
+            "type": "object", "fields": {"name": {"type": "string", "required": True, "default": "none", **canon()}}}}
+        judgments(fx).append({"key": "omitted:entries[].note", "choice": "omitted", "gap_note": "x"})
+
+    @case("fail C14: a list choice repeats a code", 1, {"C14"}, kinds={"judgment_choice_invalid"})
+    def _(fx: Fixture) -> None:
+        d = _defs(fx, "cmd.docker.image.tag")
+        judgments(fx).append({"key": "error_codes", "choice": d["error_codes"] + ["invalid_args"], "gap_note": "x"})
+
+    @case("fail C07: the map's mutating entry has no not_mutating key", 1, {"C07"}, kinds={"map_required_identity_malformed"})
+    def _(fx: Fixture) -> None:
+        del mutating_entry(fx)["not_mutating"]
+
+    # The aliases judgment key (DL-341, P0c lead proposal).
+    @case("pass: an aliases judgment whose choice is the alias tokens the definition records", 0, set(), check=counted(3))
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.container.view_logs")["judgments"] = [
+            {"key": "aliases", "choice": ["cmd.docker.logs"], "gap_note": "fixture: only the compatibility alias is claimed"}]
+
+    @case("pass: an aliases judgment with choice none on a definition that records no alias", 0, set(), check=counted(3))
+    def _(fx: Fixture) -> None:
+        judgments(fx).append({"key": "aliases", "choice": "none", "gap_note": "fixture: no alias is claimed"})
+
+    @case("fail C14: an aliases judgment names a token the definition does not record", 1, {"C14"},
+          kinds={"judgment_choice_differs_from_definition"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.container.view_logs")["judgments"] = [
+            {"key": "aliases", "choice": ["cmd.docker.logs", "cmd.docker.tail"], "gap_note": "x"}]
+
+    @case("fail C14: an aliases judgment says none on a definition that records an alias", 1, {"C14"},
+          kinds={"judgment_choice_differs_from_definition"})
+    def _(fx: Fixture) -> None:
+        _defs(fx, "cmd.docker.container.view_logs")["judgments"] = [{"key": "aliases", "choice": "none", "gap_note": "x"}]
+
+    # owner_state_codes (DL-341, P0c lead proposal).
+    def verify(fx: Fixture) -> dict[str, Any]:
+        return _defs(fx, "cmd.chat.memory.verify")
+
+    @case("pass: owner_state_codes ties maintenance_cutoffs_pending to its mapped code not_configured", 0, set())
+    def _(fx: Fixture) -> None:
+        verify(fx)["owner_state_codes"] = [{"owner_state": "maintenance_cutoffs_pending", "code": "not_configured"}]
+
+    for label, entries, code, kind in [
+            ("owner_state_codes is not a list", {"owner_state": "maintenance_cutoffs_pending", "code": "not_configured"},
+             "C14", "owner_state_codes_not_list"),
+            ("owner_state_codes is an empty list", [], "C14", "owner_state_codes_not_list"),
+            ("an owner_state_codes entry has no code", [{"owner_state": "maintenance_cutoffs_pending"}],
+             "C14", "owner_state_code_entry_malformed"),
+            ("an owner_state_codes entry has an unknown key",
+             [{"owner_state": "maintenance_cutoffs_pending", "code": "not_configured", "note": "x"}], "C14", "owner_state_code_entry_malformed"),
+            ("an owner state listed twice", [{"owner_state": "maintenance_cutoffs_pending", "code": "not_configured"},
+                                             {"owner_state": "maintenance_cutoffs_pending", "code": "not_configured"}],
+             "C14", "owner_state_code_duplicate"),
+            ("an owner state the map does not record", [{"owner_state": "dedup_hold_pending", "code": "not_configured"}],
+             "C09", "owner_state_not_in_map"),
+            ("an owner state code that is not one of the definition's disabled_reason_codes",
+             [{"owner_state": "dirty_worktree", "code": "blocked_state_required"}], "C09", "owner_state_code_not_in_disabled_reason_codes")]:
+        @case(f"fail {code}: {label}", 1, {code}, kinds={kind})
+        def _(fx: Fixture, entries=entries) -> None:
+            verify(fx)["owner_state_codes"] = copy.deepcopy(entries)
+
+    @case("fail C09: an owner state code that differs from the map's code", 1, {"C09"},
+          kinds={"owner_state_code_differs_from_map"},
+          check=lambda r: {e["kind"] for e in r["errors"]} == {"owner_state_code_differs_from_map"})
+    def _(fx: Fixture) -> None:
+        verify(fx)["disabled_reason_codes"] = ["not_configured", "degraded"]
+        verify(fx)["owner_state_codes"] = [{"owner_state": "maintenance_cutoffs_pending", "code": "degraded"}]
+
+    @case("fail C09: the map records one owner state twice", 1, {"C09"}, kinds={"map_owner_state_duplicate"})
+    def _(fx: Fixture) -> None:
+        fx.map["owner_state_code_map"].append({"owner_state": "dirty_worktree", "maps_to": "degraded", "sources": ["fixture"]})
+
+    # No review or evidence references inside a definitions block (DL-341, P0c).
+    def review_rows(result: dict[str, Any]) -> list[dict[str, Any]]:
+        return [e for e in result["errors"] if e["kind"] == "review_reference_in_definitions_block"]
+
+    for label, text in [
+            ("a review round and finding", "no field carried the new tag (review r1 finding 9)"),
+            ("a round-1 finding", "fixed after the round 1 finding on tags"),
+            ("a fix-round report name", "a spelling drift listed as a canon conflict in fix-r1-S1"),
+            ("the fix-round brief", "the definition follows the table, as the fix-round brief directs"),
+            ("a review file name", "see r2-opus-S3 for the reasoning"),
+            ("the review folder", "per defs-review/R1-DECISIONS call 5"),
+            ("the owner-answers folder", "settled in owner-answers/q5/RESOLUTIONS.md"),
+            ("the evidence share", "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/notes.md"),
+            ("a fix report's canon-conflict label", "Canon conflict C2: the row says query?"),
+            ("a Q5 design section", "classed with the context selector (DESIGN 4.6)")]:
+        @case(f"fail C11: a gap_note names review or evidence material ({label})", 1, {"C11"},
+              kinds={"review_reference_in_definitions_block"},
+              check=lambda r: [(e.get("command_id"), e.get("field")) for e in review_rows(r)] == [("cmd.docker.image.tag", "args.new_tag.gap_note")])
+        def _(fx: Fixture, text=text) -> None:
+            tag_args(fx)["new_tag"]["gap_note"] = text
+
+    @case("fail C11: a judgment's gap_note names a review finding", 1, {"C11"},
+          kinds={"review_reference_in_definitions_block"},
+          check=lambda r: [(e.get("command_id"), e.get("field")) for e in review_rows(r)] == [("cmd.docker.image.tag", "judgments[0].gap_note")])
+    def _(fx: Fixture) -> None:
+        judgments(fx)[0]["gap_note"] = "no typed owner request exists (review r1 finding 11)"
+
+    @case("fail C11: a local result field's source names the evidence share", 1, {"C11"},
+          kinds={"review_reference_in_definitions_block"},
+          check=lambda r: [(e.get("command_id"), e.get("field")) for e in review_rows(r)] == [("local:DockerImageTagResultV1", "fields.image_ref.gap_note")])
+    def _(fx: Fixture) -> None:
+        fx.results["CRAU-115"]["DockerImageTagResultV1"]["fields"]["image_ref"]["gap_note"] = "see PuppetMaster-Evidence/q5"
+
+    @case("pass: preview, reviewed, the compile review, a Plans design doc and a canon conflict without a label are not review references",
+          0, set())
+    def _(fx: Fixture) -> None:
+        tag_args(fx)["new_tag"]["gap_note"] = ("the preview names it; the reviewed dry-run scan record; the compile review may "
+                                               "re-token it; assistant-chat-design.md:341; Canon conflict: two rows disagree; round 2 of retries")
+
+    @case("pass: an evidence path in the owner unit's source_lineage is not in a definitions block", 0, set())
+    def _(fx: Fixture) -> None:
+        fx.owner_unit_overrides["CRAU-115"] = {"source_lineage": [
+            "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/defs-review/r1-opus-S1.md (review r1 finding 9)"]}
 
     return cases, cli_cases, post_checks
 
