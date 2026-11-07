@@ -3168,17 +3168,24 @@ canonical_text: >-
   prune archive to archive-only: a memory is deleted only when the user deletes it, originals keep their evidence
   references, and neither job archives or merges a pinned memory. DL-403 holds both commands unavailable,
   automatically and from the Memory panel, until approved cutoffs exist; DL-446 and DL-447 record the returned
-  cutoffs and keep runs waiting for their application and the remaining definition, review and recording approvals.
+  cutoffs and keep runs waiting for their application and the remaining definition, review and recording approvals;
+  the definitions record that hold as owner state maintenance_cutoffs_pending, which UCC-230 maps to not_configured
+  (DL-341). DL-444 and DL-445 keep dedup_sweep unavailable the same way until their answer is applied and the
+  remaining approvals pass. prune_archive's policy can never change DL-447's cutoffs, pin exclusion or DL-402's
+  archive-only rule. gist_id is the canon name UCC-230's identity_aliases records for the overlay identity
+  memory_item_id, and every judgment is in its definition's judgments list (DL-341).
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible Gist Review panel ("Notes it took") commands.
-depends_on: [UCC-230, UCC-084, UCC-085, CV-333, DL-333, DL-402, DL-403, DL-444, DL-445, DL-446, DL-447]
+depends_on: [UCC-230, UCC-084, UCC-085, CV-333, DL-333, DL-402, DL-403, DL-444, DL-445, DL-446, DL-447, DL-341]
 unblocks: []
 acceptance_criteria:
   - Every command UCC-230 routes to AMS-141 has exactly one definition in the block below.
   - Every field has a vocabulary type, required, default and provenance; every gap field says what was missing.
   - error_codes and disabled_reason_codes stay inside the overlay's closed sets.
   - summarize_monthly and prune_archive archive only and never delete, and neither archives or merges a pinned memory (DL-402).
-  - summarize_monthly and prune_archive stay unavailable with their reason until approved cutoffs exist and are applied (DL-403, DL-446, DL-447).
+  - summarize_monthly and prune_archive stay unavailable with their reason, owner state maintenance_cutoffs_pending mapped to not_configured (UCC-230, DL-341), until approved cutoffs exist and are applied (DL-403, DL-446, DL-447).
+  - dedup_sweep stays unavailable, automatically and from the Memory panel, until the DL-444 and DL-445 answer is applied and all remaining definition, review and recording approvals pass (DL-444, DL-445).
+  - prune_archive's policy can never change DL-447's eligibility test or pin exclusion or DL-402's archive-only rule, and a supplied policy is refused until the memory owner defines its shape.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
   - python3 scripts/pm-command-payload-defs-check.py
@@ -3197,6 +3204,9 @@ negative_constraints:
   - Do not define a payload for an alias, retired, non-alias or source-lineage token.
   - Do not let summarize_monthly or prune_archive delete a memory; deletion stays the user's action (DL-402, DL-445).
   - Do not make summarize_monthly or prune_archive available before approved cutoffs exist and are applied (DL-403, DL-446, DL-447).
+  - Do not make dedup_sweep available before the DL-444 and DL-445 answer is applied and the remaining approvals pass (DL-444, DL-445).
+  - Do not let a prune_archive policy value select memories outside DL-447's cutoffs, include a pinned memory, or delete anything (DL-402, DL-447).
+  - Do not record a judgment in a YAML comment; record it in the definition's judgments list (DL-341).
   - cmd.chat.memory.export keeps its own catalog rows (UCC-171, DL-130); this unit defines no payload for it.
 owner_hints: [Plans/UI_Command_Catalog.md, Plans/Decision_Log.md]
 ```
@@ -3206,14 +3216,6 @@ command_payload_definitions:
   format: pm.command_payload_definitions.v1
   owner_unit: AMS-141
   overlay: Plans/UI_Command_Catalog.md#UCC-230
-  # Shared conventions for this block:
-  # - gist_id is the concrete arg name for the UCC-084..088 row-group identity `memory_item_id?`
-  #   (overlay table, UI_Command_Catalog.md:8858); the catalog's 2.8 rows and this doc use gist_id.
-  # - owner_request and owner_result are the chat-owner V2 contracts that every wiring row of these
-  #   commands names (Wiring_Matrix.production.json request_schema_ref / result_schema_ref); the
-  #   domain payload carried through ChatOwnerCommandResultV2.owner_result_ref is typed nowhere yet.
-  # - No catalog row states disabled_reason_codes for these commands; the subsets below are judgment
-  #   drawn from the overlay's closed set.
   definitions:
     - command_id: cmd.chat.memory.verify
       ucc_units: [UCC-084]
@@ -3231,14 +3233,24 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1133 { project_id, gist_id }; MemoryGist id (assistant-memory-subsystem.md §3.1); AutoMilestone dedup pair (gist_id, evidence_ref) §5.2.2"
+          source: "UI_Command_Catalog.md:1133 { project_id, gist_id }; UCC-230 identity_aliases: gist_id stands for the UCC-084..UCC-088 overlay identity memory_item_id? (UI_Command_Catalog.md:8857; DL-341 resolution 4); MemoryGist id (assistant-memory-subsystem.md §3.1)"
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: assistant.memory.enabled=false or no memory store for the scope (§9.4); no catalog row states disabled reasons
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: "The 2.8 row (UI_Command_Catalog.md:1133) states no command_kind. Verify emits memory.gist.verification_requested and memory.gist.verified or verification_failed, a durable change to the gist."
+        - key: owner_result
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+          gap_note: "The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon types no gist-review result payload, so none is defined here."
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (assistant-memory-subsystem.md §9.4) is read as not_configured."
     - command_id: cmd.chat.memory.edit
       ucc_units: [UCC-084]
       command_kind: domain_action
@@ -3255,7 +3267,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1134; MemoryGist id (assistant-memory-subsystem.md §3.1)"
+          source: "UI_Command_Catalog.md:1134; UCC-230 identity_aliases: gist_id stands for memory_item_id (DL-341 resolution 4); MemoryGist id (assistant-memory-subsystem.md §3.1)"
         patch:
           type: object
           required: true
@@ -3273,15 +3285,15 @@ command_payload_definitions:
                     required: false
                     default: none
                     provenance: gap
-                    gap_note: "claim_id is canon (§3.2, stable within gist); whether a patch item must carry it is not stated. JUDGMENT: optional so a new claim may omit it."
+                    gap_note: "claim_id is canon (§3.2, stable within gist); whether a patch item must carry it is not stated. Choice: optional so a new claim may omit it."
                   text:
                     type: string
                     required: true
                     default: none
                     provenance: gap
-                    gap_note: "text is canon (§3.2, single sentence); no length bound is stated, so none is set. Required in each patch item is judgment."
+                    gap_note: "text is canon (§3.2, single sentence); no length bound is stated, so none is set. Required in each patch item is chosen here."
               provenance: gap
-              gap_note: "claims[] is the canon gist field (§3.1) and §3.2 fixes the claim shape, but whether Edit replaces the list or edits per claim is not stated. JUDGMENT: shape only; replacement semantics assumed."
+              gap_note: "claims[] is the canon gist field (§3.1) and §3.2 fixes the claim shape, but whether Edit replaces the list or edits per claim is not stated. Choice: shape only; replacement semantics assumed."
             tags:
               type: list
               required: false
@@ -3295,21 +3307,31 @@ command_payload_definitions:
               default: none
               constraints: {minimum: 1}
               provenance: gap
-              gap_note: "the per-gist half-life override stays a gist field (AMS-048, assistant-memory-subsystem.md:2787); minimum 1 day is judgment (§9.2 gives per-kind defaults, no per-gist bound)."
+              gap_note: "the per-gist half-life override stays a gist field (AMS-048, assistant-memory-subsystem.md:2787); minimum 1 day is chosen here (§9.2 gives per-kind defaults, no per-gist bound)."
           provenance: gap
           gap_note: >-
             UI_Command_Catalog.md:1134 gives the key only ({ project_id, gist_id, patch }); no patch shape is
             stated. AMS-048 (assistant-memory-subsystem.md:2787) makes Edit a versioned claim edit that writes a
             new gist version, keeps the prior version and its evidence history, and resets the gist to Unverified.
-            JUDGMENT: the fields below are the canon-named user-editable gist surfaces of §3.1 (claims[], tags[],
+            Choice: the fields below are the canon-named user-editable gist surfaces of §3.1 (claims[], tags[],
             half_life_days); whether Edit may set all of them is not stated.
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: assistant.memory.enabled=false or no memory store for the scope (§9.4); no catalog row states disabled reasons
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: "The 2.8 row (UI_Command_Catalog.md:1134) states no command_kind. Edit emits memory.gist.updated and writes a new gist version (AMS-048)."
+        - key: owner_result
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+          gap_note: "The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon types no gist-review result payload, so none is defined here."
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
     - command_id: cmd.chat.memory.pin
       ucc_units: [UCC-084]
       command_kind: domain_action
@@ -3326,7 +3348,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1135; MemoryGist id (assistant-memory-subsystem.md §3.1)"
+          source: "UI_Command_Catalog.md:1135; UCC-230 identity_aliases: gist_id stands for memory_item_id (DL-341 resolution 4); MemoryGist id (assistant-memory-subsystem.md §3.1)"
         pinned:
           type: boolean
           required: true
@@ -3338,8 +3360,18 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: assistant.memory.enabled=false or no memory store for the scope (§9.4); no catalog row states disabled reasons
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: "The 2.8 row (UI_Command_Catalog.md:1135) states no command_kind. Pin emits memory.gist.pinned or memory.gist.unpinned, a durable change to the gist."
+        - key: owner_result
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+          gap_note: "The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon types no gist-review result payload, so none is defined here."
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
     - command_id: cmd.chat.memory.discard
       ucc_units: [UCC-084]
       command_kind: domain_action
@@ -3356,14 +3388,24 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1136; MemoryGist id (assistant-memory-subsystem.md §3.1). Discard sets verification_state = Discarded and excludes the gist from automatic injection and default search results (§5.3)."
+          source: "UI_Command_Catalog.md:1136; UCC-230 identity_aliases: gist_id stands for memory_item_id (DL-341 resolution 4); MemoryGist id (assistant-memory-subsystem.md §3.1). Discard sets verification_state = Discarded and excludes the gist from automatic injection and default search results (§5.3)."
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: assistant.memory.enabled=false or no memory store for the scope (§9.4); no catalog row states disabled reasons
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: "The 2.8 row (UI_Command_Catalog.md:1136) states no command_kind. Discard emits memory.gist.discarded and sets verification_state = Discarded (§5.3)."
+        - key: owner_result
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+          gap_note: "The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon types no gist-review result payload, so none is defined here."
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
     - command_id: cmd.chat.memory.toggle_auto_save_unverified
       ucc_units: [UCC-084]
       command_kind: domain_action
@@ -3386,11 +3428,21 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: assistant.memory.enabled=false or no memory store for the scope (§9.4); no catalog row states disabled reasons
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: "The 2.8 row (UI_Command_Catalog.md:1137) states no command_kind. The toggle sets a ConfigKey and emits settings.updated, a durable settings change."
+        - key: owner_result
+          choice: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+          gap_note: "The wiring row names ChatOwnerCommandResultV2, whose domain payload is only owner_result_ref; canon types no result payload for the toggle, so none is defined here."
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
     - command_id: cmd.chat.memory.preview_capsule
       ucc_units: [UCC-084]
-      command_kind: shell_view                    # catalog row: "no persisted domain event (preview computation only)" (UI_Command_Catalog.md:1138); no domain effect to take
+      command_kind: shell_view
       response_kind: owner_operation
       args:
         project_id:
@@ -3404,14 +3456,21 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1138 { project_id, thread_id? }; restated at its UCC-230 canonical type id, optional as the row marks it; MemoryGist provenance thread_id is optional for traceability (§3.1)"
+          source: "UI_Command_Catalog.md:1138 { project_id, thread_id? }; restated at its UCC-230 canonical type id, optional as the row marks it"
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
-        owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+        owner_result: local:MemoryCapsulePreviewResultV1
       error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: assistant.memory.enabled=false or no memory store for the scope (§9.4); no catalog row states disabled reasons
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: shell_view
+          gap_note: "The 2.8 row (UI_Command_Catalog.md:1138) states no command_kind; it says 'no persisted domain event (preview computation only)', so there is no domain effect to take."
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
     - command_id: cmd.chat.memory.rebuild_lexical_index
       ucc_units: [UCC-085]
       command_kind: domain_action
@@ -3426,10 +3485,17 @@ command_payload_definitions:
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
-        owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+        owner_result: local:MemoryMaintenanceResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: assistant.memory.enabled=false or no memory store for the scope (§9.4); no catalog row states disabled reasons
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: "The 2.8 row (UI_Command_Catalog.md:1139) states no command_kind. The rebuild emits memory.index.lexical.rebuild.started and .completed and rewrites the derived index."
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
     - command_id: cmd.chat.memory.rebuild_semantic_index
       ucc_units: [UCC-085]
       command_kind: domain_action
@@ -3444,10 +3510,17 @@ command_payload_definitions:
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
-        owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+        owner_result: local:MemoryMaintenanceResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: assistant.memory.enabled=false or no memory store for the scope (§9.4); no catalog row states disabled reasons
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: "The 2.8 row (UI_Command_Catalog.md:1140) states no command_kind. The rebuild emits memory.index.semantic.rebuild.started and .completed and rewrites the derived index."
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
     - command_id: cmd.chat.memory.verification_sweep
       ucc_units: [UCC-085]
       command_kind: domain_action
@@ -3462,10 +3535,17 @@ command_payload_definitions:
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
-        owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+        owner_result: local:MemoryMaintenanceResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: assistant.memory.enabled=false or no memory store for the scope (§9.4); no catalog row states disabled reasons
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: "The 2.8 row (UI_Command_Catalog.md:1141) states no command_kind. The sweep emits memory.verification_sweep.started and .completed and re-evaluates every gist's verification_state."
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: "No catalog row states disabled reasons for the memory commands. assistant.memory.enabled=false or no memory store for the scope (§9.4) is read as not_configured."
     - command_id: cmd.chat.memory.dedup_sweep
       ucc_units: [UCC-085]
       command_kind: domain_action
@@ -3476,14 +3556,21 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1142 row args { project_id }; UCC-230 common optional project_id made required by the row. Merges identical embed_text_hash gists preserving evidence refs (§7.2 item 4); survivor and disposition per DL-444/DL-445, merged originals archived and never automatically deleted."
+          source: "UI_Command_Catalog.md:1142 row args { project_id }; UCC-230 common optional project_id made required by the row. Merges identical embed_text_hash gists (§7.2 item 4); survivor and disposition per Plans/Decision_Log.md#DL-444 and #DL-445: the oldest eligible memory keeps its identity, merged originals are archived with their evidence references, never automatically deleted, and a pin-protected merge is skipped."
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
-        owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+        owner_result: local:MemoryMaintenanceResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: assistant.memory.enabled=false or no memory store for the scope (§9.4), and DL-444/DL-445 keep jobs and panel buttons unavailable until the answer is applied and remaining approvals pass; no catalog row states disabled reasons
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: "The 2.8 row (UI_Command_Catalog.md:1142) states no command_kind. The sweep emits memory.dedup_sweep.started and .completed and merges gists."
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: "No catalog row states disabled reasons for the memory commands. Plans/Decision_Log.md#DL-444 and #DL-445 (approved scope) keep automatic jobs and panel buttons unavailable until the answer is applied and all remaining definition, review and recording approvals pass. UCC-230's owner_state_code_map records no owner state for that hold; it is read as not_configured, the code the map gives the parallel cutoffs hold maintenance_cutoffs_pending (DL-403, DL-341 resolution 3). assistant.memory.enabled=false or no memory store (§9.4) is also not_configured."
     - command_id: cmd.chat.memory.summarize_monthly
       ucc_units: [UCC-085]
       command_kind: domain_action
@@ -3494,7 +3581,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1143 row args { project_id, month? }; UCC-230 common optional project_id made required by the row. Consolidates older low-activation Note gists into a monthly Note gist (§7.2 item 5); DL-402: archive-only, originals archived with all evidence references, never a pinned memory, never a deletion."
+          source: "UI_Command_Catalog.md:1143 row args { project_id, month? }; UCC-230 common optional project_id made required by the row. Consolidates older low-activation Note gists into a monthly Note gist (§7.2 item 5). Archive-only per Plans/Decision_Log.md#DL-402: originals stay archived with all their evidence references, a pinned memory is never archived or merged, and a memory is deleted only when the user deletes it."
         month:
           type: string
           required: false
@@ -3503,15 +3590,23 @@ command_payload_definitions:
           gap_note: >-
             UI_Command_Catalog.md:1143 gives the key only ({ project_id, month? }); no format or default is
             stated. DL-446 keeps "the existing monthly grouping" and fixes the selection cutoffs (Note memories
-            idle at least 90 days AND usefulness score below 0.10, per Project), not a month format. JUDGMENT:
-            left an unconstrained optional string pending an owner format; candidate YYYY-MM.
+            idle at least 90 days AND usefulness score below 0.10, per Project), not a month format. Choice:
+            an unconstrained optional string pending an owner format, candidate YYYY-MM. month only names which
+            monthly group to consolidate; it can never change DL-446's cutoffs, pin exclusion or archive-only rule.
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
-        owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+        owner_result: local:MemoryMaintenanceResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # DL-403: neither job runs until cutoffs exist and the buttons show unavailable with the reason; DL-446 returns the cutoffs and keeps panel runs waiting for application and remaining definition, review and recording approvals
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: "The 2.8 row (UI_Command_Catalog.md:1143) states no command_kind. The job emits memory.monthly_summary.started and .completed and archives originals."
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: "Owner state maintenance_cutoffs_pending, which UCC-230's owner_state_code_map maps to not_configured (DL-403; DL-341 resolution 3): neither job runs, automatically or from the Memory panel, until approved cutoffs exist, and the button shows unavailable with that reason. DL-446 returned the cutoffs and keeps runs waiting for their application and the remaining definition, review and recording approvals, so the state holds until then. assistant.memory.enabled=false or no memory store (§9.4) is also not_configured."
     - command_id: cmd.chat.memory.prune_archive
       ucc_units: [UCC-085]
       command_kind: domain_action
@@ -3522,25 +3617,45 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1144 row args { project_id, policy? }; UCC-230 common optional project_id made required by the row. DL-402 supersedes §7.2 item 6's archive-or-delete wording: archive only, deletion stays the user's action, never a pinned memory, originals keep evidence references and versions."
+          source: "UI_Command_Catalog.md:1144 row args { project_id, policy? }; UCC-230 common optional project_id made required by the row. Archive-only per Plans/Decision_Log.md#DL-402: deletion stays the user's action, a pinned memory is never archived, and archived originals keep their evidence references and versions (DL-447)."
         policy:
           type: string
           required: false
           default: none
           provenance: gap
           gap_note: >-
-            UI_Command_Catalog.md:1144 gives the key only ({ project_id, policy? }); §7.2 item 6 says
-            "policy-driven" without a policy shape. DL-402 and DL-447 fix the archive-only rule and the cutoffs
-            (eligible memories of any kind idle at least 180 days AND usefulness score below 0.05, per Project);
-            a caller-supplied policy override is defined nowhere. JUDGMENT: kept as an unconstrained optional
-            string rather than dropped or shaped.
+            UI_Command_Catalog.md:1144 gives the key only ({ project_id, policy? }) and no canon defines a
+            policy shape or what a caller-supplied policy may change. DL-402 fixes archive-only and DL-447 fixes
+            the selection (memories of any kind idle at least 180 days AND usefulness score below 0.05, inside
+            each Project, pins excluded before scoring). Choice: the field stays an optional string with no
+            accepted value until the memory owner defines it; until then the handler refuses any supplied
+            policy with invalid_args, and no policy value can ever widen, narrow or replace DL-447's eligibility
+            test, its pin exclusion or DL-402's archive-only rule.
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       result:
         response: Plans/ui_command_response.schema.json
-        owner_result: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandResultV2
+        owner_result: local:MemoryMaintenanceResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # DL-403: neither job runs until cutoffs exist and the buttons show unavailable with the reason; DL-447 returns the cutoffs and keeps panel runs waiting for application and remaining definition, review and recording approvals
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: "The 2.8 row (UI_Command_Catalog.md:1144) states no command_kind. The job emits memory.prune_archive.started and .completed and archives memories."
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: "Owner state maintenance_cutoffs_pending, which UCC-230's owner_state_code_map maps to not_configured (DL-403; DL-341 resolution 3): neither job runs, automatically or from the Memory panel, until approved cutoffs exist, and the button shows unavailable with that reason. DL-447 returned the cutoffs and keeps runs waiting for their application and the remaining definition, review and recording approvals, so the state holds until then. assistant.memory.enabled=false or no memory store (§9.4) is also not_configured."
+  results:
+    MemoryCapsulePreviewResultV1:
+      fields:
+        estimated_tokens: {type: integer, required: true, default: none, constraints: {minimum: 0}, provenance: gap, gap_note: "the estimated token count the capsule preview MUST report (assistant-memory-subsystem.md:389), counting memory notes only against assistant.memory.capsule_budget_tokens (:392); canon names no field, and minimum 0 is chosen here"}
+        truncated: {type: boolean, required: true, default: none, provenance: gap, gap_note: "whether truncation occurred because of the configured cap, which the preview MUST indicate (assistant-memory-subsystem.md:389); canon names no field"}
+        capsule_budget_tokens: {type: integer, required: false, default: none, constraints: {minimum: 0}, provenance: gap, gap_note: "the assistant.memory.capsule_budget_tokens value the count is measured against (assistant-memory-subsystem.md:392); canon does not say the result carries it"}
+        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.chat_memory_preview_capsule); the row persists no domain event"}
+    MemoryMaintenanceResultV1:
+      fields:
+        status: {type: enum, values: [succeeded, failed], required: true, default: none, provenance: gap, gap_note: "maintenance operations report explicit success/failure status (assistant-memory-subsystem.md:412); canon names neither the field nor its values"}
+        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt for the job's started/completed events (UI_Command_Catalog.md:1139-1144)"}
 ```
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md#UCC-230, ContractName:Plans/UI_Command_Catalog.md#UCC-084, ContractName:Plans/UI_Command_Catalog.md#UCC-085, ContractName:Plans/Decision_Log.md#DL-333, ContractName:Plans/Decision_Log.md#DL-402, ContractName:Plans/Decision_Log.md#DL-403, ContractName:Plans/Decision_Log.md#DL-444, ContractName:Plans/Decision_Log.md#DL-445, ContractName:Plans/Decision_Log.md#DL-446, ContractName:Plans/Decision_Log.md#DL-447, ContractName:Plans/Wiring_Matrix.production.json, ContractName:Plans/application_workflow_contracts.schema.json, ContractName:Plans/Contracts_V0.md#7-uicommand
