@@ -184878,6 +184878,142 @@
         "C10"
       ],
       "error": "date_time_leap_second"
+    },
+    {
+      "id": "payload-inline-flag-zero",
+      "op": "payload",
+      "length": 6,
+      "inline": 0,
+      "conflicts": [
+        "C05",
+        "C09"
+      ],
+      "error": "boolean_type",
+      "target_predicate": "boolean_type",
+      "enforcement": "authored",
+      "single_defect": "payload.inline.boolean"
+    },
+    {
+      "id": "payload-inline-flag-null",
+      "op": "payload",
+      "length": 6,
+      "inline": null,
+      "conflicts": [
+        "C05",
+        "C09"
+      ],
+      "error": "boolean_type",
+      "target_predicate": "boolean_type",
+      "enforcement": "authored",
+      "single_defect": "payload.inline.boolean"
+    },
+    {
+      "id": "payload-inline-flag-empty-string",
+      "op": "payload",
+      "length": 6,
+      "inline": "",
+      "conflicts": [
+        "C05",
+        "C09"
+      ],
+      "error": "boolean_type",
+      "target_predicate": "boolean_type",
+      "enforcement": "authored",
+      "single_defect": "payload.inline.boolean"
+    },
+    {
+      "id": "physical-binding-array-reported-length-4294967296",
+      "op": "physical",
+      "value": [
+        {
+          "@int": "1"
+        }
+      ],
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "reported_length": 4294967296,
+      "reported_length_module": "binding",
+      "fixture_boundary": "Fault-injection fixture boundary: for this one call the runner makes the SP-278 binding codec module's len() report 4294967296 for the one-element array input (true length elsewhere), so the binding's uint32 header limit is reached without allocating the array. Only the length predicate is exercised. Dependence: the fixture works only while binding_bytes reads the array length through its module-global len; a behaviour-preserving refactor fails both binding reported-length cases, a false alarm in the safe direction, never a mask.",
+      "conflicts": [
+        "C05",
+        "C06"
+      ],
+      "error": "binding_domain",
+      "target_predicate": "binding_domain",
+      "enforcement": "authored",
+      "single_defect": "physical.binding.array_length"
+    },
+    {
+      "id": "physical-binding-array-reported-length-4294967295",
+      "op": "physical",
+      "value": [
+        {
+          "@int": "1"
+        }
+      ],
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "reported_length": 4294967295,
+      "reported_length_module": "binding",
+      "fixture_boundary": "Fault-injection fixture boundary: for this one call the runner makes the SP-278 binding codec module's len() report 4294967295 for the one-element array input (true length elsewhere), so the binding's uint32 header limit is reached without allocating the array. Only the length predicate is exercised. Dependence: the fixture works only while binding_bytes reads the array length through its module-global len; a behaviour-preserving refactor fails both binding reported-length cases, a false alarm in the safe direction, never a mask.",
+      "conflicts": [
+        "C06"
+      ],
+      "output": "ddffffffff01",
+      "target_predicate": "physical.canonical_bytes"
+    },
+    {
+      "id": "history-recipe-added-after-install",
+      "op": "history",
+      "scenario": "unknown_recipe",
+      "after_install": "add",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "error": "recipe_unknown",
+      "target_predicate": "recipe_unknown",
+      "enforcement": "authored",
+      "single_defect": "recipe_unknown.added_after_install"
+    },
+    {
+      "id": "history-recipe-replaced-after-install",
+      "op": "history",
+      "original": "integral_float",
+      "after_install": "replace",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "output": "original-returned-with-zero-effects",
+      "target_predicate": "original.authentic_retained"
+    },
+    {
+      "id": "history-recipe-deleted-after-install",
+      "op": "history",
+      "original": "integral_float",
+      "after_install": "delete",
+      "conflicts": [
+        "C09",
+        "C10"
+      ],
+      "output": "original-returned-with-zero-effects",
+      "target_predicate": "original.authentic_retained"
+    },
+    {
+      "id": "payload-size-and-media-two-defects",
+      "op": "payload",
+      "length": 6,
+      "descriptor": {
+        "byte_size": 7,
+        "media_type": "text/plain"
+      },
+      "conflicts": [
+        "C05",
+        "C09"
+      ],
+      "error": "payload_size",
+      "target_predicate": "payload_size",
+      "enforcement": "authored",
+      "precedence_pinned": "Two defects (a wrong size and a wrong media type). The owner text names no precedence among payload refusals; the current one, the size first, is pinned here so a change of order is a reviewed change to this case (REVIEW-numrule-tb4-opus blind B-N12)."
     }
   ],
   "guard_isolation_sweep": [

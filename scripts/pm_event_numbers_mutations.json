@@ -2438,6 +2438,78 @@
       "replace": "        keys.sort(key=lambda pair: (len(pair[0]), pair[0]))\n",
       "witness": "physical-binding-map-length-order",
       "rule": "physical.map-key-order"
+    },
+    {
+      "id": "review-tb4-B-N09",
+      "api": "storage_value_bytes",
+      "class": "type_coercion",
+      "module": "pm_event_index_binding",
+      "source": "review-toolbatch4",
+      "note": "The binding codec's uint32 length limit raises OverflowError, which storage_value_bytes does not map to binding_domain (REVIEW-numrule-tb4-opus blind B-N09; fail-open on the refusal contract).",
+      "find": "        raise ValueError(\"MessagePack length exceeds uint32\")",
+      "replace": "        raise OverflowError(\"MessagePack length exceeds uint32\")",
+      "witness": "physical-binding-array-reported-length-4294967296",
+      "rule": "binding.domain"
+    },
+    {
+      "id": "review-tb4-B-N11",
+      "api": "verify_payload_bytes",
+      "class": "early_return",
+      "module": "pm_event_numbers",
+      "source": "review-toolbatch4",
+      "note": "verify_payload_bytes returns before exact_boolean(inline) for a falsy inline, so 0, None and '' are accepted (REVIEW-numrule-tb4-opus blind B-N11; fail-open).",
+      "find": "    exact_boolean(inline)\n    if inline and len(raw) > 16384:",
+      "replace": "    if not inline:\n        return\n    exact_boolean(inline)\n    if inline and len(raw) > 16384:",
+      "witness": "payload-inline-flag-zero",
+      "rule": "boolean.exact"
+    },
+    {
+      "id": "review-tb4-B-N14",
+      "api": "RetainedDispatcher",
+      "class": "projection",
+      "module": "pm_event_numbers",
+      "source": "review-toolbatch4",
+      "note": "The dispatcher keeps the caller's recipe map, not a copy, so a recipe added after installation is honoured (REVIEW-numrule-tb4-opus blind B-N14; fail-open).",
+      "find": "        self._recipes = dict(recipes)",
+      "replace": "        self._recipes = recipes",
+      "witness": "history-recipe-added-after-install",
+      "rule": "dispatch.recipe-unknown"
+    },
+    {
+      "id": "review-tb4-B-N20",
+      "api": "main",
+      "class": "wrong_default",
+      "module": "pm_event_numbers",
+      "source": "review-toolbatch4",
+      "note": "The CLI's default --corpus resolves under scripts/, so the documented `python3 scripts/pm_event_numbers.py --self-test` fails (REVIEW-numrule-tb4-opus blind B-N20).",
+      "find": "    parser.add_argument(\"--corpus\", type=Path, default=Path(__file__).resolve().parents[1] / \"Plans/event_number_recipe_corpus.json\")",
+      "replace": "    parser.add_argument(\"--corpus\", type=Path, default=Path(__file__).resolve().parent / \"Plans/event_number_recipe_corpus.json\")",
+      "witness": "check:cli_default_corpus_is_the_committed_corpus",
+      "rule": "cli.exit-status"
+    },
+    {
+      "id": "review-tb4-B-N10",
+      "api": "Refusal",
+      "class": "string_content",
+      "module": "pm_event_numbers",
+      "source": "review-toolbatch4",
+      "find": "        super().__init__(reason)\n        self.reason = reason",
+      "replace": "        super().__init__(\"refused: \" + reason)\n        self.reason = reason",
+      "witness": "check:refusal_message_is_its_reason",
+      "rule": "refusal.reason-code",
+      "note": "A Refusal's message gains a 'refused: ' prefix; .reason is unchanged (REVIEW-numrule-tb4-opus blind B-N10, owner-equivalent: the owner text names no message, so the current form, the bare reason code, is pinned by an owner check)."
+    },
+    {
+      "id": "review-tb4-B-N12",
+      "api": "verify_payload_bytes",
+      "class": "ordering",
+      "module": "pm_event_numbers",
+      "source": "review-toolbatch4",
+      "find": "    size = current_integer(byte_size, minimum=0)\n    if size != len(raw):\n        _refuse(\"payload_size\")\n",
+      "replace": "    if type(media_type) is not str or media_type != expected_media_type:\n        _refuse(\"payload_media\")\n    size = current_integer(byte_size, minimum=0)\n    if size != len(raw):\n        _refuse(\"payload_size\")\n",
+      "witness": "payload-size-and-media-two-defects",
+      "rule": "payload.exact-media",
+      "note": "The payload media check runs before the size, id and digest checks (REVIEW-numrule-tb4-opus blind B-N12, owner-equivalent: SP-337 and CV-1101 name no precedence among payload refusals, so the current one, the size first, is pinned by a two-defect case)."
     }
   ],
   "rules_source": "Predicate-level rows. Each rule names hand-written mutation ids (each of which names it back through its rule field) and generated point keys; every one must be caught with its witness failing. A control rule's mutations must survive instead. Statement rows (statements) name these rules.",
@@ -3233,7 +3305,8 @@
         "boolean-isinstance-int",
         "boolean-returns-int",
         "boolean-no-refusal",
-        "payload-inline-coerced"
+        "payload-inline-coerced",
+        "review-tb4-B-N11"
       ]
     },
     {
@@ -3384,7 +3457,8 @@
       "rule": "INDEX_BINDING uses only its declared domain: uint64 integers, valid UTF-8 strings, string keys; anything else refuses binding_domain.",
       "mutations": [
         "site:storage_value_bytes:binding_domain#1",
-        "S3-binding-surrogatepass"
+        "S3-binding-surrogatepass",
+        "review-tb4-B-N09"
       ]
     },
     {
@@ -3479,7 +3553,8 @@
       "rule": "A recipe tuple with no installed frozen verifier refuses; no alternative verifier is tried.",
       "mutations": [
         "site:RetainedDispatcher.resolve:recipe_unknown#1",
-        "review-fix4-B07"
+        "review-fix4-B07",
+        "review-tb4-B-N14"
       ]
     },
     {
@@ -3498,7 +3573,8 @@
       "rule": "The CLI exits 1 when the self-test fails.",
       "mutations": [
         "site:<module>:raise#1",
-        "cli-exit-mapping-always-zero"
+        "cli-exit-mapping-always-zero",
+        "review-tb4-B-N20"
       ]
     },
     {
@@ -3507,7 +3583,8 @@
       "api": "Refusal",
       "rule": "Each refusal carries its exact diagnostic code.",
       "mutations": [
-        "refusal-drops-reason"
+        "refusal-drops-reason",
+        "review-tb4-B-N10"
       ]
     },
     {
@@ -3548,7 +3625,8 @@
       "rule": "The payload media type compares exactly with the original's, never normalized.",
       "mutations": [
         "payload-no-media-refusal",
-        "R18-payload-media-casefold"
+        "R18-payload-media-casefold",
+        "review-tb4-B-N12"
       ]
     },
     {

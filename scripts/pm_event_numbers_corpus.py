@@ -26,6 +26,7 @@ from dataclasses import asdict, astuple, dataclass, fields as dataclass_fields, 
 from decimal import Decimal
 from functools import lru_cache
 import hashlib
+import contextlib
 import json
 from pathlib import Path
 import re
@@ -377,10 +378,23 @@ def _retained(m, case, corpus):
             return case["verifier_result"]
         return authentic
 
-    dispatcher = m.RetainedDispatcher(FixtureOwner(), {
+    recipes = {
         base_recipe: m.FrozenRecipe(frozen(base_recipe)), current_recipe: m.FrozenRecipe(frozen(current_recipe)),
         replaced_resources: m.FrozenRecipe(frozen(replaced_resources)),
-    })
+    }
+    dispatcher = m.RetainedDispatcher(FixtureOwner(), recipes)
+    # T103 (TOOLBATCH4 pre-check B-N14): the caller's recipe map changed after installation. The dispatcher installs
+    # the exact map it was given ("Install owner and exact recipe map outside the request boundary"): a recipe added
+    # to the caller's map later is still unknown, and a replaced or deleted entry keeps its installed verifier.
+    after = case.get("after_install")
+    if after == "add":
+        recipes[sealed.recipe] = m.FrozenRecipe(frozen(sealed.recipe))
+    elif after == "replace":
+        recipes[base_recipe] = m.FrozenRecipe(lambda record: False)
+    elif after == "delete":
+        del recipes[base_recipe]
+    elif after is not None:
+        raise AssertionError("Unknown after_install change: " + str(after))
     out = dispatcher.resolve(ref, expected, disclose=lambda b: allow,
                              recipe_override=override)
     return RetainedObservation(out, observed, calls)
@@ -487,6 +501,12 @@ def _str_subclass(value):
     """
     import enum
     return enum.StrEnum("Member", {"MEMBER": value}).MEMBER
+
+
+class _Globals:
+    """A module's globals dict seen as a module, for _reported_length (T103): `.len` and `__dict__`."""
+    def __init__(self, namespace):
+        object.__setattr__(self, "__dict__", namespace)
 
 
 @contextmanager
@@ -649,7 +669,12 @@ def execute(m, case, corpus):
         # "default_profile": call with no profile argument, exercising the
         # helper's own default; otherwise the profile is always passed.
         profile = {} if case.get("default_profile") else {"profile": case.get("profile", m.EVENT_VALUE)}
-        with _reported_length(m, value, case.get("reported_length")):
+        # T103 (B-N09): "reported_length_module": "binding" injects the length into the SP-278 binding codec's own
+        # module (the globals of the binding_bytes this module calls), where its uint32 header limit is checked
+        target_module = m
+        if case.get("reported_length_module") == "binding":
+            target_module = _Globals(m.binding_bytes.__globals__)
+        with _reported_length(target_module, value, case.get("reported_length")):
             out = m.storage_value_bytes(value, **profile)
         if case.get("output_form") == "head":
             # Long outputs: the header bytes and the exact total length.
@@ -761,6 +786,14 @@ def number_integration_checks(m, root):
         checks["payload_exact_size_" + str(n)] = len(raw) == n and blake3.blake3(raw).digest() != blake3.blake3(raw + b"\n").digest()
     if not _CLI_STATE["nested"]:
         checks["cli_failing_corpus_exits_1"] = _cli_exit_status(m) == (1, "fail")
+        # T103 (TOOLBATCH4 pre-check B-N20): the documented command, `python3 scripts/pm_event_numbers.py --self-test`
+        # with no --corpus, reads the committed corpus
+        checks["cli_default_corpus_is_the_committed_corpus"] = _cli_default_corpus(m) == (
+            Path(__file__).resolve().parents[1] / "Plans/event_number_recipe_corpus.json")
+    # T103 (TOOLBATCH4 pre-check B-N10, owner-equivalent): a Refusal's message is its bare reason code, as callers and
+    # logs read it; the owner text names no other form, so the current one is pinned
+    checks["refusal_message_is_its_reason"] = all(str(m.Refusal(r)) == r and m.Refusal(r).args == (r,) and m.Refusal(r).reason == r
+                                                  for r in ("integer_token", "binding_domain", "payload_size"))
     return checks
 
 
@@ -818,6 +851,36 @@ def _cli_exit_status(m):
     except (ValueError, AttributeError):
         printed = None
     return status, printed
+
+
+def _cli_default_corpus(m):
+    """T103 (B-N20): the corpus path the helper's CLI reads when no --corpus is given. The helper's module code runs
+    under another name (so its main guard does not fire), its self_test is replaced by a stub that records the path it
+    is handed, and its main() runs with the argument vector `--self-test --scope numbers`."""
+    code = _CLI_STATE["code"].get(m.__name__)
+    if code is None:
+        code = compile(Path(m.__file__).read_text(encoding="utf-8"), m.__file__, "exec")
+    probe = types.ModuleType("pm_event_numbers_cli_probe")
+    probe.__file__ = m.__file__
+    namespace = probe.__dict__
+    seen, saved_argv, saved = [], sys.argv, sys.modules.get(probe.__name__)
+    sys.modules[probe.__name__] = probe     # (dataclasses read their module's namespace through sys.modules)
+    try:
+        exec(code, namespace)
+        namespace["self_test"] = lambda corpus, scope="all": seen.append(Path(corpus).resolve()) or {"status": "pass"}
+        sys.argv = [m.__file__, "--self-test", "--scope", "numbers"]
+        import io
+        with contextlib.redirect_stdout(io.StringIO()):
+            status = namespace["main"]()
+    except BaseException as error:  # noqa: BLE001 (a parser error is a SystemExit)
+        return "exception: " + type(error).__name__
+    finally:
+        sys.argv = saved_argv
+        if saved is None:
+            sys.modules.pop(probe.__name__, None)
+        else:
+            sys.modules[probe.__name__] = saved
+    return seen[0] if status == 0 and len(seen) == 1 else None
 
 
 def cli_subprocess_status(helper_file):
