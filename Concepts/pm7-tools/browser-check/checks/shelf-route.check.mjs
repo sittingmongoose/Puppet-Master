@@ -912,18 +912,26 @@ export default async function (t) {
           // checks can take longer than the rail's delay. The previous reveal's watch is judged first: a request or a
           // scroll that came after its wait returned means the wait returned before the rail's own reveal began.
           const lateReveal = await head.evaluate(() => { const W = window.__shelfReveal; if (!W || !W.done) return null;
-            const late = W.scs.filter(s => s.asked > W.done || s.scrolled > W.done).map(s => ({ el: s.el.className.toString().slice(0, 40), asked: s.asked ? Math.round(s.asked - W.clickAt) : null, scrolled: s.scrolled ? Math.round(s.scrolled - W.clickAt) : null, waitReturned: Math.round(W.done - W.clickAt) }));
+            /* (a request by the rail after the wait returned; the check's own later scrolls, the wheel and scrollIntoView,
+               are no request) */
+            const late = W.scs.filter(s => s.asked > W.done).map(s => ({ el: s.el.className.toString().slice(0, 40), asked: Math.round(s.asked - W.clickAt), scrolled: s.scrolled ? Math.round(s.scrolled - W.clickAt) : null, waitReturned: Math.round(W.done - W.clickAt) }));
             for (const u of W.undo) u(); W.undo = []; return late; });
           if (lateReveal) await t.check(`${target} accordion reveal: the previous wait returned after the rail's own reveal began`, !lateReveal.length, JSON.stringify(lateReveal), { hard: true });
           await head.evaluate(e => { const W = window.__shelfReveal = { at: performance.now(), clickAt: null, done: 0, scs: [], undo: [] };
             const onClick = () => { if (W.clickAt === null) W.clickAt = performance.now(); };
             e.addEventListener('click', onClick, { capture: true }); W.undo.push(() => e.removeEventListener('click', onClick, { capture: true }));
             for (let a = e.parentElement; a; a = a.parentElement) if (a.scrollHeight > a.clientHeight) {
-              const s = { el: a, scrolled: 0, ended: 0, asked: 0 }; W.scs.push(s);
+              const s = { el: a, scrolled: 0, ended: 0, asked: 0, moves: false }; W.scs.push(s);
               a.addEventListener('scroll', () => { s.scrolled = performance.now(); }, { passive: true });
               a.addEventListener('scrollend', () => { s.ended = performance.now(); }, { passive: true });
               for (const fn of ['scrollBy', 'scrollTo']) { const own = Object.prototype.hasOwnProperty.call(a, fn), was = a[fn];
-                a[fn] = function (...x) { s.asked = performance.now(); return was.apply(this, x); };
+                /* (whether the request can move the scroller: a smooth scroll's first scroll event can come a few hundred
+                   ms after the request on a slow host, so a request that can move it is waited for until it ends) */
+                a[fn] = function (...x) { s.asked = performance.now();
+                  const o = x[0], max = a.scrollHeight - a.clientHeight, top0 = a.scrollTop;
+                  const to = o && typeof o === 'object' ? (fn === 'scrollBy' ? top0 + (+o.top || 0) : (o.top == null ? top0 : +o.top)) : (typeof x[1] === 'number' ? (fn === 'scrollBy' ? top0 + x[1] : x[1]) : top0);
+                  s.moves = Math.abs(Math.max(0, Math.min(max, to)) - top0) >= 1;
+                  return was.apply(this, x); };
                 W.undo.push(() => { if (own) a[fn] = was; else delete a[fn]; }); }
             } });
           await pressAt(head, hp, { at: {x:8,y:8} });
@@ -955,7 +963,7 @@ export default async function (t) {
                 const now = performance.now();
                 const open = W.scs.filter(s => {
                   if (s.scrolled > W.clickAt) return !(s.ended > s.scrolled);
-                  if (s.asked > W.clickAt) return now - s.asked < 50;   /* asked, nothing scrolled yet: give it two or three frames */
+                  if (s.asked > W.clickAt) return s.moves;     /* asked and able to move: wait for its scroll to begin and end */
                   return false; });
                 if (!open.length) { W.done = performance.now(); return res({ ok: true, ms: Math.round(W.done - W.clickAt), pressLag: Math.round(W.clickAt - W.at), asked: W.scs.filter(s => s.asked > W.clickAt).map(s => Math.round(s.asked - W.clickAt)), scrolled: W.scs.filter(s => s.scrolled > W.clickAt).length }); }
                 if (now - t1 > endMs) { W.done = performance.now(); return res({ ok: false, ms: Math.round(now - W.clickAt), pressLag: Math.round(W.clickAt - W.at), open: open.map(s => s.el.className.toString().slice(0, 40)) }); }
@@ -973,7 +981,7 @@ export default async function (t) {
       // T98: the last reveal's watch, judged as the next press would judge it (a request or scroll after the wait returned)
       await f.waitForTimeout(300);
       const lastLate = await panel.evaluate(() => { const W = window.__shelfReveal; if (!W || !W.done) return null;
-        const late = W.scs.filter(s => s.asked > W.done || s.scrolled > W.done).map(s => ({ el: s.el.className.toString().slice(0, 40), asked: s.asked ? Math.round(s.asked - W.clickAt) : null, scrolled: s.scrolled ? Math.round(s.scrolled - W.clickAt) : null, waitReturned: Math.round(W.done - W.clickAt) }));
+        const late = W.scs.filter(s => s.asked > W.done).map(s => ({ el: s.el.className.toString().slice(0, 40), asked: Math.round(s.asked - W.clickAt), scrolled: s.scrolled ? Math.round(s.scrolled - W.clickAt) : null, waitReturned: Math.round(W.done - W.clickAt) }));
         for (const u of W.undo) u(); W.undo = []; window.__shelfReveal = null; return late; });
       if (lastLate) await t.check(`${target} accordion reveal: the last wait returned after the rail's own reveal began`, !lastLate.length, JSON.stringify(lastLate), { hard: true });
       if (revealLog.length) { const lag = revealLog.map(r => r.pressLag).filter(x => x !== null).sort((a, b) => a - b), asked = revealLog.flatMap(r => r.asked || []).sort((a, b) => a - b), med = a => a.length ? a[a.length >> 1] : null;
