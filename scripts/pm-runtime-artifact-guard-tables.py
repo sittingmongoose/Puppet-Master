@@ -29,8 +29,11 @@ def main():
     parser.add_argument('--resume-at', type=int, default=11)
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
-    families = None if not args.family else set(args.family) | {'shared'}
-    run_shared_only = not args.family or 'shared' in args.family
+    # --family shared runs only the phases no family reaches (codec helpers and
+    # failure oracle); every other shared witness rides with each family suite.
+    shared_mode = args.family == ['shared']
+    families = None if not args.family or shared_mode else set(args.family) | {'shared'}
+    run_shared_only = not args.family or shared_mode
     started = time.monotonic()
     collected, findings = suites.collect(families)
     summary = dict(tool_sha256=hashlib.sha256((suites.ROOT / 'scripts/pm_guard_isolation.py').read_bytes()).hexdigest(),
@@ -64,6 +67,8 @@ def main():
             merged[phase, family] = slot
     for (phase, family), slot in sorted(merged.items()):
         if args.phase and phase not in args.phase:
+            continue
+        if shared_mode and family != 'shared':
             continue
         rows = [name for name, _, _ in dr.table_rows(phase)]
         controls, negatives = list(slot['controls'].values()), list(slot['negatives'].values())

@@ -43,7 +43,7 @@ def main():
             cut = {r['id']: r for r in tool.get('rows', [])}
             for name in entry['rows']:
                 r = rows.setdefault(name, dict(phase=entry['phase'], families=0, proved=0, unproved=[], own_flips=0,
-                                               stays=0, unrelated_changes=0))
+                                               own=0, stays=0, unrelated_changes=0, masked=0))
                 r['families'] += 1
                 if name in proved:
                     r['proved'] += 1
@@ -51,6 +51,8 @@ def main():
                     r['unproved'].append(family)
                 c = cut.get(name, {})
                 r['own_flips'] += len(c.get('flips', []) or [])
+                r['own'] += len(c.get('own', []) or [])
+                r['masked'] += len(c.get('masked', []) or [])
                 r['stays'] += len(c.get('stays', []) or [])
                 r['unrelated_changes'] += len(c.get('unrelated_changes', []) or [])
             suites.append(dict(phase=entry['phase'], family=family, status=entry.get('tool_status'),
