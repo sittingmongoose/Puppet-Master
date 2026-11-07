@@ -40,6 +40,10 @@ const REVEAL_MS = 120, REVEAL_END_MS = 2000;
 // in an animation frame after the click (30-motion.js onClickMotion), so the request comes one frame and the timer's
 // lateness after the delay; on Windows' fast frames three frames were 23 ms, and the request came at 149 ms
 const REVEAL_MARGIN_MS = 80;
+// T98: a scroll event this soon after a scrollend is that scroll's last step, not a new scroll: Chrome can dispatch the
+// final scroll event of a smooth scroll after its scrollend, in the same frame (both stamped 325 ms after the click on
+// Windows), and T55's rule then waited for a scrollend that never came
+const REVEAL_TAIL_MS = 50;
 export default async function (t) {
   if (t.args.blockMenu) await t.page.addInitScript(id => {
     window.__blockedShelfMenu = 0;
@@ -949,12 +953,12 @@ export default async function (t) {
             const late = W.scs.filter(s => s.asked > W.done).map(s => ({ el: s.el.className.toString().slice(0, 40), asked: Math.round(s.asked - W.clickAt), scrolled: s.scrolled ? Math.round(s.scrolled - W.clickAt) : null, waitReturned: Math.round(W.done - W.clickAt) }));
             for (const u of W.undo) u(); W.undo = []; return late; });
           if (lateReveal) await t.check(`${target} accordion reveal: the previous wait returned after the rail's own reveal began`, !lateReveal.length, JSON.stringify(lateReveal), { hard: true });
-          await head.evaluate(e => { const W = window.__shelfReveal = { at: performance.now(), clickAt: null, done: 0, scs: [], undo: [] };
+          await head.evaluate((e, tailMs) => { const W = window.__shelfReveal = { at: performance.now(), clickAt: null, done: 0, scs: [], undo: [] };
             const onClick = () => { if (W.clickAt === null) W.clickAt = performance.now(); };
             e.addEventListener('click', onClick, { capture: true }); W.undo.push(() => e.removeEventListener('click', onClick, { capture: true }));
             for (let a = e.parentElement; a; a = a.parentElement) if (a.scrollHeight > a.clientHeight) {
-              const s = { el: a, scrolled: 0, ended: 0, asked: 0, moves: false }; W.scs.push(s);
-              a.addEventListener('scroll', () => { s.scrolled = performance.now(); }, { passive: true });
+              const s = { el: a, scrolled: 0, ended: 0, asked: 0, moves: false, tail: 0 }; W.scs.push(s);
+              a.addEventListener('scroll', () => { const now = performance.now(); if (s.ended && now - s.ended <= tailMs) s.tail = now; else s.scrolled = now; }, { passive: true });
               a.addEventListener('scrollend', () => { s.ended = performance.now(); }, { passive: true });
               for (const fn of ['scrollBy', 'scrollTo']) { const own = Object.prototype.hasOwnProperty.call(a, fn), was = a[fn];
                 /* (whether the request can move the scroller: a smooth scroll's first scroll event can come a few hundred
@@ -965,7 +969,7 @@ export default async function (t) {
                   s.moves = Math.abs(Math.max(0, Math.min(max, to)) - top0) >= 1;
                   return was.apply(this, x); };
                 W.undo.push(() => { if (own) a[fn] = was; else delete a[fn]; }); }
-            } });
+            } }, REVEAL_TAIL_MS);
           await pressAt(head, hp, { at: {x:8,y:8} });
           await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),JSON.stringify(await head.evaluate((e,hp)=>{const r=e.getBoundingClientRect(),h=document.elementFromPoint(hp.x,hp.y);return {text:e.textContent.trim().replace(/\s+/g,' ').slice(0,40),cls:e.className,acc:e.closest('[data-acc]').className,r:[r.x,r.y,r.width,r.height].map(Math.round),hp,hitNow:h?.tagName+'.'+(h?.className?.baseVal??h?.className),own:!!h&&(h===e||e.contains(h))};},hp)),{hard:true});
           // The rail skin scrolls an expander opened near the bottom into view 120 ms after the click, smoothly
@@ -978,9 +982,10 @@ export default async function (t) {
           // REVEAL_END_MS fails by name.
           // T98: the wait runs from the click itself (the head's capture listener), not from before Playwright's press:
           // the rail's delay is after the click, then REVEAL_MARGIN_MS for the rail's own frame before its timer and the
-          // timer's lateness, then two frames; then every head scroller the product asked to scroll, or that scrolled, after the click
-          // must reach its scrollend (a request that moved nothing is done once two frames show no scroll). A click that
-          // never reached the head, or a reveal that does not end within REVEAL_END_MS, fails by name.
+          // timer's lateness, then two frames; then every head scroller the product asked to scroll (and the request can
+          // move it) must have a scrollend after the request, and every one that scrolled after the click a scrollend after
+          // its last scroll (a scroll within REVEAL_TAIL_MS after a scrollend is its last step). A click that never reached
+          // the head, or a reveal that does not end within REVEAL_END_MS, fails by name.
           const reveal = await head.evaluate((e, [ms, endMs, marginMs]) => new Promise(res => {
             const W = window.__shelfReveal, reduced = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'reduced';
             const raf = () => new Promise(r => requestAnimationFrame(r));
@@ -994,13 +999,13 @@ export default async function (t) {
               for (;;) {
                 const now = performance.now();
                 const open = W.scs.filter(s => {
-                  if (s.scrolled > W.clickAt) return !(s.ended > s.scrolled);
-                  if (s.asked > W.clickAt) return s.moves;     /* asked and able to move: wait for its scroll to begin and end */
+                  if (s.asked > W.clickAt && s.moves && !(s.ended > s.asked)) return true;   /* asked and able to move: until a scrollend after the request */
+                  if (s.scrolled > W.clickAt) return !(s.ended >= s.scrolled);              /* scrolled: until a scrollend after its last scroll (tail aside) */
                   return false; });
                 if (!open.length) { W.done = performance.now(); return res({ ok: true, ms: Math.round(W.done - W.clickAt), pressLag: Math.round(W.clickAt - W.at), asked: W.scs.filter(s => s.asked > W.clickAt).map(s => Math.round(s.asked - W.clickAt)), scrolled: W.scs.filter(s => s.scrolled > W.clickAt).length }); }
                 if (now - t1 > endMs) { W.done = performance.now(); const rel = x => x ? Math.round(x - W.clickAt) : null;
                   return res({ ok: false, ms: Math.round(now - W.clickAt), pressLag: Math.round(W.clickAt - W.at), open: open.map(s => s.el.className.toString().slice(0, 40)),
-                    scrollers: open.map(s => ({ asked: rel(s.asked), scrolled: rel(s.scrolled), ended: rel(s.ended), moves: s.moves, top: Math.round(s.el.scrollTop), max: Math.round(s.el.scrollHeight - s.el.clientHeight) })) }); }
+                    scrollers: open.map(s => ({ asked: rel(s.asked), scrolled: rel(s.scrolled), ended: rel(s.ended), tail: rel(s.tail), moves: s.moves, top: Math.round(s.el.scrollTop), max: Math.round(s.el.scrollHeight - s.el.clientHeight) })) }); }
                 await raf();
               }
             })();
