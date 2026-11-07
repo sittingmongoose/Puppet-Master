@@ -537,6 +537,13 @@ class RenameContext:
         self.root, self.base, self.touched = root, base, frozenset(touched)
         self._at_base: dict[str, bool] = {}
         self._left: dict[str, bool] = {}
+        # T88: why an evidence file is not left alone, by path (reported, so the landing agent can tell whose work it is)
+        self.why: dict[str, str] = {}
+
+    def _git(self, *args: str) -> subprocess.CompletedProcess:
+        # T88: read-only and lock-free: never refresh or rewrite the checkout's index (the shared checkout's other threads)
+        return subprocess.run(["git", "--no-optional-locks", "--literal-pathspecs", "-c", "core.quotePath=false", *args],
+                              cwd=self.root, capture_output=True)
 
     def left_alone(self, path: str) -> bool:
         """T63 (REVIEW-etools-tb3-opus findings 7 and 8): the branch left the evidence file alone. It is not among the
@@ -545,14 +552,46 @@ class RenameContext:
         modified, staged, deleted or untracked); and neither it nor a folder above it is a symbolic link, whose target
         the branch could edit while the link itself stays unchanged. A git failure answers no."""
         if path in self.touched:
+            self.why.setdefault(path, "the branch's commits changed it")
             return False
         if path not in self._left:
-            proc = subprocess.run(["git", "--literal-pathspecs", "-c", "core.quotePath=false", "status", "--porcelain=v1", "-z",
-                                   "--untracked-files=all", "--", path], cwd=self.root, capture_output=True)
-            parts = path.split("/")
-            linked = any((self.root / "/".join(parts[:i])).is_symlink() for i in range(1, len(parts) + 1))
-            self._left[path] = proc.returncode == 0 and not proc.stdout and not linked
+            self._left[path], reason = self._alone(path)
+            if reason:
+                self.why[path] = reason
         return self._left[path]
+
+    def _alone(self, path: str) -> tuple[bool, str]:
+        """T88 (TOOLBATCH4 pre-check findings 6 and 7): read only, with no optional lock (`git status` refreshed and
+        wrote the shared checkout's index), and nothing hidden from it: `git status` with ignored files too (an untracked
+        evidence file under a .gitignored or info/exclude'd folder kept the excuse); the index's own flags (an edit under
+        skip-worktree or assume-unchanged does not show in status); and the file's bytes against HEAD's (which catches
+        both, whatever git reports). Returns (alone, why not)."""
+        parts = path.split("/")
+        if any((self.root / "/".join(parts[:i])).is_symlink() for i in range(1, len(parts) + 1)):
+            return False, "evidence is or sits under a symbolic link"
+        status = self._git("status", "--porcelain=v1", "-z", "--untracked-files=all", "--ignored=matching", "--", path)
+        if status.returncode != 0:
+            return False, "git status failed"
+        if status.stdout:
+            line = status.stdout.decode("utf-8", "surrogateescape").split("\0")[0]
+            return False, "evidence has working-tree changes: " + line
+        flags = self._git("ls-files", "-v", "-z", "--", path)
+        if flags.returncode != 0:
+            return False, "git ls-files failed"
+        tag = flags.stdout.decode("utf-8", "surrogateescape").split("\0")[0][:1]
+        if tag == "S" or (tag and tag.islower()):
+            return False, "evidence is flagged " + ("skip-worktree" if tag in ("S", "s") else "assume-unchanged") + " in the index"
+        blob = self._git("cat-file", "blob", "HEAD:" + path)
+        on_disk = self.root / path
+        if blob.returncode != 0:
+            return (False, "evidence is not in HEAD but is on disk") if on_disk.exists() else (False, "evidence is not in HEAD")
+        try:
+            data = on_disk.read_bytes()
+        except OSError:
+            return False, "evidence is in HEAD but not on disk"
+        if data != blob.stdout:
+            return False, "evidence differs from HEAD on disk"
+        return True, ""
 
     def existed_at_base(self, path: str) -> bool:
         if path not in self._at_base:
@@ -929,8 +968,11 @@ def branch_paths(root: Path, base: str) -> list[str]:
     """The paths the branch's commits changed. T63: read with -z (NUL-separated, never quoted) and
     core.quotePath=false, so a path with non-ASCII characters is the path itself, as every other reader names
     it, not git's quoted form ("Plans/.evidence/\\303\\251.json")."""
+    # T88 (TOOLBATCH4 pre-check finding 5): --no-renames, so a renamed file's old path is one of the branch's paths (git
+    # diff's default rename detection named only the new one: on main's 9ddfa95b51, 66,989 paths against 66,990);
+    # --no-ext-diff and no optional lock, so no configuration changes what is listed and nothing writes the index
     proc = subprocess.run(
-        ["git", "-c", "core.quotePath=false", "diff", "--name-only", "-z", f"{base}..HEAD"],
+        ["git", "--no-optional-locks", "-c", "core.quotePath=false", "diff", "--no-renames", "--no-ext-diff", "--name-only", "-z", f"{base}..HEAD"],
         cwd=root,
         capture_output=True,
     )
@@ -2057,6 +2099,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
                 "pre_existing": pre_existing,
                 "grown_buckets": grown,
                 "grown_subchecks": subcheck_growth,
+                "rename_excuse_lost": dict(sorted(rename_context.why.items())) if rename_context else {},
                 "excused_by_kind": excused_by_kind(on_branch),
                 "resolved_buckets": resolved,
                 "infrastructure": infrastructure,
@@ -2082,7 +2125,12 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             infra = sum(1 for row in infrastructure if row["check"] == check)
             note = f", {plural(infra, 'infrastructure result')} among them" if infra else ""
             print(f"  {check:24s} {statuses[check]:5s} {total:7d} failures (baseline {was}){note}")
-        print(f"  branch paths from git diff --name-only {args.base}..HEAD: {len(touched)}")
+        print(f"  branch paths from git diff --no-renames --name-only {args.base}..HEAD: {len(touched)}")
+        if rename_context and rename_context.why:
+            # T88: whose work it is: an evidence file the renamed-shard rule found not left alone, and why
+            print(f"  renamed-shard rule: {len(rename_context.why)} evidence file(s) not left alone, so their missing_ref rows keep their class:")
+            for where, why in sorted(rename_context.why.items())[:20]:
+                print(f"    {where}: {why}")
         if keep_dir is not None:
             print(f"  full check reports kept in {keep_dir}")
         for line in describe_export_commands():

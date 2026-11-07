@@ -375,6 +375,65 @@ class RenamedShardStaleness(unittest.TestCase):
         context = M.RenameContext(self.root, "base", touched)
         self.assertFalse(self.stale(self.ref(self.OLD, source=name), context))
 
+    # T88 (TOOLBATCH4 pre-check findings 5 to 7): a committed rename's old path is one of the branch's paths; files git
+    # status does not report still lose the excuse; and the check never writes the index
+    def _git(self, *a):
+        return subprocess.run(["git", *a], cwd=self.root, check=True, capture_output=True)
+
+    def _commit(self, message):
+        self._git("-c", "user.name=t", "-c", "user.email=t@example.invalid", "-c", "commit.gpgsign=false", "commit", "--quiet", "-m", message)
+
+    def test_a_committed_rename_names_its_old_path_among_the_branch_paths(self):
+        notes = self.root / "Plans/notes.md"
+        notes.write_text("notes\n" * 40)
+        self._git("add", "-A"); self._commit("notes")
+        self._git("tag", "rename-base")
+        self._git("mv", "Plans/notes.md", "Plans/notes-renamed.md"); self._commit("rename")
+        touched = M.branch_paths(self.root, "rename-base")
+        self.assertIn("Plans/notes.md", touched)
+        self.assertIn("Plans/notes-renamed.md", touched)
+
+    def test_an_ignored_untracked_evidence_file_keeps_its_class(self):
+        (self.root / ".gitignore").write_text("coverage/\n")
+        self._git("add", ".gitignore"); self._commit("ignore")
+        fresh = "Plans/.evidence/coverage/evidence.json"
+        (self.root / fresh).parent.mkdir(parents=True, exist_ok=True)
+        (self.root / fresh).write_text("{}\n")
+        context = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])
+        self.assertFalse(self.stale(self.ref(self.OLD, source=fresh), context))
+        self.assertIn(fresh, context.why)
+
+    def test_an_excluded_untracked_evidence_file_keeps_its_class(self):
+        (self.root / ".git/info").mkdir(parents=True, exist_ok=True)
+        (self.root / ".git/info/exclude").write_text("Plans/.evidence/scratch/\n")
+        fresh = "Plans/.evidence/scratch/evidence.json"
+        (self.root / fresh).parent.mkdir(parents=True, exist_ok=True)
+        (self.root / fresh).write_text("{}\n")
+        self.assertFalse(self.stale(self.ref(self.OLD, source=fresh), M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])))
+
+    def test_a_skip_worktree_edit_of_the_evidence_keeps_its_class(self):
+        self._git("update-index", "--skip-worktree", self.EVIDENCE)
+        (self.root / self.EVIDENCE).write_text('{"edited": true}\n')
+        context = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])
+        self.assertFalse(self.stale(self.ref(self.OLD), context))
+        self.assertIn("skip-worktree", context.why[self.EVIDENCE])
+
+    def test_an_assume_unchanged_edit_of_the_evidence_keeps_its_class(self):
+        self._git("update-index", "--assume-unchanged", self.EVIDENCE)
+        (self.root / self.EVIDENCE).write_text('{"edited": true}\n')
+        context = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])
+        self.assertFalse(self.stale(self.ref(self.OLD), context))
+        self.assertIn("assume-unchanged", context.why[self.EVIDENCE])
+
+    def test_the_untouched_evidence_still_keeps_the_excuse_and_the_index_is_not_written(self):
+        index = self.root / ".git/index"
+        os.utime(self.root / self.EVIDENCE, (1, 1))             # stale stat data: a plain git status would refresh the index
+        before = (index.stat().st_mtime_ns, index.read_bytes())
+        context = M.RenameContext(self.root, "base", [self.NEW, self.NEW_SCHEMA])
+        self.assertTrue(self.stale(self.ref(self.OLD), context))
+        self.assertEqual((index.stat().st_mtime_ns, index.read_bytes()), before)
+        self.assertNotIn(self.EVIDENCE, context.why)
+
     def test_a_deleted_unit_is_not_staleness(self):
         # the document's manifest no longer holds shard 002 at all
         self.manifest("prd_planning_runtime_contracts", [("001", "001-lines-1-200.md")])
