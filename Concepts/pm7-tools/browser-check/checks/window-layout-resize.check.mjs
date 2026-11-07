@@ -24,6 +24,16 @@
 //    logged ('own first 740 frame laid out N ms after the resize'), not judged. It is a lower bound on the time from the resize
 //    until the new picture shows: on film the new picture can appear 1-14 frames after the page's own first frame (opus-recheck-g6fix). Native proof of the sandbox's first painted frame
 //    needs a film and its frames (tools/stale88b.py in the retro-c6 evidence), and fails on FO-92 until it is fixed.
+// T74 (tool batch 5; sol-review-g6 K1, sol-review-g6b N1): c-ready opened fresh keeps Welcome's sleep (the films showed Pip
+// asleep), though the header says awake. Now Pip is woken by a real pointer travelling over the stage, as a person
+// arrives, and before every shrink it is asserted awake (the stage's sleepZ off and its pose not asleep), hard.
+// T75 (tool batch 5; FO-92): the optional native paint oracle. Every shrink logs WLR-FILM: the frame's place in the window
+// and its sizes; with --record, tools/window-layout-film-reader.py <film> <run folder> <out.json> reads each shrink's film
+// frames: the first frame where the frame's parent is 740 wide (the window's ground right of it), and the first where the
+// frame's own picture inside 740 changes from the wide one it showed before. Every frame in between shows the old picture
+// clipped, which fails it (the sandbox's FO-92, until it is fixed; the normal surface paints the new layout in the same
+// frame). A shrink whose boundaries the reader cannot find is not proven, and fails too. --selftest checks the reader on
+// synthetic films.
 // Both surfaces (--set sandbox picks one); --set looks=, --set reps=. Headless or --record (the frames are resized, not
 // the window, so a film shows each resize; each is marked).
 //   browser-check run Concepts/pm7-tools/browser-check/checks/window-layout-resize.check.mjs --set page=<build>
@@ -56,6 +66,18 @@ const past = (f, r) => {
 	return Math.max(0, v[0] - r[0], r[2] - v[2], v[1] - r[1], r[3] - v[3]);
 };
 
+// T74: Pip's stage awake (its sleepZ off and its pose not asleep), and a real arrival: the pointer travels over the stage
+const awake = (f) => f.evaluate(() => { const st = window.O55 && O55.pipStage && O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return !!st && !st.sleepZ && !!st.ps && !st.ps.asleep; }).catch(() => false);
+const frameBox = async (f) => { const fe = await f.frameElement().catch(() => null), b = fe && (await fe.boundingBox()); return b ? { x: Math.round(b.x), y: Math.round(b.y) } : { x: 0, y: 0 }; };
+async function arrive(t, f) {
+	const o = await frameBox(f), r = await f.evaluate(() => { const e = O55.S.root.querySelector('.o55-stage'); if (!e) return null; const q = e.getBoundingClientRect(); return { x: q.x + q.width / 2, y: q.y + q.height / 2 }; });
+	if (!r) return false;
+	for (let k = 0; k < 10; k++) { await t.page.mouse.move(o.x + r.x + (k % 2 ? 24 : -24), o.y + r.y + (k % 3) * 6, { steps: 3 }); await f.waitForTimeout(60); }
+	await f.waitForFunction(() => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return !!st && !st.sleepZ && !!st.ps && !st.ps.asleep; }, null, { timeout: 6000 }).catch(() => {});
+	await t.page.mouse.move(2, 2);
+	return true;
+}
+
 async function run(t, mode) {
 	let f, size;
 	if (mode === 'normal') {
@@ -79,9 +101,14 @@ async function run(t, mode) {
 		await f.waitForTimeout(2500);
 		for (let i = 1; i <= reps; i++) {
 			const tag = `${mode} ${look} c-ready rep ${i}`;
+			// T74: Pip awake by a real arrival, asserted before every shrink
+			if (!(await awake(f))) await arrive(t, f);
+			await t.check(`${tag}: Pip is awake before the shrink (a real pointer arrival over the stage; sleepZ off, pose not asleep)`, await awake(f), JSON.stringify(await f.evaluate(() => { const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage')); return st ? { sleepZ: !!st.sleepZ, asleep: !!(st.ps && st.ps.asleep) } : null; })), { hard: true });
+			const fb = await frameBox(f);
 			await f.evaluate(install);
 			await f.waitForTimeout(150);
 			await t.mark(`${look} rep ${i} 740`);
+			t.log('WLR-FILM ' + JSON.stringify({ label: `${look} rep ${i} 740`, mode, frame: fb, wide: { w: 1920, h: 1080 }, narrow: { w: 740, h: 768 } }));
 			const sizedAt = await size(740, 768);
 			await f.waitForTimeout(1500);
 			await t.mark(`${look} rep ${i} 1920`);
