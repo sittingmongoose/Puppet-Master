@@ -112,6 +112,9 @@ else:
     for index in range(row.get("timeouts", 0)):
         print("  [infrastructure] run-gates/x%d  subprocess_timeout (lint-x)  killed after 600 s" % index)
     print("Gone since the baseline (nothing to do): 0")
+    # As the real check: it takes --row-report, whose rows carry grown_stale, and prints these two lines.
+    print("Subcheck totals this run: 0")
+    print("Bucket counts this run: 0")
 sys.exit(row.get("exit", 0))
 '''
 
@@ -1986,9 +1989,9 @@ def pre_row(bucket: str, baseline: int, count: int, fields: str = '{"n":1}', whe
 
 
 def landing_report(pre=(), more: int = 0, counter=(), compare: int = 0, timeouts: int = 0, tail: str = "", gone: int = 0,
-                   gone_ids=None, totals=None, counts=None) -> str:
-    """A landing check's text report, line for line as main() in scripts/pm-landing-check.py prints it. With `totals`,
-    the lines for comparing one run with the next; without them, a report from before those lines."""
+                   gone_ids=None, totals=None, counts=None, older: bool = False) -> str:
+    """A landing check's text report, line for line as main() in scripts/pm-landing-check.py prints it. `older`: from
+    before the lines for comparing one run with the next."""
     lines = ["pm-landing-check: baseline reports/landing-checks/baseline.json recorded at aaaaaaaaaaaa; this checkout is at bbbbbbbbbbbb",
              "  the baseline is current, so rule 2 applies: its commit aaaaaaaaaaaa is an ancestor of the base", "",
              "New since the baseline: 0",
@@ -2008,12 +2011,11 @@ def landing_report(pre=(), more: int = 0, counter=(), compare: int = 0, timeouts
     lines += [f"  [infrastructure] run-gates/x{index}  subprocess_timeout (lint-x)  killed after 600 s" for index in range(timeouts)]
     lines += [f"Gone since the baseline (nothing to do): {gone}"]
     lines += [f"  [gone] {name}" for name in gone_ids or []]
-    if totals is not None:
-        lines.append(f"Subcheck totals this run: {len(totals)}")
-        lines += [f"  [total] {name}  {'timed out' if total is None else total}" for name, total in totals.items()]
-    if counts is not None:
-        lines.append(f"Bucket counts this run: {len(counts)}")
-        lines += [f"  [count] {name}  {count}" for name, count in counts.items()]
+    if not older:
+        lines.append(f"Subcheck totals this run: {len(totals or {})}")
+        lines += [f"  [total] {name}  {'timed out' if total is None else total}" for name, total in (totals or {}).items()]
+        lines.append(f"Bucket counts this run: {len(counts or {})}")
+        lines += [f"  [count] {name}  {count}" for name, count in (counts or {}).items()]
     lines.append("")
     advice = []
     if pre and compare:
@@ -2081,7 +2083,6 @@ class ReportFormatTests(unittest.TestCase):
                        'print(f"  [count] {escape_newlines(name)}  {count}")',
                        "Nothing reported stops the landing: it is ",
                        "of them with changed content on files this branch touched, so compare those with the baseline's rows",
-                       "(the readiness growth counter: its printed rows",
                        "{row['baseline_reported']} -> {row['reported']}{note}",
                        'tag = "staleness"',
                        "more\")"):
@@ -2092,7 +2093,6 @@ class ReportFormatTests(unittest.TestCase):
                                               compare=2, timeouts=3))
         self.assertEqual(report["infrastructure"], 3)
         self.assertEqual(report["compare"], 2)
-        self.assertEqual(report["counter"], {READINESS: 218})
         self.assertEqual(report["pre"][BUCKET]["rows"], ['{"n":1}', '{"n":2}'])
         self.assertEqual(M.read_report(landing_report(gone=4))["gone"], 4)
         self.assertIsNone(M.read_report("no such line")["gone"])
@@ -2422,19 +2422,20 @@ class BatchGapTests(Base):
     def test_class_b_a_readiness_rise_this_landing_added_closes_it(self):
         """Review R5 class B: excused in the batch by the earlier member's stale row, alone it needs its own."""
         start, result = self.two_members(
-            landing_report(counter=[(READINESS, 124, 218)]),
-            landing_report(counter=[(READINESS, 124, 230)]))
+            landing_report(counter=[(READINESS, 124, 218)], totals={READINESS: 218}),
+            landing_report(counter=[(READINESS, 124, 230)], totals={READINESS: 230}))
         self.closed_and_alone(start, result)
-        self.assertIn("rose to 230", result.stdout)
+        self.assertIn("rose from 218 to 230", result.stdout)
 
     def test_class_b_a_first_rise_in_a_later_member_closes_it(self):
-        start, result = self.two_members(landing_report(), landing_report(counter=[(READINESS, 124, 218)]))
+        start, result = self.two_members(landing_report(), landing_report(counter=[(READINESS, 124, 218)], totals={READINESS: 218}))
         self.closed_and_alone(start, result)
+        self.assertIn("rose from 0 to 218", result.stdout)
 
     def test_class_b_a_total_no_higher_than_the_earlier_members_is_no_rise_alone_and_keeps_the_batch(self):
         start, result = self.two_members(
-            landing_report(counter=[(READINESS, 124, 218)]),
-            landing_report(counter=[(READINESS, 124, 218)]))
+            landing_report(counter=[(READINESS, 124, 218)], totals={READINESS: 218}),
+            landing_report(counter=[(READINESS, 124, 218)], totals={READINESS: 218}))
         self.assertEqual(result.returncode, 0, result.stdout)
         self.assertEqual(len(self.h.calls("landing")), 2)
         self.assertTrue(self.h.held())
@@ -2454,7 +2455,7 @@ class BatchGapTests(Base):
         self.assertEqual(report["totals"], {"run-gates/x": 3, "run-gates/y": None})
         self.assertEqual(report["bucket_counts"], {"run-gates|x|e|a b.md": 2})
         self.assertFalse(report["ids_unread"])
-        old = M.read_report(landing_report())
+        old = M.read_report(landing_report(older=True))
         self.assertEqual((old["gone_ids"], old["totals"], old["bucket_counts"], old["ids_unread"]), (None, None, None, False))
 
     def test_ids_that_do_not_add_up_cannot_be_told(self):
@@ -2483,32 +2484,66 @@ class BatchGapTests(Base):
         report = M.read_report(landing_report(totals={"run-gates/x": 1}))
         self.assertIn("not on record", M.batch_gap(report, [None])[1])
 
-    def test_an_older_earlier_report_is_passed_over_and_the_landing_is_told(self):
+    def test_a_report_without_the_lines_closes_the_batch_with_no_narrower_fallback(self):
+        """Gate 3 N7: a narrower comparison would let a member pass that stops alone."""
         report = M.read_report(landing_report(totals={"run-gates/x": 9}))
-        older = M.read_report(landing_report())
-        self.assertIsNone(M.batch_gap(report, [older]))
-        self.assertFalse(M.shows_what_changed(report, [older]))
-        self.assertFalse(M.shows_what_changed(older, []))
-        self.assertTrue(M.shows_what_changed(report, [report]))
+        older = M.read_report(landing_report(older=True))
+        for now, before in ((report, older), (older, report), (older, older)):
+            self.assertEqual(M.batch_gap(now, [before])[0], "batch_check_too_old")
+        self.assertIsNone(M.batch_gap(report, [M.read_report(landing_report(totals={"run-gates/x": 9}))]))
+        start, result = self.two_members(landing_report(), landing_report(older=True))
+        self.closed_and_alone(start, result)
+        self.assertIn("cannot be seen", result.stdout)
 
-    def test_with_an_older_check_the_batch_stays_and_says_so_once(self):
+    OLDER_CHECK = STUB_LANDING.replace("--row-report", "--x").replace("grown_stale", "z") \
+        .replace("Subcheck totals this run", "y").replace("Bucket counts this run", "w")
+
+    def test_the_check_on_this_branch_can_batch_and_an_older_one_cannot(self):
+        self.assertTrue(M.check_can_batch((ROOT / "scripts" / "pm-landing-check.py").read_text(encoding="utf-8")))
+        self.assertTrue(M.check_can_batch(STUB_LANDING))
+        self.assertFalse(M.check_can_batch(self.OLDER_CHECK))
+        self.assertFalse(M.check_can_batch(""))
+
+    def test_no_batch_opens_on_an_older_check_and_the_landing_lands_alone(self):
+        """Gate 3 N7, and nothing else in the batch's way: this landing is otherwise an ordinary one."""
+        self.h.commit_to_main("scripts/pm-landing-check.py", self.OLDER_CHECK)
+        wt = self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        result = self.land("fix/a", "--batch-open")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("no batch:", result.stdout)
+        self.assertIn("lands alone", result.stdout)
+        landing = self.h.calls("landing")
+        self.assertEqual(landing[0]["args"][:2], ["--base", "origin/main"])
+        self.assertNotIn("--row-report", landing[0]["args"])
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertFalse(self.h.held(), "no batch holds the lock")
+        self.assertIsNone(self.h.state("fix/a")["batch"])
+
+    def test_a_plans_landing_on_an_older_check_has_its_own_follow_up(self):
+        self.h.commit_to_main("scripts/pm-landing-check.py", self.OLDER_CHECK)
+        self.h.branch("fix/a", {"Plans/doc-a.md": "a\n"})
+        result = self.land("fix/a", "--batch-open")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(len(self.h.calls("snapshot")), 1)
+        self.assertFalse(self.h.held())
+
+    def test_a_member_whose_tree_has_an_older_check_closes_the_batch_and_lands_alone(self):
         self.h.branch("fix/a", {"src/x.txt": "a\n"})
-        self.h.branch("fix/b", {"src/y.txt": "b\n"})
-        self.h.branch("fix/c", {"src/z.txt": "c\n"})
         start = self.h.origin_main()
-        said = "prints no gone ids, subcheck totals or bucket counts"
-        first = self.land("fix/a", "--batch-open")
-        self.assertEqual(first.returncode, 0, first.stdout)
-        self.assertNotIn(said, first.stdout, "the first member has nothing to compare with")
-        self.h.set_plan("landing", [{"exit": 1, "timeouts": 1}])
-        second = self.land("fix/b", "--batch-start", start)
-        self.assertEqual(self.h.state("fix/b")["stop"]["code"], "timeouts_need_judgement", second.stdout)
-        self.assertEqual(second.stdout.count(said), 1)
-        again = self.h.tool("resume", "--branch", "fix/b")
-        self.assertEqual(again.returncode, 0, again.stdout + again.stderr)
-        self.assertEqual(sum(1 for row in self.h.state("fix/b")["notes"] if said in row), 1, "once per landing")
-        self.assertTrue(self.h.held(), "the batch stays open, as it did before those lines")
-        self.assertEqual(M.parse_holder(self.h.holder())["batch-start"], start)
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        a_sha = self.h.origin_main()
+        wt = self.h.branch("fix/b", {"scripts/pm-landing-check.py": self.OLDER_CHECK})
+        tip = self.h.g(wt, "rev-parse", "HEAD")
+        result = self.land("fix/b", "--batch-start", start)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("judged alone", result.stdout)
+        landing = self.h.calls("landing")
+        self.assertEqual([row["args"][:2] for row in landing], [["--base", start], ["--base", "origin/main"]], "never checked in the batch")
+        self.assertEqual(landing[1]["origin_main"], a_sha)
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertFalse(self.h.held())
+        self.assertIsNone(self.h.state("fix/b")["batch"])
 
     def test_an_id_with_an_escaped_newline_is_read_as_one_row(self):
         report = M.read_report(landing_report(gone=1, gone_ids=["run-gates|x|first\\nsecond|a.md"], totals={"run-gates/x": 1},
@@ -2516,30 +2551,29 @@ class BatchGapTests(Base):
         self.assertFalse(report["ids_unread"])
         self.assertEqual(M.subcheck_of("run-gates|x|first\\nsecond|b.md"), "run-gates/x")
 
-    def test_a_gone_count_below_an_earlier_reports_closes_it_on_exit_0_too(self):
+    def test_a_gone_id_no_longer_gone_closes_it_on_exit_0_too(self):
+        one, two = "run-gates|x|e|a.md", "run-gates|x|e|b.md"
         self.h.branch("fix/a", {"src/x.txt": "a\n"})
         self.h.branch("fix/b", {"src/y.txt": "b\n"})
         start = self.h.origin_main()
-        self.h.set_plan("landing", [{"exit": 0, "raw": landing_report(gone=2)}, {"exit": 0, "raw": landing_report(gone=1)}, {}])
+        self.h.set_plan("landing", [{"exit": 0, "raw": landing_report(gone=2, gone_ids=[one, two])},
+                                    {"exit": 0, "raw": landing_report(gone=1, gone_ids=[one])}, {}])
         self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
         self.a_sha = self.h.origin_main()
         result = self.land("fix/b", "--batch-start", start)
         self.closed_and_alone(start, result)
-        self.assertIn("fell from 2 to 1", result.stdout)
+        self.assertIn("listed as gone is back", result.stdout)
 
-    def test_a_gone_count_that_holds_or_rises_keeps_the_batch(self):
-        for second in (2, 3):
-            self.assertIsNone(M.batch_gap(M.read_report(landing_report(gone=second)), [M.read_report(landing_report(gone=2))]), second)
-
-    def test_the_gone_count_is_held_to_the_highest_earlier_one_not_the_latest(self):
-        earlier = [M.read_report(landing_report(gone=3)), M.read_report(landing_report(gone=1))]
-        self.assertEqual(M.batch_gap(M.read_report(landing_report(gone=2)), earlier)[0], "batch_rows_overlap")
+    def test_gone_ids_that_hold_or_grow_keep_the_batch(self):
+        one, two = "run-gates|x|e|a.md", "run-gates|x|e|b.md"
+        before = M.read_report(landing_report(gone=1, gone_ids=[one]))
+        for ids in ([one], [one, two]):
+            self.assertIsNone(M.batch_gap(M.read_report(landing_report(gone=len(ids), gone_ids=ids)), [before]), ids)
 
     def test_a_report_with_no_gone_line_cannot_be_told(self):
-        gap = M.batch_gap(M.read_report("no such line"), [M.read_report(landing_report())])
-        self.assertIn("cannot be told", gap[1])
-        gap = M.batch_gap(M.read_report(landing_report()), [dict(M.read_report(landing_report()), gone=None)])
-        self.assertIn("cannot be told", gap[1])
+        fine = M.read_report(landing_report())
+        self.assertEqual(M.batch_gap(M.read_report("no such line"), [fine])[0], "batch_check_too_old")
+        self.assertIn("do not add up", M.batch_gap(M.read_report("Subcheck totals this run: 0\n"), [fine])[1])
 
     def test_a_content_changed_row_no_earlier_report_listed_closes_it(self):
         start, result = self.two_members(landing_report(), landing_report(pre=[pre_row(BUCKET, 2, 2, '{"n":3}', "(content changed)")]))
@@ -3186,14 +3220,6 @@ class StalenessExemptionTests(RealReports, Base):
         twice = M.why_not_exempt("run-gates/x", self.rows(kept, dict(kept, stale=False)), before, ["Plans/A.md"])
         self.assertIn("not staleness", twice, "the same key twice is one added row, and the row list is what says so")
 
-    def test_an_older_landing_check_is_not_asked_for_a_row_report(self):
-        folder = self.h.tmp / "older"
-        (folder / "scripts").mkdir(parents=True)
-        (folder / "scripts" / "pm-landing-check.py").write_text("no such flag here\n")
-        self.assertFalse(M.writes_row_report(folder))
-        self.assertTrue(M.writes_row_report(ROOT))
-        self.assertFalse(M.writes_row_report(self.h.tmp / "nowhere"))
-
     def test_a_landing_outside_a_batch_is_not_asked_for_one(self):
         self.h.branch("fix/a", {"src/x.txt": "a\n"})
         self.assertEqual(self.land("fix/a").returncode, 0)
@@ -3783,6 +3809,10 @@ class HandRowTests(Base):
         self.assertEqual(self.h.state()["stop"]["code"], "batch_full")
         self.assertEqual(self.h.origin_main(), start)
 
+    def closed_rows(self) -> list:
+        """A hand landing's report is not on record, so the next tool member closes the batch: what it read is in its state."""
+        return self.h.state("fix/a")["closed_batches"][-1]["landings"]
+
     def test_three_hand_rows_leave_room(self):
         wt = self.h.branch("fix/a", {"src/x.txt": "a\n"})
         tip = self.h.g(wt, "rev-parse", "HEAD")
@@ -3791,7 +3821,9 @@ class HandRowTests(Base):
         result = self.join(start)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(self.h.origin_main(), tip)
-        self.assertEqual(len(M.parse_holder(self.h.holder())["batch-landing"]), 4)
+        self.assertEqual(self.h.calls("landing")[0]["args"][:2], ["--base", start], "room for it: it was checked in the batch")
+        self.assertEqual(len(self.closed_rows()), 3)
+        self.assertIn("not on record", result.stdout)
 
     def test_the_two_hours_count_from_the_first_rows_commit(self):
         start = self.h.origin_main()
@@ -3812,7 +3844,7 @@ class HandRowTests(Base):
         result = self.join(start)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(self.h.origin_main(), tip)
-        self.assertIn("batch-first-push", M.parse_holder(self.h.holder()))
+        self.assertIsNotNone(self.h.state("fix/a")["closed_batches"][-1]["first_push"])
 
     def test_a_row_in_another_shape_is_refused_not_dropped_uncounted(self):
         self.h.branch("fix/a", {"src/x.txt": "a\n"})
@@ -3856,8 +3888,7 @@ class HandRowTests(Base):
         result = self.h.tool("resume")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertEqual(self.h.origin_main(), tip)
-        rows = M.parse_holder(self.h.holder())["batch-landing"]
-        self.assertEqual(rows, [f"fix/old {earlier}", f"fix/a {tip}"])
+        self.assertEqual(self.closed_rows(), [{"branch": "fix/old", "sha": earlier}], "the added row was read, not erased")
 
     def test_a_first_row_corrected_after_the_stop_counts_on_resume(self):
         start = self.h.origin_main()
@@ -3872,7 +3903,8 @@ class HandRowTests(Base):
         path.write_text(path.read_text().replace(wrong, earlier))
         result = self.h.tool("resume")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertEqual(M.parse_holder(self.h.holder())["batch-landing"], [f"fix/old {earlier}", f"fix/a {tip}"])
+        self.assertEqual(self.h.origin_main(), tip)
+        self.assertEqual(self.closed_rows(), [{"branch": "fix/old", "sha": earlier}], "the corrected row was read")
 
     def test_a_row_in_another_shape_added_after_the_stop_is_refused_on_resume(self):
         start = self.h.origin_main()

@@ -784,17 +784,15 @@ with its follow-up at the current `main`, and the member is rechecked alone agai
   "compare those"). Rows a report only lists again do not count: each report lists what the earlier members touched.
 - **A bucket an earlier member fixed without printing it.** The report lists a row only if it names a batch file or
   its content changed. A bucket emptied is only a number in `Gone since the baseline`, and one lowered with no row
-  naming a batch file prints nothing, yet alone either stops the later member. A member closes the batch when that
-  count is below the highest any earlier report showed, even on exit 0: a bucket has come back. It also closes it on a
-  `(content changed)` row no earlier report listed. Either can close a batch needlessly, for one follow-up: the count
-  also falls when a subcheck that counted earlier timed out or printed only a sample this time.
+  naming a batch file prints nothing, yet alone either stops the later member. A member closes the batch on a
+  `(content changed)` row no earlier report listed, and on what moved, below. A closing can be needless, for one
+  follow-up: a bucket reads as no longer gone when a subcheck that counted earlier timed out or printed only a sample this
+  time.
 - **The readiness growth counter.** A rise judged as staleness can be excused in the batch by an earlier member's
-  stale row, where alone it needs this landing's own. A member closes the batch when the counter's total is above the
-  highest any earlier report showed. A total no higher is no rise alone either, so it stays. In practice, two members
-  that each edit an inventoried source do not share a batch.
-- **An earlier report it cannot read.** A hand lander's report is not on record, and the check prints only 40
-  pre-existing rows. Then a member listing such rows, or showing the counter, closes the batch, since what they share
-  cannot be told.
+  stale row, where alone it needs this landing's own. So its total is judged as any subcheck's is, below. A total no higher
+  than the previous report's is no rise alone either, so it stays.
+- **An earlier report it cannot read.** A hand lander's report is not on record, so the next tool member closes the batch.
+  The check prints only 40 pre-existing rows, so a member listing such rows past that cap closes it too.
 - **The seven-day limit.** Rule 2 is measured from `--base`, which stays at `batch-start`, so a baseline could read as
   current in the batch and stale alone. No batch opens on a baseline within two hours of the limit, counted to now or
   to `origin/main`, whichever is later, and a member stops with `batch_baseline_past_limit` once it is past it. A
@@ -855,18 +853,12 @@ which rows a sample prints can change with nothing added or removed, so alone is
 `audit_closure` prints a sample, and it is one bucket at its cap. `test_unseen_a_reshuffled_sample_passes_in_the_batch_and_stops_alone`
 pins it; reopen this if a second subcheck comes to print a sample with no export.
 
-**Against an older `pm-landing-check.py`,** which prints none of those lines, the tool says once per landing that these
-shapes may not be seen, and they do not close the batch, though each would stop alone:
-
-- A bucket lowered with no row naming a batch file, and raised again by a fresh row on a later member's own file. That
-  row reads `(names ...)`, like any pre-existing row on a touched file, so it stops for the comparison above and does
-  not close the batch. The comparison with the baseline's rows is then the only guard.
-- The same bucket raised again by the baseline's own row, naming no batch file: nothing prints, so nothing stops it.
-- A member that empties one bucket as another comes back: the gone count does not move. A row it lists on a batch
-  file reads as pre-existing, with no comparison to stop for.
-- One bucket raised as another falls in one subcheck: no total moves either.
-- A total that falls and rises again below the baseline's figure prints no counter row, and a rise in a subcheck that
-  prints only a sample, staying under the baseline's total, has no guard at all.
+**A batch needs those lines.** There is no fallback: a narrower comparison would let a member pass that stops alone. If the
+landing check at a landing's own commit prints no gone ids, subcheck totals or bucket counts, or has no `--row-report`, the
+tool refuses to batch. With nothing landed yet there is no batch to close, so that landing lands alone and the lock is
+released after it, whatever `--batch-open` or `--batch-start` asked for. With something landed, the batch closes with its
+follow-up and the landing is rechecked alone. A report that lacks the lines closes the batch in the same way, and so does
+one whose row report cannot be read.
 
 ### The lock queue
 
