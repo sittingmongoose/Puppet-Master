@@ -942,9 +942,14 @@ export default async function (t) {
     return out;
   }, [slot.html, pn, toks]);
   const fxCases = [];
+  // Read from the walk's own frame before the first fresh page replaces it (on the sandbox surface it goes with it).
+  const fxSpecs = [];
   if (t.args.effects !== '0') for (const pn of ctxPanes) {
     if (fxPanes && !fxPanes.includes(pn.state)) continue;
-    const toks = rowClasses(pn.panel, pn.state, pn.menu), authoredFx = await authoredPaths(pn.panel, toks);
+    const toks = rowClasses(pn.panel, pn.state, pn.menu);
+    fxSpecs.push({ pn, toks, authoredFx: await authoredPaths(pn.panel, toks) });
+  }
+  for (const { pn, toks, authoredFx } of fxSpecs) {
     for (const input of CTX_INPUTS) {
       const T = `${pn.panel} ${pn.state} FO-93b ${input}`;
       const g = await t.app.open();
