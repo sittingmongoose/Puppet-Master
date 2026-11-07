@@ -1386,6 +1386,147 @@
    },
    "data:value_arithmetic:datetime_value_probe:reviewed_role:plus_one on_value_path: 1 in -1#1": {
     "witness": "check:datetime_validator_real_inventory_format_installed"
+   },
+   "data:loop_member:datetime:_dialect_validator:drop_entry Draft202012Validator#1": {
+    "witness": "check:datetime_unit_dialect_supported_four"
+   },
+   "data:loop_member:datetime:_dialect_validator:drop_entry Draft201909Validator#1": {
+    "witness": "check:datetime_unit_dialect_supported_four"
+   },
+   "data:loop_member:datetime:_dialect_validator:drop_entry Draft7Validator#1": {
+    "witness": "check:datetime_unit_dialect_supported_four"
+   },
+   "data:loop_member:datetime:_dialect_validator:drop_entry Draft6Validator#1": {
+    "witness": "check:datetime_unit_dialect_supported_four"
+   },
+   "regex:datetime:<module>:drop_flag _DATE_TIME drop re.ASCII#1": {
+    "survives": "Equivalent. _DATE_TIME has no \\d, \\w, \\s or \\b and no IGNORECASE: its classes are the explicit ASCII [0-9], [Tt], [Zz] and [+-], so re.ASCII changes nothing it matches. The widenings that need the flag ([0-9] to \\d with re.ASCII dropped) are separate points, each caught by an Arabic-Indic digit case."
+   },
+   "regex:datetime:<module>:widen_class _DATE_TIME widen + #0#1": {
+    "witness": "check:datetime_unit_date_time_empty_fraction"
+   },
+   "regex:datetime:<module>:widen_class _DATE_TIME widen [0-9] #0 without re.ASCII#1": {
+    "witness": "check:datetime_unit_date_time_unicode_digits"
+   },
+   "regex:datetime:<module>:widen_class _DATE_TIME widen [0-9] #1 without re.ASCII#1": {
+    "witness": "check:datetime_unit_date_time_unicode_digit_month"
+   },
+   "regex:datetime:<module>:widen_class _DATE_TIME widen [0-9] #2 without re.ASCII#1": {
+    "witness": "check:datetime_unit_date_time_unicode_digit_day"
+   },
+   "regex:datetime:<module>:widen_class _DATE_TIME widen [0-9] #3 without re.ASCII#1": {
+    "witness": "check:datetime_unit_date_time_unicode_digit_hour"
+   },
+   "regex:datetime:<module>:widen_class _DATE_TIME widen [0-9] #4 without re.ASCII#1": {
+    "witness": "check:datetime_unit_date_time_unicode_digit_minute"
+   },
+   "regex:datetime:<module>:widen_class _DATE_TIME widen [0-9] #5 without re.ASCII#1": {
+    "witness": "check:datetime_unit_date_time_unicode_digit_second"
+   },
+   "regex:datetime:<module>:widen_class _DATE_TIME widen [0-9] #6 without re.ASCII#1": {
+    "witness": "check:datetime_unit_date_time_unicode_digit_fraction"
+   },
+   "regex:datetime:<module>:widen_class _DATE_TIME widen [0-9] #7 without re.ASCII#1": {
+    "witness": "check:datetime_unit_date_time_unicode_digit_offset_hour"
+   },
+   "regex:datetime:<module>:widen_class _DATE_TIME widen [0-9] #8 without re.ASCII#1": {
+    "witness": "check:datetime_unit_date_time_unicode_digit_offset_minute"
+   },
+   "regex:datetime:date_time:match_call _DATE_TIME.fullmatch(value)#1": {
+    "witness": "check:datetime_unit_date_time_trailing_lf"
+   },
+   "data:loop_member:datetime_inventory:declarations:drop_entry 'properties'#1": {
+    "witness": "check:datetime_unit_scan_declaration_form_properties"
+   },
+   "data:loop_member:datetime_inventory:declarations:drop_entry 'dependentRequired'#1": {
+    "witness": "check:datetime_unit_scan_declaration_form_dependentRequired_key"
+   },
+   "data:loop_member:datetime_inventory:declarations:drop_entry 'dependentSchemas'#1": {
+    "witness": "check:datetime_unit_scan_declaration_form_dependentSchemas"
+   },
+   "data:loop_member:datetime_inventory:declarations:drop_entry 'required'#1": {
+    "witness": "check:datetime_unit_scan_declaration_form_required"
+   },
+   "data:loop_member:datetime_inventory:declarations:drop_entry 'enum'#1": {
+    "witness": "check:datetime_unit_scan_declaration_form_enum"
+   },
+   "data:loop_member:datetime_inventory:declarations:drop_entry node.get('const')#1": {
+    "witness": "check:datetime_unit_scan_declaration_form_const_object"
+   },
+   "data:loop_member:datetime_inventory:declarations:drop_entry *node.get('enum', [])#1": {
+    "witness": "check:datetime_unit_scan_declaration_form_enum_object"
+   },
+   "data:loop_member:datetime_inventory:_exclusion_schema_paths:drop_entry b'$schema'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_loadable_schema_forbidden"
+   },
+   "data:loop_member:datetime_inventory:_exclusion_schema_paths:drop_entry b'$id'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_referenced_by_nested_id_forbidden"
+   },
+   "data:loop_member:datetime_inventory:_exclusion_schema_paths:drop_entry b'$ref'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_referenced_by_ref_only_file_forbidden"
+   },
+   "data:loop_member:datetime_inventory:_exclusion_schema_paths:drop_entry b'$dynamicRef'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_referenced_by_dynamic_ref_only_file_forbidden"
+   },
+   "data:loop_member:datetime_inventory:_exclusion_schema_paths:drop_entry b'$recursiveRef'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_referenced_by_recursive_ref_only_file_forbidden"
+   },
+   "data:loop_member:datetime_inventory:_exclusion_schema_paths:drop_entry b'\\\\u'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_referenced_by_escaped_ref_only_file_forbidden"
+   },
+   "data:loop_member:datetime_inventory:_exclusion_schema_paths:drop_entry b'\\x00'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_referenced_by_utf16_ref_only_file_forbidden"
+   },
+   "data:loop_member:datetime_inventory:_exclusion_schema_paths.visit:drop_entry '$ref'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_referenced_file_forbidden"
+   },
+   "data:loop_member:datetime_inventory:_exclusion_schema_paths.visit:drop_entry '$dynamicRef'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_referenced_by_dynamic_ref_only_file_forbidden"
+   },
+   "data:loop_member:datetime_inventory:_exclusion_schema_paths.visit:drop_entry '$recursiveRef'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_referenced_by_recursive_ref_only_file_forbidden"
+   },
+   "data:loop_member:datetime_inventory:scan:drop_entry 'path'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_not_string_path"
+   },
+   "data:loop_member:datetime_inventory:scan:drop_entry 'origin'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_not_string_origin"
+   },
+   "data:loop_member:datetime_inventory:scan:drop_entry 'sha256'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_not_string_sha256"
+   },
+   "data:loop_member:datetime_inventory:scan:drop_entry 'reason'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_not_string_reason"
+   },
+   "data:loop_member:datetime_inventory:scan:drop_entry 'citation'#1": {
+    "witness": "check:datetime_unit_scan_exclusion_not_string_citation"
+   },
+   "regex:datetime_inventory:<module>:widen_class _LIST_MARKER widen + #0#1": {
+    "witness": "check:datetime_unit_scan_list_marker_needs_a_space"
+   },
+   "regex:datetime_inventory:validate_inventory:match_call re.fullmatch('/documents/([0-9]+)/changes/[0-9]+/(?:before|after)', row['pointer'])#1": {
+    "witness": "check:datetime_unit_validate_lineage_pointer_below_patch"
+   },
+   "regex:datetime_inventory:_supplementary_fences:match_call re.fullmatch('[ \\\\t]*' + re.escape(opening[0]) + '{' + str(len(opening)) + ',}[ \\\\t]*\\\\r?\\\\n?', line)#1": {
+    "witness": "check:datetime_unit_scan_supplementary_closer_has_no_info_string"
+   },
+   "regex:datetime_inventory:declarations:match_call re.search(pattern, f)#1": {
+    "witness": "check:datetime_unit_scan_unanchored_pattern_suffix"
+   },
+   "regex:datetime_inventory:scan:match_call re.search('data|lineage|non-JSON code|example', r['reason'], re.I)#1": {
+    "witness": "check:datetime_unit_scan_exclusion_citation_unreadable"
+   },
+   "data:loop_member:datetime_value_probe:_year_sweep_values:drop_entry 'T'#1": {
+    "witness": "check:datetime_unit_year_sweep_complete"
+   },
+   "data:loop_member:datetime_value_probe:_year_sweep_values:drop_entry 't'#1": {
+    "witness": "check:datetime_unit_year_sweep_complete"
+   },
+   "regex:datetime_value_probe:wildcard_probe.constraint_paths:match_call re.search(pattern, field)#1": {
+    "witness": "check:datetime_unit_value_path_unanchored_pattern"
+   },
+   "regex:datetime_value_probe:_PositivePaths._map:match_call re.search(pattern, field)#1": {
+    "witness": "check:datetime_unit_authority_unanchored_pattern_value"
    }
   }
  },
@@ -2053,6 +2194,114 @@
    "replace": "    dialects, dynamic = set(), set()",
    "witness": "check:datetime_unit_closure_default_dialect_counts",
    "rule": "probe.static-closure"
+  },
+  {
+   "id": "hw-tb4-unicode-digit-year",
+   "module": "pm_event_datetime",
+   "find": "[0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]\"\n    r\"([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\\.([0-9]+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\", re.ASCII)",
+   "replace": "\\d{4})-([0-9]{2})-([0-9]{2})[Tt]\"\n    r\"([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\\.([0-9]+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\")",
+   "witness": "check:datetime_unit_date_time_unicode_digits",
+   "rule": "predicate.whole-string",
+   "note": "T71 (REVIEW-numrule-tb3-opus finding 4, DT03): the year group's [0-9] made \\d and re.ASCII dropped, so it takes every Unicode digit."
+  },
+  {
+   "id": "hw-tb4-unicode-digit-month",
+   "module": "pm_event_datetime",
+   "find": "[0-9]{2})-([0-9]{2})[Tt]\"\n    r\"([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\\.([0-9]+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\", re.ASCII)",
+   "replace": "\\d{2})-([0-9]{2})[Tt]\"\n    r\"([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\\.([0-9]+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\")",
+   "witness": "check:datetime_unit_date_time_unicode_digit_month",
+   "rule": "predicate.whole-string",
+   "note": "T71 (REVIEW-numrule-tb3-opus finding 4, DT03): the month group's [0-9] made \\d and re.ASCII dropped, so it takes every Unicode digit."
+  },
+  {
+   "id": "hw-tb4-unicode-digit-day",
+   "module": "pm_event_datetime",
+   "find": "[0-9]{2})[Tt]\"\n    r\"([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\\.([0-9]+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\", re.ASCII)",
+   "replace": "\\d{2})[Tt]\"\n    r\"([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\\.([0-9]+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\")",
+   "witness": "check:datetime_unit_date_time_unicode_digit_day",
+   "rule": "predicate.whole-string",
+   "note": "T71 (REVIEW-numrule-tb3-opus finding 4, DT03): the day group's [0-9] made \\d and re.ASCII dropped, so it takes every Unicode digit."
+  },
+  {
+   "id": "hw-tb4-unicode-digit-hour",
+   "module": "pm_event_datetime",
+   "find": "[0-9]{2}):([0-9]{2}):([0-9]{2})(?:\\.([0-9]+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\", re.ASCII)",
+   "replace": "\\d{2}):([0-9]{2}):([0-9]{2})(?:\\.([0-9]+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\")",
+   "witness": "check:datetime_unit_date_time_unicode_digit_hour",
+   "rule": "predicate.whole-string",
+   "note": "T71 (REVIEW-numrule-tb3-opus finding 4, DT03): the hour group's [0-9] made \\d and re.ASCII dropped, so it takes every Unicode digit."
+  },
+  {
+   "id": "hw-tb4-unicode-digit-minute",
+   "module": "pm_event_datetime",
+   "find": "[0-9]{2}):([0-9]{2})(?:\\.([0-9]+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\", re.ASCII)",
+   "replace": "\\d{2}):([0-9]{2})(?:\\.([0-9]+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\")",
+   "witness": "check:datetime_unit_date_time_unicode_digit_minute",
+   "rule": "predicate.whole-string",
+   "note": "T71 (REVIEW-numrule-tb3-opus finding 4, DT03): the minute group's [0-9] made \\d and re.ASCII dropped, so it takes every Unicode digit."
+  },
+  {
+   "id": "hw-tb4-unicode-digit-second",
+   "module": "pm_event_datetime",
+   "find": "[0-9]{2})(?:\\.([0-9]+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\", re.ASCII)",
+   "replace": "\\d{2})(?:\\.([0-9]+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\")",
+   "witness": "check:datetime_unit_date_time_unicode_digit_second",
+   "rule": "predicate.whole-string",
+   "note": "T71 (REVIEW-numrule-tb3-opus finding 4, DT03): the second group's [0-9] made \\d and re.ASCII dropped, so it takes every Unicode digit."
+  },
+  {
+   "id": "hw-tb4-unicode-digit-fraction",
+   "module": "pm_event_datetime",
+   "find": "[0-9]+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\", re.ASCII)",
+   "replace": "\\d+))?\"\n    r\"([Zz]|[+-][0-9]{2}:[0-9]{2})\")",
+   "witness": "check:datetime_unit_date_time_unicode_digit_fraction",
+   "rule": "predicate.whole-string",
+   "note": "T71 (REVIEW-numrule-tb3-opus finding 4, DT03): the fraction group's [0-9] made \\d and re.ASCII dropped, so it takes every Unicode digit."
+  },
+  {
+   "id": "hw-tb4-unicode-digit-offset-hour",
+   "module": "pm_event_datetime",
+   "find": "[0-9]{2}:[0-9]{2})\", re.ASCII)",
+   "replace": "\\d{2}:[0-9]{2})\")",
+   "witness": "check:datetime_unit_date_time_unicode_digit_offset_hour",
+   "rule": "predicate.whole-string",
+   "note": "T71 (REVIEW-numrule-tb3-opus finding 4, DT03): the offset-hour group's [0-9] made \\d and re.ASCII dropped, so it takes every Unicode digit."
+  },
+  {
+   "id": "hw-tb4-unicode-digit-offset-minute",
+   "module": "pm_event_datetime",
+   "find": "[0-9]{2})\", re.ASCII)",
+   "replace": "\\d{2})\")",
+   "witness": "check:datetime_unit_date_time_unicode_digit_offset_minute",
+   "rule": "predicate.whole-string",
+   "note": "T71 (REVIEW-numrule-tb3-opus finding 4, DT03): the offset-minute group's [0-9] made \\d and re.ASCII dropped, so it takes every Unicode digit."
+  },
+  {
+   "id": "hw-tb4-pattern-properties-prefix-match-scan",
+   "module": "pm_event_datetime_inventory",
+   "find": "            found.update(f for f in FIELDS if re.search(pattern, f))",
+   "replace": "            found.update(f for f in FIELDS if re.match(pattern, f))",
+   "witness": "check:datetime_unit_scan_unanchored_pattern_suffix",
+   "rule": "admission.unclassified-declaration",
+   "note": "T71 (finding 2, DT13): declarations() reads a patternProperties regex as anchored at the start; a suffix or infix pattern then declares nothing."
+  },
+  {
+   "id": "hw-tb4-pattern-properties-prefix-match-constraint-paths",
+   "module": "pm_event_datetime_value_probe",
+   "find": "                if re.search(pattern, field):\n                    matched = True\n                    selectors.append(child)",
+   "replace": "                if re.match(pattern, field):\n                    matched = True\n                    selectors.append(child)",
+   "witness": "check:datetime_unit_value_path_unanchored_pattern",
+   "rule": "role.timestamp-review",
+   "note": "T71 (finding 2, DT13; value_probe.py:281): the wildcard probe's constraint paths read a patternProperties regex as anchored at the start, so a suffix-keyed value is on no field's value path."
+  },
+  {
+   "id": "hw-tb4-pattern-properties-prefix-match-positive-paths",
+   "module": "pm_event_datetime_value_probe",
+   "find": "            if re.search(pattern, field):\n                matched = True\n                children.append(child)",
+   "replace": "            if re.match(pattern, field):\n                matched = True\n                children.append(child)",
+   "witness": "check:datetime_unit_authority_unanchored_pattern_value",
+   "rule": "probe.positive-paths",
+   "note": "T71 (finding 2, DT13; value_probe.py:459): the positive-path walk (_PositivePaths._map) reads a patternProperties regex as anchored at the start, so a suffix-keyed value's endpoints are lost."
   }
  ],
  "rules_source": "Predicate-level rules derived from the owner rows. Each lists generated point keys and hand-written mutation ids; every one must be caught with its witness failing. Declared survivors are never listed.",
@@ -2063,7 +2312,16 @@
    "rule": "The whole string is validated against the RFC 3339 5.6 grammar; any other character, a trailing LF or a prefix match refuses (date_time_syntax).",
    "mutations": [
     "site:datetime:date_time:date_time_syntax#1",
-    "hw-predicate-prefix-match"
+    "hw-predicate-prefix-match",
+    "hw-tb4-unicode-digit-year",
+    "hw-tb4-unicode-digit-month",
+    "hw-tb4-unicode-digit-day",
+    "hw-tb4-unicode-digit-hour",
+    "hw-tb4-unicode-digit-minute",
+    "hw-tb4-unicode-digit-second",
+    "hw-tb4-unicode-digit-fraction",
+    "hw-tb4-unicode-digit-offset-hour",
+    "hw-tb4-unicode-digit-offset-minute"
    ]
   },
   {
@@ -2396,7 +2654,8 @@
     "site:datetime_inventory:StorageSelection.admit:DatetimeAdmissionError:datetime_schema_unclassified#1",
     "predicate:site:datetime_inventory:StorageSelection.admit:DatetimeAdmissionError:datetime_schema_unclassified#1:false match is None#1",
     "predicate:site:datetime_inventory:StorageSelection.admit:DatetimeAdmissionError:datetime_schema_unclassified#1:false tuple(match[1]['fields']) != fields#1",
-    "hw-declaration-required-ignored"
+    "hw-declaration-required-ignored",
+    "hw-tb4-pattern-properties-prefix-match-scan"
    ]
   },
   {
@@ -2697,7 +2956,8 @@
     "hw-union-endpoints-union-map",
     "hw-not-treated-as-path",
     "hw-then-treated-as-path",
-    "hw-draft7-ref-siblings-applied"
+    "hw-draft7-ref-siblings-applied",
+    "hw-tb4-pattern-properties-prefix-match-positive-paths"
    ]
   },
   {
@@ -2812,7 +3072,8 @@
    "rule": "An explicit timestamp review (other_owner_observation) must cite the end of a value path of every field.",
    "mutations": [
     "credit:datetime_value_probe:reviewed_role:on_value_path:true p['field'] == field#1",
-    "credit:datetime_value_probe:reviewed_role:on_value_path:true p['path'][-1] == cited#1"
+    "credit:datetime_value_probe:reviewed_role:on_value_path:true p['path'][-1] == cited#1",
+    "hw-tb4-pattern-properties-prefix-match-constraint-paths"
    ]
   },
   {

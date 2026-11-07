@@ -47,6 +47,10 @@ ROOT = Path(__file__).resolve().parents[1]
 MUTATION_SET = "scripts/pm_event_datetime_mutations.json"
 TARGETS = ("pm_event_datetime", "pm_event_datetime_inventory", "pm_event_datetime_value_probe")
 FAMILIES = {
+    # T71 (REVIEW-numrule-tb3-opus finding 6): the regex families (regex_points)
+    "regex_pattern": "Each flag of a module-level re.compile, dropped; and each character class of its pattern widened "
+                     "one step: each [0-9] to \\d and each unescaped + quantifier outside a class to *.",
+    "regex_match_kind": "Each fullmatch or search call on re or on a module-level compiled pattern, made a match call.",
     "refusal_site": "Every way the date-time code emits a refusal: each raise statement, each _refuse(...) "
                     "call, each call to a local error sink (a nested function that appends to errors: fail, "
                     "unsupported), each error record (a dict literal with an \"error\" key), each errors.extend, "
@@ -401,7 +405,106 @@ def mutation_points(source, module):
     for family, node, action, detail, text, function in data_points(tree, module, parents):
         add(family, "data:%s:%s:%s:%s %s" % (family.removeprefix("data_"), short, function, action, text), node,
             function=function, action=action, detail=detail, text=text[:160])
+    for family, node, action, detail, text, function in regex_points(tree, parents):
+        add(family, "regex:%s:%s:%s %s" % (short, function, action, text), node,
+            function=function, action=action, detail=detail, text=text[:160])
     return points
+
+
+_REGEX_CALLS = ("fullmatch", "search")
+
+
+def _pattern_widenings(pattern):
+    """[(kind, occurrence)] for each one-step widening of a pattern's text (T71): each [0-9] class to \\d, and each
+    unescaped + quantifier outside a class to *."""
+    out, count = [], {"[0-9]": 0, "+": 0}
+    i, in_class = 0, False
+    while i < len(pattern):
+        c = pattern[i]
+        if c == "\\":
+            i += 2
+            continue
+        if pattern.startswith("[0-9]", i) and not in_class:
+            out.append(("[0-9]", count["[0-9]"]))
+            count["[0-9]"] += 1
+            i += 5
+            continue
+        if c == "[" and not in_class:
+            in_class = True
+        elif c == "]" and in_class:
+            in_class = False
+        elif c == "+" and not in_class:
+            out.append(("+", count["+"]))
+            count["+"] += 1
+        i += 1
+    return out
+
+
+def _widened(pattern, kind, occurrence):
+    """The pattern with that one widening applied (see _pattern_widenings)."""
+    seen, i, in_class = -1, 0, False
+    while i < len(pattern):
+        c = pattern[i]
+        if c == "\\":
+            i += 2
+            continue
+        if pattern.startswith("[0-9]", i) and not in_class:
+            if kind == "[0-9]":
+                seen += 1
+                if seen == occurrence:
+                    return pattern[:i] + "\\d" + pattern[i + 5:]
+            i += 5
+            continue
+        if c == "[" and not in_class:
+            in_class = True
+        elif c == "]" and in_class:
+            in_class = False
+        elif c == "+" and not in_class and kind == "+":
+            seen += 1
+            if seen == occurrence:
+                return pattern[:i] + "*" + pattern[i + 1:]
+        i += 1
+    raise ValueError("no such widening: %s #%d" % (kind, occurrence))
+
+
+def _flag_leaves(node):
+    """The flag operands of a flags argument (re.A | re.M ...), in source order."""
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.BitOr):
+        return _flag_leaves(node.left) + _flag_leaves(node.right)
+    return [node]
+
+
+def regex_points(tree, parents):
+    """[(family, node, action, detail, text, function)] of the regex family (T71, REVIEW-numrule-tb3-opus finding 6),
+    in source order: each flag of a module-level re.compile dropped; each character class of its pattern widened one
+    step ([0-9] to \\d, + to *); and each fullmatch or search call (re.search(...), _DATE_TIME.fullmatch(...)) made a
+    match call. Pattern text, flags and match kinds had no family, and the blind sample's DT03 and DT13 lived there."""
+    out = []
+    for statement in tree.body:
+        if not (isinstance(statement, ast.Assign) and len(statement.targets) == 1 and isinstance(statement.targets[0], ast.Name)):
+            continue
+        call, name = statement.value, statement.targets[0].id
+        if not (isinstance(call, ast.Call) and isinstance(call.func, ast.Attribute) and call.func.attr == "compile"
+                and isinstance(call.func.value, ast.Name) and call.func.value.id == "re" and call.args
+                and isinstance(call.args[0], ast.Constant) and isinstance(call.args[0].value, str)):
+            continue
+        flags = call.args[1] if len(call.args) > 1 else next((k.value for k in call.keywords if k.arg == "flags"), None)
+        leaves = _flag_leaves(flags) if flags is not None else []
+        for position, leaf in enumerate(leaves):
+            out.append(("regex_pattern", call, "drop_flag", position, name + " drop " + ast.unparse(leaf), "<module>"))
+        # (under re.ASCII, \\d is exactly [0-9]: the one-step widening of a [0-9] class there also drops the flag, so
+        # the class takes every Unicode digit, as the blind sample's DT03 did)
+        ascii_flag = next((i for i, leaf in enumerate(leaves) if ast.unparse(leaf) in ("re.ASCII", "re.A")), None)
+        for kind, occurrence in _pattern_widenings(call.args[0].value):
+            drop = ascii_flag if kind == "[0-9]" else None
+            out.append(("regex_pattern", call, "widen_class", [kind, occurrence, drop],
+                        name + " widen %s #%d%s" % (kind, occurrence, " without re.ASCII" if drop is not None else ""), "<module>"))
+    for node in ast.walk(tree):
+        if (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr in _REGEX_CALLS
+                and isinstance(node.func.value, ast.Name) and (node.func.value.id == "re" or node.func.value.id.isupper()
+                or node.func.value.id.startswith("_") and node.func.value.id[1:].isupper())):
+            out.append(("regex_match_kind", node, "match_call", None, ast.unparse(node)[:120], _qualname(node, parents)))
+    return sorted(out, key=lambda p: (p[1].lineno, p[1].col_offset, p[0], str(p[3]), p[4]))
 
 
 _TABLE_CALLS = ("frozenset", "set", "tuple", "list")
@@ -440,6 +543,23 @@ def data_points(tree, module, parents):
     def holds(node):
         return any(id(x) in site_ids or (isinstance(x, ast.Call) and isinstance(x.func, ast.Name) and x.func.id in with_sites)
                    for x in ast.walk(node))
+    # T71 (REVIEW-numrule-tb3-opus finding 3, DT12): the module-level helpers whose results a function with a refusal or
+    # credit site reads, directly or through other helpers (declarations(), which admit, scan and validate_inventory read)
+    read_by_sites, frontier = set(), [top[name] for name in with_sites if name in top]
+    while frontier:
+        function = frontier.pop()
+        for x in ast.walk(function):
+            if isinstance(x, ast.Call) and isinstance(x.func, ast.Name) and x.func.id in top and x.func.id not in read_by_sites:
+                read_by_sites.add(x.func.id)
+                frontier.append(top[x.func.id])
+    # (a helper with refusal sites of its own counts too: declarations() raises on an unreadable regex, and its keyword
+    # loop, which holds no site, decides what every refusal reading its result sees)
+    def top_of(node):
+        while node in parents:
+            node = parents[node]
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and parents.get(node) is tree:
+                return node.name
+        return None
     out = []
     # constant tables
     for statement in tree.body:
@@ -455,7 +575,7 @@ def data_points(tree, module, parents):
             loop, display = node, node.iter
         elif isinstance(node, ast.comprehension) and isinstance(node.iter, (ast.Tuple, ast.List, ast.Set)):
             loop, display = parents[node], node.iter
-        if loop is not None and holds(loop) and len(display.elts) > 1:
+        if loop is not None and (holds(loop) or top_of(loop) in read_by_sites) and len(display.elts) > 1:
             for position, text in _entries(display):
                 out.append(("data_loop_member", display, "drop_entry", position, text, _qualname(display, parents)))
     # flags and values a guard reads
@@ -667,6 +787,34 @@ def point_code(source, file, point):
                                   slice=ast.Slice(upper=ast.Constant(1)), ctx=ast.Load())
     elif action == "disable_error_tuple":
         _replace(tree, node, ast.Tuple(elts=[], ctx=ast.Load()))
+    elif action == "drop_flag":
+        leaves = _flag_leaves(node.args[1] if len(node.args) > 1 else next(k.value for k in node.keywords if k.arg == "flags"))
+        rest = [leaf for i, leaf in enumerate(leaves) if i != point["detail"]]
+        new = None
+        for leaf in rest:
+            new = leaf if new is None else ast.BinOp(left=new, op=ast.BitOr(), right=leaf)
+        if len(node.args) > 1:
+            if new is None:
+                del node.args[1]
+            else:
+                node.args[1] = new
+        else:
+            node.keywords = [k for k in node.keywords if k.arg != "flags"] + ([ast.keyword(arg="flags", value=new)] if new is not None else [])
+    elif action == "widen_class":
+        kind, occurrence, drop = point["detail"]
+        node.args[0].value = _widened(node.args[0].value, kind, occurrence)
+        if drop is not None:
+            leaves = _flag_leaves(node.args[1])
+            rest = [leaf for i, leaf in enumerate(leaves) if i != drop]
+            new = None
+            for leaf in rest:
+                new = leaf if new is None else ast.BinOp(left=new, op=ast.BitOr(), right=leaf)
+            if new is None:
+                del node.args[1]
+            else:
+                node.args[1] = new
+    elif action == "match_call":
+        node.func.attr = "match"
     else:
         raise ValueError("unknown mutation action: " + action)
     ast.fix_missing_locations(tree)
@@ -728,6 +876,31 @@ def installed(target, code, sources):
         for name in ("pm_event_datetime_inventory", "pm_event_datetime_value_probe", "pm_event_datetime"):
             text, file = sources[name]
             _load_module(name, code if name == target else compile(text, file, "exec"), file)
+        # T71 (REVIEW-numrule-tb3-opus finding 7): under a mutant whose inventory fails validation, resource_selections()
+        # raises, nothing is cached, and every validator build re-validated the whole inventory (a --all rerun of DT16
+        # hit 3,000 s). Its outcome for the committed inventory, a result or the raised error, is computed once per
+        # installed mutant: it reads only the committed files and the mutant's code, which do not change while the
+        # mutant is installed. A call against any other root (a self-check's scratch inventory) goes to the module's own
+        # lru_cache unchanged, and cache_clear() clears both, so the checks that clear or redirect it behave as before.
+        inventory = sys.modules["pm_event_datetime_inventory"]
+        original, memo, committed = inventory.resource_selections, {}, (inventory.ROOT, inventory.INVENTORY)
+        def selections():
+            if (inventory.ROOT, inventory.INVENTORY) != committed:
+                return original()
+            if "value" not in memo and "error" not in memo:
+                try:
+                    memo["value"] = original()
+                except Exception as error:  # noqa: BLE001
+                    memo["error"] = error
+            if "error" in memo:
+                raise memo["error"].with_traceback(None)
+            return memo["value"]
+        def cache_clear():
+            memo.clear()
+            original.cache_clear()
+        selections.cache_clear = cache_clear
+        selections.__wrapped__ = original
+        inventory.resource_selections = selections
         selfcheck.CODE[target] = code
         yield
     finally:
@@ -779,6 +952,19 @@ def run_witness(witness, context):
             raise
         except Exception as error:  # noqa: BLE001
             return "exception:" + type(error).__name__
+    if kind == "regression":
+        # (T71: the admission regression checks, run once per mutant under the installed mutant and kept on the context)
+        if name not in regression_names():
+            raise ValueError("unknown regression check: " + name)
+        if not hasattr(context, "regression"):
+            import pm_event_datetime_admission_checks as admission
+            try:
+                context.regression = admission.regression_checks(ROOT)
+            except Exception as error:  # noqa: BLE001
+                context.regression = {"__exception__": "exception:" + type(error).__name__}
+        if "__exception__" in context.regression:
+            return context.regression["__exception__"]
+        return context.regression.get(name, False) is True
     raise ValueError("unknown witness kind: " + witness)
 
 
@@ -807,11 +993,23 @@ def run_mutant(target, build, sources, witnesses, *, time_limit=180):
             "seconds": round(time.monotonic() - started, 2)}
 
 
+def regression_names():
+    """The names of the admission regression checks (pm_event_datetime_admission_checks.regression_checks), from one run
+    on the intact tree, cached for the process."""
+    if "regression_names" not in _STATE:
+        import pm_event_datetime_admission_checks as admission
+        _STATE["regression_names"] = sorted(admission.regression_checks(ROOT))
+    return _STATE["regression_names"]
+
+
 def survivor_witnesses():
-    """Every check a declared survivor must survive: all self-checks and every date-time corpus case."""
+    """Every check a declared survivor must survive: all self-checks, every date-time corpus case and (T71,
+    REVIEW-numrule-tb3-opus finding 3) every admission regression check, the suite --scope all runs beside them, so
+    the replay and the CLI judge on one suite (DT12 survived the self-checks and the cases, and only these caught it)."""
     import pm_event_datetime_selfcheck as selfcheck
     return (["check:" + name for name in selfcheck.CHECKS] +
-            ["case:" + c["id"] for c in _corpus()["cases"] if c["op"] in DATETIME_OPS])
+            ["case:" + c["id"] for c in _corpus()["cases"] if c["op"] in DATETIME_OPS] +
+            ["regression:" + name for name in regression_names()])
 
 
 # ---- The rules table, derived from the owner text ----
@@ -1056,7 +1254,9 @@ def _entry_problems(name, entry, selfcheck):
     elif witness and kind == "case" and not any(c["id"] == target and c["op"] in DATETIME_OPS
                                                for c in _corpus()["cases"]):
         problems.append(name + ": unknown date-time corpus case " + target)
-    elif witness and kind not in ("check", "case"):
+    elif witness and kind == "regression" and target not in regression_names():
+        problems.append(name + ": unknown admission regression check " + target)
+    elif witness and kind not in ("check", "case", "regression"):
         problems.append(name + ": unknown witness kind " + witness)
     return problems
 

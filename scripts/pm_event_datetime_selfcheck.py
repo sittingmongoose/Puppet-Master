@@ -183,6 +183,16 @@ DATE_TIME_CASES = (
     ("trailing_lf", "2026-01-01T00:00:00Z\n", E, "date_time_syntax"),
     ("leading_space", " 2026-01-01T00:00:00Z", E, "date_time_syntax"),
     ("unicode_digits", "２０２６-01-01T00:00:00Z", E, "date_time_syntax"),
+    # T71 (REVIEW-numrule-tb3-opus finding 4, DT03): an Arabic-Indic digit in every other numeric field; RFC 3339 DIGIT
+    # is ASCII, and the predicate's [0-9] classes and re.ASCII protect each field, not only the year and the seconds
+    ("unicode_digit_month", "2026-0\u0661-01T00:00:00Z", E, "date_time_syntax"),
+    ("unicode_digit_day", "2026-01-0\u0661T00:00:00Z", E, "date_time_syntax"),
+    ("unicode_digit_hour", "2026-01-01T\u0661\u0662:00:00Z", E, "date_time_syntax"),
+    ("unicode_digit_minute", "2026-01-01T00:0\u0661:00Z", E, "date_time_syntax"),
+    ("unicode_digit_second", "2026-01-01T00:00:0\u0661Z", E, "date_time_syntax"),
+    ("unicode_digit_fraction", "2026-01-01T00:00:00.\u0661Z", E, "date_time_syntax"),
+    ("unicode_digit_offset_hour", "2026-01-01T00:00:00+0\u0661:00", E, "date_time_syntax"),
+    ("unicode_digit_offset_minute", "2026-01-01T00:00:00+01:0\u0661", E, "date_time_syntax"),
     ("empty_fraction", "2026-01-01T00:00:00.Z", E, "date_time_syntax"),
     ("five_digit_year", "12026-01-01T00:00:00Z", E, "date_time_syntax"),
     ("offset_without_colon", "2026-01-01T00:00:00+0000", E, "date_time_syntax"),
@@ -1346,6 +1356,10 @@ _PATCH = {"properties": {"observed_at_utc": {"type": "string"}}}
 check("datetime_unit_validate_lineage_pointer")(_lineage({"documents": [], "x": _PATCH}, "/x"))
 check("datetime_unit_validate_lineage_resource_id")(_lineage(
     {"$id": "urn:pm:lineage", "documents": [{"changes": [{"after": _PATCH}]}]}, "/documents/0/changes/0/after"))
+# T71 (regex family): a lineage patch is the whole before or after value of a change, never a node below it (the
+# pointer test's fullmatch made match accepts /documents/0/changes/0/after/x)
+check("datetime_unit_validate_lineage_pointer_below_patch")(_lineage(
+    {"documents": [{"changes": [{"after": {"x": _PATCH}}]}]}, "/documents/0/changes/0/after/x"))
 
 
 @check("datetime_unit_validate_lineage_clean")
@@ -2124,6 +2138,22 @@ check("datetime_unit_authority_partial_union_map")(_authority(
 check("datetime_unit_authority_every_branch_union_map")(_authority(
     {**BASIC, "anyOf": [{"additionalProperties": REF}, {"additionalProperties": REF}]}, "/$defs/SafeRef",
     endpoint=True))
+# T71 (REVIEW-numrule-tb3-opus finding 2, DT13, and the regex family): a patternProperties regex is unanchored, so a
+# suffix pattern selects observed_at_utc and persisted_at_utc in the value probe too: it reaches its value's endpoints
+# (_PositivePaths._map) and lies on each field's value path (wildcard_probe.constraint_paths). Either search made match
+# selects nothing.
+check("datetime_unit_authority_unanchored_pattern_value")(_authority(
+    {**BASIC, "patternProperties": {"_at_utc$": REF}}, "/$defs/SafeRef", endpoint=True))
+
+
+@check("datetime_unit_value_path_unanchored_pattern")
+def _value_path_unanchored(context):
+    evidence, _, _, _ = probe_map(context, {**BASIC, "patternProperties": {"_at_utc$": REF}})
+    target = _target("/$defs/SafeRef")
+    return all(any(p["field"] == field and p["path"][-1] == target for p in evidence["value_constraint_paths"])
+               for field in ("observed_at_utc", "persisted_at_utc"))
+
+
 check("datetime_unit_authority_not_is_not_a_path")(_authority(
     {**BASIC, "additionalProperties": {"not": REF}}, "/$defs/SafeRef", unproven="not"))
 check("datetime_unit_authority_then_is_not_a_path")(_authority(
@@ -2601,6 +2631,121 @@ def _scan_patterns(context):
         "^x_": {"type": "string"}, "^observed_": {"type": "string", "format": "date-time"}}})
     rows, errors = _scan(root)
     return not errors and [(r["pointer"], r["fields"]) for r in rows] == [("", ["observed_at_utc"])]
+
+
+# T71 (REVIEW-numrule-tb3-opus finding 3, DT12): every declaration form the admission regression checks list
+# (pm_event_datetime_admission_checks.regression_checks) is also a scan self-check: one $schema file declaring it, which
+# the scan must find as one row naming exactly the fields it declares
+SCAN_DECLARATION_FORMS = {
+    "properties": ({"properties": {"observed_at_utc": {}}}, ["observed_at_utc"]),
+    "patternProperties": ({"patternProperties": {"observed.*": {}}}, ["observed_at_utc"]),
+    "required": ({"required": ["observed_at_utc"]}, ["observed_at_utc"]),
+    "dependentRequired_key": ({"dependentRequired": {"observed_at_utc": ["x"]}}, ["observed_at_utc"]),
+    "dependentRequired_value": ({"dependentRequired": {"x": ["persisted_at_utc"]}}, ["persisted_at_utc"]),
+    "dependentSchemas": ({"dependentSchemas": {"observed_at_utc": {}}}, ["observed_at_utc"]),
+    "propertyNames": ({"propertyNames": {"pattern": "^observed_at_utc$"}}, ["observed_at_utc"]),
+    "const": ({"const": "observed_at_utc"}, ["observed_at_utc"]),
+    "const_object": ({"const": {"observed_at_utc": "value"}}, ["observed_at_utc"]),
+    "enum_object": ({"enum": [{"persisted_at_utc": "value"}]}, ["persisted_at_utc"]),
+    "propertyNames_true": ({"propertyNames": True}, ["observed_at_utc", "persisted_at_utc"]),
+    "enum": ({"enum": ["persisted_at_utc"]}, ["persisted_at_utc"]),
+}
+
+
+def _declaration_form_check(form):
+    declaration, fields = SCAN_DECLARATION_FORMS[form]
+    def run(context):
+        root = context.scratch()
+        write(root, "Plans/a.json", {"$schema": D202012, **declaration})
+        rows, errors = _scan(root)
+        return not errors and [(r["pointer"], sorted(r["fields"])) for r in rows] == [("", fields)]
+    run.__doc__ = "DT12: a $schema file declaring the field(s) by %s is one scan row with exactly them." % form
+    return run
+
+
+for _form in SCAN_DECLARATION_FORMS:
+    check("datetime_unit_scan_declaration_form_" + _form)(_declaration_form_check(_form))
+
+
+# T71 (REVIEW-numrule-tb3-opus finding 2, DT13): a patternProperties regex is unanchored in JSON Schema; a suffix or an
+# infix pattern declares every field it matches anywhere, in the scan and in runtime admission (re.match found none)
+UNANCHORED_PATTERNS = {
+    "suffix": ("_at_utc$", ["observed_at_utc", "persisted_at_utc"]),
+    "infix": ("at_utc", ["observed_at_utc", "persisted_at_utc"]),
+    "lookbehind": ("(?<=observed)_at_utc", ["observed_at_utc"]),
+}
+
+
+def _unanchored_scan_check(name):
+    pattern, fields = UNANCHORED_PATTERNS[name]
+    def run(context):
+        root = context.scratch()
+        write(root, "Plans/a.json", {"$schema": D202012, "type": "object", "patternProperties": {pattern: {"type": "string"}}})
+        rows, errors = _scan(root)
+        return not errors and [(r["pointer"], sorted(r["fields"])) for r in rows] == [("", fields)]
+    run.__doc__ = "DT13: patternProperties %r declares %s in the scan." % (pattern, fields)
+    return run
+
+
+def _unanchored_admission_check(name):
+    pattern, _ = UNANCHORED_PATTERNS[name]
+    def run(context):
+        dt, _, _, _ = _mods()
+        schema = {"$schema": D202012, "type": "object", "patternProperties": {pattern: {"type": "string"}}}
+        return _admission_reason(lambda: dt.datetime_validator(schema).is_valid({})) == "datetime_schema_unclassified"
+    run.__doc__ = "DT13: an unclassified patternProperties %r refuses admission (datetime_schema_unclassified)." % pattern
+    return run
+
+
+for _name in UNANCHORED_PATTERNS:
+    check("datetime_unit_scan_unanchored_pattern_" + _name)(_unanchored_scan_check(_name))
+    check("datetime_admission_unanchored_pattern_" + _name)(_unanchored_admission_check(_name))
+
+
+@check("datetime_unit_scan_list_marker_needs_a_space")
+def _list_marker_space(context):
+    """T71 (regex family): a CommonMark list marker is followed by a space or a tab, so a line '-```' is paragraph text,
+    not a list item holding a fence; the supplementary fence scan must not open a span there and swallow the real fence
+    after it (_LIST_MARKER's [ \\t]+ widened to [ \\t]* refuses this clean file as an unreadable container)."""
+    root = context.scratch()
+    write(root, "Plans/a.md", "-```\nnot json\n\n```json\n" + json.dumps(DECLARING) + "\n```\n")
+    rows, errors = _scan(root)
+    return len(rows) == 1 and not errors
+
+@check("datetime_unit_scan_supplementary_closer_has_no_info_string")
+def _supplementary_closer(context):
+    """T71 (regex family): a closing fence has nothing after its backticks but spaces (CommonMark), so inside a
+    supplementary span a '```json' line is body, the span runs on to the real closer and, holding a field name it
+    cannot read, refuses the file. The closer test's fullmatch made match closes the span early and accepts it."""
+    root = context.scratch()
+    write(root, "Plans/a.md", '<div>\n```json\n{"a": 1}\n```json\n</div>\n\n```json\n' + json.dumps(DECLARING) + "\n```\n")
+    rows, errors = _scan(root)
+    return len(rows) == 1 and [e.get("error") for e in errors] == ["unreadable_mentioning_container"]
+
+# T71 (the regex and loop-member families of tool batch 4): _exclusion_schema_paths reads a file only when its bytes hold
+# one of its tokens, so each token needs a referrer that holds that token and no other; otherwise dropping it from the
+# fast path survives, because every earlier referrer also declared $schema.
+EXCLUSION_REFERRERS = {
+    "ref": json.dumps({"$ref": "a.json"}).encode(),
+    "dynamic_ref": json.dumps({"$dynamicRef": "a.json"}).encode(),
+    "recursive_ref": json.dumps({"$recursiveRef": "a.json"}).encode(),
+    "escaped_ref": b'{"\\u0024ref": "a.json"}',
+    "utf16_ref": json.dumps({"$ref": "a.json"}).encode("utf-16"),
+}
+
+
+def _ex_referrer_only(name):
+    def run(context):
+        body = json.dumps({"properties": {"observed_at_utc": {}}})
+        files = [("Plans/a.json", body), ("Plans/ref.json", EXCLUSION_REFERRERS[name])]
+        rows, errors = _exclusion_errors(context, [_exclusion("Plans/a.json", body)], files)
+        return not rows and bool(_errors(errors, "scan_exclusions_invalid", "loadable_schema_exclusion_forbidden: Plans/a.json"))
+    run.__doc__ = "A file referenced only by a referrer whose one token is " + name + " is loadable: it cannot be excluded."
+    return run
+
+
+for _name in EXCLUSION_REFERRERS:
+    check("datetime_unit_scan_exclusion_referenced_by_" + _name + "_only_file_forbidden")(_ex_referrer_only(_name))
 
 
 @check("datetime_unit_scan_exclusion_referenced_by_nested_id_forbidden")
