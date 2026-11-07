@@ -4,7 +4,7 @@
 // 0.3-1.8 s (Nas1) and one or more frames on Windows: the stage column and 'Take the guided tour' were cut at the
 // window's right edge. 60-ui-core.js set the layout only from the window's resize event, which a frame resized by its
 // page gets a frame after the new size is laid out and painted. In T3's sandbox (its own process) the page's own first
-// 740 frame was already narrow; the browser's clipped old picture shown before it is FO-92 (open).
+// 740 frame was already narrow; the browser's clipped old picture, shown until it presents a new frame, is FO-92 (open).
 // In each of the ten looks, on c-ready (Pip awake, the tour button in the footer), the frame is resized 1920x1080 ->
 // 740x768 and back, --set reps=2 times; every frame is read at its end (a ResizeObserver on a dot an animation frame
 // flips: after the frame's callbacks and layout, just before paint). Fails if, at 740x768:
@@ -103,13 +103,13 @@ async function run(t, mode) {
 			await t.check(`${tag}: wide at 1920x1080 before the resize`, before.length > 0 && before[before.length - 1].lay === 'wide', why);
 			await t.check(`${tag}: frames read at 740x768`, at.length > 1 && at[0].foot.length > 0 && !!at[0].stage, why); /* (a loaded film machine paints few: 2-17 frames in 1.5 s on the VM while it recorded) */
 			/* (the claim each surface can make: painted frames in the same process; the page's own frames out of process, where
-			   the browser's clipped old picture before them is FO-92 and not seen here) */
-			const F = mode === 'normal' ? { first: 'the first frame painted', every: 'every frame painted' } : { first: "the page's own first frame laid out (the clipped old picture shown before it is FO-92, not judged)", every: 'every frame the page lays out' };
+			   the browser's clipped old picture, shown until it presents a new frame, is FO-92 and not seen here) */
+			const F = mode === 'normal' ? { first: 'the first frame painted', every: 'every frame painted' } : { first: "the page's own first frame laid out (the clipped old picture the browser shows until it presents a new frame, which can be after this one, is FO-92, not judged)", every: 'every frame the page lays out' };
 			await t.check(`${tag}: ${F.first} at 740x768 is narrow`, !!at[0] && at[0].lay === 'narrow', why);
 			await t.check(`${tag}: ${F.every} at 740x768 is narrow`, wrong.length === 0, why);
 			await t.check(`${tag}: Pip's stage drawn for the narrow window (banner) in ${F.every} at 740x768`, stale.length === 0, why);
 			await t.check(`${tag}: the stage and the footer buttons inside the window in ${F.every} at 740x768`, cut.length === 0, why);
-			await t.check(`${tag}: ${F.first.replace(' (the clipped old picture shown before it is FO-92, not judged)', '')} back at 1920x1080 is wide`, !!back[0] && back[0].lay === 'wide', why);
+			await t.check(`${tag}: ${F.first.replace(' (the clipped old picture the browser shows until it presents a new frame, which can be after this one, is FO-92, not judged)', '')} back at 1920x1080 is wide`, !!back[0] && back[0].lay === 'wide', why);
 			if (mode === 'sandbox') t.log(`${tag}: own first 740 frame laid out ${ownFirst} ms after the resize (a lower bound on the clipped interval, FO-92)`);
 			t.log(`${tag}: ${why}`);
 		}
