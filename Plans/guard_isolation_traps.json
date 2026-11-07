@@ -17804,6 +17804,316 @@
         }
       ],
       "proved_rows": 1
+    },
+    {
+      "id": "TB5-T87-W06f-attrgetter-globals",
+      "kind": "code",
+      "expected": "T87 (TOOLBATCH4 pre-check finding 1, W06f): operator.attrgetter('__globals__')(textwrap.dedent)['re']._cache reaches re's compile cache past the every-hop and dunder rule; the control's only effect is re.compile, so x-bad alone is accepted only after the control ran, and the base credited guard x. attrgetter is a dynamic-code name and is not a certified value: refused before import, no factory and no case.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "dynamic_code_or_import",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import operator\nimport re\nimport textwrap\nimport pm_guard_isolation as g\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        cache = operator.attrgetter('__globals__')(textwrap.dedent)['re']._cache\n        if value['arm']:\n            re.compile('armed-tb4-review')\n        if (str, 'armed-tb4-review', 0) in cache:\n            table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0,
+            "arm": 1
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1,
+            "arm": 0
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x and the arm flag."
+        }
+      ]
+    },
+    {
+      "id": "TB5-T87-W06c-methodcaller-write",
+      "kind": "code",
+      "expected": "T87 (W06c): operator.methodcaller('setdefault', ...) writes into textwrap's namespace through attrgetter('__globals__'), with no stop error on the base: methodcaller and attrgetter are dynamic-code names, refused before import.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "dynamic_code_or_import",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import operator\nimport textwrap\nimport pm_guard_isolation as g\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        operator.methodcaller('setdefault', 'tb5_armed', 1)(operator.attrgetter('__globals__')(textwrap.dedent))\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ]
+    },
+    {
+      "id": "TB5-T87-PS0c-package-submodule",
+      "kind": "code",
+      "expected": "T87 (TOOLBATCH4 pre-check finding 2): import pkg.mod, the write in pkg/mod.py: the pre-import scan did not follow it, so the helper's module-level json.tb5_review_marker = 1 ran at import before the full scan's stop. Each dotted component and each relative import is now resolved: refused before import (external_binding_write), and json never gains the name.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_write",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import pkg.mod\nimport pm_guard_isolation as g\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "stdlib_absent": [
+        "json.tb5_review_marker"
+      ],
+      "imports": {
+        "pkg/__init__.py": "",
+        "pkg/mod.py": "import json\njson.tb5_review_marker = 1\n"
+      }
+    },
+    {
+      "id": "TB5-T87-PS0d-from-package-import-submodule",
+      "kind": "code",
+      "expected": "T87 (TOOLBATCH4 pre-check finding 2): from pkg import mod, the write in pkg/mod.py: the pre-import scan did not follow it, so the helper's module-level json.tb5_review_marker = 1 ran at import before the full scan's stop. Each dotted component and each relative import is now resolved: refused before import (external_binding_write), and json never gains the name.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_write",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "from pkg import mod\nimport pm_guard_isolation as g\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "stdlib_absent": [
+        "json.tb5_review_marker"
+      ],
+      "imports": {
+        "pkg/__init__.py": "",
+        "pkg/mod.py": "import json\njson.tb5_review_marker = 1\n"
+      }
+    },
+    {
+      "id": "TB5-T87-PS1c-relative-import-in-package-init",
+      "kind": "code",
+      "expected": "T87 (TOOLBATCH4 pre-check finding 2): from . import helper in pkg/__init__.py, the write in pkg/helper.py: the pre-import scan did not follow it, so the helper's module-level json.tb5_review_marker = 1 ran at import before the full scan's stop. Each dotted component and each relative import is now resolved: refused before import (external_binding_write), and json never gains the name.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_write",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import pkg\nimport pm_guard_isolation as g\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "stdlib_absent": [
+        "json.tb5_review_marker"
+      ],
+      "imports": {
+        "pkg/__init__.py": "from . import helper\n",
+        "pkg/helper.py": "import json\njson.tb5_review_marker = 1\n"
+      }
+    },
+    {
+      "id": "TB5-T87-PS2-relative-import-two-levels",
+      "kind": "code",
+      "expected": "T87 (TOOLBATCH4 pre-check finding 2): from .. import helper in pkg/sub/mod.py, the write in pkg/helper.py: the pre-import scan did not follow it, so the helper's module-level json.tb5_review_marker = 1 ran at import before the full scan's stop. Each dotted component and each relative import is now resolved: refused before import (external_binding_write), and json never gains the name.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "external_binding_write",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import pkg.sub.mod\nimport pm_guard_isolation as g\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "stdlib_absent": [
+        "json.tb5_review_marker"
+      ],
+      "imports": {
+        "pkg/__init__.py": "",
+        "pkg/sub/__init__.py": "",
+        "pkg/sub/mod.py": "from .. import helper\n",
+        "pkg/helper.py": "import json\njson.tb5_review_marker = 1\n"
+      }
+    },
+    {
+      "id": "TB5-T87-PS3-import-module-attribute-call",
+      "kind": "code",
+      "expected": "T87 (PS3): importlib.import_module('json').tb5_ps3_marker = 1 at module level, written as an attribute call, which the full scan stops on (dynamic_code_or_import) and the pre-import scan did not read, so it ran at import on the base: refused before import, and json never gains the name.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "dynamic_code_or_import",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import importlib\nimport pm_guard_isolation as g\nimportlib.import_module('json').tb5_ps3_marker = 1\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "stdlib_absent": [
+        "json.tb5_ps3_marker"
+      ]
+    },
+    {
+      "id": "TB5-T87-PS4-engine-private-name",
+      "kind": "code",
+      "expected": "T87 (PS4): g._tb5_review_marker = 1 at module level writes the engine's private state (table_private_state in the full scan), which the pre-import scan did not read, so it ran at import on the base: refused before import, and the engine never gains the name.",
+      "status": "FAIL",
+      "failure_kinds": [
+        "hidden_static_sites",
+        "static_error_stop"
+      ],
+      "static_error_kind": "table_private_state",
+      "max_evaluations": 0,
+      "max_factories": 0,
+      "source": "import pm_guard_isolation as g\ng._tb5_review_marker = 1\n\ndef bad_x(value, context):\n    return 'bad_x' if value['x'] < 0 else None\n\ndef factory():\n    table = g.GuardTable([g.Guard('x', g.Invariant('/x', 'nonnegative'), 'bad_x', bad_x)])\n    context = None\n    def check(value):\n        table.require('x', value, context)\n        return True\n    return g.Case(table, check, context)\n",
+      "controls": [
+        {
+          "id": "valid",
+          "value": {
+            "x": 0
+          }
+        }
+      ],
+      "negatives": [
+        {
+          "id": "x-bad",
+          "value": {
+            "x": -1
+          },
+          "target": "x",
+          "code": "bad_x",
+          "control": "valid",
+          "defect": "Change only /x."
+        }
+      ],
+      "stdlib_absent": [
+        "pm_guard_isolation._tb5_review_marker"
+      ]
     }
   ]
 }

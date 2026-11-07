@@ -131,9 +131,19 @@ def _certified_module_value(value, root):
             value.__defaults__ is None or all(_immutable_literal(v) for v in value.__defaults__)) and (
             not value.__kwdefaults__ or all(_immutable_literal(v) for v in value.__kwdefaults__.values())):
         return ('stdlib-function', value.__qualname__)
-    if type(value) is type and value.__flags__ & _IMMUTABLE_TYPE_FLAG:
+    if type(value) is type and value.__flags__ & _IMMUTABLE_TYPE_FLAG and value not in _BY_NAME_CALLABLES:
         return ('immutable-type', value.__qualname__)
+    if value in _BY_NAME_CALLABLES:
+        return None
     return _certified_external(value, root)
+
+
+# T87 (tool batch 5, TOOLBATCH4 pre-check finding 1): classes whose instances read attributes, or call methods, by a name
+# given at run time. operator.attrgetter('__globals__')(textwrap.dedent) reached textwrap's namespace past the
+# every-hop and dunder rule and earned false credit; they are refused as certified values and are dynamic-code names
+# (like getattr) in both scans.
+import operator as _operator
+_BY_NAME_CALLABLES = (_operator.attrgetter, _operator.methodcaller)
 
 
 _IMMUTABLE_TYPE_FLAG = 1 << 8      # Py_TPFLAGS_IMMUTABLETYPE (CPython 3.10 and later)
@@ -194,7 +204,11 @@ class StaticStopBeforeImport(IsolationError):
 # (the names static_scan's dynamic-code rule reads, less compile, which it exempts for the standard library's own)
 _PRESCAN_SENSITIVE = frozenset({'eval', 'exec', '__import__', 'getattr', 'globals', 'locals', 'vars', 'import_module',
                                 'spec_from_file_location', 'settrace', 'setprofile', 'run_module', 'run_path', 'gettrace',
-                                'getprofile', '__builtins__'})
+                                'getprofile', '__builtins__', 'attrgetter', 'methodcaller'})
+# T87: the same names read at the end of an attribute chain (importlib.import_module(...), operator.attrgetter(...)): those
+# that are a function or class of a module, not an ordinary attribute name an object may have
+_PRESCAN_SENSITIVE_ATTRS = frozenset({'import_module', 'spec_from_file_location', 'settrace', 'setprofile', 'run_module', 'run_path',
+                                      'gettrace', 'getprofile', '__import__', '__builtins__', 'attrgetter', 'methodcaller'})
 
 
 def prescan_sources(start, *, search=None, reset_seams=()):
@@ -226,6 +240,26 @@ def prescan_sources(start, *, search=None, reset_seams=()):
         if location in trusted or not location.is_relative_to(home) or _stdlib_path(str(location)) or any(location.is_relative_to(d) for d in _SITE_DIRS):
             return None
         return location
+    def resolve(dotted, where):
+        """T87: every module a dotted import names, each component found in its parent package's own search locations
+        (PathFinder looks a dotted name's last component up in the paths it is given, so 'pkg.mod' searched in the top
+        level found nothing and pkg/mod.py was never scanned)"""
+        found, locations = [], list(where)
+        parts = [p for p in dotted.split('.') if p]
+        for i in range(len(parts)):
+            try:
+                spec = importlib.machinery.PathFinder.find_spec('.'.join(parts[:i + 1]), locations)
+            except (ImportError, ValueError):
+                spec = None
+            if spec is None:
+                break
+            here = local(spec)
+            if here:
+                found.append(here)
+            locations = list(spec.submodule_search_locations or [])
+            if not locations:
+                break
+        return found
     while pending:
         path = pending.pop()
         if path in seen:
@@ -245,29 +279,25 @@ def prescan_sources(start, *, search=None, reset_seams=()):
                     bound = alias.asname or top
                     if (alias.asname and alias.name in STDLIB_IMMUTABLE_MODULES) or (not alias.asname and top in STDLIB_IMMUTABLE_MODULES):
                         certified[bound] = alias.name if alias.asname else top
-                    for name in [alias.name] + ['.'.join(alias.name.split('.')[:i]) for i in range(1, alias.name.count('.') + 1)]:
-                        try:
-                            spec = importlib.machinery.PathFinder.find_spec(name, search)
-                        except (ImportError, ValueError):
-                            spec = None
-                        found = local(spec)
-                        if found:
-                            pending.append(found)
+                    pending.extend(resolve(alias.name, search))
             elif isinstance(node, ast.ImportFrom):
                 if any(alias.name == '*' for alias in node.names):
                     errors.append({'kind': 'star_import', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(node)})
                 base = node.module or ''
-                where = [str(path.parent)] if node.level else search
-                for name in [base] + [base + '.' + alias.name for alias in node.names if base]:
-                    if not name:
-                        continue
-                    try:
-                        spec = importlib.machinery.PathFinder.find_spec(name, where)
-                    except (ImportError, ValueError):
-                        spec = None
-                    found = local(spec)
-                    if found:
-                        pending.append(found)
+                if node.level:
+                    # T87: a relative import is resolved against the file's own package, level - 1 folders up
+                    # ('from . import helper' named nothing before, and '..' searched the file's own folder)
+                    package = path.parent
+                    for _ in range(node.level - 1):
+                        package = package.parent
+                    where = [str(package)]
+                else:
+                    where = search
+                if base:
+                    pending.extend(resolve(base, where))
+                for alias in node.names:
+                    if alias.name != '*':
+                        pending.extend(resolve((base + '.' if base else '') + alias.name, where))
                 if not node.level and base in STDLIB_IMMUTABLE_MODULES:
                     for alias in node.names:
                         try:
@@ -287,6 +317,19 @@ def prescan_sources(start, *, search=None, reset_seams=()):
         for node in ast.walk(tree):
             if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and node.id in _PRESCAN_SENSITIVE:
                 errors.append({'kind': 'dynamic_code_or_import', 'path': str(path), 'line': node.lineno, 'source': node.id})
+            # T87: a dynamic-code name read at the end of an attribute chain (importlib.import_module(...), written as an
+            # attribute call, which static_scan stops on), and the table's private state (g._*, table._*), which the
+            # text alone shows
+            if isinstance(node, ast.Attribute) and isinstance(node.ctx, ast.Load) and node.attr in _PRESCAN_SENSITIVE_ATTRS:
+                errors.append({'kind': 'dynamic_code_or_import', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(node)})
+            if isinstance(node, ast.Attribute) and (
+                    isinstance(node.value, ast.Name) and node.value.id == 'table' and node.attr not in _TABLE_PUBLIC or
+                    node.attr in _TABLE_PRIVATE_DISTINCT or
+                    node.attr in _TABLE_PRIVATE and not (isinstance(node.value, ast.Name) and node.value.id == 'self') or
+                    isinstance(node.value, ast.Name) and node.value.id == 'g' and node.attr.startswith('_')):
+                errors.append({'kind': 'table_private_state', 'path': str(path), 'line': node.lineno, 'source': ast.unparse(node)})
+            if isinstance(node, ast.Constant) and type(node.value) is str and node.value in _TABLE_PRIVATE_DISTINCT:
+                errors.append({'kind': 'table_private_state', 'path': str(path), 'line': node.lineno, 'source': repr(node.value)})
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in ('setattr', 'delattr') and node.args:
                 first = node.args[0]
                 while isinstance(first, (ast.Attribute, ast.Subscript)):
@@ -2117,7 +2160,7 @@ def static_scan(suite, table):
             # C8-G2: harness detection names join the dynamic set: gettrace and getprofile tell the tool's own run
             # (a trace hook is always set) from production (none is), so a gate on them is non-causal by construction.
             sensitive = {'eval', 'exec', 'compile', '__import__', 'getattr', 'globals', 'locals', 'vars', 'import_module', 'spec_from_file_location', 'settrace', 'setprofile', 'run_module', 'run_path',
-                         'gettrace', 'getprofile'}
+                         'gettrace', 'getprofile', 'attrgetter', 'methodcaller'}   # (T87: attrgetter and methodcaller read by name, as getattr does)
             # Any read of a sensitive name, or of __builtins__, can carry the function to a call the scan cannot see.
             if (isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and (node.id in sensitive or node.id == '__builtins__') and
                     not (isinstance(parents.get(node), ast.Call) and parents[node].func is node)):

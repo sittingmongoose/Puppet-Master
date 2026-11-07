@@ -2,7 +2,7 @@
   "version": 2,
   "method": "B: guard tables",
   "status": "PASS",
-  "caught": 335,
+  "caught": 343,
   "skipped": 0,
   "traps": [
     {
@@ -1678,6 +1678,46 @@
     {
       "id": "TB4-T61-chain-control",
       "expected": "T61 controls: chains past a certified module's first hop that reach only immutable things still certify: a method of a str (string.ascii_letters.upper, a descriptor of an immutable class), a class method of an immutable class (itertools.chain.from_iterable) and a method of a float (math.pi.is_integer).",
+      "caught": true
+    },
+    {
+      "id": "TB5-T87-W06f-attrgetter-globals",
+      "expected": "T87 (TOOLBATCH4 pre-check finding 1, W06f): operator.attrgetter('__globals__')(textwrap.dedent)['re']._cache reaches re's compile cache past the every-hop and dunder rule; the control's only effect is re.compile, so x-bad alone is accepted only after the control ran, and the base credited guard x. attrgetter is a dynamic-code name and is not a certified value: refused before import, no factory and no case.",
+      "caught": true
+    },
+    {
+      "id": "TB5-T87-W06c-methodcaller-write",
+      "expected": "T87 (W06c): operator.methodcaller('setdefault', ...) writes into textwrap's namespace through attrgetter('__globals__'), with no stop error on the base: methodcaller and attrgetter are dynamic-code names, refused before import.",
+      "caught": true
+    },
+    {
+      "id": "TB5-T87-PS0c-package-submodule",
+      "expected": "T87 (TOOLBATCH4 pre-check finding 2): import pkg.mod, the write in pkg/mod.py: the pre-import scan did not follow it, so the helper's module-level json.tb5_review_marker = 1 ran at import before the full scan's stop. Each dotted component and each relative import is now resolved: refused before import (external_binding_write), and json never gains the name.",
+      "caught": true
+    },
+    {
+      "id": "TB5-T87-PS0d-from-package-import-submodule",
+      "expected": "T87 (TOOLBATCH4 pre-check finding 2): from pkg import mod, the write in pkg/mod.py: the pre-import scan did not follow it, so the helper's module-level json.tb5_review_marker = 1 ran at import before the full scan's stop. Each dotted component and each relative import is now resolved: refused before import (external_binding_write), and json never gains the name.",
+      "caught": true
+    },
+    {
+      "id": "TB5-T87-PS1c-relative-import-in-package-init",
+      "expected": "T87 (TOOLBATCH4 pre-check finding 2): from . import helper in pkg/__init__.py, the write in pkg/helper.py: the pre-import scan did not follow it, so the helper's module-level json.tb5_review_marker = 1 ran at import before the full scan's stop. Each dotted component and each relative import is now resolved: refused before import (external_binding_write), and json never gains the name.",
+      "caught": true
+    },
+    {
+      "id": "TB5-T87-PS2-relative-import-two-levels",
+      "expected": "T87 (TOOLBATCH4 pre-check finding 2): from .. import helper in pkg/sub/mod.py, the write in pkg/helper.py: the pre-import scan did not follow it, so the helper's module-level json.tb5_review_marker = 1 ran at import before the full scan's stop. Each dotted component and each relative import is now resolved: refused before import (external_binding_write), and json never gains the name.",
+      "caught": true
+    },
+    {
+      "id": "TB5-T87-PS3-import-module-attribute-call",
+      "expected": "T87 (PS3): importlib.import_module('json').tb5_ps3_marker = 1 at module level, written as an attribute call, which the full scan stops on (dynamic_code_or_import) and the pre-import scan did not read, so it ran at import on the base: refused before import, and json never gains the name.",
+      "caught": true
+    },
+    {
+      "id": "TB5-T87-PS4-engine-private-name",
+      "expected": "T87 (PS4): g._tb5_review_marker = 1 at module level writes the engine's private state (table_private_state in the full scan), which the pre-import scan did not read, so it ran at import on the base: refused before import, and the engine never gains the name.",
       "caught": true
     }
   ]
