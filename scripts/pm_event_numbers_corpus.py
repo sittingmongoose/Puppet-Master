@@ -998,7 +998,8 @@ GENERATED_FAMILIES = {
     # T41 (tool batch 3): the data the guards read, as for the date-time gate. REVIEW-datetime-fix16-opus finding 3
     # named the gap for both scopes; the number scope had it too (no family reached a constant table or a literal set).
     "data_table_entry": "Every entry of a module-level constant table (a tuple, list, set or dict display, or a "
-                        "frozenset, set, tuple or list of one: the producer fields). The mutant drops that one entry.",
+                        "frozenset, set, tuple or list of one: the producer fields), and of an encoder's width table "
+                        "(a literal tuple of tuples a for loop walks inside a function, T72). The mutant drops that one entry.",
     "data_loop_member": "Every element of a literal tuple, list or set that a for loop or a comprehension iterates, "
                         "or that an in or not in test reads, when the loop or the test is in a refusal guard's data "
                         "path (a refusal site in the loop, or a call of a refusing helper). The mutant drops it.",
@@ -1224,6 +1225,28 @@ def mutation_points(source):
     return points
 
 
+def width_table_points(source, prefix):
+    """T72 (REVIEW-numrule-tb3-opus finding 6): the data_table_entry points of another module's encoder width tables
+    (a literal tuple of tuples that a for loop walks inside a function: pm_event_index_binding.binding_bytes' uint
+    widths), keyed with that module's prefix, so _point_code applies them to that module's source."""
+    tree = ast.parse(source)
+    nodes = list(ast.walk(tree))
+    index = {id(node): i for i, node in enumerate(nodes)}
+    parents = _parent_map(tree)
+    points, seen = [], {}
+    for node in nodes:
+        if (isinstance(node, (ast.For, ast.AsyncFor)) and isinstance(node.iter, (ast.Tuple, ast.List)) and len(node.iter.elts) > 1
+                and all(isinstance(e, ast.Tuple) for e in node.iter.elts)):
+            function = _qualname(node.iter, parents)
+            for position, text in _entries(node.iter):
+                base = "%s:data:table_entry:%s:drop_entry width table %s" % (prefix, function, text)
+                seen[base] = seen.get(base, 0) + 1
+                points.append({"key": "%s#%d" % (base, seen[base]), "family": "data_table_entry", "line": node.iter.lineno,
+                               "node": index[id(node.iter)], "function": function, "action": "drop_entry", "detail": position,
+                               "text": ("width table " + text)[:160]})
+    return points
+
+
 def _table_display(value):
     if isinstance(value, (ast.Tuple, ast.List, ast.Set, ast.Dict)):
         return value
@@ -1269,6 +1292,14 @@ def _data_points(tree, parents, sites, refusing):
                     elif isinstance(x, ast.Constant):
                         out.append(("data_value_arithmetic", x, "plus_one", None, statement.targets[0].id + ": " + ast.unparse(x)
                                     + " in " + ast.unparse(parents.get(x, x)), "<module>"))
+    # T72 (REVIEW-numrule-tb3-opus finding 6): an encoder's width table, a literal tuple of tuples that a for loop
+    # walks inside a function (pm_event_numbers' negative-integer widths, pm_event_index_binding's uint widths), is a
+    # constant table too, though no refusal sits in its loop; a loop that does hold one gives data_loop_member points
+    for node in ast.walk(tree):
+        if (isinstance(node, (ast.For, ast.AsyncFor)) and isinstance(node.iter, (ast.Tuple, ast.List)) and len(node.iter.elts) > 1
+                and all(isinstance(e, ast.Tuple) for e in node.iter.elts) and not holds(node)):
+            for position, text in _entries(node.iter):
+                out.append(("data_table_entry", node.iter, "drop_entry", position, "width table " + text, _qualname(node.iter, parents)))
     guard_names = {}
     for site in sites:
         function = function_of(site)
@@ -1906,6 +1937,11 @@ def run_mutations(corpus_path, mutation_path, *, time_limit=120):
 
     numbers_text, numbers_file = sources["pm_event_numbers"]
     points = mutation_points(numbers_text)
+    # T72: the binding encoder's width table, as data_table_entry points of pm_event_index_binding
+    binding_text, binding_file = sources["pm_event_index_binding"]
+    for point in width_table_points(binding_text, "pm_event_index_binding"):
+        point["module"] = "pm_event_index_binding"
+        points.append(point)
     committed = spec.get("generated", {}).get("points", {})
     enumerated = {p["key"] for p in points}
     for key in sorted(enumerated - set(committed)):
@@ -1920,8 +1956,9 @@ def run_mutations(corpus_path, mutation_path, *, time_limit=120):
             row["reason"] = point["reason"]
         if point["key"] in committed and bool(entry.get("witness")) == bool(entry.get("survives")):
             problems.append(point["key"] + ": committed entry needs exactly one of witness or survives")
-        run = _run_mutant("pm_event_numbers", lambda: _point_code(numbers_text, numbers_file, point),
-                          sources, corpus_path, time_limit)
+        module = point.get("module", "pm_event_numbers")
+        text_, file_ = (binding_text, binding_file) if module == "pm_event_index_binding" else (numbers_text, numbers_file)
+        run = _run_mutant(module, lambda: _point_code(text_, file_, point), sources, corpus_path, time_limit)
         _judge(row, run, entry.get("survives"), entry.get("witness"), problems, point["key"])
         generated.append(row)
 

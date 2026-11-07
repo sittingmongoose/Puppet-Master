@@ -25040,6 +25040,33 @@
       "target_predicate": "physical.map_key_order"
     },
     {
+      "id": "physical-binding-map-length-order",
+      "op": "physical",
+      "value": {
+        "b": 2,
+        "aa": 1
+      },
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05"
+      ],
+      "output": "82a2616101a16202",
+      "target_predicate": "physical.map_key_order"
+    },
+    {
+      "id": "decode-binding-map-length-first",
+      "op": "decode",
+      "hex": "82a16202a2616101",
+      "profile": "pm.event_index.binding.msgpack_sha256.v1",
+      "conflicts": [
+        "C05"
+      ],
+      "error": "physical_noncanonical",
+      "target_predicate": "physical.map_key_order",
+      "enforcement": "authored",
+      "single_defect": "physical.map_key_order"
+    },
+    {
       "id": "payload-id-uppercase",
       "op": "payload",
       "length": 6,

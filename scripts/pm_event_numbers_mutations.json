@@ -2426,6 +2426,18 @@
       "replace": "    if bytes.fromhex(payload_id)[1:] != blake3.blake3(raw).digest()[1:]:",
       "witness": "payload-id-first-byte",
       "rule": "payload.blake3-id"
+    },
+    {
+      "id": "review-tb3-NM10",
+      "api": "storage_value_bytes",
+      "class": "ordering",
+      "module": "pm_event_index_binding",
+      "source": "review-toolbatch3",
+      "note": "Binding map keys sorted length-first, then by bytes (canonical CBOR's order), not by their strict UTF-8 bytes (REVIEW-numrule-tb3-opus blind NM10).",
+      "find": "        keys.sort()\n",
+      "replace": "        keys.sort(key=lambda pair: (len(pair[0]), pair[0]))\n",
+      "witness": "physical-binding-map-length-order",
+      "rule": "physical.map-key-order"
     }
   ],
   "rules_source": "Predicate-level rows. Each rule names hand-written mutation ids (each of which names it back through its rule field) and generated point keys; every one must be caught with its witness failing. A control rule's mutations must survive instead. Statement rows (statements) name these rules.",
@@ -2866,7 +2878,8 @@
       "mutations": [
         "physical-insertion-order-maps",
         "physical-utf16-key-order",
-        "binding-utf16-key-order"
+        "binding-utf16-key-order",
+        "review-tb3-NM10"
       ]
     },
     {
@@ -4165,6 +4178,30 @@
       },
       "data:walk_domain:OriginalBinding.__post_init__:walk_first fields(self)#1": {
         "witness": "binding-empty-event-type"
+      },
+      "data:table_entry:storage_value_bytes:drop_entry width table (-128, 208, 1)#1": {
+        "witness": "physical-int--128"
+      },
+      "data:table_entry:storage_value_bytes:drop_entry width table (-32768, 209, 2)#1": {
+        "witness": "physical-int--129"
+      },
+      "data:table_entry:storage_value_bytes:drop_entry width table (-(1 << 31), 210, 4)#1": {
+        "witness": "physical-int--2147483648"
+      },
+      "data:table_entry:storage_value_bytes:drop_entry width table (-(1 << 63), 211, 8)#1": {
+        "witness": "physical-int--2147483649"
+      },
+      "pm_event_index_binding:data:table_entry:binding_bytes:drop_entry width table (255, b'\\xcc', 1)#1": {
+        "witness": "physical-int-128"
+      },
+      "pm_event_index_binding:data:table_entry:binding_bytes:drop_entry width table (65535, b'\\xcd', 2)#1": {
+        "witness": "physical-int-256"
+      },
+      "pm_event_index_binding:data:table_entry:binding_bytes:drop_entry width table (4294967295, b'\\xce', 4)#1": {
+        "witness": "physical-int-4294967295"
+      },
+      "pm_event_index_binding:data:table_entry:binding_bytes:drop_entry width table (18446744073709551615, b'\\xcf', 8)#1": {
+        "witness": "binding-18446744073709551615"
       }
     }
   },
