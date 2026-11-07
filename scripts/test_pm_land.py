@@ -4083,17 +4083,17 @@ class DocumentedLimitsTests(Base):
         self.assertIn("**Stopping bar for this tool**", section)
         self.assertIn("TOOL-ISSUES", section)
 
-    def test_checks_local_says_its_equivalence_is_not_measured(self):
+    def test_checks_local_says_it_departs_from_todays_rule(self):
         self.h.branch("fix/a", {"src/x.txt": "new\n"})
-        self.assertIn("not yet measured", self.h.tool("plan", "fix/a", "--name", "x", "--checks-local").stdout)
-        self.assertNotIn("not yet measured", self.h.tool("plan", "fix/a", "--name", "x").stdout)
+        self.assertIn("departs from today's rule", self.h.tool("plan", "fix/a", "--name", "x", "--checks-local").stdout)
+        self.assertNotIn("departs from today's rule", self.h.tool("plan", "fix/a", "--name", "x").stdout)
         result = self.land("fix/a", "--checks-local")
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertIn("not yet measured", result.stdout)
+        self.assertIn("departs from today's rule", result.stdout)
 
     def test_a_landing_in_the_shared_checkout_says_nothing_of_it(self):
         self.h.branch("fix/a", {"src/x.txt": "new\n"})
-        self.assertNotIn("not yet measured", self.land("fix/a").stdout)
+        self.assertNotIn("departs from today's rule", self.land("fix/a").stdout)
 
 
 class StatusTests(Base):

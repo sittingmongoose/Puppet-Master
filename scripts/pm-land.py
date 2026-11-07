@@ -110,8 +110,8 @@ AUDIT_INPUTS = (
 CHECK_ARG_SWITCHES = ("--cache", "--no-cache")
 CHECK_ARG_VALUES = {"--cache-dir": False, "--cache-max-mb": True, "--subcheck-timeout-seconds": True}  # True: a number
 # Not yet measured: reports/landing-checks/README.md, "Checks in a local copy".
-CHECKS_LOCAL_NOTE = ("--checks-local: this copy's equivalence to the shared-checkout run is not yet measured, so nothing "
-                     "proves it gives the same verdict. It departs from today's rule and stays behind this flag.")
+CHECKS_LOCAL_NOTE = ("--checks-local: measured equal to the shared-checkout run at one main commit (74748ebd92, 2026-11-07), "
+                     "with no branch changes. It departs from today's rule and stays behind this flag until the rule allows it.")
 # A landing that needs a reseal is never part of a batch ("Land in batches").
 RESEAL_PATHS = ("Plans/Spec_Lock.json", "Plans/auto_decisions.jsonl")
 RESEAL_PREFIXES = ("Plans/.evidence/",)

@@ -898,7 +898,7 @@ origin that no stopped landing owns stops the landing. For hand landers, with no
 
 ### Checks in a local copy: `run --checks-local`
 
-Not today's rule, so behind this flag, which prints that its equivalence is not yet measured. The shard check and the landing check run in a full worktree on local
+Not today's rule, so behind this flag, which says so when it runs. The shard check and the landing check run in a full worktree on local
 disk (`~/pm-worktrees/land-<id>`) at the exact commit, with the ignored inputs compared by SHA-256 to the
 shared checkout's. The shared checkout only fast-forwards and pushes, after they pass: the dirty check and
 the inputs are read again, and the push requires its HEAD and tree to be the checked commit's. `main` is never
@@ -906,14 +906,16 @@ ahead of origin while checks run, and another thread's uncommitted files cannot 
 shard check reads a clean tree. The follow-up runs its checks in its own worktree the same way. It needs 50 GB
 free (`PM_LAND_MIN_FREE_GB`) and 6.4 GB for the copy.
 
-**The measurement is still to run, so nothing yet proves the local copy equivalent.** `--checks-local` stays
-behind its flag until it has been. Measured at `main` `74748ebd92` on 2026-11-06, at load 25 to 27: creating the
-full worktree 68 s (6.4 GB), copying the ignored inputs 14 s, hashing them on both sides 31 s (3,530 files, none
-differ), one shard check in the local copy 21 s. Not measured, because load stayed at 22 to 42 all afternoon
-against a bar of 12: the landing check on either side, the shard check in the shared checkout, and the comparison.
+**Measured equal, 2026-11-07, at `main` `74748ebd92`** (`/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/TOOLS/report-ids-proof/measurements-2026-11-07/`).
+On the VM under load, nice 19, idle IO: the landing check took 1374.5 s in the local copy (load 7.6 to 6.9) and 2080.3 s in the
+shared checkout (load 20.3 to 24.2), the shard check 13.1 s and 29.8 s, both exit 0. The loads differ, so that is not a like-for-like
+comparison of the disks. Making the copy took 36.3 s (6.4 GB), copying the ignored inputs 13.6 s and hashing them on both sides
+11.9 s. Same commit and tree, the same 3,530 ignored inputs by SHA-256, and 0 differences in the `--json` report, the three kept
+check reports, the three kept exports and the shard check's output. One commit with an empty branch diff, not a landing with
+changes; the shared checkout had no uncommitted files during the runs. A second pair was cut off when a landing took the lock.
 
-To run it, at one `main` commit, at most two runs per side, and only while load is under 12, nobody holds the
-lock, the VM has no recordings and no stream F timing window is open (ask `pm-fo-lead` first):
+To run it again, at one `main` commit, at most two runs per side, while nobody holds the lock, the VM has no recordings and
+10 GB available, and no stream F timing window is open (ask `pm-fo-lead` first):
 
     C=$(git -C /mnt/Cursor/PuppetMaster rev-parse HEAD)      # must equal origin/main
     W=~/tools-work/item20-timing/full; R=~/tools-work/item20-timing/out; mkdir -p "$R"
