@@ -590,11 +590,13 @@ that only the new lines show cannot be seen.
 From what moved since the previous member's report, unless exempt:
 1. A bucket the previous report listed as gone is not gone in this one.
 2. A subcheck's total is above the previous report's.
-3. A bucket's count is above the previous report's.
+3. A bucket's count is above the previous report's, printed or counted from both row reports (a subcheck the baseline holds as
+   a sample prints no count line).
 
 The exemption: a rising subcheck does not close the batch only if every row it added since the previous report, compared by
 row key, is (a) seen: the subcheck is complete in both reports, its rows adding up to its total, because it printed them all
-or is keyed from a complete export whose total matches; (b) governance staleness by the landing check's own test; and (c) this
+or is keyed from a complete export whose total matches; (b) governance staleness of a kind the landing check also excuses when
+its bucket grows (a row stale by its detail text alone is not enough, since alone a rise in its bucket stops the landing); and (c) this
 member's: it names a path in this member's own range (the previous member's `main` SHA to its own, regenerated and deleted
 paths included) and no other path of the batch.
 
@@ -609,13 +611,17 @@ When the batch cannot tell:
 8. A report's gone ids, totals or counts don't add up.
 9. A rise with no row report.
 
+From the diff, with no exemption:
+10. A path in this member's own range is not in the batch's diff: it put back what an earlier member changed, so the check,
+    measuring from `batch-start`, does not read it as touched.
+
 Unchanged: exit 2 or the two hours running out during its checks closes the batch; a baseline past seven days stops the
 member; changed pre-existing rows or timeouts with no other trigger stop it for judgement.
 
 Measured (2026-11-06, the real landing check on two real one-sentence Plans edits, each check about 25 minutes): the second
 member stayed in the batch; seven subchecks rose by 125 rows, all its own staleness. A real Plans landing still closes the
 batch when it is the first Plans member after non-Plans members (whole-snapshot rows that name no file), when a shard's
-line-range name changes (its `missing_ref` row is not staleness until stream E's rename rule lands), when another row that is
+line-range name changes (its `missing_ref` row is not staleness until stream E's rename rule lands and tells the row report so), when another row that is
 not staleness appears, when `audit_closure` (printed 100 of 201, no export) rises, or when an export fails or times out.
 Proof and the real reports: `/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/TOOLS/report-ids-proof/`.
 
@@ -649,15 +655,10 @@ and landing 2 adds a different one to the same bucket on its own file; against t
 has not risen, so landing 2's failure reads as pre-existing, where alone it would block. (B) The readiness growth
 counter: its rise reads as staleness when a printed stale row names a batch file, which can be landing 1's while
 landing 2 caused the rise past the print cap. (C) Baseline age is measured from `batch-start`, up to two hours older
-than `origin/main`. The rule closes all three rather than accepting them: a landing whose report shows changed
-pre-existing rows in a bucket an earlier member also changed, or a readiness growth counter judged as staleness
-above the highest total any earlier member's report showed, is treated like a stopped landing (the batch closes and that landing is rechecked alone), and so is one whose
-`Gone since the baseline` count falls below an earlier member's (a bucket an earlier member emptied has come back,
-which no printed row shows); no batch opens within two hours of the seven-day limit. What stays unseen until the report names
-emptied buckets and prints every subcheck's total (planned, additive): a bucket lowered with no printed row and
-then brought back with the baseline's own row naming no batch file; one bucket emptied as another comes back; a total
-that falls and rises below the baseline's figure. In those shapes a landing can pass inside a batch that would stop
-alone, and nothing in the report shows it; `pm-land.py`'s README pins each one with a test. `scripts/pm-land.py` enforces the same.
+than `origin/main`. The rule closes all three rather than accepting them: a landing whose report shows any of the batch triggers above is
+treated like a stopped landing (the batch closes and that landing is rechecked alone), and no batch opens within two
+hours of the seven-day limit. `scripts/pm-land.py` enforces the same. What a batch still cannot see is named under
+"What a batch still cannot see" in that script's section below, and pinned by a test.
 
 Why: from 2026-11-03 to 2026-11-06 `main` took about 18 follow-ups, about one per Plans landing. The two
 timed from the stream logs held the lock about 26 and 27 minutes each (snapshot about 5 minutes, then
