@@ -21,8 +21,8 @@
 //    shows the frame's previous picture clipped to the new size (the 1920 window cut at the frame's edge: 21-45 frames on
 //    Windows, FO-92, open), and nothing inside the page can see that. Its claims are about the frames the page itself lays
 //    out: its own first frame at 740 is narrow, and so is every later one. The time from the resize to that first frame is
-//    logged ('own first 740 frame laid out N ms after the resize'), not judged. It is a lower bound on how long the clipped
-//    picture shows: on film the new picture can appear 1-14 frames after the page's own first frame (opus-recheck-g6fix). Native proof of the sandbox's first painted frame
+//    logged ('own first 740 frame laid out N ms after the resize'), not judged. It is a lower bound on the time from the resize
+//    until the new picture shows: on film the new picture can appear 1-14 frames after the page's own first frame (opus-recheck-g6fix). Native proof of the sandbox's first painted frame
 //    needs a film and its frames (tools/stale88b.py in the retro-c6 evidence), and fails on FO-92 until it is fixed.
 // Both surfaces (--set sandbox picks one); --set looks=, --set reps=. Headless or --record (the frames are resized, not
 // the window, so a film shows each resize; each is marked).
@@ -95,8 +95,9 @@ async function run(t, mode) {
 			   frame late showed the tall stage's scene in the banner, FO88-N1) */
 			const stale = at.filter((x) => x.drawn !== 'banner');
 			const cut = at.map((x) => ({ x, s: past(x, x.stage), b: Math.max(0, ...x.foot.map((q) => past(x, q.r))), who: x.foot.filter((q) => past(x, q.r) > 1).map((q) => q.name) })).filter((c) => c.s > 1 || c.b > 1);
-			/* (how long after the resize, wall clock, the page laid out its own first frame at 740: before it, the sandbox's
-			   out-of-process frame shows its old picture clipped, FO-92; logged, not judged) */
+			/* (how long after the resize, wall clock, the page laid out its own first frame at 740: until the browser presents
+			   a new frame, which can be after that one, the sandbox's out-of-process frame shows its old picture clipped, FO-92;
+			   so this is a lower bound on the time until the new picture shows; logged, not judged) */
 			const ownFirst = at[0] ? Math.round(at[0].at - sizedAt) : null;
 			const why = JSON.stringify({ frames: fr.length, at740: at.length, ownFirstMs: ownFirst, first740: at[0] && { lay: at[0].lay, win: at[0].win && at[0].win.map(Math.round), stage: at[0].stage && at[0].stage.map(Math.round) }, wrongLayout: wrong.length, staleStage: stale.length, firstDrawn: at[0] && at[0].drawn, cut: cut.length, worstCut: cut[0] && { stage: Math.round(cut[0].s), button: Math.round(cut[0].b), who: cut[0].who, lay: cut[0].x.lay }, backFirst: back[0] && back[0].lay, footButtons: at[0] ? at[0].foot.map((q) => q.name) : [] });
 			// (preconditions: wide before, frames read at 740, the footer's buttons there)
@@ -110,7 +111,7 @@ async function run(t, mode) {
 			await t.check(`${tag}: Pip's stage drawn for the narrow window (banner) in ${F.every} at 740x768`, stale.length === 0, why);
 			await t.check(`${tag}: the stage and the footer buttons inside the window in ${F.every} at 740x768`, cut.length === 0, why);
 			await t.check(`${tag}: ${F.first.replace(' (the clipped old picture the browser shows until it presents a new frame, which can be after this one, is FO-92, not judged)', '')} back at 1920x1080 is wide`, !!back[0] && back[0].lay === 'wide', why);
-			if (mode === 'sandbox') t.log(`${tag}: own first 740 frame laid out ${ownFirst} ms after the resize (a lower bound on the clipped interval, FO-92)`);
+			if (mode === 'sandbox') t.log(`${tag}: own first 740 frame laid out ${ownFirst} ms after the resize (a lower bound on the time until the new picture shows, FO-92)`);
 			t.log(`${tag}: ${why}`);
 		}
 	}
