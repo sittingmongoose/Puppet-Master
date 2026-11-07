@@ -690,9 +690,11 @@
     var p = panelOf(document.activeElement);
     if (p) markPanel(p);
   }, true);
-  /* a press on the panel's own scrollbar: the press lands on the panel itself, right of its content box */
+  /* a press on the panel's own scrollbar: the press lands on the panel itself, right of its content box. Any other
+     press ends a drag whose pointerup never came (a scrollbar drag can swallow it) */
   document.addEventListener('pointerdown', function (e) {
     var p = e.target;
+    held.drag = false;
     if (e.button !== 0 || !p || !p.classList || !p.classList.contains('orbit-panel-in')) return;
     var r = p.getBoundingClientRect();
     if (e.clientX > r.left + p.clientLeft + p.clientWidth) { held.drag = true; markPanel(p); }

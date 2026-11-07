@@ -11,11 +11,13 @@
 //             live: the panel shows the live subject and the next handover changes it again.
 //   keys      a real Tab from the core moves the focus onto the panel's X and pins it; ArrowDown scrolls the panel; two
 //             handovers keep the node, the focus on the X and the scroll.
+//   scrollbar a real press on the panel's scrollbar track pages it down and pins it; a handover keeps it (skipped where
+//             scrollbars overlay the content and leave no gutter).
 //   no input  scrollTop set by script, then a clamp (the panel scrolled to its end by script and its last rows taken
 //             out, so the browser clamps scrollTop and fires scroll, as a patch that shortens it would) pin nothing,
 //             and the next handover changes the subject.
 // Fails group 7 c4ba49b137: the first handover replaces the panel (node, scroll and focus lost), and nothing pins.
-//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>   --set only=wheel,keys,none
+//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>   --set only=wheel,keys,scrollbar,none
 
 // In the app's frame: helpers the steps below read through window.__fo104.
 function install() {
@@ -157,6 +159,27 @@ async function keysCase(t, f, where) {
   await f.waitForTimeout(300);
 }
 
+// a press on the panel's own scrollbar track (below its thumb) pages it down: a real input that scrolls it, so it pins
+async function scrollbarCase(t, f, where) {
+  const tag = `${where} scrollbar`;
+  const s0 = await freshWindow(t, f, tag);
+  const bar = await f.evaluate(() => {
+    const p = window.__fo104.panel(); p.scrollIntoView({ block: 'nearest' });
+    const r = p.getBoundingClientRect(), gutter = p.offsetWidth - p.clientWidth - p.clientLeft * 2;
+    return { gutter, x: r.left + p.clientLeft + p.clientWidth + gutter / 2, y: r.top + p.clientTop + p.clientHeight - 6 };
+  });
+  if (bar.gutter < 2) { t.log(`${tag}: no scrollbar gutter here (overlay scrollbars): skipped`); return; }
+  await t.page.mouse.click(OFF.x + bar.x, OFF.y + bar.y);
+  await f.waitForFunction(() => { const s = window.__fo104.snap(); return !!s && s.top > 0; }, null, { timeout: 1000, polling: 25 }).catch(() => {});
+  const s = await settled(f);
+  await t.check(`${tag}: a press on its scrollbar track scrolls the panel and pins it`, s.top > 0 && s.pinned === 'node:' + s0.uid && s.node === s0.node, JSON.stringify({ top: s.top, pinned: s.pinned, uid: s.uid, was: s0.uid, gutter: bar.gutter }));
+  const n = await nextHandover(f, s, tag);
+  await held(t, `${tag} handover`, s, n);
+  const core = await f.evaluate(() => window.__fo104.aim('.orbit-core'));
+  await t.page.mouse.click(OFF.x + core.x, OFF.y + core.y);
+  await f.waitForTimeout(300);
+}
+
 async function noInputCase(t, f, where) {
   const tag = `${where} no input`;
   const s0 = await freshWindow(t, f, tag);
@@ -187,9 +210,10 @@ async function run(t, f, where) {
   OFF = await frameOffset(t, f);
   const s = await f.evaluate(() => window.__fo104.snap());
   await t.check(`${where}: a live Working card with the Orbit panel`, !!s, JSON.stringify(s), { hard: true });
-  const only = list(t.args.only, ['wheel', 'keys', 'none']);
+  const only = list(t.args.only, ['wheel', 'keys', 'scrollbar', 'none']);
   if (only.includes('wheel')) await wheelCase(t, f, where);
   if (only.includes('keys')) await keysCase(t, f, where);
+  if (only.includes('scrollbar')) await scrollbarCase(t, f, where);
   if (only.includes('none')) await noInputCase(t, f, where);
 }
 

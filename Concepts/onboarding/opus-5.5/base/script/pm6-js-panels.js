@@ -346,7 +346,7 @@
       return false;
     }
     /* the shell's own menu (no skin drew one): the tray's look, rows as menu items, arrows and Home/End between them,
-       Escape back to the icon, a press outside or Tab closes it */
+       Escape back to the icon, Tab on from the icon, a press outside closes it */
     function closeCtx(returnTo) {
       document.querySelectorAll('.pm-ab-ctx').forEach(function (m) { if (m.parentNode) m.parentNode.removeChild(m); });
       document.removeEventListener('pointerdown', ctxOutside, true);
@@ -382,7 +382,7 @@
         var go = ev.key === 'ArrowDown' ? i + 1 : ev.key === 'ArrowUp' ? i - 1 : ev.key === 'Home' ? 0 : ev.key === 'End' ? rows.length - 1 : null;
         if (go != null) { ev.preventDefault(); rows[(go + rows.length) % rows.length].focus(); return; }
         if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); closeCtx(node); return; }
-        if (ev.key === 'Tab') closeCtx(null);
+        if (ev.key === 'Tab') closeCtx(node);   /* back on the icon first, so Tab goes on from there */
       });
       document.body.appendChild(m);
       var r = node.getBoundingClientRect();
