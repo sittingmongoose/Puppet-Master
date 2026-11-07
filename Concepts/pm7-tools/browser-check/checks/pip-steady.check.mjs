@@ -24,7 +24,7 @@
 // the SMB presses per look (default 1). About 7 minutes per surface with every look.
 import fs from 'node:fs';
 import path from 'node:path';
-import { installWitness, FIELDS, TAG, readWitness, evaluateWitness } from '../helpers/pip-witness.mjs';
+import { installWitness, backFaceTurned, FIELDS, TAG, readWitness, evaluateWitness } from '../helpers/pip-witness.mjs';
 
 const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
@@ -117,7 +117,7 @@ async function surface(t, sandbox) {
 
 	await f.evaluate(() => window.O55.ui.open({ fresh: true }));
 	await settle();
-	const header = await f.evaluate(installWitness, { ...TAG, fields: FIELDS, ox: off.x, oy: off.y });
+	const header = await f.evaluate(installWitness, { ...TAG, fields: FIELDS, ox: off.x, oy: off.y, backface: backFaceTurned.toString() });
 	fs.writeFileSync(file, JSON.stringify({ ...header, surface: sandbox ? 'sandbox' : 'normal', page: t.args.page || null, recording: !!t.recording, looks, phases }) + '\n');
 	await phase('start');
 	await calibrate(`${await current()} start`);
@@ -199,12 +199,16 @@ async function surface(t, sandbox) {
 						const q = await cdp.send('DOM.querySelector', { nodeId: doc.root.nodeId, selector: '#pm-o55-onboarding .pst-pip > g.pst-head' });
 						head = q.nodeId && (await cdp.send('DOM.describeNode', { nodeId: q.nodeId })).node.backendNodeId;
 						await sleep(1500);
-					} finally { cdp.off('LayerTree.layerTreeDidChange', on); await cdp.send('LayerTree.disable'); }
+					/* T97 (TOOLBATCH4 recheck b, finding 7): DOM.enable was never undone, and the DOM domain then sent 275 to 1,069
+					   events a second that nothing listened to for the rest of the run (browser-check's cdpFloods), which multiplies
+					   load on a slow host; it is disabled with LayerTree */
+					} finally { cdp.off('LayerTree.layerTreeDidChange', on); await cdp.send('LayerTree.disable').catch(() => {}); await cdp.send('DOM.disable').catch(() => {}); }
 					const seen = trees.filter((tr) => tr.some((l) => l.backendNodeId === head)).length;
 					await t.check(`${name}: Pip's head is not a compositor layer of its own`, !!head && trees.length > 0 && !seen, `head in its own layer in ${seen} of ${trees.length} layer-tree updates${head ? '' : ' (head not found)'}`);
 				}
 				await flush();
 			}
+			if (cdp) await cdp.detach().catch(() => {});   /* T97: the session's work is done after the begin phase */
 		}
 		/* smb: each look on the share screen, then its presses and hovers */
 		if (!later('begin')) throw new RouteDone();

@@ -41,10 +41,13 @@ export const EXTRA = {
 	gpflip: 'the stage host grandparent rotateY(180deg) with backface-visibility hidden on the grandparent',
 	gpflat: 'the stage host grandparent rotateY(180deg), no hidden back face anywhere (painted mirrored)',
 	gprot: 'the stage host grandparent flipped by the individual rotate property (rotate: y 180deg), backface-visibility hidden on it',
+	/* T97 (TOOLBATCH4 recheck b, finding 6, the reviewer's kinds): a y-z shear, m33 +1, that Chrome still turns to its back face (inverse m33 -1/3) */
+	hostshear: 'the stage host transform matrix3d(1,0,0,0, 0,1,2,0, 0,2,1,0, 0,0,0,1) with backface-visibility hidden (m33 +1; Chrome hides it)',
+	hostshearvis: 'the same shear with the back face visible (paints the same pixels: still painted)',
 	headkids: 'every child of the head group turned rotateY(180deg) about its own box with backface-visibility hidden (Chrome does not hide SVG children by back face: painted)'
 };
 /* the extra kinds that leave Pip painted: a negative of one of them passes only when nothing flags it */
-export const PAINTED = new Set(['hostmirror', 'gpflat', 'headkids']);
+export const PAINTED = new Set(['hostmirror', 'gpflat', 'headkids', 'hostshearvis']);
 export const kindsOf = (spec) => { const [look, kind] = String(spec).split(':'); if (!MUTATIONS[look]) throw new Error(`unknown look ${look}`); if (kind && !EXTRA[kind]) throw new Error(`unknown loss ${kind}`); return { look, kind: kind || MUTATIONS[look][0], what: kind ? EXTRA[kind] : MUTATIONS[look][1], name: kind ? `${look}-${kind}` : look }; };
 
 export function mutantScript(look, kind) {
@@ -66,6 +69,7 @@ export function mutantScript(look, kind) {
       case 'hostgone': { var par = host.parentNode, nxt = host.nextSibling; host.remove(); return function () { par.insertBefore(host, nxt); }; }
       case 'hostflip': s = host.getAttribute('style'); host.style.setProperty('transform', 'rotateY(180deg)', 'important'); host.style.setProperty('backface-visibility', 'hidden', 'important'); return function () { if (s === null) host.removeAttribute('style'); else host.setAttribute('style', s); };
       case 'hostflipx': s = host.getAttribute('style'); host.style.setProperty('transform', 'rotateX(180deg)', 'important'); host.style.setProperty('backface-visibility', 'hidden', 'important'); return function () { if (s === null) host.removeAttribute('style'); else host.setAttribute('style', s); };
+      case 'hostshear': case 'hostshearvis': s = host.getAttribute('style'); host.style.setProperty('transform', 'matrix3d(1,0,0,0, 0,1,2,0, 0,2,1,0, 0,0,0,1)', 'important'); if (KIND === 'hostshear') host.style.setProperty('backface-visibility', 'hidden', 'important'); return function () { if (s === null) host.removeAttribute('style'); else host.setAttribute('style', s); };
       case 'hostmirror': s = host.getAttribute('style'); host.style.setProperty('transform', 'scale(-1, 1)', 'important'); host.style.setProperty('backface-visibility', 'hidden', 'important'); return function () { if (s === null) host.removeAttribute('style'); else host.setAttribute('style', s); };
       case 'gpflip': case 'gpflat': case 'gprot': { var gp = host.parentElement.parentElement; s = gp.getAttribute('style');
         if (KIND === 'gprot') gp.style.setProperty('rotate', 'y 180deg', 'important'); else gp.style.setProperty('transform', 'rotateY(180deg)', 'important');

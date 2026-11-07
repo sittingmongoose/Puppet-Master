@@ -24,7 +24,23 @@ export const FIELDS = ['seq', 't', 'look', 'cls', 'why', 'cal', 'calPhase', 'lab
 
 /* Page function (serialised by Playwright: no closure over this module). cfg: { x, y, block, bits, ox, oy } in CSS px
    of this frame's viewport; ox/oy place the frame's viewport in the top window (the sandbox iframe). */
+/* T97 (TOOLBATCH4 recheck b, finding 6): whether a transform turns an element's back face to the viewer, as Chrome
+   decides it (gfx::Transform::IsBackFaceVisible): the sign of the inverse's m33, that is the 3,3 cofactor times the
+   determinant, not the sign of m33 itself. A y-z shear, matrix3d(1,0,0,0, 0,1,2,0, 0,2,1,0, 0,0,0,1), has m33 +1 and an
+   inverse m33 of -1/3: Chrome hides a back-face-hidden element under it (0 of 2,500 px painted), and T67's m33 test passed
+   it. Takes any object with m11..m44 (a DOMMatrix); returns 'away', 'toward' or 'singular' (no inverse: Chrome then treats
+   the back face as not visible, and the witness flags the hidden back face as unknown). Pure, so the self-test runs it. */
+export const backFaceTurned = (m) => {
+	const a = [[m.m11, m.m12, m.m13, m.m14], [m.m21, m.m22, m.m23, m.m24], [m.m31, m.m32, m.m33, m.m34], [m.m41, m.m42, m.m43, m.m44]];
+	const det3 = (q) => q[0][0] * (q[1][1] * q[2][2] - q[1][2] * q[2][1]) - q[0][1] * (q[1][0] * q[2][2] - q[1][2] * q[2][0]) + q[0][2] * (q[1][0] * q[2][1] - q[1][1] * q[2][0]);
+	const minor = (r, c) => a.filter((_, i) => i !== r).map((row) => row.filter((_, j) => j !== c));
+	let det = 0; for (let j = 0; j < 4; j++) det += (j % 2 ? -1 : 1) * a[0][j] * det3(minor(0, j));
+	if (!Number.isFinite(det) || Math.abs(det) < 1e-12) return 'singular';
+	const cof33 = det3(minor(2, 2));
+	return cof33 * det < -1e-9 ? 'away' : 'toward';
+};
 export function installWitness(cfg) {
+	const backFace = (0, eval)(`(${cfg.backface})`);
 	const doc = document, html = doc.documentElement;
 	if (window.__pipSteady && window.__pipSteady.on) return window.__pipSteady.header;
 	const FIELDS = cfg.fields, NF = FIELDS.length, F = {}; FIELDS.forEach((k, i) => { F[k] = i; });
@@ -226,7 +242,9 @@ export function installWitness(cfg) {
 		   T67 (TOOLBATCH4, REVIEW-kit-tb3-opus finding 8): only what hides paint joins the signature: an element whose
 		   backface-visibility is hidden while its back face is turned to the viewer (m33 negative), read both in its own
 		   3D rendering context (its own transform, composed through preserve-3d parents) and composed from the root
-		   down, so either way a renderer reads it, it is flagged. A hidden back face facing the viewer (scale(-1, 1), a 2D
+		   down, so either way a renderer reads it, it is flagged. T97: 'turned away' is Chrome's own test, the sign of the
+		   inverse's m33 (backFaceTurned, above), so a y-z shear that keeps m33 positive and still hides the back face is
+		   flagged; a 3D transform with no inverse under a hidden back face is flagged as unknown. A hidden back face facing the viewer (scale(-1, 1), a 2D
 		   mirror) and a turned element whose back face shows (a grandparent turned with nothing hidden) leave Pip
 		   painted, and are no longer flagged (8a: both were false stops). The transform read is the element's whole
 		   one: the individual translate, rotate and scale properties, then transform (8c: a flip by rotate: y 180deg was
@@ -250,7 +268,11 @@ export function installWitness(cfg) {
 			let own = new DOMMatrix();
 			try { own = ownMatrix(cs); } catch (_) { sig.push(`${role}:transform=unreadable`); }
 			const m = at.multiply(own), c = parent3d ? inCtx.multiply(own) : own;
-			if (cs.backfaceVisibility === 'hidden' && (c.m33 < 0 || m.m33 < 0)) sig.push(`${role}:back face hidden and turned away`);
+			if (cs.backfaceVisibility === 'hidden') {
+				const fc = backFace(c), fm = backFace(m);
+				if (fc === 'away' || fm === 'away') sig.push(`${role}:back face hidden and turned away`);
+				else if (fc === 'singular' || fm === 'singular') sig.push(`${role}:back face hidden, facing unknown (a transform with no inverse)`);
+			}
 			return { m, c, keep3d: cs.transformStyle === 'preserve-3d' };
 		};
 		for (let i = chainNodes.length - 1; i >= 0; i--) { const [n, cs] = chainNodes[i]; const r = facing(n, cs, `${n.tagName}.${(n.getAttribute('class') || '').split(' ')[0]}`, composed, ctx, keep3d); composed = r.m; ctx = r.c; keep3d = r.keep3d; }

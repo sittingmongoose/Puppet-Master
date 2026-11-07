@@ -2,7 +2,7 @@
 // no browser, no motion evidence. The in-page witness that writes these records is exercised by the filmed negatives.
 // Run: node pip-witness.selftest.mjs
 import assert from 'node:assert/strict';
-import { FIELDS, paintContract, evaluateWitness } from '../helpers/pip-witness.mjs';
+import { FIELDS, paintContract, evaluateWitness, backFaceTurned } from '../helpers/pip-witness.mjs';
 
 const F = Object.fromEntries(FIELDS.map((k, i) => [k, i]));
 const strings = ['', 'friendly-light', 'welcome', 'start', 'Pip missing from the stage', 'animation@pst-svg', 'pstOn@content',
@@ -47,4 +47,13 @@ const paint = (x) => evaluateWitness(x).find((a) => /are painted/.test(a.name));
 assert.equal(paint(w).ok, true); assert.equal(paint(bad).ok, false); checks++;
 /* an own effect ('a') is not a visible frame: not judged by the paint contract */
 assert.equal(paint({ ...w, recs: [...recs, rec({ cls: 'a', why: S('pstOn@content'), opHead: 0 })] }).ok, true); checks++;
-console.log(`PASS ${checks}: clean frame, missing Pip, collapsed stage, missing stage, collapsed stage in a run, stray ancestor animation, an unseen head filter, an unseen controller mask, a back-face flip of the stage, brightness 0, no painted leaves, run judgement, own effect excused`);
+/* T97: Chrome's back-face test, the sign of the inverse's m33 (no browser: plain m11..m44 objects, CSS matrix3d order) */
+const M3 = (...v) => Object.fromEntries(['m11', 'm12', 'm13', 'm14', 'm21', 'm22', 'm23', 'm24', 'm31', 'm32', 'm33', 'm34', 'm41', 'm42', 'm43', 'm44'].map((k, i) => [k, v[i]]));
+assert.equal(backFaceTurned(M3(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), 'toward'); checks++;                  /* none */
+assert.equal(backFaceTurned(M3(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)), 'away'); checks++;                 /* rotateY(180deg) */
+assert.equal(backFaceTurned(M3(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1)), 'away'); checks++;                  /* scaleZ(-1) */
+assert.equal(backFaceTurned(M3(1, 0, 0, 0, 0, 1, 2, 0, 0, 2, 1, 0, 0, 0, 0, 1)), 'away'); checks++;                   /* the y-z shear: m33 +1, inverse m33 -1/3 */
+assert.equal(backFaceTurned(M3(-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)), 'toward'); checks++;                /* scale(-1, 1), a 2D mirror */
+assert.equal(backFaceTurned(M3(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1)), 'singular'); checks++;               /* scaleZ(0) */
+assert.equal(backFaceTurned(M3(.5, 0, 0, 0, 0, .5, 0, 0, 0, 0, 1, 0, 30, 40, 0, 1)), 'toward'); checks++;             /* scale and translate */
+console.log(`PASS ${checks}: clean frame, missing Pip, collapsed stage, missing stage, collapsed stage in a run, stray ancestor animation, an unseen head filter, an unseen controller mask, a back-face flip of the stage, brightness 0, no painted leaves, run judgement, own effect excused, Chrome's back-face test (7 matrices)`);
