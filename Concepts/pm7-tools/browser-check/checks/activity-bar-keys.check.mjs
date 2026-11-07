@@ -107,7 +107,7 @@ function sides(rest, focus, tile, ox, oy) {
 }
 // each side read at the tile's edge and at the item's, the one that holds the mark (a ring may sit on the tile or go
 // round the whole item, names included)
-const bestSides = (a, b) => Object.fromEntries(Object.keys(a).map(k => [k, b[k].share > a[k].share ? b[k] : a[k]]));
+const bestSides = (a, b) => Object.fromEntries(Object.keys(a).map(k => [k, (b[k].share > a[k].share || (b[k].share === a[k].share && b[k].median > a[k].median)) ? b[k] : a[k]]));
 function corners(rest, focus, item, ox, oy) {
   const L = Math.round(item.x - ox), T = Math.round(item.y - oy), Rr = Math.round(item.x + item.w - ox), B = Math.round(item.y + item.h - oy);
   const corner = (cx, cy, dx, dy) => { let n = 0; for (let y = cy - 6; y < cy + 8; y++) for (let x = cx - 6; x < cx + 8; x++) { const xx = dx > 0 ? x : 2 * cx - x, yy = dy > 0 ? y : 2 * cy - y; if (contrastAt(rest, focus, xx, yy) >= 3) n++; } return n; };
@@ -208,6 +208,10 @@ async function run(t, w, h) {
     await focusQuiet(await before(target));
     await kb.press('Tab');
     await f.waitForTimeout(450);
+    // NieR's one reticle glides from target to target: read it once it has come to rest (three still frames)
+    if (b.brackets) await f.evaluate(() => new Promise(done => { const r = document.getElementById('o55np-reticle'), t0 = performance.now(); let last = '', still = 0;
+      const step = () => { const now = r ? [...r.children].map(i => i.style.transform + getComputedStyle(i).translate).join('|') : ''; still = now === last ? still + 1 : 0; last = now;
+        if (still >= 3 || performance.now() - t0 > 1500) done(); else requestAnimationFrame(step); }; requestAnimationFrame(step); }));
     const now = await key();
     const r1 = await t.pixels(region), l1 = lr && await t.pixels(lr);
     // the item, not its tile, which a focused tile's own style may move by a fraction (Glass's press scale is lifted)
@@ -220,6 +224,8 @@ async function run(t, w, h) {
       t.log(`debug ${target} tile ${JSON.stringify(b.tile)} item ${JSON.stringify(b.item)} region ${JSON.stringify(region)}`);
       t.log(`debug ${target} col rest ${str(r0, colPts)}`); t.log(`debug ${target} col focus ${str(r1, colPts)}`);
       t.log(`debug ${target} row rest ${str(r0, rowPts)}`); t.log(`debug ${target} row focus ${str(r1, rowPts)}`);
+      const it = b.item, iy = Math.round(it.y + it.h * 0.6 - oy), ix0 = Math.round(it.x - ox), irow = [...Array(Math.round(it.w) + 12).keys()].map(k => [ix0 - 6 + k, iy]);
+      t.log(`debug ${target} item row rest ${str(r0, irow)}`); t.log(`debug ${target} item row focus ${str(r1, irow)}`);
       t.log(`debug ${target} state ` + JSON.stringify(await f.evaluate(k => { const ic = document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`), sym = ic && ic.querySelector('.symbol'); if (!sym) return null; const c = getComputedStyle(sym);
         const ops = []; for (let n = sym; n && n !== document.documentElement; n = n.parentElement) { const q = getComputedStyle(n); if (q.opacity !== '1' || q.filter !== 'none') ops.push([n.id || String(n.className).slice(0, 30), q.opacity, q.filter]); }
         return { outline: c.outlineColor + ' ' + c.outlineStyle + ' ' + c.outlineWidth, shadow: c.boxShadow.slice(0, 80), ops, anims: [sym, ic, ...document.querySelectorAll('#activityBar .d-abind')].flatMap(e => e.getAnimations().map(a => [e.className, a.id || a.animationName || a.transitionProperty, a.playState, +(a.effect?.getComputedTiming?.().progress ?? -1).toFixed(2)])),
