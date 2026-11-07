@@ -1,0 +1,29 @@
+"""DR guard table observation_recipe: RAP-113 restore-point observation ordinal, predecessor and owner-snapshot model.
+
+Method B guard rows for scripts/pm-runtime-artifact-event-drafts.py. Each
+predicate reads one observation record that the lane checker derives from the
+complete boundary input (hashes, canonical bytes, resolved routes); predicates
+never recompute, repair or call helpers. The checker refuses only through these
+rows, in this order (pm-runtime-artifact-event-drafts.py:table_refusal), and
+asserts that every factory's require order equals its table order.
+FIELDS names every observation the rows read; the checker passes no other.
+"""
+import pm_guard_isolation as g
+
+FIELDS = ('decoder',)
+
+
+def O12_recorded_recipe(value, context):
+    return 'observation_refused' if value['decoder'] not in ('current-writer', 'historical-v1-before-provider-hash') else None
+
+
+def recipe_case(value):
+    context = None
+    table = g.GuardTable([
+        g.Guard('O12_recorded_recipe', g.Invariant('/recorded_decoder', 'the authenticated write-time recipe is supported'), 'observation_refused', O12_recorded_recipe),
+    ])
+
+    def check(value):
+        table.require('O12_recorded_recipe', value, context)
+        return True
+    return g.Case(table, check, context)

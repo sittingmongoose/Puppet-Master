@@ -6,8 +6,10 @@ storage, transaction, source authentication, receipt issuance or admission runs.
 """
 import copy
 import argparse
+import ast
 import base64
 import hashlib
+import importlib
 import json
 import math
 from pathlib import Path
@@ -48,6 +50,122 @@ PROVIDER_HASH_PATHS = {
 }
 CURRENT_WRITER = 'current-writer'
 HISTORICAL_V1 = 'historical-v1-before-provider-hash'
+
+# Method B guard tables (sweep part 2A). Every product refusal of this checker
+# is one named row of one phase table, evaluated in the table's declared order.
+# Derivation code below only computes observations (bytes, digests, resolved
+# routes, presence); it never decides acceptance. A boundary is an ordered chain
+# of phases; reused boundaries (schema, decode, full value, inspect) are phases.
+TABLE_PHASES = {
+    'schema.case': ('schema', 'case'), 'schema.overlay': ('schema_overlay', 'overlay_case'),
+    'codec_value': ('codec_value', 'value_case'), 'codec_identity': ('codec_identity', 'identity_case'),
+    'codec_profile': ('codec_profile', 'profile_case'), 'codec_storage': ('codec_storage', 'storage_case'),
+    'codec_oracle': ('codec_oracle', 'oracle_case'), 'codec_references': ('codec_references', 'references_case'),
+    'decode_envelope': ('decode_envelope', 'envelope_case'), 'decode_pack_ref': ('decode_pack_ref', 'pack_ref_case'),
+    'decode_pack_source': ('decode_pack_source', 'pack_source_case'), 'decode_pack_body': ('decode_pack_body', 'pack_body_case'),
+    'decode_provider_source': ('decode_provider_source', 'provider_source_case'),
+    'decode_provider_digest': ('decode_provider_digest', 'provider_digest_case'),
+    'decode_joins': ('decode_joins', 'joins_case'), 'decode_identity': ('decode_identity', 'identity_case'),
+    'decode_identity.restore': ('decode_identity', 'restore_identity_case'),
+    'stored': ('stored', 'case'),
+    'inspect_flags': ('inspect_flags', 'flags_case'), 'inspect_payload': ('inspect_payload', 'payload_case'),
+    'inspect_deleted': ('inspect_deleted', 'deleted_case'),
+    'full_value_bytes': ('full_value_bytes', 'bytes_case'), 'full_value_ids_a': ('full_value_ids_a', 'ids_a_case'),
+    'full_value_ids_b': ('full_value_ids_b', 'ids_b_case'),
+    'history': ('history', 'case'),
+    'append_gate': ('append_gate', 'gate_case'), 'append_replay': ('append_replay', 'replay_case'),
+    'append_policy': ('append_policy', 'policy_case'), 'append_dedupe': ('append_dedupe', 'dedupe_case'),
+    'policies': ('policies', 'case'),
+    **{'checkpoint_' + k: ('checkpoint_' + k, k + '_case') for k in (
+        'route', 'store', 'node_a', 'node_b', 'token_a', 'token_b', 'source_event', 'source', 'manifest_type',
+        'manifest_a', 'manifest_b', 'anchor', 'coverage', 'frame', 'segment_a', 'segment_b', 'dataset')},
+    **{'observation_' + k: ('observation_' + k, k + '_case') for k in (
+        'source', 'group', 'snapshot', 'first', 'recipe', 'lineage_a', 'lineage_b', 'advance')},
+    **{'agreement_' + k: ('agreement_' + k, k + '_case') for k in (
+        'browser', 'cost_refs_a', 'cost_refs_b', 'cost_usage_a', 'cost_usage_b', 'trace_refs_a', 'trace_refs_b', 'trace_flags')},
+}
+AGREEMENT_PHASES = {
+    'pm.runtime_artifact.browser_recording.schema.v1': ('agreement_browser',),
+    'pm.runtime_artifact.cost_usage.schema.v1': ('agreement_cost_refs_a', 'agreement_cost_refs_b',
+                                                 'agreement_cost_usage_a', 'agreement_cost_usage_b'),
+    'pm.runtime_artifact.tool_llm_trace.schema.v1': ('agreement_trace_refs_a', 'agreement_trace_refs_b', 'agreement_trace_flags'),
+}
+_TABLE_ROWS = {}
+# Set to a list only by the guard-table suite builder; never by a checker path.
+RECORDER = None
+
+
+class TableRefusal(ValueError):
+    """A refusal issued by one named table row (phase, row, code)."""
+    def __init__(self, phase, row, code):
+        self.phase, self.row, self.code = phase, row, code
+        super().__init__(code)
+
+
+def table_rows(phase):
+    """The phase's (row, predicate, context) list in declared table order."""
+    rows = _TABLE_ROWS.get(phase)
+    if rows is None:
+        module_name, factory_name = TABLE_PHASES[phase]
+        module = importlib.import_module('pm_runtime_artifact_table_' + module_name)
+        case = getattr(module, factory_name)(None)
+        rows = _TABLE_ROWS[phase] = [(name, guard.predicate, case.context) for name, guard in case.table.guards.items()]
+    return rows
+
+
+def table_fields(phase):
+    module_name, _ = TABLE_PHASES[phase]
+    return importlib.import_module('pm_runtime_artifact_table_' + module_name).FIELDS
+
+
+def table_refusal(phase, facts):
+    """First refusing row of one phase, as (row, code), or None.
+
+    The observation passed to the rows holds exactly the module's FIELDS.
+    """
+    observed = {k: facts[k] for k in table_fields(phase)}
+    refusal = None
+    for name, predicate, context in table_rows(phase):
+        code = predicate(observed, context)
+        if code is not None:
+            refusal = (name, code)
+            break
+    if RECORDER is not None:
+        RECORDER.append((phase, copy.deepcopy(observed), refusal))
+    return refusal
+
+
+def require(phase, facts):
+    refusal = table_refusal(phase, facts)
+    if refusal is not None:
+        raise TableRefusal(phase, *refusal)
+
+
+def table_order_errors():
+    """Each factory's check() requires its rows in exactly the table order."""
+    errors = []
+    for phase, (module_name, factory_name) in TABLE_PHASES.items():
+        module = importlib.import_module('pm_runtime_artifact_table_' + module_name)
+        tree = ast.parse(Path(module.__file__).read_text())
+        factory = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == factory_name)
+        check = next(n for n in factory.body if isinstance(n, ast.FunctionDef) and n.name == 'check')
+        required = [c.args[0].value for c in ast.walk(check) if isinstance(c, ast.Call)
+                    and ast.unparse(c.func) == 'table.require']
+        if required != [name for name, _, _ in table_rows(phase)]:
+            errors.append(phase)
+    return errors
+
+
+def at(value, *keys):
+    """Total observation read: None when any step is absent or not a container."""
+    for key in keys:
+        if type(value) is dict:
+            value = value.get(key)
+        elif type(value) is list and type(key) is int and 0 <= key < len(value):
+            value = value[key]
+        else:
+            return None
+    return value
 
 
 class SchemaReferences:
@@ -171,129 +289,194 @@ def canonical_numbers(validator, enabled, instance, schema):
     yield from numeric_walk(instance, [])
 
 
-def copied_pairs(payload):
-    """Yield (rule, copied value, source/recomputed value), without coercion.
+def agreement_sites(payload):
+    """Every copied source agreement pair, by its agreement table row, without coercion.
 
-    Missing optional copies add no identity. Explicit null is a value and must
+    Missing optional copies add no pair. Explicit null is a value and must
     agree. Session and action provenance, snapshots at different times, parent
     and child usage, and streaming delta/cumulative are distinct source roles.
+    A payload whose shape does not reach a copy yields no pair: shape and type
+    refusals belong to the closed schema rows, which run first.
     """
-    body = payload['type_payload']
-    family = payload['artifact_type']
-    if family == 'browser_recording':
-        for action in body['actions']:
-            yield 'browser_session', action['browser_session_id'], body['browser_session_id']
-            page = action.get('page_representation')
-            if page is not None:
-                if 'page_representation_ref' in action:
-                    yield 'browser_page', action['page_representation_ref'], page['page_representation_id']
-                for field in ('screenshot_artifact_ref', 'pdf_artifact_ref', 'console_ref', 'network_ref'):
-                    if field in action and field in page:
-                        yield 'browser_page', action[field], page[field]
-                if 'redaction_profile_id' in page:
-                    yield 'browser_page', page['redaction_profile_id'], body['redaction_profile_id']
-        return
-    refs = body['refs']
-    for field in ('provider_attempt_ref', 'usage_event_ref', 'usage_record_id', 'receipt_refs'):
-        if field in payload and field in refs:
-            yield 'usage_refs' if family == 'cost_usage' else 'trace_refs', payload[field], refs[field]
-    if family == 'cost_usage':
-        for field in ('usage_event_ref', 'usage_record_id'):
-            yield 'usage_refs', refs[field], body[field]
-        for field in ('run_id', 'attempt_id', 'thread_id', 'node_id'):
-            if field in refs:
-                yield 'usage_refs', refs[field], payload.get(field)
-        yield 'usage_refs', refs['raw_payload_ref'], body['authority']['raw_payload_ref']
-        usage = body['usage']
-        yield 'usage_aliases', body['reasoning_tokens'], usage['reasoning_tokens']
-        if 'total_tokens' in body:
-            yield 'usage_aliases', body['total_tokens'], usage['provider_total']
-        semantics = usage['counting_semantics']
-        caches = [usage[k] for k in ('cache_read', 'cache_write', 'cache_write_1h')]
-        if semantics['input_total_includes_cache'] == 'yes' and all(type(v) is int for v in [usage['input_total'], *caches]):
-            yield 'usage_input', usage['input_non_cached'], usage['input_total'] - sum(caches)
-        if semantics['output_total_includes_reasoning'] == 'yes' and all(type(usage[k]) is int for k in ('output_total', 'reasoning_tokens')):
-            yield 'usage_output', usage['output_visible'], usage['output_total'] - usage['reasoning_tokens']
-        if semantics['provider_total_semantics'] == 'derived_input_plus_output':
-            total = None if any(usage[k] is None for k in ('input_total', 'output_total')) else usage['input_total'] + usage['output_total']
-            yield 'usage_total', usage['provider_total'], total
-        costs = body['cost'].get('bucket_costs_microdollars')
-        if costs and all(type(v) is int for v in costs.values()):
-            yield 'usage_cost', body['cost']['cost_microdollars'], sum(costs.values())
-        source_class = body['authority']['source_class']
-        for field, classes in (
-                ('is_provider_reported', ('provider_reported', 'provider_header')),
-                ('is_cli_reported', ('cli_reported',)),
-                ('is_local_context_estimate', ('local_estimated',)),
-                ('is_estimated', ('local_estimated', 'pricing_estimated'))):
-            yield 'usage_flags', body['flags'][field], source_class in classes
-    elif family == 'tool_llm_trace':
-        for field in ('provider_attempt_ref', 'usage_event_ref', 'usage_record_id'):
-            yield 'trace_refs', refs[field], body[field]
-        yield 'trace_refs', refs['raw_payload_ref'], body['raw_payload']['raw_payload_ref']
-        for field in ('usage_event_ref', 'usage_record_id'):
-            yield 'trace_settlement', body['settlement'][field], body[field]
-        if body['raw_payload']['redaction_status'] in ('redacted', 'not_needed'):
-            yield 'trace_flags', body['flags']['redacted'], body['raw_payload']['redaction_status'] == 'redacted'
-        if (body['usage_event_ref'] is not None or body['usage_record_id'] is not None
-                or body['settlement']['usage_artifact_ref'] is not None):
-            yield 'trace_flags', body['flags']['usage_observed'], True
-        if body['settlement'].get('quota_artifact_ref') is not None or refs.get('quota_refs'):
-            yield 'trace_flags', body['flags']['quota_observed'], True
-        if body['retry']['relation'] == 'none':
-            yield 'trace_retry', body['retry']['parent_trace_ref'], None
-        elif body['retry']['relation'] in ('retry_of', 'escalation_of', 'resume_of'):
-            yield 'trace_retry', body['retry']['parent_trace_ref'] is not None, True
+    sites = {}
 
+    def pair(site, copy_value, source_value):
+        sites.setdefault(site, []).append([copy_value, source_value])
 
-def source_agreement(validator, family, instance, schema):
-    # Scalar/shape refusals belong to the unchanged closed schema. This overlay
-    # establishes agreement only after those fields have their declared types.
     try:
-        pairs = list(copied_pairs(instance))
+        body = payload['type_payload']
+        family = payload['artifact_type']
+        if family == 'browser_recording':
+            for action in body['actions']:
+                pair('browser_action_session', action['browser_session_id'], body['browser_session_id'])
+                page = action.get('page_representation')
+                if page is not None:
+                    if 'page_representation_ref' in action:
+                        pair('browser_page_ref', action['page_representation_ref'], page['page_representation_id'])
+                    for field, site in (('screenshot_artifact_ref', 'browser_page_screenshot'), ('pdf_artifact_ref', 'browser_page_pdf'),
+                                        ('console_ref', 'browser_page_console'), ('network_ref', 'browser_page_network')):
+                        if field in action and field in page:
+                            pair(site, action[field], page[field])
+                    if 'redaction_profile_id' in page:
+                        pair('browser_page_redaction', page['redaction_profile_id'], body['redaction_profile_id'])
+            return sites
+        if family not in ('cost_usage', 'tool_llm_trace'):
+            return sites
+        refs = body['refs']
+        rule = 'usage_refs' if family == 'cost_usage' else 'trace_refs'
+        for field in ('provider_attempt_ref', 'usage_event_ref', 'usage_record_id', 'receipt_refs'):
+            if field in payload and field in refs:
+                pair(rule + '_root_' + field, payload[field], refs[field])
+        if family == 'cost_usage':
+            for field in ('usage_event_ref', 'usage_record_id'):
+                pair('usage_refs_body_' + field, refs[field], body[field])
+            for field in ('run_id', 'attempt_id', 'thread_id', 'node_id'):
+                if field in refs:
+                    pair('usage_refs_' + field, refs[field], payload.get(field))
+            pair('usage_refs_raw_payload_ref', refs['raw_payload_ref'], body['authority']['raw_payload_ref'])
+            usage = body['usage']
+            pair('usage_alias_reasoning', body['reasoning_tokens'], usage['reasoning_tokens'])
+            if 'total_tokens' in body:
+                pair('usage_alias_total', body['total_tokens'], usage['provider_total'])
+            semantics = usage['counting_semantics']
+            caches = [usage[k] for k in ('cache_read', 'cache_write', 'cache_write_1h')]
+            if semantics['input_total_includes_cache'] == 'yes' and all(type(v) is int for v in [usage['input_total'], *caches]):
+                pair('usage_input', usage['input_non_cached'], usage['input_total'] - sum(caches))
+            if semantics['output_total_includes_reasoning'] == 'yes' and all(type(usage[k]) is int for k in ('output_total', 'reasoning_tokens')):
+                pair('usage_output', usage['output_visible'], usage['output_total'] - usage['reasoning_tokens'])
+            if semantics['provider_total_semantics'] == 'derived_input_plus_output':
+                total = None if any(usage[k] is None for k in ('input_total', 'output_total')) else usage['input_total'] + usage['output_total']
+                pair('usage_total', usage['provider_total'], total)
+            costs = body['cost'].get('bucket_costs_microdollars')
+            if costs and all(type(v) is int for v in costs.values()):
+                pair('usage_cost', body['cost']['cost_microdollars'], sum(costs.values()))
+            source_class = body['authority']['source_class']
+            for field, site, classes in (
+                    ('is_provider_reported', 'usage_flag_provider_reported', ('provider_reported', 'provider_header')),
+                    ('is_cli_reported', 'usage_flag_cli_reported', ('cli_reported',)),
+                    ('is_local_context_estimate', 'usage_flag_local_context_estimate', ('local_estimated',)),
+                    ('is_estimated', 'usage_flag_estimated', ('local_estimated', 'pricing_estimated'))):
+                pair(site, body['flags'][field], source_class in classes)
+        else:
+            for field in ('provider_attempt_ref', 'usage_event_ref', 'usage_record_id'):
+                pair('trace_refs_body_' + field, refs[field], body[field])
+            pair('trace_refs_raw_payload_ref', refs['raw_payload_ref'], body['raw_payload']['raw_payload_ref'])
+            for field in ('usage_event_ref', 'usage_record_id'):
+                pair('trace_settlement_' + field, body['settlement'][field], body[field])
+            if body['raw_payload']['redaction_status'] in ('redacted', 'not_needed'):
+                pair('trace_flag_redacted', body['flags']['redacted'], body['raw_payload']['redaction_status'] == 'redacted')
+            if (body['usage_event_ref'] is not None or body['usage_record_id'] is not None
+                    or body['settlement']['usage_artifact_ref'] is not None):
+                pair('trace_flag_usage_observed', body['flags']['usage_observed'], True)
+            if body['settlement'].get('quota_artifact_ref') is not None or refs.get('quota_refs'):
+                pair('trace_flag_quota_observed', body['flags']['quota_observed'], True)
+            if body['retry']['relation'] == 'none':
+                pair('trace_retry_none', body['retry']['parent_trace_ref'], None)
+            elif body['retry']['relation'] in ('retry_of', 'escalation_of', 'resume_of'):
+                pair('trace_retry_parent', body['retry']['parent_trace_ref'] is not None, True)
     except (KeyError, TypeError, AttributeError):
-        return
-    for rule, copy, source in pairs:
-        if copy != source:
-            yield ValidationError(rule + ': source/copy disagreement')
+        return {}
+    return sites
 
 
-ExactValidator = validators.extend(Draft202012Validator, {
-    'pattern': exact_pattern, 'patternProperties': exact_pattern_properties,
-    'drCanonicalNumbers': canonical_numbers, 'drSourceAgreement': source_agreement,
-})
+# Only the identifier full-match overlays: every other keyword keeps its
+# Draft 2020-12 meaning, so a refusal here is the LF rule alone.
+LF_VALUE_VALIDATOR = validators.extend(Draft202012Validator, {'pattern': exact_pattern})
+LF_KEY_VALIDATOR = validators.extend(Draft202012Validator, {'patternProperties': exact_pattern_properties})
+LF_BOTH_VALIDATOR = validators.extend(Draft202012Validator, {'pattern': exact_pattern, 'patternProperties': exact_pattern_properties})
+DR_KEYWORDS = ('drCanonicalNumbers', 'drSourceAgreement')
 
 
 def load(path):
     return json.loads((ROOT / path).read_text())
 
 
+class TableValidator:
+    """One adopted schema occurrence, refused only through the schema rows.
+
+    .schema keeps the composed schema of the earlier ExactValidator edition
+    (overlays and profile keywords included) for callers that read it.
+    """
+    def __init__(self, schema, base, overlaid, validation):
+        self.schema = schema
+        self.validation = validation
+        checker = FormatChecker()
+        self.structural = Draft202012Validator(base, format_checker=checker)
+        self.lf_value = LF_VALUE_VALIDATOR(base, format_checker=checker)
+        self.lf_key = LF_KEY_VALIDATOR(base, format_checker=checker)
+        self.lf_both = LF_BOTH_VALIDATOR(base, format_checker=checker)
+        self.overlay = None if overlaid is None else Draft202012Validator(overlaid, format_checker=checker)
+        self.overlay_phase = () if overlaid is None else ('schema.overlay',)
+        self.agreement = AGREEMENT_PHASES.get(schema.get('$id'), ()) if validation == CURRENT_WRITER else ()
+
+    def refusal(self, instance):
+        structural = sum(1 for _ in self.structural.iter_errors(instance))
+        clean = structural == 0
+        # One combined pass decides that neither overlay refuses; only a
+        # refusal is split into its value and key observations.
+        lf_any = clean and not self.lf_both.is_valid(instance)
+        facts = dict(structural_errors=structural,
+                     lf_rejects=lf_any and not self.lf_value.is_valid(instance),
+                     key_lf_rejects=lf_any and not self.lf_key.is_valid(instance),
+                     number_errors=(sum(1 for _ in canonical_numbers(None, True, instance, {}))
+                                    if self.validation == CURRENT_WRITER else 0),
+                     overlay_rejects=clean and self.overlay is not None and not self.overlay.is_valid(instance))
+        for phase in ('schema.case',) + self.overlay_phase:
+            refusal = table_refusal(phase, facts)
+            if refusal is not None:
+                return (phase,) + refusal
+        if self.agreement:
+            sites = agreement_sites(instance)
+            for phase in self.agreement:
+                refusal = table_refusal(phase, {k: sites.get(k, []) for k in table_fields(phase)})
+                if refusal is not None:
+                    return (phase,) + refusal
+        return None
+
+    def iter_errors(self, instance):
+        refusal = self.refusal(instance)
+        if refusal is not None:
+            yield ValidationError(':'.join(refusal))
+
+    def is_valid(self, instance):
+        return self.refusal(instance) is None
+
+
+def provider_overlay(schema):
+    """CV-526/CV-537 current-writer provider hash lexical overlay."""
+    schema = copy.deepcopy(schema)
+    digest = {'type': ['string', 'null'], 'pattern': '^sha256:[0-9a-f]{64}$',
+              'minLength': 71, 'maxLength': 71}
+    if schema['$id'] == 'pm.runtime_artifact.cost_usage.schema.v1':
+        fields = schema['$defs']['authorityFields']['properties']
+    else:
+        fields = schema['properties']['type_payload']['properties']['raw_payload']['properties']
+    fields['provider_payload_hash'] = {'allOf': [fields['provider_payload_hash'], digest]}
+    return schema
+
+
 def validator(schema, definition=None, *, validation=CURRENT_WRITER):
     # CV-526/CV-537 current-writer lexical overlays. Historical schema files and
     # explicitly versioned historical decoders retain their original contracts.
-    if validation not in (CURRENT_WRITER, HISTORICAL_V1):
-        raise ValueError('unsupported historical decoder')
+    require('codec_profile', {'profile': validation})
     if validation == HISTORICAL_V1:
-        schema = {k: v for k, v in schema.items() if k not in ('drCanonicalNumbers', 'drSourceAgreement')}
+        schema = {k: v for k, v in schema.items() if k not in DR_KEYWORDS}
+    base = {k: v for k, v in schema.items() if k not in DR_KEYWORDS}
+    overlaid = None
     if validation == CURRENT_WRITER and schema.get('$id') in ('pm.runtime_artifact.cost_usage.schema.v1',
-                             'pm.runtime_artifact.tool_llm_trace.schema.v1'):
-        schema = copy.deepcopy(schema)
-        digest = {'type': ['string', 'null'], 'pattern': '^sha256:[0-9a-f]{64}$',
-                  'minLength': 71, 'maxLength': 71}
-        if schema['$id'] == 'pm.runtime_artifact.cost_usage.schema.v1':
-            fields = schema['$defs']['authorityFields']['properties']
-        else:
-            fields = schema['properties']['type_payload']['properties']['raw_payload']['properties']
-        fields['provider_payload_hash'] = {'allOf': [fields['provider_payload_hash'], digest]}
+                                                             'pm.runtime_artifact.tool_llm_trace.schema.v1'):
+        schema = provider_overlay(schema)
+        overlaid = provider_overlay(base)
     if definition:
         schema = dict(schema, **{'$ref': '#/$defs/' + definition})
+        base = dict(base, **{'$ref': '#/$defs/' + definition})
+        if overlaid is not None:
+            overlaid = dict(overlaid, **{'$ref': '#/$defs/' + definition})
     if validation == CURRENT_WRITER:
         schema = dict(schema, drCanonicalNumbers=True)
-        if schema.get('$id') in ('pm.runtime_artifact.browser_recording.schema.v1',
-                                'pm.runtime_artifact.cost_usage.schema.v1',
-                                'pm.runtime_artifact.tool_llm_trace.schema.v1'):
+        if schema.get('$id') in AGREEMENT_PHASES:
             schema['drSourceAgreement'] = schema['$id']
-    return ExactValidator(schema, format_checker=FormatChecker())
+    return TableValidator(schema, base, overlaid, validation)
 
 
 EVENT_VALIDATOR = validator(load('Plans/event_record.schema.json'))
@@ -307,8 +490,8 @@ def identity(event, payload, revision=None):
     members = [event, payload['project_id'], payload['artifact_id'], payload['schema_id']]
     prefix = 'ra1:'
     if event == 'runtime_artifact.restore_point':
-        if type(revision) is not int or revision < 0:
-            raise ValueError('missing original observation revision')
+        require('codec_identity', dict(revision_type=type(revision).__name__,
+                                       revision_negative=type(revision) is int and revision < 0))
         members.append(str(revision))
         prefix = 'ra-observation1:'
     encoded = [v.encode('utf-8', errors='strict') for v in members]
@@ -327,17 +510,39 @@ def semantic_digest(event):
     return hashlib.sha256(rfc8785.dumps({k: event[k] for k in SEMANTIC_FIELDS})).hexdigest()
 
 
+def codec_observation(value):
+    """Counts the codec rows read: non-finite floats and unsupported values (keys included)."""
+    nonfinite = unsupported = 0
+    stack = [value]
+    while stack:
+        item = stack.pop()
+        kind = type(item)
+        if kind is dict:
+            stack.extend(item.keys())
+            stack.extend(item.values())
+        elif kind is list:
+            stack.extend(item)
+        elif kind is float:
+            nonfinite += not math.isfinite(item)
+        elif kind not in (str, int, bool, type(None)):
+            unsupported += 1
+    return dict(nonfinite_floats=nonfinite, unsupported_values=unsupported)
+
+
 def value_bytes(value):
     """Canonical MessagePack fixture codec; shortest lossless floats, UTF-8 maps."""
+    require('codec_value', codec_observation(value))
+    return packed_value(value)
+
+
+def packed_value(value):
     packer = msgpack.Packer(use_bin_type=True)
     if type(value) is dict:
         keys = sorted(value, key=lambda k: k.encode('utf-8', errors='strict'))
-        return packer.pack_map_header(len(keys)) + b''.join(value_bytes(k) + value_bytes(value[k]) for k in keys)
+        return packer.pack_map_header(len(keys)) + b''.join(packed_value(k) + packed_value(value[k]) for k in keys)
     if type(value) is list:
-        return packer.pack_array_header(len(value)) + b''.join(value_bytes(v) for v in value)
+        return packer.pack_array_header(len(value)) + b''.join(packed_value(v) for v in value)
     if type(value) is float:
-        if not math.isfinite(value):
-            raise ValueError('nonfinite')
         try:
             single = struct.pack('>f', value)
             if struct.unpack('>f', single)[0] == value:
@@ -345,9 +550,11 @@ def value_bytes(value):
         except OverflowError:
             pass
         return b'\xcb' + struct.pack('>d', value)
-    if type(value) not in (str, int, bool, type(None)):
-        raise ValueError('unsupported value')
     return packer.pack(value)
+
+
+def value_sha256(value):
+    return hashlib.sha256(value_bytes(value)).hexdigest()
 
 
 def commitment(event):
@@ -362,8 +569,7 @@ def commitment(event):
 def storage_form(payload, packs):
     # Refuse before JSON can collapse an integral float into an integer. Both
     # storage routes must apply the same producer-input representation rule.
-    if list(canonical_numbers(None, True, payload, {})):
-        raise ValueError('noncanonical producer number')
+    require('codec_storage', {'number_errors': sum(1 for _ in canonical_numbers(None, True, payload, {}))})
     body = rfc8785.dumps(payload)
     if len(body) <= INLINE_LIMIT:
         return copy.deepcopy(payload), None
@@ -372,46 +578,78 @@ def storage_form(payload, packs):
     return {}, f'pm.payload_pack.v1:blake3:{digest}:{len(body)}:application/json'
 
 
-def unique_object(pairs):
-    result = {}
-    for key, value in pairs:
-        if key in result:
-            raise ValueError('duplicate key')
-        result[key] = value
-    return result
+def canonical_size(value):
+    try:
+        return len(rfc8785.dumps(value))
+    except (ValueError, TypeError, OverflowError):
+        return None
+
+
+def parse_pack_body(body):
+    """Observations of a pack body: UTF-8, one JSON value, duplicate members, canonical bytes."""
+    facts = dict(body_utf8=False, body_json=False, body_duplicate_member=None,
+                 body_sha256=hashlib.sha256(body).hexdigest(), canonical_sha256=None, body_length=len(body))
+    try:
+        text = body.decode('utf-8', errors='strict')
+    except UnicodeError:
+        return facts, None
+    facts['body_utf8'] = True
+    duplicates = []
+
+    def members(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                duplicates.append(key)
+            result[key] = value
+        return result
+    try:
+        payload = json.loads(text, object_pairs_hook=members)
+    except ValueError:
+        return facts, None
+    facts.update(body_json=True, body_duplicate_member=bool(duplicates))
+    if not duplicates:
+        try:
+            facts['canonical_sha256'] = hashlib.sha256(rfc8785.dumps(payload)).hexdigest()
+        except (ValueError, TypeError, OverflowError):
+            pass
+    return facts, payload
 
 
 def decode(row, event, packs, *, validation=CURRENT_WRITER, raw_sources=None):
     """Validate actual fixture EventRecord and its resolved unchanged logical schema."""
     event_validator = EVENT_VALIDATOR if validation == CURRENT_WRITER else validator(EVENT_VALIDATOR.schema, validation=validation)
-    if list(event_validator.iter_errors(event)):
-        raise ValueError('invalid EventRecord')
-    if event['event_type'] != row['event_type'] or event['payload_schema_id'] != row['payload_schema_id']:
-        raise ValueError('wrong family/schema')
-    if event['scope_kind'] != 'project' or event['replay_policy'] != 'dedupe_by_idempotency_key' or event['redaction_profile'] != 'no_secrets':
-        raise ValueError('wrong scope/replay/redaction')
+    refusal = event_validator.refusal(event)
+    if refusal is not None:
+        raise TableRefusal(*refusal)
     ref = event['payload_ref']
-    if ref is None:
+    route = 'inline' if ref is None else 'packed'
+    require('decode_envelope', dict(
+        event_type=event['event_type'], row_event_type=row['event_type'],
+        payload_schema_id=event['payload_schema_id'], row_payload_schema_id=row['payload_schema_id'],
+        scope_kind=event['scope_kind'], replay_policy=event['replay_policy'], redaction_profile=event['redaction_profile'],
+        route=route, inline_size=canonical_size(event['payload']) if route == 'inline' else None))
+    if route == 'inline':
         payload = event['payload']
-        if len(rfc8785.dumps(payload)) > INLINE_LIMIT:
-            raise ValueError('oversized inline')
     else:
-        match = PACK_REF.fullmatch(ref)
-        if not match or event['payload'] != {}:
-            raise ValueError('wrong reference/placeholder')
+        match = PACK_REF.fullmatch(ref) if type(ref) is str else None
+        require('decode_pack_ref', dict(ref_grammar=match is not None, placeholder=event['payload']))
         digest, size = match.groups()
-        source = packs.get(digest)
-        if not source or source['durable'] is not True or source['authorized'] is not True:
-            raise ValueError('pack unavailable')
-        body = source['body']
-        if len(body) != int(size) or blake3(body).hexdigest() != digest:
-            raise ValueError('pack integrity')
-        payload = json.loads(body.decode('utf-8', errors='strict'), object_pairs_hook=unique_object)
-        if rfc8785.dumps(payload) != body or len(body) <= INLINE_LIMIT:
-            raise ValueError('noncanonical storage route')
+        source = packs.get(digest) if type(packs) is dict else None
+        present = bool(source) and type(source) is dict
+        body = source.get('body') if present else None
+        body = body if type(body) is bytes else None
+        require('decode_pack_source', dict(
+            pack_present=present, pack_durable=source.get('durable') if present else None,
+            pack_authorized=source.get('authorized') if present else None,
+            body_length=None if body is None else len(body), ref_size=int(size),
+            body_blake3=None if body is None else blake3(body).hexdigest(), ref_digest=digest))
+        facts, payload = parse_pack_body(body)
+        require('decode_pack_body', facts)
     schema = load(row['payload_schema_ref'])
-    if list(validator(schema, validation=validation).iter_errors(payload)):
-        raise ValueError('invalid logical payload')
+    refusal = validator(schema, validation=validation).refusal(payload)
+    if refusal is not None:
+        raise TableRefusal(*refusal)
     if validation == CURRENT_WRITER and row['event_type'] in PROVIDER_HASH_PATHS:
         evidence = payload['type_payload']['authority' if row['event_type'].endswith('.cost_usage') else 'raw_payload']
         if raw_sources is None:
@@ -420,40 +658,39 @@ def decode(row, event, packs, *, validation=CURRENT_WRITER, raw_sources=None):
             original = original['authority' if row['event_type'].endswith('.cost_usage') else 'raw_payload']
             raw_sources = {original['raw_payload_ref']: fixtures['provider_hash_source_utf8'][row['event_type']].encode('utf-8')}
         raw = raw_sources.get(evidence['raw_payload_ref'], False)
-        if raw is False or (raw is not None and type(raw) is not bytes):
-            raise ValueError('provider source unavailable')
+        require('decode_provider_source', dict(provider_source_present=raw is not False, provider_source_type=type(raw).__name__))
         expected = None if raw is None else 'sha256:' + hashlib.sha256(raw).hexdigest()
-        if evidence['provider_payload_hash'] != expected:
-            raise ValueError('provider source digest')
-    if payload['project_id'] != event['project_id']:
-        raise ValueError('Project join')
-    for field in ('run_id', 'attempt_id', 'thread_id', 'node_id'):
-        if event[field] != payload.get(field):
-            raise ValueError(field + ' join')
-    if event['occurred_at_utc'] != payload['created_at_utc']:
-        raise ValueError('authored time join')
-    if 'actor_ref' in payload and payload['actor_ref'] != event['actor_ref']:
-        raise ValueError('actor join')
-    if event['idempotency_key'] != identity(row['event_type'], payload, event['producer_sequence_id']):
-        raise ValueError('identity join')
-    if row['event_type'] == 'runtime_artifact.restore_point':
-        point = payload['type_payload']
-        if point['project_id'] != payload['project_id']:
-            raise ValueError('point Project join')
+        require('decode_provider_digest', dict(provider_payload_hash=evidence['provider_payload_hash'], provider_expected_hash=expected))
+    require('decode_joins', dict(
+        payload_project_id=payload.get('project_id'), event_project_id=event['project_id'],
+        event_run_id=event['run_id'], payload_run_id=payload.get('run_id'),
+        event_attempt_id=event['attempt_id'], payload_attempt_id=payload.get('attempt_id'),
+        event_thread_id=event['thread_id'], payload_thread_id=payload.get('thread_id'),
+        event_node_id=event['node_id'], payload_node_id=payload.get('node_id'),
+        event_occurred_at_utc=event['occurred_at_utc'], payload_created_at_utc=payload.get('created_at_utc'),
+        payload_actor_present='actor_ref' in payload, payload_actor_ref=payload.get('actor_ref'), event_actor_ref=event['actor_ref']))
+    expected = identity(row['event_type'], payload, event['producer_sequence_id'])
+    facts = dict(idempotency_key=event['idempotency_key'], expected_identity=expected,
+                 point_project_id=at(payload, 'type_payload', 'project_id'), payload_project_id=payload.get('project_id'))
+    require('decode_identity.restore' if row['event_type'] == 'runtime_artifact.restore_point' else 'decode_identity', facts)
     return payload
 
 
 def inspect(row, payload, source):
     """Original source/body checks retained; full-envelope checks run separately."""
-    if source['withdrawn'] is not False or source['authorized'] is not True:
-        return 'unavailable'
-    if source['source_valid'] is not True or source['receipt_valid'] is not True:
-        return 'unavailable'
-    if source['project_id'] != payload['project_id'] or source['event_type'] != row['event_type']:
-        return 'identity_conflict'
-    if value_bytes(source['original_payload']) != value_bytes(payload):
-        return 'identity_conflict'
-    return ('metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs') if type(source['body_deleted']) is bool else 'unavailable'
+    refusal = table_refusal('inspect_flags', dict(
+        withdrawn=at(source, 'withdrawn'), authorized=at(source, 'authorized'),
+        source_valid=at(source, 'source_valid'), receipt_valid=at(source, 'receipt_valid'),
+        source_project_id=at(source, 'project_id'), payload_project_id=at(payload, 'project_id'),
+        source_event_type=at(source, 'event_type'), row_event_type=row['event_type']))
+    if refusal is None:
+        refusal = table_refusal('inspect_payload', dict(original_payload_sha256=value_sha256(at(source, 'original_payload')),
+                                                       payload_sha256=value_sha256(payload)))
+    if refusal is None:
+        refusal = table_refusal('inspect_deleted', dict(body_deleted=at(source, 'body_deleted')))
+    if refusal is not None:
+        return refusal[1]
+    return 'metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs'
 
 
 def full_value_matches(candidate, original, result, custody, *, validation=CURRENT_WRITER):
@@ -462,41 +699,55 @@ def full_value_matches(candidate, original, result, custody, *, validation=CURRE
         receipt_validator = validator(RECEIPT_SCHEMA, 'AppendReceipt', validation=validation)
         custody_validator = validator(RECEIPT_SCHEMA, 'custody_v2', validation=validation)
         result_validator = validator(RECEIPT_SCHEMA, 'full_value_result', validation=validation)
-    if (not stored_event_valid(candidate, validation=validation) or not stored_event_valid(original['event'], validation=validation)
-            or list(receipt_validator.iter_errors(result['first_append_receipt']))
-            or list(custody_validator.iter_errors(custody)) or list(result_validator.iter_errors(result))
-            or list(custody_validator.iter_errors(original['custody']))
-            or list(result_validator.iter_errors(original['result']))):
+    stored = at(original, 'event')
+    receipt = at(result, 'first_append_receipt')
+    if (not stored_event_valid(candidate, validation=validation) or not stored_event_valid(stored, validation=validation)
+            or not receipt_validator.is_valid(receipt) or not custody_validator.is_valid(custody)
+            or not result_validator.is_valid(result) or not custody_validator.is_valid(at(original, 'custody'))
+            or not result_validator.is_valid(at(original, 'result'))):
         return False
-    receipt = result['first_append_receipt']
-    stored = original['event']
-    return (value_bytes(candidate) == value_bytes(stored)
-            and value_bytes(result) == value_bytes(original['result']) and value_bytes(custody) == value_bytes(original['custody'])
-            and value_bytes(receipt) == value_bytes(custody['first_append_receipt'])
-            and receipt['event_id'] == candidate['event_id'] == custody['event_id']
-            and custody['scope_partition'] == scope_partition(candidate['project_id'])
-            and custody['event_type'] == candidate['event_type']
-            and custody['idempotency_key'] == candidate['idempotency_key']
-            and value_bytes(receipt['sequence_id']) == value_bytes(candidate['sequence_id'])
-            and result['original_segment_ref'] == custody['original_segment_ref']
-            and commitment(candidate) == custody['original_event_value_commitment'] == result['original_event_value_commitment']
-            and semantic_digest(candidate) == custody['producer_semantic_digest'])
+    if table_refusal('full_value_bytes', dict(
+            candidate_sha256=value_sha256(candidate), stored_sha256=value_sha256(stored),
+            result_sha256=value_sha256(result), original_result_sha256=value_sha256(original['result']),
+            custody_sha256=value_sha256(custody), original_custody_sha256=value_sha256(original['custody']),
+            receipt_sha256=value_sha256(receipt), custody_receipt_sha256=value_sha256(custody['first_append_receipt']))):
+        return False
+    project = candidate['project_id']
+    if table_refusal('full_value_ids_a', dict(
+            receipt_event_id=receipt['event_id'], candidate_event_id=candidate['event_id'], custody_event_id=custody['event_id'],
+            custody_scope_partition=custody['scope_partition'],
+            expected_scope_partition=scope_partition(project) if type(project) is str else None,
+            custody_event_type=custody['event_type'], candidate_event_type=candidate['event_type'],
+            custody_idempotency_key=custody['idempotency_key'], candidate_idempotency_key=candidate['idempotency_key'])):
+        return False
+    return table_refusal('full_value_ids_b', dict(
+        receipt_sequence_code=value_bytes(receipt['sequence_id']).hex(), candidate_sequence_code=value_bytes(candidate['sequence_id']).hex(),
+        result_segment_ref=result['original_segment_ref'], custody_segment_ref=custody['original_segment_ref'],
+        expected_commitment=commitment(candidate), custody_commitment=custody['original_event_value_commitment'],
+        result_commitment=result['original_event_value_commitment'],
+        expected_semantic_digest=semantic_digest(candidate), custody_semantic_digest=custody['producer_semantic_digest'])) is None
 
 
 def stored_event_valid(event, *, validation=CURRENT_WRITER):
     """Lexical/schema validation of original copies, without changing hash domains."""
     event_validator = EVENT_VALIDATOR if validation == CURRENT_WRITER else validator(EVENT_VALIDATOR.schema, validation=validation)
-    if list(event_validator.iter_errors(event)):
+    if not event_validator.is_valid(event):
         return False
-    if event['scope_kind'] != 'project' or event['replay_policy'] != 'dedupe_by_idempotency_key':
+    ref = event['payload_ref']
+    route = 'inline' if ref is None else 'packed'
+    dispatch = None
+    if route == 'inline':
+        dispatch = next((row for row in load('Plans/runtime_artifact_event_drafts.json')['rows']
+                         if event['event_type'] == row['event_type'] and event['payload_schema_id'] == row['payload_schema_id']), None)
+    if table_refusal('stored', dict(
+            scope_kind=event['scope_kind'], replay_policy=event['replay_policy'], route=route,
+            ref_grammar=type(ref) is str and PACK_REF.fullmatch(ref) is not None,
+            placeholder=event['payload'] if route == 'packed' else None, dispatch_found=dispatch is not None,
+            inline_size=canonical_size(event['payload']) if route == 'inline' else None)):
         return False
-    if event['payload_ref'] is not None:
-        return bool(PACK_REF.fullmatch(event['payload_ref'])) and event['payload'] == {}
-    for row in load('Plans/runtime_artifact_event_drafts.json')['rows']:
-        if event['event_type'] == row['event_type'] and event['payload_schema_id'] == row['payload_schema_id']:
-            return (len(rfc8785.dumps(event['payload'])) <= INLINE_LIMIT
-                    and validator(load(row['payload_schema_ref']), validation=validation).is_valid(event['payload']))
-    return False
+    if route == 'packed':
+        return True
+    return validator(load(dispatch['payload_schema_ref']), validation=validation).is_valid(event['payload'])
 
 
 def resolve_history(row, original, source, packs, *, decoder):
@@ -505,15 +756,16 @@ def resolve_history(row, original, source, packs, *, decoder):
     No current-writer fallback, new receipt or rehash/rewrite of retained data.
     Source/receipt authentication is modeled by the source adapter, as in inspect.
     """
-    if decoder != HISTORICAL_V1:
+    if table_refusal('history', {'decoder': decoder}):
         return 'unavailable'
     try:
-        event = original['event']
+        event = at(original, 'event')
         payload = decode(row, event, packs, validation=decoder)
-        if not full_value_matches(event, source['authenticated_original'], original['result'], original['custody'], validation=decoder):
+        if not full_value_matches(event, at(source, 'authenticated_original'), at(original, 'result'),
+                                  at(original, 'custody'), validation=decoder):
             return 'unavailable'
         return inspect(row, payload, source)
-    except (ValueError, KeyError, TypeError, UnicodeError):
+    except TableRefusal:
         return 'unavailable'
 
 
@@ -530,28 +782,30 @@ class AppendModel:
         self.scoped, self.global_ids = {}, {}
 
     def append(self, event, admission=False, source_valid=True, dedupe_available=True):
-        if admission is not True:
-            return 'withdrawn'
-        if source_valid is not True or dedupe_available is not True:
-            return 'unavailable'
-        if list(EVENT_VALIDATOR.iter_errors(event)):
+        refusal = table_refusal('append_gate', dict(admission=admission, source_valid=source_valid, dedupe_available=dedupe_available))
+        if refusal is not None:
+            return refusal[1]
+        if not EVENT_VALIDATOR.is_valid(event):
             return 'invalid'
         # Replay policy is deliberately outside the canonical semantic digest.
         # Validate it before either global or scoped dedupe can return success.
-        if event['replay_policy'] == 'projector_replay_only':
-            return 'replay_only_not_appendable'
-        if event['replay_policy'] != 'dedupe_by_idempotency_key':
-            return 'invalid'
+        for phase in ('append_replay', 'append_policy'):
+            refusal = table_refusal(phase, dict(replay_policy=event['replay_policy']))
+            if refusal is not None:
+                return refusal[1]
         digest = semantic_digest(event)
-        if event['event_id'] in self.global_ids and self.global_ids[event['event_id']] != digest:
-            return 'idempotency_conflict'
         key = (event['project_id'], event['event_type'], event['idempotency_key'])
-        if key in self.scoped:
-            original = self.scoped[key]
-            return original if original['custody']['producer_semantic_digest'] == digest else 'idempotency_conflict'
+        scoped = self.scoped.get(key)
+        refusal = table_refusal('append_dedupe', dict(
+            global_digest=self.global_ids.get(event['event_id']), digest=digest,
+            scoped_digest=None if scoped is None else scoped['custody']['producer_semantic_digest']))
+        if refusal is not None:
+            return refusal[1]
+        if scoped is not None:
+            return scoped
         try:
             decode(self.row, event, self.packs, raw_sources=self.raw_sources)
-        except (ValueError, KeyError, UnicodeError, TypeError):
+        except TableRefusal:
             return 'invalid'
         receipt = copy.deepcopy(self.receipt)
         receipt.update(event_id=event['event_id'], sequence_id=event['sequence_id'])
@@ -570,9 +824,36 @@ class AppendModel:
 
 
 def policies_match(row, index_policy, checkpoint_policy):
-    return (row.get('index_retention_policy_ref') == index_policy
-            and row.get('checkpoint_retention_policy_ref') == checkpoint_policy
-            and 'derived_retention_policy_ref' not in row)
+    return table_refusal('policies', dict(
+        index_retention_policy_ref=row.get('index_retention_policy_ref'), index_policy=index_policy,
+        checkpoint_retention_policy_ref=row.get('checkpoint_retention_policy_ref'), checkpoint_policy=checkpoint_policy,
+        derived_present='derived_retention_policy_ref' in row)) is None
+
+
+def binding_or_none(value):
+    """SP-278 binding digest, or None when the value has no binding encoding."""
+    try:
+        return binding_digest(value)
+    except (ValueError, TypeError, KeyError, OverflowError):
+        return None
+
+
+def sha_or_none(value):
+    """sha256 of canonical value bytes, or None when the codec rows refuse the value."""
+    try:
+        return value_sha256(value)
+    except TableRefusal:
+        return None
+
+
+def field_code(value, key):
+    """Canonical bytes (hex) of one present field; None when it is absent."""
+    if type(value) is not dict or key not in value:
+        return None
+    try:
+        return value_bytes(value[key]).hex()
+    except TableRefusal:
+        return None
 
 
 def checkpoint_matches(row, event, original, bundle):
@@ -580,122 +861,185 @@ def checkpoint_matches(row, event, original, bundle):
 
     The single-segment source adapter is synthetic and assumed verified. This
     exercises identities/bytes, never native controls, CRC, redb, sync or CAS.
+    Every refusal is a checkpoint_* table row, in the order of the original
+    conjunction. Re-checks of a predicate an earlier row already enforced on
+    the same values are not repeated (see the sweep part 2A report).
     """
-    try:
-        if row['checkpoint_key'] != CHECKPOINT_KEY or row['checkpoint_schema_ref'] != CHECKPOINT_SCHEMA:
-            return False
-        path, pointer = row['checkpoint_schema_ref'].split('#', 1)
-        schema = load(path)
-        definition = schema
-        for member in pointer.lstrip('/').split('/'):
-            definition = definition[member.replace('~1', '/').replace('~0', '~')]
-        if definition != schema['$defs']['checkpoint']:
-            return False
-        checkpoint, token, source = (bundle[k] for k in ('checkpoint', 'read_token', 'selected_source'))
-        if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):
-            return False
-        custody, receipt = original['custody'], original['result']['first_append_receipt']
-        storage = custody['storage_instance_id']
-        key = CHECKPOINT_KEY.format(storage_instance_id=storage)
-        if not (bundle['checkpoint_key'] == key == token['checkpoint_key']
-                and storage == checkpoint['storage_instance_id'] == token['storage_instance_id'] == source['storage_instance_id']):
-            return False
-        generation = checkpoint['current_generation_id']
-        node = checkpoint['generations'][generation]
-        anchor, frontier = node['anchor'], node['frontier']
-        selection = source['source_selection']
-        if (node['generation_id'] != generation or node['state'] != 'current'
-                or sum(n['state'] == 'current' for n in checkpoint['generations'].values()) != 1
-                or selection['storage_instance_id'] != storage
-                or anchor['source_selection']['storage_instance_id'] != storage
-                or value_bytes(selection) != value_bytes(frontier['source_selection']) or value_bytes(selection) != value_bytes(token['source_selection'])
-                or source['verified'] is not True or source['redb_snapshot_id'] != token['redb_snapshot_id']):
-            return False
-        expected_generation = 'eig_' + binding_digest(dict(
-            domain='pm.event_index.generation.v1', storage_instance_id=storage,
-            projector_version=node['projector_version'], birth_source_selection=anchor['source_selection'],
-            generation_seed_sha256=anchor['generation_seed_sha256']))
-        expected_token = dict(storage_instance_id=storage, checkpoint_key=key,
-            checkpoint_ref=key + '#/generations/' + generation, generation_id=generation,
-            generation_anchor_sha256=binding_digest(anchor), frontier_revision=frontier['publication_revision'],
-            frontier_sha256=binding_digest(frontier), index_dataset_name='event_record_index.v2@' + generation,
-            source_selection=selection, redb_snapshot_id=source['redb_snapshot_id'])
-        if generation != expected_generation or value_bytes(token) != value_bytes(expected_token) or node['index_dataset_name'] != token['index_dataset_name']:
-            return False
-        if not full_value_matches(event, original, original['result'], custody) or value_bytes(source['event']) != value_bytes(event):
-            return False
-        partition = scope_partition(event['project_id'])
-        if (source['scope_partition'] != partition or custody['scope_partition'] != partition
-                or source['event_value_sha256'] != hashlib.sha256(value_bytes(event)).hexdigest()
-                or value_bytes(source['source_locator']) != value_bytes({k: receipt[k] for k in ('segment_generation','segment_name','byte_offset','sequence_id')})
-                or selection['selected_segment_generation'] != receipt['segment_generation']):
-            return False
-        manifest, current = source['manifest'], source['current']
-        if (type(current['selected_segment_generation']) is not int
-                or any(type(manifest[k]) is not int for k in ('selected_segment_generation','manifest_generation','recovery_epoch'))
-                or selection['current_bytes_sha256'] != hashlib.sha256(value_bytes(current)).hexdigest()
-                or selection['manifest_bytes_sha256'] != hashlib.sha256(value_bytes(manifest)).hexdigest()
-                or current['selected_segment_generation'] != selection['selected_segment_generation']
-                or manifest['selected_segment_generation'] != selection['selected_segment_generation']
-                or manifest['manifest_generation'] != selection['manifest_generation']
-                or manifest['recovery_epoch'] != selection['recovery_epoch']
-                or manifest['survivor_prefix_sha256'] != selection['manifest_survivor_prefix_sha256']
-                or value_bytes(manifest['retained_inventory']) != value_bytes(source['segments'])
-                or selection['retained_inventory_sha256'] != binding_digest(manifest['retained_inventory'])
-                or selection['durable_watermarks_sha256'] != binding_digest(manifest['durable_watermarks'])
-                or selection['excluded_ranges_sha256'] != binding_digest(manifest['excluded_ranges'])
-                or selection['retired_inputs_sha256'] != binding_digest(manifest['retired_inputs'])):
-            return False
-        # This fixture edition represents one complete initial source/dataset.
-        # It cannot be used to claim a translated or partial/multi-segment read.
-        prefix = binding_digest(dict(domain='pm.event_index.retained_prefix.v1', entries=[dict(
-            sequence_id=event['sequence_id'], event_id=event['event_id'], scope_partition=partition,
-            source_value_bytes_sha256=source['event_value_sha256'])]))
-        coverage = frontier['coverage']
-        if (value_bytes(anchor['source_selection']) != value_bytes(selection) or node['translation'] is not None
-                or anchor['retained_event_count'] != 1 or anchor['first_retained_sequence_id'] != event['sequence_id']
-                or anchor['through_sequence_id'] != event['sequence_id'] or anchor['retained_event_prefix_sha256'] != prefix
-                or anchor['sequence_gaps_sha256'] != binding_digest([])
-                or coverage['retained_event_count'] != 1 or not coverage['complete_to_captured_boundary']
-                or coverage['empty_retained_source'] or coverage['sequence_gaps'] != []
-                or coverage['retained_event_prefix_sha256'] != prefix
-                or coverage['first_retained_sequence_id'] != event['sequence_id'] or coverage['through_sequence_id'] != event['sequence_id']):
-            return False
-        last = dict(segment_generation=receipt['segment_generation'], segment_name=receipt['segment_name'],
-                    byte_offset=receipt['byte_offset'], frame_end_offset=source['frame_end_offset'],
-                    last_sequence_id=event['sequence_id'], last_event_id=event['event_id'])
-        if value_bytes(coverage['last_frame']) != value_bytes(last) or value_bytes(coverage['segments']) != value_bytes(source['segments']) or len(source['segments']) != 1:
-            return False
-        segment = source['segments'][0]
-        if (segment['segment_generation'] != receipt['segment_generation'] or segment['segment_name'] != receipt['segment_name']
-                or segment['scan_start_offset'] != 0 or segment['scanned_through_offset'] != source['frame_end_offset']
-                or segment['source_durable_end_offset'] != receipt['durable_end_offset']
-                or segment['source_durable_bytes_sha256'] != source['event_value_sha256']
-                or source['frame_end_offset'] != len(value_bytes(event))
-                or source['frame_end_offset'] > receipt['durable_end_offset']
-                or segment['retained_event_count'] != 1 or segment['first_sequence_id'] != event['sequence_id']
-                or segment['last_sequence_id'] != event['sequence_id']):
-            return False
-        row_key = f"event_record_index.v2:{partition}:{event['sequence_id']:020}:{event['event_id']}"
-        expected_row = dict(schema_id='pm.storage_value.event_record_index.v2', schema_version='2.0.0',
-            scope_kind='project', project_id=event['project_id'], scope_partition=partition,
-            sequence_id=event['sequence_id'], event_id=event['event_id'], event_type=event['event_type'],
-            source_locator=source['source_locator'], publication_locator=dict(
-                manifest_generation=selection['manifest_generation'], recovery_epoch=selection['recovery_epoch'],
-                survivor_prefix_sha256=selection['manifest_survivor_prefix_sha256'],
-                checkpoint_ref=token['checkpoint_ref'], compaction_translation_manifest_ref=None),
-            payload_sha256=hashlib.sha256(value_bytes(event['payload'])).hexdigest(),
-            producer_semantic_digest=semantic_digest(event), idempotency_key=event['idempotency_key'],
-            correlation_id=event['correlation_id'], causation_event_id=event['causation_event_id'],
-            persisted_at_utc=event['persisted_at_utc'], redaction_profile=event['redaction_profile'],
-            source_schema_id=event['schema_id'], source_schema_version=event['schema_version'], projector_replay_only=False)
-        dataset = {row_key: expected_row}
-        return (value_bytes(bundle['datasets']) == value_bytes({token['index_dataset_name']: dataset})
-                and frontier['index_row_count'] == 1
-                and frontier['index_row_set_sha256'] == binding_digest(dict(
-                    domain='pm.event_index.row_set.v1', entries=[dict(key=row_key, value=expected_row)])))
-    except (KeyError, ValueError, TypeError, OSError):
+    if table_refusal('checkpoint_route', dict(
+            row_checkpoint_key=at(row, 'checkpoint_key'), key_template=CHECKPOINT_KEY,
+            row_checkpoint_schema_ref=at(row, 'checkpoint_schema_ref'), schema_ref=CHECKPOINT_SCHEMA)):
         return False
+    schema = load(CHECKPOINT_SCHEMA.split('#', 1)[0])
+    checkpoint, token, source = (at(bundle, k) for k in ('checkpoint', 'read_token', 'selected_source'))
+    if not validator(schema, 'checkpoint').is_valid(checkpoint) or not validator(schema, 'read_token').is_valid(token):
+        return False
+    custody = at(original, 'custody')
+    receipt = at(original, 'result', 'first_append_receipt')
+    storage = at(custody, 'storage_instance_id')
+    key = CHECKPOINT_KEY.format(storage_instance_id=storage)
+    if table_refusal('checkpoint_store', dict(
+            key=key, bundle_checkpoint_key=at(bundle, 'checkpoint_key'), token_checkpoint_key=token['checkpoint_key'],
+            storage=storage, checkpoint_storage=checkpoint['storage_instance_id'], token_storage=token['storage_instance_id'],
+            source_storage=at(source, 'storage_instance_id'))):
+        return False
+    generation = checkpoint['current_generation_id']
+    node = checkpoint['generations'].get(generation)
+    if table_refusal('checkpoint_node_a', dict(
+            node_present=type(node) is dict, node_generation_id=at(node, 'generation_id'), generation=generation,
+            node_state=at(node, 'state'),
+            current_count=sum(1 for n in checkpoint['generations'].values() if at(n, 'state') == 'current'))):
+        return False
+    anchor, frontier = node['anchor'], node['frontier']
+    selection = at(source, 'source_selection')
+    selection_sha256 = sha_or_none(selection)
+    if table_refusal('checkpoint_node_b', dict(
+            selection_storage=at(selection, 'storage_instance_id'), storage=storage, node_present=True,
+            anchor_selection_storage=at(anchor, 'source_selection', 'storage_instance_id'),
+            frontier_selection_sha256=sha_or_none(frontier['source_selection']), selection_sha256=selection_sha256,
+            token_selection_sha256=sha_or_none(token['source_selection']),
+            source_verified=at(source, 'verified'), source_redb_snapshot_id=at(source, 'redb_snapshot_id'),
+            token_redb_snapshot_id=token['redb_snapshot_id'])):
+        return False
+    expected_generation = 'eig_' + str(binding_or_none(dict(
+        domain='pm.event_index.generation.v1', storage_instance_id=storage,
+        projector_version=node['projector_version'], birth_source_selection=anchor['source_selection'],
+        generation_seed_sha256=anchor['generation_seed_sha256'])))
+    expected_token = dict(storage_instance_id=storage, checkpoint_key=key,
+        checkpoint_ref=key + '#/generations/' + generation, generation_id=generation,
+        generation_anchor_sha256=binding_or_none(anchor), frontier_revision=frontier['publication_revision'],
+        frontier_sha256=binding_or_none(frontier), index_dataset_name='event_record_index.v2@' + generation,
+        source_selection=selection, redb_snapshot_id=at(source, 'redb_snapshot_id'))
+    # Token storage/key/selection/snapshot equality is enforced by C03b, C03d,
+    # C04g and C04i above on the same schema-typed string/byte values, and the
+    # closed read_token schema (all ten fields required, no others) fixes the
+    # field set, so whole-token byte equality is the per-field rows below.
+    if table_refusal('checkpoint_token_a', dict(
+            generation=generation, expected_generation=expected_generation,
+            token_checkpoint_ref=field_code(token, 'checkpoint_ref'), expected_checkpoint_ref=field_code(expected_token, 'checkpoint_ref'),
+            token_generation_id=field_code(token, 'generation_id'), expected_generation_id=field_code(expected_token, 'generation_id'),
+            token_anchor_sha256=field_code(token, 'generation_anchor_sha256'),
+            expected_anchor_sha256=field_code(expected_token, 'generation_anchor_sha256'))):
+        return False
+    if table_refusal('checkpoint_token_b', dict(
+            token_frontier_revision=field_code(token, 'frontier_revision'),
+            expected_frontier_revision=field_code(expected_token, 'frontier_revision'),
+            token_frontier_sha256=field_code(token, 'frontier_sha256'), expected_frontier_sha256=field_code(expected_token, 'frontier_sha256'),
+            token_dataset_name=field_code(token, 'index_dataset_name'), expected_dataset_name=field_code(expected_token, 'index_dataset_name'),
+            node_dataset_name=node['index_dataset_name'], token_dataset_name_text=token['index_dataset_name'])):
+        return False
+    if not full_value_matches(event, original, at(original, 'result'), custody):
+        return False
+    if table_refusal('checkpoint_source_event', dict(source_event_sha256=sha_or_none(at(source, 'event')),
+                                                     event_sha256=value_sha256(event))):
+        return False
+    partition = scope_partition(event['project_id'])
+    event_value_sha256 = value_sha256(event)
+    # The custody partition is C03-independent: F03 inside full_value_matches
+    # above already required custody['scope_partition'] == this partition.
+    if table_refusal('checkpoint_source', dict(
+            source_partition=at(source, 'scope_partition'), partition=partition,
+            source_event_value_sha256=at(source, 'event_value_sha256'), event_value_sha256=event_value_sha256,
+            source_locator_sha256=sha_or_none(at(source, 'source_locator')),
+            expected_locator_sha256=value_sha256({k: receipt[k] for k in ('segment_generation', 'segment_name', 'byte_offset', 'sequence_id')}),
+            selection_segment_generation=at(selection, 'selected_segment_generation'),
+            receipt_segment_generation=receipt['segment_generation'])):
+        return False
+    manifest, current = at(source, 'manifest'), at(source, 'current')
+    if table_refusal('checkpoint_manifest_type', dict(
+            current_generation_type=type(at(current, 'selected_segment_generation')).__name__,
+            manifest_segment_type=type(at(manifest, 'selected_segment_generation')).__name__,
+            manifest_generation_type=type(at(manifest, 'manifest_generation')).__name__,
+            recovery_epoch_type=type(at(manifest, 'recovery_epoch')).__name__)):
+        return False
+    if table_refusal('checkpoint_manifest_a', dict(
+            selection_current_sha256=at(selection, 'current_bytes_sha256'), current_sha256=sha_or_none(current),
+            selection_manifest_sha256=at(selection, 'manifest_bytes_sha256'), manifest_sha256=sha_or_none(manifest),
+            current_generation=at(current, 'selected_segment_generation'),
+            selection_segment_generation=at(selection, 'selected_segment_generation'),
+            manifest_segment=at(manifest, 'selected_segment_generation'),
+            manifest_generation=at(manifest, 'manifest_generation'), selection_manifest_generation=at(selection, 'manifest_generation'),
+            recovery_epoch=at(manifest, 'recovery_epoch'), selection_recovery_epoch=at(selection, 'recovery_epoch'))):
+        return False
+    inventory = at(manifest, 'retained_inventory')
+    if table_refusal('checkpoint_manifest_b', dict(
+            survivor_prefix=at(manifest, 'survivor_prefix_sha256'), selection_survivor_prefix=at(selection, 'manifest_survivor_prefix_sha256'),
+            inventory_sha256=sha_or_none(inventory), segments_sha256=sha_or_none(at(source, 'segments')),
+            selection_inventory_digest=at(selection, 'retained_inventory_sha256'), inventory_digest=binding_or_none(inventory),
+            selection_watermarks_digest=at(selection, 'durable_watermarks_sha256'),
+            watermarks_digest=binding_or_none(at(manifest, 'durable_watermarks')),
+            selection_excluded_digest=at(selection, 'excluded_ranges_sha256'), excluded_digest=binding_or_none(at(manifest, 'excluded_ranges')),
+            selection_retired_digest=at(selection, 'retired_inputs_sha256'), retired_digest=binding_or_none(at(manifest, 'retired_inputs')))):
+        return False
+    # This fixture edition represents one complete initial source/dataset.
+    # It cannot be used to claim a translated or partial/multi-segment read.
+    prefix = binding_or_none(dict(domain='pm.event_index.retained_prefix.v1', entries=[dict(
+        sequence_id=event['sequence_id'], event_id=event['event_id'], scope_partition=partition,
+        source_value_bytes_sha256=source['event_value_sha256'])]))
+    coverage = frontier['coverage']
+    # complete_to_captured_boundary is const true in the checkpoint schema, and
+    # empty_retained_source=true forces retained_event_count 0 there, so the
+    # coverage count row below decides both earlier truth tests.
+    if table_refusal('checkpoint_anchor', dict(
+            anchor_selection_sha256=sha_or_none(anchor['source_selection']), selection_sha256=selection_sha256,
+            translation=node['translation'], anchor_count=anchor['retained_event_count'],
+            anchor_first=anchor['first_retained_sequence_id'], anchor_through=anchor['through_sequence_id'],
+            event_sequence_id=event['sequence_id'], anchor_prefix=anchor['retained_event_prefix_sha256'], prefix=prefix,
+            anchor_gaps=anchor['sequence_gaps_sha256'], no_gaps_digest=binding_digest([]))):
+        return False
+    if table_refusal('checkpoint_coverage', dict(
+            coverage_count=coverage['retained_event_count'], coverage_gaps=coverage['sequence_gaps'],
+            coverage_prefix=coverage['retained_event_prefix_sha256'], prefix=prefix,
+            coverage_first=coverage['first_retained_sequence_id'], coverage_through=coverage['through_sequence_id'],
+            event_sequence_id=event['sequence_id'])):
+        return False
+    segments = at(source, 'segments')
+    last = dict(segment_generation=receipt['segment_generation'], segment_name=receipt['segment_name'],
+                byte_offset=receipt['byte_offset'], frame_end_offset=at(source, 'frame_end_offset'),
+                last_sequence_id=event['sequence_id'], last_event_id=event['event_id'])
+    if table_refusal('checkpoint_frame', dict(
+            last_frame_sha256=sha_or_none(coverage['last_frame']), expected_last_frame_sha256=sha_or_none(last),
+            coverage_segments_sha256=sha_or_none(coverage['segments']), segments_sha256=sha_or_none(segments),
+            segment_count=len(segments) if type(segments) is list else None)):
+        return False
+    # scan_start_offset is const 0 in the checkpoint schema's coverage segments,
+    # and C10b above makes the source segments byte-equal to them.
+    segment = segments[0]
+    frame_end = at(source, 'frame_end_offset')
+    try:
+        beyond = frame_end > receipt['durable_end_offset']
+    except TypeError:
+        beyond = True
+    seg = dict(segment_present=type(segment) is dict, segment_generation=at(segment, 'segment_generation'),
+               receipt_segment_generation=receipt['segment_generation'], segment_name=at(segment, 'segment_name'),
+               receipt_segment_name=receipt['segment_name'],
+               scanned_through=at(segment, 'scanned_through_offset'), frame_end=frame_end,
+               segment_durable_end=at(segment, 'source_durable_end_offset'), receipt_durable_end=receipt['durable_end_offset'],
+               segment_durable_sha256=at(segment, 'source_durable_bytes_sha256'),
+               source_event_value_sha256=source['event_value_sha256'], event_value_length=len(value_bytes(event)),
+               frame_beyond_durable=beyond is not False, segment_count_events=at(segment, 'retained_event_count'),
+               segment_first=at(segment, 'first_sequence_id'), segment_last=at(segment, 'last_sequence_id'),
+               event_sequence_id=event['sequence_id'])
+    if table_refusal('checkpoint_segment_a', seg) or table_refusal('checkpoint_segment_b', seg):
+        return False
+    row_key = f"event_record_index.v2:{partition}:{event['sequence_id']:020}:{event['event_id']}"
+    expected_row = dict(schema_id='pm.storage_value.event_record_index.v2', schema_version='2.0.0',
+        scope_kind='project', project_id=event['project_id'], scope_partition=partition,
+        sequence_id=event['sequence_id'], event_id=event['event_id'], event_type=event['event_type'],
+        source_locator=source['source_locator'], publication_locator=dict(
+            manifest_generation=selection['manifest_generation'], recovery_epoch=selection['recovery_epoch'],
+            survivor_prefix_sha256=selection['manifest_survivor_prefix_sha256'],
+            checkpoint_ref=token['checkpoint_ref'], compaction_translation_manifest_ref=None),
+        payload_sha256=hashlib.sha256(value_bytes(event['payload'])).hexdigest(),
+        producer_semantic_digest=semantic_digest(event), idempotency_key=event['idempotency_key'],
+        correlation_id=event['correlation_id'], causation_event_id=event['causation_event_id'],
+        persisted_at_utc=event['persisted_at_utc'], redaction_profile=event['redaction_profile'],
+        source_schema_id=event['schema_id'], source_schema_version=event['schema_version'], projector_replay_only=False)
+    return table_refusal('checkpoint_dataset', dict(
+        datasets_sha256=sha_or_none(at(bundle, 'datasets')),
+        expected_datasets_sha256=sha_or_none({token['index_dataset_name']: {row_key: expected_row}}),
+        row_count=frontier['index_row_count'], row_set_digest=frontier['index_row_set_sha256'],
+        expected_row_set_digest=binding_or_none(dict(domain='pm.event_index.row_set.v1',
+                                                     entries=[dict(key=row_key, value=expected_row)])))) is None
 
 
 def checkpoint_rebind(event, original, bundle, preserve_token=()):
@@ -781,7 +1125,7 @@ def checkpoint_negative(name, row, event, original, bundle):
         'wrong_token_store': ('storage_instance_id',),
         'wrong_token_source_store': ('source_selection',),
         'wrong_pointer': ('checkpoint_ref',),
-        'wrong_frontier': ('frontier_revision','frontier_sha256'),
+        'wrong_frontier': ('frontier_revision',),
         'wrong_live_snapshot': ('redb_snapshot_id',),
     }.get(name,())
     checkpoint_rebind(event,original,bundle,preserve)
@@ -1006,59 +1350,79 @@ def history_source_for(row, payload, authentic_original):
 
 
 def rejected(action):
+    raised = False
     try:
         action()
     except (ValueError, KeyError, UnicodeError, TypeError):
-        return True
-    return False
+        raised = True
+    return table_refusal('codec_oracle', {'raised': raised}) is None
+
+
+def references_resolve(errors):
+    """S9 preflight decision: the reference walk's errors refuse through the table."""
+    return table_refusal('codec_references', {'unresolved_count': len(errors)}) is None
 
 
 def observation_admissible(candidate, previous, row, packs, source):
     """Ordinal/predecessor/source model; not a native owner fence or read proof."""
-    if source['proof_valid'] is not True or source['predecessor_complete'] is not True or source['snapshot_current'] is not True:
+    if table_refusal('observation_source', dict(
+            proof_valid=at(source, 'proof_valid'), predecessor_complete=at(source, 'predecessor_complete'),
+            snapshot_current=at(source, 'snapshot_current'))):
         return False
     try:
         payload = decode(row, candidate, packs)
-    except (ValueError, KeyError):
+    except TableRefusal:
         return False
-    if candidate['correlation_id'] != grouping_identity(row['event_type'], payload):
+    if table_refusal('observation_group', dict(correlation_id=candidate['correlation_id'],
+                                               grouping_identity=grouping_identity(row['event_type'], payload))):
         return False
     # The independently supplied owner snapshot must satisfy the same closed
     # JSON types BEFORE a value join. Python equality aliases False/0/0.0 and
     # True/1/1.0; encoded equality also keeps nested source copies exact.
-    source_payload = dict(payload, type_payload=source['canonical_point'])
-    if (not validator(load(row['payload_schema_ref'])).is_valid(source_payload)
-            or value_bytes(payload['type_payload']) != value_bytes(source['canonical_point'])):
+    canonical_point = at(source, 'canonical_point')
+    source_payload = dict(payload, type_payload=canonical_point)
+    if not validator(load(row['payload_schema_ref'])).is_valid(source_payload):
+        return False
+    if table_refusal('observation_snapshot', dict(point_sha256=value_sha256(payload['type_payload']),
+                                                  snapshot_sha256=value_sha256(canonical_point))):
         return False
     if previous is None:
-        return candidate['producer_sequence_id'] == 0 and candidate['parent_event_id'] is None
+        return table_refusal('observation_first', dict(producer_sequence_id=candidate['producer_sequence_id'],
+                                                       parent_event_id=candidate['parent_event_id'])) is None
     # The adapter authenticates the write-time recipe independently of the
     # supplied predecessor/receipt. Never select a profile from event data.
+    predecessor_source = at(source, 'predecessor_source')
+    decoder = at(predecessor_source, 'recorded_decoder')
+    if table_refusal('observation_recipe', {'decoder': decoder}):
+        return False
     try:
-        predecessor_source = source['predecessor_source']
-        decoder = predecessor_source['recorded_decoder']
-        if decoder not in (CURRENT_WRITER, HISTORICAL_V1):
-            return False
-        if not full_value_matches(previous, predecessor_source['authenticated_original'],
-                                  source['predecessor_result'], source['predecessor_custody'],
+        if not full_value_matches(previous, at(predecessor_source, 'authenticated_original'),
+                                  at(source, 'predecessor_result'), at(source, 'predecessor_custody'),
                                   validation=decoder):
             return False
         old = decode(row, previous, packs, validation=decoder)
         if inspect(row, old, predecessor_source) not in ('metadata_only', 'metadata_and_authorized_refs'):
             return False
-    except (ValueError, KeyError, TypeError, UnicodeError):
+    except TableRefusal:
         return False
-    immutable = ('restore_point_id', 'project_id', 'record_ref', 'record_sha256', 'source_thread_id', 'source_branch_id', 'source_message_id')
-    if payload['artifact_id'] != old['artifact_id'] or any(payload['type_payload'][k] != old['type_payload'][k] for k in immutable):
+    point, old_point = payload['type_payload'], old['type_payload']
+    lineage = dict(artifact_id=payload['artifact_id'], old_artifact_id=old['artifact_id'])
+    for field, name in (('restore_point_id', 'restore_point_id'), ('project_id', 'point_project_id'), ('record_ref', 'record_ref'),
+                        ('record_sha256', 'record_sha256'), ('source_thread_id', 'source_thread_id'),
+                        ('source_branch_id', 'source_branch_id'), ('source_message_id', 'source_message_id')):
+        lineage[name], lineage['old_' + name] = at(point, field), at(old_point, field)
+    if table_refusal('observation_lineage_a', lineage) or table_refusal('observation_lineage_b', lineage):
         return False
-    if payload['type_payload'] == old['type_payload']:
-        return False  # Unchanged source returns original, never allocates the proposed next ordinal.
-    old_status = old['type_payload']['status']
-    if old_status != 'available' and payload['type_payload']['status'] != old_status:
-        return False
-    return (candidate['producer_sequence_id'] == previous['producer_sequence_id'] + 1
-            and candidate['parent_event_id'] == previous['event_id']
-            and candidate['correlation_id'] == previous['correlation_id'])
+    try:
+        expected_ordinal = previous['producer_sequence_id'] + 1
+    except TypeError:
+        expected_ordinal = None
+    # An unchanged source returns the original and never allocates the next ordinal.
+    return table_refusal('observation_advance', dict(
+        point=point, old_point=old_point, old_status=at(old_point, 'status'), status=at(point, 'status'),
+        producer_sequence_id=candidate['producer_sequence_id'], expected_ordinal=expected_ordinal,
+        parent_event_id=candidate['parent_event_id'], previous_event_id=previous['event_id'],
+        correlation_id=candidate['correlation_id'], previous_correlation_id=previous['correlation_id'])) is None
 
 
 def main(families=None):
@@ -1080,6 +1444,9 @@ def main(families=None):
     check('shared', 'rfc8785_known_answer', rfc8785.dumps({'\U0001f600':1, '\ue000':2}) == '{"\U0001f600":1,"\ue000":2}'.encode())
     check('shared', 'all_19_rows', len(document['rows']) == 19 and {r['event_type'] for r in document['rows']} == set(fixtures['positive_payloads']) == set(fixtures['positive_events']) == set(fixtures['checkpoint_positives']) == set(fixtures['first_append_receipts']))
     check('shared', 'inline_limit_exact', INLINE_LIMIT == 16384)
+    # Every refusal row is reached in its table's declared order (Method B).
+    order_errors = table_order_errors()
+    check('shared', 'table_require_order' + (': ' + ', '.join(order_errors) if order_errors else ''), not order_errors)
     generic = load('Plans/event_record_index_checkpoint_contract_fixtures.json')['positive']['initial_mixed_scope']['checkpoint']
     node = generic['generations'][generic['current_generation_id']]
     check('shared', 'SP278_generation_known_answer', generic['current_generation_id'] == 'eig_' + binding_digest(dict(
@@ -1099,8 +1466,9 @@ def main(families=None):
         ref_errors = references.errors([row['payload_schema_ref'], 'Plans/event_record.schema.json',
                                        'Plans/event_append_receipt_contracts.schema.json',
                                        CHECKPOINT_SCHEMA.split('#')[0]])
-        check(event, 'S9_schema_reference_preflight' + (': ' + '; '.join(ref_errors) if ref_errors else ''), not ref_errors)
-        if ref_errors:
+        resolved = references_resolve(ref_errors)
+        check(event, 'S9_schema_reference_preflight' + (': ' + '; '.join(ref_errors) if ref_errors else ''), resolved)
+        if not resolved:
             unresolved_families.add(event)
             continue  # Fail closed before any payload or optional branch is visited.
         check(event, 'prepared_contract', row['outcome'] == 'register (prepared)')

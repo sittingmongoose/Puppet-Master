@@ -9,6 +9,7 @@ import hashlib
 from pm_runtime_artifact_round6_cases import cases as round6_cases
 from pm_runtime_artifact_round7_cases import cases as round7_cases
 from pm_runtime_artifact_round8_cases import cases as round8_cases, observation_source
+from pm_runtime_artifact_round9_cases import cases as round9_cases
 
 
 def accepted(action):
@@ -243,6 +244,7 @@ def cases(m, excluded=()):
     result.extend(round6_cases(m,rows,fixtures))
     result.extend(round7_cases(m,rows,fixtures))
     result.extend(round8_cases(m,rows,fixtures))
+    result.extend(round9_cases(m,rows,fixtures))
     return result
 
 
@@ -344,12 +346,12 @@ def shared_cases(m,rows,add):
     for row in rows:
         family=row['event_type'];schema=m.load(row['payload_schema_ref'])
         bad=copy.deepcopy(schema);bad['properties']['actor_ref']={'$ref':'#/$defs/DR_MISSING'}
-        add('S01',family,'unresolved_optional',lambda n,r=row: not refs(n).errors([r['payload_schema_ref']]),
-            lambda n,r=row,b=bad:not refs(n).errors([r['payload_schema_ref']],{r['payload_schema_ref']:b}))
+        add('S01',family,'unresolved_optional',lambda n,r=row: n.references_resolve(refs(n).errors([r['payload_schema_ref']])),
+            lambda n,r=row,b=bad:n.references_resolve(refs(n).errors([r['payload_schema_ref']],{r['payload_schema_ref']:b})))
     schema={'type':'string','pattern':'^[0-9a-f]{64}$'}
-    add('S02','shared','identifier_LF',lambda n:n.ExactValidator(schema).is_valid('a'*64),lambda n:n.ExactValidator(schema).is_valid('a'*64+'\n'))
+    add('S02','shared','identifier_LF',lambda n:n.validator(schema).is_valid('a'*64),lambda n:n.validator(schema).is_valid('a'*64+'\n'))
     schema_keys={'type':'object','patternProperties':{'^[0-9a-f]{64}$':{'type':'integer'}}}
-    add('S04','shared','identifier_key_LF',lambda n:n.ExactValidator(schema_keys).is_valid({'a'*64:1}),lambda n:n.ExactValidator(schema_keys).is_valid({'a'*64+'\n':1}))
+    add('S04','shared','identifier_key_LF',lambda n:n.validator(schema_keys).is_valid({'a'*64:1}),lambda n:n.validator(schema_keys).is_valid({'a'*64+'\n':1}))
     add('S05','shared','success_is_not_failure',lambda n:n.rejected(lambda:(_ for _ in ()).throw(ValueError())),lambda n:n.rejected(lambda:0))
     payload=dict(project_id='p',artifact_id='a',schema_id='s')
     for name,value in [('negative',-1),('missing',None),('boolean',True),('fractional',1.5)]:
