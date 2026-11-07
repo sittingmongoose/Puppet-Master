@@ -68,8 +68,8 @@ function boxOf(key) {
 // A side of the ring, read along scanlines across it (6 px either side of the tile's edge, through the middle 60% of
 // the side). On each scanline the mark is the run of pixels that changed most on the key focus (by more than 40
 // luminance levels) and now share one colour; the scanline counts when that run stands at 3:1 or more against what is
-// beside it now (the better of its two sides, as opus-recheck-f96 measured: the 1 to 3 px beyond the run, past any
-// blend). A side counts when 90% of its scanlines do. So a side the bar's edge cuts away, a side drawn in the accent on
+// beside it now (the better of its two sides, as opus-recheck-f96 measured: the 1 or 2 px just beyond the run, so a
+// blended edge pixel is passed over but nothing past a border is reached). A side counts when 90% of its scanlines do. So a side the bar's edge cuts away, a side drawn in the accent on
 // a lit accent tile (it barely changes), a side squeezed onto a tile's shadow (it barely changes either), and a side
 // missing altogether all fail; a ring with a band of ground on its inner side passes on a lit tile and an unlit one. Region coordinates: the capture's
 // origin is (ox, oy) in page pixels.
@@ -80,12 +80,15 @@ function scanline(rest, focus, pts) {
   let core = -1, best = 40;
   px.forEach((i, k) => { if (i == null) return; const d = Math.abs(Yv(focus.data, i) - Yv(rest.data, i)); if (d > best) { best = d; core = k; } });
   if (core < 0) return 0;
-  const L = i => lum(focus.data[i], focus.data[i + 1], focus.data[i + 2]), Yc = Yv(focus.data, px[core]);
+  // the run: the pixels of the core's own colour (every channel within 32 levels; by luminance alone a blue ring and
+  // the grey border beside it would merge, and the border's far side would be read as the ring's neighbour)
+  const L = i => lum(focus.data[i], focus.data[i + 1], focus.data[i + 2]), c0 = px[core];
+  const same = j => px[j] != null && Math.max(Math.abs(focus.data[px[j]] - focus.data[c0]), Math.abs(focus.data[px[j] + 1] - focus.data[c0 + 1]), Math.abs(focus.data[px[j] + 2] - focus.data[c0 + 2])) <= 32;
   let a = core, b = core;
-  while (a > 0 && px[a - 1] != null && Math.abs(Yv(focus.data, px[a - 1]) - Yc) <= 25) a--;
-  while (b < px.length - 1 && px[b + 1] != null && Math.abs(Yv(focus.data, px[b + 1]) - Yc) <= 25) b++;
+  while (a > 0 && same(a - 1)) a--;
+  while (b < px.length - 1 && same(b + 1)) b++;
   const lc = L(px[core]);
-  const beside = (from, step) => { let m = 0; for (let k = 1; k <= 3; k++) { const j = from + step * k; if (j < 0 || j >= px.length || px[j] == null) break; m = Math.max(m, ratio(lc, L(px[j]))); } return m; };
+  const beside = (from, step) => { let m = 0; for (let k = 1; k <= 2; k++) { const j = from + step * k; if (j < 0 || j >= px.length || px[j] == null) break; m = Math.max(m, ratio(lc, L(px[j]))); } return m; };
   // the better of its two neighbours, as opus-recheck-f96 judged it: a two-tone mark has its ground band on one side
   return Math.max(beside(a, -1), beside(b, 1));
 }
@@ -102,6 +105,9 @@ function sides(rest, focus, tile, ox, oy) {
     right: side(mid(T, B).map(y => span(Rr).map(x => [x, y]))),
   };
 }
+// each side read at the tile's edge and at the item's, the one that holds the mark (a ring may sit on the tile or go
+// round the whole item, names included)
+const bestSides = (a, b) => Object.fromEntries(Object.keys(a).map(k => [k, b[k].share > a[k].share ? b[k] : a[k]]));
 function corners(rest, focus, item, ox, oy) {
   const L = Math.round(item.x - ox), T = Math.round(item.y - oy), Rr = Math.round(item.x + item.w - ox), B = Math.round(item.y + item.h - oy);
   const corner = (cx, cy, dx, dy) => { let n = 0; for (let y = cy - 6; y < cy + 8; y++) for (let x = cx - 6; x < cx + 8; x++) { const xx = dx > 0 ? x : 2 * cx - x, yy = dy > 0 ? y : 2 * cy - y; if (contrastAt(rest, focus, xx, yy) >= 3) n++; } return n; };
@@ -226,7 +232,7 @@ async function run(t, w, h) {
     // item, as 7d1ef16b13 and 030240ea66 drew) still crosses
     const tileInName = lr && { x: b.tile.x + off.x - lr.x - 2, y: b.tile.y + off.y - lr.y - 2, w: b.tile.w + 4, h: b.tile.h + 4 };
     return { key: target, lit: b.lit, focused: now.key === target && !moved, moved, brackets: b.brackets,
-      ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: sides(r0, r1, b.tile, ox, oy) }),
+      ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy), sides(r0, r1, b.item, ox, oy)) }),
       ...(lr ? { name: inkDiff(l0, l1, 2, tileInName) } : {}) };
   };
   const byTab = target => async () => { for (let i = 0; i < controls.length; i++) { await kb.press('Tab'); if ((await key()).key === target) return; } };
