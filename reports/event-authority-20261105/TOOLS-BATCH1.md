@@ -321,3 +321,25 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOO
 | `newcases-on-base.json` | `41c341f2e6b7414922ba12a5871e5ae89ec7040ba443ccbe660b3f7d08813996` |
 | `ledgers-fix.json`, `ledgers-base.json` | `6721d5ebb48e3a61c489bccf6b7b2ed36f25ea77c6a39e1e6621a65380fbced6` |
 | `docs110-fix.txt` | `fde193d50d1840de53bd03e6d0c2778e54ccc1862134de8c6be87565833f628d` |
+
+## Tool batch 5: findings and responses
+
+**TOOLBATCH4 pre-check finding 3 (TOOLBATCH5 T86) is fixed; nothing is disputed.** Base: `86de8bb6d0`. Fix: `d9b60107c7` on `plans/tools-batch1-20261105`. HYPOTHETICAL: constructed documents only; no real Plans document holds the shape, before or after.
+
+| Finding | Location, cause and fix | Evidence |
+|---|---|---|
+| **3: seven phantom unit headings, new on `86de8bb6d0` — fixed** | `list_item_column` and the new `_item_paragraph_open`. T62's lazy-continuation rule continued a list item past a column-0 line after any non-blank line; CommonMark continues only open paragraph text. After indented code, an ATX heading, a fence closer, an empty item marker, a setext underline, an HTML-block line or a thematic break inside the item, a column-0 line ends the list, so an item-indented fence after it is top-level and the unit heading inside it is code. Each column-0 line the walk passes must now follow open paragraph text of the item, read by a forward pass over the item's lines with the CommonMark block rules. | Traps `tb5-column0-line-after-{indented-code,atx-heading,fence-closer,empty-item,setext-underline,html-block,thematic-break}-in-item-ends-the-list`; control `tb5-column0-line-after-paragraph-text-keeps-the-item-fence`. |
+
+On `86de8bb6d0` the seven traps fail (161/168) and the control passes (`selftest-base-86de8bb6d0-with-tb5-traps.txt`). **Soundness:** this narrows the T62 rule only. A column-0 line now continues an item only after open paragraph text, which is every continuation the T62 rule made that CommonMark also makes; the two shapes where batch 4 credited the token to the unit above (`lazy-after-atx-in-item`, `lazy-after-setext-in-item`) go back to the base's reading, a credit mismatch beside no phantom.
+
+### Rerun results
+
+| Check | `86de8bb6d0` | Now |
+|---|---|---|
+| Self-test | 160/160 (161/168 with the new traps) | **168/168** |
+| The review's 50 shapes (`shapes-tb4.json`) against markdown-it-py 3.0.0's commonmark preset | 11 mismatches, 8 phantom (7 new) | **6 mismatches, 1 phantom**: the seven gone; left are finding 4's pre-existing shapes (`under-nested-outer-continues-fence-at-2` missed, `h7-after-link-ref-def` phantom, two comment-in-container credits) and the two credit-only shapes above |
+| TB3's 57 shapes (`shapes-tb3.json`) | 2 mismatches (credit only), 0 phantom | **the same**, byte for byte (`shapes-tb3-t86.txt` = TB4's `shapes-fix.txt`) |
+| Real ledgers (`ledger_scan.py`, all 39) | `ledgers-fix.json` | **byte-identical** (`6721d5eb…`) |
+| The 110 Plans docs (`cm_docs110.py`) | 7,652 agree | **7,652** unit headings agree: 0 phantom, 0 missed, 0 setext; 69 HTML blocks each (the output is byte-identical to TB4's, `fde193d5…`) |
+
+Not done here: finding 4 (pre-existing, not in T86's row). Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH5/witness/` (`SHA256SUMS`).
