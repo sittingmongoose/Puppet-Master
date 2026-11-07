@@ -549,7 +549,9 @@ export default async function (t) {
              the row is hovered, and the press hovers it) */
           return { slot: !!slot && slot.checkVisibility(V) && onScreen(slot), view: !view || (view.checkVisibility(V) && onScreen(view)), shown: e.isConnected && e.checkVisibility(), what: (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40) }; }).catch(() => ({ slot: false, view: false, shown: false, what: 'detached' }));
         if (scrolled !== null || !(st.slot && st.view && st.shown))
-          await t.check(`${target} ${roomState}: the control to reach (${st.what}) is in an open, shown side panel${scrolled !== null ? ' when its scroll fails' : ''}`, st.slot && st.view && st.shown, JSON.stringify({ ...st, scroll: scrolled }), { hard: true });
+          await t.check(`${target} ${roomState}: the control to reach (${st.what}) is in an open, shown side panel${scrolled !== null ? ' when its scroll fails' : ''}`, st.slot && st.view && st.shown,
+            JSON.stringify({ ...st, scroll: scrolled, folding, folded: foldedRegions.filter(fr => fr.folded).map(fr => fr.region + ' in ' + fr.state),
+              via: (new Error().stack || '').split('\n').slice(2, 7).map(l => (l.match(/check\.mjs:(\d+)/) || [])[1]).filter(Boolean).join(' < ') }), { hard: true });
       }
       let p = null, wheeled = false;
       for (let pass = 0; pass < 3; pass++) {
@@ -700,7 +702,7 @@ export default async function (t) {
             p.querySelector(`[data-shelf-fold="${i}"]`)?.setAttribute('data-shelf-fold-of', tag); }, [fo.i, tag]);
           const fr = { tag, label: fo.label, region: fo.region, state, for: why.what, hid, folded: true };
           foldedRegions.push(fr);
-          t.log(`${target} ${state}: room for ${why.what} (covered by ${why.coverOf}, ${why.hits} of 5 points on top): folded ${fo.label} (${fo.region}); it hid ${hid.length} census control(s)`);
+          t.log(`${target} ${state}: room for ${why.what} (covered by ${why.coverOf}, ${why.hits} of 5 points on top): folded ${fo.label} (${fo.region}); it hid ${hid.length} of the ${before.length} census control(s) it showed`);
           // T98: a fold that hides the control it made room for (the Jujutsu card's own fold, when Technical details in
           // the card is what is covered) gives no room: it is undone at once, and the room is not counted
           await f.waitForTimeout(300);
