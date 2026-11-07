@@ -2302,6 +2302,69 @@
    "witness": "check:datetime_unit_authority_unanchored_pattern_value",
    "rule": "probe.positive-paths",
    "note": "T71 (finding 2, DT13; value_probe.py:459): the positive-path walk (_PositivePaths._map) reads a patternProperties regex as anchored at the start, so a suffix-keyed value's endpoints are lost."
+  },
+  {
+   "id": "hw-tb5-install-wrapper-before-registration",
+   "module": "pm_event_datetime_inventory",
+   "find": "        if not isinstance(schema, dict):\n            return\n        # A dictionary previously seen inside a wrapper",
+   "replace": "        if not isinstance(schema, dict):\n            return\n        if id(schema) in self.visited:\n            return\n        # A dictionary previously seen inside a wrapper",
+   "witness": "check:datetime_unit_selection_install_anonymous_after_its_wrapper",
+   "rule": "admission.pinned-resources",
+   "note": "T102 (REVIEW-numrule-tb4-opus blind B-DT11): install() returns early for a dictionary already visited inside a wrapper, so an anonymous resource loaded later on its own is never registered and admit() refuses it."
+  },
+  {
+   "id": "hw-tb5-block-origin-spelling",
+   "module": "pm_event_datetime_inventory",
+   "find": "            yield token.type.replace(\"_block\", \"\") + \":\" + str(token.map[0] + 1), token.content",
+   "replace": "            yield token.type + \":\" + str(token.map[0] + 1), token.content",
+   "witness": "check:datetime_unit_scan_origin_spellings",
+   "rule": "scan.mentioning-container",
+   "note": "T102 (B-DT15): Markdown block origins spelled code_block:N and html_block:N, not code:N and html:N, which key rows and exclusions; only the committed code:11 exclusions noticed, under --scope all."
+  },
+  {
+   "id": "hw-tb5-second-bom-kept",
+   "module": "pm_event_datetime_inventory",
+   "find": "    return data.decode(json.detect_encoding(data)).lstrip(\"\\ufeff\")",
+   "replace": "    return data.decode(json.detect_encoding(data))",
+   "witness": "check:datetime_unit_scan_decode_two_byte_order_marks",
+   "rule": "scan.decoding",
+   "note": "T102 (B-DT18): decode_text keeps a second U+FEFF after the BOM the codec consumes, so such a file no longer parses (fail-closed)."
+  },
+  {
+   "id": "hw-tb5-exclusion-paths-not-normalised",
+   "module": "pm_event_datetime_inventory",
+   "find": "        target = posixpath.normpath(unquote(parsed.path)).lstrip(\"/\")",
+   "replace": "        target = unquote(parsed.path).lstrip(\"/\")",
+   "witness": "check:datetime_unit_scan_exclusion_referenced_through_encoded_dot_dot",
+   "rule": "scan.loadable-never-excluded",
+   "note": "T102 (B-DT19, fail-open): _exclusion_schema_paths without normpath names a %2E%2E/ $ref's target Plans/a/../copy.json, so an exclusion of Plans/copy.json hides a referenced resource."
+  },
+  {
+   "id": "hw-tb5-nested-string-origin-split-once",
+   "module": "pm_event_datetime_inventory",
+   "find": "    origin, *strings = row[\"origin\"].split(\":string:\")",
+   "replace": "    origin, *strings = row[\"origin\"].split(\":string:\", 1)",
+   "witness": "check:datetime_unit_source_document_two_strings_deep",
+   "rule": "inventory.source-owner",
+   "note": "T102 (B-DT20): _source_document splits a :string: origin once, so a row two serialized strings deep is unreadable."
+  },
+  {
+   "id": "hw-tb5-utc-z-before-leap-second",
+   "module": "pm_event_datetime",
+   "find": "    if second == 60:\n        preceding = _day_number(year, month, day) * 86400 + hour * 3600 + minute * 60 + 59 - offset\n        if preceding not in _LEAP_PRECEDING_SECONDS:\n            _refuse(\"date_time_leap_second\")\n    if profile in (STORAGE_UTC_Z, COORDINATION_UTC_Z, LEGACY_NORMALIZATION_OUTPUT) and zone != \"Z\":\n        _refuse(\"date_time_utc_z\")\n",
+   "replace": "    if profile in (STORAGE_UTC_Z, COORDINATION_UTC_Z, LEGACY_NORMALIZATION_OUTPUT) and zone != \"Z\":\n        _refuse(\"date_time_utc_z\")\n    if second == 60:\n        preceding = _day_number(year, month, day) * 86400 + hour * 3600 + minute * 60 + 59 - offset\n        if preceding not in _LEAP_PRECEDING_SECONDS:\n            _refuse(\"date_time_leap_second\")\n",
+   "witness": "check:datetime_unit_date_time_precedence_leap_second_before_utc_z",
+   "rule": "profile.storage-utc-z",
+   "note": "T102 (REVIEW-numrule-tb4-opus blind B-DT12, owner-equivalent): the UTC-Z profile refusal runs before the leap-second refusal. CV-1101 names no precedence for a value with two defects, so the current one is pinned by a self-check."
+  },
+  {
+   "id": "hw-tb5-type-before-profile",
+   "module": "pm_event_datetime",
+   "find": "    if type(profile) is not str or profile not in PROFILES:\n        _refuse(\"date_time_profile\")\n    if type(value) is not str:\n        _refuse(\"date_time_type\")\n",
+   "replace": "    if type(value) is not str:\n        _refuse(\"date_time_type\")\n    if type(profile) is not str or profile not in PROFILES:\n        _refuse(\"date_time_profile\")\n",
+   "witness": "check:datetime_unit_date_time_precedence_profile_before_type",
+   "rule": "profile.selection",
+   "note": "T102 (B-DT13, owner-equivalent): date_time checks the value's type before the profile. CV-1101 names no precedence between them, so the current one is pinned by a self-check."
   }
  ],
  "rules_source": "Predicate-level rules derived from the owner rows. Each lists generated point keys and hand-written mutation ids; every one must be caught with its witness failing. Declared survivors are never listed.",
@@ -2469,7 +2532,8 @@
     "site:datetime:date_time:date_time_profile#1",
     "predicate:site:datetime:date_time:date_time_profile#1:false type(profile) is not str#1",
     "predicate:site:datetime:date_time:date_time_profile#1:false profile not in PROFILES#1",
-    "hw-profile-set-loses-coordination"
+    "hw-profile-set-loses-coordination",
+    "hw-tb5-type-before-profile"
    ]
   },
   {
@@ -2487,7 +2551,8 @@
    "mutations": [
     "site:datetime:date_time:date_time_utc_z#1",
     "predicate:site:datetime:date_time:date_time_utc_z#1:drop STORAGE_UTC_Z#1",
-    "hw-profile-storage-lowercase-z"
+    "hw-profile-storage-lowercase-z",
+    "hw-tb5-utc-z-before-leap-second"
    ]
   },
   {
@@ -2623,7 +2688,8 @@
     "site:datetime_inventory:StorageSelection.verify_resources:DatetimeAdmissionError:datetime_schema_changed_after_admission#1",
     "site:datetime_inventory:StorageSelection.admit:DatetimeAdmissionError:datetime_schema_changed_after_admission#1",
     "hw-admission-no-resource-verification",
-    "hw-admission-no-crawl-pins"
+    "hw-admission-no-crawl-pins",
+    "hw-tb5-install-wrapper-before-registration"
    ]
   },
   {
@@ -2685,7 +2751,8 @@
     "hw-scan-utf8-only",
     "hw-scan-escapes-not-decoded",
     "hw-scan-fences-not-authoritative",
-    "hw-scan-inline-code-ignored"
+    "hw-scan-inline-code-ignored",
+    "hw-tb5-second-bom-kept"
    ]
   },
   {
@@ -2712,7 +2779,8 @@
     "predicate:site:datetime_inventory:scan.unsupported:dynamic#1:true row#1",
     "predicate:site:datetime_inventory:scan.unsupported:dynamic#1:true row['sha256'] == pin#1",
     "site:datetime_inventory:scan.container:unclassified_mentioning_container#1",
-    "site:datetime_inventory:scan:unclassified_mentioning_container#1"
+    "site:datetime_inventory:scan:unclassified_mentioning_container#1",
+    "hw-tb5-block-origin-spelling"
    ]
   },
   {
@@ -2747,7 +2815,8 @@
    "mutations": [
     "site:datetime_inventory:scan:ValueError:loadable_schema_exclusion_forbidden#1",
     "hw-exclusion-references-ignored",
-    "hw-exclusion-schema-roots-ignored"
+    "hw-exclusion-schema-roots-ignored",
+    "hw-tb5-exclusion-paths-not-normalised"
    ]
   },
   {
@@ -2848,7 +2917,8 @@
    "rule": "A row's owner is non-empty and named by its own source (title, $id, node title, path or schema identity).",
    "mutations": [
     "site:datetime_inventory:validate_inventory:owner_empty#1",
-    "site:datetime_inventory:validate_inventory:source_owner_changed#1"
+    "site:datetime_inventory:validate_inventory:source_owner_changed#1",
+    "hw-tb5-nested-string-origin-split-once"
    ]
   },
   {

@@ -965,6 +965,22 @@ def run_witness(witness, context):
         if "__exception__" in context.regression:
             return context.regression["__exception__"]
         return context.regression.get(name, False) is True
+    if kind == "integration":
+        # (T102: the other date-time owner checks of --scope all, run once per mutant under the installed mutant, the
+        # committed-tree inventory check included, and kept on the context)
+        if name not in integration_names():
+            raise ValueError("unknown integration check: " + name)
+        if not hasattr(context, "integration"):
+            import pm_event_numbers as m
+            import pm_event_numbers_corpus as corpus
+            from pm_event_datetime_inventory import check_inventory
+            try:
+                context.integration = corpus.datetime_integration_checks(m, ROOT, check_inventory(ROOT))
+            except Exception as error:  # noqa: BLE001
+                context.integration = {"__exception__": "exception:" + type(error).__name__}
+        if "__exception__" in context.integration:
+            return context.integration["__exception__"]
+        return context.integration.get(name, False) is True
     raise ValueError("unknown witness kind: " + witness)
 
 
@@ -1002,14 +1018,31 @@ def regression_names():
     return _STATE["regression_names"]
 
 
+def integration_names():
+    """T102 (TOOLBATCH4 pre-check finding 3): the date-time owner checks --scope all runs that are not regression checks:
+    the committed-tree inventory check, the fence-container check, the EventRecord validity check and the nine format
+    checks (datetime_integration_checks less regression_checks), named once from the intact code."""
+    if "integration_names" not in _STATE:
+        import pm_event_numbers as m
+        import pm_event_numbers_corpus as corpus
+        names = corpus.datetime_integration_checks(m, ROOT, {"status": "pass"})
+        _STATE["integration_names"] = sorted(set(names) - set(regression_names()))
+    return _STATE["integration_names"]
+
+
 def survivor_witnesses():
     """Every check a declared survivor must survive: all self-checks, every date-time corpus case and (T71,
     REVIEW-numrule-tb3-opus finding 3) every admission regression check, the suite --scope all runs beside them, so
-    the replay and the CLI judge on one suite (DT12 survived the self-checks and the cases, and only these caught it)."""
+    the replay and the CLI judge on one suite (DT12 survived the self-checks and the cases, and only these caught it).
+    T102 (TOOLBATCH4 pre-check finding 3): and, last, the other twelve date-time owner checks --scope all runs
+    (integration:), the committed-tree inventory check among them, so the replay judges exactly the --scope all
+    date-time suite (B-DT15 survived the replay and failed only that inventory check). Only a mutant that survives
+    everything before them pays for the committed-tree scan."""
     import pm_event_datetime_selfcheck as selfcheck
     return (["check:" + name for name in selfcheck.CHECKS] +
             ["case:" + c["id"] for c in _corpus()["cases"] if c["op"] in DATETIME_OPS] +
-            ["regression:" + name for name in regression_names()])
+            ["regression:" + name for name in regression_names()] +
+            ["integration:" + name for name in integration_names()])
 
 
 # ---- The rules table, derived from the owner text ----

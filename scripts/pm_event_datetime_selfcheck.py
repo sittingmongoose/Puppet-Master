@@ -783,6 +783,49 @@ def _sel_nested(context):
             selection.uri_pins.get("urn:pm:scratch:envelope") == inv.digest(inner))
 
 
+@check("datetime_unit_date_time_precedence_leap_second_before_utc_z")
+def _precedence_leap_utc(context):
+    """T102 (TOOLBATCH4 pre-check B-DT12, owner-equivalent): a leap second that is also not UTC-Z, under storage_utc_z,
+    refuses date_time_leap_second. CV-1101 names no precedence for two defects; the current one is pinned."""
+    dt, _, _, _ = _mods()
+    return outcome(dt.date_time, "2016-12-31T23:59:60+01:00", profile="storage_utc_z") == ("refuse", "date_time_leap_second")
+
+
+@check("datetime_unit_date_time_precedence_profile_before_type")
+def _precedence_profile_type(context):
+    """T102 (B-DT13, owner-equivalent): a non-string value with an unknown profile refuses date_time_profile. CV-1101
+    names no precedence between the two; the current one is pinned."""
+    dt, _, _, _ = _mods()
+    return outcome(dt.date_time, 1, profile="utc") == ("refuse", "date_time_profile")
+
+
+@check("datetime_unit_selection_install_anonymous_after_its_wrapper")
+def _sel_anonymous_after_wrapper(context):
+    """T102 (TOOLBATCH4 pre-check B-DT11): a dictionary first seen inside a wrapper, later loaded as its own complete,
+    anonymous resource (no $id, no $schema), is registered then: admit() gives its two Storage fields."""
+    inner = _storage_schema()
+    del inner["$id"], inner["$schema"]
+    outer = {"$defs": {"inner": inner}}
+    selection = _selection([(inner, {"": _storage_row(inner)})])
+    selection.install(outer)
+    selection.install(inner)
+    return selection.admit(inner) == ("observed_at_utc", "persisted_at_utc")
+
+
+@check("datetime_unit_selection_anonymous_after_its_wrapper_changed")
+def _sel_anonymous_after_wrapper_changed(context):
+    """T102 (B-DT11, the sibling): the same resource changed after admission is refused by verify_resources()."""
+    inner = _storage_schema()
+    del inner["$id"], inner["$schema"]
+    outer = {"$defs": {"inner": inner}}
+    selection = _selection([(inner, {"": _storage_row(inner)})])
+    selection.install(outer)
+    selection.install(inner)
+    admitted = selection.admit(inner) == ("observed_at_utc", "persisted_at_utc")
+    inner["properties"]["observed_at_utc"]["format"] = "date"
+    return admitted and _admission_reason(selection.verify_resources) == "datetime_schema_changed_after_admission"
+
+
 @check("datetime_unit_resource_selections_refuses_invalid_inventory")
 def _sel_invalid_inventory(context):
     _, inv, _, _ = _mods()
@@ -2428,6 +2471,86 @@ def _leap_june_offsets(context):
     refuse = ("2015-07-01T00:59:60+02:00", "1972-07-01T00:59:60+00:30", "2015-06-30T23:59:60+01:00")
     return (all(outcome(dt.date_time, v) == ("accept", v) for v in accept) and
             all(outcome(dt.date_time, v) == ("refuse", "date_time_leap_second") for v in refuse))
+
+
+def _ex_dot_segments(referrer_path, ref, target):
+    """T102 (TOOLBATCH4 pre-check B-DT19, fail-open): a $ref whose target path holds dot segments the URL join does not
+    resolve (%2E%2E/, ./, a doubled slash) still names its target, which an exclusion may not hide."""
+    def run(context):
+        body = json.dumps({"properties": {"observed_at_utc": {}}})
+        files = [(target, body), (referrer_path, {"$schema": D202012, "$ref": ref})]
+        rows, errors = _exclusion_errors(context, [_exclusion(target, body)], files)
+        return not rows and bool(_errors(errors, "scan_exclusions_invalid", "loadable_schema_exclusion_forbidden: " + target))
+    return run
+
+
+check("datetime_unit_scan_exclusion_referenced_through_encoded_dot_dot")(_ex_dot_segments("Plans/a/ref.json", "%2E%2E/copy.json", "Plans/copy.json"))
+check("datetime_unit_scan_exclusion_referenced_through_dot")(_ex_dot_segments("Plans/ref.json", "./copy.json", "Plans/copy.json"))
+check("datetime_unit_scan_exclusion_referenced_through_doubled_slash")(_ex_dot_segments("Plans/ref.json", "sub//copy.json", "Plans/sub/copy.json"))
+
+
+SPELLED = {"$schema": D202012, "type": "object", "properties": {"observed_at_utc": {"type": "string", "format": "date-time"}}}
+
+
+@check("datetime_unit_scan_origin_spellings")
+def _scan_origin_spellings(context):
+    """T102 (TOOLBATCH4 pre-check B-DT15): the exact origin of each container kind, which keys inventory rows and
+    exclusions: a fence (fence:N), indented code (code:N), inline code (code_inline:N:i), a fence in a list item, an
+    HTML block (html:N, unreadable here), a JSONL line (jsonl:N) and a schema two serialized strings deep
+    (json:string:/a:string:/b). A respelling ('code_block:N') passed the whole replay; only the committed code:11
+    exclusions noticed it, under --scope all."""
+    one = json.dumps(SPELLED)
+    md = ("Prose.\n\n```json\n" + one + "\n```\n\nMore.\n\n    " + one + "\n\nInline `" + one + "` here.\n\n<div>\n" + one +
+          "\n</div>\n\n- item\n\n  ```json\n  " + one + "\n  ```\n")
+    root = context.scratch()
+    write(root, "Plans/doc.md", md)
+    write(root, "Plans/lines.jsonl", '{"a": 1}\n' + one + "\n")
+    write(root, "Plans/nest.json", {"wrapper": json.dumps({"schema_json": one})})
+    rows, errors = _scan(root)
+    return (sorted((r["path"], r["origin"]) for r in rows) == [
+                ("Plans/doc.md", "code:9"), ("Plans/doc.md", "code_inline:11:1"), ("Plans/doc.md", "fence:19"), ("Plans/doc.md", "fence:3"),
+                ("Plans/lines.jsonl", "jsonl:2"), ("Plans/nest.json", "json:string:/wrapper:string:/schema_json")] and
+            [(e.get("error"), e.get("path"), e.get("origin")) for e in errors] == [("unreadable_mentioning_container", "Plans/doc.md", "html:13")])
+
+
+@check("datetime_unit_scan_exclusion_at_each_origin_used")
+def _scan_exclusion_each_origin(context):
+    """T102 (B-DT15): an exclusion at each container kind's exact origin is used, so the scan finds nothing and
+    reports no stale exclusion: indented code (code:3), an HTML block (html:3) and inline code (code_inline:3:1)."""
+    note = json.dumps({"note": "observed_at_utc"})
+    md = "Prose.\n\n    " + note + "\n\nSee.\n"
+    html = "Prose.\n\n<div>\n" + note + "\n</div>\n"
+    inline = "Prose.\n\nInline `" + note + "` here.\n"
+    entries = [_exclusion("Plans/a.md", note + "\n", origin="code:3"), _exclusion("Plans/b.md", "<div>\n" + note + "\n</div>\n", origin="html:3"),
+               _exclusion("Plans/c.md", note, origin="code_inline:3:1")]
+    rows, errors = _exclusion_errors(context, entries, [("Plans/a.md", md), ("Plans/b.md", html), ("Plans/c.md", inline)])
+    return not rows and not errors
+
+
+@check("datetime_unit_source_document_two_strings_deep")
+def _source_two_strings(context):
+    """T102 (TOOLBATCH4 pre-check B-DT20): a row two serialized strings deep is read back to its schema; a one-level split
+    of the origin made every such row unreadable (inventory_source_unreadable)."""
+    _, inv, _, _ = _mods()
+    one = json.dumps(SPELLED)
+    root = context.scratch()
+    write(root, "Plans/nest.json", {"wrapper": json.dumps({"schema_json": one})})
+    rows, errors = _scan(root)
+    row = next((r for r in rows if r["origin"] == "json:string:/wrapper:string:/schema_json"), None)
+    return row is not None and not errors and inv._source_document(root, row, {}) == SPELLED
+
+
+@check("datetime_unit_scan_decode_two_byte_order_marks")
+def _scan_two_boms(context):
+    """T102 (TOOLBATCH4 pre-check B-DT18): a file whose UTF-8 text starts with a second U+FEFF after the BOM the codec
+    consumes is read as its JSON; the choice is pinned here (decode_text strips every leading U+FEFF)."""
+    _, inv, _, _ = _mods()
+    data = b"\xef\xbb\xbf\xef\xbb\xbf" + json.dumps(SPELLED).encode()
+    root = context.scratch()
+    write(root, "Plans/bom.json", data)
+    rows, errors = _scan(root)
+    return (json.loads(inv.decode_text(data)) == SPELLED and not errors and
+            [(r["path"], r["origin"]) for r in rows] == [("Plans/bom.json", "json")])
 
 
 @check("datetime_unit_scan_exclusion_referenced_under_path_free_id")
