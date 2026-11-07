@@ -2598,22 +2598,35 @@
 [data-rail-skin="d"] #activityBar:not(.collapsed) > .activity-bar-toggle::before { transform: rotate(180deg); }
 [data-rail-skin="d"] #activityBar > .activity-bar-toggle:hover { background: var(--d-hover) !important; color: var(--d-text) !important; }
 [data-rail-skin="d"] #activityBar > .activity-bar-toggle:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
-/* FO-96: the icons and More are buttons in the tab order (shell.html); a key focus rings the tile they light, the
-   symbol box. The ring stands 2 px outside the tile, on the bar's own ground (F96-1): a lit tile is the accent's own
-   family, so a ring inside it read at 1.2:1 in Retro and under 3:1 in Basic Light, Friendly Dark and Glass Light, where
-   on the bar it reads as it does round an unlit tile. NieR's target brackets take a key focus instead of a ring
-   (19-nier-parts.js, as on the toggle), so the ring stands down while that part is on. With the names shown, the
-   name sits 1 px under the tile, so a ring outside the tile would cross it: there the ring goes round the whole item,
-   tile and name, just inside its box, still on the bar's ground with a gap to both. Glass sizes the item to its
-   longest name (Pipelines fills it edge to edge), so there the ring stands 1 px outside the item, in the 5 px the bar
-   leaves at each side and the 4 px between items. */
+/* FO-96: the icons and More are buttons in the tab order (shell.html). A key focus marks the tile they light, the
+   symbol box, from inside it, so the mark needs no room the bar may not have (F96-1: a ring outside the tile was cut
+   by the bar's edges, to nothing at 1280x500, and with the names shown a ring round the item crossed names wider or
+   lower than it). Two tones: a 3 px accent ring on the tile's edge and, inside it, a 2 px band of the surface the bar
+   is drawn on. The ring then has that ground on both sides, so it reads the same on a lit tile (the accent's own
+   family, where a plain ring read at 1.2:1 in Retro) as on an unlit one, and the band lifts a lit tile's fill off its
+   edge. 3 px, so the ring keeps two whole pixels of ink wherever a tile lands between pixels (Glass sizes and centres
+   its tiles to fractions; at 2 px its ring blended to 2.4:1 on Glass Light's ground). The glyph keeps about 2 px clear. NieR's target brackets take a key focus instead (19-nier-parts.js, as
+   on the toggle), so the mark stands down while that part is on. The :not(#pmfz) outranks Liquid Glass's own rule on
+   the symbol's shadow (html[data-lg="on"] … :not(#lgz) #activityBar .icon .symbol, two ids), which took the band. The
+   focused tile stands still, as a hovered one does (above): Glass presses a lit tile in by scale(.98), which smeared the
+   ring across three pixel rows at half its ink. */
 [data-rail-skin="d"] #activityBar .icon:focus-visible { outline: none; }
-[data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"]) #activityBar.collapsed .icon:focus-visible .symbol { outline: 2px solid var(--accent-primary); outline-offset: 2px; }
-[data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"]) #activityBar:not(.collapsed) .icon:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
-[data-rail-skin="d"][data-theme^="glass"]:not([data-o55-nier-parts~="brackets"]) #activityBar:not(.collapsed) .icon:focus-visible { outline-offset: 1px; }
-/* Friendly's item ends 0.2 px under its name, whose font sets a p's tail at the very bottom: 2 px more under the name
-   keep the ring off the tail (F96-1) */
-[data-rail-skin="d"][data-theme^="friendly"]:not([data-o55-nier="on"]) #activityBar:not(.collapsed) .icon .icon-label { padding-bottom: 2px; }
+[data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"]):not(#pmfz) #activityBar .icon:focus-visible .symbol {
+  outline: 3px solid var(--accent-primary) !important; outline-offset: -3px !important;
+  box-shadow: inset 0 0 0 5px var(--surface) !important;
+  box-shadow: inset 0 0 0 5px rgb(from var(--surface) r g b / 1) !important;   /* opaque: Glass's surface is see-through */
+  transform: none !important;
+}
+/* Glass with Liquid Glass on: the open panel's icon lies under the moving lens (glass.js), which magnifies and refracts
+   what is beneath it and lays its glint over its top band, so the mark is drawn on the lens itself while it carries
+   the focus (glass.js puts data-lg-focus on the lens and on its icon). The icon's own mark, seen through the glass,
+   stands down, and the glint steps aside so the mark's top edge keeps its ink. */
+[data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"])[data-lg="on"][data-theme^="glass"]:not(#pmfz) #lg-lenses .lg-lens[data-lg-for="rail-icons"][data-lg-focus] {
+  box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px var(--surface), var(--pm-switch-shadow, var(--lg-lens-drop)) !important;
+  box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px rgb(from var(--surface) r g b / 1), var(--pm-switch-shadow, var(--lg-lens-drop)) !important;
+}
+[data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"])[data-lg="on"][data-theme^="glass"]:not(#pmfz) #lg-lenses .lg-lens[data-lg-for="rail-icons"][data-lg-focus]::after { opacity: 0 !important; }
+[data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"]):not(#pmfz)[data-lg="on"] #activityBar .icon[data-lg-focus]:focus-visible .symbol { outline: none !important; box-shadow: none !important; }
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar > .activity-bar-toggle:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 
 /* drag to reorder or hide: the ghost is the icon's tile lifted off the bar; the drop line is the accent, square in Retro

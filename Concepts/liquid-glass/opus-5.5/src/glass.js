@@ -1403,7 +1403,7 @@
     /* tag: the rail's tab strips' lenses carry data-lg-for="rail-tabs", so the rail skin can shape them (concept D,
        22-tabs.src.css: the chosen tab's own box, rounded to its track's inner radius) */
     { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens', tag: 'rail-tabs' },
-    { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon,
+    { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon, tag: 'rail-icons',
       box: function (i) { return i.querySelector('.symbol') || i; }, label: function (i) { return i.querySelector('.symbol'); } },
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
     { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6, magRest: 1, magLift: 1, press: false,
@@ -1445,8 +1445,27 @@
     var v = sp.querySelector(':scope > .side-panel-view.active');
     var icon = v && strip.querySelector('.icon[data-target="' + v.id + '"]');
     strip.querySelectorAll('.icon[data-lg-current]').forEach(function (i) { if (i !== icon) i.removeAttribute('data-lg-current'); });
-    if (icon && !icon.hasAttribute('data-lg-current')) icon.setAttribute('data-lg-current', ''); return icon;
+    if (icon && !icon.hasAttribute('data-lg-current')) { icon.setAttribute('data-lg-current', ''); queueRailFocus(); } return icon;
   }
+  /* FO-96 (F96-1): the open panel's icon lies under this lens, which magnifies and refracts what is beneath it, so a key
+     focus mark drawn on the icon could not be read there. While the icon has a key focus and the lens is shown, the
+     lens carries the mark: data-lg-focus on the lens and on the icon (the rail skin, concept D 80-bar.src.css, draws it
+     on the lens and stands the icon's own mark down). Kept in step on focus moves and when the lens changes icon. */
+  var railFocusQ = 0;
+  function syncRailFocus() {
+    railFocusQ = 0;
+    var bar = document.getElementById('activityBar'), L = bar && typeof lenses !== 'undefined' && lenses ? lenses.get(bar) : null;
+    var cur = bar ? bar.querySelector('.icon[data-lg-current]') : null, on = false;
+    if (L && L.lens && L.lens.isConnected && cur && !(typeof hiddenLenses !== 'undefined' && hiddenLenses.has(L))) {
+      try { on = cur.matches(':focus-visible') && getComputedStyle(L.lens).display !== 'none'; } catch (e) { on = false; }
+    }
+    if (bar) bar.querySelectorAll('.icon[data-lg-focus]').forEach(function (i) { if (!on || i !== cur) i.removeAttribute('data-lg-focus'); });
+    if (L && L.lens) { if (on) L.lens.setAttribute('data-lg-focus', ''); else L.lens.removeAttribute('data-lg-focus'); }
+    if (on && !cur.hasAttribute('data-lg-focus')) cur.setAttribute('data-lg-focus', '');
+  }
+  function queueRailFocus() { if (!railFocusQ) railFocusQ = requestAnimationFrame(syncRailFocus); }
+  document.addEventListener('focusin', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) syncRailFocus(); }, true);
+  document.addEventListener('focusout', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) queueRailFocus(); }, true);
   /* Every lens lives in one layer above the strips and the title bar (#lg-lenses), not inside them: from outside it sees
      the sheet, the wallpaper and the label together, and no sheet can cover it. */
   /* one layer per host surface: the app shell, or a window that floats above it (onboarding's window, a dialog in
