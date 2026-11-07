@@ -33,6 +33,9 @@ async function authoredSlot(t) {
   return { url, html: null };
 }
 
+// T55: the rail's reveal of an opened expander (30-motion.js revealInView, 15-jj.js's expander): its delay after the
+// click's frame, and the longest its smooth scroll may take to end once begun (a stated bound, failing by name)
+const REVEAL_MS = 120, REVEAL_END_MS = 2000;
 export default async function (t) {
   if (t.args.blockMenu) await t.page.addInitScript(id => {
     window.__blockedShelfMenu = 0;
@@ -480,7 +483,15 @@ export default async function (t) {
     // control is reached again.
     let roomState = 'panel', folding = false;
     const reach = async (loc, at = null) => {
-      await loc.scrollIntoViewIfNeeded({ timeout: 3000 }).catch(() => {});
+      // T70 (opus-recheck-kit8 finding C): a failed scroll is no longer swallowed silently. A control that cannot be
+      // scrolled to because its side panel (or the folded rail's overlay) closed, or because it is hidden, fails at once
+      // and by name; a control the panel's own layout covers still goes on to the wheel and the fold below.
+      const scrolled = await loc.scrollIntoViewIfNeeded({ timeout: 3000 }).then(() => null, (e) => String(e && e.message || e).split('\n')[0]);
+      if (scrolled !== null) {
+        const st = await loc.evaluate(e => { const slot = document.getElementById('sidePanelSlot'), view = e.closest('.side-panel-view');
+          return { slot: !!slot && slot.checkVisibility(), view: !view || view.checkVisibility(), shown: e.isConnected && e.checkVisibility(), what: (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40) }; }).catch(() => ({ slot: false, view: false, shown: false, what: 'detached' }));
+        await t.check(`${target} ${roomState}: the control to reach (${st.what}) is in an open, shown side panel when its scroll fails`, st.slot && st.view && st.shown, JSON.stringify({ ...st, scroll: scrolled }), { hard: true });
+      }
       let p = null, wheeled = false;
       for (let pass = 0; pass < 3; pass++) {
         await stable(loc);
@@ -495,6 +506,9 @@ export default async function (t) {
             .filter(([x, y]) => { const h = document.elementFromPoint(x, y), own = !!h && (h === e || e.contains(h)); if (!own && h && !cover) cover = h; return own; }).length;
           // Only the panel's own layout (its strips and cards) asks for room; a tooltip or a menu over the control does not.
           const view = e.closest('.side-panel-view'), coverIn = !!cover && !!view && view.contains(cover);
+          // (T69: what covers it and what it covers, for makeRoom to fold only the region holding the cover)
+          document.querySelectorAll('[data-shelf-cover], [data-shelf-covered]').forEach(x => { x.removeAttribute('data-shelf-cover'); x.removeAttribute('data-shelf-covered'); });
+          if (cover) { cover.setAttribute('data-shelf-cover', ''); e.setAttribute('data-shelf-covered', ''); }
           const coverOf = cover ? cover.tagName + '.' + String(cover.className?.baseVal ?? cover.className).trim().split(/\s+/).slice(0, 2).join('.') : null;
           const what = (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40);
           if (h0 && (h0 === e || e.contains(h0))) return { x: px, y: py, onTop: true, hits, what, coverIn, coverOf };
@@ -559,6 +573,10 @@ export default async function (t) {
     // a control the census must press is covered (reach above), fold the panel's expanded regions outside its scrollers
     // as a person would (real presses on aria-expanded="true" controls that are not tabs or popup triggers), assert each
     // fold took, and say which control asked for the room. Returns how many folded; a second call finds none.
+    // T69 (opus-recheck-kit8 finding B): only the expanded region that holds what covers the control folds (the nearest
+    // ancestor of the expanded control that contains the cover and not the covered control), never every expanded region
+    // of the panel; and a fold that hides a popup trigger the census would press fails by name (hard), so nothing the
+    // census walks is skipped at this size while it is covered at no other.
     const makeRoom = async (state, why) => {
       folding = true;
       try {
@@ -566,15 +584,23 @@ export default async function (t) {
           document.querySelectorAll('[data-shelf-fold]').forEach(e => e.removeAttribute('data-shelf-fold'));
           // The panel's regions outside every scroller (the panel itself counts when it scrolls); never a row of a tree or list.
           const scs = [p, ...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY) && a.checkVisibility() && a.clientHeight > 0);
+          const cover = document.querySelector('[data-shelf-cover]'), covered = document.querySelector('[data-shelf-covered]');
+          document.querySelectorAll('[data-shelf-fold-region]').forEach(e => e.removeAttribute('data-shelf-fold-region'));
+          const regionOf = e => { if (!cover) return null; for (let a = e; a && a !== p; a = a.parentElement) if (a.contains(cover) && !(covered && a.contains(covered))) return a; return null; };
           return [...p.querySelectorAll('[aria-expanded="true"]')].filter(e => e.checkVisibility() && !/^(tab|treeitem|row|option|gridcell|listitem)$/.test(e.getAttribute('role') || '') && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
-            .map((e, i) => { e.setAttribute('data-shelf-fold', String(i)); return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60) }; });
+            .map(e => ({ e, region: regionOf(e) })).filter(x => x.region)
+            .map(({ e, region }, i) => { e.setAttribute('data-shelf-fold', String(i)); region.setAttribute('data-shelf-fold-region', String(i));
+              return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60), region: (region.tagName + '.' + String(region.className?.baseVal ?? region.className).trim().split(/\s+/).slice(0, 2).join('.')).slice(0, 60) }; });
         });
+        const triggersIn = (i) => panel.evaluate((p, i) => { const r = p.querySelector(`[data-shelf-fold-region="${i}"]`); return r ? [...r.querySelectorAll('[aria-haspopup]:not([aria-haspopup="false"])')].filter(e => e.checkVisibility()).map(e => e.getAttribute('aria-controls') || (e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ').slice(0, 40)) : []; }, i);
         for (const fo of folds) {
-          const ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), fp = await reach(ctl);
+          const ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), before = await triggersIn(fo.i), fp = await reach(ctl);
           await t.page.mouse.click(off.x + fp.x, off.y + fp.y);
           const folded = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'false', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
           await t.check(`${target} ${state} short panel: pressing its expanded control (${fo.label}) folds it to make room for the list`, folded,
             JSON.stringify({ fold: fo, covered: { what: why.what, onTop: why.onTop, hits: why.hits, by: why.coverOf } }), { hard: true });
+          const after = await triggersIn(fo.i), hidden = before.filter(x => !after.includes(x));
+          await t.check(`${target} ${state} short panel: the folded region (${fo.region}) hid no popup trigger the census walks`, !hidden.length, JSON.stringify({ hidden, before }), { hard: true });
         }
         if (folds.length) await f.waitForTimeout(500);
         return folds.length;
@@ -641,7 +667,39 @@ export default async function (t) {
     // route that stops working fails; it does not look like a row that never had one). What each row kind opened is
     // remembered for the later walk, which asks another row of every kind that opened a menu again after the whole panel.
     const ruleDone = new Set();
+    // T68 (opus-recheck-kit8 finding A): row kinds that live only inside collapsed tree folders (this fixture's modified
+    // and added files, all below a collapsed folder) were never probed, so a dead File actions route on them passed whole.
+    // Before the census, every collapsed folder of every tree in the pane opens by the tree's own key (ArrowRight on the
+    // focused row), each asserted (hard), until none is left collapsed; then the tree is let settle.
+    const openFolders = async (state) => {
+      const opened = [];
+      for (let n = 0; ; n++) {
+        const next = await panel.evaluate(p => {
+          document.querySelectorAll('[data-shelf-folder]').forEach(e => e.removeAttribute('data-shelf-folder'));
+          const e = [...p.querySelectorAll('[role="tree"] [role="treeitem"][aria-expanded="false"]')].find(x => !x.closest('[role="menu"]') && x.checkVisibility() && x.getBoundingClientRect().width);
+          if (!e) return null;
+          e.setAttribute('data-shelf-folder', '');
+          return (e.getAttribute('data-path') || e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ').slice(0, 60);
+        });
+        if (next === null) break;
+        if (!await t.check(`${target} ${state} collapsed tree folders open in a bounded walk`, n < 200, `${n} opened`, { hard: true })) break;
+        const row = panel.locator('[data-shelf-folder]');
+        await reach(row);
+        await row.focus(); await t.page.keyboard.press('ArrowRight');
+        const ok = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'true', await row.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
+        await t.check(`${target} ${state} tree folder ${next} opens by ArrowRight for the context census`, ok, '', { hard: true });
+        opened.push(next);
+      }
+      if (opened.length) {
+        await panel.evaluate(p => new Promise(res => { const tr = [...p.querySelectorAll('[role="tree"]')]; let last = '', same = 0, n = 0;
+          const tick = () => { const k = tr.map(x => x.getBoundingClientRect().height).join(); same = k === last ? same + 1 : 0; last = k; if (same >= 3 || ++n > 120) res(); else requestAnimationFrame(tick); };
+          requestAnimationFrame(tick); }));
+        t.log(`${target} ${state}: ${opened.length} collapsed tree folders opened for the context census: ${opened.join(', ')}`);
+      }
+      return opened.length;
+    };
     const contextCensus = async (state, engine, tab) => {
+      await openFolders(state);
       const cands = await panel.evaluate(p => {
         document.querySelectorAll('[data-shelf-probe]').forEach(e => e.removeAttribute('data-shelf-probe'));
         const seen = new Set(), out = [];
@@ -794,18 +852,40 @@ export default async function (t) {
           // footer (Source Control's Publish card at 1280x500) covers it.
           const hp = await reach(head, {x:8,y:8});
           await t.check(`${target} accordion head on top where it is pressed`, hp.onTop, JSON.stringify(hp), {hard:true});
+          // T55: listen to the head's own scrollers before the press, so the rail's reveal scroll is seen from its start
+          await head.evaluate(e => { const W = window.__shelfReveal = { at: performance.now(), scs: [] };
+            for (let a = e.parentElement; a; a = a.parentElement) if (a.scrollHeight > a.clientHeight) {
+              const s = { el: a, scrolled: 0, ended: 0 }; W.scs.push(s);
+              a.addEventListener('scroll', () => { s.scrolled = performance.now(); }, { passive: true });
+              a.addEventListener('scrollend', () => { s.ended = performance.now(); }, { passive: true });
+            } });
           await pressAt(head, hp, { at: {x:8,y:8} });
           await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),JSON.stringify(await head.evaluate((e,hp)=>{const r=e.getBoundingClientRect(),h=document.elementFromPoint(hp.x,hp.y);return {text:e.textContent.trim().replace(/\s+/g,' ').slice(0,40),cls:e.className,acc:e.closest('[data-acc]').className,r:[r.x,r.y,r.width,r.height].map(Math.round),hp,hitNow:h?.tagName+'.'+(h?.className?.baseVal??h?.className),own:!!h&&(h===e||e.contains(h))};},hp)),{hard:true});
           // The rail skin scrolls an expander opened near the bottom into view 120 ms after the click, smoothly
-          // (15-jj.js, 30-motion.js revealInView): let its scrollers come to rest before the next press, or the
-          // next head moves under its press point (a slow machine pressed mid-scroll, on the card above).
-          await head.evaluate(e => new Promise(res => {
-            const scs = []; for (let a = e.parentElement; a; a = a.parentElement) if (a.scrollHeight > a.clientHeight) scs.push(a);
-            const t0 = performance.now(); let last = '', same = 0;
-            const tick = () => { const k = scs.map(x => x.scrollTop).join(); same = k === last ? same + 1 : 0; last = k;
-              if ((same >= 12 && performance.now() - t0 > 250) || performance.now() - t0 > 3000) res(); else requestAnimationFrame(tick); };
-            requestAnimationFrame(tick);
-          }));
+          // (15-jj.js, 30-motion.js revealInView): let that reveal finish before the next press, or the next head moves
+          // under its press point (a slow machine pressed mid-scroll, on the card above). T55 (opus-recheck-kit7 K4): the
+          // wait is the reveal's own completion, not a guess from the scroll position (a 250 ms floor and a silent 3 s
+          // cap): the rail decides at its own delay (REVEAL_MS, pinned: 120 ms, 0 under reduced motion) after the click's
+          // frame, and a scroll it starts ends with that scroller's scrollend. So: wait out the delay and two frames, then
+          // every head scroller that scrolled since the press must reach its scrollend; one that does not within
+          // REVEAL_END_MS fails by name.
+          const reveal = await head.evaluate((e, [ms, endMs]) => new Promise(res => {
+            const W = window.__shelfReveal, reduced = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'reduced';
+            const decide = W.at + (reduced ? 0 : ms);
+            const raf2 = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+            (async () => {
+              while (performance.now() < decide) await new Promise(r => requestAnimationFrame(r));
+              await raf2();
+              const t1 = performance.now();
+              for (;;) {
+                const open = W.scs.filter(s => s.scrolled && s.ended < s.scrolled);
+                if (!open.length) return res({ ok: true, ms: Math.round(performance.now() - W.at), scrolled: W.scs.filter(s => s.scrolled).length });
+                if (performance.now() - t1 > endMs) return res({ ok: false, ms: Math.round(performance.now() - W.at), open: open.map(s => s.el.className.toString().slice(0, 40)) });
+                await new Promise(r => requestAnimationFrame(r));
+              }
+            })();
+          }), [REVEAL_MS, REVEAL_END_MS]);
+          await t.check(`${target} accordion reveal finished (the rail's own scroll ended) before the next press`, reveal.ok, JSON.stringify(reveal), { hard: true });
           opened=true;
         }
         if(!opened)break;
