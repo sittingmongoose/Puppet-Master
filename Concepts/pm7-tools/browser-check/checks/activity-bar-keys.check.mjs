@@ -249,6 +249,12 @@ async function run(t, w, h) {
     if (!st.fv) return { key: target, focused: false, skipped: 'no key focus after the action' };
     await f.waitForTimeout(450);
     const b = await f.evaluate(boxOf, target);
+    // NieR re-places its brackets a little after a press (it locks them on the chosen item first): wait for them on this
+    // item, then for three still frames
+    if (b.brackets) await f.waitForFunction(it => { const r = document.getElementById('o55np-reticle'); if (!r || !r.hasAttribute('data-on')) return false;
+      const c = [...r.children].map(i => i.getBoundingClientRect()); if (c.length !== 4) return false;
+      const box = [Math.min(...c.map(q => q.left)), Math.min(...c.map(q => q.top)), Math.max(...c.map(q => q.right)), Math.max(...c.map(q => q.bottom))];
+      return [it.x - 3, it.y - 3, it.x + it.w + 3, it.y + it.h + 3].every((v, i) => Math.abs(v - box[i]) <= 8); }, b.item, { timeout: 1500 }).catch(() => {});
     if (b.brackets) await f.evaluate(() => new Promise(done => { const r = document.getElementById('o55np-reticle'), t0 = performance.now(); let last = '', still = 0;
       const step = () => { const now = r ? [...r.children].map(i => i.style.transform + getComputedStyle(i).translate).join('|') : ''; still = now === last ? still + 1 : 0; last = now;
         if (still >= 3 || performance.now() - t0 > 1500) done(); else requestAnimationFrame(step); }; requestAnimationFrame(step); }));
@@ -256,8 +262,13 @@ async function run(t, w, h) {
     const P = 12, x = Math.max(0, Math.floor(off.x + u.x) - P), y = Math.max(0, Math.floor(off.y + u.y) - P);
     const region = { x, y, width: Math.ceil(off.x + u.r) + P + 1 - x, height: Math.min(Math.ceil(off.y + u.b) + P + 1, Math.floor(off.y + h)) - y };
     const r1 = await t.pixels(region);
+    if (t.args.debug && b.brackets) t.log(`debug markNow ${target} reticle at focus ` + JSON.stringify(await f.evaluate(() => { const r = document.getElementById('o55np-reticle'); return r ? { on: r.hasAttribute('data-on'), kids: [...r.children].map(i => (q => [q.left, q.top].map(Math.round))(i.getBoundingClientRect())) } : null; })) + ' item ' + JSON.stringify(b.item));
     await f.evaluate(placeSentinel, ['#activityBar', 'before']); await focusQuiet(null); await f.waitForTimeout(350);
+    // NieR locks its brackets on a clicked (or Enter-pressed) item for 1.2 s (19-nier-parts.js retChoose): the rest is
+    // read once they have left it
+    if (b.brackets) await f.waitForFunction(() => { const r = document.getElementById('o55np-reticle'); return !r || !r.hasAttribute('data-on') || r.getBoundingClientRect().width === 0 || [...r.children].every(i => i.getBoundingClientRect().top < -50); }, null, { timeout: 2000 }).catch(() => f.waitForTimeout(1300));
     const r0 = await t.pixels(region);
+    if (t.args.debug && b.brackets) t.log(`debug markNow ${target} reticle at rest ` + JSON.stringify(await f.evaluate(() => { const r = document.getElementById('o55np-reticle'); return r ? { on: r.hasAttribute('data-on'), kids: [...r.children].map(i => (q => [q.left, q.top].map(Math.round))(i.getBoundingClientRect())), act: document.activeElement?.id || document.activeElement?.tagName } : null; })));
     const moved = await f.evaluate(([k, t0]) => { const q = document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`).getBoundingClientRect(); return Math.abs(q.x - t0.x) + Math.abs(q.y - t0.y) > 0.5; }, [target, b.item]);
     await focusQuiet(await before(target)); await kb.press('Tab'); await f.waitForTimeout(150);
     const ox = region.x - off.x, oy = region.y - off.y;
@@ -268,8 +279,8 @@ async function run(t, w, h) {
   // a key until 900 ms after it; only a page whose rail lens can carry the mark (Glass with Liquid Glass on) can count any.
   const startLensSampler = () => f.evaluate(() => { window.__fo96s = { frames: 0, flagged: 0, away: 0 }; const t0 = performance.now();
     const step = () => { const s = window.__fo96s; s.frames++;
-      const L = document.querySelector('#lg-lenses .lg-lens[data-lg-for="rail-icons"]'), act = document.activeElement;
-      if (L && L.hasAttribute('data-lg-focus') && act && act.closest && act.closest('#activityBar')) {
+      const L = [...document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]')].find(x => { const c = getComputedStyle(x); return c.display !== 'none' && c.visibility !== 'hidden' && parseFloat(c.opacity) > 0.5; }), act = document.activeElement;
+      if (L && act && act.closest && act.closest('#activityBar')) {
         s.flagged++; const a = L.getBoundingClientRect(), q = (act.querySelector('.symbol') || act).getBoundingClientRect();
         if (Math.abs((a.left + a.right) / 2 - (q.left + q.right) / 2) > 3 || Math.abs((a.top + a.bottom) / 2 - (q.top + q.bottom) / 2) > 3) s.away++; }
       if (performance.now() - t0 < 900) requestAnimationFrame(step); };
@@ -316,6 +327,7 @@ async function run(t, w, h) {
     // a real click on the open item (the key focus stays: its mark is due), then back to open by a key if it shut it
     await f.locator(`#activityBar .icon[data-ab-id="${c.key}"]`).click(); await frames(f, 4); await f.waitForTimeout(150);
     const clicked = await f.evaluate(panelState, c.key);
+    await rest();   /* the pointer off the item: a resting pointer's hover covers it (Retro's hover block) */
     const mc = await markNow(c.key);
     if (!clicked.open && await tabTo(c.key)) { await kb.press('Enter'); await frames(f, 4); }
     reached = reached && await tabTo(c.key);
@@ -454,7 +466,7 @@ async function run(t, w, h) {
     if (await tabTo('files')) {
       await kb.press('Enter'); await frames(f, 4); acts.push({ after: 'Enter', ...(await markNow('files')) });
       await kb.press('Enter'); await frames(f, 4); acts.push({ after: 'Enter again', ...(await markNow('files')) });
-      await f.locator('#activityBar .icon[data-ab-id="files"]').click(); await frames(f, 4); await f.waitForTimeout(150); acts.push({ after: 'click', ...(await markNow('files')) });
+      await f.locator('#activityBar .icon[data-ab-id="files"]').click(); await frames(f, 4); await f.waitForTimeout(150); await rest(); acts.push({ after: 'click', ...(await markNow('files')) });
       if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
     }
     let lens = null;
