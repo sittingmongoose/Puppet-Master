@@ -451,7 +451,7 @@ NON_GUARDS = {
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'mutation_or_error_write', 'pending.extend(reversed(node))',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
-        ('references_case', 'mutation_or_error_write', 'references.append([type(text) is str, base, fragment, keys])',
+        ('references_case', 'mutation_or_error_write', 'references.append([type(text) is str, base, form, keys])',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'call_review', 'list(node.values())',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
@@ -459,27 +459,31 @@ NON_GUARDS = {
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'call_review', "text.partition('#')",
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
-        ('references_case', 'call_review', 'node.values()',
+        ('references_case', 'call_review', "fragment.split('/')",
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'call_review', "part.replace('~1', '/').replace('~0', '~')",
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
-        ('references_case', 'call_review', "fragment[1:].split('/')",
+        ('references_case', 'call_review', 'node.values()',
+         'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
+        ('references_case', 'call_review', "fragment.startswith('/')",
+         'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
+        ('references_case', 'call_review', 'enumerate(parts)',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'call_review', "part.replace('~1', '/')",
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'data_operation', 'while pending:\n    node = pending.pop()\n    if type(node) is dict:\n        nodes.append(node)\n        pending.extend(reversed(list(node.values())))\n    elif type(node) is list:\n        pending.extend(reversed(node))',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
-        ('references_case', 'data_operation', "for node in nodes:\n    for key in ('$ref', '$dynamicRef'):\n        if key in node:\n            text = node[key]\n            base, _, fragment = text.partition('#') if type(text) is str else ('', '', '')\n            keys = [part.replace('~1', '/').replace('~0', '~') for part in fragment[1:].split('/')] if fragment[:1] == '/' else []\n            references.append([type(text) is str, base, fragment, keys])",
+        ('references_case', 'data_operation', "for node in nodes:\n    for key in ('$ref', '$dynamicRef'):\n        if key in node:\n            text = node[key]\n            base, _, fragment = text.partition('#') if type(text) is str else ('', '', '')\n            form = 'none' if not fragment else 'pointer' if fragment.startswith('/') else 'anchor'\n            parts = fragment.split('/') if form == 'pointer' else []\n            keys = [part.replace('~1', '/').replace('~0', '~') for index, part in enumerate(parts) if index]\n            references.append([type(text) is str, base, form, keys])",
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'data_operation', '(nodes, pending)',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'data_operation', 'if type(node) is dict:\n    nodes.append(node)\n    pending.extend(reversed(list(node.values())))\nelif type(node) is list:\n    pending.extend(reversed(node))',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
-        ('references_case', 'data_operation', "for key in ('$ref', '$dynamicRef'):\n    if key in node:\n        text = node[key]\n        base, _, fragment = text.partition('#') if type(text) is str else ('', '', '')\n        keys = [part.replace('~1', '/').replace('~0', '~') for part in fragment[1:].split('/')] if fragment[:1] == '/' else []\n        references.append([type(text) is str, base, fragment, keys])",
+        ('references_case', 'data_operation', "for key in ('$ref', '$dynamicRef'):\n    if key in node:\n        text = node[key]\n        base, _, fragment = text.partition('#') if type(text) is str else ('', '', '')\n        form = 'none' if not fragment else 'pointer' if fragment.startswith('/') else 'anchor'\n        parts = fragment.split('/') if form == 'pointer' else []\n        keys = [part.replace('~1', '/').replace('~0', '~') for index, part in enumerate(parts) if index]\n        references.append([type(text) is str, base, form, keys])",
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'data_operation', 'if type(node) is list:\n    pending.extend(reversed(node))',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
-        ('references_case', 'data_operation', "if key in node:\n    text = node[key]\n    base, _, fragment = text.partition('#') if type(text) is str else ('', '', '')\n    keys = [part.replace('~1', '/').replace('~0', '~') for part in fragment[1:].split('/')] if fragment[:1] == '/' else []\n    references.append([type(text) is str, base, fragment, keys])",
+        ('references_case', 'data_operation', "if key in node:\n    text = node[key]\n    base, _, fragment = text.partition('#') if type(text) is str else ('', '', '')\n    form = 'none' if not fragment else 'pointer' if fragment.startswith('/') else 'anchor'\n    parts = fragment.split('/') if form == 'pointer' else []\n    keys = [part.replace('~1', '/').replace('~0', '~') for index, part in enumerate(parts) if index]\n    references.append([type(text) is str, base, form, keys])",
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'data_operation', 'pending.pop',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
@@ -497,13 +501,21 @@ NON_GUARDS = {
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'data_operation', "text.partition('#') if type(text) is str else ('', '', '')",
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
-        ('references_case', 'data_operation', "[part.replace('~1', '/').replace('~0', '~') for part in fragment[1:].split('/')] if fragment[:1] == '/' else []",
+        ('references_case', 'data_operation', "'none' if not fragment else 'pointer' if fragment.startswith('/') else 'anchor'",
+         'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
+        ('references_case', 'data_operation', "fragment.split('/') if form == 'pointer' else []",
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'data_operation', "node['$id']",
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'data_operation', "'$id' in node",
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
-        ('references_case', 'data_operation', "fragment[:1] == '/'",
+        ('references_case', 'data_operation', 'not fragment',
+         'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
+        ('references_case', 'data_operation', "'pointer' if fragment.startswith('/') else 'anchor'",
+         'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
+        ('references_case', 'data_operation', "form == 'pointer'",
+         'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
+        ('references_case', 'data_operation', ' for index, part in enumerate(parts) if index',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'data_operation', 'references.append',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
@@ -511,19 +523,19 @@ NON_GUARDS = {
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'data_operation', 'text.partition',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
-        ('references_case', 'data_operation', 'fragment[:1]',
-         'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
-        ('references_case', 'data_operation', " for part in fragment[1:].split('/')",
-         'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
-        ('references_case', 'data_operation', 'node.values',
+        ('references_case', 'data_operation', 'fragment.split',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'data_operation', "part.replace('~1', '/').replace",
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
-        ('references_case', 'data_operation', 'fragment[1:].split',
+        ('references_case', 'data_operation', '(index, part)',
+         'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
+        ('references_case', 'data_operation', 'index',
+         'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
+        ('references_case', 'data_operation', 'node.values',
+         'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
+        ('references_case', 'data_operation', 'fragment.startswith',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
         ('references_case', 'data_operation', 'part.replace',
-         'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
-        ('references_case', 'data_operation', 'fragment[1:]',
          'Traverse every node of the schema document and parse each reference into string flag, base, fragment and unescaped pointer keys (selection only); the reference rows judge them.'),
     ],
 }
@@ -570,9 +582,26 @@ def family_negatives(meta):
     return result
 
 
-def build(name, module, factory, controls, negatives, boundary, document_keys=()):
-    """controls: [(id, value)]; negatives: [(id, value, base value or control id, row label, defect)]."""
+def build(name, module, factory, controls, negatives, boundary, document_keys=(), phase=None):
+    """controls: [(id, value)]; negatives: [(id, value, base value or control id, row label, defect)].
+
+    With a phase, every value is projected to the members that phase reads
+    (production.PHASE_MEMBERS), and controls whose projections are identical
+    are kept once: identical inputs carry identical evidence.
+    """
     production.load_documents(only=document_keys)
+    if phase is not None:
+        kept, alias = [], {}
+        for cid, value in controls:
+            value = production.projected(phase, value)
+            same = next((kid for kid, kvalue in kept if kvalue == value), None)
+            if same is None:
+                kept.append((cid, value))
+            alias[cid] = same or cid
+        controls = kept
+        negatives = [(nid, production.projected(phase, value),
+                      alias.get(base, base) if type(base) is str else production.projected(phase, base), label, defect)
+                     for nid, value, base, label, defect in negatives]
     controls = list(controls)
     probe = factory(controls[0][1])
     rows = probe.table.guards
@@ -616,11 +645,12 @@ def all_controls(metas):
 def envelope_suite():
     metas = fixture_cases()
     return build('envelope phase', 'envelope', production.envelope.envelope_case, all_controls(metas),
-                 phase_negatives('envelope', metas), 'append')
+                 phase_negatives('envelope', metas), 'append', phase='envelope')
 
 
 def family_suite():
     metas = fixture_cases()
+    # Proved on full candidates before projection was added; kept unprojected so that run stays the evidence.
     return build('family phase', 'family', production.family.family_case, all_controls(metas),
                  phase_negatives('family', metas), 'append')
 
@@ -631,7 +661,7 @@ def payload_suite(family):
     module = 'target_payload' if target else 'payload'
     factory = production.target_payload.target_payload_case if target else production.payload.payload_case
     return build(family + ' payload phase', module, factory, family_controls(meta),
-                 phase_negatives('payload', [meta]), 'append', (PREFIX + family,))
+                 phase_negatives('payload', [meta]), 'append', (PREFIX + family,), phase='payload')
 
 
 def payload_context_item_added_suite():
@@ -670,13 +700,16 @@ def payload_state_changed_suite():
     return payload_suite('state_changed')
 
 
-def single_family(family, phase, module, factory, keys=()):
+def single_family(family, phase, module, factory, keys=(), project=True):
     meta = next(m for m in fixture_cases() if m['event_type'] == PREFIX + family)
-    return build(phase + ' phase', module, factory, family_controls(meta), phase_negatives(phase, [meta]), 'append', keys)
+    return build(phase + ' phase', module, factory, family_controls(meta), phase_negatives(phase, [meta]), 'append', keys,
+                 phase=phase if project else None)
 
 
 def lifecycle_suite():
-    return single_family('state_changed', 'lifecycle', 'lifecycle', production.lifecycle.lifecycle_case, ('lifecycle',))
+    # Proved on full candidates before projection was added; kept unprojected so that run stays the evidence.
+    return single_family('state_changed', 'lifecycle', 'lifecycle', production.lifecycle.lifecycle_case, ('lifecycle',),
+                         project=False)
 
 
 def instrumentation_source_suite():

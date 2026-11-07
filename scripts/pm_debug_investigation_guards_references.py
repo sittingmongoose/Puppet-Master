@@ -9,10 +9,7 @@ import pm_guard_isolation as g
 
 def references_anchor_form(value, context):
     for reference in context['references']:
-        if reference[0] is not True:
-            return 'unresolved_schema_reference'
-        fragment = reference[2]
-        if fragment and fragment[:1] != '/':
+        if reference[0] is not True or reference[2] == 'anchor':
             return 'unresolved_schema_reference'
     return None
 
@@ -27,9 +24,9 @@ def references_base_known(value, context):
 
 def references_target_exists(value, context):
     for reference in context['references']:
-        base, fragment = reference[1], reference[2]
+        base = reference[1]
         roots = [entry[1] for entry in context['identified'] if entry[0] == base]
-        if reference[0] is not True or fragment and fragment[:1] != '/' or base and not roots:
+        if reference[0] is not True or reference[2] == 'anchor' or base and not roots:
             continue
         target = roots[0] if base else value
         found = True
@@ -45,9 +42,9 @@ def references_target_exists(value, context):
 
 def references_target_schema(value, context):
     for reference in context['references']:
-        base, fragment = reference[1], reference[2]
+        base = reference[1]
         roots = [entry[1] for entry in context['identified'] if entry[0] == base]
-        if reference[0] is not True or fragment and fragment[:1] != '/' or base and not roots:
+        if reference[0] is not True or reference[2] == 'anchor' or base and not roots:
             continue
         target = roots[0] if base else value
         found = True
@@ -63,8 +60,9 @@ def references_target_schema(value, context):
 
 def references_case(case_value):
     # Traversal and parsing only: every object node of the document in document
-    # order, each $id it declares, and each reference split into whether it is a string, its base,
-    # fragment and unescaped pointer keys. The rows judge them.
+    # order, each $id it declares, and each reference split into whether it is a
+    # string, its base, its fragment form (none, pointer or anchor) and its
+    # unescaped pointer keys. The rows judge them.
     nodes, pending = [], [case_value]
     while pending:
         node = pending.pop()
@@ -79,8 +77,10 @@ def references_case(case_value):
             if key in node:
                 text = node[key]
                 base, _, fragment = text.partition('#') if type(text) is str else ('', '', '')
-                keys = [part.replace('~1', '/').replace('~0', '~') for part in fragment[1:].split('/')] if fragment[:1] == '/' else []
-                references.append([type(text) is str, base, fragment, keys])
+                form = 'none' if not fragment else 'pointer' if fragment.startswith('/') else 'anchor'
+                parts = fragment.split('/') if form == 'pointer' else []
+                keys = [part.replace('~1', '/').replace('~0', '~') for index, part in enumerate(parts) if index]
+                references.append([type(text) is str, base, form, keys])
     context = {'references': references, 'identified': [[node['$id'], node] for node in nodes if '$id' in node]}
     table = g.GuardTable([
         g.Guard('references.anchor_form', g.Invariant('/**/$ref', 'is a string whose fragment is empty or a JSON pointer'), 'unresolved_schema_reference', references_anchor_form),

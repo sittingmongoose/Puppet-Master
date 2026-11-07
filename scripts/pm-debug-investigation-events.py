@@ -93,6 +93,9 @@ def main():
             probe = patched_case(case, transition['patches'])
             check(candidate_refusal(probe) == transition['expected_refusal'],
                   event + ': transition ' + transition['case'])
+            check(all(production.run_phase(factory, production.projected(name, probe)) == production.run_phase(factory, probe)
+                      for name, factory in production.phases(probe)),
+                  event + ': every phase gives the same result on its projected input ' + transition['case'])
         if name in ('instrumentation_state_changed', 'state_changed'):
             check(meta.get('retention_policy_ref') == 'RP-OPERATIONAL-2555D@1.0.0',
                   event + ': exact current G02 Project policy')
@@ -177,6 +180,9 @@ def main():
             bad = patched_case(negative_base, negative['patches'])
             results = phase_results(bad)
             refusing = [result for result in results if result[1]]
+            check(all(production.run_phase(factory, production.projected(name, bad)) == result[1:]
+                      for (name, factory), result in zip(production.phases(bad), results)),
+                  event + ': every phase gives the same row on its projected input ' + negative['case'])
             # The complete path is the phases in order; its refusal is the first refusing phase.
             reason = refusing[0][2] if refusing else None
             check(reason == negative['expected_refusal'], event + ': ' + negative['case'])

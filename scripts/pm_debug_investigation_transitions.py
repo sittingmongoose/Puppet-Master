@@ -207,6 +207,25 @@ def row_label(row):
     return SCHEMA_LABELS[uri] + '#' + pointer
 
 
+# The top-level candidate members each phase reads (its factory, selectors and
+# predicates). Proof inputs are projected to these; the lane runner shows that
+# every phase gives the same row on the full candidate and on its projection.
+PHASE_MEMBERS = {
+    'envelope': ('envelope', 'owner_record', 'payload', 'project_id', 'scope_partition'),
+    'payload': ('event_type', 'payload'),
+    'family': ('event_type', 'mode_resolution', 'payload'),
+    'lifecycle': ('lifecycle_source', 'payload'),
+    'instrumentation_source': ('instrumentation_source',),
+    'instrumentation_detail': ('detail_records', 'payload'),
+    'instrumentation_detail_values_a': ('detail_records', 'payload'),
+    'instrumentation_detail_values_b': ('detail_records', 'payload'),
+    'instrumentation': ('detail_records', 'instrumentation_source', 'payload')}
+
+
+def projected(phase, case):
+    return {key: case[key] for key in PHASE_MEMBERS[phase] if key in case}
+
+
 def candidate(case):
     return {key: value for key, value in case.items() if key not in FIXTURE_SUITE_KEYS}
 
