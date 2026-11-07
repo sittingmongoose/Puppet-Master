@@ -17,6 +17,14 @@ const POPUP_INPUTS = ['mouse', 'enter', 'space', 'arrowdown'];
 const PKEY = { enter: 'Enter', space: ' ', arrowdown: 'ArrowDown' };
 
 // The side panel as the page under test authors it: the same file (or served page) the kit opens.
+// T79: every PROJECT_CWD the page file declares (the shim's project root)
+async function authoredRoot(t) {
+  const page = t.args.page ? String(t.args.page) : fileURLToPath(new URL('../../../PMConcept7.html', import.meta.url));
+  const served = /^https?:/i.test(page), file = /^file:/i.test(page) ? fileURLToPath(page) : served ? null : path.resolve(page);
+  let html = '';
+  try { html = served ? await (await fetch(page)).text() : await readFile(file, 'utf8'); } catch (_) { return []; }
+  return [...html.matchAll(/\bvar PROJECT_CWD = '([^']*)'/g)].map(m => m[1]);
+}
 async function authoredSlot(t) {
   const page = t.args.page ? String(t.args.page) : fileURLToPath(new URL('../../../PMConcept7.html', import.meta.url));
   const served = /^https?:/i.test(page), file = /^file:/i.test(page) ? fileURLToPath(page) : served ? null : path.resolve(page);
@@ -913,6 +921,14 @@ export default async function (t) {
   // which takes no keys, it is always the pointer), so pointer→key, key→pointer and key→key all come before a case. The expected path is the row's data-path, else the path the page file
   // authors for it (its own item's .fm-cpath, else its own .fm-path), never the running page's text, which the rail skin
   // cuts to fit. Keys only on rows that take the focus. --set effects=0 skips the phase; effects=<pane,...> asks only those.
+  // T79 (opus-recheck-g6fix2 K3): the project root that Copy full path and Reveal in terminal are judged against is the
+  // fixture's authored root, pinned here, not what Copy full path itself copied (a wrong root both commands shared agreed
+  // with itself). The page file's own declaration is read as a drift alarm: it must be the pinned value.
+  const FX_ROOT = '~/tastebook/api';
+  if (t.args.effects !== '0') {
+    const decl = await authoredRoot(t);
+    await t.check(`FO-93b the page file declares the fixture's project root pinned in the check (${FX_ROOT}); if the fixture changed, update FX_ROOT in a reviewed change`, decl.length > 0 && decl.every(v => v === FX_ROOT), JSON.stringify(decl), { hard: true });
+  }
   const FX_CMDS = [
     { label: 'Open', how: 'open', where: 'auto' }, { label: 'Open in new panel', how: 'open', where: 'panel' }, { label: 'Open to the side', how: 'open', where: 'right' },
     { branch: 'Copy path', label: 'Copy relative path', how: 'copy' }, { branch: 'Copy path', label: 'Copy full path', how: 'copyfull' },
@@ -1084,23 +1100,25 @@ export default async function (t) {
           const now = await fx(), o = now.opens[0], where = cmd.how === 'open' ? cmd.where : 'auto';
           return now.opens.length === 1 && o.kind === 'editor' && o.path === want && (o.where || 'auto') === where ? null : { opens: now.opens, toasts: now.toasts };
         }
-        if (cmd.how === 'copy') { await until(([w]) => __fx.copies.includes(w) && __fx.toasts.some(m => m.includes(w))); const now = await fx(); return now.copies.includes(want) && now.toasts.some(m => m.includes(want)) ? null : { copies: now.copies, toasts: now.toasts }; }
+        // T78 (opus-recheck-g6fix2 K2): a note is judged by the product's own format, exactly (copy: 'Copied <path>'; Open
+        // with: '<way> · <path>'), not by a substring: a note naming a longer path that contains the row's passed
+        if (cmd.how === 'copy') { await until(([w]) => __fx.copies.includes(w) && __fx.toasts.some(m => String(m).trim() === 'Copied ' + w)); const now = await fx(); return now.copies.includes(want) && now.toasts.some(m => String(m).trim() === 'Copied ' + want) ? null : { copies: now.copies, toasts: now.toasts }; }
         if (cmd.how === 'copyfull') {
           await until(([w]) => __fx.copies.some(c => c.endsWith('/' + w)));
           const now = await fx(), c = now.copies.find(c => c.endsWith('/' + want) && c.length > want.length + 1);
-          if (c) root = c.slice(0, -(want.length + 1));
-          return c && now.toasts.some(m => m.includes(c)) ? null : { copies: now.copies, toasts: now.toasts };
+          if (c) root = c.slice(0, -(want.length + 1));   /* (what the product copied, logged; judged against FX_ROOT, T79) */
+          return c && c === FX_ROOT + '/' + want && now.toasts.some(m => String(m).trim() === 'Copied ' + c) ? null : { copies: now.copies, toasts: now.toasts, root: FX_ROOT };
         }
         if (cmd.how === 'source' || cmd.how === 'note') {
-          await until(([w]) => __fx.toasts.some(m => m.includes(w)));
-          const now = await fx(); return now.toasts.some(m => m.includes(want)) && !now.opens.length ? null : { opens: now.opens, toasts: now.toasts };
+          await until(([w]) => __fx.toasts.some(m => String(m).trim().endsWith(' \u00b7 ' + w)));
+          const now = await fx(); return now.toasts.some(m => String(m).trim().endsWith(' \u00b7 ' + want)) && !now.opens.length ? null : { opens: now.opens, toasts: now.toasts };
         }
         if (cmd.how === 'terminal') {
           await until(() => __fx.opens.some(o => o.kind === 'terminal') || __fx.reveals.length > 0);
           const now = await fx(), o = now.opens.find(o => o.kind === 'terminal'), id = now.reveals[now.reveals.length - 1];
           const cwd = o ? o.cwd : await g.evaluate(id => { const sid = String(id || '').replace(/^terminal:/, ''); try { return (window.PMT && PMT.sessions ? PMT.sessions() : []).find(s => s.id === sid)?.cwd || null; } catch (_) { return null; } }, id);
           const dir = r.folder ? want : (want.includes('/') ? want.slice(0, want.lastIndexOf('/')) : '');
-          return root != null && cwd != null && norm(cwd) === norm(root + (dir ? '/' + dir : '')) ? null : { opens: now.opens, reveals: now.reveals, cwd, root, dir };
+          return cwd != null && norm(cwd) === norm(FX_ROOT + (dir ? '/' + dir : '')) ? null : { opens: now.opens, reveals: now.reveals, cwd, root: FX_ROOT, copiedRoot: root, dir };
         }
         return { unknown: cmd.how };
       };
