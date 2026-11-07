@@ -20,7 +20,11 @@
 // when the footer's controls no longer fit on one line with it, and a label wraps only when they still don't fit without
 // it; as the footer narrows, no label returns to fewer lines and Back's word does not come back (the footer itself
 // widens where the window's layout changes, at 808 and 560: there the comparison starts again, and the log names each
-// such step); and Back's chevron alone is 40 px or more in the wide window (NieR's was 27). From 1280 down to 380 by
+// such step); and Back's chevron alone is 40 px or more in every layout (NieR's was 27 in the wide window, 32 at phone
+// width). Judged exactly: lines as drawn, widths in layout units (1/64 px), no tolerance; and every interval of the
+// sweep in which the footer's drawing changes, or across which its room passes one of its one-line widths, is walked
+// again at 1 px (Q4-K1, opus-recheck-look8: 30a9756711 kept Back's word while both labels wrapped in a 1 px band, Friendly
+// Light 1092, NieR Dark 1086, Glass Light 1039, which 10 px steps and a 1 px tolerance passed). From 1280 down to 380 by
 // default. Fails on c4ba49b137: Back's word hidden at a fixed 520 px footer, so Basic's labels went one, two, one, two
 // lines. Both surfaces (--set sandbox picks one). Headless, or --record with --set looks=<one> --set screens=c-ready for
 // a film of the sweep (the window's size stays, the page is held in a frame; each width is marked).
@@ -142,27 +146,51 @@ async function run(t, mode) {
 			const base = await f.evaluate(READ);
 			const font = Object.fromEntries((base.ctl || []).map((c) => [c.name, c.font]));
 			const bad = [], backBad = [], fitBad = [], monoBad = [], widens = [];
-			let widths = 0, prev = null;
-			for (let w = from; w >= to; w -= step) {
+			let widths = 0, prev = null, refined = 0;
+			/* one width: laid out, then read (and the footer's one-line widths, Q4) */
+			const sample = async (w) => {
 				await t.viewport(w, 900);
 				await t.mark(`${look} ${screen} ${w}`);
 				await frames(f, 2);
 				const r = await f.evaluate(READ);
+				if (!r.none) r.need = await f.evaluate(NEED);
+				return r;
+			};
+			/* what the footer draws: its layout, Back's word, every label's lines */
+			const sig = (r) => (r.none ? 'none' : JSON.stringify([r.lay, r.ctl.map((c) => [c.name, c.word, c.nl])]));
+			const LU = (x) => Math.round(x * 64); /* layout units: Chromium lays out in 1/64 px */
+			const samples = new Map();
+			for (let w = from; w >= to; w -= step) { const r = await sample(w); samples.set(w, r); if (!r.none) widths++; }
+			/* Q4-K1 (opus-recheck-look8): every interval of the coarse sweep in which the footer's drawing changes, or across which
+			   its room passes one of its one-line widths, is walked again at 1 px, so a band narrower than the step (Back's word
+			   kept while both labels wrap, 1 px wide at Friendly Light 1092 on 30a9756711) is read; the points come from the page */
+			const coarse = [...samples.keys()];
+			for (let i = 1; i < coarse.length; i++) {
+				const a = samples.get(coarse[i - 1]), b = samples.get(coarse[i]);
+				if (a.none || b.none) continue;
+				const crosses = (k) => a.need && b.need && Math.sign(LU(a.need[k]) - LU(a.room)) !== Math.sign(LU(b.need[k]) - LU(b.room));
+				if (sig(a) === sig(b) && !crosses('full') && !crosses('chevron')) continue;
+				for (let w = coarse[i - 1] - 1; w > coarse[i]; w--) { samples.set(w, await sample(w)); refined++; }
+			}
+			for (const w of [...samples.keys()].sort((x, y) => y - x)) {
+				const r = samples.get(w);
 				if (r.none) { bad.push({ w, err: 'no footer' }); continue; }
-				widths++;
 				if (r.keyParts.includes('cut')) bad.push({ w, lay: r.lay, ctl: 'NieR key prompts', keys: r.keyParts.join(' ') });
-				/* Q4: Back's word and every label's wrapping against the footer's own one-line widths (1 px either way) */
-				const need = await f.evaluate(NEED), bk = r.ctl.find((c) => c.back), wide = r.lay !== 'narrow';
+				/* Q4, exactly (no tolerance; widths in layout units, lines as drawn): Back's word drawn, no label on two lines; Back's
+				   word only while the footer's controls fit on one line with it, and given up only when they don't; a label wraps
+				   only when they don't fit even without it; Back's chevron alone is 40 px or more in every layout */
+				const need = r.need, bk = r.ctl.find((c) => c.back), wide = r.lay !== 'narrow';
+				if (bk && bk.word && wide) for (const c of r.ctl) if (c.nl > 1) fitBad.push({ w, room: r.room, ctl: c.name, nl: c.nl, why: "a label wraps while Back keeps its word" });
 				if (need && bk && wide) {
-					if (bk.word && need.full > r.room + 1) fitBad.push({ w, room: r.room, need, why: 'Back keeps its word though the footer does not fit on one line' });
-					if (!bk.word && need.full <= r.room - 1) fitBad.push({ w, room: r.room, need, why: 'Back gave up its word though the footer fits on one line' });
-					if (!bk.word && bk.back.w < 39.5) fitBad.push({ w, room: r.room, back: bk.back.w, why: "Back's chevron alone under 40 px" });
+					if (bk.word && LU(need.full) > LU(r.room)) fitBad.push({ w, room: r.room, need, why: 'Back keeps its word though the footer does not fit on one line' });
+					if (!bk.word && LU(need.full) <= LU(r.room)) fitBad.push({ w, room: r.room, need, why: 'Back gave up its word though the footer fits on one line' });
 				}
-				if (need) for (const c of r.ctl) if (c.nl > 1 && (bk && bk.word && wide ? need.full : need.chevron) <= r.room - 1) fitBad.push({ w, lay: r.lay, room: r.room, need, ctl: c.name, nl: c.nl, why: 'a label wraps though the footer fits on one line' });
+				if (bk && !bk.word && bk.back.w < 40 - 1 / 64) fitBad.push({ w, lay: r.lay, back: bk.back.w, why: "Back's chevron alone under 40 px" });
+				if (need) for (const c of r.ctl) if (c.nl > 1 && LU(bk && bk.word && wide ? need.full : need.chevron) <= LU(r.room)) fitBad.push({ w, lay: r.lay, room: r.room, need, ctl: c.name, nl: c.nl, why: 'a label wraps though the footer fits on one line' });
 				/* ...and as the footer narrows nothing goes back: no label to fewer lines, Back's word not back */
-				if (prev && r.room > prev.room + 0.5) widens.push({ w, prevW: prev.w, from: prev.room, to: r.room, lay: `${prev.lay}->${r.lay}`,
+				if (prev && LU(r.room) > LU(prev.room)) widens.push({ w, prevW: prev.w, from: prev.room, to: r.room, lay: `${prev.lay}->${r.lay}`,
 					unwrapped: r.ctl.filter((c) => prev.nl[c.name] > 0 && c.nl > 0 && c.nl < prev.nl[c.name]).map((c) => `${c.name} ${prev.nl[c.name]}->${c.nl}`) });
-				else if (prev && r.room < prev.room - 0.5) {
+				else if (prev && LU(r.room) < LU(prev.room)) {
 					for (const c of r.ctl) { const p0 = prev.nl[c.name]; if (p0 > 0 && c.nl > 0 && c.nl < p0) monoBad.push({ w, ctl: c.name, lines: `${p0}->${c.nl}`, room: `${prev.room}->${r.room}` }); }
 					if (bk && bk.word && prev.back === false && r.lay === prev.lay) monoBad.push({ w, ctl: 'Back', why: 'its word came back', room: `${prev.room}->${r.room}` });
 				}
@@ -175,14 +203,19 @@ async function run(t, mode) {
 					if (k && (k.squeeze > 0.5 || k.w < 24 || k.caret === 'none' || k.caretW < k.caretOwn - 0.3)) backBad.push({ at: w, lay: r.lay, ...k });
 				}
 			}
+			/* (where Back gives up its word, read at 1 px: the last width with it and the first without, and the footer's room) */
+			const seq = [...samples.keys()].sort((x, y) => y - x).map((w) => [w, samples.get(w)]).filter(([, r]) => !r.none);
+			const flips = seq.slice(1).map(([w, r], i) => [seq[i], [w, r]]).filter(([[, a], [, b]]) => { const x = a.ctl.find((c) => c.back), y = b.ctl.find((c) => c.back); return x && y && x.word !== y.word; })
+				.map(([[wa, a], [wb, b]]) => ({ at: `${wa}->${wb}`, gap: wa - wb, word: `${a.ctl.find((c) => c.back).word}->${b.ctl.find((c) => c.back).word}`, room: `${a.room}->${b.room}`, need: b.need && b.need.full, lay: `${a.lay}->${b.lay}` }));
+			t.log(`${tag}: ${widths} widths at ${step} px, ${refined} more at 1 px where the footer changes; Back's word changes ${JSON.stringify(flips)}`);
 			const why = JSON.stringify({ widths, failures: bad.length, first: bad.slice(0, 4), controls: (base.ctl || []).map((c) => c.name) });
 			await t.check(`${tag}: footer read at every width ${from}-${to}`, widths === Math.floor((from - to) / step) + 1, why);
 			await t.check(`${tag}: every footer control inside the window, its label inside its button, at its own size, ${from}-${to} wide`, bad.length === 0, why);
 			if ((base.ctl || []).some((c) => c.back)) await t.check(`${tag}: Back at its own width (never squeezed), 24 px or more, its caret whole, ${from}-${to} wide (FO-100)`, backBad.length === 0,
 				JSON.stringify({ widths, failures: backBad.length, first: backBad.slice(0, 4), narrowestBack: backBad.length ? Math.min(...backBad.map((b) => b.w)) : undefined }));
-			await t.check(`${tag}: Q4 Back gives up its word only when the footer does not fit on one line, a label wraps only when it still doesn't, Back's chevron 40 px or more, ${from}-${to} wide`, fitBad.length === 0,
-				JSON.stringify({ widths, failures: fitBad.length, first: fitBad.slice(0, 4) }));
-			await t.check(`${tag}: Q4 as the footer narrows no label returns to fewer lines and Back's word does not come back, ${from}-${to} wide`, monoBad.length === 0,
+			await t.check(`${tag}: Q4 exactly: no label wraps while Back keeps its word, Back gives it up only when the footer does not fit on one line, a label wraps only when it still doesn't, Back's chevron 40 px or more, ${from}-${to} wide (1 px where it changes)`, fitBad.length === 0,
+				JSON.stringify({ widths, refined, failures: fitBad.length, first: fitBad.slice(0, 4) }));
+			await t.check(`${tag}: Q4 as the footer narrows no label returns to fewer lines and Back's word does not come back, ${from}-${to} wide (1 px where it changes)`, monoBad.length === 0,
 				JSON.stringify({ widths, failures: monoBad.length, first: monoBad.slice(0, 4), footerWidens: widens }));
 			/* (the footer may widen as the window narrows only where the window's own layout changes: at 808 the stage leaves
 			   its side, at 560 the window's margin drops to 8 px; labels that unwrap there do so because it is wider) */
