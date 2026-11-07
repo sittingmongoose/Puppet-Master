@@ -8917,8 +8917,8 @@ canonical_text: >-
   and forbidden on the chat_tool branch. Canon names only the chat_tool value of approval_kind; the node branch
   value is not canon, so the definition marks approval_kind a gap. A definition may list in owner_state_codes each
   owner state it shows as a disabled reason, with the closed code owner_state_code_map gives it, which must be one
-  of its disabled_reason_codes. Owner states maintenance_cutoffs_pending (DL-403) and dedup_hold_pending (DL-444,
-  DL-445) map to not_configured, and the thirteen CRAU-095 local-runtime reason codes map to the closed codes the
+  of its disabled_reason_codes. Owner states maintenance_cutoffs_pending (DL-403, DL-446, DL-447) and
+  dedup_hold_pending (DL-444, DL-445) map to not_configured, and the thirteen CRAU-095 local-runtime reason codes map to the closed codes the
   map lists.
 gui_related: false
 gui_classification_reason: Records where command payload types live and how they are checked; no GUI behavior changes.

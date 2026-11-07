@@ -1425,15 +1425,16 @@ command_payload_definitions:
             The runtime contract row under the catalog id carries conflict_id, selected_claim_refs and
             resolution_reason (Plans/prd_planning_runtime_contracts.json ui_command_contracts), and DL-333
             resolution 1 puts that field list under the catalog id and makes the old id a compatibility alias.
-            PRDB-011's acceptance criterion, amended 2026-11-07 under DL-333 (PRD_Builder.md:950, with the note at
-            :931), now names the same three fields; before, it named cmd.prd_builder.resolve_conflict with prd_id,
-            conflict_id, selected_value, optional rationale and actor_ref. prd_id is left out because the
+            PRDB-011 keeps its original acceptance criterion (PRD_Builder.md:950), which names
+            cmd.prd_builder.resolve_conflict with prd_id, conflict_id, selected_value, optional rationale and actor_ref,
+            and gains a separate criterion amended 2026-11-07 under DL-333 (PRD_Builder.md:951, with the note at :931)
+            that names the same three fields as this definition. prd_id is left out because the
             ConflictRecord named by conflict_id carries it (PRDB-011 canonical_text); selected_value became
             selected_claim_refs, the rationale became the required resolution_reason, and actor_ref stays in the
             envelope.
       aliases:
         - {command_id: cmd.prd_builder.resolve_conflict, kind: compatibility_alias,
-           source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1); PRDB-011's amended acceptance criterion names it the compatibility alias (PRD_Builder.md:950)"}
+           source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1); PRDB-011's amended acceptance criterion names it the compatibility alias (PRD_Builder.md:951)"}
     - command_id: cmd.prd_builder.approve_for_planning_wizard
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
