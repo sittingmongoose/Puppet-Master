@@ -41,12 +41,13 @@ function railControls() {
 }
 
 // The rail's controls on screen at rest (K-F96c-2), with the bar scrolled to its top and the focus off it, as a person
-// first sees it: each tile lies inside the bar's clip box and the window, and is what a point at its centre hits. The
+// first sees it: each tile's centre lies inside the bar's clip box and the window, and a point there hits the tile. The
 // collapsed rail holds all its controls so, in every look, as on main; with the names shown the bar may scroll instead
 // (overflow-y auto or scroll, with something to scroll), where scrolling it must bring the tile in (F96b-3). A Tab walk
 // proves none of this, as a focus scrolls the bar to it: Glass's collapsed rail at 1280x500 held 528 px in 411, with
 // Artifacts, More and the toggle below the fold and no scrollbar to say so (F96c-2). `below` lists the controls seen only
-// by scrolling.
+// by scrolling; `trimmed`, the tiles in view whose edge the box cuts by more than 1 px (Friendly's toggle at 1280x500,
+// 5 px, on b622109459 as well: logged, not failed).
 function railAtRest() {
   const bar = document.getElementById('activityBar');
   if (!bar) return null;
@@ -56,12 +57,13 @@ function railAtRest() {
   const scrolls = /^(auto|scroll|overlay)$/.test(oy) && bar.scrollHeight > bar.clientHeight + 1;
   const clipBox = () => { const b = bar.getBoundingClientRect(), x0 = b.left + bar.clientLeft, y0 = b.top + bar.clientTop;
     return { x0: Math.max(0, x0), y0: Math.max(0, y0), x1: Math.min(innerWidth, x0 + bar.clientWidth), y1: Math.min(innerHeight, y0 + bar.clientHeight) }; };
-  const inside = (q, c) => q.top >= c.y0 - 1 && q.bottom <= c.y1 + 1 && q.left >= c.x0 - 1 && q.right <= c.x1 + 1;
+  const inside = (q, c) => { const x = (q.left + q.right) / 2, y = (q.top + q.bottom) / 2; return y >= c.y0 && y <= c.y1 && x >= c.x0 && x <= c.x1; };
+  const cut = (q, c) => Math.round(Math.max(0, c.y0 - q.top, q.bottom - c.y1, c.x0 - q.left, q.right - c.x1));
   const hits = (e, q) => { const h = document.elementFromPoint((q.left + q.right) / 2, (q.top + q.bottom) / 2); return !!h && (h === e || e.contains(h)); };
   const rows = [...document.querySelectorAll('#activityBar .icon[data-ab-id], #activityBar > .activity-bar-toggle')].filter(shown).map(e => {
     const s = e.querySelector(':scope > .symbol') || e, key = e.getAttribute('data-ab-id') || e.id;
     let q = s.getBoundingClientRect(), c = clipBox();
-    if (inside(q, c) && hits(e, q)) return { key, seen: 'at rest' };
+    if (inside(q, c) && hits(e, q)) return cut(q, c) > 1 ? { key, seen: 'at rest', cut: cut(q, c) } : { key, seen: 'at rest' };
     const row = { key, bottom: Math.round(q.bottom), top: Math.round(q.top), box: [Math.round(c.y0), Math.round(c.y1)] };
     if (!scrolls) return { ...row, seen: false };
     bar.scrollTop += q.bottom > c.y1 ? q.bottom - c.y1 + 2 : q.top < c.y0 ? q.top - c.y0 - 2 : 0;
@@ -72,7 +74,7 @@ function railAtRest() {
   });
   bar.scrollTop = top0;
   return { overflowY: oy, client: bar.clientHeight, content: bar.scrollHeight, scrolls, rows, unseen: rows.filter(r => !r.seen).map(r => r.key),
-    below: rows.filter(r => r.seen === 'by scrolling the bar').map(r => r.key) };
+    below: rows.filter(r => r.seen === 'by scrolling the bar').map(r => r.key), trimmed: rows.filter(r => r.cut).map(r => `${r.key} ${r.cut}px`) };
 }
 
 // The focus mark, judged from painted pixels (F96-1). The item, its tile (the symbol box) and 12 px round them are
