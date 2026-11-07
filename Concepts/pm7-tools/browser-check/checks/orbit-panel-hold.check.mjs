@@ -17,13 +17,16 @@
 //   elsewhere a real click on the panel's words, then one outside the chat on no control, then PageDown with the focus
 //             on the page: the panel does not scroll, a scroll of it with no input does not pin it, and the next
 //             handover changes the subject (round 3, F104-2).
+//   mark      a real wheel up over the unscrolled panel marks it without scrolling it. With no press after it, a scroll of
+//             the panel with no input inside the 700 ms pins it (the control: the mark was made); after a real click
+//             outside the chat it does not, and the next handover changes the subject (opus-recheck-act8c O1).
 //   scrollbar a real press on the panel's scrollbar track pages it down and pins it; a handover keeps it (skipped where
 //             scrollbars overlay the content and leave no gutter).
 //   no input  scrollTop set by script, then a clamp (the panel scrolled to its end by script and its last rows taken
 //             out, so the browser clamps scrollTop and fires scroll, as a patch that shortens it would) pin nothing,
 //             and the next handover changes the subject.
 // Fails group 7 c4ba49b137: the first handover replaces the panel (node, scroll and focus lost), and nothing pins.
-//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>   --set only=wheel,keys,click,elsewhere,scrollbar,none
+//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>   --set only=wheel,keys,click,elsewhere,mark,scrollbar,none
 
 // In the app's frame: helpers the steps below read through window.__fo104.
 function install() {
@@ -266,6 +269,47 @@ async function elsewhereCase(t, f, where) {
   await t.check(`${tag}: the next handover changes the subject`, n.uid !== s.uid && !n.pinned, `${s.uid} -> ${n.uid}`);
 }
 
+// a press elsewhere also ends a wheel's (or a touch's) 700 ms mark (opus-recheck-act8c O1): a wheel up over the panel at
+// its top marks it and scrolls nothing. The control, with no press after the wheel, shows the mark was made: a scroll of
+// the panel with no input inside the 700 ms pins it. After a real click outside the chat, the same scroll must not.
+async function markElsewhereCase(t, f, where) {
+  for (const press of [false, true]) {
+    const tag = `${where} wheel mark${press ? ' then a press elsewhere' : ' (control, no press)'}`;
+    const s0 = await freshWindow(t, f, tag);
+    const a = await f.evaluate(() => window.__fo104.aim('.orbit-panel-title'));
+    const o = await f.evaluate(() => window.__fo104.outside());
+    await t.check(`${tag}: the panel at its top, its words, and a spot outside the chat that is no control`, !!(a && a.ok && o && s0.top === 0),
+      JSON.stringify({ top: s0.top, title: a, outside: o }), { hard: true });
+    await t.page.mouse.move(OFF.x + a.x, OFF.y + a.y);
+    const t0 = await f.evaluate(() => performance.now());
+    await t.page.mouse.wheel(0, -48);
+    if (press) await t.page.mouse.click(OFF.x + o.x, OFF.y + o.y);
+    const r = await f.evaluate(async (t0) => {
+      const p = window.__fo104.panel(), fr = () => new Promise((res) => requestAnimationFrame(() => res()));
+      const wheelTop = p.scrollTop;
+      p.scrollTop = 14; await fr(); await fr(); await fr();
+      return { wheelTop, scriptTop: p.scrollTop, ms: Math.round(performance.now() - t0), pinned: window.__fo104.snap().pinned };
+    }, t0);
+    const inWindow = r.ms < 700 && r.wheelTop === 0 && r.scriptTop > 0;
+    if (!press) {
+      await t.check(`${tag}: a scroll with no input inside the wheel's 700 ms pins the panel (the mark was made)`,
+        inWindow && r.pinned === 'node:' + s0.uid, JSON.stringify({ ...r, uid: s0.uid }));
+      // resume live before the next window: a real click on the core, as the wheel case ends
+      const core = await f.evaluate(() => window.__fo104.aim('.orbit-core'));
+      if (core) await t.page.mouse.click(OFF.x + core.x, OFF.y + core.y);
+      await f.waitForFunction(() => { const s = window.__fo104.snap(); return !!s && !s.pinned && s.core === 'true'; }, null, { timeout: 2000, polling: 25 }).catch(() => {});
+      const back = await f.evaluate(() => window.__fo104.snap());
+      t.log(`${tag}: the core click follows live again (pinned ${back.pinned}, core ${back.core})`);
+      continue;
+    }
+    await t.check(`${tag}: after a press outside the chat, a scroll with no input inside the wheel's 700 ms does not pin the panel`,
+      inWindow && !r.pinned, JSON.stringify({ outside: o.on, ...r, uid: s0.uid }));
+    const s = await f.evaluate(() => window.__fo104.snap());
+    const n = await nextHandover(f, s, tag);
+    await t.check(`${tag}: the next handover changes the subject`, n.uid !== s.uid && !n.pinned, `${s.uid} -> ${n.uid}`);
+  }
+}
+
 async function noInputCase(t, f, where) {
   const tag = `${where} no input`;
   const s0 = await freshWindow(t, f, tag);
@@ -296,11 +340,12 @@ async function run(t, f, where) {
   OFF = await frameOffset(t, f);
   const s = await f.evaluate(() => window.__fo104.snap());
   await t.check(`${where}: a live Working card with the Orbit panel`, !!s, JSON.stringify(s), { hard: true });
-  const only = list(t.args.only, ['wheel', 'keys', 'click', 'elsewhere', 'scrollbar', 'none']);
+  const only = list(t.args.only, ['wheel', 'keys', 'click', 'elsewhere', 'mark', 'scrollbar', 'none']);
   if (only.includes('wheel')) await wheelCase(t, f, where);
   if (only.includes('keys')) await keysCase(t, f, where);
   if (only.includes('click')) await clickKeysCase(t, f, where);
   if (only.includes('elsewhere')) await elsewhereCase(t, f, where);
+  if (only.includes('mark')) await markElsewhereCase(t, f, where);
   if (only.includes('scrollbar')) await scrollbarCase(t, f, where);
   if (only.includes('none')) await noInputCase(t, f, where);
 }
