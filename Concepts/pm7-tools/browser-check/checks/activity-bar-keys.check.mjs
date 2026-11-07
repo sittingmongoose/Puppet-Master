@@ -62,7 +62,12 @@ function boxOf(key) {
   let l = null;
   if (n && getComputedStyle(n).display !== 'none' && n.getClientRects().length) { const g = document.createRange(); g.selectNodeContents(n); l = R(g); }
   const root = document.documentElement;
-  return { item: R(el), tile: sym ? R(sym) : R(el), lit: el.classList.contains('active'), label: l,
+  // how much of the tile the bar cuts off (K-F96b-2): the bar scrolls (overflow-y: auto), so it clips at its padding
+  // box; the mark is drawn inside the tile, and a cut tile is a cut mark (Chat's top in Glass at 1280x500, F96b-3)
+  const bar = document.getElementById('activityBar'), bb = bar.getBoundingClientRect(), tt = (sym || el).getBoundingClientRect();
+  const cx0 = bb.left + bar.clientLeft, cy0 = bb.top + bar.clientTop, cx1 = cx0 + bar.clientWidth, cy1 = cy0 + bar.clientHeight;
+  const clip = { top: Math.max(0, +(cy0 - tt.top).toFixed(1)), bottom: Math.max(0, +(tt.bottom - cy1).toFixed(1)), left: Math.max(0, +(cx0 - tt.left).toFixed(1)), right: Math.max(0, +(tt.right - cx1).toFixed(1)) };
+  return { item: R(el), tile: sym ? R(sym) : R(el), lit: el.classList.contains('active'), label: l, clip,
     brackets: (root.getAttribute('data-o55-nier') === 'on' || /^nier/.test(root.getAttribute('data-theme') || '')) && /(^|\s)brackets(\s|$)/.test(root.getAttribute('data-o55-nier-parts') || '') };
 }
 // A side of the ring, read along scanlines across it (6 px either side of the tile's edge, through the middle 60% of
@@ -115,32 +120,29 @@ function corners(rest, focus, item, ox, oy) {
 }
 // a mark passes when every side (every corner for NieR) is there at 3:1; `soft` (FO-99) asks only that every side changed
 const markOk = (r, soft) => !!r && r.focused && (r.brackets ? Object.values(r.corners).every(n => n >= 6)
-  : Object.values(r.sides).every(sd => soft ? sd.share >= 0.9 || sd.median > 1.5 : sd.share >= 0.9));
-const brief = r => r && { key: r.key, lit: r.lit, focused: r.focused, ...(r.moved ? { moved: true } : {}), ...(r.brackets ? { corners: r.corners } : { sides: Object.fromEntries(Object.entries(r.sides).map(([k, v]) => [k, `${v.share} ${v.worst}-${v.median}`])) }), ...(r.name ? { name: r.name } : {}) };
+  : Object.values(r.sides).every(sd => soft ? sd.share >= 0.9 || sd.median > 1.5 : sd.share >= 0.9) && (!r.clip || Object.values(r.clip).every(v => v <= 1)));
+const brief = r => r && { key: r.key, lit: r.lit, focused: r.focused, ...(r.unreached ? { unreached: true } : {}), ...(r.skipped ? { skipped: r.skipped } : {}), ...(r.moved ? { moved: true } : {}), ...(r.clip && Object.values(r.clip).some(v => v > 1) ? { clip: r.clip } : {}),
+  ...(r.corners ? { corners: r.corners } : {}), ...(r.sides ? { sides: Object.fromEntries(Object.entries(r.sides).map(([k, v]) => [k, `${v.share} ${v.worst}-${v.median}`])) } : {}), ...(r.names ? { names: r.names } : {}) };
 
-// the name's letters: inside its text box, the pixels that stand out from the box's own ground (its most common
-// colour) by more than 40 luminance levels, grown by 1 px so a ring that only touches a letter counts; none of them may
-// change on a key focus. The region is the text box and 2 px round it.
-function inkDiff(rest, focus, pad, tileBox) {
+// Names' letters, every name in view (K-F96b-3: a mark must not cross a neighbour's name either). The letters are found
+// exactly: the region is captured once more at rest with every name's text made transparent, and a letter is a pixel
+// that differs between the two by more than 24 levels (so a lens rim or a tile edge inside a name's box is never taken
+// for a letter, K-F96b-5). Each letter is grown by 1 px, and none of those pixels may change on the key focus.
+function lettersCrossed(rest, bare, focus) {
   const w = rest.width, h = rest.height, Y = (d, i) => 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
-  const counts = new Map();
-  for (let y = pad; y < h - pad; y++) for (let x = pad; x < w - pad; x++) { const i = 4 * (y * w + x), k = Math.round(Y(rest.data, i) / 8); counts.set(k, (counts.get(k) || 0) + 1); }
-  const ground = 8 * [...counts.entries()].sort((p, q) => q[1] - p[1])[0][0];
-  const ink = new Uint8Array(w * h); let letters = 0;
-  for (let y = pad; y < h - pad; y++) for (let x = pad; x < w - pad; x++) if (Math.abs(Y(rest.data, 4 * (y * w + x)) - ground) > 40) { ink[y * w + x] = 1; letters++; }
-  // tileBox (in the capture's pixels): where a name is laid out over its own tile (Glass at 1280x500, names shown,
-  // on b79930bc40 as well) a mark drawn in the tile meets the letters there; those count apart, as base overlap
-  let crossed = 0, overlap = 0;
-  const inTile = (x, y) => !!tileBox && x >= tileBox.x && x < tileBox.x + tileBox.w && y >= tileBox.y && y < tileBox.y + tileBox.h;
+  const ink = new Uint8Array(w * h); let letters = 0, crossed = 0;
+  for (let i = 0, p = 0; i < rest.data.length; i += 4, p++) if (Math.abs(Y(rest.data, i) - Y(bare.data, i)) > 24) { ink[p] = 1; letters++; }
   for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
     let near = false;
     for (let dy = -1; dy <= 1 && !near; dy++) for (let dx = -1; dx <= 1; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && yy < h && xx >= 0 && xx < w && ink[yy * w + xx]) { near = true; break; } }
     if (!near) continue;
     const i = 4 * (y * w + x);
-    if (Math.abs(Y(focus.data, i) - Y(rest.data, i)) > 40) { if (inTile(x, y)) overlap++; else crossed++; }
+    if (Math.abs(Y(focus.data, i) - Y(rest.data, i)) > 40) crossed++;
   }
-  return { letters, crossed, overlap };
+  return { letters, crossed };
 }
+const hideNames = on => { const id = 'fo96-bare-names'; document.getElementById(id)?.remove(); if (!on) return;
+  const st = document.createElement('style'); st.id = id; st.textContent = ':root #activityBar.activity-bar .icon .icon-label:not(#fo96a):not(#fo96b):not(#fo96c):not(#fo96d):not(#fo96e) { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; -webkit-text-stroke: 0 !important; }'; document.head.appendChild(st); };
 function panelState(key) {
   const ic = document.querySelector(`#activityBar .icon[data-ab-id="${key}"]`), slot = document.getElementById('sidePanelSlot');
   const view = ic && ic.getAttribute('data-target') && document.getElementById(ic.getAttribute('data-target'));
@@ -202,9 +204,11 @@ async function run(t, w, h) {
     const u = { x: Math.min(b.item.x, b.tile.x), y: Math.min(b.item.y, b.tile.y), r: Math.max(b.item.x + b.item.w, b.tile.x + b.tile.w), b: Math.max(b.item.y + b.item.h, b.tile.y + b.tile.h) };
     const P = 12, x = Math.max(0, Math.floor(off.x + u.x) - P), y = Math.max(0, Math.floor(off.y + u.y) - P);
     const region = { x, y, width: Math.ceil(off.x + u.r) + P + 1 - x, height: Math.min(Math.ceil(off.y + u.b) + P + 1, Math.floor(off.y + h)) - y };
-    // with the names shown, the name's own text box and 2 px round it: the mark must not cross or touch its letters
-    const L = b.label, lr = L && { x: Math.floor(off.x + L.x) - 2, y: Math.floor(off.y + L.y) - 2, width: Math.ceil(L.w) + 5, height: Math.ceil(L.h) + 5 };
-    const r0 = await t.pixels(region), l0 = lr && await t.pixels(lr);
+    // with the names shown, every name's letters in the region, its own and its neighbours': an exact mask (below)
+    const named = !!b.label;
+    const r0 = await t.pixels(region);
+    let bare = null;
+    if (named) { await f.evaluate(hideNames, true); await frames(f, 2); bare = await t.pixels(region); await f.evaluate(hideNames, false); await frames(f, 2); }
     await focusQuiet(await before(target));
     await kb.press('Tab');
     await f.waitForTimeout(450);
@@ -213,7 +217,7 @@ async function run(t, w, h) {
       const step = () => { const now = r ? [...r.children].map(i => i.style.transform + getComputedStyle(i).translate).join('|') : ''; still = now === last ? still + 1 : 0; last = now;
         if (still >= 3 || performance.now() - t0 > 1500) done(); else requestAnimationFrame(step); }; requestAnimationFrame(step); }));
     const now = await key();
-    const r1 = await t.pixels(region), l1 = lr && await t.pixels(lr);
+    const r1 = await t.pixels(region);
     // the item, not its tile, which a focused tile's own style may move by a fraction (Glass's press scale is lifted)
     const moved = await f.evaluate(([k, t0]) => { const el = k === 'activityBarToggle' ? document.getElementById(k) : document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`); const q = el.getBoundingClientRect(); return Math.abs(q.x - t0.x) + Math.abs(q.y - t0.y) > 0.5; }, [target, b.item]);
     const ox = region.x - off.x, oy = region.y - off.y;
@@ -232,15 +236,45 @@ async function run(t, w, h) {
           overlays: [...document.querySelectorAll('body > *')].filter(e => { const q = getComputedStyle(e); if (q.pointerEvents !== 'none' || q.display === 'none' || q.visibility === 'hidden' || q.opacity === '0') return false; const r = e.getBoundingClientRect(), s = sym.getBoundingClientRect(); return r.right > s.left && r.left < s.right && r.bottom > s.top && r.top < s.bottom; }).map(e => (e.id || String(e.className).slice(0, 40)) + ' op ' + getComputedStyle(e).opacity) }; }, target)));
       t.log(`debug ${target} over ` + JSON.stringify(await f.evaluate(([x, y, w, hh]) => [[x + 1, y + hh / 2], [x + w / 2, y + 1], [x + w / 2, y + hh - 1]].map(([px, py]) => document.elementsFromPoint(px, py).slice(0, 3).map(e => (e.id ? '#' + e.id : '') + '.' + String(e.className?.baseVal ?? e.className).split(' ').slice(0, 2).join('.'))), [b.tile.x, b.tile.y, b.tile.w, b.tile.h])));
     }
-    // the tile and 2 px round it (the mark's own edge, and the 1 px grown round each letter): a letter there is laid out
-    // against the tile (Glass at 1280x500 with the names shown, b79930bc40 as well), and any mark on the tile meets it;
-    // that counts as overlap, reported as base. A mark that reaches beyond it (a ring outside the tile or round the
-    // item, as 7d1ef16b13 and 030240ea66 drew) still crosses
-    const tileInName = lr && { x: b.tile.x + off.x - lr.x - 2, y: b.tile.y + off.y - lr.y - 2, w: b.tile.w + 4, h: b.tile.h + 4 };
-    return { key: target, lit: b.lit, focused: now.key === target && !moved, moved, brackets: b.brackets,
+    return { key: target, lit: b.lit, focused: now.key === target && !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
       ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy), sides(r0, r1, b.item, ox, oy)) }),
-      ...(lr ? { name: inkDiff(l0, l1, 2, tileInName) } : {}) };
+      ...(named ? { names: lettersCrossed(r0, bare, r1) } : {}) };
   };
+  // The mark as it is now, after a key or a click acted on the focused control (K-F96b-1: a panel closing or changing
+  // under a key focus). Read first with the focus where the action left it, then at rest with the focus stepped off
+  // without scrolling; the key focus is then given back by a real Tab. A control the action left without a key focus
+  // (:focus-visible off) is skipped, as no mark is due.
+  const markNow = async (target) => {
+    const st = await f.evaluate(k => { const el = document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`); return { fv: !!el && document.activeElement === el && el.matches(':focus-visible') }; }, target);
+    if (!st.fv) return { key: target, focused: false, skipped: 'no key focus after the action' };
+    await f.waitForTimeout(450);
+    const b = await f.evaluate(boxOf, target);
+    if (b.brackets) await f.evaluate(() => new Promise(done => { const r = document.getElementById('o55np-reticle'), t0 = performance.now(); let last = '', still = 0;
+      const step = () => { const now = r ? [...r.children].map(i => i.style.transform + getComputedStyle(i).translate).join('|') : ''; still = now === last ? still + 1 : 0; last = now;
+        if (still >= 3 || performance.now() - t0 > 1500) done(); else requestAnimationFrame(step); }; requestAnimationFrame(step); }));
+    const u = { x: Math.min(b.item.x, b.tile.x), y: Math.min(b.item.y, b.tile.y), r: Math.max(b.item.x + b.item.w, b.tile.x + b.tile.w), b: Math.max(b.item.y + b.item.h, b.tile.y + b.tile.h) };
+    const P = 12, x = Math.max(0, Math.floor(off.x + u.x) - P), y = Math.max(0, Math.floor(off.y + u.y) - P);
+    const region = { x, y, width: Math.ceil(off.x + u.r) + P + 1 - x, height: Math.min(Math.ceil(off.y + u.b) + P + 1, Math.floor(off.y + h)) - y };
+    const r1 = await t.pixels(region);
+    await f.evaluate(placeSentinel, ['#activityBar', 'before']); await focusQuiet(null); await f.waitForTimeout(350);
+    const r0 = await t.pixels(region);
+    const moved = await f.evaluate(([k, t0]) => { const q = document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`).getBoundingClientRect(); return Math.abs(q.x - t0.x) + Math.abs(q.y - t0.y) > 0.5; }, [target, b.item]);
+    await focusQuiet(await before(target)); await kb.press('Tab'); await f.waitForTimeout(150);
+    const ox = region.x - off.x, oy = region.y - off.y;
+    return { key: target, lit: b.lit, focused: !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
+      ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy), sides(r0, r1, b.item, ox, oy)) }) };
+  };
+  // Frames where the lens carries the mark away from the focused control (F96b-2), sampled every frame from just before
+  // a key until 900 ms after it; only a page whose rail lens can carry the mark (Glass with Liquid Glass on) can count any.
+  const startLensSampler = () => f.evaluate(() => { window.__fo96s = { frames: 0, flagged: 0, away: 0 }; const t0 = performance.now();
+    const step = () => { const s = window.__fo96s; s.frames++;
+      const L = document.querySelector('#lg-lenses .lg-lens[data-lg-for="rail-icons"]'), act = document.activeElement;
+      if (L && L.hasAttribute('data-lg-focus') && act && act.closest && act.closest('#activityBar')) {
+        s.flagged++; const a = L.getBoundingClientRect(), q = (act.querySelector('.symbol') || act).getBoundingClientRect();
+        if (Math.abs((a.left + a.right) / 2 - (q.left + q.right) / 2) > 3 || Math.abs((a.top + a.bottom) / 2 - (q.top + q.bottom) / 2) > 3) s.away++; }
+      if (performance.now() - t0 < 900) requestAnimationFrame(step); };
+    requestAnimationFrame(step); });
+  const lensSamples = () => f.evaluate(() => window.__fo96s);
   const byTab = target => async () => { for (let i = 0; i < controls.length; i++) { await kb.press('Tab'); if ((await key()).key === target) return; } };
   await rest();
   const paint1 = [];
@@ -278,15 +312,20 @@ async function run(t, w, h) {
     }
     if (reached) { await kb.press('Enter'); await frames(f, 4); }
     const s1 = await f.evaluate(panelState, c.key);
-    // a real click on the open item, then back to open by a key if the click shut it
+    const m1 = reached ? await markNow(c.key) : null;
+    // a real click on the open item (the key focus stays: its mark is due), then back to open by a key if it shut it
     await f.locator(`#activityBar .icon[data-ab-id="${c.key}"]`).click(); await frames(f, 4); await f.waitForTimeout(150);
     const clicked = await f.evaluate(panelState, c.key);
+    const mc = await markNow(c.key);
     if (!clicked.open && await tabTo(c.key)) { await kb.press('Enter'); await frames(f, 4); }
     reached = reached && await tabTo(c.key);
     const s2a = await f.evaluate(panelState, c.key);
     if (reached) { await kb.press(' '); await frames(f, 4); await f.waitForTimeout(150); }
     const s2 = await f.evaluate(panelState, c.key);
+    const m2 = reached ? await markNow(c.key) : null;
     const still = await key();
+    const reads = [m1, mc, m2].filter(r => r && !r.skipped);
+    await t.check(`${at} ${c.key}: its key focus mark is on every side after Enter, a click and Space`, reads.length >= 2 && reads.every(r => markOk(r)), JSON.stringify([m1, mc, m2].map(brief)));
     const enterOk = reached && !s0.open && s1.active && s1.open, spaceOk = s2a.open && s2.open === clicked.open && s2.active === clicked.active;
     if (clicked.open) t.log(`${at} ${c.key}: a real click on the open item keeps its panel here (base behaviour, b79930bc40 too); Space does the same`);
     await t.check(`${at} ${c.key}: Enter opens its panel, Space on the open item does what a real click does`, enterOk && spaceOk && still.key === c.key,
@@ -408,15 +447,37 @@ async function run(t, w, h) {
     t.log(`${at} ${look} marks ${JSON.stringify(rows.map(brief))}`);
     await t.check(`${at} ${look}: Chat and Files are lit, Search and More are not`, rows[0]?.lit && rows[1]?.lit && rows[2] && !rows[2].lit && rows[3] && !rows[3].lit, JSON.stringify(rows.map(r => r && [r.key, r.lit])));
     await t.check(`${at} ${look}: a key focus mark on every side ${known ? '(3:1 held back for FO-99)' : 'at 3:1 or more'} on lit Chat and Files, on Search and on More`, rows.every(ok), JSON.stringify(rows.map(brief)));
+    // Keys acting on the open panel's icon (F96b-1): Enter (at 1920 it closes the panel), Enter again, a real click on
+    // the focused icon, then Enter on Search (the panel changes, F96b-2); the mark is read after each, and no frame may
+    // show the lens carrying it away from the focused control. Files is left open again.
+    const acts = [];
+    if (await tabTo('files')) {
+      await kb.press('Enter'); await frames(f, 4); acts.push({ after: 'Enter', ...(await markNow('files')) });
+      await kb.press('Enter'); await frames(f, 4); acts.push({ after: 'Enter again', ...(await markNow('files')) });
+      await f.locator('#activityBar .icon[data-ab-id="files"]').click(); await frames(f, 4); await f.waitForTimeout(150); acts.push({ after: 'click', ...(await markNow('files')) });
+      if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+    }
+    let lens = null;
+    if (await tabTo('search')) {
+      await startLensSampler(); await kb.press('Enter'); await f.waitForTimeout(950); lens = await lensSamples();
+      acts.push({ after: 'Enter on Search', ...(await markNow('search')) });
+    }
+    if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+    t.log(`${at} ${look} after keys ${JSON.stringify(acts.map(a => ({ after: a.after, ...brief(a) })))} lens ${JSON.stringify(lens)}`);
+    const actsRead = acts.filter(a => !a.skipped);
+    await t.check(`${at} ${look}: the key focus mark ${known ? '(FO-99)' : 'at 3:1 on every side'} after Enter, Enter again and a click on the open panel's icon, and after Enter changes the panel`,
+      actsRead.length >= 3 && actsRead.every(ok), JSON.stringify(acts.map(a => ({ after: a.after, ...brief(a) }))));
+    await t.check(`${at} ${look}: the lens never carries the mark away from the focused item when Enter changes the panel`, !!lens && lens.away === 0, JSON.stringify(lens));
+    await rest();
     // the bar with its names shown (the toggle)
     await f.evaluate(() => document.getElementById('activityBarToggle').click());
     await f.waitForFunction(() => !document.getElementById('activityBar').classList.contains('collapsed'), null, { timeout: 5000 }).catch(() => {});
     await f.waitForTimeout(900);
-    const wide = [await painted('files'), await painted('search'), await painted('repository_automation')];
+    // Chat (the first item, K-F96b-2), lit Files, Search and Pipelines (its p is the bar's lowest letter)
+    const wide = [await painted('chat'), await painted('files'), await painted('search'), await painted('repository_automation')];
     t.log(`${at} ${look} names shown, marks ${JSON.stringify(wide.map(brief))}`);
-    await t.check(`${at} ${look}, names shown: a key focus mark on every side ${known ? '(FO-99)' : 'at 3:1 or more'} on lit Files, on Search and on Pipelines, and no name's letters are crossed or touched`,
-      wide.every(ok) && wide[0]?.lit && wide.every(r => r && r.name && r.name.letters >= 15 && r.name.crossed === 0), JSON.stringify(wide.map(brief)));
-    for (const r of wide) if (r?.name?.overlap) t.log(`${at} ${look} ${r.key}: ${r.name.overlap} px of its letters lie within 2 px of its own tile (the name is set against the tile, or over it in Glass at 1280x500, on b79930bc40 as well) and change with the tile's edge; not counted as crossed`);
+    await t.check(`${at} ${look}, names shown: a key focus mark on every side ${known ? '(FO-99)' : 'at 3:1 or more'} on Chat, lit Files, Search and Pipelines, and no name's letters in view are crossed or touched`,
+      wide.every(ok) && wide[1]?.lit && wide.every(r => r && r.names && r.names.letters >= 15 && r.names.crossed === 0), JSON.stringify(wide.map(brief)));
     if (t.args.crops) {
       await sentinel('#activityBar'); await byTab('files')(); await f.waitForTimeout(450);
       await t.crop(`${at}-names-files-${surface}-${look}`, f.locator('#activityBar'), `${at} ${look}: names shown, lit Files with the key focus mark`);
