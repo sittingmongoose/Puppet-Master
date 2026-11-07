@@ -1453,10 +1453,10 @@
      80-bar.src.css, draws it on the lens and stands the icon's own mark down). Otherwise neither carries the flag and
      the icon shows its own mark. Kept in step whenever the rail's lens is synced (a panel opening, closing or changing
      hides, shows or moves it: F96b-1), on focus moves and keys in the bar (a key turns :focus-visible on for a
-     mouse-focused icon with no focusin), and, while the lens travels to the focused icon, each frame until it arrives,
-     so the mark never sits on the item the focus has left (F96b-2). "Painted" is read from the computed opacity, not
-     from display: the lens is hidden by opacity. */
-  var railFocusQ = 0, railTravelUntil = 0;
+     mouse-focused icon with no focusin), and, while the lens travels to the focused icon or fades in on it, once more
+     when that motion ends, so the mark never sits on the item the focus has left (F96b-2). "Painted" is read from the
+     computed opacity, not from display: the lens is hidden by opacity. */
+  var railFocusQ = 0, railAwaited = typeof WeakSet === 'function' ? new WeakSet() : null;
   function railLensAt(lens, icon) {
     var s = icon.querySelector('.symbol') || icon, a = lens.getBoundingClientRect(), b = s.getBoundingClientRect();
     return Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 2 && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 2;
@@ -1477,18 +1477,28 @@
     if (!cur && !flagged) return;
     if (cur && L && L.lens && L.lens.isConnected && L.rect && !(typeof hiddenLenses !== 'undefined' && hiddenLenses.has(L))) {
       var cs = getComputedStyle(L.lens);
-      if (cs.display !== 'none' && parseFloat(cs.opacity) > 0.5) { if (railLensAt(L.lens, cur)) on = true; else wait = true; }
+      if (cs.display !== 'none') { if (parseFloat(cs.opacity) > 0.5 && railLensAt(L.lens, cur)) on = true; else wait = true; }
     }
     bar.querySelectorAll('.icon[data-lg-focus]').forEach(function (i) { if (!on || i !== cur) i.removeAttribute('data-lg-focus'); });
     document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]').forEach(function (x) { if (!on || !L || x !== L.lens) x.removeAttribute('data-lg-focus'); });
     if (on && L && L.lens) L.lens.setAttribute('data-lg-focus', '');
     if (on && !cur.hasAttribute('data-lg-focus')) cur.setAttribute('data-lg-focus', '');
-    /* the lens is on its way to the focused icon: look again next frame, for as long as a travel lasts */
-    if (wait) { if (!railTravelUntil) railTravelUntil = performance.now() + 1500; if (performance.now() < railTravelUntil) queueRailFocus(); else railTravelUntil = 0; }
-    else railTravelUntil = 0;
+    /* the lens is on its way to the focused icon, or fading in on it: look again when its own motion ends (travel(),
+       a ride on its strip's entrance, an arrival or reduced-motion fade: every move of the lens that is not a jump is
+       one of its Web Animations), in that frame, before it paints. No poll (F96c-3): a lens at rest somewhere else
+       waits for a strip sync to move it, and syncStripNow queues this itself; an endless animation (a step look's hop
+       hide, never in Glass) is not waited on, and the icon keeps its own mark meanwhile. */
+    if (wait && L.lens.getAnimations) L.lens.getAnimations().forEach(function (a) {
+      if (a.playState === 'finished' || (railAwaited && railAwaited.has(a))) return;
+      var end = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming().endTime : Infinity;
+      if (!isFinite(end) || !a.finished) return;
+      if (railAwaited) railAwaited.add(a);
+      a.finished.then(railFocusNow, railFocusNow);
+    });
   }
   function queueRailFocus() { if (!railFocusQ) railFocusQ = requestAnimationFrame(syncRailFocus); }
-  document.addEventListener('focusin', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) { railTravelUntil = 0; syncRailFocus(); } }, true);
+  function railFocusNow() { if (railFocusQ) { cancelAnimationFrame(railFocusQ); railFocusQ = 0; } syncRailFocus(); }
+  document.addEventListener('focusin', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) railFocusNow(); }, true);
   document.addEventListener('focusout', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) queueRailFocus(); }, true);
   document.addEventListener('keydown', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) queueRailFocus(); }, true);
   /* Every lens lives in one layer above the strips and the title bar (#lg-lenses), not inside them: from outside it sees
