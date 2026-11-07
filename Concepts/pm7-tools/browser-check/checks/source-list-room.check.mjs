@@ -35,17 +35,40 @@ async function cell(t, surface, w, h) {
 	const icon = f.locator('#activityBar .icon[data-target="panel-source"]');
 	const shown = () => f.evaluate(() => { const s = document.getElementById('sidePanelSlot'); return !!s && s.checkVisibility() && document.querySelector('#sidePanelSlot > .side-panel-view.active')?.id === 'panel-source'; });
 	// every finite animation in the panel finished (its entrance deals the rows and the card in; a running job's pulse
-	// never ends, so it is not waited for), then two frames
-	const settle = () => f.evaluate(() => Promise.all(document.getElementById('panel-source').getAnimations({ subtree: true })
-		.filter((a) => Number.isFinite(a.effect?.getComputedTiming().endTime)).map((a) => a.finished.catch(() => {})))
-		.then(() => new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res)))));
+	// never ends, so it is not waited for), then the panel's parts hold still for 6 frames running (a look's font load
+	// refits the rail and can start an entrance after the first wait), at most 4 s
+	const settle = () => f.evaluate(async () => {
+		const pn = document.getElementById('panel-source'), t0 = performance.now();
+		const parts = () => [...pn.querySelectorAll(':scope > *, .pm7-scm-jj-view > *')].map((e) => { const b = e.getBoundingClientRect(); return [b.top, b.height, b.left].map((v) => v.toFixed(1)).join(); }).join('|');
+		let last = '', still = 0;
+		while (performance.now() - t0 < 4000) {
+			await Promise.all(pn.getAnimations({ subtree: true }).filter((a) => Number.isFinite(a.effect?.getComputedTiming().endTime)).map((a) => a.finished.catch(() => {})));
+			await new Promise((res) => requestAnimationFrame(res));
+			const k = parts(); still = k === last ? still + 1 : 0; last = k;
+			if (still >= 6) return true;
+		}
+		return false;
+	});
 	const open = async (engine) => {
-		for (let n = 0; n < 3 && !await shown(); n++) { await icon.click(); await f.waitForFunction(() => document.querySelector('#sidePanelSlot > .side-panel-view.active')?.id === 'panel-source', null, { timeout: 2000 }).catch(() => {}); }
+		for (let n = 0; n < 3 && !await shown(); n++) { await press(icon); await f.waitForFunction(() => document.querySelector('#sidePanelSlot > .side-panel-view.active')?.id === 'panel-source', null, { timeout: 2000 }).catch(() => {}); }
 		const sw = f.locator(`#panel-source [data-pm7-scm-engine="${engine}"]`);
-		if (await sw.getAttribute('aria-pressed') !== 'true') { await sw.click(); await f.waitForFunction((e) => document.getElementById('panel-source').getAttribute('data-scm-engine') === e, engine, { timeout: 3000 }); }
+		if (await sw.getAttribute('aria-pressed') !== 'true') {
+			await t.page.mouse.move(2, 2);
+			await t.check(`the ${engine} switch is on top where it is pressed`, await press(sw), '', { hard: true });
+			await f.waitForFunction((e) => document.getElementById('panel-source').getAttribute('data-scm-engine') === e, engine, { timeout: 5000 });
+		}
 		await settle();
 	};
 	const off = async () => { const fe = f === t.page.mainFrame() ? null : await f.frameElement(); return fe ? await fe.boundingBox() : { x: 0, y: 0 }; };
+	// a real press at a control's centre, once it is on top there: NieR's parts keep its buttons moving, so Playwright's
+	// click, which waits for a still box, never comes (the engine switch, the tabs)
+	const press = async (loc) => {
+		await loc.scrollIntoViewIfNeeded();
+		const ok = await loc.evaluate((e) => { const b = e.getBoundingClientRect(), h = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2); return !!h && (h === e || e.contains(h)); });
+		const bb = await loc.boundingBox();
+		if (bb) await t.page.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2);
+		return ok && !!bb;
+	};
 	for (const look of looks) {
 		await t.app.look(look);
 		for (const engine of engines) {
@@ -67,7 +90,7 @@ async function cell(t, surface, w, h) {
 			if (tall) await t.check(`${T}: a tall panel shows the footer's whole card (nothing to scroll in it)`, lay.footScroll <= 0, JSON.stringify(lay));
 			// clearance and reach, in every tab
 			for (const tab of tabs) {
-				await f.locator(`${P.tabs}[${P.tabKey}="${tab}"]`).click();
+				await press(f.locator(`${P.tabs}[${P.tabKey}="${tab}"]`));
 				await f.waitForFunction((s) => { const p = document.querySelector(s); return !!p && p.checkVisibility(); }, paneOf(P, tab), { timeout: 3000 });
 				await settle();
 				const res = await f.evaluate(([P, pane, ROWS]) => {
@@ -93,7 +116,7 @@ async function cell(t, surface, w, h) {
 				await t.check(`${T} ${tab}: every row (${res.rows}) can be scrolled to a press point clear of the strip and the footer`, res.rows > 0 && !res.miss.length, JSON.stringify(res.miss.slice(0, 6)));
 			}
 			// a real wheel over the list brings its last row to a press point (the engine's first tab)
-			await f.locator(`${P.tabs}[${P.tabKey}="${tabs[0]}"]`).click();
+			await press(f.locator(`${P.tabs}[${P.tabKey}="${tabs[0]}"]`));
 			await settle();
 			const o = await off();
 			const sb = await f.evaluate((P) => { const r = document.querySelector(P.scroll).getBoundingClientRect(), s = document.querySelector(P.strip).getBoundingClientRect(); return { x: r.left + r.width / 2, y: (s.bottom + Math.min(r.bottom, document.querySelector(P.foot).getBoundingClientRect().top)) / 2 }; }, P);
@@ -126,9 +149,10 @@ async function cell(t, surface, w, h) {
 				const hit = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2);
 				const pn = document.getElementById('panel-source'), pb = pn.getBoundingClientRect(), view = document.querySelector(P.scroll).closest('.pm7-scm-jj-view') || pn;
 				const lo = Math.max(fb.top + ft.clientTop, pb.top), hi = Math.min(fb.top + ft.clientTop + ft.clientHeight, pb.bottom);
-				// in view: inside the footer's visible box as the panel clips it; the panel itself never scrolls (it clips with
-				// overflow hidden, which a focus can still scroll, carrying the banner and the strip off)
-				return { focused: document.activeElement === e, inside: b.top >= lo - 0.5 && b.bottom <= hi + 0.5, onTop: !!hit && (hit === e || e.contains(hit)), panelScroll: pn.scrollTop + (view === pn ? 0 : view.scrollTop), top: Math.round(b.top), bottom: Math.round(b.bottom), footTop: Math.round(fb.top), footBottom: Math.round(fb.bottom), panelBottom: Math.round(pb.bottom) };
+				// in view: inside the footer's visible box as the panel clips it, within 1 px (a focus scrolls to a whole pixel
+				// while the footer sits at a fraction); the panel itself never scrolls (it clips with overflow hidden, which a
+				// focus can still scroll, carrying the banner and the strip off)
+				return { focused: document.activeElement === e, inside: b.top >= lo - 1 && b.bottom <= hi + 1, onTop: !!hit && (hit === e || e.contains(hit)), panelScroll: pn.scrollTop + (view === pn ? 0 : view.scrollTop), top: Math.round(b.top), bottom: Math.round(b.bottom), footTop: Math.round(fb.top), footBottom: Math.round(fb.bottom), panelBottom: Math.round(pb.bottom) };
 			}, [P, i]);
 			const keyMiss = [];
 			await f.locator('[data-slr-act="0"]').focus();

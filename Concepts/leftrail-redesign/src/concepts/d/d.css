@@ -972,6 +972,9 @@
 [data-rail-skin="d"] #panel-source { --d-list-floor: 132px; }
 [data-rail-skin="d"] #panel-source > .sh-scroll { min-height: calc(var(--pm6-shrun-banner-h, 42px) + var(--d-list-floor)) !important; }
 [data-rail-skin="d"] #panel-source :is(.pm7-scm-git-footer, .d-jj-foot) { flex: 0 1 auto !important; min-height: 0 !important; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: auto; }
+/* a key's focus brings a footer action wholly into view with the footer's own padding round it (without it the scroll
+   stopped at a whole pixel and left a pixel or so of the action under the footer's edge) */
+[data-rail-skin="d"] #panel-source :is(.pm7-scm-git-footer, .d-jj-foot) { scroll-padding-block: var(--d-g); }
 [data-rail-skin="d"] #panel-source :is(.pm7-scm-git-footer, .pm7-scm-jj-view) .pm7-post-card {
   padding: 7px 7px 8px !important; border-radius: var(--d-R) !important; box-shadow: none !important;
   border: 1px solid var(--d-line) !important; background: color-mix(in srgb, var(--surface-elevated) 70%, transparent) !important;
