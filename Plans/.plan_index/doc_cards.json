@@ -2146,7 +2146,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "40c214f92a4de0bf0f2c44aca08503e2b274ee56edc9f6a1eb34aaa7dc062784",
+      "sha256": "94ca89af157936e376d660672c594f6446a691fc627fb617f0b78138b5beb682",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 77,
@@ -2287,7 +2287,7 @@
         "python3 scripts/pm-plans-verify.py validate-working-notebook-contracts",
         "python3 scripts/pm-platform-execution-policy-verify.py",
         "python3 scripts/pm-runtime-artifact-event-drafts.py",
-        "python3 scripts/pm-runtime-artifact-guard-isolation.py --full-checker",
+        "python3 scripts/pm-runtime-artifact-guard-tables.py --out <evidence directory>",
         "python3 scripts/pm-runtime-artifact-standing-checks.py",
         "python3 scripts/pm-server-command-gap-verify.py --json",
         "python3 scripts/pm-shard-plans.py --check",
@@ -21701,7 +21701,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T17:10:55Z",
+  "generated_at_utc": "2026-11-07T16:06:07Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
