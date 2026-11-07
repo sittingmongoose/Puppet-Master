@@ -154,6 +154,7 @@
     s.setProperty('--ph-h', r.height + 'px');
     s.setProperty('--ph-pane', r.width + 'px');
     syncHistoryHead();
+    syncHandle();
     var flyout = document.querySelector('.history-flyout');
     if(flyout !== flyoutObserved){
       if(flyoutRO) flyoutRO.disconnect();
@@ -163,6 +164,18 @@
         flyoutRO.observe(flyout);
       }
     }
+  }
+
+  /* The separator's values (the window-splitter pattern) follow the pane: its maximum is a share of the pane's width and
+     the width it reports is clamped by it. A column resize renders nothing, so they are written here as the render
+     writes them (historyChrome). The chat's own re-render on a narrow flip used to refresh them; since that re-render
+     went (FO-92), a flip left them stale, as every other column resize already did (opus-recheck-look8 FO92-N1). */
+  function syncHandle(){
+    var h = document.querySelector('[data-ph-resize]');
+    if(!h) return;
+    var max = String(Math.round(Math.min(W_MAX, paneWidth() * W_PANE))), now = String(clampWidth(widthNow()));
+    if(h.getAttribute('aria-valuemax') !== max) h.setAttribute('aria-valuemax', max);
+    if(h.getAttribute('aria-valuenow') !== now) h.setAttribute('aria-valuenow', now);
   }
 
   function syncHistoryHead(){
