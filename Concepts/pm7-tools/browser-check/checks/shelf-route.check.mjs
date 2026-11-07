@@ -908,8 +908,9 @@ export default async function (t) {
   // row command: Open, Open in new panel, Open to the side (PM_HOME.open's path and placement), Copy path › Copy relative
   // path and Copy full path (the text copied and the note), Open with › each of its five ways (Source editor opens a file;
   // the others, and Source editor on a folder, name the row in their note) and Reveal in terminal (the terminal's folder).
-  // Before each case the menu is opened on another row by another input and closed by Escape, rotating, so pointer→key,
-  // key→pointer and key→key all come before a case. The expected path is the row's data-path, else the path the page file
+  // Before each case the menu is opened on another row by a rotating input and closed by Escape (T77: the input rotates
+  // over the inputs that row takes, so about a third of these opens use the case's own input, and before a Recent row,
+  // which takes no keys, it is always the pointer), so pointer→key, key→pointer and key→key all come before a case. The expected path is the row's data-path, else the path the page file
   // authors for it (its own item's .fm-cpath, else its own .fm-path), never the running page's text, which the rail skin
   // cuts to fit. Keys only on rows that take the focus. --set effects=0 skips the phase; effects=<pane,...> asks only those.
   const FX_CMDS = [
@@ -1111,7 +1112,7 @@ export default async function (t) {
       await t.check(`${T}: a fresh open and Open act on ${r0.want}`, !e0, JSON.stringify(e0), { hard: true });
       const act = await g.waitForFunction(w => PM_HOME.active && PM_HOME.active()?.tabId === 'file:' + w, r0.want, { timeout: 3000 }).then(() => true, () => false);
       await t.check(`${T}: ${r0.want} becomes the active tab`, act, JSON.stringify(await g.evaluate(() => PM_HOME.active && PM_HOME.active())), { hard: true });
-      // (2) every row asked, every command, each after an open on another row by another input
+      // (2) every row asked, every command, each after an open on another row by a rotating input (T77)
       let turn = 0;
       for (const r of rowsI) for (const cmd of FX_CMDS) {
         const others = pick.rows.filter(o => o.i !== r.i);
