@@ -704,11 +704,15 @@
      press ends a drag whose pointerup never came (a scrollbar drag can swallow it), and every press says which panel,
      if any, the last press landed in. Added with the plain method, as the keydown listener above is: in PMConcept7 the
      host scoped it to presses inside the chat, so a press elsewhere on the page left the panel as "the last press" and a
-     later scroll key marked it (round 3, F104-2). It only reads the target and sets these fields. */
+     later scroll key marked it (round 3, F104-2). A press that lands outside the marked panel also ends the 700 ms mark a
+     wheel or a touch put on it, so a scroll of that panel in the rest of the window pins nothing (opus-recheck-act8c O1);
+     a touch's pointerdown comes before its touchstart, so a touch on a panel still marks it afresh. It only reads the
+     target and sets these fields. */
   EventTarget.prototype.addEventListener.call(document, 'pointerdown', function (e) {
     var p = e.target;
     held.drag = false;
     held.press = panelOf(p);
+    if (held.el !== held.press) held.el = null;
     if (e.button !== 0 || !p || !p.classList || !p.classList.contains('orbit-panel-in')) return;
     var r = p.getBoundingClientRect();
     if (e.clientX > r.left + p.clientLeft + p.clientWidth) { held.drag = true; markPanel(p); }
