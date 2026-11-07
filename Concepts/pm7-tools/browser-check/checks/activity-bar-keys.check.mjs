@@ -126,12 +126,14 @@ const brief = r => r && { key: r.key, lit: r.lit, focused: r.focused, ...(r.unre
 
 // Names' letters, every name in view (K-F96b-3: a mark must not cross a neighbour's name either). The letters are found
 // exactly: the region is captured once more at rest with every name's text made transparent, and a letter is a pixel
-// that differs between the two by more than 24 levels (so a lens rim or a tile edge inside a name's box is never taken
-// for a letter, K-F96b-5). Each letter is grown by 1 px, and none of those pixels may change on the key focus.
-function lettersCrossed(rest, bare, focus) {
+// inside a rail name's text box that differs between the two by more than 24 levels (so a lens rim or a tile edge in a
+// name's box is never taken for a letter, K-F96b-5, nor a tip card's words over the bar). Each letter is grown by 1 px, and none of those pixels may change on the key focus.
+// boxes: the rail names' own text boxes, in the capture's pixels; nothing outside them (a tip card, a title) is a letter
+function lettersCrossed(rest, bare, focus, boxes) {
   const w = rest.width, h = rest.height, Y = (d, i) => 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
+  const inName = (x, y) => boxes.some(b => x >= b.x - 1 && x < b.x + b.w + 1 && y >= b.y - 1 && y < b.y + b.h + 1);
   const ink = new Uint8Array(w * h); let letters = 0, crossed = 0;
-  for (let i = 0, p = 0; i < rest.data.length; i += 4, p++) if (Math.abs(Y(rest.data, i) - Y(bare.data, i)) > 24) { ink[p] = 1; letters++; }
+  for (let i = 0, p = 0; i < rest.data.length; i += 4, p++) if (Math.abs(Y(rest.data, i) - Y(bare.data, i)) > 24 && inName(p % w, Math.floor(p / w))) { ink[p] = 1; letters++; }
   for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
     let near = false;
     for (let dy = -1; dy <= 1 && !near; dy++) for (let dx = -1; dx <= 1; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && yy < h && xx >= 0 && xx < w && ink[yy * w + xx]) { near = true; break; } }
@@ -208,11 +210,21 @@ async function run(t, w, h) {
     const named = !!b.label;
     const r0 = await t.pixels(region);
     let bare = null;
-    if (named) { await f.evaluate(hideNames, true); await frames(f, 2); bare = await t.pixels(region); await f.evaluate(hideNames, false); await frames(f, 2); }
+    let nameBoxes = [];
+    if (named) {
+      nameBoxes = await f.evaluate(() => [...document.querySelectorAll('#activityBar .icon .icon-label')].filter(n => getComputedStyle(n).display !== 'none' && n.getClientRects().length)
+        .map(n => { const g = document.createRange(); g.selectNodeContents(n); const q = g.getBoundingClientRect(); return { x: q.x, y: q.y, w: q.width, h: q.height }; }));
+      await f.evaluate(hideNames, true); await frames(f, 2); bare = await t.pixels(region); await f.evaluate(hideNames, false); await frames(f, 2);
+    }
     await focusQuiet(await before(target));
     await kb.press('Tab');
     await f.waitForTimeout(450);
-    // NieR's one reticle glides from target to target: read it once it has come to rest (three still frames)
+    // NieR's one reticle glides from target to target in steps: read it once it is round this item and has come to rest
+    // (three still frames; a pause between two steps is still for a frame or two)
+    if (b.brackets) await f.waitForFunction(it => { const r = document.getElementById('o55np-reticle'); if (!r || !r.hasAttribute('data-on')) return false;
+      const c = [...r.children].map(i => i.getBoundingClientRect()); if (c.length !== 4) return false;
+      const box = [Math.min(...c.map(q => q.left)), Math.min(...c.map(q => q.top)), Math.max(...c.map(q => q.right)), Math.max(...c.map(q => q.bottom))];
+      return [it.x - 3, it.y - 3, it.x + it.w + 3, it.y + it.h + 3].every((v, i) => Math.abs(v - box[i]) <= 8); }, b.item, { timeout: 1500 }).catch(() => {});
     if (b.brackets) await f.evaluate(() => new Promise(done => { const r = document.getElementById('o55np-reticle'), t0 = performance.now(); let last = '', still = 0;
       const step = () => { const now = r ? [...r.children].map(i => i.style.transform + getComputedStyle(i).translate).join('|') : ''; still = now === last ? still + 1 : 0; last = now;
         if (still >= 3 || performance.now() - t0 > 1500) done(); else requestAnimationFrame(step); }; requestAnimationFrame(step); }));
@@ -238,7 +250,7 @@ async function run(t, w, h) {
     }
     return { key: target, lit: b.lit, focused: now.key === target && !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
       ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy), sides(r0, r1, b.item, ox, oy)) }),
-      ...(named ? { names: lettersCrossed(r0, bare, r1) } : {}) };
+      ...(named ? { names: lettersCrossed(r0, bare, r1, nameBoxes.map(q => ({ x: q.x + off.x - region.x, y: q.y + off.y - region.y, w: q.w, h: q.h }))) } : {}) };
   };
   // The mark as it is now, after a key or a click acted on the focused control (K-F96b-1: a panel closing or changing
   // under a key focus). Read first with the focus where the action left it, then at rest with the focus stepped off
