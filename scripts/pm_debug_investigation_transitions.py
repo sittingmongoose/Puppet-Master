@@ -275,6 +275,8 @@ PHASE_MEMBERS = {
 # and the record it names).
 VALUE_PARTS = {'payload_values': None, 'instrumentation_detail_values_a': 0,
                'instrumentation_detail_values_b': 1, 'instrumentation_detail_values_c': 2}
+# The envelope rows read only these payload members.
+ENVELOPE_PAYLOAD_KEYS = ('investigation_id', 'project_id', 'thread_id', 'run_id')
 
 
 def part_keys(phase, case):
@@ -288,6 +290,8 @@ def part_keys(phase, case):
 
 def projected(phase, case):
     result = {key: case[key] for key in PHASE_MEMBERS[phase] if key in case}
+    if phase == 'envelope' and type(result.get('payload')) is dict:
+        result['payload'] = {key: value for key, value in result['payload'].items() if key in ENVELOPE_PAYLOAD_KEYS}
     if phase not in VALUE_PARTS:
         return result
     keys = part_keys(phase, case)
