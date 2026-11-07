@@ -1214,3 +1214,24 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOO
 | `results/lane-trial-tb4.json` | `e5a403ac945e3467827ecda3f36d5798b442db54150c0e54f1781f77611acf58` |
 | `results/selftest-final.json.gz` | `5812c90946a520bf366840eabdd2f412e1e4cdd0a54da8a5a10e9b4b7a161512` |
 | `results/dg6b.summary.jsonl` | `7fcff088285748fbe8ed2ebe17e669baad886f8380ff0d8e1ddd68e1c2104e60` |
+
+## Tool batch 5: findings and responses
+
+**TOOLBATCH4 pre-check findings 1 and 2 (TOOLBATCH5 T87) are fixed; nothing is disputed.** Base: `004bdedd63`. Fix: `ab153f6d6c` on `plans/ea-guardtool-20261105`. Both findings are HYPOTHETICAL (synthetic suites and constructed trees); every real-lane credit stays right.
+
+| Finding | Location, cause and fix | Evidence |
+|---|---|---|
+| **1: `operator.attrgetter` and `methodcaller` read attributes by name past the chain rule — fixed** | `_certified_module_value`, `_PRESCAN_SENSITIVE`, `static_scan`'s `sensitive`. Both are classes CPython marks immutable, so the T48 widening certified them, and `operator.attrgetter('__globals__')(textwrap.dedent)['re']._cache` reached re's compile cache with no written dunder hop: false credit for guard `x` on fix and base (W06f). They are now never certified values (`_BY_NAME_CALLABLES`) and are dynamic-code names in both scans, like `getattr`: W06a-c, W06e and W06f each stop before import (`dynamic_code_or_import`, beside `external_binding_mutable_read`). | Traps `TB5-T87-W06f-attrgetter-globals`, `TB5-T87-W06c-methodcaller-write`. The review's other probes keep their results (W04a-e, W05a, W01, W07, W08, W08b: `static-tb4-probes*-t87.jsonl`). |
+| **2: the pre-import scan missed package submodules, relative imports, attribute-form dynamic calls and `g._*` — fixed** | `prescan_sources`. Each dotted import is resolved component by component in its parent package's own search locations (PathFinder looked a dotted name's last component up in the top-level paths, so `pkg/mod.py` was never scanned); `from . import x` and `from .. import x` are resolved against the file's own package, `level - 1` folders up; a dynamic-code name at the end of an attribute chain (`importlib.import_module(...)`) is read; the table-private rule (`g._*`, `table._*`, the private names) runs before import too. | Traps `TB5-T87-PS0c`, `-PS0d`, `-PS1c`, `-PS2` (`external_binding_write`, and json never gains the marker), `-PS3` (`dynamic_code_or_import`), `-PS4` (`table_private_state`, and the engine never gains the name). The review's 14 trees: all 12 that the full scan stops now stop before import (`prescan-trees-t87.jsonl`; base: 4 of them). |
+
+On `004bdedd63` the eight new traps fail (335/343, `selftest-base-004bdedd63-with-tb5-traps.json.gz`). **Soundness:** nothing widens: both changes only add refusals, before import or in the full scan. PS5 and PS6 (a helper outside the repository through `sys.path`, `from json import dumps; dumps.x = 1`) stay unstopped by both scans, as in batch 4, so the pre-import scan is not faulted for them.
+
+### Rerun results
+
+| Check | `004bdedd63` | Now |
+|---|---|---|
+| Self-test | 335/335 (335/343 with the new traps) | **343/343** |
+| Real-lane trial (`lane_trial_tb2.py`, lane `e66effc3aa`, cycle-8 adapter `ec625912…`) | 11/11 match ground truth | **11/11**, each row identical to batch 4 in status, credited guards and failure kinds; `all_match: true` |
+| DG6B (`pm_guard_isolation_dg6b_example.py`, through `--adapter`, so the pre-import scan runs) | PASS, 7/7, 176 evaluations, 353 factories, normal and `-O` | **the same**, normal and `-O` |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH5/guard/` (`SHA256SUMS`).
