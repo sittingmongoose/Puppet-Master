@@ -13,6 +13,12 @@
 import { LOOKS } from '../browser-check.config.mjs';
 
 const SIZES = [[1920, 1080], [740, 768]];
+// T73 (tool batch 5; opus-recheck-b7f K-A2): the ? was read by its whole box, whose 1 px border alone gives about 0.2 of
+// the share on an 18 px box, so a ? whose glyph had gone ink on ink inside a border that stayed would pass. Its glyph is
+// now also read on its own, inside the border (the box inset by its border width and 1.5 px), and must reach GLYPH_MIN
+// (the real page's least is 0.11). --set selftest=q-glyph-gone draws every ? glyph transparent with its border kept, and
+// must fail.
+const GLYPH_MIN = 0.05;
 const list = (v, all) => (v ? String(v).split(',').map((s) => s.trim()).filter(Boolean) : all);
 
 function strokes(img) {
@@ -29,6 +35,7 @@ async function cell(t, surface, w, h) {
 	const f = await t.app.open({ onboarding: true, query: 'o55=fresh', sandbox: surface === 'sandbox' });
 	await f.waitForFunction(() => window.O55?.S?.open && !!document.querySelector('#pm-o55-onboarding .o55-lookbtn'), null, { timeout: 30000 });
 	const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
+	if (t.args.selftest === 'q-glyph-gone') await f.evaluate(() => { const st = document.createElement('style'); st.textContent = '#pm-o55-onboarding .o55-lookmenu .o55-tipq, #pm-o55-onboarding .o55-lookmenu .o55-tipq * { -webkit-text-fill-color: transparent !important; }'; document.head.appendChild(st); });
 	await f.evaluate(() => { window.__fo90 = false; window.addEventListener('click', (e) => { if (!window.__fo90) return; e.stopImmediatePropagation(); e.preventDefault(); }, true); });
 	for (const motion of list(t.args.motion, ['no-preference', 'reduce'])) {
 		await t.emulate({ reducedMotion: motion === 'attribute' ? 'no-preference' : motion });
@@ -47,9 +54,9 @@ async function cell(t, surface, w, h) {
 				/* every row with a name and a ?, the chosen one included (Adjust NieR's under NieR); the mode row is not a bar */
 				const rows = await f.evaluate(() => [...document.querySelectorAll('#pm-o55-onboarding .o55-lookmenu .o55-opt-menu:not(.o55-lookmoderow)')].map((r, i) => { r.__fo90 = i; return { i, arg: r.querySelector('.o55-lookopt')?.getAttribute('data-arg') || '', chosen: r.classList.contains('o55-opt-on'), hasQ: !!r.querySelector(':scope > .o55-tipq') }; }).filter((r) => r.hasQ));
 				/* the row's name and ? as window rects (pixels are read from the window) */
-				const rects = (i) => f.evaluate((i) => { const r = [...document.querySelectorAll('#pm-o55-onboarding .o55-lookmenu .o55-opt-menu')].find((n) => n.__fo90 === i); r.scrollIntoView({ block: 'nearest' }); const box = (e) => { const q = e.getBoundingClientRect(); return { x: q.x, y: q.y, width: q.width, height: q.height }; }; const n = r.querySelector('.o55-lookname'), q = r.querySelector(':scope > .o55-tipq'); return { name: box(n), q: box(q), opt: box(r.querySelector('.o55-lookopt')) }; }, i);
+				const rects = (i) => f.evaluate((i) => { const r = [...document.querySelectorAll('#pm-o55-onboarding .o55-lookmenu .o55-opt-menu')].find((n) => n.__fo90 === i); r.scrollIntoView({ block: 'nearest' }); const box = (e) => { const q = e.getBoundingClientRect(); return { x: q.x, y: q.y, width: q.width, height: q.height }; }; const n = r.querySelector('.o55-lookname'), q = r.querySelector(':scope > .o55-tipq'), cs = getComputedStyle(q), bw = Math.max(...['Top', 'Right', 'Bottom', 'Left'].map((k) => parseFloat(cs[`border${k}Width`]) || 0)) + 1.5, qb = box(q); return { name: box(n), q: qb, qGlyph: { x: qb.x + bw, y: qb.y + bw, width: Math.max(1, qb.width - 2 * bw), height: Math.max(1, qb.height - 2 * bw) }, opt: box(r.querySelector('.o55-lookopt')) }; }, i);
 				const win = (b) => ({ x: off.x + b.x, y: off.y + b.y, width: b.width, height: b.height });
-				const read = async (rc) => ({ name: strokes(await t.pixels(win(rc.name))), q: strokes(await t.pixels(win(rc.q))) });
+				const read = async (rc) => ({ name: strokes(await t.pixels(win(rc.name))), q: strokes(await t.pixels(win(rc.q))), glyph: strokes(await t.pixels(win(rc.qGlyph))) });
 				const bad = [], seen = [];
 				for (const row of rows) {
 					const rc = await rects(row.i), at = (b, dx) => ({ x: off.x + b.x + (dx == null ? b.width / 2 : dx), y: off.y + b.y + b.height / 2 });
@@ -77,8 +84,8 @@ async function cell(t, surface, w, h) {
 					await t.page.keyboard.press('Tab'); await f.waitForTimeout(200);
 					const onQFocus = await f.evaluate((i) => { const q = [...document.querySelectorAll('#pm-o55-onboarding .o55-lookmenu .o55-opt-menu')].find((n) => n.__fo90 === i).querySelector(':scope > .o55-tipq'); return document.activeElement === q && q.matches(':focus-visible'); }, row.i);
 					states.qFocus = { ...(await read(rc)), focused: onQFocus };
-					const lost = Object.entries(states).filter(([k, v]) => v.name.share < 0.03 || v.q.share < 0.03 || (k === 'qFocus' && !v.focused)).map(([k]) => k);
-					seen.push({ row: row.arg, chosen: row.chosen, states: Object.fromEntries(Object.entries(states).map(([k, v]) => [k, [v.name.share, v.q.share]])) });
+					const lost = Object.entries(states).filter(([k, v]) => v.name.share < 0.03 || v.q.share < 0.03 || v.glyph.share < GLYPH_MIN || (k === 'qFocus' && !v.focused)).map(([k]) => k);
+					seen.push({ row: row.arg, chosen: row.chosen, states: Object.fromEntries(Object.entries(states).map(([k, v]) => [k, [v.name.share, v.q.share, v.glyph.share]])) });
 					if (lost.length || !painted) bad.push({ row: row.arg, chosen: row.chosen, lost, painted, states });
 				}
 				await t.page.mouse.move(2, 2);
