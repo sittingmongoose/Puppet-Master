@@ -689,6 +689,13 @@ export default async function (t) {
         }, [i, tag, mark]);
         let done = 0;
         for (const fo of folds) {
+          // (each candidate is judged again at its turn: an earlier fold of this room can have hidden it, as the card's
+          // fold hides the Technical details head that was the second candidate)
+          const still = await panel.evaluate((p, i) => { const e = p.querySelector(`[data-shelf-fold="${i}"]`);
+            if (!e || !e.isConnected || !e.checkVisibility() || e.getAttribute('aria-expanded') !== 'true') return false;
+            const r = e.closest('[data-shelf-folded]'); if (!r) return true;
+            const c = p.querySelector(`[data-shelf-fold-of="${r.getAttribute('data-shelf-folded')}"]`); return !(c && c !== e && c.getAttribute('aria-expanded') === 'false'); }, fo.i);
+          if (!still) { t.log(`${target} ${state}: ${fo.label} is no longer an open, shown control outside a folded region (an earlier fold hid it), so it is left`); continue; }
           const tag = String(foldedRegions.length), ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), before = await censusIn(fo.i, tag, true), fp = await reach(ctl);
           await t.page.mouse.click(off.x + fp.x, off.y + fp.y);
           const folded = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'false', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
