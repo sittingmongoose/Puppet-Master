@@ -94,7 +94,8 @@ export default async function (t) {
       window.addEventListener(type, e => { if (hit(e, 'hover')) { window.__blockedBranch++; e.stopImmediatePropagation(); } }, true);
     window.addEventListener('keydown', e => { if (e.key === 'ArrowRight' && hit(e, 'key')) { window.__blockedBranch++; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
   }, String(t.args.blockBranch));
-  // --set inputs=<shift-f10,menu-key,...> probes only those context inputs (to isolate FO-93 on a base; the floors then fail by design)
+  // --set inputs=<shift-f10,menu-key,...> probes only those context inputs (to isolate FO-93 or FO-93b's key routes on an
+  // earlier build); the per-pane context floor then asks those inputs, the run-wide floors fail by design
   const CTX_INPUTS = t.args.inputs ? String(t.args.inputs).split(',') : INPUTS;
   await t.viewport(Number(t.args.width || 1920),Number(t.args.height || 1080)); const f = await t.app.open();
   if(t.args.look) await t.app.look(t.args.look);
@@ -877,7 +878,7 @@ export default async function (t) {
     await t.check(target+' popup menu floor', (expectedPopups[target] || []).every(k => row.popups.includes(k)), JSON.stringify({ floor: expectedPopups[target] || [], popups: row.popups }), { hard: true });
     for (const tab of expectedContext[target] || []) {
       const inputs = new Set(contextRoutes.filter(r => r.panel === target && r.tab === tab).map(r => r.input));
-      await t.check(`${target} ${tab} context menu reached by every input`, INPUTS.every(i => inputs.has(i)),
+      await t.check(`${target} ${tab} context menu reached by every input`, CTX_INPUTS.every(i => inputs.has(i)),
         JSON.stringify({ inputs: [...inputs], blocked: await f.evaluate(() => window.__blockedContext || 0) }), { hard: true });
     }
   }
