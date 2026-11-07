@@ -144,7 +144,7 @@ node $K/tools/affects-check.mjs --select <file> [<file> ...]                    
 
 **Before landing a kit change, run `node $K/tools/affects-check.mjs`.** A new check with no `checkSurfaces` entry would never be selected by a source change. `--changed` only prints a NOTE naming such checks; this self-check fails on them.
 
-`--reuse` (`browser-check guide results`) on this kit is all or nothing. Its tests share one page (`isolate` and `cacheIndependent` are unset), so a stored run is reused only for the same command, the same check files and every test green; one missing test or one stored failure on these bytes makes every test run, and a subset never matches. A `--changed --reuse` run reuses only a stored `--changed` run with the same selection, not a full run's store.
+Result reuse is not in browser-check 2.1: `--reuse` and `--store-results` refuse (`browser-check guide results`).
 
 How the map is made (`affects.mjs` says it in full):
 - `checkSurfaces` lists what each check exercises: the onboarding window, the Demo Studio, the tour, the chat, Home, Usage, the rail, Settings, notifications, sound, timing, looks, Glass, NieR, glyphs, the app page. The entries come from each check's code: its selectors, page globals, helpers and looks.
