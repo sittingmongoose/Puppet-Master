@@ -1014,12 +1014,14 @@ async function frozenRigid(t, mode) {
 //   moveto          each path leaf given an empty sub-path (a lone moveto) 3 units outside its box, alternating sides
 //   jitter-0.3      the CSS hold nudged .3 CSS px back and forth each frame (--set dpr=2: .6 device px)
 // T95 (TOOLBATCH4, REVIEW-kit-tb4-b-opus finding 3, its zz-rv65 kinds), each on the same CSS hold:
-//   occluded        under each part's biggest opaque leaf, clones of it shrunk to 80 % shift 2.5 device px each frame
+//   occluded        under the head's biggest opaque leaf, clones of it shrunk to 80 % shift 2.5 device px each frame (the
+//                   hand's clones leaked 16 to 46 px in the review, real paint, so the hand is held plain)
 //   zero-w          three black rects of width 0, as tall as the part's painted area, moved 2 units each frame
 //   ghost-oklch     T65's ghost with fill: oklch(0.5 0.1 30 / 0), a transparent colour whose computed form stays oklch()
 //   clip-ghost      an opaque rect, half the part's area, clipped to nothing by an empty clipPath, moved 2 units
 //   mask-ghost      the same under an empty mask
-//   zero-l          each path leaf given a zero-length sub-path (M x y l0 0) 3 units outside its box, alternating sides
+//   zero-l          each path leaf whose stroke has no round or square cap given a zero-length sub-path (M x y l0 0) 3
+//                   units outside its box, alternating sides (a capped stroke paints a dot there: real paint)
 // For moveto, the painted leaf the case measures its freeze by is read through its rendered matrix from its box at the
 // start, since its box grows by the empty sub-path that paints nothing. The case passes when the guard rejects the freeze
 // (each frozen part under PART_STEPS visible steps); --set selftest=freeze-<kind> applies the acceptance predicate
@@ -1075,12 +1077,16 @@ const PART_FREEZE = async ({ m, i, g, kind }) => {
 				grp.appendChild(host); undo.push(() => host.remove());
 				let kk = 0; every(() => { kk ^= 1; realSet.call(rr, 'transform', `translate(${kk * 2} 0)`); });
 			} else if (kind === 'moveto' || kind === 'zero-l') {
-				const paths = [...grp.querySelectorAll('path')].filter((q) => !q.closest('defs, clipPath, mask, pattern, marker, symbol')).map((q) => ({ q, d: q.getAttribute('d') || '', b: q.getBBox() })).filter((z) => z.d);
+				// (zero-l: only paths whose stroke has no round or square cap, where a zero-length sub-path paints nothing; with
+				// a capped stroke it paints a dot, as the review's moveto-z did, which is real paint)
+				const capped = (q) => { const c = getComputedStyle(q); return c.stroke !== 'none' && parseFloat(c.strokeWidth) > 0 && (c.strokeLinecap === 'round' || c.strokeLinecap === 'square'); };
+				const paths = [...grp.querySelectorAll('path')].filter((q) => !q.closest('defs, clipPath, mask, pattern, marker, symbol') && !(kind === 'zero-l' && capped(q))).map((q) => ({ q, d: q.getAttribute('d') || '', b: q.getBBox() })).filter((z) => z.d);
 				let kk = 0; every(() => { kk ^= 1; for (const z of paths) realSet.call(z.q, 'd', `${z.d} M${kk ? z.b.x - 3 : z.b.x + z.b.width + 3} ${z.b.y + z.b.height / 2}${kind === 'zero-l' ? ' l0 0' : ''}`); });
 				undo.push(() => { for (const z of paths) realSet.call(z.q, 'd', z.d); });
-			} else if (kind === 'occluded') {
-				// T95 (TOOLBATCH4 recheck b, finding 3, its zz-rv65 kinds): under the part's biggest opaque leaf, clones of it
-				// shrunk to 80 % about its centre shift 2.5 device px back and forth each frame: painted, but covered
+			} else if (kind === 'occluded' && grp === head) {
+				// T95 (TOOLBATCH4 recheck b, finding 3, its zz-rv65 kinds): under the head's biggest opaque leaf, clones of it
+				// shrunk to 80 % about its centre shift 2.5 device px back and forth each frame: painted, but covered. (The head
+				// only: under the hand's leaf the review's clones leaked 16 to 46 px, real paint, so the hand is held plain)
 				const ls = shownLeaves(grp).filter((e) => { const c = getComputedStyle(e); return c.fill !== 'none' && !/rgba\([^)]*,\s*0\)$/.test(c.fill) && +c.fillOpacity >= .99 && +c.opacity >= .99 && c.filter === 'none' && !e.getAttribute('filter'); });
 				const big = ls.sort((a, b) => areaOf(b) - areaOf(a))[0];
 				if (big) {
