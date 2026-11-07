@@ -269,7 +269,7 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
      action a brick a little lighter (5.2:1 under white) */
   --o55-ink-accent: var(--o55-ink-tag); --o55-action: color-mix(in srgb, var(--o55-accent) 70%, #000);
   /* FO-99: the keyboard focus ring takes the words' brick too. The plain orange ring read 2.64:1 against the white
-     footer beside it (Back's, at 2 px outside its border), under WCAG's 3:1 for a focus mark; the brick reads 5.7:1.
+     footer beside it (Back's, at 2 px outside its border), under WCAG's 3:1 for a focus mark; the brick reads 5.4-5.5:1.
      Only the ring changes: --o55-focus is unset in every other look, where the rings keep var(--o55-accent). */
   --o55-focus: var(--o55-ink-accent); }
 /* SW-18: reserve normal-text contrast over the brightest selected Glass backing,

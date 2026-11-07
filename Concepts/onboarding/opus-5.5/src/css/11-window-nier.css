@@ -535,10 +535,10 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding:not([data-o55-layout="na
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-key { display: inline-flex; align-items: center; gap: 8px; }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-key > b { padding: 3px 5px 3px 6px; font-weight: 600; letter-spacing: .14em; color: var(--o55-nier-on-ink); background: var(--o55-nier-ink); }
 @media (max-width: 947px), (pointer: coarse) { #pm-o55-onboarding .o55nw-keys { display: none !important; } }
-/* FO-100: the prompts give way to the buttons. Their max-content row held the grow cell open, so from 948 to about 1010
-   px the footer squeezed its buttons instead: Back's caret was crushed to nothing and Continue's word ran 3 px past its
-   outline (11 px once Back stopped shrinking). Now the cell may shrink below them, and a prompt that no longer fits
-   leaves whole, the last first: the row wraps, and its one line (a keycap's height) is all that shows */
+/* FO-100: the prompts give way to the buttons. Their max-content row held the grow cell open, so from about 1070 px
+   down to 948 the footer squeezed its buttons instead: Back's caret was crushed to nothing and Continue's word ran 2-3 px
+   past its outline (11 px once Back stopped shrinking). Now the cell may shrink below them, and a prompt that no longer
+   fits leaves whole, the last first: the row wraps, and its one line (a keycap's height) is all that shows */
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-foot > .o55-footgrow { min-width: 0; }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55nw-keys { max-width: 100%; flex-wrap: wrap; justify-content: center; height: calc(1lh + 6px); overflow: hidden; }
 
