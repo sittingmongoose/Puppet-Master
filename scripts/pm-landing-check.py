@@ -1198,8 +1198,10 @@ def write_row_report(
 
     A subcheck is `complete` when every row it counted is here: it printed them all, or is keyed from an export whose
     total matches. Each staleness row carries `names`, the paths of `git diff --name-only --no-renames <base>..HEAD` it
-    names, the regenerated ones too, and a deleted or renamed path, since evidence rows name shards. Nothing here judges
-    any of it, and it is written only when asked for. scripts/pm-land.py reads it inside a batch.
+    names, the regenerated ones too, and a deleted or renamed path, since evidence rows name shards. `grown_stale` is what
+    grown_buckets calls a rise in the row's bucket, asked of it so that the two cannot differ: a row can be `stale` by its
+    detail text alone, and that does not excuse its bucket growing. Nothing here judges any of it, and it is written only
+    when asked for. scripts/pm-land.py reads it inside a batch.
     """
     proc = subprocess.run(["git", "diff", "--name-only", "--no-renames", f"{base}..HEAD"], cwd=root, capture_output=True, text=True)
     direct, derived = split_touched(proc.stdout.splitlines() if proc.returncode == 0 else [])
@@ -1214,8 +1216,10 @@ def write_row_report(
             if seen not in named:
                 named[seen] = names_branch_path(item, tokens, root, units)
             names = named[seen]
+        bucket = bucket_of(item)
         rows.setdefault(f"{item['check']}/{item['subcheck'] or '-'}", []).append(
-            {"key": item["key"], "stale": item["stale"], "names": names})
+            {"key": item["key"], "stale": item["stale"], "grown_stale": grown_buckets({bucket: 1}, {bucket: 0})[0]["stale"],
+             "names": names})
     subchecks = {}
     for name, total in subcheck_totals(counts, listed, timed_out).items():
         mine = rows.get(name, [])
