@@ -664,3 +664,17 @@ classed by the other rules, as before T53).
 
 Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH4/landing/`:
 `tests-on-base-9647530869.txt` (the fix's test file run against the base script) and `tests-on-fix.txt`.
+
+## Tool batch 5: findings and responses
+
+**TOOLBATCH4 pre-check findings 5 to 7 (TOOLBATCH5 T88) are fixed; nothing is disputed. This branch stays unlanded** (a landing-policy change for pm7-build). Base: `e7b77247a7`. Fix: `35f92ff241` on `fix/landing-check-renamed-shard-20261106`. `grown_buckets` is unchanged, so T63's rebase note for `write_row_report` still applies as written when this branch is rebased onto `fix/landing-check-report-ids-20261106`.
+
+| Finding | Location, cause and fix | Evidence |
+|---|---|---|
+| **5: a committed rename's old path was not one of the branch's paths — fixed (pre-existing on main)** | `branch_paths`: `git diff --name-only` uses git's default rename detection, which names only a renamed file's new path. Now `--no-renames --no-ext-diff`, with `--no-optional-locks`. On main's `9ddfa95b51` the old command lists 66,989 paths and the new one 66,990, the renamed file's old path the one added. | Test `test_a_committed_rename_names_its_old_path_among_the_branch_paths`. |
+| **6: files `git status` does not report kept the renamed-shard excuse — fixed** | `RenameContext._alone`. Status now runs with `--ignored=matching` (an untracked evidence file under a `.gitignore`d or `info/exclude`d folder), the index's own flags are read (`git ls-files -v`: `S` skip-worktree, a lowercase tag assume-unchanged), and the file's bytes are compared with HEAD's blob (`git cat-file blob HEAD:<path>`), which catches every hidden edit whatever git reports. | Tests `test_an_ignored_untracked_evidence_file_keeps_its_class`, `test_an_excluded_untracked_evidence_file_keeps_its_class`, `test_a_skip_worktree_edit_of_the_evidence_keeps_its_class`, `test_an_assume_unchanged_edit_of_the_evidence_keeps_its_class`. |
+| **7: `git status` rewrote the shared checkout's index, and a lost excuse named no cause — fixed** | Every git call of the rule passes `--no-optional-locks` (no index refresh, no `index.lock`), and the report names each evidence file that lost the excuse and why (`rename_excuse_lost` in the JSON; a list under the branch paths in the text, for example `evidence has working-tree changes: <status line>`), so the landing agent can tell whose work stopped the landing. | Test `test_the_untouched_evidence_still_keeps_the_excuse_and_the_index_is_not_written` (stale stat data, which a plain status refreshes: the index is byte- and mtime-identical after the rule runs). |
+
+**Tests:** 181/181 (`tests-fix.txt`). The fix's tests against `e7b77247a7`'s script: 6 failures, exactly the six new tests (`tests-on-base-e7b77247a7.txt`). **Soundness:** nothing widens: the branch's path list can only grow, and the excuse can only be lost in more cases.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH5/landing/` (`SHA256SUMS`).
