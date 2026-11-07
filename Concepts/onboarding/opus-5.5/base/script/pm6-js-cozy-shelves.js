@@ -1020,15 +1020,17 @@
     if (!tree || !ctx) return;
     var ctxTarget = null;
     function rowOf(el) { return el && el.closest ? el.closest('.fm-row, .fm-changerow, .fm-openrow') : null; }
-    /* the row File actions acts on: a tree row's own data-path, else the full path a Changed or Open item shows in its
-       body (.fm-cpath; the row's own folder text can be cut in the middle to fit the rail) */
+    /* the row File actions acts on: a tree row's own data-path, else the full path its own Changed or Open item shows in
+       its body (.fm-cpath; the row's folder text can be cut in the middle to fit the rail). A Recent row has neither: it
+       names its file in its demo arg ('cmd.file.open -> image.rs'), which the Home shim looks up in the file index. */
     function rowInfo(r) {
-      var p = r.getAttribute('data-path') || '';
+      var p = r.getAttribute('data-path') || '', name = '';
       if (!p) {
-        var item = r.closest('[data-acc]'), cp = item && item.querySelector('.fm-cpath');
+        var item = r.closest('.fm-changeitem, .fm-openitem'), cp = item && item.querySelector('.fm-cpath');
         p = cp ? cp.textContent.trim() : '';
       }
-      return { el: r, path: p, folder: r.getAttribute('data-kind') === 'folder' };
+      if (!p) { var m = /->\s*(.+?)\s*$/.exec(r.getAttribute('data-demo-arg') || ''); name = m ? m[1] : ''; }
+      return { el: r, path: p, name: name, folder: r.getAttribute('data-kind') === 'folder' };
     }
     /* File actions for a row, by the pointer (focus stays on the row) or by a key (focus moves to the first enabled item);
        either way it gives the focus back to the row when it closes holding it (FO-93). This is the one place the row is

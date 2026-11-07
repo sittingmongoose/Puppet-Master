@@ -170,11 +170,12 @@ shims.fileContextMenu = function () {
   menuEl.setAttribute('data-pm-home-body-portal', 'true');
   var target = null;
   /* the row comes from the menu's owner, for a right-click and for Shift+F10 or the Menu key alike (pm-ctx-open,
-     pm6-js-cozy-shelves.js openFor); a row without a data-path (Changed, Open) is named through the project's file index,
-     as the tree's own open does (FO-93b) */
+     pm6-js-cozy-shelves.js openFor) (FO-93b). A tree row's data-path is the tree's own id. A Changed or Open item's full
+     path is matched in the project's file index and, where the index does not hold it (an untracked file), used as it
+     stands: it is already a full path. A Recent row's bare file name only counts once the index finds it. */
   menuEl.addEventListener('pm-ctx-open', function (e) {
     var row = e.detail || null, own = row && row.el && row.el.getAttribute && row.el.getAttribute('data-path');
-    var path = row && row.path ? (own ? row.path : resolveProjectPath(row.path)) : null;
+    var path = !row ? null : own ? row.path : row.path ? (resolveProjectPath(row.path) || row.path) : row.name ? resolveProjectPath(row.name) : null;
     target = path || null;
     ctxRow = path ? { path: path, folder: !!row.folder } : null;
   });
