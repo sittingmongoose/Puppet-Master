@@ -4236,7 +4236,7 @@
         "future RuntimeHostFamilyProfile and Kubernetes capability probes",
         "future RuntimeHostFamilyProfile capability and governor consumers"
       ],
-      "line_count": 9809,
+      "line_count": 9815,
       "path": "Plans/Containers_Registry_and_Unraid.md",
       "plan_unit_count": 106,
       "plan_unit_ids": [
@@ -4453,7 +4453,7 @@
         "unsafe_url_guess",
         "xml_shape_drift"
       ],
-      "sha256": "63e926b575144889d6981b95aae1143176e48d9c95c478d4baef66f88f163536",
+      "sha256": "176c6416fc876cfb3f9fc41de3dc5e0d82d90b3944450e2d4147452b802b8fd9",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 106
@@ -7040,7 +7040,7 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 10675,
+      "line_count": 10677,
       "path": "Plans/Executor_Protocol.md",
       "plan_unit_count": 130,
       "plan_unit_ids": [
@@ -7214,7 +7214,7 @@
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "d6867d7d5e6c0a82dc8142f7404aa13f7a12ad8b97998a21023d9af89ca5fc86",
+      "sha256": "15acd5125e02bc20554581c412cc834a5b41630154e612089270c17d681ae1ff",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 130
@@ -15198,7 +15198,7 @@
         "future PRD Builder output records",
         "future PRD Builder source picker"
       ],
-      "line_count": 1534,
+      "line_count": 1535,
       "path": "Plans/PRD_Builder.md",
       "plan_unit_count": 14,
       "plan_unit_ids": [
@@ -15232,7 +15232,7 @@
         "stale_or_forbidden_behavior",
         "untrusted_source_security_bypass"
       ],
-      "sha256": "d53916f1ec8c865ed245f27b12776e53e5e6e1005e535186c3a1f89b3dbedd9e",
+      "sha256": "e899d86a360e0b89baa977829bfa025cadbc144f66c450adcd4da03100b6fa36",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 14
@@ -20528,7 +20528,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "dec4e854821af6c6c271de42fe40966cea88edf74deaa9b322073234b0a4d7f6",
+      "sha256": "7a9552cbfabb859b6963fd952757846850e5bdf3a963a542d4a277f8b86a4b90",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 196,
@@ -21734,7 +21734,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-07T17:41:09Z",
+  "generated_at_utc": "2026-11-07T18:02:54Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
