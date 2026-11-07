@@ -239,8 +239,9 @@ def why_not_exempt(subcheck: str, now: Optional[Dict[str, Any]], previous: Optio
     after the previous member's follow-up, each added row would be staleness on this member's files, which stops nothing.
 
     Every added row must be seen (the subcheck is complete in both reports, its rows adding up to its total), be
-    staleness by the landing check's own test, and name this member's files and no other file of the batch. The caller
-    gives this member's own range, so a row on another member's file is told apart. Otherwise, says why.
+    staleness of a kind the landing check also excuses when its bucket grows, and name this member's files and no other
+    file of the batch. A row stale by its detail text alone is not enough: alone, a rise in its bucket stops the landing.
+    The caller gives this member's own range, so a row on another member's file is told apart. Otherwise, says why.
     """
     if now is None or previous is None:
         return "the landing check wrote no row report for one of the two runs, so what was added cannot be seen"
@@ -260,6 +261,8 @@ def why_not_exempt(subcheck: str, now: Optional[Dict[str, Any]], previous: Optio
             continue
         if not row.get("stale"):
             return f"an added row is not staleness: {row['key']}"
+        if not row.get("grown_stale"):
+            return f"an added row is staleness only by its detail text, which the check does not excuse when its bucket grows: {row['key']}"
         names = row.get("names") or []
         if not names:
             return f"an added staleness row names no file of this batch, so it cannot be attributed: {row['key']}"

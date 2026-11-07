@@ -2651,12 +2651,7 @@ class RealReports:
         run.record()
         out = []
         for number, (rows, rels) in enumerate(zip(states, edits), 1):
-            for rel in (rels if isinstance(rels, tuple) else (rels,)):
-                target = run.repo / rel
-                target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_text(f"edit {number}\n", encoding="utf-8")
-                run.git("add", rel)
-            run.git("commit", "-qm", f"member {number}")
+            self.commit_member(run, rels, number)
             if exports is not None:
                 given.clear()
                 given.update(exports[number])
@@ -2665,6 +2660,28 @@ class RealReports:
             code, text = run.compare("--row-report", str(rows_file))
             out.append((code, text, str(rows_file)))
         return out
+
+    def alone(self, baseline, first, second, edits, subcheck="lint_path_refs") -> tuple:
+        """What the second member's check says alone: a baseline recorded at the first member's state, as its follow-up
+        would, and the second member's own range as the base."""
+        run = self.real_run()
+        run.stub(gates={subcheck: baseline})
+        run.record()
+        self.commit_member(run, edits[0], 1)
+        run.stub(gates={subcheck: first})
+        run.record()
+        run.base = run.git("rev-parse", "HEAD").strip()
+        self.commit_member(run, edits[1], 2)
+        run.stub(gates={subcheck: second})
+        return run.compare()
+
+    def commit_member(self, run, rels, number: int) -> None:
+        for rel in (rels if isinstance(rels, tuple) else (rels,)):
+            target = run.repo / rel
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(f"edit {number}\n", encoding="utf-8")
+            run.git("add", rel)
+        run.git("commit", "-qm", f"member {number}")
 
     def reports(self, baseline, first, second, edits=("Plans/A.md", "Plans/A.md"), **options) -> list:
         return self.members(baseline, [first, second], edits, **options)
@@ -3015,6 +3032,37 @@ class StalenessExemptionTests(RealReports, Base):
         start, result = self.land_both(one, two, ({"Plans/A.md": "a\n", shard: "s\n"}, self.B))
         self.assert_closed(start, result, f"names another member's file ({shard})")
 
+    def by_detail(self, ref: str, doc: str) -> dict:
+        return {"path": "Plans/registry.json", "error": "registry_entry_mismatch", "ref": ref, "detail": f"entry for {doc} is stale"}
+
+    def test_a_row_stale_only_by_its_detail_text_closes_because_alone_its_bucket_growing_blocks(self):
+        """Review F1. The exemption must never be wider than what the check excuses alone."""
+        a, b = self.by_detail("#1", "Plans/A.md"), self.by_detail("#2", "Plans/B.md")
+        edits = ("Plans/A.md", "Plans/B.md")
+        code, text = self.alone([], [a], [a, b], edits, self.SPEC)
+        self.assertEqual(code, 2, text)
+        self.assertIn("[blocking ] run-gates|verify_spec_lock|registry_entry_mismatch|Plans/registry.json  1 -> 2", text)
+        one, two = self.reports([], [a], [a, b], edits=edits, subcheck=self.SPEC)
+        self.assertEqual((one[0], two[0]), (1, 1), "in the batch the check itself does not stop it")
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_closed(start, result, "only by its detail text")
+
+    def test_the_same_bucket_lowered_then_raised_by_a_row_stale_only_by_its_detail_text_closes(self):
+        a, c, b = self.by_detail("#1", "Plans/A.md"), self.by_detail("#2", "Plans/C.md"), self.by_detail("#3", "Plans/B.md")
+        one, two = self.reports([a, c], [a], [a, b], edits=("Plans/A.md", "Plans/B.md"), subcheck=self.SPEC)
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_closed(start, result, "only by its detail text")
+
+    def test_control_the_same_shape_with_a_staleness_kind_stays_and_alone_it_passes(self):
+        def row(ref, doc):
+            return {"path": "Plans/registry.json", "error": "stale_hash", "ref": ref, "note": f"entry for {doc}"}
+        a, b = row("#1", "Plans/A.md"), row("#2", "Plans/B.md")
+        edits = ("Plans/A.md", "Plans/B.md")
+        self.assertEqual(self.alone([], [a], [a, b], edits, self.SPEC)[0], 1)
+        one, two = self.reports([], [a], [a, b], edits=edits, subcheck=self.SPEC)
+        start, result = self.land_both(one, two, (self.A, self.B))
+        self.assert_shared(start, result)
+
     def test_a_rise_with_no_row_report_closes(self):
         def rep(total):
             return M.read_report(landing_report(totals={"run-gates/x": total}))
@@ -3025,11 +3073,15 @@ class StalenessExemptionTests(RealReports, Base):
         return {"subchecks": {"run-gates/x": {"reported": len(rows) if reported is None else reported, "complete": complete, "rows": list(rows)}}}
 
     def test_what_exempts_a_subcheck_row_by_row(self):
-        kept = {"key": "k1", "stale": True, "names": ["Plans/A.md"]}
-        own = {"key": "k2", "stale": True, "names": ["Plans/B.md"]}
+        kept = {"key": "k1", "stale": True, "grown_stale": True, "names": ["Plans/A.md"]}
+        own = {"key": "k2", "stale": True, "grown_stale": True, "names": ["Plans/B.md"]}
         before = self.rows(kept)
         self.assertIsNone(M.why_not_exempt("run-gates/x", self.rows(kept, own), before, ["Plans/B.md"]))
         self.assertIn("not staleness", M.why_not_exempt("run-gates/x", self.rows(kept, dict(own, stale=False)), before, ["Plans/B.md"]))
+        self.assertIn("only by its detail text", M.why_not_exempt("run-gates/x", self.rows(kept, dict(own, grown_stale=False)), before, ["Plans/B.md"]))
+        no_field = {key: value for key, value in own.items() if key != "grown_stale"}
+        self.assertIn("only by its detail text", M.why_not_exempt("run-gates/x", self.rows(kept, no_field), before, ["Plans/B.md"]),
+                      "a row report from before the field cannot exempt")
         self.assertIn("names no file", M.why_not_exempt("run-gates/x", self.rows(kept, dict(own, names=[])), before, ["Plans/B.md"]))
         self.assertIn("another member", M.why_not_exempt("run-gates/x", self.rows(kept, own), before, ["Plans/Z.md"]))
         self.assertIn("not complete in this", M.why_not_exempt("run-gates/x", self.rows(kept, own, reported=3), before, ["Plans/B.md"]))

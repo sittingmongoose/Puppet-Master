@@ -812,7 +812,9 @@ report (compared by the check's own row key, read from `--row-report`, which the
 
 - **it is seen:** the subcheck is complete in both reports, its rows adding up to its total, because it printed them all
   or is keyed from a complete export whose total matches;
-- **it is staleness,** by the check's own test;
+- **it is staleness of a kind the check also excuses when its bucket grows** (`grown_stale`, asked of `grown_buckets`). A
+  row stale by its detail text alone is not enough, since alone a rise in its bucket stops the landing. That can close a
+  batch needlessly, for one follow-up, when the bucket is new;
 - **it is this member's:** it names a path of this member's own range, the previous member's `main` SHA to its own, and no
   other path of the batch. Regenerated and deleted paths count, because evidence rows name shards.
 
