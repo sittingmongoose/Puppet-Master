@@ -541,9 +541,11 @@ export default async function (t) {
       if (!p.wheeled && p.onTop) await loc.click(opts.at ? { position: opts.at, button: opts.button } : { button: opts.button });
       else await t.page.mouse.click(off.x + p.x, off.y + p.y, opts.button ? { button: opts.button } : {});
     };
-    // FO-84d: every disclosure the panel shows outside its scrollers (button[aria-expanded], not a tab or a popup
+    // FO-84d: every disclosure the panel shows outside its list scrollers (button[aria-expanded], not a tab or a popup
     // trigger; Source Control's Publish and review chevron in each engine) folds on one press and unfolds on a second,
-    // and Enter and Space on the focused control do the same.
+    // and Enter and Space on the focused control do the same. The list scrollers are the panel's .sh-scroll (Jujutsu's
+    // .d-jj-scroll) and any scroller inside them; a scroller elsewhere does not hide a disclosure (FO-86: at 1280x500
+    // Source Control's Publish footer scrolls its own card, chevron included).
     const disclosures = {};
     // --set disclosures=0 skips this census (to reach later Source Control assertions on a base without FO-84d; the
     // disclosure floor then fails by design)
@@ -551,7 +553,8 @@ export default async function (t) {
       if (t.args.disclosures === '0') return;
       const ctls = await panel.evaluate(p => {
         document.querySelectorAll('[data-shelf-disc]').forEach(e => e.removeAttribute('data-shelf-disc'));
-        const scs = [...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY));
+        const lists = [...p.querySelectorAll(':scope > .sh-scroll, .d-jj-scroll')];
+        const scs = [...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY) && lists.some(l => l.contains(a)));
         return [...p.querySelectorAll('button[aria-expanded]')].filter(e => e.checkVisibility() && e.getAttribute('role') !== 'tab' && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
           .map((e, i) => { e.setAttribute('data-shelf-disc', String(i)); return { i, label: e.getAttribute('aria-label') || (e.parentElement?.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40) || String(e.className) }; });
       });
