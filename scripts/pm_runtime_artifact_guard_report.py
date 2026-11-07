@@ -23,7 +23,9 @@ def main():
     families, rows, suites, findings = {}, {}, [], []
     for summary_path in sorted(root.glob('*/summary.json')):
         summary = json.loads(summary_path.read_text())
-        findings.extend(summary['findings'])
+        # A family run and the shared pass can both collect a witness; count each pair once.
+        seen = {(f['kind'], f['pair']) for f in findings}
+        findings.extend(f for f in summary['findings'] if (f['kind'], f['pair']) not in seen)
         for entry in summary['suites']:
             family = entry['family']
             fam = families.setdefault(family, dict(suites=0, rows=0, proved=0, negatives=0, controls=0, failed_suites=[],

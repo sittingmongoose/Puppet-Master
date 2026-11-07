@@ -183,7 +183,7 @@ def history_rejects_live_change(m):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path)
-    parser.add_argument('--case', help='Run only case names containing this text')
+    parser.add_argument('--case', action='append', help='Run only case names containing this text (repeatable)')
     args = parser.parse_args()
     source = CHECKER.read_text()
     cases = [
@@ -226,7 +226,7 @@ def main():
     hash_families = ['runtime_artifact.cost_usage','runtime_artifact.tool_llm_trace']
     cases.append(('S5_remove_provider_hash_guard',5,cut('S03_provider_hash_overlay'),None,hash_families))
     cases.append(('earlier_B6_remove_restore_grouping_guard',None,cut('O02_grouping'),None,['runtime_artifact.restore_point']))
-    selected = [c for c in cases if not args.case or args.case in c[0]]
+    selected = [c for c in cases if not args.case or any(text in c[0] for text in args.case)]
     results = []
     for case in selected:
         name, standing, configure, altered, *targets = case
