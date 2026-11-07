@@ -8888,16 +8888,33 @@ canonical_text: >-
   hold no data shapes. Fields of type timestamp, url or path take no literal default: their default is none,
   their owners validate syntax at run time, and an owner that needs a literal default first adds its validation to
   the checker (DL-333 coordinator resolution 11). scripts/pm-command-payload-defs-check.py checks this map against
-  the overlay and every definition against this map.
+  the overlay and every definition against this map. Amended 2026-11-07 (DL-341): a definition records every
+  judgment it makes in an optional judgments list, never in a YAML comment; each entry has a key (command_kind,
+  response_kind, disabled_reason_codes, error_codes, owner_request, owner_result, omitted:<field> for a field it
+  deliberately leaves out, or field:<arg path> for a judgment that is not that field's own gap_note), the choice
+  the definition made, equal to its own value for a fixed key, and a gap_note saying what canon lacks or where it
+  disagrees. A judgment carries no provenance, and a canon field whose source or gap_note says JUDGMENT, or a
+  definitions block with a YAML comment that says it, is a provenance finding. A field marked nullable: true may
+  be JSON null, with any required value. Enum values keep canon's exact spelling: non-empty strings without
+  surrounding whitespace, unique within the field. worktree_lifecycle_state is required when the command mutates
+  worktree state, as the overlay cell says: the map lists the mutating commands and the domain_action commands
+  that do not mutate (not_mutating), each with canon evidence that names it, and a domain_action it lists in
+  neither fails closed. identity_aliases records, per row group, a canon name that stands for an overlay identity
+  name, with canon evidence, so gist_id stands for memory_item_id and investigation_id for debug_session_id and
+  canon is never renamed. A conditional identity exemption keeps its field and requires it on every branch of
+  branch_field except exempt_branch: cmd.runtime.approve and cmd.runtime.decline define both the node shape and
+  the HITL-038 chat-tool shape, with blocked_sequence and allowed_action_id required only on the node branch.
+  Owner state maintenance_cutoffs_pending (DL-403) maps to not_configured.
 gui_related: false
 gui_classification_reason: Records where command payload types live and how they are checked; no GUI behavior changes.
 split_recommended: false
-depends_on: [DL-333, CV-333, UCC-109]
+depends_on: [DL-333, CV-333, UCC-109, DL-341]
 unblocks: []
 acceptance_criteria:
   - "Every expected UCC-049..UCC-105 command has exactly one definition, in the owner unit this map routes it to, or is listed in contested."
   - "row_groups equal the overlay's row-specific identity cells, and envelope equals the overlay's payload_required and payload_optional bullets."
   - "Every non_definition_tokens entry quotes the canon that marks it, and every token a unit's compatibility or stale note marks is listed."
+  - "Every judgment a definition makes is in its judgments list with a key, a choice and a gap_note; no judgment claims provenance, and no canon field or YAML comment records one (DL-341)."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
   - python3 scripts/pm-command-payload-defs-check.py
@@ -8919,16 +8936,27 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/DESIGN.md sections 4-6"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/RESOLUTIONS.md"
+  - "pm-mail 1107140349-9370 (pm7-build, 2026-11-07T14:03Z): coordinator resolutions 1-5 after definitions review round 1 (DL-341); /mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/defs-review/R1-DECISIONS.md and r1-opus-S1.md..r1-opus-S5.md"
 preserved_exact_tokens:
   - UCC-230
   - pm.command_payload_definitions.v1
   - command_payload_definitions
   - command_payload_definition_map
+  - DL-341
+  - judgments
+  - nullable
+  - identity_aliases
+  - not_mutating
+  - branch_field
+  - exempt_branch
+  - maintenance_cutoffs_pending
 negative_constraints:
   - Do not add payload fields to UI_Command_Catalog command rows.
   - Do not define a payload for an alias, retired, non-alias, source-lineage, outside-range or contested token.
   - Do not expand the overlay's closed error or disabled-reason sets; map owner states to closed codes instead.
   - Do not record an identity exemption anywhere but this map, and only with a decision.
+  - Do not record a judgment in a YAML comment or in a canon field; record it in the definition's judgments list.
+  - Do not rename canon to an overlay identity name; record an identity alias instead.
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Decision_Log.md
@@ -9048,7 +9076,8 @@ command_payload_definition_map:
         constraints:
           max_length: 256
     identity_typing: row-group identity fields ending in _id are type id and in _ref are type ref; they become required
-      only where the overlay marks them required or canon makes the subject mandatory, citing the source
+      only where the overlay marks them required or canon makes the subject mandatory, citing the source; a recorded
+      identity alias's canon name is typed and required as the overlay name it stands for (DL-341)
   row_groups:
   - id: UCC-049..UCC-053
     first: UCC-049
@@ -9069,7 +9098,54 @@ command_payload_definition_map:
     - field: repo_id
       when: always
     - field: worktree_lifecycle_state
-      when: domain_action
+      when: mutating
+      source: 'Overlay UCC-054 through UCC-055 identity cell: "`worktree_lifecycle_state` when mutating worktree state"
+        (DL-341); each command below is marked by its UCC-054 Worktree Topology Commands row'
+      commands:
+      - command_id: cmd.git.worktree.create
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.create` | Create Worktree | Creates a new git worktree at specified path'
+      - command_id: cmd.git.worktree.lock
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.lock` | Lock Worktree | Prevents accidental removal of worktree'
+      - command_id: cmd.git.worktree.prune
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.prune` | Prune Worktree | Prunes eligible stale worktree metadata'
+      - command_id: cmd.git.worktree.recover
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.recover` | Recover Worktree | Reopens or rebinds a worktree from stored lineage'
+      - command_id: cmd.git.worktree.release
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.release` | Release Worktree Ownership | Releases runtime ownership'
+      - command_id: cmd.git.worktree.remove
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.remove` | Remove Worktree | Removes an existing live worktree'
+      - command_id: cmd.git.worktree.reuse
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.reuse` | Reuse Worktree | Rebinds a clean, lineage-compatible worktree to a new run/lane/package owner'
+      - command_id: cmd.git.worktree.unlock
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.unlock` | Unlock Worktree | Removes lock from worktree'
+      not_mutating:
+      - command_id: cmd.git.worktree.request_prune
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.request_prune` | Request Worktree Prune | Requests an approval-gated prune of the selected worktree without mutating it'
+        note: 'GI-041 acceptance criterion: "request_prune never mutates worktree state".'
+      - command_id: cmd.git.worktree.select
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.select` | Select Worktree | Selects a worktree row and persists selected worktree/filter state per project'
+        note: 'Selection and filter state are per-project panel state, not worktree state; W-075 keeps the selected worktree
+          an owner runtime/view record.'
     optional_identity:
     - worktree_id
     - branch_ref
@@ -9183,15 +9259,20 @@ command_payload_definition_map:
   pre_attempt_admissible:
     field: attempt_id
     commands:
+    - cmd.runtime.abandon_recovery
     - cmd.runtime.approve
     - cmd.runtime.decline
+    - cmd.runtime.locate_and_verify_recovery
     - cmd.runtime.open_attempt_details
     - cmd.runtime.replan
     - cmd.runtime.resume_after_prerequisite
     - cmd.runtime.skip_node
     - cmd.runtime.start_fresh_attempt
-    source: References allowed_action_id table (minimum args with attempt_id?) and the Pre-attempt blocked rule;
-      UCC-092
+    source: 'References allowed_action_id table (minimum args with attempt_id?) and the Pre-attempt blocked rule;
+      UCC-092. Amended 2026-11-07 (DL-341): locate_and_verify_recovery and abandon_recovery, from the Known-37
+      recovery-unavailable catalog rows ("Pre-attempt payloads omit `attempt_id`"), Plans/Commands_System.md
+      ("Pre-attempt dispatch omits `attempt_id`") and Plans/Contracts_V0.md ("A pre-attempt request omits
+      `attempt_id`")'
   owners:
     routing_rule: an exact exception wins; otherwise the longest namespace (an id starting with cmd.<namespace>.)
       among the routes of the command's primary row group (the row group of its lowest-numbered token unit, else
@@ -10102,6 +10183,16 @@ command_payload_definition_map:
       unit: UCC-067
       field: stale_retired_dispositions
       quote: the detach and pane rows retire; replacements in UCC-201
+  - token: cmd.terminal.focus_session
+    disposition: alias
+    targets:
+    - cmd.terminal.focus
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-202
+      field: canonical_text
+      quote: cmd.terminal.focus is canonical and cmd.terminal.focus_session is its alias
+    note: 'DL-341: recorded alias metadata of cmd.terminal.focus (UCC-202, DL-180), with no handler or row of its own.'
   - token: cmd.terminal.kill_session
     disposition: owned_outside_range
     evidence:
@@ -10142,6 +10233,49 @@ command_payload_definition_map:
       field: canonical_text
       quote: Existing cmd.thread.request/spawn Send uses current local previews and receiver authority
     note: Owned by UCC-145 and UCC-216.
+  - token: compose.run_scenario
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.compose.scenario.run
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-137
+      field: canonical_text
+      quote: the flat compose.save_scenario and compose.run_scenario spellings recorded as compatibility aliases
+    note: 'DL-341: the flat spelling canon records (UCC-137; the Cozy Shelves table row for the scenario family).'
+  - token: compose.save_scenario
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.compose.scenario.save
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-137
+      field: canonical_text
+      quote: the flat compose.save_scenario and compose.run_scenario spellings recorded as compatibility aliases
+    note: 'DL-341: the flat spelling canon records (UCC-137; the Cozy Shelves table row for the scenario family).'
+  - token: set_context
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.k8s.select_context
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-137
+      field: canonical_text
+      quote: cmd.docker.k8s.select_context and cmd.docker.k8s.select_namespace are canonical with set_context and set_namespace
+        recorded aliases
+    note: 'DL-341: the bare K8s-era form; UCC-052 compatibility_only_notes also marks it a compatibility alias. The prototype
+      token cmd.docker.set_context is a different alias, of cmd.docker.context.select.'
+  - token: set_namespace
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.k8s.select_namespace
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-137
+      field: canonical_text
+      quote: cmd.docker.k8s.select_context and cmd.docker.k8s.select_namespace are canonical with set_context and set_namespace
+        recorded aliases
+    note: 'DL-341: the bare K8s-era form; UCC-052 compatibility_only_notes also marks it a compatibility alias.'
   owner_state_code_map:
   - owner_state: activation_not_active
     maps_to: blocked_state_required
@@ -10195,6 +10329,11 @@ command_payload_definition_map:
     maps_to: degraded
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: maintenance_cutoffs_pending
+    maps_to: not_configured
+    sources:
+    - 'Plans/Decision_Log.md DL-403: memory maintenance waits for approved cutoffs, and the two maintenance buttons show as
+      unavailable with the reason until they exist; DL-341 coordinator resolution 3'
   - owner_state: missing_approver
     maps_to: permission_required
     sources:
@@ -10388,6 +10527,65 @@ command_payload_definition_map:
     decision: DL-333
     reason: 'Q5 resolution 8: cmd.chat.new runs before a thread exists (thread_id is minted when the first user
       message commits); it carries draft identity (ChatNewRequestScopeV2).'
+  - command_id: cmd.runtime.approve
+    field: allowed_action_id
+    decision: DL-341
+    condition: required_when
+    branch_field: approval_kind
+    exempt_branch: chat_tool
+    reason: 'DL-341 coordinator resolution 1: HITL-038 keeps one approval host with separate typed envelopes. The node
+      branch (OrchestratorNodeApprovalRequestV1) carries the blocked identity and keeps allowed_action_id required; the
+      chat-tool branch (RuntimeApproveV3ToolRequest, approval_kind chat_tool) binds run, request, tool and target and has no blocked
+      episode. Both shapes are defined.'
+  - command_id: cmd.runtime.approve
+    field: blocked_sequence
+    decision: DL-341
+    condition: required_when
+    branch_field: approval_kind
+    exempt_branch: chat_tool
+    reason: 'DL-341 coordinator resolution 1: HITL-038 keeps one approval host with separate typed envelopes. The node
+      branch (OrchestratorNodeApprovalRequestV1) carries the blocked identity and keeps blocked_sequence required; the
+      chat-tool branch (RuntimeApproveV3ToolRequest, approval_kind chat_tool) binds run, request, tool and target and has no blocked
+      episode. Both shapes are defined.'
+  - command_id: cmd.runtime.decline
+    field: allowed_action_id
+    decision: DL-341
+    condition: required_when
+    branch_field: approval_kind
+    exempt_branch: chat_tool
+    reason: 'DL-341 coordinator resolution 1: HITL-038 keeps one approval host with separate typed envelopes. The node
+      branch (OrchestratorNodeApprovalRequestV1) carries the blocked identity and keeps allowed_action_id required; the
+      chat-tool branch (RuntimeDeclineV3ToolRequest, approval_kind chat_tool) binds run, request, tool and target and has no blocked
+      episode. Both shapes are defined.'
+  - command_id: cmd.runtime.decline
+    field: blocked_sequence
+    decision: DL-341
+    condition: required_when
+    branch_field: approval_kind
+    exempt_branch: chat_tool
+    reason: 'DL-341 coordinator resolution 1: HITL-038 keeps one approval host with separate typed envelopes. The node
+      branch (OrchestratorNodeApprovalRequestV1) carries the blocked identity and keeps blocked_sequence required; the
+      chat-tool branch (RuntimeDeclineV3ToolRequest, approval_kind chat_tool) binds run, request, tool and target and has no blocked
+      episode. Both shapes are defined.'
+  identity_aliases:
+  - row_group: UCC-077..UCC-083
+    overlay_name: debug_session_id
+    canon_name: investigation_id
+    decision: DL-341
+    evidence:
+      doc: Plans/Contracts_V0.md
+      quote: '| `debug.investigation.started` | `investigation_id`, `project_id`, `thread_id?`'
+    note: 'DL-341 coordinator resolution 4: the debug investigation identity is investigation_id in Contracts_V0 CV-294
+      and assistant-chat-design.md section 12.0A (ACD-096 keeps the canonical header names).'
+  - row_group: UCC-084..UCC-088
+    overlay_name: memory_item_id
+    canon_name: gist_id
+    decision: DL-341
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: '| `cmd.chat.memory.verify` | `{ project_id, gist_id }` |'
+    note: 'DL-341 coordinator resolution 4: the memory item identity is gist_id in the catalog memory rows and in
+      Plans/assistant-memory-subsystem.md (MemoryGist).'
   contested: []
 ```
 
