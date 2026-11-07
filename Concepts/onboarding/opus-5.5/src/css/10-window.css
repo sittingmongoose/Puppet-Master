@@ -188,7 +188,9 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
    NieR's caret to 4.7 px. It keeps its own width, chevron and label as shown; the other buttons wrap instead */
 #pm-o55-onboarding .o55-foot > .o55-back { flex-shrink: 0; }
 /* ...and before any of them wraps, a footer that has run out of room shows Back as its chevron alone, as at phone width
-   (its name stays for screen readers), so labels wrap to two lines, not three ('Enter / Puppet / Master' at 860). Q4
+   (its name stays for screen readers), so the other labels have its word's room before they wrap (group 6's 'Enter /
+   Puppet / Master' at 860 took three lines; the flex shares the shrink by each label's length, so the longest can still
+   take three in the narrowest band, NieR Dark at 810). Q4
    (Jared, 2026-11-07: "A, do the change to only wrap when it doesn't fit"): that is decided by the footer's own fit, not
    a fixed width. 60-ui-core.js fitFoot reads the footer's one-line width once (data-o55-fit="measure": the footer laid
    out at max-content, without NieR's key prompts, which give way to everything) and marks it full or chevron from its
@@ -495,7 +497,7 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph
 #pm-o55-onboarding[data-o55-layout="narrow"] { --o55-pad: 22px; }
 /* at phone width Back is its chevron alone (its name stays for screen readers), so the primary keeps one line */
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-foot { padding-inline: 14px; gap: 8px; }
-#pm-o55-onboarding[data-o55-layout="narrow"] .o55-back { padding-inline: 10px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-back { padding-inline: 10px; min-width: 40px; } /* (its chevron alone keeps the wide window's 40 px minimum, Q4: it was 32 px in NieR, 36 in Glass, 38 in Basic; the phone layout has no target size of its own beyond the buttons' 40 px height) */
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-back > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-tiles { --o55-tileart-h: 84px; }

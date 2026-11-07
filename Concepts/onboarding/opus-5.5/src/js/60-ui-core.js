@@ -446,7 +446,10 @@
       if (was === null) foot.removeAttribute('data-o55-fit'); else foot.setAttribute('data-o55-fit', was);
       footNeed.set(foot, need);
     }
-    const fit = need.w <= need.room + 0.5 ? 'full' : 'chevron';
+    /* exactly, in layout units (1/64 px): a footer even 1/64 px short of its one-line width shrinks its labels, which
+       wrap, so Back's word must go there (a half-pixel allowance kept it while both labels wrapped, and a pixel narrower
+       they went back to one line: Friendly Light 1092, NieR Dark 1086, Glass Light 1039; opus-recheck-look8 Q4-1) */
+    const fit = Math.round(need.w * 64) <= Math.round(need.room * 64) ? 'full' : 'chevron';
     if (foot.getAttribute('data-o55-fit') !== fit) foot.setAttribute('data-o55-fit', fit);
   }
   /* (the layer's width is the footer's; a size change re-reads the room, and the morph of a quiet redraw, which drops the
