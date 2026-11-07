@@ -102,7 +102,7 @@
   box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px rgb(from var(--surface) r g b / 1), var(--pm-switch-shadow, var(--lg-lens-drop)) !important;
 }
 §R:not([data-o55-nier-parts~="brackets"])[data-lg="on"][data-theme^="glass"]:not(#pmfz) #lg-lenses .lg-lens[data-lg-for="rail-icons"][data-lg-focus]::after { opacity: 0 !important; }
-§R:not([data-o55-nier-parts~="brackets"]):not(#pmfz)[data-lg="on"] #activityBar .icon[data-lg-focus]:focus-visible .symbol { outline: none !important; box-shadow: none !important; }
+§R:not([data-o55-nier-parts~="brackets"]):not(#pmfz)[data-lg="on"][data-theme^="glass"] #activityBar .icon[data-lg-focus]:focus-visible .symbol { outline: none !important; box-shadow: none !important; }
 §R[data-o55-nier="on"] #activityBar > .activity-bar-toggle:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 
 /* drag to reorder or hide: the ghost is the icon's tile lifted off the bar; the drop line is the accent, square in Retro

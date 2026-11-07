@@ -1465,7 +1465,8 @@
     railFocusQ = 0;
     var bar = document.getElementById('activityBar');
     if (!bar) return;
-    var L = typeof lenses !== 'undefined' && lenses ? lenses.get(bar) : null, act = document.activeElement;
+    /* outside Glass the rail has no lens of its own (an adopting look keeps its lit icon), so no flag stays (F96c-1) */
+    var L = isGlass() && typeof lenses !== 'undefined' && lenses ? lenses.get(bar) : null, act = document.activeElement;
     /* any rail lens still flagged counts, the live one or one left from an earlier look (outside Glass the rail has none) */
     var flagged = bar.querySelector('.icon[data-lg-focus]') || document.querySelector('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]');
     var cur = null, on = false, wait = false;
@@ -2709,7 +2710,7 @@
     sheets.forEach(unpin);   /* the scroll has settled: anchored frost again, at the very spot it is pinned */
     if (root.hasAttribute('data-lg-demo-host') && document.getElementById('lg-demo-btn')) demo();
     applyWall();
-    if (!isGlass()) { unmountAll(switchLook); if (!switchLook) return; }
+    if (!isGlass()) { unmountAll(switchLook); if (!switchLook) { queueRailFocus(); return; } }
     else { syncSurfaces(scopes, sheets); ensureFrost(); }
     var covered = pageCovered(), todo = [];
     STRIPS.forEach(function (cfg) {
@@ -2718,7 +2719,7 @@
       });
       strips.forEach(function (s) { if (s.matches(cfg.sel) && found.indexOf(s) < 0) found.push(s); });
       /* the activity bar's icon lens is Glass's own rail design; an adopting look keeps its own lit icon there */
-      if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); return; }
+      if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); queueRailFocus(); return; }
       found.forEach(function (s) {
         /* (a shown chip is put out whatever its box says: a look change clears every lens's box for the next sync to place
            it again, and a screen that left in that same sync kept its chip on screen at full opacity until the screen was
