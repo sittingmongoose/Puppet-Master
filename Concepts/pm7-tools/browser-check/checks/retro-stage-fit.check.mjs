@@ -476,36 +476,67 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	// SVG, in CSS px, so the pane or the window moving is not Pip moving. A part has moved this frame when leaves holding
 	// at least half of its painted area have each moved at least PAINT_STEP px since the part's last counted pose (slow
 	// travel accumulates; a blink or a glance of the eyes alone is not the head moving). Each part must change for at
-	// least 200 ms on its own; movingMs is the lesser of the two.
-	const PAINT_STEP = .25;
+	// least 200 ms on its own; movingMs is the lesser of the two. (T65: each part must now make PART_STEPS visible steps
+	// on its own; moving is the lesser count, and the parts are judged from Pip's first painted frame.)
+	// T65 (TOOLBATCH4, REVIEW-kit-tb3-opus findings 1-3): a leaf is compared by what it paints, orientation-free. Its
+	// signature is its axis-aligned box in the stage, in device px: a shape mirrored, or turned 180 degrees, about its own
+	// centre repaints the same pixels and keeps the same box, where its corners compared one by one had 'moved' (a frozen
+	// Pip whose leaves were mirrored on alternate frames passed both parts). Geometry that paints nothing is left out:
+	// leaves inside defs, clipPath, mask, pattern, marker or symbol (Friendly's head counted a clip path as 42% of its
+	// area); a fill or a stroke whose colour is transparent (fill: transparent computes to rgba(0, 0, 0, 0), not none);
+	// and a path's empty sub-paths (a lone moveto, which getBBox counts): such a path's box is read from points along what
+	// it draws instead. The step is in device px (one device pixel), not CSS px: .25 CSS px is under a device pixel at
+	// DPR 1 to 3, and a frozen Pip nudged .3 CSS px back and forth passed, at DPR 2 too. The parts' net travel, from the
+	// first sampled frame, is reported in device px (headTravelPx, handTravelPx) and asserted per awake cell.
+	const STEP_DPX = 1, DPR = window.devicePixelRatio || 1;
+	const NOPAINT = 'defs, clipPath, mask, pattern, marker, symbol';
+	const alphaOf = (col) => { if (!col || col === 'none' || col === 'transparent') return 0; if (/^url\(/.test(col)) return 1; const m = /rgba?\(([^)]*)\)/.exec(col); if (!m) return 1; const v = m[1].split(/[\s,\/]+/).filter(Boolean); if (v.length < 4) return 1; return v[3].endsWith('%') ? parseFloat(v[3]) / 100 : parseFloat(v[3]); };
+	const paints = (c) => (alphaOf(c.fill) * +c.fillOpacity > .05) || (alphaOf(c.stroke) * +c.strokeOpacity > .05 && parseFloat(c.strokeWidth) > 0);
+	// a sub-path with nothing drawn: a moveto with one coordinate pair, followed by another moveto or the end
+	const emptySub = (d) => { const tk = String(d || '').match(/[MmLlHhVvCcSsQqTtAaZz]|[-+]?(?:\d+\.?\d*|\.\d+)(?:[eE][-+]?\d+)?/g) || [];
+		for (let i = 0; i < tk.length; i++) { if (tk[i] !== 'M' && tk[i] !== 'm') continue; let j = i + 1; while (j < tk.length && !/[A-Za-z]/.test(tk[j])) j++; if (j - i - 1 === 2 && (j >= tk.length || tk[j] === 'M' || tk[j] === 'm')) return true; }
+		return false; };
 	const leafShown = (e, top) => { for (let a = e; a && a !== top.parentElement; a = a.parentElement) { const c = getComputedStyle(a); if (c.display === 'none' || c.visibility === 'hidden' || +c.opacity < .05) return false; } return true; };
 	const painted = (s, g, label) => {
 		const root = s.svg.getScreenCTM();
 		if (!root) throw new Error('stage SVG: no screen matrix');
-		const inv = root.inverse(), k = Math.hypot(root.a, root.b), leaves = new Map();
+		const inv = root.inverse(), k = Math.hypot(root.a, root.b) * DPR, leaves = new Map();
 		for (const e of g.querySelectorAll('path,circle,ellipse,rect,polygon,polyline,line')) {
-			if (!leafShown(e, g)) continue;
+			if (e.closest(NOPAINT) || !leafShown(e, g)) continue;
 			const c = getComputedStyle(e);
-			if (!(c.fill !== 'none' && +c.fillOpacity > .05) && !(c.stroke !== 'none' && parseFloat(c.strokeWidth) > 0 && +c.strokeOpacity > .05)) continue;
-			const m = e.getScreenCTM(); let b = null;
-			try { b = e.getBBox(); } catch (_) { /* not rendered */ }
-			if (!m || !b || !(b.width > 0 || b.height > 0)) continue;
-			const r = inv.multiply(m), w = Math.max(b.width, .1), h = Math.max(b.height, .1);
-			const pts = [[b.x, b.y], [b.x + w, b.y], [b.x, b.y + h], [b.x + w, b.y + h]].map(([x, y]) => [(r.a * x + r.c * y + r.e) * k, (r.b * x + r.d * y + r.f) * k]);
+			if (!paints(c)) continue;
+			const m = e.getScreenCTM(); if (!m) continue;
+			const r = inv.multiply(m), at = (x, y) => [(r.a * x + r.c * y + r.e) * k, (r.b * x + r.d * y + r.f) * k];
+			let pts = null;
+			if (e.tagName === 'path') {
+				const cd0 = c.d && c.d !== 'none' ? c.d : e.getAttribute('d'), cd = (/^path\(\s*["']([\s\S]*)["']\s*\)$/.exec(cd0 || '') || [null, cd0])[1];
+				if (emptySub(cd)) {
+					let len = 0; try { len = e.getTotalLength(); } catch (_) { /* not rendered */ }
+					if (!(len > 0)) continue;
+					const n = Math.max(32, Math.min(400, Math.ceil(len * Math.hypot(r.a, r.b) * k)));
+					pts = []; for (let i = 0; i <= n; i++) { const q = e.getPointAtLength(Math.min(len, Math.max(0, i / n * len))); pts.push(at(q.x, q.y)); }
+				}
+			}
+			if (!pts) {
+				let b = null; try { b = e.getBBox(); } catch (_) { /* not rendered */ }
+				if (!b || !(b.width > 0 || b.height > 0)) continue;
+				pts = [at(b.x, b.y), at(b.x + b.width, b.y), at(b.x, b.y + b.height), at(b.x + b.width, b.y + b.height)];
+			}
 			if (!pts.every((q) => Number.isFinite(q[0]) && Number.isFinite(q[1]))) continue;
-			leaves.set(e, { pts, area: Math.abs(r.a * r.d - r.b * r.c) * w * h * k * k });
+			const box = [Math.min(...pts.map((q) => q[0])), Math.min(...pts.map((q) => q[1])), Math.max(...pts.map((q) => q[0])), Math.max(...pts.map((q) => q[1]))];
+			leaves.set(e, { box, area: Math.max(box[2] - box[0], 1) * Math.max(box[3] - box[1], 1) });
 		}
 		if (!leaves.size) throw new Error(`${label}: no painted shape`);
 		return leaves;
 	};
-	const centre = (leaves) => { let a = 0, x = 0, y = 0; for (const { pts, area } of leaves.values()) { for (const q of pts) { x += q[0] * area / 4; y += q[1] * area / 4; } a += area; } return a > 0 ? [x / a, y / a] : [0, 0]; };
+	const centre = (leaves) => { let a = 0, x = 0, y = 0; for (const { box, area } of leaves.values()) { x += (box[0] + box[2]) / 2 * area; y += (box[1] + box[3]) / 2 * area; a += area; } return a > 0 ? [x / a, y / a] : [0, 0]; };
 	// true (moved), false (held), or null (no leaf in common with the last counted pose: the drawing was rebuilt)
 	const partMoved = (now, ref) => {
 		let all = 0, moved = 0;
 		for (const [e, q] of now) {
 			const p = ref.get(e); if (!p) continue;
 			all += q.area;
-			if (Math.max(...q.pts.map((pt, i) => Math.hypot(pt[0] - p.pts[i][0], pt[1] - p.pts[i][1]))) >= PAINT_STEP) moved += q.area;
+			if (Math.max(...q.box.map((v, i) => Math.abs(v - p.box[i]))) >= STEP_DPX) moved += q.area;
 		}
 		return all > 0 ? moved >= all / 2 : null;
 	};
@@ -520,7 +551,7 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	};
 	const tally = () => {
 		const r1 = (v) => Math.round(v * 100) / 100;
-		Object.assign(out, { headMs: parts.head.ms, handMs: parts.hand.ms, headMoves: parts.head.n, handMoves: parts.hand.n, headTravelPx: r1(parts.head.travel), handTravelPx: r1(parts.hand.travel), headRebuilt: parts.head.rebuilt, handRebuilt: parts.hand.rebuilt, movingMs: Math.min(parts.head.ms, parts.hand.ms), moving: Math.min(parts.head.n, parts.hand.n) });
+		Object.assign(out, { travelUnit: 'device px', dpr: DPR, headMs: parts.head.ms, handMs: parts.hand.ms, headMoves: parts.head.n, handMoves: parts.hand.n, headTravelPx: r1(parts.head.travel), handTravelPx: r1(parts.hand.travel), headRebuilt: parts.head.rebuilt, handRebuilt: parts.hand.rebuilt, movingMs: Math.min(parts.head.ms, parts.hand.ms), moving: Math.min(parts.head.n, parts.hand.n) });
 	};
 	while (performance.now() - t0 < ms) {
 		await new Promise((r) => requestAnimationFrame(() => r()));
@@ -548,6 +579,15 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 		const now = { tilt: Math.abs(ps.tiltv) > 1.5, swing: Math.abs(ps.thv) > .25, hop: ps.dyv < -80, cheer: s2.moodOverride === 'happy' && s2.moodUntil > s2.t, kick: props.some((p) => Math.abs(p.av) > .12) };
 		for (const k of Object.keys(now)) { if (now[k] && !was[k]) out.kinds[k === 'kick' ? 'propKick' : k]++; was[k] = now[k]; }
 
+		// T65: the parts are judged from Pip's first painted frame, not from the props' arrival: under load the props
+		// finished fading in after Pip's wake hop and cheer, and the cell then held only the idle sway (2 hand steps in a
+		// run on Nas1). Before the first paint a missing paint is waited out; after any valid pair it is a geometry error.
+		{
+			let hP = null, cP = null;
+			try { hP = painted(s2, s2.gHead, 'head'); cP = painted(s2, s2.gCtl, 'hand'); }
+			catch (e) { if (out.validPairs) { out.geometryError = `${e.message} at frame ${out.n}`; break; } }
+			if (hP && cP) { judgePart(parts.head, hP, tNow); judgePart(parts.hand, cP, tNow); }
+		}
 		// No comparison is eligible during the props' entrance fade. Coverage below must still become positive.
 		if (!props.length) continue;
 		// A fresh screen can expose its leaving props before its head's entrance is painted.
@@ -569,8 +609,6 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 			}
 			const hb = R(s2.gHead, 'head');
 			R(s2.gCtl, 'hand');
-			judgePart(parts.head, painted(s2, s2.gHead, 'head'), tNow);
-			judgePart(parts.hand, painted(s2, s2.gCtl, 'hand'), tNow);
 			if (props.length) out.validFrames++;
 			for (const p of props) {
 				const q = R(p.el, `prop ${p.spec.kind}:${p.spec.slot || ''}`), x0 = Math.max(hb.left, q.left), x1 = Math.min(hb.right, q.right), y0 = Math.max(hb.top, q.top), y1 = Math.min(hb.bottom, q.bottom);
@@ -588,6 +626,14 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 	return out;
 };
 const MOTION_SCREENS = ['name', 'c-ready', 'online-details'];
+const TRAVEL_FLOOR_DPX = 1;
+// T65: a part is awake when it made at least PART_STEPS visible steps in the cell, each of at least one device pixel
+// (STEP_DPX) from its last counted pose. The T42 bar was 200 ms at 50 ms a step, four steps of .25 CSS px; at one
+// device pixel a step is four times coarser, and the real hand's idle sway makes a visible step about every 2.5 s
+// (2 to 4 in an idle 10 s on every look, retro-stage-fit probe3 on Nas1). The full real-page run on Nas1 (90 cells,
+// load 12.8 on 5 cores) gave the hand 2 steps at the fewest, the head 8, and every freeze, the review's and T42's,
+// makes 0; so the bar is one visible step a part, beside each part's net travel of TRAVEL_FLOOR_DPX.
+const PART_STEPS = 1;
 const MOTION_SIZES = [[860, 768], [740, 768], [1280, 500]];
 async function awakeMotion(t, mode) {
 	if (t.args.motion === 'reduce') return t.check('not run: this case is about normal motion', true);
@@ -629,10 +675,14 @@ async function awakeMotion(t, mode) {
 				/* (in time, not frames: one nod keeps Pip off its rest pose for 333 ms on the stage's tilt spring, a wiggle 467 ms,
 				   at any frame rate; 20 frames were 435 ms at the VM's 46 fps, more than a nod, and 171 ms at Windows' 117 fps.
 				   NieR's c-ready has one idle wiggle or nod in 14 s, by design (no swing, no hop): 13-16 frames on the VM, 45-56 on
-				   Windows, retro-c4. 200 ms is stricter than 20 frames were on every Windows run, and below one nod) */
+				   Windows, retro-c4. 200 ms is stricter than 20 frames were on every Windows run, and below one nod.
+				   T65: in device px the bar is PART_STEPS visible steps a part, see PART_STEPS) */
 				// T42: each drawn part on its own, on what is painted (a head held still while the hand moves fails here)
-				await t.check(`${tag}: Pip's drawn head changed visibly (painted, >= .25 px) for at least 200 ms`, r.headMs >= 200, why);
-				await t.check(`${tag}: Pip's drawn hand changed visibly (painted, >= .25 px) for at least 200 ms`, r.handMs >= 200, why);
+				await t.check(`${tag}: Pip's drawn head changed visibly (painted, >= 1 device px) at least ${PART_STEPS === 1 ? 'once' : PART_STEPS + ' times'}`, r.headMoves >= PART_STEPS, why);
+				await t.check(`${tag}: Pip's drawn hand changed visibly (painted, >= 1 device px) at least ${PART_STEPS === 1 ? 'once' : PART_STEPS + ' times'}`, r.handMoves >= PART_STEPS, why);
+				// T65: the parts' net travel over the cell, a backstop beside the per-frame steps (the real page's smallest at
+				// 860x768 were 5.65 px for the head and 1.98 px for the hand, REVIEW-kit-tb3-opus)
+				await t.check(`${tag}: Pip's drawn head and hand each travelled at least ${TRAVEL_FLOOR_DPX} device px`, r.headTravelPx >= TRAVEL_FLOOR_DPX && r.handTravelPx >= TRAVEL_FLOOR_DPX, why);
 				const okInk = r.worst <= 4;
 				await t.check(`${tag}: no painted overlap of Pip's head and a prop`, okInk, `${r.worst} px² painted; ${why}`);
 				if (!okInk) await t.crop(`awake-${mode}-${look}-${scr}-${w}x${h}`, '#pm-o55-onboarding .o55-stage', `${tag}: painted overlap ${r.worst} px²`);
@@ -734,7 +784,7 @@ async function frozenDrawing(t,mode) {
 	},{m:MOTION.toString(),i:INK_OVERLAP.toString(),g:GEOMETRY.toString()});
 	await t.check(`${mode}: frozen drawing retains valid visible geometry`,!r.err&&!r.geometryError&&r.validPairs>0,JSON.stringify(r));
 	await t.check(`${mode}: frozen drawing retains nominal physics`,r.off===0&&r.forced?.fired,JSON.stringify(r));
-	await t.check(`${mode}: frozen drawing rejected by 200 ms drawn-pose assertion`,t.args.selftest === 'frozen-drawing' ? r.movingMs>=200 : r.headMs<200&&r.handMs<200,JSON.stringify(r));
+	await t.check(`${mode}: frozen drawing rejected by the drawn-pose assertion (${PART_STEPS} visible steps a part)`,t.args.selftest === 'frozen-drawing' ? r.moving>=PART_STEPS : r.headMoves<PART_STEPS&&r.handMoves<PART_STEPS,JSON.stringify(r));
 	t.log(JSON.stringify(r));
 }
 // sol-review-retro-5's independent negative, test-side (its frozen-rigid.html built the same freeze into the rig): the
@@ -746,7 +796,7 @@ async function frozenDrawing(t,mode) {
 // changing (the old reader would have passed it) and the rendered matrices did not. Passes when the guard rejects the
 // freeze; --set selftest=frozen-rigid applies the acceptance predicate instead and must fail. NieR Light c-ready 860, as
 // the review ran it. The built mutant reruns as: --grep "awake motion over props" --set looks=nier-light
-// --set sizes=860x768 --set screens=c-ready --set page=<frozen-rigid.html>, whose c-ready cell must fail its 200 ms.
+// --set sizes=860x768 --set screens=c-ready --set page=<frozen-rigid.html>, whose c-ready cell must fail its step bar.
 async function frozenRigid(t, mode) {
 	await t.viewport(860, 768); const f = await frameFor(t, mode);
 	await t.emulate({ reducedMotion: 'no-preference' }); await stageLook(t, f, 'nier-light');
@@ -781,13 +831,13 @@ async function frozenRigid(t, mode) {
 			return Object.assign(out, { written: seen.attrs.size, drawnHead: seen.headCss.size, drawnHand: seen.handCss.size, headCtm: seen.headCtm.size, counted: seen.frames });
 		} finally { on = false; thaw(); }
 	}, { m: MOTION.toString(), i: INK_OVERLAP.toString(), g: GEOMETRY.toString() });
-	const why = JSON.stringify({ err: r.err, geometryError: r.geometryError, validPairs: r.validPairs, off: r.off, forced: r.forced, headMs: Math.round(r.headMs || 0), handMs: Math.round(r.handMs || 0), headTravelPx: r.headTravelPx, handTravelPx: r.handTravelPx, written: r.written, drawnHead: r.drawnHead, drawnHand: r.drawnHand, headCtm: r.headCtm, counted: r.counted });
+	const why = JSON.stringify({ err: r.err, geometryError: r.geometryError, validPairs: r.validPairs, off: r.off, forced: r.forced, headMs: Math.round(r.headMs || 0), handMs: Math.round(r.handMs || 0), headMoves: r.headMoves, handMoves: r.handMoves, headTravelPx: r.headTravelPx, handTravelPx: r.handTravelPx, written: r.written, drawnHead: r.drawnHead, drawnHand: r.drawnHand, headCtm: r.headCtm, counted: r.counted });
 	await t.check(`${mode}: rigid freeze retains valid visible geometry`, !r.err && !r.geometryError && r.validPairs > 0, why);
 	await t.check(`${mode}: rigid freeze retains nominal physics`, r.off === 0 && !!(r.forced && r.forced.fired), why);
 	// (the freeze is real: render() kept writing new head and hand transforms, and none of them was drawn)
 	await t.check(`${mode}: rigid freeze: transform attributes kept changing`, r.written > 20 && r.counted > 100, why);
 	await t.check(`${mode}: rigid freeze: rendered head and hand matrices held still`, r.drawnHead === 1 && r.drawnHand === 1 && r.headCtm === 1, why);
-	await t.check(`${mode}: rigid freeze rejected by 200 ms drawn-pose assertion`, t.args.selftest === 'frozen-rigid' ? r.movingMs >= 200 : r.headMs < 200 && r.handMs < 200, why);
+	await t.check(`${mode}: rigid freeze rejected by the drawn-pose assertion (${PART_STEPS} visible steps a part)`, t.args.selftest === 'frozen-rigid' ? r.moving >= PART_STEPS : r.headMoves < PART_STEPS && r.handMoves < PART_STEPS, why);
 	t.log(why);
 }
 
@@ -803,8 +853,18 @@ async function frozenRigid(t, mode) {
 //   parent-counter  a wrapper above each group undoes every write: the groups' own matrices stay put
 //   smil            animateTransform holds both groups' poses over the written attribute
 //   jitter          the CSS hold, nudged 0.03 units each frame (0.025 CSS px at 860): below anything a person sees
-// The case passes when the guard rejects the freeze (each frozen part under 200 ms of visible change); --set
-// selftest=freeze-<kind> applies the acceptance predicate instead and must fail.
+// T65 (TOOLBATCH4), the freezes REVIEW-kit-tb3-opus found the corner-by-corner guard accepted (its zz-rv-t42 probes),
+// each on the CSS hold of both parts with their insides stilled:
+//   mirror          every painted leaf mirrored left-right about its own centre on alternate frames
+//   rot180          every circle, ellipse, rect and line leaf turned 180 degrees about its centre on alternate frames
+//   ghost           a fill: transparent rect, half the part's painted area, moved 2 units back and forth each frame
+//   defs-clip       a clip-path rect inside defs in each part, half the part's painted area, moved 2 units each frame
+//   moveto          each path leaf given an empty sub-path (a lone moveto) 3 units outside its box, alternating sides
+//   jitter-0.3      the CSS hold nudged .3 CSS px back and forth each frame (--set dpr=2: .6 device px)
+// For moveto, the painted leaf the case measures its freeze by is read through its rendered matrix from its box at the
+// start, since its box grows by the empty sub-path that paints nothing. The case passes when the guard rejects the freeze
+// (each frozen part under PART_STEPS visible steps); --set selftest=freeze-<kind> applies the acceptance predicate
+// instead and must fail. --set dpr=<n> runs it at that device pixel ratio.
 const PART_FREEZE = async ({ m, i, g, kind }) => {
 	const s = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
 	const realSet = Element.prototype.setAttribute;
@@ -814,8 +874,13 @@ const PART_FREEZE = async ({ m, i, g, kind }) => {
 	const local = (e) => { const c = e.transform.baseVal.consolidate(); const q = c ? c.matrix : null; return q ? new DOMMatrix([q.a, q.b, q.c, q.d, q.e, q.f]) : new DOMMatrix(); };
 	const mstr = (q) => `matrix(${q.a} ${q.b} ${q.c} ${q.d} ${q.e} ${q.f})`;
 	const cstr = (q) => `matrix(${q.a}, ${q.b}, ${q.c}, ${q.d}, ${q.e}, ${q.f})`;
-	const leafOf = (grp) => [...grp.querySelectorAll('path,circle,ellipse,rect,polygon')].find((e) => { const b = e.getBBox(); return b.width > 2 && b.height > 2; });
+	const leafOf = (grp) => [...grp.querySelectorAll('path,circle,ellipse,rect,polygon')].find((e) => { if (e.closest('defs, clipPath, mask, pattern, marker, symbol')) return false; const b = e.getBBox(); return b.width > 2 && b.height > 2; });
 	const leaves = { head: leafOf(head), hand: leafOf(hand) };
+	// (T65) each measured leaf's box at the start, read each frame through its rendered matrix
+	const box0 = { head: leaves.head && leaves.head.getBBox(), hand: leaves.hand && leaves.hand.getBBox() };
+	const NS = 'http://www.w3.org/2000/svg', every = (fn) => { const tick = () => { if (!jitterOn) return; try { fn(); } catch (e) { /* keep going */ } requestAnimationFrame(tick); }; requestAnimationFrame(tick); };
+	const shownLeaves = (grp) => [...grp.querySelectorAll('path,circle,ellipse,rect,polygon,polyline,line')].filter((e) => { if (e.closest('defs, clipPath, mask, pattern, marker, symbol')) return false; const c = getComputedStyle(e); return (c.fill !== 'none' && !/rgba\([^)]*,\s*0\)$/.test(c.fill)) || (c.stroke !== 'none' && parseFloat(c.strokeWidth) > 0); });
+	const T65 = ['mirror', 'rot180', 'ghost', 'defs-clip', 'moveto', 'jitter-0.3'];
 	const still = (grp) => {
 		const inner = [...grp.querySelectorAll('*')];
 		for (const c of inner) { c.style.setProperty('animation', 'none', 'important'); c.style.setProperty('transition', 'none', 'important'); c.setAttribute = () => {}; }
@@ -825,7 +890,35 @@ const PART_FREEZE = async ({ m, i, g, kind }) => {
 	let jitterOn = false;
 	for (const grp of frozen) {
 		still(grp);
-		if (kind === 'head-only' || kind === 'hand-only') {
+		if (T65.includes(kind)) {
+			grp.style.setProperty('transform', getComputedStyle(grp).transform, 'important');
+			undo.push(() => grp.style.removeProperty('transform'));
+			if (!jitterOn) undo.push(() => { jitterOn = false; });
+			jitterOn = true;
+			if (kind === 'jitter-0.3') {
+				const M = new DOMMatrix(getComputedStyle(grp).transform), p = grp.parentElement.getScreenCTM(), u = .3 / Math.hypot(p.a, p.b);
+				let kk = 0; every(() => { kk ^= 1; const q = M.translate(0, 0); q.e += kk * u; grp.style.setProperty('transform', cstr(q), 'important'); });
+			} else if (kind === 'mirror' || kind === 'rot180') {
+				const all = shownLeaves(grp).filter((e) => kind === 'mirror' || /^(circle|ellipse|rect|line)$/.test(e.tagName));
+				const base = all.map((e) => ({ e, t: e.getAttribute('transform') || '', b: e.getBBox() }));
+				let kk = 0; every(() => { kk ^= 1; for (const z of base) { const cx = z.b.x + z.b.width / 2, cy = z.b.y + z.b.height / 2; realSet.call(z.e, 'transform', `${z.t} ${kk ? (kind === 'mirror' ? `translate(${cx} 0) scale(-1 1) translate(${-cx} 0)` : `rotate(180 ${cx} ${cy})`) : ''}`.trim()); } });
+				undo.push(() => { for (const z of base) realSet.call(z.e, 'transform', z.t); });
+			} else if (kind === 'ghost' || kind === 'defs-clip') {
+				// sized as the review sized it: the part's whole painted area again, so it holds half of the part's area
+				const gi = grp.getScreenCTM().inverse(), tot = shownLeaves(grp).reduce((a, e) => { const q = gi.multiply(e.getScreenCTM()), bb = e.getBBox(); return a + Math.abs(q.a * q.d - q.b * q.c) * bb.width * bb.height; }, 0);
+				const b = grp.getBBox(), f = Math.sqrt(1.05 * tot / Math.max(b.width * b.height, 1e-6)), w = b.width * f, h = b.height * f, rr = document.createElementNS(NS, 'rect');
+				for (const [a, v] of [['x', b.x + b.width / 2 - w / 2], ['y', b.y + b.height / 2 - h / 2], ['width', w], ['height', h]]) realSet.call(rr, a, String(v));
+				let host = rr;
+				if (kind === 'ghost') realSet.call(rr, 'fill', 'transparent');
+				else { const d = document.createElementNS(NS, 'defs'), cp = document.createElementNS(NS, 'clipPath'); realSet.call(cp, 'id', 'zz-t65-clip-' + Math.random().toString(36).slice(2)); cp.appendChild(rr); d.appendChild(cp); host = d; }
+				grp.appendChild(host); undo.push(() => host.remove());
+				let kk = 0; every(() => { kk ^= 1; realSet.call(rr, 'transform', `translate(${kk * 2} 0)`); });
+			} else if (kind === 'moveto') {
+				const paths = [...grp.querySelectorAll('path')].filter((q) => !q.closest('defs, clipPath, mask, pattern, marker, symbol')).map((q) => ({ q, d: q.getAttribute('d') || '', b: q.getBBox() })).filter((z) => z.d);
+				let kk = 0; every(() => { kk ^= 1; for (const z of paths) realSet.call(z.q, 'd', `${z.d} M${kk ? z.b.x - 3 : z.b.x + z.b.width + 3} ${z.b.y + z.b.height / 2}`); });
+				undo.push(() => { for (const z of paths) realSet.call(z.q, 'd', z.d); });
+			}
+		} else if (kind === 'head-only' || kind === 'hand-only') {
 			grp.style.setProperty('transform', getComputedStyle(grp).transform, 'important');
 			undo.push(() => grp.style.removeProperty('transform'));
 		} else if (kind === 'jitter') {
@@ -865,8 +958,13 @@ const PART_FREEZE = async ({ m, i, g, kind }) => {
 		if (!on) return;
 		seen.frames++; seen.written.add(head.getAttribute('transform') + '|' + hand.getAttribute('transform'));
 		for (const nm of ['head', 'hand']) {
-			const lf = leaves[nm]; if (!lf) continue;
-			const b = lf.getBoundingClientRect();
+			const lf = leaves[nm], b0 = box0[nm]; if (!lf || !b0) continue;
+			let b = lf.getBoundingClientRect();
+			if (kind === 'moveto') {   // (its box grows by the empty sub-path; the drawn shape is read through its matrix)
+				const m = lf.getScreenCTM(); if (!m) continue;
+				const pts = [[b0.x, b0.y], [b0.x + b0.width, b0.y], [b0.x, b0.y + b0.height], [b0.x + b0.width, b0.y + b0.height]].map(([x, y]) => [m.a * x + m.c * y + m.e, m.b * x + m.d * y + m.f]);
+				b = { left: Math.min(...pts.map((q) => q[0])), top: Math.min(...pts.map((q) => q[1])) };
+			}
 			if (!first[nm]) first[nm] = [b.left, b.top]; else seen.span[nm] = Math.max(seen.span[nm], Math.hypot(b.left - first[nm][0], b.top - first[nm][1]));
 		}
 		requestAnimationFrame(count);
@@ -877,15 +975,17 @@ const PART_FREEZE = async ({ m, i, g, kind }) => {
 		return Object.assign(out, { kind, counted: seen.frames, written: seen.written.size, leafHeadTravelPx: Math.round(seen.span.head * 100) / 100, leafHandTravelPx: Math.round(seen.span.hand * 100) / 100, hasLeaves: !!leaves.head && !!leaves.hand });
 	} finally { on = false; for (const u of undo.reverse()) { try { u(); } catch (e) { /* undone as far as it goes */ } } }
 };
-const PART_FREEZES = ['head-only', 'hand-only', 'inner-counter', 'parent-counter', 'smil', 'jitter'];
+const PART_FREEZES = ['head-only', 'hand-only', 'inner-counter', 'parent-counter', 'smil', 'jitter', 'mirror', 'rot180', 'ghost', 'defs-clip', 'moveto', 'jitter-0.3'];
 async function partFreeze(t, mode, kind) {
-	const look = t.args.look || 'nier-light';
-	await t.viewport(860, 768); const f = await frameFor(t, mode);
+	const look = t.args.look || 'nier-light', dpr = Number(t.args.dpr || 1);
+	if (dpr !== 1) await t.newContext({ viewport: { width: 860, height: 768 }, deviceScaleFactor: dpr });
+	else await t.viewport(860, 768);
+	const f = await frameFor(t, mode);
 	await t.emulate({ reducedMotion: 'no-preference' }); await stageLook(t, f, look);
 	await f.evaluate(() => O55.ui.open({ fresh: true, screen: 'c-ready' })); await arrive(t, f); await f.waitForTimeout(3500);
 	await t.mark(`${mode} ${kind} freeze`);
 	const r = await f.evaluate(PART_FREEZE, { m: MOTION.toString(), i: INK_OVERLAP.toString(), g: GEOMETRY.toString(), kind });
-	const why = JSON.stringify({ err: r.err, geometryError: r.geometryError, validPairs: r.validPairs, off: r.off, forced: r.forced, headMs: Math.round(r.headMs || 0), handMs: Math.round(r.handMs || 0), headMoves: r.headMoves, handMoves: r.handMoves, headTravelPx: r.headTravelPx, handTravelPx: r.handTravelPx, written: r.written, counted: r.counted, leafHeadTravelPx: r.leafHeadTravelPx, leafHandTravelPx: r.leafHandTravelPx, hasLeaves: r.hasLeaves });
+	const why = JSON.stringify({ err: r.err, geometryError: r.geometryError, validPairs: r.validPairs, off: r.off, forced: r.forced, headMs: Math.round(r.headMs || 0), handMs: Math.round(r.handMs || 0), headMoves: r.headMoves, handMoves: r.handMoves, headTravelPx: r.headTravelPx, handTravelPx: r.handTravelPx, travelUnit: r.travelUnit, dpr: r.dpr, written: r.written, counted: r.counted, leafHeadTravelPx: r.leafHeadTravelPx, leafHandTravelPx: r.leafHandTravelPx, hasLeaves: r.hasLeaves });
 	t.log(`${mode} ${kind} freeze: ${why}`);
 	const tag = `${mode} frozen part ${kind}`;
 	await t.check(`${tag}: retains valid visible geometry`, !r.err && !r.geometryError && r.validPairs > 0, why);
@@ -895,8 +995,8 @@ async function partFreeze(t, mode, kind) {
 	// the freeze is real where it says (the painted leaf moved under half a pixel), and the part left free still moves
 	await t.check(`${tag}: painted head ${headFrozen ? 'held still (< .5 px)' : 'moves (> 2 px)'}`, headFrozen ? r.leafHeadTravelPx < .5 : r.leafHeadTravelPx > 2, why);
 	await t.check(`${tag}: painted hand ${handFrozen ? 'held still (< .5 px)' : 'moves (> 2 px)'}`, handFrozen ? r.leafHandTravelPx < .5 : r.leafHandTravelPx > 2, why);
-	const rejected = (!headFrozen || r.headMs < 200) && (!handFrozen || r.handMs < 200);
-	await t.check(`${tag}: rejected by the 200 ms drawn-pose assertion (each frozen part)`, t.args.selftest === `freeze-${kind}` ? r.movingMs >= 200 : rejected, why);
+	const rejected = (!headFrozen || r.headMoves < PART_STEPS) && (!handFrozen || r.handMoves < PART_STEPS);
+	await t.check(`${tag}: rejected by the drawn-pose assertion (each frozen part under ${PART_STEPS} visible steps)`, t.args.selftest === `freeze-${kind}` ? r.moving >= PART_STEPS : rejected, why);
 }
 
 // N1 (astra-review-retro-3): c-ready's props keep off Pip's speech bubble, and off Pip's head. In Retro Dark at 740 the
