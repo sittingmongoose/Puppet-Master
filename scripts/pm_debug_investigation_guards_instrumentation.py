@@ -27,7 +27,7 @@ def instr_no_op(value, context):
     payload = value['payload']
     states = (payload.get('previous_state'), payload.get('state'))
     results = (payload.get('previous_rollback_state'), payload.get('rollback_state'))
-    if not all(state in INSTR_STATES for state in states) or not all(result in CLEANUP_RESULTS for result in results):
+    if not all([state in INSTR_STATES for state in states]) or not all([result in CLEANUP_RESULTS for result in results]):
         return None
     return 'no_op' if states[0] == states[1] and results[0] == results[1] else None
 

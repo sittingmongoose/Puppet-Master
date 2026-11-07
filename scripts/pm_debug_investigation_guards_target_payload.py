@@ -29,7 +29,9 @@ def target_sha256_hex(value, context):
     digest = bindings.get('source_sha256')
     if type(digest) is not str or len(digest) != 64:
         return None
-    return 'invalid_payload' if not all(character in HEX for character in digest) else None
+    # A list, not a generator: a short-circuited generator closes with GeneratorExit,
+    # which the guard tool reports as an untracked exception.
+    return 'invalid_payload' if not all([character in HEX for character in digest]) else None
 
 
 def target_payload_case(case_value):
