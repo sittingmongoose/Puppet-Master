@@ -654,7 +654,11 @@ export default async function (t) {
           if (!pairs.length && cover) pairs = [...p.querySelectorAll('[data-shelf-folded]')]
             .map(r => ({ e: p.querySelector(`[data-shelf-fold-of="${r.getAttribute('data-shelf-folded')}"]`), region: r }))
             .filter(x => x.e && x.region.contains(x.e) && x.e.getAttribute('aria-expanded') === 'true' && x.e.checkVisibility() && !scs.some(sc => sc.contains(x.e)) && !(covered && x.region.contains(covered)));
-          return pairs.map(({ e, region }, i) => { e.setAttribute('data-shelf-fold', String(i)); region.setAttribute('data-shelf-fold-region', String(i));
+          // (what a fold may hide is wider than the region that chose it: the card's head strip can be the cover while the
+          // fold hides the card's body. The census, the marks and the unfold read the widest ancestor of the region that
+          // still does not hold the covered control: the whole footer)
+          const widen = r => { let a = r; while (a.parentElement && a.parentElement !== p && !(covered && a.parentElement.contains(covered))) a = a.parentElement; return a; };
+          return pairs.map(({ e, region: chose }, i) => { const region = widen(chose); e.setAttribute('data-shelf-fold', String(i)); region.setAttribute('data-shelf-fold-region', String(i));
               return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60), region: (region.tagName + '.' + String(region.className?.baseVal ?? region.className).trim().split(/\s+/).slice(0, 2).join('.')).slice(0, 60) }; });
         });
         // T98 (TOOLBATCH4 recheck b, finding 11): every control the census presses in the region (popup triggers, rows
