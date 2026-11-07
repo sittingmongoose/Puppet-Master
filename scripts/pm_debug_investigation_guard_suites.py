@@ -813,7 +813,7 @@ def retry_request_suite():
 def references_suite():
     schema = json.loads((ROOT / SCHEMA).read_text())
     return probe_suite('schema references', 'references', production.references.references_case,
-                       [('schema', production.reference_probes(schema))], 'synthetic')
+                       [('schema', production.reference_probes(production.reference_proof_document(schema)))], 'synthetic')
 
 
 SUITES = ('envelope_suite', 'family_suite', 'payload_context_item_added_suite', 'payload_context_item_state_changed_suite',

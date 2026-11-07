@@ -408,6 +408,15 @@ def retry_request_probes(rows):
     return controls, negatives
 
 
+def reference_proof_document(schema):
+    """The smallest document the reference probes need: the companion schema's own
+    identifiers and the one definition they point into. The guard tool snapshots
+    the whole input at each checkpoint, so the proof judges the reference rows on
+    this document; the lane runner judges the same probes on the full schema."""
+    return {'$schema': schema['$schema'], '$id': schema['$id'],
+            '$defs': {'lifecycle_source': copy.deepcopy(schema['$defs']['lifecycle_source'])}}
+
+
 def reference_probes(schema):
     """(controls, negatives): the real schema, and one injected dormant reference per defect."""
     def injected(reference):
