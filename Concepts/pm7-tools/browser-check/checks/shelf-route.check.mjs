@@ -512,12 +512,14 @@ export default async function (t) {
       // T98 (TOOLBATCH4 recheck b, finding 12): the side panel's own state is checked at every reach, not only after a
       // failed scroll: a panel that closes by fading (opacity 0) or by moving off screen keeps its controls 'visible' to
       // Playwright, so the scroll succeeded and the census went on probing a panel no one could see. The slot and the
-      // control's view must paint (display, visibility and opacity, through every ancestor) and lie on screen, and so must
-      // the control
+      // control's view must paint (display, visibility and opacity, through every ancestor) and lie on screen, and the
+      // control must be laid out
       {
         const st = await loc.evaluate(e => { const slot = document.getElementById('sidePanelSlot'), view = e.closest('.side-panel-view'), V = { opacityProperty: true, visibilityProperty: true };
           const onScreen = x => { const r = x.getBoundingClientRect(); return r.width > 0 && r.height > 0 && r.right > 0 && r.bottom > 0 && r.left < innerWidth && r.top < innerHeight; };
-          return { slot: !!slot && slot.checkVisibility(V) && onScreen(slot), view: !view || (view.checkVisibility(V) && onScreen(view)), shown: e.isConnected && e.checkVisibility(V), what: (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40) }; }).catch(() => ({ slot: false, view: false, shown: false, what: 'detached' }));
+          /* (the control itself as T70 read it, laid out and not display: none: a row's actions are drawn at opacity 0 until
+             the row is hovered, and the press hovers it) */
+          return { slot: !!slot && slot.checkVisibility(V) && onScreen(slot), view: !view || (view.checkVisibility(V) && onScreen(view)), shown: e.isConnected && e.checkVisibility(), what: (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40) }; }).catch(() => ({ slot: false, view: false, shown: false, what: 'detached' }));
         if (scrolled !== null || !(st.slot && st.view && st.shown))
           await t.check(`${target} ${roomState}: the control to reach (${st.what}) is in an open, shown side panel${scrolled !== null ? ' when its scroll fails' : ''}`, st.slot && st.view && st.shown, JSON.stringify({ ...st, scroll: scrolled }), { hard: true });
       }
