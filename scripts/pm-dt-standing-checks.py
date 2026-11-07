@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""Fault-inject all eleven standing checks into the complete DT checker.
+"""Fault-inject standing checks 1..10 into the complete DT checker.
 
 Each fault affects one family. Checks 1..7 and 10 call the complete main with
-an in-memory model fault; check 8 uses a real failing subprocess and check 9
-injects invalid schemas. Nothing is written to the repository. Authentication
-adapters remain assumed.
+an in-memory model fault: a model fault swaps named guard-table rows to
+always-pass (pm-dt-event-contracts.py CUT_ROWS) for the target family only,
+never a rewrite of checker source. Check 8 uses a real failing subprocess and
+check 9 injects invalid schemas. Check 11 is proved by the shared guard tool
+over the guard tables (scripts/pm-dt-guard-tables.py), not here. Nothing is
+written to the repository. Authentication adapters remain assumed.
 """
 import argparse
-import ast
-import inspect
 import contextlib
 import copy
 import importlib.util
@@ -34,8 +35,36 @@ CASES = {
     '8': 'pinned family identity oracle is wrong; process must exit 1',
     '9': 'unvisited timestamp alternative contains an unresolved schema reference',
     '10': 'historical reader rechecks the live operation instead of its retained original',
-    '11': 'each negative is admitted by removing only its own predicate or schema rule',
 }
+# Table rows each model fault swaps to always-pass (the rows that enforce the standing check).
+FAULT_ROWS = {
+    '1': [('src_replay', 'SV03_replay_only_refused')],
+    '2': [('src_identity', 'SV27_event_key'), ('src_identity', 'SV28_event_id'),
+          ('src_identity', 'SV29_captured_key'), ('src_identity', 'SV30_captured_id')],
+    '3': [('src_scope', 'SV18_scope_partition'), ('src_project_only', 'SV19_project_only_scope')],
+    '4': [('src_inline', 'SV06_inline_limit')],
+    '7': [('cp_token', 'CP14_token_storage')],
+    '10/withdrawn': [('hr_flags_a', 'HR03_not_withdrawn')],
+    '10/forged': [('hr_original', 'HR09_original_prepared'), ('hr_original', 'HR10_original_completed'),
+                  ('hr_original', 'HR11_original_event')],
+}
+
+
+@contextlib.contextmanager
+def cut_rows(rows):
+    previous = dt.CUT_ROWS
+    dt.CUT_ROWS = frozenset(rows)
+    try:
+        yield
+    finally:
+        dt.CUT_ROWS = previous
+
+
+def weakened(function, rows):
+    def run(*args, **kwargs):
+        with cut_rows(rows):
+            return function(*args, **kwargs)
+    return run
 
 
 def failure_probe(name):
@@ -77,15 +106,6 @@ def run_fault(name, number, ref_location='timestamp', reader_fault='live_state')
             return original_load(path)
         dt.load = changed_load
 
-    def relaxed(function, fragment):
-        tree = ast.parse(inspect.getsource(function)); changed = 0
-        for node in ast.walk(tree):
-            if isinstance(node, ast.If) and fragment in ast.unparse(node.test):
-                node.test = ast.Constant(False); changed += 1
-        assert changed == 1, (function.__name__, fragment, changed)
-        namespace = {}
-        exec(compile(ast.fix_missing_locations(tree), '<one actual DT predicate>', 'exec'), dt.__dict__, namespace)
-        return namespace[function.__name__]
     def schema_fault(document, definition):
         storage = copy.deepcopy(original_load('Plans/storage_value_registry.json'))
         ref = 'Plans/dt_event_contracts.schema.json#/$defs/' + definition
@@ -99,10 +119,10 @@ def run_fault(name, number, ref_location='timestamp', reader_fault='live_state')
         dt.load = changed
     weakened_source = source
     if number == '1':
-        weakened_source = relaxed(source, "event['replay_policy'] != 'dedupe_by_idempotency_key'")
+        weakened_source = weakened(source, FAULT_ROWS['1'])
     elif number == '2':
         if any(v['event']['scope_kind'] == 'application' for fixture in dt.load('Plans/dt_event_contract_fixtures.json')['families'] if fixture['event_type'] == name for v in fixture['positive_variants']):
-            weakened_source = relaxed(source, "key != event['idempotency_key']")
+            weakened_source = weakened(source, FAULT_ROWS['2'])
         else:
             # The Project-only prohibition is a source-schema rule. Remove only
             # that const for the explicit validator-boundary control.
@@ -111,17 +131,10 @@ def run_fault(name, number, ref_location='timestamp', reader_fault='live_state')
             del document['$defs'][definition]['properties']['envelope_context']['properties']['scope_kind']['const']
             schema_fault(document, definition)
     elif number == '3':
-        weakened_source = relaxed(source, "partition != completed['scope_partition']")
+        weakened_source = weakened(source, FAULT_ROWS['3'])
     elif number == '4':
-        # Change only the size comparison; every downstream check still runs.
-        tree = ast.parse(inspect.getsource(source)); changed = 0
-        for node in ast.walk(tree):
-            if isinstance(node, ast.Constant) and type(node.value) is int and node.value == 16384:
-                node.value = 100000000; changed += 1
-        assert changed == 1
-        namespace = {}
-        exec(compile(ast.fix_missing_locations(tree), '<only SP-337 limit>', 'exec'), dt.__dict__, namespace)
-        weakened_source = namespace['source_valid']
+        # Swap only the SP-337 limit row; every downstream check still runs.
+        weakened_source = weakened(source, FAULT_ROWS['4'])
     def changed_source(c, *args, **kwargs):
         return (weakened_source if c['event_type'] == name else source)(c, *args, **kwargs)
     dt.source_valid = changed_source
@@ -132,25 +145,16 @@ def run_fault(name, number, ref_location='timestamp', reader_fault='live_state')
         del document['$defs'][definition]['properties']['index_read_token']['properties']['generation_anchor_sha256']['maxLength']
         schema_fault(document, definition)
     elif number == '7':
-        weakened_checkpoint = relaxed(checkpoint, "t['storage_instance_id'] != context['source_storage_instance_id']")
+        weakened_checkpoint = weakened(checkpoint, FAULT_ROWS['7'])
     def changed_checkpoint(c, *args, **kwargs):
         return (weakened_checkpoint if c['event_type'] == name else checkpoint)(c, *args, **kwargs)
     dt.checkpoint_result = changed_checkpoint
     if number == '10':
         weakened_historical = historical
         if reader_fault == 'withdrawn':
-            tree = ast.parse(inspect.getsource(historical)); changed = 0
-            for node in ast.walk(tree):
-                if isinstance(node, ast.BoolOp) and isinstance(node.op, ast.Or):
-                    for index, clause in enumerate(node.values):
-                        if ast.unparse(clause) == "context['withdrawn']":
-                            node.values[index] = ast.Constant(False); changed += 1
-            assert changed == 1
-            namespace = {}
-            exec(compile(ast.fix_missing_locations(tree), '<only historical withdrawal guard>', 'exec'), dt.__dict__, namespace)
-            weakened_historical = namespace['historical_read']
+            weakened_historical = weakened(historical, FAULT_ROWS['10/withdrawn'])
         elif reader_fault == 'forged':
-            weakened_historical = relaxed(historical, "source_bytes(prepared) != source_bytes(context['authenticated_original']['prepared'])")
+            weakened_historical = weakened(historical, FAULT_ROWS['10/forged'])
         def changed_historical(c, a, b, e, schemas, context):
             if c['event_type'] == name:
                 if reader_fault == 'replay_history' and e['replay_policy'] == 'projector_replay_only':
@@ -227,8 +231,6 @@ def main():
     targets = families if not args.family else args.family
     if len(set(targets)) != len(targets) or any(name not in families for name in targets):
         parser.error('--family must name distinct drafted DT families')
-    isolation_spec = importlib.util.spec_from_file_location('dt_isolation', ROOT / 'scripts/pm-dt-guard-isolation.py')
-    isolation = importlib.util.module_from_spec(isolation_spec); isolation_spec.loader.exec_module(isolation)
     results = {}; failures = []
     controls = reference_controls()
     failures.extend('schema reference control: ' + name for name, passed in controls.items() if not passed)
@@ -280,11 +282,6 @@ def main():
                     row[number]['status'] = 'fail'
             if not rejected:
                 failures.append(name + ': standing check ' + number + ' failed to reject fault')
-        contract = next(c for c in dt.load('Plans/dt_event_contracts.json')['families'] if c['event_type'] == name)
-        fixture = next(f for f in dt.load('Plans/dt_event_contract_fixtures.json')['families'] if f['event_type'] == name)
-        row['11'] = isolation.prove_family(dt, contract, fixture, dt.load('Plans/dt_event_contracts.schema.json')['$defs'])
-        if row['11']['status'] != 'pass':
-            failures.append(name + ': standing check 11 negative isolation failed')
         results[name] = row
         print(name + ': ' + ', '.join(k + '=' + v['status'] for k, v in row.items()), file=sys.stderr, flush=True)
     print(json.dumps({'status': 'pass' if not failures else 'fail', 'families': len(targets),

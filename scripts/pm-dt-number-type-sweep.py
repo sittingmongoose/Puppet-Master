@@ -2,8 +2,10 @@
 """DT S1/S2: sweep every numeric/boolean schema leaf, one family per run.
 
 Leaf guards use their real JSON Schema evaluator. Each removal changes only one
-keyword, or an explicitly named type/const/enum duplicate set. Model guard
-removals and all source joins are independently covered by pm-dt-guard-isolation.
+keyword, or an explicitly named type/const/enum duplicate set. This is lane
+evidence for schema keywords only and earns no Method B credit: the model rows
+and every source join are guard-table rows proved by the shared guard tool
+(scripts/pm-dt-guard-tables.py).
 """
 import argparse
 import copy
