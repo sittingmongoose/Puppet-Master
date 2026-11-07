@@ -252,14 +252,24 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   // which expands it, and Escape folds it back (round 2, F98-1)
   const stripOn = () => f.evaluate(() => { const b = document.getElementById('pmw-chat-strip'); return !!(b && !b.hidden && b.getClientRects().length); });
   const peeking = () => f.evaluate(() => !!document.querySelector('.main-area')?.hasAttribute('data-pmw-chat-peek'));
+  // At 740 the step is required, whatever ran before (round 3, K8b-1): section 5's 1920 test stores "Keep the chat open
+  // in narrow windows" on the normal page, and the 740 test that follows then never folded the chat, so the step only
+  // logged a skip and round 1 passed the default run. It turns that preference off for the step (as the chat's own
+  // "Keep the chat open in narrow windows" item does), fails by name if the chat still does not fold, and puts it back.
   if (await peeking() && await reach('chat')) { await kb.press('Escape'); await f.waitForTimeout(500); }
+  const mustFold = at === '740x900';
+  const keptOpen = mustFold ? await f.evaluate(() => { const c = window.PMW && PMW.chatCol; if (!c || !c.keepOpen || !c.keepOpen()) return false; c.setKeepOpen(false); return true; }) : false;
+  if (mustFold) await f.waitForFunction(() => { const b = document.getElementById('pmw-chat-strip'); return !!(b && !b.hidden && b.getClientRects().length); }, null, { timeout: 4000 }).catch(() => {});
+  if (keptOpen) t.log(`${at} FO-98: "keep the chat open" was stored by an earlier test; turned off for the strip step`);
   if (await stripOn()) {
     await agree('the chat folded to its strip', s => s.chat.expanded === 'false' && s.chat.lit);
     if (await reach('chat')) { await kb.press('Enter'); await f.waitForTimeout(700); }
     await agree('after Enter opens the chat over the centre', s => s.chat.expanded === 'true');
     await kb.press('Escape'); await f.waitForTimeout(700);
     await agree('after Escape folds the chat back to its strip', s => s.chat.expanded === 'false');
-  } else t.log(`${at} FO-98: the chat is not folded to its strip at this size`);
+  } else if (mustFold) await t.check(`${at} FO-98: the chat folds to its strip at 740x900 for the strip step`, false, JSON.stringify(await f.evaluate(() => ({ keepOpen: !!(window.PMW && PMW.chatCol && PMW.chatCol.keepOpen && PMW.chatCol.keepOpen()), chatStrip: !!(window.PMW && PMW.narrow && PMW.narrow.state.chatStrip), chatW: Math.round(document.getElementById('chatPanel')?.getBoundingClientRect().width || 0) }))));
+  else t.log(`${at} FO-98: the chat is not folded to its strip at this size`);
+  if (keptOpen) { await f.evaluate(() => PMW.chatCol.setKeepOpen(true)); await f.waitForTimeout(500); }
   // across the fold in one session (round 2, K-act8-3): the state is read again after the window narrows and widens
   if (full) {
     await t.viewport(740, 900); await f.waitForTimeout(1200);
