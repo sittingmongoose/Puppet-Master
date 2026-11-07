@@ -120,7 +120,7 @@ export default async function (t) {
     const open = () => [...document.querySelectorAll('[role="menu"]')].filter(m => m.classList.contains('is-open') && !m.classList.contains('is-closing') && m.checkVisibility());
     // Row kinds for the context census: tag, classes (less state classes) and role, and for a tree's rows file or folder
     // (data-kind, else aria-expanded: a parent or a leaf). box: the nearest tree, grid, list or listbox, else the parent.
-    const cls = e => [...e.classList].filter(c => !/^(active|selected|open|on|focus|hover|pmr-cur|is-|has-)/.test(c)).sort();
+    const cls = e => [...e.classList].filter(c => !/^(active|selected|open|on|focus|hover|pmr-cur|o55np-cur|is-|has-)/.test(c)).sort(); /* o55np-cur-*: NieR's hovered-item state (19-nier-parts.js), transient like hover */
     const kind = e => e.hasAttribute('data-kind') ? (e.dataset.kind === 'folder' ? 'folder' : 'file') : e.getAttribute('role') === 'treeitem' ? (e.hasAttribute('aria-expanded') ? 'parent' : 'leaf') : '';
     const sig = e => e.tagName + '.' + cls(e).join('.') + '[' + (e.getAttribute('role') || '') + ']' + (kind(e) ? '{' + kind(e) + '}' : '');
     const box = e => { const q = (e.parentElement && e.parentElement.closest('[role="tree"],[role="treegrid"],[role="grid"],[role="listbox"],[role="list"],[role="table"]')) || e.parentElement;
