@@ -222,23 +222,42 @@ export function installWitness(cfg) {
 			if ((n instanceof HTMLElement || svgRoot) && (cs.overflowX !== 'visible' || cs.overflowY !== 'visible')) clip = inter(clip, rect(n));
 		}
 		/* T52 (TOOLBATCH2 pre-check finding 7): a back-face flip. rotateY(180deg) with backface-visibility: hidden on the
-		   stage host for one frame paints nothing, and neither the classifier nor the paint chain read it. Each element's
-		   backface-visibility, and which face its transform composed from the root down shows (back when the composed
-		   matrix's m33 is negative: the face turned away from the viewer), join the signature, from the root to Pip's
-		   group and on each part; its look's calibration has neither. */
-		let composed = new DOMMatrix();
-		const facing = (n, cs, role, at) => {
-			const tf = cs.transform; let m = at;
-			if (tf && tf !== 'none') { try { m = at.multiply(new DOMMatrix(tf)); } catch (_) { sig.push(`${role}:transform=unreadable`); } }
-			if (cs.backfaceVisibility === 'hidden') sig.push(`${role}:backface=hidden`);
-			if (m.m33 < 0) sig.push(`${role}:facing=back`);
+		   stage host for one frame paints nothing, and neither the classifier nor the paint chain read it.
+		   T67 (TOOLBATCH4, REVIEW-kit-tb3-opus finding 8): only what hides paint joins the signature: an element whose
+		   backface-visibility is hidden while its back face is turned to the viewer (m33 negative), read both in its own
+		   3D rendering context (its own transform, composed through preserve-3d parents) and composed from the root
+		   down, so either way a renderer reads it, it is flagged. A hidden back face facing the viewer (scale(-1, 1), a 2D
+		   mirror) and a turned element whose back face shows (a grandparent turned with nothing hidden) leave Pip
+		   painted, and are no longer flagged (8a: both were false stops). The transform read is the element's whole
+		   one: the individual translate, rotate and scale properties, then transform (8c: a flip by rotate: y 180deg was
+		   seen only through its backface string). */
+		const deg = (a) => { const v = parseFloat(a); return /rad$/.test(a) && !/grad$/.test(a) ? v * 180 / Math.PI : /grad$/.test(a) ? v * .9 : /turn$/.test(a) ? v * 360 : v; };
+		const ownMatrix = (cs) => {
+			let m = new DOMMatrix();
+			const ro = cs.rotate;
+			if (ro && ro !== 'none') { const q = ro.trim().split(/\s+/); let x = 0, y = 0, z = 1, a = q[q.length - 1];
+				if (q.length === 2) { x = q[0] === 'x' ? 1 : 0; y = q[0] === 'y' ? 1 : 0; z = q[0] === 'z' ? 1 : 0; }
+				else if (q.length === 4) [x, y, z] = q.slice(0, 3).map(Number);
+				m = m.rotateAxisAngle(x, y, z, deg(a)); }
+			const sc = cs.scale;
+			if (sc && sc !== 'none') { const v = sc.trim().split(/\s+/).map((x) => (x.endsWith('%') ? parseFloat(x) / 100 : parseFloat(x))); m = m.scale(v[0], v.length > 1 ? v[1] : v[0], v.length > 2 ? v[2] : 1); }
+			const tf = cs.transform;
+			if (tf && tf !== 'none') m = m.multiply(new DOMMatrix(tf));
 			return m;
 		};
-		for (let i = chainNodes.length - 1; i >= 0; i--) { const [n, cs] = chainNodes[i]; composed = facing(n, cs, `${n.tagName}.${(n.getAttribute('class') || '').split(' ')[0]}`, composed); }
+		let composed = new DOMMatrix(), ctx = new DOMMatrix(), keep3d = false;
+		const facing = (n, cs, role, at, inCtx, parent3d) => {
+			let own = new DOMMatrix();
+			try { own = ownMatrix(cs); } catch (_) { sig.push(`${role}:transform=unreadable`); }
+			const m = at.multiply(own), c = parent3d ? inCtx.multiply(own) : own;
+			if (cs.backfaceVisibility === 'hidden' && (c.m33 < 0 || m.m33 < 0)) sig.push(`${role}:back face hidden and turned away`);
+			return { m, c, keep3d: cs.transformStyle === 'preserve-3d' };
+		};
+		for (let i = chainNodes.length - 1; i >= 0; i--) { const [n, cs] = chainNodes[i]; const r = facing(n, cs, `${n.tagName}.${(n.getAttribute('class') || '').split(' ')[0]}`, composed, ctx, keep3d); composed = r.m; ctx = r.c; keep3d = r.keep3d; }
 		const part = (e) => { const cs = getComputedStyle(e), fl = filterOf(cs); return { op: chainOp * (+cs.opacity) * fl.op, shown: chainShown && cs.display !== 'none' && cs.visibility === 'visible', blur: chainBlur + fl.blur, dim: chainDim * fl.dim, cs }; };
 		const ph = part(S.gHead), pc = part(S.gCtl), ps = S.pstrs.map(part);
 		effects(S.gHead, ph.cs, 'head'); effects(S.gCtl, pc.cs, 'controller'); S.pstrs.forEach((p, i) => effects(p, ps[i].cs, 'string'));
-		facing(S.gHead, ph.cs, 'head', composed); facing(S.gCtl, pc.cs, 'controller', composed); S.pstrs.forEach((p, i) => facing(p, ps[i].cs, 'string', composed));
+		facing(S.gHead, ph.cs, 'head', composed, ctx, keep3d); facing(S.gCtl, pc.cs, 'controller', composed, ctx, keep3d); S.pstrs.forEach((p, i) => facing(p, ps[i].cs, 'string', composed, ctx, keep3d));
 		rec[F.headVis] = ph.shown ? 1 : 0; rec[F.ctlVis] = pc.shown ? 1 : 0; rec[F.strVis] = ps.every((p) => p.shown) ? 1 : 0;
 		rec[F.opHead] = Math.round(ph.op * 1000); rec[F.opCtl] = Math.round(pc.op * 1000); rec[F.opStr] = Math.round(Math.min(...ps.map((p) => p.op)) * 1000);
 		rec[F.blur] = Math.round(ph.blur * 10); rec[F.dim] = Math.round(ph.dim * 1000);
@@ -360,7 +379,8 @@ export function paintContract(w) {
 			if (r[F.leafArea] < 0.6 * b.leaf) w2.push(`painted leaves ${r[F.leafArea]} of ${b.leaf} px²`);
 			const a = r[F.hw] * r[F.hh]; if (a < 0.4 * b.area || a > 2.5 * b.area) w2.push(`head box ${Math.round(a)} of ${Math.round(b.area)} px²`);
 			if (r[F.clipFrac] < Math.min(900, b.clip - 100)) w2.push(`only ${r[F.clipFrac] / 10} % of the head inside its clips (look: ${b.clip / 10} %)`);
-			if (!b.sigs.has(r[F.sig])) w2.push(`clip, mask or filter on Pip or its ancestors that its look's calibration did not have: "${S(r[F.sig])}" (look: ${[...b.sigs].map(S).join(' ; ') || 'none'})`);
+			/* (T67: the signature holds clip-paths, masks, filters and hidden back faces turned away; the text names them all) */
+			if (!b.sigs.has(r[F.sig])) w2.push(`a clip-path, mask, filter or hidden back face on Pip or its ancestors that its look's calibration did not have: "${S(r[F.sig])}" (look: ${[...b.sigs].map(S).join(' ; ') || 'none'})`);
 		}
 		return w2;
 	};
