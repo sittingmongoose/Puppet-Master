@@ -807,6 +807,10 @@ with its follow-up at the current `main`, and the member is rechecked alone agai
   follow-up, and none shows against the baseline from before the batch. A subcheck that timed out has no total to
   compare; its own stop for a judgement covers it.
 
+- **A file put back.** A member whose own range holds a path the batch's diff does not has put back what an earlier member
+  changed. The check measures from `batch-start`, so it does not read that path as touched, and the checks that hang on a
+  touched file, such as the PM7 inventory's, do not run. Alone they would.
+
 **A member's own staleness does not close the batch.** Plans landings add staleness rows as a matter of course, and alone
 those stop nothing. So a rise in a subcheck stays in the batch when, for every row that subcheck added since the previous
 report (compared by the check's own row key, read from `--row-report`, which the tool asks for inside a batch):

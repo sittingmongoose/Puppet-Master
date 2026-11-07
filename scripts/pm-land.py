@@ -1633,6 +1633,15 @@ class Lander:
                                f"{str(sha)[:12]}: {text}")
             self.st[key] = None
 
+    def reverted_paths(self, cwd: Any, t: Dict[str, Any]) -> List[str]:
+        """Paths in this member's own range that are not in the batch's diff: it put back what an earlier member changed.
+        The check measures the batch from batch-start, so it does not read them as touched, where alone it would."""
+        batch = self.st["batch"]
+        previous = batch["landings"][-1]["sha"]
+        if self.rev(cwd, previous, check=False) is None:
+            return []
+        return sorted(set(self.diff_names(cwd, previous, t["sha"])) - set(self.diff_names(cwd, batch["start"], t["sha"])))
+
     def own_staleness(self, cwd: Any, t: Dict[str, Any], rows_now: Optional[Dict[str, Any]], rows_before: Optional[Dict[str, Any]],
                       excused: List[str]) -> Callable[[str], Optional[str]]:
         """Why a subcheck's rise is not only this member's own staleness; its own range is the previous member's main SHA
@@ -1695,6 +1704,12 @@ class Lander:
             rows_before = read_row_report((earlier[-1] or {}).get("rows_file")) if earlier else None
             gap = batch_gap(report, earlier, self.own_staleness(cwd, t, rows_now, rows_before, excused),
                             row_count_rises(rows_now, rows_before))
+            if not gap:
+                reverted = self.reverted_paths(cwd, t)
+                if reverted:
+                    gap = ("batch_reverted_path", "this landing put back what an earlier member of the batch changed, so the "
+                                                  "check, measuring from batch-start, does not read it as touched: "
+                                                  + ", ".join(reverted[:10]))
             if excused and not gap:
                 self.for_jared(f"this landing stays in its batch: {', '.join(sorted(set(excused)))} rose since the previous "
                                "report, and every added row is staleness naming only this landing's own files")
@@ -2119,7 +2134,7 @@ class Lander:
     def batch_can_close_and_retry(self, stop: Stop, step: Dict[str, Any]) -> bool:
         batch = self.st.get("batch")
         return bool(batch) and stop.code in ("landing_check_blocked", "batch_rows_overlap", "batch_readiness_rise",
-                                             "batch_total_rise") \
+                                             "batch_total_rise", "batch_reverted_path") \
             and step.get("target") == "land" and bool(batch.get("landings"))
 
     def close_batch_and_retry(self, stop: Stop, step: Dict[str, Any]) -> None:

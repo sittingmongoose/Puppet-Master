@@ -3167,6 +3167,42 @@ class StalenessExemptionTests(RealReports, Base):
         self.assertNotIn("--row-report", self.h.calls("landing")[1]["args"])
 
 
+class RevertedPathTests(Base):
+    """Review F4: a member that puts a file back to its batch-start bytes is not reading it as touched in the batch."""
+
+    FILE = "Plans/settings_inventory.json"
+
+    def test_a_member_that_puts_back_an_earlier_members_file_closes(self):
+        self.h.commit_to_main(self.FILE, "v0\n")
+        self.h.branch("fix/a", {self.FILE: "v1\n"})
+        start = self.h.origin_main()
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        a_sha = self.h.origin_main()
+        self.h.branch("fix/b", {self.FILE: "v0\n"})
+        result = self.land("fix/b", "--batch-start", start)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("put back what an earlier member", result.stdout)
+        self.assertIn(self.FILE, result.stdout)
+        landing = self.h.calls("landing")
+        self.assertEqual([row["args"][:2] for row in landing[:3]],
+                         [["--base", start], ["--base", start], ["--base", "origin/main"]], result.stdout)
+        self.assertEqual(landing[2]["origin_main"], a_sha, "the batch's follow-up runs before fix/b is on main")
+        self.assertIsNone(self.h.state("fix/b")["batch"])
+        self.assertEqual(self.h.g(self.h.origin, "show", f"refs/heads/main:{self.FILE}"), "v0")
+        self.assertFalse(self.h.held())
+
+    def test_control_two_members_changing_one_file_onward_stay(self):
+        self.h.commit_to_main(self.FILE, "v0\n")
+        self.h.branch("fix/a", {self.FILE: "v1\n"})
+        start = self.h.origin_main()
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        self.h.branch("fix/b", {self.FILE: "v2\n"})
+        result = self.land("fix/b", "--batch-start", start)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(len(self.h.calls("landing")), 2)
+        self.assertTrue(self.h.held())
+
+
 class BatchClearingTests(Base):
     """L2: a dead holder whose batch landed something is closed, not cleared."""
 
