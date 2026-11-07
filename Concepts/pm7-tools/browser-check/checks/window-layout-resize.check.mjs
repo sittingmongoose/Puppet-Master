@@ -3,7 +3,8 @@
 // side-by-side frame, as a film shows a window resize), the window kept its wide two-column layout on screen for
 // 0.3-1.8 s (Nas1) and one or more frames on Windows: the stage column and 'Take the guided tour' were cut at the
 // window's right edge. 60-ui-core.js set the layout only from the window's resize event, which a frame resized by its
-// page gets a frame after the new size is laid out and painted. T3's sandbox (its own process) switched at once.
+// page gets a frame after the new size is laid out and painted. In T3's sandbox (its own process) the page's own first
+// 740 frame was already narrow; the browser's clipped old picture shown before it is FO-92 (open).
 // In each of the ten looks, on c-ready (Pip awake, the tour button in the footer), the frame is resized 1920x1080 ->
 // 740x768 and back, --set reps=2 times; every frame is read at its end (a ResizeObserver on a dot an animation frame
 // flips: after the frame's callbacks and layout, just before paint). Fails if, at 740x768:
@@ -16,11 +17,12 @@
 //  - Normal surface: the page is a frame in the same process as the page around it, which paints the page's frame in the
 //    same frame it composites; what the reader reads is what that frame paints. Its claims are about painted frames
 //    (60 fps films agree: 0 wide frames at 740 on the fix, 12-27 per resize on 457801b0f6, retro-c6 fo88 films).
-//  - Sandbox: T3's frame is out of process. Until the page there commits its first frame at the new size, the browser
+//  - Sandbox: T3's frame is out of process. Until the browser presents a frame the page laid out at the new size, it
 //    shows the frame's previous picture clipped to the new size (the 1920 window cut at the frame's edge: 21-45 frames on
 //    Windows, FO-92, open), and nothing inside the page can see that. Its claims are about the frames the page itself lays
 //    out: its own first frame at 740 is narrow, and so is every later one. The time from the resize to that first frame is
-//    logged ('own first 740 frame N ms after the resize'), not judged. Native proof of the sandbox's first painted frame
+//    logged ('own first 740 frame laid out N ms after the resize'), not judged. It is a lower bound on how long the clipped
+//    picture shows: on film the new picture can appear 1-14 frames after the page's own first frame (opus-recheck-g6fix). Native proof of the sandbox's first painted frame
 //    needs a film and its frames (tools/stale88b.py in the retro-c6 evidence), and fails on FO-92 until it is fixed.
 // Both surfaces (--set sandbox picks one); --set looks=, --set reps=. Headless or --record (the frames are resized, not
 // the window, so a film shows each resize; each is marked).
@@ -108,7 +110,7 @@ async function run(t, mode) {
 			await t.check(`${tag}: Pip's stage drawn for the narrow window (banner) in ${F.every} at 740x768`, stale.length === 0, why);
 			await t.check(`${tag}: the stage and the footer buttons inside the window in ${F.every} at 740x768`, cut.length === 0, why);
 			await t.check(`${tag}: ${F.first.replace(' (the clipped old picture shown before it is FO-92, not judged)', '')} back at 1920x1080 is wide`, !!back[0] && back[0].lay === 'wide', why);
-			if (mode === 'sandbox') t.log(`${tag}: own first 740 frame ${ownFirst} ms after the resize`);
+			if (mode === 'sandbox') t.log(`${tag}: own first 740 frame laid out ${ownFirst} ms after the resize (a lower bound on the clipped interval, FO-92)`);
 			t.log(`${tag}: ${why}`);
 		}
 	}
