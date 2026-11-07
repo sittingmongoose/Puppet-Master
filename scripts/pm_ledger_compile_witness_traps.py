@@ -563,5 +563,16 @@ def exercise(g, *, scratch=None):
     case("tb4-token-only-in-html-comment-is-not-prose", lambda f: f.update(owner=owner("AA-001", "Owner text.\n\n<!-- live token -->", ["live token"])),
          status="findings", exit_code=2, verify=lambda r: r["witness_exact_tokens"][0]["fires"] and r["witness_exact_tokens"][0]["units_with_token_in_prose"] == [])
     case("tb4-token-in-prose-beside-a-comment-control", lambda f: f.update(owner=owner("AA-001", "Required live token.\n\n<!-- a note -->", ["live token"])), verify=no_ambiguity)
+    # Tool batch 5, T86 (TOOLBATCH4 pre-check finding 3). CommonMark continues only a paragraph lazily: after a non-paragraph
+    # line inside the item (indented code, an ATX heading, a fence closer, an empty item marker, a setext underline, an
+    # HTML-block line, a thematic break) a column-0 line ends the list, so the fence after it is top-level and AA-001 inside
+    # it is code. Each read AA-001 as a unit on the batch-4 witness (86de8bb6d0), a phantom the batch-3 witness did not make.
+    for name, head in [("indented-code", "- a\n\n      code\n"), ("atx-heading", "- # h\n"), ("fence-closer", "- ```\n  c\n  ```\n"), ("empty-item", "-\n"),
+                       ("setext-underline", "- a\n  ---\n"), ("html-block", "- <div>\n"), ("thematic-break", "- ***\n")]:
+        case(f"tb5-column0-line-after-{name}-in-item-ends-the-list", lambda f, head=head: f.update(owner=head + "x\n  ```\n## AA-001 \u2014 Owner\n\nRequired live token.\n  ```\n"),
+             status="vacuous_with_findings", exit_code=2, verify=missing_target)
+    # (control) a true lazy line after paragraph text in the item keeps the item fence, as CommonMark does
+    case("tb5-column0-line-after-paragraph-text-keeps-the-item-fence", lambda f: f.update(owner=owner("AA-001", "Owner text.", ["live token"]) + "\n- a\nlazy\n  ```\n## BB-001 \u2014 Real\n\nRequired live token.\n  ```\n"),
+         status="findings", exit_code=2, verify=lambda r: r["witness_exact_tokens"][0]["fires"] and r["witness_exact_tokens"][0]["units_with_token_in_prose"] == [])
     return {"schema_id": "pm.ledger_compile_witness.self_test.v1", "status": "pass" if all(row["caught"] for row in rows) else "findings",
             "caught": sum(row["caught"] for row in rows), "tests": rows}

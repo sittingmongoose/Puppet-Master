@@ -151,6 +151,70 @@ def _item_content_column(item, line: str) -> int:
     return len(item.group(1)) + len(item.group(2)) + gap
 
 
+def _item_paragraph_open(lines: list[str], j0: int, column: int, upto: int) -> bool:
+    """T86 (TOOLBATCH4 pre-check finding 3): whether the list item whose marker is line j0 (content column `column`)
+    has a paragraph open after line upto - 1, by the CommonMark block rules over the item's lines: a blank line, a
+    heading, a setext underline, a thematic break, a fence (and the lines inside it), an HTML block (to its blank line),
+    indented code, and an empty item or block-quote marker leave none open; paragraph text, a nested item's or a block
+    quote's text, and a lazy line after open paragraph text keep one open. Only an open paragraph continues lazily."""
+    para, fence, html = False, None, False
+    for k in range(j0, upto):
+        raw = lines[k].expandtabs(4)
+        if not raw.strip():
+            para, html = False, False if fence is None else html
+            continue
+        if fence is not None:
+            m = FENCE_OPEN.match(raw[column:] if _indent(raw) >= column else raw)
+            if m and m.group(2)[0] == fence[0] and len(m.group(2)) >= fence[1] and not m.group(3).strip():
+                fence = None
+            continue
+        if html:
+            continue
+        if k == j0:
+            item = LIST_ITEM.match(raw)
+            s = raw[len(item.group(0)):] if item else ''
+            if not s.strip():
+                para = False
+                continue
+            rel = 0
+        else:
+            ind = _indent(raw)
+            if ind < column:
+                # a line left of the item's content: only a lazy continuation of open paragraph text keeps the item
+                s = raw.lstrip(' ')
+                para = para and not _block_start(s) and not SETEXT_UNDER.match(s)
+                continue
+            s, rel = raw[column:], ind - column
+        if rel >= 4 and not para:
+            continue                                  # indented code
+        if para and rel >= 4:
+            continue                                  # (a paragraph's continuation line, however indented)
+        m = FENCE_OPEN.match(s)
+        if m and not (m.group(2)[0] == '`' and '`' in m.group(3)):
+            fence, para = (m.group(2)[0], len(m.group(2))), False
+            continue
+        if para and SETEXT_UNDER.match(s):
+            para = False
+            continue
+        if THEMATIC.match(s) or any_head(s):
+            para = False
+            continue
+        if HTML_BLANK_ENDED.match(s) or any(begin.match(s) for begin, _ in HTML_ENDED) or (not para and HTML_TAG_LINE.match(s)):
+            para, html = False, True
+            continue
+        nested = LIST_ITEM.match(s)
+        if nested:
+            para = bool(s[len(nested.group(0)):].strip()) and not _block_start(s[len(nested.group(0)):])
+            continue
+        quote = QUOTE_MARK.match(s)
+        if quote:
+            rest = s[len(quote.group(0)):]
+            para = bool(rest.strip()) and not _block_start(rest)
+            continue
+        para = True
+    return para
+
+
 def list_item_column(lines: list[str], i: int):
     """The content column of the list item line i continues, or None (T49). Walks back over blank lines and lines
     indented past column 0 to the nearest list-item marker line; line i continues that item only when it is indented
@@ -158,7 +222,10 @@ def list_item_column(lines: list[str], i: int):
     and line i that comes right after a blank line and sits left of the item's content column has ended the item
     (CommonMark: ' b' after a blank line under '- a' is a new paragraph, so a fence after it is top-level); a column-0
     line right after a non-blank line that opens no block of its own is a lazy continuation of the item's paragraph
-    and does not end the walk; any other non-marker line at column 0 ends it. Tabs count to 4-column stops."""
+    and does not end the walk; any other non-marker line at column 0 ends it. Tabs count to 4-column stops.
+    T86: CommonMark continues only a paragraph lazily, so each column-0 line the walk passed must follow open paragraph
+    text of the item (_item_paragraph_open); after indented code, a heading, a fence closer, an empty item, a setext
+    underline, an HTML block or a thematic break it ends the item, and line i is outside it."""
     ind = _indent(lines[i])
     if ind == 0:
         return None
@@ -173,6 +240,9 @@ def list_item_column(lines: list[str], i: int):
                 return None
             if any(lines[k].strip() and not lines[k - 1].strip() and _indent(lines[k]) < column for k in range(j + 1, i + 1)):
                 return None
+            for k in range(j + 1, i):
+                if lines[k].strip() and _indent(lines[k]) == 0 and not _item_paragraph_open(lines, j, column, k):
+                    return None
             return column
         if _indent(line) == 0:
             if j > 0 and lines[j - 1].strip() and not _block_start(line):
