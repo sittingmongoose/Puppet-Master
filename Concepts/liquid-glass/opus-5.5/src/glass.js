@@ -1466,7 +1466,8 @@
     var bar = document.getElementById('activityBar');
     if (!bar) return;
     var L = typeof lenses !== 'undefined' && lenses ? lenses.get(bar) : null, act = document.activeElement;
-    var flagged = bar.querySelector('.icon[data-lg-focus]') || (L && L.lens && L.lens.hasAttribute('data-lg-focus'));
+    /* any rail lens still flagged counts, the live one or one left from an earlier look (outside Glass the rail has none) */
+    var flagged = bar.querySelector('.icon[data-lg-focus]') || document.querySelector('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]');
     var cur = null, on = false, wait = false;
     if (act && act.matches && act.matches('#activityBar .icon[data-lg-current]')) {
       var sp = document.getElementById('sidePanelSlot');
@@ -1478,7 +1479,8 @@
       if (cs.display !== 'none' && parseFloat(cs.opacity) > 0.5) { if (railLensAt(L.lens, cur)) on = true; else wait = true; }
     }
     bar.querySelectorAll('.icon[data-lg-focus]').forEach(function (i) { if (!on || i !== cur) i.removeAttribute('data-lg-focus'); });
-    if (L && L.lens) { if (on) L.lens.setAttribute('data-lg-focus', ''); else L.lens.removeAttribute('data-lg-focus'); }
+    document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]').forEach(function (x) { if (!on || !L || x !== L.lens) x.removeAttribute('data-lg-focus'); });
+    if (on && L && L.lens) L.lens.setAttribute('data-lg-focus', '');
     if (on && !cur.hasAttribute('data-lg-focus')) cur.setAttribute('data-lg-focus', '');
     /* the lens is on its way to the focused icon: look again next frame, for as long as a travel lasts */
     if (wait) { if (!railTravelUntil) railTravelUntil = performance.now() + 1500; if (performance.now() < railTravelUntil) queueRailFocus(); else railTravelUntil = 0; }
