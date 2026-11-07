@@ -348,6 +348,98 @@ NON_GUARDS = {
         ('instrumentation_detail_values_c_case', 'data_operation', 'records.get',
          'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
     ],
+    'instrumentation_detail_required': [
+        ('instrumentation_detail_required_subject', 'return', "return {} if detail is None else {'detail': detail}",
+         'Schema selector: read the subject the schema rows judge; a missing member yields None, which the subject type row refuses.'),
+        ('instrumentation_detail_required_case', 'return', 'return g.Case(table, check, context)',
+         'Return the fresh execution object built for this candidate; it decides no acceptance.'),
+        ('instrumentation_detail_required_case', 'call_review', "g.SchemaCatalog(DOCUMENTS['instrumentation_detail_required'], roots=DETAIL_REQUIRED_ROOTS)",
+         'Build a fresh closed schema catalog from the per-phase documents the loader injected once before any case.'),
+        ('instrumentation_detail_required_case', 'call_review', 'g.schema_table(catalog, {DETAIL_REQUIRED_URI: instrumentation_detail_required_subject})',
+         'Build the fresh guard table: the named code rows plus one row per supported schema assertion.'),
+        ('instrumentation_detail_required_case', 'call_review', "case_value.get('payload')",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_detail_required_case', 'call_review', "case_value.get('detail_records')",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_detail_required_case', 'call_review', "payload.get('detail_ref')",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_detail_required_case', 'call_review', 'records.get(ref)',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_detail_required_case.check', 'call_review', 'table.validate(DETAIL_REQUIRED_URI, value, context)',
+         'Run the schema boundary through the table; the engine attributes any refusal to its schema row.'),
+        ('instrumentation_detail_required_subject', 'data_operation', "context['detail']",
+         'Schema selector: wrap the record payload.detail_ref names (from the factory selection) so the detail rows judge it; no record means an empty wrapper, and instr.detail_available refuses.'),
+        ('instrumentation_detail_required_subject', 'data_operation', "{} if detail is None else {'detail': detail}",
+         'Schema selector: wrap the record payload.detail_ref names (from the factory selection) so the detail rows judge it; no record means an empty wrapper, and instr.detail_available refuses.'),
+        ('instrumentation_detail_required_case', 'data_operation', '(payload, records)',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_detail_required_case', 'data_operation', "payload.get('detail_ref') if type(payload) is dict else None",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_detail_required_case', 'data_operation', 'records.get(ref) if type(ref) is str and type(records) is dict else None',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_detail_required_case', 'data_operation', 'type(ref) is str and type(records) is dict',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_detail_required_case', 'data_operation', "DOCUMENTS['instrumentation_detail_required']",
+         'Select the injected schema document of this phase or family; the loader sets it before any case.'),
+        ('instrumentation_detail_required_case', 'data_operation', '{DETAIL_REQUIRED_URI: instrumentation_detail_required_subject}',
+         'Bind the one consumed schema root to its selector.'),
+        ('instrumentation_detail_required_case', 'data_operation', 'case_value.get',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.', 2),
+        ('instrumentation_detail_required_case', 'data_operation', 'payload.get',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_detail_required_case', 'data_operation', 'records.get',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+    ],
+    'instrumentation_joins': [
+        ('instrumentation_joins_case', 'return', 'return g.Case(table, check, context)',
+         'Return the fresh execution object built for this candidate; it decides no acceptance.'),
+        ('instrumentation_joins_case', 'call_review', "case_value.get('payload')",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_joins_case', 'call_review', "case_value.get('detail_records')",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_joins_case', 'call_review', "payload.get('detail_ref')",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_joins_case', 'call_review', 'records.get(ref)',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_joins_case', 'data_operation', '(payload, records)',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_joins_case', 'data_operation', "payload.get('detail_ref') if type(payload) is dict else None",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_joins_case', 'data_operation', 'records.get(ref) if type(ref) is str and type(records) is dict else None',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_joins_case', 'data_operation', 'type(ref) is str and type(records) is dict',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_joins_case', 'data_operation', 'case_value.get',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.', 2),
+        ('instrumentation_joins_case', 'data_operation', 'payload.get',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_joins_case', 'data_operation', 'records.get',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+    ],
+    'payload_values': [
+        ('payload_values_subject', 'return', "return value.get('payload')",
+         'Schema selector: read the subject the schema rows judge; a missing member yields None, which the subject type row refuses.'),
+        ('payload_values_case', 'return', 'return g.Case(table, check, context)',
+         'Return the fresh execution object built for this candidate; it decides no acceptance.'),
+        ('payload_values_subject', 'call_review', "value.get('payload')",
+         'Schema selector: read the subject the schema rows judge; a missing member yields None, which the subject type row refuses.'),
+        ('payload_values_case', 'call_review', "g.SchemaCatalog(DOCUMENTS[case_value.get('event_type')], roots=PAYLOAD_VALUES_ROOTS)",
+         'Build a fresh closed schema catalog from the per-phase documents the loader injected once before any case.'),
+        ('payload_values_case', 'call_review', 'g.schema_table(catalog, {PAYLOAD_VALUES_URI: payload_values_subject})',
+         'Build the fresh guard table: the named code rows plus one row per supported schema assertion.'),
+        ('payload_values_case.check', 'call_review', 'table.validate(PAYLOAD_VALUES_URI, value, context)',
+         'Run the schema boundary through the table; the engine attributes any refusal to its schema row.'),
+        ('payload_values_case', 'call_review', "case_value.get('event_type')",
+         'Read the family event type to select that family document; every candidate carries it.'),
+        ('payload_values_subject', 'data_operation', 'value.get',
+         'Schema selector: read the subject the schema rows judge; a missing member yields None, which the subject type row refuses.'),
+        ('payload_values_case', 'data_operation', "DOCUMENTS[case_value.get('event_type')]",
+         'Select the injected schema document of this phase or family; the loader sets it before any case.'),
+        ('payload_values_case', 'data_operation', '{PAYLOAD_VALUES_URI: payload_values_subject}',
+         'Bind the one consumed schema root to its selector.'),
+        ('payload_values_case', 'data_operation', 'case_value.get',
+         'Read the family event type to select that family document; every candidate carries it.'),
+    ],
     'instrumentation': [
         ('instrumentation_case', 'return', 'return g.Case(table, check, context)',
          'Return the fresh execution object built for this candidate; it decides no acceptance.'),
@@ -702,6 +794,21 @@ def payload_suite(family):
                  phase_negatives('payload', [meta]), 'append', (PREFIX + family,), phase='payload')
 
 
+def payload_values_suite(family):
+    meta = next(m for m in fixture_cases() if m['event_type'] == PREFIX + family)
+    return build(family + ' payload values phase', 'payload_values', production.payload_values.payload_values_case,
+                 family_controls(meta), phase_negatives('payload_values', [meta]), 'append', (PREFIX + family + '#values',),
+                 phase='payload_values')
+
+
+def payload_values_instrumentation_state_changed_suite():
+    return payload_values_suite('instrumentation_state_changed')
+
+
+def payload_values_started_suite():
+    return payload_values_suite('started')
+
+
 def payload_context_item_added_suite():
     return payload_suite('context_item_added')
 
@@ -758,6 +865,17 @@ def instrumentation_source_suite():
 def instrumentation_detail_suite():
     return single_family('instrumentation_state_changed', 'instrumentation_detail', 'instrumentation_detail',
                          production.instrumentation_detail.instrumentation_detail_case, ('instrumentation_detail',))
+
+
+def instrumentation_detail_required_suite():
+    return single_family('instrumentation_state_changed', 'instrumentation_detail_required', 'instrumentation_detail_required',
+                         production.instrumentation_detail_required.instrumentation_detail_required_case,
+                         ('instrumentation_detail_required',))
+
+
+def instrumentation_joins_suite():
+    return single_family('instrumentation_state_changed', 'instrumentation_joins', 'instrumentation_joins',
+                         production.instrumentation_joins.instrumentation_joins_case)
 
 
 def instrumentation_detail_values_a_suite():
@@ -818,7 +936,7 @@ def references_suite():
 
 SUITES = ('envelope_suite', 'family_suite', 'payload_context_item_added_suite', 'payload_context_item_state_changed_suite',
           'payload_exported_suite', 'payload_imported_suite', 'payload_instrumentation_state_changed_suite',
-          'payload_started_suite', 'payload_target_bound_suite', 'payload_verification_recorded_suite',
-          'payload_state_changed_suite', 'lifecycle_suite', 'instrumentation_source_suite', 'instrumentation_detail_suite',
+          'payload_started_suite', 'payload_values_instrumentation_state_changed_suite', 'payload_values_started_suite', 'payload_target_bound_suite', 'payload_verification_recorded_suite',
+          'payload_state_changed_suite', 'lifecycle_suite', 'instrumentation_source_suite', 'instrumentation_detail_suite', 'instrumentation_detail_required_suite',
           'instrumentation_detail_values_a_suite', 'instrumentation_detail_values_b_suite', 'instrumentation_detail_values_c_suite',
-          'instrumentation_suite', 'retry_request_suite', 'admission_suite', 'retained_suite', 'references_suite')
+          'instrumentation_joins_suite', 'instrumentation_suite', 'retry_request_suite', 'admission_suite', 'retained_suite', 'references_suite')

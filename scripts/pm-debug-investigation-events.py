@@ -191,7 +191,7 @@ def main():
             check(len(refusing) == 1, event + ': exactly one phase refuses ' + negative['case'])
             check(bool(refusing) and row_label(refusing[0][1]) == negative.get('guard'),
                   event + ': named row refuses ' + negative['case'])
-            check(validator.is_valid(bad['payload']) == (not refusing or refusing[0][0] != 'payload'),
+            check(validator.is_valid(bad['payload']) == (not refusing or refusing[0][0] not in ('payload', 'payload_values')),
                   event + ': published payload schema agrees ' + negative['case'])
             checks += 5
         bad_scope = patched_case(case, {'payload.project_id': 'other-project'}) if name == 'started' else patched_case(case, {'envelope.project_id': 'other-project'})

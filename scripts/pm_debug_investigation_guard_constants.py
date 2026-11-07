@@ -57,11 +57,12 @@ DETAIL_URI = 'https://pm.invalid/debug/instrumentation_change_detail.schema.json
 
 DETAIL_ROOTS = ('https://pm.invalid/debug/instrumentation_change_detail.schema.json',)
 
-# The detail schema is judged in four exact parts (structure: type, closed
-# members and required list; then the value constraints of the first, second
-# and third ten of its properties), so each part's schema rows are attributed
-# on their own; pm_debug_investigation_transitions.detail_documents() checks
-# the parts recombine to the published definition.
+# The detail schema is judged in five exact parts (structure: type, closed
+# members and the first half of the required list; the second half of the
+# required list; then the value constraints of the first, second and third ten
+# of its properties), so each part's schema rows are attributed on their own;
+# pm_debug_investigation_transitions.detail_documents() checks the parts
+# recombine to the published definition.
 DETAIL_VALUES_A_URI = 'https://pm.invalid/debug/instrumentation_change_detail.values_a.schema.json'
 
 DETAIL_VALUES_A_ROOTS = ('https://pm.invalid/debug/instrumentation_change_detail.values_a.schema.json',)
@@ -73,6 +74,17 @@ DETAIL_VALUES_B_ROOTS = ('https://pm.invalid/debug/instrumentation_change_detail
 DETAIL_VALUES_C_URI = 'https://pm.invalid/debug/instrumentation_change_detail.values_c.schema.json'
 
 DETAIL_VALUES_C_ROOTS = ('https://pm.invalid/debug/instrumentation_change_detail.values_c.schema.json',)
+
+DETAIL_REQUIRED_URI = 'https://pm.invalid/debug/instrumentation_change_detail.required_b.schema.json'
+
+DETAIL_REQUIRED_ROOTS = ('https://pm.invalid/debug/instrumentation_change_detail.required_b.schema.json',)
+
+# The payloads of instrumentation_state_changed and started are judged in two
+# exact parts: structure (type, closed members, required list, conditionals)
+# in the payload phase and their property value constraints here.
+PAYLOAD_VALUES_URI = 'https://pm.invalid/debug/payload.values.schema.json'
+
+PAYLOAD_VALUES_ROOTS = ('https://pm.invalid/debug/payload.values.schema.json',)
 
 PAYLOAD_URI = 'https://pm.invalid/debug/payload.schema.json'
 

@@ -25,9 +25,12 @@ import pm_debug_investigation_guards_instrumentation_detail as instrumentation_d
 import pm_debug_investigation_guards_instrumentation_detail_values_a as instrumentation_detail_values_a
 import pm_debug_investigation_guards_instrumentation_detail_values_b as instrumentation_detail_values_b
 import pm_debug_investigation_guards_instrumentation_detail_values_c as instrumentation_detail_values_c
+import pm_debug_investigation_guards_instrumentation_detail_required as instrumentation_detail_required
+import pm_debug_investigation_guards_instrumentation_joins as instrumentation_joins
 import pm_debug_investigation_guards_instrumentation_source as instrumentation_source
 import pm_debug_investigation_guards_lifecycle as lifecycle
 import pm_debug_investigation_guards_payload as payload
+import pm_debug_investigation_guards_payload_values as payload_values
 import pm_debug_investigation_guards_references as references
 import pm_debug_investigation_guards_retained as retained
 import pm_debug_investigation_guards_retry as retry
@@ -45,6 +48,9 @@ TARGET_EVENT = 'debug.investigation.target_bound'
 FAMILIES = ('context_item_added', 'context_item_state_changed', 'exported', 'imported',
             'instrumentation_state_changed', 'started', 'target_bound', 'verification_recorded',
             'state_changed')
+# Payloads judged in two exact parts (structure, then property values), so no
+# payload suite needs more than the guard tool's per-command time.
+SPLIT_PAYLOADS = ('instrumentation_state_changed', 'started')
 # The one pattern in the companion schema, kept by the payload phase as the
 # payload.target_sha256_hex row plus its type and length rows.
 SUPPORTED_PATTERN = (('$defs', 'target_bound', 'properties', 'target_bindings', 'properties', 'source_sha256'),
@@ -62,6 +68,8 @@ SCHEMA_CODES = {
     guards.DETAIL_VALUES_A_URI: 'invalid_detail',
     guards.DETAIL_VALUES_B_URI: 'invalid_detail',
     guards.DETAIL_VALUES_C_URI: 'invalid_detail',
+    guards.DETAIL_REQUIRED_URI: 'invalid_detail',
+    guards.PAYLOAD_VALUES_URI: 'invalid_payload',
     guards.RETRY_URI: 'invalid_retry_request'}
 SCHEMA_LABELS = {
     guards.PAYLOAD_URI: 'payload',
@@ -71,6 +79,8 @@ SCHEMA_LABELS = {
     guards.DETAIL_VALUES_A_URI: 'instrumentation_change_detail',
     guards.DETAIL_VALUES_B_URI: 'instrumentation_change_detail',
     guards.DETAIL_VALUES_C_URI: 'instrumentation_change_detail',
+    guards.DETAIL_REQUIRED_URI: 'instrumentation_change_detail',
+    guards.PAYLOAD_VALUES_URI: 'payload',
     guards.RETRY_URI: 'cleanup_retry_request'}
 
 
@@ -107,17 +117,37 @@ def documents(schema):
         closed = document(name)
         if name == 'target_bound':
             del closed['properties']['target_bindings']['properties']['source_sha256']['pattern']
-        result['debug.investigation.' + name] = {guards.PAYLOAD_URI: closed}
+        if name in SPLIT_PAYLOADS:
+            structure, values = split_properties(closed)
+            result['debug.investigation.' + name] = {guards.PAYLOAD_URI: structure}
+            result['debug.investigation.' + name + '#values'] = {guards.PAYLOAD_VALUES_URI: dict(values, **{'$schema': DIALECT})}
+        else:
+            result['debug.investigation.' + name] = {guards.PAYLOAD_URI: closed}
     return result
+
+
+def split_properties(definition):
+    """(structure, values): every keyword but the property constraints, with each
+    property kept as an empty schema; and {'properties': the constraints}. Refused
+    unless the two recombine to the definition."""
+    keys = list(definition['properties'])
+    structure = {key: copy.deepcopy(value) for key, value in definition.items() if key != 'properties'}
+    structure['properties'] = {key: {} for key in keys}
+    values = {'properties': copy.deepcopy(definition['properties'])}
+    if dict(structure, properties=values['properties']) != definition:
+        raise ValueError('schema parts do not recombine to the published definition')
+    return structure, values
 
 
 # Which document keys each schema-using phase module holds.
 DOCUMENT_MODULES = ((lifecycle, ('lifecycle',)), (instrumentation_source, ('instrumentation_source',)),
                     (instrumentation_detail, ('instrumentation_detail',)),
+                    (instrumentation_detail_required, ('instrumentation_detail_required',)),
                     (instrumentation_detail_values_a, ('instrumentation_detail_values_a',)),
                     (instrumentation_detail_values_b, ('instrumentation_detail_values_b',)),
                     (instrumentation_detail_values_c, ('instrumentation_detail_values_c',)), (retry, ('retry_request',)),
                     (payload, tuple('debug.investigation.' + name for name in FAMILIES if name != 'target_bound')),
+                    (payload_values, tuple('debug.investigation.' + name for name in SPLIT_PAYLOADS)),
                     (target_payload, (TARGET_EVENT,)))
 
 
@@ -125,21 +155,28 @@ LOADED = {'keys': None}
 
 
 def detail_documents(detail):
-    """The detail definition in four exact parts: structure (every keyword but the
-    property constraints, with each property kept as an empty schema), and the
-    constraints of the first, second and third ten of its properties."""
+    """The detail definition in five exact parts: structure (every keyword but the
+    property constraints and the second half of the required list, with each
+    property kept as an empty schema); the second half of the required list; and
+    the constraints of the first, second and third ten of its properties."""
     keys = list(detail['properties'])
-    structure = {key: copy.deepcopy(value) for key, value in detail.items() if key != 'properties'}
+    required = list(detail['required'])
+    half = len(required) // 2
+    structure = {key: copy.deepcopy(value) for key, value in detail.items() if key not in ('properties', 'required')}
+    structure['required'] = required[:half]
     structure['properties'] = {key: {} for key in keys}
+    required_b = {'required': required[half:]}
     groups = (keys[:10], keys[10:20], keys[20:])
     parts = tuple({key: copy.deepcopy(detail['properties'][key]) for key in group} for group in groups)
-    recombined = dict(structure, properties={key: value for part in parts for key, value in part.items()})
+    recombined = dict(structure, required=structure['required'] + required_b['required'],
+                      properties={key: value for part in parts for key, value in part.items()})
     if recombined != detail or list(recombined['properties']) != keys or sum(len(part) for part in parts) != len(keys):
         raise ValueError('detail schema parts do not recombine to the published definition')
 
     def wrapped(part):
         return {'$schema': DIALECT, 'properties': {'detail': part}}
     return {'instrumentation_detail': {guards.DETAIL_URI: wrapped(structure)},
+            'instrumentation_detail_required': {guards.DETAIL_REQUIRED_URI: wrapped(required_b)},
             'instrumentation_detail_values_a': {guards.DETAIL_VALUES_A_URI: wrapped({'properties': parts[0]})},
             'instrumentation_detail_values_b': {guards.DETAIL_VALUES_B_URI: wrapped({'properties': parts[1]})},
             'instrumentation_detail_values_c': {guards.DETAIL_VALUES_C_URI: wrapped({'properties': parts[2]})}}
@@ -151,8 +188,11 @@ def load_documents(schema=None, only=None):
     if schema is None and LOADED['keys'] == wanted:
         return
     loaded = documents(schema if schema is not None else json.loads((ROOT / SCHEMA).read_text()))
+    LOADED['schema'] = loaded
     for module, keys in DOCUMENT_MODULES:
-        module.DOCUMENTS = {key: loaded[key] for key in keys if only is None or key in only}
+        # The values part of a split payload is stored under its event type in its own module.
+        suffix = '#values' if module is payload_values else ''
+        module.DOCUMENTS = {key: loaded[key + suffix] for key in keys if only is None or key + suffix in only}
     LOADED['keys'] = wanted
     BUILT.clear()
 
@@ -162,6 +202,7 @@ def load_documents(schema=None, only=None):
 # key; GuardTable._restore returns its table to the unbound original after each
 # run. The proof still builds a fresh Case for every evaluation.
 REUSABLE = {payload.payload_case: 'event_type', target_payload.target_payload_case: 'event_type',
+            payload_values.payload_values_case: 'event_type',
             lifecycle.lifecycle_case: None, instrumentation_source.instrumentation_source_case: None,
             retry.retry_request_case: None, admission.admission_case: None}
 BUILT = {}
@@ -206,7 +247,8 @@ def row_label(row):
     if uri is None:
         return row
     pointer = row.split('#', 1)[1].rsplit('@', 1)[0]
-    if uri in (guards.DETAIL_URI, guards.DETAIL_VALUES_A_URI, guards.DETAIL_VALUES_B_URI, guards.DETAIL_VALUES_C_URI):
+    if uri in (guards.DETAIL_URI, guards.DETAIL_REQUIRED_URI, guards.DETAIL_VALUES_A_URI, guards.DETAIL_VALUES_B_URI,
+               guards.DETAIL_VALUES_C_URI):
         pointer = pointer[len('/properties/detail'):]
     return SCHEMA_LABELS[uri] + '#' + pointer
 
@@ -217,18 +259,48 @@ def row_label(row):
 PHASE_MEMBERS = {
     'envelope': ('envelope', 'owner_record', 'payload', 'project_id', 'scope_partition'),
     'payload': ('event_type', 'payload'),
+    'payload_values': ('event_type', 'payload'),
     'family': ('event_type', 'mode_resolution', 'payload'),
     'lifecycle': ('lifecycle_source', 'payload'),
     'instrumentation_source': ('instrumentation_source',),
     'instrumentation_detail': ('detail_records', 'payload'),
+    'instrumentation_detail_required': ('detail_records', 'payload'),
     'instrumentation_detail_values_a': ('detail_records', 'payload'),
     'instrumentation_detail_values_b': ('detail_records', 'payload'),
     'instrumentation_detail_values_c': ('detail_records', 'payload'),
+    'instrumentation_joins': ('detail_records', 'instrumentation_source', 'payload'),
     'instrumentation': ('detail_records', 'instrumentation_source', 'payload')}
+# Value-part phases judge only some properties of one object; their proof input
+# keeps only those properties (and, for the detail parts, only payload.detail_ref
+# and the record it names).
+VALUE_PARTS = {'payload_values': None, 'instrumentation_detail_values_a': 0,
+               'instrumentation_detail_values_b': 1, 'instrumentation_detail_values_c': 2}
+
+
+def part_keys(phase, case):
+    loaded = documents(json.loads((ROOT / SCHEMA).read_text())) if 'schema' not in LOADED else LOADED['schema']
+    if phase == 'payload_values':
+        document = loaded.get(str(case.get('event_type')) + '#values')
+        return None if document is None else list(document[guards.PAYLOAD_VALUES_URI]['properties'])
+    uri = (guards.DETAIL_VALUES_A_URI, guards.DETAIL_VALUES_B_URI, guards.DETAIL_VALUES_C_URI)[VALUE_PARTS[phase]]
+    return list(loaded[phase][uri]['properties']['detail']['properties'])
 
 
 def projected(phase, case):
-    return {key: case[key] for key in PHASE_MEMBERS[phase] if key in case}
+    result = {key: case[key] for key in PHASE_MEMBERS[phase] if key in case}
+    if phase not in VALUE_PARTS:
+        return result
+    keys = part_keys(phase, case)
+    if phase == 'payload_values':
+        if keys is not None and type(result.get('payload')) is dict:
+            result['payload'] = {key: value for key, value in result['payload'].items() if key in keys}
+        return result
+    payload_value, records = result.get('payload'), result.get('detail_records')
+    ref = payload_value.get('detail_ref') if type(payload_value) is dict else None
+    if type(ref) is str and type(records) is dict and type(records.get(ref)) is dict:
+        result['payload'] = {'detail_ref': ref}
+        result['detail_records'] = {ref: {key: value for key, value in records[ref].items() if key in keys}}
+    return result
 
 
 def candidate(case):
@@ -238,14 +310,18 @@ def candidate(case):
 def phases(case):
     event = case.get('event_type')
     sequence = [('envelope', envelope.envelope_case),
-                ('payload', target_payload.target_payload_case if event == TARGET_EVENT else payload.payload_case),
-                ('family', family.family_case)]
+                ('payload', target_payload.target_payload_case if event == TARGET_EVENT else payload.payload_case)]
+    if event in tuple('debug.investigation.' + name for name in SPLIT_PAYLOADS):
+        sequence.append(('payload_values', payload_values.payload_values_case))
+    sequence.append(('family', family.family_case))
     if event == INSTRUMENTATION_EVENT:
         sequence += [('instrumentation_source', instrumentation_source.instrumentation_source_case),
                      ('instrumentation_detail', instrumentation_detail.instrumentation_detail_case),
+                     ('instrumentation_detail_required', instrumentation_detail_required.instrumentation_detail_required_case),
                      ('instrumentation_detail_values_a', instrumentation_detail_values_a.instrumentation_detail_values_a_case),
                      ('instrumentation_detail_values_b', instrumentation_detail_values_b.instrumentation_detail_values_b_case),
                      ('instrumentation_detail_values_c', instrumentation_detail_values_c.instrumentation_detail_values_c_case),
+                     ('instrumentation_joins', instrumentation_joins.instrumentation_joins_case),
                      ('instrumentation', instrumentation.instrumentation_case)]
     if event == LIFECYCLE_EVENT:
         sequence.append(('lifecycle', lifecycle.lifecycle_case))
@@ -275,10 +351,9 @@ def lifecycle_refusal(case):
 
 
 def instrumentation_refusal(case):
-    for factory in (instrumentation_source.instrumentation_source_case, instrumentation_detail.instrumentation_detail_case,
-                    instrumentation_detail_values_a.instrumentation_detail_values_a_case,
-                    instrumentation_detail_values_b.instrumentation_detail_values_b_case,
-                    instrumentation_detail_values_c.instrumentation_detail_values_c_case, instrumentation.instrumentation_case):
+    for name, factory in phases(dict(case, event_type=INSTRUMENTATION_EVENT)):
+        if not name.startswith('instrumentation'):
+            continue
         row, code = run_phase(factory, case)
         if row is not None:
             return code
