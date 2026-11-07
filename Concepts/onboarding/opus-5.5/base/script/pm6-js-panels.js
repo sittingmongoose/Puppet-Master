@@ -45,9 +45,48 @@
       var down = e.key === 'ArrowDown' && icon.id === 'abMoreBtn';
       if (e.key !== 'Enter' && e.key !== ' ' && !down) return;
       e.preventDefault();
-      if (down && document.querySelector('.pm-ab-tray')) return;
+      if (down && document.querySelector('.pm-ab-tray:not(.pm-ab-ctx)')) return;
       icon.click();
     });
+
+    /* FO-98: each icon says whether what it opens is open, as the chat's own Activity strip does (aria-expanded and
+       aria-controls on each .activity-item). A panel icon (data-target) is expanded while its view is the side panel's
+       active view and that view is on screen; Chat, while its .active says the chat column is shown (the chat's owner
+       keeps it in step with the column: home 46-chat.js syncRailEntry, else the legacy toggle). Several owners open and
+       close panels (the legacy rail toggle in script-038, Cozy Shelves' cozeSwitchPanel, Home's folded-rail overlay in
+       44-narrow.js, and the media rule that hides the slot below 1180 px), so the state is read from what reaches the
+       screen: the view's .active and whether it is displayed, once per frame after any of them changes it (the read
+       falls in the frame's own style pass), and only a change is written. More is a menu button: its menu keeps its
+       aria-expanded. */
+    var openQueued = 0;
+    function shown(el) { return typeof el.checkVisibility === 'function' ? el.checkVisibility() : el.getClientRects().length > 0; }
+    function syncOpenState() {
+      openQueued = 0;
+      $all('.icon[data-ab-id]', bar).forEach(function (icon) {
+        if (icon.id === 'abMoreBtn') return;
+        var target = icon.getAttribute('data-target'), view = target ? byId(target) : null;
+        var chat = !view && icon.getAttribute('data-ab-id') === 'chat';
+        if (!view && !chat) return;
+        var open = view ? view.classList.contains('active') && shown(view) : icon.classList.contains('active');
+        var controls = view ? target : 'chatPanel', v = open ? 'true' : 'false';
+        if (icon.getAttribute('aria-controls') !== controls) icon.setAttribute('aria-controls', controls);
+        if (icon.getAttribute('aria-expanded') !== v) icon.setAttribute('aria-expanded', v);
+      });
+    }
+    function queueOpenState() { if (!openQueued) openQueued = requestAnimationFrame(syncOpenState); }
+    if (typeof MutationObserver === 'function') {
+      var openMo = new MutationObserver(queueOpenState);
+      openMo.observe(bar, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+      var slot = byId('sidePanelSlot');
+      if (slot) {
+        openMo.observe(slot, { attributes: true, attributeFilter: ['class', 'style', 'data-pm-rail-fold'] });
+        $all('.side-panel-view', slot).forEach(function (v) { openMo.observe(v, { attributes: true, attributeFilter: ['class'] }); });
+      }
+      var area = bar.closest ? bar.closest('.main-area') : null;
+      if (area) openMo.observe(area, { attributes: true, attributeFilter: ['data-pmw-rail', 'data-pmw-rail-peek'] });
+    }
+    window.addEventListener('resize', queueOpenState);
+    queueOpenState();
 
     document.addEventListener('keydown', function (e) {
       if (!e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) return;
@@ -96,7 +135,7 @@
       lsSet(LS_KEY, JSON.stringify(order));
     }
     function killTray() {
-      var t = document.querySelector('.pm-ab-tray');
+      var t = document.querySelector('.pm-ab-tray:not(.pm-ab-ctx)');
       if (t && t.parentNode) t.parentNode.removeChild(t);
     }
 
@@ -257,6 +296,137 @@
       armGesture(e, icon, icon.getAttribute('data-ab-id'), false, icon);
     });
 
+    /* ---- FO-98: reorder and hide by keys ----
+       The drag above is the pointer's way; every icon also has its own menu with Move up, Move down and Hide in More:
+       a right click, Shift+F10 or the Menu key opens it (as the Home tab strip's tab menu opens), and Alt+ArrowUp /
+       Alt+ArrowDown move the focused icon at once. The bar keeps its pattern (each icon a button in the tab order, no
+       roving; Ctrl+1..9 follow the order as they always did). A move keeps the focus on the icon; a hide gives it to
+       the next icon (the one before it when it was last; More when none is left). Each one is announced. A hidden
+       icon comes back from More's menu, at the end of the bar, and moves from there. The shell owns the moves and the
+       hide; a rail skin may draw the menu itself (PM_ACTIVITY_BAR.drawMenu, concept D's 41-more.js), else the shell
+       draws a small one in its tray's look. */
+    function iconName(node) { return node.getAttribute('aria-label') || node.getAttribute('data-pm-hover-label') || node.getAttribute('data-ab-id'); }
+    function say(text) { try { if (window.PM_HOME && typeof window.PM_HOME.announce === 'function') window.PM_HOME.announce(text); } catch (e) {} }
+    function moveIcon(node, delta, focus) {
+      var vis = visibleIcons(), i = vis.indexOf(node), j = i + delta;
+      if (i < 0 || j < 0 || j >= vis.length) return false;
+      var hadFocus = document.activeElement === node;
+      bar.insertBefore(node, delta < 0 ? vis[j] : (vis[j + 1] || moreBtn));   /* moved, not cloned */
+      persist();
+      if ((focus || hadFocus) && document.activeElement !== node) node.focus();   /* a moved node loses the focus */
+      say(iconName(node) + ' moved ' + (delta < 0 ? 'up' : 'down') + ', ' + (j + 1) + ' of ' + vis.length);
+      return true;
+    }
+    function hideIcon(node, focus) {
+      var vis = visibleIcons(), i = vis.indexOf(node);
+      if (i < 0) return false;
+      var hadFocus = node.contains(document.activeElement);
+      var next = vis[i + 1] || vis[i - 1] || moreBtn;
+      node.parentNode.removeChild(node);
+      hidden.push({ id: node.getAttribute('data-ab-id'), node: node });
+      syncMore();
+      persist();
+      if (focus || hadFocus) next.focus();
+      say(iconName(node) + ' hidden in More');
+      return true;
+    }
+    function iconActions(node) {
+      var vis = visibleIcons(), i = vis.indexOf(node);
+      return [
+        { id: 'up', label: 'Move up', key: 'Alt+↑', disabled: i <= 0 ? 'It is first on the bar' : null },
+        { id: 'down', label: 'Move down', key: 'Alt+↓', disabled: i >= vis.length - 1 ? 'It is last on the bar' : null },
+        { id: 'hide', label: 'Hide in More', key: null, disabled: null }
+      ];
+    }
+    /* focus: the action came from the keys (Alt+arrows, or a menu the keys opened), so the focus lands on the bar */
+    function runAction(node, id, focus) {
+      if (!node.isConnected || node.parentNode !== bar) return false;
+      if (id === 'up' || id === 'down') return moveIcon(node, id === 'up' ? -1 : 1, focus);
+      if (id === 'hide') return hideIcon(node, focus);
+      return false;
+    }
+    /* the shell's own menu (no skin drew one): the tray's look, rows as menu items, arrows and Home/End between them,
+       Escape back to the icon, a press outside or Tab closes it */
+    function closeCtx(returnTo) {
+      document.querySelectorAll('.pm-ab-ctx').forEach(function (m) { if (m.parentNode) m.parentNode.removeChild(m); });
+      document.removeEventListener('pointerdown', ctxOutside, true);
+      if (returnTo && returnTo.isConnected) returnTo.focus();
+    }
+    function ctxOutside(e) { var m = document.querySelector('.pm-ab-ctx'); if (m && !m.contains(e.target)) closeCtx(null); }
+    function shellMenu(node, d) {
+      closeCtx(null);
+      killTray();
+      var m = document.createElement('div');
+      m.className = 'pm-ab-tray pm-ab-ctx';
+      m.setAttribute('role', 'menu');
+      m.setAttribute('aria-label', d.name + ' on the Activity bar');
+      d.items.forEach(function (it) {
+        var row = document.createElement('button');
+        row.type = 'button';
+        row.className = 'pm-ab-tray-row';
+        row.setAttribute('role', 'menuitem');
+        row.tabIndex = -1;
+        row.textContent = it.label;
+        if (it.key) row.setAttribute('aria-keyshortcuts', it.key === 'Alt+↑' ? 'Alt+ArrowUp' : 'Alt+ArrowDown');
+        if (it.disabled) { row.setAttribute('aria-disabled', 'true'); row.title = it.disabled; }
+        row.addEventListener('click', function (ev) {
+          ev.stopPropagation();
+          if (it.disabled) return;
+          closeCtx(null);
+          d.run(it.id);
+        });
+        m.appendChild(row);
+      });
+      m.addEventListener('keydown', function (ev) {
+        var rows = $all('.pm-ab-tray-row', m), i = rows.indexOf(document.activeElement);
+        var go = ev.key === 'ArrowDown' ? i + 1 : ev.key === 'ArrowUp' ? i - 1 : ev.key === 'Home' ? 0 : ev.key === 'End' ? rows.length - 1 : null;
+        if (go != null) { ev.preventDefault(); rows[(go + rows.length) % rows.length].focus(); return; }
+        if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); closeCtx(node); return; }
+        if (ev.key === 'Tab') closeCtx(null);
+      });
+      document.body.appendChild(m);
+      var r = node.getBoundingClientRect();
+      var x = d.keyboard || d.x == null ? r.right + 8 : d.x, y = d.keyboard || d.y == null ? r.top : d.y;
+      m.style.left = Math.min(x, window.innerWidth - m.offsetWidth - 8) + 'px';
+      m.style.top = Math.min(y, Math.max(8, window.innerHeight - m.offsetHeight - 8)) + 'px';
+      var first = $all('.pm-ab-tray-row', m).filter(function (b) { return b.getAttribute('aria-disabled') !== 'true'; })[0];
+      if (first) first.focus();
+      setTimeout(function () { document.addEventListener('pointerdown', ctxOutside, true); }, 0);
+    }
+    var keyMenuAt = -1e9;
+    function openIconMenu(node, x, y, keyboard) {
+      var d = { id: node.getAttribute('data-ab-id'), name: iconName(node), x: x, y: y, keyboard: !!keyboard, items: iconActions(node),
+        run: function (a) { return runAction(node, a, !!keyboard); } };
+      var draw = window.PM_ACTIVITY_BAR && window.PM_ACTIVITY_BAR.drawMenu;
+      if (typeof draw === 'function') { try { if (draw(node, d)) return; } catch (err) {} }
+      shellMenu(node, d);
+    }
+    bar.addEventListener('keydown', function (e) {
+      if (e.defaultPrevented || e.repeat) return;
+      var icon = e.target;
+      if (!icon || !icon.matches || !icon.matches('#activityBar > .icon[data-ab-id]') || icon === moreBtn) return;
+      if ((e.key === 'F10' && e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) || e.key === 'ContextMenu') {
+        e.preventDefault();
+        keyMenuAt = performance.now();
+        openIconMenu(icon, null, null, true);
+        return;
+      }
+      if (e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
+        e.preventDefault();
+        runAction(icon, e.key === 'ArrowUp' ? 'up' : 'down', true);
+      }
+    });
+    bar.addEventListener('contextmenu', function (e) {
+      var icon = e.target && e.target.closest ? e.target.closest('#activityBar > .icon[data-ab-id]') : null;
+      if (!icon || icon === moreBtn) return;
+      e.preventDefault();
+      if (performance.now() - keyMenuAt < 1000) return;   /* the key that opened its menu also sent this */
+      openIconMenu(icon, e.clientX, e.clientY, false);
+    });
+    window.PM_ACTIVITY_BAR = Object.assign(window.PM_ACTIVITY_BAR || {}, {
+      actions: iconActions, run: runAction, openMenu: openIconMenu, drawMenu: (window.PM_ACTIVITY_BAR && window.PM_ACTIVITY_BAR.drawMenu) || null
+    });
+
     /* ---- More tray popover (cloned from the terminal overflow-menu
        pattern: body-appended, outside-click close) ---- */
     function restoreHidden(id, beforeNode) {
@@ -297,7 +467,7 @@
       return row;
     }
     function refreshTray() {
-      var tray = document.querySelector('.pm-ab-tray');
+      var tray = document.querySelector('.pm-ab-tray:not(.pm-ab-ctx)');
       if (!tray) return;
       if (!hidden.length) { killTray(); return; }
       while (tray.firstChild) tray.removeChild(tray.firstChild);
@@ -308,7 +478,7 @@
       if (!btn) return;
       e.stopPropagation();       /* keep the legacy .icon body handler from claiming More */
       e.preventDefault();
-      var existing = document.querySelector('.pm-ab-tray');
+      var existing = document.querySelector('.pm-ab-tray:not(.pm-ab-ctx)');
       if (existing) { killTray(); return; }
       if (!hidden.length) return;
       var m = document.createElement('div');
