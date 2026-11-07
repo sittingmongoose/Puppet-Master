@@ -5695,6 +5695,10 @@ suggested path                    migration 0043, reversible</div></div></sectio
       // ResizeObserver runs after layout, before paint. Resolve dock/cover here;
       // another rAF would let the narrowed, still-docked panel paint first.
       const n=isNarrow(), p=activityDocked();
+      /* a narrow flip changes what renderApp draws only while History is pinned (its historyPinned is pinned and not
+         narrow), the rule the window's resize handler already keeps; with History closed or floating the re-render wrote
+         the same chat, in the first frame after a window shrink (FO-92), so that flip is only noted */
+      if(n!==lastNarrow&&state.historyMode!=='pinned') lastNarrow=n;
       /* renderApp keeps activityDockLayout, so a column it already widened for Activity Detail is not drawn twice */
       if(n!==lastNarrow||p!==activityDockLayout){ const moved=n===lastNarrow&&moveActivityPanel(p); lastNarrow=n; if(moved) syncJumpBottom(); else renderApp(); }
       else if(document.body && document.body.classList.contains('pm-resizing')){
