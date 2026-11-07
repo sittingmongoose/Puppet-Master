@@ -487,24 +487,42 @@ export default async function (t) {
     // exposed band), makes room first: the panel's expanded regions outside its scrollers fold (makeRoom), and the
     // control is reached again.
     let roomState = 'panel', folding = false;
-    // T98: the regions folded so far, re-checked at the start of every later census state: a folded region (its fold
-    // control still folded) may hide no census control it did not already hide when it was folded
+    // T98 (TOOLBATCH4 recheck b, finding 11): a fold is temporary. makeRoom folds a region only for the covered control
+    // it was asked for; the region is unfolded again (a real press on its fold control) before every census enumeration
+    // (the disclosures, each state's accordion heads, the inventory, popup and context censuses, the later walk), before
+    // an engine switch, and whenever a control to reach lies inside it. So every control the fold hid is enumerated and
+    // pressed with the panel in its own layout (at 1280x500 the Jujutsu card's Technical details head and row, which the
+    // census skipped at that size while the card stayed folded), and unfolding must show again every census control the
+    // fold hid (popup triggers, rows with a context route, accordion heads and disclosures; by element), or fails by name.
     const foldedRegions = [];
-    await f.evaluate(() => { window.foldHidden = (r) => {
-      const sels = '[aria-haspopup]:not([aria-haspopup="false"]), [data-acc] > [data-collapse], button[aria-expanded]:not([role="tab"]):not([aria-haspopup])';
-      const fold = r.querySelector('[data-shelf-fold]');
-      const name = e => (e.getAttribute('aria-controls') || e.getAttribute('aria-label') || e.getAttribute('data-path') || e.textContent || e.className).toString().trim().replace(/\s+/g, ' ').slice(0, 40);
-      return [...r.querySelectorAll(sels)].filter(e => e !== fold && !e.checkVisibility()).map(e => 'control ' + name(e)).concat(__shelf.rows(r).filter(e => !e.checkVisibility()).map(e => 'row ' + __shelf.sig(e))); }; });
-    const recheckFolds = async (state) => {
-      for (const fr of foldedRegions) {
-        const now = await panel.evaluate((p, tag) => { const r = p.querySelector(`[data-shelf-folded="${tag}"]`); if (!r) return null;
-          const fc = r.querySelector('[aria-expanded]'); return { folded: !fc || fc.getAttribute('aria-expanded') === 'false', hidden: foldHidden(r) }; }, fr.tag);
-        if (!now || !now.folded) continue;
-        const fresh = now.hidden.filter(x => !fr.hidden.has(x));
-        await t.check(`${target} ${state}: the region folded in ${fr.state} (${fr.region}) hides no census control it did not hide when it was folded`, !fresh.length, JSON.stringify({ fresh }), { hard: true });
-      }
+    const unfold = async (fr, why) => {
+      if (!fr.folded) return false;
+      const ctl = panel.locator(`[data-shelf-fold-of="${fr.tag}"]`);
+      const st = await ctl.evaluate(e => ({ shown: e.isConnected && e.checkVisibility(), expanded: e.getAttribute('aria-expanded') })).catch(() => null);
+      if (!st || st.expanded !== 'false') { fr.folded = false; return false; }
+      if (!st.shown) return false;      /* (its engine is not shown now: it is unfolded when that engine is) */
+      const was = folding; folding = true;
+      try { const fp = await reach(ctl); await t.page.mouse.click(off.x + fp.x, off.y + fp.y); } finally { folding = was; }
+      const ok = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'true', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
+      await t.check(`${target} ${why}: pressing the fold control (${fr.label}) unfolds the region folded in ${fr.state} (${fr.region})`, ok, '', { hard: true });
+      fr.folded = false;
+      const marks = `[data-shelf-fold-ctl^="${fr.tag}:"]`;
+      await f.waitForFunction(m => [...document.querySelectorAll(m)].every(e => e.isConnected && e.checkVisibility()), marks, { timeout: 1500 }).catch(() => {});
+      const back = new Map((await f.evaluate(m => [...document.querySelectorAll(m)].map(e => [+e.getAttribute('data-shelf-fold-ctl').split(':')[1], e.isConnected && e.checkVisibility()]), marks)));
+      const lost = fr.hid.filter(x => !back.get(x.j));
+      await t.check(`${target} ${why}: unfolding the region folded in ${fr.state} (${fr.region}) shows again every census control the fold hid`, !lost.length, JSON.stringify({ lost, hid: fr.hid.length }), { hard: true });
+      if (fr.hid.length) t.log(`${target} ${why}: unfolded ${fr.region} (folded in ${fr.state} for ${fr.for}); ${fr.hid.length} census control(s) it hid shown again: ${fr.hid.map(x => x.kind + ' ' + x.what).join('; ')}`);
+      return true;
+    };
+    const unfoldAll = async (why) => { for (const fr of foldedRegions) await unfold(fr, why); };
+    const unfoldFor = async (loc, why) => {
+      if (folding || !foldedRegions.some(fr => fr.folded)) return;
+      const tag = await loc.evaluate(e => e.closest('[data-shelf-folded]')?.getAttribute('data-shelf-folded') ?? null).catch(() => null);
+      const fr = tag === null ? null : foldedRegions.find(x => x.tag === tag);
+      if (fr) await unfold(fr, why);
     };
     const reach = async (loc, at = null) => {
+      await unfoldFor(loc, `${roomState} (to reach a control inside it)`);
       // T70 (opus-recheck-kit8 finding C): a failed scroll is no longer swallowed silently. A control that cannot be
       // scrolled to because its side panel (or the folded rail's overlay) closed, or because it is hidden, fails at once
       // and by name; a control the panel's own layout covers still goes on to the wheel and the fold below.
@@ -580,6 +598,7 @@ export default async function (t) {
     // disclosure floor then fails by design)
     const disclosureCensus = async (state) => {
       if (t.args.disclosures === '0') return;
+      await unfoldAll(`${state} (before its disclosures)`);
       const ctls = await panel.evaluate(p => {
         document.querySelectorAll('[data-shelf-disc]').forEach(e => e.removeAttribute('data-shelf-disc'));
         const scs = [...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY));
@@ -628,30 +647,26 @@ export default async function (t) {
         // fold and looked up by its mark after it, not by label (two triggers labelled 'More' were one); the fold control
         // itself is left out. A control of a kind the census already asked in this state is not lost (the census samples a
         // row kind), and is reported apart
-        const censusIn = (i, mark) => panel.evaluate((p, [i, mark, state, asked]) => {
+        const censusIn = (i, tag, mark) => panel.evaluate((p, [i, tag, mark]) => {
           const r = p.querySelector(`[data-shelf-fold-region="${i}"]`); if (!r) return [];
           const fold = r.querySelector(`[data-shelf-fold="${i}"]`), out = [];
           const kinds = [['popup trigger', '[aria-haspopup]:not([aria-haspopup="false"])'], ['accordion head', '[data-acc] > [data-collapse]'], ['disclosure', 'button[aria-expanded]:not([role="tab"]):not([aria-haspopup])']];
           const name = e => (e.getAttribute('aria-controls') || e.getAttribute('aria-label') || e.getAttribute('data-path') || e.textContent || e.className).toString().trim().replace(/\s+/g, ' ').slice(0, 40);
           for (const [kind, sel] of kinds) for (const e of r.querySelectorAll(sel)) { if (e === fold) continue; out.push({ e, kind }); }
           for (const e of __shelf.rows(r)) out.push({ e, kind: 'row', sig: __shelf.sig(e) });
-          if (mark) { document.querySelectorAll(`[data-shelf-fold-ctl^="${i}:"]`).forEach(x => x.removeAttribute('data-shelf-fold-ctl'));
-            return out.filter(x => x.e.checkVisibility()).map((x, j) => { x.e.setAttribute('data-shelf-fold-ctl', `${i}:${j}`); return { j, kind: x.kind, sig: x.sig || null, what: name(x.e) }; }); }
-          return [...document.querySelectorAll(`[data-shelf-fold-ctl^="${i}:"]`)].map(e => ({ j: +e.getAttribute('data-shelf-fold-ctl').split(':')[1], shown: e.isConnected && e.checkVisibility() }));
-        }, [i, mark]);
+          if (mark) return out.filter(x => x.e.checkVisibility()).map((x, j) => { x.e.setAttribute('data-shelf-fold-ctl', `${tag}:${j}`); return { j, kind: x.kind, sig: x.sig || null, what: name(x.e) }; });
+          return [...document.querySelectorAll(`[data-shelf-fold-ctl^="${tag}:"]`)].map(e => ({ j: +e.getAttribute('data-shelf-fold-ctl').split(':')[1], shown: e.isConnected && e.checkVisibility() }));
+        }, [i, tag, mark]);
         for (const fo of folds) {
-          const ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), before = await censusIn(fo.i, true), fp = await reach(ctl);
+          const tag = String(foldedRegions.length), ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), before = await censusIn(fo.i, tag, true), fp = await reach(ctl);
           await t.page.mouse.click(off.x + fp.x, off.y + fp.y);
           const folded = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'false', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
           await t.check(`${target} ${state} short panel: pressing its expanded control (${fo.label}) folds it to make room for the list`, folded,
             JSON.stringify({ fold: fo, covered: { what: why.what, onTop: why.onTop, hits: why.hits, by: why.coverOf } }), { hard: true });
-          const after = new Map((await censusIn(fo.i, false)).map(x => [x.j, x.shown])), gone = before.filter(x => !after.get(x.j));
-          const sampled = gone.filter(x => x.kind === 'row' && probed.has(`${state}|${x.sig}`)), hidden = gone.filter(x => !sampled.includes(x));
-          await t.check(`${target} ${state} short panel: the folded region (${fo.region}) hid no control the census presses (popup triggers, context rows, accordion heads, disclosures; by element)`, !hidden.length, JSON.stringify({ hidden, sampledKindsHidden: sampled.length, before: before.length }), { hard: true });
-          const tag = String(foldedRegions.length);
-          const hiddenNow = await panel.evaluate((p, [i, tag]) => { const r = p.querySelector(`[data-shelf-fold-region="${i}"]`); if (r) r.setAttribute('data-shelf-folded', tag);
-            return r ? foldHidden(r) : []; }, [fo.i, tag]).catch(() => []);
-          foldedRegions.push({ tag, region: fo.region, state, hidden: new Set(hiddenNow) });
+          const after = new Map((await censusIn(fo.i, tag, false)).map(x => [x.j, x.shown])), hid = before.filter(x => !after.get(x.j));
+          await panel.evaluate((p, [i, tag]) => { p.querySelector(`[data-shelf-fold-region="${i}"]`)?.setAttribute('data-shelf-folded', tag);
+            p.querySelector(`[data-shelf-fold="${i}"]`)?.setAttribute('data-shelf-fold-of', tag); }, [fo.i, tag]);
+          foldedRegions.push({ tag, label: fo.label, region: fo.region, state, for: why.what, hid, folded: true });
         }
         if (folds.length) await f.waitForTimeout(500);
         return folds.length;
@@ -659,6 +674,7 @@ export default async function (t) {
     };
     // Every popup trigger the panel shows (PMMenu wrappers and the rail skin's own), by mouse, Enter, Space and ArrowDown.
     const popupCensus = async (state) => {
+      await unfoldAll(`${state} (before its popup census)`);
       const cands = await panel.evaluate(p => {
         const hidden = e => { for (let a = e; a; a = a.parentElement) if (getComputedStyle(a).display === 'none') return true; return false; };
         document.querySelectorAll('[data-shelf-pop]').forEach(e => e.removeAttribute('data-shelf-pop'));
@@ -750,6 +766,7 @@ export default async function (t) {
       return opened.length;
     };
     const contextCensus = async (state, engine, tab) => {
+      await unfoldAll(`${state} (before its context census)`);
       await openFolders(state);
       const cands = await panel.evaluate(p => {
         document.querySelectorAll('[data-shelf-probe]').forEach(e => e.removeAttribute('data-shelf-probe'));
@@ -829,6 +846,7 @@ export default async function (t) {
       for (const st of [...new Set(kinds.map(k => k.state))]) {
         const ks = kinds.filter(k => k.state === st), { engine, tab } = ks[0];
         if (engine) {
+          await unfoldAll(`${roomState} (before the later walk's engine switch)`);
           await panel.locator(`[data-pm7-scm-engine="${engine}"]`).click();
           await t.check(`${target} later walk: engine ${engine} selected`, await panel.evaluate((p, en) => p.dataset.scmEngine === en, engine), '', { hard: true });
           await f.waitForTimeout(400);
@@ -847,6 +865,7 @@ export default async function (t) {
           await f.waitForTimeout(300);
         }
         for (const k of ks) {
+          await unfoldAll(`${st} (before the later walk's ${k.sig} rows)`);
           const menu = CTX_INPUTS.map(i => k.got[i]).find(Boolean);
           // T98 (TOOLBATCH4 recheck b, finding 10): the census asks a kind's first row and this walk its last, so a dead
           // route on a middle row passed; a kind of more than two rows also has one middle row asked, picked by the run's
@@ -885,6 +904,7 @@ export default async function (t) {
     for (const engine of (engines.length ? engines : [null])) {
     if (engine !== null) {
       const sw = panel.locator(`[data-pm7-scm-engine="${engine}"]`);
+      await unfoldAll(`${roomState} (before the engine switch)`);
       await sw.click();
       await t.check(`${target} engine ${engine} selected`, await panel.evaluate((p, en) => p.dataset.scmEngine === en, engine), '', { hard: true });
       await f.waitForTimeout(400);
@@ -907,7 +927,7 @@ export default async function (t) {
       const heads=await panel.locator('[data-acc] > [data-collapse]').elementHandles();
       for (let pass=0;pass<20;pass++) {
         let opened=false;
-        for(const head of heads) if(await head.isVisible() && !await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open'))) {
+        for(const head of heads) if((await unfoldFor(head, `${roomState} (before an accordion head inside it)`), await head.isVisible()) && !await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open'))) {
           // Centre it in its own scroller with the wheel: at the scroller's edge a short panel's sticky
           // footer (Source Control's Publish card at 1280x500) covers it.
           const hp = await reach(head, {x:8,y:8});
@@ -972,7 +992,9 @@ export default async function (t) {
                   if (s.asked > W.clickAt) return s.moves;     /* asked and able to move: wait for its scroll to begin and end */
                   return false; });
                 if (!open.length) { W.done = performance.now(); return res({ ok: true, ms: Math.round(W.done - W.clickAt), pressLag: Math.round(W.clickAt - W.at), asked: W.scs.filter(s => s.asked > W.clickAt).map(s => Math.round(s.asked - W.clickAt)), scrolled: W.scs.filter(s => s.scrolled > W.clickAt).length }); }
-                if (now - t1 > endMs) { W.done = performance.now(); return res({ ok: false, ms: Math.round(now - W.clickAt), pressLag: Math.round(W.clickAt - W.at), open: open.map(s => s.el.className.toString().slice(0, 40)) }); }
+                if (now - t1 > endMs) { W.done = performance.now(); const rel = x => x ? Math.round(x - W.clickAt) : null;
+                  return res({ ok: false, ms: Math.round(now - W.clickAt), pressLag: Math.round(W.clickAt - W.at), open: open.map(s => s.el.className.toString().slice(0, 40)),
+                    scrollers: open.map(s => ({ asked: rel(s.asked), scrolled: rel(s.scrolled), ended: rel(s.ended), moves: s.moves, top: Math.round(s.el.scrollTop), max: Math.round(s.el.scrollHeight - s.el.clientHeight) })) }); }
                 await raf();
               }
             })();
@@ -1000,6 +1022,7 @@ export default async function (t) {
         return {key:e.getAttribute('aria-controls'),index:i};
       }).filter(Boolean),selectors.trigger);
       const exercise = async () => {
+        await unfoldAll(`${state} (before its inventory)`);
         const candidates=await discover();
         await t.check(`${target} shelf trigger identities unique`,new Set(candidates.map(c=>c.key)).size===candidates.length,JSON.stringify(candidates),{hard:true});
         for(const c of candidates) {
@@ -1043,10 +1066,11 @@ export default async function (t) {
       };
       await exercise();
       // The panel's first state is one of its tabs; census each tab once.
-      if (tab !== null || !tabs.length) { await recheckFolds(state); await popupCensus(state); await contextCensus(state, engine, tab); }
+      if (tab !== null || !tabs.length) { await popupCensus(state); await contextCensus(state, engine, tab); }
     }
     }
     await laterWalk();
+    await unfoldAll(`${roomState} (the panel's last state)`);
     if (engines.length > 1) {
       await panel.locator(`[data-pm7-scm-engine="${engines[0]}"]`).click();
       await t.check(`${target} engine ${engines[0]} restored`, await panel.evaluate((p, en) => p.dataset.scmEngine === en, engines[0]), '', { hard: true });
