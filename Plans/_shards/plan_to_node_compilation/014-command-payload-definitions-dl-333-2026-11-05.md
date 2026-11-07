@@ -2,9 +2,9 @@
 
 Source: `Plans/Plan_To_Node_Compilation.md`
 
-Source lines: L1752-L2108
+Source lines: L1752-L2109
 
-Source SHA256: `30794912c967f901eaa5ef1eebdc75dc71d0f6d9566083446a7566bcba9382a8`
+Source SHA256: `eea7233af7a6e3ade179b2026a399af964dd5579b443e7934ed2a605ef538712`
 
 ---
 
@@ -33,7 +33,7 @@ canonical_text: >-
   sets.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible Plan Compile pause, resume, cancel, retry, inspection, recompile and Open Build commands.
-depends_on: [UCC-230, UCC-097, UCC-098, DL-333, CV-333, PNC-014]
+depends_on: [UCC-230, UCC-097, UCC-098, DL-333, DL-341, CV-333, PNC-014]
 unblocks: []
 acceptance_criteria:
   - Every command that UCC-230 routes to PNC-037 has exactly one definition in the block below.
@@ -69,8 +69,6 @@ command_payload_definitions:
     - command_id: cmd.plan_compile.pause
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.plan_compile.pause (command_kind domain_action); the
-      # history column's extra "current stage token" input has no field in the runtime field list.
       response_kind: owner_operation
       args:
         compile_id:
@@ -93,14 +91,10 @@ command_payload_definitions:
         owner_result: local:PlanCompilePauseResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's compile_terminal maps to blocked_state_required
-      # (owner_state_code_map); refresh_compile_state_before_pause is the freshness clause.
       aliases: []
     - command_id: cmd.plan_compile.resume
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.plan_compile.resume (command_kind domain_action); the
-      # history column's extra "recovery route" input has no field in the runtime field list.
       response_kind: owner_operation
       args:
         compile_id:
@@ -121,14 +115,10 @@ command_payload_definitions:
         owner_result: local:PlanCompileResumeResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's missing_resume_ref maps to blocked_state_required
-      # (owner_state_code_map); load_compile_cursor_before_resume is the freshness clause.
       aliases: []
     - command_id: cmd.plan_compile.cancel
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.plan_compile.cancel (command_kind domain_action); the
-      # history column's extra "confirmation token" input has no field in the runtime field list.
       response_kind: owner_operation
       args:
         compile_id:
@@ -151,13 +141,10 @@ command_payload_definitions:
         owner_result: local:PlanCompileCancelResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's mutation_already_active maps to blocked_state_required
-      # (owner_state_code_map); refresh_activation_state_before_cancel is the freshness clause.
       aliases: []
     - command_id: cmd.plan_compile.retry
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.plan_compile.retry (command_kind domain_action).
       response_kind: owner_operation
       args:
         compile_id:
@@ -184,16 +171,12 @@ command_payload_definitions:
         owner_result: local:PlanCompileRetryResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's stage_not_retryable maps to blocked_state_required
-      # (owner_state_code_map); reload_stage_card_and_worklist_before_retry is the freshness clause.
       aliases:
         - {command_id: cmd.plan_compile.retry_stage, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.plan_compile.inspect_blocker
       ucc_units: [UCC-098, UCC-097]
       command_kind: navigation_wrapper
-      # canon: runtime contract row cmd.plan_compile.inspect_blocker (command_kind
-      # navigation_wrapper); the result is a route, so the response carries no owner result.
       response_kind: local_projection
       args:
         compile_id:
@@ -214,16 +197,22 @@ command_payload_definitions:
         owner_result: none
       error_codes: [invalid_route, invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's blocker_missing maps to blocked_state_required
-      # (owner_state_code_map); refresh_blocker_projection_before_open is the freshness clause; the
-      # result_contract route_target rides the CV-333 response.
+      judgments:
+        - key: response_kind
+          choice: local_projection
+          gap_note: >-
+            The runtime row is a navigation_wrapper whose result_contract is only route_target and whose receipt
+            effect is inspection_opened (Plans/prd_planning_runtime_contracts.json ui_command_contracts), and its
+            wiring row asks only for a no-persist receipt or route/open disposition (catalog.plan_compile_inspect_blocker).
+            Canon does not say whether that is an owner result. Choice: a local projection. The route is applied as
+            the command's route/open disposition, and the inspection_opened receipt travels as the CV-333 response's
+            own receipt_ref, which carries the "actual dispatch/route/owner receipt" (Contracts_V0.md:1929), so no
+            owner result is defined. cmd.plan_compile.open_build is modelled differently because PNC canon gives it
+            an explicit receipt and a route_open effect.
       aliases: []
     - command_id: cmd.plan_compile.inspect_evidence
       ucc_units: [UCC-098, UCC-097]
       command_kind: navigation_wrapper
-      # canon: runtime contract row cmd.plan_compile.inspect_evidence (command_kind
-      # navigation_wrapper); the history column's extra "redaction profile" input has no field in
-      # the runtime field list.
       response_kind: local_projection
       args:
         compile_id:
@@ -244,14 +233,20 @@ command_payload_definitions:
         owner_result: none
       error_codes: [invalid_route, invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's evidence_missing maps to blocked_state_required
-      # (owner_state_code_map); refresh_evidence_projection_before_open is the freshness clause.
+      judgments:
+        - key: response_kind
+          choice: local_projection
+          gap_note: >-
+            The runtime row is a navigation_wrapper whose result_contract is only route_target and whose receipt
+            effect is evidence_opened (Plans/prd_planning_runtime_contracts.json ui_command_contracts); its wiring row
+            asks only for a no-persist receipt or route/open disposition. Canon does not say whether that is an owner
+            result. Choice: a local projection: the route is the command's route/open disposition and
+            evidence_opened travels as the CV-333 response's receipt_ref (Contracts_V0.md:1929), as for
+            cmd.plan_compile.inspect_blocker.
       aliases: []
     - command_id: cmd.plan_compile.inspect_assignment
       ucc_units: [UCC-098, UCC-097]
       command_kind: navigation_wrapper
-      # canon: runtime contract row cmd.plan_compile.inspect_assignment (command_kind
-      # navigation_wrapper).
       response_kind: local_projection
       args:
         compile_id:
@@ -272,14 +267,20 @@ command_payload_definitions:
         owner_result: none
       error_codes: [invalid_route, invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's assignment_missing maps to blocked_state_required
-      # (owner_state_code_map); refresh_assignment_projection_before_open is the freshness clause.
+      judgments:
+        - key: response_kind
+          choice: local_projection
+          gap_note: >-
+            The runtime row is a navigation_wrapper whose result_contract is only route_target and whose receipt
+            effect is assignment_opened (Plans/prd_planning_runtime_contracts.json ui_command_contracts); its wiring
+            row asks only for a no-persist receipt or route/open disposition. Canon does not say whether that is an
+            owner result. Choice: a local projection: the route is the command's route/open disposition and
+            assignment_opened travels as the CV-333 response's receipt_ref (Contracts_V0.md:1929), as for
+            cmd.plan_compile.inspect_blocker.
       aliases: []
     - command_id: cmd.plan_compile.request_bounded_recompile
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.plan_compile.request_bounded_recompile (command_kind
-      # domain_action).
       response_kind: owner_operation
       args:
         compile_id:
@@ -309,16 +310,10 @@ command_payload_definitions:
         owner_result: local:PlanCompileBoundedRecompileResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's no_invalidated_refs maps to blocked_state_required
-      # (owner_state_code_map); refresh_impact_report_before_recompile is the freshness clause.
       aliases: []
     - command_id: cmd.plan_compile.open_build
       ucc_units: [UCC-098, UCC-097]
       command_kind: navigation_wrapper
-      # canon: runtime contract row cmd.plan_compile.open_build (command_kind navigation_wrapper);
-      # it takes the PlanCompileRun identity the catalog names, not a goal run id (DL-333
-      # resolution 1). PNC-014 makes it a route/open with projected availability, disabled reason
-      # and an explicit receipt, so it carries an owner result unlike the inspect commands.
       response_kind: owner_operation
       args:
         plan_compile_run_id:
@@ -339,10 +334,16 @@ command_payload_definitions:
         owner_result: local:PlanCompileOpenBuildResultV1
       error_codes: [invalid_route, invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's activation_not_active maps to blocked_state_required
-      # (owner_state_code_map); its stale_projection_policy opens only after the durable
-      # BuildStarted projection (the freshness clause). No fabricated success event and no runtime
-      # activation claim while the branch is design_only (PNC-014).
+      judgments:
+        - key: response_kind
+          choice: owner_operation
+          gap_note: >-
+            The runtime row is a navigation_wrapper with result_contract route_target and receipt effect build_opened,
+            the same shape as the inspect rows. It is owner_operation, unlike them, because PNC canon calls it "a
+            route/open or post-build reveal command with projected availability, disabled reason, and explicit
+            receipt" (Plan_To_Node_Compilation.md:913) and its wiring rows give it a route_open effect that opens the
+            build route or records a disabled route/open receipt (catalog.plan_compile_open_build,
+            orchestrator.plan.compile.open_build). Canon does not state the response_kind itself.
       aliases: []
   results:
     PlanCompilePauseResultV1:

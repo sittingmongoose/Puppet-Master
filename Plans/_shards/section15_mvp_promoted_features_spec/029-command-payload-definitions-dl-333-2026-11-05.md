@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L13363-L14617
+Source lines: L13363-L15164
 
-Source SHA256: `e48b22f338b10ae7a1ae1e9cee8bb501c4d5c307a050779124832222b4e7a68a`
+Source SHA256: `522e8cfe82ce6384d9b7cbf35cd3063a034e2d61a4fbfaba888de60d7a5e3062`
 
 ---
 
@@ -89,12 +89,18 @@ command_payload_definitions:
   format: pm.command_payload_definitions.v1
   owner_unit: SMPFS-328
   overlay: Plans/UI_Command_Catalog.md#UCC-230
+  # Shared conventions for this block:
+  # - Row cites are the browser command table, UI_Command_Catalog.md:825-846; its Payload column is
+  #   history under DL-333 resolution 10, kept as the command-row authority for names.
+  # - Every wiring row (Wiring_Matrix.production.json entries catalog.browser_*) names
+  #   BrowserActionRequestV2 and BrowserActionResultV2 (Plans/section15_browser_program_contracts.schema.json).
+  # - The table states no command_kind and no disabled reasons for these rows; only
+  #   cmd.browser.open_devtools has a kind cell (UI_Command_Catalog.md:15390).
+  # - CV-360's placement fields go only on the routes its open-routes table lists
+  #   (UI_Command_Catalog.md:18046-18066): open_workspace_preview and focus_browser_tab.
   definitions:
     - command_id: cmd.browser.open_workspace_preview
       ucc_units: [UCC-063, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind for this row; the aliases table records it a kept id,
-      # open route with normalization.kind wrapper (UI_Command_Catalog.md:17840), which is a
-      # navigation_wrapper in Contracts_V0 7.2 terms.
       command_kind: navigation_wrapper
       response_kind: owner_operation
       args:
@@ -111,9 +117,10 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             Canon names target with no type (UI_Command_Catalog.md:825); the aliases row reads it as
-            "browser session target" (:17840) and the launcher rows open "an address" through it. JUDGMENT:
-            url covers the address opens; alternatives not settled by canon are a union with the overlay's
-            preview_subject_ref or Primitive:RouteTarget.
+            "browser session target" (:18038), the launcher rows open "an address" through it, and
+            Commands_System.md:8925-8926 has Open port reuse it "with a server/environment-authoritative URL".
+            JUDGMENT: url covers the address opens; alternatives not settled by canon are a union with the
+            overlay's preview_subject_ref or Primitive:RouteTarget.
         workspace_tab_id:
           type: id
           required: true
@@ -125,26 +132,26 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "CV-360 placement fields (Plans/Contracts_V0.md#CV-360): where is auto, tab, panel, right, down or a panel id; default auto"
+          source: "CV-360 (Contracts_V0.md:23626-23629) names this route: where is auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. Open-routes table UI_Command_Catalog.md:18062; DL-180 amendment :850"
         mode:
           type: enum
           values: [preview, keep]
           required: false
           default: none
           provenance: canon
-          source: "CV-360 placement fields (Plans/Contracts_V0.md#CV-360): mode is preview or keep; preview only for kinds with a preview tab; no default stated"
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; preview only for kinds with a preview tab; no default stated"
         by:
           type: string
           required: false
           default: user
           provenance: canon
-          source: "CV-360 placement fields (Plans/Contracts_V0.md#CV-360): by is user or agent:<name>; default user"
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user; an agent always opens in the background"
         background:
           type: boolean
           required: false
           default: false
           provenance: canon
-          source: "CV-360 placement fields (Plans/Contracts_V0.md#CV-360): background default false"
+          source: "CV-360 (Contracts_V0.md:23631): background default false"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -152,9 +159,32 @@ command_payload_definitions:
       error_codes: [invalid_args, invalid_route, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: navigation_wrapper
+          gap_note: >-
+            No catalog row states a command_kind; the aliases table records it a kept id, open route with
+            normalization.kind wrapper (UI_Command_Catalog.md:18038), a navigation_wrapper in Contracts_V0
+            section 7.2 terms.
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row (UI_Command_Catalog.md:825) states no disabled reasons; unsupported stands for a host
+            without the browser runtime.
+        - key: omitted:target_editor_panel_id
+          choice: omitted
+          gap_note: >-
+            The row's Payload column (history, UI_Command_Catalog.md:825) still lists target_editor_panel_id?,
+            while the DL-180 amendment (:850) says it no longer selects a home panel and CV-360
+            (Contracts_V0.md:23646) says no route carries another placement field; the definition leaves it
+            out, and the SMPFS-328 negative constraint keeps it out.
+        - key: omitted:target_editor_group_id
+          choice: omitted
+          gap_note: >-
+            Same as target_editor_panel_id: listed in the history Payload column (UI_Command_Catalog.md:825),
+            retired as home placement by the DL-180 amendment (:850) and CV-360.
     - command_id: cmd.browser.open_detached_preview
       ucc_units: [UCC-063, UCC-061, UCC-062]
-      # JUDGMENT: same open-route shape as open_workspace_preview; canon states no command_kind.
       command_kind: navigation_wrapper
       response_kind: owner_operation
       args:
@@ -179,31 +209,6 @@ command_payload_definitions:
           default: none
           provenance: canon
           source: "catalog row payload (UI_Command_Catalog.md:826); token also preserved in UCC-063"
-        where:
-          type: string
-          required: false
-          default: auto
-          provenance: canon
-          source: "CV-360 placement fields (Plans/Contracts_V0.md#CV-360); default auto"
-        mode:
-          type: enum
-          values: [preview, keep]
-          required: false
-          default: none
-          provenance: canon
-          source: "CV-360 placement fields (Plans/Contracts_V0.md#CV-360); no default stated"
-        by:
-          type: string
-          required: false
-          default: user
-          provenance: canon
-          source: "CV-360 placement fields (Plans/Contracts_V0.md#CV-360); default user"
-        background:
-          type: boolean
-          required: false
-          default: false
-          provenance: canon
-          source: "CV-360 placement fields (Plans/Contracts_V0.md#CV-360); default false"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -211,10 +216,34 @@ command_payload_definitions:
       error_codes: [invalid_args, invalid_route, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: navigation_wrapper
+          gap_note: >-
+            No catalog row states a command_kind; the row opens a target in a detached browser
+            (UI_Command_Catalog.md:826), an open like open_workspace_preview but outside the home panels.
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime.
+        - key: omitted:where
+          choice: omitted
+          gap_note: >-
+            CV-360 (Contracts_V0.md:23626-23627) and its open-routes table (UI_Command_Catalog.md:18046-18066)
+            do not list this route, the DL-180 amendment (:850) moves only open_workspace_preview onto CV-360,
+            and the row opens a detached browser (:826), not a home-panel tab; so no CV-360 placement field is
+            carried.
+        - key: omitted:mode
+          choice: omitted
+          gap_note: "Same reason as where: CV-360 does not list this route."
+        - key: omitted:by
+          choice: omitted
+          gap_note: "Same reason as where: CV-360 does not list this route."
+        - key: omitted:background
+          choice: omitted
+          gap_note: "Same reason as where: CV-360 does not list this route."
     - command_id: cmd.browser.focus_browser_tab
       ucc_units: [UCC-063, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row is layout/UI state only (UI_Command_Catalog.md:827,
-      # :17871), which is a shell_view.
       command_kind: shell_view
       response_kind: owner_operation
       args:
@@ -224,6 +253,31 @@ command_payload_definitions:
           default: none
           provenance: canon
           source: "catalog row payload (UI_Command_Catalog.md:827); overlay UCC-061..065 identity browser_session_id?"
+        where:
+          type: string
+          required: false
+          default: auto
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646, every open route UCC-200 lists carries the fields): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18062)"
+        mode:
+          type: enum
+          values: [preview, keep]
+          required: false
+          default: none
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18062"
+        by:
+          type: string
+          required: false
+          default: user
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18062"
+        background:
+          type: boolean
+          required: false
+          default: false
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18062"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -231,11 +285,28 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: shell_view
+          gap_note: >-
+            No catalog row states a command_kind; the row is "layout/UI state only" (UI_Command_Catalog.md:827)
+            and the open-routes table calls it layout-only (:18062).
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime.
+        - key: field:where
+          choice: carry CV-360's where, mode, by and background
+          gap_note: >-
+            Canon conflict C1: CV-360's acceptance (Contracts_V0.md:23646) says every open route UCC-200 lists
+            carries the four placement fields, and the open-routes table lists this route
+            (UI_Command_Catalog.md:18062), but the row and its wiring entry catalog.browser_focus_browser_tab
+            make it a reveal of the tab that hosts the session wherever it is, and CV-360 says a reveal never
+            moves a tab, so placement changes nothing here. The definition follows the table, as the fix-round
+            brief directs; the owner should say whether reveal-only routes are exempt.
     - command_id: cmd.browser.detach_browser_tab
       ucc_units: [UCC-063, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; layout/UI state row (UI_Command_Catalog.md:828), a shell_view.
-      # UCC-203: no producer on a panel tab because no tab pops out; the row stays for lineage.
-      command_kind: shell_view
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         browser_session_id:
@@ -248,14 +319,25 @@ command_payload_definitions:
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionResultV2
-      error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row emits browser.session.state_changed
+            (UI_Command_Catalog.md:828), a session-state mutation like reopen and retry. The DL-180 amendment
+            (:850, UCC-203) says it has no producer on a panel tab because no tab pops out; the row stays for
+            lineage.
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime and
+            for a panel tab, which cannot pop out (UCC-203).
     - command_id: cmd.browser.open_devtools
       ucc_units: [UCC-063, UCC-061, UCC-062]
-      # canon: UCC-156's row (via UCC-202) states command_kind navigation_wrapper for this canonical id
-      # (UI_Command_Catalog.md:15191, :18560).
-      command_kind: navigation_wrapper
+      command_kind: navigation_wrapper            # canon: UI_Command_Catalog.md:15390 (the row the canonical id takes over, :18758)
       response_kind: owner_operation
       args:
         browser_session_id:
@@ -270,10 +352,11 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            Catalog payload names mode? with no values (UI_Command_Catalog.md:829); the named contract
-            BrowserDevToolsOpenRequest (UI_Command_Catalog.md:15191, :18560) has no schema in Plans, so the
-            DevTools mode vocabulary is still open. JUDGMENT: string holds the value; an enum needs the
-            owner to name the modes.
+            Catalog payload names mode? with no values (UI_Command_Catalog.md:829). The named request contract
+            BrowserDevToolsOpenRequest (UI_Command_Catalog.md:15390, :18758) is placed at
+            Plans/browser_capture_contracts.schema.json by Commands_System.md:6486, and that file does not exist
+            in Plans, so the DevTools mode vocabulary is still open. JUDGMENT: string holds the value; an enum
+            needs the owner to name the modes.
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -281,11 +364,34 @@ command_payload_definitions:
       error_codes: [invalid_args, invalid_route, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported, permission_required]
       aliases:
-        - {command_id: cmd.browser.devtools.open, kind: alias, source: "UCC-202 and the duplicate-ids table (UI_Command_Catalog.md:18560); UCC-063 stale_retired_dispositions"}
+        - {command_id: cmd.browser.devtools.open, kind: alias, source: "UCC-202 and the duplicate-ids table (UI_Command_Catalog.md:18758); UCC-063 stale_retired_dispositions"}
+      judgments:
+        - key: disabled_reason_codes
+          choice: [unsupported, permission_required]
+          gap_note: >-
+            The canonical id takes the preconditions browser_runtime_available && !protected_auth_browser &&
+            devtools_policy_allows (UI_Command_Catalog.md:15390, :18758) but no disabled reasons; unsupported
+            stands for a missing browser runtime or the protected authentication browser, and
+            permission_required for the DevTools policy.
+        - key: owner_request
+          choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
+          gap_note: >-
+            Canon conflict C4: the wiring rows catalog.browser_open_devtools and
+            assistant.redesign.cmd.browser_devtools_open name BrowserActionRequestV2, while the catalog
+            (UI_Command_Catalog.md:15390, :18758) and Commands_System.md:6486 name BrowserDevToolsOpenRequest,
+            which has no schema in Plans. The definition takes the wiring row, the only one that resolves.
+        - key: owner_result
+          choice: local:BrowserDevToolsOpenResultV1
+          gap_note: >-
+            Canon conflict C4: the catalog (UI_Command_Catalog.md:15390, :18758) and Commands_System.md:6486
+            name RouteResult (the only RouteResult schema, Plans/assistant_chat_contracts.schema.json#/$defs/RouteResult,
+            is fixed to cmd.chat.goal.open_editor); the wiring rows name BrowserActionResultV2; Section15's
+            Browser Action Table gives this action's output fields (Section15_MVP_Promoted_Features_Spec.md:9952).
+            The definition takes Section15's fields, because the wiring rows' own effect_contract says "Owner
+            typed result and projection under Plans/Section15_MVP_Promoted_Features_Spec.md"; the owner should
+            pick one contract.
     - command_id: cmd.browser.toggle_devtools_dock
       ucc_units: [UCC-063, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; layout/UI state only row (UI_Command_Catalog.md:830), a
-      # shell_view.
       command_kind: shell_view
       response_kind: owner_operation
       args:
@@ -311,10 +417,18 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: shell_view
+          gap_note: >-
+            No catalog row states a command_kind; the row is "layout/UI state only" (UI_Command_Catalog.md:830).
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime or
+            DevTools.
     - command_id: cmd.browser.pick_element_for_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row emits browser.context_captured
-      # (UI_Command_Catalog.md:831), a mutating capture, so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -331,10 +445,19 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported, permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row emits browser.context_captured
+            (UI_Command_Catalog.md:831), a capture the composer receives.
+        - key: disabled_reason_codes
+          choice: [unsupported, permission_required]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime and
+            permission_required for the capture permission.
     - command_id: cmd.browser.add_selection_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row emits browser.context_captured
-      # (UI_Command_Catalog.md:832), a mutating capture, so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -351,10 +474,19 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported, permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row emits browser.context_captured
+            (UI_Command_Catalog.md:832), a capture the composer receives.
+        - key: disabled_reason_codes
+          choice: [unsupported, permission_required]
+          gap_note: >-
+            The row states no disabled reasons; the same choice as pick_element_for_chat (browser runtime,
+            capture permission).
     - command_id: cmd.browser.add_selection_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row emits browser.context_captured and
-      # runtime_artifact.screenshot (UI_Command_Catalog.md:833), a mutating capture, so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -378,10 +510,20 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported, permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row emits browser.context_captured and
+            runtime_artifact.screenshot (UI_Command_Catalog.md:833), a capture.
+        - key: disabled_reason_codes
+          choice: [unsupported, permission_required]
+          gap_note: >-
+            The row states no disabled reasons; the same choice as pick_element_for_chat (browser runtime,
+            capture permission). Until native capture exists the handler fails closed with
+            handler_unavailable (capture event rules, UI_Command_Catalog.md:853).
     - command_id: cmd.browser.add_selection_full_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row emits browser.context_captured and
-      # runtime_artifact.screenshot (UI_Command_Catalog.md:834), a mutating capture, so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -405,10 +547,19 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported, permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row emits browser.context_captured and
+            runtime_artifact.screenshot (UI_Command_Catalog.md:834), a capture.
+        - key: disabled_reason_codes
+          choice: [unsupported, permission_required]
+          gap_note: >-
+            The row states no disabled reasons; the same choice as pick_element_for_chat (browser runtime,
+            capture permission).
     - command_id: cmd.browser.add_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row emits runtime_artifact.screenshot
-      # (UI_Command_Catalog.md:835), a mutating capture, so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -432,10 +583,19 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported, permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row emits runtime_artifact.screenshot
+            (UI_Command_Catalog.md:835), a capture.
+        - key: disabled_reason_codes
+          choice: [unsupported, permission_required]
+          gap_note: >-
+            The row states no disabled reasons; the same choice as pick_element_for_chat (browser runtime,
+            capture permission).
     - command_id: cmd.browser.add_full_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row emits runtime_artifact.screenshot
-      # (UI_Command_Catalog.md:836), a mutating capture, so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -459,10 +619,19 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported, permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row emits runtime_artifact.screenshot
+            (UI_Command_Catalog.md:836), a capture.
+        - key: disabled_reason_codes
+          choice: [unsupported, permission_required]
+          gap_note: >-
+            The row states no disabled reasons; the same choice as pick_element_for_chat (browser runtime,
+            capture permission).
     - command_id: cmd.browser.share_with_agent
       ucc_units: [UCC-064, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row mutates browser-session share state and emits
-      # browser.context_shared (UI_Command_Catalog.md:837; SMPFS-089), so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -495,10 +664,26 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported, permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row updates browser-session share state and emits
+            browser.context_shared (UI_Command_Catalog.md:837, :855; SMPFS-089).
+        - key: disabled_reason_codes
+          choice: [unsupported, permission_required]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime and
+            permission_required for the share permission.
+        - key: owner_result
+          choice: local:BrowserShareWithAgentResultV1
+          gap_note: >-
+            The wiring row catalog.browser_share_with_agent names BrowserActionResultV2 as result_schema_ref,
+            while Section15's Browser Action Table gives this action its own output fields
+            (Section15_MVP_Promoted_Features_Spec.md:9950). The definition takes the owner doc's fields, the
+            more specific of the two; the owner should say whether they travel inside BrowserActionResultV2.
     - command_id: cmd.browser.revoke_share_with_agent
       ucc_units: [UCC-064, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row mutates browser-session share state and emits
-      # browser.context_share_revoked (UI_Command_Catalog.md:838; SMPFS-089), so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -515,10 +700,19 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row updates browser-session share state and emits
+            browser.context_share_revoked (UI_Command_Catalog.md:838, :855; SMPFS-089).
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime.
+            Revoking needs no permission beyond the share it removes.
     - command_id: cmd.browser.take_over
       ucc_units: [UCC-065, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row mutates the takeover state and emits
-      # browser.session.takeover_state_changed (UI_Command_Catalog.md:839), so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -542,10 +736,18 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row changes the takeover state and emits
+            browser.session.takeover_state_changed (UI_Command_Catalog.md:839).
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime.
     - command_id: cmd.browser.pause_agent
       ucc_units: [UCC-065, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row mutates the takeover state and emits
-      # browser.session.takeover_state_changed (UI_Command_Catalog.md:840), so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -562,10 +764,18 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row changes the takeover state and emits
+            browser.session.takeover_state_changed (UI_Command_Catalog.md:840).
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime.
     - command_id: cmd.browser.let_agent_continue
       ucc_units: [UCC-065, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row mutates the takeover state and emits
-      # browser.session.takeover_state_changed (UI_Command_Catalog.md:841), so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -582,11 +792,18 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row changes the takeover state and emits
+            browser.session.takeover_state_changed (UI_Command_Catalog.md:841).
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime.
     - command_id: cmd.browser.stop_agent_keep_browser
       ucc_units: [UCC-065, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row ends the agent run and emits
-      # browser.session.takeover_state_changed and dev.session.stopped (UI_Command_Catalog.md:842), so
-      # domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -603,10 +820,18 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row ends the agent run and emits
+            browser.session.takeover_state_changed and dev.session.stopped (UI_Command_Catalog.md:842).
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime.
     - command_id: cmd.browser.promote_to_normal_browsing
       ucc_units: [UCC-065, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row emits browser.session.promoted
-      # (UI_Command_Catalog.md:843), a session-state mutation, so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -629,10 +854,18 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row emits browser.session.promoted
+            (UI_Command_Catalog.md:843), a session-state change.
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime.
     - command_id: cmd.browser.reopen
       ucc_units: [UCC-065, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row mutates session state and emits
-      # browser.session.state_changed (UI_Command_Catalog.md:844), so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -649,10 +882,18 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row emits browser.session.state_changed
+            (UI_Command_Catalog.md:844), a session-state change.
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime.
     - command_id: cmd.browser.retry
       ucc_units: [UCC-065, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row mutates session state and emits
-      # browser.session.state_changed (UI_Command_Catalog.md:845), so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -669,10 +910,18 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row emits browser.session.state_changed
+            (UI_Command_Catalog.md:845), a session-state change.
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime.
     - command_id: cmd.browser.keep_closed
       ucc_units: [UCC-065, UCC-061, UCC-062]
-      # JUDGMENT: canon states no command_kind; the row closes the session and emits
-      # browser.session.closed (UI_Command_Catalog.md:846), so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -689,10 +938,20 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog row states a command_kind; the row closes the session and emits browser.session.closed
+            (UI_Command_Catalog.md:846).
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a host without the browser runtime.
   results:
     BrowserDevToolsOpenResultV1:
       fields:
-        devtools_session_id: {type: id, required: true, default: none, provenance: gap, gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9952 (Browser Action Table output fields); no typed contract exists"}
+        devtools_session_id: {type: id, required: true, default: none, provenance: gap, gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9952 (Browser Action Table output fields); no typed contract exists. See this command's owner_result judgment for the RouteResult and BrowserActionResultV2 sides (canon conflict C4)"}
         boundary_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9952; no typed contract exists"}
         opened_at_utc: {type: timestamp, required: true, default: none, provenance: gap, gap_note: "named at Section15_MVP_Promoted_Features_Spec.md:9952; no typed contract exists"}
     BrowserShareWithAgentResultV1:
@@ -779,10 +1038,22 @@ command_payload_definitions:
   format: pm.command_payload_definitions.v1
   owner_unit: SMPFS-329
   overlay: Plans/UI_Command_Catalog.md#UCC-230
+  # Shared conventions for this block:
+  # - Terminal row cites are the terminal command table, UI_Command_Catalog.md:880-888 (its payload column
+  #   is history under DL-333 resolution 10), and the kept terminal commands table (UCC-201,
+  #   UI_Command_Catalog.md:18479-18491), which states each terminal command_kind.
+  # - Every terminal wiring row names TerminalActionRequestV2 and TerminalActionResultV2
+  #   (Plans/shared_runtime_command_contracts.schema.json); the dev and catalog wiring rows
+  #   (catalog.dev_*, catalog.catalog_*) name no request_schema_ref or result_schema_ref.
+  # - The dev and catalog tables (UI_Command_Catalog.md:930-935, :949-951) state no command_kind and no
+  #   disabled reasons.
+  # - CV-360's placement fields go only on the routes its open-routes table lists
+  #   (UI_Command_Catalog.md:18046-18066): terminal.open, terminal.show, terminal.focus and the three
+  #   dev.show_* routes.
   definitions:
     - command_id: cmd.terminal.open
       ucc_units: [UCC-067, UCC-061, UCC-066, UCC-068, UCC-069]
-      command_kind: navigation_wrapper
+      command_kind: navigation_wrapper            # canon: UI_Command_Catalog.md:18483
       response_kind: owner_operation
       args:
         terminal_session_id:
@@ -790,32 +1061,32 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:880); kept-commands row 'Reveals the tab of the exact terminal_session_id' (UI_Command_Catalog.md:18285); overlay UCC-066..072 identity terminal_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md:880); kept-commands row 'Reveals the tab of the exact terminal_session_id' (UI_Command_Catalog.md:18483); overlay UCC-066..072 identity terminal_session_id?"
         where:
           type: string
           required: false
           default: auto
           provenance: canon
-          source: "CV-360 placement fields (Plans/Contracts_V0.md#CV-360); the kept-commands row says it carries CV-360's placement fields (UI_Command_Catalog.md:18285); default auto"
+          source: "CV-360 (Contracts_V0.md:23626-23629) names this route: where is auto, tab, panel, right, down or a panel id; default auto. The kept-commands row says it carries CV-360's placement fields (UI_Command_Catalog.md:18483); open-routes table :18063"
         mode:
           type: enum
           values: [preview, keep]
           required: false
           default: none
           provenance: canon
-          source: "CV-360 placement fields (Plans/Contracts_V0.md#CV-360); no default stated"
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated"
         by:
           type: string
           required: false
           default: user
           provenance: canon
-          source: "CV-360 placement fields (Plans/Contracts_V0.md#CV-360); default user"
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user"
         background:
           type: boolean
           required: false
           default: false
           provenance: canon
-          source: "CV-360 placement fields (Plans/Contracts_V0.md#CV-360); default false; an agent's open lands as a background tab (UCC-066)"
+          source: "CV-360 (Contracts_V0.md:23631): background default false; an agent's open lands as a background tab (UCC-066, UI_Command_Catalog.md:5114; :18483)"
         origin_surface:
           type: string
           required: false
@@ -846,9 +1117,15 @@ command_payload_definitions:
       error_codes: [invalid_args, invalid_route, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            Neither the terminal row (UI_Command_Catalog.md:880) nor the kept-commands row (:18483) states
+            disabled reasons; unsupported stands for a host without a terminal runtime.
     - command_id: cmd.terminal.show
       ucc_units: [UCC-067, UCC-061, UCC-066, UCC-068, UCC-069]
-      command_kind: shell_view
+      command_kind: shell_view                    # canon: UI_Command_Catalog.md:18484
       response_kind: owner_operation
       args:
         terminal_session_id:
@@ -856,7 +1133,32 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:881); kept-commands row (UI_Command_Catalog.md:18286); overlay UCC-066..072 identity terminal_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md:881); kept-commands row (UI_Command_Catalog.md:18484); overlay UCC-066..072 identity terminal_session_id?"
+        where:
+          type: string
+          required: false
+          default: auto
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646, every open route UCC-200 lists carries the fields): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18063)"
+        mode:
+          type: enum
+          values: [preview, keep]
+          required: false
+          default: none
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18063"
+        by:
+          type: string
+          required: false
+          default: user
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18063"
+        background:
+          type: boolean
+          required: false
+          default: false
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18063"
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -864,9 +1166,25 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            Neither the terminal row (UI_Command_Catalog.md:881) nor the kept-commands row (:18484) states
+            disabled reasons; unsupported stands for a host without a terminal runtime.
+        - key: field:where
+          choice: carry CV-360's where, mode, by and background
+          gap_note: >-
+            Canon conflict C1: CV-360's acceptance (Contracts_V0.md:23646) says every open route UCC-200 lists
+            carries the four placement fields, and the open-routes table lists this route
+            (UI_Command_Catalog.md:18063), but the kept-commands row makes it a focus of the same live
+            session's tab that never collapses into open (:18484), and its wiring entry catalog.terminal_show
+            reveals the tab wherever it is; CV-360 says a reveal never moves a tab, so placement changes
+            nothing here. The definition follows the table, as the fix-round brief directs; the owner should
+            say whether reveal-only routes are exempt.
     - command_id: cmd.terminal.rerun
       ucc_units: [UCC-067, UCC-069]
-      command_kind: domain_action
+      command_kind: domain_action                 # canon: UI_Command_Catalog.md:18487
       response_kind: owner_operation
       args:
         terminal_session_id:
@@ -876,8 +1194,8 @@ command_payload_definitions:
           provenance: canon
           source: >-
             catalog row payload (UI_Command_Catalog.md:882); UCC-067 acceptance: "Rerun preserves
-            terminal_session_id only when same-session execution is explicitly requested and available";
-            overlay UCC-066..072 identity terminal_session_id?
+            terminal_session_id only when same-session execution is explicitly requested and available"
+            (UI_Command_Catalog.md:5191); overlay UCC-066..072 identity terminal_session_id?
         command_ref:
           type: ref
           required: false
@@ -895,9 +1213,13 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             Canon says "same-session flag or new-session request" (UI_Command_Catalog.md:882) without naming
-            or typing the field. JUDGMENT: same_session boolean, absent meaning the row's default
-            new-invocation-in-bound-session; the alternative is a mode enum [same_session, new_session];
-            not settled by canon.
+            or typing the field. JUDGMENT: same_session boolean; the alternative is a mode enum
+            [same_session, new_session]. What absence means is canon conflict C3, left to the owner: UCC-067's
+            acceptance (UI_Command_Catalog.md:5191) preserves terminal_session_id "only when same-session
+            execution is explicitly requested", so absent would mean a new session, while row :882 ("new
+            terminal launch only for an explicit new-session request"), the kept-commands row (:18487,
+            "same-session rerun is a new invocation in the bound session; a new session only on explicit
+            request") and Commands_System.md:8928-8929 make a same-session rerun the default.
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -905,9 +1227,15 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            Neither the terminal row (UI_Command_Catalog.md:882) nor the kept-commands row (:18487) states
+            disabled reasons; unsupported stands for a host without a terminal runtime.
     - command_id: cmd.terminal.focus
       ucc_units: [UCC-067, UCC-068]
-      command_kind: shell_view
+      command_kind: shell_view                    # canon: UI_Command_Catalog.md:18485
       response_kind: owner_operation
       args:
         terminal_session_id:
@@ -915,23 +1243,73 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "catalog row payload terminal_session_id? (UI_Command_Catalog.md:884); kept-commands row (UI_Command_Catalog.md:18287); overlay UCC-066..072 identity terminal_session_id?"
+          source: "catalog row payload terminal_session_id? (UI_Command_Catalog.md:884); kept-commands row (UI_Command_Catalog.md:18485); overlay UCC-066..072 identity terminal_session_id?"
         dev_session_id:
           type: id
           required: false
           default: none
           provenance: canon
-          source: "catalog row payload dev_session_id? (UI_Command_Catalog.md:884, :18287); overlay UCC-066..072 identity dev_session_id?"
+          source: "catalog row payload dev_session_id? (UI_Command_Catalog.md:884, :18485); overlay UCC-066..072 identity dev_session_id?"
+        where:
+          type: string
+          required: false
+          default: auto
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646, every open route UCC-200 lists carries the fields): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18063)"
+        mode:
+          type: enum
+          values: [preview, keep]
+          required: false
+          default: none
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18063"
+        by:
+          type: string
+          required: false
+          default: user
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18063"
+        background:
+          type: boolean
+          required: false
+          default: false
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18063"
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionResultV2
       error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
-      aliases: []
+      aliases:
+        - {command_id: cmd.terminal.focus_session, kind: alias, source: "UCC-202 duplicate-ids table (UI_Command_Catalog.md:18760: cmd.terminal.focus is canonical, cmd.terminal.focus_session its alias); :8621; UCC-230 non_definition_tokens (DL-341)"}
+      judgments:
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            Neither the terminal row (UI_Command_Catalog.md:884) nor the kept-commands row (:18485) states
+            disabled reasons; unsupported stands for a host without a terminal runtime.
+        - key: field:where
+          choice: carry CV-360's where, mode, by and background
+          gap_note: >-
+            Canon conflict C1: CV-360's acceptance (Contracts_V0.md:23646) says every open route UCC-200 lists
+            carries the four placement fields, and the open-routes table lists this route
+            (UI_Command_Catalog.md:18063), but the kept-commands row (:18485) and its wiring entry
+            catalog.terminal_focus make it a reveal of the session's tab, else the most recently focused
+            terminal tab, wherever it is; CV-360 says a reveal never moves a tab, so placement changes nothing
+            here. The definition follows the table, as the fix-round brief directs; the owner should say
+            whether reveal-only routes are exempt.
+        - key: omitted:terminal_pane_id
+          choice: omitted
+          gap_note: >-
+            The terminal row's payload column (history, UI_Command_Catalog.md:884) still lists
+            terminal_pane_id?, while the kept-commands row says "the terminal_pane_id? argument retires with
+            panes" (:18485, DL-181) and the SMPFS-329 negative constraint keeps it out. The row's
+            "/last-relevant fallback mode" is the kept row's "else the most recently focused terminal tab", a
+            behavior with no arg.
     - command_id: cmd.terminal.restart_replace
       ucc_units: [UCC-067, UCC-068]
-      command_kind: domain_action
+      command_kind: domain_action                 # canon: UI_Command_Catalog.md:18488
       response_kind: owner_operation
       args:
         terminal_session_id:
@@ -939,7 +1317,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:888); kept-commands row (UI_Command_Catalog.md:18290); overlay UCC-066..072 identity terminal_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md:888); kept-commands row (UI_Command_Catalog.md:18488); overlay UCC-066..072 identity terminal_session_id?"
         policy:
           type: string
           required: false
@@ -948,7 +1326,7 @@ command_payload_definitions:
           gap_note: >-
             Canon names a "/restart/replace policy" (UI_Command_Catalog.md:888) with no values; the
             kept-commands row fixes the behavior (a new session in the same tab, same folder and profile,
-            UI_Command_Catalog.md:18290) without a policy vocabulary. JUDGMENT: string holds the value
+            UI_Command_Catalog.md:18488) without a policy vocabulary. JUDGMENT: string holds the value
             pending an owner enum.
         command_ref:
           type: ref
@@ -966,7 +1344,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             Canon names "command replay or shell profile hints" (UI_Command_Catalog.md:888); the default is
-            the same folder and profile (UI_Command_Catalog.md:18290). JUDGMENT: profile, string, optional,
+            the same folder and profile (UI_Command_Catalog.md:18488). JUDGMENT: profile, string, optional,
             overrides that default; the exact field name is not locked by canon.
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
@@ -975,9 +1353,15 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            Neither the terminal row (UI_Command_Catalog.md:888) nor the kept-commands row (:18488) states
+            disabled reasons; unsupported stands for a host without a terminal runtime.
     - command_id: cmd.terminal.clear_scrollback
       ucc_units: [UCC-072]
-      command_kind: domain_action
+      command_kind: domain_action                 # canon: UI_Command_Catalog.md:18491
       response_kind: owner_operation
       args:
         terminal_session_id:
@@ -985,7 +1369,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "kept-commands row (UI_Command_Catalog.md:18293); UCC-072 rule 'cmd.terminal.clear_scrollback preserves runtime identity'; overlay UCC-066..072 identity terminal_session_id?"
+          source: "kept-commands row (UI_Command_Catalog.md:18491); UCC-072 rule 'cmd.terminal.clear_scrollback preserves runtime identity'; overlay UCC-066..072 identity terminal_session_id?"
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -993,10 +1377,14 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The kept-commands row (UI_Command_Catalog.md:18491) states no disabled reasons; unsupported stands
+            for a host without a terminal runtime.
     - command_id: cmd.dev.start_session
       ucc_units: [UCC-070]
-      # JUDGMENT: canon states no command_kind; the row starts a dev session and emits dev.session.started
-      # (UI_Command_Catalog.md:930), a runtime mutation, so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -1036,10 +1424,19 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            The dev table states no command_kind; the row starts a dev session and emits dev.session.started
+            (UI_Command_Catalog.md:930), a runtime mutation.
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a project without a dev-session
+            runtime.
     - command_id: cmd.dev.stop_session
       ucc_units: [UCC-070]
-      # JUDGMENT: canon states no command_kind; the row stops a dev session and emits dev.session.stopping
-      # and dev.session.stopped (UI_Command_Catalog.md:931), a runtime mutation, so domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -1056,11 +1453,19 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            The dev table states no command_kind; the row stops a dev session and emits dev.session.stopping
+            and dev.session.stopped (UI_Command_Catalog.md:931), a runtime mutation.
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a project without a dev-session
+            runtime.
     - command_id: cmd.dev.restart_session
       ucc_units: [UCC-070]
-      # JUDGMENT: canon states no command_kind; the row restarts a dev session and emits
-      # dev.session.restarting and dev.session.started (UI_Command_Catalog.md:932), a runtime mutation, so
-      # domain_action. Distinct from the retired terminal spelling cmd.terminal.restart_session (UCC-202).
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -1077,10 +1482,21 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            The dev table states no command_kind; the row restarts a dev session and emits
+            dev.session.restarting and dev.session.started (UI_Command_Catalog.md:932), a runtime mutation.
+            It is distinct from the retired terminal spelling cmd.terminal.restart_session (UCC-202,
+            UI_Command_Catalog.md:18759).
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a project without a dev-session
+            runtime.
     - command_id: cmd.dev.show_output
       ucc_units: [UCC-070, UCC-072]
-      # JUDGMENT: canon states no command_kind; the row is layout/UI state only and reveals the output tool
-      # tab by kind affinity (UI_Command_Catalog.md:933, :17867), a navigation_wrapper.
       command_kind: navigation_wrapper
       response_kind: owner_operation
       args:
@@ -1090,17 +1506,52 @@ command_payload_definitions:
           default: none
           provenance: canon
           source: "catalog row payload (UI_Command_Catalog.md:933); overlay UCC-066..072 identity dev_session_id?"
+        where:
+          type: string
+          required: false
+          default: auto
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18065), and its wiring entry catalog.dev_show_output resolves it \"into the Output tool tab with CV-360's placement fields\""
+        mode:
+          type: enum
+          values: [preview, keep]
+          required: false
+          default: none
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18065; wiring entry catalog.dev_show_output"
+        by:
+          type: string
+          required: false
+          default: user
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18065; wiring entry catalog.dev_show_output"
+        background:
+          type: boolean
+          required: false
+          default: false
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18065; wiring entry catalog.dev_show_output"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
-        owner_result: local:DevSurfaceRevealResultV1
+        owner_result: local:DevToolTabOpenResultV1
       error_codes: [invalid_args, invalid_route, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: navigation_wrapper
+          gap_note: >-
+            The dev table states no command_kind; the row is "layout/UI state only" (UI_Command_Catalog.md:933)
+            and the open-routes table says it reveals or opens the output tool tab by its kind affinity
+            (:18065), an open route.
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a project without a dev-session
+            runtime.
     - command_id: cmd.dev.show_problems
       ucc_units: [UCC-070, UCC-072]
-      # JUDGMENT: canon states no command_kind; the row is layout/UI state only and reveals the problems
-      # tool tab by kind affinity (UI_Command_Catalog.md:934, :17867), a navigation_wrapper.
       command_kind: navigation_wrapper
       response_kind: owner_operation
       args:
@@ -1110,17 +1561,52 @@ command_payload_definitions:
           default: none
           provenance: canon
           source: "catalog row payload (UI_Command_Catalog.md:934); overlay UCC-066..072 identity dev_session_id?"
+        where:
+          type: string
+          required: false
+          default: auto
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18065), and its wiring entry catalog.dev_show_problems resolves it \"into the Problems tool tab with CV-360's placement fields\""
+        mode:
+          type: enum
+          values: [preview, keep]
+          required: false
+          default: none
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18065; wiring entry catalog.dev_show_problems"
+        by:
+          type: string
+          required: false
+          default: user
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18065; wiring entry catalog.dev_show_problems"
+        background:
+          type: boolean
+          required: false
+          default: false
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18065; wiring entry catalog.dev_show_problems"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
-        owner_result: local:DevSurfaceRevealResultV1
+        owner_result: local:DevToolTabOpenResultV1
       error_codes: [invalid_args, invalid_route, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: navigation_wrapper
+          gap_note: >-
+            The dev table states no command_kind; the row is "layout/UI state only" (UI_Command_Catalog.md:934)
+            and the open-routes table says it reveals or opens the problems tool tab by its kind affinity
+            (:18065), an open route.
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a project without a dev-session
+            runtime.
     - command_id: cmd.dev.show_ports
       ucc_units: [UCC-070, UCC-072]
-      # JUDGMENT: canon states no command_kind; the row is layout/UI state only and reveals the ports tool
-      # tab by kind affinity (UI_Command_Catalog.md:935, :17867), a navigation_wrapper.
       command_kind: navigation_wrapper
       response_kind: owner_operation
       args:
@@ -1130,18 +1616,52 @@ command_payload_definitions:
           default: none
           provenance: canon
           source: "catalog row payload (UI_Command_Catalog.md:935); overlay UCC-066..072 identity dev_session_id?"
+        where:
+          type: string
+          required: false
+          default: auto
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18065), and its wiring entry catalog.dev_show_ports resolves it \"into the Ports tool tab with CV-360's placement fields\""
+        mode:
+          type: enum
+          values: [preview, keep]
+          required: false
+          default: none
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18065; wiring entry catalog.dev_show_ports"
+        by:
+          type: string
+          required: false
+          default: user
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18065; wiring entry catalog.dev_show_ports"
+        background:
+          type: boolean
+          required: false
+          default: false
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18065; wiring entry catalog.dev_show_ports"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
-        owner_result: local:DevSurfaceRevealResultV1
+        owner_result: local:DevToolTabOpenResultV1
       error_codes: [invalid_args, invalid_route, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: navigation_wrapper
+          gap_note: >-
+            The dev table states no command_kind; the row is "layout/UI state only" (UI_Command_Catalog.md:935)
+            and the open-routes table says it reveals or opens the ports tool tab by its kind affinity
+            (:18065), an open route.
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for a project without a dev-session
+            runtime.
     - command_id: cmd.catalog.install_item
       ucc_units: [UCC-071]
-      # JUDGMENT: canon states no command_kind; the row mutates catalog state and emits
-      # catalog.install.started and catalog.install.completed (UI_Command_Catalog.md:949), so
-      # domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -1153,8 +1673,8 @@ command_payload_definitions:
           gap_note: >-
             Catalog payload names item_type (UI_Command_Catalog.md:949); SMPFS-055 gives the item kinds
             only in prose ("commands, skills, plugins/hooks, themes, and MCP configs",
-            Section15_MVP_Promoted_Features_Spec.md:4385) with no snake_case spellings, so no enum values
-            are written. JUDGMENT: string holds the value until the owner fixes the spellings.
+            Section15_MVP_Promoted_Features_Spec.md:4386) with no token spellings, so no enum values are
+            written. JUDGMENT: string holds the value until the owner fixes the spellings.
         item_id:
           type: id
           required: true
@@ -1176,11 +1696,18 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            The catalog table states no command_kind; the row changes catalog state and emits
+            catalog.install.started and catalog.install.completed (UI_Command_Catalog.md:949).
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for an item kind the host cannot install.
     - command_id: cmd.catalog.update_item
       ucc_units: [UCC-071]
-      # JUDGMENT: canon states no command_kind; the row mutates catalog state and emits
-      # catalog.update.started and catalog.update.completed (UI_Command_Catalog.md:950), so
-      # domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -1191,7 +1718,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             Same prose-only item kinds as cmd.catalog.install_item (UI_Command_Catalog.md:950;
-            Section15_MVP_Promoted_Features_Spec.md:4385); no enum spellings written.
+            Section15_MVP_Promoted_Features_Spec.md:4386); no enum spellings written.
         item_id:
           type: id
           required: true
@@ -1213,11 +1740,18 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            The catalog table states no command_kind; the row changes catalog state and emits
+            catalog.update.started and catalog.update.completed (UI_Command_Catalog.md:950).
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for an item kind the host cannot update.
     - command_id: cmd.catalog.remove_item
       ucc_units: [UCC-071]
-      # JUDGMENT: canon states no command_kind; the row mutates catalog state and emits
-      # catalog.remove.started and catalog.remove.completed (UI_Command_Catalog.md:951), so
-      # domain_action.
       command_kind: domain_action
       response_kind: owner_operation
       args:
@@ -1228,7 +1762,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             Same prose-only item kinds as cmd.catalog.install_item (UI_Command_Catalog.md:951;
-            Section15_MVP_Promoted_Features_Spec.md:4385); no enum spellings written.
+            Section15_MVP_Promoted_Features_Spec.md:4386); no enum spellings written.
         item_id:
           type: id
           required: true
@@ -1242,6 +1776,16 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            The catalog table states no command_kind; the row changes catalog state and emits
+            catalog.remove.started and catalog.remove.completed (UI_Command_Catalog.md:951).
+        - key: disabled_reason_codes
+          choice: [unsupported]
+          gap_note: >-
+            The row states no disabled reasons; unsupported stands for an item kind the host cannot remove.
   results:
     DevSessionStartResultV1:
       fields:
@@ -1253,10 +1797,13 @@ command_payload_definitions:
         dev_session_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the stopped or restarted dev session; no typed contract exists"}
         status: {type: string, required: true, default: none, provenance: gap, gap_note: "lifecycle status; values not fixed by canon (dev.session.stopped / dev.session.started are the events, UI_Command_Catalog.md:931-932)"}
         receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "present when the owner records a receipt; no typed contract exists"}
-    DevSurfaceRevealResultV1:
+    DevToolTabOpenResultV1:
       fields:
-        dev_session_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the owning dev session of the revealed surface; no typed contract exists"}
-        panel_tab_id: {type: id, required: false, default: none, provenance: gap, gap_note: "the revealed tool tab, named for the open-route result shape (CV-360); no typed contract exists"}
+        ok: {type: boolean, required: true, default: none, provenance: canon, source: "CV-360 (Contracts_V0.md:23631): an open returns { ok, panel_tab_id, panel_id, created, reason }; acceptance (:23652): a refused open returns ok false"}
+        panel_tab_id: {type: id, required: false, default: none, provenance: gap, gap_note: "CV-360 (Contracts_V0.md:23631) names panel_tab_id as the panel tab id; it does not say whether a refused open carries it, so it is optional here"}
+        panel_id: {type: id, required: false, default: none, provenance: gap, gap_note: "CV-360 (Contracts_V0.md:23631) names panel_id; it does not say whether a refused open carries it, so it is optional here"}
+        created: {type: boolean, required: false, default: none, provenance: gap, gap_note: "CV-360 (Contracts_V0.md:23632): created is false when an open tab was revealed and true when a tab was added; its presence on a refused open is unstated, so it is optional here"}
+        reason: {type: string, required: true, nullable: true, default: none, provenance: canon, source: "CV-360 (Contracts_V0.md:23632-23633): reason is null on success, else unknown_kind, not_ready or the route's own refusal (an open set of values, so string)"}
     CatalogItemLifecycleResultV1:
       fields:
         item_type: {type: string, required: true, default: none, provenance: gap, gap_note: "echoes the row's item_type; spellings still prose-only (SMPFS-055)"}

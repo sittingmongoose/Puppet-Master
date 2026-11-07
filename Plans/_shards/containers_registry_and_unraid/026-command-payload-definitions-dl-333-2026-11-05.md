@@ -2,9 +2,9 @@
 
 Source: `Plans/Containers_Registry_and_Unraid.md`
 
-Source lines: L6978-L9588
+Source lines: L6978-L9739
 
-Source SHA256: `1ca859a8a0a8d88ee55f0d59e0d581293fc30c3e77e3529edff6cf95074c44ed`
+Source SHA256: `3654bd33b07a198e050bf21f93becb3c441a49049158d83df585c3a5924c8a7a`
 
 ---
 
@@ -30,12 +30,13 @@ canonical_text: >-
   overlay's closed sets. The catalog keeps ids, labels, availability and aliases.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible Docker Manager, registry and Kubernetes commands.
-depends_on: [UCC-230, UCC-049, UCC-050, UCC-051, UCC-052, UCC-053, UCC-105, CRAU-011, CRAU-013, CRAU-014, CRAU-031, CRAU-044, CV-304, CV-333, DL-333]
+depends_on: [UCC-230, UCC-049, UCC-050, UCC-051, UCC-052, UCC-053, UCC-105, UCC-137, CRAU-007, CRAU-011, CRAU-012, CRAU-013, CRAU-014, CRAU-017, CRAU-031, CRAU-044, CRAU-098, CRAU-099, CV-304, CV-333, DL-333, DL-341]
 unblocks: []
 acceptance_criteria:
   - Every command that UCC-230 routes to CRAU-115 has exactly one definition in the block below.
   - Every field has a vocabulary type, required, default and provenance; every gap field says what was missing.
   - error_codes and disabled_reason_codes stay inside the overlay's closed sets.
+  - Every judgment a definition makes is in its judgments list with a key, a choice and a gap_note, never in a YAML comment (DL-341).
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
   - python3 scripts/pm-command-payload-defs-check.py
@@ -64,8 +65,7 @@ command_payload_definitions:
   definitions:
     - command_id: cmd.docker.build.select_target
       ucc_units: [UCC-049]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it persists the selected
-      # build target as per-project state and gates later builds, like cmd.docker.context.select (DESIGN 4.6).
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -126,8 +126,11 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerBuildTargetSelectionResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: shared Docker taxonomy (UCC-053) plus freshness; no row states a subset
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A build.select_target row gives only label, description and availability, and no Cozy lifecycle table lists it. It persists the selected build target as per-project state that later builds resolve to (CRAU-011), a state change like cmd.docker.context.select, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && build_candidate_present gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
     - command_id: cmd.docker.build.run
       ucc_units: [UCC-049]
       command_kind: domain_action
@@ -144,14 +147,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerBuildRunResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: docker_available gate plus freshness
-      # JUDGMENT: build.run carries no subject arg: CRAU-011 requires it to resolve to the persisted selected
-      # compose/bake target "rather than rebuilding from a guessed default", so the selection is read from
-      # per-project state, not passed per dispatch.
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A build.run row gives only label, description and availability, and no Cozy lifecycle table lists it. It runs the selected build path and records the last successful build target plus validation snapshot, a side effect, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && build_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
+        - {key: omitted:build_target_ref, choice: omitted, gap_note: "build.run takes no subject arg: CRAU-011 requires the run to resolve to the persisted selected compose/bake target rather than rebuilding from a guessed default, so the handler reads the selection from per-project state. Canon names no per-dispatch subject field; if one is wanted it needs an owner decision."}
     - command_id: cmd.docker.build.image
       ucc_units: [UCC-049]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it builds an image (side effect).
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -182,13 +186,16 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerBuildRunResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: build_target_selected gate plus shared taxonomy
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases:
         - {command_id: cmd.docker.build, kind: compatibility_alias,
            source: "UCC-049 compatibility_only_notes; UI_Command_Catalog.md section 2.5A and Cozy Shelves reconciliation: alias-of cmd.docker.build.image (selected path)"}
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A build.image row gives only label, description and availability, and no Cozy lifecycle table lists it. It builds an image, a side effect, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && build_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
     - command_id: cmd.docker.build.compose
       ucc_units: [UCC-049]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it builds compose services.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -218,11 +225,14 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerBuildRunResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: build_target_selected gate plus shared taxonomy
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A build.compose row gives only label, description and availability, and no Cozy lifecycle table lists it. It builds compose services, a side effect, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && build_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
     - command_id: cmd.docker.build.bake
       ucc_units: [UCC-049]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it runs a Bake build.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -254,12 +264,14 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerBuildRunResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: bake_target_selected gate plus shared taxonomy
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A build.bake row gives only label, description and availability, and no Cozy lifecycle table lists it. It runs a Bake build, a side effect, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && bake_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
     - command_id: cmd.docker.bake.preview
       ucc_units: [UCC-049]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it resolves the Bake graph and
-      # returns a typed preview payload (owner result), not a route.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -289,8 +301,11 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerBakePreviewResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: bake_file_resolved gate plus shared taxonomy
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A bake.preview row gives only label, description and availability, and no Cozy lifecycle table lists it. It resolves the Bake graph through the Docker engine and returns a typed preview, not a route, so domain_action; navigation_wrapper would fit only if the preview were a view of already-resolved state."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && bake_file_resolved gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
     - command_id: cmd.docker.bake.run
       ucc_units: [UCC-049]
       command_kind: domain_action
@@ -324,8 +339,11 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerBuildRunResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: bake_target_selected gate plus shared taxonomy
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A bake.run row gives only label, description and availability, and no Cozy lifecycle table lists it. It runs the selected Bake target, a side effect, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && bake_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
     - command_id: cmd.docker.container.stop
       ucc_units: [UCC-049]
       command_kind: domain_action                 # canon: Docker Manager lifecycle rows
@@ -411,7 +429,7 @@ command_payload_definitions:
     - command_id: cmd.docker.container.inspect
       ucc_units: [UCC-049]
       command_kind: navigation_wrapper            # canon: Docker Manager lifecycle rows
-      response_kind: owner_operation              # the owner returns the structured inspect output, not a route
+      response_kind: owner_operation
       args:
         container_ref:
           type: ref
@@ -428,11 +446,12 @@ command_payload_definitions:
       aliases:
         - {command_id: cmd.docker.inspect, kind: compatibility_alias,
            source: "UCC-049 compatibility_only_notes; UI_Command_Catalog.md section 2.5A: compatibility alias for cmd.docker.container.inspect"}
+      judgments:
+        - {key: response_kind, choice: owner_operation, gap_note: "The lifecycle table makes inspect a navigation_wrapper, and the 2.5A row says it shows structured inspect output with secret and redaction policy applied; canon names no result. owner_operation with the local inspect result is a choice, so the redacted output has a typed carrier; local_projection would leave it with none."}
     - command_id: cmd.docker.container.view_logs
       ucc_units: [UCC-049, UCC-105]
-      command_kind: navigation_wrapper            # JUDGMENT: canon states no kind; it opens a log view like
-      # container.inspect, and the stream session it starts is a read surface, not a mutation.
-      response_kind: owner_operation              # the owner returns the stream session record
+      command_kind: navigation_wrapper
+      response_kind: owner_operation
       args:
         container_ref:
           type: ref
@@ -452,13 +471,16 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerLogStreamResultV1
       error_codes: [invalid_args, permission_denied, invalid_route, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [unreachable, degraded, stale_projection]   # JUDGMENT: no row states a subset; engine reachability plus stream freshness
-      # JUDGMENT on the default: canon fixes no dispatch default for log_mode; default none means the surface
-      # opens in its persisted stream intent, and follow is restored only after source revalidation creates a
-      # new stream session (section 2A stream continuity).
+      disabled_reason_codes: [unreachable, degraded, stale_projection]
       aliases:
         - {command_id: cmd.docker.logs, kind: compatibility_alias,
            source: "UCC-049 compatibility_only_notes; UI_Command_Catalog.md section 2.5A: compatibility alias for cmd.docker.container.view_logs"}
+      judgments:
+        - {key: command_kind, choice: navigation_wrapper, gap_note: "Canon states no command_kind: the 2.5A row says only that it opens container logs with follow, paused snapshot and historical modes. It opens a read surface like container.inspect, which the lifecycle table makes navigation_wrapper, so navigation_wrapper. cmd.docker.k8s.logs, whose row has the same shape, takes the same kind (review r1 finding 11)."}
+        - {key: response_kind, choice: owner_operation, gap_note: "Canon names no result; the owner opens a stream session (section 2A stream continuity: follow is restored only through a new stream session), so the stream session record is returned as a local owner result."}
+        - {key: disabled_reason_codes, choice: [unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && container_selected gate; engine reachability and stream health from the shared taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph) plus the 2.0B projection-freshness clause."}
+        - {key: field:log_mode, choice: "default none", gap_note: "Canon fixes the three mode tokens (section 2A stream continuity) but no dispatch default. default none means the surface opens in its persisted stream intent, and follow is restored only after source revalidation creates a new stream session (section 2A)."}
+        - {key: omitted:capability_snapshot_ref, choice: omitted, gap_note: "Not required here: the row gate docker_available && container_selected matches container.inspect, which the lifecycle table classifies as a selection gate, not a capability gate, and the UCC-230 row group requires capability_snapshot_ref only for domain_action. cmd.docker.k8s.logs keeps the field because its gate k8s_connected is a cluster-connectivity capability."}
     - command_id: cmd.docker.container.attach_shell
       ucc_units: [UCC-049, UCC-105]
       command_kind: domain_action                 # canon: Docker Manager lifecycle rows
@@ -498,21 +520,20 @@ command_payload_definitions:
     - command_id: cmd.docker.context.select
       ucc_units: [UCC-049]
       command_kind: domain_action
-      # JUDGMENT: canon states no command_kind. Selecting the engine context changes the Docker target and
-      # revalidates capability, like cmd.docker.k8s.select_context (UI_Command_Catalog.md section 2.5B). Choose
-      # shell_view instead if it only changes what the panel shows.
       response_kind: owner_operation
       args:
-        docker_context:
-          type: id
+        runtime_context_ref:
+          type: ref
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            No field named the Docker-engine context (closure row 607); the overlay lists only
-            kubernetes_context?. JUDGMENT: (a) id = the context name as Docker reports it;
-            (b) type ref = a PM context record from the Docker capability projection (the Contexts subview,
-            CRAU-007 stable subviews). Whether the selection persists per project is not stated.
+            Canon names the Docker-engine context runtime_context, a durable runtime identity field (section 2A
+            runtime identity; CRAU-017), and the Docker/Hosts route payload carries it as runtime_context_ref?
+            (CRAU-092); CRAU-099's wrong_context diagnosis offers switch-context, which is this command. No row
+            names this arg or types it. The arg takes CRAU-092's exact name and is typed ref by the UCC-230
+            _ref rule; the docker_context name of DESIGN 4.6's worked example is dropped (review r1 finding 4).
+            Whether the selection persists per project is not stated.
         capability_snapshot_ref:
           type: ref
           required: true
@@ -525,11 +546,12 @@ command_payload_definitions:
         owner_result: local:DockerContextSelectResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
-      # JUDGMENT: canon names no subset for this row; these are drawn from the shared Docker/Kubernetes
-      # taxonomy (UCC-053) plus the 2.0B freshness clause.
       aliases:
         - {command_id: cmd.docker.set_context, kind: compatibility_alias,
            source: "UI_Command_Catalog.md Docker compose and context adjudication rows; the prototype cmd.docker.set_context is recorded as its alias"}
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind (UCC-137 says only that it is the canonical Docker-engine context selector). Selecting the engine context changes the Docker target and revalidates capability, like cmd.docker.k8s.select_context, so domain_action; shell_view would fit only if it changed what the panel shows."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "Canon names no subset for this row; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. CRAU-099's runtime_context_missing and runtime_context_unreachable map to not_configured and unreachable."}
     - command_id: cmd.docker.image.tag
       ucc_units: [UCC-049]
       command_kind: domain_action                 # canon: Docker Manager lifecycle rows
@@ -560,7 +582,7 @@ command_payload_definitions:
         target_repository:
           type: object
           required: false
-          default: none                              # absent = the source image's repository
+          default: none
           fields:
             namespace: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256},
                         provenance: canon, source: "DockerTagPushV3Request.namespace"}
@@ -569,7 +591,8 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             JUDGMENT: Docker can tag into another repository (repo:tag). Choices: (a) drop this field, so a tag
-            always stays in the source repository; (b) keep it optional as written.
+            always stays in the source repository; (b) keep it optional as written, absent meaning the source
+            image's repository.
       owner_request: none                          # no typed owner request exists
       result:
         response: Plans/ui_command_response.schema.json
@@ -580,7 +603,7 @@ command_payload_definitions:
     - command_id: cmd.docker.image.inspect
       ucc_units: [UCC-049]
       command_kind: navigation_wrapper            # canon: Docker Manager lifecycle rows
-      response_kind: owner_operation              # the owner returns the structured image inspect output
+      response_kind: owner_operation
       args:
         image_ref:
           type: ref
@@ -595,6 +618,8 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, invalid_route, handler_unavailable, internal_error]
       disabled_reason_codes: [unreachable]   # canon: Docker Manager lifecycle rows
       aliases: []
+      judgments:
+        - {key: response_kind, choice: owner_operation, gap_note: "The lifecycle table makes image inspect a navigation_wrapper and canon names no result; owner_operation with the local inspect result gives the redacted structured output a typed carrier, as for cmd.docker.container.inspect."}
     - command_id: cmd.docker.image.delete
       ucc_units: [UCC-049]
       command_kind: domain_action                 # canon: Docker Manager lifecycle rows
@@ -627,7 +652,7 @@ command_payload_definitions:
       aliases: []
     - command_id: cmd.docker.image.push
       ucc_units: [UCC-051]
-      command_kind: domain_action                 # 2.5A amended row: it pushes an approved image; DL-333 resolution 2 makes it primary
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -675,9 +700,9 @@ command_payload_definitions:
           required: true
           default: none
           item: {type: string, constraints: {min_length: 1, max_length: 256}}
-          constraints: {min_items: 1, unique_items: true}
+          constraints: {unique_items: true}
           provenance: canon
-          source: "DockerImagePushV3Request.tags"
+          source: "DockerImagePushV3Request.tags (array of unique strings 1..256, no minItems)"
         platforms:
           type: list
           required: true
@@ -697,12 +722,16 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Result
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, permission_required]   # JUDGMENT: registry account/target gates; no row states a subset
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, permission_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: the amended 2.5A row (DL-333 resolution 2) says it pushes an approved image through registry publish authority with its own DockerImagePushV3Request. A remote publish side effect, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, permission_required], gap_note: "No row states a subset for the image_selected && registry_target_allowed && permission_allowed gate; registry account, target and permission gates drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability)."}
+        - {key: owner_request, choice: "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerImagePushV3Request", gap_note: "The owner request also requires command_id, context, authority, expected_target_generation, filesafe_evidence, trust_evidence and capability_evidence, which are not args. The handler fills command_id from the dispatch, context from the active project and publication target, authority, filesafe_evidence, trust_evidence and capability_evidence from the Permissions admission and the capability snapshot (UCC-217: Permissions alone composes human, mode or build_grant evidence with retained FileSafe, trust and capability ceilings), and expected_target_generation from the projection the user acted on. Canon says nowhere which source fills each field; this is the choice."}
+        - {key: omitted:image_ref, choice: omitted, gap_note: "The row precondition image_selected makes the image the subject, but the owner request identifies it by image_digest and local_artifact_ref, both args here; an image_ref beside them would be a second identity for the same image, so the overlay's optional image_ref is left out."}
     - command_id: cmd.docker.open_dockerfile
       ucc_units: [UCC-049]
-      command_kind: navigation_wrapper            # JUDGMENT: inferred from the row; it hands the Dockerfile to
-      # the editor through the route/open contract, like cmd.docker.compose.open_file.
+      command_kind: navigation_wrapper
       response_kind: local_projection             # route/open with no owner result
       args:
         route_target:
@@ -729,11 +758,14 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_args, permission_denied, invalid_route, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: no row states a subset; resolved-target freshness plus engine gates
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: navigation_wrapper, gap_note: "Canon has no row for this command beyond the Cozy disposition (canonical existing token; build-pane wiring row required). It hands the Dockerfile to the editor like cmd.docker.compose.open_file, which the Cozy compose table makes navigation_wrapper. It is not in CV-360's open-routes table, so it carries no placement fields."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset; resolved-target freshness plus engine gates drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability)."}
     - command_id: cmd.docker.compose.up_subset
       ucc_units: [UCC-050]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it starts compose services.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -789,11 +821,14 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerComposeSubsetResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: compose_subset_valid gate plus shared taxonomy
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A compose.up_subset row gives only label, description and availability, and no Cozy lifecycle table lists it. It starts compose services, a side effect, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && compose_subset_valid gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
     - command_id: cmd.docker.compose.down_subset
       ucc_units: [UCC-050]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it stops compose services.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -823,11 +858,14 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerComposeSubsetResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: compose_subset_running gate plus shared taxonomy
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A compose.down_subset row gives only label, description and availability, and no Cozy lifecycle table lists it. It stops compose services, a side effect, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && compose_subset_running gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
     - command_id: cmd.docker.compose.scenario.save
       ucc_units: [UCC-050]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it persists a scenario record.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -869,13 +907,18 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerComposeScenarioResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: compose_file_selected gate plus shared taxonomy
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases:
         - {command_id: cmd.docker.compose.scenario.save/run/edit/delete, kind: family_alias,
            source: "UCC-050 compatibility_only_notes: the grouped scenario token denotes the family; payloads use the concrete ids"}
+        - {command_id: compose.save_scenario, kind: compatibility_alias,
+           source: "UCC-137 canonical_text: the flat compose.save_scenario and compose.run_scenario spellings recorded as compatibility aliases (UCC-230 non_definition_tokens, DL-341)"}
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A compose.scenario.save row gives only label, description and availability, and no Cozy lifecycle table lists it. It persists a scenario record, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the compose_file_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
     - command_id: cmd.docker.compose.scenario.run
       ucc_units: [UCC-050]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it runs a saved scenario.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -901,13 +944,18 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerComposeScenarioResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: compose_scenario_valid gate; a stale scenario opens degraded with repair actions (section 2A)
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases:
         - {command_id: cmd.docker.compose.scenario.save/run/edit/delete, kind: family_alias,
            source: "UCC-050 compatibility_only_notes: the grouped scenario token denotes the family; payloads use the concrete ids"}
+        - {command_id: compose.run_scenario, kind: compatibility_alias,
+           source: "UCC-137 canonical_text: the flat compose.save_scenario and compose.run_scenario spellings recorded as compatibility aliases (UCC-230 non_definition_tokens, DL-341)"}
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A compose.scenario.run row gives only label, description and availability, and no Cozy lifecycle table lists it. It runs a saved scenario and records the scenario id on a run, a side effect, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && compose_scenario_valid gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. A stale scenario opens degraded with repair actions (section 2A compose scenario runner)."}
     - command_id: cmd.docker.compose.scenario.edit
       ucc_units: [UCC-050]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it rewrites a scenario record.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -952,13 +1000,16 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerComposeScenarioResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: compose_scenario_selected gate; repair flow opens degraded (section 2A)
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases:
         - {command_id: cmd.docker.compose.scenario.save/run/edit/delete, kind: family_alias,
            source: "UCC-050 compatibility_only_notes: the grouped scenario token denotes the family; payloads use the concrete ids"}
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A compose.scenario.edit row gives only label, description and availability, and no Cozy lifecycle table lists it. It rewrites a scenario record, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the compose_scenario_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. The repair flow opens degraded (section 2A)."}
     - command_id: cmd.docker.compose.scenario.delete
       ucc_units: [UCC-050]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it deletes a scenario record.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -986,13 +1037,16 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerComposeScenarioResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: compose_scenario_selected gate; destructive confirmation handled through the shared confirm surface
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases:
         - {command_id: cmd.docker.compose.scenario.save/run/edit/delete, kind: family_alias,
            source: "UCC-050 compatibility_only_notes: the grouped scenario token denotes the family; payloads use the concrete ids"}
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A compose.scenario.delete row gives only label, description and availability, and no Cozy lifecycle table lists it. It deletes a scenario record (CS-062 lists it among destructive commands), so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the compose_scenario_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. The destructive confirmation goes through the shared confirm surface (confirmation_ref), not a disabled code."}
     - command_id: cmd.docker.create_repository
       ucc_units: [UCC-051]
-      command_kind: domain_action                 # canon: typed request DockerRepositoryCreateV3Request (wiring row)
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1040,13 +1094,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Result
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, permission_required]   # JUDGMENT: registry_target_missing && permission_allowed gates (2.5A row); no row states codes
-      # The typed request's operation envelope (context, authority, expected_target_generation, filesafe/trust/
-      # capability evidence) travels in the owner request, not in UICommand.args.
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, permission_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: the 2.5A row and the wiring row give a typed owner request (DockerRepositoryCreateV3Request) that carries authority and expected_target_generation, which marks a guarded mutation, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, permission_required], gap_note: "No row states codes for the registry_target_missing && permission_allowed gate (2.5A row); registry account and permission gates drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability)."}
+        - {key: owner_request, choice: "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCreateV3Request", gap_note: "The owner request also requires command_id, context, authority, expected_target_generation, filesafe_evidence, trust_evidence and capability_evidence, which are not args. The handler fills command_id from the dispatch, context from the active project and publication target, authority, filesafe_evidence, trust_evidence and capability_evidence from the Permissions admission and the capability snapshot (UCC-217: Permissions alone composes human, mode or build_grant evidence with retained FileSafe, trust and capability ceilings), and expected_target_generation from the projection the user acted on. Canon says nowhere which source fills each field; this is the choice."}
     - command_id: cmd.docker.create_repository.confirm
       ucc_units: [UCC-051]
-      command_kind: domain_action                 # canon: typed request DockerRepositoryConfirmV3Request (wiring row)
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1056,11 +1112,12 @@ command_payload_definitions:
           provenance: canon
           source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
         creation_request_id:
-          type: id
+          type: string
           required: true
           default: none
+          constraints: {min_length: 1, max_length: 256}
           provenance: canon
-          source: "DockerRepositoryConfirmV3Request.creation_request_id; CRAU-031: confirm dispatches cmd.docker.create_repository.confirm for the pending request"
+          source: "DockerRepositoryConfirmV3Request.creation_request_id (string 1..256); CRAU-031: confirm dispatches cmd.docker.create_repository.confirm for the pending request"
         preview_ref:
           type: ref
           required: true
@@ -1085,11 +1142,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Result
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, permission_required]   # JUDGMENT: repository_creation_confirmation_visible gate (2.5A row)
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, permission_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: the 2.5A row and the wiring row give a typed owner request (DockerRepositoryConfirmV3Request) that carries authority and expected_target_generation, which marks a guarded mutation, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, permission_required], gap_note: "No row states codes for the repository_creation_confirmation_visible gate (2.5A row); registry account and permission gates drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability)."}
+        - {key: owner_request, choice: "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryConfirmV3Request", gap_note: "The owner request also requires command_id, context, authority, expected_target_generation, filesafe_evidence, trust_evidence and capability_evidence, which are not args. The handler fills command_id from the dispatch, context from the active project and publication target, authority, filesafe_evidence, trust_evidence and capability_evidence from the Permissions admission and the capability snapshot (UCC-217: Permissions alone composes human, mode or build_grant evidence with retained FileSafe, trust and capability ceilings), and expected_target_generation from the projection the user acted on. Canon says nowhere which source fills each field; this is the choice. The request also requires registry_id, account_ref, namespace, repository_name and privacy; the handler copies them from the pending creation request that creation_request_id names, the tuple the confirmation shows (CRAU-031), so the user confirms exactly what cmd.docker.create_repository proposed and cannot change it in the confirm dispatch."}
     - command_id: cmd.docker.create_repository.cancel
       ucc_units: [UCC-051]
-      command_kind: domain_action                 # canon: typed request DockerRepositoryCancelV3Request (wiring row)
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1099,11 +1160,12 @@ command_payload_definitions:
           provenance: canon
           source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
         creation_request_id:
-          type: id
+          type: string
           required: true
           default: none
+          constraints: {min_length: 1, max_length: 256}
           provenance: canon
-          source: "DockerRepositoryCancelV3Request.creation_request_id; CRAU-031: cancel dispatches cmd.docker.create_repository.cancel"
+          source: "DockerRepositoryCancelV3Request.creation_request_id (string 1..256); CRAU-031: cancel dispatches cmd.docker.create_repository.cancel"
         expected_request_revision:
           type: integer
           required: true
@@ -1116,12 +1178,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Result
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, permission_required]   # JUDGMENT: repository_creation_confirmation_visible gate (2.5A row)
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, permission_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: the 2.5A row and the wiring row give a typed owner request (DockerRepositoryCancelV3Request) that carries authority and expected_target_generation, which marks a guarded mutation, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, permission_required], gap_note: "No row states codes for the repository_creation_confirmation_visible gate (2.5A row); registry account and permission gates drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability)."}
+        - {key: owner_request, choice: "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerRepositoryCancelV3Request", gap_note: "The owner request also requires command_id, context, authority, expected_target_generation, filesafe_evidence, trust_evidence and capability_evidence, which are not args. The handler fills command_id from the dispatch, context from the active project and publication target, authority, filesafe_evidence, trust_evidence and capability_evidence from the Permissions admission and the capability snapshot (UCC-217: Permissions alone composes human, mode or build_grant evidence with retained FileSafe, trust and capability ceilings), and expected_target_generation from the projection the user acted on. Canon says nowhere which source fills each field; this is the choice."}
     - command_id: cmd.docker.registry.promote
       ucc_units: [UCC-051]
-      command_kind: domain_action                 # JUDGMENT: inferred from the row; it copies or retags an
-      # artifact in a registry, a registry-side remote side effect (CRAU-012).
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1180,11 +1245,14 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerRegistryPromoteResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, permission_required]   # JUDGMENT: registry_source_resolved && registry_target_allowed gates; promotion blocked with a precise remote blocker (CRAU-012)
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, permission_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A registry.promote row gives only label, description and availability, and no Cozy lifecycle table lists it. It promotes, copies or retags an artifact in a registry, a registry-side remote side effect (CRAU-012), so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, permission_required], gap_note: "No row states a subset for the registry_source_resolved && registry_target_allowed gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability). CRAU-012 blocks promotion with a precise remote blocker, carried as display detail."}
     - command_id: cmd.docker.registry.tag_push
       ucc_units: [UCC-051]
-      command_kind: domain_action                 # canon: typed request DockerTagPushV3Request (wiring row)
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1232,9 +1300,9 @@ command_payload_definitions:
           required: true
           default: none
           item: {type: string, constraints: {min_length: 1, max_length: 256}}
-          constraints: {min_items: 1, unique_items: true}
+          constraints: {unique_items: true}
           provenance: canon
-          source: "DockerTagPushV3Request.tags"
+          source: "DockerTagPushV3Request.tags (array of unique strings 1..256, no minItems)"
         platforms:
           type: list
           required: true
@@ -1254,11 +1322,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Result
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, permission_required]   # JUDGMENT: registry_target_allowed && permission_allowed gates (2.5A row)
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, permission_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: the 2.5A row and the wiring row give a typed owner request (DockerTagPushV3Request) that carries authority and expected_target_generation, which marks a guarded remote publish, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, permission_required], gap_note: "No row states a subset for the registry_target_allowed && permission_allowed gate (2.5A row); drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability)."}
+        - {key: owner_request, choice: "Plans/projects_refresh_fix_contracts.schema.json#/$defs/DockerTagPushV3Request", gap_note: "The owner request also requires command_id, context, authority, expected_target_generation, filesafe_evidence, trust_evidence and capability_evidence, which are not args. The handler fills command_id from the dispatch, context from the active project and publication target, authority, filesafe_evidence, trust_evidence and capability_evidence from the Permissions admission and the capability snapshot (UCC-217: Permissions alone composes human, mode or build_grant evidence with retained FileSafe, trust and capability ceilings), and expected_target_generation from the projection the user acted on. Canon says nowhere which source fills each field; this is the choice."}
     - command_id: cmd.orchestrator.push_image
       ucc_units: [UCC-051]
-      command_kind: domain_action                 # canon: typed request OrchestratorImagePushV3Request (wiring row)
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1324,9 +1396,9 @@ command_payload_definitions:
           required: true
           default: none
           item: {type: string, constraints: {min_length: 1, max_length: 256}}
-          constraints: {min_items: 1, unique_items: true}
+          constraints: {unique_items: true}
           provenance: canon
-          source: "OrchestratorImagePushV3Request.tags"
+          source: "OrchestratorImagePushV3Request.tags (array of unique strings 1..256, no minItems)"
         platforms:
           type: list
           required: true
@@ -1346,12 +1418,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Result
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, permission_required]   # JUDGMENT: publish authority gates; missing repository creation stays a separate admitted effect (CRAU-031/044)
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, permission_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: the 2.5A row and the wiring row give a typed owner request (OrchestratorImagePushV3Request) that carries authority and expected_target_generation, which marks the Orchestrator after-build remote side-effect step (2.5A authority-split paragraph), so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, permission_required], gap_note: "No row states a subset; publish authority gates drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability). A missing repository stays a separate admitted creation effect (CRAU-031, CRAU-044), not a disabled code here."}
+        - {key: owner_request, choice: "Plans/projects_refresh_fix_contracts.schema.json#/$defs/OrchestratorImagePushV3Request", gap_note: "The owner request also requires command_id, context, authority, expected_target_generation, filesafe_evidence, trust_evidence and capability_evidence, which are not args. The handler fills command_id from the dispatch, context from the active project and publication target, authority, filesafe_evidence, trust_evidence and capability_evidence from the Permissions admission and the capability snapshot (UCC-217: Permissions alone composes human, mode or build_grant evidence with retained FileSafe, trust and capability ceilings), and expected_target_generation from the projection the user acted on. Canon says nowhere which source fills each field; this is the choice."}
     - command_id: cmd.docker.drift.compare
       ucc_units: [UCC-051]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it runs a comparison with
-      # a typed operation result (active operation contract), not a route.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1377,8 +1452,11 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerDriftCompareResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: docker_project_detected gate; drift/trust blockers refresh effective capability before mutation (UCC-053)
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A drift.compare row gives only label, description and availability, and no Cozy lifecycle table lists it. It runs a comparison against registry and deploy metadata with a typed result and receipt, not a route, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_project_detected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. Drift and trust blockers refresh effective capability before mutation (UCC-053)."}
     - command_id: cmd.docker.cleanup.scan
       ucc_units: [UCC-051, UCC-105]
       command_kind: domain_action                 # canon: Docker Manager lifecycle rows
@@ -1451,8 +1529,10 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded]   # JUDGMENT: Docker Manager still renders cached last-known state when the runtime is unreachable (section 2A), so availability copy is capability detail
+      disabled_reason_codes: [not_configured, unreachable, degraded]
       aliases: []
+      judgments:
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded], gap_note: "No row states a subset. Docker Manager still renders cached last-known state when the runtime is unreachable (section 2A), so these codes are availability copy from the shared taxonomy, not a block on opening the panel."}
     - command_id: cmd.docker.switch_subview
       ucc_units: [UCC-050]
       command_kind: shell_view                    # canon: 2.5A shell/view-state wrapper
@@ -1465,22 +1545,25 @@ command_payload_definitions:
           values: [containers, images, compose, registries, registries_docker_hub, build_bake, publish_unraid, networks, volumes, contexts, kubernetes]
           provenance: gap
           gap_note: >-
-            Canon conflicts: the 2026-07-27 user decision keeps six subview tabs (lifecycle-rows paragraph),
-            while CRAU-007 lists the stable subviews Containers, Images, Compose, Registries, Registries /
-            Docker Hub, Build / Bake, Publish / Unraid (plus the retired Publishing / Unraid alias), advanced
-            Networks, Volumes, Contexts, and project-focused Kubernetes. JUDGMENT: the eleven snake_case
-            tokens of the CRAU-007 list, dropping only the legacy alias; the six-tab decision is left for the
-            compile review to reconcile and is not settled here.
+            CRAU-007 names the routeable subviews as display names only: Containers, Images, Compose, Registries,
+            Registries / Docker Hub, Build / Bake, Publish / Unraid (Publishing / Unraid is a legacy alias),
+            advanced Networks, Volumes, Contexts, and project-focused Kubernetes, and its acceptance criterion
+            says all stable subviews and advanced foldouts remain named and routeable. CRAU-098's six side-panel
+            tabs are a presentation subset of that list, and section 2A calls Networks, Volumes and Contexts
+            advanced foldouts, so the eleven routeable values do not conflict with six tabs. Canon fixes no wire
+            tokens: JUDGMENT: the snake_case of the eleven names, dropping only the legacy alias.
       owner_request: none                          # no wiring request_schema_ref (catalog.docker_switch_subview)
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
-      disabled_reason_codes: [unsupported, not_configured, unreachable, degraded]   # JUDGMENT: unsupported runtime-specific subviews stay visible with a disabled reason (section 2A)
+      disabled_reason_codes: [unsupported, not_configured, unreachable, degraded]
       aliases: []
+      judgments:
+        - {key: disabled_reason_codes, choice: [unsupported, not_configured, unreachable, degraded], gap_note: "No row states a subset; unsupported runtime-specific subviews stay visible with a disabled reason (section 2A), and the rest come from the shared taxonomy."}
     - command_id: cmd.docker.k8s.apply
       ucc_units: [UCC-052]
-      command_kind: domain_action                 # JUDGMENT: inferred from the row; it mutates the cluster.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1494,15 +1577,15 @@ command_payload_definitions:
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; Kubernetes mutations bind approval to the selected context, namespace, workload/resource, and operation (2.5B)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity kubernetes_context?; Kubernetes mutations bind approval to the selected context, namespace, workload/resource, and operation (2.5B). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes context and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
         namespace:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity namespace?; mutation approval binds the namespace (2.5B)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity namespace?; mutation approval binds the namespace (2.5B). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes namespace and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
         manifest_ref:
           type: ref
           required: true
@@ -1516,16 +1599,18 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerK8sApplyResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection]   # JUDGMENT: shared Docker/Kubernetes taxonomy (UCC-053) plus approval/preflight blocking and freshness
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection]
       aliases:
         - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
            source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
         - {command_id: cmd.k8s.*, kind: compatibility_alias,
            source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5B k8s.apply row gives only label, description and availability, and no Cozy lifecycle table lists it. It applies a manifest to the cluster, a mutation, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection], gap_note: "No row states a subset for the k8s_connected && manifest_selected && permission_allowed gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability), plus approval and preflight blocking plus the 2.0B projection-freshness clause."}
     - command_id: cmd.docker.k8s.diff
       ucc_units: [UCC-052]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it runs a cluster
-      # comparison with a typed result, capability-gated by k8s_connected.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1545,36 +1630,38 @@ command_payload_definitions:
           required: false
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the row diffs against the selected context, namespace, or workload where supported (2.5B)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity kubernetes_context?; the row diffs against the selected context, namespace, or workload where supported (2.5B). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes context and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
         namespace:
           type: string
           required: false
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity namespace?; diff target part (2.5B)"
-        workload_ref:
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity namespace?; diff target part (2.5B). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes namespace and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
+        k8s_workload_ref:
           type: ref
           required: false
           default: none
           provenance: gap
-          gap_note: "the optional workload diff target has no field name. JUDGMENT: ref, reusing the CV-303 preserved token workload_ref for the PM workload identity"
+          gap_note: "the optional workload diff target has no field name (2.5B diff row). JUDGMENT: ref, named k8s_workload_ref: CRAU's Kubernetes workload identity, which stores context, namespace/name, kind, UID when knowable and source repo/root (section 2A workload history; CRAU-017). The broader durable runtime identity workload_ref (section 2A runtime identity, CV-303) was the other candidate; the exact-name rule takes the Kubernetes-specific name (review r1 finding 10)"
       owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_diff)
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerK8sDiffResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus freshness
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, stale_projection]
       aliases:
         - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
            source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
         - {command_id: cmd.k8s.*, kind: compatibility_alias,
            source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5B k8s.diff row gives only label, description and availability, and no Cozy lifecycle table lists it. It runs a comparison against the live cluster with a typed result, capability-gated by k8s_connected, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability, stale_projection], gap_note: "No row states a subset for the k8s_connected && manifest_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
     - command_id: cmd.docker.k8s.logs
       ucc_units: [UCC-052]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it opens a capability-gated
-      # workload log stream with a typed session result.
+      command_kind: navigation_wrapper
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1583,7 +1670,7 @@ command_payload_definitions:
           default: none
           provenance: canon
           source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
-        workload_ref:
+        k8s_workload_ref:
           type: ref
           required: true
           default: none
@@ -1591,7 +1678,7 @@ command_payload_definitions:
           gap_note: >-
             Workload/pod/container target fields are prose only (2.5B logs row; section 2A Kubernetes
             operational sessions: kubectl logs can target pods, resources, and all containers). JUDGMENT:
-            required ref to the selected workload, reusing the CV-303 preserved token workload_ref.
+            required (workload_selected), ref, named k8s_workload_ref: CRAU's Kubernetes workload identity, which stores context, namespace/name, kind, UID when knowable and source repo/root (section 2A workload history; CRAU-017). The broader durable runtime identity workload_ref (section 2A runtime identity, CV-303) was the other candidate; the exact-name rule takes the Kubernetes-specific name (review r1 finding 10).
         container:
           type: string
           required: false
@@ -1611,31 +1698,35 @@ command_payload_definitions:
           required: false
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the log stream runs in the selected context"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity kubernetes_context?; the log stream runs in the selected context. Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes context and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
         namespace:
           type: string
           required: false
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity namespace?; namespace/workload focus is persisted K8s focus state (CRAU-014)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity namespace?; namespace/workload focus is persisted K8s focus state (CRAU-014). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes namespace and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
       owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_logs)
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerK8sLogStreamResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, partial_capability, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus stream freshness
-      # JUDGMENT on the default: same as cmd.docker.container.view_logs; canon fixes no dispatch default.
+      error_codes: [invalid_args, permission_denied, invalid_route, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, partial_capability, stale_projection]
       aliases:
         - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
            source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
         - {command_id: cmd.k8s.*, kind: compatibility_alias,
            source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
+      judgments:
+        - {key: command_kind, choice: navigation_wrapper, gap_note: "Canon states no command_kind: the 2.5B row says only that it opens workload or pod logs with follow, paused snapshot and historical modes, the same shape as cmd.docker.container.view_logs. Both open a read surface like container.inspect, which the lifecycle table makes navigation_wrapper, so both take navigation_wrapper (review r1 finding 11); error_codes gain invalid_route by the UCC-230 navigation rule."}
+        - {key: response_kind, choice: owner_operation, gap_note: "Canon names no result; the owner opens an ephemeral owner-surface log session (CRAU-014), returned as a local owner result, as for cmd.docker.container.view_logs."}
+        - {key: field:capability_snapshot_ref, choice: required, gap_note: "Kept required although the kind is navigation_wrapper: the overlay asks for capability_snapshot_ref on capability-gated actions, and this row's gate k8s_connected is a cluster-connectivity capability. container.view_logs leaves the field out because its gate matches container.inspect's selection gate."}
+        - {key: field:log_mode, choice: "default none", gap_note: "Canon fixes the mode tokens (section 2A stream continuity; the 2.5B row names follow, paused snapshot and historical) but no dispatch default; default none opens the surface in its persisted stream intent, as for cmd.docker.container.view_logs."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, partial_capability, stale_projection], gap_note: "No row states a subset for the k8s_connected && workload_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability), plus stream freshness."}
     - command_id: cmd.docker.k8s.exec
       ucc_units: [UCC-052]
-      command_kind: domain_action                 # JUDGMENT: inferred from the row; it starts a privileged
-      # audited session in the cluster, permission-gated (permission_allowed).
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1644,12 +1735,12 @@ command_payload_definitions:
           default: none
           provenance: canon
           source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
-        workload_ref:
+        k8s_workload_ref:
           type: ref
           required: true
           default: none
           provenance: gap
-          gap_note: "pod/container target fields are not defined (2.5B exec row). JUDGMENT: required ref to the selected workload (workload_running), reusing the CV-303 token workload_ref"
+          gap_note: "pod/container target fields are not defined (2.5B exec row). JUDGMENT: required (workload_running), ref, named k8s_workload_ref: CRAU's Kubernetes workload identity, which stores context, namespace/name, kind, UID when knowable and source repo/root (section 2A workload history; CRAU-017). The broader durable runtime identity workload_ref (section 2A runtime identity, CV-303) was the other candidate; the exact-name rule takes the Kubernetes-specific name (review r1 finding 10)"
         container:
           type: string
           required: false
@@ -1662,32 +1753,33 @@ command_payload_definitions:
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the session binds to the selected context (2.5B mutation scoping)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity kubernetes_context?; the session binds to the selected context (2.5B mutation scoping). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes context and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
         namespace:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity namespace?; the session binds to the namespace (2.5B mutation scoping)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity namespace?; the session binds to the namespace (2.5B mutation scoping). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes namespace and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
       owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_exec)
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerK8sExecSessionResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus permission/preflight blocking
-      # JUDGMENT: the exec entry command and stream inputs are unstated in canon; the audited session record
-      # carries them, and this definition does not invent fields for them.
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection]
       aliases:
         - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
            source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
         - {command_id: cmd.k8s.*, kind: compatibility_alias,
            source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5B k8s.exec row gives only label, description and availability, and no Cozy lifecycle table lists it. It starts an audited privileged exec session in the cluster, permission-gated (permission_allowed), so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection], gap_note: "No row states a subset for the k8s_connected && workload_running && permission_allowed gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability), plus permission and preflight blocking plus the 2.0B projection-freshness clause."}
+        - {key: omitted:exec_command, choice: omitted, gap_note: "Canon names no exec entry command and no stream input (the 2.5B row says only that it starts an audited privileged exec session in the selected pod/container). The audited session record carries them, and this definition mints no field; the compile review must decide whether the dispatch names an entry command or the session honors a saved shell preference as cmd.docker.container.attach_shell does (section 2A container access)."}
     - command_id: cmd.docker.k8s.port_forward
       ucc_units: [UCC-052]
-      command_kind: domain_action                 # JUDGMENT: inferred from the row; it starts an audited
-      # port-forward session, permission-gated (permission_allowed).
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1696,26 +1788,26 @@ command_payload_definitions:
           default: none
           provenance: canon
           source: "overlay UCC-049..UCC-053 identity capability_snapshot_ref (mutating or capability-gated); UCC-230 row_groups required when domain_action"
-        workload_ref:
+        k8s_workload_ref:
           type: ref
           required: true
           default: none
           provenance: gap
-          gap_note: "the workload target is prose only. JUDGMENT: required ref (workload_selected), reusing the CV-303 token workload_ref"
+          gap_note: "the workload target is prose only (2.5B port_forward row). JUDGMENT: required (workload_selected), ref, named k8s_workload_ref: CRAU's Kubernetes workload identity, which stores context, namespace/name, kind, UID when knowable and source repo/root (section 2A workload history; CRAU-017). The broader durable runtime identity workload_ref (section 2A runtime identity, CV-303) was the other candidate; the exact-name rule takes the Kubernetes-specific name (review r1 finding 10)"
         kubernetes_context:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the session binds to the selected context (2.5B mutation scoping)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity kubernetes_context?; the session binds to the selected context (2.5B mutation scoping). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes context and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
         namespace:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity namespace?; the session binds to the namespace (2.5B mutation scoping)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity namespace?; the session binds to the namespace (2.5B mutation scoping). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes namespace and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
         remote_port:
           type: integer
           required: true
@@ -1742,16 +1834,18 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerK8sPortForwardResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus permission/preflight blocking
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection]
       aliases:
         - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
            source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
         - {command_id: cmd.k8s.*, kind: compatibility_alias,
            source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5B k8s.port_forward row gives only label, description and availability, and no Cozy lifecycle table lists it. It starts an audited port-forward session, permission-gated (permission_allowed), so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection], gap_note: "No row states a subset for the k8s_connected && workload_selected && permission_allowed gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability), plus permission and preflight blocking plus the 2.0B projection-freshness clause."}
     - command_id: cmd.docker.k8s.select_context
       ucc_units: [UCC-052]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it revalidates capability
-      # like cmd.docker.context.select and cmd.docker.k8s.select_namespace refreshes workload focus.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1765,23 +1859,27 @@ command_payload_definitions:
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the row selects the project-focused Kubernetes context and revalidates capability (2.5B)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity kubernetes_context?; the row selects the project-focused Kubernetes context and revalidates capability (2.5B). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes context and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
       owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_select_context)
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerK8sContextSelectResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus freshness; k8s_available gate
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases:
         - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
            source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
         - {command_id: cmd.k8s.*, kind: compatibility_alias,
            source: "UCC-052 compatibility_only_notes: existing cmd.k8s.*, set_context, and set_namespace rows are compatibility aliases until migrated"}
+        - {command_id: set_context, kind: compatibility_alias,
+           source: "UCC-137 canonical_text: cmd.docker.k8s.select_context and cmd.docker.k8s.select_namespace are canonical with set_context and set_namespace recorded aliases; UCC-052 compatibility_only_notes (UCC-230 non_definition_tokens, DL-341)"}
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5B k8s.select_context row gives only label, description and availability, and no Cozy lifecycle table lists it. It selects the context and revalidates capability, a state change like cmd.docker.context.select, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the k8s_available gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. CRAU's k8s_context_missing and k8s_context_unreachable map to not_configured and unreachable."}
     - command_id: cmd.docker.k8s.select_namespace
       ucc_units: [UCC-052]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it refreshes workload
-      # focus inside the selected context.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1795,30 +1893,34 @@ command_payload_definitions:
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the row selects the namespace within the selected context (2.5B)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity kubernetes_context?; the row selects the namespace within the selected context (2.5B). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes context and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
         namespace:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity namespace?; the row selects the namespace and refreshes workload focus (2.5B)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity namespace?; the row selects the namespace and refreshes workload focus (2.5B). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes namespace and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
       owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_select_namespace)
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerK8sNamespaceSelectResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus freshness; k8s_connected gate
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases:
         - {command_id: cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace, kind: family_alias,
            source: "UCC-052 preserved_exact_tokens: the grouped token denotes the canonical Docker Manager Kubernetes family"}
         - {command_id: cmd.k8s.*, kind: compatibility_alias,
            source: "UCC-052 compatibility_only_notes: existing cmd.k8s.*, set_context, and set_namespace rows are compatibility aliases until migrated"}
+        - {command_id: set_namespace, kind: compatibility_alias,
+           source: "UCC-137 canonical_text: cmd.docker.k8s.select_context and cmd.docker.k8s.select_namespace are canonical with set_context and set_namespace recorded aliases; UCC-052 compatibility_only_notes (UCC-230 non_definition_tokens, DL-341)"}
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5B k8s.select_namespace row gives only label, description and availability, and no Cozy lifecycle table lists it. It selects the namespace and refreshes workload focus inside the selected context, a state change, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the k8s_connected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. CRAU's k8s_namespace_missing maps to not_configured."}
     - command_id: cmd.docker.k8s.helm_preview
       ucc_units: [UCC-052]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it renders Helm output
-      # with a typed result, gated by helm_source_selected.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1840,31 +1942,33 @@ command_payload_definitions:
           required: false
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; rendering needs no connected cluster (precondition k8s_project_detected)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity kubernetes_context?; rendering needs no connected cluster (precondition k8s_project_detected). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes context and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
         namespace:
           type: string
           required: false
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity namespace?; optional render target namespace"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity namespace?; optional render target namespace. Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes namespace and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
       owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_helm_preview)
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerHelmPreviewResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, partial_capability, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus freshness; Helm availability is a doctor check (section 2A)
+      disabled_reason_codes: [not_configured, unreachable, degraded, partial_capability, stale_projection]
       aliases:
         - {command_id: cmd.k8s.*, kind: compatibility_alias,
            source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
         # The grouped token cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace
         # targets only its own seven commands (UCC-230 non_definition_tokens), so the Helm rows claim just
         # the cmd.k8s.* compatibility family.
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5B k8s.helm_preview row gives only label, description and availability, and no Cozy lifecycle table lists it. It renders Helm output through the Helm tool with a typed result, gated by helm_source_selected, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, partial_capability, stale_projection], gap_note: "No row states a subset for the k8s_project_detected && helm_source_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. Helm availability is a doctor check (section 2A)."}
     - command_id: cmd.docker.k8s.helm_install
       ucc_units: [UCC-052]
-      command_kind: domain_action                 # JUDGMENT: inferred from the row; it installs or upgrades
-      # a release after permission and diff review.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         capability_snapshot_ref:
@@ -1890,36 +1994,38 @@ command_payload_definitions:
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity kubernetes_context?; the install binds to the selected context (2.5B mutation scoping)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity kubernetes_context?; the install binds to the selected context (2.5B mutation scoping). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes context and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
         namespace:
           type: string
           required: true
           default: none
           constraints: {min_length: 1, max_length: 256}
-          provenance: canon
-          source: "overlay UCC-049..UCC-053 identity namespace?; the install binds to the namespace (2.5B mutation scoping)"
+          provenance: gap
+          gap_note: "overlay UCC-049..UCC-053 identity namespace?; the install binds to the namespace (2.5B mutation scoping). Canon gives the name only; type string and bounds 1..256 are a choice, since no contract types the Kubernetes namespace and the name has no _id or _ref suffix for the UCC-230 identity_typing rule (review r1 finding 9)"
       owner_request: none                          # no wiring request_schema_ref (catalog.docker_k8s_helm_install)
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerHelmInstallResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection]   # JUDGMENT: shared taxonomy (UCC-053) plus permission/preflight blocking after diff review
-      # JUDGMENT: the diff-review reference the row requires before install is unstated; no field is minted
-      # for it here and the compile review may add one (for example a reviewed diff ref).
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection]
       aliases:
         - {command_id: cmd.k8s.*, kind: compatibility_alias,
            source: "UCC-052 compatibility_only_notes: existing cmd.k8s.* rows are compatibility aliases until migrated"}
         # The grouped token targets only its own seven commands (UCC-230 non_definition_tokens); see helm_preview.
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5B k8s.helm_install row gives only label, description and availability, and no Cozy lifecycle table lists it. It installs or upgrades a release after permission and diff review, a cluster mutation, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required, stale_projection], gap_note: "No row states a subset for the k8s_connected && helm_source_selected && permission_allowed gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability), plus permission and preflight blocking after diff review plus the 2.0B projection-freshness clause."}
+        - {key: omitted:diff_review_ref, choice: omitted, gap_note: "The 2.5B row requires a diff review before install but canon names no field that carries it. This definition mints none; the open question for the compile review is whether the dispatch names the reviewed diff (for example the DockerK8sDiffResultV1 diff_output_ref) or the owner checks a recorded review for the same helm_source_ref, context and namespace. Until then an install without a review is blocked with blocked_state_required."}
   results:
     DockerBuildTargetSelectionResultV1:
       fields:
-        validation_snapshot_ref: {type: ref, required: true, default: none, provenance: canon, source: 'build.run row records "last successful build target plus validation snapshot" (UI_Command_Catalog.md section 2.5A); CRAU-011 persists the validation snapshot with the selection'}
+        validation_snapshot_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'canon says validation snapshot in prose only: the build.run row records "last successful build target plus validation snapshot" (UI_Command_Catalog.md section 2.5A) and CRAU-011 persists it with the selection; the field name validation_snapshot_ref and its ref type are coined (review r1 finding 8)'}
         receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "dispatch or owner receipt; the wiring row requires a receipt or event effect (catalog.docker_build_select_target), the record shape is typed nowhere"}
     DockerBuildRunResultV1:
       fields:
         build_result_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "structured build results including artifacts, logs, and image identity are canon (Build flow, section 2A); the result record's field names are typed nowhere. JUDGMENT: one ref to the build result"}
-        validation_snapshot_ref: {type: ref, required: true, default: none, provenance: canon, source: 'the run "records last successful build target plus validation snapshot" (UI_Command_Catalog.md section 2.5A build.run row)'}
+        validation_snapshot_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the run "records last successful build target plus validation snapshot" (UI_Command_Catalog.md section 2.5A build.run row) in prose only; the field name validation_snapshot_ref and its ref type are coined (review r1 finding 8)'}
         image_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "image identity is canon for build results (section 2A Build flow); present for image-mode results, absent for compose/bake modes"}
         receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "dispatch or owner receipt; wiring row requires a receipt or event effect (catalog.docker_build_run), shape typed nowhere"}
     DockerBakePreviewResultV1:
@@ -1947,7 +2053,7 @@ command_payload_definitions:
         receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; wiring row requires a receipt or event effect (catalog.docker_container_attach_shell), shape typed nowhere'}
     DockerContextSelectResultV1:
       fields:
-        docker_context: {type: id, required: true, default: none, provenance: gap, gap_note: 'the context now selected'}
+        runtime_context_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the runtime context now selected; the arg name of cmd.docker.context.select (CRAU-092 runtime_context_ref?), echo shape typed nowhere'}
         capability_snapshot_ref: {type: ref, required: true, default: none, provenance: gap,
                                   gap_note: 'capability after revalidation'}
         receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'present when the owner records a receipt'}
@@ -2002,12 +2108,12 @@ command_payload_definitions:
         diff_output_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the manifest diff against the selected target; record shape typed nowhere'}
     DockerK8sLogStreamResultV1:
       fields:
-        workload_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the workload streamed; echo of the request subject, shape typed nowhere'}
+        k8s_workload_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the workload streamed; echo of the request subject k8s_workload_ref (section 2A workload history), shape typed nowhere'}
         stream_session_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'ephemeral owner-surface log session (CRAU-014); session shape typed nowhere'}
         log_mode: {type: enum, required: false, default: none, values: [follow, paused_snapshot, historical_view], provenance: gap, gap_note: 'the mode the stream opened in when the request left the mode to the surface default; enum values canon, echo shape typed nowhere'}
     DockerK8sExecSessionResultV1:
       fields:
-        workload_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the workload the audited privileged exec session opened in; shape typed nowhere'}
+        k8s_workload_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the workload the audited privileged exec session opened in; echo of the request subject k8s_workload_ref (section 2A workload history), shape typed nowhere'}
         exec_session_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'the audited privileged exec session (2.5B row); session shape typed nowhere'}
         receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt retaining kubernetes_refs lineage; wiring row requires a receipt or event effect (catalog.docker_k8s_exec), shape typed nowhere'}
     DockerK8sPortForwardResultV1:
@@ -2056,12 +2162,13 @@ canonical_text: >-
   overlay's closed sets.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible Docker/Hosts page and container run commands.
-depends_on: [UCC-230, UCC-105, CRAU-092, CV-304, CV-333, DL-333]
+depends_on: [UCC-230, UCC-105, CRAU-092, CRAU-094, CV-303, CV-304, CV-333, DL-333, DL-341]
 unblocks: []
 acceptance_criteria:
   - Every command that UCC-230 routes to CRAU-116 has exactly one definition in the block below.
   - Every field has a vocabulary type, required, default and provenance; every gap field says what was missing.
   - error_codes and disabled_reason_codes stay inside the overlay's closed sets.
+  - Every judgment a definition makes is in its judgments list with a key, a choice and a gap_note, never in a YAML comment (DL-341).
   - Access actions consume structured port_access_record data and never guess low-confidence localhost URLs (CRAU-092).
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
@@ -2092,8 +2199,7 @@ command_payload_definitions:
   definitions:
     - command_id: cmd.docker.run
       ucc_units: [UCC-105]
-      command_kind: domain_action                 # JUDGMENT: inferred from the row; it starts a container
-      # from the selected image (precondition image_selected, 2.5A). Cozy keeps it live as create-from-image.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         image_ref:
@@ -2139,12 +2245,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerContainerRunResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: docker_available && image_selected gates; no row states a subset
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A run row gives only label, description and availability, and no Cozy lifecycle table lists it. It starts a container from the selected image (Cozy keeps it live as create-from-image, distinct from cmd.docker.container.start), a side effect, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && image_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_capability_ref, host_profile_id and host_instance_id from the args where present; requested_action from the command id (run); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); FileSafe scope, network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile (cmd.docker.host.profile.save); and the expected receipt ref kind (host_execution_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation (review r1 finding 5)."}
     - command_id: cmd.docker.container.open
       ucc_units: [UCC-105]
-      command_kind: navigation_wrapper            # JUDGMENT: inferred from the row; it opens a resolved URL
-      # or access target, a route/open without an owner result.
+      command_kind: navigation_wrapper
       response_kind: local_projection
       args:
         container_ref:
@@ -2181,12 +2290,14 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_args, permission_denied, invalid_route, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, blocked_state_required, stale_projection]   # JUDGMENT: container_running && access_target_resolved gates; low-confidence access is denied, not guessed (CRAU-013)
+      disabled_reason_codes: [not_configured, unreachable, degraded, blocked_state_required, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: navigation_wrapper, gap_note: "Canon states no command_kind for this row: the 2.5A container.open row gives only label, description and availability, and no Cozy lifecycle table lists it. It opens a resolved URL or access target, a route/open without an owner result, so navigation_wrapper. It is not in CV-360's open-routes table, so it carries no placement fields."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, blocked_state_required, stale_projection], gap_note: "No row states a subset for the docker_available && container_running && access_target_resolved gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. Low-confidence access is blocked, not guessed (CRAU-013, UCC-105 low-confidence port access denial)."}
     - command_id: cmd.docker.hosts.open
       ucc_units: [UCC-105]
-      command_kind: navigation_wrapper            # JUDGMENT: routed destination open (CRAU-092), a route/open
-      # without an owner result.
+      command_kind: navigation_wrapper
       response_kind: local_projection
       args:
         route_target:
@@ -2196,6 +2307,13 @@ command_payload_definitions:
           default: none
           provenance: canon
           source: "CRAU-092 Docker/Hosts route payload {route_target: docker_hosts, ...}; UCC-230 canonical type kept, narrowed to required"
+        owner_surface:
+          type: const
+          value: docker_manager
+          required: true
+          default: none
+          provenance: canon
+          source: "CRAU-092 route payload owner_surface: docker_manager, unqualified; acceptance criterion: Docker/Hosts route payloads include owner_surface, source_surface, subview (review r1 finding 2)"
         project_id:
           type: id
           required: true
@@ -2216,22 +2334,25 @@ command_payload_definitions:
           gap_note: "CRAU-092 route payload names workspace_root_id?; not a UCC-230 common optional field, so it is a family arg. JUDGMENT: type id by the _id suffix convention"
         subview:
           type: enum
-          required: false
+          required: true
           default: none
-          values: [overview, profiles, instances, runtime_matrix, host_lab_sessions, access_ports, receipts_artifacts, settings]
+          values: [overview, profiles, instances, runtime_matrix, host_lab_sessions, access_ports, receipts_artifacts, settings, compose]
           provenance: gap
           gap_note: >-
-            CRAU-092 preserves the Docker/Hosts subview names Overview, Profiles, Instances, Runtime Matrix,
-            Host Lab Sessions, Access &amp; Ports, Receipts &amp; Artifacts and Settings but fixes no tokens.
-            JUDGMENT: snake_case of those eight names; distinct from the Docker Manager subview enum of
-            cmd.docker.switch_subview.
+            Required is canon: CRAU-092's route payload lists subview with no ?, and its acceptance criterion says
+            route payloads include owner_surface, source_surface, subview. The value compose is canon: CRAU-094,
+            the successor to CRAU-092's subview vocabulary, says the route payload subview vocabulary admits
+            compose. The other eight are display names only (CRAU-092 preserved tokens and canonical text;
+            FinalGUISpec.md Docker/Hosts page): Overview, Profiles, Instances, Runtime Matrix, Host Lab Sessions,
+            Access & Ports, Receipts & Artifacts and Settings, with no wire tokens. JUDGMENT: snake_case of those
+            eight names; distinct from the Docker Manager subview enum of cmd.docker.switch_subview.
         focus_kind:
           type: string
           required: false
           default: none
           constraints: {min_length: 1, max_length: 256}
           provenance: gap
-          gap_note: "CRAU-092 route payload names focus_kind? without a vocabulary. JUDGMENT: open string pending owner tokens"
+          gap_note: "CRAU-092 route payload names focus_kind? without a vocabulary; CRAU-094 says focus_kind admits compose_project and compose_scenario, which this field accepts. Canon fixes no other values although CRAU-092 focuses host, profile, instance, access and receipt detail views, so the vocabulary is open. JUDGMENT: open string pending owner tokens, not an enum of the two named values"
         host_capability_ref:
           type: ref
           required: false
@@ -2287,18 +2408,20 @@ command_payload_definitions:
           default: none
           constraints: {minimum: 0}
           provenance: gap
-          gap_note: "CRAU-092 route payload lists blocked_sequence? without a type. JUDGMENT: non-negative integer, matching the runtime recovery blocked-sequence identity it names"
+          gap_note: "CRAU-092 route payload lists blocked_sequence? without a type. JUDGMENT: non-negative integer, matching the runtime recovery blocked-sequence identity it names and the permission snapshot record's blocked_sequence (Plans/shared_runtime_contracts.schema.json, integer or null, minimum 0)"
       owner_request: none                          # no wiring request_schema_ref (catalog.docker_hosts_open)
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_args, permission_denied, invalid_route, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded]   # JUDGMENT: the page renders cached last-known state when unreachable (section 2A posture), so availability copy is capability detail
+      disabled_reason_codes: [not_configured, unreachable, degraded]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: navigation_wrapper, gap_note: "Canon states no command_kind: UCC-105 registers the id and CRAU-092 makes Docker/Hosts a routed destination with a route payload. A route open without an owner result, so navigation_wrapper. It is not in CV-360's open-routes table, so it carries no placement fields."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded], gap_note: "No row states a subset; the page renders cached last-known state when unreachable (section 2A posture), so these codes are availability copy from the shared taxonomy."}
     - command_id: cmd.docker.host.refresh
       ucc_units: [UCC-105]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it refreshes the host
-      # projection (event docker.host.refresh_requested).
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         host_profile_id:
@@ -2321,12 +2444,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:HostRefreshResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]   # JUDGMENT: refresh replaces a stale projection with a fresh one
+      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It refreshes the host projection (event docker.host.refresh_requested), an owner operation, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. A refresh replaces a stale projection with a fresh one."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. A refresh mutates no host, so of UCC-105's envelope fields only host_capability_ref, host_profile_id and host_instance_id are relevant, and the handler sends the args it has; the authority, policy and receipt-expectation fields UCC-105 requires before mutation are not built for a projection refresh. Canon says nowhere which fields a refresh carries; this is the choice (review r1 finding 5)."}
     - command_id: cmd.docker.host.preflight
       ucc_units: [UCC-105]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it runs the preflight
-      # before approval (event docker.host.preflight_requested; section 2A preflight ordering).
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         host_profile_id:
@@ -2350,14 +2476,17 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:HostPreflightResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability]   # JUDGMENT: preflight resolves reachability, trust/proxy policy and capability (section 2A)
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability]
       # Preflight emits blocked_preflight as an outcome, not a dispatch error; unresolved facts block the
       # mutation rather than failing the command (section 2A preflight and approval ordering contract).
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It runs the preflight before approval (event docker.host.preflight_requested; section 2A preflight ordering), an owner operation, so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability], gap_note: "No row states a subset; preflight resolves reachability, trust and proxy policy and capability (section 2A), from the shared taxonomy."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler sends requested_action and host_profile_id from the args and fills host_capability_ref and the profile's FileSafe scope, network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile, so the preflight checks the policies the later mutation will carry. approval_scope_key and permission_snapshot_id are not built, because approval follows preflight (section 2A preflight and approval ordering). Canon says nowhere which source fills each field; this is the choice (review r1 finding 5)."}
     - command_id: cmd.docker.host.profile.save
       ucc_units: [UCC-105]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it writes a host profile
-      # record (event docker.host.profile_saved).
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         host_profile_id:
@@ -2392,12 +2521,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:HostProfileSaveResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, permission_required]   # JUDGMENT: profile writes are local config; permission gate only
+      disabled_reason_codes: [not_configured, permission_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It writes a host profile record (event docker.host.profile_saved), so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, permission_required], gap_note: "No row states a subset; a profile write is local configuration, so only a missing configuration or a permission gate disables it."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The profile arg carries the UCC-105 policy fields (network_access_policy, secret_access_policy, destructive_command_policy, preflight_required) that later host commands read from the saved profile; approval_scope_key, permission_snapshot_id and allowed_action_ids come from the Permissions admission (UCC-217), not from args. FileSafe scope has no field name in UCC-105 or CV-304 and is not minted here. Canon says nowhere which source fills each field; this is the choice (review r1 finding 5)."}
     - command_id: cmd.docker.host.session.launch
       ucc_units: [UCC-105]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it launches a Host Lab
-      # session (event docker.host.session_launch_requested).
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         host_profile_id:
@@ -2411,7 +2543,7 @@ command_payload_definitions:
           required: false
           default: none
           provenance: gap
-          gap_note: "UCC-105 canonical text names execution_unit_context (CV-304 token) and the route payload runtime_context_ref; typed nowhere. JUDGMENT: optional ref to the execution unit context record"
+          gap_note: "UCC-105 canonical text names execution_unit_context_ref, which this field uses; CV-304 spells the same envelope field execution_unit_context (a spelling drift between two live units, listed as a canon conflict in fix-r1-S1). Typed nowhere. JUDGMENT: optional ref to the execution unit context record, typed ref by the UCC-230 _ref rule"
         host_capability_ref:
           type: ref
           required: false
@@ -2423,14 +2555,16 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:HostSessionLaunchResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required]   # JUDGMENT: session launch carries authority, FileSafe and preflight expectations (UCC-105)
-      # JUDGMENT: the ATS/session target input is named in prose only (UCC-105); no field is minted for it
-      # here and the compile review may add one.
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It launches a Host Lab session (event docker.host.session_launch_requested), so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required], gap_note: "No row states a subset; session launch carries authority, FileSafe and preflight expectations (UCC-105), so the authority, preflight-blocking and capability codes of the shared taxonomy apply."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_capability_ref, host_profile_id and host_instance_id from the args where present; requested_action from the command id (session launch); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); FileSafe scope, network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile (cmd.docker.host.profile.save); and the expected receipt ref kind (host_execution_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation (review r1 finding 5)."}
+        - {key: omitted:ats_target_ref, choice: omitted, gap_note: "UCC-105 names ATS host launches among the surfaces that use registered command ids, but canon names no field for the ATS or session target of a launch. This definition mints none; the compile review must decide whether a launch names its ATS session or the Host Lab session is created untargeted."}
     - command_id: cmd.docker.host.instance.start
       ucc_units: [UCC-105]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; instance lifecycle
-      # mutation (event docker.host.instance_lifecycle_requested).
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         host_instance_id:
@@ -2450,12 +2584,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:HostInstanceLifecycleResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required]   # JUDGMENT: lifecycle actions carry authority, preflight and receipt expectations (UCC-105)
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It is an instance lifecycle mutation (start; event docker.host.instance_lifecycle_requested), so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required], gap_note: "No row states a subset; lifecycle actions carry authority, preflight and receipt expectations before mutation (UCC-105), so the authority, preflight-blocking and capability codes of the shared taxonomy apply."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_capability_ref, host_profile_id and host_instance_id from the args where present; requested_action from the command id (instance start); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); FileSafe scope, network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile (cmd.docker.host.profile.save); and the expected receipt ref kind (host_execution_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation (review r1 finding 5)."}
     - command_id: cmd.docker.host.instance.stop
       ucc_units: [UCC-105]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; instance lifecycle
-      # mutation (event docker.host.instance_lifecycle_requested).
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         host_instance_id:
@@ -2475,12 +2612,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:HostInstanceLifecycleResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required]   # JUDGMENT: stopping a host instance is destructive-leaning; authority, preflight and receipt expectations (UCC-105)
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It is an instance lifecycle mutation (stop; event docker.host.instance_lifecycle_requested), so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required], gap_note: "No row states a subset; lifecycle actions carry authority, preflight and receipt expectations before mutation (UCC-105), so the authority, preflight-blocking and capability codes of the shared taxonomy apply."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_capability_ref, host_profile_id and host_instance_id from the args where present; requested_action from the command id (instance stop); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); FileSafe scope, network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile (cmd.docker.host.profile.save); and the expected receipt ref kind (host_execution_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation (review r1 finding 5)."}
     - command_id: cmd.docker.host.instance.restart
       ucc_units: [UCC-105]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; instance lifecycle
-      # mutation (event docker.host.instance_lifecycle_requested).
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         host_instance_id:
@@ -2500,13 +2640,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:HostInstanceLifecycleResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required]   # JUDGMENT: restarting a host instance is destructive-leaning; authority, preflight and receipt expectations (UCC-105)
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It is an instance lifecycle mutation (restart; event docker.host.instance_lifecycle_requested), so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required], gap_note: "No row states a subset; lifecycle actions carry authority, preflight and receipt expectations before mutation (UCC-105), so the authority, preflight-blocking and capability codes of the shared taxonomy apply."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_capability_ref, host_profile_id and host_instance_id from the args where present; requested_action from the command id (instance restart); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); FileSafe scope, network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile (cmd.docker.host.profile.save); and the expected receipt ref kind (host_execution_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation (review r1 finding 5)."}
     - command_id: cmd.docker.host.access.open_app
       ucc_units: [UCC-105]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; access actions consume
-      # structured port_access_record data under authority gates (CRAU-092). Choose navigation_wrapper
-      # instead if it only routes to a resolved URL.
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         port_access_ref:
@@ -2535,12 +2677,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:HostAccessOpenResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, blocked_state_required]   # JUDGMENT: low-confidence port access is denied with evidence, not guessed (CRAU-092, UCC-105 fixture list)
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, degraded, blocked_state_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. Access actions consume structured port_access_record data under authority gates (CRAU-092), so domain_action; navigation_wrapper would fit only if it routed to an already-resolved URL."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, blocked_state_required], gap_note: "No row states a subset; low-confidence port access is denied with evidence, not guessed (CRAU-092; UCC-105 fixture list), carried as blocked_state_required, with the rest from the shared taxonomy."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_capability_ref, host_profile_id and host_instance_id from the port access record; requested_action from the command id (open app); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); FileSafe scope, network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile (cmd.docker.host.profile.save); and the expected receipt ref kind (the access receipt the wiring row requires) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation (review r1 finding 5)."}
     - command_id: cmd.docker.host.instance.retain
       ucc_units: [UCC-105]
-      command_kind: domain_action                 # JUDGMENT: canon states no kind; it records a cleanup
-      # retention (event docker.host.instance_retention_recorded).
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         host_instance_id:
@@ -2564,12 +2709,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:HostInstanceRetainResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, unreachable, permission_required, blocked_state_required]   # JUDGMENT: cleanup/retain actions carry receipt requirements (UCC-105 fixture list)
+      disabled_reason_codes: [not_configured, unauthorized, unreachable, permission_required, blocked_state_required]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It records a cleanup retention (event docker.host.instance_retention_recorded), so domain_action."}
+        - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, permission_required, blocked_state_required], gap_note: "No row states a subset; cleanup and retain actions carry receipt requirements (UCC-105 fixture list), so a missing receipt expectation blocks, with the rest from the shared taxonomy."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_capability_ref, host_profile_id and host_instance_id from the args where present; requested_action from the command id (instance retain); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); the cleanup policy CV-304 names, FileSafe scope, network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile (cmd.docker.host.profile.save); and the expected receipt ref kind (cleanup_retention_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation (review r1 finding 5)."}
     - command_id: cmd.docker.host.receipt.open
       ucc_units: [UCC-105]
-      command_kind: navigation_wrapper            # JUDGMENT: canon states no kind; it opens a receipt view
-      # (event docker.host.receipt_opened), a route/open without an owner result.
+      command_kind: navigation_wrapper
       response_kind: local_projection
       args:
         receipt_ref:
@@ -2577,14 +2725,17 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "receipt_ref is the UCC-230 common optional field made required by the command subject (one receipt); the Docker/Hosts Receipts &amp; Artifacts subview opens receipts directly (CRAU-092)"
+          source: "receipt_ref is the UCC-230 common optional field made required by the command subject (one receipt); the Docker/Hosts Receipts & Artifacts subview opens receipts directly (CRAU-092)"
       owner_request: none                          # no wiring request_schema_ref (catalog.docker_host_receipt_open)
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_args, permission_denied, invalid_route, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, stale_projection]   # JUDGMENT: receipts open from local records; freshness of the projection matters
+      disabled_reason_codes: [not_configured, unreachable, stale_projection]
       aliases: []
+      judgments:
+        - {key: command_kind, choice: navigation_wrapper, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It opens a receipt view (event docker.host.receipt_opened), a route open without an owner result, so navigation_wrapper. It is not in CV-360's open-routes table, so it carries no placement fields."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, stale_projection], gap_note: "No row states a subset; receipts open from local records, so only missing configuration, an unreachable owner or a stale projection disables it."}
   results:
     DockerContainerRunResultV1:
       fields:

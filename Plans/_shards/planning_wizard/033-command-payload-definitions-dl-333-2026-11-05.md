@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Wizard.md`
 
-Source lines: L4150-L4768
+Source lines: L4150-L4813
 
-Source SHA256: `6641b3b4ed69012ae2bc0bc38c82149677fdaf5a00f7f6add2c2b9fcfa4c744b`
+Source SHA256: `95c588d0c52dab9967530c802868c39be59b12a9ff44c7c7b2cf055d8ba40b16`
 
 ---
 
@@ -31,7 +31,7 @@ canonical_text: >-
   common envelope and the closed code sets.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible Planning Wizard start, topic, amendment and Approve And Build commands.
-depends_on: [UCC-230, UCC-097, UCC-098, DL-333, DL-330, CV-333, PWIZ-001, PWIZ-003, PWIZ-014]
+depends_on: [UCC-230, UCC-097, UCC-098, DL-333, DL-330, DL-341, CV-333, PWIZ-001, PWIZ-003, PWIZ-014]
 unblocks: []
 acceptance_criteria:
   - Every command that UCC-230 routes to PWIZ-109 has exactly one definition in the block below.
@@ -67,8 +67,6 @@ command_payload_definitions:
     - command_id: cmd.planning_wizard.start
       ucc_units: [UCC-098, UCC-097]
       command_kind: navigation_wrapper
-      # canon: runtime contract row cmd.planning_wizard.start (command_kind navigation_wrapper);
-      # the catalog row's payload summary column is history (DL-333 lineage pointer).
       response_kind: owner_operation
       args:
         approved_prd_pack_ref:
@@ -96,17 +94,20 @@ command_payload_definitions:
         owner_result: local:PlanningWizardStartResultV1
       error_codes: [invalid_route, invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [stale_projection, not_configured]
-      # JUDGMENT: the runtime row's stale_pack maps to stale_projection and missing_project_context
-      # to not_configured (owner_state_code_map); refresh_pack_and_context_before_start is the
-      # freshness clause.
+      judgments:
+        - key: response_kind
+          choice: owner_operation
+          gap_note: >-
+            The runtime row makes start a navigation_wrapper, and CV-333 gives no response_kind for it. It is
+            owner_operation because the row's result_contract is a PlanningRun and its receipt effect is
+            planning_run_created (Plans/prd_planning_runtime_contracts.json ui_command_contracts): the owner creates
+            or opens a durable run, which a local projection cannot carry.
       aliases:
         - {command_id: cmd.planning_wizard.start_from_prd, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.planning_wizard.topic.open
       ucc_units: [UCC-098, UCC-097]
       command_kind: navigation_wrapper
-      # canon: fields from the catalog row plus the runtime contract row keyed by this catalog id
-      # (DL-333 resolution 1: the contract file adds this id from the catalog rows).
       response_kind: owner_operation
       args:
         planning_run_id:
@@ -136,14 +137,18 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOpenResultV1
       error_codes: [invalid_route, invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [stale_projection]
-      # JUDGMENT: the runtime row's stale_topic_map_version maps to stale_projection
-      # (owner_state_code_map); block_on_stale_topic_map is the freshness clause. PWIZ-003's
-      # dependency-locked presentation stays wizard state, not an overlay code.
+      judgments:
+        - key: response_kind
+          choice: owner_operation
+          gap_note: >-
+            The runtime row makes topic.open a navigation_wrapper, and CV-333 gives no response_kind for it. It is
+            owner_operation because the row returns selected_topic_projection_ref with the receipt effect
+            topic_projection_selected (Plans/prd_planning_runtime_contracts.json ui_command_contracts), an owner
+            result.
       aliases: []
     - command_id: cmd.planning_wizard.topic.add
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.planning_wizard.topic.add (command_kind domain_action).
       response_kind: owner_operation
       args:
         planning_run_id:
@@ -167,25 +172,21 @@ command_payload_definitions:
           required: true
           default: none
           item: {type: ref}
+          constraints: {min_items: 1}
           provenance: canon
-          source: "runtime contract payload_contract cmd.planning_wizard.topic.add; PWIZ-003 records source refs with every topic operation"
+          source: "runtime contract payload_contract cmd.planning_wizard.topic.add; list of refs per the UCC-230 *_ref typing; min_items 1 from the topic_operation_event invariant 'operation source_refs are non-empty' (Plans/prd_planning_runtime_contracts.json planning_wizard_runtime.records); PWIZ-003 records source refs with every topic operation"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [degraded]
-      # JUDGMENT: the runtime row's ledger_sync_blocked maps to degraded (owner_state_code_map);
-      # refresh_topic_map_before_mutation is the freshness clause.
       aliases:
         - {command_id: cmd.planning_wizard.add_topic, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.planning_wizard.topic.split
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.planning_wizard.topic.split (command_kind domain_action);
-      # the history column's extra "affected refs, topic map version" inputs have no fields in the
-      # runtime field list.
       response_kind: owner_operation
       args:
         topic_id:
@@ -209,23 +210,21 @@ command_payload_definitions:
           required: true
           default: none
           item: {type: ref}
+          constraints: {min_items: 1}
           provenance: canon
-          source: "runtime contract payload_contract cmd.planning_wizard.topic.split; PWIZ-003 records source refs with every topic operation"
+          source: "runtime contract payload_contract cmd.planning_wizard.topic.split; list of refs per the UCC-230 *_ref typing; min_items 1 from the topic_operation_event invariant 'operation source_refs are non-empty' (Plans/prd_planning_runtime_contracts.json planning_wizard_runtime.records); PWIZ-003 records source refs with every topic operation"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's topic_busy maps to blocked_state_required
-      # (owner_state_code_map); block_on_stale_topic_map is the freshness clause.
       aliases:
         - {command_id: cmd.planning_wizard.split_topic, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.planning_wizard.topic.merge
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.planning_wizard.topic.merge (command_kind domain_action).
       response_kind: owner_operation
       args:
         topic_ids:
@@ -234,7 +233,7 @@ command_payload_definitions:
           default: none
           item: {type: id}
           provenance: canon
-          source: "runtime contract payload_contract cmd.planning_wizard.topic.merge; guard topics_compatible; PWIZ-003 merge operation over two or more topics"
+          source: "runtime contract payload_contract cmd.planning_wizard.topic.merge; list of ids per the UCC-230 *_id typing; guard topics_compatible; PWIZ-003 lists merge among the topic operations and states no item bound, so none is written"
         merge_reason:
           type: string
           required: true
@@ -250,15 +249,21 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's dependency_conflict maps to blocked_state_required
-      # (owner_state_code_map); refresh_dependencies_before_merge is the freshness clause.
+      judgments:
+        - key: omitted:source_refs
+          choice: omitted
+          gap_note: >-
+            Canon conflict inside the runtime file: topic_operation_event requires source_refs for every topic
+            operation and its invariant says "operation source_refs are non-empty"
+            (planning_wizard_runtime.records), and PWIZ-003 records source refs with every operation, but the merge
+            row's payload_contract (topic_ids, merge_reason) has no source_refs. DL-333 resolution 1 makes the row's
+            field list canonical, so the field is not added; the runtime file needs the fix.
       aliases:
         - {command_id: cmd.planning_wizard.merge_topic, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.planning_wizard.topic.rename
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.planning_wizard.topic.rename (command_kind domain_action).
       response_kind: owner_operation
       args:
         topic_id:
@@ -289,15 +294,21 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's duplicate_title maps to blocked_state_required
-      # (owner_state_code_map); refresh_topic_identity_before_rename is the freshness clause.
+      judgments:
+        - key: omitted:source_refs
+          choice: omitted
+          gap_note: >-
+            Canon conflict inside the runtime file: topic_operation_event requires non-empty source_refs and names
+            rename as an explicit operation (planning_wizard_runtime.records), and PWIZ-003 records source refs with
+            every operation, but the rename row's payload_contract (topic_id, new_title, reason) has none. DL-333
+            resolution 1 makes the row's field list canonical, so the field is not added; the runtime file needs
+            the fix.
       aliases:
         - {command_id: cmd.planning_wizard.rename_topic, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.planning_wizard.topic.reorder
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.planning_wizard.topic.reorder (command_kind domain_action).
       response_kind: owner_operation
       args:
         topic_id:
@@ -329,16 +340,21 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's dependency_order_conflict maps to blocked_state_required
-      # (owner_state_code_map); refresh_dependency_order_before_mutation is the freshness clause.
+      judgments:
+        - key: omitted:source_refs
+          choice: omitted
+          gap_note: >-
+            Canon conflict inside the runtime file: topic_operation_event requires non-empty source_refs and names
+            reorder as an explicit operation (planning_wizard_runtime.records), and PWIZ-003 records source refs
+            with every operation, but the reorder row's payload_contract (topic_id, target_order, reason) has none.
+            DL-333 resolution 1 makes the row's field list canonical, so the field is not added; the runtime file
+            needs the fix.
       aliases:
         - {command_id: cmd.planning_wizard.reorder_topic, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.planning_wizard.topic.mark_impacted
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.planning_wizard.topic.mark_impacted (command_kind
-      # domain_action); PWIZ-005 owns typed invalidation.
       response_kind: owner_operation
       args:
         topic_ids:
@@ -362,23 +378,21 @@ command_payload_definitions:
           required: true
           default: none
           item: {type: ref}
+          constraints: {min_items: 1}
           provenance: canon
-          source: "runtime contract payload_contract cmd.planning_wizard.topic.mark_impacted; PWIZ-003 records source refs with every topic operation"
+          source: "runtime contract payload_contract cmd.planning_wizard.topic.mark_impacted; list of refs per the UCC-230 *_ref typing; min_items 1 from the topic_operation_event invariant 'operation source_refs are non-empty' (Plans/prd_planning_runtime_contracts.json planning_wizard_runtime.records); PWIZ-003 records source refs with every topic operation"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:PlanningWizardMarkImpactedResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's missing_impact_evidence maps to blocked_state_required
-      # (owner_state_code_map); block_on_stale_topic_map is the freshness clause.
       aliases:
         - {command_id: cmd.planning_wizard.mark_impacted, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.planning_wizard.topic.defer
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.planning_wizard.topic.defer (command_kind domain_action).
       response_kind: owner_operation
       args:
         topic_id:
@@ -410,15 +424,21 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's required_topic maps to blocked_state_required
-      # (owner_state_code_map); refresh_topic_state_before_defer is the freshness clause.
+      judgments:
+        - key: omitted:source_refs
+          choice: omitted
+          gap_note: >-
+            Canon conflict inside the runtime file: topic_operation_event requires non-empty source_refs for every
+            topic operation (planning_wizard_runtime.records), and PWIZ-003 records source refs with every
+            operation, but the defer row's payload_contract (topic_id, defer_reason, reopen_condition) has none.
+            DL-333 resolution 1 makes the row's field list canonical, so the field is not added; the runtime file
+            needs the fix.
       aliases:
         - {command_id: cmd.planning_wizard.defer_topic, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.planning_wizard.topic.reopen
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.planning_wizard.topic.reopen (command_kind domain_action).
       response_kind: owner_operation
       args:
         topic_id:
@@ -442,17 +462,20 @@ command_payload_definitions:
         owner_result: local:PlanningWizardTopicOperationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
-      # JUDGMENT: the runtime row's topic_not_deferred_or_ready maps to blocked_state_required
-      # (owner_state_code_map); refresh_topic_state_before_reopen is the freshness clause.
+      judgments:
+        - key: omitted:source_refs
+          choice: omitted
+          gap_note: >-
+            Canon conflict inside the runtime file: topic_operation_event requires non-empty source_refs for every
+            topic operation (planning_wizard_runtime.records), and PWIZ-003 records source refs with every
+            operation, but the reopen row's payload_contract (topic_id, reason) has none. DL-333 resolution 1 makes
+            the row's field list canonical, so the field is not added; the runtime file needs the fix.
       aliases:
         - {command_id: cmd.planning_wizard.reopen_topic, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.planning_wizard.amendment.accept
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.planning_wizard.amendment.accept (command_kind
-      # domain_action); planning_amendment record (planning_wizard_runtime.records) lists the same
-      # fields.
       response_kind: owner_operation
       args:
         amendment_id:
@@ -466,8 +489,9 @@ command_payload_definitions:
           required: true
           default: none
           item: {type: ref}
+          constraints: {min_items: 1}
           provenance: canon
-          source: "runtime contract payload_contract cmd.planning_wizard.amendment.accept; planning_amendment required field source_refs; guard source_refs_present"
+          source: "runtime contract payload_contract cmd.planning_wizard.amendment.accept; planning_amendment required field source_refs; list of refs per the UCC-230 *_ref typing; min_items 1 from the guard source_refs_present, its owner state missing_source_lineage and the planning_amendment invariant 'accepted amendments require source evidence and approver' (planning_wizard_runtime.records)"
         approver_ref:
           type: ref
           required: true
@@ -480,20 +504,27 @@ command_payload_definitions:
         owner_result: local:PlanningWizardAmendmentAcceptResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required, permission_required]
-      # JUDGMENT: the runtime row's missing_source_lineage maps to blocked_state_required and
-      # missing_approver to permission_required (owner_state_code_map); block_on_stale_amendment is
-      # the freshness clause.
       aliases:
         - {command_id: cmd.planning_wizard.accept_amendment, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
     - command_id: cmd.planning_wizard.approve_and_build
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
-      # canon: runtime contract row cmd.planning_wizard.approve_and_build (command_kind
-      # domain_action); the args are the PWIZ-014 compare-and-swap currentness inputs
-      # (approve_and_build_cas_fields plus project_context_snapshot_ref).
       response_kind: owner_operation
       args:
+        project_id:
+          type: id
+          required: true
+          default: none
+          provenance: canon
+          source: "UCC-230 envelope common optional project_id restated required; the approval payload carries project_id (Planning_Wizard.md:103; catalog row UI_Command_Catalog.md:8585), and it is the first of the runtime row's idempotency_key_fields (Plans/prd_planning_runtime_contracts.json ui_command_contracts)"
+        idempotency_key:
+          type: string
+          required: true
+          default: none
+          constraints: {max_length: 256}
+          provenance: canon
+          source: "UCC-230 envelope common optional idempotency_key (string, max_length 256) restated required; the approval payload carries the deterministic idempotency key (Planning_Wizard.md:103; UI_Command_Catalog.md:8585), derived from the runtime row's idempotency_key_fields; PWIZ-014 duplicate-delivery rule (Planning_Wizard.md:819, :830)"
         planning_run_id:
           type: id
           required: true
@@ -598,15 +629,29 @@ command_payload_definitions:
         owner_result: local:PlanningWizardApproveAndBuildResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required, stale_projection]
-      # JUDGMENT: the runtime row's topics_not_ready and zero_incomplete_failed map to
-      # blocked_state_required; its nine stale_* states map to stale_projection (owner_state_code_map).
-      # The envelope's idempotency_key carries the deterministic key derived from the row's
-      # idempotency_key_fields (PWIZ-014 duplicate-delivery rule); it is not restated here.
+      judgments:
+        - key: field:project_id
+          choice: restated required from the envelope's common optional project_id
+          gap_note: >-
+            Canon conflict. The owner prose (Planning_Wizard.md:103) and the catalog row (UI_Command_Catalog.md:8585)
+            put project_id in the approval payload, and the runtime row's idempotency_key_fields start with it, but
+            the runtime payload_contract leaves it out (Plans/prd_planning_runtime_contracts.json
+            ui_command_contracts). The definition keeps the runtime field list as DL-333 resolution 1 requires and
+            makes the envelope's project_id required, which the narrowing rule allows, so the deterministic key PWIZ-014
+            relies on can be derived from the payload.
+        - key: field:idempotency_key
+          choice: restated required from the envelope's common optional idempotency_key
+          gap_note: >-
+            The runtime payload_contract does not list it, but Planning_Wizard.md:103 and the catalog row
+            (UI_Command_Catalog.md:8585) put the "deterministic idempotency key" in the payload, and PWIZ-014 says
+            duplicate delivery with the same CAS inputs and idempotency key returns the same PlanCompileRun
+            (Planning_Wizard.md:819, :830). A dispatch without it could not meet that rule, so the envelope field is
+            made required (narrowing only; its type stays the envelope's).
       aliases: []
   results:
     PlanningWizardStartResultV1:
       fields:
-        PlanningRun: {type: ref, required: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; the created or opened PlanningRun record (PlanningWizard.md:1649 fields); no typed result contract"}
+        PlanningRun: {type: ref, required: true, default: none, provenance: gap, gap_note: "result_contract token of the runtime row; the created or opened PlanningRun record (Planning_Wizard.md:1649 fields); no typed result contract"}
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "planning_run_created effect of the runtime row; no typed result contract"}
     PlanningWizardTopicOpenResultV1:
       fields:

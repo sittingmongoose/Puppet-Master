@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 19068,
+    "depends_on_edge_count": 19094,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22278,
+    "edge_count": 22304,
     "node_count": 7519,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-07T14:39:05Z",
+  "generated_at_utc": "2026-11-07T15:16:22Z",
   "gui_related_units": {
     "count": 3837,
     "units": [
@@ -3850,8 +3850,8 @@
         "source_location": {
           "heading": "ACD-638 - Chat Message, Code-Block, Rewind Revert And Message Details Command Payload Definitions",
           "heading_level": 3,
-          "heading_line": 29924,
-          "line": 29926,
+          "heading_line": 30113,
+          "line": 30115,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3861,8 +3861,8 @@
         "source_location": {
           "heading": "ACD-639 - Chat Web Family And Stop Command Payload Definitions",
           "heading_level": 3,
-          "heading_line": 30319,
-          "line": 30321,
+          "heading_line": 30549,
+          "line": 30551,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -3872,8 +3872,8 @@
         "source_location": {
           "heading": "ACD-640 - Chat Vision Bridge Command Payload Definitions",
           "heading_level": 3,
-          "heading_line": 30685,
-          "line": 30687,
+          "heading_line": 30986,
+          "line": 30988,
           "path": "Plans/assistant-chat-design.md"
         }
       },
@@ -7315,8 +7315,8 @@
         "source_location": {
           "heading": "CRAU-116 - Docker Hosts Run And Container Open Command Payload Definitions",
           "heading_level": 3,
-          "heading_line": 9004,
-          "line": 9006,
+          "heading_line": 9110,
+          "line": 9112,
           "path": "Plans/Containers_Registry_and_Unraid.md"
         }
       },
@@ -21681,8 +21681,8 @@
         "source_location": {
           "heading": "F3-717 - Notifications And Sounds Command Payload Definitions",
           "heading_level": 3,
-          "heading_line": 50790,
-          "line": 50792,
+          "heading_line": 50946,
+          "line": 50948,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21692,8 +21692,8 @@
         "source_location": {
           "heading": "F3-718 - Teacher Guided GUI Command Payload Definitions",
           "heading_level": 3,
-          "heading_line": 51287,
-          "line": 51289,
+          "heading_line": 51630,
+          "line": 51632,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -30262,7 +30262,7 @@
           "heading": "PRDB-011 - Conflict, Scoring, Resource Defaults, And Approval Command Contract",
           "heading_level": 3,
           "heading_line": 929,
-          "line": 931,
+          "line": 933,
           "path": "Plans/PRD_Builder.md"
         }
       },
@@ -30272,8 +30272,8 @@
         "source_location": {
           "heading": "PRDB-013 - PRD Switcher And New Plan Under Selected Plan Scope",
           "heading_level": 3,
-          "heading_line": 1047,
-          "line": 1049,
+          "heading_line": 1049,
+          "line": 1051,
           "path": "Plans/PRD_Builder.md"
         }
       },
@@ -30283,8 +30283,8 @@
         "source_location": {
           "heading": "PRDB-024 - PRD Builder Command Payload Definitions",
           "heading_level": 3,
-          "heading_line": 1108,
-          "line": 1110,
+          "heading_line": 1110,
+          "line": 1112,
           "path": "Plans/PRD_Builder.md"
         }
       },
@@ -34364,8 +34364,8 @@
         "source_location": {
           "heading": "SMPFS-329 - Terminal, dev-session and catalog command payload definitions",
           "heading_level": 3,
-          "heading_line": 14063,
-          "line": 14065,
+          "heading_line": 14322,
+          "line": 14324,
           "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
         }
       },
@@ -46552,31 +46552,31 @@
       {
         "actual": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
         "error": "pnc019_source_hash_stale",
-        "expected": "30794912c967f901eaa5ef1eebdc75dc71d0f6d9566083446a7566bcba9382a8",
+        "expected": "eea7233af7a6e3ade179b2026a399af964dd5579b443e7934ed2a605ef538712",
         "source_path": "Plans/Plan_To_Node_Compilation.md"
       },
       {
         "actual": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
         "error": "pnc019_source_hash_stale",
-        "expected": "6641b3b4ed69012ae2bc0bc38c82149677fdaf5a00f7f6add2c2b9fcfa4c744b",
+        "expected": "95c588d0c52dab9967530c802868c39be59b12a9ff44c7c7b2cf055d8ba40b16",
         "source_path": "Plans/Planning_Wizard.md"
       },
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "11972653b14d23c33803c0fc7daf3992e0c3c95fc004448ae184f04ee83cff69",
+        "expected": "25daa0fedfb8aaa0c02378b401af507144728b36ebafb3ea0e1484142378c0a8",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "44d9dc13437e91eea78fbfe4113e847fc82e5bd23f4528c340ba572d0dcd87da",
+        "expected": "683bbbcf8160dd8a3e09d6e27ba94af51fbe3839183016eeaecf33ca6efa3071",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
         "actual": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7",
         "error": "pnc019_source_hash_stale",
-        "expected": "f2e90b9692f2ed62fd9987f90202926be34a52835686dc08b76734f8a82016ca",
+        "expected": "6ec3d7d253c71c9dcc2373f06d1e5be7a5d6ecbea43a094eca7729f30e2e37d0",
         "source_path": "Plans/Orchestrator_Page.md"
       },
       {

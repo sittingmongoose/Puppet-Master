@@ -12388,12 +12388,22 @@
     {
       "edge_type": "depends_on",
       "from": "ACD-637",
+      "to": "CV-360"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-637",
       "to": "DL-333"
     },
     {
       "edge_type": "depends_on",
       "from": "ACD-637",
       "to": "DL-335"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-637",
+      "to": "DL-341"
     },
     {
       "edge_type": "depends_on",
@@ -12423,6 +12433,11 @@
     {
       "edge_type": "depends_on",
       "from": "ACD-637",
+      "to": "UCC-200"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-637",
       "to": "UCC-230"
     },
     {
@@ -12444,6 +12459,11 @@
       "edge_type": "depends_on",
       "from": "ACD-638",
       "to": "DL-333"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-638",
+      "to": "DL-341"
     },
     {
       "edge_type": "depends_on",
@@ -12493,6 +12513,11 @@
     {
       "edge_type": "depends_on",
       "from": "ACD-639",
+      "to": "DL-341"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-639",
       "to": "UCC-078"
     },
     {
@@ -12534,6 +12559,11 @@
       "edge_type": "depends_on",
       "from": "ACD-640",
       "to": "DL-333"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "ACD-640",
+      "to": "DL-341"
     },
     {
       "edge_type": "depends_on",
@@ -13574,6 +13604,11 @@
       "edge_type": "depends_on",
       "from": "AMS-141",
       "to": "DL-333"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "AMS-141",
+      "to": "DL-341"
     },
     {
       "edge_type": "depends_on",
@@ -19683,7 +19718,17 @@
     {
       "edge_type": "depends_on",
       "from": "CRAU-115",
+      "to": "CRAU-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-115",
       "to": "CRAU-011"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-115",
+      "to": "CRAU-012"
     },
     {
       "edge_type": "depends_on",
@@ -19698,12 +19743,27 @@
     {
       "edge_type": "depends_on",
       "from": "CRAU-115",
+      "to": "CRAU-017"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-115",
       "to": "CRAU-031"
     },
     {
       "edge_type": "depends_on",
       "from": "CRAU-115",
       "to": "CRAU-044"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-115",
+      "to": "CRAU-098"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-115",
+      "to": "CRAU-099"
     },
     {
       "edge_type": "depends_on",
@@ -19719,6 +19779,11 @@
       "edge_type": "depends_on",
       "from": "CRAU-115",
       "to": "DL-333"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-115",
+      "to": "DL-341"
     },
     {
       "edge_type": "depends_on",
@@ -19753,12 +19818,27 @@
     {
       "edge_type": "depends_on",
       "from": "CRAU-115",
+      "to": "UCC-137"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-115",
       "to": "UCC-230"
     },
     {
       "edge_type": "depends_on",
       "from": "CRAU-116",
       "to": "CRAU-092"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-116",
+      "to": "CRAU-094"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-116",
+      "to": "CV-303"
     },
     {
       "edge_type": "depends_on",
@@ -19774,6 +19854,11 @@
       "edge_type": "depends_on",
       "from": "CRAU-116",
       "to": "DL-333"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CRAU-116",
+      "to": "DL-341"
     },
     {
       "edge_type": "depends_on",
@@ -21584,6 +21669,11 @@
       "edge_type": "depends_on",
       "from": "CS-125",
       "to": "DL-333"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "CS-125",
+      "to": "DL-341"
     },
     {
       "edge_type": "depends_on",
@@ -32229,6 +32319,16 @@
       "edge_type": "depends_on",
       "from": "EP-236",
       "to": "DL-333"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-236",
+      "to": "DL-341"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "EP-236",
+      "to": "HITL-038"
     },
     {
       "edge_type": "depends_on",
@@ -48048,6 +48148,11 @@
     {
       "edge_type": "depends_on",
       "from": "OP-049",
+      "to": "DL-341"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "OP-049",
       "to": "OP-026"
     },
     {
@@ -56073,6 +56178,11 @@
     {
       "edge_type": "depends_on",
       "from": "PNC-037",
+      "to": "DL-341"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PNC-037",
       "to": "PNC-014"
     },
     {
@@ -58659,6 +58769,11 @@
       "edge_type": "depends_on",
       "from": "PRDB-024",
       "to": "DL-333"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PRDB-024",
+      "to": "DL-341"
     },
     {
       "edge_type": "depends_on",
@@ -62694,6 +62809,11 @@
       "edge_type": "depends_on",
       "from": "PWIZ-109",
       "to": "DL-333"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PWIZ-109",
+      "to": "DL-341"
     },
     {
       "edge_type": "depends_on",
@@ -99488,6 +99608,11 @@
     {
       "edge_type": "depends_on",
       "from": "W-095",
+      "to": "DL-341"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "W-095",
       "to": "GI-041"
     },
     {
@@ -99509,6 +99634,11 @@
       "edge_type": "depends_on",
       "from": "W-095",
       "to": "W-007"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "W-095",
+      "to": "W-075"
     },
     {
       "edge_type": "depends_on",
@@ -118916,7 +119046,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-07T14:39:04Z",
+  "generated_at_utc": "2026-11-07T15:16:21Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -128533,8 +128663,8 @@
       "source_location": {
         "heading": "ACD-638 - Chat Message, Code-Block, Rewind Revert And Message Details Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 29924,
-        "line": 29926,
+        "heading_line": 30113,
+        "line": 30115,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -128550,8 +128680,8 @@
       "source_location": {
         "heading": "ACD-639 - Chat Web Family And Stop Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 30319,
-        "line": 30321,
+        "heading_line": 30549,
+        "line": 30551,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -128567,8 +128697,8 @@
       "source_location": {
         "heading": "ACD-640 - Chat Vision Bridge Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 30685,
-        "line": 30687,
+        "heading_line": 30986,
+        "line": 30988,
         "path": "Plans/assistant-chat-design.md"
       },
       "status": "accepted",
@@ -138291,8 +138421,8 @@
       "source_location": {
         "heading": "CRAU-116 - Docker Hosts Run And Container Open Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 9004,
-        "line": 9006,
+        "heading_line": 9110,
+        "line": 9112,
         "path": "Plans/Containers_Registry_and_Unraid.md"
       },
       "status": "accepted",
@@ -177153,8 +177283,8 @@
       "source_location": {
         "heading": "F3-717 - Notifications And Sounds Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 50790,
-        "line": 50792,
+        "heading_line": 50946,
+        "line": 50948,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -177170,8 +177300,8 @@
       "source_location": {
         "heading": "F3-718 - Teacher Guided GUI Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 51287,
-        "line": 51289,
+        "heading_line": 51630,
+        "line": 51632,
         "path": "Plans/FinalGUISpec.md"
       },
       "status": "accepted",
@@ -214010,7 +214140,7 @@
         "heading": "PRDB-011 - Conflict, Scoring, Resource Defaults, And Approval Command Contract",
         "heading_level": 3,
         "heading_line": 929,
-        "line": 931,
+        "line": 933,
         "path": "Plans/PRD_Builder.md"
       },
       "status": "accepted",
@@ -214026,8 +214156,8 @@
       "source_location": {
         "heading": "Notebook Research Assistance Addendum (2026-09-05)",
         "heading_level": 2,
-        "heading_line": 988,
-        "line": 992,
+        "heading_line": 990,
+        "line": 994,
         "path": "Plans/PRD_Builder.md"
       },
       "status": "accepted",
@@ -214043,8 +214173,8 @@
       "source_location": {
         "heading": "PRDB-013 - PRD Switcher And New Plan Under Selected Plan Scope",
         "heading_level": 3,
-        "heading_line": 1047,
-        "line": 1049,
+        "heading_line": 1049,
+        "line": 1051,
         "path": "Plans/PRD_Builder.md"
       },
       "status": "accepted",
@@ -214060,8 +214190,8 @@
       "source_location": {
         "heading": "PRDB-024 - PRD Builder Command Payload Definitions",
         "heading_level": 3,
-        "heading_line": 1108,
-        "line": 1110,
+        "heading_line": 1110,
+        "line": 1112,
         "path": "Plans/PRD_Builder.md"
       },
       "status": "accepted",
@@ -225586,8 +225716,8 @@
       "source_location": {
         "heading": "SMPFS-329 - Terminal, dev-session and catalog command payload definitions",
         "heading_level": 3,
-        "heading_line": 14063,
-        "line": 14065,
+        "heading_line": 14322,
+        "line": 14324,
         "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
       },
       "status": "accepted",
@@ -246748,9 +246878,9 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 19068,
+    "depends_on_edge_count": 19094,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22278,
+    "edge_count": 22304,
     "node_count": 7519,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,

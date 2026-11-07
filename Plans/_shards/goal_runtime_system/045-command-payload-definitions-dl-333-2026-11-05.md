@@ -2,9 +2,9 @@
 
 Source: `Plans/Goal_Runtime_System.md`
 
-Source lines: L8359-L8566
+Source lines: L8359-L8565
 
-Source SHA256: `44d9dc13437e91eea78fbfe4113e847fc82e5bd23f4528c340ba572d0dcd87da`
+Source SHA256: `683bbbcf8160dd8a3e09d6e27ba94af51fbe3839183016eeaecf33ca6efa3071`
 
 ---
 
@@ -62,7 +62,7 @@ command_payload_definitions:
     - command_id: cmd.chat.goal.start
       ucc_units: [UCC-096]
       command_kind: domain_action
-      # canon: UI_Command_Catalog.md:15016 Simplified Goal Runtime registration table command_kind column.
+      # canon: UI_Command_Catalog.md:15214 Simplified Goal Runtime registration table command_kind column.
       response_kind: owner_operation
       args:
         thread_id:
@@ -79,7 +79,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The 2.7.1 row names goal_prompt? but no canon states a type or bounds for the UI argument.
-            JUDGMENT: string reusing the objective_text bounds of Plans/goal_runtime_contracts.schema.json
+            Chosen: a string reusing the objective_text bounds of Plans/goal_runtime_contracts.schema.json
             $defs/GoalStartRequestV2 (maxLength 4000, no surrogate code points). Whether goal_prompt maps
             one-to-one onto that owner-request objective_text is not stated.
         source:
@@ -91,7 +91,7 @@ command_payload_definitions:
           source: "UI_Command_Catalog.md:1121 2.7.1 row payload source: slash|button|chip|icon|natural_language (the activation surface). This is the UI activation enum; the owner request's source_surface in GoalStartRequestV2 is the separate goal-surface namespace (agent_runtime, approved_agent_proposal, goal_activity, goal_activity_editor, goal_control, goal_hover, natural_language, slash, wand)"
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/GoalStartRequestScopeV2
       # Equals the wiring request_schema_ref (Wiring_Matrix.production.json entries.catalog.chat_goal_start)
-      # and the catalog registration table (UI_Command_Catalog.md:15016).
+      # and the catalog registration table (UI_Command_Catalog.md:15214).
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: Plans/application_workflow_contracts.schema.json#/$defs/GoalStartResultScopeV2
@@ -99,23 +99,17 @@ command_payload_definitions:
       # currentness_hash, creation receipt; Goal_Runtime_System.md:254) is carried by that contract.
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, unreachable, degraded, blocked_state_required]
-      # No registration table states disabled reasons for this row; drawn from the closed set over the
-      # catalog preconditions assistant_chat_available && goal_runtime_available && no_active_goal_on_thread
-      # (UI_Command_Catalog.md:15016): runtime unavailable maps to not_configured/unreachable/degraded and
-      # an active goal already on the thread to blocked_state_required. handler_unavailable stays the
-      # evidence boundary (Plans/Commands_System.md:6400), which the always-set already covers.
-      # blocked_state_required in disabled adds blocked_state_required to error_codes.
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [not_configured, unreachable, degraded, blocked_state_required]
+          gap_note: "No registration table states disabled reasons for this row; chosen from the closed set over the catalog preconditions assistant_chat_available && goal_runtime_available && no_active_goal_on_thread (UI_Command_Catalog.md:15214): runtime unavailable maps to not_configured, unreachable or degraded, and an active goal already on the thread to blocked_state_required. handler_unavailable stays the evidence boundary (Plans/Commands_System.md:6402) and is an error code, not a disabled code."
     - command_id: cmd.chat.goal.update
       ucc_units: [UCC-096]
       command_kind: domain_action
-      # canon: UI_Command_Catalog.md:15017 Simplified Goal Runtime registration table command_kind column.
+      # canon: UI_Command_Catalog.md:15215 Simplified Goal Runtime registration table command_kind column.
       response_kind: owner_operation
       args:
-        # UICommand.args are the GoalUpdateRequestV2 fields the 2.7.1 row names as the payload
-        # (UI_Command_Catalog.md:1122 'GoalUpdateRequestV2 under CV-342'), minus its request markers
-        # schema_id, schema_version and command_instance_id and the envelope-carried command_id,
-        # source_surface and actor_ref, which the envelope and the owner request carry at their layers.
         project_id:
           type: id
           required: true
@@ -182,24 +176,22 @@ command_payload_definitions:
           source: "GoalUpdateRequestV2 change_source enum; a user-authored edit or a resolved approval (Goal_Runtime_System.md:255)"
         source_message_id:
           type: id
-          required: false
+          required: true
           default: none
-          required_when: {field: change_source, in: [agent_proposed_user_approved]}
-          forbidden_when: {field: change_source, in: [user_direct]}
+          nullable: true
           provenance: canon
-          source: "GoalUpdateRequestV2 source_message_id is required-but-nullable (string minLength 1 or null): null exactly when change_source is user_direct and a non-null string otherwise; modeled optional with those conditionals because the closed vocabulary has no nullable type"
+          source: "GoalUpdateRequestV2 requires source_message_id, anyOf string minLength 1 or null; its allOf if/then/else makes it null when change_source is user_direct and a non-empty string otherwise (Plans/goal_runtime_contracts.schema.json)"
         approval_id:
           type: id
-          required: false
+          required: true
           default: none
-          required_when: {field: change_source, in: [agent_proposed_user_approved]}
-          forbidden_when: {field: change_source, in: [user_direct]}
+          nullable: true
           provenance: canon
-          source: "GoalUpdateRequestV2 approval_id is required-but-nullable (string minLength 1 or null): null exactly when change_source is user_direct and a non-null resolved approval otherwise (goal_present && expected_goal_revision_current && (user_authored_edit || approval_granted), UI_Command_Catalog.md:15017)"
+          source: "GoalUpdateRequestV2 requires approval_id, anyOf string minLength 1 or null; its allOf if/then/else makes it null when change_source is user_direct and a non-empty resolved approval otherwise (Plans/goal_runtime_contracts.schema.json); precondition goal_present && expected_goal_revision_current && (user_authored_edit || approval_granted) (UI_Command_Catalog.md:15215)"
       owner_request: Plans/application_workflow_contracts.schema.json#/$defs/ChatOwnerCommandRequestV2
       # Equals the wiring request_schema_ref (Wiring_Matrix.production.json entries.catalog.chat_goal_update).
       # The catalog registration table names the goal-layer pair GoalUpdateRequestV2 -> GoalUpdateResultV2
-      # (UI_Command_Catalog.md:15017; Plans/Commands_System.md:6401), which the chat-owner request carries
+      # (UI_Command_Catalog.md:15215; Plans/Commands_System.md:6403), which the chat-owner request carries
       # as its typed owner input.
       result:
         response: Plans/ui_command_response.schema.json
@@ -208,11 +200,18 @@ command_payload_definitions:
       # transaction result (revision n+1 atomically under GRS-068/SP-299, Goal_Runtime_System.md:255).
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, unreachable, degraded, blocked_state_required, stale_projection]
-      # No registration table states disabled reasons for this row; drawn from the closed set over the
-      # catalog preconditions goal_present && expected_goal_revision_current && (user_authored_edit ||
-      # approval_granted) (UI_Command_Catalog.md:15017): no goal or no approved change maps to
-      # blocked_state_required, a stale expected revision or currentness hash to stale_projection, and
-      # runtime availability to not_configured/unreachable/degraded. stale_projection in disabled keeps
-      # stale_projection in error_codes (already required for a domain_action).
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [not_configured, unreachable, degraded, blocked_state_required, stale_projection]
+          gap_note: "No registration table states disabled reasons for this row; chosen from the closed set over the catalog preconditions goal_present && expected_goal_revision_current && (user_authored_edit || approval_granted) (UI_Command_Catalog.md:15215): no goal or no approved change maps to blocked_state_required, a stale expected revision or currentness hash to stale_projection, and runtime availability to not_configured, unreachable or degraded."
+        - key: omitted:schema_id
+          choice: "left out of args; the handler sets the const pm.goal.update.request.v2"
+          gap_note: "GoalUpdateRequestV2 requires schema_id (const pm.goal.update.request.v2) and schema_version (const 2.0.0) (Plans/goal_runtime_contracts.schema.json); canon does not say whether the UI or the handler supplies these request markers."
+        - key: omitted:schema_version
+          choice: "left out of args; the handler sets the const 2.0.0"
+          gap_note: "GoalUpdateRequestV2 requires schema_version const 2.0.0 (Plans/goal_runtime_contracts.schema.json); canon does not say whether the UI or the handler supplies it."
+        - key: omitted:command_instance_id
+          choice: "left out of args; minted per dispatch by the handler"
+          gap_note: "GoalUpdateRequestV2 requires command_instance_id (string 1..256, Plans/goal_runtime_contracts.schema.json); canon does not say who mints it. command_id, actor_ref and source_surface come from the UICommand envelope (UCC-230 envelope required_not_restated), so they are not judgments."
 ```

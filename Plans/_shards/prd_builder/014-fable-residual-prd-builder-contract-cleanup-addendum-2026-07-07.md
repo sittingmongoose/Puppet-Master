@@ -2,9 +2,9 @@
 
 Source: `Plans/PRD_Builder.md`
 
-Source lines: L925-L986
+Source lines: L925-L988
 
-Source SHA256: `551c5f76659fe33abce724ff6a0c0222bfa8ca9f3c84867ab8aa93e79569f62c`
+Source SHA256: `b2150c87d776a8e7edc240ee920a1ee42523abaeab60325ab1213967968cd280`
 
 ---
 
@@ -13,6 +13,8 @@ Source SHA256: `551c5f76659fe33abce724ff6a0c0222bfa8ca9f3c84867ab8aa93e79569f62c
 This addendum closes only residual FABLE Critical/High PRD Builder rows for conflict records, scoring defaults, resource defaults, and approval command naming. It does not certify runtime readiness or create build tasks.
 
 ### PRDB-011 - Conflict, Scoring, Resource Defaults, And Approval Command Contract
+
+Amended 2026-11-07 (DL-333): the user resolution command is now `cmd.prd_builder.conflict.resolve`, with the runtime contract row's fields `conflict_id`, `selected_claim_refs` and `resolution_reason` (`Plans/prd_planning_runtime_contracts.json` `ui_command_contracts`; PRDB-024), and `cmd.prd_builder.resolve_conflict` is its compatibility alias.
 
 ```yaml
 plan_unit_id: PRDB-011

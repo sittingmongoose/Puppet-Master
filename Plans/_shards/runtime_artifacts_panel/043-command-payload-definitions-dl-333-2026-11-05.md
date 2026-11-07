@@ -2,9 +2,9 @@
 
 Source: `Plans/Runtime_Artifacts_Panel.md`
 
-Source lines: L3267-L3630
+Source lines: L3267-L3632
 
-Source SHA256: `e4906f7847a5af6c505338f2a523c48a99d1adf09bd037c7a557dbdaab3a90b0`
+Source SHA256: `21389628e0f8719072944f9ea2d361a0b5d3ee49f0b568fca9503a7e442a0127`
 
 ---
 
@@ -85,7 +85,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1155 2.8A row open_subject (UCC-086 preserved token open_subject); UCC-230 envelope canonical name and type; retains the artifact route/open source-realization bridge (UCC-109 canonical text and negative constraint, UI_Command_Catalog.md:10398)"
+          source: "UI_Command_Catalog.md:1155 2.8A row open_subject (UCC-086 preserved token open_subject); UCC-230 envelope canonical name and type; retains the artifact route/open source-realization bridge (UCC-109 canonical text and negative constraint, UI_Command_Catalog.md:10604)"
         artifact_id:
           type: id
           required: false
@@ -165,7 +165,7 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "UCC-109 canonical text and acceptance criterion carry source_class when present for the artifact Usage/Ledger commands (UI_Command_Catalog.md:10398); values from Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_class"
+          source: "UCC-109 canonical text and acceptance criterion carry source_class when present for the artifact Usage/Ledger commands (UI_Command_Catalog.md:10604); values from Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_class"
         source_confidence:
           type: enum
           values: [high, medium, low, unknown]
@@ -177,8 +177,9 @@ command_payload_definitions:
           type: string
           required: false
           default: none
+          nullable: true
           provenance: canon
-          source: "UCC-109 carries source_authority when present; Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_authority is stringOrNull, so the field is optional string (absent = not applicable)"
+          source: "UCC-109 carries source_authority when present (UI_Command_Catalog.md:10604); Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_authority is $defs/stringOrNull (type string or null)"
         settlement_status:
           type: enum
           values: [observed, streaming_partial, settled, adjusted, failed, unknown]
@@ -206,11 +207,11 @@ command_payload_definitions:
         owner_result: none
       error_codes: [invalid_args, invalid_route, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [stale_projection]
-      # No catalog row states disabled reasons for this command; drawn from the closed set. The wiring
-      # row requires a projected state selector and a disabled-reason projection before dispatch
-      # (catalog.artifacts_show_in_usage.disabled_reason_projection), and a stale projection is the
-      # closed-set code for that state; listing it in disabled adds stale_projection to error_codes.
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [stale_projection]
+          gap_note: "No catalog row states disabled reasons for cmd.artifacts.show_in_usage; chosen from the closed set. The wiring row requires a projected state selector and a disabled-reason projection before dispatch (Wiring_Matrix.production.json catalog.artifacts_show_in_usage.disabled_reason_projection), and stale_projection is the closed-set code for a stale usage projection (UCC-109 carries projection_freshness and projection_health, UI_Command_Catalog.md:10604)."
     - command_id: cmd.artifacts.show_in_ledger
       ucc_units: [UCC-086]
       command_kind: navigation_wrapper
@@ -239,7 +240,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1156 2.8A row open_subject (UCC-086 preserved token open_subject); UCC-230 envelope canonical name and type; retains the artifact route/open source-realization bridge (UCC-109 canonical text and negative constraint, UI_Command_Catalog.md:10398)"
+          source: "UI_Command_Catalog.md:1156 2.8A row open_subject (UCC-086 preserved token open_subject); UCC-230 envelope canonical name and type; retains the artifact route/open source-realization bridge (UCC-109 canonical text and negative constraint, UI_Command_Catalog.md:10604)"
         artifact_id:
           type: id
           required: false
@@ -325,7 +326,7 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "UCC-109 canonical text and acceptance criterion carry source_class when present for the artifact Usage/Ledger commands (UI_Command_Catalog.md:10398); values from Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_class"
+          source: "UCC-109 canonical text and acceptance criterion carry source_class when present for the artifact Usage/Ledger commands (UI_Command_Catalog.md:10604); values from Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_class"
         source_confidence:
           type: enum
           values: [high, medium, low, unknown]
@@ -337,8 +338,9 @@ command_payload_definitions:
           type: string
           required: false
           default: none
+          nullable: true
           provenance: canon
-          source: "UCC-109 carries source_authority when present; Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_authority is stringOrNull, so the field is optional string (absent = not applicable)"
+          source: "UCC-109 carries source_authority when present (UI_Command_Catalog.md:10604); Plans/runtime_artifact_cost_usage.schema.json $defs/authorityFields.properties.source_authority is $defs/stringOrNull (type string or null)"
         settlement_status:
           type: enum
           values: [observed, streaming_partial, settled, adjusted, failed, unknown]
@@ -366,9 +368,9 @@ command_payload_definitions:
         owner_result: none
       error_codes: [invalid_args, invalid_route, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [stale_projection]
-      # No catalog row states disabled reasons for this command; drawn from the closed set. The wiring
-      # row requires a projected state selector and a disabled-reason projection before dispatch
-      # (catalog.artifacts_show_in_ledger.disabled_reason_projection), and a stale projection is the
-      # closed-set code for that state; listing it in disabled adds stale_projection to error_codes.
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [stale_projection]
+          gap_note: "No catalog row states disabled reasons for cmd.artifacts.show_in_ledger; chosen from the closed set. The wiring row requires a projected state selector and a disabled-reason projection before dispatch (Wiring_Matrix.production.json catalog.artifacts_show_in_ledger.disabled_reason_projection), and stale_projection is the closed-set code for a stale usage projection (UCC-109 carries projection_freshness and projection_health, UI_Command_Catalog.md:10604)."
 ```
