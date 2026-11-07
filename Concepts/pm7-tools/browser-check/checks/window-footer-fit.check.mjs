@@ -4,12 +4,17 @@
 // beside its stage, c-ready's and Ready's footer ran past the window, Take the Guided Tour cut 25-99 px and its ? outside
 // it, in every look, on both surfaces (0fcd815fec and 457801b0f6 alike).
 // Screens: those whose footer, laid out at 1100 wide in Retro Light (mono capitals, among the widest), needs more than
-// 380 px (the footer's room in the wide window at 808 is about 397 px), and c-ready always; --set screens= picks some.
+// 380 px (the footer's room in the wide window at 808 is about 397 px), and c-ready and Where always (Where's Back and
+// Continue is the common footer, and under NieR's headers it also carries the key prompts); --set screens= picks some.
 // In each of the ten looks, each screen opened fresh at 1100x900, the window then narrowed in 10 px steps to 740
 // (--set from=, to=, step=). At each width, once laid out: every footer control (its buttons, their ?, Back) lies inside
 // the window's visible box (the window cut by the viewport, 1 px), no label spills out of its button, and no footer
-// button's text is drawn smaller than at 1100 (the fix may wrap a label, never shrink it). Both surfaces (--set sandbox
-// picks one). Headless, or --record with --set looks=<one> --set screens=c-ready for a film of the sweep (the window's
+// button's text is drawn smaller than at 1100 (the fix may wrap a label, never shrink it). FO-100: and Back keeps a
+// usable width: it is drawn at its own width, never squeezed (the footer's other buttons wrap, Back cannot: on 74748ebd92
+// its label ran 10-12 px past its outline at 808-950 in every look and NieR's caret was crushed to nothing), at least
+// 24 px wide, and its caret (its chevron, or NieR's ::before) is drawn at its own width; and NieR's key prompts, which
+// held their row open and squeezed the buttons from 948 to about 1010 (Continue's word 3 px past its outline on
+// c4ba49b137), each show whole or not at all. Both surfaces (--set sandbox picks one). Headless, or --record with --set looks=<one> --set screens=c-ready for a film of the sweep (the window's
 // size stays, the page is held in a frame; each width is marked).
 //   browser-check run Concepts/pm7-tools/browser-check/checks/window-footer-fit.check.mjs --set page=<build>
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
@@ -22,8 +27,15 @@ const READ = () => {
 	if (!foot || !win) return { none: true };
 	const w = win.getBoundingClientRect(), v = [Math.max(w.left, 0), Math.max(w.top, 0), Math.min(w.right, innerWidth), Math.min(w.bottom, innerHeight)];
 	const ctl = [...foot.querySelectorAll('button, a[href], [role="button"]')].filter((b) => b.getClientRects().length && b.getBoundingClientRect().width > 0 && getComputedStyle(b).visibility !== 'hidden');
+	/* NieR's key prompts (Q7): each shown whole, inside the row's box, or wrapped out of it whole (FO-100) */
+	const keys = foot.querySelector('.o55nw-keys'), kr = keys && keys.getClientRects().length ? keys.getBoundingClientRect() : null;
+	const keyParts = kr ? [...keys.children].map((k) => k.getBoundingClientRect()).map((q) => {
+		const inX = Math.max(0, Math.min(q.right, kr.right) - Math.max(q.left, kr.left)), inY = Math.max(0, Math.min(q.bottom, kr.bottom) - Math.max(q.top, kr.top));
+		const seen = (inX * inY) / Math.max(1, q.width * q.height);
+		return seen > 0.99 ? 'whole' : seen < 0.01 ? 'out' : 'cut';
+	}) : [];
 	return {
-		w: innerWidth, lay: root.getAttribute('data-o55-layout'),
+		w: innerWidth, lay: root.getAttribute('data-o55-layout'), keyParts,
 		ctl: ctl.map((b) => {
 			const r = b.getBoundingClientRect();
 			/* (its label's text as laid out, against the button's box: the ? beside a button is a glyph, no label) */
@@ -33,7 +45,20 @@ const READ = () => {
 			if (rg) rg.selectNodeContents(lab);
 			const lr = rg ? [...rg.getClientRects()] : [];
 			const spill = lr.length ? Math.max(0, ...lr.map((q) => Math.max(r.left - q.left, q.right - r.right))) : 0;
-			return { name: (b.textContent || b.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 24) || '?', past: Math.max(0, v[0] - r.left, r.right - v[2], v[1] - r.top, r.bottom - v[3]), spill: Math.round(spill * 10) / 10, font: parseFloat(getComputedStyle(b).fontSize), lines: Math.round(r.height) };
+			const out = { name: (b.textContent || b.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 24) || '?', past: Math.max(0, v[0] - r.left, r.right - v[2], v[1] - r.top, r.bottom - v[3]), spill: Math.round(spill * 10) / 10, font: parseFloat(getComputedStyle(b).fontSize), lines: Math.round(r.height) };
+			/* FO-100: Back as laid out against its own width (laid out once more with flex: none, its style put back in the same
+			   task, so nothing is painted or observed in between), and its caret: the chevron, or NieR's ::before */
+			if (b.classList.contains('o55-back')) {
+				const svg = b.querySelector(':scope > svg'), drawn = svg && getComputedStyle(svg).display !== 'none';
+				const bef = () => { const q = getComputedStyle(b, '::before'); return q.content && q.content !== 'none' && q.display !== 'none' ? parseFloat(q.width) || 0 : 0; };
+				const caret = () => (drawn ? svg.getBoundingClientRect().width : bef());
+				const now = caret(), st = b.getAttribute('style');
+				b.style.flex = 'none';
+				const own = b.getBoundingClientRect().width, ownCaret = caret();
+				if (st === null) b.removeAttribute('style'); else b.setAttribute('style', st);
+				out.back = { w: Math.round(r.width * 10) / 10, squeeze: Math.round((own - r.width) * 10) / 10, caret: drawn ? 'chevron' : bef() ? 'nier' : 'none', caretW: Math.round(now * 10) / 10, caretOwn: Math.round(ownCaret * 10) / 10 };
+			}
+			return out;
 		})
 	};
 };
@@ -64,7 +89,7 @@ async function run(t, mode) {
 	let screens = t.args.screens ? String(t.args.screens).split(',') : null;
 	if (!screens) {
 		await f.evaluate(() => window.O55.ui.applyLook('retro', 'light')); await f.waitForTimeout(800);
-		screens = ['c-ready'];
+		screens = ['c-ready', 'where'];
 		for (const s of await f.evaluate(() => Object.keys(window.O55.screens.defs))) {
 			await open(t, f, s);
 			const now = await f.evaluate(() => window.O55.S.sess.screen), n = await f.evaluate(NATURAL);
@@ -87,7 +112,7 @@ async function run(t, mode) {
 			if (now !== screen) { await t.check(`${tag}: opens as itself`, false, `opened as ${now}`); continue; }
 			const base = await f.evaluate(READ);
 			const font = Object.fromEntries((base.ctl || []).map((c) => [c.name, c.font]));
-			const bad = [];
+			const bad = [], backBad = [];
 			let widths = 0;
 			for (let w = from; w >= to; w -= step) {
 				await t.viewport(w, 900);
@@ -96,14 +121,20 @@ async function run(t, mode) {
 				const r = await f.evaluate(READ);
 				if (r.none) { bad.push({ w, err: 'no footer' }); continue; }
 				widths++;
+				if (r.keyParts.includes('cut')) bad.push({ w, lay: r.lay, ctl: 'NieR key prompts', keys: r.keyParts.join(' ') });
 				for (const c of r.ctl) {
 					const smaller = font[c.name] != null && c.font < font[c.name] - .01;
 					if (c.past > 1 || c.spill > 1 || smaller) bad.push({ w, lay: r.lay, ctl: c.name, past: Math.round(c.past), spill: c.spill, font: smaller ? `${c.font} < ${font[c.name]}` : undefined });
+					/* FO-100: Back drawn at its own width, at least 24 px, its caret whole */
+					const k = c.back;
+					if (k && (k.squeeze > 0.5 || k.w < 24 || k.caret === 'none' || k.caretW < k.caretOwn - 0.3)) backBad.push({ at: w, lay: r.lay, ...k });
 				}
 			}
 			const why = JSON.stringify({ widths, failures: bad.length, first: bad.slice(0, 4), controls: (base.ctl || []).map((c) => c.name) });
 			await t.check(`${tag}: footer read at every width ${from}-${to}`, widths === Math.floor((from - to) / step) + 1, why);
 			await t.check(`${tag}: every footer control inside the window, its label inside its button, at its own size, ${from}-${to} wide`, bad.length === 0, why);
+			if ((base.ctl || []).some((c) => c.back)) await t.check(`${tag}: Back at its own width (never squeezed), 24 px or more, its caret whole, ${from}-${to} wide (FO-100)`, backBad.length === 0,
+				JSON.stringify({ widths, failures: backBad.length, first: backBad.slice(0, 4), narrowestBack: backBad.length ? Math.min(...backBad.map((b) => b.w)) : undefined }));
 			if (bad.length) { await t.viewport(bad[0].w, 900); await frames(f, 2); await t.inFrame(f, () => t.crop(`foot-${mode}-${look}-${screen}-${bad[0].w}`, '#pm-o55-onboarding .o55-win', `${tag} at ${bad[0].w}: ${bad[0].ctl} ${bad[0].past} px past the window`)); }
 			else t.log(`${tag}: ${why}`);
 		}
