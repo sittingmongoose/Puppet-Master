@@ -1,19 +1,155 @@
 #!/usr/bin/env python3
-"""Static DG6B contract oracles; no native execution or admission."""
+"""Static DG6B contract oracles; no native execution or admission.
+
+Method B guard tables (sweep part 2A). Every product refusal of this checker is
+one named row of one phase table (scripts/pm_dg6b_table_<phase>.py, written by
+scripts/pm-dg6b-table-generate.py), evaluated in the table's declared order by
+require(). Derivation code here only computes observations (error counts,
+canonical-byte digests, recomputed identities and expected values, presence);
+it never decides acceptance. Harness assertions about fixtures, vectors and
+canon bindings stay assertions: they are not product refusals.
+"""
+import ast
 import copy
 import datetime
 import hashlib
+import importlib
 import json
 import re
+import sys
 from functools import cache
 from pathlib import Path
 from jsonschema import Draft202012Validator as JsonSchemaValidator, FormatChecker, validators
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'scripts'))
 
 # Personas section 6, protected core built-ins only. First-party team Personas
 # are explicitly outside this set; source_id may name a protected copy source.
-PROTECTED_PERSONA_IDS = frozenset(('assistant', 'general-purpose', 'overseer', 'bash',
-    'teacher', 'collaborator', 'researcher', 'deep-researcher', 'explorer'))
+# The guard row reads the same literal tuple (pm_dg6b_table_persona_mutation).
+from pm_dg6b_table_persona_mutation import PROTECTED_PERSONA_IDS  # noqa: E402
+
+TABLE_PHASES = (
+    'json', 'references', 'preparation_a', 'preparation_b',
+    'adapter_record', 'adapter_source', 'adapter_history', 'adapter_storage', 'adapter_resolved',
+    'event_record', 'payload_schema', 'envelope_payload_schema', 'payload_types', 'source_scope',
+    'persona_scope_schema', 'checkpoint_schema', 'owner_io_request', 'owner_io_result', 'selected_result_schema',
+    'resolution_schema', 'resolution_storage_schema', 'operation_schema', 'operation_logical_schema',
+    'append_policy', 'retry', 'source_grants', 'frozen_source', 'auth_scope', 'partition', 'identity_event',
+    'identity_key', 'original_server', 'semantic_scope', 'semantic_original', 'hook_block', 'cadence',
+    'envelope_a', 'envelope_b', 'payload_transport', 'checkpoint_join',
+    'inline_size', 'reference', 'transport_integrity', 'operation_size', 'operation_ref',
+    'operation_source', 'resolution_size', 'resolution_ref', 'resolution_source',
+    'history_flags', 'history_storage',
+    'persona_scope', 'persona_partition', 'persona_home', 'persona_library_home', 'definition_writer',
+    'persona_mutation', 'persona_confirmation', 'persona_cas_lease', 'persona_source_trust', 'persona_reach',
+    'persona_request_ref', 'persona_request_a', 'persona_request_b', 'persona_result_a', 'persona_result_b',
+    'persona_home_copy', 'persona_creation', 'persona_delete_cas', 'persona_update_cas', 'persona_import_source',
+    'persona_override_empty', 'persona_override_set', 'persona_lineage_copy', 'persona_resolution_a',
+    'persona_resolution_b',
+)
+_TABLE_ROWS = {}
+_TABLE_FIELDS = {}
+# Set only by the guard-table suite builder (pm_dg6b_guard_suites); never by a checker path.
+RECORDER = None
+COLLECTOR = None
+# The family whose witnesses are running ('shared' outside the family loops); recorder tag only.
+CONTEXT = 'shared'
+
+
+class TableRefusal(ValueError):
+    """A refusal issued by one named table row; str() is the row's refusal code."""
+    def __init__(self, phase, row, code):
+        self.phase, self.row, self.code = phase, row, code
+        super().__init__(code)
+
+
+def table_module(phase):
+    return importlib.import_module('pm_dg6b_table_' + phase)
+
+
+def table_rows(phase):
+    """The phase's (row, predicate, context) list in declared table order."""
+    rows = _TABLE_ROWS.get(phase)
+    if rows is None:
+        case = table_module(phase).case(None)
+        rows = _TABLE_ROWS[phase] = [(name, guard.predicate, case.context) for name, guard in case.table.guards.items()]
+        _TABLE_FIELDS[phase] = table_module(phase).FIELDS
+    return rows
+
+
+def require(phase, facts):
+    """Refuse through the first failing row of one phase table, in table order."""
+    rows = table_rows(phase)
+    fields = _TABLE_FIELDS[phase]
+    assert sorted(facts) == sorted(fields), (phase, sorted(set(facts) ^ set(fields)))
+    observed = {key: facts[key] for key in fields}
+    refusal = None
+    for name, predicate, context in rows:
+        code = predicate(observed, context)
+        if code is not None:
+            refusal = (name, code)
+            break
+    if RECORDER is not None:
+        RECORDER.append((CONTEXT, phase, copy.deepcopy(observed), refusal))
+    if refusal is not None:
+        raise TableRefusal(phase, *refusal)
+
+
+def table_order_errors():
+    """Each table factory's check() requires its rows in exactly the table order."""
+    errors = []
+    for phase in TABLE_PHASES:
+        module = table_module(phase)
+        tree = ast.parse(Path(module.__file__).read_text())
+        factory = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'case')
+        check = next(n for n in factory.body if isinstance(n, ast.FunctionDef) and n.name == 'check')
+        required = [c.args[0].value for c in ast.walk(check) if isinstance(c, ast.Call)
+                    and ast.unparse(c.func) == 'table.require']
+        if required != [name for name, _, _ in table_rows(phase)]:
+            errors.append(phase)
+    known = {p.name[len('pm_dg6b_table_'):-3] for p in (ROOT / 'scripts').glob('pm_dg6b_table_*.py')}
+    errors.extend(sorted(known ^ set(TABLE_PHASES)))
+    return errors
+
+
+def refusal_sites():
+    """Raise statements of this checker other than the table refusal and harness errors."""
+    tree = ast.parse(Path(__file__).read_text())
+    sites = []
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Raise) and node.exc is not None:
+            text = ast.unparse(node.exc)
+            if not (text.startswith(('TableRefusal(', 'AssertionError(', 'KeyError(')) or text == 'exc'):
+                sites.append((node.lineno, text))
+    return sites
+
+
+def digest_of(value, side):
+    """Canonical identity of one side of an exact typed join (same_value).
+
+    SHA-256 of the canonical binding bytes. A value with no canonical bytes has
+    no identity: each side gets its own marker, so the join refuses exactly as
+    same_value() did. This computes an observation; the row decides.
+    """
+    from pm_event_index_binding import binding_bytes
+    try:
+        return hashlib.sha256(binding_bytes(value)).hexdigest()
+    except (TypeError, ValueError, UnicodeError):
+        return 'unencodable:' + side
+
+
+def error_count(definition, value, registry=None, format_checker=None):
+    kwargs = {'format_checker': format_checker}
+    if registry is not None:
+        kwargs['registry'] = registry
+    return sum(1 for _ in Draft202012Validator(definition, **kwargs).iter_errors(value))
+
+
+def project_partition(project_id):
+    import base64
+    if type(project_id) is not str:
+        return None
+    return 'project~' + base64.urlsafe_b64encode(project_id.encode()).decode().rstrip('=')
 
 # JSON Schema's mathematical integer includes 1.0. The selected physical codec
 # accepts built-in integers only. Use that same domain at every typed boundary.
@@ -80,18 +216,16 @@ def adapter_schema(kind, name=''):
     if kind == 'resolved':
         return closed({'ref': string, 'blake3_id': string, 'byte_size': {'type': 'integer', 'minimum': 0},
                        'media_type': string, 'bytes_hex': string, 'durable': boolean, 'access_current': boolean})
-    raise ValueError('unknown_adapter_kind')
+    raise KeyError(kind)  # harness misuse: the kind is always a literal
 
 
 def adapter_contract(kind, value, name=''):
-    if list(Draft202012Validator(adapter_schema(kind, name), format_checker=FORMAT).iter_errors(value)):
-        raise ValueError('adapter_schema')
+    require('adapter_' + kind, {'errors': error_count(adapter_schema(kind, name), value, format_checker=FORMAT)})
 
 
-def payload_contract(name, payload, schema=None):
+def payload_contract(name, payload, schema=None, phase='payload_schema'):
     schema = schema if schema is not None else load_plan('Plans/dg6b_event_contracts.schema.json')
-    if list(Draft202012Validator(schema['$defs'][name.replace('.', '_')], format_checker=FORMAT).iter_errors(payload)):
-        raise ValueError('payload_schema')
+    require(phase, {'errors': error_count(schema['$defs'][name.replace('.', '_')], payload, format_checker=FORMAT)})
 
 
 def type_shape(definition):
@@ -123,8 +257,7 @@ def payload_type_definition(name):
 
 def payload_type_contract(name, payload):
     definition = payload_type_definition(name)
-    if list(Draft202012Validator(definition, format_checker=FORMAT).iter_errors(payload)):
-        raise ValueError('payload_types')
+    require('payload_types', {'errors': error_count(definition, payload, format_checker=FORMAT)})
 
 
 @cache
@@ -133,17 +266,21 @@ def load_plan(path):
 
 
 def strict_json(text):
+    duplicates = []
+
     def unique_pairs(pairs):
         result = {}
         for key, value in pairs:
             if key in result:
-                raise ValueError('duplicate_json_key')
+                duplicates.append(key)
             result[key] = value
         return result
     try:
-        return json.loads(text, object_pairs_hook=unique_pairs)
-    except json.JSONDecodeError as exc:
-        raise ValueError('invalid_json') from exc
+        value, invalid = json.loads(text, object_pairs_hook=unique_pairs), False
+    except json.JSONDecodeError:
+        value, invalid = None, True
+    require('json', {'duplicate_keys': len(duplicates), 'invalid': invalid})
+    return value
 
 
 def resolve_schema_graph(schema):
@@ -163,6 +300,7 @@ def resolve_schema_graph(schema):
                       resources[1][1]))
     registry = Registry().with_resources(resources).crawl()
     count = 0
+    unresolved = []
 
     def walk(node, resolver, root=False):
         nonlocal count
@@ -173,18 +311,22 @@ def resolve_schema_graph(schema):
                 if keyword in node:
                     try:
                         resolver.lookup(node[keyword])
-                    except Exception as exc:
-                        raise ValueError('unresolved_schema_ref: ' + node[keyword]) from exc
-                    count += 1
+                    except Exception:
+                        unresolved.append(node[keyword])
+                    else:
+                        count += 1
             for value in node.values():
                 walk(value, resolver)
         elif isinstance(node, list):
             for value in node:
                 walk(value, resolver)
 
+    meta = validators.validator_for(Draft202012Validator.META_SCHEMA, default=Draft202012Validator)
+    metaschema_errors = 0
     for doc, (_, resource) in zip(documents, resources):
-        Draft202012Validator.check_schema(doc)
+        metaschema_errors += sum(1 for _ in meta(meta.META_SCHEMA, format_checker=meta.FORMAT_CHECKER).iter_errors(doc))
         walk(doc, registry.resolver_with_root(resource), root=True)
+    require('references', {'metaschema_errors': metaschema_errors, 'unresolved': len(unresolved)})
     return count
 
 
@@ -222,38 +364,61 @@ def store_value(logical, routing_keys, force_reference=False):
 
 def operation_value_size(body):
     """Physical-value byte gate, before decoding or schema dispatch."""
-    if len(body) > 16384:
-        raise ValueError('operation_value_too_large')
+    require('operation_size', {'size': len(body)})
+
+
+def operation_schema_contract(name, value, schema):
+    definition = schema['$defs'][name.replace('.', '_') + '_operation']
+    require('operation_schema', {'errors': error_count(definition, value, format_checker=FORMAT)})
+
+
+def resolved_body(resolved):
+    """Referenced body bytes for the byte stages; b'' when absent or unreadable.
+
+    An absent body is refused at reference availability, a malformed carrier at
+    the resolved adapter and a non-hex body at transport integrity (TI04).
+    """
+    if type(resolved) is dict and type(resolved.get('bytes_hex')) is str:
+        try:
+            return bytes.fromhex(resolved['bytes_hex'])
+        except ValueError:
+            return b''
+    return b''
+
+
+def decoded_body(body):
+    """(decoded, logical, re-encoded digest) of a referenced MessagePack body."""
+    import msgpack
+    try:
+        logical = msgpack.unpackb(body, raw=False, strict_map_key=True)
+    except (TypeError, ValueError, msgpack.UnpackException):
+        return False, None, None
+    return True, logical, digest_of(logical, 'decoded')
 
 
 def operation_contract(name, value, resolved, expected, schema):
-    import msgpack
     from pm_event_index_binding import binding_bytes
     definition = schema['$defs'][name.replace('.', '_') + '_operation']
-    if list(Draft202012Validator(definition, format_checker=FORMAT).iter_errors(value)):
-        raise ValueError('operation_schema')
+    operation_schema_contract(name, value, schema)
     operation_value_size(binding_bytes(value))
     if 'payload_ref' in value:
         ref = value['payload_ref']
-        try:
-            body = bytes.fromhex(resolved['bytes_hex']) if resolved is not None else b''
-            transport(body, 'ref:payload/' + ref['blake3_id'], resolved)
-            if any(ref[key] != resolved[key] for key in ('blake3_id', 'byte_size', 'media_type')):
-                raise ValueError('payload_ref_integrity')
-            logical = msgpack.unpackb(body, raw=False, strict_map_key=True)
-            if binding_bytes(logical) != body:
-                raise ValueError('payload_ref_integrity')
-        except (TypeError, KeyError, msgpack.UnpackException) as exc:
-            raise ValueError('payload_ref_integrity') from exc
-        if list(Draft202012Validator(definition['oneOf'][0], format_checker=FORMAT).iter_errors(logical)):
-            raise ValueError('operation_schema')
-        if any(value[key] != logical[key] for key in ('schema_id', 'schema_version', 'event_type')):
-            raise ValueError('operation_source_join')
+        body = resolved_body(resolved)
+        transport(body, 'ref:payload/' + ref['blake3_id'], resolved)
+        decoded, logical, reencoded = decoded_body(body)
+        # media_type is decided by OP01 (const) and TI03 (resolved media type).
+        require('operation_ref', {'ref_blake3': ref['blake3_id'], 'resolved_blake3': resolved['blake3_id'],
+                                  'ref_size': ref['byte_size'], 'resolved_size': resolved['byte_size'],
+                                  'decoded': decoded, 'reencoded_digest': reencoded,
+                                  'body_digest': hashlib.sha256(body).hexdigest()})
+        require('operation_logical_schema', {'errors': error_count(definition['oneOf'][0], logical, format_checker=FORMAT)})
+        # The former routing-header join (schema_id, schema_version, event_type) is
+        # decided by OP01 and OG01, which bind the carrier and the decoded operation
+        # to the same per-family constants; it can never refuse after them.
     else:
         logical = value
     # Authenticated bytes alone do not prove original payload/receipt custody.
-    if not same_value(logical, expected):
-        raise ValueError('operation_source_join')
+    require('operation_source', {'logical_digest': digest_of(logical, 'logical'), 'expected_digest': digest_of(expected, 'expected')})
     return logical
 
 
@@ -264,12 +429,8 @@ def history_contract(name, case, schema):
     disconnect/update/delete/CAS/selection state and never grants read access.
     """
     adapter_contract('history', case)
-    if case['retained'] is not True or case['authentic'] is not True or case['admitted_when_written'] is not True:
-        raise ValueError('historical_provenance')
-    if case['family_withdrawn'] is not False or case['reader_current'] is not True:
-        raise ValueError('historical_withdrawn')
-    if case['access_current'] is not True or case['body_deleted'] is not False:
-        raise ValueError('historical_access')
+    require('history_flags', {key: case[key] for key in ('retained', 'authentic', 'admitted_when_written',
+                                                          'family_withdrawn', 'reader_current', 'access_current', 'body_deleted')})
     # Frozen source admission is checked at its original boundary. Neither the
     # current writer policy nor later live state selects a historical reader.
     digest = record_contract(name, case['original'], schema)
@@ -287,13 +448,17 @@ def historical_storage_contract(original, storage_record):
     """
     from pm_event_index_binding import binding_bytes
     adapter_contract('storage', storage_record)
-    if storage_record['authenticated'] is not True:
-        raise ValueError('historical_storage_source')
-    if (storage_record['storage_instance_id'] != original['durable_read_token']['storage_instance_id']
-            or storage_record['scope_partition'] != original['scope_partition']):
-        raise ValueError('historical_storage_join')
-    if binding_bytes(original['event_record']).hex() != storage_record['event_record_bytes_hex']:
-        raise ValueError('historical_storage_record')
+    try:
+        record_hex = binding_bytes(original['event_record']).hex()
+    except (TypeError, ValueError, UnicodeError):
+        record_hex = None
+    require('history_storage', {
+        'authenticated': storage_record['authenticated'],
+        'storage_instance_id': storage_record['storage_instance_id'],
+        'token_storage_instance_id': original['durable_read_token']['storage_instance_id'],
+        'scope_partition': storage_record['scope_partition'], 'original_scope_partition': original['scope_partition'],
+        'storage_hex_digest': hashlib.sha256(storage_record['event_record_bytes_hex'].encode()).hexdigest(),
+        'record_hex_digest': 'unencodable:original' if record_hex is None else hashlib.sha256(record_hex.encode()).hexdigest()})
 
 def identity(name, payload, scope_key, server_id=None):
     payload_type_contract(name, payload)
@@ -303,7 +468,7 @@ def identity(name, payload, scope_key, server_id=None):
     application = scope['scope_kind'] == 'application' if scope else scope_key == 'application'
     if application:
         server_id = scope['server_id'] if scope else server_id
-        original_server_required(server_id)
+        original_server_required(server_id)  # before the key recipe reads it
         key = 'application@1:' + server_id.encode().hex() + ':' + payload['operation_id'].encode().hex()
     else:
         key = name + ':' + digest
@@ -311,25 +476,22 @@ def identity(name, payload, scope_key, server_id=None):
 
 
 def original_server_required(server_id):
-    if type(server_id) is not str or not server_id:
-        raise ValueError('original_server_required')
+    require('original_server', {'server_id': server_id})
 
 def semantic(name, payload, scope_key, event_id, original=None, server_id=None):
     payload_type_contract(name, payload)
-    if name.startswith('auth.github.') and scope_key != 'application':
-        raise ValueError('scope')
-    if identity(name, payload, scope_key, server_id)[0] != event_id:
-        raise ValueError('identity')
-    if original is not None and not same_value(original, payload):
-        raise ValueError('original_payload_conflict')
-    if name == 'plugin.hook.blocked' and payload['hook_name'] not in (
-            'pre_tool_invoke', 'pre_attempt_start', 'pre_node_dispatch'):
-        raise ValueError('observation_only_hook')
+    if name.startswith('auth.github.'):
+        require('semantic_scope', {'scope_key': scope_key})
+    require('identity_event', {'event_id': event_id, 'expected_event_id': identity(name, payload, scope_key, server_id)[0]})
+    if original is not None:
+        require('semantic_original', {'payload_digest': digest_of(payload, 'payload'),
+                                      'original_payload_digest': digest_of(original, 'original')})
+    if name == 'plugin.hook.blocked':
+        require('hook_block', {'hook_name': payload['hook_name']})
     if name == 'auth.github.token.polling':
         previous = payload['previous_interval_seconds']
-        expected = previous + 5 if payload['outcome'] == 'slow_down' else previous
-        if payload['poll_interval_seconds'] != expected:
-            raise ValueError('cadence')
+        require('cadence', {'poll_interval_seconds': payload['poll_interval_seconds'],
+                            'expected_interval_seconds': previous + 5 if payload['outcome'] == 'slow_down' else previous})
 
 FORMAT = FormatChecker()
 
@@ -343,119 +505,121 @@ def utc_datetime(value):
 
 def persona_scope_key(payload):
     scope_schema = workflow_scope_schema()
-    if list(Draft202012Validator(scope_schema).iter_errors(payload.get('scope'))):
-        raise ValueError('scope')
+    require('persona_scope_schema', {'errors': error_count(scope_schema, payload.get('scope'))})
     return json.dumps([payload['scope']['server_id'], payload['scope']['scope_partition']],
                       ensure_ascii=False, separators=(',', ':'))
 
 
+REQUEST_KEYS = ('command_id', 'client_id', 'persona_id', 'source_id', 'source_revision', 'source_sha256',
+                'project_version_id', 'reach_ref', 'expected_owner_revision', 'return_context_ref')
+RESULT_KEYS = (('command_id', 'command_id'), ('operation_id', 'operation_id'), ('persona_id', 'persona_id'),
+               ('revision', 'owner_revision'), ('content_sha256', 'content_sha256'), ('result_status', 'status'),
+               ('owner_result_ref', 'owner_result_ref'), ('owner_readback_ref', 'readback_ref'),
+               ('return_context_ref', 'return_context_ref'))
+RESOLUTION_KEYS = ('requested_persona', 'effective_persona', 'persona_selection_source', 'selection_reason',
+                   'persona_override_scope', 'persona_override_owner_id', 'runtime_snapshot_ref', 'runtime_snapshot_sha256',
+                   'operation_id', 'persona_id', 'owner_result_ref', 'selection_target_ref')
+LINEAGE_KEYS = ('thread_id', 'run_id', 'node_id', 'attempt_id', 'actor_id')
+
+
+def copy_facts(payload, source, pairs, side):
+    facts = {}
+    for payload_key, source_key in pairs:
+        facts['payload_' + payload_key + '_digest'] = digest_of(payload[payload_key], 'payload')
+        facts[side + '_' + source_key + '_digest'] = digest_of(source.get(source_key), side)
+    assert len(facts) == 2 * len(pairs), ('copy join fields collide', pairs)
+    return facts
+
+
+def frozen_facts(payload, source):
+    return {'payload_digest': digest_of(payload, 'payload'), 'frozen_payload_digest': digest_of(source['frozen_payload'], 'frozen'),
+            'payload_storage_digest': digest_of(payload['storage_instance_id'], 'payload'),
+            'source_storage_digest': digest_of(source['storage_instance_id'], 'source')}
+
+
 def persona_semantic(name, payload, scope_key, source):
     """Static original-source oracle; not native authorization or source proof."""
-    import base64
     p, s = payload, source
     payload_type_contract(name, p)
     adapter_contract('source', s, name)
     persona_io_contract(p['command_id'], s)
     scope = p['scope']
-    if persona_scope_key(p) != scope_key or not same_value(scope, s['request'].get('scope')):
-        raise ValueError('scope')
+    require('persona_scope', {'scope_key': persona_scope_key(p), 'expected_scope_key': scope_key,
+                              'scope_digest': digest_of(scope, 'payload'),
+                              'request_scope_digest': digest_of(s['request'].get('scope'), 'request')})
     if scope['scope_kind'] == 'project':
-        expected = 'project~' + base64.urlsafe_b64encode(scope['project_id'].encode()).decode().rstrip('=')
-        if scope['scope_partition'] != expected:
-            raise ValueError('partition')
-    if p['home_kind'] == 'project' and (scope['scope_kind'] != 'project'
-            or p['home_project_id'] != scope['project_id']):
-        raise ValueError('home_scope')
-    if name != 'persona.selected' and p['home_kind'] == 'library' and scope['scope_kind'] != 'application':
-        raise ValueError('home_scope')
-    if s['access_current'] is not True:
-        raise ValueError('access')
+        require('persona_partition', {'scope_partition': scope['scope_partition'],
+                                      'expected_partition': project_partition(scope['project_id'])})
+    require('persona_home', {'home_kind': p['home_kind'], 'scope_kind': scope['scope_kind'],
+                             'home_project_id': p['home_project_id'], 'project_id': scope['project_id']})
+    if name != 'persona.selected':
+        require('persona_library_home', {'home_kind': p['home_kind'], 'scope_kind': scope['scope_kind']})
     # Event-writer admission is independent of the definition-write lease.
-    if s['writer_current'] is not True:
-        raise ValueError('writer')
-    if name != 'persona.exported' and s['definition_writer_current'] is not True:
-        raise ValueError('definition_writer')
+    require('source_grants', {'writer_current': s['writer_current'], 'access_current': s['access_current']})
+    if name != 'persona.exported':
+        require('definition_writer', {'definition_writer_current': s['definition_writer_current']})
     if name in ('persona.created', 'persona.deleted', 'persona.imported', 'persona.updated'):
-        if s['computer_mirror'] is not False:
-            raise ValueError('mirror')
-        if s['protected_id'] is not False:
-            raise ValueError('protected')
-        if p['persona_id'] in PROTECTED_PERSONA_IDS:
-            raise ValueError('protected_identity')
-    if name == 'persona.deleted' and s['confirmation_current'] is not True:
-        raise ValueError('confirmation')
-    if name in ('persona.deleted', 'persona.updated', 'persona.imported') and s['cas_current'] is not True:
-        raise ValueError('cas')
-    if name == 'persona.imported' and s['source_verified'] is not True:
-        raise ValueError('source_trust')
-    if name == 'persona.selected' and scope['scope_kind'] == 'application' and s['reach_allows_no_project'] is not True:
-        raise ValueError('reach')
+        require('persona_mutation', {'computer_mirror': s['computer_mirror'], 'protected_id': s['protected_id'],
+                                     'persona_id': p['persona_id']})
+    if name == 'persona.deleted':
+        require('persona_confirmation', {'confirmation_current': s['confirmation_current']})
+    if name in ('persona.deleted', 'persona.updated', 'persona.imported'):
+        require('persona_cas_lease', {'cas_current': s['cas_current']})
+    if name == 'persona.imported':
+        require('persona_source_trust', {'source_verified': s['source_verified']})
+    if name == 'persona.selected' and scope['scope_kind'] == 'application':
+        require('persona_reach', {'reach_allows_no_project': s['reach_allows_no_project']})
     request, result = s['request'], s['result']
-    if not same_value(p, s['frozen_payload']) or not same_value(p['owner_request_ref'], s['owner_request_ref']):
-        raise ValueError('original_source_join')
-    for key in ('command_id', 'scope', 'client_id', 'persona_id', 'source_id', 'source_revision',
-                'source_sha256', 'project_version_id', 'reach_ref', 'expected_owner_revision', 'return_context_ref'):
-        if not same_value(p[key], request.get(key)):
-            raise ValueError('original_source_join')
-    for payload_key, result_key in [('command_id', 'command_id'), ('operation_id', 'operation_id'),
-            ('persona_id', 'persona_id'), ('revision', 'owner_revision'), ('content_sha256', 'content_sha256'),
-            ('result_status', 'status'), ('owner_result_ref', 'owner_result_ref'),
-            ('owner_readback_ref', 'readback_ref'), ('return_context_ref', 'return_context_ref')]:
-        if not same_value(p[payload_key], result.get(result_key)):
-            raise ValueError('original_source_join')
-    if not same_value(p['storage_instance_id'], s['storage_instance_id']) or not same_value(p['home_ref'], request.get('destination_home_ref')):
-        raise ValueError('original_source_join')
-    if not same_value(p['content_sha256'], request.get('whole_record_sha256')):
-        raise ValueError('original_source_join')
-    source_fields = [p[k] for k in ('source_id', 'source_revision', 'source_sha256')]
+    require('frozen_source', frozen_facts(p, s))
+    require('persona_request_ref', {'owner_request_ref_digest': digest_of(p['owner_request_ref'], 'payload'),
+                                    'source_owner_request_ref_digest': digest_of(s['owner_request_ref'], 'source')})
+    # The request scope copy is decided by persona_scope PC02 (same field, same
+    # exact typed comparison) and is not repeated here.
+    requested = [(key, key) for key in REQUEST_KEYS]
+    require('persona_request_a', copy_facts(p, request, requested[:5], 'request'))
+    require('persona_request_b', copy_facts(p, request, requested[5:], 'request'))
+    require('persona_result_a', copy_facts(p, result, RESULT_KEYS[:5], 'result'))
+    require('persona_result_b', copy_facts(p, result, RESULT_KEYS[5:], 'result'))
+    require('persona_home_copy', copy_facts(p, request, [('home_ref', 'destination_home_ref'),
+                                                         ('content_sha256', 'whole_record_sha256')], 'request'))
     if name == 'persona.created':
-        duplicate = p['command_id'] == 'cmd.persona.duplicate'
-        if (duplicate and (None in source_fields or p['source_id'] == p['persona_id'] or p['result_status'] != 'duplicated')
-                or not duplicate and (any(x is None for x in source_fields) != all(x is None for x in source_fields)
-                                      or p['result_status'] != 'created')):
-            raise ValueError('creation_source')
-    if name == 'persona.deleted' and p['expected_owner_revision'] != p['revision']:
-        raise ValueError('cas')
-    if name == 'persona.updated' and (p['expected_owner_revision'] != p['source_revision']
-            or p['source_id'] != p['persona_id'] or None in source_fields
-            or p['expected_owner_revision'] >= p['revision']):
-        raise ValueError('cas')
-    if name == 'persona.imported' and None in source_fields:
-        raise ValueError('source_trust')
+        require('persona_creation', {key: p[key] for key in ('command_id', 'source_id', 'source_revision', 'source_sha256',
+                                                             'persona_id', 'result_status')})
+    if name == 'persona.deleted':
+        require('persona_delete_cas', {'expected_owner_revision': p['expected_owner_revision'], 'revision': p['revision']})
+    if name == 'persona.updated':
+        require('persona_update_cas', {key: p[key] for key in ('expected_owner_revision', 'source_revision', 'source_id',
+                                                               'persona_id', 'source_sha256', 'revision')})
+    if name == 'persona.imported':
+        require('persona_import_source', {key: p[key] for key in ('source_id', 'source_revision', 'source_sha256')})
     if name == 'persona.selected':
         override = p['persona_override_scope']
-        owner = p['persona_override_owner_id']
         lineage = p['runtime_lineage']
-        if override is None:
-            if owner is not None or any(value is not None for value in lineage.values()):
-                raise ValueError('override_lineage')
-        elif (override not in ('thread', 'run', 'node', 'attempt', 'actor')
-              or owner is None or owner == 'tier_id' or owner != lineage[override + '_id']):
-            raise ValueError('override_lineage')
-        if not same_value(lineage, s['resolution'].get('runtime_lineage')):
-            raise ValueError('original_source_join')
-        for key in ('requested_persona', 'effective_persona', 'persona_selection_source', 'selection_reason',
-                    'persona_override_scope', 'persona_override_owner_id', 'runtime_snapshot_ref', 'runtime_snapshot_sha256'):
-            if not same_value(p[key], s['resolution'].get(key)):
-                raise ValueError('original_source_join')
-        for key in ('operation_id', 'persona_id', 'owner_result_ref', 'selection_target_ref'):
-            if not same_value(p[key], s['resolution'].get(key)):
-                raise ValueError('original_source_join')
+        # The payload schema decides owner presence (const null without an override,
+        # a nonempty string with one) and limits a non-null override to thread, run,
+        # node, attempt or actor; those original clauses are decided there.
+        require('persona_override_empty', {'override_scope': override,
+                                           **{'lineage_' + key: lineage[key] for key in LINEAGE_KEYS}})
+        require('persona_override_set', {'override_scope': override, 'override_owner': p['persona_override_owner_id'],
+                                         'lineage_owner': lineage.get(override + '_id') if type(override) is str else None})
+        require('persona_lineage_copy', {'lineage_digest': digest_of(lineage, 'payload'),
+                                         'resolution_lineage_digest': digest_of(s['resolution'].get('runtime_lineage'), 'resolution')})
+        resolved_keys = [(key, key) for key in RESOLUTION_KEYS]
+        require('persona_resolution_a', copy_facts(p, s['resolution'], resolved_keys[:6], 'resolution'))
+        require('persona_resolution_b', copy_facts(p, s['resolution'], resolved_keys[6:], 'resolution'))
         resolution_storage_contract(s['resolution_value'], s['resolved_resolution'], s['resolution'],
                                     load_plan('Plans/dg6b_event_contracts.schema.json'))
 
 
 def selected_result_contract(value, shared, registry):
     definition = shared['$defs']['persona_select_result_v2']
-    if list(Draft202012Validator(definition, registry=registry, format_checker=FORMAT).iter_errors(value)):
-        raise ValueError('selected_result_schema')
+    require('selected_result_schema', {'errors': error_count(definition, value, registry, FORMAT)})
 
 
 def persona_io_contract(command, source):
     for kind in ('request', 'result'):
         definition, registry = persona_io_definition(command, kind)
-        if list(Draft202012Validator(definition, registry=registry, format_checker=FORMAT).iter_errors(source[kind])):
-            raise ValueError('source_io_schema')
+        require('owner_io_' + kind, {'errors': error_count(definition, source[kind], registry, FORMAT)})
 
 
 @cache
@@ -471,8 +635,8 @@ def persona_io_definition(command, kind):
 
 
 def resolution_contract(value, schema):
-    if list(Draft202012Validator(schema['$defs']['persona_selected_resolution'], format_checker=FORMAT).iter_errors(value)):
-        raise ValueError('resolution_schema')
+    require('resolution_schema', {'errors': error_count(schema['$defs']['persona_selected_resolution'], value,
+                                                        format_checker=FORMAT)})
 
 
 def store_resolution(logical, force_reference=False):
@@ -481,34 +645,29 @@ def store_resolution(logical, force_reference=False):
 
 
 def resolution_value_size(body):
-    if len(body) > 16384:
-        raise ValueError('resolution_value_too_large')
+    require('resolution_size', {'size': len(body)})
 
 
 def resolution_storage_contract(value, resolved, expected, schema):
-    import msgpack
     from pm_event_index_binding import binding_bytes
     definition = schema['$defs']['persona_selected_resolution_storage']
-    if list(Draft202012Validator(definition, format_checker=FORMAT).iter_errors(value)):
-        raise ValueError('resolution_storage_schema')
+    require('resolution_storage_schema', {'errors': error_count(definition, value, format_checker=FORMAT)})
     resolution_value_size(binding_bytes(value))
     if 'payload_ref' in value:
         ref = value['payload_ref']
-        try:
-            body = bytes.fromhex(resolved['bytes_hex']) if resolved is not None else b''
-            transport(body, 'ref:payload/' + ref['blake3_id'], resolved)
-            if any(not same_value(ref[key], resolved[key]) for key in ('blake3_id', 'byte_size', 'media_type')):
-                raise ValueError('payload_ref_integrity')
-            logical = msgpack.unpackb(body, raw=False, strict_map_key=True)
-            if binding_bytes(logical) != body:
-                raise ValueError('payload_ref_integrity')
-        except (TypeError, KeyError, msgpack.UnpackException) as exc:
-            raise ValueError('payload_ref_integrity') from exc
+        body = resolved_body(resolved)
+        transport(body, 'ref:payload/' + ref['blake3_id'], resolved)
+        decoded, logical, reencoded = decoded_body(body)
+        # media_type is decided by RT01 (const) and TI03 (resolved media type).
+        require('resolution_ref', {**{name: digest_of(ref[key], 'ref') for name, key in (
+            ('ref_blake3', 'blake3_id'), ('ref_size', 'byte_size'))},
+            **{name: digest_of(resolved[key], 'resolved') for name, key in (
+                ('resolved_blake3', 'blake3_id'), ('resolved_size', 'byte_size'))},
+            'decoded': decoded, 'reencoded_digest': reencoded, 'body_digest': hashlib.sha256(body).hexdigest()})
     else:
         logical = value
     resolution_contract(logical, schema)
-    if not same_value(logical, expected):
-        raise ValueError('resolution_source_join')
+    require('resolution_source', {'logical_digest': digest_of(logical, 'logical'), 'expected_digest': digest_of(expected, 'expected')})
     return logical
 
 
@@ -527,21 +686,16 @@ def check_persona(row, schema):
     assert binding['expected_event_types'] == []  # selected command is not admission
     assert binding['request_schema_ref'].endswith('/persona_' + verb + '_request_v2')
     assert binding['result_schema_ref'].endswith('/persona_' + verb + '_result_v2')
-    validator = Draft202012Validator(schema['$defs'][slug], format_checker=FORMAT)
     assert schema['$defs'][slug]['properties']['scope'] == shared['$defs']['WorkflowScopeV2']
     eid, idem = identity(name, p, row['scope_key'])
     assert (eid, idem) == (row['expected_event_id'], row['expected_idempotency_key'])
     variants = [{'label': 'library_no_project', 'payload': p, 'source': row['source']}] + row['valid_variants']
     for variant in variants:
         body, source = variant['payload'], variant['source']
-        validator.validate(body)
-        actual_verb = body['command_id'].split('.')[-1]
-        for kind in ('request', 'result'):
-            ref = shared['$defs']['persona_' + actual_verb + '_' + kind + '_v2']
-            if name == 'persona.selected' and kind == 'result':
-                selected_result_contract(source[kind], shared, registry)
-            else:
-                Draft202012Validator(ref, registry=registry, format_checker=FORMAT).validate(source[kind])
+        payload_contract(name, body, schema)
+        if name == 'persona.selected':
+            selected_result_contract(source['result'], shared, registry)
+        persona_io_contract(body['command_id'], source)
         if name == 'persona.selected':
             resolution_contract(source['resolution'], schema)
         sk = persona_scope_key(body)
@@ -557,17 +711,13 @@ def check_persona(row, schema):
                      'state': 'effect_committed', 'effect_receipt_ref': body['owner_result_ref'],
                      'event_id': veid, 'idempotency_key': videm, 'server_id': body['scope']['server_id'],
                      'replay_policy': 'dedupe_by_idempotency_key'}
-        Draft202012Validator(schema['$defs'][slug + '_operation'], format_checker=FORMAT).validate(operation)
-    for bad in row['invalid']:
-        assert list(validator.iter_errors(bad)), (name, 'accepted negative', bad)
+        operation_schema_contract(name, operation, schema)
+    for index, bad in enumerate(row['invalid']):
+        expect_failure(lambda: payload_contract(name, bad, schema), 'payload_schema', name, 'invalid/' + str(index))
     for case in row['semantic_invalid']:
-        validator.validate(case['payload'])  # relational negatives must remain shape-valid
-        try:
-            persona_semantic(name, case['payload'], case['scope_key'], case['source'])
-        except ValueError as exc:
-            assert str(exc) == case['expected_error'], (name, case['case_id'], str(exc), case['expected_error'])
-        else:
-            raise AssertionError((name, 'accepted semantic negative', case['case_id']))
+        payload_contract(name, case['payload'], schema)  # relational negatives must remain shape-valid
+        expect_failure(lambda: persona_semantic(name, case['payload'], case['scope_key'], case['source']),
+                       case['expected_error'], name, 'semantic_invalid/' + case['case_id'])
     if name == 'persona.selected':
         original = row['source']['result']
         for alias in ('requested_persona_id', 'effective_persona_id'):
@@ -588,8 +738,7 @@ def check_persona(row, schema):
 def source_scope(source):
     scope = source['request'].get('scope') if 'request' in source else source.get('scope')
     definition = workflow_scope_schema()
-    if list(Draft202012Validator(definition, format_checker=FORMAT).iter_errors(scope)):
-        raise ValueError('scope')
+    require('source_scope', {'errors': error_count(definition, scope, format_checker=FORMAT)})
     return scope
 
 
@@ -603,11 +752,9 @@ def source_scope_key(source):
 
 
 def partition_contract(scope, partition):
-    import base64
-    expected = ('app' if scope['scope_kind'] == 'application' else
-                'project~' + base64.urlsafe_b64encode(scope['project_id'].encode()).decode().rstrip('='))
-    if scope['scope_partition'] != expected or partition != expected:
-        raise ValueError('partition')
+    expected = 'app' if scope['scope_kind'] == 'application' else project_partition(scope['project_id'])
+    require('partition', {'scope_partition': scope['scope_partition'], 'envelope_partition': partition,
+                          'expected_partition': expected})
 
 
 def stage_contract(name, case, schema):
@@ -617,27 +764,17 @@ def stage_contract(name, case, schema):
     reference has no decodable body, so its availability control belongs at
     transport, rather than claiming it is an otherwise valid logical operation.
     """
-    stage = case['stage']
-    if stage == 'operation_value_size':
-        return operation_value_size(bytes.fromhex(case['body_hex']))
-    if stage == 'resolution_value_size':
-        return resolution_value_size(bytes.fromhex(case['body_hex']))
-    if stage == 'adapter_schema':
-        return adapter_contract(case['kind'], case['value'], name)
-    if stage == 'transport':
-        return transport(bytes.fromhex(case['body_hex']), case['payload_ref'], case['resolved'])
-    if stage == 'reference_availability':
-        return reference_available(case['payload_ref'], case['resolved'])
-    if stage == 'partition':
-        return partition_contract(case['scope'], case['scope_partition'])
-    if stage == 'payload_schema':
-        return payload_contract(name, case['payload'], schema)
-    if stage == 'operation_schema':
-        if list(Draft202012Validator(schema['$defs'][name.replace('.', '_') + '_operation'],
-                                    format_checker=FORMAT).iter_errors(case['value'])):
-            raise ValueError('operation_schema')
-        return
-    raise ValueError('unknown_oracle_stage')
+    stages = {
+        'operation_value_size': lambda: operation_value_size(bytes.fromhex(case['body_hex'])),
+        'resolution_value_size': lambda: resolution_value_size(bytes.fromhex(case['body_hex'])),
+        'adapter_schema': lambda: adapter_contract(case['kind'], case['value'], name),
+        'transport': lambda: transport(bytes.fromhex(case['body_hex']), case['payload_ref'], case['resolved']),
+        'reference_availability': lambda: reference_available(case['payload_ref'], case['resolved']),
+        'partition': lambda: partition_contract(case['scope'], case['scope_partition']),
+        'payload_schema': lambda: payload_contract(name, case['payload'], schema),
+        'operation_schema': lambda: operation_schema_contract(name, case['value'], schema),
+    }
+    return stages[case['stage']]()  # an unknown fixture stage is a harness KeyError
 
 
 def semantic_record(record):
@@ -687,23 +824,26 @@ def transport(body_bytes, payload_ref, resolved):
     """
     from blake3 import blake3
     if payload_ref is None:
-        if len(body_bytes) > 16384:
-            raise ValueError('inline_body_too_large')
+        require('inline_size', {'body_size': len(body_bytes)})
         return
     reference_available(payload_ref, resolved)
-    if (resolved['blake3_id'] != blake3(body_bytes).hexdigest()
-            or resolved['byte_size'] != len(body_bytes)
-            or resolved['media_type'] != 'application/msgpack'
-            or bytes.fromhex(resolved['bytes_hex']) != body_bytes):
-        raise ValueError('payload_ref_integrity')
+    try:
+        resolved_bytes = hashlib.sha256(bytes.fromhex(resolved['bytes_hex'])).hexdigest()
+    except ValueError:
+        resolved_bytes = 'not_hex'
+    require('transport_integrity', {'resolved_blake3': resolved['blake3_id'], 'body_blake3': blake3(body_bytes).hexdigest(),
+                                    'resolved_size': resolved['byte_size'], 'body_size': len(body_bytes),
+                                    'media_type': resolved['media_type'], 'resolved_bytes_digest': resolved_bytes,
+                                    'body_bytes_digest': hashlib.sha256(body_bytes).hexdigest()})
 
 
 def reference_available(payload_ref, resolved):
     if resolved is not None:
         adapter_contract('resolved', resolved)
-    if (resolved is None or resolved['ref'] != payload_ref or resolved['durable'] is not True
-            or resolved['access_current'] is not True):
-        raise ValueError('payload_ref_unavailable')
+    present = resolved is not None
+    require('reference', {'resolved_present': present, 'payload_ref': payload_ref,
+                          **{key: resolved[key] if present else None for key in ('durable', 'access_current')},
+                          'resolved_ref': resolved['ref'] if present else None})
 
 
 def append_contract(name, case, schema, original=None):
@@ -711,17 +851,14 @@ def append_contract(name, case, schema, original=None):
     adapter_contract('record', case)
     e = case['event_record']
     event_record_contract(e)
-    if e.get('replay_policy') == 'projector_replay_only':
-        raise ValueError('replay_only_not_appendable')
-    if e.get('replay_policy') != 'dedupe_by_idempotency_key':
-        raise ValueError('writer_replay_policy')
+    require('append_policy', {'replay_policy': e.get('replay_policy')})
     digest = record_contract(name, case, schema)
     if original is not None:
-        if (e['event_id'], e['idempotency_key']) != (
-                original['event_record']['event_id'], original['event_record']['idempotency_key']):
-            raise ValueError('retry_identity')
-        if not same_value(semantic_record(e), semantic_record(original['event_record'])):
-            raise ValueError('idempotency_conflict')
+        o = original['event_record']
+        require('retry', {'event_id': e['event_id'], 'original_event_id': o['event_id'],
+                          'idempotency_key': e['idempotency_key'], 'original_idempotency_key': o['idempotency_key'],
+                          'semantic_digest': digest_of(semantic_record(e), 'candidate'),
+                          'original_semantic_digest': digest_of(semantic_record(o), 'original')})
     return digest
 
 
@@ -734,71 +871,76 @@ def record_contract(name, case, schema):
     event_record_contract(e)
     payload_contract(name, p, schema)
     if e['payload_ref'] is None:
-        payload_contract(name, e['payload'], schema)
+        payload_contract(name, e['payload'], schema, phase='envelope_payload_schema')
     adapter_contract('source', s, name)
     scope = source_scope(s)
-    if s['writer_current'] is not True:
-        raise ValueError('writer')
-    if s['access_current'] is not True:
-        raise ValueError('access')
-    if not same_value(p, s['frozen_payload']) or not same_value(p['storage_instance_id'], s['storage_instance_id']):
-        raise ValueError('original_source_join')
-    if name.startswith('auth.github.') and scope['scope_kind'] != 'application':
-        raise ValueError('scope')
+    require('source_grants', {'writer_current': s['writer_current'], 'access_current': s['access_current']})
+    require('frozen_source', frozen_facts(p, s))
+    if name.startswith('auth.github.'):
+        require('auth_scope', {'scope_kind': scope['scope_kind']})
     partition_contract(scope, case['scope_partition'])
-    scope_schema = workflow_scope_schema()
-    if list(Draft202012Validator(scope_schema).iter_errors(scope)):
-        raise ValueError('scope')
+    # The former second WorkflowScopeV2 pass here (same scope, same schema, no
+    # format checker) is decided by source_scope SC01, which runs it with formats.
     sk = source_scope_key(s)
     if name.startswith('persona.'):
         persona_semantic(name, p, sk, s)
     else:
         semantic(name, p, sk, e['event_id'], server_id=scope['server_id'])
     eid, idem = identity(name, p, sk, scope['server_id'])
-    if e['event_id'] != eid:
-        raise ValueError('identity')
-    if e['idempotency_key'] != idem:
-        raise ValueError('idempotency_key')
-    if (e['event_type'] != name or e['payload_schema_id'] != schema['$id'] + '#/$defs/' + name.replace('.', '_')
-            or e['occurred_at_utc'] != p['ts'] or e['actor_ref'] != s['actor_ref']
-            or e['redaction_profile'] != 'secret_refs_only'
-            or e['scope_kind'] != scope['scope_kind'] or e['project_id'] != scope['project_id']
-            or e['requested_account_ref'] != s['requested_account_ref']
-            or e['effective_account_ref'] != s['effective_account_ref']):
-        raise ValueError('envelope_source_join')
+    require('identity_event', {'event_id': e['event_id'], 'expected_event_id': eid})
+    require('identity_key', {'idempotency_key': e['idempotency_key'], 'expected_idempotency_key': idem})
     lineage = p.get('runtime_lineage', {})
-    for field in ('thread_id', 'run_id', 'node_id', 'attempt_id'):
-        if e[field] != lineage.get(field):
-            raise ValueError('envelope_source_join')
+    require('envelope_a', {
+        'event_type': e['event_type'], 'family': name, 'payload_schema_id': e['payload_schema_id'],
+        'expected_payload_schema_id': schema['$id'] + '#/$defs/' + name.replace('.', '_'),
+        'occurred_at_utc': e['occurred_at_utc'], 'ts': p['ts'], 'actor_ref': e['actor_ref'], 'source_actor_ref': s['actor_ref'],
+        'redaction_profile': e['redaction_profile'], 'scope_kind': e['scope_kind'], 'source_scope_kind': scope['scope_kind'],
+        'project_id': e['project_id'], 'source_project_id': scope['project_id']})
+    require('envelope_b', {
+        'requested_account_ref': e['requested_account_ref'], 'source_requested_account_ref': s['requested_account_ref'],
+        'effective_account_ref': e['effective_account_ref'], 'source_effective_account_ref': s['effective_account_ref'],
+        **{field: e[field] for field in ('thread_id', 'run_id', 'node_id', 'attempt_id')},
+        **{'lineage_' + field: lineage.get(field) for field in ('thread_id', 'run_id', 'node_id', 'attempt_id')}})
     body_bytes = binding_bytes(p)  # byte-stage input only, not the SP-278 digest domain
     transport(body_bytes, e['payload_ref'], case['resolved_payload'])
-    if not same_value(e['payload'], p if e['payload_ref'] is None else {}):
-        raise ValueError('payload_transport_join')
+    require('payload_transport', {'envelope_payload_digest': digest_of(e['payload'], 'envelope'),
+                                  'expected_payload_digest': digest_of(p if e['payload_ref'] is None else {}, 'expected')})
     # This is the adopted generic read-token/storage join, not a new checkpoint.
     token = case['durable_read_token']
     read_schema = durable_token_schema()
-    if list(Draft202012Validator(read_schema, format_checker=FORMAT).iter_errors(token)):
-        raise ValueError('checkpoint_schema')
-    if (token['storage_instance_id'] != p['storage_instance_id']
-            or token['source_selection']['storage_instance_id'] != p['storage_instance_id']
-            or token['checkpoint_key'] != 'event_record_index_checkpoint.v1:' + p['storage_instance_id']):
-        raise ValueError('checkpoint_storage_join')
+    require('checkpoint_schema', {'errors': error_count(read_schema, token, format_checker=FORMAT)})
+    require('checkpoint_join', {
+        'token_storage_instance_id': token['storage_instance_id'],
+        'selection_storage_instance_id': token['source_selection']['storage_instance_id'],
+        'checkpoint_key': token['checkpoint_key'], 'payload_storage_instance_id': p['storage_instance_id'],
+        'expected_checkpoint_key': 'event_record_index_checkpoint.v1:' + p['storage_instance_id']})
     return hashlib.sha256(rfc8785.dumps(semantic_record(e))).hexdigest()
 
 
 def event_record_contract(event):
     envelope = load_plan('Plans/event_record.schema.json')
-    if list(Draft202012Validator(envelope, format_checker=FORMAT).iter_errors(event)):
-        raise ValueError('event_record_schema')
+    require('event_record', {'errors': error_count(envelope, event, format_checker=FORMAT)})
 
 
-def expect_failure(call, expected, name, label):
+def expect_failure(call, expected, name, label, row=None):
+    """Harness: the call must refuse with exactly the expected code.
+
+    When the guard-table suite builder installs COLLECTOR, the table evaluations
+    of this negative are handed to it, with the call, while its closure is live.
+    """
+    start = len(RECORDER) if RECORDER is not None else 0
     try:
         call()
     except ValueError as exc:
         assert str(exc) == expected, (name, label, str(exc), expected)
+        assert isinstance(exc, TableRefusal), (name, label, 'refusal outside a guard table', repr(exc))
+        assert row is None or exc.row == row, (name, label, 'refused by', exc.row, 'not its own row', row)
     else:
         raise AssertionError((name, 'accepted negative', label))
+    if COLLECTOR is not None:
+        records = RECORDER[start:]
+        del RECORDER[start:]
+        COLLECTOR(name, label, expected, records, call)
 
 
 def complete_append_contract(name, case, schema, original=None):
@@ -852,17 +994,19 @@ def check_append_contract(row, schema):
         logical = make_operation(name, case)
         operation, resolved = store_operation(logical)
         operation_contract(name, operation, resolved, logical, schema)
-        op_validator = Draft202012Validator(schema['$defs'][name.replace('.', '_') + '_operation'], format_checker=FORMAT)
-        op_validator.validate(operation)
+        operation_schema_contract(name, operation, schema)
         for field in ('idempotency_key', 'actor_ref'):
             bad_operation = copy.deepcopy(logical)
             bad_operation[field] += '\n'
-            assert list(op_validator.iter_errors(bad_operation)), (name, 'operation trailing LF', field)
+            expect_failure(lambda: operation_schema_contract(name, bad_operation, schema), 'operation_schema', name,
+                           'operation_trailing_lf/' + case['label'] + '/' + field)
         withdrawn_policy = {**logical, 'replay_policy': 'projector_replay_only'}
-        assert list(op_validator.iter_errors(withdrawn_policy)), (name, 'operation replay-only accepted')
+        expect_failure(lambda: operation_schema_contract(name, withdrawn_policy, schema), 'operation_schema', name,
+                       'operation_replay_only/' + case['label'])
         wrong_key = (name + ':' + '0' * 64 if source_scope(source)['scope_kind'] == 'application'
                      else 'application@1:11:22')
-        assert list(op_validator.iter_errors({**logical, 'idempotency_key': wrong_key})), (name, 'wrong operation scope/key')
+        expect_failure(lambda: operation_schema_contract(name, {**logical, 'idempotency_key': wrong_key}, schema),
+                       'operation_schema', name, 'operation_wrong_key/' + case['label'])
         retry = copy.deepcopy(case)
         retry['event_record'].update(sequence_id=999, observed_at_utc='2026-11-04T13:00:00Z',
                                      persisted_at_utc='2026-11-04T14:00:00Z')
@@ -926,6 +1070,14 @@ def check_append_contract(row, schema):
             expect_failure(lambda field=field, value=value: transport(body, resolved['ref'], {**resolved, field: value}),
                            error, name, 'reference_' + field)
     complete = check_complete_negatives(row, schema)
+    from pm_dg6b_round9_cases import family_cases
+    round9 = family_cases(globals(), row, schema)
+    for label, target, code, call in round9:
+        if target is None:
+            call()
+        else:
+            expect_failure(call, code, name, label, row=target)
+    complete['round9_negatives'] = sum(target is not None for _, target, _, _ in round9)
     return {**complete, 'positive_envelopes': len(row['append_valid']), 'negative_envelopes': len(row['append_invalid']),
             'replay_only_refused': True, 'transport_boundary_bytes': [16383, 16384, 16385],
             'operation_cases': len(row['operation_cases']), 'history_cases': len(row['history_cases']),
@@ -933,26 +1085,36 @@ def check_append_contract(row, schema):
 
 
 def preparation_contract(expected, fixtures, grade, registry, values, schema):
-    """Prepared-oracle metadata fences, independent of native admission."""
-    if {r['event_type'] for r in fixtures['families']} != expected or len(fixtures['families']) != len(expected):
-        raise ValueError('fixture_family_coverage')
-    if {r['event_type'] for r in grade['rows']} != expected:
-        raise ValueError('grade_family_coverage')
-    if not all(r['disposition'] == 'UNDISPOSITIONED' for r in grade['rows']):
-        raise ValueError('unadmitted_disposition')
-    if expected.intersection(r['event_type'] for r in registry['families']):
-        raise ValueError('prepared_membership')
-    for name in expected:
-        slug = name.replace('.', '_')
-        value = next(r for r in values['families'] if r['family_id'] == slug + '_operation')
-        if value['retention_policy_ref'] != 'PENDING_RETENTION_DECISION':
-            raise ValueError('retention_pending')
-        Draft202012Validator.check_schema(value['value_schema'])
-        if value['value_schema'] != schema['$defs'][slug + '_operation']:
-            raise ValueError('operation_schema_binding')
+    """Prepared-oracle metadata fences, independent of native admission.
+
+    The operation binding compares canonical JSON text (exact typed), at least
+    as strict as the former Python equality of the two definitions.
+    """
+    def text_digest(value):
+        return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+    names = sorted(expected)
+    require('preparation_a', {
+        'fixture_families': sorted({r['event_type'] for r in fixtures['families']}), 'expected_families': names,
+        'fixture_rows': len(fixtures['families']), 'grade_families': sorted({r['event_type'] for r in grade['rows']}),
+        'dispositions': [r['disposition'] for r in grade['rows']]})
+    entries = {r['family_id']: r for r in values['families']}
+    rows = [entries.get(name.replace('.', '_') + '_operation') for name in names]
+    meta = validators.validator_for(Draft202012Validator.META_SCHEMA, default=Draft202012Validator)
+    require('preparation_b', {
+        'registered': sorted(expected.intersection(r['event_type'] for r in registry['families'])),
+        'retention_refs': [None if r is None else r['retention_policy_ref'] for r in rows],
+        'value_schema_errors': sum(sum(1 for _ in meta(meta.META_SCHEMA, format_checker=meta.FORMAT_CHECKER).iter_errors(
+            r['value_schema'])) for r in rows if r is not None),
+        'value_schema_digests': ['missing' if r is None else text_digest(r['value_schema']) for r in rows],
+        'operation_definition_digests': [text_digest(schema['$defs'][name.replace('.', '_') + '_operation']) for name in names]})
 
 
 def run(fixtures_path=None, family=None):
+    global CONTEXT
+    order_errors, sites = table_order_errors(), refusal_sites()
+    assert not order_errors, ('table_require_order', order_errors)
+    assert not sites, ('refusal_outside_guard_table', sites)
+    CONTEXT = 'shared'
     schema = json.loads((ROOT / 'Plans/dg6b_event_contracts.schema.json').read_text())
     resolved_references = resolve_schema_graph(schema)
     fixtures = strict_json((fixtures_path or ROOT / 'Plans/dg6b_event_contract_fixtures.json').read_text())
@@ -967,17 +1129,17 @@ def run(fixtures_path=None, family=None):
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
     values = json.loads((ROOT / 'Plans/storage_value_registry.json').read_text())
     preparation_contract(expected, fixtures, grade, registry, values, schema)
+    from pm_dg6b_round9_cases import shared_cases
+    for label, target, code, call in shared_cases(globals(), schema, fixtures, grade, registry, values, expected):
+        expect_failure(call, code, 'shared', label, row=target)
     results = []
     family_rows = [row for row in fixtures['families'] if family is None or row['event_type'] == family]
     if not family_rows:
-        raise ValueError('unknown_family')
+        raise KeyError('unknown_family: ' + str(family))
     for row in family_rows:
         name, p = row['event_type'], row['valid']
-        slug = name.replace('.', '_')
-        validator = Draft202012Validator(schema['$defs'][slug], format_checker=FORMAT)
-        validator.validate(p)
-        for bad in row['invalid']:
-            assert list(validator.iter_errors(bad)), (name, 'accepted negative', bad)
+        CONTEXT = name
+        payload_contract(name, p, schema)
         if name.startswith('persona.'):
             results.append(check_persona(row, schema))
             continue
@@ -998,28 +1160,27 @@ def run(fixtures_path=None, family=None):
             probes.append(('identity', lambda: semantic(name, p, 'project:other', eid)))
         if name == 'auth.github.token.polling':
             bad = {**p, 'poll_interval_seconds': p['previous_interval_seconds']}
-            validator.validate(bad)  # schema-valid relational negative
+            payload_contract(name, bad, schema)  # schema-valid relational negative
             probes.append(('cadence', lambda: semantic(name, bad, 'application', eid, server_id=server)))
         if name == 'plugin.hook.blocked':
             for hook in ('pre_tool_invoke', 'pre_attempt_start', 'pre_node_dispatch'):
                 valid_hook = {**p, 'hook_name': hook}
-                validator.validate(valid_hook)
+                payload_contract(name, valid_hook, schema)
                 semantic(name, valid_hook, 'application', eid, server_id=server)
             for hook in ('post_tool_invoke', 'post_attempt_complete'):
                 observation = {**p, 'hook_name': hook}
                 probes.append(('observation_only_hook',
                                lambda bad=observation: semantic(name, bad, 'application', eid, server_id=server)))
-        for reason, call in probes:
-            try:
-                call()
-            except ValueError as exc:
-                assert str(exc) == reason, (name, str(exc), reason)
-            else:
-                raise AssertionError((name, 'accepted semantic negative', reason))
+        for index, (reason, call) in enumerate(probes):
+            expect_failure(call, reason, name, 'relational/' + str(index) + '/' + reason)
+        for index, bad in enumerate(row['invalid']):
+            expect_failure(lambda: payload_contract(name, bad, schema), 'payload_schema', name, 'invalid/' + str(index))
         results.append({'event_type': name, 'payload_negatives': len(row['invalid']),
                         'relational_negatives': len(probes), 'event_id_vector': eid, 'status': 'pass'})
     for row, result in zip(family_rows, results):
+        CONTEXT = row['event_type']
         result['append_oracles'] = check_append_contract(row, schema)
+    CONTEXT = 'shared'
     return {'status': 'pass', 'native_execution': 'NOT_RUN',
             'resolved_schema_references': resolved_references, 'rows': results}
 

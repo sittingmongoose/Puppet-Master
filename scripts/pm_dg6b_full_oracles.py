@@ -1,4 +1,4 @@
-"""DG6B complete-path oracle inputs, shared by the checker and removal proof.
+"""DG6B complete-path oracle inputs, shared by the checker and its guard-table suites.
 
 A defect is applied to a valid source model, then observational copies and
 identities are derived once. Proof execution never repairs an input, skips a
