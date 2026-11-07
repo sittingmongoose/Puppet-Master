@@ -28,8 +28,11 @@ def index_row_key(value, context):
 
 
 def index_row_checkpoint_ref(value, context):
-    locator = value['row'].get('publication_locator')
-    left = locator.get('checkpoint_ref') if type(locator) is dict else None
+    row = value['row']
+    locator = {}
+    if 'publication_locator' in row and type(row['publication_locator']) is dict:
+        locator = row['publication_locator']
+    left = locator.get('checkpoint_ref')
     right = value['expected_read_token']['checkpoint_ref']
     return 'index_row_locator_join' if type(left) is not type(right) or left != right else None
 

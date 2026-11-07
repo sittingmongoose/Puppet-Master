@@ -22,21 +22,24 @@ def external_entry_present(value, context):
 
 
 def external_entry_value(value, context):
-    event, entry = value['event'], value['payload_entry']
+    event = value['event']
+    entry = value['payload_entry']
     if type(event) is not dict or event.get('payload_ref') is None or not entry or type(entry) is not dict:
         return None
     return 'external_payload_join' if entry.get('value') != value['logical'] else None
 
 
 def external_entry_id(value, context):
-    event, entry = value['event'], value['payload_entry']
+    event = value['event']
+    entry = value['payload_entry']
     if type(event) is not dict or event.get('payload_ref') is None or not entry or type(entry) is not dict:
         return None
     return 'external_payload_join' if entry.get('blake3_id') != event.get('payload_ref') else None
 
 
 def external_entry_media(value, context):
-    event, entry = value['event'], value['payload_entry']
+    event = value['event']
+    entry = value['payload_entry']
     if type(event) is not dict or event.get('payload_ref') is None or not entry or type(entry) is not dict:
         return None
     return 'external_payload_join' if entry.get('media_type') != 'application/msgpack' else None

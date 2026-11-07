@@ -28,8 +28,11 @@ def row_source_segment_generation(value, context):
     frame = value['coverage']['last_frame']
     if type(frame) is not dict:
         return None
-    source = value['row'].get('source_locator')
-    left = source.get('segment_generation') if type(source) is dict else None
+    row = value['row']
+    source = {}
+    if 'source_locator' in row and type(row['source_locator']) is dict:
+        source = row['source_locator']
+    left = source.get('segment_generation')
     right = frame['segment_generation']
     return 'index_row_source_segment_generation' if type(left) is not type(right) or left != right else None
 
@@ -38,8 +41,11 @@ def row_source_segment_name(value, context):
     frame = value['coverage']['last_frame']
     if type(frame) is not dict:
         return None
-    source = value['row'].get('source_locator')
-    left = source.get('segment_name') if type(source) is dict else None
+    row = value['row']
+    source = {}
+    if 'source_locator' in row and type(row['source_locator']) is dict:
+        source = row['source_locator']
+    left = source.get('segment_name')
     right = frame['segment_name']
     return 'index_row_source_segment_name' if type(left) is not type(right) or left != right else None
 
@@ -48,8 +54,11 @@ def row_source_byte_offset(value, context):
     segments = value['coverage']['segments']
     if not segments:
         return None
-    source = value['row'].get('source_locator')
-    left = source.get('byte_offset') if type(source) is dict else None
+    row = value['row']
+    source = {}
+    if 'source_locator' in row and type(row['source_locator']) is dict:
+        source = row['source_locator']
+    left = source.get('byte_offset')
     right = segments[0]['scan_start_offset']
     return 'index_row_source_byte_offset' if type(left) is not type(right) or left != right else None
 

@@ -56,13 +56,16 @@ def stage_result_ref(value, context):
 def stage_witness_ref(value, context):
     if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
         return None
-    custody, witnesses = value['source']['stage_custody'], value['stage_witnesses']
+    custody = value['source']['stage_custody']
+    witnesses = value['stage_witnesses']
     for name in REQUIRED_STAGES:
         stage = custody[name]
         proof = stage['custody_evidence']
         if proof is None or stage['request_ref'] is None or stage['result_ref'] is None:
             continue
-        witness = witnesses.get(name, {})
+        if name not in witnesses:
+            return 'source_stage_evidence'
+        witness = witnesses[name]
         if type(witness) is not dict or witness.get('ref') != proof.get('source_ref'):
             return 'source_stage_evidence'
     return None

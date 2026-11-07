@@ -8,15 +8,21 @@ import pm_guard_isolation as g
 
 
 def row_source_sequence_id(value, context):
-    source = value['row'].get('source_locator')
-    left = source.get('sequence_id') if type(source) is dict else None
+    row = value['row']
+    source = {}
+    if 'source_locator' in row and type(row['source_locator']) is dict:
+        source = row['source_locator']
+    left = source.get('sequence_id')
     right = value['event_sequence_id']
     return 'index_row_source_sequence_id' if type(left) is not type(right) or left != right else None
 
 
 def row_translation_ref(value, context):
-    locator = value['row'].get('publication_locator')
-    ref = locator.get('compaction_translation_manifest_ref') if type(locator) is dict else None
+    row = value['row']
+    locator = {}
+    if 'publication_locator' in row and type(row['publication_locator']) is dict:
+        locator = row['publication_locator']
+    ref = locator.get('compaction_translation_manifest_ref')
     if ref is None:
         return None
     translation = value['current_translation']

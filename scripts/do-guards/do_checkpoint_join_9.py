@@ -8,17 +8,19 @@ import pm_guard_isolation as g
 
 
 def row_birth_recovery_epoch(value, context):
-    locator = value['row'].get('publication_locator')
-    if type(locator) is not dict:
+    row = value['row']
+    if 'publication_locator' not in row or type(row['publication_locator']) is not dict:
         return None
+    locator = row['publication_locator']
     left, right = locator.get('recovery_epoch'), value['anchor_source_selection']['recovery_epoch']
     return 'index_birth_anchor_join' if type(left) is not type(right) or left != right else None
 
 
 def row_birth_survivor_prefix(value, context):
-    locator = value['row'].get('publication_locator')
-    if type(locator) is not dict:
+    row = value['row']
+    if 'publication_locator' not in row or type(row['publication_locator']) is not dict:
         return None
+    locator = row['publication_locator']
     left, right = locator.get('survivor_prefix_sha256'), value['expected_prefix_sha256']
     return 'index_birth_anchor_join' if type(left) is not type(right) or left != right else None
 

@@ -13,13 +13,14 @@ REQUIRED_STAGES = ('original_intent', 'accepted_original_source', 'current_owner
 def stage_witness_value(value, context):
     if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
         return None
-    custody, witnesses = value['source']['stage_custody'], value['stage_witnesses']
+    custody = value['source']['stage_custody']
+    witnesses = value['stage_witnesses']
     for name in REQUIRED_STAGES:
         stage = custody[name]
         proof = stage['custody_evidence']
-        if proof is None or stage['request_ref'] is None or stage['result_ref'] is None:
+        if proof is None or stage['request_ref'] is None or stage['result_ref'] is None or name not in witnesses:
             continue
-        witness = witnesses.get(name, {})
+        witness = witnesses[name]
         if type(witness) is not dict or witness.get('ref') != proof.get('source_ref'):
             continue
         expected = value['stage_expected'][name]
@@ -31,13 +32,14 @@ def stage_witness_value(value, context):
 def stage_witness_sha256(value, context):
     if value['board_branch'] != 'application' or value['application_shape_valid'] is not True:
         return None
-    custody, witnesses = value['source']['stage_custody'], value['stage_witnesses']
+    custody = value['source']['stage_custody']
+    witnesses = value['stage_witnesses']
     for name in REQUIRED_STAGES:
         stage = custody[name]
         proof = stage['custody_evidence']
-        if proof is None or stage['request_ref'] is None or stage['result_ref'] is None:
+        if proof is None or stage['request_ref'] is None or stage['result_ref'] is None or name not in witnesses:
             continue
-        witness = witnesses.get(name, {})
+        witness = witnesses[name]
         expected = value['stage_expected'][name]
         if type(witness) is not dict or witness.get('ref') != proof.get('source_ref') or expected['typed_witness'] != expected['typed_expected']:
             continue

@@ -20,8 +20,11 @@ def posted_application_payload_ref(value, context):
         return None
     if value['event_type'] != 'crew.board_message_posted' or value['payload']['scope'] != 'application':
         return None
-    ref = value['payload'].get('content_ref', {})
-    return 'message_content_join' if value['message']['blake3_payload_ref'] != ref.get('blake3_id') else None
+    payload = value['payload']
+    ref_id = None
+    if 'content_ref' in payload:
+        ref_id = payload['content_ref'].get('blake3_id')
+    return 'message_content_join' if value['message']['blake3_payload_ref'] != ref_id else None
 
 
 def posted_project_message_id(value, context):

@@ -15,7 +15,8 @@ def content_entry_present(value, context):
 
 
 def content_entry_fields(value, context):
-    logical, entry = value['logical'], value['content_entry']
+    logical = value['logical']
+    entry = value['content_entry']
     if type(logical) is not dict or 'content_ref' not in logical or not entry or type(entry) is not dict:
         return None
     for key, member in logical['content_ref'].items():
