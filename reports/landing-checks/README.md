@@ -668,9 +668,16 @@ kind, say a socket, shows up as an unknown call and stops the unit only if it na
 if a result looks wrong for no reason. A run with a hit is only as fresh as its inputs say, so a lander who wants the old guarantee
 that everything ran passes nothing, which remains the default.
 
-**What was measured**, 2026-11-06 on the VM's local disk, nice 19, load 15 to 35. Not measured: a full landing check with
-`--cache`, cold, warm or after a one-document change. The rule for such a run (load under 12) was not met in 90 minutes, so what a
-whole run saves is still unknown. Tracing each of the 38 commands once took 1,245 s; the slowest were `validate-plan-migration` 262,
+**What a whole run saves**, 2026-11-07, a full local worktree at this branch over `main` `74748ebd92`, on the VM under load, nice 19,
+idle IO (`/mnt/Cursor/share/puppet-master/2026-11-04-program/streams/TOOLS/report-ids-proof/measurements-2026-11-07/`). Plain, without
+`--cache`: 1786.6 s (load 28.1 to 26.5). Cold: 1721.1 s (26.1 to 19.0), 36 runs from the cache already, because both aggregates and
+the exports run the same commands. Warm, on the unchanged tree: 516.2 s (19.0 to 17.3), 74 from the cache. After one sentence in
+`Plans/human-in-the-loop.md` and its 28 derived files: 1310.7 s with `--cache` (16.8 to 13.0), 12 commands rerun, against 1565.1 s
+without it (13.6 to 5.5). Each `--cache` run gave the same exit code, `--json` report, kept check reports and kept exports as the
+plain run on its tree, with 0 differences. `validate-audit-closure` was never stored, because other threads fetched into the shared
+object store while it ran and its key holds the refs. The loads moved from 28 to 5, so these savings are rough.
+
+**What was measured before**, 2026-11-06 on the VM's local disk, nice 19, load 15 to 35. Tracing each of the 38 commands once took 1,245 s; the slowest were `validate-plan-migration` 262,
 `validate-audit-closure` 227, `validate-new-contracts` 197, `lint-contractrefs` 173 and `json-syntax` 67. All 38 traces could be read
 and none was refused. One lookup pass over all 57,118 inputs took about 30 s on local disk and 40 s on the mount; a warm run makes
 three, one per process, and shares nothing between them. On 14 cheap real validators: 29 s fresh and traced, 4.8 s from the cache,
