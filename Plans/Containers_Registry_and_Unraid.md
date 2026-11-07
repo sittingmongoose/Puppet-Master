@@ -7122,12 +7122,16 @@ command_payload_definitions:
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerBuildRunResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, partial_capability, blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: buildx_unavailable, code: partial_capability}
+        - {owner_state: bake_unavailable, code: partial_capability}
+        - {owner_state: compose_invalid, code: blocked_state_required}
       aliases: []
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A build.run row gives only label, description and availability, and no Cozy lifecycle table lists it. It runs the selected build path and records the last successful build target plus validation snapshot, a side effect, so domain_action."}
-        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && build_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, partial_capability, blocked_state_required, stale_projection], gap_note: "No row states a subset for the docker_available && build_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. The run resolves to the persisted selected compose or Bake target (CRAU-011; section 2A project-aware build surfaces) and builds through docker buildx build after a preflight that resolves compose/config validity and buildx availability (CRAU-032). So CRAU-095's buildx_unavailable, and bake_unavailable when the selected target is a Bake target (section 2C: missing Bake capability disables Bake only), show as partial_capability, and compose_invalid, when the selected compose target fails validation (CRAU-093 reason-coded rows), shows as blocked_state_required, through UCC-230 owner_state_code_map, recorded in owner_state_codes. compose_service_missing is not listed: build.run names no services and builds the selected target whole."}
         - {key: omitted:build_target_ref, choice: omitted, gap_note: "build.run takes no subject arg: CRAU-011 requires the run to resolve to the persisted selected compose/bake target rather than rebuilding from a guessed default, so the handler reads the selection from per-project state. Canon names no per-dispatch subject field; if one is wanted it needs an owner decision."}
     - command_id: cmd.docker.build.image
       ucc_units: [UCC-049]
@@ -7162,13 +7166,15 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerBuildRunResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
+      disabled_reason_codes: [not_configured, unreachable, degraded, partial_capability, stale_projection]
+      owner_state_codes:
+        - {owner_state: buildx_unavailable, code: partial_capability}
       aliases:
         - {command_id: cmd.docker.build, kind: compatibility_alias,
            source: "UCC-049 compatibility_only_notes; UI_Command_Catalog.md section 2.5A and Cozy Shelves reconciliation: alias-of cmd.docker.build.image (selected path)"}
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A build.image row gives only label, description and availability, and no Cozy lifecycle table lists it. It builds an image, a side effect, so domain_action."}
-        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && build_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, partial_capability, stale_projection], gap_note: "No row states a subset for the docker_available && build_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. Image builds use docker buildx build after a preflight that resolves buildx availability (CRAU-032; section 2A persists buildx readiness for the build surfaces), so CRAU-095's buildx_unavailable shows as partial_capability through UCC-230 owner_state_code_map, recorded in owner_state_codes. compose_invalid and compose_service_missing are not listed: a Dockerfile build resolves no compose file."}
     - command_id: cmd.docker.build.compose
       ucc_units: [UCC-049]
       command_kind: domain_action
@@ -7201,12 +7207,16 @@ command_payload_definitions:
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerBuildRunResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, partial_capability, blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: buildx_unavailable, code: partial_capability}
+        - {owner_state: compose_invalid, code: blocked_state_required}
+        - {owner_state: compose_service_missing, code: blocked_state_required}
       aliases: []
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A build.compose row gives only label, description and availability, and no Cozy lifecycle table lists it. It builds compose services, a side effect, so domain_action."}
-        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && build_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, partial_capability, blocked_state_required, stale_projection], gap_note: "No row states a subset for the docker_available && build_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. It builds the services of the selected compose file through docker buildx build after a preflight that resolves compose/config validity and buildx availability (CRAU-032). So CRAU-095's buildx_unavailable shows as partial_capability, and compose_invalid and compose_service_missing (a services entry the file does not define), which CRAU-093 makes the reason-coded rows of compose validation, show as blocked_state_required, through UCC-230 owner_state_code_map, recorded in owner_state_codes."}
     - command_id: cmd.docker.build.bake
       ucc_units: [UCC-049]
       command_kind: domain_action
@@ -7241,11 +7251,14 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerBuildRunResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
+      disabled_reason_codes: [not_configured, unreachable, degraded, partial_capability, stale_projection]
+      owner_state_codes:
+        - {owner_state: bake_unavailable, code: partial_capability}
+        - {owner_state: buildx_unavailable, code: partial_capability}
       aliases: []
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A build.bake row gives only label, description and availability, and no Cozy lifecycle table lists it. It runs a Bake build, a side effect, so domain_action."}
-        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && bake_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, partial_capability, stale_projection], gap_note: "No row states a subset for the docker_available && bake_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. A Bake build needs the runtime's Bake capability, and missing Bake capability disables Bake only, not the whole panel (section 2C); it is an image build, so CRAU-032's docker buildx build path and its buildx availability preflight apply too. So CRAU-095's bake_unavailable and buildx_unavailable show as partial_capability through UCC-230 owner_state_code_map, recorded in owner_state_codes."}
     - command_id: cmd.docker.bake.preview
       ucc_units: [UCC-049]
       command_kind: domain_action
@@ -7278,11 +7291,13 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerBakePreviewResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
+      disabled_reason_codes: [not_configured, unreachable, degraded, partial_capability, stale_projection]
+      owner_state_codes:
+        - {owner_state: bake_unavailable, code: partial_capability}
       aliases: []
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A bake.preview row gives only label, description and availability, and no Cozy lifecycle table lists it. It resolves the Bake graph through the Docker engine and returns a typed preview, not a route, so domain_action; navigation_wrapper would fit only if the preview were a view of already-resolved state."}
-        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && bake_file_resolved gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, partial_capability, stale_projection], gap_note: "No row states a subset for the docker_available && bake_file_resolved gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. Previewing resolves the Bake graph and needs the runtime's Bake capability, which section 2C says disables Bake only when missing, so CRAU-095's bake_unavailable shows as partial_capability through UCC-230 owner_state_code_map, recorded in owner_state_codes. buildx_unavailable is not listed: a preview builds no image, and CRAU-032's buildx availability preflight runs before a build."}
     - command_id: cmd.docker.bake.run
       ucc_units: [UCC-049]
       command_kind: domain_action
@@ -7316,11 +7331,14 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerBuildRunResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
+      disabled_reason_codes: [not_configured, unreachable, degraded, partial_capability, stale_projection]
+      owner_state_codes:
+        - {owner_state: bake_unavailable, code: partial_capability}
+        - {owner_state: buildx_unavailable, code: partial_capability}
       aliases: []
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A bake.run row gives only label, description and availability, and no Cozy lifecycle table lists it. It runs the selected Bake target, a side effect, so domain_action."}
-        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && bake_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, partial_capability, stale_projection], gap_note: "No row states a subset for the docker_available && bake_target_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. A Bake build needs the runtime's Bake capability, and missing Bake capability disables Bake only, not the whole panel (section 2C); it is an image build, so CRAU-032's docker buildx build path and its buildx availability preflight apply too. So CRAU-095's bake_unavailable and buildx_unavailable show as partial_capability through UCC-230 owner_state_code_map, recorded in owner_state_codes."}
     - command_id: cmd.docker.container.stop
       ucc_units: [UCC-049]
       command_kind: domain_action
@@ -7792,21 +7810,26 @@ command_payload_definitions:
           type: id
           required: false
           default: none
+          constraints: {max_length: 200, pattern: '^[A-Za-z0-9][A-Za-z0-9._:-]*$'}
           provenance: gap
           gap_note: >-
             The row starts the subset "from a compose scenario" without naming the link; scenario_id is
             CRAU-096's scenario identity. JUDGMENT: optional scenario id recording which saved scenario the
             subset came from; scenario.run is the command that canonically records the scenario id on a run.
+            Bounds as scenario.run's scenario_id (the docker.compose.scenario event payloads' non_empty_id).
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerComposeSubsetResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: compose_invalid, code: blocked_state_required}
+        - {owner_state: compose_service_missing, code: blocked_state_required}
       aliases: []
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A compose.up_subset row gives only label, description and availability, and no Cozy lifecycle table lists it. It starts compose services, a side effect, so domain_action."}
-        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && compose_subset_valid gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, blocked_state_required, stale_projection], gap_note: "No row states a subset for the docker_available && compose_subset_valid gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. The compose_subset_valid gate needs a valid compose file that defines every named service; CRAU-093 makes compose_invalid and compose_service_missing the reason-coded rows of compose validation, so both show as blocked_state_required through UCC-230 owner_state_code_map, recorded in owner_state_codes."}
     - command_id: cmd.docker.compose.down_subset
       ucc_units: [UCC-050]
       command_kind: domain_action
@@ -7840,12 +7863,15 @@ command_payload_definitions:
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerComposeSubsetResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: compose_invalid, code: blocked_state_required}
+        - {owner_state: compose_service_missing, code: blocked_state_required}
       aliases: []
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A compose.down_subset row gives only label, description and availability, and no Cozy lifecycle table lists it. It stops compose services, a side effect, so domain_action."}
-        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && compose_subset_running gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, blocked_state_required, stale_projection], gap_note: "No row states a subset for the docker_available && compose_subset_running gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. Stopping a named subset resolves the compose file and the services it names; CRAU-093 makes compose_invalid and compose_service_missing the reason-coded rows of compose validation, so both show as blocked_state_required through UCC-230 owner_state_code_map, recorded in owner_state_codes."}
     - command_id: cmd.docker.compose.scenario.save
       ucc_units: [UCC-050]
       command_kind: domain_action
@@ -7935,8 +7961,11 @@ command_payload_definitions:
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:DockerComposeScenarioResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unreachable, degraded, stale_projection]
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: compose_invalid, code: blocked_state_required}
+        - {owner_state: compose_service_missing, code: blocked_state_required}
       aliases:
         - {command_id: cmd.docker.compose.scenario.save/run/edit/delete, kind: family_alias,
            source: "UCC-050 compatibility_only_notes: the grouped scenario token denotes the family; payloads use the concrete ids"}
@@ -7944,7 +7973,7 @@ command_payload_definitions:
            source: "UCC-137 canonical_text: the flat compose.save_scenario and compose.run_scenario spellings recorded as compatibility aliases (UCC-230 non_definition_tokens, DL-341)"}
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A compose.scenario.run row gives only label, description and availability, and no Cozy lifecycle table lists it. It runs a saved scenario and records the scenario id on a run, a side effect, so domain_action."}
-        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the docker_available && compose_scenario_valid gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. A stale scenario opens degraded with repair actions (section 2A compose scenario runner)."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, blocked_state_required, stale_projection], gap_note: "No row states a subset for the docker_available && compose_scenario_valid gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. A stale scenario opens degraded with repair actions (section 2A compose scenario runner). CRAU-096 keeps run disabled with exact reason codes until validation succeeds, and running the scenario's service_subset needs a valid compose file that defines every saved service; CRAU-093 makes compose_invalid and compose_service_missing the reason-coded rows of compose validation, so both show as blocked_state_required through UCC-230 owner_state_code_map, recorded in owner_state_codes."}
     - command_id: cmd.docker.compose.scenario.edit
       ucc_units: [UCC-050]
       command_kind: domain_action
@@ -8000,7 +8029,7 @@ command_payload_definitions:
            source: "UCC-050 compatibility_only_notes: the grouped scenario token denotes the family; payloads use the concrete ids"}
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A compose.scenario.edit row gives only label, description and availability, and no Cozy lifecycle table lists it. It rewrites a scenario record, so domain_action."}
-        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the compose_scenario_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. Canon conflict: the 2.5A edit row says edit 'Edits a saved scenario or repairs degraded scenario validation', while CRAU-096 and CRAU-011's acceptance criterion say run, edit and delete stay disabled with exact reason codes until validation succeeds, so edit cannot both repair a degraded scenario and stay disabled while it is degraded. This definition takes CRAU-096's side, the owner unit over the summary row, and lists degraded; section 2A's repair actions then have no command here, and the owner doc must settle whether edit is the repair path."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the compose_scenario_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. Canon conflict: the 2.5A edit row says edit 'Edits a saved scenario or repairs degraded scenario validation', while CRAU-096 and CRAU-011's acceptance criterion say run, edit and delete stay disabled with exact reason codes until validation succeeds, so edit cannot both repair a degraded scenario and stay disabled while it is degraded. This definition takes CRAU-096's side, the owner unit over the summary row, and lists degraded; section 2A's repair actions then have no command here, and the owner doc must settle whether edit is the repair path. CRAU-095's compose_invalid and compose_service_missing are not listed: edit changes only the saved scenario object in project state (CRAU-096) and starts no compose services, so a scenario that fails validation shows degraded, as section 2A's stale-scenario rule says, rather than the compose validation codes scenario.run carries."}
     - command_id: cmd.docker.compose.scenario.delete
       ucc_units: [UCC-050]
       command_kind: domain_action
@@ -8036,7 +8065,7 @@ command_payload_definitions:
            source: "UCC-050 compatibility_only_notes: the grouped scenario token denotes the family; payloads use the concrete ids"}
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A compose.scenario.delete row gives only label, description and availability, and no Cozy lifecycle table lists it. It deletes a scenario record (CS-062 lists it among destructive commands), so domain_action."}
-        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the compose_scenario_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. The destructive confirmation goes through the shared confirm surface (confirmation_ref), not a disabled code."}
+        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, stale_projection], gap_note: "No row states a subset for the compose_scenario_selected gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. The destructive confirmation goes through the shared confirm surface (confirmation_ref), not a disabled code. CRAU-095's compose_invalid and compose_service_missing are not listed: delete changes only the saved scenario object in project state (CRAU-096) and starts no compose services, so a scenario that fails validation shows degraded, as section 2A's stale-scenario rule says, rather than the compose validation codes scenario.run carries."}
     - command_id: cmd.docker.create_repository
       ucc_units: [UCC-051]
       command_kind: domain_action
@@ -9073,13 +9102,13 @@ command_payload_definitions:
         receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; wiring rows require a receipt or event effect (catalog.docker_compose_up_subset/down_subset), shape typed nowhere'}
     DockerComposeScenarioResultV1:
       fields:
-        scenario_id: {type: id, required: true, default: none, provenance: gap, gap_note: 'the scenario saved, run, edited or deleted; the name is CRAU-096''s scenario schema field, and the docker.compose.scenario event payloads type it (non_empty_id), but no result shape is typed anywhere'}
+        scenario_id: {type: id, required: true, default: none, constraints: {max_length: 200, pattern: '^[A-Za-z0-9][A-Za-z0-9._:-]*$'}, provenance: gap, gap_note: 'the scenario saved, run, edited or deleted; bounds from the event payloads'' non_empty_id; the name is CRAU-096''s scenario schema field, and the docker.compose.scenario event payloads type it (non_empty_id), but no result shape is typed anywhere'}
         preview_run_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'the preview or development run the scenario id is recorded on (2.5A scenario.run row); record shape typed nowhere'}
         receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: 'dispatch or owner receipt; wiring rows require a receipt or event effect, shape typed nowhere'}
     DockerRegistryPromoteResultV1:
       fields:
         image_digest: {type: string, required: true, default: none, constraints: {pattern: '^sha256:[0-9a-f]{64}$'}, provenance: gap, gap_note: 'the moved digest; CRAU-012 requires digest-first capture, the record shape is typed nowhere'}
-        tag: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'the moved tag; CRAU-012 receipt capture, shape typed nowhere'}
+        tags: {type: list, required: true, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}}, constraints: {min_items: 1, unique_items: true}, provenance: gap, gap_note: 'the moved tag or tags, one per entry of the request''s target.tags, with the same item bounds, min_items 1 and unique_items; CRAU-012 receipt capture, shape typed nowhere'}
         source: {type: object, required: true, default: none, fields: {namespace: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'source namespace of the promotion; CRAU-012 names the captured pair, the field shape is typed nowhere'}, repository_name: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'source repository of the promotion; CRAU-012 names the captured pair, the field shape is typed nowhere'}}, provenance: gap, gap_note: 'source namespace/repository of the promotion (CRAU-012); shape typed nowhere'}
         destination: {type: object, required: true, default: none, fields: {namespace: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'destination namespace of the promotion; CRAU-012 names the captured pair, the field shape is typed nowhere'}, repository_name: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: 'destination repository of the promotion; CRAU-012 names the captured pair, the field shape is typed nowhere'}}, provenance: gap, gap_note: 'destination namespace/repository of the promotion (CRAU-012); shape typed nowhere'}
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: 'registry-side promotion receipt with actor, approval source and result id captured before downstream references update (CRAU-012); shape typed nowhere'}
@@ -9157,8 +9186,9 @@ canonical_text: >-
   below gives each command its args, owner request and owner result in
   pm.command_payload_definitions.v1, with error and disabled-reason codes narrowed from the
   overlay's closed sets. An owner_request of none means the command's Wiring_Matrix.production.json
-  row names no request_schema_ref. Host profiles carry the FileSafe scope as CV-303's
-  filesafe_scope_ref, which the host commands read from the saved profile.
+  row names no request_schema_ref. These definitions carry the FileSafe scope on the host profile as
+  CV-303's filesafe_scope_ref, a gap choice recorded in cmd.docker.host.profile.save, and the host
+  commands read it from the saved profile.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible Docker/Hosts page and container run commands.
 depends_on: [UCC-230, UCC-105, UCC-217, CRAU-092, CRAU-094, CRAU-095, CV-303, CV-304, CV-333, DL-333, DL-341]
@@ -9472,6 +9502,12 @@ command_payload_definitions:
             UCC-105 canonical text names requested_action as a HostCapabilityCommand envelope field but types
             nothing (CV-304 has no typed schema). JUDGMENT: open string naming the action being preflighted;
             an enum of host actions stays open for the compile review.
+        host_capability_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-101..UCC-105 identity host_capability_ref?; the capability the proposed action would use"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -9483,7 +9519,7 @@ command_payload_definitions:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It runs the preflight before approval (event docker.host.preflight_requested; section 2A preflight ordering), an owner operation, so domain_action."}
         - {key: error_codes, choice: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error], gap_note: "blocked_state_required is left out although the other mutating host commands list it: a preflight that finds unresolved facts reports blocked_preflight as its outcome, and those facts block the later mutation, not this command (section 2A preflight and approval ordering contract). The set is the narrowing rule's set for a domain_action whose disabled reasons do not include blocked_state_required."}
         - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability], gap_note: "No row states a subset; preflight resolves reachability, trust and proxy policy and capability (section 2A), from the shared taxonomy."}
-        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler sends requested_action and host_profile_id from the args and fills host_capability_ref and the profile's FileSafe scope (filesafe_scope_ref, CV-303's name), network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile, so the preflight checks the policies the later mutation will carry. approval_scope_key and permission_snapshot_id are not built, because approval follows preflight (section 2A preflight and approval ordering). Canon says nowhere which source fills each field; this is the choice."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler sends requested_action, host_profile_id and, when given, host_capability_ref from the args, and fills the profile's FileSafe scope (filesafe_scope_ref, CV-303's name), network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile that host_profile_id names (cmd.docker.host.profile.save), so the preflight checks the policies the later mutation will carry. The saved profile holds no host_capability_ref, so without the arg the envelope carries none. approval_scope_key and permission_snapshot_id are not built, because approval follows preflight (section 2A preflight and approval ordering). Canon says nowhere which source fills each field; this is the choice."}
     - command_id: cmd.docker.host.profile.save
       ucc_units: [UCC-105]
       command_kind: domain_action
@@ -9561,7 +9597,7 @@ command_payload_definitions:
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It launches a Host Lab session (event docker.host.session_launch_requested), so domain_action."}
         - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required], gap_note: "No row states a subset; session launch carries authority, FileSafe and preflight expectations (UCC-105), so the authority, preflight-blocking and capability codes of the shared taxonomy apply."}
-        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_capability_ref, host_profile_id and host_instance_id from the args where present; requested_action from the command id (session launch); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); the FileSafe scope (the profile's filesafe_scope_ref, CV-303's name), network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile (cmd.docker.host.profile.save); and the expected receipt ref kind (host_execution_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_profile_id and, when given, host_capability_ref from the args; no host_instance_id, because a launch names no existing instance and its args carry none, so the envelope goes without one and the launched session comes back as HostSessionLaunchResultV1.host_session_ref; requested_action from the command id (session launch); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); the FileSafe scope (the profile's filesafe_scope_ref, CV-303's name), network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile that host_profile_id names (cmd.docker.host.profile.save); and the expected receipt ref kind (host_execution_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation."}
         - {key: omitted:ats_target_ref, choice: omitted, gap_note: "UCC-105 names ATS host launches among the surfaces that use registered command ids, but canon names no field for the ATS or session target of a launch. This definition mints none; the compile review must decide whether a launch names its ATS session or the Host Lab session is created untargeted."}
     - command_id: cmd.docker.host.instance.start
       ucc_units: [UCC-105]
@@ -9590,7 +9626,7 @@ command_payload_definitions:
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It is an instance lifecycle mutation (start; event docker.host.instance_lifecycle_requested), so domain_action."}
         - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required], gap_note: "No row states a subset; lifecycle actions carry authority, preflight and receipt expectations before mutation (UCC-105), so the authority, preflight-blocking and capability codes of the shared taxonomy apply."}
-        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_capability_ref, host_profile_id and host_instance_id from the args where present; requested_action from the command id (instance start); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); the FileSafe scope (the profile's filesafe_scope_ref, CV-303's name), network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile (cmd.docker.host.profile.save); and the expected receipt ref kind (host_execution_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_instance_id from the args; host_profile_id from the args when given, otherwise from the host instance record that host_instance_id names; host_capability_ref from that host instance record (CV-303 lists host instance among the host contract families but types no field, so that the record carries host_profile_id and host_capability_ref is part of this choice); requested_action from the command id (instance start); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); the FileSafe scope (the profile's filesafe_scope_ref, CV-303's name), network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile that host_profile_id names (cmd.docker.host.profile.save); and the expected receipt ref kind (host_execution_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation."}
     - command_id: cmd.docker.host.instance.stop
       ucc_units: [UCC-105]
       command_kind: domain_action
@@ -9618,7 +9654,7 @@ command_payload_definitions:
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It is an instance lifecycle mutation (stop; event docker.host.instance_lifecycle_requested), so domain_action."}
         - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required], gap_note: "No row states a subset; lifecycle actions carry authority, preflight and receipt expectations before mutation (UCC-105), so the authority, preflight-blocking and capability codes of the shared taxonomy apply."}
-        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_capability_ref, host_profile_id and host_instance_id from the args where present; requested_action from the command id (instance stop); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); the FileSafe scope (the profile's filesafe_scope_ref, CV-303's name), network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile (cmd.docker.host.profile.save); and the expected receipt ref kind (host_execution_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_instance_id from the args; host_profile_id from the args when given, otherwise from the host instance record that host_instance_id names; host_capability_ref from that host instance record (CV-303 lists host instance among the host contract families but types no field, so that the record carries host_profile_id and host_capability_ref is part of this choice); requested_action from the command id (instance stop); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); the FileSafe scope (the profile's filesafe_scope_ref, CV-303's name), network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile that host_profile_id names (cmd.docker.host.profile.save); and the expected receipt ref kind (host_execution_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation."}
     - command_id: cmd.docker.host.instance.restart
       ucc_units: [UCC-105]
       command_kind: domain_action
@@ -9646,7 +9682,7 @@ command_payload_definitions:
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It is an instance lifecycle mutation (restart; event docker.host.instance_lifecycle_requested), so domain_action."}
         - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, degraded, partial_capability, blocked_state_required, permission_required], gap_note: "No row states a subset; lifecycle actions carry authority, preflight and receipt expectations before mutation (UCC-105), so the authority, preflight-blocking and capability codes of the shared taxonomy apply."}
-        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_capability_ref, host_profile_id and host_instance_id from the args where present; requested_action from the command id (instance restart); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); the FileSafe scope (the profile's filesafe_scope_ref, CV-303's name), network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile (cmd.docker.host.profile.save); and the expected receipt ref kind (host_execution_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_instance_id from the args; host_profile_id from the args when given, otherwise from the host instance record that host_instance_id names; host_capability_ref from that host instance record (CV-303 lists host instance among the host contract families but types no field, so that the record carries host_profile_id and host_capability_ref is part of this choice); requested_action from the command id (instance restart); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); the FileSafe scope (the profile's filesafe_scope_ref, CV-303's name), network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile that host_profile_id names (cmd.docker.host.profile.save); and the expected receipt ref kind (host_execution_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation."}
     - command_id: cmd.docker.host.access.open_app
       ucc_units: [UCC-105]
       command_kind: domain_action
@@ -9715,7 +9751,7 @@ command_payload_definitions:
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind: UCC-105 registers the id with no catalog row. It records a cleanup retention (event docker.host.instance_retention_recorded), so domain_action."}
         - {key: disabled_reason_codes, choice: [not_configured, unauthorized, unreachable, permission_required, blocked_state_required], gap_note: "No row states a subset; cleanup and retain actions carry receipt requirements (UCC-105 fixture list), so a missing receipt expectation blocks, with the rest from the shared taxonomy."}
-        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_capability_ref, host_profile_id and host_instance_id from the args where present; requested_action from the command id (instance retain); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); the cleanup policy CV-304 names, the FileSafe scope (the profile's filesafe_scope_ref, CV-303's name), network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile (cmd.docker.host.profile.save); and the expected receipt ref kind (cleanup_retention_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation."}
+        - {key: owner_request, choice: none, gap_note: "No typed owner request exists. The handler builds CV-304's HostCapabilityCommand from these args: command_id and command_kind from the dispatch, host_instance_id from the args; host_profile_id and host_capability_ref from the host instance record that host_instance_id names (CV-303 lists host instance among the host contract families but types no field, so that the record carries both is part of this choice); requested_action from the command id (instance retain); approval_scope_key, permission_snapshot_id and allowed_action_ids from the Permissions admission (UCC-217: Permissions alone composes authority evidence); the cleanup policy CV-304 names, the FileSafe scope (the profile's filesafe_scope_ref, CV-303's name), network_access_policy, secret_access_policy, destructive_command_policy and preflight_required from the saved host profile that host_profile_id names (cmd.docker.host.profile.save); and the expected receipt ref kind (cleanup_retention_receipt, CV-303) from the command. UCC-105 and CV-304 name these envelope fields but type none and say nowhere which source fills each; that split is the choice. UCC-105's fixtures (missing authority, missing FileSafe scope, missing receipt expectation) then fail closed with blocked_state_required before mutation."}
     - command_id: cmd.docker.host.receipt.open
       ucc_units: [UCC-105]
       command_kind: navigation_wrapper
