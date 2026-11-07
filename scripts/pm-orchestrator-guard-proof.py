@@ -1062,7 +1062,11 @@ def suite_inputs(suite_name, fixtures, out_dir=None):
     used_controls = {c for *_, c in chosen}
     # Controls: every control a chosen negative was built from, plus the retained and compatibility originals (the
     # lane checker runs every positive through every row; the tool's controls are those the suite's negatives need).
-    keep = used_controls | {cid for cid, _ in controls if cid.startswith(('retained:', 'compatibility:'))}
+    # One retained and one compatibility original besides them (the historical boundary has hundreds of retained
+    # controls; the complete checker runs them all).
+    keep = set(used_controls)
+    for prefix in ('retained:', 'compatibility:'):
+        keep |= set([cid for cid, _ in controls if cid.startswith(prefix)][:1])
     if not keep:
         # A suite of unprovable rows has no negative; one control lets the tool run and report them unproved.
         keep = {controls[0][0]}
