@@ -547,6 +547,75 @@ async function run(t, w, h) {
     const seen6 = await f.evaluate(railAtRest);
     t.log(`${at} ${look} at rest ${JSON.stringify(seen6)}`);
     await t.check(`${at} ${look}: at rest every control of the collapsed rail is on screen`, !!seen6 && seen6.unseen.length === 0 && seen6.below.length === 0, JSON.stringify(seen6));
+    // Reduced Motion, a panel shortcut with the key focus kept on the open panel's icon (K-F96d-1), and in motion a click
+    // on that icon. In Glass the lens
+    // carries the mark on the open panel's icon; Ctrl+2 opens another panel and the lens jumps there in one step, and
+    // Ctrl+1 brings it back. Every frame for 900 ms from each key is read after layout, just before paint (a
+    // ResizeObserver callback): the key-focused icon must have a mark in each (its own outline, or the flagged lens
+    // painted at rest on it), and no flagged lens may be away from it (F96d-1: one frame with neither on 981463667f, the
+    // lens and its ring already on Search). Reduced Motion is the app's own setting (data-motion="reduced", as Settings
+    // sets it) and the media query, so both surfaces take it; both are put back after.
+    if (/^glass-/.test(look)) {
+      // started (and awaited) before the key is sent, so no frame after it is missed; read back once it has run ms
+      const frameRead = ms => f.evaluate(ms => {
+        const P = window.__fo96f = { frames: 0, none: 0, away: 0, at: [], done: false }, t0 = performance.now(), probe = document.createElement('div');
+        Object.assign(probe.style, { position: 'fixed', left: '0', top: '0', width: '1px', height: '1px', opacity: '0', pointerEvents: 'none' });
+        document.body.appendChild(probe);
+        const ro = new ResizeObserver(() => {
+          const act = document.activeElement;
+          if (!act || !act.matches || !act.matches('#activityBar .icon') || !act.matches(':focus-visible')) return;
+          P.frames++;
+          const sym = act.querySelector('.symbol') || act, o = getComputedStyle(sym), b = sym.getBoundingClientRect();
+          const own = o.outlineStyle !== 'none' && parseFloat(o.outlineWidth) >= 2;
+          const L = [...document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]')].find(x => { const c = getComputedStyle(x); return c.display !== 'none' && parseFloat(c.opacity) > 0.5; });
+          let onLens = false;
+          if (L) { const a = L.getBoundingClientRect(); onLens = Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 3 && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 3; if (!onLens) P.away++; }
+          if (!own && !onLens) { P.none++; P.at.push(Math.round(performance.now() - t0)); }
+        });
+        ro.observe(probe);
+        let flip = false;
+        const step = () => { flip = !flip; probe.style.width = flip ? '2px' : '1px'; if (performance.now() - t0 < ms) requestAnimationFrame(step); else { ro.disconnect(); probe.remove(); P.done = true; } };
+        requestAnimationFrame(step);
+      }, ms);
+      // the side panel on screen (below 1920 it lies over the page and can be folded away while it keeps its open state)
+      const shown = () => f.evaluate(() => { const s = document.getElementById('sidePanelSlot'); return !!s && s.getClientRects().length > 0 && getComputedStyle(s).display !== 'none'; });
+      const was = await f.evaluate(() => { const r = document.documentElement, w = r.getAttribute('data-motion'); r.setAttribute('data-motion', 'reduced'); return w; });
+      await t.page.emulateMedia({ reducedMotion: 'reduce' });
+      if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+      if (!(await shown()) && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+      const reached = await tabTo('files');
+      await f.waitForTimeout(1600);
+      const pre = await f.evaluate(() => !!document.querySelector('#activityBar .icon[data-ab-id="files"][data-lg-focus]'));
+      const reads = [];
+      for (const [k, label] of [['Control+2', 'Ctrl+2, the lens leaves it'], ['Control+1', 'Ctrl+1, the lens comes back']]) {
+        await frameRead(900); await kb.press(k);
+        await f.waitForFunction(() => window.__fo96f && window.__fo96f.done, null, { timeout: 5000 }).catch(() => {});
+        const r = await f.evaluate(() => { const P = window.__fo96f; return { frames: P.frames, none: P.none, away: P.away, at: P.at.slice(0, 4), done: P.done }; });
+        reads.push({ key: label, ...r }); await f.waitForTimeout(300);
+      }
+      await f.evaluate(w => { const r = document.documentElement; if (w === null) r.removeAttribute('data-motion'); else r.setAttribute('data-motion', w); }, was);
+      await t.page.emulateMedia({ reducedMotion: 'no-preference' });
+      if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+      t.log(`${at} ${look} Reduced Motion, panel shortcuts with the focus kept on Files: lens carried the mark before ${pre}, ${JSON.stringify(reads)}`);
+      await t.check(`${at} ${look}: in Reduced Motion, Ctrl+2 and Ctrl+1 with the key focus kept on the open panel's icon leave it a mark in every frame, and no flagged lens away from it`,
+        reached && pre && reads.every(r => r.done && r.frames > 0 && r.none === 0 && r.away === 0), JSON.stringify({ reached, pre, reads }));
+      // ...and in motion, a real click on the key-focused open icon, with no key in the bar: the panel closes (at 1920) or
+      // folds away (below it, where the panel lies over the page and keeps its open state), and the lens hides in one
+      // step. 981463667f left one frame with no mark there. The panel is shown again after, by Enter.
+      if (!(await shown()) && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+      const reachedC = await tabTo('files');
+      await f.waitForTimeout(1600);
+      const preC = await f.evaluate(() => !!document.querySelector('#activityBar .icon[data-ab-id="files"][data-lg-focus]'));
+      await frameRead(900); await f.locator('#activityBar .icon[data-ab-id="files"]').click(); await rest();
+      await f.waitForFunction(() => window.__fo96f && window.__fo96f.done, null, { timeout: 5000 }).catch(() => {});
+      const click = await f.evaluate(() => { const P = window.__fo96f; return { frames: P.frames, none: P.none, away: P.away, at: P.at.slice(0, 4), done: P.done }; });
+      const closed = !(await shown());
+      if (closed && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+      if (!(await shown()) && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+      t.log(`${at} ${look} a click on the key-focused open Files: lens carried the mark before ${preC}, panel gone ${closed}, ${JSON.stringify(click)}`);
+      await t.check(`${at} ${look}: a real click on the key-focused open panel's icon leaves it a mark in every frame as the panel goes and the lens hides`,
+        reachedC && preC && click.done && click.frames > 0 && click.none === 0 && click.away === 0 && closed, JSON.stringify({ reachedC, preC, closed, click }));
+    }
     // the bar with its names shown (the toggle)
     await f.evaluate(() => document.getElementById('activityBarToggle').click());
     await f.waitForFunction(() => !document.getElementById('activityBar').classList.contains('collapsed'), null, { timeout: 5000 }).catch(() => {});
