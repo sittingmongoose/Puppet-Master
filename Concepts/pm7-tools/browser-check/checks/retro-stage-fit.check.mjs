@@ -26,6 +26,10 @@ const NAME = 'First cancellation';
 const frameFor = async (t, mode) => {
 	// T60: --set selftest=late-ready holds the window's first open (95-boot's ?o55=screen= open) back past the ready bound
 	if (t.args.selftest === 'late-ready' && !t.__lateReady) { t.__lateReady = true; await t.page.addInitScript(LATE_READY, LATE_READY_HOLD_MS); }
+	// T96: --set selftest=late-boot holds the shell's ready mark and the window's first open back (the whole page late)
+	if (t.args.selftest === 'late-boot' && !t.__lateBoot) { t.__lateBoot = true; await t.page.addInitScript(LATE_BOOT, [LATE_BOOT_SHELL_MS, LATE_BOOT_OPEN_MS]); }
+	// T96: every page load stamps when the onboarding window first became ready (see READY_STAMP)
+	if (t.page !== t.__readyStampPage) { t.__readyStampPage = t.page; await t.page.addInitScript(READY_STAMP, OWNER_READY.toString()); }
 	return t.app.open({ sandbox: mode === 'sandbox', onboarding: true, query: 'o55=screen=welcome', settleMs: 1000 });
 };
 // a case runs on its own surface unless --set sandbox picks the other one
@@ -195,11 +199,49 @@ const LATE_READY = (ms) => document.addEventListener('DOMContentLoaded', () => {
 	const orig = ui.open; let first = true; ui.__lateReady = true;
 	ui.open = function (...a) { if (first) { first = false; setTimeout(() => orig.apply(this, a), ms); return undefined; } return orig.apply(this, a); };
 });
+// T96 (TOOLBATCH4 recheck b, finding 5): the bound held only for a window not ready at the first look, and the kit's
+// app.open waits up to 60 s for the shell's own ready mark before any look, so a page that booted late as a whole (the
+// shell 10 s, the window's first open 8 s) was waited out by app.open and passed with no log line. Now an init script on
+// every page load stamps, frame by frame from DOMContentLoaded, the first moment the onboarding window is ready
+// (OWNER_READY) and the moment the shell set data-pmr-ready, and the first look of every loaded page judges the window's
+// ready moment against the same bound, DOMContentLoaded + 140 + 2800 + 2000 ms, whether the window was already ready or
+// not. A page whose ready moment was not stamped fails by name. --set selftest=late-boot holds the shell's ready mark
+// 10 s and the window's first open 8 s (the review's t60-lateall page), and must fail.
+const LATE_BOOT_SHELL_MS = 10000, LATE_BOOT_OPEN_MS = 8000;
+const READY_STAMP = (src) => {
+	const W = window.__rsfBoot = { dcl: null, readyAt: null, shellAt: null };
+	const ready = (0, eval)(`(${src})`), t0 = performance.now();
+	const tick = () => {
+		const now = performance.now();
+		if (W.shellAt === null && document.documentElement && document.documentElement.getAttribute('data-pmr-ready') === '1') W.shellAt = now;
+		try { if (W.readyAt === null && ready()) W.readyAt = now; } catch (_) { /* not yet */ }
+		if (W.readyAt === null && now - t0 < 90000) requestAnimationFrame(tick);
+	};
+	document.addEventListener('DOMContentLoaded', () => { const nav = performance.getEntriesByType('navigation')[0]; W.dcl = nav ? nav.domContentLoadedEventStart : performance.now(); tick(); });
+};
+const LATE_BOOT = ([shellMs, openMs]) => {
+	const html = document.documentElement, sa = Element.prototype.setAttribute, t0 = performance.now();
+	html.setAttribute = function (n, v) { if (n === 'data-pmr-ready' && performance.now() - t0 < shellMs) { const el = this; setTimeout(() => sa.call(el, n, v), shellMs - (performance.now() - t0)); return undefined; } return sa.call(this, n, v); };
+	document.addEventListener('DOMContentLoaded', () => {
+		const ui = window.O55 && window.O55.ui; if (!ui || typeof ui.open !== 'function' || ui.__lateBoot) return;
+		const orig = ui.open; let first = true; ui.__lateBoot = true;
+		ui.open = function (...a) { if (first) { first = false; setTimeout(() => orig.apply(this, a), openMs); return undefined; } return orig.apply(this, a); };
+	});
+};
 const ownerReady = async (t, f, look) => {
 	const at = await f.evaluate((ready) => { const nav = performance.getEntriesByType('navigation')[0], ok = (0, eval)(`(${ready})`)();
-		const r = { now: performance.now(), dcl: nav ? nav.domContentLoadedEventStart : null, seen: !!window.__rsfReadySeen, ok };
+		const r = { now: performance.now(), dcl: nav ? nav.domContentLoadedEventStart : null, seen: !!window.__rsfReadySeen, ok, boot: window.__rsfBoot ? { ...window.__rsfBoot } : null };
 		if (ok) window.__rsfReadySeen = true; return r; }, OWNER_READY.toString()).catch(() => null);
-	if (at && at.ok) return { ok: true };
+	if (at && at.ok) {
+		if (at.seen) return { ok: true };
+		// T96: the first look of a loaded page with the window already ready: when did it become ready?
+		const b = at.boot, limit = READY_BOOT_MS + READY_OPEN_MS + READY_MARGIN_MS;
+		if (!b || b.readyAt === null || !(b.dcl > 0)) { const since = ` (the window's ready moment was not stamped on this page: ${JSON.stringify(b)})`; t.log(`the onboarding window was ready when ${look} was to be applied, but its ready moment is unknown${since}`); return { ok: false, waited: 0, since }; }
+		const after = Math.round(b.readyAt - b.dcl), shell = b.shellAt === null ? null : Math.round(b.shellAt - b.dcl);
+		t.log(`the onboarding window became ready ${after} ms after DOMContentLoaded (the bound: ${READY_BOOT_MS} + ${READY_OPEN_MS} + ${READY_MARGIN_MS} ms); the shell's ready mark ${shell === null ? 'not seen' : shell + ' ms after it'}`);
+		if (after <= limit) return { ok: true };
+		return { ok: false, waited: 0, since: ` (the window was ready when ${look} was to be applied, but it became ready ${after} ms after DOMContentLoaded, past the bound: ${READY_BOOT_MS} + ${READY_OPEN_MS} + ${READY_MARGIN_MS} ms; the shell's ready mark ${shell === null ? 'not seen' : shell + ' ms after it'})` };
+	}
 	const fresh = !!at && !at.seen && at.dcl > 0;
 	const bound = !at ? READY_OPEN_MS + READY_MARGIN_MS : fresh ? at.dcl + READY_BOOT_MS + READY_OPEN_MS + READY_MARGIN_MS - at.now : READY_OPEN_MS + READY_MARGIN_MS;
 	const t0 = Date.now(), ok = await f.waitForFunction(OWNER_READY, null, { timeout: Math.max(1, Math.round(bound)) }).then(() => true, () => false);
