@@ -33,6 +33,22 @@
       } catch (err) {}
     }, true);
 
+    /* FO-96: every icon and More is a button in the tab order (role="button" tabindex="0" and its name in shell.html),
+       as each of the product's other bars puts each of its buttons in the tab order; none of them roves with arrow
+       keys. Enter and Space click the focused one, as they click a native button. A key its own control already took
+       is left alone: More's PMR menu answers Enter, Space and ArrowDown itself (PMR.menu.keys, 41-more.js). Without
+       that menu, ArrowDown opens the shell's own More tray when it is shut. */
+    bar.addEventListener('keydown', function (e) {
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.repeat) return;
+      var icon = e.target;
+      if (!icon || !icon.matches || !icon.matches('#activityBar .icon[data-ab-id]')) return;
+      var down = e.key === 'ArrowDown' && icon.id === 'abMoreBtn';
+      if (e.key !== 'Enter' && e.key !== ' ' && !down) return;
+      e.preventDefault();
+      if (down && document.querySelector('.pm-ab-tray')) return;
+      icon.click();
+    });
+
     document.addEventListener('keydown', function (e) {
       if (!e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) return;
       var n = parseInt(e.key, 10);
@@ -155,6 +171,7 @@
       var g = drag.node.cloneNode(true);               /* ghost is a throwaway clone; the real node moves at drop */
       g.classList.add('pm-ab-ghost');
       g.classList.remove('active');
+      g.removeAttribute('tabindex'); g.removeAttribute('role'); g.setAttribute('aria-hidden', 'true');   /* a picture, not a control */
       var w = drag.fromTray ? moreBtn.getBoundingClientRect().width : drag.node.getBoundingClientRect().width;
       g.style.width = Math.max(32, Math.round(w)) + 'px';
       document.body.appendChild(g);
@@ -264,7 +281,10 @@
       if (svg) ico.appendChild(svg.cloneNode(true));   /* display clone only; the real node stays in the map */
       row.appendChild(ico);
       var label = document.createElement('span');
-      label.textContent = h.node.getAttribute('title') || h.id;
+      /* the hover tags move an icon's title to data-pm-hover-native-title (pm-hover-tags-js), so the row reads its
+         name there, then its hover label or its own name, never a raw id while it has one (FO-96) */
+      label.textContent = h.node.getAttribute('title') || h.node.getAttribute('data-pm-hover-native-title') ||
+        h.node.getAttribute('data-pm-hover-label') || h.node.getAttribute('aria-label') || h.id;
       row.appendChild(label);
       row.addEventListener('click', function (ev) {    /* click = restore to end of visible */
         ev.stopPropagation();

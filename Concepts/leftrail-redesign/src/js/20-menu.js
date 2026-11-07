@@ -146,7 +146,10 @@ function openMenu(def, anchor, opts) {
   if (entry.search && !keyboard) entry.search.focus({ preventScroll: true });
   else if (keyboard) {
     const list = items(entry), sel = list.findIndex(b => b.classList.contains('active'));
-    focusItem(entry, sel >= 0 ? sel : 0);
+    /* FO-96: a menu with no rows (More with nothing hidden says how to hide an icon) takes the focus itself, so its
+       words are read and Escape closes it and gives the focus back */
+    if (list.length) focusItem(entry, sel >= 0 ? sel : 0);
+    else entry.el.focus({ preventScroll: true });
   } else entry.el.focus({ preventScroll: true });
   return entry.el;
 }

@@ -124,7 +124,8 @@ APP_PATCHES = [
     # always lit and did nothing (Jared, 2026-10-14). The markup goes: the shell's handlers look it up and skip a missing
     # icon, a saved bar order drops an id that is not in the bar, and no tour step, shortcut or Settings row names it.
     # The Chat switch above it is lit by the rail's tile while the chat column shows (leftrail-redesign d/40-bar.js).
-    ('<div class="icon" title="Dashboard" id="dashboardToggleIcon" data-ab-id="dashboard"><span class="symbol"><svg'
+    ('<div class="icon" role="button" tabindex="0" aria-label="Home" title="Dashboard" id="dashboardToggleIcon"'
+     ' data-ab-id="dashboard"><span class="symbol"><svg'
      ' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"'
      ' stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect>'
      '<rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16"'

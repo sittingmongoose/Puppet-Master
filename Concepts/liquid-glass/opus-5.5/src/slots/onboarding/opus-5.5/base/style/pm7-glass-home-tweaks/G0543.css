@@ -9,6 +9,10 @@ html[data-theme^="glass"] .activity-bar.collapsed .icon {
   min-width: 0 !important;
   height: auto !important;
   min-height: 0 !important;
+  /* FO-96 (F96b-3, F96b-4): the rail's items keep their own height, as every other look's do, and a short bar scrolls
+     (it already has overflow-y: auto). Shrunk to fit a short window (29.7 px at 1280x500 with the names shown) each
+     name lay over the next item's icon and the first tile stood out above the bar, which cut its top. */
+  flex-shrink: 0 !important;
   padding: 4px 0 !important;
   margin: 0 !important;
   border-radius: 0 !important;
