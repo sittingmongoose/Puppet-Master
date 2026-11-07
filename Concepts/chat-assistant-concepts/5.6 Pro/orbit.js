@@ -701,8 +701,11 @@
     if (p) markPanel(p);
   }, true);
   /* a press on the panel's own scrollbar: the press lands on the panel itself, right of its content box. Any other
-     press ends a drag whose pointerup never came (a scrollbar drag can swallow it) */
-  document.addEventListener('pointerdown', function (e) {
+     press ends a drag whose pointerup never came (a scrollbar drag can swallow it), and every press says which panel,
+     if any, the last press landed in. Added with the plain method, as the keydown listener above is: in PMConcept7 the
+     host scoped it to presses inside the chat, so a press elsewhere on the page left the panel as "the last press" and a
+     later scroll key marked it (round 3, F104-2). It only reads the target and sets these fields. */
+  EventTarget.prototype.addEventListener.call(document, 'pointerdown', function (e) {
     var p = e.target;
     held.drag = false;
     held.press = panelOf(p);

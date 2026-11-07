@@ -14,13 +14,16 @@
 //             Shift+Tab then takes the focus out of the panel (to the core), and the pin stays over the next handover.
 //   click     a real click on the panel's words (not a control) leaves the focus on the page; PageDown then scrolls the
 //             panel and pins it, and three handovers keep its node and scroll (F104-1, opus-recheck-act8).
+//   elsewhere a real click on the panel's words, then one outside the chat on no control, then PageDown with the focus
+//             on the page: the panel does not scroll, a scroll of it with no input does not pin it, and the next
+//             handover changes the subject (round 3, F104-2).
 //   scrollbar a real press on the panel's scrollbar track pages it down and pins it; a handover keeps it (skipped where
 //             scrollbars overlay the content and leave no gutter).
 //   no input  scrollTop set by script, then a clamp (the panel scrolled to its end by script and its last rows taken
 //             out, so the browser clamps scrollTop and fires scroll, as a patch that shortens it would) pin nothing,
 //             and the next handover changes the subject.
 // Fails group 7 c4ba49b137: the first handover replaces the panel (node, scroll and focus lost), and nothing pins.
-//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>   --set only=wheel,keys,click,scrollbar,none
+//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>   --set only=wheel,keys,click,elsewhere,scrollbar,none
 
 // In the app's frame: helpers the steps below read through window.__fo104.
 function install() {
@@ -62,7 +65,22 @@ function install() {
     const hit = document.elementFromPoint(x, y);
     return { x, y, ok: !!(hit && (hit === e || e.contains(hit))), hit: hit ? hit.className || hit.tagName : null };
   };
-  window.__fo104 = { snap, aim, panel, stage, id };
+  // a spot outside the chat (outside .pm56-host where PMConcept7 hosts it, else outside the Working card) where a press
+  // lands on no control: scanned over a grid of the window, the first that qualifies
+  const outside = () => {
+    const ctl = 'button, a[href], input, textarea, select, label, summary, [role="button"], [role="tab"], [role="menuitem"], [tabindex], [contenteditable], [data-action], [draggable="true"], iframe, canvas, video, [class*="resiz"]';
+    const host = document.querySelector('.pm56-host');
+    for (let y = 80; y < innerHeight - 40; y += 37) for (let x = 40; x < innerWidth - 40; x += 53) {
+      const e = document.elementFromPoint(x, y);
+      if (!e || e === document.body || e === document.documentElement) continue;
+      if (host ? e.closest('.pm56-host') : e.closest('.working-card')) continue;
+      if (e.closest(ctl) || e.closest('.orbit-panel-in')) continue;
+      if (getComputedStyle(e).cursor === 'pointer') continue;
+      return { x, y, on: (e.className && String(e.className).slice(0, 40)) || e.tagName.toLowerCase(), hosted: !!host };
+    }
+    return null;
+  };
+  window.__fo104 = { snap, aim, panel, stage, id, outside };
   return true;
 }
 
@@ -222,6 +240,32 @@ async function scrollbarCase(t, f, where) {
   await f.waitForTimeout(300);
 }
 
+// a press elsewhere ends "the last press": click the panel's words, then a spot outside the chat that is no control, then
+// PageDown with the focus on the page; a scroll of the panel with no input in the next 700 ms must not pin it (round 3,
+// F104-2: on Home the host scoped orbit.js's pointerdown listener to the chat, so the outside press left the mark)
+async function elsewhereCase(t, f, where) {
+  const tag = `${where} press elsewhere`;
+  const s0 = await freshWindow(t, f, tag);
+  const a = await f.evaluate(() => window.__fo104.aim('.orbit-panel-title'));
+  const o = await f.evaluate(() => window.__fo104.outside());
+  await t.check(`${tag}: a spot outside the chat that is no control, and the panel's words`, !!(a && a.ok && o), JSON.stringify({ title: a, outside: o }), { hard: true });
+  await t.page.mouse.click(OFF.x + a.x, OFF.y + a.y);
+  await t.page.mouse.click(OFF.x + o.x, OFF.y + o.y);
+  const focus = await f.evaluate(() => { const e = document.activeElement; return !e || e === document.body || e === document.documentElement ? 'page' : (e.getAttribute('data-k') || e.className || e.tagName.toLowerCase()); });
+  await t.page.keyboard.press('PageDown');
+  const r = await f.evaluate(async () => {
+    const p = window.__fo104.panel(), fr = () => new Promise((res) => requestAnimationFrame(() => res()));
+    const after = p.scrollTop;
+    p.scrollTop = 14; await fr(); await fr(); await fr();
+    return { keyScrolled: after, scriptTop: p.scrollTop, pinned: window.__fo104.snap().pinned };
+  });
+  await t.check(`${tag}: after a press outside the chat, PageDown does not scroll the panel and a scroll with no input does not pin it`,
+    focus === 'page' && r.keyScrolled === 0 && r.scriptTop > 0 && !r.pinned, JSON.stringify({ focus, outside: o.on, ...r, uid: s0.uid }));
+  const s = await f.evaluate(() => window.__fo104.snap());
+  const n = await nextHandover(f, s, tag);
+  await t.check(`${tag}: the next handover changes the subject`, n.uid !== s.uid && !n.pinned, `${s.uid} -> ${n.uid}`);
+}
+
 async function noInputCase(t, f, where) {
   const tag = `${where} no input`;
   const s0 = await freshWindow(t, f, tag);
@@ -252,10 +296,11 @@ async function run(t, f, where) {
   OFF = await frameOffset(t, f);
   const s = await f.evaluate(() => window.__fo104.snap());
   await t.check(`${where}: a live Working card with the Orbit panel`, !!s, JSON.stringify(s), { hard: true });
-  const only = list(t.args.only, ['wheel', 'keys', 'click', 'scrollbar', 'none']);
+  const only = list(t.args.only, ['wheel', 'keys', 'click', 'elsewhere', 'scrollbar', 'none']);
   if (only.includes('wheel')) await wheelCase(t, f, where);
   if (only.includes('keys')) await keysCase(t, f, where);
   if (only.includes('click')) await clickKeysCase(t, f, where);
+  if (only.includes('elsewhere')) await elsewhereCase(t, f, where);
   if (only.includes('scrollbar')) await scrollbarCase(t, f, where);
   if (only.includes('none')) await noInputCase(t, f, where);
 }
