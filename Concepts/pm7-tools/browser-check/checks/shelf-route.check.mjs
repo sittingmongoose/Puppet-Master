@@ -678,6 +678,7 @@ export default async function (t) {
           if (mark) return out.filter(x => x.e.checkVisibility()).map((x, j) => { x.e.setAttribute('data-shelf-fold-ctl', `${tag}:${j}`); return { j, kind: x.kind, sig: x.sig || null, what: name(x.e) }; });
           return [...document.querySelectorAll(`[data-shelf-fold-ctl^="${tag}:"]`)].map(e => ({ j: +e.getAttribute('data-shelf-fold-ctl').split(':')[1], shown: e.isConnected && e.checkVisibility() }));
         }, [i, tag, mark]);
+        let done = 0;
         for (const fo of folds) {
           const tag = String(foldedRegions.length), ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), before = await censusIn(fo.i, tag, true), fp = await reach(ctl);
           await t.page.mouse.click(off.x + fp.x, off.y + fp.y);
@@ -687,10 +688,21 @@ export default async function (t) {
           const after = new Map((await censusIn(fo.i, tag, false)).map(x => [x.j, x.shown])), hid = before.filter(x => !after.get(x.j));
           await panel.evaluate((p, [i, tag]) => { p.querySelector(`[data-shelf-fold-region="${i}"]`)?.setAttribute('data-shelf-folded', tag);
             p.querySelector(`[data-shelf-fold="${i}"]`)?.setAttribute('data-shelf-fold-of', tag); }, [fo.i, tag]);
-          foldedRegions.push({ tag, label: fo.label, region: fo.region, state, for: why.what, hid, folded: true });
+          const fr = { tag, label: fo.label, region: fo.region, state, for: why.what, hid, folded: true };
+          foldedRegions.push(fr);
+          t.log(`${target} ${state}: room for ${why.what} (covered by ${why.coverOf}, ${why.hits} of 5 points on top): folded ${fo.label} (${fo.region}); it hid ${hid.length} census control(s)`);
+          // T98: a fold that hides the control it made room for (the Jujutsu card's own fold, when Technical details in
+          // the card is what is covered) gives no room: it is undone at once, and the room is not counted
+          await f.waitForTimeout(300);
+          if (!await f.evaluate(() => { const c = document.querySelector('[data-shelf-covered]'); return !!c && c.isConnected && c.checkVisibility(); })) {
+            t.log(`${target} ${state}: that fold hid ${why.what} itself, so it is undone`);
+            await unfold(fr, `${state} (a fold that hid the control it made room for)`);
+            done--;
+          }
+          done++;
         }
-        if (folds.length) await f.waitForTimeout(500);
-        return folds.length;
+        if (done) await f.waitForTimeout(500);
+        return done;
       } finally { folding = false; }
     };
     // Every popup trigger the panel shows (PMMenu wrappers and the rail skin's own), by mouse, Enter, Space and ArrowDown.
