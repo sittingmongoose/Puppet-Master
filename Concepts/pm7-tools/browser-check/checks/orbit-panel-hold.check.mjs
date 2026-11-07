@@ -28,11 +28,12 @@ function install() {
   const id = (e) => { if (!e) return 0; if (!ids.map.has(e)) ids.map.set(e, ++ids.n); return ids.map.get(e); };
   const stage = () => document.querySelector('.working-card:not(.is-done) .orbit-stage.is-open');
   const panel = () => { const s = stage(); return s && s.querySelector('.orbit-panel-in'); };
-  // what the reader sees at the panel's top: the first keyed element below its top edge and its offset there. A pinned
-  // panel keeps it even where the browser's scroll anchoring moves scrollTop (rows above the view grow as they stream)
+  // what the reader sees at the panel's top: the first keyed element that starts inside the view (not a section that
+  // straddles its top edge, whose own offset would hide a change inside it), and its offset there. A pinned panel
+  // keeps it even where the browser's scroll anchoring moves scrollTop (rows above the view grow as they stream)
   const viewOf = (p) => {
-    const top = p.getBoundingClientRect().top + p.clientTop;
-    for (const e of p.querySelectorAll('[data-k]')) { const r = e.getBoundingClientRect(); if (r.height > 0 && r.bottom > top + 1) return { k: e.getAttribute('data-k'), dy: Math.round(r.top - top) }; }
+    const top = p.getBoundingClientRect().top + p.clientTop, end = top + p.clientHeight;
+    for (const e of p.querySelectorAll('[data-k]')) { const r = e.getBoundingClientRect(); if (r.height > 0 && r.top >= top - 0.5 && r.top < end) return { k: e.getAttribute('data-k'), dy: Math.round(r.top - top) }; }
     return null;
   };
   const snap = () => {
