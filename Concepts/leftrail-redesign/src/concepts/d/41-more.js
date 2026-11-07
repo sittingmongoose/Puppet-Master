@@ -111,6 +111,9 @@ function lfMountMore() {
     const opts = { width: 220, context: true, onPick: it => { d.run(it._act); } };
     const el = d.keyboard ? PMR.menu.open(menu, icon, Object.assign({ side: true, keyboard: true }, opts))
       : PMR.menu.at(menu, d.x, d.y, Object.assign({ keyboard: false }, opts));
+    /* the Menu key's own contextmenu comes on its keyup in Windows Chrome, to the row that now holds the focus: the menu
+       takes it, so the browser's menu never opens over this one (round 2) */
+    if (el) el.addEventListener('contextmenu', ev => ev.preventDefault());
     return !!el;
   };
   AB.drawMenu = drawMenu;

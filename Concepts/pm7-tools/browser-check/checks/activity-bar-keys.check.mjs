@@ -165,7 +165,9 @@ function moreState() {
 }
 
 // FO-98: what each icon's open state is, read from what a person sees: a panel icon's view on screen (its .active and a
-// box of its own), the chat column shown for Chat; set beside it, the icon's aria-expanded, aria-controls, lit state and
+// box of its own); for Chat, the chat itself on screen: shown, at least 120 px wide and inside the window, with its
+// folded strip ("Open the chat") not shown (round 2, K-act8-1: the strip was counted as open, so a Chat reading
+// expanded while the chat was folded passed); set beside it, the icon's aria-expanded, aria-controls, lit state and
 // whether a menu marked it.
 function openTruth() {
   const out = {};
@@ -177,7 +179,8 @@ function openTruth() {
     if (view) { const r = view.getBoundingClientRect(); open = view.classList.contains('active') && r.width > 1 && r.height > 1; want = tg; }
     else if (k === 'chat') {
       const c = document.getElementById('chatPanel'), r = c && c.getBoundingClientRect(), strip = document.getElementById('pmw-chat-strip');
-      open = !!c && ((!c.classList.contains('hidden') && r.width > 1) || !!(strip && !strip.hidden && strip.getClientRects().length)); want = 'chatPanel';
+      const folded = !!(strip && !strip.hidden && strip.getClientRects().length);
+      open = !!c && !c.classList.contains('hidden') && !folded && r.width >= 120 && r.right > 0 && r.left < innerWidth; want = 'chatPanel';
     }
     out[k] = { open, want, expanded: ic.getAttribute('aria-expanded'), controls: ic.getAttribute('aria-controls'), lit: ic.classList.contains('active'), menuMark: ic.classList.contains('is-menu-open') };
   }
@@ -236,9 +239,33 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
     if (folded) { await kb.press('Escape'); await agree(label + ', its overlay shut by Escape', s => s.files.expanded === 'false' && s.files.lit); }
   };
   await filesBack('after Enter opens Files again');
+  // the same by real mouse clicks (round 2, K-act8-3)
+  const clickIcon = async (ic) => { const b = await f.locator(`#activityBar > .icon[data-ab-id="${ic}"]`).boundingBox(); if (!b) return false; await t.page.mouse.click(off.x + b.x + b.width / 2, off.y + b.y + b.height / 2); await rest(); return true; };
+  if (await clickIcon('search')) await agree('after a click opens Search', s => s.search.expanded === 'true');
+  if (await clickIcon('files')) await agree('after a click opens Files', s => s.files.expanded === 'true');
+  if (folded && await reach('files')) { await kb.press('Escape'); await agree('Files\' overlay shut by Escape again', s => s.files.expanded === 'false'); }
   if (full && await reach('chat')) {
     await kb.press('Enter'); await f.waitForTimeout(900); await agree('after Enter switches the chat column');
     await kb.press(' '); await f.waitForTimeout(900); await agree('after Space switches it back');
+  }
+  // the chat folded to its strip ("Open the chat"): Chat is not expanded; Enter on it opens the chat over the centre,
+  // which expands it, and Escape folds it back (round 2, F98-1)
+  const stripOn = () => f.evaluate(() => { const b = document.getElementById('pmw-chat-strip'); return !!(b && !b.hidden && b.getClientRects().length); });
+  const peeking = () => f.evaluate(() => !!document.querySelector('.main-area')?.hasAttribute('data-pmw-chat-peek'));
+  if (await peeking() && await reach('chat')) { await kb.press('Escape'); await f.waitForTimeout(500); }
+  if (await stripOn()) {
+    await agree('the chat folded to its strip', s => s.chat.expanded === 'false' && s.chat.lit);
+    if (await reach('chat')) { await kb.press('Enter'); await f.waitForTimeout(700); }
+    await agree('after Enter opens the chat over the centre', s => s.chat.expanded === 'true');
+    await kb.press('Escape'); await f.waitForTimeout(700);
+    await agree('after Escape folds the chat back to its strip', s => s.chat.expanded === 'false');
+  } else t.log(`${at} FO-98: the chat is not folded to its strip at this size`);
+  // across the fold in one session (round 2, K-act8-3): the state is read again after the window narrows and widens
+  if (full) {
+    await t.viewport(740, 900); await f.waitForTimeout(1200);
+    await agree('the same session narrowed to 740x900');
+    await t.viewport(1920, 1100); await f.waitForTimeout(1200);
+    await agree('the same session back at 1920x1100', s => s.files.expanded === 'true');
   }
   if (!full && at !== '740x900') return;
 
@@ -275,9 +302,14 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   if (await reach(k)) { await kb.press('Alt+ArrowDown'); await settle(); }
   order = await f.evaluate(barOrder);
   await t.check(`${at} FO-98 ${k}: back at its own place`, order.join() === order0.join(), order.join());
-  // hide by the Menu key, then back from More, then back to its place
+  // hide by the Menu key, then back from More, then back to its place. Windows Chrome sends the Menu key's own
+  // contextmenu on its keyup, to the menu row that has the focus by then: it must arrive cancelled (round 2, K-act8-4)
+  await f.evaluate(() => { window.__fo98ctx = []; if (!window.__fo98ctxOn) { window.__fo98ctxOn = true; window.addEventListener('contextmenu', (e) => { window.__fo98ctx.push({ prevented: e.defaultPrevented, on: String((e.target && e.target.className) || (e.target && e.target.tagName) || '').slice(0, 40) }); }); } });
   reached = await reach(k);
-  if (reached) { await kb.press('ContextMenu'); await menuUp(); }
+  if (reached) { await kb.press('ContextMenu'); await menuUp(); await f.waitForTimeout(150); }
+  const ctxSeen = await f.evaluate(() => window.__fo98ctx.slice());
+  t.log(`${at} FO-98: contextmenu events after the Menu key: ${JSON.stringify(ctxSeen)}`);
+  await t.check(`${at} FO-98 ${k}: no contextmenu event from the Menu key reaches the page uncancelled`, ctxSeen.every((e) => e.prevented), JSON.stringify(ctxSeen));
   m = await f.evaluate(iconMenu);
   if (m.open) { await kb.press('End'); await kb.press('Enter'); await menuGone(); await settle(); await f.waitForTimeout(120); }
   order = await f.evaluate(barOrder); foc = await key(); said = await live();

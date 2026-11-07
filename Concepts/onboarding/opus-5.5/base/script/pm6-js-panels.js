@@ -51,8 +51,10 @@
 
     /* FO-98: each icon says whether what it opens is open, as the chat's own Activity strip does (aria-expanded and
        aria-controls on each .activity-item). A panel icon (data-target) is expanded while its view is the side panel's
-       active view and that view is on screen; Chat, while its .active says the chat column is shown (the chat's owner
-       keeps it in step with the column: home 46-chat.js syncRailEntry, else the legacy toggle). Several owners open and
+       active view and that view is on screen; Chat, while the chat is on screen: Home's PMW.chatCol.isOpen() (shown,
+       and docked, popped out or opened over the centre; folded to its strip it is not, and the strip's own button
+       says "Open the chat", as the folded rail's overlay is not open while its icon stays lit; round 2, F98-1), else
+       its .active (the legacy toggle keeps it in step with the column). Several owners open and
        close panels (the legacy rail toggle in script-038, Cozy Shelves' cozeSwitchPanel, Home's folded-rail overlay in
        44-narrow.js, and the media rule that hides the slot below 1180 px), so the state is read from what reaches the
        screen: the view's .active and whether it is displayed, once per frame after any of them changes it (the read
@@ -67,7 +69,8 @@
         var target = icon.getAttribute('data-target'), view = target ? byId(target) : null;
         var chat = !view && icon.getAttribute('data-ab-id') === 'chat';
         if (!view && !chat) return;
-        var open = view ? view.classList.contains('active') && shown(view) : icon.classList.contains('active');
+        var col = chat && window.PMW && window.PMW.chatCol && typeof window.PMW.chatCol.isOpen === 'function' ? window.PMW.chatCol : null;
+        var open = view ? view.classList.contains('active') && shown(view) : col ? !!col.isOpen() : icon.classList.contains('active');
         var controls = view ? target : 'chatPanel', v = open ? 'true' : 'false';
         if (icon.getAttribute('aria-controls') !== controls) icon.setAttribute('aria-controls', controls);
         if (icon.getAttribute('aria-expanded') !== v) icon.setAttribute('aria-expanded', v);
@@ -83,7 +86,9 @@
         $all('.side-panel-view', slot).forEach(function (v) { openMo.observe(v, { attributes: true, attributeFilter: ['class'] }); });
       }
       var area = bar.closest ? bar.closest('.main-area') : null;
-      if (area) openMo.observe(area, { attributes: true, attributeFilter: ['data-pmw-rail', 'data-pmw-rail-peek'] });
+      if (area) openMo.observe(area, { attributes: true, attributeFilter: ['data-pmw-rail', 'data-pmw-rail-peek', 'data-pmw-chat', 'data-pmw-chat-peek', 'data-pmw-chat-float'] });
+      var chatCol = byId('chatPanel');
+      if (chatCol) openMo.observe(chatCol, { attributes: true, attributeFilter: ['class'] });
     }
     window.addEventListener('resize', queueOpenState);
     queueOpenState();
@@ -384,6 +389,8 @@
         if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); closeCtx(node); return; }
         if (ev.key === 'Tab') closeCtx(node);   /* back on the icon first, so Tab goes on from there */
       });
+      /* the Menu key's own contextmenu comes on its keyup in Windows Chrome, to the row that now holds the focus */
+      m.addEventListener('contextmenu', function (ev) { ev.preventDefault(); });
       document.body.appendChild(m);
       var r = node.getBoundingClientRect();
       var x = d.keyboard || d.x == null ? r.right + 8 : d.x, y = d.keyboard || d.y == null ? r.top : d.y;
