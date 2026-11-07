@@ -1456,7 +1456,7 @@
      mouse-focused icon with no focusin), and, while the lens travels to the focused icon or fades in on it, once more
      when that motion ends, so the mark never sits on the item the focus has left (F96b-2). "Painted" is read from the
      computed opacity, not from display: the lens is hidden by opacity. */
-  var railFocusQ = 0, railAwaited = typeof WeakSet === 'function' ? new WeakSet() : null;
+  var railFocusQ = 0, railAwaited = typeof WeakSet === 'function' ? new WeakSet() : null, railDueAnim = null, railDueT = 0, railDueTries = 0;
   function railLensAt(lens, icon) {
     var s = icon.querySelector('.symbol') || icon, a = lens.getBoundingClientRect(), b = s.getBoundingClientRect();
     return Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 2 && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 2;
@@ -1483,11 +1483,24 @@
     document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]').forEach(function (x) { if (!on || !L || x !== L.lens) x.removeAttribute('data-lg-focus'); });
     if (on && L && L.lens) L.lens.setAttribute('data-lg-focus', '');
     if (on && !cur.hasAttribute('data-lg-focus')) cur.setAttribute('data-lg-focus', '');
-    /* the lens is on its way to the focused icon, or fading in on it: look again when its own motion ends (travel(),
-       a ride on its strip's entrance, an arrival or reduced-motion fade: every move of the lens that is not a jump is
-       one of its Web Animations), in that frame, before it paints. No poll (F96c-3): a lens at rest somewhere else
-       waits for a strip sync to move it, and syncStripNow queues this itself; an endless animation (a step look's hop
-       hide, never in Glass) is not waited on, and the icon keeps its own mark meanwhile. */
+    /* the lens is on its way to the focused icon, or fading in on it. No poll (F96c-3). A travel() records its path
+       (L.path): one timer to the frame from which that path keeps the lens within the 2 px of the icon, as its spring's
+       last wobble takes another 60-100 ms to end; the frame's clock and the path's can be a frame apart, so a read there
+       that finds the lens still short looks again on each of at most three frames. Otherwise, and as the fallback, look
+       again when the lens's own motion ends (travel(), a ride on its strip's entrance, an arrival or reduced-motion fade:
+       every move of the lens that is not a jump is one of its Web Animations), in that frame, before it paints. A lens at
+       rest somewhere else waits for a strip sync to move it, and syncStripNow queues this itself; an endless animation (a
+       step look's hop hide, never in Glass) is not waited on, and the icon keeps its own mark meanwhile. */
+    var an = wait ? L.anim : null, T = an && L.path;
+    if (T && T.rects && T.rects.length && L.rect) {
+      if (an !== railDueAnim) {
+        var cx = L.rect.x + L.rect.w / 2, cy = L.rect.y + L.rect.h / 2, k = T.rects.length, q;
+        while (k > 0 && (q = T.rects[k - 1]) && Math.abs(q.x + q.w / 2 - cx) <= 1.5 && Math.abs(q.y + q.h / 2 - cy) <= 1.5) k--;
+        var due = k < T.rects.length ? T.rects[k].t : T.dur, ct = an.currentTime;
+        railDueAnim = an; railDueTries = 0; clearTimeout(railDueT);
+        railDueT = setTimeout(function () { railDueT = 0; queueRailFocus(); }, Math.max(0, due - (ct == null ? -17 : ct)));
+      } else if (!railDueT && railDueTries < 3) { railDueTries++; queueRailFocus(); }
+    }
     if (wait && L.lens.getAnimations) L.lens.getAnimations().forEach(function (a) {
       if (a.playState === 'finished' || (railAwaited && railAwaited.has(a))) return;
       var end = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming().endTime : Infinity;
