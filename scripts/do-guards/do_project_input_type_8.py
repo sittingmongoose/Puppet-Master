@@ -6,14 +6,14 @@ these rows; `scripts/pm-orchestrator-guard-proof.py generate` writes it and `che
 """
 import pm_guard_isolation as g
 
-CONTEXT_FIELDS = {'files', 'operations', 'sender_node', 'related_message_ids'}
+CONTEXT_FIELDS = ('files', 'operations', 'sender_node', 'related_message_ids')
 
 
 def project_context_files_items(value, context):
     if value['project_shape_valid'] is not True:
         return None
     found = value['message']['context']
-    if type(found) is not dict or set(found.keys()) != CONTEXT_FIELDS or type(found['files']) is not list:
+    if type(found) is not dict or set(found.keys()) != set(CONTEXT_FIELDS) or type(found['files']) is not list:
         return None
     for item in found['files']:
         if type(item) is not str:
@@ -25,7 +25,7 @@ def project_context_operations_type(value, context):
     if value['project_shape_valid'] is not True:
         return None
     found = value['message']['context']
-    if type(found) is not dict or set(found.keys()) != CONTEXT_FIELDS:
+    if type(found) is not dict or set(found.keys()) != set(CONTEXT_FIELDS):
         return None
     return 'project_original_input_type' if type(found['operations']) is not list else None
 
@@ -34,7 +34,7 @@ def project_context_operations_items(value, context):
     if value['project_shape_valid'] is not True:
         return None
     found = value['message']['context']
-    if type(found) is not dict or set(found.keys()) != CONTEXT_FIELDS or type(found['operations']) is not list:
+    if type(found) is not dict or set(found.keys()) != set(CONTEXT_FIELDS) or type(found['operations']) is not list:
         return None
     for item in found['operations']:
         if type(item) is not str:
@@ -46,7 +46,7 @@ def project_context_related_message_ids_type(value, context):
     if value['project_shape_valid'] is not True:
         return None
     found = value['message']['context']
-    if type(found) is not dict or set(found.keys()) != CONTEXT_FIELDS:
+    if type(found) is not dict or set(found.keys()) != set(CONTEXT_FIELDS):
         return None
     return 'project_original_input_type' if type(found['related_message_ids']) is not list else None
 
@@ -55,7 +55,7 @@ def project_context_related_message_ids_items(value, context):
     if value['project_shape_valid'] is not True:
         return None
     found = value['message']['context']
-    if type(found) is not dict or set(found.keys()) != CONTEXT_FIELDS or type(found['related_message_ids']) is not list:
+    if type(found) is not dict or set(found.keys()) != set(CONTEXT_FIELDS) or type(found['related_message_ids']) is not list:
         return None
     for item in found['related_message_ids']:
         if type(item) is not str:

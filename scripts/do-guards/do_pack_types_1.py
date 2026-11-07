@@ -6,12 +6,12 @@ these rows; `scripts/pm-orchestrator-guard-proof.py generate` writes it and `che
 """
 import pm_guard_isolation as g
 
-PACK_MEMBERS = {'blake3_id', 'byte_size', 'media_type', 'value', 'bytes_durable', 'index_durable'}
+PACK_MEMBERS = ('blake3_id', 'byte_size', 'media_type', 'value', 'bytes_durable', 'index_durable')
 
 
 def pack_type_byte_size(value, context):
     entry = value['entry']
-    if type(entry) is not dict or set(entry.keys()) != PACK_MEMBERS:
+    if type(entry) is not dict or set(entry.keys()) != set(PACK_MEMBERS):
         return None
     size = entry['byte_size']
     return 'payload_pack_types' if not (type(size) is int or (type(size) is float and size % 1 == 0)) else None
@@ -19,28 +19,28 @@ def pack_type_byte_size(value, context):
 
 def pack_type_bytes_durable(value, context):
     entry = value['entry']
-    if type(entry) is not dict or set(entry.keys()) != PACK_MEMBERS:
+    if type(entry) is not dict or set(entry.keys()) != set(PACK_MEMBERS):
         return None
     return 'payload_pack_types' if type(entry['bytes_durable']) is not bool else None
 
 
 def pack_type_index_durable(value, context):
     entry = value['entry']
-    if type(entry) is not dict or set(entry.keys()) != PACK_MEMBERS:
+    if type(entry) is not dict or set(entry.keys()) != set(PACK_MEMBERS):
         return None
     return 'payload_pack_types' if type(entry['index_durable']) is not bool else None
 
 
 def pack_type_msgpack_value(value, context):
     entry = value['entry']
-    if type(entry) is not dict or set(entry.keys()) != PACK_MEMBERS or entry['media_type'] != 'application/msgpack':
+    if type(entry) is not dict or set(entry.keys()) != set(PACK_MEMBERS) or entry['media_type'] != 'application/msgpack':
         return None
     return 'payload_pack_types' if type(entry['value']) is not dict else None
 
 
 def pack_type_text_value(value, context):
     entry = value['entry']
-    if type(entry) is not dict or set(entry.keys()) != PACK_MEMBERS or entry['media_type'] != 'text/plain; charset=utf-8':
+    if type(entry) is not dict or set(entry.keys()) != set(PACK_MEMBERS) or entry['media_type'] != 'text/plain; charset=utf-8':
         return None
     return 'payload_pack_types' if type(entry['value']) is not str else None
 

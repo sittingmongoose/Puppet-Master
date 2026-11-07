@@ -25,7 +25,7 @@ def project_ref_identifier_value(value, context):
     if ref is None:
         return None
     ident = ref['blake3_id']
-    well_formed = len(ident) == 71 and ident.startswith('blake3:') and all(ch in HEX for ch in ident[7:])
+    well_formed = len(ident) == 71 and ident.startswith('blake3:') and all(ch in HEX for ch in ident.replace('blake3:', '', 1))
     return 'project_original_input_value' if not well_formed else None
 
 

@@ -6,7 +6,7 @@ these rows; `scripts/pm-orchestrator-guard-proof.py generate` writes it and `che
 """
 import pm_guard_isolation as g
 
-CONTEXT_FIELDS = {'files', 'operations', 'sender_node', 'related_message_ids'}
+CONTEXT_FIELDS = ('files', 'operations', 'sender_node', 'related_message_ids')
 
 
 def project_message_resolved_type(value, context):
@@ -33,14 +33,14 @@ def project_context_members(value, context):
     found = value['message']['context']
     if type(found) is not dict:
         return None
-    return 'project_original_input_type' if set(found.keys()) != CONTEXT_FIELDS else None
+    return 'project_original_input_type' if set(found.keys()) != set(CONTEXT_FIELDS) else None
 
 
 def project_context_sender_node(value, context):
     if value['project_shape_valid'] is not True:
         return None
     found = value['message']['context']
-    if type(found) is not dict or set(found.keys()) != CONTEXT_FIELDS:
+    if type(found) is not dict or set(found.keys()) != set(CONTEXT_FIELDS):
         return None
     node = found['sender_node']
     return 'project_original_input_type' if node is not None and type(node) is not str else None
@@ -50,7 +50,7 @@ def project_context_files_type(value, context):
     if value['project_shape_valid'] is not True:
         return None
     found = value['message']['context']
-    if type(found) is not dict or set(found.keys()) != CONTEXT_FIELDS:
+    if type(found) is not dict or set(found.keys()) != set(CONTEXT_FIELDS):
         return None
     return 'project_original_input_type' if type(found['files']) is not list else None
 

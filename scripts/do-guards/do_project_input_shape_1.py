@@ -6,11 +6,8 @@ these rows; `scripts/pm-orchestrator-guard-proof.py generate` writes it and `che
 """
 import pm_guard_isolation as g
 
-PROJECT_SOURCE_FIELDS = {'scope', 'storage_instance_id', 'server_id', 'thread_id', 'crew_id', 'run_id', 'operation_id',
-                         'project_id', 'edition', 'interface', 'message_schema', 'message_ids', 'original_input'}
-PROJECT_MESSAGE_FIELDS = {'message_id', 'from_agent_id', 'from_platform', 'to_agent_id', 'to_agent_type', 'to_node_id',
-                          'to_lane_id', 'message_type', 'priority', 'subject', 'content', 'content_ref', 'context',
-                          'thread_id', 'in_reply_to', 'created_at', 'read_by', 'resolved'}
+PROJECT_SOURCE_FIELDS = ('scope', 'storage_instance_id', 'server_id', 'thread_id', 'crew_id', 'run_id', 'operation_id', 'project_id', 'edition', 'interface', 'message_schema', 'message_ids', 'original_input')
+PROJECT_MESSAGE_FIELDS = ('message_id', 'from_agent_id', 'from_platform', 'to_agent_id', 'to_agent_type', 'to_node_id', 'to_lane_id', 'message_type', 'priority', 'subject', 'content', 'content_ref', 'context', 'thread_id', 'in_reply_to', 'created_at', 'read_by', 'resolved')
 
 
 def project_source_object(value, context):
@@ -21,7 +18,7 @@ def project_source_members(value, context):
     source = value['source']
     if type(source) is not dict:
         return None
-    return 'project_original_input_shape' if set(source.keys()) != PROJECT_SOURCE_FIELDS else None
+    return 'project_original_input_shape' if set(source.keys()) != set(PROJECT_SOURCE_FIELDS) else None
 
 
 def project_message_object(value, context):
@@ -34,7 +31,7 @@ def project_message_members(value, context):
     message = value['message']
     if type(value['source']) is not dict or type(message) is not dict:
         return None
-    return 'project_original_input_shape' if set(message.keys()) != PROJECT_MESSAGE_FIELDS else None
+    return 'project_original_input_shape' if set(message.keys()) != set(PROJECT_MESSAGE_FIELDS) else None
 
 
 ROWS = (

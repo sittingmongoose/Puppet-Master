@@ -6,14 +6,14 @@ these rows; `scripts/pm-orchestrator-guard-proof.py generate` writes it and `che
 """
 import pm_guard_isolation as g
 
-PACK_MEMBERS = {'blake3_id', 'byte_size', 'media_type', 'value', 'bytes_durable', 'index_durable'}
+PACK_MEMBERS = ('blake3_id', 'byte_size', 'media_type', 'value', 'bytes_durable', 'index_durable')
 
 HEX = '0123456789abcdef'
 
 
 def pack_media_type(value, context):
     entry = value['entry']
-    if type(entry) is not dict or set(entry.keys()) != PACK_MEMBERS:
+    if type(entry) is not dict or set(entry.keys()) != set(PACK_MEMBERS):
         return None
     media = entry['media_type']
     allowed = media == 'application/msgpack' or media == 'text/plain; charset=utf-8'
@@ -22,19 +22,19 @@ def pack_media_type(value, context):
 
 def pack_identifier_string(value, context):
     entry = value['entry']
-    if type(entry) is not dict or set(entry.keys()) != PACK_MEMBERS:
+    if type(entry) is not dict or set(entry.keys()) != set(PACK_MEMBERS):
         return None
     return 'payload_pack_identifier' if type(entry['blake3_id']) is not str else None
 
 
 def pack_identifier_form(value, context):
     entry = value['entry']
-    if type(entry) is not dict or set(entry.keys()) != PACK_MEMBERS:
+    if type(entry) is not dict or set(entry.keys()) != set(PACK_MEMBERS):
         return None
     ident = entry['blake3_id']
     if type(ident) is not str:
         return None
-    well_formed = len(ident) == 71 and ident.startswith('blake3:') and all(ch in HEX for ch in ident[7:])
+    well_formed = len(ident) == 71 and ident.startswith('blake3:') and all(ch in HEX for ch in ident.replace('blake3:', '', 1))
     return 'payload_pack_identifier' if not well_formed else None
 
 

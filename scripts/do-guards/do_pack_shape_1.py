@@ -6,7 +6,7 @@ these rows; `scripts/pm-orchestrator-guard-proof.py generate` writes it and `che
 """
 import pm_guard_isolation as g
 
-PACK_MEMBERS = {'blake3_id', 'byte_size', 'media_type', 'value', 'bytes_durable', 'index_durable'}
+PACK_MEMBERS = ('blake3_id', 'byte_size', 'media_type', 'value', 'bytes_durable', 'index_durable')
 
 
 def pack_shape_object(value, context):
@@ -17,7 +17,7 @@ def pack_shape_members(value, context):
     entry = value['entry']
     if type(entry) is not dict:
         return None
-    return 'payload_pack_shape' if set(entry.keys()) != PACK_MEMBERS else None
+    return 'payload_pack_shape' if set(entry.keys()) != set(PACK_MEMBERS) else None
 
 
 ROWS = (

@@ -14,6 +14,7 @@ unusable (3.1 s per evaluation on one DO checkpoint case). The full-table matrix
 across suites. Number-domain rows (NUMRULE, sweep part 2B) are tabled but not proved here.
 """
 import argparse
+import collections
 import copy
 import hashlib
 import json
@@ -248,9 +249,9 @@ def append_inputs(fixtures):
             neg('P2A:parent_run_id', case, lambda c: resync_inline(c) if c['logical_payload'].update(
                 parent_run_id=c['logical_payload']['parent_run_id'] + '-foreign') is None else c)
             neg('P2A:transition', case, lambda c: c['producer_context'].update(permission_current=False))
-    for test in fixtures['context_type_cases']:
+    for index, test in enumerate(fixtures['context_type_cases']):
         if test['domain'] == 'phase':
-            neg('ctx:' + str(test.get('name', '')), by_id[test['case_id']], lambda c, x=test['context']: c.update(producer_context=copy.deepcopy(x)),
+            neg('ctx:' + str(index), by_id[test['case_id']], lambda c, x=test['context']: c.update(producer_context=copy.deepcopy(x)),
                 ['phase_context_type'])
     view = lambda pair: oracles.append_full_view(pair[0], pair[1], contracts.identity, contracts.retry_allowed, root, formats)
     return [(cid, (case, schema)) for cid, case in controls], negatives, view
@@ -868,6 +869,18 @@ def matrix_errors(fixtures=None):
 
 # ---- Matrix ------------------------------------------------------------------------------------------------------
 
+def unique_inputs(inputs):
+    """The boundary's inputs with every case id unique: a repeated fixture name gets a '#n' suffix."""
+    controls, negatives, view_of = inputs
+    seen = collections.Counter()
+    def fresh(case_id):
+        seen[case_id] += 1
+        return case_id if seen[case_id] == 1 else case_id + '#' + str(seen[case_id])
+    controls = [(fresh(cid), case) for cid, case in controls]
+    negatives = [(fresh(nid),) + tuple(rest) for nid, *rest in negatives]
+    return controls, negatives, view_of
+
+
 def all_rows(tables):
     return [row for _, rows in tables for row in rows]
 
@@ -876,10 +889,13 @@ def boundary_matrix(name, fixtures):
     tables_of, inputs_of = BOUNDARIES[name]
     tables = tables_of()
     rows = all_rows(tables)
-    controls, negatives, view_of = inputs_of(fixtures)
+    controls, negatives, view_of = unique_inputs(inputs_of(fixtures))
     result = {'boundary': name, 'rows': [r[0] for r in rows], 'controls': [], 'negatives': [], 'errors': []}
     names = [r[0] for r in rows]
     assert len(set(names)) == len(names), 'duplicate row names'
+    ids = [c[0] for c in controls] + [n[0] for n in negatives]
+    if len(set(ids)) != len(ids):
+        result['errors'].append(('duplicate_case_ids', sorted({i for i in ids if ids.count(i) > 1})[:10]))
     for cid, case in controls:
         refused = oracles.refusing_rows(rows, view_of(case))
         result['controls'].append({'id': cid, 'refused_by': refused})
@@ -1030,7 +1046,7 @@ def suite_inputs(suite_name, fixtures, out_dir=None):
     boundary = suite_boundary(table)
     matrix = cached_matrix(boundary, fixtures, out_dir)
     _, inputs_of = BOUNDARIES[boundary]
-    controls, negatives, view_of = inputs_of(fixtures)
+    controls, negatives, view_of = unique_inputs(inputs_of(fixtures))
     rows = module.ROWS
     reads = sorted({key for row in rows for key in row[5]})
     project = lambda view: {key: view[key] for key in reads}
@@ -1047,6 +1063,9 @@ def suite_inputs(suite_name, fixtures, out_dir=None):
     # Controls: every control a chosen negative was built from, plus the retained and compatibility originals (the
     # lane checker runs every positive through every row; the tool's controls are those the suite's negatives need).
     keep = used_controls | {cid for cid, _ in controls if cid.startswith(('retained:', 'compatibility:'))}
+    if not keep:
+        # A suite of unprovable rows has no negative; one control lets the tool run and report them unproved.
+        keep = {controls[0][0]}
     tool_controls = [g.Control(cid, project(view_of(case)), 'retained_history') for cid, case in controls if cid in keep]
     tool_negatives = [g.Negative(nid, project(view_of(case)), target, targets[target], control,
                                  'lane negative ' + nid + ': one field changed from control ' + control)

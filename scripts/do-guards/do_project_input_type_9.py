@@ -6,7 +6,7 @@ these rows; `scripts/pm-orchestrator-guard-proof.py generate` writes it and `che
 """
 import pm_guard_isolation as g
 
-REF_FIELDS = {'blake3_id', 'byte_size', 'media_type'}
+REF_FIELDS = ('blake3_id', 'byte_size', 'media_type')
 
 
 def project_content_ref_members(value, context):
@@ -15,14 +15,14 @@ def project_content_ref_members(value, context):
     ref = value['message']['content_ref']
     if type(ref) is not dict:
         return None
-    return 'project_original_input_type' if set(ref.keys()) != REF_FIELDS else None
+    return 'project_original_input_type' if set(ref.keys()) != set(REF_FIELDS) else None
 
 
 def project_content_ref_blake3_id_type(value, context):
     if value['project_shape_valid'] is not True:
         return None
     ref = value['message']['content_ref']
-    if type(ref) is not dict or set(ref.keys()) != REF_FIELDS:
+    if type(ref) is not dict or set(ref.keys()) != set(REF_FIELDS):
         return None
     return 'project_original_input_type' if type(ref['blake3_id']) is not str else None
 
@@ -31,7 +31,7 @@ def project_content_ref_media_type_type(value, context):
     if value['project_shape_valid'] is not True:
         return None
     ref = value['message']['content_ref']
-    if type(ref) is not dict or set(ref.keys()) != REF_FIELDS:
+    if type(ref) is not dict or set(ref.keys()) != set(REF_FIELDS):
         return None
     return 'project_original_input_type' if type(ref['media_type']) is not str else None
 
@@ -40,7 +40,7 @@ def project_content_ref_byte_size_type(value, context):
     if value['project_shape_valid'] is not True:
         return None
     ref = value['message']['content_ref']
-    if type(ref) is not dict or set(ref.keys()) != REF_FIELDS:
+    if type(ref) is not dict or set(ref.keys()) != set(REF_FIELDS):
         return None
     return 'project_original_input_type' if not (type(ref['byte_size']) is int or (type(ref['byte_size']) is float and ref['byte_size'] % 1 == 0)) else None
 

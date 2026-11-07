@@ -8,7 +8,7 @@ import pm_guard_isolation as g
 
 HEX = '0123456789abcdef'
 
-PACK_MEMBERS = {'blake3_id', 'byte_size', 'media_type', 'value', 'bytes_durable', 'index_durable'}
+PACK_MEMBERS = ('blake3_id', 'byte_size', 'media_type', 'value', 'bytes_durable', 'index_durable')
 
 LIMIT = 16384
 
@@ -18,7 +18,7 @@ def pack_identifier_recomputed(value, context):
     if expected is None:
         return None
     ident = value['entry']['blake3_id']
-    well_formed = type(ident) is str and len(ident) == 71 and ident.startswith('blake3:') and all(ch in HEX for ch in ident[7:])
+    well_formed = type(ident) is str and len(ident) == 71 and ident.startswith('blake3:') and all(ch in HEX for ch in ident.replace('blake3:', '', 1))
     if not well_formed:
         return None
     return 'payload_pack_integrity_or_durability' if ident != expected['blake3_id'] else None
