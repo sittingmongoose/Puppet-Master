@@ -35,8 +35,13 @@ const frameFor = async (t, mode) => {
 // a case runs on its own surface unless --set sandbox picks the other one
 const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
 
-// every frame for about 600 ms: the worst of each measure (px; > 0 is wrong)
-const SAMPLE = async () => {
+// every frame for about 600 ms: the worst of each measure (px; > 0 is wrong). T83 (astra-review-g6): a slow run that
+// gets 7 frames in 600 ms, all resting, failed 'Pip seen at rest' (8 frames are needed) with every geometry check
+// passing; now the sample runs on past 600 ms until it holds REST_FRAMES resting frames, up to REST_CAP_MS, and a sample
+// that still has too few reports that as an infrastructure result (the machine's frame rate or Pip's idle life), not a
+// fit failure
+const REST_FRAMES = 8, REST_MIN_MS = 600, REST_CAP_MS = 3000;
+const SAMPLE = async (minRest = 8, minMs = 600, capMs = 3000) => {
 	const st = O55.pipStage.of(O55.S.root.querySelector('.o55-stage'));
 	if (!st) return { err: 'no stage' };
 	const R = (e) => { const r = e.getBoundingClientRect(); return { l: r.left, t: r.top, r: r.right, b: r.bottom }; };
@@ -44,7 +49,7 @@ const SAMPLE = async () => {
 	const worst = { pip: -1e9, headFoot: -1e9, sign: -1e9, signFoot: -1e9, prop: -1e9, propFoot: -1e9, propOnHead: 0, words: 0 }, seen = { sign: 0, props: 0, colWords: 0, restFrames: 0 }, who = {};
 	let n = 0, last = null;
 	const t0 = performance.now();
-	while (performance.now() - t0 < 600) {
+	while (performance.now() - t0 < minMs || (seen.restFrames < minRest && performance.now() - t0 < capMs)) {
 		await new Promise((r) => requestAnimationFrame(() => r()));
 		n++;
 		// the visible crop: the tube or paper, cut by every box that clips it, and by the window
@@ -102,7 +107,7 @@ const SAMPLE = async () => {
 		last = { crop: [c.l, c.t, c.r, c.b].map(Math.round), pip: [pip.l, pip.t, pip.r, pip.b].map(Math.round), foot: Math.round(foot) };
 	}
 	const r1 = (v) => (v < -1e8 ? null : Math.round(v * 10) / 10);
-	return { theme: st.theme, layout: st.layoutName, screen: O55.S.sess.screen, asleep: !!st.sleepZ, reduced: !!st.reduced, low: !!O55.motion.lowResource, n, signFrames: seen.sign, propFrames: seen.props, pip: r1(worst.pip), headFoot: r1(worst.headFoot), sign: r1(worst.sign), signFoot: r1(worst.signFoot), prop: r1(worst.prop), propFoot: r1(worst.propFoot), propOnHead: r1(worst.propOnHead), words: r1(worst.words), colWords: seen.colWords, restFrames: seen.restFrames, pipK: st.pipK == null ? 1 : Math.round(st.pipK * 1000) / 1000, who, last };
+	return { ms: Math.round(performance.now() - t0), restShort: seen.restFrames < minRest, theme: st.theme, layout: st.layoutName, screen: O55.S.sess.screen, asleep: !!st.sleepZ, reduced: !!st.reduced, low: !!O55.motion.lowResource, n, signFrames: seen.sign, propFrames: seen.props, pip: r1(worst.pip), headFoot: r1(worst.headFoot), sign: r1(worst.sign), signFoot: r1(worst.signFoot), prop: r1(worst.prop), propFoot: r1(worst.propFoot), propOnHead: r1(worst.propOnHead), words: r1(worst.words), colWords: seen.colWords, restFrames: seen.restFrames, pipK: st.pipK == null ? 1 : Math.round(st.pipK * 1000) / 1000, who, last };
 };
 
 // the tube powered on (the paper fed in, the line opened) and its stepped draw caught up
@@ -120,9 +125,10 @@ const poseAtRest = (f) => f.waitForFunction(() => {
 async function judge(t, f, tag, { sign = true, props = false } = {}) {
 	await settle(t, f);
 	await poseAtRest(f);
-	let r = await f.evaluate(`(${SAMPLE.toString()})()`);
+	const sample = () => f.evaluate(`(${SAMPLE.toString()})(${REST_FRAMES}, ${REST_MIN_MS}, ${REST_CAP_MS})`);
+	let r = await sample();
 	// an idle wiggle or swing that began inside the sample left too few resting frames: once Pip rests again, sample again
-	if (!r.err && r.restFrames < 8) { await poseAtRest(f); const r2 = await f.evaluate(`(${SAMPLE.toString()})()`); if (!r2.err && r2.restFrames > r.restFrames) r = r2; }
+	if (!r.err && r.restFrames < REST_FRAMES) { await poseAtRest(f); const r2 = await sample(); if (!r2.err && r2.restFrames > r.restFrames) r = r2; }
 	if (r.err) return t.check(`${tag}: the stage`, false, r.err);
 	const at = `${tag} [${r.theme} ${r.layout}${r.asleep ? ', asleep' : ''}${r.low ? ', low-resource' : ''}${r.reduced ? ', reduced' : ''}]`;
 	const why = JSON.stringify(r.last);
@@ -137,7 +143,7 @@ async function judge(t, f, tag, { sign = true, props = false } = {}) {
 		await t.check(`${at}: every resting prop inside the visible crop`, r.prop <= 1, `${r.who.prop} ${r.prop} px outside; ${why}`);
 		await t.check(`${at}: every resting prop above the tube's foot (printer, command line)`, r.propFoot <= 0.5, `${r.who.propFoot} ${r.propFoot} px into it; ${why}`);
 	}
-	await t.check(`${at}: Pip seen at rest (head-overlap frames)`, r.restFrames >= 8, `${r.restFrames}/${r.n} frames in its resting pose`);
+	await t.check(`${at}: Pip seen at rest (head-overlap frames)`, r.restFrames >= REST_FRAMES, r.restFrames >= REST_FRAMES ? `${r.restFrames}/${r.n} frames in its resting pose in ${r.ms} ms` : `infrastructure result, not a fit failure: ${r.restFrames}/${r.n} frames in its resting pose in ${r.ms} ms, twice, each sampled until ${REST_FRAMES} resting frames or ${REST_CAP_MS} ms (the machine's frame rate, or Pip's idle life never resting); the fit checks above judged every frame sampled`);
 	await t.check(`${at}: no prop over Pip's head`, r.propOnHead <= 1, `${r.who.propOnHead || ''} ${r.propOnHead} px; ${why}${r.who.pipState ? '; pip ' + JSON.stringify(r.who.pipState) : ''}`);
 	await t.check(`${at}: Pip clear of the stage's words (title line, readouts)`, r.words <= 1, `${r.who.words || ''} ${r.words} px; ${why}`);
 	// FO-55, the lead's ruling: Pip is drawn smaller only where the stage's words sit over its column, and never under 80%
