@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L50376-L52059
 
-Source SHA256: `9265cdf039048dacccede520ac605110d55f2bd989b4c3b5d2df0a792d0cf7ea`
+Source SHA256: `e9f393db2d1c72e1300d516f7ab24688861fda9df8da7ab5b61861347435555b`
 
 ---
 
@@ -34,7 +34,7 @@ canonical_text: >-
   these commands (Wiring_Matrix.production.json entries catalog.search_*) names a request_schema_ref or
   result_schema_ref, so owner_request is none throughout. No catalog row or registration table states
   command_kind or disabled reasons for these eight (the Search panel completion rows,
-  UI_Command_Catalog.md:12477-12482, cover other ids), so each definition records both in its judgments.
+  UI_Command_Catalog.md:12575-12580, cover other ids), so each definition records both in its judgments.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible Search side panel commands.
 depends_on: [UCC-230, UCC-087, UCC-088, UCC-099, CV-333, DL-333]
@@ -184,8 +184,8 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             UI_Command_Catalog.md:1168 carries scope?, and the Cozy Shelves reconciliation keeps it
-            ("scope argument retained", UI_Command_Catalog.md:12312; "find_in_files scope arg unchanged",
-            :12316) beside the standalone cmd.search.set_scope (:12479), but no canon types the scope arg or
+            ("scope argument retained", UI_Command_Catalog.md:12410; "find_in_files scope arg unchanged",
+            :12414) beside the standalone cmd.search.set_scope (:12577), but no canon types the scope arg or
             its values, and set_scope's row gives none either. JUDGMENT: opaque string placeholder;
             alternatives: an enum of scope kinds or an object of include/exclude filters, once the Search
             owner types it.
@@ -249,7 +249,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             Same gap as cmd.search.find_in_files.scope: the row carries scope? (UI_Command_Catalog.md:1169)
-            and no canon types its values; cmd.search.set_scope's row (:12479) gives none either.
+            and no canon types its values; cmd.search.set_scope's row (:12577) gives none either.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -296,26 +296,26 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23628-23629): where is auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. The open-routes table lists this route (UI_Command_Catalog.md:18160: \"its disposition? resolves to CV-360's placement fields\") and its wiring row catalog.search_open_result resolves it \"into the result's tab kind with CV-360's placement fields\"."
+          source: "CV-360 (Contracts_V0.md:23628-23629): where is auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. The open-routes table lists this route (UI_Command_Catalog.md:18258: \"its disposition? resolves to CV-360's placement fields\") and its wiring row catalog.search_open_result resolves it \"into the result's tab kind with CV-360's placement fields\"."
         mode:
           type: enum
           values: [preview, keep]
           required: false
           default: none
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep, preview only for kinds with a preview tab; no default stated. Route listed at UI_Command_Catalog.md:18160."
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep, preview only for kinds with a preview tab; no default stated. Route listed at UI_Command_Catalog.md:18258."
         by:
           type: string
           required: false
           default: user
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user; an agent always opens in the background. Route listed at UI_Command_Catalog.md:18160."
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user; an agent always opens in the background. Route listed at UI_Command_Catalog.md:18258."
         background:
           type: boolean
           required: false
           default: false
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18160."
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18258."
         route_target:
           type: contract
           ref: Primitive:RouteTarget
@@ -347,7 +347,7 @@ command_payload_definitions:
           gap_note: >-
             No catalog kind cell states one; the row opens a result through route_target and the canonical
             file-open path (UI_Command_Catalog.md:1170), and the open-routes table lists it
-            (UI_Command_Catalog.md:18160).
+            (UI_Command_Catalog.md:18258).
         - key: response_kind
           choice: owner_operation
           gap_note: >-
@@ -370,7 +370,7 @@ command_payload_definitions:
             Canon conflict: the row's Parameters column (history under DL-333 resolution 10,
             UI_Command_Catalog.md:1170) and the Search rules (:1180, "open-disposition / reuse policy through
             disposition?") keep disposition?, and the open-routes table says it "resolves to CV-360's placement
-            fields" (:18160), while CV-360's acceptance (Contracts_V0.md:23646) says no route carries another
+            fields" (:18258), while CV-360's acceptance (Contracts_V0.md:23646) says no route carries another
             placement field. The definition follows CV-360 and carries the four placement fields instead; the
             owner should retire disposition? in the rules or say what it adds.
     - command_id: cmd.search.replace_selected
@@ -447,7 +447,7 @@ command_payload_definitions:
           gap_note: >-
             Commands_System.md:4519-4522 gives cmd.search.replace_all an owner-assigned destructive
             confirmation class and dispatches it "only through the shared confirm surface", and the Cozy
-            Shelves reconciliation calls it destructive (UI_Command_Catalog.md:12318), but no canon names the
+            Shelves reconciliation calls it destructive (UI_Command_Catalog.md:12416), but no canon names the
             arg that carries the confirmation. JUDGMENT: the UCC-230 common optional confirmation_ref (type
             ref), narrowed to required; alternative: the confirm surface holds the confirmation and the
             command carries none.
@@ -544,7 +544,7 @@ command_payload_definitions:
             No row states disabled reasons; unreachable stands for the remote cache being unreachable and
             degraded for the eviction path being degraded.
         - key: field:remote_cache_id
-          choice: absent selects no particular cache
+          choice: default none; the meaning of absence is left to the Search owner
           gap_note: >-
             The row (UI_Command_Catalog.md:1174) does not say what absence of remote_cache_id selects (every
             cache, the current one, or a picker); the eviction stays subject to the FinalGUISpec indexing
@@ -1246,7 +1246,7 @@ command_payload_definitions:
         receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "dispatch or owner receipt for the override write"}
     SoundPlaybackResultV1:
       fields:
-        playback_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "playback started after the explicit gesture; F3-404/F3-405 make the playing indicator follow actual playback, no record is named"}
+        playback_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "playback started after the explicit gesture; F3-405 (FinalGUISpec.md:28468) makes the playing indicator follow actual playback, no record is named"}
     SoundAssetMutationResultV1:
       fields:
         sound_asset_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the asset mutated; name canon (row-group identity), result shape typed nowhere"}
@@ -1282,7 +1282,7 @@ canonical_text: >-
   result in pm.command_payload_definitions.v1, with error and disabled-reason codes narrowed from the
   overlay's closed sets.
   Shared conventions of the definitions block: command_kind for every command equals its row in the Teacher
-  guided GUI command rows table (UI_Command_Catalog.md:21607-21615, one row per command in the order listed
+  guided GUI command rows table (UI_Command_Catalog.md:21705-21713, one row per command in the order listed
   above), the only catalog table that states kinds here. teach_session_id is the UCC-101..UCC-105 row-group
   optional identity, made required on guide.* steps by their teacher_guidance_active precondition. UCC-102
   and F3-403 list the degraded states the disabled codes stand for (target surface unavailable, route or
@@ -1296,7 +1296,7 @@ depends_on: [UCC-230, UCC-102, DL-127, F3-403, CV-333, DL-333]
 unblocks: []
 acceptance_criteria:
   - Every command UCC-230 routes to F3-718 has exactly one definition in the block below.
-  - Every command_kind equals the catalog's Teacher guided GUI command rows (UI_Command_Catalog.md:21607-21615).
+  - Every command_kind equals the catalog's Teacher guided GUI command rows (UI_Command_Catalog.md:21705-21713).
   - Every field has a vocabulary type, required, default and provenance; every gap field says what was missing.
   - error_codes and disabled_reason_codes stay inside the overlay's closed sets.
   - guide.do_it runs only explicitly safe actions through their stable commands, with confirmation and permission gates; a mutation always needs confirmation (UCC-102).
@@ -1341,7 +1341,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row "Opens a new Teacher thread from a help icon with the current surface and control
-            context" (UI_Command_Catalog.md:21607) and UCC-102's negative constraints "Do not launch Teacher
+            context" (UI_Command_Catalog.md:21705) and UCC-102's negative constraints "Do not launch Teacher
             without preserving current surface context needed for useful help." (:7772) and "Do not lose the
             originating surface/control context during launch." (:7778) require the context, and "Do not use
             stale or private panel-local route fields when the route/open contract provides canonical
@@ -1368,7 +1368,7 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [degraded, partial_capability, permission_required]
           gap_note: >-
-            The row states only the precondition help_icon_visible (UI_Command_Catalog.md:21607) and no
+            The row states only the precondition help_icon_visible (UI_Command_Catalog.md:21705) and no
             disabled reasons; degraded stands for model fallback or clamp, partial_capability for an
             unavailable capability and permission_required for a permission block (UCC-102 degraded states).
     - command_id: cmd.teacher.continue_in_teacher
@@ -1381,7 +1381,7 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "Row \"Hands an intent-classified natural-language request off into a new or selected Teacher thread\" (UI_Command_Catalog.md:21608); UCC-230 envelope common optional thread_id (type id), still optional"
+          source: "Row \"Hands an intent-classified natural-language request off into a new or selected Teacher thread\" (UI_Command_Catalog.md:21706); UCC-230 envelope common optional thread_id (type id), still optional"
         intent_request_ref:
           type: ref
           required: true
@@ -1397,7 +1397,7 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "Row \"with the current surface context\" (UI_Command_Catalog.md:21608) and CS-053 current-surface context; restates the UCC-230 common optional route_target, still optional, without changing its canonical contract type"
+          source: "Row \"with the current surface context\" (UI_Command_Catalog.md:21706) and CS-053 current-surface context; restates the UCC-230 common optional route_target, still optional, without changing its canonical contract type"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -1409,13 +1409,13 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [degraded, partial_capability]
           gap_note: >-
-            The row states only the precondition teach_intent_classified (UI_Command_Catalog.md:21608) and no
+            The row states only the precondition teach_intent_classified (UI_Command_Catalog.md:21706) and no
             disabled reasons; degraded stands for model fallback or clamp and partial_capability for an
             unavailable capability (UCC-102 degraded states).
         - key: field:thread_id
           choice: absent hands off into a new Teacher thread, present into the selected one
           gap_note: >-
-            The row says "a new or selected Teacher thread" (UI_Command_Catalog.md:21608) but not how the
+            The row says "a new or selected Teacher thread" (UI_Command_Catalog.md:21706) but not how the
             command chooses; reading thread_id's presence is the definition's choice.
     - command_id: cmd.teacher.guide.open_route
       ucc_units: [UCC-102]
@@ -1427,14 +1427,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21609): a guided step runs inside an active guidance session; type id per identity_typing"
+          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21707): a guided step runs inside an active guidance session; type id per identity_typing"
         route_target:
           type: contract
           ref: Primitive:RouteTarget
           required: true
           default: none
           provenance: canon
-          source: "Row \"Guided step: opens a canonical route target to show the user where something is\" with precondition route_target_resolvable (UI_Command_Catalog.md:21609); restates the UCC-230 common optional route_target narrowed to required, canonical contract type kept"
+          source: "Row \"Guided step: opens a canonical route target to show the user where something is\" with precondition route_target_resolvable (UI_Command_Catalog.md:21707); restates the UCC-230 common optional route_target narrowed to required, canonical contract type kept"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -1447,7 +1447,7 @@ command_payload_definitions:
           choice: [stale_projection]
           gap_note: >-
             The row states preconditions (teacher_guidance_active && route_target_resolvable,
-            UI_Command_Catalog.md:21609) but no disabled reasons; stale_projection stands for a route or
+            UI_Command_Catalog.md:21707) but no disabled reasons; stale_projection stands for a route or
             control that no longer exists or a stale context (UCC-102 degraded states).
     - command_id: cmd.teacher.guide.focus
       ucc_units: [UCC-102]
@@ -1459,14 +1459,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21610); type id per identity_typing"
+          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21708); type id per identity_typing"
         target:
           type: id
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            The row "focuses a tab or panel" with precondition target_present (UI_Command_Catalog.md:21610)
+            The row "focuses a tab or panel" with precondition target_present (UI_Command_Catalog.md:21708)
             names no target field. JUDGMENT: id of the canonical tab or panel; alternative: route_target
             through the route/open contract.
       owner_request: none
@@ -1480,7 +1480,7 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [stale_projection]
           gap_note: >-
-            The row states preconditions (UI_Command_Catalog.md:21610) but no disabled reasons;
+            The row states preconditions (UI_Command_Catalog.md:21708) but no disabled reasons;
             stale_projection stands for an unavailable target surface or a control that no longer exists
             (UCC-102, F3-403).
     - command_id: cmd.teacher.guide.highlight
@@ -1493,14 +1493,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21611); type id per identity_typing"
+          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21709); type id per identity_typing"
         target:
           type: id
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            The row "spotlights or outlines a control or region" (UI_Command_Catalog.md:21611) names no
+            The row "spotlights or outlines a control or region" (UI_Command_Catalog.md:21709) names no
             target field. JUDGMENT: id of the control or region; alternative: route_target for region-level
             targets.
         caption:
@@ -1511,7 +1511,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row and F3-403 fix the anchored caption that does not cover the target
-            (UI_Command_Catalog.md:21611), and UCC-102 preserves "anchored caption", but no arg names the
+            (UI_Command_Catalog.md:21709), and UCC-102 preserves "anchored caption", but no arg names the
             caption text or bounds it. JUDGMENT: optional string with the generic text bound; alternative:
             caption text owned by the guidance step record, not the command.
       owner_request: none
@@ -1525,7 +1525,7 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [stale_projection]
           gap_note: >-
-            The row states preconditions (UI_Command_Catalog.md:21611) but no disabled reasons;
+            The row states preconditions (UI_Command_Catalog.md:21709) but no disabled reasons;
             stale_projection stands for a stale or missing UI target, which UCC-102 says guidance must not
             keep stepping through.
     - command_id: cmd.teacher.guide.scroll_to
@@ -1538,14 +1538,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21612); type id per identity_typing"
+          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21710); type id per identity_typing"
         target:
           type: id
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            The row "scrolls to a section or field" (UI_Command_Catalog.md:21612) names no target field.
+            The row "scrolls to a section or field" (UI_Command_Catalog.md:21710) names no target field.
             JUDGMENT: id of the section or field target; alternative: an anchor ref resolved by the surface.
       owner_request: none
       result:
@@ -1558,7 +1558,7 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [stale_projection]
           gap_note: >-
-            The row states preconditions (UI_Command_Catalog.md:21612) but no disabled reasons;
+            The row states preconditions (UI_Command_Catalog.md:21710) but no disabled reasons;
             stale_projection stands for a stale or missing UI target (UCC-102).
     - command_id: cmd.teacher.guide.inspect
       ucc_units: [UCC-102]
@@ -1570,7 +1570,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21613); type id per identity_typing"
+          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21711); type id per identity_typing"
         target:
           type: id
           required: true
@@ -1578,7 +1578,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row "expands non-mutating details or previews a selection, read-only"
-            (UI_Command_Catalog.md:21613) names no target field. JUDGMENT: id of the detail target;
+            (UI_Command_Catalog.md:21711) names no target field. JUDGMENT: id of the detail target;
             alternative: the UCC-230 common optional selection_ref for the preview-selection case.
       owner_request: none
       result:
@@ -1591,7 +1591,7 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [stale_projection]
           gap_note: >-
-            The row states preconditions (UI_Command_Catalog.md:21613) but no disabled reasons;
+            The row states preconditions (UI_Command_Catalog.md:21711) but no disabled reasons;
             stale_projection stands for a lost selection or a stale target (UCC-102 degraded states).
     - command_id: cmd.teacher.explain_current_ui
       ucc_units: [UCC-102]
@@ -1603,7 +1603,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "Row \"Asks Teacher to explain the current surface in the Teacher thread\" with precondition teacher_thread_available (UI_Command_Catalog.md:21614); UCC-230 envelope common optional thread_id (type id) made required by the row subject"
+          source: "Row \"Asks Teacher to explain the current surface in the Teacher thread\" with precondition teacher_thread_available (UI_Command_Catalog.md:21712); UCC-230 envelope common optional thread_id (type id) made required by the row subject"
         route_target:
           type: contract
           ref: Primitive:RouteTarget
@@ -1611,7 +1611,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row asks Teacher to explain "the current surface" (UI_Command_Catalog.md:21614) and UCC-102
+            The row asks Teacher to explain "the current surface" (UI_Command_Catalog.md:21712) and UCC-102
             says "Do not launch Teacher without preserving current surface context needed for useful help."
             (:7772), but no canon names the arg that identifies that surface or says whether it comes from
             the Teacher thread's launch context instead. JUDGMENT: the UCC-230 common optional route_target,
@@ -1628,7 +1628,7 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [degraded, partial_capability]
           gap_note: >-
-            The row states only the precondition teacher_thread_available (UI_Command_Catalog.md:21614) and no
+            The row states only the precondition teacher_thread_available (UI_Command_Catalog.md:21712) and no
             disabled reasons; degraded stands for model fallback or clamp and partial_capability for an
             unavailable capability or a missing help entry (UCC-102 degraded states).
     - command_id: cmd.teacher.guide.do_it
@@ -1641,7 +1641,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21615); type id per identity_typing"
+          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21713); type id per identity_typing"
         target_command_id:
           type: id
           required: true
@@ -1649,7 +1649,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row "Runs an explicitly safe action for the user through its stable command after
-            confirmation and permission gates" (UI_Command_Catalog.md:21615) names no field for that command
+            confirmation and permission gates" (UI_Command_Catalog.md:21713) names no field for that command
             and types no pass-through of its args. JUDGMENT: id of the target command; its args travel as
             that command's own payload after the safety gate, not as a typed field here.
         confirmation_ref:
@@ -1659,7 +1659,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row requires confirmation (precondition confirmation_given, "a mutation always needs
-            confirmation", UI_Command_Catalog.md:21615), but no canon names the arg that carries it.
+            confirmation", UI_Command_Catalog.md:21713), but no canon names the arg that carries it.
             JUDGMENT: the UCC-230 common optional confirmation_ref (type ref), narrowed to required;
             alternative: the confirmation gate holds the confirmation and the command carries none.
       owner_request: none
@@ -1674,7 +1674,7 @@ command_payload_definitions:
           choice: [permission_required, blocked_state_required, stale_projection]
           gap_note: >-
             The row states preconditions (teacher_guidance_active && action_explicitly_safe &&
-            confirmation_given, UI_Command_Catalog.md:21615) but no disabled reasons; permission_required
+            confirmation_given, UI_Command_Catalog.md:21713) but no disabled reasons; permission_required
             stands for the permission gates, blocked_state_required for confirmation not yet given, and
             stale_projection for a stale or missing UI target (UCC-102).
   results:

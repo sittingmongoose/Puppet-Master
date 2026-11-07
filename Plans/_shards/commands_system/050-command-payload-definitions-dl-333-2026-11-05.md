@@ -4,7 +4,7 @@ Source: `Plans/Commands_System.md`
 
 Source lines: L10726-L11222
 
-Source SHA256: `7b9a09667c4b551d548377b7f9d85d1069165dd94233b6211fd4c21ed03753be`
+Source SHA256: `6dbfaf857025f64aa008e90c06f3cb4f802df5d422364662dfec3ba8ae48f9df`
 
 ---
 
@@ -84,7 +84,7 @@ command_payload_definitions:
             which leaves lifecycle semantics to Commands_System) states a command_kind. Beginning an investigation is a
             durable lifecycle mutation (Commands_System.md:694; it emits debug.investigation.started,
             Contracts_V0.md:1532), and the parallel DAP row cmd.run_debug.start is catalog domain_action (Run/Debug
-            registration table, UI_Command_Catalog.md:13321).
+            registration table, UI_Command_Catalog.md:13419).
         - key: omitted:target
           choice: omitted
           gap_note: >-
@@ -132,7 +132,7 @@ command_payload_definitions:
           gap_note: >-
             Canon states no command_kind for this row. Concluding the active investigation is a durable lifecycle
             mutation (Commands_System.md:695), and the parallel DAP row cmd.run_debug.stop is catalog domain_action
-            (UI_Command_Catalog.md:13323).
+            (UI_Command_Catalog.md:13421).
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection]
           gap_note: >-
@@ -168,7 +168,7 @@ command_payload_definitions:
           gap_note: >-
             Canon states no command_kind for this row. Pausing evidence collection is a durable investigation-state
             mutation (Commands_System.md:696), and the parallel DAP row cmd.run_debug.pause is catalog domain_action
-            (UI_Command_Catalog.md:13327). Canon conflict: ACD 11.0A's closed investigation lifecycle has no paused
+            (UI_Command_Catalog.md:13425). Canon conflict: ACD 11.0A's closed investigation lifecycle has no paused
             state (assistant-chat-design.md:1174-1182), while 7.1 has pause, resume and the investigation_paused
             precondition (Commands_System.md:696-697). The definition follows 7.1, which CS-042 makes the owner of
             the family's lifecycle semantics; the ACD list has not been reconciled.
@@ -207,7 +207,7 @@ command_payload_definitions:
           gap_note: >-
             Canon states no command_kind for this row. Resuming a paused investigation is a durable investigation-state
             mutation (Commands_System.md:697), and the parallel DAP row cmd.run_debug.continue is catalog
-            domain_action (UI_Command_Catalog.md:13328). The same canon conflict as cmd.debug.pause: ACD 11.0A has no
+            domain_action (UI_Command_Catalog.md:13426). The same canon conflict as cmd.debug.pause: ACD 11.0A has no
             paused state (assistant-chat-design.md:1174-1182); the definition follows 7.1.
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection]
@@ -269,7 +269,7 @@ command_payload_definitions:
           gap_note: >-
             Canon states no command_kind for this row. Adding a breakpoint is a durable investigation mutation
             (Commands_System.md:698), and the parallel DAP breakpoint rows are catalog domain_action
-            (UI_Command_Catalog.md:13348-13350).
+            (UI_Command_Catalog.md:13446-13448).
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection]
           gap_note: >-
@@ -314,7 +314,7 @@ command_payload_definitions:
           gap_note: >-
             Canon states no command_kind for this row. Removing a breakpoint is a durable investigation mutation
             (Commands_System.md:699), and the parallel DAP breakpoint rows are catalog domain_action
-            (UI_Command_Catalog.md:13348-13352 and :13354; :13353, cmd.run_debug.breakpoint.goto_source, is navigation_wrapper).
+            (UI_Command_Catalog.md:13446-13450 and :13452; :13451, cmd.run_debug.breakpoint.goto_source, is navigation_wrapper).
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection]
           gap_note: >-
@@ -350,7 +350,7 @@ command_payload_definitions:
           gap_note: >-
             Canon states no command_kind for this row. Removing all breakpoints is a durable investigation mutation
             (Commands_System.md:700), and the parallel DAP row cmd.run_debug.breakpoint.remove_all is catalog
-            domain_action (UI_Command_Catalog.md:13351).
+            domain_action (UI_Command_Catalog.md:13449).
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection]
           gap_note: >-
@@ -426,7 +426,7 @@ command_payload_definitions:
           gap_note: >-
             Canon states no command_kind for this row. Advancing to the next execution point is a durable investigation
             mutation (Commands_System.md:702), and the parallel DAP step rows are catalog domain_action
-            (UI_Command_Catalog.md:13329-13331).
+            (UI_Command_Catalog.md:13427-13429).
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection]
           gap_note: >-

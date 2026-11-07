@@ -4,7 +4,7 @@ Source: `Plans/Executor_Protocol.md`
 
 Source lines: L9145-L10675
 
-Source SHA256: `2bc6769dbdb9f1f990f8af541c1dfbe810577559c65221bd0bd9634319c887f5`
+Source SHA256: `d6867d7d5e6c0a82dc8142f7404aa13f7a12ad8b97998a21023d9af89ca5fc86`
 
 ---
 
@@ -742,7 +742,7 @@ command_payload_definitions:
           gap_note: "Canon requires command_kind metadata on recovery commands (UI_Command_Catalog.md:6852) but states no value for this command; domain_action because it runs the FileSafe restore and admits a successor attempt (Plans/Executor_Protocol.md:676-688)."
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection, permission_required]
-          gap_note: "No catalog row states disabled reasons for cmd.runtime.restore_safe_point_then_retry itself. Its wrapper cmd.orchestrator.safe_point_retry, which shares its admission decision (Plans/Executor_Protocol.md:677), keeps safe_point_missing, state_changed, permission_denied and operation_in_progress (UI_Command_Catalog.md:10800). Mapped: permission_denied to permission_required and operation_in_progress to blocked_state_required (UCC-230 owner_state_code_map); state_changed to stale_projection; safe_point_missing to blocked_state_required. Canon gives no map for state_changed or safe_point_missing."
+          gap_note: "No catalog row states disabled reasons for cmd.runtime.restore_safe_point_then_retry itself. Its wrapper cmd.orchestrator.safe_point_retry, which shares its admission decision (Plans/Executor_Protocol.md:677), keeps safe_point_missing, state_changed, permission_denied and operation_in_progress (UI_Command_Catalog.md:10898). Mapped: permission_denied to permission_required and operation_in_progress to blocked_state_required (UCC-230 owner_state_code_map); state_changed to stale_projection; safe_point_missing to blocked_state_required. Canon gives no map for state_changed or safe_point_missing."
         - key: field:idempotency_key
           choice: required
           gap_note: "Canon disagrees: the catalog minimum args require idempotency_key (UI_Command_Catalog.md:1203), while Plans/Executor_Protocol.md:677 gives the exact canonical payload { project_id, run_id, node_id, blocked_sequence, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target: \"safe_point\" } with no idempotency_key (and no allowed_action_id, which the overlay and Plans/Executor_Protocol.md:676 require). The definition follows the catalog row and the overlay; not settled here."
