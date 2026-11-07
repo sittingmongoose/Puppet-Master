@@ -1005,12 +1005,30 @@ def suite_boundary(table):
     return next(name for name, (tables_of, _) in BOUNDARIES.items() if any(t == table for t, _ in tables_of()))
 
 
-def suite_inputs(suite_name, fixtures):
+def cached_matrix(boundary, fixtures, out_dir):
+    """The boundary's matrix, computed once per run and head: every suite of the boundary picks its negatives from it."""
+    import subprocess
+    head = subprocess.run(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'], capture_output=True, text=True).stdout.strip()
+    dirty = subprocess.run(['git', '-C', str(ROOT), 'status', '--porcelain', '--', 'scripts', 'Plans'], capture_output=True,
+                           text=True).stdout.strip()
+    path = Path(out_dir) / ('matrix-' + boundary + '.json') if out_dir else None
+    if path and path.exists():
+        cached = json.loads(path.read_text())
+        if cached['head'] == head and not dirty and not cached['dirty']:
+            return cached['matrix']
+    matrix = boundary_matrix(boundary, fixtures)
+    if path:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({'head': head, 'dirty': bool(dirty), 'matrix': matrix}, default=str) + '\n')
+    return matrix
+
+
+def suite_inputs(suite_name, fixtures, out_dir=None):
     """The tool's controls and negatives for one suite, projected to the keys its rows read."""
     import pm_guard_isolation as g
     table, module = next((t, m) for t, s, m in guards.SUITES if s == suite_name)
     boundary = suite_boundary(table)
-    matrix = boundary_matrix(boundary, fixtures)
+    matrix = cached_matrix(boundary, fixtures, out_dir)
     _, inputs_of = BOUNDARIES[boundary]
     controls, negatives, view_of = inputs_of(fixtures)
     rows = module.ROWS
@@ -1041,7 +1059,7 @@ def suite_inputs(suite_name, fixtures):
 def run_suite(suite_name, out_dir):
     import pm_guard_isolation as g
     fixtures = fixtures_now()
-    module, controls, negatives, missing, reads = suite_inputs(suite_name, fixtures)
+    module, controls, negatives, missing, reads = suite_inputs(suite_name, fixtures, out_dir)
     path = str(suite_path(suite_name).relative_to(ROOT))
     non_guards = [g.NonGuard(path, 'factory', 'return', 'return g.Case(table, check, context)',
                              'Plumbing: returns the fresh case object the engine runs; it decides no acceptance.')]
