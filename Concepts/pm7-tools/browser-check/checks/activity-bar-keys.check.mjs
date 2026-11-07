@@ -40,6 +40,43 @@ function railControls() {
     .map(e => ({ key: e.getAttribute('data-ab-id') || e.id, target: e.getAttribute('data-target') }));
 }
 
+// The rail's controls on screen at rest (K-F96c-2), with the bar scrolled to its top and the focus off it, as a person
+// first sees it: each tile's centre lies inside the bar's clip box and the window, and a point there hits the tile. The
+// collapsed rail holds all its controls so, in every look, as on main; with the names shown the bar may scroll instead
+// (overflow-y auto or scroll, with something to scroll), where scrolling it must bring the tile in (F96b-3). A Tab walk
+// proves none of this, as a focus scrolls the bar to it: Glass's collapsed rail at 1280x500 held 528 px in 411, with
+// Artifacts, More and the toggle below the fold and no scrollbar to say so (F96c-2). `below` lists the controls seen only
+// by scrolling; `trimmed`, the tiles in view whose edge the box cuts by more than 1 px (Friendly's toggle at 1280x500,
+// 5 px, on b622109459 as well: logged, not failed).
+function railAtRest() {
+  const bar = document.getElementById('activityBar');
+  if (!bar) return null;
+  const shown = e => e.getClientRects().length > 0 && getComputedStyle(e).visibility !== 'hidden';
+  const top0 = bar.scrollTop, oy = getComputedStyle(bar).overflowY;
+  bar.scrollTop = 0;
+  const scrolls = /^(auto|scroll|overlay)$/.test(oy) && bar.scrollHeight > bar.clientHeight + 1;
+  const clipBox = () => { const b = bar.getBoundingClientRect(), x0 = b.left + bar.clientLeft, y0 = b.top + bar.clientTop;
+    return { x0: Math.max(0, x0), y0: Math.max(0, y0), x1: Math.min(innerWidth, x0 + bar.clientWidth), y1: Math.min(innerHeight, y0 + bar.clientHeight) }; };
+  const inside = (q, c) => { const x = (q.left + q.right) / 2, y = (q.top + q.bottom) / 2; return y >= c.y0 && y <= c.y1 && x >= c.x0 && x <= c.x1; };
+  const cut = (q, c) => Math.round(Math.max(0, c.y0 - q.top, q.bottom - c.y1, c.x0 - q.left, q.right - c.x1));
+  const hits = (e, q) => { const h = document.elementFromPoint((q.left + q.right) / 2, (q.top + q.bottom) / 2); return !!h && (h === e || e.contains(h)); };
+  const rows = [...document.querySelectorAll('#activityBar .icon[data-ab-id], #activityBar > .activity-bar-toggle')].filter(shown).map(e => {
+    const s = e.querySelector(':scope > .symbol') || e, key = e.getAttribute('data-ab-id') || e.id;
+    let q = s.getBoundingClientRect(), c = clipBox();
+    if (inside(q, c) && hits(e, q)) return cut(q, c) > 1 ? { key, seen: 'at rest', cut: cut(q, c) } : { key, seen: 'at rest' };
+    const row = { key, bottom: Math.round(q.bottom), top: Math.round(q.top), box: [Math.round(c.y0), Math.round(c.y1)] };
+    if (!scrolls) return { ...row, seen: false };
+    bar.scrollTop += q.bottom > c.y1 ? q.bottom - c.y1 + 2 : q.top < c.y0 ? q.top - c.y0 - 2 : 0;
+    q = s.getBoundingClientRect(); c = clipBox();
+    const ok = inside(q, c) && hits(e, q);
+    bar.scrollTop = 0;
+    return { ...row, seen: ok ? 'by scrolling the bar' : false };
+  });
+  bar.scrollTop = top0;
+  return { overflowY: oy, client: bar.clientHeight, content: bar.scrollHeight, scrolls, rows, unseen: rows.filter(r => !r.seen).map(r => r.key),
+    below: rows.filter(r => r.seen === 'by scrolling the bar').map(r => r.key), trimmed: rows.filter(r => r.cut).map(r => `${r.key} ${r.cut}px`) };
+}
+
 // The focus mark, judged from painted pixels (F96-1). The item, its tile (the symbol box) and 12 px round them are
 // captured with the focus off the bar and again 450 ms after a real key puts the focus on it. A ring is judged per side
 // of the tile, not by a median: across each side (6 px either side of the tile's edge), every scanline through the side's
@@ -188,6 +225,11 @@ async function run(t, w, h) {
   const back = [];
   for (let i = 0; i < controls.length; i++) { await kb.press('Shift+Tab'); back.push((await key()).key); }
   await t.check(`${at}: Shift+Tab walks the bar back`, JSON.stringify(back) === JSON.stringify(controls.map(c => c.key).reverse()), back.join(' '));
+  // ...and at rest, with the focus off the bar, every control of the collapsed rail is on screen (K-F96c-2)
+  await f.evaluate(placeSentinel, ['#activityBar', 'before']); await f.evaluate(() => document.getElementById('fo96-sentinel').focus({ preventScroll: true })); await frames(f, 2);
+  const seen1 = await f.evaluate(railAtRest);
+  t.log(`${at} at rest ${JSON.stringify(seen1)}`);
+  await t.check(`${at}: at rest every control of the collapsed rail is on screen`, !!seen1 && seen1.unseen.length === 0 && seen1.below.length === 0, JSON.stringify(seen1));
 
   // The painted mark on a control reached by a key. The control is reached by keys first, so the bar scrolls as it
   // will; the focus then steps to the sentinel without scrolling, the rest is captured, and a real Tab from the control
@@ -229,7 +271,14 @@ async function run(t, w, h) {
       const step = () => { const now = r ? [...r.children].map(i => i.style.transform + getComputedStyle(i).translate).join('|') : ''; still = now === last ? still + 1 : 0; last = now;
         if (still >= 3 || performance.now() - t0 > 1500) done(); else requestAnimationFrame(step); }; requestAnimationFrame(step); }));
     const now = await key();
-    const r1 = await t.pixels(region);
+    let r1 = await t.pixels(region);
+    // a read of NieR's brackets taken while one corner was still on its way in (K-F96c-4, a false stop: tl 0, bl 8 once,
+    // passing on a rerun): read once more after 500 ms, the focus unmoved. A corner still short then is a real fault.
+    if (b.brackets && !Object.values(corners(r0, r1, b.item, region.x - off.x, region.y - off.y)).every(n => n >= 6)) {
+      t.log(`${target}: NieR's brackets read short ${JSON.stringify(corners(r0, r1, b.item, region.x - off.x, region.y - off.y))}; read again after 500 ms`);
+      await f.waitForTimeout(500);
+      if ((await key()).key === target) r1 = await t.pixels(region);
+    }
     // the item, not its tile, which a focused tile's own style may move by a fraction (Glass's press scale is lifted)
     const moved = await f.evaluate(([k, t0]) => { const el = k === 'activityBarToggle' ? document.getElementById(k) : document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`); const q = el.getBoundingClientRect(); return Math.abs(q.x - t0.x) + Math.abs(q.y - t0.y) > 0.5; }, [target, b.item]);
     const ox = region.x - off.x, oy = region.y - off.y;
@@ -493,10 +542,19 @@ async function run(t, w, h) {
       actsRead.length >= 3 && actsRead.every(ok), JSON.stringify(acts.map(a => ({ after: a.after, ...brief(a) }))));
     await t.check(`${at} ${look}: the lens never carries the mark away from the focused item when Enter changes the panel`, !!lens && lens.away === 0, JSON.stringify(lens));
     await rest();
+    // the collapsed bar at rest, focus off it: every control on screen (K-F96c-2)
+    await f.evaluate(placeSentinel, ['#activityBar', 'before']); await focusQuiet(null); await frames(f, 2);
+    const seen6 = await f.evaluate(railAtRest);
+    t.log(`${at} ${look} at rest ${JSON.stringify(seen6)}`);
+    await t.check(`${at} ${look}: at rest every control of the collapsed rail is on screen`, !!seen6 && seen6.unseen.length === 0 && seen6.below.length === 0, JSON.stringify(seen6));
     // the bar with its names shown (the toggle)
     await f.evaluate(() => document.getElementById('activityBarToggle').click());
     await f.waitForFunction(() => !document.getElementById('activityBar').classList.contains('collapsed'), null, { timeout: 5000 }).catch(() => {});
     await f.waitForTimeout(900);
+    await f.evaluate(placeSentinel, ['#activityBar', 'before']); await focusQuiet(null); await frames(f, 2);
+    const seenW = await f.evaluate(railAtRest);
+    t.log(`${at} ${look} names shown, at rest ${JSON.stringify(seenW)}`);
+    await t.check(`${at} ${look}, names shown: at rest every rail control is on screen, or the bar scrolls to it`, !!seenW && seenW.unseen.length === 0, JSON.stringify(seenW));
     // Chat (the first item, K-F96b-2), lit Files, Search and Pipelines (its p is the bar's lowest letter)
     const wide = [await painted('chat'), await painted('files'), await painted('search'), await painted('repository_automation')];
     t.log(`${at} ${look} names shown, marks ${JSON.stringify(wide.map(brief))}`);
@@ -512,6 +570,33 @@ async function run(t, w, h) {
     if (t.args.crops) {
       await sentinel('#activityBar'); await byTab('files')(); await f.waitForTimeout(450);
       await t.crop(`${at}-files-${surface}-${look}`, f.locator('#activityBar'), `${at} ${look}: lit Files with the key focus mark`);
+    }
+    // A family change with the key focus kept on the open panel's icon (K-F96c-1). In Glass the lens carries the mark;
+    // in the look it changes to (Basic, then Retro, each from this Glass look) the icon draws its own at once, with no
+    // focus flag left behind (F96c-1). The change is made with the rail idle (1.6 s on the icon: no sync of the lens
+    // still queued, which on b622109459 could clear the flag by chance). Last in the look, as the next look is set by
+    // the loop.
+    if (/^glass-/.test(look)) {
+      const flags = () => f.evaluate(() => { const i = document.querySelector('#activityBar .icon[data-ab-id="files"]'), L = document.querySelector('.lg-lens[data-lg-for="rail-icons"]');
+        return { theme: document.documentElement.getAttribute('data-theme'), iconFlag: !!i && i.hasAttribute('data-lg-focus'), lensFlag: !!L && L.hasAttribute('data-lg-focus'), keyFocus: !!i && document.activeElement === i && i.matches(':focus-visible') }; });
+      for (const fam of ['basic', 'retro']) {
+        if (fam !== 'basic') {
+          await t.app.look(look);
+          await f.waitForFunction(() => !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.(), null, { timeout: 20000 }).catch(() => {});
+          await frames(f, 4); await rest();
+        }
+        if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+        const reached = await tabTo('files');
+        await f.waitForTimeout(1600);
+        const pre = await flags();
+        await f.evaluate(fam => PM_THEME.setFamily(fam, { persist: false }), fam);
+        await f.waitForFunction(fam => (document.documentElement.getAttribute('data-theme') || '').startsWith(fam + '-') && !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.(), fam, { timeout: 20000 }).catch(() => {});
+        await frames(f, 4);
+        const post = await flags(), r = await markNow('files');
+        t.log(`${at} ${look} -> ${fam} with the focus kept: before ${JSON.stringify(pre)}, after ${JSON.stringify(post)}, mark ${JSON.stringify(brief(r))}`);
+        await t.check(`${at} ${look}: a change to ${fam} with the key focus kept on the open panel's icon leaves it its own mark at 3:1 on every side and no focus flag`,
+          reached && pre.iconFlag && pre.lensFlag && post.keyFocus && !post.iconFlag && !post.lensFlag && !r.skipped && markOk(r), JSON.stringify({ pre, post, mark: brief(r) }));
+      }
     }
   }
   await f.evaluate(() => document.getElementById('fo96-sentinel')?.remove());

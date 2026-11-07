@@ -9,10 +9,6 @@ html[data-theme^="glass"] .activity-bar.collapsed .icon {
   min-width: 0 !important;
   height: auto !important;
   min-height: 0 !important;
-  /* FO-96 (F96b-3, F96b-4): the rail's items keep their own height, as every other look's do, and a short bar scrolls
-     (it already has overflow-y: auto). Shrunk to fit a short window (29.7 px at 1280x500 with the names shown) each
-     name lay over the next item's icon and the first tile stood out above the bar, which cut its top. */
-  flex-shrink: 0 !important;
   padding: 4px 0 !important;
   margin: 0 !important;
   border-radius: 0 !important;
@@ -21,4 +17,12 @@ html[data-theme^="glass"] .activity-bar.collapsed .icon {
   transform: none !important;
   color: var(--text-secondary) !important;
   transition: color var(--motion-fast) var(--ease-out) !important;
+}
+/* FO-96 (F96b-3, F96b-4, F96c-2): with the names shown, the rail's items keep their own height, as every other look's
+   do, and a short bar scrolls (it already has overflow-y: auto). Shrunk to fit a short window (29.7 px at 1280x500)
+   each name lay over the next item's icon and the first tile stood out above the bar, which cut its top. The collapsed
+   rail has no names to collide, so it still shrinks to fit as on main: kept at 40 px, 1280x500 needed 528 px in 411
+   and Artifacts, More and the names toggle fell below the fold. */
+html[data-theme^="glass"] .activity-bar:not(.collapsed) .icon {
+  flex-shrink: 0 !important;
 }
