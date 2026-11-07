@@ -1672,6 +1672,8 @@ def describe(item: dict[str, Any], tag: str, width: int = 150) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--root", default=str(ROOT), help="repository root (default: this checkout)")
+    # --ro abbreviated --root before --row-report existed; named here so that it still does.
+    parser.add_argument("--ro", dest="root", help=argparse.SUPPRESS)
     parser.add_argument("--base", default="origin/main", help="revision this branch is measured against")
     parser.add_argument("--row-report", metavar="FILE", help="also write every row of each subcheck to FILE, outside the "
                                                              "repository, for comparing one run with another; judges nothing")
