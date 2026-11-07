@@ -416,7 +416,7 @@ async function run(t, w, h) {
     t.log(`${at} ${look} names shown, marks ${JSON.stringify(wide.map(brief))}`);
     await t.check(`${at} ${look}, names shown: a key focus mark on every side ${known ? '(FO-99)' : 'at 3:1 or more'} on lit Files, on Search and on Pipelines, and no name's letters are crossed or touched`,
       wide.every(ok) && wide[0]?.lit && wide.every(r => r && r.name && r.name.letters >= 15 && r.name.crossed === 0), JSON.stringify(wide.map(brief)));
-    for (const r of wide) if (r?.name?.overlap) t.log(`${at} ${look} ${r.key}: the name is laid out over its own tile here (base layout, b79930bc40 as well), so ${r.name.overlap} px of its letters inside the tile change with the tile's mark; not counted as crossed`);
+    for (const r of wide) if (r?.name?.overlap) t.log(`${at} ${look} ${r.key}: ${r.name.overlap} px of its letters lie within 2 px of its own tile (the name is set against the tile, or over it in Glass at 1280x500, on b79930bc40 as well) and change with the tile's edge; not counted as crossed`);
     if (t.args.crops) {
       await sentinel('#activityBar'); await byTab('files')(); await f.waitForTimeout(450);
       await t.crop(`${at}-names-files-${surface}-${look}`, f.locator('#activityBar'), `${at} ${look}: names shown, lit Files with the key focus mark`);
