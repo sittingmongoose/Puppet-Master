@@ -2658,21 +2658,16 @@
           "format": "uuid"
         }
       ],
-      "source": "the payload's storage_instance_id; one invariant at two sites",
+      "source": "the payload's storage_instance_id; one invariant at one site (sweep part 2A: the read-token join no longer repeats it)",
       "guards": [
         {
           "function": "checkpoint_errors",
           "code": "checkpoint_storage_identity",
           "negative": "P1F06:token_storage_instance_id"
-        },
-        {
-          "function": "checkpoint_errors",
-          "code": "checkpoint_read_token_join",
-          "negative": "P1F06:token_storage_instance_id"
         }
       ],
       "builder": "recapture_history",
-      "guarded_since": "before DO-P1F06"
+      "guarded_since": "before DO-P1F06; one site since sweep part 2A"
     },
     {
       "path": "read.row.causation_event_id",

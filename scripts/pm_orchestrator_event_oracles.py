@@ -24,6 +24,7 @@ from referencing.exceptions import Unresolvable
 from pm_event_index_binding import binding_digest
 from pm_projects_refresh_contracts import semantic_hash, scope_failures, typed_tree
 from pm_event_numbers import JsonNumber, Refusal, storage_uint64
+import pm_orchestrator_event_guards as guards
 
 
 SEMANTIC_FIELDS = (
@@ -119,20 +120,12 @@ def number_rule_for_record(case=None, *, retained=False):
     Current inputs always use the strict domain. Both supported original
     editions keep their originally valid number types. The verified adapter
     binds the edition to this exact original receipt, never to live state.
+    Sweep part 2A: the five recipe clauses are rows of `guards.RECIPE_ROWS`.
     """
     if not retained:
         return CURRENT_NUMBER_RULE, []
-    state = case['historical_reader_state']
-    recipe = state['original_identity_recipe']
-    proof = state['original_recipe_evidence']
-    expected = recipe_witness_value(case, recipe)
-    errors = []
-    if (recipe not in (LEGACY_RECIPE, CURRENT_RECIPE) or proof['verified'] is not True
-            or proof['value'] != expected
-            or proof['source_ref'] != 'writer-recipe:' + case['event']['event_id']
-            or proof['source_sha256'] != hashlib.sha256(packed(expected)).hexdigest()):
-        errors.append('historical_original_recipe')
-    return recipe, errors
+    view = recipe_view(case)
+    return view['recipe'], run_rows(guards.RECIPE_ROWS, view)
 
 
 def record_number_errors(value, case=None, *, retained=False):
@@ -200,16 +193,8 @@ def integer_value(value):
 
 
 def retry_context_errors(context):
-    if not isinstance(context, dict):
-        return ['retry_context_type']
-    expected = {key: bool for key in ('interruption_fence', 'permission_current',
-        'parent_ceiling_current', 'stop_latched', 'deadline_expired', 'same_child_lineage')}
-    expected.update({key: (int, float) for key in ('attempt_number', 'prior_attempt_number')})
-    expected.update({key: str for key in ('retry_cause', 'prior_state', 'operation_kind')})
-    return ['retry_context_type'] if (any(type(context.get(key)) not in (kind if isinstance(kind, tuple) else (kind,))
-        for key, kind in expected.items()) or 'prior_terminal_reason' not in context
-        or type(context['prior_terminal_reason']) not in (str, type(None))
-        or any(not integer_value(context[key]) for key in ('attempt_number', 'prior_attempt_number'))) else []
+    """OSI-699 transition context types, through the RETRY_CONTEXT table (sweep part 2A)."""
+    return run_rows(guards.RETRY_CONTEXT_ROWS, {'context': context})
 
 
 REQUIRED_ORIGINAL_STAGES = (
@@ -259,100 +244,79 @@ def pack_entry(value, media_type='application/msgpack'):
 
 
 def pack_type_errors(entry):
-    if (not integer_value(entry['byte_size']) or type(entry['bytes_durable']) is not bool
-            or type(entry['index_durable']) is not bool
-            or (entry['media_type'] == 'application/msgpack' and type(entry['value']) is not dict)
-            or (entry['media_type'] == 'text/plain; charset=utf-8' and type(entry['value']) is not str)):
-        return ['payload_pack_types']
-    return []
+    return run_rows(guards.PACK_TYPE_ROWS, {'entry': entry})
 
 
 def pack_errors(entry, *, large=False):
-    if not isinstance(entry, dict) or set(entry) != {
-            'blake3_id', 'byte_size', 'media_type', 'value', 'bytes_durable', 'index_durable'}:
-        return ['payload_pack_shape']
-    type_errors = pack_type_errors(entry)
-    if type_errors:
-        return type_errors
-    if (entry['media_type'] not in ('application/msgpack', 'text/plain; charset=utf-8')
-            or not isinstance(entry['blake3_id'], str)
-            or re.fullmatch(r'blake3:[0-9a-f]{64}', entry['blake3_id']) is None):
-        return ['payload_pack_identifier']
-    try:
-        expected = pack_entry(entry['value'], entry['media_type'])
-    except (TypeError, ValueError, UnicodeError):
-        return ['payload_pack_encoding']
-    if entry != expected or (large and entry['byte_size'] <= LIMIT):
-        return ['payload_pack_integrity_or_durability']
-    return []
+    """SP-337 pack entry, through the PACK tables (sweep part 2A); the original's stops after shape, types,
+    identifier and encoding are kept."""
+    view = {'entry': entry, 'large': large}
+    for table in (guards.PACK_SHAPE_ROWS, guards.PACK_TYPE_ROWS, guards.PACK_IDENTIFIER_ROWS):
+        errors = run_rows(table, view)
+        if errors:
+            return errors
+    view.update(pack_view(entry))
+    errors = run_rows(guards.PACK_ENCODING_ROWS, view)
+    if errors:
+        return errors
+    return run_rows(guards.PACK_INTEGRITY_ROWS, view)
 
 
 def transport_type_errors(event, logical, packs):
-    if (type(event) is not dict or type(logical) is not dict or type(packs) is not dict
-            or type(event.get('payload')) is not dict):
-        return ['payload_types']
-    return []
+    return run_rows(guards.TRANSPORT_TYPE_ROWS, {'event': event, 'logical': logical, 'packs': packs})
 
 
 def transport_errors(event, logical, packs, *, ingest_encoding='decoded'):
-    errors = []
-    type_errors = transport_type_errors(event, logical, packs)
+    """Inline/external transport, through the TRANSPORT and PACK tables (sweep part 2A).
+
+    Sweep part 2A: a missing pack entry is refused once, by the join that looked it up (`external_payload_join` or
+    `content_reference_join`); the PACK rows run on an entry that exists. Before, a missing entry also gave
+    `payload_pack_shape`, the same defect a second time.
+    """
+    view = {'event': event, 'logical': logical, 'packs': packs, 'ingest_encoding': ingest_encoding}
+    type_errors = run_rows(guards.TRANSPORT_TYPE_ROWS, view)
     if type_errors:
         return type_errors
+    errors = []
     try:
-        if len(packed(event['payload'])) > LIMIT:
-            errors.append('inline_payload_over_16k')
-        if event['payload_ref'] is None:
-            if event['payload'] != logical:
-                errors.append('inline_payload_join')
-        else:
-            entry = packs.get(event['payload_ref'])
-            errors += pack_errors(entry, large=True)
-            if (event['payload'] != {} or not entry or entry['value'] != logical
-                    or entry['blake3_id'] != event['payload_ref']
-                    or entry['media_type'] != 'application/msgpack'):
-                errors.append('external_payload_join')
+        view['inline_packed_size'] = len(packed(event['payload']))
+        errors += run_rows(rows_named(guards.TRANSPORT_INLINE_ROWS, ('inline_payload_size',)), view)
+        ref = event['payload_ref']
+        errors += run_rows(rows_named(guards.TRANSPORT_INLINE_ROWS, ('inline_payload_join',)), view)
+        if ref is not None:
+            entry = packs.get(ref)
+            view['payload_entry'] = entry
+            if entry:
+                errors += pack_errors(entry, large=True)
+            errors += run_rows(guards.TRANSPORT_EXTERNAL_ROWS, view)
         if 'content_ref' in logical:
-            ref = logical['content_ref']
-            entry = packs.get(ref['blake3_id'])
-            errors += pack_errors(entry, large=True)
-            if not entry or any(entry.get(k) != v for k, v in ref.items()):
-                errors.append('content_reference_join')
+            entry = packs.get(logical['content_ref']['blake3_id'])
+            view['content_entry'] = entry
+            if entry:
+                errors += pack_errors(entry, large=True)
+            errors += run_rows(guards.TRANSPORT_CONTENT_ROWS, view)
         # An actual ingest adapter identifies encoded input. Literal text may
         # contain a data URI; its characters cannot prove an ingest encoding.
-        if ingest_encoding != 'decoded':
-            errors.append('inline_base64_body')
+        errors += run_rows(guards.TRANSPORT_INGEST_ROWS, view)
     except (TypeError, ValueError, UnicodeError, KeyError):
-        errors.append('payload_encoding')
+        errors += run_rows(guards.TRANSPORT_ENCODING_ROWS, {'transport_encoding_failed': True})
     return errors
 
 
 def phase_context_errors(context):
-    if (type(context) is not dict or not integer_value(context.get('max_questions'))
-            or type(context.get('completion_signal')) is not bool
-            or type(context.get('phase_state')) is not str):
-        return ['phase_context_type']
-    return []
+    return run_rows(guards.APPEND_PHASE_CONTEXT_ROWS, {'family': 'phase.force_completed', 'producer_context': context})
 
 
 def predicate_errors(family, payload, context, retry_allowed):
-    if family == 'phase.force_completed':
-        type_errors = phase_context_errors(context)
-        if type_errors:
-            return type_errors
-        if (context.get('phase_state') != 'active' or context.get('completion_signal') is not False
-                or payload['question_count'] <= payload['max_questions'] + 1
-                or context.get('max_questions') != payload['max_questions']):
-            return ['phase_force_predicate']
-    if family == 'subagent.output_truncated' and payload['original_length'] < payload['truncated_length']:
-        return ['truncation_grows_output']
-    if family == 'subagent.retried':
-        joins = ('retry_cause', 'prior_attempt_number', 'attempt_number', 'child_run_id', 'parent_run_id')
-        if any(payload[k] != context.get(k) for k in joins):
-            return ['retry_payload_source_predicate']
-        if not retry_allowed(context):
-            return ['retry_current_transition']
-    return []
+    """The family producer predicates, through the APPEND_PHASE_CONTEXT, APPEND_PREDICATE, APPEND_RETRY_SOURCE and
+    APPEND_RETRY_TRANSITION tables (sweep part 2A), with the original's stops."""
+    view = {'family': family, 'payload': payload, 'producer_context': context}
+    for table in (guards.APPEND_PHASE_CONTEXT_ROWS, guards.APPEND_PREDICATE_ROWS, guards.APPEND_RETRY_SOURCE_ROWS):
+        errors = run_rows(table, view)
+        if errors:
+            return errors
+    view['retry_transition_allowed'] = bool(retry_allowed(context)) if family == 'subagent.retried' else None
+    return run_rows(guards.APPEND_RETRY_TRANSITION_ROWS, view)
 
 
 def offline_registry(documents):
@@ -462,207 +426,73 @@ def member_payload_schema_id(definition, version):
 
 
 def event_errors(case, schema, identity, retry_allowed, root, formats, *, historical=False):
+    """The append (or, historical, the original-event) check, through the APPEND tables (sweep part 2A)."""
     event, payload = case['event'], case['logical_payload']
-    numeric_errors = record_number_errors([
-        {k: value for k, value in event.items() if k in SEMANTIC_FIELDS},
-        payload, case['producer_context']],
-                                          case, retained=historical)
+    if historical:
+        numeric_errors = number_rule_for_record(case, retained=True)[1]
+    else:
+        numeric_errors = run_rows(guards.APPEND_NUMBER_ROWS, append_number_view(case))
     if numeric_errors:
         return numeric_errors
-    refs = reference_errors(schema, '#/$defs/' + case['definition'], selected_documents(root))
+    view = append_reference_view(case, schema, root)
+    refs = run_rows(guards.APPEND_REFERENCE_ROWS, view)
     if refs:
-        return ['unresolved_schema_reference']
-    v = selected_validators(root, formats)
-    errors = ['event_schema'] if (list(v['event'].iter_errors(event))
-                                  or not storage_sequence_valid(event)) else []
-    if historical and event.get('replay_policy') in ('projector_replay_only', 'dedupe_by_idempotency_key'):
-        pass
-    elif event.get('replay_policy') == 'projector_replay_only':
-        errors.append('replay_only_not_appendable')
-    elif event.get('replay_policy') != 'dedupe_by_idempotency_key':
-        errors.append('family_current_replay_policy')
-    if list(StrictValidator(schema['$defs'][case['definition']], format_checker=formats).iter_errors(payload)):
-        return errors + ['logical_payload_schema']
-    family = case['event_type']
-    if event.get('event_type') != family or re.fullmatch(r'[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+', event.get('event_type', '')) is None:
-        errors.append('event_type_join')
-    key, event_id = identity(family, payload)
-    expected = {'idempotency_key': key, 'event_id': event_id, 'scope_kind': payload['scope'],
-                'project_id': payload.get('project_id'), 'thread_id': payload['thread_id'],
-                'run_id': payload['run_id'], 'occurred_at_utc': payload['occurred_at_utc'],
-                'payload_schema_id': member_payload_schema_id(case['definition'], payload['schema_version'])}
-    errors += ['event_join_' + k for k, value in expected.items() if event.get(k) != value]
-    if case['scope_partition'] != partition(payload):
-        errors.append('scope_partition')
-    errors += predicate_errors(family, payload, case['producer_context'], retry_allowed)
+        return refs
+    view.update(append_shape_view(case, schema, root, formats, historical))
+    errors = run_rows(rows_named(guards.APPEND_SHAPE_ROWS, APPEND_ENVELOPE_ROWS), view)
+    payload_errors = run_rows(rows_named(guards.APPEND_SHAPE_ROWS, ('logical_payload_schema',)), view)
+    if payload_errors:
+        return errors + payload_errors
+    view.update(append_join_view(case, identity))
+    errors += run_rows(guards.APPEND_JOIN_ROWS, view)
+    errors += predicate_errors(case['event_type'], payload, case['producer_context'], retry_allowed)
     errors += transport_errors(event, payload, case['payload_packs'],
                                ingest_encoding=case.get('ingest_encoding', 'decoded'))
     return errors
 
 
 def application_shape_errors(case, root, formats):
-    """Closed original input/source/wrapper preconditions, before relational joins."""
-    v = selected_validators(root, formats)
-    edition = '_v2' if (case['event_type'] == 'crew.board_message_posted' or
-                         case['source'].get('schema_id') == 'pm.application_source.coordination_append.v2') else ''
-    errors = []
-    for kind, value in [('source', case['source']), ('input', case['source'].get('original_input')),
-                        ('wrapper', case['wrapper'])]:
-        if list(v[kind + edition].iter_errors(value)):
-            errors.append('application_' + kind + '_schema')
-    return errors
+    """Closed original input/source/wrapper preconditions, before relational joins (BOARD_APPLICATION_SHAPE_ROWS)."""
+    return run_rows(guards.BOARD_APPLICATION_SHAPE_ROWS, application_shape_view(case, root, formats))
 
 
 def board_source_errors(case, root, formats):
-    """Validate the selected closed original, not a hand-written source summary."""
-    payload, source = case['payload'], case['source']
-    errors = []
+    """Validate the selected closed original, not a hand-written source summary (the BOARD tables, sweep part 2A)."""
+    payload = case['payload']
     if payload['scope'] != 'application':
         # Project source is the unchanged original codec behind an explicit
         # synthetic adapter; the canonical board message itself is joined below.
         shape_errors = project_original_input_errors(case, formats)
         if shape_errors:
             return shape_errors
-        for k in ('scope', 'storage_instance_id', 'server_id', 'thread_id', 'crew_id', 'run_id', 'operation_id', 'project_id'):
-            if source.get(k) != payload.get(k):
-                errors.append('source_' + k)
-        if source.get('edition') != 'original_project_coordination_source' or source.get('interface') != 'storage.coordination_append.v1@1.0.0':
-            errors.append('source_edition')
-        message = source.get('original_input', {})
-        if source.get('message_ids') != payload.get('message_ids', [payload.get('message_id')]):
-            errors.append('message_source')
+        view = board_project_view(case)
+        errors = run_rows(guards.BOARD_PROJECT_SOURCE_ROWS, view)
     else:
-        edition = '_v2' if (case['event_type'] == 'crew.board_message_posted' or
-                         case['source'].get('schema_id') == 'pm.application_source.coordination_append.v2') else ''
-        wrapper = case['wrapper']
-        errors += application_shape_errors(case, root, formats)
+        errors = application_shape_errors(case, root, formats)
         if errors:
             return errors
-        message = source['original_input']
-        if len(packed(wrapper)) > LIMIT:
-            errors.append('application_wrapper_over_16k')
-        if (message['inline_text'] is None) == (message['blake3_payload_ref'] is None):
-            errors.append('application_message_body_representation')
-        errors += scope_failures(source) + scope_failures(wrapper)
-        for value in (source, wrapper):
-            for k in ('storage_instance_id', 'server_id'):
-                if value[k] != payload[k]:
-                    errors.append('source_' + k)
-        if (source['original_operation_id'] != payload['operation_id'] or source['thread_id'] != payload['thread_id']
-                or source['scope'] != message['scope'] or wrapper['scope'] != message['scope']
-                or typed_tree(wrapper['record']) != typed_tree(message)):
-            errors.append('source_original_join')
-        if source['original_input_semantic_sha256'] != semantic_hash('accepted_source', message):
-            errors.append('source_input_digest')
-        if source['original_output_semantic_sha256'] != (None if source['original_output'] is None else semantic_hash('accepted_source', source['original_output'])):
-            errors.append('source_output_digest')
-        if source['source_sha256'] != semantic_hash('accepted_source', {k: x for k, x in source.items() if k != 'source_sha256'}):
-            errors.append('source_digest')
-        for name, stage in source['stage_custody'].items():
-            if stage['original_operation_id'] != source['original_operation_id']:
-                errors.append('source_stage_operation')
-            if stage['owner_method_id'] != source['interface_id']:
-                errors.append('source_stage_method')
-        witness = case.get('accepted_source_witness', {})
-        if (witness.get('ref') != source['accepted_source_ref']
-                or typed_tree(witness.get('value')) != typed_tree(message)
-                or source['accepted_source_sha256'] != semantic_hash('accepted_source', witness.get('value'))):
-            errors.append('accepted_original_source_join')
-        if case.get('physical_record_sha256') != hashlib.sha256(packed(wrapper)).hexdigest():
-            errors.append('wrapper_physical_digest')
-        for name in REQUIRED_ORIGINAL_STAGES:
-            stage = source['stage_custody'][name]
-            if stage['status'] != 'accepted':
-                errors.append('source_stage_status')
-            proof = stage['custody_evidence']
-            witness = case.get('stage_evidence_witnesses', {}).get(name, {})
-            if (proof is None or stage['request_ref'] is None or stage['result_ref'] is None
-                    or witness.get('ref') != (proof or {}).get('source_ref')
-                    or typed_tree(witness.get('value')) != typed_tree(stage_witness_value(case, name))
-                    or (proof or {}).get('source_sha256') != semantic_hash('accepted_source', witness.get('value'))):
-                errors.append('source_stage_evidence')
-        for k in ('thread_id', 'crew_id', 'run_id'):
-            if message[k] != payload[k]:
-                errors.append('message_' + k)
-        ids = payload.get('message_ids', [payload.get('message_id')])
-        if ids != [message['message_id']]:
-            errors.append('message_source')
-        prefix = 'crew_board_message.application.' + ('v2:' if edition else 'v1:')
-        key = prefix + ':'.join(value.encode().hex() for value in (
-            wrapper['storage_instance_id'], wrapper['server_id'], message['thread_id'],
-            message['crew_id'], message['run_id'], message['message_id']))
-        if case['wrapper_key'] != key:
-            errors.append('wrapper_key_join')
-    if case['event_type'] == 'crew.board_message_posted':
-        if payload['scope'] == 'application':
-            for k in ('subject', 'priority'):
-                if message[k] != payload[k]:
-                    errors.append('message_' + k)
-            if message['receiver_agent_type'] != payload.get('to_agent_type'):
-                errors.append('message_target_type')
-        else:
-            for k in ('message_id', 'from_agent_id', 'subject', 'priority', 'to_agent_id', 'to_agent_type'):
-                if message.get(k) != payload.get(k):
-                    errors.append('message_' + k)
-        if payload['scope'] == 'application':
-            if message['sender_agent_id'] != payload['from_agent_id']:
-                errors.append('message_sender')
-            if message['receiver_agent_id'] != payload.get('to_agent_id'):
-                errors.append('message_target')
-            if (message['inline_text'] != payload.get('content')
-                    or message['blake3_payload_ref'] != payload.get('content_ref', {}).get('blake3_id')):
-                errors.append('message_content_join')
-        elif (message.get('content') != payload.get('content')
-              or message.get('content_ref') != payload.get('content_ref')):
-            errors.append('message_content_join')
-    return errors
+        view = board_application_view(case)
+        errors = run_rows(guards.BOARD_APPLICATION_SOURCE_ROWS, view)
+    return errors + run_rows(guards.BOARD_POSTED_ROWS, view)
 
 
 def project_original_input_errors(case, formats):
-    """Validate the unchanged Project adapter before reading any joined value.
+    """Validate the unchanged Project adapter before reading any joined value (the PROJECT_INPUT tables).
 
     OSI-247/299/301 supply the types/enums. This adapter's context names are
     files/operations/sender_node/related_message_ids; no original is rewritten.
     JSON integer semantics on reference sizes retain valid original floats.
     """
     source = case['source']
-    message = source.get('original_input') if type(source) is dict else None
-    if (type(source) is not dict or set(source) != PROJECT_SOURCE_FIELDS
-            or type(message) is not dict or set(message) != PROJECT_MESSAGE_FIELDS):
-        return ['project_original_input_shape']
-    types = {key: str for key in PROJECT_MESSAGE_FIELDS}
-    types.update({key: (str, type(None)) for key in (
-        'to_agent_id', 'to_agent_type', 'to_node_id', 'to_lane_id', 'thread_id',
-        'in_reply_to', 'content')})
-    types.update(content_ref=(dict, type(None)), context=dict, read_by=list, resolved=bool)
-    if (any(type(source[key]) is not str for key in PROJECT_SOURCE_FIELDS - {'original_input', 'message_ids'})
-            or type(source['message_ids']) is not list
-            or any(type(item) is not str for item in source['message_ids'])
-            or any(type(message[key]) not in (kind if type(kind) is tuple else (kind,))
-                   for key, kind in types.items())
-            or any(type(item) is not str for item in message['read_by'])):
-        return ['project_original_input_type']
-    context = message['context']
-    if (set(context) != {'files', 'operations', 'sender_node', 'related_message_ids'}
-            or type(context['sender_node']) not in (str, type(None))
-            or any(type(context[key]) is not list or any(type(item) is not str for item in context[key])
-                   for key in ('files', 'operations', 'related_message_ids'))):
-        return ['project_original_input_type']
-    ref = message['content_ref']
-    if ref is not None and (set(ref) != {'blake3_id', 'byte_size', 'media_type'}
-            or type(ref['blake3_id']) is not str or type(ref['media_type']) is not str
-            or not integer_value(ref['byte_size'])):
-        return ['project_original_input_type']
-    if (message['message_type'] not in ('Question', 'Answer', 'Update', 'Request', 'Decision', 'Warning', 'Announcement')
-            or message['priority'] not in ('low', 'normal', 'high', 'urgent')
-            or source['message_schema'] != 'original_project_agent_message'
-            or not formats.conforms(message['created_at'], 'date-time')
-            or (message['content'] is None) == (ref is None)
-            or (message['content'] is not None and not inline_body(message['content']))
-            or (ref is not None and (re.fullmatch(r'blake3:[0-9a-f]{64}', ref['blake3_id']) is None
-                or ref['byte_size'] <= LIMIT or ref['media_type'] != 'text/plain; charset=utf-8'))):
-        return ['project_original_input_value']
-    return []
+    view = {'source': source, 'message': source.get('original_input') if type(source) is dict else None}
+    for table in (guards.PROJECT_INPUT_SHAPE_ROWS, guards.PROJECT_INPUT_TYPE_ROWS):
+        errors = run_rows(table, view)
+        if errors:
+            return errors
+    message = view['message']
+    view['created_at_conforms'] = formats.conforms(message['created_at'], 'date-time')
+    view['content_inline_body'] = inline_body(message['content']) if message['content'] is not None else None
+    return run_rows(guards.PROJECT_INPUT_VALUE_ROWS, view)
 
 
 # The definitions the V2 graph reaches in the two shared aggregates, and their content digests.
@@ -680,82 +510,20 @@ SELECTED_SHARED_DEFINITIONS = {
 
 
 def selected_definition_errors(documents):
-    """Refuse a change to a selected shared definition, whatever the whole-file pin says."""
+    """Refuse a change to a selected shared definition, whatever the whole-file pin says (SELECTED_DEFINITION_ROWS)."""
+    selected_sha256 = {}
     for name, selection in SELECTED_SHARED_DEFINITIONS.items():
         selected = {x: documents[name].get('$defs', {}).get(x) for x in selection['names']}
         encoded = json.dumps(selected, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()
-        if hashlib.sha256(encoded).hexdigest() != selection['sha256']:
-            return ['successor_selected_definitions']
-    return []
+        selected_sha256[name] = hashlib.sha256(encoded).hexdigest()
+    view = {'selected_sha256': selected_sha256,
+            'pinned_sha256': {name: selection['sha256'] for name, selection in SELECTED_SHARED_DEFINITIONS.items()}}
+    return run_rows(guards.SELECTED_DEFINITION_ROWS, view)
 
 
 def successor_errors(root):
-    """Pin the whole live successor selection without rewriting frozen graphs."""
-    doc = json.loads((root / 'Plans/application_board_message_v2.schema.json').read_text())
-    graph = json.loads((root / 'Plans/application_board_message_v2_graph.json').read_text())
-    errors = reference_errors(doc, documents=selected_documents(root))
-    if graph['graph_sha256'] != semantic_hash('source_graph', {k:v for k,v in graph.items() if k != 'graph_sha256'}):
-        errors.append('successor_graph_digest')
-    expected_resources = {'Plans/' + name + '.schema.json': selected_documents(root)[name]['$id']
-        for name in ('application_board_message_v2', 'application_workflow_contracts',
-                     'shared_integration_runtime', 'coordination_projection_contracts')}
-    if ({x['path']: x['schema_uri'] for x in graph['resources']} != expected_resources
-            or len(graph['resources']) != len(expected_resources)
-            or any(x['sha256'] != hashlib.sha256((root / x['path']).read_bytes()).hexdigest()
-                   for x in graph['resources'])):
-        errors.append('successor_resource_selection')
-    errors.extend(selected_definition_errors(selected_documents(root)))
-    method = graph['methods'][0]
-    expected_method = {'interface_id': 'storage.coordination_append.application@2.0.0',
-        'owner_doc': 'Plans/Contracts_V0.md#CV-740',
-        'source_root_ref': 'Plans/application_board_message_v2.schema.json#/$defs/OriginalCoordinationAppendSourceV2',
-        'input_root_ref': 'Plans/application_board_message_v2.schema.json#/$defs/AgentMessageApplicationV2',
-        'output_root_ref': 'Plans/application_workflow_contracts.schema.json#/$defs/CoordinationProjectionApplicationV1',
-        'current_or_retained_role': 'original_current_and_retained_exact'}
-    if method != expected_method or len(graph['methods']) != 1:
-        errors.append('successor_method_selection')
-    g = graph['graphs'][0]
-    stages = list(doc['$defs']['OriginalCoordinationAppendSourceV2']['properties']['stage_custody']['properties'])
-    expected_edges = [{'from_role': a, 'to_role': b, 'interface_id': expected_method['interface_id'],
-        'input_root_ref': expected_method['input_root_ref'], 'output_root_ref': expected_method['output_root_ref']}
-        for a,b in zip(stages, stages[1:])]
-    if (g['graph_id'] != 'app.coordination_append.v2' or g['ordered_role_edges'] != expected_edges
-            or g['participating_method_ids'] != [expected_method['interface_id']]
-            or g['physical_family_ids'] != ['crew_board_message_application_v2']
-            or g['event_selectors'] != ['crew.board_message_posted@1.0.0', 'crew.board_message_read@1.0.0', 'crew.board_messages_archived@1.0.0']
-            or g['reader_ids'] != ['reader.orchestrator.crew_board_message_posted.history.v1@1.0.0']):
-        errors.append('successor_complete_graph')
-    physical = graph['physical_selection']
-    if (physical['wrapper_root_ref'] != 'Plans/application_board_message_v2.schema.json#/$defs/CrewBoardMessageStorageApplicationV2'
-            or physical['codec_id'] != 'pm.crew_board_message.application.physical_messagepack.v2'
-            or physical['codec_algorithm'] != 'pm.application.physical_messagepack.v1'
-            or physical['key_prefix'] != 'crew_board_message.application.v2'):
-        errors.append('successor_physical_selection')
-    rb = graph['read_backup_restore']
-    if any(rb[k] != value for k,value in {
-        'canonical_reader_id':'storage.crew_board_message.read.application@2.0.0',
-        'backup_method_id':'storage.crew_board_message.backup.application@2.0.0',
-        'restore_method_id':'storage.crew_board_message.restore.application@2.0.0',
-        'wrapper_root_ref':physical['wrapper_root_ref'], 'source_root_ref':method['source_root_ref'],
-        'owner_ref':'Plans/storage-plan.md#SP-723', 'backup_owner_ref':'Plans/Backup_Restore_System.md#BRS-033',
-        'same_source_access_deletion_hold_fences':True}.items()):
-        errors.append('successor_read_backup_restore')
-    storage = json.loads((root / 'Plans/storage_value_registry.json').read_text())
-    rows = [x for x in storage['families'] if x['family_id'] == 'crew_board_message_application_v2']
-    if len(rows) != 1:
-        return errors + ['successor_storage_member']
-    row = rows[0]
-    if (row['value_schema'] != doc['$defs']['CrewBoardMessageStorageApplicationV2']
-            or row['schema_version'] != '2.0.0' or row['value_schema_id'] != 'pm.storage_value.crew_board_message.application.v2'
-            or row['value_schema_ref'] != physical['wrapper_root_ref']
-            or storage['storage_profile']['family_profiles'].get('crew_board_message_application_v2') != {
-                'redb_file':'canonical', 'storage_group':'coordination_and_storage',
-                'encoding_target':'messagepack_canonical',
-                'encoding_note':'SP-723 governed V2 wrapper uses CV-366 deterministic MessagePack algorithm; frozen V1 remains exact.',
-                'max_value_bytes':16384}
-            or row['key_shape'] != physical['key_prefix'] + ':{hex(storage_instance_id)}:{hex(server_id)}:{hex(thread_id)}:{hex(crew_id)}:{hex(run_id)}:{hex(message_id)}'):
-        errors.append('successor_storage_selection')
-    return errors
+    """Pin the whole live successor selection without rewriting frozen graphs (the SUCCESSOR tables, sweep part 2A)."""
+    return successor_errors_from(successor_inputs(root))
 
 
 @lru_cache(maxsize=1)
@@ -776,59 +544,42 @@ def retry_shape_valid(event):
 
 
 def retry_outcome(original, candidate):
-    if record_number_errors({k: value for k, value in candidate.items() if k in SEMANTIC_FIELDS}):
-        return {'status': 'number_domain', 'appended': False, 'receipt': None}
-    if not retry_shape_valid(original) or not retry_shape_valid(candidate):
-        return {'status': 'retry_value_schema', 'appended': False, 'receipt': None}
-    # Refuse replay-only even if event/key and semantic fields are identical.
-    if candidate['replay_policy'] == 'projector_replay_only':
-        return {'status': 'replay_only_not_appendable', 'appended': False, 'receipt': None}
-    selected = (original['scope_kind'], original['project_id'], original['event_type'], original['idempotency_key'])
-    proposed = (candidate['scope_kind'], candidate['project_id'], candidate['event_type'], candidate['idempotency_key'])
-    if selected != proposed or original['event_id'] != candidate['event_id']:
-        return {'status': 'different_identity', 'appended': False, 'receipt': None}
-    if semantic_digest(original) != semantic_digest(candidate):
-        return {'status': 'idempotency_conflict', 'appended': False, 'receipt': None}
+    """Retry of an original append, through the RETRY tables (sweep part 2A): the first stage that refuses gives the
+    status; otherwise the original receipt, unchanged."""
+    view = retry_view(original, candidate)
+    for table in (guards.RETRY_NUMBER_ROWS, guards.RETRY_SHAPE_ROWS, guards.RETRY_REPLAY_ROWS, guards.RETRY_IDENTITY_ROWS):
+        errors = run_rows(table, view)
+        if errors:
+            return {'status': errors[0], 'appended': False, 'receipt': None}
+    view.update(original_semantic_digest=semantic_digest(original), candidate_semantic_digest=semantic_digest(candidate))
+    errors = run_rows(guards.RETRY_SEMANTIC_ROWS, view)
+    if errors:
+        return {'status': errors[0], 'appended': False, 'receipt': None}
     return {'status': 'original_result', 'appended': False, 'receipt': copy.deepcopy(original)}
 
 
 def historical_read_errors(case, schema, owner_module):
+    """The retained-history read, through the HISTORICAL tables plus the checkpoint and original-event tables (sweep
+    part 2A). Only captured original facts enter original-event validation: current live child/phase/model/board/
+    Stop/deadline/permission state cannot recapture them."""
     root, formats = owner_module.ROOT, owner_module.UTC_FORMAT
     state = case.get('historical_reader_state')
-    validators = selected_validators(root, formats)
-    if not validators['historical'].is_valid(state):
-        return ['historical_state_schema']
+    view = {'historical_state_valid': selected_validators(root, formats)['historical'].is_valid(state)}
+    errors = run_rows(guards.HISTORICAL_STATE_ROWS, view)
+    if errors:
+        return errors
     recipe, recipe_errors = number_rule_for_record(case, retained=True)
     if recipe_errors:
         return recipe_errors
     errors = checkpoint_errors(case, root, formats)
-    family, payload, event = case['event_type'], case['logical_payload'], case['event']
-    expected_reader = 'reader.orchestrator.' + family.replace('.', '_') + '.history.v1@1.0.0'
-    if state['event_type'] != family or state['reader_id'] != expected_reader:
-        errors.append('historical_reader_identity')
-    if state['reader_status'] == 'withdrawn' or state['publication_state'] != 'published':
-        errors.append('historical_reader_withdrawn')
-    if state['supported_payload_schema'] != event['payload_schema_id']:
-        errors.append('historical_schema_unsupported')
-    admission = state['original_admission']
-    expected = {'event_type': family, 'family_revision': payload['schema_version'],
-                'payload_schema_id': event['payload_schema_id'], 'event_id': event['event_id'],
-                'scope_partition': case['scope_partition'], 'storage_instance_id': payload['storage_instance_id']}
-    if not admission['admitted_when_written'] or any(admission[k] != value for k, value in expected.items()):
-        errors.append('historical_original_admission')
-    if (state['original_source_sha256'] != hashlib.sha256(packed(event)).hexdigest()
-            or state['original_source_ref'] != 'seglog:' + event['event_id']
-            or not state['original_source_verified']):
-        errors.append('historical_original_source')
-    # Only captured original facts enter original-event validation. Current live
-    # child/phase/model/board/Stop/deadline/permission state cannot recapture them.
+    view.update(historical_view(case))
+    errors += run_rows(guards.HISTORICAL_READER_ROWS, view)
     original = copy.deepcopy(case)
     original['producer_context'] = state['original_producer_context']
     selected_identity = lambda family, payload: owner_module.historical_identity(family, payload, recipe)
     errors += event_errors(original, schema, selected_identity, owner_module.retry_allowed,
                            root, formats, historical=True)
-    if not state['current_access_allowed'] or state['source_deleted'] or not state['hold_allows_disclosure']:
-        errors.append('historical_disclosure_fence')
+    errors += run_rows(guards.HISTORICAL_DISCLOSURE_ROWS, view)
     return errors
 
 
@@ -841,27 +592,109 @@ def recover_original(case, schema, owner_module, candidate=None):
     return {'status': 'original_result', 'appended': False, 'receipt': copy.deepcopy(case['event'])}
 
 
-def checkpoint_errors(case, root, formats):
-    _, recipe_errors = number_rule_for_record(case, retained=True)
-    if recipe_errors:
-        return recipe_errors
-    read = case['read']; cp, token, row = read['checkpoint'], read['read_token'], read['row']
+# ---- Guard tables (sweep part 2A) ------------------------------------------------------------------------------
+# Every DO refusal is a named predicate in `pm_orchestrator_event_guards`; the checkers below reach a refusal only
+# through `run_rows`. A view is the flat dict of the case's own fields and the values recomputed from them that the
+# rows read; each row sees only the keys it declares, so an undeclared read fails here as a KeyError.
+
+def run_rows(rows, view, context=None):
+    """Evaluate every row in order and return the refusal codes, a compound group's code once."""
+    errors, groups = [], set()
+    for name, _subject, _words, code, predicate, reads, group in rows:
+        result = predicate({key: view[key] for key in reads}, context)
+        if result is None:
+            continue
+        if type(result) is not str or result != code:
+            raise AssertionError(('guard_protocol', name, result))
+        if group is not None:
+            if group in groups:
+                continue
+            groups.add(group)
+        errors.append(code)
+    return errors
+
+
+def refusing_rows(rows, view, context=None):
+    """The matrix row of one input: the name of every row that refuses it, with no early stop and no grouping."""
+    return [row[0] for row in rows if all(key in view for key in row[5])
+            and row[4]({key: view[key] for key in row[5]}, context) is not None]
+
+
+def rows_named(rows, names):
+    selected = tuple(row for row in rows if row[0] in names)
+    assert tuple(row[0] for row in selected) == tuple(names), ('rows_named', names)
+    return selected
+
+
+ROW_EVENT_COPY_ROWS = ('index_row_scope_kind', 'index_row_project_id', 'index_row_scope_partition', 'index_row_sequence_id',
+                       'index_row_event_id', 'index_row_event_type', 'index_row_producer_semantic_digest',
+                       'index_row_idempotency_key', 'index_row_payload_sha256', 'index_row_correlation_id',
+                       'index_row_causation_event_id', 'index_row_persisted_at_utc', 'index_row_redaction_profile',
+                       'index_row_source_schema_id', 'index_row_source_schema_version', 'index_row_projector_replay_only')
+COVERAGE_COPY_ROWS = (
+    'coverage_segment_count', 'coverage_segment_generation', 'coverage_segment_name', 'coverage_frame_byte_offset',
+    'coverage_frame_end_offset', 'coverage_scanned_through_offset', 'coverage_source_durable_end_offset',
+    'coverage_source_durable_bytes_sha256')
+SEQUENCE_COPY_ROWS = (
+    'coverage_first_retained_sequence_id', 'coverage_through_sequence_id', 'coverage_retained_event_count',
+    'coverage_frame_last_sequence_id', 'coverage_segment_first_sequence_id', 'coverage_segment_last_sequence_id',
+    'coverage_segment_retained_event_count', 'segment_name_first_sequence', 'segment_name_last_sequence',
+    'anchor_first_retained_sequence_id', 'anchor_through_sequence_id', 'anchor_retained_event_count')
+SEGMENT_IDENTITY_ROWS = ('segment_name_generation', 'segment_name_state')
+SELECTION_COPY_ROWS = (
+    'anchor_selected_segment_generation', 'frontier_selected_segment_generation', 'frontier_current_bytes_sha256',
+    'frontier_recovery_epoch', 'frontier_excluded_ranges_sha256', 'frontier_retired_inputs_sha256',
+    'anchor_sequence_gaps_sha256')
+SEQUENCE_GAP_ROWS = ('sequence_gap_retained', 'sequence_gap_order')
+ROW_LOCATOR_ROWS = ('row_source_segment_generation', 'row_source_segment_name', 'row_source_byte_offset',
+                    'row_source_sequence_id', 'row_translation_ref')
+GENERATION_COPY_ROWS = ('generation_id_copy', 'generation_dataset_name', 'generation_id_recipe',
+                        'generation_translation_origin', 'translation_target_selection')
+CHECKPOINT_STAGES = ('CHECKPOINT_SCHEMA_ROWS', 'CHECKPOINT_IDENTITY_ROWS', 'CHECKPOINT_CURRENT_ROWS',
+                     'CHECKPOINT_JOIN_ROWS', 'CHECKPOINT_FRAME_ROWS', 'CHECKPOINT_COVERAGE_ROWS')
+
+
+def typed_text(value):
+    """The exact-type tree of a value (`typed_tree`) as one canonical JSON string: two values are typed-equal exactly
+    when their strings are equal. A view carries the string, not the tree, because the guard tool snapshots every node
+    of the value at each predicate instruction."""
+    return json.dumps(typed_tree(value), ensure_ascii=False, separators=(',', ':'))
+
+
+def recipe_view(case):
+    state = case['historical_reader_state']
+    recipe = state['original_identity_recipe']
+    expected = recipe_witness_value(case, recipe)
+    return {'recipe': recipe, 'recipe_evidence': state['original_recipe_evidence'], 'recipe_expected_value': expected,
+            'recipe_expected_source_ref': 'writer-recipe:' + case['event']['event_id'],
+            'recipe_expected_source_sha256': hashlib.sha256(packed(expected)).hexdigest()}
+
+
+def checkpoint_schema_view(case, root, formats):
     v = selected_validators(root, formats)
-    if list(v['checkpoint'].iter_errors(cp)) or list(v['read_token'].iter_errors(token)):
-        return ['checkpoint_schema']
-    event, payload = case['event'], case['logical_payload']
-    errors = []
-    storage_id = payload['storage_instance_id']
-    # DO-P1F06: every comparison below is by exact type (typed_tree), so 1.0, "1" or true is never 1, and each
-    # copy is compared with its source, never with another copy of it.
-    if typed_tree(cp['storage_instance_id']) != typed_tree(storage_id):
-        errors.append('checkpoint_storage_identity')
-    if typed_tree(token['storage_instance_id']) != typed_tree(storage_id):
-        errors.append('checkpoint_storage_identity')
+    read = case['read']
+    return {'checkpoint_schema_valid': not list(v['checkpoint'].iter_errors(read['checkpoint'])),
+            'read_token_schema_valid': not list(v['read_token'].iter_errors(read['read_token']))}
+
+
+def checkpoint_identity_view(case):
+    read = case['read']
+    return {'storage_instance_id': case['logical_payload']['storage_instance_id'],
+            'checkpoint_storage_instance_id': read['checkpoint']['storage_instance_id'], 'read_token': read['read_token']}
+
+
+def checkpoint_current_view(case):
+    cp = case['read']['checkpoint']
+    return {'current_generation_id': cp['current_generation_id'],
+            'generation_states': {key: node['state'] for key, node in cp['generations'].items()}}
+
+
+def checkpoint_join_view(case, root, formats):
+    read, event = case['read'], case['event']
+    cp, token, row = read['checkpoint'], read['read_token'], read['row']
+    storage_id = case['logical_payload']['storage_instance_id']
     generation_id = cp['current_generation_id']
-    node = cp['generations'].get(generation_id)
-    if node is None or node['state'] != 'current' or sum(n['state'] == 'current' for n in cp['generations'].values()) != 1:
-        return errors + ['checkpoint_not_current']
+    node = cp['generations'][generation_id]
     frontier = node['frontier']
     key = 'event_record_index_checkpoint.v1:' + storage_id
     expected = {'storage_instance_id': storage_id, 'checkpoint_key': key,
@@ -870,73 +703,332 @@ def checkpoint_errors(case, root, formats):
         'frontier_revision': frontier['publication_revision'], 'frontier_sha256': binding_digest(frontier),
         'index_dataset_name': 'event_record_index.v2@' + generation_id,
         'source_selection': frontier['source_selection'], 'redb_snapshot_id': read['snapshot_id']}
-    if typed_tree(token) != typed_tree(expected):
-        errors.append('checkpoint_read_token_join')
-    if typed_tree(read['current_source_selection']) != typed_tree(frontier['source_selection']):
-        errors.append('checkpoint_read_token_join')
-    for selection in (node['anchor']['source_selection'], frontier['source_selection']):
-        if typed_tree(selection['storage_instance_id']) != typed_tree(storage_id):
-            errors.append('checkpoint_source_storage_identity')
-    errors += row_event_copy_errors(case, row)
+    typed_token_selection = typed_text(token['source_selection'])
+    typed_frontier_selection = typed_text(frontier['source_selection'])
+    typed_current_selection = typed_text(read['current_source_selection'])
+    expected_row = expected_row_copies(case)
     row_key = f"event_record_index.v2:{case['scope_partition']}:{event['sequence_id']:020}:{event['event_id']}"
-    if typed_tree(read['row_key']) != typed_tree(row_key):
-        errors.append('index_row_locator_join')
-    if typed_tree(row['publication_locator']['checkpoint_ref']) != typed_tree(expected['checkpoint_ref']):
-        errors.append('index_row_locator_join')
     source_value_sha256 = hashlib.sha256(packed(event)).hexdigest()
-    if typed_tree(read['source_event']) != typed_tree(event):
-        errors.append('index_original_source_join')
-    if typed_tree(read['source_value_sha256']) != typed_tree(source_value_sha256):
-        errors.append('index_original_source_join')
-    row_schema = index_row_schema(root)
-    if list(StrictValidator(row_schema, format_checker=formats).iter_errors(row)):
-        errors.append('index_row_schema')
-    expected_set = binding_digest({'domain': 'pm.event_index.row_set.v1',
-                                  'entries': [{'key': read['row_key'], 'value': row}]})
-    if typed_tree(frontier['index_row_count']) != typed_tree(1):
-        errors.append('index_complete_row_set')
-    if typed_tree(frontier['index_row_set_sha256']) != typed_tree(expected_set):
-        errors.append('index_complete_row_set')
+    row_schema_valid = not list(StrictValidator(index_row_schema(root), format_checker=formats).iter_errors(row))
+    expected_set = binding_digest({'domain': 'pm.event_index.row_set.v1', 'entries': [{'key': read['row_key'], 'value': row}]})
     # The prefix is recomputed from the event's own bytes, not from the read's copy of their hash.
-    expected_prefix = typed_tree(binding_digest({'domain': 'pm.event_index.retained_prefix.v1', 'entries': [{
+    expected_prefix = binding_digest({'domain': 'pm.event_index.retained_prefix.v1', 'entries': [{
         'sequence_id': event['sequence_id'], 'event_id': event['event_id'],
-        'scope_partition': case['scope_partition'], 'source_value_sha256': source_value_sha256}]}))
-    if typed_tree(node['anchor']['retained_event_prefix_sha256']) != expected_prefix:
-        errors.append('index_source_prefix')
-    if typed_tree(frontier['coverage']['retained_event_prefix_sha256']) != expected_prefix:
-        errors.append('index_source_prefix')
-    if typed_tree(node['anchor']['source_selection']['manifest_survivor_prefix_sha256']) != expected_prefix:
-        errors.append('index_source_prefix')
-    if typed_tree(frontier['source_selection']['manifest_survivor_prefix_sha256']) != expected_prefix:
-        errors.append('index_source_prefix')
-    # The row's birth triple: the two manifest facts are the anchor's, and the survivor prefix is the prefix itself.
-    locator = row['publication_locator']
-    if typed_tree(locator['manifest_generation']) != typed_tree(node['anchor']['source_selection']['manifest_generation']):
-        errors.append('index_birth_anchor_join')
-    if typed_tree(locator['recovery_epoch']) != typed_tree(node['anchor']['source_selection']['recovery_epoch']):
-        errors.append('index_birth_anchor_join')
-    if typed_tree(locator['survivor_prefix_sha256']) != expected_prefix:
-        errors.append('index_birth_anchor_join')
-    coverage = frontier['coverage']
-    # DO-P1F05: a null last frame names no frame, so none of the frame and segment copies below can be read.
-    # The schema admits it only in the empty-retained-source form, which a frontier covering this event
-    # contradicts. Refused here with its own code, where it used to raise TypeError.
-    if coverage['last_frame'] is None:
-        return errors + ['index_coverage_last_frame_null']
-    # DO-P1F05: the sequence facts that used to share this code are now sequence_copy_errors predicates.
-    if coverage['complete_to_captured_boundary'] is not True:
-        errors.append('index_complete_source_coverage')
-    if typed_tree(coverage['last_frame']['last_event_id']) != typed_tree(event['event_id']):
-        errors.append('index_coverage_frame_last_event_id')
-    errors += coverage_copy_errors(event, coverage)
-    errors += sequence_copy_errors(event, node['anchor'], coverage)
-    # DO-P1F06: the segment identity, source selection, gap, row locator and generation identity copies.
-    errors += segment_identity_errors(coverage)
-    errors += selection_copy_errors(node['anchor'], frontier)
-    errors += sequence_gap_errors(event, coverage)
-    errors += row_locator_copy_errors(event, row, node, coverage)
-    errors += generation_copy_errors(storage_id, cp['generations'])
-    return errors
+        'scope_partition': case['scope_partition'], 'source_value_sha256': source_value_sha256}]})
+    return {'expected_read_token': expected, 'typed_read_token_source_selection': typed_token_selection,
+            'typed_frontier_source_selection': typed_frontier_selection,
+            'typed_current_source_selection': typed_current_selection,
+            'anchor_source_selection': node['anchor']['source_selection'],
+            'frontier_source_selection': frontier['source_selection'], 'row': row, 'expected_row': expected_row,
+            'row_key': read['row_key'], 'expected_row_key': row_key, 'typed_source_event': typed_text(read['source_event']),
+            'typed_event': typed_text(event), 'source_value_sha256': read['source_value_sha256'],
+            'expected_source_value_sha256': source_value_sha256, 'index_row_schema_valid': row_schema_valid,
+            'frontier_index_row_count': frontier['index_row_count'],
+            'frontier_index_row_set_sha256': frontier['index_row_set_sha256'], 'expected_row_set_sha256': expected_set,
+            'anchor': node['anchor'], 'coverage': frontier['coverage'], 'expected_prefix_sha256': expected_prefix}
+
+
+def frame_name_view(coverage, event):
+    """The last frame's segment-name fields, parsed by the grammar outside the predicates (a predicate calls no
+    helper): the three groups, or None when the name is not a string the grammar matches; the frame's generation in
+    at least six digits; and, with an event, its sequence in 20 digits."""
+    frame = coverage['last_frame']
+    name = frame['segment_name'] if type(frame) is dict else None
+    match = SEGMENT_NAME.fullmatch(name) if type(name) is str else None
+    generation = frame['segment_generation'] if type(frame) is dict else None
+    view = {'coverage': coverage, 'frame_segment_name_groups': list(match.groups()) if match else None,
+            'frame_generation_digits': f'{generation:06}' if type(generation) is int and generation >= 0 else None}
+    if event is not None:
+        sequence = event['sequence_id']
+        view.update(event_sequence_id=sequence, event_sequence_digits=f'{sequence:020}' if type(sequence) is int else None)
+    return view
+
+
+def generation_view(storage_instance_id, generations):
+    return {'generation_copies': {key: {'generation_id': node['generation_id'], 'index_dataset_name': node['index_dataset_name'],
+                                        'origin': node['origin'], 'translation': node['translation']}
+                                  for key, node in generations.items()},
+            'generation_recipe_ids': {key: generation_identity(storage_instance_id, node) for key, node in generations.items()},
+            'generation_birth_selection_sha256': {key: binding_digest(node['anchor']['source_selection'])
+                                                  for key, node in generations.items()}}
+
+
+def checkpoint_coverage_view(case):
+    event, cp = case['event'], case['read']['checkpoint']
+    node = cp['generations'][cp['current_generation_id']]
+    view = frame_name_view(node['frontier']['coverage'], event)
+    view.update(event_id=event['event_id'], event_packed_size=len(packed(event)), empty_gaps_sha256=EMPTY_GAPS_SHA256,
+                current_translation=node['translation'])
+    view.update(generation_view(case['logical_payload']['storage_instance_id'], cp['generations']))
+    return view
+
+
+def checkpoint_full_view(case, root, formats):
+    """Every checkpoint view key the case can give, stage by stage, for the guard matrix and the guard tool: a stage
+    whose inputs the case does not hold (a missing current node, a null last frame) ends the view there, exactly where
+    the checker stops."""
+    view = recipe_view(case)
+    for build in (lambda: checkpoint_schema_view(case, root, formats), lambda: checkpoint_identity_view(case),
+                  lambda: checkpoint_current_view(case), lambda: checkpoint_join_view(case, root, formats),
+                  lambda: checkpoint_coverage_view(case)):
+        try:
+            view.update(build())
+        except (KeyError, TypeError, AttributeError, IndexError):
+            break
+    return view
+
+
+
+APPEND_ENVELOPE_ROWS = ('event_record_schema', 'event_storage_sequence', 'replay_only_not_appendable',
+                        'family_current_replay_policy')
+EVENT_TYPE_PATTERN = re.compile(r'[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+')
+
+
+def pack_view(entry):
+    try:
+        return {'expected_entry': pack_entry(entry['value'], entry['media_type']), 'pack_encoding_failed': False}
+    except (TypeError, ValueError, UnicodeError):
+        return {'expected_entry': None, 'pack_encoding_failed': True}
+
+
+def append_number_view(case):
+    event = case['event']
+    return {'number_domain_errors': list(dict.fromkeys(number_domain_errors([
+        {k: value for k, value in event.items() if k in SEMANTIC_FIELDS}, case['logical_payload'], case['producer_context']])))}
+
+
+def append_reference_view(case, schema, root):
+    return {'schema_reference_errors': reference_errors(schema, '#/$defs/' + case['definition'], selected_documents(root))}
+
+
+def append_shape_view(case, schema, root, formats, historical):
+    event, payload = case['event'], case['logical_payload']
+    v = selected_validators(root, formats)
+    event_valid = not list(v['event'].iter_errors(event))
+    return {'event': event, 'historical': historical, 'event_schema_valid': event_valid,
+            # The original evaluated the uint64 rule only when the record schema passed.
+            'storage_sequence_valid': storage_sequence_valid(event) if event_valid else True,
+            'payload_schema_valid': not list(StrictValidator(schema['$defs'][case['definition']],
+                                                             format_checker=formats).iter_errors(payload))}
+
+
+def append_join_view(case, identity):
+    event, payload, family = case['event'], case['logical_payload'], case['event_type']
+    event_type = event.get('event_type', '')
+    key, event_id = identity(family, payload)
+    return {'family': family,
+            'event_type_pattern_valid': type(event_type) is str and EVENT_TYPE_PATTERN.fullmatch(event_type) is not None,
+            'expected_event': {'idempotency_key': key, 'event_id': event_id, 'scope_kind': payload['scope'],
+                               'project_id': payload.get('project_id'), 'thread_id': payload['thread_id'],
+                               'run_id': payload['run_id'], 'occurred_at_utc': payload['occurred_at_utc'],
+                               'payload_schema_id': member_payload_schema_id(case['definition'], payload['schema_version'])},
+            'scope_partition': case['scope_partition'], 'expected_scope_partition': partition(payload)}
+
+
+def append_full_view(case, schema, identity, retry_allowed, root, formats, historical=False):
+    """Every append view key the case can give, for the guard matrix and the guard tool (stops where the checker
+    stops: a number-domain or reference refusal, or a payload the closed schema refuses)."""
+    view = {} if historical else append_number_view(case)
+    for build in (lambda: append_reference_view(case, schema, root),
+                  lambda: append_shape_view(case, schema, root, formats, historical),
+                  lambda: append_join_view(case, identity)):
+        try:
+            view.update(build())
+        except (KeyError, TypeError, ValueError, AttributeError):
+            break
+    view.update(family=case['event_type'], payload=case['logical_payload'], producer_context=case['producer_context'])
+    view['retry_transition_allowed'] = (bool(retry_allowed(case['producer_context']))
+                                        if case['event_type'] == 'subagent.retried' else None)
+    return view
+
+
+def transport_full_view(event, logical, packs, ingest_encoding='decoded'):
+    view = {'event': event, 'logical': logical, 'packs': packs, 'ingest_encoding': ingest_encoding,
+            'transport_encoding_failed': False}
+    try:
+        view['inline_packed_size'] = len(packed(event['payload']))
+        ref = event['payload_ref']
+        view['payload_entry'] = packs.get(ref) if ref is not None else None
+        view['content_entry'] = packs.get(logical['content_ref']['blake3_id']) if 'content_ref' in logical else None
+    except (TypeError, ValueError, UnicodeError, KeyError, AttributeError):
+        view['transport_encoding_failed'] = True
+    return view
+
+
+
+def retry_view(original, candidate):
+    view = {'original': original, 'candidate': candidate,
+            'candidate_number_errors': record_number_errors({k: value for k, value in candidate.items() if k in SEMANTIC_FIELDS})}
+    if not view['candidate_number_errors']:
+        view['original_shape_valid'] = retry_shape_valid(original)
+        # The original evaluated the candidate's shape only when the original's held.
+        view['candidate_shape_valid'] = retry_shape_valid(candidate) if view['original_shape_valid'] else None
+    return view
+
+
+def retry_full_view(original, candidate):
+    view = {'original': original, 'candidate': candidate,
+            'candidate_number_errors': record_number_errors({k: value for k, value in candidate.items() if k in SEMANTIC_FIELDS})}
+    view['original_shape_valid'] = retry_shape_valid(original)
+    view['candidate_shape_valid'] = retry_shape_valid(candidate) if view['original_shape_valid'] else None
+    try:
+        view.update(original_semantic_digest=semantic_digest(original), candidate_semantic_digest=semantic_digest(candidate))
+    except (KeyError, TypeError, ValueError):
+        view.update(original_semantic_digest=None, candidate_semantic_digest=None)
+    return view
+
+
+def historical_view(case):
+    state, event, payload, family = case['historical_reader_state'], case['event'], case['logical_payload'], case['event_type']
+    return {'state': state, 'family': family,
+            'expected_reader_id': 'reader.orchestrator.' + family.replace('.', '_') + '.history.v1@1.0.0',
+            'event_payload_schema_id': event['payload_schema_id'],
+            'expected_admission': {'event_type': family, 'family_revision': payload['schema_version'],
+                                   'payload_schema_id': event['payload_schema_id'], 'event_id': event['event_id'],
+                                   'scope_partition': case['scope_partition'], 'storage_instance_id': payload['storage_instance_id']},
+            'expected_original_source_sha256': hashlib.sha256(packed(event)).hexdigest(),
+            'expected_original_source_ref': 'seglog:' + event['event_id']}
+
+
+def historical_full_view(case, root, formats):
+    view = {'historical_state_valid': selected_validators(root, formats)['historical'].is_valid(case.get('historical_reader_state'))}
+    try:
+        view.update(historical_view(case))
+    except (KeyError, TypeError, AttributeError):
+        pass
+    return view
+
+
+
+def board_member_view(name, owner_defs, orchestrator_defs):
+    definition = owner_defs.get(name)
+    return {'definition': definition, 'orchestrator': orchestrator_defs.get(name), 'expected_id': f'pm.event_payload.{name}.v1',
+            'definition_body': ({key: value for key, value in definition.items() if key not in ('$schema', '$id')}
+                                if isinstance(definition, dict) else None)}
+
+
+def coordination_storage_view(row, expected):
+    return {'typed_row': typed_text(row), 'typed_expected_row': typed_text(expected)}
+
+
+
+def successor_inputs(root):
+    """The files successor_errors reads, loaded once; negatives change these in memory."""
+    graph = json.loads((root / 'Plans/application_board_message_v2_graph.json').read_text())
+    return {'doc': json.loads((root / 'Plans/application_board_message_v2.schema.json').read_text()), 'graph': graph,
+            'documents': selected_documents(root),
+            'file_sha256': {x['path']: hashlib.sha256((root / x['path']).read_bytes()).hexdigest() for x in graph['resources']},
+            'storage': json.loads((root / 'Plans/storage_value_registry.json').read_text())}
+
+
+def successor_view(inputs):
+    doc, graph, documents, storage = inputs['doc'], inputs['graph'], inputs['documents'], inputs['storage']
+    stages = list(doc['$defs']['OriginalCoordinationAppendSourceV2']['properties']['stage_custody']['properties'])
+    method = graph['methods'][0]
+    rows = [x for x in storage['families'] if x['family_id'] == 'crew_board_message_application_v2']
+    row = rows[0] if len(rows) == 1 else None
+    view = {'successor_reference_errors': reference_errors(doc, documents=documents), 'graph': graph,
+            'expected_graph_sha256': semantic_hash('source_graph', {k: v for k, v in graph.items() if k != 'graph_sha256'}),
+            'resource_paths': {x['path']: x['schema_uri'] for x in graph['resources']},
+            'expected_resource_paths': {'Plans/' + name + '.schema.json': documents[name]['$id'] for name in (
+                'application_board_message_v2', 'application_workflow_contracts', 'shared_integration_runtime',
+                'coordination_projection_contracts')},
+            'file_sha256': inputs['file_sha256'],
+            'expected_edges': [{'from_role': a, 'to_role': b, 'interface_id': method['interface_id'],
+                                'input_root_ref': method['input_root_ref'], 'output_root_ref': method['output_root_ref']}
+                               for a, b in zip(stages, stages[1:])],
+            'storage_member_count': len(rows),
+            'storage_row': {k: v for k, v in row.items() if k != 'value_schema'} if row else None,
+            'storage_value_schema_text': typed_text(row['value_schema']) if row else None,
+            'wrapper_definition_text': typed_text(doc['$defs']['CrewBoardMessageStorageApplicationV2']),
+            'storage_profile': storage['storage_profile']['family_profiles'].get('crew_board_message_application_v2')}
+    return view
+
+
+def successor_errors_from(inputs):
+    view = successor_view(inputs)
+    errors = run_rows(guards.SUCCESSOR_ROWS, view)
+    errors += selected_definition_errors(inputs['documents'])
+    errors += run_rows(guards.SUCCESSOR_GRAPH_ROWS, view)
+    count = run_rows(guards.SUCCESSOR_STORAGE_COUNT_ROWS, view)
+    if count:
+        return errors + count
+    return errors + run_rows(guards.SUCCESSOR_STORAGE_ROWS, view)
+
+
+
+def application_shape_view(case, root, formats):
+    v = selected_validators(root, formats)
+    edition = '_v2' if (case['event_type'] == 'crew.board_message_posted' or
+                         case['source'].get('schema_id') == 'pm.application_source.coordination_append.v2') else ''
+    return {'source_schema_valid': not list(v['source' + edition].iter_errors(case['source'])),
+            'input_schema_valid': not list(v['input' + edition].iter_errors(case['source'].get('original_input'))),
+            'wrapper_schema_valid': not list(v['wrapper' + edition].iter_errors(case['wrapper']))}
+
+
+def board_project_view(case):
+    payload, source = case['payload'], case['source']
+    return {'payload': payload, 'source': source, 'message': source.get('original_input', {}), 'event_type': case['event_type'],
+            'payload_message_ids': payload.get('message_ids', [payload.get('message_id')])}
+
+
+def board_application_view(case):
+    payload, source, wrapper = case['payload'], case['source'], case['wrapper']
+    message = source['original_input']
+    edition = '_v2' if (case['event_type'] == 'crew.board_message_posted' or
+                         source.get('schema_id') == 'pm.application_source.coordination_append.v2') else ''
+    witness = case.get('accepted_source_witness', {})
+    witnesses = case.get('stage_evidence_witnesses', {})
+    prefix = 'crew_board_message.application.' + ('v2:' if edition else 'v1:')
+    stage_expected = {}
+    for name in REQUIRED_ORIGINAL_STAGES:
+        stage_witness = witnesses.get(name, {})
+        stage_expected[name] = {'typed_witness': typed_text(stage_witness.get('value')),
+                                'typed_expected': typed_text(stage_witness_value(case, name)),
+                                'witness_sha256': semantic_hash('accepted_source', stage_witness.get('value'))}
+    return {'payload': payload, 'source': source, 'message': message, 'wrapper': wrapper, 'event_type': case['event_type'],
+            'wrapper_packed_size': len(packed(wrapper)),
+            'source_scope_failures': scope_failures(source), 'wrapper_scope_failures': scope_failures(wrapper),
+            'typed_wrapper_record': typed_text(wrapper['record']), 'typed_message': typed_text(message),
+            'expected_input_digest': semantic_hash('accepted_source', message),
+            'expected_output_digest': (None if source['original_output'] is None
+                                       else semantic_hash('accepted_source', source['original_output'])),
+            'expected_source_digest': semantic_hash('accepted_source', {k: x for k, x in source.items() if k != 'source_sha256'}),
+            'witness': witness, 'typed_witness_value': typed_text(witness.get('value')),
+            'expected_accepted_sha256': semantic_hash('accepted_source', witness.get('value')),
+            'physical_record_sha256': case.get('physical_record_sha256'),
+            'expected_physical_sha256': hashlib.sha256(packed(wrapper)).hexdigest(),
+            'stage_witnesses': witnesses, 'stage_expected': stage_expected,
+            'payload_message_ids': payload.get('message_ids', [payload.get('message_id')]),
+            'wrapper_key': case['wrapper_key'],
+            'expected_wrapper_key': prefix + ':'.join(value.encode().hex() for value in (
+                wrapper['storage_instance_id'], wrapper['server_id'], message['thread_id'],
+                message['crew_id'], message['run_id'], message['message_id']))}
+
+
+def checkpoint_errors(case, root, formats):
+    """The checkpoint read, through the guard tables (sweep part 2A). The stages and early stops are the original's."""
+    view = recipe_view(case)
+    recipe_errors = run_rows(guards.RECIPE_ROWS, view)
+    if recipe_errors:
+        return recipe_errors
+    view.update(checkpoint_schema_view(case, root, formats))
+    errors = run_rows(guards.CHECKPOINT_SCHEMA_ROWS, view)
+    if errors:
+        return errors
+    view.update(checkpoint_identity_view(case))
+    errors = run_rows(guards.CHECKPOINT_IDENTITY_ROWS, view)
+    view.update(checkpoint_current_view(case))
+    current = run_rows(guards.CHECKPOINT_CURRENT_ROWS, view)
+    if current:
+        return errors + current
+    view.update(checkpoint_join_view(case, root, formats))
+    errors += run_rows(guards.CHECKPOINT_JOIN_ROWS, view)
+    frame = run_rows(guards.CHECKPOINT_FRAME_ROWS, view)
+    if frame:
+        return errors + frame
+    view.update(checkpoint_coverage_view(case))
+    return errors + run_rows(guards.CHECKPOINT_COVERAGE_ROWS, view)
 
 
 # DO-P1F06: the index row's copies of the event, compared field by field. The first eight were read before this
@@ -984,9 +1076,9 @@ def expected_row_copies(case):
 
 def row_event_copy_errors(case, row):
     """Each index-row copy of the event, by exact type, with its own code `index_row_<field>`."""
-    expected = expected_row_copies(case)
-    assert tuple(expected) == ROW_EVENT_COPY_FIELDS
-    return ['index_row_' + k for k in ROW_EVENT_COPY_FIELDS if typed_tree(row.get(k)) != typed_tree(expected[k])]
+    view = {'row': row, 'expected_row': expected_row_copies(case)}
+    assert tuple(view['expected_row']) == ROW_EVENT_COPY_FIELDS
+    return run_rows(rows_named(guards.CHECKPOINT_JOIN_ROWS, ROW_EVENT_COPY_ROWS), view)
 
 
 SEGMENT_IDENTITY_CODES = ('index_coverage_segment_name_generation', 'index_coverage_segment_name_state')
@@ -1002,16 +1094,7 @@ def segment_identity_errors(coverage):
     owner gives no separate name for `sealed_degraded`, which is immutable like `closed`, so both take `.seglog`.
     The name is read from the last frame; DO-P1F04's `index_coverage_segment_name` joins the segment's copy to it.
     """
-    frame, segment = coverage['last_frame'], coverage['segments'][0]
-    name = SEGMENT_NAME.fullmatch(frame['segment_name']) if type(frame['segment_name']) is str else None
-    generation = frame['segment_generation']
-    digits = f'{generation:06}' if type(generation) is int and generation >= 0 else None
-    errors = []
-    if name is None or name.group(1) != digits:
-        errors.append('index_coverage_segment_name_generation')
-    if name is not None and (name.group(3) is None) != (typed_tree(segment['state']) == typed_tree('active')):
-        errors.append('index_coverage_segment_name_state')
-    return errors
+    return run_rows(rows_named(guards.CHECKPOINT_COVERAGE_ROWS, SEGMENT_IDENTITY_ROWS), frame_name_view(coverage, None))
 
 
 SELECTION_COPY_CODES = (
@@ -1038,25 +1121,9 @@ def selection_copy_errors(anchor, frontier):
       change on an ordinary append (storage-plan.md:21291) and are not tied here (the prefix has its own guard).
     - The anchor's gap digest: EMPTY_GAPS_SHA256.
     """
-    frame = frontier['coverage']['last_frame']
-    birth, current = anchor['source_selection'], frontier['source_selection']
-    generation = typed_tree(frame['segment_generation'])
-    errors = []
-    if typed_tree(birth['selected_segment_generation']) != generation:
-        errors.append('index_anchor_selected_segment_generation')
-    if typed_tree(current['selected_segment_generation']) != generation:
-        errors.append('index_frontier_selected_segment_generation')
-    if typed_tree(current['current_bytes_sha256']) != typed_tree(birth['current_bytes_sha256']):
-        errors.append('index_frontier_current_bytes_sha256')
-    if typed_tree(current['recovery_epoch']) != typed_tree(birth['recovery_epoch']):
-        errors.append('index_frontier_recovery_epoch')
-    if typed_tree(current['excluded_ranges_sha256']) != typed_tree(birth['excluded_ranges_sha256']):
-        errors.append('index_frontier_excluded_ranges_sha256')
-    if typed_tree(current['retired_inputs_sha256']) != typed_tree(birth['retired_inputs_sha256']):
-        errors.append('index_frontier_retired_inputs_sha256')
-    if typed_tree(anchor['sequence_gaps_sha256']) != typed_tree(EMPTY_GAPS_SHA256):
-        errors.append('index_anchor_sequence_gaps_sha256')
-    return errors
+    view = {'coverage': frontier['coverage'], 'anchor': anchor, 'anchor_source_selection': anchor['source_selection'],
+            'frontier_source_selection': frontier['source_selection'], 'empty_gaps_sha256': EMPTY_GAPS_SHA256}
+    return run_rows(rows_named(guards.CHECKPOINT_COVERAGE_ROWS, SELECTION_COPY_ROWS), view)
 
 
 SEQUENCE_GAP_CODES = ('index_coverage_sequence_gap_retained', 'index_coverage_sequence_gap_order')
@@ -1065,18 +1132,11 @@ SEQUENCE_GAP_CODES = ('index_coverage_sequence_gap_retained', 'index_coverage_se
 def sequence_gap_errors(event, coverage):
     """DO-P1F06: the frontier's gaps are free data (SP-278: legal gaps need actual manifest evidence this value does
     not carry), bounded here by two facts the value itself contradicts: a gap names sequence ids with no retained
-    event, so it cannot hold the covered event's own sequence; and a gap's first id is not after its last."""
-    sequence = event['sequence_id']
-    gaps = coverage['sequence_gaps']
-    # Exact type: a bound that is not an integer (1.0, "1", true, null) makes no ordered range; it is refused as an
-    # unordered gap, never compared numerically.
-    ordered = lambda gap: type(gap['first_sequence_id']) is int and type(gap['last_sequence_id']) is int
-    errors = []
-    if any(ordered(gap) and gap['first_sequence_id'] <= sequence <= gap['last_sequence_id'] for gap in gaps):
-        errors.append('index_coverage_sequence_gap_retained')
-    if any(not ordered(gap) or gap['first_sequence_id'] > gap['last_sequence_id'] for gap in gaps):
-        errors.append('index_coverage_sequence_gap_order')
-    return errors
+    event, so it cannot hold the covered event's own sequence; and a gap's first id is not after its last. A bound
+    that is not an integer (1.0, "1", true, null) makes no ordered range; it is refused as an unordered gap, never
+    compared numerically."""
+    view = {'coverage': coverage, 'event_sequence_id': event['sequence_id']}
+    return run_rows(rows_named(guards.CHECKPOINT_COVERAGE_ROWS, SEQUENCE_GAP_ROWS), view)
 
 
 ROW_LOCATOR_CODES = (
@@ -1095,23 +1155,9 @@ def row_locator_copy_errors(event, row, node, coverage):
     unless the generation carries a translation, and then it is null (an appended suffix row) or that translation's
     manifest (SP-278: translated rows keep their ref, suffix rows use none).
     """
-    frame, segment = coverage['last_frame'], coverage['segments'][0]
-    source = row['source_locator'] if isinstance(row.get('source_locator'), dict) else {}
-    publication = row['publication_locator'] if isinstance(row.get('publication_locator'), dict) else {}
-    errors = []
-    if typed_tree(source.get('segment_generation')) != typed_tree(frame['segment_generation']):
-        errors.append('index_row_source_segment_generation')
-    if typed_tree(source.get('segment_name')) != typed_tree(frame['segment_name']):
-        errors.append('index_row_source_segment_name')
-    if typed_tree(source.get('byte_offset')) != typed_tree(segment['scan_start_offset']):
-        errors.append('index_row_source_byte_offset')
-    if typed_tree(source.get('sequence_id')) != typed_tree(event['sequence_id']):
-        errors.append('index_row_source_sequence_id')
-    translation = node['translation']
-    allowed = [typed_tree(None)] + ([typed_tree(translation['manifest_ref'])] if translation is not None else [])
-    if typed_tree(publication.get('compaction_translation_manifest_ref')) not in allowed:
-        errors.append('index_row_translation_ref')
-    return errors
+    view = {'coverage': coverage, 'row': row, 'event_sequence_id': event['sequence_id'],
+            'current_translation': node['translation']}
+    return run_rows(rows_named(guards.CHECKPOINT_COVERAGE_ROWS, ROW_LOCATOR_ROWS), view)
 
 
 GENERATION_COPY_CODES = (
@@ -1138,21 +1184,8 @@ def generation_copy_errors(storage_instance_id, generations):
     binds that generation's own birth selection (storage-plan.md:21297; the binding wrapper covers source-selection
     objects used in translation, :21275).
     """
-    errors = []
-    for key, node in generations.items():
-        if typed_tree(node['generation_id']) != typed_tree(key):
-            errors.append('index_generation_id')
-        if typed_tree(node['index_dataset_name']) != typed_tree('event_record_index.v2@' + key):
-            errors.append('index_generation_dataset_name')
-        if typed_tree(generation_identity(storage_instance_id, node)) != typed_tree(key):
-            errors.append('index_generation_id_recipe')
-        translation = node['translation']
-        if translation is not None and typed_tree(node['origin']) != typed_tree('compaction_shadow'):
-            errors.append('index_generation_translation_origin')
-        if translation is not None and typed_tree(translation['target_selection_sha256']) != typed_tree(
-                binding_digest(node['anchor']['source_selection'])):
-            errors.append('index_translation_target_selection')
-    return errors
+    return run_rows(rows_named(guards.CHECKPOINT_COVERAGE_ROWS, GENERATION_COPY_ROWS),
+                    generation_view(storage_instance_id, generations))
 
 
 P1F06_CODES = (tuple('index_row_' + k for k in ROW_EVENT_COPY_FIELDS[8:]) + SEGMENT_IDENTITY_CODES
@@ -1172,31 +1205,12 @@ def coverage_copy_errors(event, coverage):
     In this lane's one-event model the coverage holds one segment, the one the last frame names, and its one
     frame is the event's complete canonical MessagePack bytes (`packed`) from the segment's scan start. So the
     frame end, the segment's scanned-through and durable end offsets and its durable bytes' SHA-256 are each
-    recomputed from the event, never trusted as supplied, and compared by exact type (`typed_tree`), so 1344.0
-    or "1344" is not 1344. The first four predicates locate the segment and frame those copies are read from.
+    recomputed from the event, never trusted as supplied, and compared by exact type, so 1344.0 or "1344" is not
+    1344. The first four predicates locate the segment and frame those copies are read from.
     """
     data = packed(event)
-    size, digest = typed_tree(len(data)), typed_tree(hashlib.sha256(data).hexdigest())
-    frame, segments = coverage['last_frame'], coverage['segments']
-    segment = segments[0]
-    errors = []
-    if len(segments) != 1:
-        errors.append('index_coverage_segment_count')
-    if typed_tree(segment['segment_generation']) != typed_tree(frame['segment_generation']):
-        errors.append('index_coverage_segment_generation')
-    if typed_tree(segment['segment_name']) != typed_tree(frame['segment_name']):
-        errors.append('index_coverage_segment_name')
-    if typed_tree(frame['byte_offset']) != typed_tree(segment['scan_start_offset']):
-        errors.append('index_coverage_frame_byte_offset')
-    if typed_tree(frame['frame_end_offset']) != size:
-        errors.append('index_coverage_frame_end_offset')
-    if typed_tree(segment['scanned_through_offset']) != size:
-        errors.append('index_coverage_scanned_through_offset')
-    if typed_tree(segment['source_durable_end_offset']) != size:
-        errors.append('index_coverage_source_durable_end_offset')
-    if typed_tree(segment['source_durable_bytes_sha256']) != digest:
-        errors.append('index_coverage_source_durable_bytes_sha256')
-    return errors
+    view = {'coverage': coverage, 'event_packed_size': len(data), 'expected_source_value_sha256': hashlib.sha256(data).hexdigest()}
+    return run_rows(rows_named(guards.CHECKPOINT_COVERAGE_ROWS, COVERAGE_COPY_ROWS), view)
 
 
 SEQUENCE_COPY_CODES = (
@@ -1218,40 +1232,13 @@ def sequence_copy_errors(event, anchor, coverage):
     covered event, in the one segment the last frame names. So each first, through and last sequence is the
     event's Storage-assigned `sequence_id`, each retained count is one, and the segment name's first-sequence field
     (and a closed name's last-sequence field) is that number in 20 zero-padded digits. Every copy is recomputed from
-    the event and compared by exact type (`typed_tree`), so 7.0, "7", true or null is not 7 and true is not 1.
+    the event and compared by exact type, so 7.0, "7", true or null is not 7 and true is not 1.
     The name is read from the last frame; DO-P1F04's `index_coverage_segment_name` joins the segment's name to it.
     Requires a non-null last frame: checkpoint_errors refuses a null one first.
     """
-    sequence, one = typed_tree(event['sequence_id']), typed_tree(1)
-    digits = f"{event['sequence_id']:020}" if type(event['sequence_id']) is int else None
-    frame, segment = coverage['last_frame'], coverage['segments'][0]
-    name = SEGMENT_NAME.fullmatch(frame['segment_name']) if type(frame['segment_name']) is str else None
-    errors = []
-    if typed_tree(coverage['first_retained_sequence_id']) != sequence:
-        errors.append('index_coverage_first_retained_sequence_id')
-    if typed_tree(coverage['through_sequence_id']) != sequence:
-        errors.append('index_coverage_through_sequence_id')
-    if typed_tree(coverage['retained_event_count']) != one:
-        errors.append('index_coverage_retained_event_count')
-    if typed_tree(frame['last_sequence_id']) != sequence:
-        errors.append('index_coverage_frame_last_sequence_id')
-    if typed_tree(segment['first_sequence_id']) != sequence:
-        errors.append('index_coverage_segment_first_sequence_id')
-    if typed_tree(segment['last_sequence_id']) != sequence:
-        errors.append('index_coverage_segment_last_sequence_id')
-    if typed_tree(segment['retained_event_count']) != one:
-        errors.append('index_coverage_segment_retained_event_count')
-    if name is None or name.group(2) != digits:
-        errors.append('index_coverage_segment_name_first_sequence')
-    if name is not None and name.group(3) is not None and name.group(3) != digits:
-        errors.append('index_coverage_segment_name_last_sequence')
-    if typed_tree(anchor['first_retained_sequence_id']) != sequence:
-        errors.append('index_anchor_first_retained_sequence_id')
-    if typed_tree(anchor['through_sequence_id']) != sequence:
-        errors.append('index_anchor_through_sequence_id')
-    if typed_tree(anchor['retained_event_count']) != one:
-        errors.append('index_anchor_retained_event_count')
-    return errors
+    view = frame_name_view(coverage, event)
+    view['anchor'] = anchor
+    return run_rows(rows_named(guards.CHECKPOINT_COVERAGE_ROWS, SEQUENCE_COPY_ROWS), view)
 
 
 def coverage_copy_negatives(case):
@@ -1724,9 +1711,9 @@ def join_negatives(case):
 
     Before this round only `checkpoint_storage_identity` (standing check 7) had a fixture negative, and the read-token
     loop asserted only a non-empty refusal. Each negative here changes one derived field and keeps every dependent copy
-    in step, as identity_copy_negatives does. The read token's storage instance is one invariant at two sites
-    (`checkpoint_storage_identity` and the token join), so its negative names both codes. Yields like
-    identity_copy_negatives.
+    in step, as identity_copy_negatives does. The read token's storage instance is one invariant; sweep part 2A keeps
+    it at one site (`read_token_storage_identity`, code `checkpoint_storage_identity`) and drops the token join's
+    repeat of it, so its negative names that code alone. Yields like identity_copy_negatives.
     """
     event = case['event']
     read = case['read']
@@ -1753,7 +1740,7 @@ def join_negatives(case):
     changes = (
         ('checkpoint_storage_instance_id', ['checkpoint_storage_identity'], lambda c: c['read']['checkpoint'].update(
             storage_instance_id=FOREIGN_STORAGE_ID), None, True),
-        ('token_storage_instance_id', ['checkpoint_storage_identity', 'checkpoint_read_token_join'],
+        ('token_storage_instance_id', ['checkpoint_storage_identity'],
          lambda c: token(c).update(storage_instance_id=FOREIGN_STORAGE_ID), None, True),
         ('token_checkpoint_key', ['checkpoint_read_token_join'], lambda c: token(c).update(checkpoint_key=foreign_key), None, True),
         ('token_checkpoint_ref', ['checkpoint_read_token_join'], lambda c: token(c).update(

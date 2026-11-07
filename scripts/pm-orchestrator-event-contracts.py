@@ -53,60 +53,38 @@ def historical_identity(family, payload, recipe):
 
 
 def retry_allowed(context):
-    """OSI-699 static transition oracle, never a native attempt dispatcher."""
-    if oracles.retry_context_errors(context):
-        return False
-    cause = context['retry_cause']
-    prior = context['prior_state']
-    source_allowed = ((cause == 'failure' and prior == 'failed')
-                      or (cause == 'blockage' and prior == 'blocked')
-                      or (cause == 'interruption' and prior in ('running', 'awaiting_parent', 'blocked')
-                          and context['interruption_fence']))
-    return (source_allowed and context['prior_terminal_reason'] != 'superseded'
-            and context['permission_current'] and context['parent_ceiling_current']
-            and not context['stop_latched'] and not context['deadline_expired']
-            and context['same_child_lineage'] and context['operation_kind'] == 'retry'
-            and context['attempt_number'] == context['prior_attempt_number'] + 1)
+    """OSI-699 static transition oracle, never a native attempt dispatcher.
 
+    Sweep part 2A: the clauses are the rows of `RETRY_TRANSITION_ROWS` (types first, through RETRY_CONTEXT); a retry
+    is allowed exactly when no row refuses.
+    """
+    view = {'context': context, 'context_type_errors': oracles.retry_context_errors(context)}
+    return not oracles.run_rows(oracles.guards.RETRY_TRANSITION_ROWS, view)
 
 BOARD = ('crew.board_message_posted', 'crew.board_message_read', 'crew.board_messages_archived')
 
 
-def board_join_errors(case):
-    """Exact source/append/run joins, using supplied canonical-source fixtures only."""
-    payload, source, envelope = case['payload'], case['source'], case['envelope']
-    if oracles.record_number_errors(payload) or oracles.record_number_errors(envelope):
-        return ['number_domain']
-    errors = []
-    errors += oracles.board_source_errors(case, ROOT, UTC_FORMAT)
-    app = payload['scope'] == 'application'
-    expected_partition = ('app' if app else 'project~' + base64.urlsafe_b64encode(
-        payload['project_id'].encode()).decode().rstrip('='))
-    if (case['event_type'] not in BOARD or envelope.get('payload_schema_id') !=
-            oracles.member_payload_schema_id(case['event_type'].replace('.', '_'), payload.get('schema_version'))):
-        errors.append('board_family_payload_join')
-    if 'schema_id' in payload:
-        errors.append('board_member_stored_header')
-    if envelope.get('scope_partition') != expected_partition:
-        errors.append('scope_partition')
-    for field in ('scope', 'run_id', 'thread_id', 'occurred_at_utc', 'project_id'):
-        if envelope.get(field) != payload.get(field):
-            errors.append('envelope_' + field)
-    if envelope.get('replay_policy') != 'dedupe_by_idempotency_key':
-        errors.append('replay_only_not_appendable' if envelope.get('replay_policy') == 'projector_replay_only'
-                      else 'family_current_replay_policy')
+def board_join_view(case):
+    payload, envelope = case['payload'], case['envelope']
     key, event_id = identity(case['event_type'], payload)
-    if envelope.get('idempotency_key') != key or envelope.get('event_id') != event_id:
-        errors.append('identity')
-    terminal = case.get('terminal_run')
-    if terminal is not None:
-        for field in ('scope', 'storage_instance_id', 'server_id', 'thread_id', 'crew_id', 'run_id', 'project_id'):
-            if terminal.get(field) != payload.get(field):
-                errors.append('run_anchor_' + field)
-        if terminal.get('kind') != 'first_durable_terminal_canonical_run':
-            errors.append('run_anchor_kind')
-    return errors
+    return {'payload': payload, 'envelope': envelope, 'event_type': case['event_type'],
+            'expected_payload_schema_id': oracles.member_payload_schema_id(case['event_type'].replace('.', '_'),
+                                                                           payload.get('schema_version')),
+            'expected_scope_partition': ('app' if payload['scope'] == 'application' else 'project~' + base64.urlsafe_b64encode(
+                payload['project_id'].encode()).decode().rstrip('=')),
+            'expected_idempotency_key': key, 'expected_event_id': event_id, 'terminal_run': case.get('terminal_run')}
 
+
+def board_join_errors(case):
+    """Exact source/append/run joins, using supplied canonical-source fixtures only; through the BOARD_NUMBER, BOARD
+    source and BOARD_JOIN tables (sweep part 2A)."""
+    numbers = {'payload_number_errors': oracles.record_number_errors(case['payload']),
+               'envelope_number_errors': oracles.record_number_errors(case['envelope'])}
+    errors = oracles.run_rows(oracles.guards.BOARD_NUMBER_ROWS, numbers)
+    if errors:
+        return errors
+    errors = oracles.board_source_errors(case, ROOT, UTC_FORMAT)
+    return errors + oracles.run_rows(oracles.guards.BOARD_JOIN_ROWS, board_join_view(case))
 
 def selected_definition_checks():
     """Each selected shared definition refuses one change; an edit elsewhere in the same file does not."""
@@ -214,14 +192,18 @@ def board_storage_checks(schema, fixtures, storage, owner):
     coordination = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(coordination)
     expected = coordination.expected_svr_rows()['coordination_event_records']
-    assert row == expected, 'actual_coordination_storage_member_drift'
+    member = oracles.guards.COORDINATION_STORAGE_ROWS
+    assert not oracles.run_rows(member, oracles.coordination_storage_view(row, expected)), 'actual_coordination_storage_member_drift'
     # Negative: the same row with one sentence back on the retired branch citation differs from the
-    # expected row in that field alone, so the comparison above refuses a stale copy on either side.
+    # expected row in that field alone, so the row above refuses a stale copy on either side.
     landed = 'is landed in this registry (Storage retention landing `4d52bd2758526cd0e8a56358baaa73049c1d4bdd`)'
     retired = 'remains on origin/plans/ea-storage-retention-20261104'
     assert row['retention_compaction'].count(landed) == 1 and retired not in row['retention_compaction']
     drifted = dict(row, retention_compaction=row['retention_compaction'].replace(landed, retired))
     assert drifted != expected and [k for k in row if drifted[k] != row[k]] == ['retention_compaction']
+    assert oracles.run_rows(member, oracles.coordination_storage_view(drifted, expected)) == ['actual_coordination_storage_member_drift']
+    assert oracles.run_rows(member, oracles.coordination_storage_view(row, dict(expected, retention_compaction=drifted['retention_compaction']))) == [
+        'actual_coordination_storage_member_drift']
     checks += 1
     original = json.loads((ROOT / 'Plans/coordination_event_payloads.schema.json').read_text())
     for name in ['lineage_envelope', 'non_secret_ref'] + [coordination.DEF_BY_TYPE[t] for t in coordination.SEVEN] + ['debug_mirror_exported']:

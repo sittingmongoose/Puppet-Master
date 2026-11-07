@@ -417,22 +417,19 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
 
 
 def board_member_definition_failures(owner_defs: dict[str, Any], orchestrator_defs: dict[str, Any]) -> list[dict[str, Any]]:
-    """SP-320 and SP-720..722: each board member lives in the owner file value_schema_ref names, carries no stored schema_id, and equals the Orchestrator's closed definition."""
+    """SP-320 and SP-720..722: each board member lives in the owner file value_schema_ref names, carries no stored schema_id, and equals the Orchestrator's closed definition.
+
+    DO sweep part 2A: the clauses are the rows of the DO guard table `BOARD_MEMBER_ROWS`, run per member; a missing member stops there.
+    """
+    import pm_orchestrator_event_guards as guards
+    import pm_orchestrator_event_oracles as oracles
     failures: list[dict[str, Any]] = []
     for name in BOARD_MEMBERS:
-        label = {"definition": name}
-        definition, orchestrator = owner_defs.get(name), orchestrator_defs.get(name)
-        if not isinstance(definition, dict) or not isinstance(orchestrator, dict):
-            failures.append({"error": "board_member_definition_missing", **label})
-            continue
-        if "schema_id" in definition.get("properties", {}) or "schema_id" in definition.get("required", []):
-            failures.append({"error": "board_member_stored_header", **label})
-        if definition.get("$id") != f"pm.event_payload.{name}.v1":
-            failures.append({"error": "board_member_schema_id", **label})
-        if {key: value for key, value in definition.items() if key not in ("$schema", "$id")} != orchestrator:
-            failures.append({"error": "board_member_copy_drift", **label})
+        view = oracles.board_member_view(name, owner_defs, orchestrator_defs)
+        missing = oracles.run_rows(guards.BOARD_MEMBER_ROWS[:1], view)
+        codes = missing or oracles.run_rows(guards.BOARD_MEMBER_ROWS[1:], view)
+        failures += [{"error": code, "definition": name} for code in codes]
     return failures
-
 
 def board_member_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     return board_member_definition_failures(load(PAYLOAD_PATH, root)["$defs"], load(BOARD_PAYLOAD_PATH, root)["$defs"])
