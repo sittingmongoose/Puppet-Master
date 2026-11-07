@@ -69,8 +69,8 @@
  *      starts 5 s late), pod-delay-2s (2 s late), pod-twitch (2 s late, and the Pod jumps off the control for 40 ms
  *      every 400 ms), pod-rolebutton (2 s late, over transcript buttons rebuilt as div[role=button]) and pod-twitch-alone
  *      (no late fade: for 2.4 s after a scroll the Pod jumps off-screen for two frames every 200 ms, its data-shy cleared
- *      and set again 90 ms after it returns) and pod-late-attr (data-shy itself set just past the shy step's allowance, the
- *      check plus its slack and the longest frame gap, by one frame and 40 ms) are real overlaps a person would see, and
+ *      and set again 90 ms after it returns) and pod-late-attr (data-shy itself held to a fixed 250 ms after the product's
+ *      own probe grid finds a control under the Pod, T93; the committed allowance is about 190 ms) are real overlaps a person would see, and
  *      must fail it; so must pod-shyhost-typo (the page's SHY_HOST reads 'buton') and
  *      pod-declared-slow (the page declares a 2000 ms fade), which run on an edited copy of the page. T91: 18b measures
  *      the product's clear wait from the running code (a probe control under the Pod, taken away when data-shy goes on),
@@ -1760,6 +1760,9 @@ const POD_SHY_SLACK_MS = 80, POD_FADE_SLACK_MS = 60, POD_TARGET_SLACK = .02;
 const POD_CLEAR_SLACK_MS = 20;
 /* T58: past the episode's own deadline, how long the Pod may be above its shy target over a control in one episode */
 const POD_EPISODE_ALLOW_MS = 300;
+/* T93: how long the pod-late-attr self-test holds data-shy after a control comes under the Pod (the product's 90 ms check
+   plus 160 ms; a fixed number, so it does not move with the check's own allowance) */
+const POD_LATE_ATTR_MS = 250;
 /* T92: in any POD_WINDOW_MS, how long in all the Pod may be above its shy target over a control, across episodes */
 const POD_WINDOW_MS = 2000, POD_WINDOW_ALLOW_MS = 700;
 /* the values the product is meant to have (70-nier-pod-shy.js and nier-parts.js at the time of T57): the controls its shy
@@ -1806,7 +1809,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       await setTheme(p, 'nier-dark');
       await p.evaluate(() => window.PM56_DEMO.setVariant(1, 5));
       /* (the page-edit self-tests, pod-shyhost-typo and pod-declared-slow, add nothing here: their page is the edit) */
-      if (SELFTEST && !PAGE_EDITS[SELFTEST]) await p.evaluate(kind => {
+      if (SELFTEST && !PAGE_EDITS[SELFTEST]) await p.evaluate(([kind, X]) => {
         const css = t => { const st = document.createElement('style'); st.textContent = t; document.head.appendChild(st); };
         if (kind === 'pod-never-shy') css('#o55np-pod, #o55np-pod[data-shy] { opacity: 1 !important; transition: none !important; }');
         /* T47: data-shy goes on in time, but the fade starts 2 s late, inside the 3 s settle bound: the Pod stays opaque
@@ -1830,23 +1833,33 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
         /* T58 (the round-2 review's twitch-alone2): no late fade; for 2.4 s after any scroll, every 200 ms the Pod jumps
            off-screen (3000 px right, where no control is under it) for two frames and its data-shy is cleared, and
            data-shy is set again 90 ms after the Pod returns. The 180 ms fade restarts every 200 ms and never ends */
-        /* T59 (the batch-3 worker's stated limit): data-shy itself late, set on the first frame after the shy step's own
-           allowance has run out by 40 ms (the product's check plus the slack and the longest frame gap since the control
-           came under the Pod, read from the check's own monitor), so the trap sits just past the slack, not far beyond
-           it. Removing data-shy cancels a set still held. Nothing else changes: the fade, its timing and the target are
-           the product's own */
+        /* T59 (the batch-3 worker's stated limit): data-shy itself late. T93 (TOOLBATCH4 recheck a, finding 4): the trap read
+           the check's own allowance (the monitor's shyBy, frame gaps and episode), so it moved with it: on a check whose
+           shy slack was widened to 1000 ms it still failed, while a page about 1 s late passed. Now the hold is a fixed
+           number, POD_LATE_ATTR_MS (250 ms: the product's 90 ms check plus 160 ms), counted by the trap's own frame loop
+           from the first frame the product's own 5 x 5 probe grid finds a transcript control under the Pod, and read from
+           nothing in the monitor. The committed shy allowance is the check, 80 ms of slack and the longest frame gap
+           (about 190 ms on Nas1), so the trap fails it; an allowance widened past 250 ms passes the trap, and the
+           self-test shows that. Removing data-shy cancels a set still held; with no control under the grid the set is
+           not held. Nothing else changes: the fade, its timing and the target are the product's own */
         else if (kind === 'pod-late-attr') {
-          const sa = Element.prototype.setAttribute, ra = Element.prototype.removeAttribute; let held = 0;
+          const sa = Element.prototype.setAttribute, ra = Element.prototype.removeAttribute; let held = 0, since = null;
           const isShy = (el, n) => n === 'data-shy' && el && el.id === 'o55np-pod';
+          const SHY_AT = [0.06, 0.27, 0.5, 0.73, 0.94];
+          const grid = () => { const pod = document.getElementById('o55np-pod'); if (!pod) return false; const r = pod.getBoundingClientRect(); if (!(r.width > 0 && r.height > 0)) return false;
+            for (let i = 0; i < 25; i++) for (const el of document.elementsFromPoint(r.left + r.width * SHY_AT[i % 5], r.top + r.height * SHY_AT[Math.floor(i / 5)])) { const c = el.closest && el.closest(X.host); if (c && c.closest('.transcript')) return true; }
+            return false; };
+          const look = () => { const now = performance.now(); if (!grid()) since = null; else if (since === null) since = now; return now; };
+          const loop = () => { look(); requestAnimationFrame(loop); }; requestAnimationFrame(loop);
           Element.prototype.setAttribute = function (n, v) {
             if (!isShy(this, n)) return sa.call(this, n, v);
             if (held) return undefined;
             const el = this;
-            const wait = () => { const M = window.__nvPodOpaque, e = M && M.ep;
-              if (!e || !e.under) { held = 0; sa.call(el, n, v); return; }
-              const now = performance.now(), gap = M.gaps.reduce((g, [t, d]) => (t >= e.spanFrom ? Math.max(g, d) : g), 0);
-              if (now - e.spanFrom > M.shyBy(gap) + 40) { held = requestAnimationFrame(() => { held = 0; sa.call(el, n, v); }); return; }
+            const wait = () => { const now = look();
+              if (since === null) { held = 0; sa.call(el, n, v); return; }
+              if (now - since >= X.lateAttrMs) { held = 0; sa.call(el, n, v); return; }
               held = requestAnimationFrame(wait); };
+            look(); if (since === null) return sa.call(el, n, v);
             held = requestAnimationFrame(wait);
             return undefined;
           };
@@ -1888,7 +1901,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           };
           window.addEventListener('scroll', () => { if (quiet) return; until = performance.now() + 2400; if (!running) { running = true; cycle(); } }, { capture: true, passive: true });
         }
-      }, SELFTEST);
+      }, [SELFTEST, { lateAttrMs: POD_LATE_ATTR_MS, host: POD_EXPECTED.shyHost }]);
       /* T47 round 2: the fade-back mechanism, frame by frame (see above) */
       await p.evaluate(([HOST, P]) => {
         const M = window.__nvPodOpaque = { phase: '', ep: null, over: [], worst: 0, worstAt: '', worstLate: 0, worstLateAt: '', frames: 0, shyAt: null, shyFade: null, shyTiming: '', lastFrame: null, gaps: [], win: [], winSum: 0, worstWin: 0, worstWinAt: '', winFlagged: {} };
