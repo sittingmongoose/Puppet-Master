@@ -9,10 +9,11 @@
 //   expanders do not count) can be scrolled to a press point clear of the strip and the footer, where a hit-test lands on
 //   it; and once per engine and look, a real mouse wheel over the list brings its last row to such a point;
 // - the footer's actions: each focusable in the footer, reached in turn by a real Tab from the first, is focused, wholly
-//   inside the footer's visible box (as the panel clips it) and on top at its centre, and the panel itself has not
+//   inside the footer's visible box (as the panel clips it; the card scrolls inside the footer) and on top at its centre, and the panel itself has not
 //   scrolled (it clips with overflow hidden, which a focus can still scroll, carrying the banner and strip off); and a
 //   real wheel over the footer brings its last action into view;
-// - a tall panel (1920x1080, 1024x768, 740x768) is unchanged: the footer shows its whole card with nothing to scroll.
+// - a tall panel (1920x1080, 1024x768, 740x768) is unchanged: the footer shows its whole card with nothing to scroll (in
+//   the footer or the card).
 // Sizes 1280x500 (FO-86's), 1024x768, 740x768 and 1920x1080, both surfaces, one test each.
 //   --set size=1280x500   --set looks=glass-dark   --set engines=git,jj
 const SIZES = [[1280, 500], [1024, 768], [740, 768], [1920, 1080]];
@@ -82,12 +83,14 @@ async function cell(t, surface, w, h) {
 			// the layout: the panel holds the footer; the band below the strip; the footer's whole card on a tall panel
 			const lay = await f.evaluate((P) => {
 				const r = (s) => document.querySelector(s).getBoundingClientRect(), ft = document.querySelector(P.foot), pn = r('#panel-source');
-				return { panelBottom: pn.bottom, stripBottom: r(P.strip).bottom, scrollBottom: r(P.scroll).bottom, footTop: r(P.foot).top, footBottom: r(P.foot).bottom, footScroll: ft.scrollHeight - ft.clientHeight };
+				// what is left to scroll in the footer: the footer itself or the card that scrolls in it
+				const footScroll = Math.max(...[ft, ...ft.querySelectorAll('*')].filter((e) => e === ft || /auto|scroll/.test(getComputedStyle(e).overflowY)).map((e) => e.scrollHeight - e.clientHeight));
+				return { panelBottom: pn.bottom, stripBottom: r(P.strip).bottom, scrollBottom: r(P.scroll).bottom, footTop: r(P.foot).top, footBottom: r(P.foot).bottom, footScroll };
 			}, P);
 			const band = Math.min(lay.scrollBottom, lay.footTop) - lay.stripBottom;
 			await t.check(`${T}: the panel holds the card's footer (nothing cut off at its foot)`, lay.footBottom <= lay.panelBottom + 0.5, JSON.stringify(lay));
 			await t.check(`${T}: the list keeps at least ${BAND} px (about three rows) below the strip`, band >= BAND, JSON.stringify({ band: Math.round(band), ...lay }));
-			if (tall) await t.check(`${T}: a tall panel shows the footer's whole card (nothing to scroll in it)`, lay.footScroll <= 0, JSON.stringify(lay));
+			if (tall) await t.check(`${T}: a tall panel shows the footer's whole card (nothing to scroll in the footer or the card)`, lay.footScroll <= 0, JSON.stringify(lay));
 			// clearance and reach, in every tab
 			for (const tab of tabs) {
 				await press(f.locator(`${P.tabs}[${P.tabKey}="${tab}"]`));
@@ -137,7 +140,7 @@ async function cell(t, surface, w, h) {
 			await f.evaluate((P) => { document.querySelector(P.scroll).scrollTop = 0; }, P);
 			// the footer's actions: by real Tab from the first, and by a real wheel over the footer
 			const acts = await f.evaluate((P) => {
-				const ft = document.querySelector(P.foot); ft.scrollTop = 0;
+				const ft = document.querySelector(P.foot); [ft, ...ft.querySelectorAll('*')].forEach((e) => { if (e.scrollTop) e.scrollTop = 0; });
 				document.querySelectorAll('[data-slr-act]').forEach((e) => e.removeAttribute('data-slr-act'));
 				const els = [...ft.querySelectorAll('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])')].filter((e) => e.checkVisibility() && !e.disabled && e.tabIndex >= 0);
 				els.forEach((e, i) => e.setAttribute('data-slr-act', String(i)));
@@ -162,7 +165,7 @@ async function cell(t, surface, w, h) {
 				if (!(v.focused && v.inside && v.onTop && !v.panelScroll)) keyMiss.push({ action: acts[i], ...v });
 			}
 			await t.check(`${T}: each footer action (${acts.length}), reached by Tab, is focused, in view and on top, the panel unscrolled`, !keyMiss.length, JSON.stringify(keyMiss.slice(0, 4)));
-			await f.evaluate(([P]) => { document.activeElement?.blur?.(); document.querySelector(P.foot).scrollTop = 0; const pn = document.getElementById('panel-source'); pn.scrollTop = 0; const v = pn.querySelector('.pm7-scm-jj-view'); if (v) v.scrollTop = 0; }, [P]);
+			await f.evaluate(([P]) => { document.activeElement?.blur?.(); const ft = document.querySelector(P.foot); [ft, ...ft.querySelectorAll('*')].forEach((e) => { if (e.scrollTop) e.scrollTop = 0; }); const pn = document.getElementById('panel-source'); pn.scrollTop = 0; const v = pn.querySelector('.pm7-scm-jj-view'); if (v) v.scrollTop = 0; }, [P]);
 			const fb = await f.evaluate((P) => { const r = document.querySelector(P.foot).getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + Math.min(r.height / 2, 30) }; }, P);
 			await t.page.mouse.move(o.x + fb.x, o.y + fb.y);
 			let v = null;
@@ -172,7 +175,7 @@ async function cell(t, surface, w, h) {
 				await t.page.mouse.wheel(0, 60); await f.waitForTimeout(60);
 			}
 			await t.check(`${T}: a real wheel over the footer brings its last action (${acts[acts.length - 1]}) into view, on top`, !!v && v.inside && v.onTop && !v.panelScroll, JSON.stringify(v));
-			await f.evaluate((P) => { document.querySelector(P.foot).scrollTop = 0; }, P);
+			await f.evaluate((P) => { const ft = document.querySelector(P.foot); [ft, ...ft.querySelectorAll('*')].forEach((e) => { if (e.scrollTop) e.scrollTop = 0; }); }, P);
 			await t.page.mouse.move(2, 2);
 		}
 	}
