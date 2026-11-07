@@ -6,16 +6,24 @@
 // Screens: those whose footer, laid out at 1100 wide in Retro Light (mono capitals, among the widest), needs more than
 // 380 px (the footer's room in the wide window at 808 is about 397 px), and c-ready and Where always (Where's Back and
 // Continue is the common footer, and under NieR's headers it also carries the key prompts); --set screens= picks some.
-// In each of the ten looks, each screen opened fresh at 1100x900, the window then narrowed in 10 px steps to 740
+// In each of the ten looks, each screen opened fresh at 1280x900, the window then narrowed in 10 px steps to 380
 // (--set from=, to=, step=). At each width, once laid out: every footer control (its buttons, their ?, Back) lies inside
 // the window's visible box (the window cut by the viewport, 1 px), no label spills out of its button, and no footer
-// button's text is drawn smaller than at 1100 (the fix may wrap a label, never shrink it). FO-100: and Back keeps a
+// button's text is drawn smaller than at the widest (the fix may wrap a label, never shrink it). FO-100: and Back keeps a
 // usable width: it is drawn at its own width, never squeezed (the footer's other buttons wrap, Back cannot: on 74748ebd92
 // its label ran 10-12 px past its outline at 808-950 in every look and NieR's caret was crushed to nothing), at least
 // 24 px wide, and its caret (its chevron, or NieR's ::before) is drawn at its own width; and NieR's key prompts, which
 // held their row open and squeezed the buttons from 948 to about 1010 (Continue's word 3 px past its outline on
-// c4ba49b137), each show whole or not at all. Both surfaces (--set sandbox picks one). Headless, or --record with --set looks=<one> --set screens=c-ready for a film of the sweep (the window's
-// size stays, the page is held in a frame; each width is marked).
+// c4ba49b137), each show whole or not at all. Q4 (Jared, 2026-11-07: "A, do the change to only wrap when it doesn't
+// fit"), judged against the footer's own one-line widths, measured here on a hidden copy of the footer laid out at
+// max-content in the same layer (NieR's key prompts left out: they give way to everything): Back gives up its word only
+// when the footer's controls no longer fit on one line with it, and a label wraps only when they still don't fit without
+// it; as the footer narrows, no label returns to fewer lines and Back's word does not come back (the footer itself
+// widens where the window's layout changes, at 808 and 560: there the comparison starts again, and the log names each
+// such step); and Back's chevron alone is 40 px or more in the wide window (NieR's was 27). From 1280 down to 380 by
+// default. Fails on c4ba49b137: Back's word hidden at a fixed 520 px footer, so Basic's labels went one, two, one, two
+// lines. Both surfaces (--set sandbox picks one). Headless, or --record with --set looks=<one> --set screens=c-ready for
+// a film of the sweep (the window's size stays, the page is held in a frame; each width is marked).
 //   browser-check run Concepts/pm7-tools/browser-check/checks/window-footer-fit.check.mjs --set page=<build>
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
@@ -35,7 +43,7 @@ const READ = () => {
 		return seen > 0.99 ? 'whole' : seen < 0.01 ? 'out' : 'cut';
 	}) : [];
 	return {
-		w: innerWidth, lay: root.getAttribute('data-o55-layout'), keyParts,
+		w: innerWidth, lay: root.getAttribute('data-o55-layout'), keyParts, room: Math.round(foot.getBoundingClientRect().width * 10) / 10,
 		ctl: ctl.map((b) => {
 			const r = b.getBoundingClientRect();
 			/* (its label's text as laid out, against the button's box: the ? beside a button is a glyph, no label) */
@@ -45,7 +53,9 @@ const READ = () => {
 			if (rg) rg.selectNodeContents(lab);
 			const lr = rg ? [...rg.getClientRects()] : [];
 			const spill = lr.length ? Math.max(0, ...lr.map((q) => Math.max(r.left - q.left, q.right - r.right))) : 0;
-			const out = { name: (b.textContent || b.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 24) || '?', past: Math.max(0, v[0] - r.left, r.right - v[2], v[1] - r.top, r.bottom - v[3]), spill: Math.round(spill * 10) / 10, font: parseFloat(getComputedStyle(b).fontSize), lines: Math.round(r.height) };
+			const out = { name: (b.textContent || b.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 24) || '?', past: Math.max(0, v[0] - r.left, r.right - v[2], v[1] - r.top, r.bottom - v[3]), spill: Math.round(spill * 10) / 10, font: parseFloat(getComputedStyle(b).fontSize), lines: Math.round(r.height),
+				/* (Q4: the label's lines as drawn, 0 when it is not drawn; and whether it is drawn at all) */
+				nl: new Set(lr.filter((q) => q.width > 0).map((q) => Math.round(q.top))).size, word: !!lab };
 			/* FO-100: Back as laid out against its own width (laid out once more with flex: none, its style put back in the same
 			   task, so nothing is painted or observed in between), and its caret: the chevron, or NieR's ::before */
 			if (b.classList.contains('o55-back')) {
@@ -72,6 +82,24 @@ const NATURAL = () => {
 	return Math.round(parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + kids.reduce((a, k) => a + k.getBoundingClientRect().width, 0) + gap * Math.max(0, kids.length - 1));
 };
 
+// Q4: the footer's one-line width with Back's word (full) and with its chevron alone (chevron): a copy of the footer,
+// hidden, at max-content, in the same layer so the same rules reach it, without NieR's key prompts; gone in the same task
+const NEED = () => {
+	const layer = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)'), foot = layer && layer.querySelector(':scope > .o55-foot');
+	if (!foot) return null;
+	const one = (fit) => {
+		const c = foot.cloneNode(true);
+		c.removeAttribute('data-o55-fit'); if (fit) c.setAttribute('data-o55-fit', fit);
+		c.classList.remove('o55-st'); c.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id'));
+		const k = c.querySelector('.o55nw-keys'); if (k) k.remove();
+		c.setAttribute('aria-hidden', 'true'); c.inert = true;
+		c.style.cssText += ';position:absolute;left:0;top:0;width:max-content;visibility:hidden;pointer-events:none;animation:none;transition:none';
+		layer.appendChild(c); const w = c.getBoundingClientRect().width; c.remove();
+		return Math.round(w * 10) / 10;
+	};
+	return { full: one(null), chevron: one('chevron') };
+};
+
 async function open(t, f, screen) {
 	await f.evaluate((x) => window.O55.ui.open({ fresh: true, screen: x }), screen);
 	await f.waitForFunction(() => !!document.querySelector('#pm-o55-onboarding .o55-layer:not(.o55-out) .o55-foot'), null, { timeout: 15000 }).catch(() => {});
@@ -80,7 +108,7 @@ async function open(t, f, screen) {
 const frames = (f, n) => f.evaluate((k) => new Promise((res) => { let i = 0; const s = () => (++i >= k ? res() : requestAnimationFrame(s)); requestAnimationFrame(s); }), n);
 
 async function run(t, mode) {
-	const from = +t.args.from || 1100, to = +t.args.to || 740, step = +t.args.step || 10;
+	const from = +t.args.from || 1280, to = +t.args.to || 380, step = +t.args.step || 10;
 	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
 	await t.viewport(from, 900);
 	let f = await t.app.open({ sandbox: mode === 'sandbox', onboarding: true, query: 'o55=screen=welcome', settleMs: 1000 });
@@ -112,8 +140,8 @@ async function run(t, mode) {
 			if (now !== screen) { await t.check(`${tag}: opens as itself`, false, `opened as ${now}`); continue; }
 			const base = await f.evaluate(READ);
 			const font = Object.fromEntries((base.ctl || []).map((c) => [c.name, c.font]));
-			const bad = [], backBad = [];
-			let widths = 0;
+			const bad = [], backBad = [], fitBad = [], monoBad = [], widens = [];
+			let widths = 0, prev = null;
 			for (let w = from; w >= to; w -= step) {
 				await t.viewport(w, 900);
 				await t.mark(`${look} ${screen} ${w}`);
@@ -122,6 +150,22 @@ async function run(t, mode) {
 				if (r.none) { bad.push({ w, err: 'no footer' }); continue; }
 				widths++;
 				if (r.keyParts.includes('cut')) bad.push({ w, lay: r.lay, ctl: 'NieR key prompts', keys: r.keyParts.join(' ') });
+				/* Q4: Back's word and every label's wrapping against the footer's own one-line widths (1 px either way) */
+				const need = await f.evaluate(NEED), bk = r.ctl.find((c) => c.back), wide = r.lay !== 'narrow';
+				if (need && bk && wide) {
+					if (bk.word && need.full > r.room + 1) fitBad.push({ w, room: r.room, need, why: 'Back keeps its word though the footer does not fit on one line' });
+					if (!bk.word && need.full <= r.room - 1) fitBad.push({ w, room: r.room, need, why: 'Back gave up its word though the footer fits on one line' });
+					if (!bk.word && bk.back.w < 39.5) fitBad.push({ w, room: r.room, back: bk.back.w, why: "Back's chevron alone under 40 px" });
+				}
+				if (need) for (const c of r.ctl) if (c.nl > 1 && (bk && bk.word && wide ? need.full : need.chevron) <= r.room - 1) fitBad.push({ w, lay: r.lay, room: r.room, need, ctl: c.name, nl: c.nl, why: 'a label wraps though the footer fits on one line' });
+				/* ...and as the footer narrows nothing goes back: no label to fewer lines, Back's word not back */
+				if (prev && r.room > prev.room + 0.5) widens.push({ w, prevW: prev.w, from: prev.room, to: r.room, lay: `${prev.lay}->${r.lay}`,
+					unwrapped: r.ctl.filter((c) => prev.nl[c.name] > 0 && c.nl > 0 && c.nl < prev.nl[c.name]).map((c) => `${c.name} ${prev.nl[c.name]}->${c.nl}`) });
+				else if (prev && r.room < prev.room - 0.5) {
+					for (const c of r.ctl) { const p0 = prev.nl[c.name]; if (p0 > 0 && c.nl > 0 && c.nl < p0) monoBad.push({ w, ctl: c.name, lines: `${p0}->${c.nl}`, room: `${prev.room}->${r.room}` }); }
+					if (bk && bk.word && prev.back === false && r.lay === prev.lay) monoBad.push({ w, ctl: 'Back', why: 'its word came back', room: `${prev.room}->${r.room}` });
+				}
+				prev = { w, room: r.room, lay: r.lay, back: bk ? bk.word : null, nl: Object.fromEntries(r.ctl.map((c) => [c.name, c.nl])) };
 				for (const c of r.ctl) {
 					const smaller = font[c.name] != null && c.font < font[c.name] - .01;
 					if (c.past > 1 || c.spill > 1 || smaller) bad.push({ w, lay: r.lay, ctl: c.name, past: Math.round(c.past), spill: c.spill, font: smaller ? `${c.font} < ${font[c.name]}` : undefined });
@@ -135,6 +179,15 @@ async function run(t, mode) {
 			await t.check(`${tag}: every footer control inside the window, its label inside its button, at its own size, ${from}-${to} wide`, bad.length === 0, why);
 			if ((base.ctl || []).some((c) => c.back)) await t.check(`${tag}: Back at its own width (never squeezed), 24 px or more, its caret whole, ${from}-${to} wide (FO-100)`, backBad.length === 0,
 				JSON.stringify({ widths, failures: backBad.length, first: backBad.slice(0, 4), narrowestBack: backBad.length ? Math.min(...backBad.map((b) => b.w)) : undefined }));
+			await t.check(`${tag}: Q4 Back gives up its word only when the footer does not fit on one line, a label wraps only when it still doesn't, Back's chevron 40 px or more, ${from}-${to} wide`, fitBad.length === 0,
+				JSON.stringify({ widths, failures: fitBad.length, first: fitBad.slice(0, 4) }));
+			await t.check(`${tag}: Q4 as the footer narrows no label returns to fewer lines and Back's word does not come back, ${from}-${to} wide`, monoBad.length === 0,
+				JSON.stringify({ widths, failures: monoBad.length, first: monoBad.slice(0, 4), footerWidens: widens }));
+			/* (the footer may widen as the window narrows only where the window's own layout changes: at 808 the stage leaves
+			   its side, at 560 the window's margin drops to 8 px; labels that unwrap there do so because it is wider) */
+			const odd = widens.filter((x) => { const [was, now] = x.lay.split('->'); return !(was !== now || (x.prevW > 560 && x.w <= 560)); });
+			await t.check(`${tag}: Q4 the footer widens as the window narrows only where the window's layout changes (808, 560)`, odd.length === 0, JSON.stringify({ widens }));
+			t.log(`${tag}: the footer widens as the window narrows at ${JSON.stringify(widens)}`);
 			if (bad.length) { await t.viewport(bad[0].w, 900); await frames(f, 2); await t.inFrame(f, () => t.crop(`foot-${mode}-${look}-${screen}-${bad[0].w}`, '#pm-o55-onboarding .o55-win', `${tag} at ${bad[0].w}: ${bad[0].ctl} ${bad[0].past} px past the window`)); }
 			else t.log(`${tag}: ${why}`);
 		}

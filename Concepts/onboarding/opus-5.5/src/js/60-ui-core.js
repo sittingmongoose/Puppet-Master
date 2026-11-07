@@ -419,6 +419,46 @@
     const note = foot.note ? `<span class="o55-footnote">${U.esc(foot.note)}</span>` : '';
     return `<footer class="o55-foot o55-st" style="--i:4">${back}${note}<span class="o55-footgrow">${secs.length || note ? '' : keysHtml(foot, choose)}</span>${sec}${pri}</footer>`;
   }
+  /* The footer's own fit (Q4, Jared 2026-11-07: "A, do the change to only wrap when it doesn't fit"). Back gives up its
+     word (its chevron stays, at least 40 px: 10-window.css) only when the footer's controls, laid out on one line at
+     their own widths, no longer fit in the footer; the other labels then wrap, by the footer's flex, only if they still
+     do not fit. So nothing wraps while it fits, and as the footer narrows no label returns to one line (group 6 hid the
+     word below a fixed 520 px whatever the footer held: Basic's labels went from one line to two, back to one, then
+     two). The one-line width is read once per footer, look and wording (the footer laid out at max-content for that one
+     read) and compared whenever the screen's layer changes size, after layout and before that frame is painted. */
+  const footNeed = new WeakMap();
+  function footKey(foot) {
+    const de = document.documentElement;
+    return [S.root.getAttribute('data-family'), S.root.getAttribute('data-mode'), S.root.getAttribute('data-o55-layout'), de.getAttribute('data-o55-nier'),
+      de.getAttribute('data-o55-nier-parts'), de.getAttribute('style'), document.body ? document.body.style.zoom : '', document.fonts ? document.fonts.status : '',
+      foot.childElementCount, foot.textContent].join('|');
+  }
+  function fitFoot(layer) {
+    const foot = layer && layer.isConnected ? layer.querySelector(':scope > .o55-foot') : null;
+    if (!foot) return;
+    if (!foot.querySelector(':scope > .o55-back') || S.root.getAttribute('data-o55-layout') === 'narrow') { if (foot.hasAttribute('data-o55-fit')) foot.removeAttribute('data-o55-fit'); return; }
+    const key = footKey(foot);
+    let need = footNeed.get(foot);
+    if (!need || need.key !== key || need.room == null) {
+      const room = foot.getBoundingClientRect().width, was = foot.getAttribute('data-o55-fit');
+      foot.setAttribute('data-o55-fit', 'measure');
+      need = { key, w: foot.getBoundingClientRect().width, room };
+      if (was === null) foot.removeAttribute('data-o55-fit'); else foot.setAttribute('data-o55-fit', was);
+      footNeed.set(foot, need);
+    }
+    const fit = need.w <= need.room + 0.5 ? 'full' : 'chevron';
+    if (foot.getAttribute('data-o55-fit') !== fit) foot.setAttribute('data-o55-fit', fit);
+  }
+  /* (the layer's width is the footer's; a size change re-reads the room, and the morph of a quiet redraw, which drops the
+     attribute, is answered from what was read) */
+  const footRoom = typeof ResizeObserver === 'function' ? new ResizeObserver((entries) => {
+    for (const e of entries) {
+      if (!e.target.isConnected) { footRoom.unobserve(e.target); continue; }
+      const foot = e.target.querySelector(':scope > .o55-foot'), need = foot && footNeed.get(foot);
+      if (need) need.room = null;
+      fitFoot(e.target);
+    }
+  }) : null;
   /* NieR Mode's key prompts (hero spec Q7): the keys the window answers, between Back and the primary, as ink keycaps
      with mono words; only while NieR Mode is painted (shown under YoRHa headers on a wide window with a fine pointer,
      11-window-nier.css), never beside other buttons, and hidden from screen readers (the keys are the window's own) */
@@ -707,6 +747,7 @@
     const rs = layer.querySelector('.o55-reason.o55-reason-show'), rsAt = rs ? +rs.dataset.at || 0 : 0, keepReason = rs && performance.now() - rsAt < 2600 ? rs : null;
     morphing = true;
     try { U.morph(layer, paneHtml(def)); } finally { morphing = false; }
+    fitFoot(layer);
     if (keepReason && !keepReason.isConnected) { keepReason.style.animationDelay = -(performance.now() - rsAt) + 'ms'; layer.appendChild(keepReason); }
     O55.tips.write(layer); armLoaders(layer);
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
@@ -749,6 +790,7 @@
     layer.setAttribute('data-screen', def.id);
     layer.innerHTML = paneHtml(def);
     pane.appendChild(layer);
+    if (footRoom) footRoom.observe(layer); /* (its first report, before the first paint, fits the footer: fitFoot) */
     O55.tips.write(layer); armLoaders(layer);
     holdColumn(layer);
     /* (a card's ? sits beside it in its option and comes in with it, on its index: p75, the ? circles floated on empty
