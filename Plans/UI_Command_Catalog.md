@@ -10300,9 +10300,14 @@ command_payload_definition_map:
   - owner_state: access_url_unresolved
     maps_to: not_configured
     sources:
-    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): no project
-      override, published host port or web-UI label gives an access URL, so the open action is disabled (Runtime access
-      URL resolution); applied under DL-333 coordinator resolution 6 (DL-341)'
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list access_url_unresolved in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      not_configured from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead
+      applies it (DL-341 under_dl333_resolution_6). Not configured is a family of the shared Docker/Kubernetes
+      disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured,
+      Unauthorized, Unreachable, Degraded, Partial capability); section 2A Runtime access URL resolution: when no
+      access URL is available, Docker Manager MUST show No direct access URL detected and disable the open action
+      rather than guessing'
   - owner_state: activation_not_active
     maps_to: blocked_state_required
     sources:
@@ -10322,8 +10327,12 @@ command_payload_definition_map:
   - owner_state: bake_unavailable
     maps_to: partial_capability
     sources:
-    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the runtime is
-      reachable but has no bake capability; applied under DL-333 coordinator resolution 6 (DL-341)'
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list bake_unavailable in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      partial_capability from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C
+      lead applies it (DL-341 under_dl333_resolution_6). Partial capability is a family of the shared
+      Docker/Kubernetes disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph:
+      Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability)'
   - owner_state: blocker_missing
     maps_to: blocked_state_required
     sources:
@@ -10335,8 +10344,13 @@ command_payload_definition_map:
   - owner_state: buildx_unavailable
     maps_to: partial_capability
     sources:
-    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the runtime is
-      reachable but has no buildx builder; applied under DL-333 coordinator resolution 6 (DL-341)'
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list buildx_unavailable in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      partial_capability from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C
+      lead applies it (DL-341 under_dl333_resolution_6). Partial capability is a family of the shared
+      Docker/Kubernetes disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph:
+      Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability); section 2A persists
+      buildx readiness for the build surfaces'
   - owner_state: compile_terminal
     maps_to: blocked_state_required
     sources:
@@ -10344,20 +10358,43 @@ command_payload_definition_map:
   - owner_state: compose_invalid
     maps_to: blocked_state_required
     sources:
-    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): a compose
-      validation failure whose repair is the editor handoff (CRAU-093); the command waits for a valid compose file;
-      applied under DL-333 coordinator resolution 6 (DL-341)'
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list compose_invalid in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      blocked_state_required from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream
+      C lead applies it (DL-341 under_dl333_resolution_6); by its name the command waits for a valid compose file.
+      CRAU-093: compose validation failures (compose_invalid, compose_service_missing) render as reason-coded rows
+      whose repair path is the editor handoff. Canon reads two ways here: blocked_state_required is not a family of
+      the shared Docker/Kubernetes disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph:
+      Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability), while
+      Plans/Containers_Registry_and_Unraid.md section 2B gives runtime identity a local-runtime blocked/degraded
+      classification and lists compose-up failure, unhealthy container, missing Docker context, cluster unreachable
+      and rollout failure among local-runtime blockers. Kept as the best fit and asked of the CRAU owner (DL-341
+      crau_owner_questions)'
   - owner_state: compose_service_missing
     maps_to: blocked_state_required
     sources:
-    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): a compose
-      validation failure whose repair is the editor handoff (CRAU-093); the command waits for the named service; applied
-      under DL-333 coordinator resolution 6 (DL-341)'
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list compose_service_missing in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      blocked_state_required from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream
+      C lead applies it (DL-341 under_dl333_resolution_6); by its name the command waits for the named compose
+      service. CRAU-093: compose validation failures (compose_invalid, compose_service_missing) render as reason-coded
+      rows whose repair path is the editor handoff. Canon reads two ways here: blocked_state_required is not a family
+      of the shared Docker/Kubernetes disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy
+      paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability), while
+      Plans/Containers_Registry_and_Unraid.md section 2B gives runtime identity a local-runtime blocked/degraded
+      classification and lists compose-up failure, unhealthy container, missing Docker context, cluster unreachable
+      and rollout failure among local-runtime blockers. Kept as the best fit and asked of the CRAU owner (DL-341
+      crau_owner_questions)'
   - owner_state: container_unhealthy
     maps_to: degraded
     sources:
-    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the container
-      runs but fails its health check; applied under DL-333 coordinator resolution 6 (DL-341)'
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list container_unhealthy in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to degraded from
+      the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead applies it (DL-341
+      under_dl333_resolution_6). Degraded is a family of the shared Docker/Kubernetes disabled-state taxonomy
+      (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized,
+      Unreachable, Degraded, Partial capability); section 2B lists unhealthy container among local-runtime blockers
+      under its blocked/degraded classification'
   - owner_state: dedup_hold_pending
     maps_to: not_configured
     sources:
@@ -10387,29 +10424,56 @@ command_payload_definition_map:
   - owner_state: image_missing
     maps_to: blocked_state_required
     sources:
-    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the image the
-      command needs does not exist until it is built or pulled; applied under DL-333 coordinator resolution 6 (DL-341)'
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list image_missing in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      blocked_state_required from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream
+      C lead applies it (DL-341 under_dl333_resolution_6); by its name the command waits for an image that is built or
+      pulled. Canon reads two ways here: blocked_state_required is not a family of the shared Docker/Kubernetes
+      disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured,
+      Unauthorized, Unreachable, Degraded, Partial capability), while Plans/Containers_Registry_and_Unraid.md section
+      2B gives runtime identity a local-runtime blocked/degraded classification and lists compose-up failure,
+      unhealthy container, missing Docker context, cluster unreachable and rollout failure among local-runtime
+      blockers. Kept as the best fit and asked of the CRAU owner (DL-341 crau_owner_questions)'
   - owner_state: k8s_context_missing
     maps_to: not_configured
     sources:
-    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): no Kubernetes
-      context is configured; applied under DL-333 coordinator resolution 6 (DL-341)'
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list k8s_context_missing in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      not_configured from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead
+      applies it (DL-341 under_dl333_resolution_6). Not configured is a family of the shared Docker/Kubernetes
+      disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured,
+      Unauthorized, Unreachable, Degraded, Partial capability)'
   - owner_state: k8s_context_unreachable
     maps_to: unreachable
     sources:
-    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the Kubernetes
-      context exists but its cluster cannot be reached; applied under DL-333 coordinator resolution 6 (DL-341)'
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list k8s_context_unreachable in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to unreachable
+      from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead applies it
+      (DL-341 under_dl333_resolution_6). Unreachable is a family of the shared Docker/Kubernetes disabled-state
+      taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized,
+      Unreachable, Degraded, Partial capability); section 2B lists cluster unreachable among local-runtime blockers'
   - owner_state: k8s_namespace_missing
     maps_to: not_configured
     sources:
-    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the selected
-      namespace is not configured in the context; applied under DL-333 coordinator resolution 6 (DL-341)'
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list k8s_namespace_missing in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      not_configured from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead
+      applies it (DL-341 under_dl333_resolution_6). Not configured is a family of the shared Docker/Kubernetes
+      disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured,
+      Unauthorized, Unreachable, Degraded, Partial capability)'
   - owner_state: k8s_rollout_blocked
     maps_to: blocked_state_required
     sources:
-    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): a rollout
-      cannot progress, and the command waits for the rollout state; applied under DL-333 coordinator resolution 6
-      (DL-341)'
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list k8s_rollout_blocked in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      blocked_state_required from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream
+      C lead applies it (DL-341 under_dl333_resolution_6); by its name the command waits for the rollout to progress.
+      Canon reads two ways here: blocked_state_required is not a family of the shared Docker/Kubernetes disabled-state
+      taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized,
+      Unreachable, Degraded, Partial capability), while Plans/Containers_Registry_and_Unraid.md section 2B gives
+      runtime identity a local-runtime blocked/degraded classification and lists compose-up failure, unhealthy
+      container, missing Docker context, cluster unreachable and rollout failure among local-runtime blockers. Kept as
+      the best fit and asked of the CRAU owner (DL-341 crau_owner_questions)'
   - owner_state: ledger_sync_blocked
     maps_to: degraded
     sources:
@@ -10417,8 +10481,13 @@ command_payload_definition_map:
   - owner_state: maintenance_cutoffs_pending
     maps_to: not_configured
     sources:
-    - 'Plans/Decision_Log.md DL-403: memory maintenance waits for approved cutoffs, and the two maintenance buttons show as
-      unavailable with the reason until they exist; DL-341 coordinator resolution 3'
+    - 'Plans/Decision_Log.md DL-403: memory maintenance waits for approved cutoffs, and the two maintenance buttons
+      show as unavailable with the reason until they exist; DL-341 coordinator resolution 3'
+    - 'Plans/Decision_Log.md DL-446 and DL-447: the cutoffs now exist (monthly summary: 90 idle days and score below
+      0.10; prune archive: 180 idle days and score below 0.05), and what still holds the two maintenance commands is
+      each card''s "Automatic jobs and panel buttons stay unavailable until your answer is applied and all remaining
+      definition, review and recording approvals pass". The owner state names that hold until it lifts; source added
+      by the stream C lead''s P0d task (DL-341 round_3_changes)'
   - owner_state: missing_approver
     maps_to: permission_required
     sources:
@@ -10491,15 +10560,34 @@ command_payload_definition_map:
   - owner_state: runtime_context_missing
     maps_to: not_configured
     sources:
-    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): no Docker
-      runtime context is configured (CRAU-099 carries the diagnosis); applied under DL-333 coordinator resolution 6
-      (DL-341)'
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list runtime_context_missing in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      not_configured from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead
+      applies it (DL-341 under_dl333_resolution_6). Not configured is a family of the shared Docker/Kubernetes
+      disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured,
+      Unauthorized, Unreachable, Degraded, Partial capability); CRAU-099 carries a typed daemon diagnosis inside this
+      code''s payload; section 2B lists missing Docker context among local-runtime blockers'
   - owner_state: runtime_context_unreachable
     maps_to: unreachable
     sources:
-    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the runtime
-      context exists but its daemon cannot be reached (CRAU-099 carries the diagnosis); applied under DL-333 coordinator
-      resolution 6 (DL-341)'
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list runtime_context_unreachable in the
+      canonical local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      unreachable from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead
+      applies it (DL-341 under_dl333_resolution_6). Unreachable is a family of the shared Docker/Kubernetes
+      disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured,
+      Unauthorized, Unreachable, Degraded, Partial capability); CRAU-099 carries a typed daemon diagnosis inside this
+      code''s payload'
+  - owner_state: safe_point_missing
+    maps_to: blocked_state_required
+    sources:
+    - 'Plans/UI_Command_Catalog.md UCC-111 and the Orchestrator projection-action and safe-point retry commands table:
+      cmd.orchestrator.safe_point_retry preserves the four pre-modal disabled reasons safe_point_missing,
+      state_changed, permission_denied, and operation_in_progress, and normalizes to
+      cmd.runtime.restore_safe_point_then_retry, which shares its admission decision; the safe-point/Chat-revert
+      section lets Orchestrator availability additionally expose safe_point_missing | state_changed |
+      operation_in_progress. Canon gives no closed code. Mapped to blocked_state_required (the command waits for a
+      safe point to exist; its precondition is safe_point_available): the P0d worker''s choice, under DL-333
+      resolution 6 as the stream C lead applies it (DL-341 under_dl333_resolution_6)'
   - owner_state: source_coverage_missing
     maps_to: blocked_state_required
     sources:
@@ -10568,6 +10656,16 @@ command_payload_definition_map:
     maps_to: stale_projection
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: state_changed
+    maps_to: stale_projection
+    sources:
+    - 'Plans/UI_Command_Catalog.md UCC-111 and the Orchestrator projection-action and safe-point retry commands table:
+      cmd.orchestrator.safe_point_retry preserves the four pre-modal disabled reasons safe_point_missing,
+      state_changed, permission_denied, and operation_in_progress, with the precondition state_current; the storage
+      fallback divergence dispositions also close their disabled reasons to a list that includes state_changed, which
+      the storage handler returns when a root-binding, hash or captured-generation component changed. Canon gives no
+      closed code. Mapped to stale_projection (the state the projection showed is no longer current): the P0d
+      worker''s choice, under DL-333 resolution 6 as the stream C lead applies it (DL-341 under_dl333_resolution_6)'
   - owner_state: topic_busy
     maps_to: blocked_state_required
     sources:
