@@ -650,7 +650,11 @@ export default async function (t) {
           covered?.setAttribute('data-shelf-room-for', '');
           document.querySelectorAll('[data-shelf-fold-region]').forEach(e => e.removeAttribute('data-shelf-fold-region'));
           const regionOf = e => { if (!cover) return null; for (let a = e; a && a !== p; a = a.parentElement) if (a.contains(cover) && !(covered && a.contains(covered))) return a; return null; };
-          let pairs = [...p.querySelectorAll('[aria-expanded="true"]')].filter(e => e.checkVisibility() && !/^(tab|treeitem|row|option|gridcell|listitem)$/.test(e.getAttribute('role') || '') && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
+          // (never a control inside a region the census has folded and not unfolded: Technical details in the folded
+          // Jujutsu card still reads as shown while the card collapses)
+          const inFolded = e => { const r = e.closest('[data-shelf-folded]'); if (!r) return false;
+            const c = p.querySelector(`[data-shelf-fold-of="${r.getAttribute('data-shelf-folded')}"]`); return !!c && c !== e && c.getAttribute('aria-expanded') === 'false'; };
+          let pairs = [...p.querySelectorAll('[aria-expanded="true"]')].filter(e => e.checkVisibility() && !inFolded(e) && !/^(tab|treeitem|row|option|gridcell|listitem)$/.test(e.getAttribute('role') || '') && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
             .map(e => ({ e, region: regionOf(e) })).filter(x => x.region);
           // T98: folds are temporary, so a control covered by what no region holds (the tab strip over Source Control's
           // list at 1280x500) gets the room a region the census folded earlier in this panel gave: that region folds again
@@ -688,6 +692,9 @@ export default async function (t) {
           const folded = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'false', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
           await t.check(`${target} ${state} short panel: pressing its expanded control (${fo.label}) folds it to make room for the list`, folded,
             JSON.stringify({ fold: fo, covered: { what: why.what, onTop: why.onTop, hits: why.hits, by: why.coverOf } }), { hard: true });
+          // (the census after the fold waits for the region to stop moving: a card that collapses by a transition still
+          // shows what it is hiding for a few frames)
+          if (folded) await stable(panel.locator(`[data-shelf-fold-region="${fo.i}"]`)).catch(() => {});
           const after = new Map((await censusIn(fo.i, tag, false)).map(x => [x.j, x.shown])), hid = before.filter(x => !after.get(x.j));
           await panel.evaluate((p, [i, tag]) => { p.querySelector(`[data-shelf-fold-region="${i}"]`)?.setAttribute('data-shelf-folded', tag);
             p.querySelector(`[data-shelf-fold="${i}"]`)?.setAttribute('data-shelf-fold-of', tag); }, [fo.i, tag]);
