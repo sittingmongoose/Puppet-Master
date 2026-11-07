@@ -30,6 +30,17 @@ function changed(a, b, mask) {
 function grow(m, w, h, k) { const o = new Uint8Array(m.length); for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { if (!m[y * w + x]) continue; for (let dy = -k; dy <= k; dy++) for (let dx = -k; dx <= k; dx++) { const yy = y + dy, xx = x + dx; if (yy >= 0 && yy < h && xx >= 0 && xx < w) o[yy * w + xx] = 1; } } return o; }
 function motionMask(a, b) { const m = new Uint8Array(a.data.length / 4); for (let i = 0, p = 0; i < a.data.length; i += 4, p++) if (Math.max(Math.abs(a.data[i] - b.data[i]), Math.abs(a.data[i + 1] - b.data[i + 1]), Math.abs(a.data[i + 2] - b.data[i + 2])) > THRESHOLD / 2) m[p] = 1; return m; }
 
+// T71 (opus-recheck-b7f K-B1, a REAL false stop): the surface's nodes were marked once, so a surface that replaced some of
+// them before shot b (the Agents list re-rendering) lost the mark on the new nodes, its own text went transparent with
+// the page's, and counted as read-through (11.80% in Glass Light docked agents, on main and on the fix alike; the own-text
+// share collapsed from 31-36% to 1.8%). Now a MutationObserver marks every node added inside the surface while the
+// measurement runs, and before shot b and shot c every text-bearing node inside the surface is checked for its mark;
+// one left unmarked is marked and the shot retaken (at most twice), and the count is reported. --set selftest=rerender
+// rebuilds a list inside each rail panel (its markup again, without the marks) 100 ms after the marking, as the Agents
+// list's re-render did; the check must still pass, where the base reads the panel's own text as read-through.
+const unmarked = (f, sel) => f.evaluate((s) => { const e = document.querySelector(s); if (!e) return 0; let n = 0;
+	for (const x of [e, ...e.querySelectorAll('*')]) if (!x.hasAttribute('data-bc-in')) { x.setAttribute('data-bc-in', ''); if ([...x.childNodes].some((c) => c.nodeType === 3 && c.textContent.trim())) n++; }
+	return n; }, sel);
 // how much of the page's content reads through the surface sel (null when it isn't on screen)
 async function readThrough(t, f, sel) {
 	const r = await f.evaluate((s) => {
@@ -49,23 +60,34 @@ async function readThrough(t, f, sel) {
 		e.style.setProperty('color', c.color, 'important'); e.style.setProperty('-webkit-text-fill-color', c.webkitTextFillColor, 'important');
 		e.style.setProperty('text-shadow', c.textShadow, 'important'); e.style.setProperty('caret-color', c.caretColor, 'important');
 		[e, ...e.querySelectorAll('*')].forEach((n) => n.setAttribute('data-bc-in', ''));
+		// T71: nodes the surface adds while it is measured are marked as they come
+		const mo = window.__bcMO = new MutationObserver((recs) => { for (const r of recs) for (const a of r.addedNodes) if (a.nodeType === 1) [a, ...a.querySelectorAll('*')].forEach((n) => n.setAttribute('data-bc-in', '')); });
+		mo.observe(e, { childList: true, subtree: true });
 		const st = document.createElement('style'); st.id = 'bc-through';
 		st.textContent = 'body *:not([data-bc-in]) { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; caret-color: transparent !important; }';
 		document.head.appendChild(st);
 	}, sel);
+	if (t.args.selftest === 'rerender' && sel === '#sidePanelSlot') await f.evaluate((s) => setTimeout(() => {
+		const e = document.querySelector(s); if (!e) return;
+		const list = [...e.querySelectorAll('*')].filter((x) => x.children.length >= 3 && x.checkVisibility() && x.textContent.trim().length > 40).pop();
+		if (!list) return; window.__bcRerendered = (window.__bcRerendered || 0) + 1;
+		list.innerHTML = list.innerHTML.replace(/ data-bc-in=""/g, '');   /* the markup again, as a re-render writes it: no marks */
+	}, 100), sel);
 	await f.waitForTimeout(350);
-	const b = await shot(t, r);
+	let b = await shot(t, r), remarked = 0;
+	for (let k = 0, n; k < 2 && (n = await unmarked(f, sel)) > 0; k++) { remarked += n; await f.waitForTimeout(150); b = await shot(t, r); }
 	// the surface's own text: where it is drawn, its re-rasterised glyphs differ a little whatever is behind; those pixels
 	// (grown by 2 px) are not counted
 	await f.evaluate((s) => { const e = document.querySelector(s); ['color', '-webkit-text-fill-color', 'text-shadow'].forEach((k) => e.style.removeProperty(k)); document.getElementById('bc-through').textContent += ' [data-bc-in] { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; transition: none !important; }'; }, sel);
 	await f.waitForTimeout(350);
-	const c = await shot(t, r);
+	let c = await shot(t, r);
+	for (let k = 0, n; k < 2 && (n = await unmarked(f, sel)) > 0; k++) { remarked += n; await f.waitForTimeout(150); c = await shot(t, r); }
 	const own = grow(motionMask(b, c), r.width, r.height, 2);
 	for (let i = 0; i < own.length; i++) if (own[i]) mask[i] = 1;
-	await f.evaluate((s) => { const st = document.getElementById('bc-through'); if (st) st.remove(); document.querySelectorAll('[data-bc-in]').forEach((n) => n.removeAttribute('data-bc-in')); const e = document.querySelector(s); if (e) { if (e.__bcStyle == null) e.removeAttribute('style'); else e.setAttribute('style', e.__bcStyle); } }, sel);
+	await f.evaluate((s) => { if (window.__bcMO) { window.__bcMO.disconnect(); window.__bcMO = null; } const st = document.getElementById('bc-through'); if (st) st.remove(); document.querySelectorAll('[data-bc-in]').forEach((n) => n.removeAttribute('data-bc-in')); const e = document.querySelector(s); if (e) { if (e.__bcStyle == null) e.removeAttribute('style'); else e.setAttribute('style', e.__bcStyle); } }, sel);
 	const counted = mask.reduce((s, v) => s + (v ? 0 : 1), 0);
 	const m = changed(a2, b, mask);
-	return { rect: r, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length };
+	return { rect: r, n: m.n, mx: m.mx, share: m.n / Math.max(1, counted), motion: 1 - counted / mask.length, remarked };
 }
 
 export default async function (t) {
@@ -76,7 +98,7 @@ export default async function (t) {
 	const judge = (look, name, m) => {
 		if (!m) { bad.push(`${look} ${name}: not on screen`); rows.push(`${look} ${name}: not on screen`); return; }
 		const pct = (m.share * 100).toFixed(2);
-		rows.push(`${look} ${name}: ${pct}% of its pixels show the page through it (max change ${m.mx}; its own text and motion left out: ${(m.motion * 100).toFixed(1)}%) ${m.rect.width}x${m.rect.height}`);
+		rows.push(`${look} ${name}: ${pct}% of its pixels show the page through it (max change ${m.mx}; its own text and motion left out: ${(m.motion * 100).toFixed(1)}%${m.remarked ? `; ${m.remarked} text nodes the surface replaced during the shots marked again and the shot retaken` : ''}) ${m.rect.width}x${m.rect.height}`);
 		if (m.share > MAX_SHARE) bad.push(`${look} ${name}: ${pct}% reads through`);
 	};
 	const click = async (sel) => {
