@@ -905,14 +905,16 @@ export default async function (t) {
   // active tab; (2) after a right-click on another row A (closed by Escape), the key on row B acts on B: Open, Copy path's
   // Copy relative path (the copied text and its note name B) and Open with's Source editor. A row's own path is its
   // data-path, else the full path its item shows (.fm-cpath). (3) A right-click on B and a press on Open act on B too.
-  // --set effects=0 skips this phase.
+  // --set effects=0 skips this phase; --set effects=<pane,...> (explorer, changed, open) asks only those panes.
   const kbRoutes = [];
   for (const r of contextRoutes) {
     if (r.input === 'mouse') continue;
     const state = [r.engine, r.tab].filter(Boolean).join(' ') || 'panel';
     if (!kbRoutes.some(k => k.panel === r.panel && k.state === state && k.input === r.input && k.menu === r.menu)) kbRoutes.push({ ...r, state });
   }
+  const fxPanes = t.args.effects && t.args.effects !== '0' ? String(t.args.effects).split(',') : null;
   if (t.args.effects !== '0') for (const rt of kbRoutes) {
+    if (fxPanes && !fxPanes.includes(rt.state)) continue;
     const T = `${rt.panel} ${rt.state} FO-93b ${rt.input}`;
     const sigs = ctxKinds.filter(k => k.panel === rt.panel && k.state === rt.state && k.got[rt.input] === rt.menu).map(k => k.sig);
     const g = await t.app.open();
@@ -1026,7 +1028,7 @@ export default async function (t) {
     await g.locator('[data-shelf-fx-open]').click();
     await openedPath(pick.b, 'a right-click and a press on Open');
   }
-  if (t.args.effects !== '0') await t.check('FO-93b every keyboard context route was asked what it acts on', kbRoutes.length >= 6 || !!only || !!t.args.inputs, JSON.stringify(kbRoutes.map(r => `${r.panel} ${r.state} ${r.input} ${r.menu}`)));
+  if (t.args.effects !== '0') await t.check('FO-93b every keyboard context route was asked what it acts on', kbRoutes.length >= 6 || !!only || !!t.args.inputs || !!fxPanes, JSON.stringify(kbRoutes.map(r => `${r.panel} ${r.state} ${r.input} ${r.menu}`)));
 
   await t.check('at least 14 known PMMenu identities exercised',new Set(routedRows.flatMap(r=>r.exercised)).size>=14,JSON.stringify(routedRows),{hard:true});
   t.log(JSON.stringify({initial:rows,routed:routedRows,popups:popupRows,context:contextRoutes,branches:branchRows}));
