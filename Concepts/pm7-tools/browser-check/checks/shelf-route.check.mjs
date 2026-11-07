@@ -36,6 +36,10 @@ async function authoredSlot(t) {
 // T55: the rail's reveal of an opened expander (30-motion.js revealInView, 15-jj.js's expander): its delay after the
 // click's frame, and the longest its smooth scroll may take to end once begun (a stated bound, failing by name)
 const REVEAL_MS = 120, REVEAL_END_MS = 2000;
+// T98: past the rail's delay, how long the wait gives the rail's own path to its request: the rail sets its 120 ms timer
+// in an animation frame after the click (30-motion.js onClickMotion), so the request comes one frame and the timer's
+// lateness after the delay; on Windows' fast frames three frames were 23 ms, and the request came at 149 ms
+const REVEAL_MARGIN_MS = 80;
 export default async function (t) {
   if (t.args.blockMenu) await t.page.addInitScript(id => {
     window.__blockedShelfMenu = 0;
@@ -945,19 +949,19 @@ export default async function (t) {
           // every head scroller that scrolled since the press must reach its scrollend; one that does not within
           // REVEAL_END_MS fails by name.
           // T98: the wait runs from the click itself (the head's capture listener), not from before Playwright's press:
-          // the rail's delay is after the click (and the rail's own frame before its timer), then three frames for the
-          // scroll's first frame; then every head scroller the product asked to scroll, or that scrolled, after the click
+          // the rail's delay is after the click, then REVEAL_MARGIN_MS for the rail's own frame before its timer and the
+          // timer's lateness, then two frames; then every head scroller the product asked to scroll, or that scrolled, after the click
           // must reach its scrollend (a request that moved nothing is done once two frames show no scroll). A click that
           // never reached the head, or a reveal that does not end within REVEAL_END_MS, fails by name.
-          const reveal = await head.evaluate((e, [ms, endMs]) => new Promise(res => {
+          const reveal = await head.evaluate((e, [ms, endMs, marginMs]) => new Promise(res => {
             const W = window.__shelfReveal, reduced = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'reduced';
             const raf = () => new Promise(r => requestAnimationFrame(r));
             (async () => {
               const t0 = performance.now();
               while (W.clickAt === null) { if (performance.now() - t0 > 1000) { W.done = performance.now(); return res({ ok: false, why: 'no click reached the head within 1 s of the press', pressLag: null }); } await raf(); }
-              const decide = W.clickAt + (reduced ? 0 : ms);
+              const decide = W.clickAt + (reduced ? 0 : ms) + marginMs;
               while (performance.now() < decide) await raf();
-              await raf(); await raf(); await raf();
+              await raf(); await raf();
               const t1 = performance.now();
               for (;;) {
                 const now = performance.now();
@@ -970,7 +974,7 @@ export default async function (t) {
                 await raf();
               }
             })();
-          }), [REVEAL_MS, REVEAL_END_MS]);
+          }), [REVEAL_MS, REVEAL_END_MS, REVEAL_MARGIN_MS]);
           await t.check(`${target} accordion reveal finished (the rail's own scroll ended) before the next press`, reveal.ok, JSON.stringify(reveal), { hard: true });
           revealLog.push(reveal);
           opened=true;
