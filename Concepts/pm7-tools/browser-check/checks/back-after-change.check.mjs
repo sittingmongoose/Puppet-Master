@@ -468,7 +468,8 @@ const pickTook = async (A, pre) => {
   return JSON.stringify(pre) !== JSON.stringify([await A.frame().evaluate(ANSWERS), await A.frame().evaluate(SEL)]);
 };
 /* why a pick did not take, for the walk's message */
-const tookWhy = () => (LAST_PICK && LAST_PICK.field ? (LAST_PICK.held === false ? `the field does not hold ${LAST_PICK.emptied ? 'the emptiness left' : 'the text typed'}` : !LAST_PICK.follows ? 'the field holds the text typed but the session\'s answers did not change' : 'the session\'s answers are those the screen was reached with') : 'neither the screen\'s selection nor the session\'s answers changed');
+/* T99 (tool batch 5; REVIEW-kit-tb4-b-opus finding 13): an emptied field is named as emptied, not as holding the text typed */
+const tookWhy = () => (LAST_PICK && LAST_PICK.field ? (LAST_PICK.held === false ? `the field does not hold ${LAST_PICK.emptied ? 'the emptiness left' : 'the text typed'}` : !LAST_PICK.follows ? (LAST_PICK.emptied ? 'the field was emptied, but the session\'s answers did not change' : 'the field holds the text typed but the session\'s answers did not change') : 'the session\'s answers are those the screen was reached with') : 'neither the screen\'s selection nor the session\'s answers changed');
 const pickOther = async (A, which = 'first', revealed = false, reached = null) => {
   LAST_PICK = null;
   /* (T66: the answers as the screen was reached, before any click that reveals a field) */
