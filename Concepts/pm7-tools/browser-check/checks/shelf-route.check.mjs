@@ -114,7 +114,7 @@ export default async function (t) {
     await t.page.mouse.move(off.x + p.x, off.y + p.y);
   };
   // Test-only readers: which menus are open, and a stable key for each (id, PMR id, or parent › label).
-  await f.evaluate(() => {
+  const readers = () => {
     const key = m => { const up = m.parentElement && m.parentElement.closest('[role="menu"]'); return m.id || m.dataset.pmrMenu || ((up ? key(up) + ' › ' : '') + (m.getAttribute('aria-label') || 'menu')); };
     const open = () => [...document.querySelectorAll('[role="menu"]')].filter(m => m.classList.contains('is-open') && !m.classList.contains('is-closing') && m.checkVisibility());
     // Row kinds for the context census: tag, classes (less state classes) and role, and for a tree's rows file or folder
@@ -127,7 +127,8 @@ export default async function (t) {
     const rows = p => [...p.querySelectorAll('[tabindex]:not([tabindex="-1"]), button, a[href], input, select, textarea, summary, [role="treeitem"], [role="row"], [role="option"], [role="listitem"], [role="gridcell"]')]
       .filter(e => !e.closest('[role="menu"]') && e.checkVisibility() && e.getBoundingClientRect().width);
     window.__shelf = { key, open, keys: () => open().map(key), cls, sig, box, rows };
-  });
+  };
+  await f.evaluate(readers);
   // Preserve the original initial-view census; the complete routed inventory below
   // independently includes hidden tabs and collapsed shelves. Zero here is initial-only.
   const expected = {'panel-files':0,'panel-search':1,'panel-source':0,'panel-git':0,
@@ -177,7 +178,7 @@ export default async function (t) {
   const targets = await f.locator('#activityBar .icon[data-target]').evaluateAll(es => es.filter(e => e.getBoundingClientRect().width).map(e=>e.dataset.target));
   await t.check('expected activity routes present', JSON.stringify([...targets].sort()) === JSON.stringify(Object.keys(expected).sort()), JSON.stringify(targets), {hard:true});
   const rows=[]; let reached=0; const routedRows=[];
-  const opened = new Set(), contextRoutes = [], popupRows = [], branchRows = [], branchDone = new Set();
+  const opened = new Set(), contextRoutes = [], popupRows = [], branchRows = [], branchDone = new Set(), ctxKinds = [];
   let current = null;
   // Assert one open menu: items, a reachable first item, its nested branches, then Escape closes it.
   // reopen: opens the same menu again by the same route, for the pick (FO-84b).
@@ -638,7 +639,7 @@ export default async function (t) {
     // class are one route kind: once one of them opens a menu, every other one must open that menu by every input (a
     // route that stops working fails; it does not look like a row that never had one). What each row kind opened is
     // remembered for the later walk, which asks another row of every kind that opened a menu again after the whole panel.
-    const ctxKinds = [], ruleDone = new Set();
+    const ruleDone = new Set();
     const contextCensus = async (state, engine, tab) => {
       const cands = await panel.evaluate(p => {
         document.querySelectorAll('[data-shelf-probe]').forEach(e => e.removeAttribute('data-shelf-probe'));
@@ -894,9 +895,142 @@ export default async function (t) {
     await t.page.mouse.click(off.x + out.x, off.y + out.y);
     await t.check("a click outside the side panel and its menus closes the folded rail's overlay", await f.locator('#sidePanelSlot').isHidden(), JSON.stringify(out), { hard: true });
   }
+  // The main walk's frame is read here for the last time: the FO-93b phase below opens fresh pages, then the floors run.
+  const blocked = await f.evaluate(() => ({ __blockedShelfMenu: window.__blockedShelfMenu || 0, __blockedContext: window.__blockedContext || 0, __blockedContextOn: window.__blockedContextOn || 0, __blockedPopup: window.__blockedPopup || 0, __blockedBranch: window.__blockedBranch || 0 }));
+  const marks = ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch','data-shelf-pick','data-shelf-fold','data-shelf-disc','data-shelf-kb','data-shelf-kbs','data-shelf-later','data-shelf-later-tab'];
+  await f.evaluate(marks=>document.querySelectorAll(marks.map(a=>`[${a}]`).join(',')).forEach(e=>{for(const a of marks)e.removeAttribute(a);}), marks);
+
+  // FO-93b: what a context menu opened by a key acts on. For every keyboard route the census opened (pane and key), on a
+  // fresh page each: (1) a fresh open by the key and Enter on Open hands PM_HOME.open the row's own path and makes it the
+  // active tab; (2) after a right-click on another row A (closed by Escape), the key on row B acts on B: Open, Copy path's
+  // Copy relative path (the copied text and its note name B) and Open with's Source editor. A row's own path is its
+  // data-path, else the full path its item shows (.fm-cpath). (3) A right-click on B and a press on Open act on B too.
+  // --set effects=0 skips this phase.
+  const kbRoutes = [];
+  for (const r of contextRoutes) {
+    if (r.input === 'mouse') continue;
+    const state = [r.engine, r.tab].filter(Boolean).join(' ') || 'panel';
+    if (!kbRoutes.some(k => k.panel === r.panel && k.state === state && k.input === r.input && k.menu === r.menu)) kbRoutes.push({ ...r, state });
+  }
+  if (t.args.effects !== '0') for (const rt of kbRoutes) {
+    const T = `${rt.panel} ${rt.state} FO-93b ${rt.input}`;
+    const sigs = ctxKinds.filter(k => k.panel === rt.panel && k.state === rt.state && k.got[rt.input] === rt.menu).map(k => k.sig);
+    const g = await t.app.open();
+    if (t.args.look) await t.app.look(t.args.look);
+    const ge = g === t.page.mainFrame() ? null : await g.frameElement(), goff = ge ? await ge.boundingBox() : { x: 0, y: 0 };
+    await g.evaluate(readers);
+    await g.waitForFunction(() => window.PM_HOME && typeof PM_HOME.open === 'function', null, { timeout: 15000 });
+    // Test-side recorders: the opens PM_HOME is asked for, the notes shown, and the text copied by either clipboard route.
+    await g.evaluate(() => {
+      const fx = window.__fx = { opens: [], toasts: [], copies: [] };
+      const open = PM_HOME.open; PM_HOME.open = function (spec, ...a) { fx.opens.push(JSON.parse(JSON.stringify(spec || {}))); return open.apply(this, [spec, ...a]); };
+      const say = window.toast; if (typeof say === 'function') window.toast = function (m, ...a) { fx.toasts.push(String(m)); return say.apply(this, [m, ...a]); };
+      try { const w = navigator.clipboard && navigator.clipboard.writeText && navigator.clipboard.writeText.bind(navigator.clipboard);
+        if (w) navigator.clipboard.writeText = x => { fx.copies.push(String(x)); return w(x).catch(() => {}); }; } catch (_) {}
+      document.addEventListener('copy', e => { const a = e.target && typeof e.target.value === 'string' ? e.target : document.activeElement;
+        fx.copies.push(a && typeof a.value === 'string' ? (a.selectionEnd > a.selectionStart ? a.value.slice(a.selectionStart, a.selectionEnd) : a.value) : String(getSelection())); }, true);
+    });
+    const slot = g.locator('#sidePanelSlot'), icon = g.locator(`#activityBar .icon[data-target="${rt.panel}"]`);
+    const pane = async () => {
+      if (!await slot.isVisible() || !await g.evaluate(p => document.querySelector('#sidePanelSlot > .side-panel-view.active')?.id === p, rt.panel)) {
+        await icon.click(); await g.waitForTimeout(400); if (!await slot.isVisible()) await icon.click();
+      }
+      if (rt.engine) await g.locator(`#${rt.panel} [data-pm7-scm-engine="${rt.engine}"]`).click();
+      if (rt.tab) {
+        const tab = await g.evaluate(([p, tab]) => { const e = [...document.querySelectorAll(`#${p} [role="tab"]`)].find(e => e.checkVisibility() && (e.dataset.tab || e.dataset.jjTab || e.textContent.trim()) === tab);
+          document.querySelectorAll('[data-shelf-fx-tab]').forEach(x => x.removeAttribute('data-shelf-fx-tab')); e?.setAttribute('data-shelf-fx-tab', ''); return !!e && !(e.classList.contains('active') || e.getAttribute('aria-selected') === 'true'); }, [rt.panel, rt.tab]);
+        if (tab) await g.locator('[data-shelf-fx-tab]').click();
+      }
+      await g.waitForTimeout(300);
+    };
+    await pane();
+    // Two file rows of the route's kinds (folders open nothing as a file), each with its own path: B the first, A the last.
+    const pick = await g.evaluate(([p, sigs]) => {
+      document.querySelectorAll('[data-shelf-fx]').forEach(e => e.removeAttribute('data-shelf-fx'));
+      const own = e => e.getAttribute('data-path') || e.closest('[data-acc]')?.querySelector('.fm-cpath')?.textContent.trim() || '';
+      const rows = __shelf.rows(document.getElementById(p)).filter(e => sigs.includes(__shelf.sig(e)) && e.getAttribute('data-kind') !== 'folder' && !(e.getAttribute('role') === 'treeitem' && e.hasAttribute('aria-expanded')) && own(e));
+      const b = rows[0], a = [...rows].reverse().find(e => own(e) !== own(b));
+      b?.setAttribute('data-shelf-fx', 'b'); a?.setAttribute('data-shelf-fx', 'a');
+      return { b: b ? own(b) : null, a: a ? own(a) : null, n: rows.length };
+    }, [rt.panel, sigs]);
+    await t.check(`${T}: two file rows with their own paths to act on`, !!pick.b && !!pick.a, JSON.stringify(pick), { hard: true });
+    const B = g.locator('[data-shelf-fx="b"]'), A = g.locator('[data-shelf-fx="a"]');
+    const fx = () => g.evaluate(() => JSON.parse(JSON.stringify(window.__fx)));
+    const clear = () => g.evaluate(() => { __fx.opens = []; __fx.toasts = []; __fx.copies = []; });
+    const isOpen = () => g.evaluate(k => __shelf.keys().includes(k), rt.menu);
+    const shut = () => g.waitForFunction(k => !__shelf.keys().includes(k), rt.menu, { timeout: 5000 }).then(() => true, () => false);
+    const rest = async () => {
+      const p = await g.evaluate(() => { const slot = document.getElementById('sidePanelSlot');
+        const busy = h => !h || (slot && slot.contains(h)) || !!h.closest('[role="menu"], [role="dialog"], [role="tooltip"], button, a, input, textarea, select, summary, [contenteditable], [title], [role="button"], [role="tab"], [data-pm-hover-label], [data-pm-hover-kind], [aria-describedby]');
+        for (const fx of [0.98, 0.9, 0.75, 0.6]) for (let y = innerHeight * 0.45; y < innerHeight - 30; y += 16) { const x = Math.round(innerWidth * fx); if (!busy(document.elementFromPoint(x, y))) return { x, y: Math.round(y) }; }
+        return { x: 2, y: 2 }; });
+      await t.page.mouse.move(goff.x + p.x, goff.y + p.y);
+    };
+    const keyOpen = async () => {
+      await pane(); await B.scrollIntoViewIfNeeded(); await rest(); await B.focus(); await t.page.keyboard.press(KEY[rt.input]);
+      return g.waitForFunction(k => __shelf.keys().includes(k), rt.menu, { timeout: 5000 }).then(() => true, () => false);
+    };
+    const rightA = async () => {
+      await pane(); await A.scrollIntoViewIfNeeded(); await A.click({ button: 'right' });
+      const up = await g.waitForFunction(k => __shelf.keys().includes(k), rt.menu, { timeout: 5000 }).then(() => true, () => false);
+      await t.check(`${T}: a right-click on ${pick.a} opens the menu`, up, '', { hard: true });
+      await t.page.keyboard.press('Escape'); await shut();
+    };
+    const focused = () => g.evaluate(() => (document.activeElement?.textContent || '').trim().replace(/\s+/g, ' '));
+    // Keys from the first item to the one whose label starts with the text (the menu's own ArrowDown order).
+    const keysTo = async (label) => {
+      for (let s = 0; s < 40; s++) { if ((await focused()).startsWith(label)) return true; await t.page.keyboard.press('ArrowDown'); }
+      return false;
+    };
+    const openedPath = async (want, how) => {
+      const ok = await g.waitForFunction(w => __fx.opens.some(o => o.path === w), want, { timeout: 3000 }).then(() => true, () => false);
+      const now = await fx();
+      await t.check(`${T}: ${how} hands PM_HOME.open ${want}, only`, ok && now.opens.length === 1 && now.opens[0].kind === 'editor' && now.opens[0].path === want, JSON.stringify(now.opens), { hard: true });
+    };
+    // (1) a fresh open by the key, Enter on Open
+    await clear();
+    await t.check(`${T}: a fresh key opens the menu on ${pick.b}`, await keyOpen(), '', { hard: true });
+    await t.check(`${T}: the focus is on Open`, await focused() === 'Open', await focused(), { hard: true });
+    await t.page.keyboard.press('Enter');
+    await openedPath(pick.b, 'a fresh key open and Enter on Open');
+    const active = await g.waitForFunction(w => PM_HOME.active && PM_HOME.active()?.tabId === 'file:' + w, pick.b, { timeout: 3000 }).then(() => true, () => false);
+    await t.check(`${T}: ${pick.b} becomes the active tab`, active, JSON.stringify(await g.evaluate(() => PM_HOME.active && PM_HOME.active())), { hard: true });
+    // (2) after a right-click on A, the key on B: Open
+    await rightA(); await clear();
+    await t.check(`${T}: after a right-click on ${pick.a}, the key opens the menu on ${pick.b}`, await keyOpen(), '', { hard: true });
+    await t.page.keyboard.press('Home'); await keysTo('Open'); await t.page.keyboard.press('Enter');
+    await openedPath(pick.b, `after a right-click on ${pick.a}, Enter on Open`);
+    // (2) Copy path's Copy relative path
+    await rightA(); await clear(); await keyOpen();
+    await t.check(`${T}: keys reach Copy path`, await keysTo('Copy path'), await focused(), { hard: true });
+    await t.page.keyboard.press('ArrowRight');
+    await t.check(`${T}: keys reach Copy relative path`, await keysTo('Copy relative path'), await focused(), { hard: true });
+    await t.page.keyboard.press('Enter');
+    const copied = await g.waitForFunction(w => __fx.copies.includes(w) && __fx.toasts.some(m => m.includes(w)), pick.b, { timeout: 3000 }).then(() => true, () => false);
+    await t.check(`${T}: after a right-click on ${pick.a}, Copy relative path copies ${pick.b} and says so`, copied, JSON.stringify(await fx()), { hard: true });
+    await shut();
+    // (2) Open with's Source editor
+    await rightA(); await clear(); await keyOpen();
+    await t.check(`${T}: keys reach Open with`, await keysTo('Open with'), await focused(), { hard: true });
+    await t.page.keyboard.press('ArrowRight');
+    await t.check(`${T}: keys reach Source editor`, await keysTo('Source editor'), await focused(), { hard: true });
+    await t.page.keyboard.press('Enter');
+    await openedPath(pick.b, `after a right-click on ${pick.a}, Open with Source editor`);
+    if (await isOpen()) { await t.page.keyboard.press('Escape'); await shut(); }
+    // (3) the pointer takes the same path: a right-click on B and a press on Open act on B
+    await clear(); await pane(); await B.scrollIntoViewIfNeeded(); await B.click({ button: 'right' });
+    await g.waitForFunction(k => __shelf.keys().includes(k), rt.menu, { timeout: 5000 }).catch(() => {});
+    await g.evaluate(k => { const m = __shelf.open().find(x => __shelf.key(x) === k);
+      const it = m && [...m.querySelectorAll('[role="menuitem"]')].find(i => i.closest('[role="menu"]') === m && i.textContent.trim() === 'Open');
+      it?.setAttribute('data-shelf-fx-open', ''); }, rt.menu);
+    await g.locator('[data-shelf-fx-open]').click();
+    await openedPath(pick.b, 'a right-click and a press on Open');
+  }
+  if (t.args.effects !== '0') await t.check('FO-93b every keyboard context route was asked what it acts on', kbRoutes.length >= 6 || !!only || !!t.args.inputs, JSON.stringify(kbRoutes.map(r => `${r.panel} ${r.state} ${r.input} ${r.menu}`)));
+
   await t.check('at least 14 known PMMenu identities exercised',new Set(routedRows.flatMap(r=>r.exercised)).size>=14,JSON.stringify(routedRows),{hard:true});
   t.log(JSON.stringify({initial:rows,routed:routedRows,popups:popupRows,context:contextRoutes,branches:branchRows}));
-  if(t.args.blockMenu) await t.check('capture blocker intercepted requested menu',await f.evaluate(()=>window.__blockedShelfMenu)>0,t.args.blockMenu,{hard:true});
+  if(t.args.blockMenu) await t.check('capture blocker intercepted requested menu',blocked.__blockedShelfMenu>0,t.args.blockMenu,{hard:true});
   await t.check('workflow Ref route exercised',routedRows.find(r=>r.target==='panel-git')?.exercised.includes('shDispRefCI'),'',{hard:true});
   await t.check('all rail targets inspected and reachable shelf menus exercised',targets.length===Object.keys(expected).length&&reached===Object.values(expected).reduce((a,b)=>a+b,0),JSON.stringify({reached,rows}));
   // Completeness against the authored census, plus floors for what only a route can show.
@@ -907,7 +1041,5 @@ export default async function (t) {
   await t.check('at least 2 nested menu branches exercised', new Set(branchRows.map(b => b.sub)).size >= 2, JSON.stringify(branchRows));
   await t.check('at least 6 popup menus beyond the PMMenu wrappers exercised', new Set(popupRows.filter(r => !r.controls).map(r => r.identity)).size >= 6, JSON.stringify(popupRows));
   for (const [arg, hits] of [['blockContext', '__blockedContext'], ['blockContextOn', '__blockedContextOn'], ['blockPopup', '__blockedPopup'], ['blockBranch', '__blockedBranch']])
-    if (t.args[arg]) await t.check(`capture blocker ${arg} intercepted input`, await f.evaluate(h => window[h] || 0, hits) > 0, String(t.args[arg]));
-  const marks = ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch','data-shelf-pick','data-shelf-fold','data-shelf-disc','data-shelf-kb','data-shelf-kbs','data-shelf-later','data-shelf-later-tab'];
-  await f.evaluate(marks=>document.querySelectorAll(marks.map(a=>`[${a}]`).join(',')).forEach(e=>{for(const a of marks)e.removeAttribute(a);}), marks);
+    if (t.args[arg]) await t.check(`capture blocker ${arg} intercepted input`, (blocked[hits] || 0) > 0, String(t.args[arg]));
 }
