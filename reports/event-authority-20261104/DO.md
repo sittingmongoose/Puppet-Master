@@ -1279,6 +1279,8 @@ Status counts stay **250 PASS / 25 PARTIAL / 25 ABSENT**. Native execution stays
 
 Number-handling, date-time, guard-table and proof-machinery items, parked for the shared-tool sweep (locations from `reviews/DO-sol/REVIEW-cycle8.md`, unchanged by this pass):
 
+_Sweep part 2A (below) closed the guard-table, fixture-pass, DO-P1F-03, DO-P1F04, DO-P1F05 and DO-P1F06 rows and DO-C8-P1..P3; the number and date-time rows are its "Part 2B items"._
+
 | ID | Kind | Location |
 |---|---|---|
 | DO-C8-N1 | number domains by field owner | `scripts/pm_orchestrator_event_oracles.py:86-179` (`number_domain_errors`, `number_token_errors`, `fixture_loads`) |
@@ -1302,4 +1304,120 @@ Number-handling, date-time, guard-table and proof-machinery items, parked for th
 
 The last review's family grades are carried unchanged; this pass re-graded nothing (no checker, fixture or schema file changed). The fixture pass also carries them unchanged: its fixes change no cell. DO-P1F-03 bore on the `closed_payload_schema` cell of the three `crew.board_*` families. The lead answered it, the members now conform, and that cell alone was re-graded: PASS, with the reasons in "DO-P1F-03: findings and responses". The review still judges it. DO-P1F04 bore on the `consumers_checkpoints` and `retention` cells of the 22 non-board families. `consumers_checkpoints` holds PASS after the fix, where by the rubric it read PARTIAL at `35ba68b6d0`. `retention` holds PARTIAL. The reasons are in "DO-P1F04: findings and responses", and the review still judges them. DO-P1F05 bore on the `consumers_checkpoints` cell of all 25 families. It holds PASS after the fix, where by the rubric it read PARTIAL at `37c1176bec`. The reasons are in "DO-P1F05: findings and responses", and the review still judges them. DO-P1F06 bore on the `consumers_checkpoints`, `compatibility_withdrawal` and `retention` cells of all 25 families. `consumers_checkpoints` and `compatibility_withdrawal` hold PASS after the fix, where by the rubric they read PARTIAL at `12fb322ceb`; `retention` holds PARTIAL. The reasons are in "DO-P1F06: findings and responses", and the review still judges them. Cycle-8 independent regrade: **225 PASS / 50 PARTIAL / 25 ABSENT / 0 CONFLICT**; every family **9 PASS / 2 PARTIAL / 1 ABSENT** with membership ABSENT, retention PARTIAL and oracles PARTIAL (`reviews/DO-sol/REVIEW-cycle8.md` twelve-criterion table), verdict NOT_READY. Membership stays ABSENT pending admission; retention stays PARTIAL pending integration; native execution stays NOT_RUN.
 
+Sweep part 2A re-graded the `positive_negative_oracles` cell of all 25 families to PARTIAL, the cycle-8 grade; the reasons are in "Sweep part 2A: findings and responses".
+
 This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
+
+---
+
+# DO — sweep part 2A: guard tables on the gated guard tool (2026-11-07)
+
+Task: `lanes/SWEEP-P2A.md`. Branch `plans/ea-w2-orchestrator-20261104`, start head `cd0ad1888f` (DO-P1F06), no rebase. Tool merge `c12dd57afc` (the gated tool `004bdedd63`, 11 files, none edited). Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DO/sweep-p2a/`, gzipped while the share is full (lead, 22:13Z): `guard-tool.tar.gz` (per-suite tool reports and summaries, the cached boundary matrices, `guard-table-result.json`, `DO.guard-tables.md`), `differential.tar.gz`, `authoring.tar.gz` (the split and authoring scripts and the 3.1 s prototype), `runs/` and `SHA256SUMS`. No Decision Log entry, registry append, admission, seal or reseal; `Plans/Spec_Lock.json`, `Plans/.evidence/**`, `Plans/auto_decisions.jsonl`, `.gitignore`, the frozen validator and the tool's files are unchanged.
+
+**Result.** Every DO refusal is now a named predicate in a guard table: **414 rows** in **118 guard-tool suites** over 14 boundaries, and the lane's checkers reach a refusal only through `run_rows`. The gated tool proves **387 rows** by their own single-guard cuts, with 0 masked and 0 unrelated changes. **27 rows** are unprovable by construction, each named with its reason (`UNPROVED`). The complete checker exits 0 at the head with **212,259 checks** (203,296 lane checks, unchanged from DO-P1F06, plus the whole-table guard matrix). The `positive_negative_oracles` cell of all 25 families stays **PARTIAL** (the cycle-8 grade); the reasons are below.
+
+## Sweep part 2A: findings and responses
+
+| Item | Result | Commit, path:line | How to verify |
+|---|---|---|---|
+| **Take the gated tool** | Merged as `--no-ff`; the merge adds exactly the 11 tool files, unedited. | `c12dd57afc` | `git diff 004bdedd63 HEAD -- scripts/pm_guard_isolation*.py scripts/guard-isolation Plans/guard_isolation_traps.json reports/event-authority-2026110[45]/GUARDTOOL*` is empty. |
+| **Guard tables (whole lane; DO-C8 "Guard tables")** | Every refusal of the append, transport, pack, retry, retry-transition, historical, recipe, checkpoint, board source, Project input, board join, board member, selected-definition, coordination-storage and successor checks is a row `(name, subject, words, code, predicate, reads, group)` in `scripts/do-guards/do_<suite>.py`; `scripts/pm_orchestrator_event_guards.py:144` assembles the stage tables; `run_rows` (`scripts/pm_orchestrator_event_oracles.py:596`) runs them. A predicate reads only the view keys its row declares (the runner projects them, so an undeclared read is a `KeyError`), calls no helper and abstains on a field another row owns. The lane builds each view (the case's fields and its recomputed digests, identities, typed trees and schema verdicts) in `*_view` functions. A compound clause that appended its code once keeps that through `group`, so every checker output list is unchanged except the two de-duplications below. Rewritten functions: `checkpoint_errors` `:1024`, `event_errors` `:429`, `transport_errors` `:269`, `pack_errors` `:250`, `predicate_errors` `:310`, `retry_outcome` `:542`, `historical_read_errors` `:557`, `board_source_errors` `:460`, `project_original_input_errors` `:480`, `application_shape_errors` `:455`, `selected_definition_errors` `:515`, `successor_errors_from` `:948`, `retry_context_errors` `:195`, `number_rule_for_record` `:117` and the eight checkpoint copy functions; `board_join_errors` and `retry_allowed` (`scripts/pm-orchestrator-event-contracts.py:78`, `:55`); `board_member_definition_failures` (`scripts/pm_coordination_events.py:419`). | `c8c17b4923`, `a73bd32f7f` | Differential runs against the `cd0ad1888f` functions: 15,605 checkpoint inputs, 4,696 append/transport/pack/retry/historical inputs and 2,240 board/selected/successor inputs give identical outputs except the two de-duplications (`diff_*.py` and their outputs in `differential.tar.gz`). The complete checker keeps its 203,296 lane checks. |
+| **De-duplication 1: the read token's storage instance** | One invariant at two sites with two codes (`checkpoint_storage_identity` and the token join); the tool's Duplicate needs one code. The token join no longer repeats it; `read_token_storage_identity` keeps it. Negative `P1F06:token_storage_instance_id` now names that code alone; the inventory row has one guard. Not a weakening: the same predicate on the same field still refuses. | `c8c17b4923`; `scripts/pm_orchestrator_event_oracles.py` `join_negatives`; `Plans/orchestrator_checkpoint_field_inventory.json` row `read.read_token.storage_instance_id` | `checkpoint_errors` on that negative is `['checkpoint_storage_identity']` (53 inputs, the only checkpoint difference). |
+| **De-duplication 2: a missing pack entry** | A missing SP-337 entry was refused twice (`payload_pack_shape` and the join that looked it up); now once, by `external_payload_join` or `content_reference_join`. `pack_errors(None)` alone still refuses with `payload_pack_shape`. | `c8c17b4923`; `transport_errors` `:269` | 25 `transport_cases` with `forge: missing`: `['external_payload_join']`. |
+| **Two-defect negatives the matrix found** | The whole-table matrix (every row on every negative, no early stop) found negatives a second row also refuses. Each was fixed in the predicate where the second refusal came from the checker's own early stop: the null-frame form also tripped three coverage sequence rows (they now abstain on a null frame, `do_checkpoint_coverage_*`); payload-schema, Project input, historical-schema and board-branch stops (later stages now read the earlier stage's verdict and abstain where the checker stops); same-code compound clauses (stage evidence and accepted source now keep the original short-circuit order). Negatives that are two-defect by design stay lane checks and are never credited, each with its reason (`LANE_ONLY` and the `lane` argument of each `*_inputs` builder): schema-first forms, the schema-const duplicate pair, the nested application schemas, the token-loop string forms, the transport type forms that change a value and its logical copy, the stored-header payload form and the scope-coupled forms. | `a73bd32f7f`, `605a3b4153`; `scripts/pm-orchestrator-guard-proof.py` | `python3 scripts/pm-orchestrator-guard-proof.py check-all` exits 0: no control refused, no negative refused by two rows, unwitnessed rows exactly `UNPROVED`. |
+| **Missing negatives** | 2,253 single-defect negatives added (2,243 `P2A:` negatives and the 10 recipe-evidence negatives) for rows the lane had none for (envelope joins, phase and retry-source predicates, transport and pack forms, retry identity, historical reader facts, board joins, run anchors, Project branch joins, application copies kept in step by `resync_application`, successor graph fields with the graph digest kept in step, recipe evidence fields). They run in the complete checker through `guard_table_checks`. | `605a3b4153`; `scripts/pm-orchestrator-guard-proof.py` (`*_inputs`); `scripts/pm-orchestrator-event-contracts.py:291` | `check-all` lists each boundary's single-defect, lane-only and probe counts; the complete checker asserts it. |
+| **DO-C8-P1, P2, P3 (proof machinery)** | **Closed by adoption.** The external round-7 `guard_audit.py` inventory, its merged groups and its whole-schema/keyword cuts are replaced by the gated tool cutting one table entry at a time, on suites the lane's own tables generate. No Duplicate is declared: the cross-code duplicates are reported unproved, not merged. | `c12dd57afc`..`04abbf0b70` | `scripts/pm-orchestrator-guard-proof.py run`; per-suite JSON in `guard-tool.tar.gz`. |
+| **Fixture-pass guards** | `selected_definition_errors` is `SELECTED_DEFINITION_ROWS` (2 rows); the coordination storage row comparison is `COORDINATION_STORAGE_ROWS` (`coordination_storage_member`), with the row-drift negative on both sides. | `c8c17b4923`; `scripts/do-guards/do_selected_definitions_1.py`, `do_coordination_storage_1.py`; `scripts/pm-orchestrator-event-contracts.py:195-206` | Tool: both suites PASS. |
+| **DO-P1F-03 guards** | `board_member_stored_header`, the envelope joins (`board_envelope_*`, `board_scope_partition`, `board_identity_*`), `event_join_payload_schema_id` and the four `board_member_definition_failures` clauses (5 rows, per member) are rows. | `c8c17b4923`; `do_board_join_*.py`, `do_append_join_*.py`, `do_board_member_1.py` | Tool: those suites PASS. |
+| **DO-P1F04, P1F05, P1F06 guards** | The 8 coverage copies, the 12 sequence copies, the null-frame row, the last-event-id row, the 29 identity-copy predicates and the older checkpoint guards are the 98 checkpoint and recipe rows. The coverage-complete clause is `coverage_complete`, unprovable (below). | `c8c17b4923`; `do_checkpoint_*.py`, `do_recipe_1.py` | Tool: 97/97 provable checkpoint and recipe rows proved. |
+| **DO-C8-N1..N5, DO-P1F4-S1, date-time gate** | **Part 2B** (number and timestamp items); see "Part 2B items". | — | — |
+
+### Guard-table result
+
+| Boundary | Rows | Suites | Matrix single-defect negatives | Tool proved | Unproved (declared) |
+|---|---:|---:|---:|---:|---:|
+| checkpoint | 98 | 24 | 242 | 97 | 1 |
+| append | 33 | 12 | 992 | 31 | 2 |
+| transport | 15 | 6 | 572 | 15 | 0 |
+| pack | 16 | 5 | 44 | 16 | 0 |
+| retry_context | 13 | 3 | 215 | 13 | 0 |
+| retry_transition | 11 | 3 | 15 | 11 | 0 |
+| historical | 19 | 5 | 2511 | 19 | 0 |
+| retry | 10 | 6 | 637 | 9 | 1 |
+| board | 102 | 31 | 972 | 79 | 23 |
+| project_input | 57 | 12 | 999 | 57 | 0 |
+| board_member | 5 | 1 | 15 | 5 | 0 |
+| selected | 2 | 1 | 14 | 2 | 0 |
+| coordination_storage | 1 | 1 | 2 | 1 | 0 |
+| successor | 32 | 8 | 32 | 32 | 0 |
+| **all** | **414** | **118** | **7262** | **387** | **27** |
+
+**Cut results.** For every proved row the tool ran the suite's controls and negatives under the cut: all of the row's own negatives flipped (703 flips in all), every other case kept its exact result (2414 kept), with 0 masked and 0 unrelated changes. The guard-call trace check passed on every row. 13,193 evaluations in 9,987 s of tool time. Per-row results (`where`, matrix witnesses, tool result, own/flips, stays): `reports/event-authority-20261104/DO.guard-tables.md`; full reports: `<suite>.json` in `guard-tool.tar.gz`.
+
+**Unproved rows, with the reason.** Each sits in a suite of its own kind, so the tool reports it unproved without withholding another row's credit.
+- `coverage_complete` (scripts/do-guards/do_checkpoint_coverage_1.py:10): runtime duplicate of the checkpoint schema's const `complete_to_captured_boundary: true` (same field, same predicate, codes checkpoint_schema and index_complete_source_coverage): the schema verdict refuses every input it would (lane negative P1F05:incomplete_coverage reaches both); the tool's Duplicate needs one code.
+- `event_type_pattern` (scripts/do-guards/do_append_join_1.py:10): runtime duplicate of the EventRecord schema's `event_type` pattern (same field, same pattern, codes event_schema and event_type_join): standing negative identifier_lf reaches both.
+- `application_input_schema` (scripts/do-guards/do_board_application_shape_2.py:10): the V1/V2 source schema validates the original input it holds, so an input defect is refused by `application_source_schema` too: a nested duplicate under another code (lane negatives successor:*missing_subject and others reach both).
+- `application_source_server_id` (scripts/do-guards/do_board_application_source_7.py:10): the source's server_id must equal its scope's (scope_failures server_scope_mismatch), so a server change reaches both rows (probe P2A:source_server_id).
+- `application_wrapper_server_id` (scripts/do-guards/do_board_application_source_9.py:10): the wrapper's server_id is bound to its scope the same way.
+- `source_scope_join` (scripts/do-guards/do_board_application_source_11.py:10): every scope member is fixed by WorkflowScopeV2 and by scope_failures for an application source, so a scope differing from the message's is refused by the schema or the helper (probe P2A:source_scope).
+- `wrapper_scope_join` (scripts/do-guards/do_board_application_source_11.py:16): the wrapper's scope is bound the same way.
+- `event_join_scope_kind` (scripts/do-guards/do_append_join_3.py:10): the EventRecord schema's if/then ties scope_kind to project_id, so a scope_kind other than the payload's also changes project_id (probe P2A:scope_kind reaches both joins).
+- `retry_same_scope_kind` (scripts/do-guards/do_retry_identity_1.py:10): the same EventRecord if/then: a candidate with another scope_kind also has another project_id (probe P2A:retry_scope_kind).
+- The 18 rows `source_scope_<code>` and `wrapper_scope_<code>` for the nine `scope_failures` codes (`do_board_application_source_2.py`..`_5.py`): delegated to the shared Projects helper `scope_failures` (scripts/pm_projects_refresh_contracts.py): the scope object is copied in the source, its original input, the wrapper and the wrapper record, closed by WorkflowScopeV2 and joined by source_scope_join, wrapper_scope_join and wrapper_record_join, so a schema-valid scope defect reaches more than one row or none (probe P2A:source_scope is refused by `application_source_schema`).
+
+**How the proof is partitioned, and why.** The tool snapshots the whole input value at every predicate instruction. On one complete DO checkpoint case that cost 3.1 s per evaluation (78 evaluations of a 4-row prototype took 244 s), so a whole-boundary suite would take days. Each suite is therefore at most five consecutive rows of one stage table, with a value projected to the keys those rows read. Isolation across suites is the whole-table matrix the complete checker runs: every row on every negative of its boundary, with no early stop and no grouping, and every negative refused by its target row alone. The tool's own controls per suite are the controls its chosen negatives (at most two per row) were built from; the complete checker runs every positive through every row.
+
+**Not proved here.** The schema assertions stay compound verdict rows (`*_schema_valid`), one row per schema boundary, with no per-keyword cut. For the payload schema alone the tool's `SchemaCatalog` inventories 1,412 schema rows across the 25 definitions. A schema-table port is the open item and the reason `positive_negative_oracles` stays PARTIAL.
+
+### Checks, before and after
+
+| Command | `cd0ad1888f` | Head |
+|---|---|---|
+| `python3 scripts/pm-orchestrator-event-contracts.py` | 0: 203,296 checks | 0: 25 families, 212,259 checks |
+| `python3 scripts/pm-orchestrator-guard-proof.py check-all` | not applicable | 0: 0 errors, 414 rows, 27 declared unprovable |
+| `python3 scripts/pm-orchestrator-guard-proof.py check` | not applicable | 0: 118 adapters current |
+| `python3 scripts/pm-orchestrator-guard-proof.py run` | not applicable | 1: 106 suites PASS, 12 FAIL (unproved_guards 12); 387 rows proved |
+| `python3 scripts/pm_coordination_events.py` | 1: 2 baseline failures | 1: the same 2 (`payload_schema_definition_census`, `coordination_storage_family_mismatch`) |
+| `python3 -m unittest discover -s tests -p test_pm_coordination_events.py` | 1: 50 tests, 14 failures | 1: the same 14 |
+| `python3 -m unittest tests.test_shared_runtime_storage_contracts` | 0 | 0: 17 tests |
+| `python3 -m unittest tests.test_pm_event_index_binding` | 0 | 0 |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | 0: 99 sources |
+
+No `Plans/*.md` document changed, so no shard or index regeneration was needed and the index was not re-validated. The one `Plans/` edit is the inventory JSON row above, which is not a shard source.
+
+### Recurring classes
+
+Class 8 (masked negatives) is this round's subject: the matrix and the tool now show it row by row. The restructure changes no comparison: typed comparisons stay typed (`typed_text` is `typed_tree` serialized), Python comparisons stay Python, and the differential runs show identical outputs. Exact types come before values in every predicate (class 11). Schema references still resolve eagerly (`append_schema_references`, `successor_schema_references`, class 5). Classes 10, 10a and 12 are part 2B. The other classes are unchanged by this round.
+
+**This lane's own review of its timestamp fields is interim only** (pm7-build, 2026-11-05 16:50Z), until the shared date-time gate passes.
+
+### Part 2B items
+
+| ID | Kind | Location |
+|---|---|---|
+| DO-C8-N1 | number domains by field owner | `scripts/pm_orchestrator_event_oracles.py:89` `number_domain_errors`, `:137` `number_token_errors`, `:156` `fixture_loads`; their rows `append_number_domain` (`scripts/do-guards/do_append_number_1.py`), `retry_number_domain` (`do_retry_number_1.py`), `board_payload_number_domain` and `board_envelope_number_domain` (`do_board_number_1.py`), whose input is `append_number_view` `:790`, `retry_view` `:859` and `board_join_errors` |
+| DO-C8-N2 | qualified JCS for identity and digests | `scripts/pm_orchestrator_event_oracles.py:230` `semantic_digest`; `scripts/pm-orchestrator-event-contracts.py:24` `identity`, `:19` `observation_component`, `:38` `historical_identity` |
+| DO-C8-N3 | per-profile physical number codecs | `scripts/pm_orchestrator_event_oracles.py:219` `packed`, `:239` `pack_entry`; the transport size and source hashes in `checkpoint_join_view` `:688` |
+| DO-C8-N4 | composition-installed original-recipe resolver | `RECIPE_ROWS` (`scripts/do-guards/do_recipe_1.py`), `recipe_view` `:660`, `number_rule_for_record` `:117` |
+| DO-C8-N5 | coordination helper reconciliation with DCO | `scripts/pm_coordination_events.py:163` `canonical`, `:213` `event_id_preimage`, `:298` `producer_digest` |
+| DO-P1F4-S1 | integral-float coverage, sequence and identity copies refused by the SP-278 binding codec's `TypeError`, before a coded refusal | `scripts/pm_event_index_binding.py:85` `binding_digest`, reached from `checkpoint_join_view` `:688` and `generation_view`; the float type forms in `coverage_copy_checks` and `p1f06_type_form_checks` |
+| Date-time gate | adopt the shared date-time gate | `scripts/pm_orchestrator_event_oracles.py:61` `utc` (the lane `FormatChecker`), row `project_created_at_value` (`scripts/do-guards/do_project_input_value_1.py`), the payload and envelope `date-time` formats |
+| Typed copies | the owner `typed_tree` (Projects) encodes floats by their IEEE bytes; `typed_text` serializes it | `scripts/pm_orchestrator_event_oracles.py:653` `typed_text` |
+
+### Family grades
+
+| Cell | Before (lane self-grade at `cd0ad1888f`; cycle-8 independent) | After |
+|---|---|---|
+| `positive_negative_oracles`, all 25 families | PASS (self-grade); PARTIAL (cycle 8) | **PARTIAL** |
+| `retention`, all 25 | PARTIAL | PARTIAL |
+| `membership_version`, all 25 | ABSENT | ABSENT |
+| the other nine cells, all 25 | PASS | PASS |
+
+Totals: self-grade **250 PASS / 25 PARTIAL / 25 ABSENT → 225 PASS / 50 PARTIAL / 25 ABSENT**, the same as the cycle-8 independent regrade; every family **9 PASS / 2 PARTIAL / 1 ABSENT**. The oracles cell is PARTIAL because the schema keywords are not cut, 27 rows are unprovable by construction and the number rows wait for part 2B; native execution stays NOT_RUN. The self-grade's DO-C8-P1..P3 are closed (`sweep_p2a_closed_items`); N1..N5 stay open.
+
+### Open notes
+
+- **TOOL-ISSUES candidates (not filed: the brief allows no mail).** (1) The scan treats every function of a scanned file as checker code unless the suite's table holds it, so a lane must split its predicates into one file per suite. (2) The purity snapshot at every predicate instruction makes a real lane value cost about 3 s per evaluation, so suites must be small and projected. (3) A Duplicate needs one refusal code, so a runtime row that repeats a schema assertion under its own code cannot be proved as a pair.
+- The guard-tool controls per suite are the controls its negatives need, not every positive; the complete checker runs every positive through every row.
+- Retention integration, linked-successor physical and admission work, Q1/Q3 and the native NOT_RUN facets carry unchanged.

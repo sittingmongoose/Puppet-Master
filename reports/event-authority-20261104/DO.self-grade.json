@@ -19,8 +19,8 @@
   },
   "status_counts": {
     "ABSENT": 25,
-    "PASS": 250,
-    "PARTIAL": 25
+    "PARTIAL": 50,
+    "PASS": 225
   },
   "families": [
     {
@@ -282,9 +282,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-680: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-680: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -303,17 +303,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -756,9 +777,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the pre-DO-P1F-03 member payloads, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-681: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-681: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -784,31 +805,52 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 543,
-              "line_end": 543,
-              "quote": "or typed_tree(wrapper['record']) != typed_tree(message)"
+              "path": "scripts/do-guards/do_board_application_source_12.py",
+              "unit": "DO guard row wrapper_record_join (sweep part 2A; was typed_tree(wrapper record) in board_source_errors)",
+              "line_start": 13,
+              "line_end": 13,
+              "quote": "return 'source_original_join' if value['typed_wrapper_record'] != value['typed_message'] else None"
             },
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1191,
-              "line_end": 1191,
+              "line_start": 2747,
+              "line_end": 2747,
               "quote": "assert test['boundary'] == 'project_original_input_adapter'"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -1245,9 +1287,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the pre-DO-P1F-03 member payloads, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-682: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-682: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -1266,24 +1308,45 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 543,
-              "line_end": 543,
-              "quote": "or typed_tree(wrapper['record']) != typed_tree(message)"
+              "path": "scripts/do-guards/do_board_application_source_12.py",
+              "unit": "DO guard row wrapper_record_join (sweep part 2A; was typed_tree(wrapper record) in board_source_errors)",
+              "line_start": 13,
+              "line_end": 13,
+              "quote": "return 'source_original_join' if value['typed_wrapper_record'] != value['typed_message'] else None"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -1720,9 +1783,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the pre-DO-P1F-03 member payloads, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-683: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-683: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -1741,24 +1804,45 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
             },
             {
-              "path": "scripts/pm_orchestrator_event_oracles.py",
-              "unit": "DO static oracle",
-              "line_start": 543,
-              "line_end": 543,
-              "quote": "or typed_tree(wrapper['record']) != typed_tree(message)"
+              "path": "scripts/do-guards/do_board_application_source_12.py",
+              "unit": "DO guard row wrapper_record_join (sweep part 2A; was typed_tree(wrapper record) in board_source_errors)",
+              "line_start": 13,
+              "line_end": 13,
+              "quote": "return 'source_original_join' if value['typed_wrapper_record'] != value['typed_message'] else None"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -2178,9 +2262,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-684: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-684: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -2199,17 +2283,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -2628,9 +2733,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-685: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-685: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -2649,17 +2754,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -3078,9 +3204,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-686: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-686: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -3099,17 +3225,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -3528,9 +3675,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-687: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-687: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -3549,17 +3696,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -3978,9 +4146,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-688: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-688: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -3999,17 +4167,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -4428,9 +4617,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-689: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-689: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -4449,17 +4638,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -4878,9 +5088,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-690: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-690: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -4899,17 +5109,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -5328,9 +5559,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-691: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-691: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -5349,17 +5580,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -5778,9 +6030,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-692: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-692: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -5799,17 +6051,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -6228,9 +6501,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-693: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-693: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -6249,17 +6522,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -6678,9 +6972,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-694: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-694: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -6699,17 +6993,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -7128,9 +7443,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-695: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-695: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -7149,17 +7464,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -7578,9 +7914,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-696: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-696: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -7599,17 +7935,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -8028,9 +8385,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-697: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-697: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -8049,17 +8406,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -8478,9 +8856,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-698: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-698: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -8499,17 +8877,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -8928,9 +9327,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-699: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-699: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -8949,17 +9348,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -9378,9 +9798,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-700: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-700: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -9399,17 +9819,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -9828,9 +10269,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-701: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-701: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -9849,17 +10290,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -10278,9 +10740,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-702: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-702: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -10299,17 +10761,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -10728,9 +11211,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-703: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-703: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -10749,17 +11232,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -11178,9 +11682,9 @@
           "change_reason": "DO-P1F06 (cc7c6839e4 + 01bded7d7a): at 12fb322ceb this family's seven compatibility positives, all projector_replay_only originals, carried index rows saying projector_replay_only false, generation ids stale against SP-278's recipe and payload digests of the base event where the original's number spelling differs, and no guard read those copies, so the compatibility fixtures were false; by the rubric the cell read PARTIAL there. They are regenerated with the lane builders, and each copy is now refused by its own code with a single-defect negative on every compatibility positive (through checkpoint_errors and the historical reader). Compatibility readers, withdrawal and the replay-only append refusal are unchanged. It holds PASS. Native execution stays NOT_RUN."
         },
         "positive_negative_oracles": {
-          "status": "PASS",
+          "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "OSI-704: serial static oracles pass with all ten Storage boundary forms and original-receipt retries. Application typed-copy/Project adapter controls pass where applicable. Shared number/proof adoption remains deferred; native NOT_RUN.",
+          "finding": "OSI-704: every refusal of this family's append, transport, pack, retry, historical, checkpoint and (board families) board checks is a row of the DO guard tables; the complete checker passes and requires the whole-table guard matrix to be diagonal; the gated tool proves each provable row by its own single-guard cut. Schema keywords are not cut individually; number rows are part 2B; native NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/orchestrator-subagent-integration.md",
@@ -11199,17 +11703,38 @@
             {
               "path": "scripts/pm_orchestrator_event_oracles.py",
               "unit": "DO static oracle",
-              "line_start": 1058,
-              "line_end": 1058,
+              "line_start": 2614,
+              "line_end": 2614,
               "quote": "for test in fixtures['storage_sequence_cases']:"
+            },
+            {
+              "path": "scripts/pm_orchestrator_event_guards.py",
+              "unit": "DO guard tables (sweep part 2A)",
+              "line_start": 144,
+              "line_end": 144,
+              "quote": "SUITES = ("
+            },
+            {
+              "path": "scripts/pm-orchestrator-guard-proof.py",
+              "unit": "DO guard proof driver (sweep part 2A)",
+              "line_start": 820,
+              "line_end": 820,
+              "quote": "UNPROVED = dict({"
+            },
+            {
+              "path": "scripts/pm-orchestrator-event-contracts.py",
+              "unit": "DO static contract checker",
+              "line_start": 413,
+              "line_end": 413,
+              "quote": "    checks += guard_table_checks(fixtures)"
             }
           ],
           "prior": {
-            "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DO-sol/REVIEW-cycle8.md",
-            "status": "PARTIAL"
+            "source": "reports/event-authority-20261104/DO.self-grade.json at cd0ad1888f (lane self-grade); independent cycle-8 regrade PARTIAL",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "Round 8: Storage uint64 boundaries, exact CV-366 typed-copy joins, isolated Project adapter inputs and serial per-family verification; N1..N5/P1..P3 remain shared-sweep work."
+          "change": "downgraded",
+          "change_reason": "Sweep part 2A: the cycle-8 PARTIAL stands. Check 11 is now proved by the gated guard tool for the runtime rows, but the schema assertions stay compound verdict rows with no per-keyword cut, 27 rows are unprovable by construction (named in UNPROVED with reasons), and the number-domain rows wait for NUMRULE (part 2B)."
         }
       },
       "remaining_gaps": [
@@ -11399,10 +11924,7 @@
     "DO-C8-N2",
     "DO-C8-N3",
     "DO-C8-N4",
-    "DO-C8-N5",
-    "DO-C8-P1",
-    "DO-C8-P2",
-    "DO-C8-P3"
+    "DO-C8-N5"
   ],
   "do_p1f3_regrade": {
     "scope": "closed_payload_schema of crew.board_message_posted, crew.board_message_read and crew.board_messages_archived only; every other cell is carried unchanged",
@@ -11497,5 +12019,70 @@
       "subagent.tool_completed"
     ],
     "status_counts_changed": false
-  }
+  },
+  "status_counts_before_sweep_p2a": {
+    "ABSENT": 25,
+    "PASS": 250,
+    "PARTIAL": 25
+  },
+  "do_sweep_p2a_regrade": {
+    "scope": "positive_negative_oracles of all 25 families (the guard tables touch every family); every other cell carried",
+    "families": [
+      "config.validation.failed",
+      "crew.board_message_posted",
+      "crew.board_message_read",
+      "crew.board_messages_archived",
+      "parser.error",
+      "phase.force_completed",
+      "subagent.budget_warning",
+      "subagent.cancelled",
+      "subagent.completed",
+      "subagent.context_warning",
+      "subagent.escalated",
+      "subagent.failed",
+      "subagent.message_received",
+      "subagent.message_sent",
+      "subagent.model_switched",
+      "subagent.output_truncated",
+      "subagent.paused",
+      "subagent.progress",
+      "subagent.resumed",
+      "subagent.retried",
+      "subagent.spawned",
+      "subagent.started",
+      "subagent.timeout",
+      "subagent.tool_called",
+      "subagent.tool_completed"
+    ],
+    "status_counts_changed": {
+      "before": {
+        "ABSENT": 25,
+        "PASS": 250,
+        "PARTIAL": 25
+      },
+      "after": {
+        "ABSENT": 25,
+        "PARTIAL": 50,
+        "PASS": 225
+      }
+    },
+    "timestamp_review": "This lane's own review of its timestamp fields is interim only (pm7-build, 2026-11-05 16:50Z) until the shared date-time gate passes.",
+    "assessed_code_head": "4220875d8eb2eac5c98d5ddd0566c8a1119eba8a",
+    "guard_tool": {
+      "tool": "004bdedd632d9463f3535190a6ed5772338cdce1",
+      "rows": 414,
+      "suites": 118,
+      "proved": 387,
+      "unproved_declared": 27,
+      "suites_pass": 106,
+      "suites_fail_unproved_only": 12,
+      "masked": 0,
+      "unrelated_changes": 0
+    }
+  },
+  "sweep_p2a_closed_items": [
+    "DO-C8-P1",
+    "DO-C8-P2",
+    "DO-C8-P3"
+  ]
 }
