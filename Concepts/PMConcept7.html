@@ -26842,7 +26842,11 @@ html:not([data-o55-nier="on"]) :where(.o55t-root > *):not(#t7.t7:not(*)) { --tex
 
 /* header + rail */
 .o55-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px; height: 58px; padding: 0 12px 0 18px; border-bottom: 1px solid var(--o55-line);
-  background: color-mix(in srgb, var(--surface) 94%, var(--text-primary) 2%); position: relative; z-index: 3; }
+  background: color-mix(in srgb, var(--surface) 94%, var(--text-primary) 2%); position: relative; z-index: 10; }
+/* (FO-81: the header, and the look menu that drops from it, lie over everything in the window's interior: its screens
+   (z-index 0 to 2), Adjust NieR's panel (3, 13-nier-look.css), which replaces the interior and, at the header's old 3,
+   painted over the open menu because it comes later, and the Safe screen's toast (6). Glass's lens layer (30, drawn
+   over its strips, the menu's Light / Dark among them) and NieR's reboot cover (60) stay above it.) */
 #pm-o55-onboarding[data-family="glass"] .o55-head { background: color-mix(in srgb, #fff 5%, transparent); }
 .o55-brand { display: flex; align-items: center; gap: 9px; font: 700 14px/1 var(--display-font, var(--body-font)); letter-spacing: 0.01em; white-space: nowrap; }
 .o55-logo { color: var(--o55-accent); }
@@ -26906,7 +26910,11 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-sound[aria-pressed="false"] svg { opacity: 0.7; }
 
 /* body: stage + pane */
-.o55-body { display: grid; grid-template-columns: minmax(300px, 42%) minmax(0, 1fr); min-height: 0; }
+.o55-body { display: grid; grid-template-columns: minmax(300px, 42%) minmax(0, 1fr); min-height: 0; position: relative; z-index: 0; }
+/* (FO-83: the interior is a layer of its own, under the header (10) and Adjust NieR's panel (3, 13-nier-look.css), and
+   Glass draws its strips' lenses inside it (data-lg-lens-host, 60-ui-core.js). In the window's lens layer (30) the lens
+   of a screen the panel covers painted over the editor, and one under the open look menu over the menu, in every frame
+   from the panel's rise to its close; here no lens of the interior can paint above anything the interior lies under.) */
 /* clipped, never scrollable: overflow hidden still makes a scroll container, and Glass's world (its caustics, back ellipse
    and reflection) reaches past the box, so focus, scrollIntoView or scroll anchoring could scroll it and Pip's whole
    painted stage slid ~250 px left and 60 px up inside an unmoved panel (final run FO-15); overflow: clip cannot scroll */
@@ -26915,6 +26923,15 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-pane > .o55-layer { position: absolute; inset: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr); background: var(--o55-win-bg); } /* the footer's buttons never widen the column past the window */
 #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer { background: transparent; }
 .o55-scroll { display: flex; flex-direction: column; overflow: auto; min-height: 0; overscroll-behavior: contain; scrollbar-width: thin; }
+/* (FO-87: the screen's scroller owns its whole visible box. The footer under it is positioned and painted after it, and
+   Chromium's hit-testing gave the footer the scroller's last visible row, about 1 px above the footer's own top edge, in
+   every look: the bottom row of a control a scroll had just brought to the edge (Retro's Server guest checkbox, a
+   whole-pixel scroll leaving its last 0.39 px under the edge) pressed the footer. As the layer's grid item the scroller
+   takes a z-index with no position, so nothing inside it gets a new containing block; its clip ends where the footer
+   begins, so the footer keeps its own box. The refusal reason that floats above the footer is the layer's own, not the
+   footer's (FO87-N1): inside the footer, the footer's entrance fade made it a stacking context under the scroller for
+   up to a second, and the scroller's words painted over the reason.) */
+.o55-pane > .o55-layer > .o55-scroll { z-index: 1; }
 .o55-content { margin-block: auto; padding: 32px var(--o55-pad) 28px; max-width: 640px; width: 100%; box-sizing: border-box; }
 /* centred as a screen comes in, then held where it opened: a line appearing or going inside it grows or shrinks the
    column downward instead of re-centring it in one frame (p76: jumps of 20-29 px; 60-ui-core.js holdColumn) */
@@ -26930,9 +26947,20 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 
 /* footer + buttons */
 .o55-foot { position: relative; display: flex; align-items: center; gap: 10px; padding: 14px 22px 16px; border-top: 1px solid var(--o55-line); background: color-mix(in srgb, var(--surface) 96%, var(--text-primary) 2%); }
-/* a long primary label wraps inside its button rather than pushing past the window */
-.o55-foot > .o55-btn { min-width: 0; }
-.o55-foot > .o55-primary { white-space: normal; text-align: center; line-height: 1.2; padding-block: 8px; }
+/* a long primary label wraps inside its button rather than pushing past the window. A footer button with a ? of its own
+   (Ready's Tour and Enter, Welcome's Skip) sits with it in an .o55-opt-foot wrapper, which these rules did not reach: the
+   wrapper kept both buttons' labels on one line, and between 808 and about 950 wide (the wide window beside its stage)
+   Ready's footer ran past the window, Take the Guided Tour cut 25-99 px and its ? outside (FO88-N2). There both labels may
+   wrap, at their own size */
+.o55-foot > .o55-btn, .o55-foot > .o55-opt-foot, .o55-foot > .o55-opt-foot > .o55-btn { min-width: 0; }
+.o55-foot > .o55-primary, .o55-foot > .o55-opt-foot > .o55-btn { white-space: normal; text-align: center; line-height: 1.2; padding-block: 8px; }
+/* ...and a footer with two of them, tight in the wide window, shows Back as its chevron alone, as at phone width (its name
+   stays for screen readers), so the two labels wrap to two lines, not three ('Enter / Puppet / Master' at 860) */
+#pm-o55-onboarding .o55-foot { container: o55foot / inline-size; }
+@container o55foot (max-width: 520px) {
+  #pm-o55-onboarding .o55-foot:has(> .o55-opt-foot ~ .o55-opt-foot) > .o55-back { padding-inline: 10px; }
+  #pm-o55-onboarding .o55-foot:has(> .o55-opt-foot ~ .o55-opt-foot) > .o55-back > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
 #pm-o55-onboarding[data-family="glass"] .o55-foot { background: color-mix(in srgb, #fff 4%, transparent); }
 .o55-footgrow { flex: 1; }
 .o55-footnote { font-size: 12.5px; color: var(--text-muted); }
@@ -26963,7 +26991,10 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 #pm-o55-onboarding[data-family="retro"] .o55-btn { border: 2px solid var(--text-primary); text-transform: uppercase; font-family: var(--display-font); font-size: 12.5px; letter-spacing: 0.05em; box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
 #pm-o55-onboarding[data-family="retro"] .o55-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
 #pm-o55-onboarding[data-family="retro"] .o55-btn.o55-ghost { border-color: transparent; box-shadow: none; }
-.o55-reason { position: absolute; right: 22px; bottom: calc(100% + 8px); max-width: 340px; padding: 9px 12px; border-radius: 9px; font-size: 13px; line-height: 1.4; background: var(--text-primary); color: var(--background); opacity: 0; transform: translateY(6px); pointer-events: none; }
+/* the refusal reason: a child of the screen's layer, placed in the footer's grid row, and above the scroller (1)
+   whatever the footer's own animation does (60-ui-core.js showReason). It stands where it stood as the footer's child:
+   7 px over the footer's 1 px top rule (8 px over its padding edge then) */
+.o55-reason { position: absolute; grid-row: 2; grid-column: 1; z-index: 2; right: 22px; bottom: calc(100% + 7px); max-width: 340px; padding: 9px 12px; border-radius: 9px; font-size: 13px; line-height: 1.4; background: var(--text-primary); color: var(--background); opacity: 0; transform: translateY(6px); pointer-events: none; }
 .o55-reason.o55-reason-show { animation: o55-reason 2600ms ease both; }
 @keyframes o55-reason { 0% { opacity: 0; transform: translateY(6px); } 8%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
 
@@ -28574,9 +28605,20 @@ html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-opt-tile > .o55-tile
 html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-opt-tile > .o55-tile:is(.o55-on, [data-o55fx-cursor]) ~ :is(.o55-nieradjust):is(:hover, [aria-expanded="true"]) { color: var(--o55-nier-ink); background: var(--o55-nier-on-ink); border-color: var(--o55-nier-on-ink); outline-color: var(--o55-nier-on-ink); }
 /* The look menu's rows under NieR's cursor part: the chosen (or hovered) row's ink bar is the whole row, option and ?,
    the ? turned over to paper (QA2 review m1); the option inside draws no bar of its own */
-html[data-o55-nier-parts~="cursor"] .o55-lookmenu .o55-opt-menu > .o55-lookopt:is([aria-checked="true"], :hover) { background: transparent !important; border-color: transparent !important; color: inherit !important; }
+/* (FO-90: the bar is the row's, hovered anywhere on it, its ? included, so the option inside takes the bar's paper ink
+   whether the pointer is on the option or on its ?; with the pointer on the ?, the row turned to ink and left the
+   option's name, and Adjust NieR's icon, in ink on it, unseen) */
+html[data-o55-nier-parts~="cursor"] .o55-lookmenu .o55-opt-menu > .o55-lookopt:is([aria-checked="true"], :hover),
+html[data-o55-nier-parts~="cursor"] .o55-lookmenu .o55-opt-menu:is(.o55-opt-on, :not(.o55-lookmoderow):hover) > .o55-lookopt { background: transparent !important; border-color: transparent !important; color: inherit !important; }
+html[data-o55-nier-parts~="cursor"] .o55-lookmenu .o55-opt-menu:is(.o55-opt-on, :not(.o55-lookmoderow):hover) > .o55-lookopt .o55-lookadjust-ico { color: inherit; }
+/* (and the ? under the pointer on that bar turns over to ink on paper, as a tile's ? does: the window's own ? hover, in
+   NieR's accent ink, outranked the bar's paper ? and drew it ink on ink, FO-90) */
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-lookmenu .o55-opt-menu:is(.o55-opt-on, :not(.o55-lookmoderow):hover) > .o55-tipq:not([aria-expanded="true"]):is(:hover, :focus-visible) { color: var(--o55-nier-ink); background: var(--o55-nier-on-ink); border-color: var(--o55-nier-on-ink); }
 html[data-o55-nier-parts~="cursor"] .o55-lookmenu .o55-opt-menu:is(.o55-opt-on, :not(.o55-lookmoderow):hover) { background: var(--o55-nier-ink); color: var(--o55-nier-on-ink); box-shadow: none; }
-html[data-o55-nier-parts~="cursor"] .o55-lookmenu .o55-opt-menu:is(.o55-opt-on, :not(.o55-lookmoderow):hover) > .o55-tipq:not([aria-expanded="true"]) { color: var(--o55-nier-on-ink); border-color: var(--o55-nier-on-ink); background: transparent; }
+/* (scoped to the window, as the turned-over ? above is: unscoped, NieR's own ? rule (11-window-nier.css, #pm-o55-onboarding
+   .o55-tipq, ink) outranked it, and the chosen row's ?, and a hovered row's with the pointer on its name, drew ink on
+   the ink bar, FO90-N1) */
+html[data-o55-nier-parts~="cursor"] #pm-o55-onboarding .o55-lookmenu .o55-opt-menu:is(.o55-opt-on, :not(.o55-lookmoderow):hover) > .o55-tipq:not([aria-expanded="true"]) { color: var(--o55-nier-on-ink); border-color: var(--o55-nier-on-ink); background: transparent; }
 
 /* ---- css/14-family-moments.css ---- */
 /* The four looks' hero moments are Pip's (DL-238, O1): the troupe's wake, act cards and curtain calls and their overlay
@@ -55816,7 +55858,7 @@ html[data-ab-ready] .pm56-host .activity-item[data-hover-domain="changes"] .coun
   padding: 0 12px;
   gap: 6px;
 }
-html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only .pm56-activity-bar[data-variant="2"] .activity-item{
+html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only > .pm56-activity-bar[data-variant="2"] .activity-item{
   width: 30px;
   min-width: 30px;
   padding: 0;
@@ -56130,42 +56172,54 @@ html[data-ab-ready] .pm56-host .pm56-activity-bar .activity-item{
   flex: 0 0 auto;
   min-width: max-content;
 }
-html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only .activity-item{
+html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only > :where(.pm56-activity-bar) .activity-item{
   min-width: 0;
 }
-html[data-ab-ready] .pm56-host .activity-wrap:not(.is-ab-compact):not(.is-ab-icon-only) .activity-item .label{
+html[data-ab-ready] .pm56-host :is(.activity-wrap, .activity-fit):not(.is-ab-compact):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item .label{
   display: inline;
 }
-html[data-ab-ready] .pm56-host .activity-wrap.is-ab-compact .activity-item .label, html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only .activity-item .label{ display: none; }
-html[data-ab-ready] .pm56-host .activity-wrap:not(.is-ab-icon-only) .activity-item .count{ display: inline; }
-html[data-ab-ready] .pm56-host .activity-wrap:not(.is-ab-icon-only) .activity-item[data-hover-domain="changes"] .count{
+html[data-ab-ready] .pm56-host :is(.activity-wrap, .activity-fit).is-ab-compact > :where(.pm56-activity-bar) .activity-item .label, html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only > :where(.pm56-activity-bar) .activity-item .label{ display: none; }
+html[data-ab-ready] .pm56-host :is(.activity-wrap, .activity-fit):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item .count{ display: inline; }
+html[data-ab-ready] .pm56-host :is(.activity-wrap, .activity-fit):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item[data-hover-domain="changes"] .count{
   display: inline-flex;
 }
-html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only .activity-item .count{ display: none; }
-html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only .activity-item{ padding: 0 8px; }
-</style><style data-pm-split-of="pm56-css" media="(max-width: 1100px)">@media (max-width: 1100px){html[data-ab-ready] .pm56-host:where(#pmOverlayRoot, #pm56Fx) .activity-wrap:not(.is-ab-compact):not(.is-ab-icon-only) .activity-item .label{ display: inline; }}</style><style data-pm-split-of="pm56-css">
-@container pm56col (max-width: 301px){html[data-ab-ready] .pm56-host .activity-wrap:not(.is-ab-compact):not(.is-ab-icon-only) .activity-item .label{ display: inline; }}
-@container pm56tab (max-width: 594px){html[data-ab-ready] .pm56-host .activity-wrap:not(.is-ab-compact):not(.is-ab-icon-only) .activity-item .label{ display: inline; }}
-</style><style data-pm-split-of="pm56-css" media="(max-width: 590px)">@media (max-width: 590px){html[data-ab-ready] .pm56-host:where(#pmOverlayRoot, #pm56Fx) .activity-wrap:not(.is-ab-compact):not(.is-ab-icon-only) .activity-item .label{ display: inline; }}</style><style data-pm-split-of="pm56-css">
-@container pm56col (max-width: 66.4px){html[data-ab-ready] .pm56-host .activity-wrap:not(.is-ab-compact):not(.is-ab-icon-only) .activity-item .label{ display: inline; }}
-@container pm56tab (max-width: 318.6px){html[data-ab-ready] .pm56-host .activity-wrap:not(.is-ab-compact):not(.is-ab-icon-only) .activity-item .label{ display: inline; }}
-</style><style data-pm-split-of="pm56-css" media="(max-width: 390px)">@media (max-width: 390px){html[data-ab-ready] .pm56-host:where(#pmOverlayRoot, #pm56Fx) .activity-wrap:not(.is-ab-icon-only) .activity-item .count{ display: inline; }
-html[data-ab-ready] .pm56-host:where(#pmOverlayRoot, #pm56Fx) .activity-wrap:not(.is-ab-icon-only) .activity-item[data-hover-domain="changes"] .count{
+html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only > :where(.pm56-activity-bar) .activity-item .count{ display: none; }
+html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only > :where(.pm56-activity-bar) .activity-item{ padding: 0 8px; }
+</style><style data-pm-split-of="pm56-css" media="(max-width: 1100px)">@media (max-width: 1100px){html[data-ab-ready] .pm56-host:where(#pmOverlayRoot, #pm56Fx) :is(.activity-wrap, .activity-fit):not(.is-ab-compact):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item .label{ display: inline; }}</style><style data-pm-split-of="pm56-css">
+@container pm56col (max-width: 301px){html[data-ab-ready] .pm56-host :is(.activity-wrap, .activity-fit):not(.is-ab-compact):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item .label{ display: inline; }}
+@container pm56tab (max-width: 594px){html[data-ab-ready] .pm56-host :is(.activity-wrap, .activity-fit):not(.is-ab-compact):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item .label{ display: inline; }}
+</style><style data-pm-split-of="pm56-css" media="(max-width: 590px)">@media (max-width: 590px){html[data-ab-ready] .pm56-host:where(#pmOverlayRoot, #pm56Fx) :is(.activity-wrap, .activity-fit):not(.is-ab-compact):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item .label{ display: inline; }}</style><style data-pm-split-of="pm56-css">
+@container pm56col (max-width: 66.4px){html[data-ab-ready] .pm56-host :is(.activity-wrap, .activity-fit):not(.is-ab-compact):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item .label{ display: inline; }}
+@container pm56tab (max-width: 318.6px){html[data-ab-ready] .pm56-host :is(.activity-wrap, .activity-fit):not(.is-ab-compact):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item .label{ display: inline; }}
+</style><style data-pm-split-of="pm56-css" media="(max-width: 390px)">@media (max-width: 390px){html[data-ab-ready] .pm56-host:where(#pmOverlayRoot, #pm56Fx) :is(.activity-wrap, .activity-fit):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item .count{ display: inline; }
+html[data-ab-ready] .pm56-host:where(#pmOverlayRoot, #pm56Fx) :is(.activity-wrap, .activity-fit):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item[data-hover-domain="changes"] .count{
     display: inline-flex;
   }}</style><style data-pm-split-of="pm56-css">
-@container pm56col (max-width: -25.6px){html[data-ab-ready] .pm56-host .activity-wrap:not(.is-ab-icon-only) .activity-item .count{ display: inline; }
-html[data-ab-ready] .pm56-host .activity-wrap:not(.is-ab-icon-only) .activity-item[data-hover-domain="changes"] .count{
+@container pm56col (max-width: -25.6px){html[data-ab-ready] .pm56-host :is(.activity-wrap, .activity-fit):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item .count{ display: inline; }
+html[data-ab-ready] .pm56-host :is(.activity-wrap, .activity-fit):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item[data-hover-domain="changes"] .count{
     display: inline-flex;
   }}
-@container pm56tab (max-width: 210.6px){html[data-ab-ready] .pm56-host .activity-wrap:not(.is-ab-icon-only) .activity-item .count{ display: inline; }
-html[data-ab-ready] .pm56-host .activity-wrap:not(.is-ab-icon-only) .activity-item[data-hover-domain="changes"] .count{
+@container pm56tab (max-width: 210.6px){html[data-ab-ready] .pm56-host :is(.activity-wrap, .activity-fit):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item .count{ display: inline; }
+html[data-ab-ready] .pm56-host :is(.activity-wrap, .activity-fit):not(.is-ab-icon-only) > :where(.pm56-activity-bar) .activity-item[data-hover-domain="changes"] .count{
     display: inline-flex;
   }}
 .pm56-host .activity-wrap{ container: pmActivityBar / inline-size; }
+.pm56-host .activity-wrap > .activity-sizer{
+  position: absolute; left: 0; right: 0; top: 0; height: 0;
+  margin: 0; border: 0; padding: 0; padding-inline: inherit; box-sizing: border-box;
+  visibility: hidden; pointer-events: none;
+  overflow: clip; contain: strict;
+}
+.pm56-host .activity-sizer > .activity-fit > .pm56-activity-bar{
+  width: max-content !important; min-width: 0 !important; max-width: none !important;
+}
+.pm56-host .activity-sizer, .pm56-host .activity-sizer *, .pm56-host .activity-sizer *::before, .pm56-host .activity-sizer *::after{
+  animation: none !important; transition: none !important;
+}
 @container pmActivityBar (max-width: 700px){html[data-ab-ready] .pm56-host .activity-item{ padding: 0 6px; gap: 4px; }
 html[data-ab-ready] .pm56-host .activity-item .label{ font-size: 10.5px; }
 html[data-ab-ready] .pm56-host .activity-item .count{ font-size: 9.5px; }
-html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only .activity-item{ padding: 0 8px; }
+html[data-ab-ready] .pm56-host .activity-wrap.is-ab-icon-only > :where(.pm56-activity-bar) .activity-item{ padding: 0 8px; }
 html[data-ab-ready] .pm56-host .pm56-activity-bar{ max-width: 100%; overflow-x: auto; scrollbar-width: none; }
 html[data-ab-ready] .pm56-host .pm56-activity-bar::-webkit-scrollbar{ display: none; }
 html[data-ab-ready] .pm56-host .activity-item{ flex: 0 0 auto; }}
@@ -157733,6 +157787,10 @@ policies for tenant isolation, and add migration script.</textarea>
       if (!menu.classList.contains('is-open') && !menu.classList.contains('is-closing')) return;
       var trig = menu._pmTrigger;
       if (trig) trig.setAttribute('aria-expanded', 'false');
+      /* a menu that holds the focus gives it back to what opened it (openAt's returnTo), not to the page (FO-93) */
+      var back = menu._pmReturn;
+      menu._pmReturn = null;
+      if (back && back.isConnected && menu.contains(document.activeElement)) back.focus({ preventScroll: true });
       markMenuOpen(menu, false);
       window.PM6_SPROUT.close(menu, function () { restoreHome(menu); }, { instant: !!instant });
       var i = openMenus.indexOf(menu);
@@ -157801,7 +157859,40 @@ policies for tenant isolation, and add migration script.</textarea>
         else if (ev.key === 'End') { ev.preventDefault(); items[items.length - 1].focus(); }
       });
     }
-    function openAt(menu, x, y) {
+    /* the items the keys walk in a menu or one of its branches: its own menuitems, as a wrapper's menu walks them
+       (only [disabled] is skipped; an aria-disabled item still takes focus and says why) */
+    function keyItems(m) {
+      return Array.prototype.filter.call(m.querySelectorAll('[role="menuitem"]'), function (it) {
+        return it.closest('[role="menu"]') === m && !it.hasAttribute('disabled') && it.getClientRects().length;
+      });
+    }
+    function firstEnabled(m) {
+      return keyItems(m).filter(function (it) { return it.getAttribute('aria-disabled') !== 'true'; })[0] || null;
+    }
+    /* ArrowDown / ArrowUp / Home / End in a pointer-placed menu, as in a wrapper's menu, in whichever menu or branch
+       holds the focus (FO-93) */
+    function wireKeys(menu) {
+      if (menu._pmKeys) return;
+      menu._pmKeys = true;
+      menu.addEventListener('keydown', function (ev) {
+        if (['ArrowDown', 'ArrowUp', 'Home', 'End'].indexOf(ev.key) < 0) return;
+        var m = ev.target.closest && ev.target.closest('[role="menu"]');
+        if (!m || !menu.contains(m)) return;
+        var items = keyItems(m);
+        if (!items.length) return;
+        var idx = items.indexOf(document.activeElement);
+        ev.preventDefault();
+        if (ev.key === 'ArrowDown') (items[idx + 1] || items[0]).focus();
+        else if (ev.key === 'ArrowUp') (items[idx - 1] || items[items.length - 1]).focus();
+        else if (ev.key === 'Home') items[0].focus();
+        else items[items.length - 1].focus();
+      });
+    }
+    /* openAt(menu, x, y, opts): a menu placed at a point (a context menu). opts.returnTo: what gets the focus back when
+       the menu closes while holding it; opts.focus: opened by a key, so the focus moves to the first enabled item
+       (a pointer-opened menu leaves the focus where it was, as a wrapper's menu does) (FO-93) */
+    function openAt(menu, x, y, opts) {
+      opts = opts || {};
       closeAll();
       menu.style.position = 'fixed';
       menu.style.left = '0px'; menu.style.top = '0px';
@@ -157817,11 +157908,22 @@ policies for tenant isolation, and add migration script.</textarea>
       menu.style.setProperty('--pm6-sprout-oy', (fy === y ? '0%' : '100%'));
       menu.style.setProperty('--pm6-sprout-ty', (fy === y ? '-10px' : '10px'));
       openMenus.push(menu);
+      wireKeys(menu);
+      menu._pmReturn = opts.returnTo || null;
+      if (opts.focus) { var first = firstEnabled(menu); if (first) first.focus({ preventScroll: true }); }
     }
     document.addEventListener('click', function (ev) {
       if (!ev.target.closest('.pm6-tb-menu, .pm6-chat-more-menu, .pm6-tb-menu-trigger, .pm-ctx-menu')) closeAll();
     });
-    document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape') closeAll(); });
+    /* An Escape that closes a menu is spent on it: marked handled (preventDefault, only when a menu was open) so a
+       layer under the menu, such as the folded rail's overlay (home 44-narrow.js), stays for the next Escape (FO-84).
+       No stopPropagation: every other document listener still hears the key. */
+    document.addEventListener('keydown', function (ev) {
+      /* an Escape a layer inside the menu already spent (a branch closing back to its item) closes only that (FO-93) */
+      if (ev.key !== 'Escape' || ev.defaultPrevented || !openMenus.length) return;
+      closeAll();
+      ev.preventDefault();
+    });
     window.addEventListener('resize', function () { closeAll(true); });
     window.addEventListener('scroll', function () {
       openMenus.forEach(function (m) { if (m._pmRailHome) positionRail(m); else if (m._pmBottomHome) positionBottom(m); });
@@ -157831,7 +157933,17 @@ policies for tenant isolation, and add migration script.</textarea>
         if (wrap.closest('#sidePanelSlot') || wrap.closest('#bottomDebugHost')) upgradeWrap(wrap);
       });
     }
-    return { init: init, open: open, close: close, closeAll: closeAll, openAt: openAt, upgradeWrap: upgradeWrap };
+    /* what an open menu holding node belongs to: its trigger, else the home it was portalled from; null when node is in
+       no open menu. The folded rail's overlay (home 44-narrow.js) asks it, so a press in one of the panel's menus is
+       not a press outside the panel (FO-84b). */
+    function ownerOf(node) {
+      var m = null;
+      openMenus.forEach(function (x) { if (!m && x.contains(node)) m = x; });
+      if (!m) return null;
+      var home = m._pmRailHome || m._pmBottomHome;
+      return m._pmTrigger || (home && home.parent) || null;
+    }
+    return { init: init, open: open, close: close, closeAll: closeAll, openAt: openAt, upgradeWrap: upgradeWrap, ownerOf: ownerOf };
   })();
   window.PMCozeMenu = PMMenu;
 
@@ -158456,15 +158568,34 @@ policies for tenant isolation, and add migration script.</textarea>
     if (!tree || !ctx) return;
     var ctxTarget = null;
     function rowOf(el) { return el && el.closest ? el.closest('.fm-row, .fm-changerow, .fm-openrow') : null; }
+    /* the row File actions acts on: a tree row's own data-path, else the full path its own Changed or Open item shows in
+       its body (.fm-cpath; the row's folder text can be cut in the middle to fit the rail). A Recent row has neither: it
+       names its file in its demo arg ('cmd.file.open -> image.rs'), which the Home shim looks up in the file index. */
+    function rowInfo(r) {
+      var p = r.getAttribute('data-path') || '', name = '';
+      if (!p) {
+        var item = r.closest('.fm-changeitem, .fm-openitem'), cp = item && item.querySelector('.fm-cpath');
+        p = cp ? cp.textContent.trim() : '';
+      }
+      if (!p) { var m = /->\s*(.+?)\s*$/.exec(r.getAttribute('data-demo-arg') || ''); name = m ? m[1] : ''; }
+      return { el: r, path: p, name: name, folder: r.getAttribute('data-kind') === 'folder' };
+    }
+    /* File actions for a row, by the pointer (focus stays on the row) or by a key (focus moves to the first enabled item);
+       either way it gives the focus back to the row when it closes holding it (FO-93). This is the one place the row is
+       known: pm-ctx-open carries it, for every input, to whatever else acts on the menu's commands (FO-93b: the Home
+       shim's Open items, Copy path, Open with, Reveal in terminal). */
+    function openFor(r, x, y, byKey) {
+      ctxTarget = r;
+      var paste = byId('fmCtxPaste');
+      if (paste) paste.setAttribute('aria-disabled', r.getAttribute('data-kind') === 'folder' ? 'false' : 'true');
+      ctx.dispatchEvent(new CustomEvent('pm-ctx-open', { detail: rowInfo(r) }));
+      PMMenu.openAt(ctx, x, y, { returnTo: r, focus: byKey });
+    }
     panel.addEventListener('contextmenu', function (ev) {
       var r = rowOf(ev.target);
       if (!r) return;
       ev.preventDefault();
-      ctxTarget = r;
-      var paste = byId('fmCtxPaste');
-      if (paste) paste.setAttribute('aria-disabled', r.getAttribute('data-kind') === 'folder' ? 'false' : 'true');
-      PMMenu.openAt(ctx, ev.clientX, ev.clientY);
-      ctx.dispatchEvent(new CustomEvent('pm-ctx-open'));
+      openFor(r, ev.clientX, ev.clientY, false);
     });
     panel.addEventListener('keydown', function (ev) {
       if (ev.key !== 'F10' && ev.key !== 'ContextMenu') return;
@@ -158472,10 +158603,12 @@ policies for tenant isolation, and add migration script.</textarea>
       if (!r) return;
       if (ev.key === 'F10' && !ev.shiftKey) return;
       ev.preventDefault();
-      ctxTarget = r;
       var rc = r.getBoundingClientRect();
-      PMMenu.openAt(ctx, rc.left + 16, rc.bottom);
+      openFor(r, rc.left + 16, rc.bottom, true);
     });
+    /* a key's own contextmenu (Windows sends one on the Menu key's keyup, at the item now holding the focus) and a
+       right press inside the menu raise no browser menu over it */
+    ctx.addEventListener('contextmenu', function (ev) { ev.preventDefault(); });
     var rows = Array.prototype.slice.call(tree.querySelectorAll('.fm-row[data-path]'));
     var selected = new Set();
     var lastIdx = -1;
@@ -158873,10 +159006,33 @@ policies for tenant isolation, and add migration script.</textarea>
         if (trig) trig.addEventListener('click', function (ev) { ev.stopPropagation(); if (wrap.classList.contains('open')) closeSub(wrap); else openSub(wrap); });
       });
       ctx.addEventListener('keydown', function (ev) {
-        if (ev.key === 'ArrowRight') { var w = ev.target.closest('.fm-ctx-wrap[data-sub]'); if (w) { openSub(w); var f = w.querySelector('.fm-ctx-sub .fm-ctx-item'); if (f) f.focus(); ev.preventDefault(); } }
-        else if (ev.key === 'ArrowLeft' || ev.key === 'Escape') { var o = ctx.querySelector('.fm-ctx-wrap.open'); if (o) { closeSub(o); var t = o.querySelector(':scope > .fm-ctx-item'); if (t) t.focus(); ev.preventDefault(); } }
+        if (ev.key === 'ArrowRight') { var w = ev.target.closest('.fm-ctx-wrap[data-sub]'); if (w) { if (!w.classList.contains('open')) { closeAllSub(); openSub(w); } var f = w.querySelector('.fm-ctx-sub .fm-ctx-item'); if (f) f.focus(); ev.preventDefault(); } }
+        /* ArrowLeft or Escape inside a branch closes that branch, back on its item; from the menu's own items Escape
+           closes the menu (a branch the pointer opened goes with it) (FO-93) */
+        else if (ev.key === 'ArrowLeft' || ev.key === 'Escape') { var o = ev.target.closest && ev.target.closest('.fm-ctx-sub') ? ev.target.closest('.fm-ctx-wrap[data-sub]') : null; if (o) { closeSub(o); var t = o.querySelector(':scope > .fm-ctx-item'); if (t) t.focus(); ev.preventDefault(); } }
       });
       ctx.addEventListener('pm-ctx-open', closeAllSub);
+      /* a pick closes File actions through PMMenu, as a wrapper's menu closes on its pick (FO-84c): an enabled item
+         that is not a branch. No stopPropagation, so the demo router still runs the item. Enter or Space on a focused
+         item picks it like a click, and a pick by key gives focus back to the row the menu was opened for. */
+      ctx.addEventListener('click', function (ev) {
+        var item = ev.target.closest('[role="menuitem"]');
+        if (!item || item.hasAttribute('aria-haspopup') || item.hasAttribute('disabled') || item.getAttribute('aria-disabled') === 'true') return;
+        closeAllSub();
+        PMMenu.close(ctx);
+      });
+      ctx.addEventListener('keydown', function (ev) {
+        if (ev.key !== 'Enter' && ev.key !== ' ') return;
+        var item = ev.target.closest && ev.target.closest('[role="menuitem"]');
+        if (!item || !ctx.contains(item)) return;
+        ev.preventDefault();
+        /* on a branch's item the key opens the branch with the focus on its first item, as ArrowRight does (FO-93) */
+        var bw = item.getAttribute('aria-haspopup') && item.closest('.fm-ctx-wrap[data-sub]');
+        if (bw) { closeAllSub(); openSub(bw); var bf = bw.querySelector('.fm-ctx-sub .fm-ctx-item'); if (bf) bf.focus(); return; }
+        var back = ctxTarget;
+        item.click();
+        if (!ctx.classList.contains('is-open') && back && back.isConnected) back.focus();
+      });
     })();
     var filter = byId('fmFilter');
     var fcount = byId('fmFilterCount');
@@ -173661,7 +173817,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (!d) return;
       const glyphs = '#%&*+=<>/\\01';
       const goal = text.toUpperCase().slice(0, 28);
-      if (goal === this.decoded) return;
+      /* (a new layout: the label as it reads, decoded, at once: SW-23. It stayed blank, the new HUD never written) */
+      if (goal === this.decoded) { if (this.relayout) { if (this.decT) this.decT.cancel(); d.textContent = goal; } return; }
       this.decoded = goal;
       if (this.decT) this.decT.cancel();
       if (this.reduced || !goal) { d.textContent = goal; return; }
@@ -173819,6 +173976,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     // the command line at the foot of the tube types what the scene is doing
     cmd(text) {
       if (!this.hudEl || text === this.cmdText) return;
+      /* (a new layout: the line as it read, whole, and its ok, without typing or a sound: SW-23) */
+      const kept = !!this.relayout && text === this.cmdWas;
       this.cmdText = text;
       const inp = this.hudEl.querySelector('.pst-term-in'), ok = this.hudEl.querySelector('.pst-term-ok');
       if (!inp) return;
@@ -173827,7 +173986,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const tty = this.tube === 'teletype';
       ok.textContent = '';
       const s = text || '';
-      if (this.reduced) { inp.textContent = s; this.headTo(); return; }
+      if (this.reduced || kept) { inp.textContent = s; if (kept && this.okWas) ok.textContent = this.okWas; this.headTo(); return; }
       inp.textContent = ''; this.headTo();
       if (tty && s) this.sfx('decode', { len: s.length });
       if (!s) return;
@@ -173863,8 +174022,20 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     powerOn() {
       if (this.reduced) return;
       const s = this.screen;
+      this.onAt = performance.now(); if (this.content) this.content.style.animationDelay = '';
       s.classList.remove('pst-on', 'pst-off', 'pst-degauss'); void s.offsetWidth; s.classList.add('pst-on');
       setTimeout(() => this.sfx('powerOn'), 20);
+    },
+    /* a new layout rebuilds the tube, which is already on: the look's entrance is not played again (SW-23: the paper fed
+       in anew on every resize past a layout's edge). One still powering on carries on where it was, without a sound */
+    stayOn() {
+      if (this.reduced || !this.onAt) return;
+      const t = performance.now() - this.onAt;
+      if (t >= 2000) return;
+      const s = this.screen;
+      s.classList.remove('pst-off', 'pst-degauss');
+      if (this.content) this.content.style.animationDelay = `${-Math.round(t)}ms`;
+      s.classList.add('pst-on');
     },
     powerOff() {
       if (!this.tube || this.reduced) return;
@@ -174731,7 +174902,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     }
     /* ------------------------------------------------------- building */
     build() {
-      const root = this.root, w = PW.WORLDS[this.theme] || PW.WORLDS['basic-dark'], Lay = this.L = LAYOUTS[this.layoutName];
+      const root = this.root, w = PW.WORLDS[this.theme] || PW.WORLDS['basic-dark'], L0 = this.L0 = LAYOUTS[this.layoutName], Lay = this.L = Object.create(L0); /* (Pip's own size on it: setPipK) */
+      this.pipK = 1;
       this.dirty = true;
       /* Pip's voice and music follow the look's kit (15-sound-pip.js) */
       const vo = snd(); if (vo && vo.setTheme) vo.setTheme(this.theme);
@@ -174823,9 +174995,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         + '<span class="pst-tip-h"></span><span class="pst-tip-t" aria-hidden="true"></span><span class="pst-tip-sr o55-sr"></span>';
       if (w.fam !== 'nier') this.tipBox = div('pst-tip', this.overlay, tipHtml);
       else { const nt = this.hudEl.querySelector('.pst-ntip'); nt.innerHTML = tipHtml; }
+
       this.buildPip();
       // A retained note uses the pose that setLayout() just cleared.
-      if (this.tipData) this.showTip(true);
+      if (this.tipData) { this.showTip(true); if (this.relayout && this.tipEl()) this.tipEl().getAnimations().forEach((a) => a.finish()); }
       // re-create the props that were on stage, in the new material
       const keep = [...this.props.values()];
       this.props.clear();
@@ -174833,7 +175006,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       this.ghosts = [];
       this.syncDefs();
       this.measure(); this.remeasureAt = now() + 0.9; /* (and once the window's opening has settled) */
-      if (this.tube) this.powerOn();
+      /* the look's entrance plays on first show and on a look switch, not on a new layout (stayOn, SW-23) */
+      if (this.tube) { if (this.relayout) this.stayOn(); else this.powerOn(); }
     }
     syncDefs() { this.defs.innerHTML = this.backDefs + this.pen.defs(); }
     hudHtml() {
@@ -174868,7 +175042,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (!this.ps) {
         this.ps = { C: { x: Lay.ctl[0], y: Lay.ctl[1], vx: 0, vy: 0 }, Ct: { x: Lay.ctl[0], y: Lay.ctl[1] }, th: 0, thv: 0, dy: 0, dyv: 0, tilt: 0, tiltv: 0, tiltT: 0, phi: 0, phiv: 0,
           sx: 1, sy: 1, sv: 0, look: [0, 0], lookT: [0, 0], blink: 1, nextBlink: 2, asleep: false };
+        this.pipAt = Lay.ctl; this.pipOff = [0, 0]; /* (its spot, not yet fitted to what a person can see: pipFit) */
       }
+      this.pipBB = null;
       this.gPip.innerHTML = '';
       this.pstrs = [0, 1].map(() => el('path', { class: 'pst-str', fill: 'none', 'stroke-linecap': 'round' }, this.gPip));
       this.pglow = [0, 1].map(() => el('path', { class: 'pst-power', fill: 'none', 'stroke-linecap': 'round' }, this.gPip));
@@ -175140,9 +175316,18 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
           const hit = (ax, ay) => obs.find((o) => X0 + ax < o[2] && X1 + ax > o[0] && Y0 + ay < o[3] && Y1 + ay > o[1]);
           const o = hit(0, 0); if (!o) break;
           const inside = (ax, ay) => X0 + ax >= v.x0 + pad - .5 && X1 + ax <= v.x1 - pad + .5 && Y0 + ay >= v.y0 + pad - .5 && Y1 + ay <= v.y1 - pad + .5;
-          const c = [[0, o[3] - Y0], [0, o[1] - Y1], [o[0] - X1, 0], [o[2] - X0, 0], [o[0] - X1, o[3] - Y0], [o[2] - X0, o[3] - Y0], [o[0] - X1, o[1] - Y1], [o[2] - X0, o[1] - Y1]]
-            .filter(([ax, ay]) => inside(ax, ay) && !hit(ax, ay)).sort((p, q) => Math.hypot(p[0], p[1]) - Math.hypot(q[0], q[1]));
-          if (c.length) { dx += c[0][0]; dy += c[0][1]; break; }
+          const best = (list) => list.filter(([ax, ay]) => inside(ax, ay) && !hit(ax, ay)).sort((p, q) => Math.hypot(p[0], p[1]) - Math.hypot(q[0], q[1]))[0];
+          let c = best([[0, o[3] - Y0], [0, o[1] - Y1], [o[0] - X1, 0], [o[2] - X0, 0], [o[0] - X1, o[3] - Y0], [o[2] - X0, o[3] - Y0], [o[0] - X1, o[1] - Y1], [o[2] - X0, o[1] - Y1]]);
+          /* (and where no way off the box it meets is clear, the ways past the others too, each edge of each box across and
+             down: Retro Dark's c-ready at 740, the server under the bubble that claimed its place, Pip's head on its left,
+             the laptop on its right and the tube's foot below; the only ways tried were round the bubble, so it was drawn
+             smaller and smaller under it, still under it (N1, astra-review-retro-3). Past the laptop it hangs whole) */
+          if (!c) {
+            const xs = [0], ys = [0];
+            obs.forEach((q) => { xs.push(q[0] - X1, q[2] - X0); ys.push(q[1] - Y1, q[3] - Y0); });
+            c = best(xs.flatMap((ax) => ys.map((ay) => [ax, ay])));
+          }
+          if (c) { dx += c[0]; dy += c[1]; break; }
           if (g <= .66) break;
           g *= .9; f = f0 * g; lo = L0 * g; hi = H0 * g; tp = T0 * g; bt = B0 * g;
         }
@@ -175155,20 +175340,163 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
            (the name's sign and the service's mark at a short window); it moves the least way that clears them all,
            inside the pane, and is drawn a little smaller only when no way does */
         const obs = []; if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
+        /* (and off Pip's head where it hangs at rest: Retro's crop pushed a sign in from its cut side over Pip, FO-50) */
+        const pk = this.pipKeep; if (pk && pr.op > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
         this.props.forEach((q) => { if (q !== pr && q.box && q.placedN === this.renderN && q.op > .05 && q.state !== 'out') obs.push([q.box[0] - 4, q.box[1] - 4, q.box[2] + 4, q.box[3] + 4]); });
         const g = clear(obs);
         pr.restOff = { dx: dx - dxEdge, dy, g };
-      } else if (pr.state === 'out' && pr.restOff) {
+      } else if (pr.state === 'out') {
         /* a prop that leaves keeps the way it was moved off the box and its neighbours at rest: dropping it at once made the
            prop jump up to 8 px in the frame it began to leave, into NieR's box at 740 (FO-34 kind) */
-        const o = pr.restOff; f *= o.g; lo *= o.g; hi *= o.g; tp *= o.g; bt *= o.g; dx += o.dx; dy = o.dy;
+        const o = pr.restOff || { dx: 0, dy: 0, g: 1 }; f *= o.g; lo *= o.g; hi *= o.g; tp *= o.g; bt *= o.g; dx += o.dx; dy = o.dy;
         /* ...and makes way, as a prop at rest does, for a speech box that cannot move: a bubble that found nowhere clear
            and claimed a place over it (Retro's 740 banner on Name > Safe: between Pip's face and the leaving sign there
            was no room, so the bubble claimed the sign's place and the sign faded out under it for 8-13 frames), or NieR's
            box. The move is kept for the rest of its way out, which holdUnder then keeps below the box */
-        if (this.keepOff && pr.op > .05) { const g = clear([this.keepOff]); pr.restOff = { dx: dx - dxEdge, dy, g: o.g * g }; }
+        const obs = [];
+        if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
+        const pk = this.pipKeep;
+        if (pk && pr.op > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
+        // Keep each correction through the exit; releasing it on the next frame snaps the sign back into Pip.
+        if (obs.length) { const g = clear(obs); pr.restOff = { dx: dx - dxEdge, dy, g: o.g * g }; }
       }
       return { dx, dy, f, box: [hx + lo + dx, hy + tp + dy, hx + hi + dx, hy + bt + dy] };
+    }
+    /* how far Pip's spot (the hand's, at) must move for the hand and Pip, hanging at rest, to sit whole inside the pane's
+       visible span with the props' margin. Retro's tube slices the scene to fill the pane: a short window's crop left
+       Pip's spot (84 units) off the tube altogether (FO-37), and the narrow strip's cut the hand at the top. Pip's box is
+       its own drawing's (the hand's and the head's), placed as render() places them; the margin narrows where the span
+       is barely tall enough, and where it is not, the hand stays whole */
+    pipFit(at) {
+      const v = this.vis, Lay = this.L, L0 = this.L0 || Lay;
+      if (!v || !this.gCtl || !this.gHead) return [0, 0];
+      if (!this.pipBB) { const c = this.boxOf(this.gCtl), h = this.boxOf(this.gHead); if (!c || !c[2] || !h || !h[2]) return [0, 0]; this.pipBB = { c, h }; }
+      const { c, h } = this.pipBB;
+      const lo = Math.min(c[0], h[0]) - 32, hi = Math.max(c[0] + c[2], h[0] + h[2]) - 32;
+      const into = (a0, a1, v0, v1) => {
+        const pad = clamp((v1 - v0 - (a1 - a0)) / 2, 0, 8); let d = 0;
+        if (a1 > v1 - pad) d = v1 - pad - a1;
+        if (a0 + d < v0 + pad) d = v0 + pad - a0;
+        return d;
+      };
+      /* Pip hangs below the stage's own words over its column (Retro's title line, NieR's unit line: the bar crossed
+         Retro Light's SETUP LOG at 740, FO-55). The lead's ruling: Pip is drawn smaller only where those words cut its
+         span, and never under 80% of its size. Under the words it takes the largest size that keeps its 8-unit margins
+         (.82 in Retro Light at 740), at least .8, narrowing the margins only if .8 needs it; at its size elsewhere. If
+         not even .8 fits under the words, it hangs in the nearest column clear of them inside the crop, at its size;
+         only with no such column is it drawn at .8 under them. One size for the span, at once, never animated */
+      const s0 = L0.s, tall0 = L0.rope + (h[1] + h[3] - 31.5 - (c[1] - 14.5)) * s0;
+      const col = (x) => { const d = into(x + lo * s0, x + hi * s0, v.x0, v.x1); return [x + d + lo * s0 - 4, x + d + hi * s0 + 4]; };
+      const over = (x) => { const [X0, X1] = col(x); return (this.hdr || []).filter((w) => w.x1 > X0 && w.x0 < X1 && w.y1 > v.y0); };
+      let ax = at[0], y0 = v.y0, k = 1;
+      const ws = over(ax);
+      if (ws.length) {
+        const yw = Math.max(...ws.map((w) => w.y1));
+        if (v.y1 - yw >= .8 * tall0) { y0 = yw; k = clamp((v.y1 - yw - 16) / tall0, .8, 1); }
+        else {
+          const [X0, X1] = col(ax), right = Math.max(...ws.map((w) => w.x1)) + 4 - X0, left = Math.min(...ws.map((w) => w.x0)) - 4 - X1;
+          const clear = [right, left].filter((d) => X0 + d >= v.x0 && X1 + d <= v.x1 && !over(ax + d).length).sort((p, q) => Math.abs(p) - Math.abs(q));
+          if (clear.length) ax += clear[0];
+          else { y0 = yw; k = .8; }
+        }
+      }
+      if (Math.abs(k - (this.pipK || 1)) > .002) this.setPipK(k);
+      const s = Lay.s, dy = into(at[1] + (c[1] - 14.5) * s, at[1] + Lay.rope + (h[1] + h[3] - 31.5) * s, y0, v.y1);
+      /* (and the bar rocks, while Pip works, only as far as the room above it: its ends rose 2.6 px past Retro Dark's tube
+         at 740 on Creating, the span there barely holding Pip at rest) */
+      const room = at[1] + dy + (c[1] - 14.5) * s - y0, halfW = Math.max(Math.abs(c[0] - 32), Math.abs(c[0] + c[2] - 32)) * s;
+      this.rockMax = Math.min(.12, Math.asin(clamp(room / (halfW || 1), 0, 1)));
+      return [ax - at[0] + into(ax + lo * s, ax + hi * s, v.x0, v.x1), dy];
+    }
+    /* Pip drawn at k of its layout's size: its drawing and the rope it hangs on, and the strings' rest lengths */
+    setPipK(k) {
+      const L0 = this.L0, Lay = this.L;
+      this.pipK = k;
+      if (k === 1) { delete Lay.s; delete Lay.rope; } else { Lay.s = L0.s * k; Lay.rope = L0.rope * k; }
+      if (this.barPts && this.headPts) {
+        const rest = this.solveStrings({ C: { x: Lay.ctl[0], y: Lay.ctl[1] }, phi: 0, H: this.headAt(Lay.ctl[0], Lay.ctl[1], 0, 0), ang: 0, sx: 1, sy: 1 });
+        this.restLen = rest.map((r) => Math.hypot(r.E[0] - r.T[0], r.E[1] - r.T[1]));
+      }
+      this.dirty = true;
+    }
+    /* how far Pip's drawn head reaches around the point it hangs from, turned by ang (asleep it tilts), in stage units:
+       [left, top, right, bottom]; null until it has been measured */
+    pipReach(ang) {
+      if (!this.pipBB || !this.vis) return null;
+      const h = this.pipBB.h, s = this.L.s, c = Math.cos(ang || 0), n = Math.sin(ang || 0);
+      const p = [[h[0], h[1]], [h[0] + h[2], h[1]], [h[0], h[1] + h[3]], [h[0] + h[2], h[1] + h[3]]].map(([x, y]) => { const u = (x - 32) * s, v = (y - 31.5) * s; return [u * c - v * n, u * n + v * c]; });
+      return [Math.min(...p.map((q) => q[0])), Math.min(...p.map((q) => q[1])), Math.max(...p.map((q) => q[0])), Math.max(...p.map((q) => q[1]))];
+    }
+    /* how far a damped swing under way (angle x, speed v; x'' = -w2 x - d x', as step() swings Pip and the props) carries
+       before it turns: its next peak, or where it is if that is further, in rad */
+    swingAmp(x, v, w, d) {
+      const sg = d / 2, wd = Math.sqrt(Math.max(1e-6, w * w - sg * sg)), B = (v + sg * x) / wd, R = Math.hypot(x, B);
+      if (R < 1e-5) return 0;
+      const phi = Math.atan2(x, B), q = Math.atan(wd / sg) - phi, t1 = (q - Math.PI * Math.floor(q / Math.PI)) / wd;
+      return Math.max(Math.abs(x), R * Math.exp(-sg * t1) * Math.abs(Math.sin(wd * t1 + phi)));
+    }
+    /* how hard an idle swing may push Pip (dir: which way): the largest kick to the swing's speed whose swing, with the one
+       already under way, keeps the head's box off every prop still painted, by more than fit()'s margin: where it
+       is drawn, where it will hang at rest (a prop still being lowered in counts at its place) and as far as its own
+       swing carries it. Measured where a prop was drawn at the kick, Glass Light's forge on Online details at 860 was not
+       counted while it was lowered in after the screen changed, or was counted swung away, and swung back under the head
+       as Pip swung to it (48 px2, retro-c3's awake guard) */
+    swingRoom(dir) {
+      const ps = this.ps, F = this.fam, near = [];
+      if (!ps || !this.pipKeep) return .5;
+      this.props.forEach((p) => {
+        if (!p.box || (p.state === 'out' && !(+p.el.getAttribute('opacity') > .05))) return;
+        const b = p.box, tg = this.propTarget(p), len = Math.max(0, p.len), L = Math.max(0, tg.len);
+        const dx = tg.ax - (p.ax + Math.sin(p.a) * len), dy = tg.len - Math.cos(p.a) * len;
+        const sw = Math.sin(this.swingAmp(p.a, p.av, F.pw * Math.sqrt(170 / Math.max(30, L)), F.pdamp)) * L, m = 5;
+        near.push([Math.min(b[0], b[0] + dx - sw) - m, Math.min(b[1], b[1] + dy) - m, Math.max(b[2], b[2] + dx + sw) + m, Math.max(b[3], b[3] + dy) + m]);
+      });
+      const clear = (k) => { const h = this.pipHead(this.swingAmp(ps.th, ps.thv + dir * k, F.w, F.damp)); return !h || !near.some((o) => h[0] < o[2] && h[2] > o[0] && h[1] < o[3] && h[3] > o[1]); };
+      if (clear(.5)) return .5;
+      if (!clear(0)) return 0;
+      let lo = 0, hi = .5;
+      for (let i = 0; i < 10; i++) { const k = (lo + hi) / 2; if (clear(k)) lo = k; else hi = k; }
+      return lo;
+    }
+    /* Pip's head where it hangs at rest from the hand's spot, on the floor it rests on: the box the props keep off (fit);
+       swing: the swing's reach, rad (by default the one under way); now: the head as render() draws it this frame */
+    pipHead(swing, now) {
+      const ps = this.ps, Lay = this.L, s = Lay.s;
+      if (!ps || !this.pipReach(ps.tiltT)) return null;
+      const box = (cx, cy, ang, th) => {
+        const r = this.pipReach(ang);
+        let y = cy + Math.cos(th || 0) * Lay.rope; const x = cx + Math.sin(th || 0) * Lay.rope;
+        if (y + 28 * s > Lay.ground - 2) y = Lay.ground - 2 - 28 * s;
+        if (y + r[3] > this.vis.y1) y = this.vis.y1 - r[3];
+        return [x + r[0], y + r[1], x + r[2], y + r[3]];
+      };
+      const join = (a, c) => [Math.min(a[0], c[0]), Math.min(a[1], c[1]), Math.max(a[2], c[2]), Math.max(a[3], c[3])];
+      let b = box(ps.Ct.x, ps.Ct.y, ps.tiltT);
+      /* (and, while the hand travels to a new spot, as Pip wakes and rises from the floor, the head where it hangs now:
+         the box takes its whole way, so a sign beside where it rises to is not under it as it comes. Retro Dark Name 860
+         showed 40 px2 painted as Pip woke, sol-review-retro-1's awake guard. Not within the idle drift, so resting props
+         do not shift as Pip sways) */
+      if (Math.hypot(ps.C.x - ps.Ct.x, ps.C.y - ps.Ct.y) > 8) b = join(b, box(ps.C.x, ps.C.y, ps.tilt + ps.th * .9, ps.th));
+      /* (and the room its idle drift takes, awake: a sign beside the resting head was under it as it swayed, Retro Dark 860) */
+      const F = this.fam, still = this.reduced || !!O55.motion.lowResource || !H.part('sway-and-physics');
+      /* (and the room the swing under way takes, to its next peak either side, the head turned with it as render() turns
+         it: a prop lowered in, or swinging back, beside a swinging Pip keeps off its head, as off the resting one) */
+      const A = still ? 0 : swing != null ? swing : this.swingAmp(ps.th, ps.thv, F.w, F.damp);
+      if (A > .002) [-1, -.5, .5, 1].forEach((q) => { b = join(b, box(ps.Ct.x, ps.Ct.y, ps.tiltT + A * q * .9, A * q)); });
+      const sw = still ? 0 : F.sway * (ps.asleep ? .2 : 1), bob = still || !F.bob ? 0 : F.bob * .6;
+      b = [b[0] - sw, b[1] - bob, b[2] + sw, b[3] + bob];
+      /* (and the head where it is drawn now, turned, stretched and lifted as render() draws it: with no room to swing Pip
+         wiggled, and the turn took its head 4 units past that box into the forge held at its edge as the forge swung in,
+         Glass Light 860, retro-c4) */
+      if (now) {
+        const h = this.pipBB.h, c = Math.cos(now.ang), n = Math.sin(now.ang);
+        const p = [[h[0], h[1]], [h[0] + h[2], h[1]], [h[0], h[1] + h[3]], [h[0] + h[2], h[1] + h[3]]].map(([x, y]) => {
+          const u = (x - 32) * now.sx * s, v = ((y - 59.5) * now.sy + 28) * s;
+          return [now.H[0] + u * c - v * n, now.H[1] + u * n + v * c];
+        });
+        b = join(b, [Math.min(...p.map((q) => q[0])), Math.min(...p.map((q) => q[1])), Math.max(...p.map((q) => q[0])), Math.max(...p.map((q) => q[1]))]);
+      }
+      return b;
     }
     /* Creating's and Protect's stack of blocks stands on the lowest floor a person can see, and is drawn closer and
        smaller when it would rise past the pane's top or into a speech box that cannot move (Retro's tube crops the floor
@@ -175253,7 +175581,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const at = pip.at ? (Array.isArray(pip.at) ? pip.at : { left: [Lay.ctl[0] - 30 * (Lay.s / 2.3), Lay.ctl[1]], home: Lay.ctl }[pip.at] || Lay.ctl) : Lay.ctl;
       // asleep: the hand lowers until Pip rests on the floor (kept while the wake is pending)
       const asleep = pip.pose === 'asleep' || !!this.sleepZ;
-      this.ps.Ct.x = at[0]; this.ps.Ct.y = at[1] + (asleep ? Lay.rope * .72 : 0);
+      /* (its spot fitted to what a person can see, as the props are: pipFit) */
+      this.work = !!pip.work; /* (before the fit: how far the bar may rock) */
+      const fo = this.pipOff = this.pipFit(at); this.pipAt = at;
+      this.ps.Ct.x = at[0] + fo[0]; this.ps.Ct.y = at[1] + fo[1] + (asleep ? Lay.rope * .72 : 0);
       this.ps.asleep = asleep;
       this.ps.tiltT = pip.tilt != null ? pip.tilt : this.ps.asleep ? -.2 : 0;
       this.work = !!pip.work; this.power = pip.power || 0;
@@ -175266,7 +175597,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
          55-scenes.js) is not the screen's speech now, because the operation moved on or its inputs changed. Such a line
          gives way at once, whichever path said it (the screen's line, a fault, a cheer); FO-41 */
       const fresh = spec.sayNow || !this.ownerLive(this.sayOwner) || (spec.screen != null && spec.screen !== this.lastScreen); this.lastScreen = spec.screen;
-      if (spec.say !== undefined && !this.sleepZ) this.say(spec.say, null, fresh, spec.sayOwner);
+      if (spec.say !== undefined && !this.sleepZ) {
+        // A layout rebuild retains the line without replaying it, adopting its current live owner.
+        if (this.relayout && spec.say && spec.say === this.saying && this.ownerLive(spec.sayOwner)) {
+          this.sayOwner = spec.sayOwner || null; this.sayKept(spec.say);
+        } else this.say(spec.say, null, fresh, spec.sayOwner);
+      }
       this.hudTarget(spec.target, spec.label);
       if (this.tube) this.cmd(spec.cmd || null);
       if (this.famName === 'nier' && this.hudEl && spec.label) this.decode(spec.label);
@@ -175337,6 +175673,17 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       off.textContent = text; b.classList.add('typing');
       this.typeT = H.typer(text.length, cps, (i) => { on.textContent = text.slice(0, i); off.textContent = text.slice(i); },
         { paused: () => !this.live(), done: () => b.classList.remove('typing') });
+    }
+    /* a new layout: the line Pip has said stays on the new bubble, whole and at once: not typed or voiced again, its box
+       not popping in again (SW-23). Its time on screen runs on from when it was said */
+    sayKept(text) {
+      const b = this.bubble;
+      clearTimeout(this.sayT); this.sayNext = null;
+      if (this.typeT) this.typeT.cancel();
+      b.classList.remove('typing'); b.classList.add('on');
+      b.getAnimations().forEach((a) => a.finish());
+      this.btext.innerHTML = '<span class="pst-bt-on"></span><span class="pst-bt-off"></span>';
+      this.btext.firstChild.textContent = text;
     }
     // the line in Pip's voice (O55.sound.pip through O55.pipVoice): { ms, cps } for the typing
     voice(text, mood) {
@@ -175446,7 +175793,26 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       }
       /* (and the viewport: a short window can scroll the stage partly out of view) */
       vl = Math.max(vl, -r0.left / sx); vr = Math.min(vr, (window.innerWidth - r0.left) / sx); vt = Math.max(vt, -r0.top / sx); vb = Math.min(vb, (window.innerHeight - r0.top) / sx);
+      /* (and what the stage paints over the scene at its foot: Retro Light's printer, its platen, bail and head across the
+         paper, and a tube's command line. A sign at the pane's foot kept its lower line behind the roller, A3-6. Read
+         from the layout, not the painted box: the paper feeding in and the tube's degauss move them for a moment) */
+      const atop = (n) => { let y = 0; for (let e = n; e && e !== this.screen; e = e.offsetParent) y += e.offsetTop; return y; };
+      this.screen.querySelectorAll(':scope > .pst-printer, :scope > .pst-printer > *, .pst-term-cmd').forEach((n) => { if (n.offsetHeight) vb = Math.min(vb, atop(n)); });
+      /* (and the stage's own words at its top, Retro's title line and NieR's unit line, each where it is written: Pip
+         hangs below the ones over its column, pipFit, FO-55) */
+      const aleft = (n) => { let x = 0; for (let e = n; e && e !== this.screen; e = e.offsetParent) x += e.offsetLeft; return x; };
+      this.hdr = [];
+      if (this.hudEl && k > 0) this.hudEl.querySelectorAll('.pst-term-top > span, .pst-ntop > span').forEach((n) => {
+        if (!n.offsetWidth || !n.textContent.trim()) return;
+        const x = aleft(n);
+        this.hdr.push({ x0: (x - this.map.ox) / k, x1: (x + n.offsetWidth - this.map.ox) / k, y1: (atop(n) + n.offsetHeight - this.map.oy) / k });
+      });
       this.vis = k > 0 && vr > vl && vb > vt ? { x0: (vl - this.map.ox) / k, x1: (vr - this.map.ox) / k, y0: (vt - this.map.oy) / k, y1: (vb - this.map.oy) / k } : null;
+      /* Pip's spot follows the new span at once, the hand and Pip together, so a resize does not swing it (pipFit) */
+      if (this.ps && this.pipAt) {
+        const o = this.pipOff || [0, 0], f = this.pipOff = this.pipFit(this.pipAt), ps = this.ps, dx = f[0] - o[0], dy = f[1] - o[1];
+        if (dx || dy) { ps.Ct.x += dx; ps.Ct.y += dy; ps.C.x += dx; ps.C.y += dy; }
+      }
       this.nierBox = null;
       this.dirty = true; this.frameT = -1e9; if (this.svg && this.kick) this.kick(); /* (a resize redraws the props in their new room, at once: past Retro's stepped gate too) */
       this.headTo();
@@ -175504,7 +175870,13 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         const ps = this.ps, f = this.famName, acts = ['wiggle'].concat(f !== 'nier' ? ['swing'] : [], pointer.t > 0 ? [] : ['up', 'side']);
         const pick = acts[Math.floor(Math.random() * acts.length)];
         if (pick === 'up') { this.idleLook = [0, -2.4]; this.idleUntil = this.t + 1.3; this.ps.tiltv -= .8; }
-        else if (pick === 'swing') { ps.thv += (Math.random() > .5 ? 1 : -1) * .5; this.sfx('swing', { x: ps.C.x, intensity: .35 }); }
+        else if (pick === 'swing') {
+          /* (as far as the room beside the head allows: a swing carried Glass's head .15 rad into the forge beside it on
+             Online details at 860, 24 px2 painted, the awake guard of sol-review-retro-1; with no room, a wiggle) */
+          const dir = Math.random() > .5 ? 1 : -1, kick = Math.min(.5, this.swingRoom(dir));
+          if (kick > .08) { ps.thv += dir * kick; this.sfx('swing', { x: ps.C.x, intensity: .35 * kick / .5 }); }
+          else ps.tiltv += dir * 3;
+        }
         else if (pick === 'wiggle') ps.tiltv += (Math.random() > .5 ? 1 : -1) * 3;
         else { this.idleLook = [Math.random() > .5 ? 2.2 : -2.2, .3]; this.idleUntil = this.t + 1.1; }
       }
@@ -175539,7 +175911,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (red) { ps.tilt = ps.tiltT; ps.phi = 0; }
       else {
         const tA = 90 * (ps.tiltT - ps.tilt) - 10 * ps.tiltv; ps.tiltv += tA * dt; ps.tilt += ps.tiltv * dt;
-        const phiT = this.work ? Math.sin(this.t * 4.2) * .12 : ps.asleep ? .08 : 0;
+        const phiT = this.work ? Math.sin(this.t * 4.2) * (this.rockMax == null ? .12 : this.rockMax) : ps.asleep ? .08 : 0;
         ps.phi += (phiT - ps.phi) * Math.min(1, dt * 6);
       }
       // eyes follow what Pip is looking at
@@ -175594,6 +175966,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       // asleep: the head rests on the floor and the strings go slack
       const headH = 28 * Lay.s;
       if (H[1] + headH > Lay.ground - 2) { H = [H[0], Lay.ground - 2 - headH]; }
+      /* (and on the lowest floor a person can see: a narrow window's Retro tube crops the stage's floor away, FO-51) */
+      const reach = this.pipReach(ang);
+      if (reach && H[1] + reach[3] > this.vis.y1) H = [H[0], this.vis.y1 - reach[3]];
       this.H = H; this.ang = ang;
       // breathing: Pip's head swells a touch, slower when it sleeps
       const br = this.reduced || !PIP.h.part('idle-life') ? 0 : (this.fam.breathe || 0) * Math.sin(this.t * (this.sleepZ ? 1.5 : 2.2));
@@ -175637,6 +176012,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
          that lands before it talks is already below it) */
       if (f === 'nier') { const nb = this.boxInScene(this.bubble, 6); if (nb) this.nierBox = nb; }
       this.keepOff = f === 'nier' ? this.nierBox || null : this.bubbleKeepOff || null;
+      this.pipKeep = this.pipHead(null, { H, ang, sx, sy });
       this.renderN = (this.renderN || 0) + 1;
       this.props.forEach((pr) => this.placeProp(pr));
       // particles
@@ -175769,7 +176145,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     setTheme(theme) {
       if (theme === this.theme) return;
       this.theme = theme;
-      this.booted = false;
+      this.booted = false; this.decoded = null;
       this.root.classList.add('pst-swap');
       this.build();
       this.direct(this.spec);
@@ -175783,7 +176159,14 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     setLayout(name) {
       if (name === this.layoutName) return;
       this.layoutName = name; this.ps = null;
-      this.build(); this.direct(this.spec); this.render(); /* (drawn in its pose before it can be painted, as setTheme) */
+      /* a new layout rebuilds the stage in its new shape; what it already shows stays as it was, finished: the tube on,
+         Pip's line whole, the command line and NieR's label as they read. No entrance plays again (SW-23) */
+      const okEl = this.hudEl && this.hudEl.querySelector('.pst-term-ok');
+      this.cmdWas = this.cmdText; this.okWas = okEl ? okEl.textContent : '';
+      this.relayout = true;
+      try { this.build(); this.direct(this.spec); } finally { this.relayout = false; }
+      this.render(); /* (drawn in its pose before it can be painted, as setTheme: group 1, FO-40; without it the new head
+         painted unposed at the stage's corner for a frame or two once no entrance covered the rebuild, SW-23) */
     }
     setReduced(r) { if (this.reduced === !!r) return; this.reduced = !!r; this.root.dataset.reduced = r ? '1' : '0'; this.dirty = true; this.kick(); }
     // something on the screen is being pointed at: Pip turns to it rather than to the pointer
@@ -176188,7 +176571,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       + `<div class="o55-headctl"><span class="o55-lookslot"></span><span class="o55-talkslot"></span><span class="o55-soundslot"></span>`
       + `<button type="button" class="o55-iconbtn o55-close" data-o55-do="close" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.close'))}" title="${U.esc(closeTitle())}">`
       + `${U.nx('close', 18, 'control') || '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'}<span>${U.esc(T('chrome.close'))}</span></button></div></header>`
-      + `<div class="o55-body"><div class="o55-stage o55-scene-host"></div><section class="o55-pane"></section></div>`
+      /* the interior holds its own strips' Glass lenses, in its own layer under the header and Adjust NieR (FO-83, 10-window.css) */
+      + `<div class="o55-body" data-lg-lens-host=""><div class="o55-stage o55-scene-host"></div><section class="o55-pane"></section></div>`
       + `<div class="o55-live" aria-live="polite" role="status"></div></div>`;
     document.body.appendChild(root);
     S.root = root;
@@ -176202,6 +176586,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     root.addEventListener('input', onInput);
     root.addEventListener('change', onInput);
     ['keydown', 'keyup', 'keypress'].forEach((ev) => root.addEventListener(ev, onKey));
+    /* the look menu closes on Escape wherever focus is: a press on its own padding or on a note's words leaves focus on
+       the page's body, where the window's own keys never hear it (FO-89); the window's Escape (onKey) closes the menu */
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && S.open && S.lookOpen && (e.target === document.body || e.target === document.documentElement)) onKey(e); });
     root.addEventListener('pointerdown', (e) => { if (e.target.closest('.o55-scrim')) nudge(); });
     /* Input never waits for a performance (hero spec section 1 rule 7): a press or a key while the stage or the skin is
        still playing a moment snaps it to its end state. Caught on the way down, never prevented, so it still acts. */
@@ -176227,6 +176614,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       if (hv.byFocus && !to) { hv.byFocus = false; wantHover(null); }
     });
     window.addEventListener('resize', () => { if (S.open) layoutClass(); });
+    /* ...and in the frame the size changes, before it is painted: the root is fixed to the viewport, so its own size is the
+       window's. In a page resized by the page that holds it (a frame in the same process) the window's resize event comes
+       only after that frame, and a slower one after that: the wide two-column window was painted at 740, its stage and
+       Take the guided tour cut at the window's edge, for 0.3-1.8 s (FO-88). T3's sandbox, in its own process, had it at once */
+    new ResizeObserver(() => { if (S.open) layoutClass(); }).observe(root);
     return root;
   }
   /* The window's brand mark is Pip (DL-235, DR-076: the one kit), still (the brand mark never animates) and drawn in the
@@ -176758,7 +177150,9 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
      never one of them. */
   const MOVED_ON = new Set(['another', 'elsewhere', 'useTailscale', 'useCode', 'useSsh', 'useSmb', 'useAlt', 'tokenOn', 'tokenOff',
     'manualOn', 'manualOff', 'otherAccount', 'cancelAdd', 'cancelSignin', 'skip', 'skipOnline', 'later']);
-  function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit()); }
+  /* (not while Adjust NieR's editor covers the stage: a ? then opens its note in the form, the look menu's own, as the
+     narrow layout does; on the stage it lay under the editor, unseen, FO-81 recheck) */
+  function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit() && !(O55.nierLook && O55.nierLook.panelOpen && O55.nierLook.panelOpen())); }
   O55.pipStage.holdsTip = holdsTip;
 
   /* Hover intent: a choice previews only once the pointer has rested on it for DWELL ms, so moving across the list to
@@ -176837,7 +177231,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const rs = layer.querySelector('.o55-reason.o55-reason-show'), rsAt = rs ? +rs.dataset.at || 0 : 0, keepReason = rs && performance.now() - rsAt < 2600 ? rs : null;
     morphing = true;
     try { U.morph(layer, paneHtml(def)); } finally { morphing = false; }
-    if (keepReason && !keepReason.isConnected) { const ft = layer.querySelector('.o55-foot'); if (ft) { keepReason.style.animationDelay = -(performance.now() - rsAt) + 'ms'; ft.appendChild(keepReason); } }
+    if (keepReason && !keepReason.isConnected) { keepReason.style.animationDelay = -(performance.now() - rsAt) + 'ms'; layer.appendChild(keepReason); }
     O55.tips.write(layer); armLoaders(layer);
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
     const sheet = !hadSheet && layer.querySelector('.o55-sheet[data-open="true"]');
@@ -176918,7 +177312,10 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
         if (shown) return; shown = true;
         if (off) off();
         if (gate) releaseStage(); /* a gate shown early (a key, a press, the cap) shows the stage with it */
-        if (!layer.isConnected || layer.classList.contains('o55-out')) return;
+        /* a screen replaced while it was still held was never shown, but the screen before it still leaves now: the
+           newer screen took this one's place, not its predecessor's, so nothing else would ever remove it (FO-85: a
+           second change inside this one's two-frame hold left the old screen painted under the new one for good) */
+        if (!layer.isConnected || layer.classList.contains('o55-out')) { leave(); return; }
         layer.classList.remove('o55-hold');
         /* the screen arrives showing an error (a refused password on the way back): Pip says so as it shows, the oops
            read off the screen that was held until now (Astra M08) */
@@ -177261,7 +177658,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     if (!reason) return;
     const layer = t.closest('.o55-layer'); if (!layer) return;
     let tip = layer.querySelector('.o55-reason');
-    if (!tip) { tip = document.createElement('div'); tip.className = 'o55-reason'; tip.setAttribute('role', 'note'); layer.querySelector('.o55-foot').appendChild(tip); }
+    /* the layer's own, beside the scroller and the footer, never inside the footer (FO87-N1, 10-window.css .o55-reason) */
+    if (!tip) { tip = document.createElement('div'); tip.className = 'o55-reason'; tip.setAttribute('role', 'note'); layer.appendChild(tip); }
     tip.textContent = reason; tip.style.animationDelay = ''; tip.dataset.at = String(performance.now()); tip.classList.remove('o55-reason-show'); void tip.offsetWidth; tip.classList.add('o55-reason-show');
   }
   /* typing ticks at most one per 120 ms, the chat's rate (ACD-475; O55.sound's RATE.type matches it) */
@@ -178440,10 +178838,11 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
   function openPanel(from) {
     const S = O55.S, w = win(), n = N(), C = window.PM_NIER_CHIPS;
     if (!w || !n || !n.store) return null;
+    /* the look menu gives way to the editor, also when the editor is open already: the menu opens over it (FO-81), and
+       its Adjust NieR then closes the menu and takes focus to the editor's heading */
+    if (S.lookOpen) { S.lookOpen = false; O55.ui.refresh(); if (panel) O55.sound.play('unsheet'); }
     if (panel) { const h = panel.host.querySelector('.o55-nierpanel-h'); if (h) h.focus({ preventScroll: true }); return panel; }
     heavy(); /* mounting the editor is a large build of its own */
-    /* the look menu gives way to the editor */
-    if (S.lookOpen) { S.lookOpen = false; O55.ui.refresh(); }
     const body = w.querySelector('.o55-body');
     const host = document.createElement('section');
     host.className = 'o55-nierpanel';
@@ -178470,8 +178869,12 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
       const t = e.target, root = S.root;
       if (e.key === 'Enter' && t && t.classList && t.classList.contains('o55-nierpanel-h')) { e.preventDefault(); e.stopPropagation(); return; }
       if (e.key !== 'Escape') return;
-      const inside = host.contains(t) || t === document.body || t === document.documentElement || (root && root.contains(t) && !S.lookOpen);
+      const inside = host.contains(t) || t === document.body || t === document.documentElement || (root && root.contains(t));
       if (!inside) return;
+      /* the look menu open over the editor is the topmost layer and closes first, wherever focus is (FO-81 recheck: with
+         focus fallen to the page's body, a press on the menu's padding or a note's words, this closed the editor under the
+         open menu): the window's own Escape closes it, from inside the window and from the body (60-ui-core.js, FO-89) */
+      if (S.lookOpen) return;
       e.preventDefault(); e.stopPropagation(); closePanel();
     };
     const onClickHost = (e) => { if (e.target.closest && e.target.closest('[data-o55-nierpanel="done"]')) { e.preventDefault(); closePanel(); } };
@@ -178484,6 +178887,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     host.addEventListener('click', keepFocus);
     document.addEventListener('keydown', onKey, true);
     panel = { host, from: from || null, m, body, off: () => document.removeEventListener('keydown', onKey, true) };
+    /* a ? note open on Pip's stage moves to the form now that the editor covers the stage (O55.pipStage.holdsTip) */
+    if (S.tip) O55.ui.refresh();
     O55.sound.play('sheet');
     /* it opens the way a NieR surface opens when NieR Mode is painted (a stepped slice), otherwise it rises */
     const fx = O55.nierFx;
@@ -178500,6 +178905,8 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     try { if (p.m && p.m.unmount) p.m.unmount(); } catch (_) {}
     p.host.remove();
     if (p.body) { p.body.removeAttribute('inert'); p.body.removeAttribute('aria-hidden'); }
+    /* an open ? note goes back to Pip's stage where the stage holds it, now that the editor no longer covers it */
+    if (O55.S && O55.S.tip && inWindow()) O55.ui.refresh();
     if (!o.silent) O55.sound.play('unsheet');
     if (o.keepFocus || !inWindow()) return;
     /* focus goes back to what opened it; a look-menu option was redrawn, so its button stands in */
@@ -192620,6 +193027,7 @@ function button(a, opts) {
   if (a.menu && opts.menus && opts.menus[a.menu]) {
     el.setAttribute('aria-haspopup', 'menu');
     el.addEventListener('click', ev => { ev.preventDefault(); PMR.menu.toggle(opts.menus[a.menu], el, { menus: opts.menus }); });
+    PMR.menu.keys(el);
   }
   return el;
 }
@@ -193014,10 +193422,25 @@ function trigger(def, opts) {
       },
     }));
   });
-  btn.addEventListener('keydown', ev => { if (ev.key === 'ArrowDown') { ev.preventDefault(); if (!isOpenFor(btn)) btn.click(); } });
-  return btn;
+  return keyTrigger(btn);
 }
 const isOpenFor = anchor => MENU_STACK.some(e => e.anchor === anchor);
+/* FO-95: the keys of a popup trigger, shared by every rail-skin trigger that opens a PMR menu from its own click (trigger()
+   above, PMR.button's menus, the skin's Owner filters, the automation service select, Jujutsu's menu buttons, the
+   activity bar's More and the rail switcher): ArrowDown opens the menu when it is shut, and a trigger that is not a
+   native button also opens on Enter and Space (a button clicks on them by itself). The open follows a key, so openMenu
+   puts the focus on the menu's selected item, else its first (lastInputWasKey). on(target, type, fn) lets a caller that
+   removes its own listeners (41-more's destroy) hold this one too. */
+function keyTrigger(btn, on) {
+  const fn = ev => {
+    const native = btn.tagName === 'BUTTON';
+    if (ev.key !== 'ArrowDown' && (native || (ev.key !== 'Enter' && ev.key !== ' '))) return;
+    ev.preventDefault();
+    if (ev.key !== 'ArrowDown' || !isOpenFor(btn)) btn.click();
+  };
+  if (on) on(btn, 'keydown', fn); else btn.addEventListener('keydown', fn);
+  return btn;
+}
 function toggle(def, anchor, opts) {
   const open = MENU_STACK.find(e => e.anchor === anchor && !e.opts.parent);
   if (open) { closeEntry(open, { returnFocus: false }); return null; }
@@ -193025,9 +193448,18 @@ function toggle(def, anchor, opts) {
 }
 
 PMR.menu = {
-  open: openMenu, toggle, trigger, closeAll,
+  open: openMenu, toggle, trigger, closeAll, keys: keyTrigger,
   close(el) { const e = MENU_STACK.find(x => x.el === el) || MENU_STACK[MENU_STACK.length - 1]; if (e) closeEntry(e); },
   isOpen: anchor => (anchor ? isOpenFor(anchor) : MENU_STACK.length > 0),
+  /* what an open menu holding node hangs from: the trigger of its top menu (a submenu answers for its whole chain),
+     or what lay under the point of a context menu. null when node is in no open menu. A layer under the menus (the
+     folded rail's overlay, home 44-narrow.js) asks it, so a press in a menu of its own is not a press outside (FO-84b). */
+  anchorOf(node) {
+    let e = MENU_STACK.find(x => x.el.contains(node));
+    if (!e) return null;
+    while (e.opts.parent) e = e.opts.parent;
+    return e.anchor.id === 'pmr-menu-pin' && e.opts.origin ? e.opts.origin : e.anchor;
+  },
   /* a context menu at a point (right click / Shift+F10): anchored to a 1px box at the pointer */
   at(def, x, y, opts) {
     let pin = document.getElementById('pmr-menu-pin');
@@ -193637,6 +194069,7 @@ function ownerFilter(menuId, hover, classes, start, onChange) {
       },
     });
   });
+  PMR.menu.keys(trig);
   return { trig, reset() { chosen.clear(); show(); onChange(chosen); } };
 }
 
@@ -193994,7 +194427,7 @@ function jjBtn(c, base) {
   const b = jh('button', a, c.icon && base === 'pm-minibtn' ? jjIco(c.icon) : null, base === 'pm-minibtn' ? null : jh('span', { text: c.label }), c.menu && base !== 'pm-minibtn' ? jjIco('chevD', 'd-jj-chev') : null);
   PMR.hover(b, c.hover || c.label, c.reason ? reasonText(c.reason) : c.detail);
   if (base === 'pm-minibtn') b.setAttribute('aria-label', c.hover || c.label);
-  if (c.menu) b.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); jjMenu(b, c.menu()); });
+  if (c.menu) { b.addEventListener('click', ev => { ev.preventDefault(); ev.stopPropagation(); jjMenu(b, c.menu()); }); PMR.menu.keys(b); }
   return b;
 }
 /* menu items: { label, cmd, arg, reason, danger, icon, meta } in groups [{ label, items }] -> PMR.menu */
@@ -194455,7 +194888,8 @@ function jjWireFold(card) {
     PMR.state.set('d.publish.folded', folded);
     set(folded, true);
   };
-  btn.addEventListener('click', toggle);
+  /* the chevron sits inside the head, so the head's listener takes its presses and its Enter / Space (a button's key
+     press is a click that bubbles); a listener on the chevron too toggled twice, so it never folded (FO-84d) */
   head.addEventListener('click', toggle);
 }
 
@@ -195076,7 +195510,8 @@ function wirePublish(panel) {
     PMR.state.set('d.publish.folded', folded);
     set(folded, true);
   };
-  btn.addEventListener('click', toggle);
+  /* the chevron sits inside the head, so the head's listener takes its presses and its Enter / Space (a button's key
+     press is a click that bubbles); a listener on the chevron too toggled twice, so it never folded (FO-84d) */
   head.addEventListener('click', toggle);
   remember(() => { head.removeEventListener('click', toggle); card.classList.remove('d-folded'); delete card._dPub; });
 }
@@ -196077,6 +196512,8 @@ function lfMountMore() {
     setTimeout(() => { if (D.on && !PMR.menu.isOpen(btn)) open(); }, 0);
   }, true);
 
+  PMR.menu.keys(btn, on);
+
   return {
     destroy() {
       offs.forEach(off => off());
@@ -196927,6 +197364,7 @@ const LANE_E = (() => {
         },
       });
     });
+    PMR.menu.keys(trig);
     const onChange = () => { sync(); requestAnimationFrame(() => riseProvider(panel)); };
     sel.addEventListener('change', onChange);
     inject(sel.parentNode, trig, sel);
@@ -206587,15 +207025,28 @@ narrow.installRailPeek = function () {
     if (icon.classList.contains('active') && !peeking) { e.stopPropagation(); e.preventDefault(); ma.setAttribute('data-pmw-rail-peek', ''); return; }
     ma.setAttribute('data-pmw-rail-peek', '');
   }, true);
+  // a press in one of the panel's own menus is a press in the panel: PMR.menu and PMMenu portal their menus to <body>,
+  // so ask each owner what the menu hangs from (FO-84b); a press anywhere else still closes the overlay
+  function panelMenu(node) {
+    var owners = [window.PMR && PMR.menu && PMR.menu.anchorOf, window.PMCozeMenu && PMCozeMenu.ownerOf];
+    for (var i = 0; i < owners.length; i++) {
+      var a = typeof owners[i] === 'function' ? owners[i](node) : null;
+      if (a && a.closest && a.closest('.left-panel')) return true;
+    }
+    return false;
+  }
   doc.addEventListener('pointerdown', function (e) {
     var ma = mainArea();
     if (!ma || !ma.hasAttribute('data-pmw-rail-peek')) return;
     if (e.target.closest && e.target.closest('.left-panel, #fileContextMenu')) return;
+    if (panelMenu(e.target)) return;
     ma.removeAttribute('data-pmw-rail-peek');
   }, true);
+  // an Escape a menu over the overlay already spent (PMMenu and PMR.menu mark it with preventDefault) closes only that
+  // menu; the next Escape closes the overlay (FO-84)
   doc.addEventListener('keydown', function (e) {
     var ma = mainArea();
-    if (e.key === 'Escape' && ma && ma.hasAttribute('data-pmw-rail-peek')) { ma.removeAttribute('data-pmw-rail-peek'); }
+    if (e.key === 'Escape' && !e.defaultPrevented && ma && ma.hasAttribute('data-pmw-rail-peek')) { ma.removeAttribute('data-pmw-rail-peek'); }
   });
   bus.on('open', function () { var ma = mainArea(); if (ma) ma.removeAttribute('data-pmw-rail-peek'); });
 };
@@ -207127,6 +207578,16 @@ shims.demoFacades = function () {
   }
   if (D.actions && typeof D.actions.register === 'function') {
     D.actions.register('cmd.file.open', fileOpenFromRow);
+    // File actions' Copy path and Open with act on the row the menu was opened for (FO-93b); elsewhere (the rail's own
+    // menus name their file in the arg) they keep the handler they had
+    ['cmd.file.copy_path', 'cmd.file.open_with'].forEach(function (id) {
+      var own = D.actions.get ? D.actions.get(id) : null;
+      D.actions.register(id, function (ctx) {
+        var inMenu = ctx && ctx.el && ctx.el.closest && ctx.el.closest('#fileContextMenu');
+        if (inMenu && ctxRow) return id === 'cmd.file.copy_path' ? copyRowPath(ctx, ctxRow) : openRowWith(ctx, ctxRow);
+        return own ? own(ctx) : { toast: (ctx && ctx.arg) || id };
+      });
+    });
     // reveals go through revealKind (rule 1: an existing tab of the kind is revealed, never a new one per click);
     // PMW.revealKind is defined by bottomPanel below and looked up at click time
     D.actions.register('cmd.terminal.show', terminalAt);
@@ -207140,7 +207601,25 @@ shims.demoFacades = function () {
    a terminal already in that folder is revealed, else one opens there. With no folder to go on, the existing
    terminal is revealed (or one opened), as the page's own handler did. */
 var PROJECT_CWD = '~/tastebook/api';   // the concept's project root: the home layout's terminals start here
-var ctxRow = null;                     // the row the file context menu was opened on ({ path, folder })
+var ctxRow = null;                     // the row the file context menu was opened on ({ path, folder }), from pm-ctx-open
+/* Copy relative path / Copy full path on that row: the value goes to the clipboard (O55.util.copyText falls back where
+   the clipboard is blocked) and the toast names it */
+function copyRowPath(ctx, row) {
+  var value = /absolute/.test(String(ctx && ctx.arg || '')) ? PROJECT_CWD + '/' + row.path : row.path;
+  try {
+    var U = window.O55 && window.O55.util;
+    if (U && typeof U.copyText === 'function') U.copyText(value);
+    else if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(value).catch(function () {});
+  } catch (_) {}
+  return { ok: true, toast: 'Copied ' + value };
+}
+/* Open with on that row: Source editor opens it as Open does; the other ways name the row in their note */
+var OPEN_WITH_RE = /^cmd\.file\.open_with\s*->\s*(\S+)/;
+function openRowWith(ctx, row) {
+  var m = OPEN_WITH_RE.exec(String(ctx && ctx.arg || '')), how = m ? m[1] : '';
+  if (how === 'source_editor' && !row.folder) return { ok: !!PM_HOME.open({ kind: 'editor', path: row.path, mode: 'keep', where: 'auto' }).ok };
+  return { toast: String(ctx && ctx.arg || 'cmd.file.open_with') + ' \u00b7 ' + row.path };
+}
 function folderOf(path, folder) { path = String(path || '').replace(/\/+$/, ''); return folder ? path : (path.indexOf('/') >= 0 ? path.slice(0, path.lastIndexOf('/')) : ''); }
 function normCwd(p) { return String(p || '').replace(/\/+$/, '').replace(/^(?:~|\/home\/[^\/]+|\/Users\/[^\/]+)(?=\/|$)/, ''); }
 function terminalCwdFor(ctx) {
@@ -207203,11 +207682,16 @@ shims.fileContextMenu = function () {
   menuEl.style.setProperty('z-index', '10070', 'important');
   menuEl.setAttribute('data-pm-home-body-portal', 'true');
   var target = null;
-  doc.addEventListener('contextmenu', function (e) {
-    var row = e.target.closest && e.target.closest('.fm-row[data-path], .fm-openrow[data-path]');
-    target = row ? row.getAttribute('data-path') : null;
-    ctxRow = row ? { path: target, folder: row.getAttribute('data-kind') === 'folder' } : null;
-  }, true);
+  /* the row comes from the menu's owner, for a right-click and for Shift+F10 or the Menu key alike (pm-ctx-open,
+     pm6-js-cozy-shelves.js openFor) (FO-93b). A tree row's data-path is the tree's own id. A Changed or Open item's full
+     path is matched in the project's file index and, where the index does not hold it (an untracked file), used as it
+     stands: it is already a full path. A Recent row's bare file name only counts once the index finds it. */
+  menuEl.addEventListener('pm-ctx-open', function (e) {
+    var row = e.detail || null, own = row && row.el && row.el.getAttribute && row.el.getAttribute('data-path');
+    var path = !row ? null : own ? row.path : row.path ? (resolveProjectPath(row.path) || row.path) : row.name ? resolveProjectPath(row.name) : null;
+    target = path || null;
+    ctxRow = path ? { path: path, folder: !!row.folder } : null;
+  });
   if (!menuEl.querySelector('[data-pmw-open]')) {
     var rows = [
       ['open', 'Open'], ['panel', 'Open in new panel'], ['side', 'Open to the side']
@@ -207215,8 +207699,9 @@ shims.fileContextMenu = function () {
       var b = h('div', { class: 'fm-ctx-item pmw-ctx-item', role: 'menuitem', tabindex: '-1', 'data-pmw-open': r[0], text: r[1] });
       b.addEventListener('click', function (e) {
         e.stopPropagation();
-        menuEl.classList.remove('open', 'show', 'visible');
-        menuEl.style.display = 'none';
+        // close through the menu's owner, so its register of open menus stays true (FO-84c)
+        if (window.PMCozeMenu) window.PMCozeMenu.close(menuEl);
+        else { menuEl.classList.remove('open', 'show', 'visible'); menuEl.style.display = 'none'; }
         if (!target) return;
         PM_HOME.open({ kind: 'editor', path: target, mode: 'keep', where: r[0] === 'open' ? 'auto' : r[0] === 'panel' ? 'panel' : 'right' });
       });
@@ -306073,7 +306558,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const defs=activityDefs();
     const items=Object.entries(defs);
     if(!items.length) return '';
-    return `<div class="activity-wrap${abCompactTier>=1?' is-ab-compact':''}${abCompactTier>=2?' is-ab-icon-only':''}" data-k="activity-wrap"><div class="pm56-activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}"><i class="state-mark ${d.state}"></i>${COLLAB_DOMAINS[id]&&!hasIcon(d.icon)?kindMark(id,12,'users'):icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span></button>`;}).join('')}</div></div>`;
+    // The hidden sizer holds the bar twice, labelled and compact, laid out at max-content inside the live wrap: the
+    // same cascade, container and media regime and inherited host variables, so syncActivityCompact's observer reads
+    // every tier width from layout. The copies carry no action, domain id or accessible name (aria-hidden, inert);
+    // data-hover-domain and .active stay, because the bar's rules size items by them.
+    const inner=(id,d)=>`<i class="state-mark ${d.state}"></i>${COLLAB_DOMAINS[id]&&!hasIcon(d.icon)?kindMark(id,12,'users'):icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span>`;
+    const isActive=id=>state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;
+    const fitRow=tier=>`<div class="activity-fit${tier?' is-ab-compact':''}"><div class="pm56-activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}">${items.map(([id,d])=>`<button class="activity-item ${isActive(id)?'active':''}" data-hover-domain="${id}" tabindex="-1">${inner(id,d)}</button>`).join('')}</div></div>`;
+    return `<div class="activity-wrap${abCompactTier>=1?' is-ab-compact':''}${abCompactTier>=2?' is-ab-icon-only':''}" data-k="activity-wrap"><div class="pm56-activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=isActive(id);return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}">${inner(id,d)}</button>`;}).join('')}</div><div class="activity-sizer" data-k="activity-sizer" aria-hidden="true" inert>${fitRow(0)}${fitRow(1)}</div></div>`;
   }
   function renderJumpBottom(){
     const working=turnBusy();
@@ -306288,7 +306780,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderStatusBar(){ return `<footer class="status-bar"><span>${icon('check-circle',10)} Agent · ${esc(selectedModel().name)} · ${formatElapsed(state.work.elapsed)}</span><span class="center">${esc(state.worktree)} · Local server</span><span class="right">Ready · ${state.context.compacted?'Context compacted':`Context ${(window.PM56_CTX&&window.PM56_CTX.ringPct)?window.PM56_CTX.ringPct():64}%`} ${icon('info',10)}</span></footer>`; }
 
   let composerRO=null, composerCompact=false, labeledToolsMin=0, measuringCompact=false;
-  let abCompactTier=0, abMeasuring=false;
+  let abCompactTier=0;
   function toolsContentWidth(tools){
     const kids=[...tools.children];
     if(!kids.length) return 0;
@@ -306303,7 +306795,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     measuringCompact=false;
     return w;
   }
-  let composerMeasureCache=null, activityMeasureCache=null;
+  let composerMeasureCache=null;
   function syncComposerCompact(){
     if(measuringCompact) return;
     const box=document.querySelector('.composer-box');
@@ -306357,40 +306849,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(strip) observeLensStrip(strip);
     else if(lensStripObserved&&composerRO){ composerRO.unobserve(lensStripObserved); lensStripObserved=null; }
   }
-  function activityRowWidth(bar){
-    const kids=[...bar.querySelectorAll(':scope > .activity-item')];
-    if(!kids.length) return 0;
-    const gap=parseFloat(getComputedStyle(bar).columnGap||getComputedStyle(bar).gap)||0;
-    const box=getComputedStyle(bar), edge=k=>parseFloat(box[k])||0;
-    return kids.reduce((n,el)=>n+el.getBoundingClientRect().width,0)+gap*Math.max(0,kids.length-1)+edge('paddingLeft')+edge('paddingRight')+edge('borderLeftWidth')+edge('borderRightWidth');
-  }
-  function measureActivityTier(wrap, bar, tier){
-    abMeasuring=true;
-    wrap.classList.add('is-measuring');
-    wrap.classList.toggle('is-ab-compact', tier>=1);
-    wrap.classList.toggle('is-ab-icon-only', tier>=2);
-    const w=activityRowWidth(bar);
-    wrap.classList.remove('is-measuring');
-    abMeasuring=false;
-    return w;
-  }
-  function syncActivityCompact(){
-    if(abMeasuring) return;
-    const wrap=document.querySelector('.activity-wrap');
-    const bar=wrap&&wrap.querySelector('.pm56-activity-bar');
-    if(!wrap||!bar||!bar.querySelector('.activity-item')){
-      abCompactTier=0;
-      return;
-    }
-    const cs=getComputedStyle(wrap);
-    const avail=wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+  /* Activity tiers (FO-76). renderActivityBar puts a hidden sizer in the wrap: the bar again, labelled and compact,
+     at max-content. One ResizeObserver reads the sizer's content box (the wrap's content width, through inherited
+     padding) and both copies' border boxes as layout delivers them, so text, counts, fonts, hosted rules, generated
+     content and the container and media regimes all reach the fit through layout, a Chat revealed after hiding
+     included, and a resize step reads three stored numbers instead of probing the live strip. The copies' widths do
+     not depend on the tier chosen, so the 8 px hysteresis below cannot feed back into them. */
+  const abFit={ro:null,mo:null,sizer:null,rows:[],bar:null,foreign:null,avail:0,labeled:0,compact:0};
+  function applyActivityTier(){
+    const wrap=abFit.sizer&&abFit.sizer.parentElement;
+    const {avail,labeled,compact}=abFit;
+    // A hidden Chat lays nothing out: keep the tier until the observer reports the revealed sizes.
+    if(!wrap||avail<=0||labeled<=0||compact<=0) return;
     const slack=8;
-    // Tier widths are intrinsic to the bar's content/font/theme, not to the available width (see
-    // syncComposerCompact): keep the container width out of the cache key.
-    const signature=[bar.textContent,bar.dataset.variant,state.theme,document.fonts?.status].join('|');
-    if(!activityMeasureCache||activityMeasureCache.node!==bar||activityMeasureCache.key!==signature)
-      activityMeasureCache={node:bar,key:signature,labeled:measureActivityTier(wrap,bar,0),compact:measureActivityTier(wrap,bar,1)};
-    const {labeled,compact}=activityMeasureCache;
     let tier=abCompactTier;
     if(tier===0){
       if(avail+0.5<labeled) tier=avail+0.5<compact?2:1;
@@ -306402,6 +306873,67 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     abCompactTier=tier;
     wrap.classList.toggle('is-ab-compact', tier>=1);
     wrap.classList.toggle('is-ab-icon-only', tier>=2);
+  }
+  function onActivityFit(entries){
+    for(const e of entries){
+      const box=e.target===abFit.sizer?e.contentBoxSize:e.borderBoxSize;
+      const w=box&&box[0]?box[0].inlineSize:e.contentRect.width;
+      if(e.target===abFit.sizer) abFit.avail=w;
+      else if(e.target===abFit.rows[0]) abFit.labeled=w;
+      else if(e.target===abFit.rows[1]) abFit.compact=w;
+    }
+    applyActivityTier();
+  }
+  /* An item another layer put into the live strip, which the template never renders (the background-activity
+     concept's Processes button is one), is copied into both fit rows at the same place, so the fit measures every
+     item the strip actually shows. A MutationObserver on the live bar and on the rows runs this; it reads no layout.
+     The rows are written only when what is foreign changed: such a layer may rewrite its item with the same values on
+     a timer and re-insert it from its own observer, and an unconditional write here would answer it forever. The
+     copies lose ids, actions, domain ids, ARIA and tab stops, as the template's copies do. */
+  const AB_COPY_DROP=/^(?:id|tabindex|data-action|data-domain|aria-.*)$/;
+  function mirrorForeignActivityItems(){
+    const {bar,rows}=abFit;
+    if(!bar||!bar.isConnected||rows.length!==2) return;
+    const order=[...rows[0].children].filter(e=>!e.hasAttribute('data-ab-foreign')).map(e=>e.getAttribute('data-hover-domain'));
+    const plan=[];
+    let j=0;
+    for(const e of bar.children){
+      if(j<order.length&&e.getAttribute('data-action')==='open-activity'&&e.getAttribute('data-domain')===order[j]){ j++; continue; }
+      plan.push({e,before:j<order.length?order[j]:null});
+    }
+    const key=plan.map(p=>p.before+'\n'+p.e.outerHTML).join('\n\n');
+    if(key===abFit.foreign&&rows.every(r=>r.querySelectorAll(':scope > [data-ab-foreign]').length===plan.length)) return;
+    abFit.foreign=key;
+    for(const row of rows){
+      for(const n of row.querySelectorAll(':scope > [data-ab-foreign]')) n.remove();
+      for(const p of plan){
+        const c=p.e.cloneNode(true);
+        for(const n of [c,...c.querySelectorAll('*')]) for(const a of [...n.attributes]) if(AB_COPY_DROP.test(a.name)) n.removeAttribute(a.name);
+        c.setAttribute('data-ab-foreign','');
+        row.insertBefore(c,p.before?row.querySelector(`:scope > [data-hover-domain="${CSS.escape(p.before)}"]:not([data-ab-foreign])`):null);
+      }
+    }
+  }
+  // Called on every chrome sync: it (re)arms the observers when render replaced the sizer or the live bar, brings
+  // the copies of foreign items up to date, and reads no layout.
+  function syncActivityCompact(){
+    const sizer=document.querySelector('.activity-wrap > .activity-sizer');
+    const rows=sizer?[...sizer.querySelectorAll(':scope > .activity-fit > .pm56-activity-bar')]:[];
+    const bar=sizer?sizer.parentElement.querySelector(':scope > .pm56-activity-bar'):null;
+    if(!sizer||rows.length!==2){
+      if(abFit.sizer){ abFit.ro.disconnect(); abFit.mo.disconnect(); abFit.sizer=null; abFit.rows=[]; abFit.bar=null; }
+      abCompactTier=0;
+      return;
+    }
+    if(sizer!==abFit.sizer||rows[0]!==abFit.rows[0]||rows[1]!==abFit.rows[1]||bar!==abFit.bar){
+      if(!abFit.ro){ abFit.ro=new ResizeObserver(onActivityFit); abFit.mo=new MutationObserver(mirrorForeignActivityItems); }
+      else { abFit.ro.disconnect(); abFit.mo.disconnect(); }
+      Object.assign(abFit,{sizer,rows,bar,foreign:null,avail:0,labeled:0,compact:0});
+      abFit.ro.observe(sizer);
+      for(const row of rows){ abFit.ro.observe(row,{box:'border-box'}); abFit.mo.observe(row,{childList:true}); }
+      if(bar) abFit.mo.observe(bar,{childList:true,subtree:true,attributes:true,characterData:true});
+    }
+    mirrorForeignActivityItems();
   }
   function syncChatChrome(){
     syncComposerCompact();
@@ -306415,12 +306947,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     // Hosted resize drags resize the chat column every frame; the chrome syncs below read rects and
     // scroll metrics after each width write. Dock heights and the jump pill may lag one cadence
     // mid-drag (the editor/terminal kinds use the same 120ms rule); a trailing sync lands on release.
-    // The two compact tiers are not held: they compare a cached intrinsic width against the current
-    // one (no measuring), and on the pass-3 tape their one-cadence lag showed as labels overflowing
-    // for 1-2 frames at each threshold crossing.
+    // The composer's compact tier is not held: it compares a cached intrinsic width against the current
+    // one (no measuring), and on the pass-3 tape a one-cadence lag showed as labels overflowing for
+    // 1-2 frames at each threshold crossing. The Activity tier needs no call here: its own observer
+    // decides it at layout delivery in the same frame (syncActivityCompact).
     if(document.body && document.body.classList.contains('pm-resizing') && performance.now()-chromeLastSync<100){
       syncComposerCompact();
-      syncActivityCompact();
       if(!chromeTrailT) chromeTrailT=setTimeout(()=>{chromeTrailT=null;chromeLastSync=performance.now();syncChatChrome();},100);
       return;
     }
@@ -309716,7 +310248,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
            non-zero, and any harness reading them saw three permanent zeros as
            measurements. They now point at what renderActivityBar,
            renderMenu and the artifact renderers actually produce. */
-        activityDomains: qa('.activity-item[data-hover-domain]').length,
+        // The live strip only: the hidden fit sizer holds two more copies of every item.
+        activityDomains: qa('.activity-wrap > .pm56-activity-bar > .activity-item[data-hover-domain]').length,
         artifacts: qa('[data-artifact-id]').length,
         menus: qa('.overlay-menu').length,
         decisionVisible: Boolean(q('.decision-host:not([hidden])')?.textContent?.trim()),
@@ -314572,6 +315105,15 @@ try {
      step). A request made inside that delivery waits for the next frame's layout, as a fresh observation made there
      would be skipped and reported as a ResizeObserver loop error. */
   var postEl = null, postRO = null, postQ = false, postOn = false, postFns = [], postRunning = false;
+  /* The probe is observed afresh, often from the mutation observer below, which runs inside another observer's delivery
+     when that observer's callback is what changed the page (the title bar's density fold, the chat's re-render). The
+     browser delivers a fresh observation made in a delivery only if it is deeper than every target that delivery's
+     round already handed out; a window resize's first round reaches div.app-shell (depth 4), the probe's own depth, so
+     the probe was skipped, the frame ended with 'ResizeObserver loop completed with undelivered notifications', and the
+     sync ran a frame late (FO-94, every one of those errors). The document root is therefore observed for the page's
+     life: a frame that resizes the window delivers the root in its first round, and a probe observed during that frame
+     is delivered in the same frame. Nothing is done on the root's report itself. */
+  try { if (window.ResizeObserver) new ResizeObserver(function () {}).observe(document.documentElement); } catch (e) { /* none */ }
   function afterLayout(fn) {
     if (!window.ResizeObserver || !document.body) return false;
     if (fn) postFns.push(fn); else postQ = true;
