@@ -1764,7 +1764,7 @@ canonical_text: >-
   contract row keyed by its catalog id in Plans/prd_planning_runtime_contracts.json
   ui_command_contracts (DL-333 coordinator resolution 1); that file's former ids are recorded
   compatibility aliases, and the catalog row's payload summary column is history. The run identity is
-  the PlanCompileRun compile_id the state record names (PNC-006 state machine), and
+  the PlanCompileRun compile_id the state record names (PNC-010 state machine), and
   cmd.plan_compile.open_build takes the PlanCompileRun identity the catalog names
   (plan_compile_run_id), not a goal run id (DL-333 resolution 1). The runtime contract's owner
   disabled states map to the overlay's closed codes through UCC-230 owner_state_code_map. The
@@ -1774,7 +1774,7 @@ canonical_text: >-
   sets.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible Plan Compile pause, resume, cancel, retry, inspection, recompile and Open Build commands.
-depends_on: [UCC-230, UCC-097, UCC-098, DL-333, DL-341, CV-333, PNC-014]
+depends_on: [UCC-230, UCC-097, UCC-098, DL-333, DL-341, CV-333, PNC-010, PNC-011, PNC-014]
 unblocks: []
 acceptance_criteria:
   - Every command that UCC-230 routes to PNC-037 has exactly one definition in the block below.
@@ -1817,7 +1817,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "runtime contract payload_contract cmd.plan_compile.pause; PlanCompileRun state record identity compile_id (PNC-006 state machine, Plan_To_Node_Compilation.md:644)"
+          source: "runtime contract payload_contract cmd.plan_compile.pause; PlanCompileRun state record identity compile_id (PNC-010 state machine, Plan_To_Node_Compilation.md:644)"
         reason:
           type: string
           required: true
@@ -1832,6 +1832,8 @@ command_payload_definitions:
         owner_result: local:PlanCompilePauseResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: compile_terminal, code: blocked_state_required}
       aliases: []
     - command_id: cmd.plan_compile.resume
       ucc_units: [UCC-098, UCC-097]
@@ -1849,13 +1851,15 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "runtime contract payload_contract cmd.plan_compile.resume; compile wave contracts and resume routes carry resume_ref (Plan_To_Node_Compilation.md:644, PNC-014 resume rule); guard resume_ref_valid"
+          source: "runtime contract payload_contract cmd.plan_compile.resume; compile wave contracts and resume routes carry resume_ref (PNC-010, Plan_To_Node_Compilation.md:644; PNC-011 stage-card route objects with optional resume_ref, :717); guard resume_ref_valid"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:PlanCompileResumeResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: missing_resume_ref, code: blocked_state_required}
       aliases: []
     - command_id: cmd.plan_compile.cancel
       ucc_units: [UCC-098, UCC-097]
@@ -1882,6 +1886,8 @@ command_payload_definitions:
         owner_result: local:PlanCompileCancelResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: mutation_already_active, code: blocked_state_required}
       aliases: []
     - command_id: cmd.plan_compile.retry
       ucc_units: [UCC-098, UCC-097]
@@ -1912,6 +1918,8 @@ command_payload_definitions:
         owner_result: local:PlanCompileRetryResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: stage_not_retryable, code: blocked_state_required}
       aliases:
         - {command_id: cmd.plan_compile.retry_stage, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
@@ -1938,7 +1946,17 @@ command_payload_definitions:
         owner_result: none
       error_codes: [invalid_route, invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: blocker_missing, code: blocked_state_required}
       judgments:
+        - key: error_codes
+          choice: [invalid_route, invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
+          gap_note: >-
+            The narrowing rule adds stale_projection for a domain_action or when the disabled reasons include it;
+            this navigation_wrapper's only disabled reason is blocked_state_required (owner state blocker_missing). It
+            is added because the runtime row's stale_projection_policy refresh_blocker_projection_before_open
+            (Plans/prd_planning_runtime_contracts.json ui_command_contracts) refreshes the projection before
+            the open, so a stale projection is refused at dispatch and travels in stale_projection.
         - key: response_kind
           choice: local_projection
           gap_note: >-
@@ -1974,7 +1992,17 @@ command_payload_definitions:
         owner_result: none
       error_codes: [invalid_route, invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: evidence_missing, code: blocked_state_required}
       judgments:
+        - key: error_codes
+          choice: [invalid_route, invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
+          gap_note: >-
+            The narrowing rule adds stale_projection for a domain_action or when the disabled reasons include it;
+            this navigation_wrapper's only disabled reason is blocked_state_required (owner state evidence_missing). It
+            is added because the runtime row's stale_projection_policy refresh_evidence_projection_before_open
+            (Plans/prd_planning_runtime_contracts.json ui_command_contracts) refreshes the projection before
+            the open, so a stale projection is refused at dispatch and travels in stale_projection.
         - key: response_kind
           choice: local_projection
           gap_note: >-
@@ -2008,7 +2036,17 @@ command_payload_definitions:
         owner_result: none
       error_codes: [invalid_route, invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: assignment_missing, code: blocked_state_required}
       judgments:
+        - key: error_codes
+          choice: [invalid_route, invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
+          gap_note: >-
+            The narrowing rule adds stale_projection for a domain_action or when the disabled reasons include it;
+            this navigation_wrapper's only disabled reason is blocked_state_required (owner state assignment_missing). It
+            is added because the runtime row's stale_projection_policy refresh_assignment_projection_before_open
+            (Plans/prd_planning_runtime_contracts.json ui_command_contracts) refreshes the projection before
+            the open, so a stale projection is refused at dispatch and travels in stale_projection.
         - key: response_kind
           choice: local_projection
           gap_note: >-
@@ -2051,6 +2089,8 @@ command_payload_definitions:
         owner_result: local:PlanCompileBoundedRecompileResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: no_invalidated_refs, code: blocked_state_required}
       aliases: []
     - command_id: cmd.plan_compile.open_build
       ucc_units: [UCC-098, UCC-097]
@@ -2075,7 +2115,17 @@ command_payload_definitions:
         owner_result: local:PlanCompileOpenBuildResultV1
       error_codes: [invalid_route, invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: activation_not_active, code: blocked_state_required}
       judgments:
+        - key: error_codes
+          choice: [invalid_route, invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
+          gap_note: >-
+            The narrowing rule adds stale_projection for a domain_action or when the disabled reasons include it;
+            this navigation_wrapper's only disabled reason is blocked_state_required (owner state activation_not_active). It
+            is added because the runtime row's stale_projection_policy "open only after durable BuildStarted projection"
+            (Plans/prd_planning_runtime_contracts.json ui_command_contracts) makes the open depend on a current
+            projection, so a stale projection is refused at dispatch and travels in stale_projection.
         - key: response_kind
           choice: owner_operation
           gap_note: >-

@@ -947,7 +947,7 @@ depends_on: [PRDB-005, PRDB-007, PRDB-008, PLS-015]
 unblocks: []
 acceptance_criteria:
   - ConflictRecord tie-break order is explicit user resolution, higher-authority source_ref, latest accepted user correction, higher confidence, then blocked_requires_user_decision.
-  - User resolution command is cmd.prd_builder.resolve_conflict with prd_id, conflict_id, selected_value, optional rationale, and actor_ref.
+  - "User resolution command is cmd.prd_builder.conflict.resolve with conflict_id, selected_claim_refs, and resolution_reason. Amended 2026-11-07 (DL-333): the runtime contract row's fields replace prd_id, selected_value, optional rationale, and actor_ref, and cmd.prd_builder.resolve_conflict is its compatibility alias (PRDB-024)."
   - Readiness score defaults are completeness 0.35, evidence 0.25, conflicts 0.20, dependencies 0.10, resources 0.10, with approve threshold >= 0.85 and conflicts axis requiring no blocking conflicts.
   - Resource defaults include estimated_tokens = unknown, estimated_cost_microusd = unknown, max_review_minutes = 30, provider_preference = unset, and required_human_review = true when estimates are unknown.
   - The canonical approval command is cmd.prd_builder.approve_for_planning_wizard; compatibility alias cmd.prd_builder.approve_for_planning must project to the canonical command and emit the same approval receipt.
@@ -1196,6 +1196,14 @@ command_payload_definitions:
         owner_result: local:PrdSourceImportResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required, not_configured, permission_required, degraded, stale_projection]
+      owner_state_codes:
+        - {owner_state: stale_workspace, code: stale_projection}
+        - {owner_state: permission_denied, code: permission_required}
+        - {owner_state: stale_source_security_policy, code: stale_projection}
+        - {owner_state: missing_resource_limit_profile, code: not_configured}
+        - {owner_state: parser_sandbox_unavailable, code: degraded}
+        - {owner_state: source_quarantined, code: blocked_state_required}
+        - {owner_state: source_limit_exceeded, code: blocked_state_required}
       aliases:
         - {command_id: cmd.prd_builder.import_sources, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
@@ -1231,6 +1239,8 @@ command_payload_definitions:
         owner_result: local:PrdAnswerUpsertResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [degraded]
+      owner_state_codes:
+        - {owner_state: ledger_sync_blocked, code: degraded}
       aliases:
         - {command_id: cmd.prd_builder.answer_question, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
@@ -1269,8 +1279,8 @@ command_payload_definitions:
           gap_note: >-
             Plans/prd_planning_runtime_contracts.json prd_builder_runtime.records annotation_record requires action_kind (PRDB-007 lists it too) and PRDB-007 lists the action verbs
             (highlight, comment, ask, request change, replace, remove, move to non-goal, mark unclear,
-            show source, challenge source) but fixes no snake_case token set. JUDGMENT: typed string
-            pending that enum; the verb list is the semantic range.
+            show source, challenge source) in prose, not as tokens, so canon gives no value spellings for an
+            enum. JUDGMENT: typed string pending a token set; the verb list is the semantic range.
         action_payload:
           type: string
           required: true
@@ -1328,6 +1338,10 @@ command_payload_definitions:
         owner_result: local:PrdAnnotationUpsertResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [stale_projection, unauthorized]
+      owner_state_codes:
+        - {owner_state: stale_anchor_unrelocated, code: stale_projection}
+        - {owner_state: actor_not_authorized, code: unauthorized}
+        - {owner_state: projection_stale, code: stale_projection}
       aliases:
         - {command_id: cmd.prd_builder.annotate_source, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}
@@ -1364,6 +1378,9 @@ command_payload_definitions:
         owner_result: local:PrdAnnotationResolveResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: annotation_terminal, code: blocked_state_required}
+        - {owner_state: stale_anchor_unrelocated, code: stale_projection}
       aliases: []
     - command_id: cmd.prd_builder.conflict.resolve
       ucc_units: [UCC-098, UCC-097]
@@ -1398,22 +1415,24 @@ command_payload_definitions:
         owner_result: local:PrdConflictResolveResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: missing_claims, code: blocked_state_required}
       judgments:
         - key: omitted:prd_id
           choice: omitted
           gap_note: >-
-            Canon conflict. PRDB-011's acceptance criterion says the user resolution command is
-            cmd.prd_builder.resolve_conflict "with prd_id, conflict_id, selected_value, optional rationale, and
-            actor_ref" (PRD_Builder.md:950). The runtime contract row under the catalog id carries conflict_id,
-            selected_claim_refs and resolution_reason (Plans/prd_planning_runtime_contracts.json
-            ui_command_contracts). DL-333 resolution 1 puts the runtime field list under the catalog id and makes
-            the old id a compatibility alias, so this definition follows the runtime row: prd_id is left out (the
-            ConflictRecord named by conflict_id carries prd_id, PRDB-011), selected_value becomes
-            selected_claim_refs, the rationale becomes the required resolution_reason, and actor_ref stays in the
-            envelope. PRDB-011 now carries an "Amended 2026-11-07 (DL-333)" note pointing here.
+            The runtime contract row under the catalog id carries conflict_id, selected_claim_refs and
+            resolution_reason (Plans/prd_planning_runtime_contracts.json ui_command_contracts), and DL-333
+            resolution 1 puts that field list under the catalog id and makes the old id a compatibility alias.
+            PRDB-011's acceptance criterion, amended 2026-11-07 under DL-333 (PRD_Builder.md:950, with the note at
+            :931), now names the same three fields; before, it named cmd.prd_builder.resolve_conflict with prd_id,
+            conflict_id, selected_value, optional rationale and actor_ref. prd_id is left out because the
+            ConflictRecord named by conflict_id carries it (PRDB-011 canonical_text); selected_value became
+            selected_claim_refs, the rationale became the required resolution_reason, and actor_ref stays in the
+            envelope.
       aliases:
         - {command_id: cmd.prd_builder.resolve_conflict, kind: compatibility_alias,
-           source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1); PRDB-011 records the alias-era field set"}
+           source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1); PRDB-011's amended acceptance criterion names it the compatibility alias (PRD_Builder.md:950)"}
     - command_id: cmd.prd_builder.approve_for_planning_wizard
       ucc_units: [UCC-098, UCC-097]
       command_kind: domain_action
@@ -1445,6 +1464,9 @@ command_payload_definitions:
         owner_result: local:PrdApproveForPlanningWizardResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: blocking_findings, code: blocked_state_required}
+        - {owner_state: source_coverage_missing, code: blocked_state_required}
       aliases:
         - {command_id: cmd.prd_builder.approve_for_planning, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1); PRDB-011 compatibility alias"}
@@ -1474,6 +1496,8 @@ command_payload_definitions:
         owner_result: local:PrdPackReopenResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, blocked_state_required, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required]
+      owner_state_codes:
+        - {owner_state: pack_missing, code: blocked_state_required}
       aliases:
         - {command_id: cmd.prd_builder.reopen_pack, kind: compatibility_alias,
            source: "Plans/prd_planning_runtime_contracts.json ui_command_contracts alias_command_ids; UCC-230 non_definition_tokens (DL-333 resolution 1)"}

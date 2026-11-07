@@ -5903,7 +5903,7 @@ command_payload_definitions:
               provenance: gap
               gap_note: >-
                 The values are W-075's lifecycle state dimension, spelled as canon spells them
-                (WorktreeGitImprovement.md:5303-5304). Canon names no field for the dimension: lifecycle_state
+                (WorktreeGitImprovement.md:5304). Canon names no field for the dimension: lifecycle_state
                 is its snake_case name. unique_items is a choice (a chip is on or off); absent or empty means
                 the dimension does not filter.
             owner_class:
@@ -5915,7 +5915,7 @@ command_payload_definitions:
               provenance: gap
               gap_note: >-
                 The values are W-075's owner class dimension in canon's own spelling, hyphens kept
-                (WorktreeGitImprovement.md:5304). Canon names no field: owner_class is the dimension's
+                (WorktreeGitImprovement.md:5304-5305). Canon names no field: owner_class is the dimension's
                 snake_case name; unique_items as for lifecycle_state.
             row_flags:
               type: list
@@ -5936,7 +5936,7 @@ command_payload_definitions:
               provenance: gap
               gap_note: >-
                 The values are W-075's blocked-reason family dimension in canon's own spelling
-                (WorktreeGitImprovement.md:5305-5306). Canon names no field: blocked_reason_family is the
+                (WorktreeGitImprovement.md:5306-5307). Canon names no field: blocked_reason_family is the
                 dimension's snake_case name; unique_items as for lifecycle_state.
           provenance: gap
           gap_note: >-
@@ -5958,7 +5958,7 @@ command_payload_definitions:
           gap_note: >-
             Canon states no command_kind for this row. Select persists the selected worktree and filter state per
             project (UI_Command_Catalog.md:700), and that persisted selection gates every worktree_selected
-            command, so it is classed with cmd.docker.context.select (DESIGN 4.6). The other reading, shell_view
+            command, so it is a durable owner selection. The other reading, shell_view
             with a local_projection response like cmd.git.worktree.list, also fits canon: W-075 keeps the selected
             worktree an owner runtime/view record (WorktreeGitImprovement.md:5317-5318). UCC-230 lists select as a
             domain_action that does not mutate worktree state (not_mutating, DL-341).
@@ -6000,9 +6000,9 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             No field names the open focus or target. The alias cmd.git.worktree.open_files supplies a "File
-            Manager focus" argument (UI_Command_Catalog.md:702 and the Cozy Shelves alias table row at :12227), and
+            Manager focus" argument (UI_Command_Catalog.md:702 and the Cozy Shelves alias table row at :12333), and
             the retired cmd.git.worktree.open_other folded a "target argument" into open (alias table row at
-            :12228); neither names the field or its values. Choice: absent means the worktree root itself (the
+            :12334); neither names the field or its values. Choice: absent means the worktree root itself (the
             row's own behavior, :701); present is a target surface name. The bounds 1..256 are not canon. A typed
             union of focus targets is the alternative, and no canon enumerates one.
       owner_request: none
@@ -6028,9 +6028,18 @@ command_payload_definitions:
             Canon names no disabled set for this row. not_configured covers git_available false,
             blocked_state_required covers worktree_selected or worktree_path_resolvable false
             (UI_Command_Catalog.md:701), and stale_projection is the 2.0B clause.
+        - key: aliases
+          choice: [cmd.git.worktree.open_files, cmd.git.worktree.switch]
+          gap_note: >-
+            UCC-054 makes cmd.git.worktree.switch a compatibility alias for "select plus open"
+            (UI_Command_Catalog.md:714) and names no single target. It is recorded on open, not on select, because
+            the alias ends in the open (the select is the selection open already requires, precondition
+            worktree_selected, :701), and one alias token is recorded on one definition. open_files is open's alias
+            (:702, :12333). GitHub_Integration.md:2115 lists switch among its Command IDs; the catalog, which keeps
+            aliases, makes it an alias, and this definition follows the catalog.
       aliases:
         - {command_id: cmd.git.worktree.open_files, kind: compatibility_alias,
-           source: "UCC-054 compatibility_only_notes; UI_Command_Catalog.md:702 and the Cozy Shelves alias table row cmd.git.worktree.open_files (:12227, open plus File Manager focus argument)"}
+           source: "UCC-054 compatibility_only_notes; UI_Command_Catalog.md:702 and the Cozy Shelves alias table row cmd.git.worktree.open_files (:12333, open plus File Manager focus argument)"}
         - {command_id: cmd.git.worktree.switch, kind: compatibility_alias,
            source: "UCC-054 compatibility_only_notes; UI_Command_Catalog.md:714 (compatibility alias for select plus open until callers migrate)"}
     - command_id: cmd.git.worktree.compare
@@ -6144,9 +6153,9 @@ command_payload_definitions:
           type: enum
           required: true
           default: none
-          values: [reserved, active, blocked_preserved, released, orphaned]
+          values: [reserved, active]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.create as mutating (DL-341). Values: the reserved lifecycle state names (WorktreeGitImprovement.md:299) spelled as W-075 spells them (WorktreeGitImprovement.md:5303); :299 also admits Orphaned"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.create as mutating (DL-341). Values: two of the reserved lifecycle state names (WorktreeGitImprovement.md:299) spelled as W-075 spells them (WorktreeGitImprovement.md:5304), the two a worktree that does not exist yet can enter"
         path:
           type: path
           required: true
@@ -6177,6 +6186,13 @@ command_payload_definitions:
         owner_result: local:WorktreeCreateResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, permission_required, blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: dirty_worktree, code: blocked_state_required}
+        - {owner_state: untracked_files, code: blocked_state_required}
+        - {owner_state: protected_branch, code: blocked_state_required}
+        - {owner_state: missing_remote, code: not_configured}
+        - {owner_state: permission_denied, code: permission_required}
+        - {owner_state: operation_in_progress, code: blocked_state_required}
       judgments:
         - key: command_kind
           choice: domain_action
@@ -6185,11 +6201,16 @@ command_payload_definitions:
             (UI_Command_Catalog.md:704), UCC-230 lists it as mutating (DL-341), and W-084 binds child flows to this
             command.
         - key: field:worktree_lifecycle_state
-          choice: the lifecycle state the new worktree enters
+          choice: the lifecycle state the new worktree enters, reserved or active
           gap_note: >-
             Canon requires the field when a command mutates worktree state but does not say, for create, whether it
-            is an observed or a target state; a worktree that does not exist yet has no observed state, so the
-            field is the state the created worktree enters.
+            is an observed or a target state; a worktree that does not exist yet has no observed state, so on
+            create the field is the state the created worktree enters, while on the other seven mutating commands
+            it is the state observed at dispatch. Canon gives no create-time state (WorktreeGitImprovement.md has
+            none). The values are narrowed to reserved and active, the two states a new worktree can enter:
+            blocked_preserved needs a blocked episode, released follows lineage-safe completion, archival or a
+            recorded override (UI_Command_Catalog.md:711), and orphaned marks a worktree whose owner is gone, and
+            none of these exists before the worktree does.
         - key: field:branch_ref
           choice: absent means the owner derives the branch per W-007
           gap_note: >-
@@ -6228,13 +6249,74 @@ command_payload_definitions:
           default: none
           values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.remove as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.remove as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5304)"
         safe_point_id:
           type: id
           required: false
           default: none
           provenance: canon
           source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe worktree action commands carry optional safe_point_id (UI_Command_Catalog.md:720)"
+        expected_owner:
+          type: object
+          required: false
+          default: none
+          fields:
+            kind:
+              type: enum
+              required: true
+              default: none
+              values: [run, lane, package]
+              provenance: gap
+              gap_note: "the owner class the surface observed; canon's words are the prose 'lane/run/package refs' (UI_Command_Catalog.md:720), so the field and its value spellings are not canon"
+            owner_ref:
+              type: ref
+              required: true
+              default: none
+              provenance: gap
+              gap_note: "the run, lane or package reference the surface observed; no field name in canon"
+          provenance: gap
+          gap_note: >-
+            Safe worktree action commands "carry enough repo_id, worktree_id, optional safe_point_id, lane/run/package
+            refs, blocked/recovery lineage, and blocked reason payloads to preserve stale-run and crashed-session
+            safety" (UI_Command_Catalog.md:720), but canon names no field for the lane/run/package ref. Choice: the
+            run, lane or package owner the dispatching surface observed, a tagged object shaped like
+            cmd.git.worktree.reuse's new_owner; absent means the surface observed no run, lane or package owner. The
+            owner compares it with its own record before it mutates and refuses a mismatch with stale_projection, so
+            a stale view of the owner cannot act. The field names are not canon.
+        expected_lineage_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry the blocked/recovery lineage but names no
+            field. Choice: a ref to the blocked episode or recovery lineage record the dispatching surface observed;
+            absent means it observed none. The owner compares it as it compares expected_owner. The name is not
+            canon.
+        expected_blocked_reason:
+          type: object
+          required: false
+          default: none
+          fields:
+            family:
+              type: enum
+              required: true
+              default: none
+              values: [approval-gated, policy-blocked, preflight-blocked, auth-blocked, governance-blocked, stale-data-blocked]
+              provenance: gap
+              gap_note: "the blocked-reason family the surface observed, in W-075's own spelling (WorktreeGitImprovement.md:5306-5307); canon names no field for it"
+            reason_ref:
+              type: ref
+              required: false
+              default: none
+              provenance: gap
+              gap_note: "a ref to the full blocked reason record the surface observed; no field name in canon"
+          provenance: gap
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry blocked reason payloads but names no field
+            or shape. Choice: the blocked reason the dispatching surface observed, as its W-075 blocked-reason family
+            plus an optional ref to the full reason record; absent means the surface observed the worktree not
+            blocked. The owner compares it as it compares expected_owner. The names are not canon.
         target_worktree_id:
           type: id
           required: true
@@ -6284,6 +6366,13 @@ command_payload_definitions:
         owner_result: local:WorktreeRemoveResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, permission_required, blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: dirty_worktree, code: blocked_state_required}
+        - {owner_state: untracked_files, code: blocked_state_required}
+        - {owner_state: protected_branch, code: blocked_state_required}
+        - {owner_state: missing_remote, code: not_configured}
+        - {owner_state: permission_denied, code: permission_required}
+        - {owner_state: operation_in_progress, code: blocked_state_required}
       judgments:
         - key: command_kind
           choice: domain_action
@@ -6295,14 +6384,6 @@ command_payload_definitions:
           gap_note: >-
             Canon requires the field when a command mutates worktree state but does not say whether it is the
             observed or the target state.
-        - key: omitted:safe_action_lineage
-          choice: omitted
-          gap_note: >-
-            Safe worktree action commands "carry enough repo_id, worktree_id, optional safe_point_id, lane/run/package
-            refs, blocked/recovery lineage, and blocked reason payloads" (UI_Command_Catalog.md:720), but canon names
-            no field for the lane/run/package refs, the lineage or the blocked reason. They are left out: the owner
-            reads them from the worktree's owner record by worktree_id and fences on its lease (W-082), and a field is
-            added when canon names one.
         - key: disabled_reason_codes
           choice: [not_configured, permission_required, blocked_state_required, stale_projection]
           gap_note: >-
@@ -6313,7 +6394,8 @@ command_payload_definitions:
             (UI_Command_Catalog.md:705) are blocked_state_required, git_available false is not_configured, and
             stale_projection is the 2.0B clause. Canon conflict: W-078 lets a dirty worktree be removed after a
             confirmation that previews the dirty paths (WorktreeGitImprovement.md:5463), while the row's precondition
-            worktree_clean (:705) and GI's dirty_worktree disabled state (:2117) block it. The definition takes the
+            worktree_clean (UI_Command_Catalog.md:705) and GI's dirty_worktree disabled state
+            (GitHub_Integration.md:2117) block it. The definition takes the
             row and GI side, so a dirty worktree is blocked_state_required; the owner doc has not reconciled them.
       aliases: []
     - command_id: cmd.git.worktree.prune
@@ -6339,13 +6421,75 @@ command_payload_definitions:
           default: none
           values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.prune as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.prune as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5304)"
         safe_point_id:
           type: id
           required: false
           default: none
           provenance: canon
           source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe worktree action commands carry optional safe_point_id (UI_Command_Catalog.md:720)"
+        expected_owner:
+          type: object
+          required: false
+          default: none
+          fields:
+            kind:
+              type: enum
+              required: true
+              default: none
+              values: [run, lane, package]
+              provenance: gap
+              gap_note: "the owner class the surface observed; canon's words are the prose 'lane/run/package refs' (UI_Command_Catalog.md:720), so the field and its value spellings are not canon"
+            owner_ref:
+              type: ref
+              required: true
+              default: none
+              provenance: gap
+              gap_note: "the run, lane or package reference the surface observed; no field name in canon"
+          provenance: gap
+          gap_note: >-
+            Safe worktree action commands "carry enough repo_id, worktree_id, optional safe_point_id, lane/run/package
+            refs, blocked/recovery lineage, and blocked reason payloads to preserve stale-run and crashed-session
+            safety" (UI_Command_Catalog.md:720), but canon names no field for the lane/run/package ref. Choice: the
+            run, lane or package owner the dispatching surface observed, a tagged object shaped like
+            cmd.git.worktree.reuse's new_owner; absent means the surface observed no run, lane or package owner. The
+            owner compares it with its own record before it mutates and refuses a mismatch with stale_projection, so
+            a stale view of the owner cannot act. The field names are not canon. The approved
+            request may carry the same context; the payload carries what the surface saw when it executes it.
+        expected_lineage_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry the blocked/recovery lineage but names no
+            field. Choice: a ref to the blocked episode or recovery lineage record the dispatching surface observed;
+            absent means it observed none. The owner compares it as it compares expected_owner. The name is not
+            canon.
+        expected_blocked_reason:
+          type: object
+          required: false
+          default: none
+          fields:
+            family:
+              type: enum
+              required: true
+              default: none
+              values: [approval-gated, policy-blocked, preflight-blocked, auth-blocked, governance-blocked, stale-data-blocked]
+              provenance: gap
+              gap_note: "the blocked-reason family the surface observed, in W-075's own spelling (WorktreeGitImprovement.md:5306-5307); canon names no field for it"
+            reason_ref:
+              type: ref
+              required: false
+              default: none
+              provenance: gap
+              gap_note: "a ref to the full blocked reason record the surface observed; no field name in canon"
+          provenance: gap
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry blocked reason payloads but names no field
+            or shape. Choice: the blocked reason the dispatching surface observed, as its W-075 blocked-reason family
+            plus an optional ref to the full reason record; absent means the surface observed the worktree not
+            blocked. The owner compares it as it compares expected_owner. The names are not canon.
         approved_request_ref:
           type: ref
           required: true
@@ -6355,7 +6499,7 @@ command_payload_definitions:
             GI-041 makes the approved request the command's subject ("it requires the approved request as its
             subject"; direct prune execution without an approved request is invalid, GitHub_Integration.md:2500-2504)
             but names no field. Choice: a ref to the approved prune request that cmd.git.worktree.request_prune
-            produced.
+            produced: the value of WorktreeRequestPruneResultV1.prune_request_ref once that request is approved.
         target_worktree_id:
           type: id
           required: true
@@ -6404,6 +6548,13 @@ command_payload_definitions:
         owner_result: local:WorktreePruneResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, permission_required, blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: dirty_worktree, code: blocked_state_required}
+        - {owner_state: untracked_files, code: blocked_state_required}
+        - {owner_state: protected_branch, code: blocked_state_required}
+        - {owner_state: missing_remote, code: not_configured}
+        - {owner_state: permission_denied, code: permission_required}
+        - {owner_state: operation_in_progress, code: blocked_state_required}
       judgments:
         - key: command_kind
           choice: domain_action
@@ -6415,12 +6566,6 @@ command_payload_definitions:
           gap_note: >-
             Canon requires the field when a command mutates worktree state but does not say whether it is the
             observed or the target state.
-        - key: omitted:safe_action_lineage
-          choice: omitted
-          gap_note: >-
-            UI_Command_Catalog.md:720 asks safe worktree actions to carry lane/run/package refs, blocked/recovery
-            lineage and blocked reason payloads but names no field for them. They are left out: the approved request
-            and the owner record by worktree_id carry them, and a field is added when canon names one.
         - key: disabled_reason_codes
           choice: [not_configured, permission_required, blocked_state_required, stale_projection]
           gap_note: >-
@@ -6447,6 +6592,12 @@ command_payload_definitions:
           default: none
           provenance: canon
           source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:707) per UCC-230 identity_typing"
+        safe_point_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe worktree action commands carry optional safe_point_id (UI_Command_Catalog.md:720); GI-041 gates the request form on safe-point awareness (GitHub_Integration.md:2498), and the cmd.git.worktree.prune that executes the request carries the same optional field"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -6497,13 +6648,75 @@ command_payload_definitions:
           default: none
           values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.reuse as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.reuse as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5304)"
         safe_point_id:
           type: id
           required: false
           default: none
           provenance: canon
           source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe worktree action commands carry optional safe_point_id (UI_Command_Catalog.md:720)"
+        expected_owner:
+          type: object
+          required: false
+          default: none
+          fields:
+            kind:
+              type: enum
+              required: true
+              default: none
+              values: [run, lane, package]
+              provenance: gap
+              gap_note: "the owner class the surface observed; canon's words are the prose 'lane/run/package refs' (UI_Command_Catalog.md:720), so the field and its value spellings are not canon"
+            owner_ref:
+              type: ref
+              required: true
+              default: none
+              provenance: gap
+              gap_note: "the run, lane or package reference the surface observed; no field name in canon"
+          provenance: gap
+          gap_note: >-
+            Safe worktree action commands "carry enough repo_id, worktree_id, optional safe_point_id, lane/run/package
+            refs, blocked/recovery lineage, and blocked reason payloads to preserve stale-run and crashed-session
+            safety" (UI_Command_Catalog.md:720), but canon names no field for the lane/run/package ref. Choice: the
+            run, lane or package owner the dispatching surface observed, a tagged object shaped like
+            cmd.git.worktree.reuse's new_owner; absent means the surface observed no run, lane or package owner. The
+            owner compares it with its own record before it mutates and refuses a mismatch with stale_projection, so
+            a stale view of the owner cannot act. The field names are not canon. On reuse it is
+            the current owner being replaced; new_owner is the incoming one.
+        expected_lineage_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry the blocked/recovery lineage but names no
+            field. Choice: a ref to the blocked episode or recovery lineage record the dispatching surface observed;
+            absent means it observed none. The owner compares it as it compares expected_owner. The name is not
+            canon.
+        expected_blocked_reason:
+          type: object
+          required: false
+          default: none
+          fields:
+            family:
+              type: enum
+              required: true
+              default: none
+              values: [approval-gated, policy-blocked, preflight-blocked, auth-blocked, governance-blocked, stale-data-blocked]
+              provenance: gap
+              gap_note: "the blocked-reason family the surface observed, in W-075's own spelling (WorktreeGitImprovement.md:5306-5307); canon names no field for it"
+            reason_ref:
+              type: ref
+              required: false
+              default: none
+              provenance: gap
+              gap_note: "a ref to the full blocked reason record the surface observed; no field name in canon"
+          provenance: gap
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry blocked reason payloads but names no field
+            or shape. Choice: the blocked reason the dispatching surface observed, as its W-075 blocked-reason family
+            plus an optional ref to the full reason record; absent means the surface observed the worktree not
+            blocked. The owner compares it as it compares expected_owner. The names are not canon.
         new_owner:
           type: object
           required: true
@@ -6556,13 +6769,6 @@ command_payload_definitions:
           gap_note: >-
             Canon requires the field when a command mutates worktree state but does not say whether it is the
             observed or the target state.
-        - key: omitted:safe_action_lineage
-          choice: omitted
-          gap_note: >-
-            UI_Command_Catalog.md:720 asks safe worktree actions to carry lane/run/package refs, blocked/recovery
-            lineage and blocked reason payloads but names no field for them. new_owner carries the incoming owner;
-            the current owner's lineage is left out because the owner reads it by worktree_id, and a field is added
-            when canon names one.
         - key: disabled_reason_codes
           choice: [not_configured, blocked_state_required, stale_projection]
           gap_note: >-
@@ -6593,7 +6799,76 @@ command_payload_definitions:
           default: none
           values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.recover as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.recover as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5304)"
+        safe_point_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe worktree action commands carry optional safe_point_id (UI_Command_Catalog.md:720); safe-point restore is a named lifecycle trigger (WorktreeGitImprovement.md:299)"
+        expected_owner:
+          type: object
+          required: false
+          default: none
+          fields:
+            kind:
+              type: enum
+              required: true
+              default: none
+              values: [run, lane, package]
+              provenance: gap
+              gap_note: "the owner class the surface observed; canon's words are the prose 'lane/run/package refs' (UI_Command_Catalog.md:720), so the field and its value spellings are not canon"
+            owner_ref:
+              type: ref
+              required: true
+              default: none
+              provenance: gap
+              gap_note: "the run, lane or package reference the surface observed; no field name in canon"
+          provenance: gap
+          gap_note: >-
+            Safe worktree action commands "carry enough repo_id, worktree_id, optional safe_point_id, lane/run/package
+            refs, blocked/recovery lineage, and blocked reason payloads to preserve stale-run and crashed-session
+            safety" (UI_Command_Catalog.md:720), but canon names no field for the lane/run/package ref. Choice: the
+            run, lane or package owner the dispatching surface observed, a tagged object shaped like
+            cmd.git.worktree.reuse's new_owner; absent means the surface observed no run, lane or package owner. The
+            owner compares it with its own record before it mutates and refuses a mismatch with stale_projection, so
+            a stale view of the owner cannot act. The field names are not canon. Recover
+            reads the stored lineage itself (UI_Command_Catalog.md:709), and ownership may resolve to unknown
+            ownership; these fields carry what the surface saw, so the owner can tell a view older than its record.
+        expected_lineage_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry the blocked/recovery lineage but names no
+            field. Choice: a ref to the blocked episode or recovery lineage record the dispatching surface observed;
+            absent means it observed none. The owner compares it as it compares expected_owner. The name is not
+            canon.
+        expected_blocked_reason:
+          type: object
+          required: false
+          default: none
+          fields:
+            family:
+              type: enum
+              required: true
+              default: none
+              values: [approval-gated, policy-blocked, preflight-blocked, auth-blocked, governance-blocked, stale-data-blocked]
+              provenance: gap
+              gap_note: "the blocked-reason family the surface observed, in W-075's own spelling (WorktreeGitImprovement.md:5306-5307); canon names no field for it"
+            reason_ref:
+              type: ref
+              required: false
+              default: none
+              provenance: gap
+              gap_note: "a ref to the full blocked reason record the surface observed; no field name in canon"
+          provenance: gap
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry blocked reason payloads but names no field
+            or shape. Choice: the blocked reason the dispatching surface observed, as its W-075 blocked-reason family
+            plus an optional ref to the full reason record; absent means the surface observed the worktree not
+            blocked. The owner compares it as it compares expected_owner. The names are not canon.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -6612,12 +6887,6 @@ command_payload_definitions:
           gap_note: >-
             Canon requires the field when a command mutates worktree state but does not say whether it is the
             observed or the target state.
-        - key: omitted:safe_action_lineage
-          choice: omitted
-          gap_note: >-
-            UI_Command_Catalog.md:720 asks safe worktree actions to carry lane/run/package refs, blocked/recovery
-            lineage and blocked reason payloads but names no field for them. Recover reads the stored lineage itself
-            (:709), so they are left out, and a field is added when canon names one.
         - key: disabled_reason_codes
           choice: [not_configured, blocked_state_required, stale_projection]
           gap_note: >-
@@ -6701,7 +6970,75 @@ command_payload_definitions:
           default: none
           values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.release as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.release as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5304)"
+        safe_point_id:
+          type: id
+          required: false
+          default: none
+          provenance: canon
+          source: "overlay UCC-054..UCC-055 optional identity safe_point_id; safe worktree action commands carry optional safe_point_id (UI_Command_Catalog.md:720); safe-point-preserved worktrees stay reserved until an explicit release (WorktreeGitImprovement.md:295)"
+        expected_owner:
+          type: object
+          required: false
+          default: none
+          fields:
+            kind:
+              type: enum
+              required: true
+              default: none
+              values: [run, lane, package]
+              provenance: gap
+              gap_note: "the owner class the surface observed; canon's words are the prose 'lane/run/package refs' (UI_Command_Catalog.md:720), so the field and its value spellings are not canon"
+            owner_ref:
+              type: ref
+              required: true
+              default: none
+              provenance: gap
+              gap_note: "the run, lane or package reference the surface observed; no field name in canon"
+          provenance: gap
+          gap_note: >-
+            Safe worktree action commands "carry enough repo_id, worktree_id, optional safe_point_id, lane/run/package
+            refs, blocked/recovery lineage, and blocked reason payloads to preserve stale-run and crashed-session
+            safety" (UI_Command_Catalog.md:720), but canon names no field for the lane/run/package ref. Choice: the
+            run, lane or package owner the dispatching surface observed, a tagged object shaped like
+            cmd.git.worktree.reuse's new_owner; absent means the surface observed no run, lane or package owner. The
+            owner compares it with its own record before it mutates and refuses a mismatch with stale_projection, so
+            a stale view of the owner cannot act. The field names are not canon. The W-082
+            lease fences stay owner-side checks; this field adds what the surface saw.
+        expected_lineage_ref:
+          type: ref
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry the blocked/recovery lineage but names no
+            field. Choice: a ref to the blocked episode or recovery lineage record the dispatching surface observed;
+            absent means it observed none. The owner compares it as it compares expected_owner. The name is not
+            canon.
+        expected_blocked_reason:
+          type: object
+          required: false
+          default: none
+          fields:
+            family:
+              type: enum
+              required: true
+              default: none
+              values: [approval-gated, policy-blocked, preflight-blocked, auth-blocked, governance-blocked, stale-data-blocked]
+              provenance: gap
+              gap_note: "the blocked-reason family the surface observed, in W-075's own spelling (WorktreeGitImprovement.md:5306-5307); canon names no field for it"
+            reason_ref:
+              type: ref
+              required: false
+              default: none
+              provenance: gap
+              gap_note: "a ref to the full blocked reason record the surface observed; no field name in canon"
+          provenance: gap
+          gap_note: >-
+            UI_Command_Catalog.md:720 asks safe worktree actions to carry blocked reason payloads but names no field
+            or shape. Choice: the blocked reason the dispatching surface observed, as its W-075 blocked-reason family
+            plus an optional ref to the full reason record; absent means the surface observed the worktree not
+            blocked. The owner compares it as it compares expected_owner. The names are not canon.
         override_record_ref:
           type: ref
           required: false
@@ -6730,12 +7067,6 @@ command_payload_definitions:
           gap_note: >-
             Canon requires the field when a command mutates worktree state but does not say whether it is the
             observed or the target state.
-        - key: omitted:safe_action_lineage
-          choice: omitted
-          gap_note: >-
-            UI_Command_Catalog.md:720 asks safe worktree actions to carry lane/run/package refs, blocked/recovery
-            lineage and blocked reason payloads but names no field for them. They are left out: the owner checks the
-            W-082 lease fences on its own record by worktree_id, and a field is added when canon names one.
         - key: disabled_reason_codes
           choice: [not_configured, blocked_state_required, stale_projection]
           gap_note: >-
@@ -6759,14 +7090,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:712; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.lock, :12360) per UCC-230 identity_typing"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:712; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.lock, :12466) per UCC-230 identity_typing"
         worktree_lifecycle_state:
           type: enum
           required: true
           default: none
           values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.lock as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.lock as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5304)"
         reason:
           type: string
           required: true
@@ -6810,14 +7141,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_locked (UI_Command_Catalog.md:713; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.unlock, :12361): the locked worktree is the subject, per UCC-230 identity_typing"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_locked (UI_Command_Catalog.md:713; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.unlock, :12467): the locked worktree is the subject, per UCC-230 identity_typing"
         worktree_lifecycle_state:
           type: enum
           required: true
           default: none
           values: [reserved, active, blocked_preserved, released, orphaned]
           provenance: canon
-          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.unlock as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5303)"
+          source: "overlay UCC-054..UCC-055 required identity worktree_lifecycle_state when mutating; UCC-230 lists cmd.git.worktree.unlock as mutating (DL-341). Values: WorktreeGitImprovement.md:299 spelled as W-075 spells them (:5304)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -6835,7 +7166,7 @@ command_payload_definitions:
           gap_note: >-
             The narrowing rule adds blocked_state_required only when the disabled reasons include it, and the
             row's disabled reasons are stale_projection and permission_required (Cozy Shelves row
-            cmd.git.worktree.unlock, UI_Command_Catalog.md:12361). W-077 says unlock of a run-owned lock while the
+            cmd.git.worktree.unlock, UI_Command_Catalog.md:12467). W-077 says unlock of a run-owned lock while the
             owner is live "is refused with a blocked explanation naming the owner" (WorktreeGitImprovement.md:5418-5419);
             that refusal happens at dispatch, so blocked_state_required is added for it to travel in.
       aliases: []
@@ -6858,7 +7189,7 @@ command_payload_definitions:
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.git_worktree_prune)"}
     WorktreeRequestPruneResultV1:
       fields:
-        prune_request_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "the produced prune request, the subject cmd.git.worktree.prune executes (GI-041)"}
+        prune_request_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "the produced prune request, the subject cmd.git.worktree.prune executes once approved, where it is the value of approved_request_ref (GI-041, GitHub_Integration.md:2499-2500)"}
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "dispatch receipt (catalog.git_worktree_request_prune)"}
     WorktreeReuseResultV1:
       fields:
