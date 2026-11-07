@@ -1452,7 +1452,8 @@
      rest on it, the lens carries the mark: data-lg-focus on the lens and on the icon (the rail skin, concept D
      80-bar.src.css, draws it on the lens and stands the icon's own mark down). Otherwise neither carries the flag and
      the icon shows its own mark. Kept in step whenever the rail's lens is synced (a panel opening, closing or changing
-     hides, shows or moves it: F96b-1), on focus moves and keys in the bar (a key turns :focus-visible on for a
+     hides, shows or moves it: F96b-1; where it jumps or hides in one step, in that same sync, before the frame paints:
+     F96d-1), on focus moves and keys in the bar (a key turns :focus-visible on for a
      mouse-focused icon with no focusin), and, while the lens travels to the focused icon or fades in on it, once more
      when that motion ends, so the mark never sits on the item the focus has left (F96b-2). "Painted" is read from the
      computed opacity, not from display: the lens is hidden by opacity. */
@@ -2169,7 +2170,12 @@
     });
   }
   function syncStripNow(cfg, strip, m) {
-    if (cfg.kind === 'lensIcon') queueRailFocus();   /* FO-96: the rail's lens may hide, show or move: re-read the focus flags */
+    /* FO-96: the rail's lens may hide, show or move: re-read the focus flags. A move along a path is read next frame
+       (and timed by syncRailFocus); a jump or a one-step hide is read in this same call, before the frame paints, so the
+       lens never shows the mark on an icon the key focus is not on, nor leaves the focused icon unmarked (F96d-1:
+       Reduced Motion, Ctrl+2 with the focus on the open panel's icon, 1 or 2 frames with no mark). */
+    var rail = cfg.kind === 'lensIcon';
+    if (rail) queueRailFocus();
     if (!m && cvSkipped(strip)) { cvSkip(strip); return; }
     var L = lensFor(strip, cfg), P0 = L.pending;
     followStrip(strip, cfg);
@@ -2185,7 +2191,7 @@
     if (L.pending && !L.pending.el.isConnected) { pressMark(L.pending, false); L.pending = null; }
     if (P0 && P0 !== L.pending) pressMark(P0, false);
     var pre = m && m.target === target ? m : null;
-    if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
+    if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { var shown = L.lens.style.opacity !== '0'; stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (shown) L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); if (rail && shown) railFocusNow(); return; }
     hiddenLenses.delete(L);
     if (L.scroller && L.scroller.isConnected) {
       var out;
@@ -2194,7 +2200,7 @@
         var sr = L.scroller.getBoundingClientRect(), tr = boxRect(cfg.box ? (cfg.box(target).getBoundingClientRect ? cfg.box(target) : target) : target);
         out = tr.left < sr.left - 1 || tr.left + tr.width > sr.right + 1 || tr.top < sr.top - 1 || tr.top + tr.height > sr.bottom + 1;
       }
-      if (out) { stopLensTravel(L); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; return; }
+      if (out) { var was = L.lens.style.opacity !== '0'; stopLensTravel(L); if (was) L.lens.style.opacity = '0'; L.rect = null; if (rail && was) railFocusNow(); return; }
     }
     if (L.lens.style.opacity) L.lens.style.opacity = '';
     prewarmSoon(L, cfg, strip);
@@ -2202,7 +2208,7 @@
     if (!R) R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
     var A = L.rect;
     if (L.dragging) return;
-    if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); return; }
+    if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); if (rail) railFocusNow(); return; }
     var quiet = reduced();
     var still = A && (quiet ? A.x === R.x && A.y === R.y && A.w === R.w && A.h === R.h : Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5);
     if ((quiet && !L.reducedAnim) || !switchOn()) stopLensTravel(L);
@@ -2214,7 +2220,7 @@
     if (still) return;
     if (!A || quiet || !switchOn()) {
       stopLensTravel(L);
-      if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } ownRest(L); }; }
+      if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.path = null; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } ownRest(L); }; }
       setLensBox(L, R); L.tgt = target;
       /* a lens in the app-wide layer waits for its strip's entrance; one in its host's own layer (a page, a menu, a
          dialog) is part of that entrance already */
@@ -2223,6 +2229,9 @@
         else { if (L.layer === layer) arrive(L, target); ride(L, target); }
         settleCheck(L);
       }
+      /* a jump (Reduced Motion, or no switch motion) is read now; a first show in motion fades in by an arrival or ride
+         that a batched sync may attach later in this task, and is read as before, next frame and at its end */
+      if (rail && (A || quiet || !switchOn())) railFocusNow();
       return;
     }
     /* the destination moved by a pixel or two (the chosen label turned bold): a move in flight carries on, re-based;
