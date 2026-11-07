@@ -630,10 +630,13 @@ const TRAVEL_FLOOR_DPX = 1;
 // T65: a part is awake when it made at least PART_STEPS visible steps in the cell, each of at least one device pixel
 // (STEP_DPX) from its last counted pose. The T42 bar was 200 ms at 50 ms a step, four steps of .25 CSS px; at one
 // device pixel a step is four times coarser, and the real hand's idle sway makes a visible step about every 2.5 s
-// (2 to 4 in an idle 10 s on every look, retro-stage-fit probe3 on Nas1). The full real-page run on Nas1 (90 cells,
-// load 12.8 on 5 cores) gave the hand 2 steps at the fewest, the head 8, and every freeze, the review's and T42's,
-// makes 0; so the bar is one visible step a part, beside each part's net travel of TRAVEL_FLOOR_DPX.
-const PART_STEPS = 1;
+// (2 to 4 in an idle 10 s on every look, retro-stage-fit probe3 on Nas1). The real page's two full runs on Nas1 (90
+// cells each, normal and sandbox) gave the hand 2 steps at the fewest (2 cells, at load 12.8 on 5 cores) and 3 in the
+// sandbox run, the head 8 and 14. Every freeze the check runs, the review's and T42's, makes 0; a page built with a
+// freeze can make 1, a single jump when its freeze takes hold after Pip's first paint (the review's mirror page, the
+// frozen hand: 8.5 device px at 1014 ms). So the bar is two visible steps a part, beside each part's net travel of
+// TRAVEL_FLOOR_DPX.
+const PART_STEPS = 2;
 const MOTION_SIZES = [[860, 768], [740, 768], [1280, 500]];
 async function awakeMotion(t, mode) {
 	if (t.args.motion === 'reduce') return t.check('not run: this case is about normal motion', true);
