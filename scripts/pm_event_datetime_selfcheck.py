@@ -67,6 +67,16 @@ class StrSub(str):
     """A str subclass instance: equal to its text, but not exactly a str."""
 
 
+def _str_enum_member(text):
+    """A stdlib StrEnum member equal to text: a string to JSON Schema, but not exactly a str."""
+    import enum
+    return enum.StrEnum("HostTimestamp", {"VALUE": text}).VALUE
+
+
+# Sol max gate finding 1 (REAL): host string-like values JSON Schema treats as strings.
+HOST_STRINGS = {"str_subclass": StrSub, "str_enum": _str_enum_member}
+
+
 def outcome(function, *args, **kwargs):
     """('accept', value) | ('refuse', reason) | ('exception', type name)."""
     _, _, _, m = _mods()
@@ -335,6 +345,26 @@ def _fc_non_string(context):
     dt, _, _, _ = _mods()
     checker = dt.format_checker()
     return all(checker.conforms(v, "date-time") for v in (12, None, ["x"], {"a": 1}))
+
+
+@check("datetime_unit_format_checker_str_subclass_runs_predicate")
+def _fc_str_subclass(context):
+    # Sol max gate finding 1 (REAL): a str subclass or StrEnum member is a string to JSON Schema, so the checker runs
+    # the predicate on it, which refuses it (date_time_type) under every profile; it never passes as a non-string.
+    from jsonschema import FormatError
+    dt, _, _, m = _mods()
+    reasons = []
+    for profile in (E, S):
+        checker = dt.format_checker(profile=profile)
+        for make in HOST_STRINGS.values():
+            for text in ("2026-01-01T00:00:00Z", "not-a-dateZ"):
+                try:
+                    checker.check(make(text), "date-time")
+                except FormatError as error:
+                    reasons.append(error.cause.reason if isinstance(error.cause, m.Refusal) else None)
+                else:
+                    reasons.append(None)
+    return reasons == ["date_time_type"] * 8 and dt.format_checker().conforms("2026-01-01T00:00:00Z", "date-time")
 
 
 @check("datetime_unit_format_checker_storage_profile")
@@ -663,6 +693,41 @@ def _real_envelope(context):
             not validator.is_valid({"event": dict(event, persisted_at_utc="2026-01-01T00:00:00+00:00")}) and
             not validator.is_valid({"event": dict(event, observed_at_utc="2026-01-01T00:00:00z")}) and
             validator.is_valid({"event": dict(event, occurred_at_utc="2026-01-01t00:00:00+05:30")}))
+
+
+def _eventrecord_host_string(field, kind):
+    """Sol max gate finding 1 (REAL): datetime_validator over the complete committed EventRecord schema refuses a host
+    string-like value (HOST_STRINGS[kind]) at field, the malformed text and base_event's own valid text alike: every
+    error is a format error at that field whose cause is date_time_type. The unchanged base_event stays valid, and the
+    JSON round trip of the malformed value, a plain str, is still refused by its syntax."""
+    def run(context):
+        dt, _, _, m = _mods()
+        schema = json.loads((context.root / "Plans/event_record.schema.json").read_text())
+        event = json.loads((context.root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())["base_event"]
+        validator = dt.datetime_validator(schema)
+
+        def errors(instance):
+            return sorted({(e.validator, tuple(e.absolute_path),
+                            e.cause.reason if isinstance(e.cause, m.Refusal) else None)
+                           for e in validator.iter_errors(instance)})
+        if errors(event) != []:
+            return False
+        make = HOST_STRINGS[kind]
+        for text in ("not-a-dateZ", event[field]):
+            value = make(text)
+            if type(value) is str or not isinstance(value, str) or value != text:
+                return False
+            if errors(dict(event, **{field: value})) != [("format", (field,), "date_time_type")]:
+                return False
+        plain = json.loads(json.dumps(dict(event, **{field: make("not-a-dateZ")})))
+        return type(plain[field]) is str and errors(plain) == [("format", (field,), "date_time_syntax")]
+    return run
+
+
+for _field in ("occurred_at_utc", "observed_at_utc", "persisted_at_utc"):
+    for _kind in HOST_STRINGS:
+        check("datetime_validator_real_eventrecord_%s_%s_refused" % (_field, _kind), slow=True)(
+            _eventrecord_host_string(_field, _kind))
 
 
 @check("datetime_validator_real_inventory_unclassified_refused", slow=True)

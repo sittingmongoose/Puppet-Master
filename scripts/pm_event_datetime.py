@@ -103,7 +103,9 @@ def format_checker(*, profile=EVENT_RECORD):
     @checker.checks("date-time", raises=Refusal)
     def check(value):
         # JSON Schema format applies only to strings; type remains independent.
-        return True if type(value) is not str else date_time(value, profile=profile) == value
+        # Every value the validator treats as a string reaches the predicate,
+        # which refuses a str subclass or StrEnum member (date_time_type).
+        return True if not isinstance(value, str) else date_time(value, profile=profile) == value
 
     return checker
 

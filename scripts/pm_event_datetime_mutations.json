@@ -1710,18 +1710,27 @@
   {
    "id": "hw-format-non-string",
    "module": "pm_event_datetime",
-   "find": "return True if type(value) is not str else",
-   "replace": "return False if type(value) is not str else",
+   "find": "return True if not isinstance(value, str) else",
+   "replace": "return False if not isinstance(value, str) else",
    "witness": "check:datetime_unit_format_checker_non_string_passes",
    "rule": "format.type-independent"
   },
   {
    "id": "hw-format-profile-ignored",
    "module": "pm_event_datetime",
-   "find": "        return True if type(value) is not str else date_time(value, profile=profile) == value",
-   "replace": "        return True if type(value) is not str else date_time(value) == value",
+   "find": "        return True if not isinstance(value, str) else date_time(value, profile=profile) == value",
+   "replace": "        return True if not isinstance(value, str) else date_time(value) == value",
    "witness": "check:datetime_unit_format_checker_storage_profile",
    "rule": "format.registered-predicate"
+  },
+  {
+   "id": "hw-solgate-format-exact-str-selection",
+   "module": "pm_event_datetime",
+   "find": "return True if not isinstance(value, str) else",
+   "replace": "return True if type(value) is not str else",
+   "witness": "check:datetime_validator_real_eventrecord_occurred_at_utc_str_subclass_refused",
+   "rule": "format.type-independent",
+   "note": "Sol max gate finding 1 (REAL, REVIEW-gate-solmax-numrule.md): the checker selected values by exact type, so a str subclass or stdlib StrEnum member, a string to JSON Schema, skipped the predicate and the committed EventRecord schema accepted not-a-dateZ at each timestamp field. This edit restores that selection; the six datetime_validator_real_eventrecord_<field>_<kind>_refused checks and datetime_unit_format_checker_str_subclass_runs_predicate each catch it."
   },
   {
    "id": "hw-validator-no-checker",
@@ -2599,9 +2608,10 @@
   {
    "id": "format.type-independent",
    "owner": "CV-1101",
-   "rule": "format applies only to strings; a non-string passes the format check (type stays independent).",
+   "rule": "format applies to every value JSON Schema treats as a string and to nothing else: a non-string passes the format check (type stays independent), and a string, a str subclass or StrEnum member included, runs the predicate, which refuses a non-exact str (date_time_type).",
    "mutations": [
-    "hw-format-non-string"
+    "hw-format-non-string",
+    "hw-solgate-format-exact-str-selection"
    ]
   },
   {
