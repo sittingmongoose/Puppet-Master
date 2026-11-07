@@ -647,9 +647,14 @@ export default async function (t) {
           const cover = document.querySelector('[data-shelf-cover]'), covered = document.querySelector('[data-shelf-covered]');
           document.querySelectorAll('[data-shelf-fold-region]').forEach(e => e.removeAttribute('data-shelf-fold-region'));
           const regionOf = e => { if (!cover) return null; for (let a = e; a && a !== p; a = a.parentElement) if (a.contains(cover) && !(covered && a.contains(covered))) return a; return null; };
-          return [...p.querySelectorAll('[aria-expanded="true"]')].filter(e => e.checkVisibility() && !/^(tab|treeitem|row|option|gridcell|listitem)$/.test(e.getAttribute('role') || '') && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
-            .map(e => ({ e, region: regionOf(e) })).filter(x => x.region)
-            .map(({ e, region }, i) => { e.setAttribute('data-shelf-fold', String(i)); region.setAttribute('data-shelf-fold-region', String(i));
+          let pairs = [...p.querySelectorAll('[aria-expanded="true"]')].filter(e => e.checkVisibility() && !/^(tab|treeitem|row|option|gridcell|listitem)$/.test(e.getAttribute('role') || '') && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
+            .map(e => ({ e, region: regionOf(e) })).filter(x => x.region);
+          // T98: folds are temporary, so a control covered by what no region holds (the tab strip over Source Control's
+          // list at 1280x500) gets the room a region the census folded earlier in this panel gave: that region folds again
+          if (!pairs.length && cover) pairs = [...p.querySelectorAll('[data-shelf-folded]')]
+            .map(r => ({ e: p.querySelector(`[data-shelf-fold-of="${r.getAttribute('data-shelf-folded')}"]`), region: r }))
+            .filter(x => x.e && x.region.contains(x.e) && x.e.getAttribute('aria-expanded') === 'true' && x.e.checkVisibility() && !scs.some(sc => sc.contains(x.e)) && !(covered && x.region.contains(covered)));
+          return pairs.map(({ e, region }, i) => { e.setAttribute('data-shelf-fold', String(i)); region.setAttribute('data-shelf-fold-region', String(i));
               return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60), region: (region.tagName + '.' + String(region.className?.baseVal ?? region.className).trim().split(/\s+/).slice(0, 2).join('.')).slice(0, 60) }; });
         });
         // T98 (TOOLBATCH4 recheck b, finding 11): what the fold may not hide is every control the census presses there
