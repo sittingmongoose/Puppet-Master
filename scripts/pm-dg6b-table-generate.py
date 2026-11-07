@@ -392,7 +392,7 @@ phase('persona_creation', 'Create and duplicate source rules.', [
     ('CR05_duplicate_status', '/result_status', 'a duplicate reports duplicated', 'creation_source',
      f"{DUP} and value['result_status'] != 'duplicated'"),
     ('CR06_create_source_all_or_none', '/source_id', 'a plain create names all three source fields or none', 'creation_source',
-     f"{NOT_DUP} and [value['source_id'] is None, value['source_revision'] is None, value['source_sha256'] is None].count(True) not in (0, 3)"),
+     f"{NOT_DUP} and not (value['source_id'] is None) == (value['source_revision'] is None) == (value['source_sha256'] is None)"),
     ('CR07_create_status', '/result_status', 'a plain create reports created', 'creation_source',
      f"{NOT_DUP} and value['result_status'] != 'created'"),
 ])

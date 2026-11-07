@@ -125,11 +125,12 @@ def refusal_sites():
 
 
 def digest_of(value, side):
-    """Canonical identity of one side of an exact typed join (same_value).
+    """Canonical identity of one side of an exact typed join.
 
-    SHA-256 of the canonical binding bytes. A value with no canonical bytes has
-    no identity: each side gets its own marker, so the join refuses exactly as
-    same_value() did. This computes an observation; the row decides.
+    SHA-256 of the canonical binding bytes, so bool/int and int/float are never
+    interchangeable. A value with no canonical bytes has no identity: each side
+    gets its own marker, so the join refuses it, as the former same_value()
+    equality did. This computes an observation; the row decides.
     """
     from pm_event_index_binding import binding_bytes
     try:
@@ -155,15 +156,6 @@ def project_partition(project_id):
 # accepts built-in integers only. Use that same domain at every typed boundary.
 Draft202012Validator = validators.extend(JsonSchemaValidator, type_checker=
     JsonSchemaValidator.TYPE_CHECKER.redefine('integer', lambda checker, value: type(value) is int))
-
-
-def same_value(left, right):
-    """Exact typed equality; bool/int and int/float are never interchangeable."""
-    from pm_event_index_binding import binding_bytes
-    try:
-        return binding_bytes(left) == binding_bytes(right)
-    except (TypeError, ValueError, UnicodeError):
-        return False
 
 
 def closed(properties, optional=()):

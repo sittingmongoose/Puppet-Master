@@ -34,7 +34,7 @@ def CR05_duplicate_status(value, context):
 
 
 def CR06_create_source_all_or_none(value, context):
-    return 'creation_source' if value['command_id'] != 'cmd.persona.duplicate' and [value['source_id'] is None, value['source_revision'] is None, value['source_sha256'] is None].count(True) not in (0, 3) else None
+    return 'creation_source' if value['command_id'] != 'cmd.persona.duplicate' and not (value['source_id'] is None) == (value['source_revision'] is None) == (value['source_sha256'] is None) else None
 
 
 def CR07_create_status(value, context):
