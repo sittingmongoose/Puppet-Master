@@ -609,7 +609,8 @@ From the printed rows, with no exemption:
 When the batch cannot tell:
 7. An earlier member's report is not on record (a hand landing).
 8. A report's gone ids, totals or counts don't add up.
-9. A rise with no row report.
+9. A rise with no row report, or a row report the batch asked for that cannot be read (this landing's or the previous
+   member's).
 
 From the diff, with no exemption:
 10. A path in this member's own range is not in the batch's diff: it put back what an earlier member changed, so the check,
