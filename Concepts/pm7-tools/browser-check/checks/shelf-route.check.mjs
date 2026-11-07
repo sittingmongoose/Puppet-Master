@@ -657,18 +657,20 @@ export default async function (t) {
           return pairs.map(({ e, region }, i) => { e.setAttribute('data-shelf-fold', String(i)); region.setAttribute('data-shelf-fold-region', String(i));
               return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60), region: (region.tagName + '.' + String(region.className?.baseVal ?? region.className).trim().split(/\s+/).slice(0, 2).join('.')).slice(0, 60) }; });
         });
-        // T98 (TOOLBATCH4 recheck b, finding 11): what the fold may not hide is every control the census presses there
-        // (popup triggers, rows with a context route, accordion heads and disclosures), each marked by element before the
-        // fold and looked up by its mark after it, not by label (two triggers labelled 'More' were one); the fold control
-        // itself is left out. A control of a kind the census already asked in this state is not lost (the census samples a
-        // row kind), and is reported apart
+        // T98 (TOOLBATCH4 recheck b, finding 11): every control the census presses in the region (popup triggers, rows
+        // with a context route, accordion heads and disclosures) is marked by element before the fold, with the fold's own
+        // tag, and looked up by its mark after it, not by label (two triggers labelled 'More' were one); the fold control
+        // itself is left out. What the fold hid must show again when the region is unfolded (unfold, above)
         const censusIn = (i, tag, mark) => panel.evaluate((p, [i, tag, mark]) => {
           const r = p.querySelector(`[data-shelf-fold-region="${i}"]`); if (!r) return [];
           const fold = r.querySelector(`[data-shelf-fold="${i}"]`), out = [];
           const kinds = [['popup trigger', '[aria-haspopup]:not([aria-haspopup="false"])'], ['accordion head', '[data-acc] > [data-collapse]'], ['disclosure', 'button[aria-expanded]:not([role="tab"]):not([aria-haspopup])']];
           const name = e => (e.getAttribute('aria-controls') || e.getAttribute('aria-label') || e.getAttribute('data-path') || e.textContent || e.className).toString().trim().replace(/\s+/g, ' ').slice(0, 40);
-          for (const [kind, sel] of kinds) for (const e of r.querySelectorAll(sel)) { if (e === fold) continue; out.push({ e, kind }); }
-          for (const e of __shelf.rows(r)) out.push({ e, kind: 'row', sig: __shelf.sig(e) });
+          /* (one entry per element, its kinds joined: Technical details is an accordion head and a row, and one mark
+             attribute holds one entry) */
+          const at = new Map(), add = (e, kind, sig) => { const x = at.get(e); if (x) { x.kind += ', ' + kind; if (sig) x.sig = sig; } else { const y = { e, kind, sig }; at.set(e, y); out.push(y); } };
+          for (const [kind, sel] of kinds) for (const e of r.querySelectorAll(sel)) { if (e === fold) continue; add(e, kind); }
+          for (const e of __shelf.rows(r)) add(e, 'row', __shelf.sig(e));
           if (mark) return out.filter(x => x.e.checkVisibility()).map((x, j) => { x.e.setAttribute('data-shelf-fold-ctl', `${tag}:${j}`); return { j, kind: x.kind, sig: x.sig || null, what: name(x.e) }; });
           return [...document.querySelectorAll(`[data-shelf-fold-ctl^="${tag}:"]`)].map(e => ({ j: +e.getAttribute('data-shelf-fold-ctl').split(':')[1], shown: e.isConnected && e.checkVisibility() }));
         }, [i, tag, mark]);
