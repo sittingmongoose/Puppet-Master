@@ -505,8 +505,8 @@ file, with each staleness row's `names`: the paths of `git diff --name-only --no
 and deleted ones included, and `grown_stale`: what the check calls a rise in that row's bucket. A row can be `stale` by its
 detail text alone, and a rise in its bucket still stops a landing. A subcheck is `complete` when every row it counted is
 there: it printed them all, or is keyed from an export whose total matches. One that prints a sample lists none. It changes
-nothing else about a run, with one exception in the command line: `--ro`, which abbreviated `--root`, is now ambiguous. No
-caller uses it.
+nothing else about a run. `--ro`, which abbreviated `--root` before this option existed, is named as a hidden alias so that it
+still does.
 
 ## Which paths count as the branch's
 

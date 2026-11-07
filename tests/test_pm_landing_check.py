@@ -2655,6 +2655,24 @@ class WhatEachRunAlsoReports(LandingRun):
         code, out, _doc = self.row_report()
         self.assertEqual((code, out), without)
 
+    def test_ro_still_means_root_as_it_did_before_row_report_existed(self):
+        """Gate 3 SG3-7S: the abbreviation was accepted, so an added option must not make it ambiguous."""
+        self.stub(gates={"lint_path_refs": [self.row("#1")]})
+        self.record()
+        self.touch("Plans/A.md")
+        by_root = self.compare()
+        for argv in (("--ro", str(self.repo)), (f"--ro={self.repo}",)):
+            self.assertEqual(self.compare(*argv), by_root, argv)
+
+    def test_ro_is_accepted_on_the_command_line_and_hidden_from_help(self):
+        script = ROOT / "scripts" / "pm-landing-check.py"
+        run = subprocess.run([sys.executable, "-B", str(script), "--ro", str(self.repo), "--help"], capture_output=True, text=True)
+        self.assertEqual(run.returncode, 0, run.stderr)
+        self.assertNotIn("ambiguous", run.stderr)
+        self.assertNotIn("--ro ", run.stdout.replace("--root", ""))
+        self.assertIn("--root ROOT", run.stdout)
+        self.assertIn("--row-report FILE", run.stdout)
+
     def test_the_row_report_must_be_outside_the_repository(self):
         self.stub(gates={"lint_path_refs": [self.row("#1")]})
         self.record()
