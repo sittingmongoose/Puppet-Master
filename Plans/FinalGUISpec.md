@@ -50430,14 +50430,16 @@ command_payload_definitions:
   #   column is history under DL-333 resolution 10, kept as the command-row authority for names.
   # - FinalGUISpec.md:1788-1789 is the owner-doc canon for the canonical GUI shell shapes and the
   #   search-domain taxonomy (find/replace, regex/case/whole-word toggles, include/exclude scope).
-  # - No wiring row of these commands names a request_schema_ref (Wiring_Matrix.production.json);
-  #   owner_request is none throughout.
-  # - No catalog row or registration table states command_kind or disabled_reason_codes for these
-  #   eight; kinds follow the row behavior and disabled subsets are judgment from the closed set.
+  #   Where it disagrees with the catalog rows, the definition cites both (canon conflict C2 in the
+  #   fix-round report).
+  # - No wiring row of these commands names a request_schema_ref or result_schema_ref
+  #   (Wiring_Matrix.production.json entries catalog.search_*); owner_request is none throughout.
+  # - No catalog row or registration table states command_kind or disabled reasons for these eight
+  #   (the Search panel completion rows, UI_Command_Catalog.md:12371-12376, cover other ids).
   definitions:
     - command_id: cmd.search.show
       ucc_units: [UCC-087]
-      command_kind: shell_view                         # judgment: row "Reveal or focus the Search side panel" (UI_Command_Catalog.md:1167); no catalog kind cell states one
+      command_kind: shell_view
       response_kind: local_projection
       args:
         project_id:
@@ -50464,11 +50466,21 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
-      disabled_reason_codes: [degraded]                # judgment: shell reveal degraded with the panel subsystem; no row states disabled reasons
+      disabled_reason_codes: [degraded]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: shell_view
+          gap_note: >-
+            No catalog kind cell states one for this row; the row "Reveal or focus the Search side panel"
+            (UI_Command_Catalog.md:1167) changes only what the shell shows.
+        - key: disabled_reason_codes
+          choice: [degraded]
+          gap_note: >-
+            No row states disabled reasons; degraded stands for the Search panel subsystem being degraded.
     - command_id: cmd.search.find_in_files
       ucc_units: [UCC-087, UCC-088, UCC-099]
-      command_kind: domain_action                      # judgment: runs or reruns the owner search; no catalog kind cell states one
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         project_id:
@@ -50481,8 +50493,12 @@ command_payload_definitions:
           type: string
           required: false
           default: none
-          provenance: canon
-          source: "UI_Command_Catalog.md:1168 marks query? optional for rerun; FinalGUISpec.md:1788 canonical shape { project_id, query, include_globs?, ... } marks it required. Optional chosen so one shape admits first run and rerun; the Search owner validates a non-empty query when no session query exists."
+          provenance: gap
+          gap_note: >-
+            Canon conflict C2: UI_Command_Catalog.md:1168 has query? (optional; the row runs "or reruns"
+            find-in-files), while FinalGUISpec.md:1788's canonical shape { project_id, query, include_globs?,
+            ... } makes it required. The definition takes the catalog row (optional, so one shape admits a
+            rerun) and leaves the reconciliation to the Search owner; no canon bounds its length.
         include_globs:
           type: list
           required: false
@@ -50534,21 +50550,32 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            UI_Command_Catalog.md:1168 carries scope?, and the standalone cmd.search.set_scope (registered in
-            the Search panel completion rows, UI_Command_Catalog.md:12175) keeps "the scope argument on
-            find_in_files unchanged", but no canon types the scope arg or its values; set_scope's own values
-            are undefined too. JUDGMENT: opaque string placeholder; alternatives: an enum of scope kinds or an
-            object of include/exclude filters, once the Search owner types it.
+            UI_Command_Catalog.md:1168 carries scope?, and the Cozy Shelves reconciliation keeps it
+            ("scope argument retained", UI_Command_Catalog.md:12206; "find_in_files scope arg unchanged",
+            :12210) beside the standalone cmd.search.set_scope (:12373), but no canon types the scope arg or
+            its values, and set_scope's row gives none either. JUDGMENT: opaque string placeholder;
+            alternatives: an enum of scope kinds or an object of include/exclude filters, once the Search
+            owner types it.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:SearchQuerySessionResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [degraded]                # judgment: search index unavailable or degraded
+      disabled_reason_codes: [degraded]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog kind cell states one; the row runs or reruns the owner search
+            (UI_Command_Catalog.md:1168) and produces a query session the owner keeps.
+        - key: disabled_reason_codes
+          choice: [degraded]
+          gap_note: >-
+            No row states disabled reasons; degraded stands for an unavailable or degraded search index.
     - command_id: cmd.search.replace_in_files
       ucc_units: [UCC-087, UCC-088]
-      command_kind: domain_action                      # judgment: runs the owner replace preview or apply flow; no catalog kind cell states one
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         project_id:
@@ -50562,15 +50589,16 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1169 marks query? optional; the panel reruns against the preserved query session"
+          source: "UI_Command_Catalog.md:1169 marks query? optional; FinalGUISpec.md:1788 names cmd.search.replace_in_files as the canonical replace-in-files action without a shape"
         replacement:
           type: string
           required: false
           default: none
           provenance: gap
           gap_note: >-
-            The row and the UCC-084..UCC-088 row-group identity name replacement? but no canon types it or
-            bounds its length. JUDGMENT: string, the literal replacement text.
+            The row (UI_Command_Catalog.md:1169) and the UCC-084..UCC-088 row-group optional identity
+            (UCC-230 row_groups; overlay cell UI_Command_Catalog.md:8857) name replacement? but no canon types
+            it or bounds its length. JUDGMENT: string, the literal replacement text.
         mode:
           type: enum
           required: false
@@ -50588,18 +50616,29 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             Same gap as cmd.search.find_in_files.scope: the row carries scope? (UI_Command_Catalog.md:1169)
-            and no canon types its values; cmd.search.set_scope's values are undefined too.
+            and no canon types its values; cmd.search.set_scope's row (:12373) gives none either.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:SearchReplaceApplyResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [stale_projection]        # judgment: UCC-088 requires Search-owner validation of the current result snapshot before replacement
+      disabled_reason_codes: [stale_projection]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog kind cell states one; the row runs the owner replace preview or apply flow
+            (UI_Command_Catalog.md:1169).
+        - key: disabled_reason_codes
+          choice: [stale_projection]
+          gap_note: >-
+            No row states disabled reasons; UCC-088 requires the Search owner to validate the current result
+            snapshot and mutation path before replacement, so a stale snapshot disables it.
     - command_id: cmd.search.open_result
       ucc_units: [UCC-087, UCC-088]
-      command_kind: navigation_wrapper                 # judgment: opens a result through route_target and the canonical file-open path (UI_Command_Catalog.md:1170); no catalog kind cell states one
-      response_kind: local_projection
+      command_kind: navigation_wrapper
+      response_kind: owner_operation
       args:
         project_id:
           type: id
@@ -50619,45 +50658,91 @@ command_payload_definitions:
           default: none
           provenance: canon
           source: "UI_Command_Catalog.md:1170; UCC-087 preserved_exact_token subject_id; type id per the UCC-230 identity_typing convention for _id fields"
-        disposition:
+        where:
           type: string
           required: false
+          default: auto
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23628-23629): where is auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. The open-routes table lists this route (UI_Command_Catalog.md:18054: \"its disposition? resolves to CV-360's placement fields\") and its wiring row catalog.search_open_result resolves it \"into the result's tab kind with CV-360's placement fields\"."
+        mode:
+          type: enum
+          values: [preview, keep]
+          required: false
           default: none
-          provenance: gap
-          gap_note: >-
-            The row carries disposition? and the rules preserve "open-disposition / reuse policy through
-            disposition? and route/open owner resolution" (UI_Command_Catalog.md:1180), but no canon types
-            the values; they are owned by route/open owner resolution under
-            Plans/Orchestrator_Page.md#search-routing-and-action-policy. JUDGMENT: opaque string placeholder;
-            alternative: an enum once the route/open owner publishes closed values.
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep, preview only for kinds with a preview tab; no default stated. Route listed at UI_Command_Catalog.md:18054."
+        by:
+          type: string
+          required: false
+          default: user
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user; an agent always opens in the background. Route listed at UI_Command_Catalog.md:18054."
+        background:
+          type: boolean
+          required: false
+          default: false
+          provenance: canon
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18054."
         route_target:
           type: contract
           ref: Primitive:RouteTarget
           required: false
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1170 \"Open a Search result through route_target\" and the rule \"Search command routing resolves through route_target\" (UI_Command_Catalog.md:1179); restates the UCC-230 common optional route_target without changing its canonical contract type. The row's arg list does not mark it required, so the handler may derive the route from the session subject."
+          source: "UI_Command_Catalog.md:1170 \"Open a Search result through route_target\" and the rule \"Search command routing resolves through route_target\" (UI_Command_Catalog.md:1179); restates the UCC-230 common optional route_target, still optional, without changing its canonical contract type"
         result_ref:
           type: ref
           required: false
           default: none
           provenance: gap
           gap_note: >-
-            FinalGUISpec.md:1788 says cmd.search.open_result carries result_ref that opens the file/location
-            through the canonical open-file contract, while the catalog row (UI_Command_Catalog.md:1170)
-            identifies the result by query_session_id + subject_id. The relation between the two identities
-            is stated nowhere. JUDGMENT: optional ref carried alongside; alternative: drop it once the Search
-            owner types result identity.
+            Canon conflict C2: FinalGUISpec.md:1788 says cmd.search.open_result carries result_ref that opens
+            the file/location through the canonical open-file contract, while the catalog row
+            (UI_Command_Catalog.md:1170) identifies the result by query_session_id + subject_id. The relation
+            between the two identities is stated nowhere. JUDGMENT: optional ref carried alongside;
+            alternative: drop it once the Search owner types result identity.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
-        owner_result: none
+        owner_result: local:SearchResultOpenResultV1
       error_codes: [invalid_args, invalid_route, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [stale_projection]        # judgment: the preserved query session's result snapshot no longer current
+      disabled_reason_codes: [stale_projection]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: navigation_wrapper
+          gap_note: >-
+            No catalog kind cell states one; the row opens a result through route_target and the canonical
+            file-open path (UI_Command_Catalog.md:1170), and the open-routes table lists it
+            (UI_Command_Catalog.md:18054).
+        - key: response_kind
+          choice: owner_operation
+          gap_note: >-
+            The wiring row catalog.search_open_result names no result_schema_ref, but CV-360
+            (Contracts_V0.md:23631) says what every open returns; the definition carries that return as the
+            owner result (local:SearchResultOpenResultV1) rather than a local projection with no result.
+        - key: owner_result
+          choice: local:SearchResultOpenResultV1
+          gap_note: >-
+            No typed contract holds CV-360's open return; the local result restates its five fields, and the
+            fields whose presence on a refused open CV-360 does not state are gap.
+        - key: disabled_reason_codes
+          choice: [stale_projection]
+          gap_note: >-
+            No row states disabled reasons; stale_projection stands for the preserved query session's result
+            snapshot no longer being current.
+        - key: omitted:disposition
+          choice: replaced by CV-360's where, mode, by and background
+          gap_note: >-
+            Canon conflict C1: the row's Parameters column (history under DL-333 resolution 10,
+            UI_Command_Catalog.md:1170) and the Search rules (:1180, "open-disposition / reuse policy through
+            disposition?") keep disposition?, and the open-routes table says it "resolves to CV-360's placement
+            fields" (:18054), while CV-360's acceptance (Contracts_V0.md:23646) says no route carries another
+            placement field. The definition follows CV-360 and carries the four placement fields instead; the
+            owner should retire disposition? in the rules or say what it adds.
     - command_id: cmd.search.replace_selected
       ucc_units: [UCC-087, UCC-088]
-      command_kind: domain_action                      # judgment: applies one replacement through the owner; no catalog kind cell states one
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         project_id:
@@ -50683,11 +50768,22 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:SearchReplaceApplyResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [stale_projection]        # judgment: UCC-088 snapshot validation gates the mutation
+      disabled_reason_codes: [stale_projection]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog kind cell states one; the row applies one replacement through the owner
+            (UI_Command_Catalog.md:1171).
+        - key: disabled_reason_codes
+          choice: [stale_projection]
+          gap_note: >-
+            No row states disabled reasons; UCC-088's snapshot validation gates the mutation, so a stale
+            result snapshot disables it.
     - command_id: cmd.search.replace_all
       ucc_units: [UCC-087, UCC-088]
-      command_kind: domain_action                      # judgment: applies the replacement across the session; no catalog kind cell states one
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         project_id:
@@ -50695,13 +50791,13 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1172 row args { project_id, query_session_id, replacement }; UCC-088 \"project_id scopes dispatch in the canonical table row\""
+          source: "UI_Command_Catalog.md:1172 row args { project_id, query_session_id, replacement }; UCC-088 \"project_id scopes dispatch in the canonical table row\" (UI_Command_Catalog.md:1181)"
         query_session_id:
           type: id
           required: true
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1172; UCC-088 preserved_exact_token cmd.search.replace_all { query_session_id, replacement } is the required query-session payload core"
+          source: "UI_Command_Catalog.md:1172; the rule \"cmd.search.replace_all { query_session_id, replacement } is the required query-session payload core\" (UI_Command_Catalog.md:1181)"
         replacement:
           type: string
           required: true
@@ -50710,16 +50806,39 @@ command_payload_definitions:
           gap_note: >-
             The row and the UCC-088 payload core require replacement but no canon types it or bounds its
             length. JUDGMENT: string, the literal replacement text.
+        confirmation_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: gap
+          gap_note: >-
+            Commands_System.md:4519-4522 gives cmd.search.replace_all an owner-assigned destructive
+            confirmation class and dispatches it "only through the shared confirm surface", and the Cozy
+            Shelves reconciliation calls it destructive (UI_Command_Catalog.md:12212), but no canon names the
+            arg that carries the confirmation. JUDGMENT: the UCC-230 common optional confirmation_ref (type
+            ref), narrowed to required; alternative: the confirm surface holds the confirmation and the
+            command carries none.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:SearchReplaceApplyResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [stale_projection]        # judgment: the row applies "after the Search owner validates the current result snapshot and mutation path" (UI_Command_Catalog.md:1172)
+      disabled_reason_codes: [stale_projection]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog kind cell states one; the row applies the replacement across the preserved query
+            session (UI_Command_Catalog.md:1172).
+        - key: disabled_reason_codes
+          choice: [stale_projection]
+          gap_note: >-
+            No row states disabled reasons; the row applies only "after the Search owner validates the current
+            result snapshot and mutation path" (UI_Command_Catalog.md:1172), so a stale snapshot disables it.
     - command_id: cmd.search.rebuild_index
       ucc_units: [UCC-087]
-      command_kind: domain_action                      # judgment: triggers the Search-owned index rebuild; no catalog kind cell states one
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         project_id:
@@ -50734,19 +50853,31 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The UCC-084..UCC-088 row-group optional identity names index_scope? (UCC-230 row_groups), but no
-            catalog row or FinalGUISpec prose types its values. JUDGMENT: opaque string placeholder;
-            alternatives: an enum of index kinds once the Search owner fixes them, or omitting the arg.
+            The UCC-084..UCC-088 row-group optional identity names index_scope? (UCC-230 row_groups; overlay
+            cell UI_Command_Catalog.md:8857), but no catalog row or FinalGUISpec prose types its values, and
+            the row's own args are { project_id } only. JUDGMENT: opaque string placeholder; alternatives: an
+            enum of index kinds once the Search owner fixes them, or omitting the arg.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:SearchIndexRebuildResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [degraded]                # judgment: index subsystem unavailable or degraded
+      disabled_reason_codes: [degraded]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog kind cell states one; the row triggers the Search-owned index rebuild
+            (UI_Command_Catalog.md:1173).
+        - key: disabled_reason_codes
+          choice: [degraded]
+          gap_note: >-
+            No row states disabled reasons; degraded stands for the index subsystem being unavailable or
+            degraded.
     - command_id: cmd.search.evict_remote_cache
       ucc_units: [UCC-087]
-      command_kind: domain_action                      # judgment: opens confirmed remote cache eviction; no catalog kind cell states one
+      command_kind: domain_action
       response_kind: owner_operation
       args:
         project_id:
@@ -50760,14 +50891,32 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "UI_Command_Catalog.md:1174; UCC-087 preserved_exact_token remote_cache_id?; type id per the UCC-230 identity_typing convention. The row does not state what absence selects; the eviction stays subject to the FinalGUISpec indexing settings copy it must not bypass"
+          source: "UI_Command_Catalog.md:1174 remote_cache_id?; UCC-087 preserved_exact_token remote_cache_id?; type id per the UCC-230 identity_typing convention"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:SearchCacheEvictionResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [unreachable, degraded]   # judgment: remote cache unreachable, or the eviction path degraded
+      disabled_reason_codes: [unreachable, degraded]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            No catalog kind cell states one; the row opens confirmed remote cache eviction
+            (UI_Command_Catalog.md:1174).
+        - key: disabled_reason_codes
+          choice: [unreachable, degraded]
+          gap_note: >-
+            No row states disabled reasons; unreachable stands for the remote cache being unreachable and
+            degraded for the eviction path being degraded.
+        - key: field:remote_cache_id
+          choice: absent selects no particular cache
+          gap_note: >-
+            The row (UI_Command_Catalog.md:1174) does not say what absence of remote_cache_id selects (every
+            cache, the current one, or a picker); the eviction stays subject to the FinalGUISpec indexing
+            settings copy it must not bypass. The definition sets default none and leaves the meaning to the
+            Search owner.
   results:
     SearchQuerySessionResultV1:
       fields:
@@ -50777,6 +50926,13 @@ command_payload_definitions:
       fields:
         applied_count: {type: integer, required: false, default: none, provenance: gap, gap_note: "no canon types the replace outcome; count chosen for preview and apply alike"}
         receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "dispatch or owner receipt when the replacement records one; presence unstated"}
+    SearchResultOpenResultV1:
+      fields:
+        ok: {type: boolean, required: true, default: none, provenance: canon, source: "CV-360 (Contracts_V0.md:23631): an open returns { ok, panel_tab_id, panel_id, created, reason }; acceptance (:23652): a refused open returns ok false"}
+        panel_tab_id: {type: id, required: false, default: none, provenance: gap, gap_note: "CV-360 (Contracts_V0.md:23631) names panel_tab_id as the panel tab id; it does not say whether a refused open carries it, so it is optional here"}
+        panel_id: {type: id, required: false, default: none, provenance: gap, gap_note: "CV-360 (Contracts_V0.md:23631) names panel_id; it does not say whether a refused open carries it, so it is optional here"}
+        created: {type: boolean, required: false, default: none, provenance: gap, gap_note: "CV-360 (Contracts_V0.md:23632): created is false when an open tab was revealed and true when a tab was added; its presence on a refused open is unstated, so it is optional here"}
+        reason: {type: string, required: true, nullable: true, default: none, provenance: canon, source: "CV-360 (Contracts_V0.md:23632-23633): reason is null on success, else unknown_kind, not_ready or the route's own refusal (an open set of values, so string)"}
     SearchIndexRebuildResultV1:
       fields:
         rebuild_run_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "no canon names a rebuild run record"}
@@ -50842,14 +50998,15 @@ command_payload_definitions:
   overlay: Plans/UI_Command_Catalog.md#UCC-230
   # Shared conventions for this block:
   # - UCC-103 registers these ids in its fenced unit only; no catalog command table or registration
-  #   table states command_kind, args or disabled_reason_codes for them. Kinds follow the UCC-103
-  #   canonical_text (domain controls), and disabled subsets are judgment from the closed set.
+  #   table states command_kind, args or disabled_reason_codes for them. UCC-103 calls them "Domain
+  #   commands" (UI_Command_Catalog.md UCC-103 canonical_text).
   # - Provider-typed destination profile fields are typed by CV-298
-  #   (Plans/Contracts_V0.md#CV-298), referenced as a contract; this block does not restate them.
+  #   (Plans/Contracts_V0.md#CV-298, Contracts_V0.md:19259-19265); this block does not restate them.
   # - notification_destination_id and sound_asset_id are the UCC-101..UCC-105 row-group optional
   #   identity fields, made required where the command's subject is one destination or asset.
-  # - No wiring row of these commands names a request_schema_ref (Wiring_Matrix.production.json);
-  #   owner_request is none throughout.
+  # - No wiring row of these commands names a request_schema_ref or result_schema_ref
+  #   (Wiring_Matrix.production.json entries catalog.notifications_* and catalog.sound_*); owner_request
+  #   is none throughout.
   definitions:
     - command_id: cmd.notifications.destination.create
       ucc_units: [UCC-103]
@@ -50864,9 +51021,9 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             UCC-103 and CV-298 name the six providers (Slack, Discord, generic webhook, ntfy, Pushover,
-            Telegram) and delivery receipts record a "provider kind", but no canon fixes snake_case enum
-            tokens. JUDGMENT: lowercase snake_case of the canon names, generic_webhook for "generic webhook";
-            the enum stays open to re-tokening by the Notifications owner.
+            Telegram) and delivery receipts record a "provider kind", but no canon fixes enum tokens.
+            JUDGMENT: lowercase snake_case of the canon names, generic_webhook for "generic webhook"; the enum
+            stays open to re-tokening by the Notifications owner.
         display_name:
           type: string
           required: true
@@ -50874,23 +51031,42 @@ command_payload_definitions:
           constraints: {min_length: 1, max_length: 256}
           provenance: gap
           gap_note: >-
-            No canon PlanUnit types a destination label. The name and its required place come from the ledger
-            readiness matrix destination_matrix (source lineage, notifications_sounds_readiness_matrix.json);
-            JUDGMENT: required string with the generic text bound.
+            No canon PlanUnit names a destination label. The name comes from the ledger readiness matrix that
+            UCC-103 lists as source lineage
+            (Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json,
+            destination_matrix), which lists display_name as a required field for "Slack webhook" only.
+            JUDGMENT: required for all six providers, with the generic text bound; alternative: required for
+            Slack only and optional elsewhere.
         profile:
           type: contract
           ref: Plans/Contracts_V0.md#CV-298
           required: true
           default: none
-          provenance: canon
-          source: "UCC-103 \"Destination create/update payloads carry provider-specific profile fields from CV-298 ... while storing only credential refs for secrets\"; typed by the CV-298 provider-typed destination profiles (credential_ref, channel_ref, mrkdwn_mode, mention_policy, rate_limit_profile; webhook_credential_ref, thread_id, allowed_mentions; url_credential_ref, method, static_header_refs, body_template_ref, timeout, success_predicate; server_ref, topic_ref, priority, tags, click_action_policy; app_token_ref, user_key_ref, device, sound, retry/expire policy; bot_token_ref, chat_id_ref, message_thread_id, parse_mode, disable_notification)"
+          provenance: gap
+          gap_note: >-
+            UCC-103 says "Destination create/update payloads carry provider-specific profile fields from
+            CV-298 ... while storing only credential refs for secrets", and CV-298 lists each provider's
+            profile fields (Contracts_V0.md:19259-19265). No canon names the arg that carries them or says
+            whether they nest under one arg. JUDGMENT: one arg named profile, typed by CV-298 and matching the
+            selected provider; alternative: the provider's fields flattened into args.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:NotificationDestinationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, permission_required]   # judgment: delivery subsystem not configured; settings write permission
+      disabled_reason_codes: [not_configured, permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists destination create among its "Domain commands" but no catalog row states a
+            command_kind; it writes a destination record.
+        - key: disabled_reason_codes
+          choice: [not_configured, permission_required]
+          gap_note: >-
+            No canon states disabled reasons; not_configured stands for the delivery subsystem not being
+            configured and permission_required for the settings write permission.
     - command_id: cmd.notifications.destination.update
       ucc_units: [UCC-103]
       command_kind: domain_action
@@ -50909,9 +51085,10 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            UCC-103 routes create and update through the same CV-298 profile fields, but partial versus full
-            replacement semantics are stated nowhere. JUDGMENT: optional contract payload; absent leaves the
-            stored profile unchanged.
+            UCC-103 routes create and update through the same CV-298 profile fields, but names no arg for them
+            (see cmd.notifications.destination.create.profile), and partial versus full replacement semantics
+            are stated nowhere. JUDGMENT: optional contract payload; absent leaves the stored profile
+            unchanged.
         display_name:
           type: string
           required: false
@@ -50924,8 +51101,18 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:NotificationDestinationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, permission_required]   # judgment: as create
+      disabled_reason_codes: [not_configured, permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists destination update among its "Domain commands" but no catalog row states a
+            command_kind; it writes a destination record.
+        - key: disabled_reason_codes
+          choice: [not_configured, permission_required]
+          gap_note: >-
+            No canon states disabled reasons; the same choice as destination create.
     - command_id: cmd.notifications.destination.delete
       ucc_units: [UCC-103]
       command_kind: domain_action
@@ -50942,8 +51129,18 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:NotificationDestinationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [permission_required]   # judgment: destructive settings write
+      disabled_reason_codes: [permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists destination delete among its "Domain commands" but no catalog row states a
+            command_kind; it removes a destination record.
+        - key: disabled_reason_codes
+          choice: [permission_required]
+          gap_note: >-
+            No canon states disabled reasons; permission_required stands for the destructive settings write.
     - command_id: cmd.notifications.destination.toggle
       ucc_units: [UCC-103]
       command_kind: domain_action
@@ -50969,8 +51166,19 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:NotificationDestinationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: destination store not configured
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists destination toggle among its "Domain commands" but no catalog row states a
+            command_kind; it writes the destination's enabled state.
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: >-
+            No canon states disabled reasons; not_configured stands for the destination store not being
+            configured.
     - command_id: cmd.notifications.destination.test
       ucc_units: [UCC-103]
       command_kind: domain_action
@@ -50987,8 +51195,21 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:NotificationTestSendResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured, unauthorized, permission_required]   # judgment: enabled destination authority (unauthorized), delivery not configured, explicit-action permission; test never mutates alert state (UCC-103)
+      disabled_reason_codes: [not_configured, unauthorized, permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists destination test among its "Domain commands" but no catalog row states a
+            command_kind; it sends one external delivery and records a receipt.
+        - key: disabled_reason_codes
+          choice: [not_configured, unauthorized, permission_required]
+          gap_note: >-
+            No canon states disabled reasons. UCC-103 requires "explicit user action, enabled destination
+            authority, rate limiting, masking, and receipt recording"; unauthorized stands for missing
+            destination authority, not_configured for delivery not being configured, and permission_required
+            for the explicit-action permission. Test-send never mutates alert state (UCC-103).
     - command_id: cmd.notifications.mapping.update
       ucc_units: [UCC-103]
       command_kind: domain_action
@@ -51006,8 +51227,16 @@ command_payload_definitions:
                 required: true
                 default: none
                 values: [run_blocked, approval_required, human_input_requested, run_failed, run_completed, goal_blocked, provider_attention, system_error, security_attention, quiet_digest, test_send]
-                provenance: canon
-                source: "CV-298 acceptance criterion fixes the canonical event families and categories; F3-405 preserved_exact_token event_category and \"canonical event categories\""
+                provenance: gap
+                gap_note: >-
+                  The eleven values are CV-298's notification event categories (acceptance,
+                  Contracts_V0.md:19278), and F3-405 keys the routing matrix on event_category (preserved
+                  token). But F3-405 says "The routing matrix's categories include the chat cues (F3-564) and
+                  the onboarding and Guided Tour cues (F3-599)", and its DL-228 amendment adds the
+                  notifications' own cue category (F3-460) (FinalGUISpec.md:28478-28485; F3-564 acceptance
+                  :40535; F3-599 acceptance :43309). Canon gives those cue categories no tokens, and CV-298's
+                  list covers notification delivery events only, so this closed enum cannot yet map the cue
+                  categories. The owner must spell the cue category tokens before the enum is complete.
               notification_destination_ids:
                 type: list
                 required: false
@@ -51035,8 +51264,19 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:NotificationMappingUpdateResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: delivery subsystem not configured
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists notification mapping update among its "Domain commands" but no catalog row states a
+            command_kind; it writes the routing matrix.
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: >-
+            No canon states disabled reasons; not_configured stands for the delivery subsystem not being
+            configured.
     - command_id: cmd.notifications.override.set
       ucc_units: [UCC-103]
       command_kind: domain_action
@@ -51047,7 +51287,7 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "F3-405 acceptance criterion \"global/project overrides\"; restates the UCC-230 envelope common optional project_id (type id): absent applies the global override, present the project override"
+          source: "F3-405 acceptance criterion \"global/project overrides\" (FinalGUISpec.md:28497); restates the UCC-230 envelope common optional project_id (type id), still optional"
         override_kind:
           type: enum
           required: true
@@ -51056,8 +51296,8 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             UCC-103 registers only "runtime override set"; F3-405 names the subject as quiet/focus behavior
-            but no payload. JUDGMENT: enum quiet|focus from the F3-405 words; alternative: one boolean mute
-            override.
+            (FinalGUISpec.md:28456) but no payload. JUDGMENT: enum quiet|focus from the F3-405 words;
+            alternative: one boolean mute override.
         enabled:
           type: boolean
           required: true
@@ -51069,8 +51309,25 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:NotificationOverrideSetResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: delivery subsystem not configured
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists runtime override set among its "Domain commands" but no catalog row states a
+            command_kind; it writes an override.
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: >-
+            No canon states disabled reasons; not_configured stands for the delivery subsystem not being
+            configured.
+        - key: field:project_id
+          choice: absent applies the global override, present the project override
+          gap_note: >-
+            F3-405's acceptance (FinalGUISpec.md:28497) says users configure "global/project overrides" but
+            no canon says how one command selects between the two; reading project_id's presence is the
+            definition's choice.
     - command_id: cmd.sound.preview
       ucc_units: [UCC-103]
       command_kind: domain_action
@@ -51084,15 +51341,31 @@ command_payload_definitions:
           gap_note: >-
             The UCC-101..UCC-105 row-group identity names sound_asset_id?, and F3-405 says "Preview starts
             the selected available audio only after an explicit user gesture", but whether preview takes the
-            asset id or plays the current library selection is unstated. JUDGMENT: optional id; absent plays
-            the currently selected entry.
+            asset id or plays the current library selection is unstated. F3-599 (FinalGUISpec.md:43323-43330,
+            DL-153) also says each sound-library entry's Play dispatches cmd.sound.preview, and those entries
+            are takes of each onboarding and Tour cue per kit and look, so an asset id may not identify a take;
+            no canon names a take identity. F3-405 says "The same control stops playback"
+            (FinalGUISpec.md:28469), and canon does not say whether a second cmd.sound.preview stops playback
+            or another command does. JUDGMENT: optional id; absent plays the currently selected entry.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:SoundPlaybackResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [degraded]   # judgment: missing audio support, unavailable or undecodable asset (F3-405 hides or labels the controls); preview is local only and never delivers
+      disabled_reason_codes: [degraded]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists sound preview among its "Domain commands" but no catalog row states a command_kind;
+            it starts local playback through the Notifications & Sounds player and never delivers externally
+            (UCC-103).
+        - key: disabled_reason_codes
+          choice: [degraded]
+          gap_note: >-
+            No canon states disabled reasons; degraded stands for missing audio support or an unavailable or
+            undecodable asset, for which F3-405 hides or labels the controls.
     - command_id: cmd.sound.upload
       ucc_units: [UCC-103]
       command_kind: domain_action
@@ -51119,8 +51392,18 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:SoundAssetMutationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [permission_required]   # judgment: sound library write
+      disabled_reason_codes: [permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists sound upload among its "Domain commands" but no catalog row states a command_kind;
+            it writes the sound library.
+        - key: disabled_reason_codes
+          choice: [permission_required]
+          gap_note: >-
+            No canon states disabled reasons; permission_required stands for the sound library write.
     - command_id: cmd.sound.pack.import
       ucc_units: [UCC-103]
       command_kind: domain_action
@@ -51148,8 +51431,20 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:SoundPackImportResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [blocked_state_required, permission_required]   # judgment: compatibility/licensing acknowledgement missing (blocked until given); library write permission
+      disabled_reason_codes: [blocked_state_required, permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists pack import among its "Domain commands" but no catalog row states a command_kind;
+            it adds assets to the sound library.
+        - key: disabled_reason_codes
+          choice: [blocked_state_required, permission_required]
+          gap_note: >-
+            No canon states disabled reasons; blocked_state_required stands for the compatibility and
+            licensing checks F3-405 requires before a pack is admitted, and permission_required for the
+            library write.
     - command_id: cmd.sound.asset.delete
       ucc_units: [UCC-103]
       command_kind: domain_action
@@ -51166,8 +51461,18 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:SoundAssetMutationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [permission_required]   # judgment: destructive library write
+      disabled_reason_codes: [permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists asset delete among its "Domain commands" but no catalog row states a command_kind;
+            it removes or hides a library asset.
+        - key: disabled_reason_codes
+          choice: [permission_required]
+          gap_note: >-
+            No canon states disabled reasons; permission_required stands for the destructive library write.
     - command_id: cmd.sound.asset.restore
       ucc_units: [UCC-103]
       command_kind: domain_action
@@ -51184,8 +51489,18 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:SoundAssetMutationResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [permission_required]   # judgment: library write
+      disabled_reason_codes: [permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists asset restore among its "Domain commands" but no catalog row states a command_kind;
+            it restores a hidden or disabled asset.
+        - key: disabled_reason_codes
+          choice: [permission_required]
+          gap_note: >-
+            No canon states disabled reasons; permission_required stands for the library write.
     - command_id: cmd.sound.asset.export
       ucc_units: [UCC-103]
       command_kind: domain_action
@@ -51210,8 +51525,19 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:SoundAssetExportResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [permission_required]   # judgment: library read with a file write
+      disabled_reason_codes: [permission_required]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists asset export among its "Domain commands" but no catalog row states a command_kind;
+            it writes an export file.
+        - key: disabled_reason_codes
+          choice: [permission_required]
+          gap_note: >-
+            No canon states disabled reasons; permission_required stands for the library read with a file
+            write.
     - command_id: cmd.sound.mapping.set
       ucc_units: [UCC-103]
       command_kind: domain_action
@@ -51229,8 +51555,14 @@ command_payload_definitions:
                 required: true
                 default: none
                 values: [run_blocked, approval_required, human_input_requested, run_failed, run_completed, goal_blocked, provider_attention, system_error, security_attention, quiet_digest, test_send]
-                provenance: canon
-                source: "CV-298 acceptance criterion fixes the canonical event families and categories; F3-405 preserved_exact_tokens event_category and default sound mappings"
+                provenance: gap
+                gap_note: >-
+                  Same gap as cmd.notifications.mapping.update entries[].event_category: the eleven values are
+                  CV-298's notification event categories (Contracts_V0.md:19278), but F3-405 puts the chat
+                  cues (F3-564), the onboarding and Guided Tour cues (F3-599) and the notifications' own cues
+                  (F3-460, DL-228) in the same Notifications & Sounds mapping (FinalGUISpec.md:28478-28485,
+                  :40535, :43309) without tokens, so this enum cannot yet map a sound to those cue
+                  categories. The owner must spell the cue category tokens before the enum is complete.
               sound_asset_id:
                 type: id
                 required: true
@@ -51248,16 +51580,27 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:SoundMappingSetResultV1
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [not_configured]   # judgment: sound library not configured
+      disabled_reason_codes: [not_configured]
       aliases: []
+      judgments:
+        - key: command_kind
+          choice: domain_action
+          gap_note: >-
+            UCC-103 lists mapping set among its "Domain commands" but no catalog row states a command_kind;
+            it writes the sound mapping.
+        - key: disabled_reason_codes
+          choice: [not_configured]
+          gap_note: >-
+            No canon states disabled reasons; not_configured stands for the sound library not being
+            configured.
   results:
     NotificationDestinationResultV1:
       fields:
         notification_destination_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the destination the mutation applied to; name canon (row-group identity), result shape typed nowhere"}
-        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "dispatch or owner receipt; test-send receipts are the CV-298 NotificationDeliveryAttemptReceipt, mutation receipts unstated"}
+        receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "dispatch or owner receipt; test-send receipts are the CV-298 NotificationDeliveryAttemptReceipt (Contracts_V0.md:19331), mutation receipts unstated"}
     NotificationTestSendResultV1:
       fields:
-        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "the CV-298 delivery receipt: provider kind, destination id, event id, event category, status class, HTTP status, digests, idempotency key"}
+        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "the CV-298 delivery receipt (Contracts_V0.md:19265-19268 lists what it records); no typed contract holds it"}
         status_class: {type: string, required: true, default: none, provenance: gap, gap_note: "receipt status class; CV-298 names the field, no enum values are fixed"}
     NotificationMappingUpdateResultV1:
       fields:
@@ -51308,7 +51651,7 @@ depends_on: [UCC-230, UCC-102, DL-127, F3-403, CV-333, DL-333]
 unblocks: []
 acceptance_criteria:
   - Every command UCC-230 routes to F3-718 has exactly one definition in the block below.
-  - Every command_kind equals the catalog's Teacher guided GUI command rows (UI_Command_Catalog.md:21303-21311).
+  - Every command_kind equals the catalog's Teacher guided GUI command rows (UI_Command_Catalog.md:21501-21509).
   - Every field has a vocabulary type, required, default and provenance; every gap field says what was missing.
   - error_codes and disabled_reason_codes stay inside the overlay's closed sets.
   - guide.do_it runs only explicitly safe actions through their stable commands, with confirmation and permission gates; a mutation always needs confirmation (UCC-102).
@@ -51341,18 +51684,18 @@ command_payload_definitions:
   overlay: Plans/UI_Command_Catalog.md#UCC-230
   # Shared conventions for this block:
   # - command_kind for every command equals the Teacher guided GUI command rows table
-  #   (UI_Command_Catalog.md:21303-21311), the only catalog table that states kinds here.
+  #   (UI_Command_Catalog.md:21501-21509), the only catalog table that states kinds here.
   # - teach_session_id is the UCC-101..UCC-105 row-group optional identity, made required on
   #   guide.* steps by their teacher_guidance_active precondition.
-  # - Degraded-state disabled codes are judgment from the UCC-102/F3-403 degraded list (target
-  #   surface unavailable, route/control no longer exists, context stale, permission blocked,
-  #   capability unavailable, model fallback/clamp).
-  # - No wiring row of these commands names a request_schema_ref (Wiring_Matrix.production.json);
-  #   owner_request is none throughout.
+  # - UCC-102 and F3-403 list the degraded states the disabled codes stand for (target surface
+  #   unavailable, route/control no longer exists, context stale, permission blocked, capability
+  #   unavailable, model fallback/clamp); the table states no disabled reasons.
+  # - No wiring row of these commands names a request_schema_ref or result_schema_ref
+  #   (Wiring_Matrix.production.json entries catalog.teacher_*); owner_request is none throughout.
   definitions:
     - command_id: cmd.teacher.open_from_help
       ucc_units: [UCC-102]
-      command_kind: domain_action                 # canon: UI_Command_Catalog.md:21303
+      command_kind: domain_action                 # canon: UI_Command_Catalog.md:21501
       response_kind: owner_operation
       args:
         route_target:
@@ -51360,8 +51703,16 @@ command_payload_definitions:
           ref: Primitive:RouteTarget
           required: true
           default: none
-          provenance: canon
-          source: "Row \"Opens a new Teacher thread from a help icon with the current surface and control context\" (UI_Command_Catalog.md:21303); UCC-102 \"Do not use stale or private panel-local route fields when the route/open contract provides canonical targets\" and \"Do not launch Teacher without preserving current surface/control context\"; restates the UCC-230 common optional route_target narrowed to required, canonical contract type kept"
+          provenance: gap
+          gap_note: >-
+            The row "Opens a new Teacher thread from a help icon with the current surface and control
+            context" (UI_Command_Catalog.md:21501) and UCC-102's negative constraints "Do not launch Teacher
+            without preserving current surface context needed for useful help." (:7772) and "Do not lose the
+            originating surface/control context during launch." (:7778) require the context, and "Do not use
+            stale or private panel-local route fields when the route/open contract provides canonical
+            targets." (:7776) points at the route/open contract, but no canon names the arg that carries the
+            surface. JUDGMENT: the UCC-230 common optional route_target, canonical contract type kept, narrowed
+            to required as the carrier of the current surface; the control part travels in control_ref.
         control_ref:
           type: ref
           required: false
@@ -51376,11 +51727,18 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:TeacherThreadLaunchResultV1
       error_codes: [invalid_args, invalid_route, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [degraded, partial_capability, permission_required]   # judgment: model fallback/clamp, capability unavailable, permission blocked (UCC-102 degraded states)
+      disabled_reason_codes: [degraded, partial_capability, permission_required]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [degraded, partial_capability, permission_required]
+          gap_note: >-
+            The row states only the precondition help_icon_visible (UI_Command_Catalog.md:21501) and no
+            disabled reasons; degraded stands for model fallback or clamp, partial_capability for an
+            unavailable capability and permission_required for a permission block (UCC-102 degraded states).
     - command_id: cmd.teacher.continue_in_teacher
       ucc_units: [UCC-102]
-      command_kind: domain_action                 # canon: UI_Command_Catalog.md:21304
+      command_kind: domain_action                 # canon: UI_Command_Catalog.md:21502
       response_kind: owner_operation
       args:
         thread_id:
@@ -51388,7 +51746,7 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "Row \"Hands an intent-classified natural-language request off into a new or selected Teacher thread\" (UI_Command_Catalog.md:21304); UCC-230 envelope common optional thread_id (type id); absent means a new Teacher thread"
+          source: "Row \"Hands an intent-classified natural-language request off into a new or selected Teacher thread\" (UI_Command_Catalog.md:21502); UCC-230 envelope common optional thread_id (type id), still optional"
         intent_request_ref:
           type: ref
           required: true
@@ -51404,17 +51762,29 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "Row \"with the current surface context\" (UI_Command_Catalog.md:21304) and CS-053 current-surface context; restates the UCC-230 common optional route_target without changing its canonical contract type"
+          source: "Row \"with the current surface context\" (UI_Command_Catalog.md:21502) and CS-053 current-surface context; restates the UCC-230 common optional route_target, still optional, without changing its canonical contract type"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:TeacherThreadLaunchResultV1
       error_codes: [invalid_args, invalid_route, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [degraded, partial_capability]   # judgment: model fallback/clamp, capability unavailable (UCC-102 degraded states)
+      disabled_reason_codes: [degraded, partial_capability]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [degraded, partial_capability]
+          gap_note: >-
+            The row states only the precondition teach_intent_classified (UI_Command_Catalog.md:21502) and no
+            disabled reasons; degraded stands for model fallback or clamp and partial_capability for an
+            unavailable capability (UCC-102 degraded states).
+        - key: field:thread_id
+          choice: absent hands off into a new Teacher thread, present into the selected one
+          gap_note: >-
+            The row says "a new or selected Teacher thread" (UI_Command_Catalog.md:21502) but not how the
+            command chooses; reading thread_id's presence is the definition's choice.
     - command_id: cmd.teacher.guide.open_route
       ucc_units: [UCC-102]
-      command_kind: navigation_wrapper            # canon: UI_Command_Catalog.md:21305
+      command_kind: navigation_wrapper            # canon: UI_Command_Catalog.md:21503
       response_kind: local_projection
       args:
         teach_session_id:
@@ -51422,24 +51792,31 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21305): a guided step runs inside an active guidance session; type id per identity_typing"
+          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21503): a guided step runs inside an active guidance session; type id per identity_typing"
         route_target:
           type: contract
           ref: Primitive:RouteTarget
           required: true
           default: none
           provenance: canon
-          source: "Row \"Guided step: opens a canonical route target to show the user where something is\" with precondition route_target_resolvable (UI_Command_Catalog.md:21305); restates the UCC-230 common optional route_target narrowed to required, canonical contract type kept"
+          source: "Row \"Guided step: opens a canonical route target to show the user where something is\" with precondition route_target_resolvable (UI_Command_Catalog.md:21503); restates the UCC-230 common optional route_target narrowed to required, canonical contract type kept"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_args, invalid_route, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [stale_projection]   # judgment: route/control no longer exists, context stale (UCC-102 degraded states)
+      disabled_reason_codes: [stale_projection]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [stale_projection]
+          gap_note: >-
+            The row states preconditions (teacher_guidance_active && route_target_resolvable,
+            UI_Command_Catalog.md:21503) but no disabled reasons; stale_projection stands for a route or
+            control that no longer exists or a stale context (UCC-102 degraded states).
     - command_id: cmd.teacher.guide.focus
       ucc_units: [UCC-102]
-      command_kind: shell_view                    # canon: UI_Command_Catalog.md:21306
+      command_kind: shell_view                    # canon: UI_Command_Catalog.md:21504
       response_kind: local_projection
       args:
         teach_session_id:
@@ -51447,26 +51824,33 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21306); type id per identity_typing"
+          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21504); type id per identity_typing"
         target:
           type: id
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            The row "focuses a tab or panel" (UI_Command_Catalog.md:21306) names no target field.
-            JUDGMENT: id of the canonical tab or panel; alternative: route_target through the route/open
-            contract.
+            The row "focuses a tab or panel" with precondition target_present (UI_Command_Catalog.md:21504)
+            names no target field. JUDGMENT: id of the canonical tab or panel; alternative: route_target
+            through the route/open contract.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [stale_projection]   # judgment: target surface unavailable / control no longer exists (UCC-102, F3-403)
+      disabled_reason_codes: [stale_projection]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [stale_projection]
+          gap_note: >-
+            The row states preconditions (UI_Command_Catalog.md:21504) but no disabled reasons;
+            stale_projection stands for an unavailable target surface or a control that no longer exists
+            (UCC-102, F3-403).
     - command_id: cmd.teacher.guide.highlight
       ucc_units: [UCC-102]
-      command_kind: shell_view                    # canon: UI_Command_Catalog.md:21307
+      command_kind: shell_view                    # canon: UI_Command_Catalog.md:21505
       response_kind: local_projection
       args:
         teach_session_id:
@@ -51474,14 +51858,14 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21307); type id per identity_typing"
+          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21505); type id per identity_typing"
         target:
           type: id
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            The row "spotlights or outlines a control or region" (UI_Command_Catalog.md:21307) names no
+            The row "spotlights or outlines a control or region" (UI_Command_Catalog.md:21505) names no
             target field. JUDGMENT: id of the control or region; alternative: route_target for region-level
             targets.
         caption:
@@ -51491,19 +51875,27 @@ command_payload_definitions:
           constraints: {max_length: 256}
           provenance: gap
           gap_note: >-
-            F3-403 fixes the anchored caption presentation and UCC-102 preserves "anchored caption", but no
-            arg names the caption text. JUDGMENT: optional string; the caption must not cover the target
-            (F3-403). Alternative: caption text owned by the guidance step record, not the command.
+            The row and F3-403 fix the anchored caption that does not cover the target
+            (UI_Command_Catalog.md:21505), and UCC-102 preserves "anchored caption", but no arg names the
+            caption text or bounds it. JUDGMENT: optional string with the generic text bound; alternative:
+            caption text owned by the guidance step record, not the command.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [stale_projection]   # judgment: stale or missing UI target (UCC-102: do not keep stepping through it)
+      disabled_reason_codes: [stale_projection]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [stale_projection]
+          gap_note: >-
+            The row states preconditions (UI_Command_Catalog.md:21505) but no disabled reasons;
+            stale_projection stands for a stale or missing UI target, which UCC-102 says guidance must not
+            keep stepping through.
     - command_id: cmd.teacher.guide.scroll_to
       ucc_units: [UCC-102]
-      command_kind: shell_view                    # canon: UI_Command_Catalog.md:21308
+      command_kind: shell_view                    # canon: UI_Command_Catalog.md:21506
       response_kind: local_projection
       args:
         teach_session_id:
@@ -51511,25 +51903,31 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21308); type id per identity_typing"
+          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21506); type id per identity_typing"
         target:
           type: id
           required: true
           default: none
           provenance: gap
           gap_note: >-
-            The row "scrolls to a section or field" (UI_Command_Catalog.md:21308) names no target field.
+            The row "scrolls to a section or field" (UI_Command_Catalog.md:21506) names no target field.
             JUDGMENT: id of the section or field target; alternative: an anchor ref resolved by the surface.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [stale_projection]   # judgment: stale or missing UI target (UCC-102)
+      disabled_reason_codes: [stale_projection]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [stale_projection]
+          gap_note: >-
+            The row states preconditions (UI_Command_Catalog.md:21506) but no disabled reasons;
+            stale_projection stands for a stale or missing UI target (UCC-102).
     - command_id: cmd.teacher.guide.inspect
       ucc_units: [UCC-102]
-      command_kind: shell_view                    # canon: UI_Command_Catalog.md:21309
+      command_kind: shell_view                    # canon: UI_Command_Catalog.md:21507
       response_kind: local_projection
       args:
         teach_session_id:
@@ -51537,7 +51935,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21309); type id per identity_typing"
+          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21507); type id per identity_typing"
         target:
           type: id
           required: true
@@ -51545,18 +51943,24 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row "expands non-mutating details or previews a selection, read-only"
-            (UI_Command_Catalog.md:21309) names no target field. JUDGMENT: id of the detail target;
+            (UI_Command_Catalog.md:21507) names no target field. JUDGMENT: id of the detail target;
             alternative: the UCC-230 common optional selection_ref for the preview-selection case.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: none
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [stale_projection]   # judgment: selection lost / stale target (UCC-102 degraded states)
+      disabled_reason_codes: [stale_projection]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [stale_projection]
+          gap_note: >-
+            The row states preconditions (UI_Command_Catalog.md:21507) but no disabled reasons;
+            stale_projection stands for a lost selection or a stale target (UCC-102 degraded states).
     - command_id: cmd.teacher.explain_current_ui
       ucc_units: [UCC-102]
-      command_kind: domain_action                 # canon: UI_Command_Catalog.md:21310
+      command_kind: domain_action                 # canon: UI_Command_Catalog.md:21508
       response_kind: owner_operation
       args:
         thread_id:
@@ -51564,17 +51968,37 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "Row \"Asks Teacher to explain the current surface in the Teacher thread\" with precondition teacher_thread_available (UI_Command_Catalog.md:21310); UCC-230 envelope common optional thread_id (type id) made required by the row subject"
+          source: "Row \"Asks Teacher to explain the current surface in the Teacher thread\" with precondition teacher_thread_available (UI_Command_Catalog.md:21508); UCC-230 envelope common optional thread_id (type id) made required by the row subject"
+        route_target:
+          type: contract
+          ref: Primitive:RouteTarget
+          required: false
+          default: none
+          provenance: gap
+          gap_note: >-
+            The row asks Teacher to explain "the current surface" (UI_Command_Catalog.md:21508) and UCC-102
+            says "Do not launch Teacher without preserving current surface context needed for useful help."
+            (:7772), but no canon names the arg that identifies that surface or says whether it comes from
+            the Teacher thread's launch context instead. JUDGMENT: the UCC-230 common optional route_target,
+            canonical contract type kept and still optional; absent, canon does not say which surface is
+            explained.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:TeacherExplanationResultV1
-      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [degraded, partial_capability]   # judgment: model fallback/clamp, capability unavailable, help entry missing (UCC-102 degraded states)
+      error_codes: [invalid_args, invalid_route, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [degraded, partial_capability]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [degraded, partial_capability]
+          gap_note: >-
+            The row states only the precondition teacher_thread_available (UI_Command_Catalog.md:21508) and no
+            disabled reasons; degraded stands for model fallback or clamp and partial_capability for an
+            unavailable capability or a missing help entry (UCC-102 degraded states).
     - command_id: cmd.teacher.guide.do_it
       ucc_units: [UCC-102]
-      command_kind: domain_action                 # canon: UI_Command_Catalog.md:21311
+      command_kind: domain_action                 # canon: UI_Command_Catalog.md:21509
       response_kind: owner_operation
       args:
         teach_session_id:
@@ -51582,7 +52006,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21311); type id per identity_typing"
+          source: "UCC-230 row-group UCC-101..UCC-105 optional identity teach_session_id?, made mandatory by the row precondition teacher_guidance_active (UI_Command_Catalog.md:21509); type id per identity_typing"
         target_command_id:
           type: id
           required: true
@@ -51590,7 +52014,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row "Runs an explicitly safe action for the user through its stable command after
-            confirmation and permission gates" (UI_Command_Catalog.md:21311) names no field for that command
+            confirmation and permission gates" (UI_Command_Catalog.md:21509) names no field for that command
             and types no pass-through of its args. JUDGMENT: id of the target command; its args travel as
             that command's own payload after the safety gate, not as a typed field here.
         confirmation_ref:
@@ -51598,14 +52022,22 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "Row precondition confirmation_given, \"a mutation always needs confirmation\" (UI_Command_Catalog.md:21311); restates the UCC-230 envelope common optional confirmation_ref (type ref) narrowed to required"
+          source: "Row precondition confirmation_given, \"a mutation always needs confirmation\" (UI_Command_Catalog.md:21509); restates the UCC-230 envelope common optional confirmation_ref (type ref) narrowed to required"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
         owner_result: local:TeacherDoItResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [permission_required, blocked_state_required, stale_projection]   # judgment: permission gates; confirmation not yet given; stale or missing UI target (UCC-102)
+      disabled_reason_codes: [permission_required, blocked_state_required, stale_projection]
       aliases: []
+      judgments:
+        - key: disabled_reason_codes
+          choice: [permission_required, blocked_state_required, stale_projection]
+          gap_note: >-
+            The row states preconditions (teacher_guidance_active && action_explicitly_safe &&
+            confirmation_given, UI_Command_Catalog.md:21509) but no disabled reasons; permission_required
+            stands for the permission gates, blocked_state_required for confirmation not yet given, and
+            stale_projection for a stale or missing UI target (UCC-102).
   results:
     TeacherThreadLaunchResultV1:
       fields:
