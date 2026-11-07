@@ -4,10 +4,10 @@
 // at that size; More also opens on ArrowDown, its menu takes the focus, and Escape gives it back to More. A key focus
 // paints a mark on every side of the item's tile at 3:1 or more against what was painted there before, in every look,
 // lit or not, collapsed or with the names shown, and never crosses or touches a name's letters (F96-1); NieR's mark is
-// its four target brackets. Friendly Light's 3:1 is held back for FO-99. The chat strip's FO-76 sizer copies stay inert
+// its four target brackets; in Friendly Light the ring must stand 3:1 against both its neighbours (FO-99). The chat strip's FO-76 sizer copies stay inert
 // and out of the tab order. One test per size: 1920x1100 (everything), 1390x860, 1280x500, 1024x768 and 740x900 (all
 // but the chat switch, the Docker drag and the chat strip, which are judged at 1920). Both surfaces (--set sandbox=0|1).
-//   --set size=1280x500   --set looks=basic-dark,nier-light   --set crops=1   --set fo99=1 (Friendly Light held to 3:1)
+//   --set size=1280x500   --set looks=basic-dark,nier-light   --set crops=1
 import { LOOKS } from '../browser-check.config.mjs';
 
 const frames = (f, n = 3) => f.evaluate(async n => { for (let i = 0; i < n; i++) await new Promise(requestAnimationFrame); }, n);
@@ -80,7 +80,7 @@ function boxOf(key) {
 // origin is (ox, oy) in page pixels.
 const Yv = (d, i) => 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
 const ratio = (p, q) => (Math.max(p, q) + 0.05) / (Math.min(p, q) + 0.05);
-function scanline(rest, focus, pts) {
+function scanline(rest, focus, pts, both = false) {
   const px = pts.map(([x, y]) => (x < 0 || y < 0 || x >= rest.width || y >= rest.height) ? null : 4 * (y * rest.width + x));
   let core = -1, best = 40;
   px.forEach((i, k) => { if (i == null) return; const d = Math.abs(Yv(focus.data, i) - Yv(rest.data, i)); if (d > best) { best = d; core = k; } });
@@ -94,14 +94,17 @@ function scanline(rest, focus, pts) {
   while (b < px.length - 1 && same(b + 1)) b++;
   const lc = L(px[core]);
   const beside = (from, step) => { let m = 0; for (let k = 1; k <= 2; k++) { const j = from + step * k; if (j < 0 || j >= px.length || px[j] == null) break; m = Math.max(m, ratio(lc, L(px[j]))); } return m; };
-  // the better of its two neighbours, as opus-recheck-f96 judged it: a two-tone mark has its ground band on one side
-  return Math.max(beside(a, -1), beside(b, 1));
+  // the better of its two neighbours, as opus-recheck-f96 judged it: a two-tone mark has its ground band on one side.
+  // `both` (FO-99, Friendly Light, whose ring lies between the white band and the bar's pale ground): the worse of the
+  // two, so the ring must stand 3:1 against each (its old pale-blue ring read about 3:1 against the band and 1.9 to
+  // 2.9:1 against the ground)
+  return both ? Math.min(beside(a, -1), beside(b, 1)) : Math.max(beside(a, -1), beside(b, 1));
 }
-function sides(rest, focus, tile, ox, oy) {
+function sides(rest, focus, tile, ox, oy, both = false) {
   const L = Math.round(tile.x - ox), T = Math.round(tile.y - oy), Rr = Math.round(tile.x + tile.w - ox), B = Math.round(tile.y + tile.h - oy);
   const mid = (p, q) => { const out = []; for (let v = Math.round(p + (q - p) * 0.2); v < Math.round(p + (q - p) * 0.8); v++) out.push(v); return out; };
   const span = e => { const out = []; for (let v = e - 6; v < e + 6; v++) out.push(v); return out; };
-  const side = lines => { const got = lines.map(pts => scanline(rest, focus, pts)).sort((p, q) => p - q); const n = got.length;
+  const side = lines => { const got = lines.map(pts => scanline(rest, focus, pts, both)).sort((p, q) => p - q); const n = got.length;
     return { share: n ? +(got.filter(v => v >= 3).length / n).toFixed(2) : 0, worst: n ? +got[0].toFixed(2) : 0, median: n ? +got[Math.floor(n / 2)].toFixed(2) : 0 }; };
   return {
     top: side(mid(L, Rr).map(x => span(T).map(y => [x, y]))),
@@ -118,9 +121,9 @@ function corners(rest, focus, item, ox, oy) {
   const corner = (cx, cy, dx, dy) => { let n = 0; for (let y = cy - 6; y < cy + 8; y++) for (let x = cx - 6; x < cx + 8; x++) { const xx = dx > 0 ? x : 2 * cx - x, yy = dy > 0 ? y : 2 * cy - y; if (contrastAt(rest, focus, xx, yy) >= 3) n++; } return n; };
   return { tl: corner(L, T, 1, 1), tr: corner(Rr, T, -1, 1), bl: corner(L, B, 1, -1), br: corner(Rr, B, -1, -1) };
 }
-// a mark passes when every side (every corner for NieR) is there at 3:1; `soft` (FO-99) asks only that every side changed
-const markOk = (r, soft) => !!r && r.focused && (r.brackets ? Object.values(r.corners).every(n => n >= 6)
-  : Object.values(r.sides).every(sd => soft ? sd.share >= 0.9 || sd.median > 1.5 : sd.share >= 0.9) && (!r.clip || Object.values(r.clip).every(v => v <= 1)));
+// a mark passes when every side (every corner for NieR) is there at 3:1
+const markOk = r => !!r && r.focused && (r.brackets ? Object.values(r.corners).every(n => n >= 6)
+  : Object.values(r.sides).every(sd => sd.share >= 0.9) && (!r.clip || Object.values(r.clip).every(v => v <= 1)));
 const brief = r => r && { key: r.key, lit: r.lit, focused: r.focused, ...(r.unreached ? { unreached: true } : {}), ...(r.skipped ? { skipped: r.skipped } : {}), ...(r.moved ? { moved: true } : {}), ...(r.clip && Object.values(r.clip).some(v => v > 1) ? { clip: r.clip } : {}),
   ...(r.corners ? { corners: r.corners } : {}), ...(r.sides ? { sides: Object.fromEntries(Object.entries(r.sides).map(([k, v]) => [k, `${v.share} ${v.worst}-${v.median}`])) } : {}), ...(r.names ? { names: r.names } : {}) };
 
@@ -195,6 +198,8 @@ async function run(t, w, h) {
   // the control before it in the bar as it is now (at 1920 the Docker drag puts Docker back just before More)
   const before = async target => { const now = await f.evaluate(railControls), i = now.findIndex(c => c.key === target); return i > 0 ? now[i - 1].key : null; };
   const focusQuiet = k => f.evaluate(k => { const el = k ? (k === 'activityBarToggle' ? document.getElementById(k) : document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`)) : document.getElementById('fo96-sentinel'); if (el) el.focus({ preventScroll: true }); }, k);
+  // FO-99: whether a ring side is read against both its neighbours (Friendly Light, set per look below)
+  let both = false;
   const painted = async (target) => {
     await sentinel('#activityBar');
     await byTab(target)();
@@ -249,7 +254,7 @@ async function run(t, w, h) {
       t.log(`debug ${target} over ` + JSON.stringify(await f.evaluate(([x, y, w, hh]) => [[x + 1, y + hh / 2], [x + w / 2, y + 1], [x + w / 2, y + hh - 1]].map(([px, py]) => document.elementsFromPoint(px, py).slice(0, 3).map(e => (e.id ? '#' + e.id : '') + '.' + String(e.className?.baseVal ?? e.className).split(' ').slice(0, 2).join('.'))), [b.tile.x, b.tile.y, b.tile.w, b.tile.h])));
     }
     return { key: target, lit: b.lit, focused: now.key === target && !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
-      ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy), sides(r0, r1, b.item, ox, oy)) }),
+      ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, both), sides(r0, r1, b.item, ox, oy, both)) }),
       ...(named ? { names: lettersCrossed(r0, bare, r1, nameBoxes.map(q => ({ x: q.x + off.x - region.x, y: q.y + off.y - region.y, w: q.w, h: q.h }))) } : {}) };
   };
   // The mark as it is now, after a key or a click acted on the focused control (K-F96b-1: a panel closing or changing
@@ -285,7 +290,7 @@ async function run(t, w, h) {
     await focusQuiet(await before(target)); await kb.press('Tab'); await f.waitForTimeout(150);
     const ox = region.x - off.x, oy = region.y - off.y;
     return { key: target, lit: b.lit, focused: !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
-      ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy), sides(r0, r1, b.item, ox, oy)) }) };
+      ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, both), sides(r0, r1, b.item, ox, oy, both)) }) };
   };
   // Frames where the lens carries the mark away from the focused control (F96b-2), sampled every frame from just before
   // a key until 900 ms after it; only a page whose rail lens can carry the mark (Glass with Liquid Glass on) can count any.
@@ -453,9 +458,9 @@ async function run(t, w, h) {
 
   // 6. The painted focus mark in every look, on the two items lit by default (Chat, while the chat column shows, and
   // Files, the open panel; F96-1), an unlit item (Search) and More; then with the bar's names shown, on lit Files,
-  // Search and Pipelines (its p is the bar's lowest letter), none of whose letters may be crossed or touched. Friendly
-  // Light's accent is under 3:1 on its own ground (FO-99, logged for batch 8): there each side must change and the
-  // contrast is logged, unless --set fo99=1 holds it to 3:1.
+  // Search and Pipelines (its p is the bar's lowest letter), none of whose letters may be crossed or touched. In
+  // Friendly Light each side is read against both its neighbours (FO-99: the accent's pale blue read under 3:1 on the
+  // bar's ground; the ring now takes the accent's ink there, 80-bar.src.css).
   const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
   for (const look of looks) {
     await t.app.look(look);
@@ -465,12 +470,13 @@ async function run(t, w, h) {
       window.PM_NIER?.wanted?.() === window.PM_NIER?.on?.() && !document.getElementById('o55np-reboot'), null, { timeout: 20000 }).catch(() => {});
     await frames(f, 4);
     await rest();
-    const known = look === 'friendly-light' && !t.args.fo99;
-    const ok = r => markOk(r, known);
+    both = look === 'friendly-light';
+    const ok = markOk;
+    const both3 = both ? ' against both its neighbours' : '';
     const rows = [await painted('chat'), await painted('files'), await painted('search'), await painted('more')];
     t.log(`${at} ${look} marks ${JSON.stringify(rows.map(brief))}`);
     await t.check(`${at} ${look}: Chat and Files are lit, Search and More are not`, rows[0]?.lit && rows[1]?.lit && rows[2] && !rows[2].lit && rows[3] && !rows[3].lit, JSON.stringify(rows.map(r => r && [r.key, r.lit])));
-    await t.check(`${at} ${look}: a key focus mark on every side ${known ? '(3:1 held back for FO-99)' : 'at 3:1 or more'} on lit Chat and Files, on Search and on More`, rows.every(ok), JSON.stringify(rows.map(brief)));
+    await t.check(`${at} ${look}: a key focus mark on every side at 3:1 or more${both3} on lit Chat and Files, on Search and on More`, rows.every(ok), JSON.stringify(rows.map(brief)));
     // Keys acting on the open panel's icon (F96b-1): Enter (at 1920 it closes the panel), Enter again, a real click on
     // the focused icon, then Enter on Search (the panel changes, F96b-2); the mark is read after each, and no frame may
     // show the lens carrying it away from the focused control. Files is left open again.
@@ -489,7 +495,7 @@ async function run(t, w, h) {
     if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
     t.log(`${at} ${look} after keys ${JSON.stringify(acts.map(a => ({ after: a.after, ...brief(a) })))} lens ${JSON.stringify(lens)}`);
     const actsRead = acts.filter(a => !a.skipped);
-    await t.check(`${at} ${look}: the key focus mark ${known ? '(FO-99)' : 'at 3:1 on every side'} after Enter, Enter again and a click on the open panel's icon, and after Enter changes the panel`,
+    await t.check(`${at} ${look}: the key focus mark at 3:1 on every side${both3} after Enter, Enter again and a click on the open panel's icon, and after Enter changes the panel`,
       actsRead.length >= 3 && actsRead.every(ok), JSON.stringify(acts.map(a => ({ after: a.after, ...brief(a) }))));
     await t.check(`${at} ${look}: the lens never carries the mark away from the focused item when Enter changes the panel`, !!lens && lens.away === 0, JSON.stringify(lens));
     await rest();
@@ -500,7 +506,7 @@ async function run(t, w, h) {
     // Chat (the first item, K-F96b-2), lit Files, Search and Pipelines (its p is the bar's lowest letter)
     const wide = [await painted('chat'), await painted('files'), await painted('search'), await painted('repository_automation')];
     t.log(`${at} ${look} names shown, marks ${JSON.stringify(wide.map(brief))}`);
-    await t.check(`${at} ${look}, names shown: a key focus mark on every side ${known ? '(FO-99)' : 'at 3:1 or more'} on Chat, lit Files, Search and Pipelines, and no name's letters in view are crossed or touched`,
+    await t.check(`${at} ${look}, names shown: a key focus mark on every side at 3:1 or more${both3} on Chat, lit Files, Search and Pipelines, and no name's letters in view are crossed or touched`,
       wide.every(ok) && wide[1]?.lit && wide.every(r => r && r.names && r.names.letters >= 15 && r.names.crossed === 0), JSON.stringify(wide.map(brief)));
     if (t.args.crops) {
       await sentinel('#activityBar'); await byTab('files')(); await f.waitForTimeout(450);

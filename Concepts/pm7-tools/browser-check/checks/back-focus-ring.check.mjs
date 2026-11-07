@@ -4,13 +4,15 @@
 // luminance levels, at a median contrast of 3:1 or more against what was there before (WCAG 1.4.11's non-text minimum).
 // In NieR the mark is NieR's own: four ink brackets (the brackets part, kit.d/19-nier-parts.js #o55np-reticle, which
 // replaces every outline, 14-nier-parts.css); --set nierParts=nobrackets takes that part away, and NieR's outline must
-// then show. NieR Light and Dark by default (FO-97's scope; --set look= reads others: Friendly Light's 2 px outline
-// measures 2.64:1 there, reported, not asserted). 1920x1080, 860 and 740; c-ready (Back, Open the folder and Continue:
-// at 860 the footer squeezes Back to its padding, and at 740 the narrow window keeps its caret alone) and Where (Back and
-// Continue); both surfaces. The log gives Back's width and the window's layout.
+// then show. All ten looks by default (--set look= picks some): FO-97's NieR Light and Dark, and FO-99's Friendly Light,
+// whose 2 px orange outline measured 2.64:1 (it takes the look's brick now, 10-window.css --o55-focus). 1920x1080, 860
+// and 740; c-ready (Back, Enter Puppet Master and Take the Guided Tour, each with its ?: at 860 the two leave Back its
+// chevron alone, as the narrow window does at 740) and Where (Back and Continue); both surfaces. The log gives Back's
+// width and the window's layout.
 //   --set size=740x900   --set look=nier-dark   --set screen=c-ready   --set selftest=noring (must fail)
 
 const SIZES = [[1920, 1080], [860, 900], [740, 900]];
+const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 const list = (v, all) => (v ? String(v).split(',').map((s) => s.trim()).filter(Boolean) : all);
 const LAYER = '#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)';
 const lum = (r, g, b) => { const c = [r, g, b].map((v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
@@ -25,7 +27,7 @@ async function cell(t, surface, w, h) {
 	/* the check's own test: --set selftest=noring takes every focus mark away (the reticle and any outline); it must fail */
 	if (t.args.selftest === 'noring') await f.evaluate(() => { const st = document.createElement('style'); st.textContent = '#o55np-reticle { display: none !important; } :focus-visible { outline: none !important; box-shadow: none !important; }'; document.head.appendChild(st); });
 	const settle = () => f.waitForFunction(() => !document.querySelector('#pm-o55-onboarding .o55-layer.o55-entering, #pm-o55-onboarding .o55-layer.o55-out') && !O55.nierLook.busy() && !document.getElementById('o55np-reboot'), null, { timeout: 15000 }).catch(() => {});
-	for (const look of list(t.args.look, ['nier-light', 'nier-dark'])) {
+	for (const look of list(t.args.look, LOOKS)) {
 		await t.page.mouse.move(2, 2);
 		await f.evaluate((v) => { document.documentElement.setAttribute('data-motion', 'full'); O55.S.lookOpen = false; O55.ui.applyLook(...v); }, look.split('-'));
 		await f.waitForTimeout(1600); await settle();
