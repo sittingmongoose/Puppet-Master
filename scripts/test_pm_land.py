@@ -3512,6 +3512,53 @@ class HandOverWordingTests(unittest.TestCase):
         self.assertNotIn("is the handover", text)
 
 
+class IdleHandOverTests(Base):
+    """Review F6: the rule says the lock passes by pm-mail. An idle batch needs no flag, and the tool says what taking it asserts."""
+
+    SAID = "asserts that lander-fix/a handed you the lock by pm-mail"
+
+    def opened(self) -> str:
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        start = self.h.origin_main()
+        self.assertEqual(self.land("fix/a", "--batch-open").returncode, 0)
+        self.assertEqual(M.parse_holder(self.h.holder())["state"], "batch-idle")
+        return start
+
+    def test_taking_over_an_idle_batch_says_and_logs_what_it_asserts(self):
+        start = self.opened()
+        result = self.land("fix/b", "--batch-start", start)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn(self.SAID, result.stdout)
+        self.assertIn("The tool cannot see that mail", result.stdout)
+        rows = [json.loads(line) for line in (self.h.lock / "queue" / "log.jsonl").read_text().splitlines()]
+        row = next(item for item in rows if item["event"] == "batch_handover_asserted")
+        self.assertEqual((row["who"], row["by"], row["state"]), ("lander-fix/b", "lander-fix/a", "batch-idle"))
+
+    def test_closing_an_idle_batch_says_it_too(self):
+        start = self.opened()
+        result = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "closer")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn(self.SAID, result.stdout)
+
+    def test_your_own_idle_batch_asserts_nothing(self):
+        start = self.opened()
+        result = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "lander-fix/a")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertNotIn("handed you the lock", result.stdout)
+
+    def test_a_dead_idle_batch_asserts_nothing(self):
+        start = self.opened()
+        path = self.h.lock / "held" / "holder.txt"
+        path.write_text(re.sub(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z", utc(2 * 3600), path.read_text()))
+        moment = time.time() - 2 * 3600
+        os.utime(path, (moment, moment))
+        os.utime(self.h.lock / "held", (moment, moment))
+        result = self.h.tool("run", "--batch-close", "--batch-start", start, "--name", "closer")
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertNotIn("handed you the lock", result.stdout)
+
+
 class MainAheadTests(Base):
     """L4: the lock is never released while the shared checkout's main is ahead of origin."""
 

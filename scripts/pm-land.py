@@ -1224,6 +1224,10 @@ class Lander:
         agent = fields.get("agent")
         from_tool = fields.get("tool") == TOOL_TAG
         idle = from_tool and fields.get("state") == "batch-idle"
+        if idle and not ours and not verdict["dead"] and agent != st["name"]:
+            say(f"taking over {agent}'s idle batch: this asserts that {agent} handed you the lock by pm-mail, as the rule "
+                "requires. The tool cannot see that mail.")
+            queue_log(self.cfg, "batch_handover_asserted", who=st["name"], by=agent, batch=start, state="batch-idle")
         if not ours and not verdict["dead"] and not idle:
             if from_tool and fields.get("state") == "landing":
                 raise Stop("batch_busy", f"{agent} is landing inside this batch right now",
