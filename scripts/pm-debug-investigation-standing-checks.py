@@ -6,6 +6,7 @@ verification, never native append, external-payload or SP-278 execution proof.
 """
 import copy
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -15,8 +16,15 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = 'Plans/debug_investigation_event_fixtures.json'
 CHECKER = 'scripts/pm-debug-investigation-events.py'
+CONSTANTS = 'scripts/pm_debug_investigation_guard_constants.py'
+RETAINED = 'scripts/pm_debug_investigation_guards_retained.py'
 INPUTS = (FIXTURE, CHECKER, 'Plans/debug_investigation_event_payloads.schema.json',
-          'Plans/event_family_registry.json', 'scripts/pm_debug_investigation_transitions.py')
+          'Plans/event_family_registry.json', 'scripts/pm_debug_investigation_transitions.py',
+          'scripts/pm_guard_isolation.py', CONSTANTS, RETAINED,
+          *('scripts/pm_debug_investigation_guards_' + phase + '.py' for phase in (
+              'admission', 'envelope', 'family', 'instrumentation', 'instrumentation_detail',
+              'instrumentation_detail_values_a', 'instrumentation_detail_values_b',
+              'instrumentation_source', 'lifecycle', 'payload', 'references', 'retry', 'target_payload')))
 
 
 def patch(case, patches):
@@ -30,6 +38,7 @@ def patch(case, patches):
 
 def main():
     fixture = json.loads((ROOT / FIXTURE).read_text())
+    families = {case['event_type'] for case in fixture['cases']}
     rows, failures = [], []
     with tempfile.TemporaryDirectory(prefix='pm-ddbg-standing-') as directory:
         scratch = Path(directory)
@@ -37,13 +46,26 @@ def main():
             destination = scratch / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / relative, destination)
-        checker_text = (scratch / CHECKER).read_text()
+        originals = {relative: (scratch / relative).read_text() for relative in (CONSTANTS, RETAINED)}
 
-        def run(label, data, event=None, reject=False, checker=None):
+        def run(label, data, event=None, reject=False, mutate=None):
+            # mutate: (relative source path, exact old text, new text), applied to this run only.
             (scratch / FIXTURE).write_text(json.dumps(data))
-            (scratch / CHECKER).write_text(checker or checker_text)
+            for relative, text in originals.items():
+                (scratch / relative).write_text(text)
+            if mutate:
+                relative, old, new = mutate
+                if old not in originals[relative]:
+                    raise SystemExit('standing-check mutation target missing: ' + old)
+                (scratch / relative).write_text(originals[relative].replace(old, new))
+            # A probe that corrupts one family runs that family's complete oracles; the
+            # baseline, restored and reference runs check every family.
+            environment = dict(os.environ)
+            environment.pop('PM_DDBG_FAMILY', None)
+            if event in families:
+                environment['PM_DDBG_FAMILY'] = event
             result = subprocess.run([sys.executable, '-B', str(scratch / CHECKER)],
-                                    capture_output=True, text=True, timeout=30)
+                                    capture_output=True, text=True, timeout=600, env=environment)
             try:
                 output = json.loads(result.stdout)
             except ValueError:
@@ -103,14 +125,12 @@ def main():
                 run('C6 Storage metadata preserves original receipt: ' + key, data, event)
                 # A checker regression hashing Storage assignments must itself
                 # be rejected by every family's authored retry vectors.
-                mutant = checker_text.replace("fields = ('scope_kind',",
-                                              "fields = ('" + key + "', 'scope_kind',")
-                run('C6 reject digest that includes ' + key, fixture, event,
-                    reject=True, checker=mutant)
+                run('C6 reject digest that includes ' + key, fixture, event, reject=True,
+                    mutate=(CONSTANTS, "DIGEST_FIELDS = ('scope_kind',", "DIGEST_FIELDS = ('" + key + "', 'scope_kind',"))
             # The inverse bug (hashing only payload) must also fail each family.
-            mutant = checker_text.replace("body.update(event_type=case['event_type'], payload=case['payload'])",
-                                          "body = {'payload': case['payload']}")
-            run('C6 reject payload-only semantic digest', fixture, event, reject=True, checker=mutant)
+            run('C6 reject payload-only semantic digest', fixture, event, reject=True,
+                mutate=(RETAINED, "body = dict(pairs + [('event_type', case['event_type']), ('payload', case['payload'])])",
+                        "body = {'payload': case['payload']}"))
             data = copy.deepcopy(fixture)
             retry = data['cases'][index]['retry_cases'][0]
             retry['expected_result'] = 'semantic_digest_changed'
