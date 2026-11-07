@@ -4,14 +4,16 @@
 Models assume the named original-owner/SP-278 authentication adapters. They do not
 execute native Storage, redb, provider or Git operations and never admit a family.
 """
+import ast
 import base64
 import copy
 import hashlib
+import importlib
 import json
 import struct
 import rfc8785
 from pm_event_index_binding import binding_bytes
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from decimal import Decimal
 from pathlib import Path
 from jsonschema import Draft202012Validator, FormatChecker
@@ -28,6 +30,142 @@ PRODUCER_FIELDS = (
     'parent_event_id', 'idempotency_key', 'payload_schema_id', 'payload', 'payload_ref',
     'redaction_profile', 'migration',
 )
+
+# Method B guard tables (sweep part 2A). Every product refusal of this checker
+# is one named row of one phase table (scripts/pm_dt_table_<phase>.py, generated
+# by scripts/pm-dt-table-generate.py), evaluated in the table's declared order.
+# Derivation code below computes observations only (canonical bytes, digests,
+# recomputed identities, type names, presence, mismatch lists); a refusal is
+# issued only by a row. A boundary is an ordered chain of phases.
+TABLE_PHASES = (
+    'src_envelope', 'src_replay', 'src_inline', 'src_definition', 'src_schema', 'src_size', 'src_stage', 'src_original',
+    'src_scope', 'src_project_only', 'src_payload', 'src_join', 'src_identity', 'src_context', 'id_inputs',
+    'append_types', 'append_retry',
+    'rec_gate', 'rec_custody', 'rec_commit', 'rec_original', 'rec_receipt', 'rec_receipt_join',
+    'cp_schema', 'cp_lifecycle', 'cp_cas', 'cp_token', 'cp_source', 'cp_rows', 'cp_prefix', 'cp_coverage', 'cp_state',
+    'hr_flags_a', 'hr_flags_b', 'hr_original',
+    'tool_request', 'tr_approval_requested', 'tr_approval_granted', 'tr_approval_denied', 'tr_approval_timeout',
+    'tr_config_migrated', 'gate_score', 'tr_gate_started', 'tr_gate_failed_a', 'tr_gate_failed_b',
+    'tr_gate_passed_a', 'tr_gate_passed_b', 'tr_requirements', 'tr_background', 'denial', 'tr_tool_denied',
+    'tr_tool_completed', 'tr_tool_started', 'tr_tool_invoked', 'tr_usage_a', 'tr_usage_b',
+    'usage_values_a', 'usage_values_b', 'tr_worktree_created', 'tr_worktree_deleted_a', 'tr_worktree_deleted_b',
+    'batch_parent', 'batch_child', 'batch_success', 'source_codec', 'accounting', 'schema_verdict', 'references',
+    'retention', 'projection_retention',
+)
+_TABLE_ROWS = {}
+_TABLE_FIELDS = {}
+# Set to a list only by the guard-table suite builder (scripts/pm_dt_guard_suites.py).
+RECORDER = None
+# Standing-check trials only (scripts/pm-dt-standing-checks.py): (phase, row)
+# pairs swapped to always-pass for one trial. No checker path sets it.
+CUT_ROWS = frozenset()
+
+
+class TableRefusal(ValueError):
+    """A refusal issued by one named table row (phase, row, code)."""
+    def __init__(self, phase, row, code):
+        self.phase, self.row, self.code = phase, row, code
+        super().__init__(code)
+
+
+def table_module(phase):
+    return importlib.import_module('pm_dt_table_' + phase)
+
+
+def table_rows(phase):
+    """The phase's (row, predicate, context) list in declared table order."""
+    rows = _TABLE_ROWS.get(phase)
+    if rows is None:
+        case = table_module(phase).case(None)
+        rows = _TABLE_ROWS[phase] = [(name, guard.predicate, case.context) for name, guard in case.table.guards.items()]
+        _TABLE_FIELDS[phase] = table_module(phase).FIELDS
+    return rows
+
+
+def table_refusal(phase, facts):
+    """First refusing row of one phase, as (row, code), or None.
+
+    The observation holds exactly the table's FIELDS; any other key set is a
+    derivation fault, never a refusal.
+    """
+    rows = table_rows(phase)
+    fields = _TABLE_FIELDS[phase]
+    if set(facts) != set(fields):
+        raise KeyError('observation fields differ from table FIELDS: ' + phase)
+    observed = {k: facts[k] for k in fields}
+    refusal = None
+    for name, predicate, context in rows:
+        if (phase, name) in CUT_ROWS:
+            continue
+        code = predicate(observed, context)
+        if code is not None:
+            refusal = (name, code)
+            break
+    if RECORDER is not None:
+        RECORDER.append((phase, copy.deepcopy(observed), refusal))
+    return refusal
+
+
+def require(phase, facts):
+    refusal = table_refusal(phase, facts)
+    if refusal is not None:
+        raise TableRefusal(phase, *refusal)
+
+
+def run_steps(steps):
+    """Require each (phase, facts) step in order; later facts are derived only after earlier phases pass."""
+    for phase, facts in steps:
+        require(phase, facts)
+
+
+def table_order_errors():
+    """Each factory's check() requires its rows in exactly the table order, and every phase is declared."""
+    errors = []
+    found = sorted(p.name[len('pm_dt_table_'):-3] for p in (ROOT / 'scripts').glob('pm_dt_table_*.py'))
+    if found != sorted(TABLE_PHASES):
+        errors.append('declared phases differ from table modules')
+    for phase in TABLE_PHASES:
+        tree = ast.parse((ROOT / ('scripts/pm_dt_table_' + phase + '.py')).read_text())
+        factory = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'case')
+        check = next(n for n in factory.body if isinstance(n, ast.FunctionDef) and n.name == 'check')
+        required = [c.args[0].value for c in ast.walk(check) if isinstance(c, ast.Call) and ast.unparse(c.func) == 'table.require']
+        if required != [name for name, _, _ in table_rows(phase)]:
+            errors.append(phase)
+    return errors
+
+
+def type_name(value):
+    return type(value).__name__
+
+
+def nonbool(mapping, keys):
+    return [k for k in keys if type(mapping[k]) is not bool]
+
+
+def value_digest(value):
+    """SHA-256 of pm.dt.source.json.v1 bytes; a value with no encoding raises, as the byte joins did."""
+    return hashlib.sha256(canonical(value)).hexdigest()
+
+
+def canonical_text(value):
+    return canonical(value).decode('utf-8')
+
+
+def source_digest(value):
+    return hashlib.sha256(source_bytes(value)).hexdigest()
+
+
+def schema_error_count(validator, value):
+    return sum(1 for _ in validator.iter_errors(value))
+
+
+def schema_accepts(validator, value):
+    """One complete schema occurrence, decided only by the schema_verdict row."""
+    return table_refusal('schema_verdict', {'errors': schema_error_count(validator, value)}) is None
+
+
+def event_schema_errors(event):
+    return schema_error_count(Draft202012Validator(load('Plans/event_record.schema.json'), format_checker=FormatChecker()), event)
 
 
 def load(path):
@@ -140,19 +278,37 @@ def canonical(value):
 
 
 def decode_source(raw):
-    if len(raw) > 1048576:
-        raise ValueError('source stage exceeds 1048576 encoded bytes')
+    """Strict pm.dt.source.json.v1 decode; every refusal is a source_codec row (a ValueError)."""
+    facts = {'size': len(raw), 'utf8': True, 'json': False, 'duplicate_keys': 0, 'nonfinite_constants': 0, 'canonical': False}
+    counts = {'duplicate_keys': 0, 'nonfinite_constants': 0}
     def unique(pairs):
         result = {}
         for key, value in pairs:
             if key in result:
-                raise ValueError('duplicate key')
+                counts['duplicate_keys'] += 1
             result[key] = value
         return result
-    value = json.loads(raw.decode('utf-8'), object_pairs_hook=unique, parse_float=Decimal,
-                       parse_constant=lambda _: (_ for _ in ()).throw(ValueError('nonfinite number')))
-    if canonical(value) != raw:
-        raise ValueError('noncanonical source bytes')
+    def constant(_):
+        counts['nonfinite_constants'] += 1
+        return None
+    value = None
+    try:
+        text = raw.decode('utf-8')
+    except UnicodeDecodeError:
+        facts['utf8'] = False
+    else:
+        try:
+            value = json.loads(text, object_pairs_hook=unique, parse_float=Decimal, parse_constant=constant)
+            facts['json'] = True
+        except json.JSONDecodeError:
+            pass
+    facts.update(counts)
+    if facts['json'] and not counts['duplicate_keys'] and not counts['nonfinite_constants']:
+        try:
+            facts['canonical'] = canonical(value) == raw
+        except ValueError:
+            facts['canonical'] = False
+    require('source_codec', facts)
     return value
 
 
@@ -216,7 +372,7 @@ def identifier_checks(c, f, schemas, check):
             exact = rule.get('minLength') == rule.get('maxLength') and 'maxLength' in rule
             check(exact or rule['pattern'].endswith(r'(?![\s\S])'), name + ': full-string identifier guard ' + definition + str(path))
             bad = copy.deepcopy(value); set_path(bad, path, identifier + '\n')
-            check(not validator.is_valid(bad), name + ': trailing-LF identifier refused ' + definition + str(path))
+            check(not schema_accepts(validator, bad), name + ': trailing-LF identifier refused ' + definition + str(path))
     # Keep all token witnesses coherent, so schema grammar alone must refuse.
     for path, identifier, _ in patterned_values(schemas[slug + '_checkpoint'], f['checkpoint']):
         case = copy.deepcopy(f['checkpoint_cases'][0])
@@ -278,152 +434,257 @@ def source_bytes(value):
 
 
 def identity(contract, payload, partition='project~cHJvamVjdC0x', application=None):
-    if 'blocked_sequence' in contract['identity_fields'] and not Draft202012Validator({'type': 'integer', 'minimum': 0}).is_valid(payload['blocked_sequence']):
-        raise ValueError('schema_refused')
+    """Identity recipe; its input refusals are id_inputs rows (TableRefusal is a ValueError)."""
+    blocked = 'blocked_sequence' in contract['identity_fields']
+    app = partition == 'app'
+    facts = {'blocked_in_identity': blocked,
+             'blocked_valid': Draft202012Validator({'type': 'integer', 'minimum': 0}).is_valid(payload['blocked_sequence']) if blocked else True,
+             'application_partition': app, 'application_present': application is not None,
+             'recomputed_operation': None, 'owner_operation_id': None}
     # JSON Schema's integer domain includes 1.0. The exact source codec already
     # gives it the same spelling as 1; use that spelling in every identity too.
     # Never convert an exact u64 through binary64.
-    subjects = [canonical(payload[k]).decode('utf-8') if k == 'blocked_sequence' else payload[k]
+    def subjects():
+        return [canonical(payload[k]).decode('utf-8') if k == 'blocked_sequence' else payload[k]
                 for k in contract['identity_fields']]
-    if partition == 'app':
-        if application is None:
-            raise ValueError('missing original application identity')
-        operation = sha([contract['event_type'], application['original_owner_operation_id']] + subjects)
-        if operation != application['owner_operation_id']:
-            raise ValueError('wrong original application operation')
+    if app and application is not None and facts['blocked_valid']:
+        facts['recomputed_operation'] = sha([contract['event_type'], application['original_owner_operation_id']] + subjects())
+        facts['owner_operation_id'] = application['owner_operation_id']
+    require('id_inputs', facts)
+    if app:
+        operation = facts['recomputed_operation']
         key = 'application@1:' + application['application_scope']['server_id'].encode().hex() + ':' + operation.encode().hex()
     else:
         # Array elements are strings, without u64/IEEE-754 rounding.
-        key = 'dt:' + sha([contract['event_type'], partition] + subjects)
+        key = 'dt:' + sha([contract['event_type'], partition] + subjects())
     return key, 'evt_dt_' + hashlib.sha256(key.encode()).hexdigest()
 
 
 def append_model(seen, key, digest, result):
-    if type(key) is not str or type(digest) is not str:
-        return 'schema_refused', None
+    try:
+        require('append_types', {'key_type': type_name(key), 'digest_type': type_name(digest)})
+    except TableRefusal as refusal:
+        return refusal.code, None
     if key in seen:
         old_digest, original = seen[key]
-        return ('original', original) if type(old_digest) is str and old_digest == digest else ('idempotency_conflict', None)
+        try:
+            require('append_retry', {'stored_digest_type': type_name(old_digest), 'stored_digest': old_digest, 'digest': digest})
+        except TableRefusal as refusal:
+            return refusal.code, None
+        return 'original', original
     seen[key] = (digest, copy.deepcopy(result))
     return 'appended', result
 
 
-def transition(name, payload, before, outcome):
-    """The separately authored owner predicates for each exact family."""
-    if name in ['gate.evaluation_started', 'gate.failed', 'gate.passed'] and not gate_score_join(payload, before, outcome):
-        return False
-    if name == 'approval.requested':
-        return before['episode_state'] == 'blocked' and bool(payload['allowed_action_ids']) and payload['allowed_action_ids'] == before['allowed_action_ids'] and tool_request_join(payload, before)
-    if name == 'approval.granted':
-        return before['episode_state'] == 'requested' and before['human_authenticated'] is True and before['paused'] is False and before['revoked'] is False and payload['allowed_action_id'] in before['allowed_action_ids'] and tool_request_join(payload, before)
-    if name == 'approval.denied':
-        return before['episode_state'] == 'requested' and tool_request_join(payload, before)
-    if name == 'approval.timeout':
-        return before['episode_state'] == 'requested' and time_value(payload['ts']) >= time_value(before['deadline_at_utc']) and tool_request_join(payload, before)
-    if name == 'config.migrated':
-        return before['first_load'] is True and payload['legacy_value'] == before['legacy_value'] and payload['source_ref'] == before['source_ref'] and payload['source_sha256'] == before['source_sha256'] and payload['result_ref'] == outcome['committed_settings_ref'] and {'single': 'None', 'per_phase': 'Phase', 'per_task': 'Task'}.get(payload['legacy_value']) == payload['enum_value']
-    if name == 'gate.evaluation_started':
-        return before['evaluation_state'] == 'allocated' and payload['evaluation_id'] == before['evaluation_id']
-    if name == 'gate.failed':
-        return before['evaluation_state'] == 'started' and payload['evaluation_id'] == before['evaluation_id'] and payload['gate_id'] == before['gate_id'] and outcome['report_status'] == 'FAIL' and not outcome['question_ids'] and bool(payload['evidence_refs']) and payload['evidence_refs'] == outcome['evidence_refs'] and payload['failure_reason_code'] == outcome['failure_reason_code']
-    if name == 'gate.passed':
-        return before['evaluation_state'] == 'started' and payload['evaluation_id'] == before['evaluation_id'] and payload['gate_id'] == before['gate_id'] and outcome['report_status'] == 'PASS' and not outcome['question_ids'] and outcome['all_predicates_pass'] is True and bool(payload['evidence_refs']) and payload['evidence_refs'] == outcome['evidence_refs']
-    if name == 'requirements.clarification_requested':
-        return before['report_status'] == 'BLOCKED' and bool(before['question_ids']) and all(canonical(payload[k]) == canonical(before[k]) for k in ['question_ids', 'report_ref', 'wizard_id', 'thread_id'])
-    if name == 'run.background_enqueued':
-        return before['queue_state'] == 'committed' and all(canonical(payload[k]) == canonical(before[k]) for k in ['enqueue_id', 'queue_record_ref', 'scope_ref', 'host_ref', 'root_ref'])
-    if name == 'tool.denied':
-        fields = ['denial_reason_code', 'blocked_sequence', 'approval_scope_key', 'blocked_reason_code', 'failure_class', 'allowed_action_ids', 'headless_denied', 'permission_snapshot_id', 'executed_at_all']
-        return denial_emission(before) == 'emit' and all(canonical(payload[k]) == canonical(before[k]) for k in fields) and payload['executed_at_all'] is False and payload['headless_denied'] is (payload['blocked_reason_code'] == 'headless_ask_denied') and payload['failure_class'] is None
-    if name == 'tool.execution_completed':
-        return before['execution_state'] == 'started' and all(canonical(payload.get(k)) == canonical(outcome[k]) for k in ['result_ref', 'outcome', 'duration_ms'])
-    if name == 'tool.execution_started':
-        return before['execution_state'] == 'admitted' and before['policy_decision'] == 'allow' and before['schema_valid'] is True and before['hooks_pass'] is True
-    if name == 'tool.invoked':
-        request = before['web_request']
-        meta = payload.get('meta')
-        web_join = request is None and meta is None or request is not None and meta is not None and payload['tool_name'] == meta['tool_id'] and all(canonical(meta.get(k)) == canonical(v) for k, v in request.items() if k != 'parent_event_id')
-        return web_join and before['dispatch_state'] == 'started' and outcome['dispatch_state'] == 'attempted_completed' and all(canonical(payload.get(k)) == canonical(outcome[k]) for k in ['success', 'latency_ms', 'index_used', 'meta'])
-    if name == 'usage.event':
-        previous = before['prior_settlement_status']
-        state = payload['settlement_status']
-        if previous in ['settled', 'adjusted', 'failed'] and state in ['observed', 'streaming_partial', 'unknown']:
-            return False
-        if state == 'adjusted' and previous not in ['settled', 'adjusted']:
-            return False
-        if previous is not None and not before['prior_usage_event_ref']:
-            return False
-        if state == 'settled' and not payload.get('settled_at_utc'):
-            return False
-        if state == 'adjusted' and not payload.get('adjusted_at_utc'):
-            return False
-        return payload.get('parent_run_id') == before['parent_run_id'] and all(canonical(payload.get(k)) == canonical(before[k]) for k in ['usage_record_id', 'dedupe_key', 'provider_attempt_ref', 'parent_usage_record_id', 'account_id', 'billing_entity_id', 'provider_account_ref']) and payload['raw_payload_ref'] == before['observation_ref'] and payload['provider_payload_hash'] == before['observation_sha256'] and usage_values_valid(payload)
-    if name == 'worktree.created':
-        return before['allocation_state'] == 'allocated' and outcome['allocation_state'] == 'created' and all(canonical(payload.get(k)) == canonical(before[k]) for k in ['branch_name', 'worktree_path', 'repo_id', 'run_id', 'lane_id', 'package_id'])
-    if name == 'worktree.deleted':
-        return before['allocation_state'] == 'cleanup_eligible' and outcome['allocation_state'] == 'deleted' and unsigned_integer_valid(before['elapsed_grace_ms']) and unsigned_integer_valid(payload['grace_period_ms']) and before['elapsed_grace_ms'] >= payload['grace_period_ms'] and before['file_lock_checked'] is True and payload['file_lock_checked'] is True and not any(before[k] for k in ['active_lock_refs', 'safe_point_refs', 'terminal_session_refs', 'editor_session_refs', 'blocked_recovery_refs']) and not payload.get('active_lock_refs') and not payload.get('safe_point_refs') and all(canonical(payload.get(k)) == canonical(before[k]) for k in ['repo_id', 'run_id', 'lane_id', 'package_id'])
-    return False
+def copy_mismatches(left, right, keys, missing=False):
+    """Fields whose canonical bytes differ (left.get when the owner reads an optional field)."""
+    return [k for k in keys if canonical(left.get(k) if missing else left[k]) != canonical(right[k])]
 
 
-def gate_score_join(payload, before, outcome):
+def tool_request_steps(payload, before):
+    yield 'tool_request', {'request_kind': before['request_kind'], 'payload_tool_use_id': payload.get('tool_use_id'),
+                           'payload_has_tool_use_id': 'tool_use_id' in payload, 'before_tool_use_id': before['tool_use_id']}
+
+
+def gate_score_steps(payload, before, outcome):
     """Numeric gate results retain Executor's dispatch context, not a new score policy."""
-    if canonical([payload.get('score'), payload.get('score_threshold')]) != canonical([outcome['score'], before['score_threshold']]):
-        return False
-    if any(canonical(payload.get(k)) != canonical(before[k]) for k in ['dispatch_score_ref', 'dispatch_score_tuple']):
-        return False
-    if 'score' in payload or 'score_threshold' in payload:
-        context = payload.get('dispatch_score_tuple')
-        node_id = None if context is None else context['node_id']
-        return context is not None and payload.get('node_id') == node_id and bool(payload.get('dispatch_score_ref'))
-    return True
+    context = payload.get('dispatch_score_tuple')
+    yield 'gate_score', {
+        'payload_score': canonical_text(payload.get('score')), 'outcome_score': canonical_text(outcome['score']),
+        'payload_threshold': canonical_text(payload.get('score_threshold')), 'before_threshold': canonical_text(before['score_threshold']),
+        'payload_dispatch_ref': canonical_text(payload.get('dispatch_score_ref')), 'before_dispatch_ref': canonical_text(before['dispatch_score_ref']),
+        'payload_dispatch_tuple': canonical_text(context), 'before_dispatch_tuple': canonical_text(before['dispatch_score_tuple']),
+        'scored': 'score' in payload or 'score_threshold' in payload, 'tuple_present': context is not None,
+        'payload_node_id': payload.get('node_id'), 'tuple_node_id': context['node_id'] if type(context) is dict else None,
+        'dispatch_ref_truthy': bool(payload.get('dispatch_score_ref'))}
 
 
-def denial_emission(before):
+def denial_steps(before):
     # DL-430: FileSafe saves its dedicated refusal only, never tool.denied.
-    if before['denial_origin'] not in ['policy', 'user'] or before['policy_decision'] != 'deny' or before['dispatch_state'] != 'not_dispatched':
-        return 'no_emission'
-    return 'emit'
+    yield 'denial', {'denial_origin': before['denial_origin'], 'policy_decision': before['policy_decision'],
+                     'dispatch_state': before['dispatch_state']}
+
+
+def usage_value_steps(p):
+    cost = p['cost']
+    yield 'usage_values_a', {
+        'payload_cost': canonical_text(p['cost_microdollars']), 'record_cost': canonical_text(cost['cost_microdollars']),
+        'cost_mismatches': copy_mismatches(p, cost, ['currency', 'cost_status', 'pricing_snapshot_id', 'pricing_source', 'pricing_effective_at', 'pricing_version']),
+        'cost_status': cost['cost_status'], 'amount_present': cost['cost_microdollars'] is not None or cost.get('cost_minor_units') is not None,
+        'display_cost_policy': p.get('display_cost_policy')}
+    quota = p['quota']
+    yield 'usage_values_b', {
+        'cost_status': cost['cost_status'],
+        'pricing_missing': [k for k in ['pricing_snapshot_id', 'pricing_source', 'pricing_effective_at', 'pricing_version'] if cost.get(k) is None],
+        'quota_status': quota['quota_status'],
+        'quota_values_present': [k for k in ['quota_remaining', 'quota_used', 'quota_limit', 'reset_at', 'cooldown_until'] if quota.get(k) is not None],
+        'credits_status': quota.get('credits_status', 'unknown'), 'credits_remaining_present': quota.get('credits_remaining') is not None,
+        'window_kind': quota['window_kind'], 'window_times_present': quota.get('reset_at') is not None or quota.get('cooldown_until') is not None}
 
 
 def time_value(s):
     return datetime.fromisoformat(s.replace('Z', '+00:00'))
 
 
+def time_micros(s):
+    """Exact microseconds since the Unix epoch, as the owner timeout comparison reads it."""
+    return (time_value(s) - datetime(1970, 1, 1, tzinfo=timezone.utc)) // timedelta(microseconds=1)
+
+
+def transition_steps(name, payload, before, outcome):
+    """The separately authored owner predicates for each exact family, as ordered table phases."""
+    if name.startswith('gate.'):
+        yield from gate_score_steps(payload, before, outcome)
+    if name == 'approval.requested':
+        yield 'tr_approval_requested', {'episode_state': before['episode_state'], 'actions_truthy': bool(payload['allowed_action_ids']),
+                                        'payload_actions': payload['allowed_action_ids'], 'before_actions': before['allowed_action_ids']}
+        yield from tool_request_steps(payload, before)
+    elif name == 'approval.granted':
+        yield 'tr_approval_granted', {'episode_state': before['episode_state'], 'human_authenticated': before['human_authenticated'],
+                                      'paused': before['paused'], 'revoked': before['revoked'],
+                                      'action_listed': payload['allowed_action_id'] in before['allowed_action_ids']}
+        yield from tool_request_steps(payload, before)
+    elif name == 'approval.denied':
+        yield 'tr_approval_denied', {'episode_state': before['episode_state']}
+        yield from tool_request_steps(payload, before)
+    elif name == 'approval.timeout':
+        yield 'tr_approval_timeout', {'episode_state': before['episode_state'], 'ts_micros': time_micros(payload['ts']),
+                                      'deadline_micros': time_micros(before['deadline_at_utc'])}
+        yield from tool_request_steps(payload, before)
+    elif name == 'config.migrated':
+        yield 'tr_config_migrated', {
+            'first_load': before['first_load'], 'payload_legacy': payload['legacy_value'], 'before_legacy': before['legacy_value'],
+            'payload_source_ref': payload['source_ref'], 'before_source_ref': before['source_ref'],
+            'payload_source_sha256': payload['source_sha256'], 'before_source_sha256': before['source_sha256'],
+            'result_ref': payload['result_ref'], 'committed_settings_ref': outcome['committed_settings_ref'],
+            'mapped_enum': {'single': 'None', 'per_phase': 'Phase', 'per_task': 'Task'}.get(payload['legacy_value']),
+            'enum_value': payload['enum_value']}
+    elif name == 'gate.evaluation_started':
+        yield 'tr_gate_started', {'evaluation_state': before['evaluation_state'], 'payload_evaluation_id': payload['evaluation_id'],
+                                  'before_evaluation_id': before['evaluation_id']}
+    elif name in ['gate.failed', 'gate.passed']:
+        gate = name.split('.')[1]
+        yield 'tr_gate_' + gate + '_a', {
+            'evaluation_state': before['evaluation_state'], 'payload_evaluation_id': payload['evaluation_id'],
+            'before_evaluation_id': before['evaluation_id'], 'payload_gate_id': payload['gate_id'], 'before_gate_id': before['gate_id'],
+            'report_status': outcome['report_status']}
+        facts = {'questions_truthy': bool(outcome['question_ids']), 'evidence_truthy': bool(payload['evidence_refs']),
+                 'payload_evidence': payload['evidence_refs'], 'outcome_evidence': outcome['evidence_refs']}
+        if gate == 'failed':
+            facts.update(payload_failure_code=payload['failure_reason_code'], outcome_failure_code=outcome['failure_reason_code'])
+        else:
+            facts['all_predicates_pass'] = outcome['all_predicates_pass']
+        yield 'tr_gate_' + gate + '_b', facts
+    elif name == 'requirements.clarification_requested':
+        yield 'tr_requirements', {'report_status': before['report_status'], 'questions_truthy': bool(before['question_ids']),
+                                  'copy_mismatches': copy_mismatches(payload, before, ['question_ids', 'report_ref', 'wizard_id', 'thread_id'])}
+    elif name == 'run.background_enqueued':
+        yield 'tr_background', {'queue_state': before['queue_state'],
+                                'copy_mismatches': copy_mismatches(payload, before, ['enqueue_id', 'queue_record_ref', 'scope_ref', 'host_ref', 'root_ref'])}
+    elif name == 'tool.denied':
+        yield from denial_steps(before)
+        fields = ['denial_reason_code', 'blocked_sequence', 'approval_scope_key', 'blocked_reason_code', 'failure_class', 'allowed_action_ids', 'headless_denied', 'permission_snapshot_id', 'executed_at_all']
+        yield 'tr_tool_denied', {'copy_mismatches': copy_mismatches(payload, before, fields), 'executed_at_all': payload['executed_at_all'],
+                                 'headless_denied': payload['headless_denied'], 'headless_reason': payload['blocked_reason_code'] == 'headless_ask_denied',
+                                 'failure_class': payload['failure_class']}
+    elif name == 'tool.execution_completed':
+        yield 'tr_tool_completed', {'execution_state': before['execution_state'],
+                                    'copy_mismatches': copy_mismatches(payload, outcome, ['result_ref', 'outcome', 'duration_ms'], missing=True)}
+    elif name == 'tool.execution_started':
+        yield 'tr_tool_started', {'execution_state': before['execution_state'], 'policy_decision': before['policy_decision'],
+                                  'schema_valid': before['schema_valid'], 'hooks_pass': before['hooks_pass']}
+    elif name == 'tool.invoked':
+        request = before['web_request']
+        meta = payload.get('meta')
+        both = request is not None and meta is not None
+        yield 'tr_tool_invoked', {
+            'request_present': request is not None, 'meta_present': meta is not None,
+            'tool_name': payload['tool_name'] if both else None, 'meta_tool_id': meta.get('tool_id') if both else None,
+            'web_mismatches': [k for k, v in request.items() if k != 'parent_event_id' and canonical(meta.get(k)) != canonical(v)] if both else [],
+            'dispatch_state': before['dispatch_state'], 'outcome_dispatch_state': outcome['dispatch_state'],
+            'copy_mismatches': copy_mismatches(payload, outcome, ['success', 'latency_ms', 'index_used', 'meta'], missing=True)}
+    elif name == 'usage.event':
+        yield 'tr_usage_a', {'previous': before['prior_settlement_status'], 'state': payload['settlement_status'],
+                             'prior_ref_truthy': bool(before['prior_usage_event_ref']),
+                             'settled_at_truthy': bool(payload.get('settled_at_utc')), 'adjusted_at_truthy': bool(payload.get('adjusted_at_utc'))}
+        yield 'tr_usage_b', {
+            'payload_parent_run_id': payload.get('parent_run_id'), 'before_parent_run_id': before['parent_run_id'],
+            'copy_mismatches': copy_mismatches(payload, before, ['usage_record_id', 'dedupe_key', 'provider_attempt_ref', 'parent_usage_record_id', 'account_id', 'billing_entity_id', 'provider_account_ref'], missing=True),
+            'raw_payload_ref': payload['raw_payload_ref'], 'observation_ref': before['observation_ref'],
+            'provider_payload_hash': payload['provider_payload_hash'], 'observation_sha256': before['observation_sha256']}
+        yield from usage_value_steps(payload)
+    elif name == 'worktree.created':
+        yield 'tr_worktree_created', {'before_state': before['allocation_state'], 'outcome_state': outcome['allocation_state'],
+                                      'copy_mismatches': copy_mismatches(payload, before, ['branch_name', 'worktree_path', 'repo_id', 'run_id', 'lane_id', 'package_id'], missing=True)}
+    elif name == 'worktree.deleted':
+        elapsed, grace = before['elapsed_grace_ms'], payload['grace_period_ms']
+        yield 'tr_worktree_deleted_a', {'before_state': before['allocation_state'], 'outcome_state': outcome['allocation_state'],
+                                        'elapsed_unsigned': unsigned_integer_valid(elapsed), 'grace_unsigned': unsigned_integer_valid(grace),
+                                        'elapsed': elapsed, 'grace': grace}
+        yield 'tr_worktree_deleted_b', {
+            'before_file_lock_checked': before['file_lock_checked'], 'payload_file_lock_checked': payload['file_lock_checked'],
+            'before_blockers': [k for k in ['active_lock_refs', 'safe_point_refs', 'terminal_session_refs', 'editor_session_refs', 'blocked_recovery_refs'] if before[k]],
+            'active_locks_truthy': bool(payload.get('active_lock_refs')), 'safe_points_truthy': bool(payload.get('safe_point_refs')),
+            'copy_mismatches': copy_mismatches(payload, before, ['repo_id', 'run_id', 'lane_id', 'package_id'], missing=True)}
+    else:
+        raise KeyError('no transition table for ' + name)
+
+
+TRANSITION_PHASES = frozenset({
+    'tool_request', 'tr_approval_requested', 'tr_approval_granted', 'tr_approval_denied', 'tr_approval_timeout',
+    'tr_config_migrated', 'gate_score', 'tr_gate_started', 'tr_gate_failed_a', 'tr_gate_failed_b', 'tr_gate_passed_a',
+    'tr_gate_passed_b', 'tr_requirements', 'tr_background', 'denial', 'tr_tool_denied', 'tr_tool_completed',
+    'tr_tool_started', 'tr_tool_invoked', 'tr_usage_a', 'tr_usage_b', 'usage_values_a', 'usage_values_b',
+    'tr_worktree_created', 'tr_worktree_deleted_a', 'tr_worktree_deleted_b'})
+
+
+def transition(name, payload, before, outcome):
+    """True when every owner transition row of the exact family passes."""
+    try:
+        run_steps(transition_steps(name, payload, before, outcome))
+    except TableRefusal:
+        return False
+    return True
+
+
+def gate_score_join(payload, before, outcome):
+    try:
+        run_steps(gate_score_steps(payload, before, outcome))
+    except TableRefusal:
+        return False
+    return True
+
+
+def denial_emission(before):
+    try:
+        run_steps(denial_steps(before))
+    except TableRefusal as refusal:
+        return refusal.code
+    return 'emit'
+
+
 def tool_request_join(payload, before):
-    if before['request_kind'] == 'tool':
-        return payload.get('tool_use_id') is not None and payload['tool_use_id'] == before['tool_use_id']
-    return 'tool_use_id' not in payload and before['tool_use_id'] is None
+    try:
+        run_steps(tool_request_steps(payload, before))
+    except TableRefusal:
+        return False
+    return True
 
 
 def usage_values_valid(p):
-    cost = p['cost']
-    if canonical(p['cost_microdollars']) != canonical(cost['cost_microdollars']):
-        return False
-    if any(canonical(p[k]) != canonical(cost[k]) for k in ['currency', 'cost_status', 'pricing_snapshot_id', 'pricing_source', 'pricing_effective_at', 'pricing_version']):
-        return False
-    if cost['cost_status'] == 'unknown' and (cost['cost_microdollars'] is not None or cost['cost_minor_units'] is not None):
-        return False
-    if cost['cost_status'] in ['hidden_subscription', 'hidden_byok'] and p['display_cost_policy'] == 'show':
-        return False
-    if cost['cost_status'] in ['priced', 'estimated'] and any(cost[k] is None for k in ['pricing_snapshot_id', 'pricing_source', 'pricing_effective_at', 'pricing_version']):
-        return False
-    quota = p['quota']
-    if quota['quota_status'] in ['unknown', 'disabled', 'not_exposed']:
-        if any(quota[k] is not None for k in ['quota_remaining', 'quota_used', 'quota_limit', 'reset_at', 'cooldown_until']):
-            return False
-    if quota.get('credits_status', 'unknown') in ['unknown', 'disabled', 'not_exposed'] and quota.get('credits_remaining') is not None:
-        return False
-    if quota['window_kind'] == 'unknown' and (quota['reset_at'] is not None or quota['cooldown_until'] is not None):
+    try:
+        run_steps(usage_value_steps(p))
+    except TableRefusal:
         return False
     return True
 
 
 def accounting_totals(p):
-    if any(type(p['counting_semantics'][k]) is not bool for k in ['cache_is_input_subset', 'reasoning_is_output_subset']):
-        raise ValueError('schema_refused')
     properties = load('Plans/dt_event_contracts.schema.json')['$defs']['usage_event']['properties']
-    if any(not Draft202012Validator(properties[k]).is_valid(p[k]) for k in ['input_total', 'output_total', 'cache_read', 'cache_write', 'reasoning', 'provider_total', 'cost_microdollars']):
-        raise ValueError('schema_refused')
+    numbers = ['input_total', 'output_total', 'cache_read', 'cache_write', 'reasoning', 'provider_total', 'cost_microdollars']
+    flags = nonbool(p['counting_semantics'], ['cache_is_input_subset', 'reasoning_is_output_subset'])
+    require('accounting', {'nonbool_flags': flags,
+                           'invalid_fields': [k for k in numbers if not Draft202012Validator(properties[k]).is_valid(p[k])]})
     # cache_write_1h is a subset of cache_write, never a second bucket.
     incoming, outgoing = p['input_total'], p['output_total']
     if incoming is not None and not p['counting_semantics']['cache_is_input_subset']:
@@ -434,179 +695,185 @@ def accounting_totals(p):
     return {'input': incoming, 'output': outgoing, 'provider_total': p['provider_total'], 'cost_microdollars': p['cost_microdollars']}
 
 
-def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, payload_ref_verified=False, *, historical=False):
-    if type(historical) is not bool:
-        return 'schema_refused'
-    if not Draft202012Validator(load('Plans/event_record.schema.json'), format_checker=FormatChecker()).is_valid(event):
-        return 'schema_refused'
-    if not historical and event['replay_policy'] != 'dedupe_by_idempotency_key':
-        return 'replay_only_not_appendable' if event['replay_policy'] == 'projector_replay_only' else 'join_refused'
-    if event['payload_ref'] is None:
+def source_steps(c, prepared, completed, event, schemas, resolved_payload, payload_ref_verified, historical):
+    yield 'src_envelope', {'historical_type': type_name(historical), 'event_schema_errors': event_schema_errors(event)}
+    yield 'src_replay', {'historical': historical, 'replay_policy': event['replay_policy']}
+    inline = event['payload_ref'] is None
+    size = None
+    if inline:
         try:
-            if len(application_bytes(event['payload'])) > 16384:
-                return 'payload_ref_required'
+            size = len(application_bytes(event['payload']))
         except ValueError:
-            return 'schema_refused'
+            size = None
+    yield 'src_inline', {'inline': inline, 'inline_size': size}
     slug = c['event_type'].replace('.', '_')
     source_is_app = completed['envelope_context']['scope_kind'] == 'application'
     source_definition = slug + ('_application_source' if source_is_app else '_source')
-    if source_definition not in schemas:
-        return 'scope_refused'
+    yield 'src_definition', {'definition_present': source_definition in schemas}
     validator = Draft202012Validator(schemas[source_definition], format_checker=FormatChecker())
-    if list(validator.iter_errors(prepared)) or list(validator.iter_errors(completed)):
-        return 'schema_refused'
-    if len(source_bytes(prepared)) > 1048576:
-        return 'source_stage_too_large'
-    if len(source_bytes(completed)) > 1048576:
-        return 'source_stage_too_large'
-    if prepared['stage'] != 'prepared' or completed['stage'] != 'completed' or completed['prepared_sha256'] != hashlib.sha256(source_bytes(prepared)).hexdigest():
-        return 'original_source_refused'
+    yield 'src_schema', {'prepared_errors': schema_error_count(validator, prepared), 'completed_errors': schema_error_count(validator, completed)}
+    yield 'src_size', {'prepared_size': len(source_bytes(prepared)), 'completed_size': len(source_bytes(completed))}
     immutable = (['application_scope', 'original_owner_operation_id', 'owner_operation_id'] if source_is_app else []) + ['storage_instance_id', 'scope_partition', 'event_type', 'event_id', 'idempotency_key', 'producer', 'owner_ref', 'owner_revision', 'subject', 'before', 'captured_at_utc', 'runtime_context']
-    if any(canonical(prepared[k]) != canonical(completed[k]) for k in immutable):
-        return 'original_source_refused'
     a, b = prepared['envelope_context'], completed['envelope_context']
-    if any(canonical(a[k]) != canonical(b[k]) for k in a if k != 'occurred_at_utc'):
-        return 'original_source_refused'
+    yield 'src_stage', {'prepared_stage': prepared['stage'], 'completed_stage': completed['stage']}
+    yield 'src_original', {'prepared_commitment': completed['prepared_sha256'], 'recomputed_commitment': source_digest(prepared),
+                           'immutable_mismatches': copy_mismatches(prepared, completed, immutable),
+                           'envelope_mismatches': [k for k in a if k != 'occurred_at_utc' and canonical(a[k]) != canonical(b[k])]}
     p = completed['payload']
     partition = partition_for(event)
-    if event['scope_kind'] != completed['envelope_context']['scope_kind']:
-        return 'scope_refused'
     # Application partition='app' is enforced by its schema; the immutable
-    # application_scope check binds the server, and the next guard binds the
-    # event partition. Avoid rechecking those same facts in a second predicate.
-    if partition != completed['scope_partition'] or (c['scope_policy'] == 'project_only' and event['scope_kind'] != 'project'):
-        return 'scope_refused'
-    if event['payload_ref'] is not None:
-        if payload_ref_verified is not True or canonical(resolved_payload) != canonical(p):
-            return 'payload_unavailable'
-    elif canonical(event['payload']) != canonical(p):
-        return 'join_refused'
+    # application_scope check binds the server, and SV18 binds the event partition.
+    yield 'src_scope', {'event_scope_kind': event['scope_kind'], 'captured_scope_kind': b['scope_kind'],
+                        'event_partition': partition, 'captured_partition': completed['scope_partition']}
+    yield 'src_project_only', {'scope_policy': c['scope_policy'], 'event_scope_kind': event['scope_kind']}
+    route = 'inline' if event['payload_ref'] is None else 'ref'
+    yield 'src_payload', {'route': route, 'payload_ref_verified': payload_ref_verified if route == 'ref' else None,
+                          'resolved_digest': value_digest(resolved_payload) if route == 'ref' else None,
+                          'event_payload_digest': value_digest(event['payload']) if route == 'inline' else None,
+                          'captured_payload_digest': value_digest(p)}
     # Scope has its own guard above; keep this join independent of that rule.
-    if any(canonical(event[k]) != canonical(b[k]) for k in b if k != 'scope_kind'):
-        return 'join_refused'
-    if event['event_type'] != c['event_type'] or event['payload_schema_id'] != c['payload_schema_id']:
-        return 'join_refused'
-    if any(canonical(p[k]) != canonical(completed['subject'][k]) for k in c['identity_fields']):
-        return 'join_refused'
+    yield 'src_join', {'envelope_copy_mismatches': [k for k in b if k != 'scope_kind' and canonical(event[k]) != canonical(b[k])],
+                       'event_type': event['event_type'], 'contract_event_type': c['event_type'],
+                       'payload_schema_id': event['payload_schema_id'], 'contract_payload_schema_id': c['payload_schema_id'],
+                       'subject_mismatches': [k for k in c['identity_fields'] if canonical(p[k]) != canonical(completed['subject'][k])]}
+    key, eid = identity(c, p, partition, completed if partition == 'app' else None)
+    yield 'src_identity', {'key': key, 'eid': eid, 'event_key': event['idempotency_key'], 'event_id': event['event_id'],
+                           'captured_key': completed['idempotency_key'], 'captured_event_id': completed['event_id']}
+    web = completed['before'].get('web_request') if c['event_type'] == 'tool.invoked' else None
+    yield 'src_context', {
+        'payload_envelope_mismatches': [k for k in ['run_id', 'thread_id', 'node_id', 'attempt_id', 'project_id'] if k in p and p[k] != event[k]],
+        'occurred_at_utc': event['occurred_at_utc'], 'payload_time': p.get('ts', p.get('observed_at_utc')),
+        'runtime_mismatches': [k for k, v in completed['runtime_context'].items() if canonical(p.get(k)) != canonical(v)],
+        'family': c['event_type'], 'usage_event_ref': p['usage_event_ref'] if c['event_type'] == 'usage.event' else None,
+        'event_id': event['event_id'], 'web_parent_applies': web is not None, 'event_parent_event_id': event['parent_event_id'],
+        'web_parent_event_id': web.get('parent_event_id') if web is not None else None}
+    yield from transition_steps(c['event_type'], p, completed['before'], completed['owner_result'])
+
+
+def source_valid(c, prepared, completed, event, schemas, resolved_payload=None, payload_ref_verified=False, *, historical=False):
     try:
-        key, eid = identity(c, p, partition, completed if partition == 'app' else None)
-    except ValueError:
-        return 'identity_refused'
-    if key != event['idempotency_key'] or eid != event['event_id'] or key != completed['idempotency_key'] or eid != completed['event_id']:
-        return 'identity_refused'
-    for k in ['run_id', 'thread_id', 'node_id', 'attempt_id', 'project_id']:
-        if k in p and p[k] != event[k]:
-            return 'join_refused'
-    if event['occurred_at_utc'] != p.get('ts', p.get('observed_at_utc')):
-        return 'join_refused'
-    if any(canonical(p.get(k)) != canonical(v) for k, v in completed['runtime_context'].items()):
-        return 'join_refused'
-    if c['event_type'] == 'usage.event' and p['usage_event_ref'] != event['event_id']:
-        return 'join_refused'
-    if c['event_type'] == 'tool.invoked' and completed['before']['web_request'] is not None and event['parent_event_id'] != completed['before']['web_request'].get('parent_event_id'):
-        return 'join_refused'
-    if not transition(c['event_type'], p, completed['before'], completed['owner_result']):
-        return 'transition_refused'
+        run_steps(source_steps(c, prepared, completed, event, schemas, resolved_payload, payload_ref_verified, historical))
+    except TableRefusal as refusal:
+        if refusal.phase == 'id_inputs':
+            return 'identity_refused'
+        if refusal.phase in TRANSITION_PHASES:
+            return 'transition_refused'
+        return refusal.code
     return 'accepted'
 
 
-def batch_join(parent, children):
+def batch_steps(parent, children):
     p = parent['event']['payload']; pm = p['meta']
-    if pm.get('batch_role') != 'parent' or not children:
-        return False
-    if pm['child_tool_use_ids'] != [v['event']['payload']['tool_use_id'] for v in children] or len(set(pm['child_tool_use_ids'])) != len(children):
-        return False
-    if any(type(child['event']['payload']['success']) is not bool for child in children):
-        return False
-    for child in children:
+    declared = pm['child_tool_use_ids']
+    yield 'batch_parent', {'parent_role': pm.get('batch_role'), 'child_count': len(children),
+                           'declared_child_ids': declared, 'child_ids': [v['event']['payload']['tool_use_id'] for v in children],
+                           'distinct_declared': len(set(declared)),
+                           'nonbool_success': [i for i, child in enumerate(children) if type(child['event']['payload']['success']) is not bool]}
+    facts = {k: [] for k in ['role_bad', 'batch_id_bad', 'parent_tool_bad', 'parent_event_bad', 'attempt_ref_missing', 'tool_reused', 'envelope_bad']}
+    for index, child in enumerate(children):
         e = child['event']; q = e['payload']; cm = q['meta']
-        if cm.get('batch_role') != 'child' or cm['batch_id'] != pm['batch_id'] or cm['parent_tool_use_id'] != p['tool_use_id'] or e['parent_event_id'] != parent['event']['event_id'] or not q.get('provider_attempt_ref') or q['tool_use_id'] == p['tool_use_id']:
-            return False
-        if any(e[k] != parent['event'][k] for k in ['run_id', 'attempt_id', 'project_id', 'scope_kind']):
-            return False
-    return p['success'] is all(v['event']['payload']['success'] for v in children)
+        for key, bad in [('role_bad', cm.get('batch_role') != 'child'), ('batch_id_bad', cm['batch_id'] != pm['batch_id']),
+                         ('parent_tool_bad', cm['parent_tool_use_id'] != p['tool_use_id']),
+                         ('parent_event_bad', e['parent_event_id'] != parent['event']['event_id']),
+                         ('attempt_ref_missing', not q.get('provider_attempt_ref')), ('tool_reused', q['tool_use_id'] == p['tool_use_id']),
+                         ('envelope_bad', any(e[k] != parent['event'][k] for k in ['run_id', 'attempt_id', 'project_id', 'scope_kind']))]:
+            if bad:
+                facts[key].append(index)
+    yield 'batch_child', facts
+    yield 'batch_success', {'parent_success': p['success'], 'children_succeeded': all(v['event']['payload']['success'] for v in children)}
+
+
+def batch_join(parent, children):
+    try:
+        run_steps(batch_steps(parent, children))
+    except TableRefusal:
+        return False
+    return True
 
 
 def recovery(c, f, case, schemas=None):
     """Original-owner/receipt adapters are supplied witnesses, not native authentication."""
-    if case.get('replay_policy', f['event_record']['replay_policy']) == 'projector_replay_only':
-        return {'result': 'replay_only_not_appendable', 'external_effects': 0, 'append_count': 0, 'value': None}
-    if type(case['admitted']) is not bool or not case['admitted']:
-        return {'result': 'admission_refused', 'external_effects': 0, 'append_count': 0, 'value': None}
-    if any(type(case[k]) is not bool for k in ['source_present', 'owner_proven', 'backup_coherent', 'permission', 'deleted']) or not case['source_present'] or not case['owner_proven'] or not case['backup_coherent'] or not case['permission'] or case['deleted']:
-        return {'result': 'unavailable', 'external_effects': 0, 'append_count': 0, 'value': None}
-    if type(case['outcome_committed']) is not bool or not case['outcome_committed']:
-        return {'result': 'fenced', 'external_effects': 0, 'append_count': 0, 'value': None}
-    unavailable = {'result': 'unavailable', 'external_effects': 0, 'append_count': 0, 'value': None}
+    try:
+        return recovery_flow(c, f, case, schemas)
+    except TableRefusal as refusal:
+        return {'result': refusal.code, 'external_effects': 0, 'append_count': 0, 'value': None}
+
+
+def recovery_flow(c, f, case, schemas):
+    admitted = case['admitted']
+    require('rec_gate', {'replay_policy': case.get('replay_policy', f['event_record']['replay_policy']),
+                         'admitted_type': type_name(admitted), 'admitted': admitted})
+    flags = ['source_present', 'owner_proven', 'backup_coherent', 'permission', 'deleted']
+    require('rec_custody', dict({'nonbool_flags': nonbool(case, flags)}, **{k: case[k] for k in flags}))
     schemas = load('Plans/dt_event_contracts.schema.json')['$defs'] if schemas is None else schemas
     prepared, completed, event = (f[key] for key in ['prepared_source', 'completed_source', 'event_record'])
     original = f['recovery_original']  # Frozen owner/Storage adapter observations.
-    if not Draft202012Validator(load('Plans/event_record.schema.json'), format_checker=FormatChecker()).is_valid(event):
-        return unavailable
+    require('rec_commit', {'committed_type': type_name(case['outcome_committed']), 'outcome_committed': case['outcome_committed'],
+                           'event_schema_errors': event_schema_errors(event)})
+    # The complete source chain decides the candidate; its refusal is a source row.
     if source_valid(c, prepared, completed, event, schemas,
                     case.get('resolved_payload'), case.get('payload_ref_verified', False)) != 'accepted':
-        return unavailable
-    if source_bytes(prepared) != source_bytes(original['prepared']) or source_bytes(completed) != source_bytes(original['completed']):
-        return unavailable
-    if canonical(event) != canonical(original['event']):
-        return unavailable
-    if type(case['completed_present']) is not bool or type(case['append_issued']) is not bool:
-        return unavailable
+        return {'result': 'unavailable', 'external_effects': 0, 'append_count': 0, 'value': None}
+    require('rec_original', {'prepared_digest': source_digest(prepared), 'original_prepared_digest': source_digest(original['prepared']),
+                             'completed_digest': source_digest(completed), 'original_completed_digest': source_digest(original['completed']),
+                             'event_digest': value_digest(event), 'original_event_digest': value_digest(original['event']),
+                             'nonbool_stage_flags': nonbool(case, ['completed_present', 'append_issued'])})
     if not case['completed_present']:
         # Only finalize from the authenticated original outcome; never rerun it.
         return {'result': 'finalize_original', 'external_effects': 0, 'append_count': 0, 'value': f['completed_source']}
     if not case['append_issued']:
         return {'result': 'append_original', 'external_effects': 0, 'append_count': 1, 'value': f['event_record']}
-    if any(type(case[k]) is not bool for k in ['receipt_custody', 'full_flush']) or not case['receipt_custody'] or not case['full_flush']:
-        return {'result': 'fenced', 'external_effects': 0, 'append_count': 0, 'value': None}
+    receipt_flags = ['receipt_custody', 'full_flush']
+    require('rec_receipt', dict({'nonbool_receipt_flags': nonbool(case, receipt_flags)}, **{k: case[k] for k in receipt_flags}))
     receipt = f['first_append_receipt']
-    if canonical([receipt['event_id'], receipt['sequence_id']]) != canonical([event['event_id'], event['sequence_id']]):
-        return unavailable
-    if canonical(receipt) != canonical(original['receipt']):
-        return unavailable
+    require('rec_receipt_join', {'receipt_event_id': canonical_text(receipt['event_id']), 'event_event_id': canonical_text(event['event_id']),
+                                 'receipt_sequence_id': canonical_text(receipt['sequence_id']), 'event_sequence_id': canonical_text(event['sequence_id']),
+                                 'receipt_digest': value_digest(receipt), 'original_receipt_digest': value_digest(original['receipt'])})
     return {'result': 'original', 'external_effects': 0, 'append_count': 0, 'value': {'event': f['event_record'], 'receipt': f['first_append_receipt']}}
 
 
-def checkpoint_result(c, old, proposed, context, schema):
-    if old is not None and not Draft202012Validator(schema, format_checker=FormatChecker()).is_valid(old):
-        return 'schema_refused'
-    if type(context['governed_rebuild']) is not bool:
-        return 'unavailable'
-    if list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(proposed)):
-        return 'schema_refused'
-    if any(type(context[k]) is not bool for k in ['admitted', 'reader_installed', 'withdrawn', 'permission', 'deleted']) or not context['admitted'] or not context['reader_installed'] or context['withdrawn'] or not context['permission'] or context['deleted']:
-        return 'unavailable'
-    if type(context['lease_current']) is not bool or canonical(context['expected_previous']) != canonical(old) or not context['lease_current']:
-        return 'cas_lost'
-    if canonical(proposed['index_read_token']) != canonical(context['current_token']):
-        return 'source_changed'
+def checkpoint_steps(c, old, proposed, context, schema):
+    validator = Draft202012Validator(schema, format_checker=FormatChecker())
+    yield 'cp_schema', {'previous_present': old is not None, 'previous_errors': schema_error_count(validator, old) if old is not None else 0,
+                        'governed_type': type_name(context['governed_rebuild']), 'proposed_errors': schema_error_count(validator, proposed)}
+    flags = ['admitted', 'reader_installed', 'withdrawn', 'permission', 'deleted']
+    yield 'cp_lifecycle', dict({'nonbool_flags': nonbool(context, flags)}, **{k: context[k] for k in flags})
+    yield 'cp_cas', {'lease_type': type_name(context['lease_current']), 'lease_current': context['lease_current'],
+                     'expected_previous_digest': value_digest(context['expected_previous']), 'previous_digest': value_digest(old)}
     t = proposed['index_read_token']
-    if t['storage_instance_id'] != context['source_storage_instance_id']:
-        return 'source_changed'
-    if proposed['storage_instance_id'] != t['storage_instance_id'] or t['source_selection']['storage_instance_id'] != t['storage_instance_id']:
-        return 'source_changed'
-    if t['checkpoint_key'] != 'event_record_index_checkpoint.v1:' + t['storage_instance_id'] or t['checkpoint_ref'] != t['checkpoint_key'] + '#/generations/' + t['generation_id'] or t['index_dataset_name'] != 'event_record_index.v2@' + t['generation_id']:
-        return 'source_changed'
-    if any(type(context[k]) is not bool for k in ['source_verified', 'coverage_complete', 'versions_supported']) or proposed['scope_partition'] != context['scope_partition'] or not context['source_verified'] or not context['coverage_complete'] or not context['versions_supported']:
-        return 'unavailable'
+    yield 'cp_token', {'token_digest': value_digest(t), 'current_token_digest': value_digest(context['current_token']),
+                       'token_storage': t['storage_instance_id'], 'source_storage': context['source_storage_instance_id'],
+                       'proposed_storage': proposed['storage_instance_id'], 'selection_storage': t['source_selection']['storage_instance_id'],
+                       'checkpoint_key': t['checkpoint_key'], 'expected_key': 'event_record_index_checkpoint.v1:' + t['storage_instance_id'],
+                       'checkpoint_ref': t['checkpoint_ref'], 'expected_ref': t['checkpoint_key'] + '#/generations/' + t['generation_id'],
+                       'dataset_name': t['index_dataset_name'], 'expected_dataset': 'event_record_index.v2@' + t['generation_id']}
+    flags = ['source_verified', 'coverage_complete', 'versions_supported']
+    yield 'cp_source', dict({'nonbool_flags': nonbool(context, flags), 'proposed_partition': proposed['scope_partition'],
+                             'context_partition': context['scope_partition']}, **{k: context[k] for k in flags})
     rows = context['source_rows']
-    if type(rows) is not list or any(type(row) is not dict or not unsigned_integer_valid(row.get('sequence_id')) or any(type(row.get(k)) is not str or not row[k] for k in ['event_type', 'event_id', 'scope_partition']) for row in rows):
-        return 'unavailable'
-    prefix = context['verified_prefix']
+    objects = [row for row in rows if type(row) is dict] if type(rows) is list else []
+    yield 'cp_rows', {'rows_type': type_name(rows), 'non_object_rows': len(rows) - len(objects) if type(rows) is list else 0,
+                      'bad_sequence_rows': sum(1 for row in objects if not unsigned_integer_valid(row.get('sequence_id'))),
+                      'bad_string_rows': sum(1 for row in objects if any(type(row.get(k)) is not str or not row[k] for k in ['event_type', 'event_id', 'scope_partition']))}
     expected_prefix = {'index_read_token': proposed['index_read_token'], 'row_set_sha256': sha(rows), 'row_count': len(rows), 'first_sequence_id': rows[0]['sequence_id'] if rows else None, 'through_sequence_id': rows[-1]['sequence_id'] if rows else None}
-    if canonical(prefix) != canonical(expected_prefix):
-        return 'unavailable'
+    yield 'cp_prefix', {'prefix_digest': value_digest(context['verified_prefix']), 'expected_prefix_digest': value_digest(expected_prefix)}
     through = rows[-1]['sequence_id'] if rows else None
     matches = [r for r in rows if r['event_type'] == c['event_type'] and r['scope_partition'] == proposed['scope_partition']]
-    last = matches[-1]['event_id'] if matches else None
-    if canonical(proposed['examined_through_sequence_id']) != canonical(through) or proposed['last_applied_event_id'] != last or not proposed['filter_complete']:
-        return 'coverage_refused'
-    if proposed['state'] != 'current' or proposed['health'] != 'healthy' or proposed['withdrawn_at_utc'] is not None:
-        return 'unavailable'
-    if old and old['state'] == 'withdrawn' and not context['governed_rebuild']:
-        return 'unavailable'
-    if old and old['examined_through_sequence_id'] is not None and (through is None or through < old['examined_through_sequence_id']) and not context['governed_rebuild']:
-        return 'coverage_refused'
+    yield 'cp_coverage', {'examined_through': canonical_text(proposed['examined_through_sequence_id']), 'through': canonical_text(through),
+                          'last_applied_event_id': proposed['last_applied_event_id'],
+                          'last_matching_event_id': matches[-1]['event_id'] if matches else None,
+                          'filter_complete_truthy': bool(proposed['filter_complete'])}
+    yield 'cp_state', {'state': proposed['state'], 'health': proposed['health'], 'withdrawn_at_utc': proposed['withdrawn_at_utc'],
+                       'previous_truthy': bool(old), 'previous_state': old['state'] if old else None,
+                       'governed_rebuild': context['governed_rebuild'],
+                       'previous_examined': old['examined_through_sequence_id'] if old else None, 'global_through': through}
+
+
+def checkpoint_result(c, old, proposed, context, schema):
+    try:
+        run_steps(checkpoint_steps(c, old, proposed, context, schema))
+    except TableRefusal as refusal:
+        return refusal.code
     return 'published'
 
 
@@ -619,16 +886,18 @@ def historical_read(c, prepared, completed, event, schemas, context):
     about whether an earlier operation was valid at its original occurrence.
     """
     unavailable = {'result': 'unavailable', 'value': None, 'external_effects': 0, 'append_count': 0}
-    if (any(type(context[k]) is not bool for k in ['reader_installed', 'withdrawn', 'permission', 'deleted', 'source_present', 'owner_proven', 'versions_supported']) or not context['reader_installed'] or context['withdrawn'] or not context['permission']
-            or context['deleted'] or not context['source_present'] or not context['owner_proven']
-            or not context['versions_supported']):
+    flags = ['reader_installed', 'withdrawn', 'permission', 'deleted', 'source_present', 'owner_proven', 'versions_supported']
+    try:
+        require('hr_flags_a', dict({'nonbool_flags': nonbool(context, flags)}, **{k: context[k] for k in flags[:4]}))
+        require('hr_flags_b', {k: context[k] for k in flags[4:]})
+        original = context['authenticated_original']
+        require('hr_original', {'prepared_digest': source_digest(prepared), 'original_prepared_digest': source_digest(original['prepared']),
+                                'completed_digest': source_digest(completed), 'original_completed_digest': source_digest(original['completed']),
+                                'event_digest': value_digest(event), 'original_event_digest': value_digest(original['event']),
+                                'event_schema_errors': event_schema_errors(event)})
+    except TableRefusal:
         return unavailable
-    if (source_bytes(prepared) != source_bytes(context['authenticated_original']['prepared'])
-            or source_bytes(completed) != source_bytes(context['authenticated_original']['completed'])
-            or canonical(event) != canonical(context['authenticated_original']['event'])):
-        return unavailable
-    if not Draft202012Validator(load('Plans/event_record.schema.json'), format_checker=FormatChecker()).is_valid(event):
-        return unavailable
+    # The complete source chain in historical mode; its refusal is a source row.
     if source_valid(c, prepared, completed, event, schemas,
                     context.get('resolved_payload'), context.get('payload_ref_verified', False), historical=True) != 'accepted':
         return unavailable
@@ -915,7 +1184,7 @@ def technical_checks(c, f, schemas, check):
                 check(append_model(seen, ee['idempotency_key'], producer_semantic_digest(ee), None) == ('original', result) and len(seen) == 1,
                       name + ': equal integer retry returns original')
                 check(source_valid(c, *[decode_source(canonical(v)) for v in [aa, bb, ee]], schemas) == 'accepted', name + ': float integer canonical round trip')
-                check(not Draft202012Validator(schemas[slug], format_checker=FormatChecker()).is_valid(replace_sequence(e['payload'], 1.25)), name + ': fractional identity refused')
+                check(not schema_accepts(Draft202012Validator(schemas[slug], format_checker=FormatChecker()), replace_sequence(e['payload'], 1.25)), name + ': fractional identity refused')
         for integer in [9007199254740992, 18446744073709549568]:
             values = [f[k] for k in ['prepared_source', 'completed_source', 'event_record']]
             integers = recommit(c, replace_sequence(values, integer))
@@ -1182,7 +1451,89 @@ def round6_checks(c, f, schemas, check):
         else:
             check(actual not in accepting if isinstance(accepting, set) else actual != accepting, name + ': round6 ' + label)
     for definition, label, value in schema_type_cases(c, f, schemas):
-        check(not Draft202012Validator(schemas[definition], format_checker=FormatChecker()).is_valid(value), name + ': numeric/boolean schema ' + label)
+        check(not schema_accepts(Draft202012Validator(schemas[definition], format_checker=FormatChecker()), value), name + ': numeric/boolean schema ' + label)
+
+
+def table_witness_checks(c, f, schemas, check):
+    """Sweep part 2A: single-defect witnesses for table rows no earlier case reached.
+
+    Each case changes one fact of a valid base (refreshing only the derived
+    commitments that observe it) and asserts the exact refusal of its own row.
+    """
+    name = c['event_type']; slug = name.replace('.', '_')
+    a, b, e = copy.deepcopy([f[k] for k in ['prepared_source', 'completed_source', 'event_record']])
+    # SV04: a current writer appends only dedupe_by_idempotency_key.
+    for policy in ['append_once', 'dedupe_by_event_id']:
+        check(source_valid(c, a, b, dict(e, replay_policy=policy), schemas) == 'join_refused', name + ': table SV04 current writer ' + policy)
+    # SV05: an inline body CV-366 MessagePack cannot encode (signed integer below int64).
+    bad = copy.deepcopy(e); bad['payload'][next(iter(bad['payload']))] = -(2 ** 63) - 1
+    check(source_valid(c, a, b, bad, schemas) == 'schema_refused', name + ': table SV05 unencodable inline body')
+    # SV07: a project-only family has no application source definition.
+    if c['scope_policy'] == 'project_only':
+        bad = copy.deepcopy(b); bad['envelope_context']['scope_kind'] = 'application'
+        check(source_valid(c, a, bad, e, schemas) == 'scope_refused', name + ': table SV07 application capture of a project-only family')
+    # SV08/SV09: one stage only carries an unknown property.
+    x, y = copy.deepcopy((a, b)); x['unexpected'] = 'refused'; y['prepared_sha256'] = source_digest(x)
+    check(source_valid(c, x, y, e, schemas) == 'schema_refused', name + ': table SV08 prepared stage unknown property')
+    y = copy.deepcopy(b); y['unexpected'] = 'refused'
+    check(source_valid(c, a, y, e, schemas) == 'schema_refused', name + ': table SV09 completed stage unknown property')
+    # SV29/SV30: the captured key or event id differs from the recomputed identity (both stages, coherent).
+    for field, value in [('idempotency_key', b['idempotency_key'][:-1] + ('0' if b['idempotency_key'][-1] != '0' else '1')),
+                         ('event_id', b['event_id'][:-1] + ('0' if b['event_id'][-1] != '0' else '1'))]:
+        x, y = copy.deepcopy((a, b)); x[field] = y[field] = value; y['prepared_sha256'] = source_digest(x)
+        check(source_valid(c, x, y, e, schemas) == 'identity_refused', name + ': table captured ' + field)
+    # SV27/SV28: only the event copy differs.
+    for field, value in [('idempotency_key', e['idempotency_key'][:-1] + ('0' if e['idempotency_key'][-1] != '0' else '1')),
+                         ('event_id', e['event_id'][:-1] + ('0' if e['event_id'][-1] != '0' else '1'))]:
+        bad = dict(e, **{field: value})
+        check(source_valid(c, a, b, bad, schemas) == 'identity_refused', name + ': table event ' + field)
+    # ID02: an application partition without its original application identity.
+    try:
+        identity(c, b['payload'], 'app', None); refused = None
+    except TableRefusal as refusal:
+        refused = refusal.row
+    check(refused == 'ID02_application_present', name + ': table ID02 application identity absent')
+    # AM01: a retry key that is not exactly a str.
+    for value in [1, True, None, [], {}]:
+        check(append_model({}, value, producer_semantic_digest(e), None) == ('schema_refused', None), name + ': table AM01 key ' + repr(value))
+    # CP26: one verified source row is not an object.
+    case = copy.deepcopy(f['checkpoint_cases'][0])
+    if case['context']['source_rows']:
+        case['context']['source_rows'][0] = 'row'
+        check(checkpoint_result(c, case['previous'], case['proposed'], case['context'], schemas[slug + '_checkpoint']) == 'unavailable',
+              name + ': table CP26 non-object source row')
+    # HR09: only the authenticated prepared original differs.
+    forged = copy.deepcopy(a); forged['owner_ref'] += '-forged'
+    ctx = dict(f['historical_reader_oracle']['context'], live_before=None,
+               authenticated_original={'prepared': forged, 'completed': b, 'event': e})
+    check(historical_read(c, a, b, e, schemas, ctx)['result'] == 'unavailable', name + ': table HR09 authenticated prepared original')
+    # DS02: source bytes that are not strict UTF-8.
+    try:
+        decode_source(b'\xff'); refused = None
+    except TableRefusal as refusal:
+        refused = refusal.row
+    check(refused == 'DS02_utf8', name + ': table DS02 invalid UTF-8 source')
+    # RT02/RT04: an eligible retained record that is too young, or still has a dependent.
+    for case in f['retention_cases']:
+        if case['expected_eligible']:
+            value = case['input']
+            anchor = value.get('run_completed_at') or value.get('terminal_at')
+            check(retention_eligible(dict(value, now=anchor)) is False, name + ': table RT02 too young ' + case['case'])
+            check(retention_eligible(dict(value, dependent=True)) is False, name + ': table RT04 dependent ' + case['case'])
+    if name == 'tool.invoked':
+        parent = copy.deepcopy(next(v for v in f['positive_variants'] if v['case'] == 'batch_parent'))
+        children = [copy.deepcopy(next(v for v in f['positive_variants'] if v['case'] == label)) for label in ['batch_url_1', 'batch_url_2']]
+        check(batch_join(parent, children), name + ': table batch control')
+        empty = copy.deepcopy(parent); empty['event']['payload']['meta']['child_tool_use_ids'] = []
+        check(not batch_join(empty, []), name + ': table BJ02 parent with no children')
+        twice = copy.deepcopy(parent); twice['event']['payload']['meta']['child_tool_use_ids'] = [children[0]['event']['payload']['tool_use_id']] * 2
+        check(not batch_join(twice, [children[0], copy.deepcopy(children[0])]), name + ': table BJ04 child named twice')
+        role = copy.deepcopy(children); role[0]['event']['payload']['meta']['batch_role'] = 'parent'
+        check(not batch_join(parent, role), name + ': table BJ06 child role')
+        reused = copy.deepcopy(children); same = copy.deepcopy(parent)
+        reused[0]['event']['payload']['tool_use_id'] = parent['event']['payload']['tool_use_id']
+        same['event']['payload']['meta']['child_tool_use_ids'][0] = parent['event']['payload']['tool_use_id']
+        check(not batch_join(same, reused), name + ': table BJ11 child reuses the parent tool_use_id')
 
 
 def checker_exit_code(failures):
@@ -1287,7 +1638,7 @@ def standing_results(c, f, schemas):
     results['2'] = {'application_cases': app_results}
     if not app:
         bad_source = copy.deepcopy(a); bad_source['envelope_context']['scope_kind'] = 'application'
-        results['2']['forbidden_application_scope'] = 'schema_refused' if not Draft202012Validator(schemas[slug + '_source'], format_checker=FormatChecker()).is_valid(bad_source) else 'accepted'
+        results['2']['forbidden_application_scope'] = 'schema_refused' if not schema_accepts(Draft202012Validator(schemas[slug + '_source'], format_checker=FormatChecker()), bad_source) else 'accepted'
     aa, bb = copy.deepcopy((a, b)); aa['scope_partition'] = bb['scope_partition'] = e['project_id']
     bb['prepared_sha256'] = hashlib.sha256(source_bytes(aa)).hexdigest()
     project_cases = [(b, e)] + [(v['completed'], v['event']) for v in f['positive_variants'] if v['event']['scope_kind'] == 'project']
@@ -1335,13 +1686,227 @@ def standing_results(c, f, schemas):
     return results
 
 
-def main():
-    contracts = load('Plans/dt_event_contracts.json')['families']
+def retention_eligible(value):
+    """Retention eligibility of one retained record; ineligibility is a retention row."""
+    anchor, days = (value.get('run_completed_at'), 365) if value['policy'] == 'RP-RUNTIME-365D' else (value.get('terminal_at'), 2555) if value['policy'] == 'RP-OPERATIONAL-2555D' else (None, None)
+    return table_refusal('retention', {
+        'anchor_present': anchor is not None, 'required_days': days,
+        'age_days': (time_value(value['now']) - time_value(anchor)).days if anchor is not None else None,
+        'held_truthy': bool(value['held']), 'dependent_truthy': bool(value['dependent'])}) is None
+
+
+def projection_outcome(case):
+    refusal = table_refusal('projection_retention', {'held_count': len(case['held_generations']),
+                                                     'existing_generations': case['existing_generations']})
+    return 'retire_unheld_derived_only' if refusal is None else refusal[1]
+
+
+def references_refusal(errors):
+    return table_refusal('references', {'unresolved': len(errors)})
+
+
+def checker_inputs():
     schema_document = load('Plans/dt_event_contracts.schema.json')
-    schemas = schema_document['$defs']
-    fixtures = {f['event_type']: f for f in load('Plans/dt_event_contract_fixtures.json')['families']}
-    registered = {f['event_type'] for f in load('Plans/event_family_registry.json')['families']}
     storage_schemas = {f['value_schema_ref']: f for f in load('Plans/storage_value_registry.json')['families']}
+    event_schema = load('Plans/event_record.schema.json')
+    return {'contracts': load('Plans/dt_event_contracts.json')['families'], 'schema_document': schema_document,
+            'schemas': schema_document['$defs'],
+            'fixtures': {f['event_type']: f for f in load('Plans/dt_event_contract_fixtures.json')['families']},
+            'registered': {f['event_type'] for f in load('Plans/event_family_registry.json')['families']},
+            'storage_schemas': storage_schemas, 'event_schema': event_schema,
+            'event_validator': Draft202012Validator(event_schema, format_checker=FormatChecker()),
+            'documents': {'Plans/dt_event_contracts.schema.json': schema_document, 'Plans/event_record.schema.json': event_schema},
+            'mirrors': [(row['family_id'], row['value_schema'], ref) for ref, row in storage_schemas.items()
+                        if ref.startswith('Plans/dt_event_contracts.schema.json#')]}
+
+
+def family_checks(c, inputs, check):
+    """Every per-family oracle check; returns the family's standing-check results."""
+    schemas, storage_schemas, registered = inputs['schemas'], inputs['storage_schemas'], inputs['registered']
+    event_validator = inputs['event_validator']
+    name = c['event_type']; slug = name.replace('.', '_'); f = inputs['fixtures'][name]; p = f['valid_payload']
+    for definition in [slug + '_checkpoint', slug + '_source', slug + '_application_source']:
+        if definition in schemas:
+            ref = 'Plans/dt_event_contracts.schema.json#/$defs/' + definition
+            check(storage_schemas[ref]['value_schema'] == schemas[definition], name + ': exact Storage schema mirror ' + definition)
+    identifier_checks(c, f, schemas, check)
+    technical_checks(c, f, schemas, check)
+    round6_checks(c, f, schemas, check)
+    table_witness_checks(c, f, schemas, check)
+    standing = standing_results(c, f, schemas)
+    for number in map(str, range(1, 11)):
+        check(standing[number] == f['standing_check_oracles'][number], name + ': standing check ' + number)
+    validator = Draft202012Validator(schemas[slug], format_checker=FormatChecker())
+    check(schema_accepts(validator, p), name + ': positive payload')
+    check(name not in registered, name + ': no registry admission')
+    for key in f['required_field_negatives']:
+        negative = copy.deepcopy(p); del negative[key]
+        check(not schema_accepts(validator, negative), name + ': missing payload ' + key)
+    for key, val in [('unexpected', 'refused'), ('schema_id', 'wrong'), ('schema_version', '2.0.0')]:
+        check(not schema_accepts(validator, dict(p, **{key: val})), name + ': invalid payload ' + key)
+    prep, done, event = f['prepared_source'], f['completed_source'], f['event_record']
+    check(schema_accepts(event_validator, event), name + ': complete current EventRecord envelope')
+    check(source_valid(c, prep, done, event, schemas) == 'accepted', name + ': original source accepted')
+    for stage in [prep, done]:
+        check(decode_source(canonical(stage)) == stage, name + ': source canonical bytes')
+        sc = schemas[slug + '_source']; Draft202012Validator.check_schema(sc)
+        sv = Draft202012Validator(sc, format_checker=FormatChecker())
+        for key in sc['required']:
+            bad = copy.deepcopy(prep if key == 'stage' else stage); del bad[key]
+            check(not schema_accepts(sv, bad), name + ': missing source ' + key)
+        check(not schema_accepts(sv, dict(stage, unexpected='refused')), name + ': closed source')
+    check(sha(prep) == f['source_byte_oracle']['prepared_sha256'], name + ': pinned original source digest')
+    check(canonical(prep).hex() == f['source_byte_oracle']['prepared_hex'], name + ': pinned original source bytes')
+    for case in f['semantic_negatives']:
+        base, negative = semantic_case(f, case)
+        check(source_valid(c, *base, schemas) == 'accepted', name + ': valid semantic base ' + case['case'])
+        check(source_valid(c, *negative, schemas) == case['expected'], name + ': ' + case['case'])
+    ref_event = copy.deepcopy(event); ref_event['payload'] = {}; ref_event['payload_ref'] = 'payload:fixture-verified-pack-body'
+    check(source_valid(c, prep, done, ref_event, schemas, p, True) == 'accepted', name + ': separately governed payload resolves before joins')
+    check(source_valid(c, prep, done, ref_event, schemas, p, False) == 'payload_unavailable', name + ': unverified pack body unavailable')
+    check(source_valid(c, prep, done, ref_event, schemas, {}, True) == 'payload_unavailable', name + ': changed pack body unavailable')
+    bad_scope = copy.deepcopy(prep); bad_scope['envelope_context']['scope_kind'] = 'application'
+    check(not schema_accepts(sv, bad_scope), name + ': source schema refuses wrong envelope scope')
+    for field, value in [('project_id', 'wrong-project'), ('run_id', 'wrong-run'), ('actor_ref', 'wrong-actor')]:
+        base, negative = envelope_case(c, f, field, value)
+        check(source_valid(c, *base, schemas) == 'accepted', name + ': valid envelope base ' + field)
+        check(source_valid(c, *negative, schemas) != 'accepted', name + ': wrong envelope ' + field)
+    for field in c['identity_fields']:
+        a, bad = copy.deepcopy((prep, done)); v = bad['subject'][field]
+        a['subject'][field] = bad['subject'][field] = v + 1 if isinstance(v, int) else v + '-other'
+        bad['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
+        check(source_valid(c, a, bad, event, schemas) != 'accepted', name + ': wrong source subject ' + field)
+    for case in f['positive_variants']:
+        check(schema_accepts(event_validator, case['event']), name + ': variant complete envelope ' + case['case'])
+        check(source_valid(c, case['prepared'], case['completed'], case['event'], schemas) == 'accepted', name + ': ' + case['case'])
+    for case in f.get('source_join_negatives', []):
+        check(source_valid(c, case['prepared'], case['completed'], case['event'], schemas) == case['expected'], name + ': ' + case['case'])
+    replay = copy.deepcopy(event); replay['replay_policy'] = 'projector_replay_only'
+    check(source_valid(c, prep, done, replay, schemas) == 'replay_only_not_appendable', name + ': current writer refuses compatibility-only replay policy')
+    retry = dict(f['recovery_cases'][0]['input'], replay_policy='projector_replay_only')
+    check(recovery(c, f, retry, schemas) == {'result': 'replay_only_not_appendable', 'external_effects': 0, 'append_count': 0, 'value': None}, name + ': retry refuses compatibility-only replay policy')
+    large = oversized_inline(c, f)
+    check(schema_accepts(validator, large[2]['payload']) and schema_accepts(event_validator, large[2]), name + ': oversized closure retains valid payload/envelope schemas')
+    check(source_valid(c, *large, schemas) == 'payload_ref_required', name + ': inline body over SP-337 limit requires payload ref')
+    for case in f.get('application_identity_negatives', []):
+        original = next(v for v in f['positive_variants'] if v['case'] == 'authenticated_application_source')
+        a, b, e = (copy.deepcopy(original[k]) for k in ['prepared', 'completed', 'event'])
+        for item in [a, b]:
+            if '.' in case['field']:
+                x, y = case['field'].split('.'); item[x][y] = case['value']
+            else:
+                item[case['field']] = case['value']
+        b['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
+        check(source_valid(c, a, b, e, schemas) == case['expected'], name + ': app ' + case['case'])
+    for case in f['retention_cases']:
+        check(retention_eligible(case['input']) == case['expected_eligible'], name + ': retention ' + case['case'])
+    check(f['retention_binding_oracle'] == c.get('retention_binding'), name + ': exact retention binding')
+    if c.get('retention_binding'):
+        binding = c['retention_binding']
+        check('one Server-wide counterpart bucket' in binding['application_bucket'], name + ': SP-349 app counting boundary')
+        if name == 'usage.event':
+            check(binding['setting_key'] == 'ai.usage.usage-retention' and binding['default_days'] == 90 and not binding['deletion_enabled'] and not binding['admission_enabled'], name + ': decided Usage setting with adapter fenced')
+    for case in f['projection_retention_cases']:
+        check(projection_outcome(case) == case['expected'], name + ': ' + case['case'])
+    key, eid = identity(c, p, done['scope_partition']); seen = {}; result = {'event': event, 'receipt': f['first_append_receipt']}
+    check((key, eid) == (f['identity_oracle']['idempotency_key'], f['identity_oracle']['event_id']), name + ': pinned identity')
+    check(identity(c, p, 'project~b3RoZXI') != (key, eid), name + ': scope identity isolation')
+    digest = producer_semantic_digest(event)
+    oracle = f['retry_oracle']
+    check(producer_semantic_bytes(event).hex() == oracle['producer_semantic_bytes_hex'] and digest == oracle['producer_semantic_digest'], name + ': pinned caller semantic bytes/digest')
+    check(append_model(seen, key, digest, result) == ('appended', result), name + ': first append')
+    check(append_model(seen, key, digest, None) == ('original', result) and len(seen) == 1, name + ': duplicate returns original full value and receipt')
+    for case in oracle['storage_metadata_mutations']:
+        changed = copy.deepcopy(event); changed[case['field']] = case['value']
+        check(schema_accepts(event_validator, changed), name + ': metadata retry valid envelope ' + case['field'])
+        check(producer_semantic_digest(changed) == digest, name + ': metadata excluded from semantic digest ' + case['field'])
+        check(append_model(seen, key, producer_semantic_digest(changed), None) == ('original', result) and len(seen) == 1,
+              name + ': metadata retry returns original full event/receipt ' + case['field'])
+    for case in oracle['producer_mutations']:
+        changed = copy.deepcopy(event); changed[case['field']] = case['value']
+        check(producer_semantic_digest(changed) != digest, name + ': producer field in semantic digest ' + case['field'])
+        check(append_model(seen, key, producer_semantic_digest(changed), None) == ('idempotency_conflict', None) and len(seen) == 1,
+              name + ': changed producer field conflicts ' + case['field'])
+    check(append_model(seen, key, 'different', None) == ('idempotency_conflict', None), name + ': semantic conflict')
+    for case in f['recovery_cases']:
+        got = recovery(c, f, case['input'], schemas)
+        check(got == case['expected'], name + ': ' + case['case'])
+    cp = schemas[slug + '_checkpoint']; Draft202012Validator.check_schema(cp); cv = Draft202012Validator(cp, format_checker=FormatChecker())
+    check(len(cp['properties']['index_read_token']['required']) == 9, name + ': nine stored token fields')
+    for key in cp['required']:
+        bad = copy.deepcopy(f['checkpoint']); del bad[key]
+        check(not schema_accepts(cv, bad), name + ': missing checkpoint ' + key)
+    for case in f['checkpoint_cases']:
+        got = checkpoint_result(c, case['previous'], case['proposed'], case['context'], cp)
+        check(got == case['expected'], name + ': ' + case['case'])
+        stored = case['proposed'] if got == 'published' else case['previous']
+        check(stored == case['expected_stored'], name + ': exact checkpoint publication ' + case['case'])
+    check(f['native_execution'] == 'NOT_RUN', name + ': native boundary')
+    return standing
+
+
+SHARED_BLOCKS = ('shared/source_codec', 'shared/messagepack', 'tool.denied', 'tool.invoked', 'usage.event')
+
+
+def shared_checks(inputs, check, block=None):
+    """Cross-case oracles; block selects one of SHARED_BLOCKS (None runs all)."""
+    fixtures = inputs['fixtures']
+    if block in (None, 'shared/source_codec'):
+        for vector in load('Plans/dt_event_contract_fixtures.json')['source_codec_vectors']:
+            try:
+                value = decode_source(vector['bytes'].encode('utf-8')); accepted = True
+            except (ValueError, UnicodeError, json.JSONDecodeError):
+                value = None; accepted = False
+            check(accepted == vector['accepted'], 'source codec: ' + vector['case'])
+    if block in (None, 'shared/messagepack'):
+        for vector in load('Plans/dt_event_contract_fixtures.json')['messagepack_integer_vectors']:
+            try:
+                actual = application_bytes(vector['value']).hex()
+            except ValueError:
+                actual = None
+            check(actual == vector['expected_hex'], 'MessagePack integer: ' + vector['case'])
+    if block in (None, 'tool.denied'):
+        for case in fixtures['tool.denied']['non_emission_cases']:
+            disposition = denial_emission(case['before'])
+            check(disposition == case['expected'], 'tool.denied emission boundary: ' + case['case'])
+            check((1 if disposition == 'emit' else 0) == case['append_count'], 'tool.denied append boundary: ' + case['case'])
+    if block in (None, 'tool.invoked'):
+        web = fixtures['tool.invoked']
+        for case in web['batch_cases']:
+            parent = copy.deepcopy(next(v for v in web['positive_variants'] if v['case'] == case['parent_case']))
+            children = [copy.deepcopy(next(v for v in web['positive_variants'] if v['case'] == name)) for name in case['child_cases']]
+            for change in case.get('changes', []):
+                target = parent if change['target'] == 'parent' else children[change['target']]
+                for field in change['path'][:-1]:
+                    target = target[field]
+                target[change['path'][-1]] = change['value']
+            check(batch_join(parent, children) == case['expected'], 'tool.invoked batch: ' + case['case'])
+    if block in (None, 'usage.event'):
+        usage = fixtures['usage.event']
+        for case in usage['accounting_cases']:
+            check(accounting_totals(case['payload']) == case['expected'], 'usage accounting: ' + case['case'])
+        for case in usage['usage_value_negatives']:
+            check(not usage_values_valid(case['payload']), 'usage cost/quota: ' + case['case'])
+        for case in usage['daily_total_cases']:
+            original = case['daily_total']; backup = case['backup_captured_total']
+            total = original if backup is None else backup
+            actual = {'detail_retirement': 'eligible_under_owner_setting' if case['daily_committed'] else 'held', 'visible_total': total, 'canonical_total': total}
+            if backup is not None:
+                actual['lost_after_backup'] = original - backup
+            check(actual == case['expected'], 'usage daily totals: ' + case['case'])
+        # Replacement semantics: revisions replace one contribution, a new billed retry adds its own.
+        for case in usage['settlement_accounting_cases']:
+            contributions = {}
+            for observation in case['observations']:
+                if observation['settlement_status'] in ['settled', 'adjusted'] or observation['accepted_partial']:
+                    contributions[observation['usage_record_id']] = observation['cost_microdollars']
+            known = [v for v in contributions.values() if v is not None]
+            check(sum(known) == case['expected_known_cost_microdollars'] and len(contributions) == case['expected_records'], 'usage replacement: ' + case['case'])
+
+
+def main():
+    inputs = checker_inputs()
+    contracts = inputs['contracts']
     checks = 0
     failures = []
     counts = {}
@@ -1351,13 +1916,8 @@ def main():
         checks += 1
         if not ok:
             failures.append(message)
-    event_schema = load('Plans/event_record.schema.json')
-    documents = {'Plans/dt_event_contracts.schema.json': schema_document,
-                 'Plans/event_record.schema.json': event_schema}
-    mirrors = [(row['family_id'], row['value_schema'], ref) for ref, row in storage_schemas.items()
-               if ref.startswith('Plans/dt_event_contracts.schema.json#')]
-    reference_errors = schema_reference_errors(documents, mirrors)
-    if reference_errors:
+    reference_errors = schema_reference_errors(inputs['documents'], inputs['mirrors'])
+    if references_refusal(reference_errors) is not None:
         # No fixture may hide an invalid schema behind a successful alternative.
         for c in contracts:
             check(False, c['event_type'] + ': unresolved schema reference; see schema_reference_errors')
@@ -1365,181 +1925,18 @@ def main():
                           'failures': failures, 'schema_reference_errors': reference_errors,
                           'native_execution': 'NOT_RUN'}, indent=2))
         return checker_exit_code(failures)
-    event_validator = Draft202012Validator(event_schema, format_checker=FormatChecker())
+    order = table_order_errors()
+    check(not order, 'shared: every table factory requires its rows in table order ' + ','.join(order))
     for c in contracts:
         start = checks
-        name = c['event_type']; slug = name.replace('.', '_'); f = fixtures[name]; p = f['valid_payload']
-        for definition in [slug + '_checkpoint', slug + '_source', slug + '_application_source']:
-            if definition in schemas:
-                ref = 'Plans/dt_event_contracts.schema.json#/$defs/' + definition
-                check(storage_schemas[ref]['value_schema'] == schemas[definition], name + ': exact Storage schema mirror ' + definition)
-        identifier_checks(c, f, schemas, check)
-        technical_checks(c, f, schemas, check)
-        round6_checks(c, f, schemas, check)
-        standing[name] = standing_results(c, f, schemas)
-        for number in map(str, range(1, 11)):
-            check(standing[name][number] == f['standing_check_oracles'][number], name + ': standing check ' + number)
-        validator = Draft202012Validator(schemas[slug], format_checker=FormatChecker())
-        check(not list(validator.iter_errors(p)), name + ': positive payload')
-        check(name not in registered, name + ': no registry admission')
-        for key in f['required_field_negatives']:
-            negative = copy.deepcopy(p); del negative[key]
-            check(bool(list(validator.iter_errors(negative))), name + ': missing payload ' + key)
-        for key, val in [('unexpected', 'refused'), ('schema_id', 'wrong'), ('schema_version', '2.0.0')]:
-            check(bool(list(validator.iter_errors(dict(p, **{key: val})))), name + ': invalid payload ' + key)
-        prep, done, event = f['prepared_source'], f['completed_source'], f['event_record']
-        check(not list(event_validator.iter_errors(event)), name + ': complete current EventRecord envelope')
-        check(source_valid(c, prep, done, event, schemas) == 'accepted', name + ': original source accepted')
-        for stage in [prep, done]:
-            check(decode_source(canonical(stage)) == stage, name + ': source canonical bytes')
-            sc = schemas[slug + '_source']; Draft202012Validator.check_schema(sc)
-            sv = Draft202012Validator(sc, format_checker=FormatChecker())
-            for key in sc['required']:
-                bad = copy.deepcopy(prep if key == 'stage' else stage); del bad[key]
-                check(bool(list(sv.iter_errors(bad))), name + ': missing source ' + key)
-            check(bool(list(sv.iter_errors(dict(stage, unexpected='refused')))), name + ': closed source')
-        check(sha(prep) == f['source_byte_oracle']['prepared_sha256'], name + ': pinned original source digest')
-        check(canonical(prep).hex() == f['source_byte_oracle']['prepared_hex'], name + ': pinned original source bytes')
-        for case in f['semantic_negatives']:
-            base, negative = semantic_case(f, case)
-            check(source_valid(c, *base, schemas) == 'accepted', name + ': valid semantic base ' + case['case'])
-            check(source_valid(c, *negative, schemas) == case['expected'], name + ': ' + case['case'])
-        ref_event = copy.deepcopy(event); ref_event['payload'] = {}; ref_event['payload_ref'] = 'payload:fixture-verified-pack-body'
-        check(source_valid(c, prep, done, ref_event, schemas, p, True) == 'accepted', name + ': separately governed payload resolves before joins')
-        check(source_valid(c, prep, done, ref_event, schemas, p, False) == 'payload_unavailable', name + ': unverified pack body unavailable')
-        check(source_valid(c, prep, done, ref_event, schemas, {}, True) == 'payload_unavailable', name + ': changed pack body unavailable')
-        bad_scope = copy.deepcopy(prep); bad_scope['envelope_context']['scope_kind'] = 'application'
-        check(not sv.is_valid(bad_scope), name + ': source schema refuses wrong envelope scope')
-        for field, value in [('project_id', 'wrong-project'), ('run_id', 'wrong-run'), ('actor_ref', 'wrong-actor')]:
-            base, negative = envelope_case(c, f, field, value)
-            check(source_valid(c, *base, schemas) == 'accepted', name + ': valid envelope base ' + field)
-            check(source_valid(c, *negative, schemas) != 'accepted', name + ': wrong envelope ' + field)
-        for field in c['identity_fields']:
-            a, bad = copy.deepcopy((prep, done)); v = bad['subject'][field]
-            a['subject'][field] = bad['subject'][field] = v + 1 if isinstance(v, int) else v + '-other'
-            bad['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
-            check(source_valid(c, a, bad, event, schemas) != 'accepted', name + ': wrong source subject ' + field)
-        for case in f['positive_variants']:
-            check(not list(event_validator.iter_errors(case['event'])), name + ': variant complete envelope ' + case['case'])
-            check(source_valid(c, case['prepared'], case['completed'], case['event'], schemas) == 'accepted', name + ': ' + case['case'])
-        for case in f.get('source_join_negatives', []):
-            check(source_valid(c, case['prepared'], case['completed'], case['event'], schemas) == case['expected'], name + ': ' + case['case'])
-        replay = copy.deepcopy(event); replay['replay_policy'] = 'projector_replay_only'
-        check(source_valid(c, prep, done, replay, schemas) == 'replay_only_not_appendable', name + ': current writer refuses compatibility-only replay policy')
-        retry = dict(f['recovery_cases'][0]['input'], replay_policy='projector_replay_only')
-        check(recovery(c, f, retry, schemas) == {'result': 'replay_only_not_appendable', 'external_effects': 0, 'append_count': 0, 'value': None}, name + ': retry refuses compatibility-only replay policy')
-        large = oversized_inline(c, f)
-        check(validator.is_valid(large[2]['payload']) and event_validator.is_valid(large[2]), name + ': oversized closure retains valid payload/envelope schemas')
-        check(source_valid(c, *large, schemas) == 'payload_ref_required', name + ': inline body over SP-337 limit requires payload ref')
-        for case in f.get('application_identity_negatives', []):
-            original = next(v for v in f['positive_variants'] if v['case'] == 'authenticated_application_source')
-            a, b, e = (copy.deepcopy(original[k]) for k in ['prepared', 'completed', 'event'])
-            for item in [a, b]:
-                if '.' in case['field']:
-                    x, y = case['field'].split('.'); item[x][y] = case['value']
-                else:
-                    item[case['field']] = case['value']
-            b['prepared_sha256'] = hashlib.sha256(source_bytes(a)).hexdigest()
-            check(source_valid(c, a, b, e, schemas) == case['expected'], name + ': app ' + case['case'])
-        for case in f['retention_cases']:
-            value = case['input']
-            anchor, days = (value.get('run_completed_at'), 365) if value['policy'] == 'RP-RUNTIME-365D' else (value.get('terminal_at'), 2555) if value['policy'] == 'RP-OPERATIONAL-2555D' else (None, None)
-            eligible = anchor is not None and (time_value(value['now']) - time_value(anchor)).days >= days and not value['held'] and not value['dependent']
-            check(eligible == case['expected_eligible'], name + ': retention ' + case['case'])
-        check(f['retention_binding_oracle'] == c.get('retention_binding'), name + ': exact retention binding')
-        if c.get('retention_binding'):
-            binding = c['retention_binding']
-            check('one Server-wide counterpart bucket' in binding['application_bucket'], name + ': SP-349 app counting boundary')
-            if name == 'usage.event':
-                check(binding['setting_key'] == 'ai.usage.usage-retention' and binding['default_days'] == 90 and not binding['deletion_enabled'] and not binding['admission_enabled'], name + ': decided Usage setting with adapter fenced')
-        for case in f['projection_retention_cases']:
-            outcome = 'capacity_fenced' if len(case['held_generations']) == case['existing_generations'] else 'retire_unheld_derived_only'
-            check(outcome == case['expected'], name + ': ' + case['case'])
-        key, eid = identity(c, p, done['scope_partition']); seen = {}; result = {'event': event, 'receipt': f['first_append_receipt']}
-        check((key, eid) == (f['identity_oracle']['idempotency_key'], f['identity_oracle']['event_id']), name + ': pinned identity')
-        check(identity(c, p, 'project~b3RoZXI') != (key, eid), name + ': scope identity isolation')
-        digest = producer_semantic_digest(event)
-        oracle = f['retry_oracle']
-        check(producer_semantic_bytes(event).hex() == oracle['producer_semantic_bytes_hex'] and digest == oracle['producer_semantic_digest'], name + ': pinned caller semantic bytes/digest')
-        check(append_model(seen, key, digest, result) == ('appended', result), name + ': first append')
-        check(append_model(seen, key, digest, None) == ('original', result) and len(seen) == 1, name + ': duplicate returns original full value and receipt')
-        for case in oracle['storage_metadata_mutations']:
-            changed = copy.deepcopy(event); changed[case['field']] = case['value']
-            check(event_validator.is_valid(changed), name + ': metadata retry valid envelope ' + case['field'])
-            check(producer_semantic_digest(changed) == digest, name + ': metadata excluded from semantic digest ' + case['field'])
-            check(append_model(seen, key, producer_semantic_digest(changed), None) == ('original', result) and len(seen) == 1,
-                  name + ': metadata retry returns original full event/receipt ' + case['field'])
-        for case in oracle['producer_mutations']:
-            changed = copy.deepcopy(event); changed[case['field']] = case['value']
-            check(producer_semantic_digest(changed) != digest, name + ': producer field in semantic digest ' + case['field'])
-            check(append_model(seen, key, producer_semantic_digest(changed), None) == ('idempotency_conflict', None) and len(seen) == 1,
-                  name + ': changed producer field conflicts ' + case['field'])
-        check(append_model(seen, key, 'different', None) == ('idempotency_conflict', None), name + ': semantic conflict')
-        for case in f['recovery_cases']:
-            got = recovery(c, f, case['input'], schemas)
-            check(got == case['expected'], name + ': ' + case['case'])
-        cp = schemas[slug + '_checkpoint']; Draft202012Validator.check_schema(cp); cv = Draft202012Validator(cp, format_checker=FormatChecker())
-        check(len(cp['properties']['index_read_token']['required']) == 9, name + ': nine stored token fields')
-        for key in cp['required']:
-            bad = copy.deepcopy(f['checkpoint']); del bad[key]
-            check(bool(list(cv.iter_errors(bad))), name + ': missing checkpoint ' + key)
-        for case in f['checkpoint_cases']:
-            got = checkpoint_result(c, case['previous'], case['proposed'], case['context'], cp)
-            check(got == case['expected'], name + ': ' + case['case'])
-            stored = case['proposed'] if got == 'published' else case['previous']
-            check(stored == case['expected_stored'], name + ': exact checkpoint publication ' + case['case'])
-        check(f['native_execution'] == 'NOT_RUN', name + ': native boundary')
-        counts[name] = checks - start
-    for vector in load('Plans/dt_event_contract_fixtures.json')['source_codec_vectors']:
-        try:
-            value = decode_source(vector['bytes'].encode('utf-8')); accepted = True
-        except (ValueError, UnicodeError, json.JSONDecodeError):
-            value = None; accepted = False
-        check(accepted == vector['accepted'], 'source codec: ' + vector['case'])
-    for vector in load('Plans/dt_event_contract_fixtures.json')['messagepack_integer_vectors']:
-        try:
-            actual = application_bytes(vector['value']).hex()
-        except ValueError:
-            actual = None
-        check(actual == vector['expected_hex'], 'MessagePack integer: ' + vector['case'])
-    usage = fixtures['usage.event']
-    for case in fixtures['tool.denied']['non_emission_cases']:
-        disposition = denial_emission(case['before'])
-        check(disposition == case['expected'], 'tool.denied emission boundary: ' + case['case'])
-        check((1 if disposition == 'emit' else 0) == case['append_count'], 'tool.denied append boundary: ' + case['case'])
-    web = fixtures['tool.invoked']
-    for case in web['batch_cases']:
-        parent = copy.deepcopy(next(v for v in web['positive_variants'] if v['case'] == case['parent_case']))
-        children = [copy.deepcopy(next(v for v in web['positive_variants'] if v['case'] == name)) for name in case['child_cases']]
-        for change in case.get('changes', []):
-            target = parent if change['target'] == 'parent' else children[change['target']]
-            for field in change['path'][:-1]:
-                target = target[field]
-            target[change['path'][-1]] = change['value']
-        check(batch_join(parent, children) == case['expected'], 'tool.invoked batch: ' + case['case'])
-    for case in usage['accounting_cases']:
-        check(accounting_totals(case['payload']) == case['expected'], 'usage accounting: ' + case['case'])
-    for case in usage['usage_value_negatives']:
-        check(not usage_values_valid(case['payload']), 'usage cost/quota: ' + case['case'])
-    for case in usage['daily_total_cases']:
-        original = case['daily_total']; backup = case['backup_captured_total']
-        total = original if backup is None else backup
-        actual = {'detail_retirement': 'eligible_under_owner_setting' if case['daily_committed'] else 'held', 'visible_total': total, 'canonical_total': total}
-        if backup is not None:
-            actual['lost_after_backup'] = original - backup
-        check(actual == case['expected'], 'usage daily totals: ' + case['case'])
-    # Replacement semantics: revisions replace one contribution, a new billed retry adds its own.
-    for case in usage['settlement_accounting_cases']:
-        contributions = {}
-        for observation in case['observations']:
-            if observation['settlement_status'] in ['settled', 'adjusted'] or observation['accepted_partial']:
-                contributions[observation['usage_record_id']] = observation['cost_microdollars']
-        known = [v for v in contributions.values() if v is not None]
-        check(sum(known) == case['expected_known_cost_microdollars'] and len(contributions) == case['expected_records'], 'usage replacement: ' + case['case'])
+        standing[c['event_type']] = family_checks(c, inputs, check)
+        counts[c['event_type']] = checks - start
+    shared_checks(inputs, check)
     print(json.dumps({'status': 'pass' if not failures else 'fail', 'families': len(contracts), 'checks': checks,
                       'per_family_checks': counts, 'standing_checks': standing, 'failures': failures, 'native_execution': 'NOT_RUN',
                       'boundary': 'original-owner and SP-278 authentication are assumed adapters; no native proof'}, indent=2))
     return checker_exit_code(failures)
+
 
 if __name__ == '__main__':
     raise SystemExit(main())
