@@ -1705,9 +1705,18 @@ class Lander:
             earlier = self.earlier_digests()
             excused: List[str] = []
             rows_now = read_row_report(row_report)
-            rows_before = read_row_report((earlier[-1] or {}).get("rows_file")) if earlier else None
-            gap = batch_gap(report, earlier, self.own_staleness(cwd, t, rows_now, rows_before, excused),
-                            row_count_rises(rows_now, rows_before))
+            before_file = (earlier[-1] or {}).get("rows_file") if earlier else None
+            rows_before = read_row_report(before_file) if before_file else None
+            # Recheck 3 N1: a row report this batch asked for and cannot read must close the batch, never silence the
+            # triggers that read it (a rise counted from the row reports would otherwise go unseen and the batch push).
+            missing = [str(path) for path, doc, wanted in ((row_report, rows_now, asks_rows), (before_file, rows_before, bool(before_file)))
+                       if wanted and doc is None]
+            if missing:
+                gap = ("batch_row_report_unreadable", "a row report this batch needs could not be read (" + ", ".join(missing)
+                       + "), so what rose since the previous report cannot be judged")
+            else:
+                gap = batch_gap(report, earlier, self.own_staleness(cwd, t, rows_now, rows_before, excused),
+                                row_count_rises(rows_now, rows_before))
             if not gap:
                 reverted = self.reverted_paths(cwd, t)
                 if reverted:
@@ -2138,7 +2147,7 @@ class Lander:
     def batch_can_close_and_retry(self, stop: Stop, step: Dict[str, Any]) -> bool:
         batch = self.st.get("batch")
         return bool(batch) and stop.code in ("landing_check_blocked", "batch_rows_overlap", "batch_readiness_rise",
-                                             "batch_total_rise", "batch_reverted_path") \
+                                             "batch_total_rise", "batch_reverted_path", "batch_row_report_unreadable") \
             and step.get("target") == "land" and bool(batch.get("landings"))
 
     def close_batch_and_retry(self, stop: Stop, step: Dict[str, Any]) -> None:

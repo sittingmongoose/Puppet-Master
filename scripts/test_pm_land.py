@@ -2823,6 +2823,36 @@ class RealReportBatchTests(RealReports, Base):
         self.assert_closed_and_alone(start, result)
         self.assertIn("Plans/X.md rose from 10 to 11", result.stdout)
 
+    def test_a_row_report_this_landing_asked_for_and_cannot_read_closes(self):
+        """Recheck 3 N1: F2's shape with this landing's row report missing. Alone it is exit 2; the batch must close."""
+        baseline, first, second = self.sample_then_complete(10, 10, 11, 9)
+        code, text = self.alone(baseline, first, second, ("Plans/A.md", "Plans/A.md"))
+        self.assertEqual(code, 2, text)
+        one, two = self.reports(baseline, first, second)
+        start, result = self.land_both(one, (two[0], two[1], None))
+        self.assert_closed_and_alone(start, result)
+        self.assertIn("could not be read", result.stdout)
+
+    def test_the_previous_landings_row_report_gone_closes(self):
+        """Recheck 3 N1: the earlier member's row report deleted before the next landing (a cleaner, a hand) closes too."""
+        baseline, first, second = self.sample_then_complete(10, 10, 11, 9)
+        one, two = self.reports(baseline, first, second)
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        start = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": one[0], "raw": one[1], "rows_file": one[2]},
+                                    {"exit": two[0], "raw": two[1], "rows_file": two[2]}, {}])
+        first_run = self.land("fix/a", "--batch-open")
+        self.assertEqual(first_run.returncode, 0, first_run.stdout + first_run.stderr)
+        self.a_sha = self.h.origin_main()
+        gone = sorted(self.h.tmp.rglob("check-rows-*.json"))
+        self.assertTrue(gone, "the first landing kept its row report")
+        for path in gone:
+            path.unlink()
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        result = self.land("fix/b", "--batch-start", start)
+        self.assert_closed_and_alone(start, result)
+        self.assertIn("could not be read", result.stdout)
+
     def test_control_a_bucket_lowered_in_such_a_subcheck_keeps_the_batch(self):
         baseline, first, second = self.sample_then_complete(10, 10, 9, 10)
         one, two = self.reports(baseline, first, second)
