@@ -1218,8 +1218,20 @@ def module_scope_problems(tree):
     # module name (any reference into it / the object itself)
     whole = {scope: {} for scope in bindings}
     returns, returns_whole = {}, {}
-    functions = {n.name: n for n in tree.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef))}
+    # T89 (TOOLBATCH4 pre-check finding 8, R09 and R10): every function, in any scope, and every lambda bound to a name,
+    # keyed by (the scope its name is bound in, its name): a nested def's or a lambda's return refers as a module-level
+    # function's does
+    functions = {}
+    for n in ast.walk(tree):
+        if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and id(n) in owner:
+            functions[(owner[id(n)], n.name)] = n
+        elif isinstance(n, ast.Assign) and isinstance(n.value, ast.Lambda) and id(n) in owner:
+            for t in n.targets:
+                if isinstance(t, ast.Name):
+                    functions[(owner[id(n)], t.id)] = n.value
     def own_returns(fn):
+        if isinstance(fn, ast.Lambda):
+            return [fn.body]
         out, stack = [], list(fn.body)
         while stack:
             n = stack.pop()
@@ -1245,20 +1257,34 @@ def module_scope_problems(tree):
         if parts is not None:
             found = [origin(part, itself) for part in parts if part is not None]
             return next((f for f in found if f[0]), (False, None))
+        # T89 (R07, R08): a comprehension's or generator's result holds its elements; it refers to a module object only
+        # when an element is the object itself ([x for x in (X,)]), never through an element of one, which is immutable
+        if isinstance(value, (ast.ListComp, ast.SetComp, ast.GeneratorExp, ast.DictComp)):
+            return elements(value)
         # T64: an item or attribute of a display (or of a Boolean, conditional or assignment expression) refers
         # wherever the display does; [X][0] is X itself
         if isinstance(value, (ast.Attribute, ast.Subscript, ast.Starred)):
             base = value
             while isinstance(base, (ast.Attribute, ast.Subscript, ast.Starred)):
                 base = base.value
-            if isinstance(base, (ast.List, ast.Tuple, ast.Set, ast.Dict, ast.BoolOp, ast.IfExp, ast.NamedExpr)):
+            if isinstance(base, (ast.List, ast.Tuple, ast.Set, ast.Dict, ast.BoolOp, ast.IfExp, ast.NamedExpr,
+                                 ast.ListComp, ast.SetComp, ast.GeneratorExp, ast.DictComp)):
                 return origin(base, itself)
         if isinstance(value, ast.Call):
-            # T44: the result of a call of a module-level function that returns a module name
             scope, made = owner.get(id(value)), returns_whole if itself else returns
-            if (isinstance(value.func, ast.Name) and scope is not None and value.func.id in made
-                    and resolves_to(value.func.id, scope, tree, bindings, parents) is tree):
-                return True, made[value.func.id]
+            # T89 (R09): a lambda called where it is written returns its body
+            if isinstance(value.func, ast.Lambda):
+                return origin(value.func.body, itself)
+            # T89 (R07): next(), min() and max() of one iterable hand out one of its elements
+            if (isinstance(value.func, ast.Name) and value.func.id in ('next', 'min', 'max') and value.args and scope is not None
+                    and value.func.id not in module and resolves_to(value.func.id, scope, tree, bindings, parents) is tree):
+                return elements(value.args[0]) if value.func.id == 'next' or len(value.args) == 1 else next(
+                    (f for f in (origin(a, itself) for a in value.args) if f[0]), (False, None))
+            # T44: the result of a call of a function that returns a module name (T89: in any scope)
+            if isinstance(value.func, ast.Name) and scope is not None:
+                home = resolves_to(value.func.id, scope, tree, bindings, parents)
+                if (home, value.func.id) in made:
+                    return True, made[(home, value.func.id)]
             return False, None
         root = (value.id if isinstance(value, ast.Name) else None) if itself else _pure_root(value)
         scope = owner.get(id(value))
@@ -1273,13 +1299,39 @@ def module_scope_problems(tree):
         if root in known[home]:
             return True, known[home][root]
         return False, None
+    def elements(value):
+        """T89: whether an element of an iterable is a module object itself: the elements of a display, a comprehension's
+        or a generator's element expression, and the elements of iter(), reversed(), sorted(), list(), tuple(), set() or
+        frozenset() of one"""
+        if isinstance(value, (ast.ListComp, ast.SetComp, ast.GeneratorExp)):
+            return origin(value.elt, True)
+        if isinstance(value, ast.DictComp):
+            return next((f for f in (origin(value.key, True), origin(value.value, True)) if f[0]), (False, None))
+        if isinstance(value, (ast.List, ast.Tuple, ast.Set)):
+            return next((f for f in (origin(e, True) for e in value.elts) if f[0]), (False, None))
+        if (isinstance(value, ast.Call) and isinstance(value.func, ast.Name) and value.args
+                and value.func.id in ('iter', 'reversed', 'sorted', 'list', 'tuple', 'set', 'frozenset')):
+            return elements(value.args[0])
+        return False, None
     def stores(target):
         return [(x.id, owner[id(x)]) for x in ast.walk(target)
                 if isinstance(x, ast.Name) and isinstance(x.ctx, ast.Store) and id(x) in owner]
-    sources = []
+    sources, held_in = [], []
+    # T89: holders[scope][name]: a local object a module object itself was stored into (d['k'] = X, a class body's
+    # f = X); read only by the mutation rules (d['k'].clear(), C.f.clear()), so a store into the local is no write
+    holders = {scope: {} for scope in bindings}
     for node in ast.walk(tree):
         if isinstance(node, ast.Assign):
             sources += [(node.value, stores(t)) for t in node.targets]
+            # T89 (R05, R06): a module object itself stored into a local object (d['k'] = X, o.f = X) makes that
+            # local refer to it, so d['k'].clear() is a mutation of X
+            for t in node.targets:
+                if isinstance(t, (ast.Subscript, ast.Attribute)):
+                    root = t.value
+                    while isinstance(root, (ast.Subscript, ast.Attribute)):
+                        root = root.value
+                    if isinstance(root, ast.Name) and id(root) in owner:
+                        held_in.append((node.value, root.id, owner[id(root)]))
         elif isinstance(node, ast.AnnAssign) and node.value is not None:
             sources.append((node.value, stores(node.target)))
         elif isinstance(node, ast.NamedExpr) and id(node.target) in owner:
@@ -1312,14 +1364,27 @@ def module_scope_problems(tree):
                     if scope is not tree and local not in known[scope]:
                         known[scope][local] = name
                         grew = True
-        for fname, fn in functions.items():
+        for value, local, scope in held_in:
+            refers, name = origin(value, True)
+            home = resolves_to(local, scope, tree, bindings, parents)
+            if refers and home is not tree and local not in holders[home]:
+                holders[home][local] = name
+                grew = True
+        # T89 (R12): a class whose body binds a name to a module object itself refers to it through that attribute
+        for cls in [n for n in ast.walk(tree) if isinstance(n, ast.ClassDef) and n in whole and id(n) in owner]:
+            target = next((v for v in whole[cls].values() if v is not None), None)
+            home = owner[id(cls)]
+            if target is not None and home is not tree and cls.name not in holders[home]:
+                holders[home][cls.name] = target
+                grew = True
+        for key, fn in functions.items():
             for itself, made in ((False, returns), (True, returns_whole)):
-                if fname in made:
+                if key in made:
                     continue
                 for value in own_returns(fn):
                     refers, name = origin(value, itself)
                     if refers and name is not None:
-                        made[fname] = name
+                        made[key] = name
                         grew = True
                         break
 
@@ -1328,6 +1393,21 @@ def module_scope_problems(tree):
         scope = owner.get(id(node))
         if scope is None:
             continue
+        # T89 (R16): global and nonlocal rebind a name in another scope (V has none)
+        if isinstance(node, (ast.Global, ast.Nonlocal)):
+            writes += [('global ' if isinstance(node, ast.Global) else 'nonlocal ') + n + '@' + str(node.lineno) for n in node.names]
+        # T89 (R14, R15): an augmented assignment to a name bound to a module object itself (y = X; y += [...]; t |= {...})
+        if isinstance(node, ast.AugAssign) and isinstance(node.target, ast.Name):
+            home = resolves_to(node.target.id, scope, tree, bindings, parents)
+            target = node.target.id if home is tree else whole[home].get(node.target.id)
+            if target in containers:
+                mutations.append(node.target.id + ' ' + type(node.op).__name__ + '=@' + str(node.lineno))
+        # T89 (R13, R11): sys.modules reaches the module's own namespace (sys.modules[__name__].X), and a match statement's
+        # capture patterns bind names the analysis does not follow (V has neither)
+        if isinstance(node, ast.Attribute) and node.attr == 'modules' and isinstance(node.value, ast.Name) and node.value.id == 'sys':
+            reflection.append('sys.modules@' + str(node.lineno))
+        if isinstance(node, ast.Match):
+            reflection.append('match@' + str(node.lineno))
         if isinstance(node, (ast.Attribute, ast.Subscript)) and isinstance(node.ctx, (ast.Store, ast.Del)):
             root = chain_root(node.value)
             home = resolves_to(root, scope, tree, bindings, parents) if root is not None else None
@@ -1337,7 +1417,7 @@ def module_scope_problems(tree):
             root = _pure_root(node.value)
             if root is not None:
                 home = resolves_to(root, scope, tree, bindings, parents)
-                target = root if home is tree else alias[home].get(root)
+                target = root if home is tree else alias[home].get(root) or (holders[home].get(root) if node.value is not None and not isinstance(node.value, ast.Name) else None)
                 if target in containers:
                     mutations.append(root + '.' + node.attr + '@' + str(node.lineno))
             elif isinstance(node.value, (ast.BoolOp, ast.IfExp, ast.NamedExpr, ast.List, ast.Tuple, ast.Set, ast.Dict,
@@ -1366,7 +1446,27 @@ def module_scope_problems(tree):
             # conditional or assignment expression (max([X]) and min([X], key=len) hand X back), and never as a
             # keyword value of dict (dict(a=X)['a'] is X)
             if received and reads_only:
-                wrapped = [a for a in passed if origin(a, True)[0] and not isinstance(a, ast.Name)]
+                # T89 (TOOLBATCH4 pre-check finding 9): a callee that returns a new string, number or Boolean (str, repr,
+                # len, bool, isinstance, any, all, json.dumps) hands nothing back, wherever the container sits in its
+                # arguments (json.dumps({'f': X}), str([X])); one that copies its argument's elements (tuple, sorted, ...)
+                # into a new container (tuple, sorted, ...) is exempt when the argument evaluates to the container itself
+                # (tuple(X or ())), never when the container is an element of it (sorted([X]))
+                name = callee.id if isinstance(callee, ast.Name) else callee.value.id + '.' + callee.attr
+                fresh = name in ('str', 'repr', 'len', 'bool', 'isinstance', 'any', 'all', 'json.dumps')
+                def itself_only(a):
+                    if isinstance(a, ast.Name):
+                        return True
+                    if isinstance(a, ast.BoolOp):
+                        return all(itself_only(v) or not origin(v, True)[0] for v in a.values)
+                    if isinstance(a, ast.IfExp):
+                        return all(itself_only(v) or not origin(v, True)[0] for v in (a.body, a.orelse))
+                    if isinstance(a, ast.NamedExpr):
+                        return itself_only(a.value)
+                    return False
+                # (min and max hand back one of their argument's elements, or an argument itself, so they keep the bare-only
+                # rule: max(X or []) stays refused, as batch 4 had it)
+                copies = name in ('tuple', 'list', 'set', 'frozenset', 'sorted', 'dict', 'sum', 'iter', 'reversed', 'enumerate', 'zip')
+                wrapped = [] if fresh else [a for a in passed if origin(a, True)[0] and not (copies and itself_only(a))]
                 by_keyword = isinstance(callee, ast.Name) and callee.id == 'dict' and any(origin(k.value, True)[0] for k in node.keywords)
                 if wrapped or by_keyword:
                     reads_only = False
@@ -2091,6 +2191,31 @@ EDIT_PROBES = {
     'binding_call_result_new_function': ('binding', BINDING,
                                          'module: def pm_fields(): return EVIDENCE_FIELDS, and recount_outcomes: '
                                          'pm_fields().clear(), with every row forged'),
+    # T89 (TOOLBATCH4 pre-check finding 8): the aliasing routes left open, each with every row forged (R16, global
+    # then +=, is refused before the binding rules by the AST class table, Global being a refused class; the binding
+    # rules refuse it too now, as writes_a_module_object)
+    'binding_local_dict_item_new_function': ('binding', BINDING,
+        'recount_outcomes: pm_d = {}; pm_d["k"] = EVIDENCE_FIELDS; pm_d["k"].clear(), with every row forged'),
+    'binding_local_attribute_new_function': ('binding', BINDING,
+        'recount_outcomes: def pm_f(): pass; pm_f.pm_v = EVIDENCE_FIELDS; pm_f.pm_v.clear(), with every row forged'),
+    'binding_generator_next_new_function': ('binding', BINDING,
+        'recount_outcomes: next(pm_x for pm_x in (EVIDENCE_FIELDS,)).clear(), with every row forged'),
+    'binding_comprehension_item_new_function': ('binding', BINDING,
+        'recount_outcomes: [pm_x for pm_x in (EVIDENCE_FIELDS,)][0].clear(), with every row forged'),
+    'binding_called_lambda_new_function': ('binding', BINDING,
+        'recount_outcomes: (lambda: EVIDENCE_FIELDS)().clear(), with every row forged'),
+    'binding_nested_function_return_new_function': ('binding', BINDING,
+        'recount_outcomes: def pm_h(): return EVIDENCE_FIELDS; pm_h().clear(), with every row forged'),
+    'binding_match_capture_new_function': ('binding', BINDING,
+        'recount_outcomes: match EVIDENCE_FIELDS: case pm_y: pm_y.clear(), with every row forged'),
+    'binding_class_attribute_new_function': ('binding', BINDING,
+        'recount_outcomes: class pm_C: pm_f = EVIDENCE_FIELDS; pm_C.pm_f.clear(), with every row forged'),
+    'binding_sys_modules_new_function': ('binding', BINDING,
+        'recount_outcomes: sys.modules[__name__].EVIDENCE_FIELDS.clear(), with every row forged'),
+    'binding_alias_iadd_new_function': ('binding', BINDING,
+        'recount_outcomes: pm_y = EVIDENCE_FIELDS; pm_y += ["pm"], with every row forged'),
+    'binding_alias_ior_new_function': ('binding', BINDING,
+        'recount_outcomes: pm_t = HOLDING_DECISIONS; pm_t |= {"pm": 1}, with every row forged'),
     # T45 (cycle-13 H01, H02): what the parser reads alike and the checker compared as text, each with every row
     # forged and validator_sha256 refreshed, so only the new rule can refuse
     'encoding_declaration_inserted': ('encoding', 'validator declares a source encoding',
@@ -2125,6 +2250,18 @@ BINDING_EXPECTED = {
     'binding_max_display_result_new_function': {'mutates_a_module_container': None},
     'binding_boolop_receiver_new_function': {'mutates_a_module_container': None},
     'binding_display_iteration_call_new_function': {'mutates_a_module_container': None},
+    # T89: the aliasing routes (R16 is refused earlier, by the AST class table)
+    'binding_local_dict_item_new_function': {'mutates_a_module_container': None},
+    'binding_local_attribute_new_function': {'mutates_a_module_container': None},
+    'binding_generator_next_new_function': {'mutates_a_module_container': None},
+    'binding_comprehension_item_new_function': {'mutates_a_module_container': None},
+    'binding_called_lambda_new_function': {'mutates_a_module_container': None},
+    'binding_nested_function_return_new_function': {'mutates_a_module_container': None},
+    'binding_match_capture_new_function': {'reflection': None},
+    'binding_class_attribute_new_function': {'mutates_a_module_container': None},
+    'binding_sys_modules_new_function': {'reflection': None},
+    'binding_alias_iadd_new_function': {'mutates_a_module_container': None},
+    'binding_alias_ior_new_function': {'mutates_a_module_container': None},
 }
 _AUG = {'bitor': '|=', 'bitand': '&=', 'bitxor': '^='}
 
@@ -2178,6 +2315,28 @@ def edit_probe_source(source, label):
         return insert(cards, '    (EVIDENCE_FIELDS or []).clear()')
     if label == 'binding_display_iteration_call_new_function':
         return insert(cards, '    for pm_x in [EVIDENCE_FIELDS]:', '        list.clear(pm_x)')
+    if label == 'binding_local_dict_item_new_function':
+        return insert(cards, '    pm_d = {}', '    pm_d["k"] = EVIDENCE_FIELDS', '    pm_d["k"].clear()')
+    if label == 'binding_local_attribute_new_function':
+        return insert(cards, '    def pm_f():', '        pass', '    pm_f.pm_v = EVIDENCE_FIELDS', '    pm_f.pm_v.clear()')
+    if label == 'binding_generator_next_new_function':
+        return insert(cards, '    next(pm_x for pm_x in (EVIDENCE_FIELDS,)).clear()')
+    if label == 'binding_comprehension_item_new_function':
+        return insert(cards, '    [pm_x for pm_x in (EVIDENCE_FIELDS,)][0].clear()')
+    if label == 'binding_called_lambda_new_function':
+        return insert(cards, '    (lambda: EVIDENCE_FIELDS)().clear()')
+    if label == 'binding_nested_function_return_new_function':
+        return insert(cards, '    def pm_h():', '        return EVIDENCE_FIELDS', '    pm_h().clear()')
+    if label == 'binding_match_capture_new_function':
+        return insert(cards, '    match EVIDENCE_FIELDS:', '        case pm_y:', '            pm_y.clear()')
+    if label == 'binding_class_attribute_new_function':
+        return insert(cards, '    class pm_C:', '        pm_f = EVIDENCE_FIELDS', '    pm_C.pm_f.clear()')
+    if label == 'binding_sys_modules_new_function':
+        return insert(cards, '    sys.modules[__name__].EVIDENCE_FIELDS.clear()')
+    if label == 'binding_alias_iadd_new_function':
+        return insert(cards, '    pm_y = EVIDENCE_FIELDS', '    pm_y += ["pm"]')
+    if label == 'binding_alias_ior_new_function':
+        return insert(cards, '    pm_t = HOLDING_DECISIONS', '    pm_t |= {"pm": 1}')
     if label == 'encoding_declaration_inserted':
         return insert(2, '# -*- coding: latin-1 -*-')
     if label.startswith('line_ending_'):
