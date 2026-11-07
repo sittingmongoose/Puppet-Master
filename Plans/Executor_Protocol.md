@@ -9410,7 +9410,7 @@ command_payload_definitions:
       judgments:
         - key: command_kind
           choice: domain_action
-          gap_note: "The catalog requires command_kind metadata on recovery commands (UCC-095, UI_Command_Catalog.md:6852) but states no value for cmd.runtime.approve; domain_action because approval resolves the blocked episode or chat-tool request (node.unblocked or approval.chat_tool_resolved, Wiring_Matrix.production.json catalog.runtime_approve)."
+          gap_note: "The catalog requires command_kind metadata on recovery commands (UCC-095, UI_Command_Catalog.md:6852) but states no value for cmd.runtime.approve; domain_action because approval resolves the blocked episode (node.unblocked, Wiring_Matrix.production.json catalog.runtime_approve expected_event_types) or the chat-tool request (approval.chat_tool_resolved, the event_types const of RuntimeApproveV3ToolResult in Plans/projects_refresh_fix_contracts.schema.json and HITL-038, Plans/human-in-the-loop.md:2739)."
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection]
           gap_note: "No catalog row states disabled reasons for cmd.runtime.approve; chosen from the closed set: the node branch needs a live blocked episode, and both branches revalidate the original pending request and refuse stale currentness (HITL-038, Plans/human-in-the-loop.md:2739)."
@@ -9598,7 +9598,7 @@ command_payload_definitions:
       judgments:
         - key: command_kind
           choice: domain_action
-          gap_note: "The catalog requires command_kind metadata on recovery commands (UCC-095, UI_Command_Catalog.md:6852) but states no value for cmd.runtime.decline; domain_action because decline resolves the blocked episode (a recorded receipt) or the chat-tool request (approval.chat_tool_resolved), Wiring_Matrix.production.json catalog.runtime_decline."
+          gap_note: "The catalog requires command_kind metadata on recovery commands (UCC-095, UI_Command_Catalog.md:6852) but states no value for cmd.runtime.decline; domain_action because decline resolves the blocked episode (a recorded receipt; Wiring_Matrix.production.json catalog.runtime_decline lists no expected event) or the chat-tool request (approval.chat_tool_resolved, the event_types const of RuntimeDeclineV3ToolResult in Plans/projects_refresh_fix_contracts.schema.json and HITL-038, Plans/human-in-the-loop.md:2739)."
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection]
           gap_note: "No catalog row states disabled reasons for cmd.runtime.decline; chosen from the closed set: the node branch needs a live blocked episode, and both branches revalidate the original pending request and refuse stale currentness (HITL-038, Plans/human-in-the-loop.md:2739)."
@@ -9866,6 +9866,9 @@ command_payload_definitions:
         owner_result: local:RuntimeRestoreSafePointThenRetryResult
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required, stale_projection, permission_required]
+      owner_state_codes:
+        - {owner_state: permission_denied, code: permission_required}
+        - {owner_state: operation_in_progress, code: blocked_state_required}
       aliases: []
       judgments:
         - key: command_kind
@@ -9873,10 +9876,10 @@ command_payload_definitions:
           gap_note: "Canon requires command_kind metadata on recovery commands (UI_Command_Catalog.md:6852) but states no value for this command; domain_action because it runs the FileSafe restore and admits a successor attempt (Plans/Executor_Protocol.md:676-688)."
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection, permission_required]
-          gap_note: "No catalog row states disabled reasons for cmd.runtime.restore_safe_point_then_retry itself. Its wrapper cmd.orchestrator.safe_point_retry, which shares its admission decision (Plans/Executor_Protocol.md:678), keeps safe_point_missing, state_changed, permission_denied and operation_in_progress (UI_Command_Catalog.md:10694). Mapped: permission_denied to permission_required and operation_in_progress to blocked_state_required (UCC-230 owner_state_code_map); state_changed to stale_projection; safe_point_missing to blocked_state_required. Canon gives no map for state_changed or safe_point_missing."
+          gap_note: "No catalog row states disabled reasons for cmd.runtime.restore_safe_point_then_retry itself. Its wrapper cmd.orchestrator.safe_point_retry, which shares its admission decision (Plans/Executor_Protocol.md:677), keeps safe_point_missing, state_changed, permission_denied and operation_in_progress (UI_Command_Catalog.md:10800). Mapped: permission_denied to permission_required and operation_in_progress to blocked_state_required (UCC-230 owner_state_code_map); state_changed to stale_projection; safe_point_missing to blocked_state_required. Canon gives no map for state_changed or safe_point_missing."
         - key: field:idempotency_key
           choice: required
-          gap_note: "Canon disagrees: the catalog minimum args require idempotency_key (UI_Command_Catalog.md:1203), while Plans/Executor_Protocol.md:678 gives the exact canonical payload { project_id, run_id, node_id, blocked_sequence, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target: \"safe_point\" } with no idempotency_key (and no allowed_action_id, which the overlay and Plans/Executor_Protocol.md:676 require). The definition follows the catalog row and the overlay; not settled here."
+          gap_note: "Canon disagrees: the catalog minimum args require idempotency_key (UI_Command_Catalog.md:1203), while Plans/Executor_Protocol.md:677 gives the exact canonical payload { project_id, run_id, node_id, blocked_sequence, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target: \"safe_point\" } with no idempotency_key (and no allowed_action_id, which the overlay and Plans/Executor_Protocol.md:676 require). The definition follows the catalog row and the overlay; not settled here."
     - command_id: cmd.runtime.start_fresh_attempt
       ucc_units: [UCC-089, UCC-090, UCC-092, UCC-093, UCC-094, UCC-095]
       command_kind: domain_action
@@ -10092,6 +10095,18 @@ command_payload_definitions:
           default: none
           provenance: canon
           source: "UI_Command_Catalog.md:1206 attempt_id?; pre-attempt blocked rule (UI_Command_Catalog.md:1230-1231)"
+        reason_code:
+          type: string
+          required: true
+          default: none
+          provenance: gap
+          gap_note: "The name and its requiredness are canon: the HITL Skip And Cancel Commands passage gives cmd.runtime.skip_node the fields node_id, run_id, reason_code and operator_note? (Plans/human-in-the-loop.md:2669). Canon gives no type, value set or bounds for reason_code, and the catalog minimum args (UI_Command_Catalog.md:1206) do not list it; a plain string is chosen until the owner names its codes."
+        operator_note:
+          type: string
+          required: false
+          default: none
+          provenance: gap
+          gap_note: "The name and its optionality are canon (operator_note?, Plans/human-in-the-loop.md:2669). Canon gives no type, length bound or content rule; a free-text string with no bound is chosen until the owner sets one."
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -10130,6 +10145,24 @@ command_payload_definitions:
           default: none
           provenance: canon
           source: "overlay UCC-089..095 required identity; blocked-state actions map from allowed_action_ids[] (UI_Command_Catalog.md:1246)"
+        node_id:
+          type: id
+          required: true
+          default: none
+          provenance: gap
+          gap_note: "The name and type are canon: the overlay lists node_id? as an optional identity of the UCC-089..095 rows (UI_Command_Catalog.md:8858). Canon does not require it for abort_run: the catalog minimum args are { run_id } (UI_Command_Catalog.md:1207) and the HITL field list is run_id, reason_code, requested_by and created_at_utc (Plans/human-in-the-loop.md:2670). It is required here because the required blocked_sequence is monotonic per { run_id, node_id } (Plans/Contracts_V0.md:600), so run_id and blocked_sequence alone do not name one blocked episode when two nodes of a run are blocked."
+        reason_code:
+          type: string
+          required: true
+          default: none
+          provenance: gap
+          gap_note: "The name and its requiredness are canon: the HITL Skip And Cancel Commands passage gives cmd.runtime.abort_run the fields run_id, reason_code, requested_by and created_at_utc (Plans/human-in-the-loop.md:2670). Canon gives no type, value set or bounds for reason_code, and the catalog minimum args (UI_Command_Catalog.md:1207) do not list it; a plain string is chosen until the owner names its codes."
+        created_at_utc:
+          type: timestamp
+          required: true
+          default: none
+          provenance: gap
+          gap_note: "The name and its requiredness are canon (Plans/human-in-the-loop.md:2670). Canon gives no format; timestamp is chosen from the _utc suffix, with no literal default (type timestamp), and canon does not say whether the UI or the handler stamps it."
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -10141,6 +10174,9 @@ command_payload_definitions:
         - key: command_kind
           choice: domain_action
           gap_note: "Canon requires command_kind metadata on recovery commands (UI_Command_Catalog.md:6852) but states no value for this command; domain_action because it emits goal_run.stopped (Wiring_Matrix.production.json catalog.runtime_abort_run)."
+        - key: omitted:requested_by
+          choice: "left out of args; the UICommand envelope actor_ref carries the requester"
+          gap_note: "The HITL field list names requested_by for cmd.runtime.abort_run (Plans/human-in-the-loop.md:2670). The requester of a UICommand is the envelope actor_ref, which UCC-230 lists as required_not_restated, so a definition can carry it neither under that name nor as requested_by without restating the actor; UCC-230 has no form that records requested_by as the canon name of actor_ref. Canon does not say that requested_by is anything other than the actor."
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection]
           gap_note: "No catalog row states disabled reasons for this command; chosen from the closed set: it needs the live blocked episode that exposes its allowed_action_id (UI_Command_Catalog.md:1246), and a stale blocked_sequence or projection refuses (UI_Command_Catalog.md:1220)."
@@ -10305,6 +10341,9 @@ command_payload_definitions:
         owner_result: local:LocateAndVerifyRecoveryResult
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required, stale_projection, permission_required, degraded]
+      owner_state_codes:
+        - {owner_state: permission_denied, code: permission_required}
+        - {owner_state: operation_in_progress, code: blocked_state_required}
       aliases: []
       judgments:
         - key: owner_request
@@ -10445,6 +10484,9 @@ command_payload_definitions:
         owner_result: local:AbandonRecoveryResult
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required, stale_projection, permission_required, degraded]
+      owner_state_codes:
+        - {owner_state: permission_denied, code: permission_required}
+        - {owner_state: operation_in_progress, code: blocked_state_required}
       aliases: []
       judgments:
         - key: owner_request
@@ -10568,14 +10610,14 @@ command_payload_definitions:
     RuntimeRetryNowResult:
       fields:
         attempt_id: {type: id, required: false, default: none, provenance: gap, gap_note: "The successor attempt, present only when durable admission mints one (Plans/Executor_Protocol.md:688, restore-before-rerun step 5). A refused admission (UI_Command_Catalog.md:1220) or a safe_point target whose restore ends restore_refused, restore_failed or restore_recovery_required mints none (Plans/Executor_Protocol.md:697-701), so the field is optional; no typed result schema gives an outcome field to condition it on."}
-        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "durable dispatch or owner receipt; the strict UICommandResponse requires a reference to the typed domain result (UI_Command_Catalog.md:143); no typed result schema exists"}
+        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "durable dispatch or owner receipt; canon states that the strict UICommandResponse contains a reference to the matching typed domain result only for the locate and abandon recovery commands (UI_Command_Catalog.md:144), and the same reference is assumed here; no typed result schema exists"}
     RuntimeResumeAfterPrerequisiteResult:
       fields:
         attempt_id: {type: id, required: false, default: none, provenance: gap, gap_note: "The attempt of the resumed blocked, paused or waiting episode (recovery verb copy, UI_Command_Catalog.md:1237-1243). Optional: a pre-attempt blocked episode has no attempt and must not fabricate one (UI_Command_Catalog.md:1230-1231), and the request's attempt_id is optional; no typed result schema exists."}
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "durable dispatch or owner receipt; no typed result schema exists"}
     RuntimeRestoreSafePointThenRetryResult:
       fields:
-        restore_outcome: {type: enum, values: [restored_clean, restored_with_conflicts, restore_failed, restore_skipped, restore_refused, restore_recovery_required], required: true, default: none, provenance: gap, gap_note: "the closed restore_outcome enum is canon (Contracts_V0 safe_point.restored, Plans/Contracts_V0.md:2571-2583) but no typed command-result schema places it; only restored_clean or zero-mutation restore_skipped with target equality admits a successor (UI_Command_Catalog.md:1216)"}
+        restore_outcome: {type: enum, values: [restored_clean, restored_with_conflicts, restore_failed, restore_skipped, restore_refused, restore_recovery_required], required: true, default: none, provenance: gap, gap_note: "the closed restore_outcome enum is canon (Contracts_V0 safe_point.restored, Plans/Contracts_V0.md:2571-2583) but no typed command-result schema places it; only restored_clean or zero-mutation restore_skipped with target equality admits a successor (UI_Command_Catalog.md:1216). restored_with_conflicts is kept only because the enum is closed: safe-point restore never emits it (Plans/Contracts_V0.md:2576), and if an owner returns it anyway the result can carry it only as an owner-contract violation that keeps dispatch fenced and routes to recovery diagnostics (Plans/Executor_Protocol.md:701)"}
         attempt_id: {type: id, required: false, default: none, required_when: {field: restore_outcome, in: [restored_clean, restore_skipped]}, forbidden_when: {field: restore_outcome, in: [restored_with_conflicts, restore_failed, restore_refused, restore_recovery_required]}, provenance: gap, gap_note: "The successor attempt is minted only after the proved-ready baseline (Plans/Executor_Protocol.md:688, step 5): restored_clean or restore_skipped with the equality proof continues to admission, while restore_refused, restore_failed, restore_recovery_required and restored_with_conflicts mint no successor attempt (Plans/Executor_Protocol.md:697-701). No typed result schema places the field."}
         restore_transaction_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the exact restore transaction linked at admission; the field is named in the safe_point.restored event payload (Plans/Contracts_V0.md:2553-2567), no typed command-result schema"}
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "the durable baseline receipt required for successor-attempt admission (UI_Command_Catalog.md:1216); no typed result schema exists"}
