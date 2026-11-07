@@ -28,6 +28,7 @@ import pm_debug_investigation_guards_instrumentation_detail_values_c as instrume
 import pm_debug_investigation_guards_instrumentation_detail_required as instrumentation_detail_required
 import pm_debug_investigation_guards_instrumentation_joins as instrumentation_joins
 import pm_debug_investigation_guards_instrumentation_source as instrumentation_source
+import pm_debug_investigation_guards_instrumentation_source_values as instrumentation_source_values
 import pm_debug_investigation_guards_lifecycle as lifecycle
 import pm_debug_investigation_guards_payload as payload
 import pm_debug_investigation_guards_payload_values as payload_values
@@ -50,7 +51,7 @@ FAMILIES = ('context_item_added', 'context_item_state_changed', 'exported', 'imp
             'state_changed')
 # Payloads judged in two exact parts (structure, then property values), so no
 # payload suite needs more than the guard tool's per-command time.
-SPLIT_PAYLOADS = ('instrumentation_state_changed', 'started')
+SPLIT_PAYLOADS = ('instrumentation_state_changed', 'started', 'target_bound', 'state_changed')
 # The one pattern in the companion schema, kept by the payload phase as the
 # payload.target_sha256_hex row plus its type and length rows.
 SUPPORTED_PATTERN = (('$defs', 'target_bound', 'properties', 'target_bindings', 'properties', 'source_sha256'),
@@ -64,6 +65,7 @@ SCHEMA_CODES = {
     guards.PAYLOAD_URI: 'invalid_payload',
     guards.LIFECYCLE_URI: 'invalid_lifecycle_source',
     guards.SOURCE_URI: 'invalid_instrumentation_source',
+    guards.SOURCE_VALUES_URI: 'invalid_instrumentation_source',
     guards.DETAIL_URI: 'invalid_detail',
     guards.DETAIL_VALUES_A_URI: 'invalid_detail',
     guards.DETAIL_VALUES_B_URI: 'invalid_detail',
@@ -75,6 +77,7 @@ SCHEMA_LABELS = {
     guards.PAYLOAD_URI: 'payload',
     guards.LIFECYCLE_URI: 'lifecycle_source',
     guards.SOURCE_URI: 'instrumentation_source',
+    guards.SOURCE_VALUES_URI: 'instrumentation_source',
     guards.DETAIL_URI: 'instrumentation_change_detail',
     guards.DETAIL_VALUES_A_URI: 'instrumentation_change_detail',
     guards.DETAIL_VALUES_B_URI: 'instrumentation_change_detail',
@@ -109,7 +112,7 @@ def documents(schema):
         return {'$schema': DIALECT, **copy.deepcopy(defs[name])}
     result = {
         'lifecycle': {guards.LIFECYCLE_URI: document('lifecycle_source')},
-        'instrumentation_source': {guards.SOURCE_URI: document('instrumentation_source')},
+        **source_documents(document('instrumentation_source')),
         # The detail rows judge the record payload.detail_ref names, wrapped as {'detail': record}.
         **detail_documents(defs['instrumentation_change_detail']),
         'retry_request': {guards.RETRY_URI: document('cleanup_retry_request')}}
@@ -124,6 +127,12 @@ def documents(schema):
         else:
             result['debug.investigation.' + name] = {guards.PAYLOAD_URI: closed}
     return result
+
+
+def source_documents(source):
+    structure, values = split_properties(source)
+    return {'instrumentation_source': {guards.SOURCE_URI: structure},
+            'instrumentation_source_values': {guards.SOURCE_VALUES_URI: dict(values, **{'$schema': DIALECT})}}
 
 
 def split_properties(definition):
@@ -141,6 +150,7 @@ def split_properties(definition):
 
 # Which document keys each schema-using phase module holds.
 DOCUMENT_MODULES = ((lifecycle, ('lifecycle',)), (instrumentation_source, ('instrumentation_source',)),
+                    (instrumentation_source_values, ('instrumentation_source_values',)),
                     (instrumentation_detail, ('instrumentation_detail',)),
                     (instrumentation_detail_required, ('instrumentation_detail_required',)),
                     (instrumentation_detail_values_a, ('instrumentation_detail_values_a',)),
@@ -204,6 +214,7 @@ def load_documents(schema=None, only=None):
 REUSABLE = {payload.payload_case: 'event_type', target_payload.target_payload_case: 'event_type',
             payload_values.payload_values_case: 'event_type',
             lifecycle.lifecycle_case: None, instrumentation_source.instrumentation_source_case: None,
+            instrumentation_source_values.instrumentation_source_values_case: None,
             retry.retry_request_case: None, admission.admission_case: None}
 BUILT = {}
 
@@ -263,6 +274,7 @@ PHASE_MEMBERS = {
     'family': ('event_type', 'mode_resolution', 'payload'),
     'lifecycle': ('lifecycle_source', 'payload'),
     'instrumentation_source': ('instrumentation_source',),
+    'instrumentation_source_values': ('instrumentation_source',),
     'instrumentation_detail': ('detail_records', 'payload'),
     'instrumentation_detail_required': ('detail_records', 'payload'),
     'instrumentation_detail_values_a': ('detail_records', 'payload'),
@@ -320,6 +332,7 @@ def phases(case):
     sequence.append(('family', family.family_case))
     if event == INSTRUMENTATION_EVENT:
         sequence += [('instrumentation_source', instrumentation_source.instrumentation_source_case),
+                     ('instrumentation_source_values', instrumentation_source_values.instrumentation_source_values_case),
                      ('instrumentation_detail', instrumentation_detail.instrumentation_detail_case),
                      ('instrumentation_detail_required', instrumentation_detail_required.instrumentation_detail_required_case),
                      ('instrumentation_detail_values_a', instrumentation_detail_values_a.instrumentation_detail_values_a_case),

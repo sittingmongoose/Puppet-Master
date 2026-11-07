@@ -1,4 +1,4 @@
-"""DDBG guard table: Instrumentation source phase: the original source record schema (DL-429).
+"""DDBG guard table: Instrumentation source structure: type, closed members and required list of the original source record (DL-429).
 
 Part of the DDBG guard tables; the domain rule and phase order are in
 pm_debug_investigation_guard_constants.py. Every refusal here is a named

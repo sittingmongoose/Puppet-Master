@@ -440,6 +440,26 @@ NON_GUARDS = {
         ('payload_values_case', 'data_operation', 'case_value.get',
          'Read the family event type to select that family document; every candidate carries it.'),
     ],
+    'instrumentation_source_values': [
+        ('instrumentation_source_values_subject', 'return', "return value.get('instrumentation_source')",
+         'Schema selector: read the subject the schema rows judge; a missing member yields None, which the subject type row refuses.'),
+        ('instrumentation_source_values_case', 'return', 'return g.Case(table, check, context)',
+         'Return the fresh execution object built for this candidate; it decides no acceptance.'),
+        ('instrumentation_source_values_subject', 'call_review', "value.get('instrumentation_source')",
+         'Schema selector: read the subject the schema rows judge; a missing member yields None, which the subject type row refuses.'),
+        ('instrumentation_source_values_case', 'call_review', "g.SchemaCatalog(DOCUMENTS['instrumentation_source_values'], roots=SOURCE_VALUES_ROOTS)",
+         'Build a fresh closed schema catalog from the per-phase documents the loader injected once before any case.'),
+        ('instrumentation_source_values_case', 'call_review', 'g.schema_table(catalog, {SOURCE_VALUES_URI: instrumentation_source_values_subject})',
+         'Build the fresh guard table: the named code rows plus one row per supported schema assertion.'),
+        ('instrumentation_source_values_case.check', 'call_review', 'table.validate(SOURCE_VALUES_URI, value, context)',
+         'Run the schema boundary through the table; the engine attributes any refusal to its schema row.'),
+        ('instrumentation_source_values_subject', 'data_operation', 'value.get',
+         'Schema selector: read the subject the schema rows judge; a missing member yields None, which the subject type row refuses.'),
+        ('instrumentation_source_values_case', 'data_operation', "DOCUMENTS['instrumentation_source_values']",
+         'Select the injected schema document of this phase or family; the loader sets it before any case.'),
+        ('instrumentation_source_values_case', 'data_operation', '{SOURCE_VALUES_URI: instrumentation_source_values_subject}',
+         'Bind the one consumed schema root to its selector.'),
+    ],
     'instrumentation': [
         ('instrumentation_case', 'return', 'return g.Case(table, check, context)',
          'Return the fresh execution object built for this candidate; it decides no acceptance.'),
@@ -809,6 +829,20 @@ def payload_values_started_suite():
     return payload_values_suite('started')
 
 
+def payload_values_target_bound_suite():
+    return payload_values_suite('target_bound')
+
+
+def payload_values_state_changed_suite():
+    return payload_values_suite('state_changed')
+
+
+def instrumentation_source_values_suite():
+    return single_family('instrumentation_state_changed', 'instrumentation_source_values', 'instrumentation_source_values',
+                         production.instrumentation_source_values.instrumentation_source_values_case,
+                         ('instrumentation_source_values',))
+
+
 def payload_context_item_added_suite():
     return payload_suite('context_item_added')
 
@@ -936,7 +970,8 @@ def references_suite():
 
 SUITES = ('envelope_suite', 'family_suite', 'payload_context_item_added_suite', 'payload_context_item_state_changed_suite',
           'payload_exported_suite', 'payload_imported_suite', 'payload_instrumentation_state_changed_suite',
-          'payload_started_suite', 'payload_values_instrumentation_state_changed_suite', 'payload_values_started_suite', 'payload_target_bound_suite', 'payload_verification_recorded_suite',
+          'payload_started_suite', 'payload_values_instrumentation_state_changed_suite', 'payload_values_started_suite',
+          'payload_values_target_bound_suite', 'payload_values_state_changed_suite', 'instrumentation_source_values_suite', 'payload_target_bound_suite', 'payload_verification_recorded_suite',
           'payload_state_changed_suite', 'lifecycle_suite', 'instrumentation_source_suite', 'instrumentation_detail_suite', 'instrumentation_detail_required_suite',
           'instrumentation_detail_values_a_suite', 'instrumentation_detail_values_b_suite', 'instrumentation_detail_values_c_suite',
           'instrumentation_joins_suite', 'instrumentation_suite', 'retry_request_suite', 'admission_suite', 'retained_suite', 'references_suite')

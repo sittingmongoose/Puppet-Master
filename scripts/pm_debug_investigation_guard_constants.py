@@ -53,6 +53,12 @@ SOURCE_URI = 'https://pm.invalid/debug/instrumentation_source.schema.json'
 
 SOURCE_ROOTS = ('https://pm.invalid/debug/instrumentation_source.schema.json',)
 
+# The original source schema is judged in two exact parts: structure (type,
+# closed members, required list) and its property value constraints.
+SOURCE_VALUES_URI = 'https://pm.invalid/debug/instrumentation_source.values.schema.json'
+
+SOURCE_VALUES_ROOTS = ('https://pm.invalid/debug/instrumentation_source.values.schema.json',)
+
 DETAIL_URI = 'https://pm.invalid/debug/instrumentation_change_detail.schema.json'
 
 DETAIL_ROOTS = ('https://pm.invalid/debug/instrumentation_change_detail.schema.json',)
@@ -79,9 +85,10 @@ DETAIL_REQUIRED_URI = 'https://pm.invalid/debug/instrumentation_change_detail.re
 
 DETAIL_REQUIRED_ROOTS = ('https://pm.invalid/debug/instrumentation_change_detail.required_b.schema.json',)
 
-# The payloads of instrumentation_state_changed and started are judged in two
-# exact parts: structure (type, closed members, required list, conditionals)
-# in the payload phase and their property value constraints here.
+# The payloads of instrumentation_state_changed, started, target_bound and
+# state_changed are judged in two exact parts: structure (type, closed members,
+# required list, conditionals) in the payload phase and their property value
+# constraints in the payload values phase.
 PAYLOAD_VALUES_URI = 'https://pm.invalid/debug/payload.values.schema.json'
 
 PAYLOAD_VALUES_ROOTS = ('https://pm.invalid/debug/payload.values.schema.json',)
