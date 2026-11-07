@@ -1975,6 +1975,8 @@
         "future notification and sound tests",
         "future vision bridge tests",
         "scratchpad/pm-integration-20260831/audits/onboarding-doctor-128-current-runner/audit_runner.py",
+        "scripts/pm-collab-guard-tables.py",
+        "scripts/pm-collab-table-generate.py",
         "scripts/pm-forge-backup-acceptance-verify.py",
         "scripts/pm-governance-seal.py",
         "scripts/pm-integration-packet-audit-work.py",
@@ -1995,7 +1997,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 8712,
+      "line_count": 8715,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 96,
       "plan_unit_ids": [
@@ -2166,7 +2168,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+      "sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 95,
@@ -2292,6 +2294,7 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+        "python3 scripts/pm-collab-guard-tables.py --out <dir>",
         "python3 scripts/pm-forge-backup-acceptance-verify.py",
         "python3 scripts/pm-integration-packet-audit.py census",
         "python3 scripts/pm-new-contracts-verify.py",
@@ -21800,7 +21803,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-05T17:05:48Z",
+  "generated_at_utc": "2026-11-07T23:01:59Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
