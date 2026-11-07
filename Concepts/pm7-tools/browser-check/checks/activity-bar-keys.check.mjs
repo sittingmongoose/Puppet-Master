@@ -243,9 +243,10 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   if (!full && at !== '740x900') return;
 
   // reorder and hide by keys, through the rail skin's menu
-  const order0 = await f.evaluate(barOrder);
-  const k = order0.includes('docker') ? 'docker' : order0[Math.min(4, order0.length - 2)];
-  const i0 = order0.indexOf(k), visible0 = order0.filter(x => x !== 'more');
+  // an icon with a neighbour on each side, so it can move both ways (section 4's drag leaves Docker last)
+  const order0 = await f.evaluate(barOrder), visible0 = order0.filter(x => x !== 'more');
+  const middle = visible0.slice(1, -1), k = middle.includes('docker') ? 'docker' : middle[Math.floor(middle.length / 2)];
+  const i0 = order0.indexOf(k);
   const menuUp = () => f.waitForFunction(() => { const m = document.querySelector('.pmr-menu[data-pmr-menu="d-ab-icon"], .pm-ab-ctx'); return !!m && m.getClientRects().length > 0 && m.contains(document.activeElement); }, null, { timeout: 2000 }).catch(() => {});
   const menuGone = () => f.waitForFunction(() => { const m = document.querySelector('.pmr-menu[data-pmr-menu="d-ab-icon"], .pm-ab-ctx'); return !m || !m.isConnected || !m.getClientRects().length || getComputedStyle(m).display === 'none'; }, null, { timeout: 2000 }).catch(() => {});
   let reached = await reach(k);
