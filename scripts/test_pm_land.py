@@ -97,6 +97,9 @@ if "--record-baseline" in args:
     sys.exit(code)
 if "--row-report" in args and row.get("rows_file"):
     shutil.copy(row["rows_file"], args[args.index("--row-report") + 1])
+elif "--row-report" in args and not row.get("no_row_report"):
+    # Like the real check, which always writes the row report it is asked for: an empty one, unless a test says otherwise.
+    Path(args[args.index("--row-report") + 1]).write_text(json.dumps({"schema_id": "pm.landing_check.rows.v1", "subchecks": {}}) + "\n")
 if "--keep-check-reports" in args:
     keep = Path(args[args.index("--keep-check-reports") + 1])
     keep.mkdir(parents=True, exist_ok=True)
@@ -2829,7 +2832,15 @@ class RealReportBatchTests(RealReports, Base):
         code, text = self.alone(baseline, first, second, ("Plans/A.md", "Plans/A.md"))
         self.assertEqual(code, 2, text)
         one, two = self.reports(baseline, first, second)
-        start, result = self.land_both(one, (two[0], two[1], None))
+        self.h.branch("fix/a", {"src/x.txt": "a\n"})
+        start = self.h.origin_main()
+        self.h.set_plan("landing", [{"exit": one[0], "raw": one[1], "rows_file": one[2]},
+                                    {"exit": two[0], "raw": two[1], "no_row_report": True}, {}])
+        first_run = self.land("fix/a", "--batch-open")
+        self.assertEqual(first_run.returncode, 0, first_run.stdout + first_run.stderr)
+        self.a_sha = self.h.origin_main()
+        self.h.branch("fix/b", {"src/y.txt": "b\n"})
+        result = self.land("fix/b", "--batch-start", start)
         self.assert_closed_and_alone(start, result)
         self.assertIn("could not be read", result.stdout)
 
