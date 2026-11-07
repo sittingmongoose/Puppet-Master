@@ -170,10 +170,26 @@ export default async function(t) {
   // the host or the CSSOM). Each change is made and the live boxes are read again in the same task, before any
   // observer can run, to show the box did not move; the strip must take the fitting tier within three frames and
   // keep it through a 500 ms hold.
-  const cssCase = async (name, width, setup, change, expectBefore, expectAfter, cleanup) => {
-    await setWidth(width); await f.waitForTimeout(300);
-    await f.evaluate(setup); await frames(f);
-    const before = await readFit(f);
+  // T84 (astra-review-g6 K4): the precondition is required and recorded before the change: the case is set up, and the
+  // tier before the change must be the one the case starts from (with the fixture still holding, when the case names a
+  // guard: no other count update overwrote it), read again for up to 30 frames; a fixture that does not get there is set
+  // up again, up to three tries. One that never does fails as setup ('the precondition ... was not established'), and
+  // the fit is not judged on it; the first sandbox integration run had judged the restoration from tier 1, expected 2.
+  const cssCase = async (name, width, setup, change, expectBefore, expectAfter, cleanup, guard = null) => {
+    let before = null, tries = 0, held0 = true;
+    for (; tries < 3; tries++) {
+      await setWidth(width); await f.waitForTimeout(300);
+      await f.evaluate(setup); await frames(f);
+      before = await readFit(f);
+      if (guard) await f.evaluate(`window.__fo76Guard = ${guard.toString()}`);
+      for (let k = 0; k < 10; k++) { held0 = !guard || await f.evaluate(() => window.__fo76Guard()); if (before.tier === expectBefore && valid(before) && held0) break; await frames(f); before = await readFit(f); }
+      if (before.tier === expectBefore && valid(before) && held0) break;
+      t.log(`css-only ${name}: setup try ${tries + 1}: tier ${before.tier} before the change (the case starts from ${expectBefore})${held0 ? '' : '; the fixture was overwritten by another update'}; set up again`);
+      await f.evaluate(cleanup); await rerender(f); await t.settle();
+    }
+    const pre = before.tier === expectBefore && valid(before) && held0;
+    await t.check(`css-only ${name}: setup: the precondition, tier ${expectBefore} before the change, was established (${Math.min(tries + 1, 3)} tr${tries ? 'ies' : 'y'})`, pre, JSON.stringify({ before: JSON.parse(strip(before)), fixtureHeld: held0 }));
+    if (!pre) { await f.evaluate(cleanup); await rerender(f); await t.settle(); return; }
     // The page's CSP has no unsafe-eval: install the change as a function through the harness, then run it between
     // two box reads in one task.
     await f.evaluate(`window.__fo76Change = ${change.toString()}`);
@@ -184,7 +200,7 @@ export default async function(t) {
     const held = await readFit(f);
     await f.evaluate(cleanup); await rerender(f); await t.settle();
     await t.check(`css-only ${name}: live boxes unchanged by the change`, moved.a.bar === moved.b.bar && moved.a.wrap === moved.b.wrap && moved.a.tier === moved.b.tier, JSON.stringify(moved));
-    await t.check(`css-only ${name}: tier ${expectBefore} before, ${expectAfter} within 3 frames and after 500 ms`,
+    await t.check(`css-only ${name}: from tier ${expectBefore}, tier ${expectAfter} within 3 frames and after 500 ms`,
       before.tier === expectBefore && valid(before) && after.tier === expectAfter && valid(after) && held.tier === expectAfter && valid(held),
       JSON.stringify({ before: JSON.parse(strip(before)), after: JSON.parse(strip(after)), held: JSON.parse(strip(held)) }));
   };
@@ -199,9 +215,10 @@ export default async function(t) {
       () => { document.getElementById('fo76-pseudo').textContent = '#pmRoot .activity-item .label::after{content:""}'; },
       1, 0, () => document.getElementById('fo76-pseudo')?.remove());
     await cssCase(`host count restored ${rep}`, 560,
-      () => { const h = __fo76.host(); window.__fo76Add = h.style.getPropertyValue('--ab-add'); h.style.setProperty('--ab-add', '"+123456789123456789123456789"'); },
+      () => { const h = __fo76.host(); if (window.__fo76Add === undefined) window.__fo76Add = h.style.getPropertyValue('--ab-add'); h.style.setProperty('--ab-add', '"+123456789123456789123456789"'); },
       () => { __fo76.host().style.setProperty('--ab-add', window.__fo76Add); },
-      2, 1, () => {});
+      2, 1, () => { __fo76.host().style.setProperty('--ab-add', window.__fo76Add); },
+      () => __fo76.host().style.getPropertyValue('--ab-add') === '"+123456789123456789123456789"');
     await cssCase(`hidden-label font stack ${rep}`, 660, () => {},
       () => { const s = document.createElement('style'); s.id = 'fo76-font'; s.textContent = '#pmRoot .activity-item .label{font-family:Arial,sans-serif!important;letter-spacing:-1px!important;font-size:8px!important}'; document.head.append(s); },
       1, 0, () => document.getElementById('fo76-font')?.remove());
