@@ -820,9 +820,12 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :is(#pm-o55-onboarding .o55-bt
   text-shadow: 0 1px 1px rgba(0, 0, 0, .25);
 }
 /* SW-18: reserve contrast at the brightest ground beneath glyphs, including
-   the radial highlight and hover brightening; the edge light and gradient stay. */
+   the radial highlight and hover brightening; the edge light and gradient stay.
+   CONTRAST-G6: Light's 0, 78, 170 left its hovered white word at 4.499:1 where the highlight is brightest (Done at
+   1920x900), so a one-level change in how the window's layers are composited (group 6's FO-83 and FO-87 stacking)
+   read it at 4.452. 0, 74, 164 reads 4.62:1 or more there at every size, on both surfaces. */
 html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) :is(#pm-o55-onboarding .o55-btn.o55-primary) { --accent-primary-rgb: 18, 78, 168; }
-html[data-lg="on"][data-theme="glass-light"]:not(#lgz) :is(#pm-o55-onboarding .o55-btn.o55-primary) { --accent-primary-rgb: 0, 78, 170; }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) :is(#pm-o55-onboarding .o55-btn.o55-primary) { --accent-primary-rgb: 0, 74, 164; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-btn.o55-primary:hover { filter: brightness(1.06); }
 /* choices: glass rows that light up when chosen */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding :is(.o55-card, .o55-tile, .o55-provider) {
