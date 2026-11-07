@@ -66,7 +66,7 @@ TABLE_PHASES = {
     'decode_provider_source': ('decode_provider_source', 'provider_source_case'),
     'decode_provider_digest': ('decode_provider_digest', 'provider_digest_case'),
     'decode_joins': ('decode_joins', 'joins_case'), 'decode_identity': ('decode_identity', 'identity_case'),
-    'decode_identity.restore': ('decode_identity', 'restore_identity_case'),
+    'decode_identity.restore': ('decode_identity_restore', 'restore_identity_case'),
     'stored': ('stored', 'case'),
     'inspect_flags': ('inspect_flags', 'flags_case'), 'inspect_payload': ('inspect_payload', 'payload_case'),
     'inspect_deleted': ('inspect_deleted', 'deleted_case'),

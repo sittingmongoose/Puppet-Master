@@ -47,8 +47,17 @@ def main():
         both = dict(controls=dict(slot['controls']), negatives=dict(slot['negatives']))
         shared = collected.get((phase, 'shared'))
         if shared:
-            both['controls'].update(shared['controls'])
-            both['negatives'].update(shared['negatives'])
+            # An identical observation keeps the family's control id; shared
+            # negatives naming that observation are pointed at it.
+            remap = {}
+            for k, control in shared['controls'].items():
+                if k in both['controls']:
+                    remap[control['id']] = both['controls'][k]['id']
+                else:
+                    both['controls'][k] = control
+            for k, negative in shared['negatives'].items():
+                if k not in both['negatives']:
+                    both['negatives'][k] = dict(negative, control=remap.get(negative['control'], negative['control']))
         merged[phase, family] = both
     for (phase, family), slot in collected.items():
         if family == 'shared' and run_shared_only and not any(p == phase for p, _ in merged):
