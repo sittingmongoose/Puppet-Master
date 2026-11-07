@@ -1,4 +1,133 @@
-# DG6B — sweep part 1, prepared without admission
+# DG6B — Sweep part 2A: guard tables on the gated guard tool
+
+Branch `plans/ea-w2-plugins-personas-github-20261104`; part 2A start `e0fe6998d81eae3b416f6c5d3436572e9dee3b33`; gated tool merge `4842b41e5a` (tool `004bdedd63`, eleven files, unchanged); implementation and evidence head **`4cc3643606ec666a7503b0015c7c50a1a99c7410`**; delivery head in the external `HEAD.txt`. No rebase onto main this round. Native execution: **NOT_RUN**.
+
+**All 19 families keep 9 PASS / 2 PARTIAL / 1 ABSENT (171 / 38 / 19).** Part 2A closes S1 (guard tables on the shared tool). `positive_negative_oracles` stays PARTIAL because S2 (shared number rule) and S3 (timestamp formats) are part 2B; `retention` stays PARTIAL (PENDING_RETENTION_DECISION); membership stays ABSENT. Prepared READY: 0/19. Sol and Astra review the lane once, after part 2B.
+
+## Sweep part 2A: findings and responses
+
+| Item | Disposition and change | Where | Verify |
+|---|---|---|---|
+| **Take the gated tool** | Merged `004bdedd632d9463f3535190a6ed5772338cdce1` with `--no-ff` as `4842b41e5a`: exactly the eleven tool files, no conflict, none edited. | `scripts/pm_guard_isolation*.py`, `scripts/guard-isolation/README.md`, `Plans/guard_isolation_traps.json`, GUARDTOOL reports | `git diff --stat 4842b41e5a^1 4842b41e5a` lists 11 files; `git diff 4842b41e5a HEAD -- scripts/pm_guard_isolation.py scripts/pm_guard_isolation_dg6b_example.py` is empty. |
+| **S1 — guard tables** (fixed, `94eb20e014`, `4cc3643606`) | Every product refusal of the checker is one named row in one of **76 phase tables (173 rows, at most seven each)**, reached only through `require()`. Derivation computes observations (schema error counts, canonical-byte digests via `digest_of`, recomputed identities and expected values) and decides nothing. Or-chains are one row per predicate; a later predicate that would also hold for an input an earlier row refuses carries the earlier rows' pass condition as applicability (retry RY02/RY03, reference RA02–RA04, Persona home PH02, update CAS UC01/UC02, creation CR04, override OO03, EJ07, PR02, PR08), so each defect has exactly one refusing row and the rows together refuse what the original chain refused. The DG6B example's seven retained-history flags are table `history_flags` unchanged in substance. The checker asserts each factory's require order and that no `raise` outside the table remains (harness `KeyError`/`AssertionError` only). | `scripts/pm-dg6b-event-contracts.py:31` (`TABLE_PHASES`), `:80` (`require`), `:98` (`table_order_errors`), `:115` (`refusal_sites`); row spec `scripts/pm-dg6b-table-generate.py`; generated `scripts/pm_dg6b_table_*.py` | `python3 scripts/pm-dg6b-table-generate.py scripts --check` (no stale or extra module); every family CLI `pass`. |
+| **S1 — retired machinery** (fixed, `94eb20e014`) | Removed the AST/mutation proof `scripts/pm-dg6b-guard-proof.py` (its `guard_inventory`, `run_family`, cut grouping and reported inventory). Proof is now the gated tool over the tables. | — | `git show 94eb20e014 --stat` |
+| **S1 — adapter and runner** (fixed, `73e9bb854e`) | `pm_dg6b_guard_suites` replays the complete checker per family under its recorder: each asserted negative (`expect_failure`: Probe corpus, fixture negatives, round-9 witnesses) supplies the observation of its first refusing phase, targeted at the refusing row; every passing evaluation outside a negative is a control. It re-runs every negative with only its refusing row cut (complete-boundary flip, lane evidence). `pm-dg6b-guard-tables.py` runs the tool once per (phase, family) and copies its credit. | `scripts/pm_dg6b_guard_suites.py:59` (`Collector`), `:116` (`collect`), `:245` (`suite_for`); `scripts/pm-dg6b-guard-tables.py` | `python3 scripts/pm-dg6b-guard-tables.py --family <f> --out <dir> --pool <collect dir>` (one process per family). |
+| **Two-defect negatives the tool reported** (fixed, `e0de248c4a`) | The lane matrix reported the 42 `invalid_project_partition_*` stage fixtures (14 non-auth families × 3): each put the same invalid value in the source scope partition and the record partition, so PA01 and PA02 both refused. Each is now two single-defect cases, `/scope` and `/record`. No other negative refused two rows. | `Plans/dg6b_event_contract_fixtures.json` (`stage_cases`) | Lane matrix: 0 problems in every suite; tool: no masked negative. |
+| **Missing negatives for unproved rows** (fixed, `94eb20e014`) | Before round 9, 484 row×family cells (75 distinct rows) and 10 of the 12 shared fence rows had no negative of their own. `pm_dg6b_round9_cases` adds one witness per row and family, each from a valid case of its own family with one source change (derived identities, keys and stored carriers re-derived), each asserted to be refused **by its own row** (`expect_failure(..., row=...)`): frozen Storage instance, redaction/scope kind/project/run/node/attempt envelope copies, record partition, payload types and original Server (relational helpers), retry from another Server, operation lookup ref, carrier ref digest/size, undecodable and schema-invalid decoded operations, request-scope schema and copy, Project home rules, every owner request/result/home copy, creation source, update CAS, empty-lineage override and `tier_id` owner, resolution lineage/field copies and carrier integrity, schema reference/metaschema fences and the eight preparation fences. While building them, the RR06 witness exposed a fault in the first draft of the restructure (payload and result field names collided, so the row compared a value with itself); it was fixed before the commit and the generator now refuses a self-join. | `scripts/pm_dg6b_round9_cases.py:41` (`family_cases`), `:142` (`persona_cases`), `:287` (`shared_cases`) | Every suite: `rows_without_negative` empty. |
+| **Rows a family cannot reach** (declared, `73e9bb854e`) | Five rows are structurally unreachable on some families' own paths; their suites take one recorded negative of the same table from a named donor family, listed separately (35 cells): SC01 for the 13 non-Persona families (their closed source adapter embeds the same strict WorkflowScopeV2, so AS01 decides it); RY02 and OS01 for the 6 Persona families (the Persona scope key holds the Server, so equal event IDs imply equal keys; Persona identity reads the Server from the typed payload scope); PA01 and EJ07 for the 5 auth families (application scope fixes partition `app` and `project_id` null). | `scripts/pm_dg6b_guard_suites.py:189` (`BORROW`), `:207` (`borrow`) | Per-family table below (borrowed column); `summary.json` `borrowed` per suite. |
+| **Clauses removed as already decided** (`94eb20e014`) | Not repeated because an earlier row decides the same predicate on the same values; each is commented in place: record_contract's second WorkflowScopeV2 pass without formats (SC01 runs it with formats); the operation carrier's schema_id/schema_version/event_type header join (OP01 and OG01 bind both copies to the same per-family constants); the operation and resolution carrier `media_type` joins (OP01/RT01 const plus TI03); the Persona request `scope` copy in the request loop (identical to PC02); override owner presence and override membership (persona.selected payload schema). No other refusal was removed. | `scripts/pm-dg6b-event-contracts.py:401`, `:407`, `:568`, `:590`, `:653`, `:874`; `scripts/pm-dg6b-table-generate.py:250`, `:256`, `:272`, `:421` | Reviewer check against the named schema clauses in `Plans/dg6b_event_contracts.schema.json`. |
+| **Behaviour changes, none weaker** | A non-hex resolved body and trailing bytes after a MessagePack value used to crash (`ValueError`/`ExtraData` with no code); both now refuse `payload_ref_integrity`. The preparation operation binding compares canonical JSON text (exact typed) instead of Python equality. A metaschema-invalid selected schema now refuses `invalid_schema` instead of raising `SchemaError`; an unresolved reference refuses `unresolved_schema_ref` without the reference text appended. Within `persona_semantic`, writer is checked before access and the storage-instance copy before the other copies (same codes for every single defect). Unknown adapter kinds and fixture stages are harness `KeyError`s. | `scripts/pm-dg6b-event-contracts.py:278` (`resolve_schema_graph`), `:367` (`resolved_body`), `:381` (`decoded_body`), `:811` (`transport`), `:1079` (`preparation_contract`) | Every family CLI pass with unchanged expected codes. |
+| **Astra-4 coherent bad positives** (re-run) | The seven coherent bad positives inserted as `append_valid` still make the unchanged family CLI exit nonzero, refused through a table row: plugin.hook.error payload_schema, plugin.hook.invoked payload_schema, persona.selected payload_schema, persona.created protected_identity, persona.deleted protected_identity, persona.imported protected_identity, persona.updated protected_identity. | external `verify/counterexample-cli.json` | 7/7 pass. |
+| **S2 — shared number rule** | Part 2B (needs NUMRULE gates). | Listed below | — |
+| **S3 — timestamp formats** | Part 2B. Interim only (below). | Listed below | — |
+
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** zero new. No `Plans/*.md` changed, so no shard or index regeneration.
+
+## Guard-table result
+
+The gated tool ran **763 suites** (one per phase table per family, plus 4 shared-only tables): **1640/1640 row cells proved, 0 failed suites**, 2575 distinct single-row negatives (35 borrowed cells, declared above). 173 distinct rows in 76 tables. Lane matrix problems: 0. Collection findings: 0. Credit is the tool's own `rows[].proved`.
+
+Each cut swaps one table row to always-pass; the tool runs every control and negative, checks the guard-call trace against the uncut baseline and runs a fresh restoration. Own negatives must be accepted after the cut ("flips"); every other negative must keep its exact refusal ("stays").
+
+| Checker | Tables | Rows | Row cells proved | Unproved (reason) | Cut: own flips / own | Cut: stays | Unrelated changes | Masked | Borrowed cells |
+|---|---:|---:|---:|---|---:|---:|---:|---:|---:|
+| Shared fences: strict JSON, schema references, preparation | 4 | 12 | 12/12 | none | 12/12 | 28 | 0 | 0 | 0 |
+| Schema occurrences (one row per validated subject) | 19 | 19 | 268/268 | none | 272/272 | 0 | 0 | 0 | 13 |
+| `append_contract`: replay policy, retry | 2 | 5 | 95/95 | none | 283/283 | 528 | 0 | 0 | 6 |
+| `record_contract`: grants, frozen source, scope, partition, identity, envelope, body, read token | 11 | 28 | 518/518 | none | 777/777 | 1777 | 0 | 0 | 16 |
+| `semantic`: auth key scope, retry payload, hook block, cadence | 4 | 4 | 20/20 | none | 21/21 | 0 | 0 | 0 | 0 |
+| SP-337 byte stages: inline, reference, integrity, operation and resolution carriers | 9 | 21 | 291/291 | none | 701/701 | 1746 | 0 | 0 | 0 |
+| `history_contract`: retained flags, Storage join | 2 | 11 | 209/209 | none | 247/247 | 1140 | 0 | 0 | 0 |
+| `persona_semantic`: Persona relational rules and owner copies | 25 | 73 | 227/227 | none | 262/262 | 727 | 0 | 0 | 0 |
+
+Per family (every phase table the family reaches; shared witnesses of the same table ride with each family):
+
+| Family | Suites | Row cells proved | Own-witness cells | Borrowed cells | Distinct negatives | Failed suites |
+|---|---:|---:|---:|---:|---:|---|
+| `auth.github.authenticated` | 36 | 74/74 | 71 | 3 | 115 | none |
+| `auth.github.device_code.issued` | 36 | 74/74 | 71 | 3 | 110 | none |
+| `auth.github.disconnected` | 36 | 74/74 | 71 | 3 | 110 | none |
+| `auth.github.failed` | 36 | 74/74 | 71 | 3 | 110 | none |
+| `auth.github.token.polling` | 37 | 75/75 | 72 | 3 | 111 | none |
+| `persona.created` | 49 | 113/113 | 111 | 2 | 168 | none |
+| `persona.deleted` | 51 | 109/109 | 107 | 2 | 165 | none |
+| `persona.exported` | 46 | 102/102 | 100 | 2 | 149 | none |
+| `persona.imported` | 51 | 111/111 | 109 | 2 | 165 | none |
+| `persona.selected` | 58 | 132/132 | 130 | 2 | 209 | none |
+| `persona.updated` | 50 | 113/113 | 111 | 2 | 167 | none |
+| `plugin.hook.blocked` | 35 | 73/73 | 72 | 1 | 122 | none |
+| `plugin.hook.error` | 34 | 72/72 | 71 | 1 | 136 | none |
+| `plugin.hook.invoked` | 34 | 72/72 | 71 | 1 | 136 | none |
+| `plugin.load_failed` | 34 | 72/72 | 71 | 1 | 118 | none |
+| `plugin.loaded` | 34 | 72/72 | 71 | 1 | 118 | none |
+| `plugin.permission.override` | 34 | 72/72 | 71 | 1 | 118 | none |
+| `plugin.tool.collision` | 34 | 72/72 | 71 | 1 | 118 | none |
+| `plugin.tool.registered` | 34 | 72/72 | 71 | 1 | 118 | none |
+| `shared` (JSON, references, preparation) | 4 | 12/12 | 12 | 0 | 12 | none |
+
+Every row of every table and its per-family cut result are in the per-suite tool reports (`tool/<family>/<phase>__<family>.json`) and `aggregate.json` under the evidence directory.
+
+**Phase boundary.** Tables are extracted observation boundaries (tool boundary `synthetic`). The complete path is the full checker, which reaches every refusal through the same rows. As lane evidence beyond the tool, each negative was re-run through its whole call with only its refusing row cut: of 10362 negative calls (the 12 shared fence witnesses re-run in each of the 19 family passes), 6320 are accepted. The rest are refused later by a distinct invariant that watches the same source fact: a wrong-typed flag cut at its adapter row is also not exactly True/False (SG01/SG02, HF01–HF07, HS01, RA03/RA04, DW01, PM01/PM02, PF01, PK01, PV01, PX01); a payload refused by PS01 is the same invalid body inline (EP01, PJ01); a physical operation refused by OP01 still differs from the decoded or expected operation (OG01, OF01/OF02, OJ01); an owner-schema defect also breaks a copy join (PC01, QK03, QK09, RR04, RR07); direct relational-helper probes reach identity and retry rows (ID01, SO01, SS01); and a cut adapter row leaves derivation reading a wrong-typed field (`derivation_requires_cut_row`). Counts per cut row are in `verify/flips.json`. None reaches another row of its own table, so each stays a single-row negative for the tool.
+
+**Shared tool limits met.** One module per table, at most seven rows, each prescanned from its text before use. The only `NonGuard` is the `return g.Case(table, check, context)` plumbing return. The first full run found one static stop: CR06 used `list.count` on a list display, which the purity scan does not certify; it is now one chained comparison (`4cc3643606`), and the evidence run is at that head.
+
+**What Astra keeps finding, probed for part 2A.** (1) Identities and digests are recomputed in derivation and compared by rows (ID01, IK01, TI01, OF05, RF05, OJ01, RJ01); forged copies are the negatives. (2) Storage sequence and times stay outside `semantic_record`; RY03 compares the caller semantic digest, HS04 the full canonical record bytes against the independent Storage record. (3) `history_contract` has no replay-policy row, so retained replay-only history stays readable; withdrawn, foreign and forged history refuse at HF/HS rows. (4) Every former `same_value` join is a `digest_of` exact-typed-bytes comparison; joins that used `!=` keep it. (5) R02 walks every `$ref` including unused definitions; the new dangling-definition witness refuses. (6) Inline body (IS01), physical operation (OV01) and resolution (RZ01) sizes are measured in canonical bytes. (7) Retry validates the original first; operation recovery runs the complete append first; history validates the original record and Storage. (8) Masked negatives: tool `masked` empty on every row; complete-boundary flips reported above. (9) The oracle cell stays PARTIAL. (11) Wrong-type flags refuse at their adapter rows before any truth-value row; integers are exact `int`. (10, 10a, 12) are part 2B.
+
+**Timestamp fields — interim only.** My own review of the timestamp fields is interim only (pm7-build, 2026-11-05 16:50Z); it is not a certification. DG6B passes an explicit `date-time` checker (`utc_datetime`) at every schema occurrence that has timestamps. A probe of it at this head: it accepts `2026-11-04T12:00:00Z`, fractional seconds and lowercase `t`; it refuses lowercase `z`, `+00:00`, a missing zone, a space separator, a trailing LF, `2026-02-30`, `23:59:60` and non-strings; **it accepts `24:00:00Z`** (Python 3.14 `fromisoformat` reads it as the next midnight). Part 2A adds no date-time rule and changes no timestamp field.
+
+## Part 2B items
+
+- **S2 — shared number rule (CV-1100/1101, SP-1100/1101, shared helper).** `scripts/pm-dg6b-event-contracts.py:158` (JSON Schema `integer` redefined as exact `int`), `:455`–`:458` (`identity` preimage: `revision` through `json.dumps`), `:909` (record digest through `rfc8785.dumps`, the 2**53 semantic-digest question), `:127` `digest_of` over `binding_bytes` (`scripts/pm_event_index_binding.py:51`–`:53`: uint64 range, floats unencodable; Storage uint64 boundaries), `:486` (cadence `previous + 5`); tables `scripts/pm_dg6b_table_persona_update_cas.py:36` (UC06 order), `pm_dg6b_table_persona_delete_cas.py:16` (DC01), `pm_dg6b_table_retry.py:16`–`:24` (RY01–RY03), `pm_dg6b_table_cadence.py:16` (CD01); witnesses `scripts/pm_dg6b_full_oracles.py:47`–`:48` (`rebuild` preimage) and `:265`–`:268` (decimal/exponent `producer_sequence_id`); owner identity paragraphs `Plans/storage-plan.md:29624` (SP-670, one per family thereafter), SP-671 at `:29736`, SP-672 at `:29949`.
+- **S2 — authenticated at-write recipe selection for history.** `scripts/pm-dg6b-event-contracts.py:417` `history_contract` validates a retained original with the current recipes (`record_contract`); no recorded recipe edition selects them (item 10a).
+- **S3 — timestamp formats (interim only, above).** `scripts/pm-dg6b-event-contracts.py:488`–`:495` (`FORMAT`, `utc_datetime`: lowercase `t` and `24:00:00Z` accepted; retained `+00:00` and lowercase-`z` spellings refused regardless of their at-write recipe); `Plans/event_record.schema.json:212` (`date-time` for occurred/observed/persisted); the 40 `date-time` occurrences in `Plans/dg6b_event_contracts.schema.json` (every family `ts`); `scripts/pm_dg6b_table_envelope_a.py:24` (EJ03 joins `occurred_at_utc` to `ts` by string, spelling-sensitive); `scripts/pm-dg6b-event-contracts.py:1003` (retry Storage-time fixture values).
+
+## Family grades before and after
+
+P=PASS, Q=PARTIAL, A=ABSENT. Before is the part 1 self-grade at `e0fe6998d8`; after is this part 2A self-grade. Every cell is carried; `positive_negative_oracles` cites the tables and states the proved cells.
+
+| Exact family | Before → after |
+|---|---|
+| `auth.github.authenticated` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `auth.github.device_code.issued` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `auth.github.disconnected` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `auth.github.failed` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `auth.github.token.polling` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `persona.created` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `persona.deleted` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `persona.exported` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `persona.imported` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `persona.selected` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `persona.updated` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `plugin.hook.blocked` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `plugin.hook.error` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `plugin.hook.invoked` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `plugin.load_failed` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `plugin.loaded` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `plugin.permission.override` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `plugin.tool.collision` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `plugin.tool.registered` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+
+171 PASS / 38 PARTIAL / 19 ABSENT / 0 CONFLICT → the same totals. Every cited quote was re-verified at its line in this tree; the two quotes the restructure removed (`def same_value`, the inline protected-ID test) now cite `digest_of` and row PM03.
+
+## Commands and evidence
+
+Heavy checkers ran one at a time with at least 10 GB available (the tool MemoryGate paused below 10; each step waited below 11). PM7 work was not waited on or touched. Commits: `4842b41e5a` (tool merge), `e0de248c4a`, `94eb20e014`, `73e9bb854e`, `4cc3643606`, then the report commit. Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6B/sweep-p2a/` (SHA-256 of every file in `MANIFEST.json`).
+
+| Command | Exit | Outcome |
+|---|---:|---|
+| `git merge --no-ff 004bdedd63` | 0 | clean; 11 tool files |
+| `python3 scripts/pm-dg6b-table-generate.py scripts --check` | 0 | 76 phases, 173 rows, no stale or extra module |
+| `python3 scripts/pm-dg6b-event-contracts.py --family <f>` ×19 (head `4cc3643606`) | 0 ×19 | 19/19 `pass`, 11.2–20.6 s, peak RSS 150 MB (`verify/checker/`) |
+| `python3 scripts/pm-dg6b-guard-tables.py --family <f> --out tool/<f> --pool pool` ×19, then `--family shared` | 0 ×20 | 763 suites `PASS`; `tool/<family>/summary.json`, `aggregate.json` |
+| collect pass `--collect-only --no-flips` ×19 (donor pool) | 1 ×19 | expected: without the pool the declared borrowed rows have no negative |
+| counterexample CLIs (`verify/counterexample-cli.json`) | 0 | 7/7 refused through a table row |
+| complete-boundary flips (`verify/flips.json`, lane evidence) | 0 | 10362 negative calls: 6320 accepted, 4042 refused later (reasons above) |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | `pass`, 3139 shards, 0 failures |
+| `python3 scripts/pm-plan-index.py validate` (origin/main `5cbb92a5aa`) | 1 | top-level `fail`, 30 failures: 21 `plan_unit_removal_ledger_invalid` in existing ledgers (carried from part 1) and 9 `plan_unit_removed_without_ledger_decision` for DL-333, DL-335..340, DL-349 and UCC-230, which main added after this branch's base; none names a DG6B file. Integration rebase owns them. |
+
+---
+
+# DG6B — Sweep part 1 (earlier report, unchanged): prepared without admission
 
 Branch: `plans/ea-w2-plugins-personas-github-20261104`. Input: `5cc7c461d08d993c0aa4c0bdeb6ccd4e98131468`. Rebased main: `e42ce235b4711325ced818c777f070c3ee0d7952`. Fix commit: **`9c10e2c4b17cb1263b88825a81b0a305ecfcb8f0`**. Native execution: **NOT_RUN**.
 
