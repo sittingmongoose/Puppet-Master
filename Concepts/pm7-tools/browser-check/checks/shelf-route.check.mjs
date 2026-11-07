@@ -959,7 +959,7 @@ export default async function (t) {
     });
     return out;
   }, [slot.html, pn, toks]);
-  const fxCases = [];
+  const fxCases = [], branchMisses = [];
   // Read from the walk's own frame before the first fresh page replaces it (on the sandbox surface it goes with it).
   const fxSpecs = [];
   if (t.args.effects !== '0') for (const pn of ctxPanes) {
@@ -1069,16 +1069,43 @@ export default async function (t) {
           const it = m && [...m.querySelectorAll('[role="menuitem"]')].find(i => i.closest('[role="menu"]') === m && i.checkVisibility() && (prefix ? lab(i).startsWith(label) : lab(i) === label));
           it?.setAttribute('data-shelf-fx-item', ''); return !!it;
         }, [pn.menu, label, prefix, within]);
-        if (ok) { if (prefix) await g.locator('[data-shelf-fx-item]').hover(); else await g.locator('[data-shelf-fx-item]').click(); }
-        return ok;
+        if (!ok) return false;
+        if (prefix) { await g.locator('[data-shelf-fx-item]').hover(); return true; }
+        // T85 (sol-review-g6b N2): a branch item's press is bounded (3 s, not Playwright's 10 s), and when it does not land
+        // what stood in its way is captured: whether the item and its branch are still open and shown, what is on top at
+        // the item's centre and who owns it, and where the pointer last was. The press is then tried once more, with the
+        // branch opened again by its own trigger; the effect assertions after it are unchanged
+        const res = await g.locator('[data-shelf-fx-item]').click({ timeout: 3000 }).then(() => null, e => String(e && e.message || e).split('\n')[0]);
+        if (res === null) return true;
+        const seen = await g.evaluate(([k]) => {
+          const it = document.querySelector('[data-shelf-fx-item]'), top = __shelf.open().find(x => __shelf.key(x) === k);
+          const sub = it && it.closest('[role="menu"]'), r = it && it.getBoundingClientRect(), h = r ? document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2) : null;
+          const own = x => !x ? null : (x.closest('[role="menuitem"]') ? 'menuitem ' + ((x.closest('[role="menuitem"]').textContent || '').trim().replace(/\s+/g, ' ').slice(0, 30)) : x.tagName + '.' + String(x.className?.baseVal ?? x.className).trim().split(/\s+/).slice(0, 2).join('.'));
+          return { item: !!it && it.isConnected && it.checkVisibility(), menuOpen: !!top, branchOpen: !!sub && sub !== top && sub.checkVisibility(), onTop: own(h), ownItem: !!h && !!it && (h === it || it.contains(h)), pointer: window.__shelfPointer || null };
+        }, [pn.menu]).catch(e => ({ error: String(e) }));
+        branchMisses.push({ pane: pn.state, label, err: res, seen });
+        t.log(`FO-93b ${pn.state}: the press on ${label} did not land in 3 s (${res}); ${JSON.stringify(seen)}; trying once more with the branch opened again`);
+        if (within && retryBranch) { await t.page.mouse.move(2, 2); if (!await clickItem(retryBranch, true, false)) return `the branch trigger ${retryBranch} is gone (${JSON.stringify(seen)})`; await g.waitForTimeout(250); }
+        const ok2 = await g.evaluate(([k, label]) => { const top = __shelf.open().find(x => __shelf.key(x) === k); const m = top && [...top.querySelectorAll('[role="menu"]')].find(s => s.checkVisibility());
+          const lab = i => ((i.querySelector('.fm-ctx-label')) || i).textContent.trim().replace(/\s+/g, ' ');
+          document.querySelectorAll('[data-shelf-fx-item]').forEach(x => x.removeAttribute('data-shelf-fx-item'));
+          const it = m && [...m.querySelectorAll('[role="menuitem"]')].find(i => i.closest('[role="menu"]') === m && i.checkVisibility() && lab(i) === label); it?.setAttribute('data-shelf-fx-item', ''); return !!it; }, [pn.menu, label]);
+        if (!ok2) return `${label} did not land, and is not shown after the branch opened again (${JSON.stringify(seen)})`;
+        const res2 = await g.locator('[data-shelf-fx-item]').click({ timeout: 3000 }).then(() => null, e => String(e && e.message || e).split('\n')[0]);
+        return res2 === null ? true : `${label} did not land twice (${res}; then ${res2}); ${JSON.stringify(seen)}`;
       };
+      let retryBranch = null;
+      // (T85: where the pointer last was, for the capture above)
+      await g.evaluate(() => { if (window.__shelfPointerOn) return; window.__shelfPointerOn = true; addEventListener('pointermove', e => { const h = e.target; window.__shelfPointer = { x: Math.round(e.clientX), y: Math.round(e.clientY), on: h && h.tagName ? h.tagName + '.' + String(h.className?.baseVal ?? h.className).trim().split(/\s+/)[0] : null }; }, true); });
       const run = async (cmd, how) => {
         if (how === 'mouse') {
           if (cmd.branch) {
             if (!await clickItem(cmd.branch, true, false)) return `no ${cmd.branch}`;
             await g.waitForFunction(k => __shelf.open().some(x => x !== __shelf.open().find(y => __shelf.key(y) === k) && __shelf.open().find(y => __shelf.key(y) === k)?.contains(x)), pn.menu, { timeout: 3000 }).catch(() => {});
-            if (!await clickItem(cmd.label, false, true)) return `no ${cmd.label}`;
-          } else if (!await clickItem(cmd.label, false, false)) return `no ${cmd.label}`;
+            retryBranch = cmd.branch;
+            const c = await clickItem(cmd.label, false, true); retryBranch = null;
+            if (c !== true) return c === false ? `no ${cmd.label}` : c;
+          } else { const c = await clickItem(cmd.label, false, false); if (c !== true) return c === false ? `no ${cmd.label}` : c; }
         } else {
           await t.page.keyboard.press('Home');
           if (cmd.branch) {
@@ -1151,6 +1178,7 @@ export default async function (t) {
     const asked = new Set(fxCases.map(c => c.pane)), inputs = new Set(fxCases.map(c => c.input));
     await t.check('FO-93b every pane with a context menu was asked, by every input', (asked.size >= 3 && inputs.size === CTX_INPUTS.length) || !!only || !!t.args.inputs || !!fxPanes, JSON.stringify({ panes: [...asked], inputs: [...inputs], cases: fxCases.length }));
     t.log('FO93B-CASES ' + JSON.stringify(fxCases));
+    if (branchMisses.length) t.log('FO93B-BRANCH-MISSES (T85: presses that did not land at first; each was tried once more) ' + JSON.stringify(branchMisses));
   }
 
   await t.check('at least 14 known PMMenu identities exercised',new Set(routedRows.flatMap(r=>r.exercised)).size>=14,JSON.stringify(routedRows),{hard:true});
