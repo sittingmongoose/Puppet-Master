@@ -501,6 +501,12 @@ export default async function (t) {
       const st = await ctl.evaluate(e => ({ shown: e.isConnected && e.checkVisibility(), expanded: e.getAttribute('aria-expanded') })).catch(() => null);
       if (!st || st.expanded !== 'false') { fr.folded = false; return false; }
       if (!st.shown) return false;      /* (its engine is not shown now: it is unfolded when that engine is) */
+      // (the previous accordion reveal is judged and its watch closed first, so a scroll the product asks for as the
+      // region unfolds is not counted against that reveal's wait)
+      const late = await f.evaluate(() => { const W = window.__shelfReveal; if (!W || !W.done) return null;
+        const late = W.scs.filter(s => s.asked > W.done).map(s => ({ el: s.el.className.toString().slice(0, 40), asked: Math.round(s.asked - W.clickAt), scrolled: s.scrolled ? Math.round(s.scrolled - W.clickAt) : null, waitReturned: Math.round(W.done - W.clickAt) }));
+        for (const u of W.undo) u(); W.undo = []; window.__shelfReveal = null; return late; });
+      if (late) await t.check(`${target} accordion reveal: the previous wait returned after the rail's own reveal began`, !late.length, JSON.stringify(late), { hard: true });
       const was = folding; folding = true;
       try { const fp = await reach(ctl); await t.page.mouse.click(off.x + fp.x, off.y + fp.y); } finally { folding = was; }
       const ok = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'true', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
