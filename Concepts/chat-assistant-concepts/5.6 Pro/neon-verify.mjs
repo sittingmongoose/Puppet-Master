@@ -77,7 +77,10 @@
  *      so pod-clear-zero (the canonical line kept in a comment, the code clearing at once) fails it; pod-transcript-inert
  *      (the transcript inert but painted, so the product's hit test never sees its controls) and pod-chip-slot (the hidden
  *      jump chip's slot moved under the Pod) must fail 18: only what paints nothing, and FO-76's sizer copies, is left out
- *      of the transcript count, and the fixed controls are counted visible or not, as before T57.
+ *      of the transcript count, and the fixed controls are counted visible or not, as before T57. T92: in any 2 s window
+ *      the Pod may stand above its shy target over controls for at most 700 ms in all, across episodes, so
+ *      pod-twitch-long (for 1 s after a scroll the Pod jumps off-screen for 380 ms, longer than the clear wait, and comes
+ *      back for 220 ms, where the product's own check sets data-shy) must fail.
  *      --cpu <rate> throttles the page's CPU (CDP) for check 18.
  *   19 the chat header's status word wears its mark's tone (nine statuses; three themes).
  *   console: no warnings, errors or page errors.
@@ -147,7 +150,7 @@ const REDUCED = argv.includes('--reduced');
 const SECTION = argVal('--section', null), sectionFilter = SECTION ? new RegExp(SECTION) : null;
 // T40 and T47 negatives for check 18: each makes the Pod overlap a control the way a person would see it.
 const SELFTEST = argVal('--selftest', null);
-if (SELFTEST && !['pod-never-shy', 'pod-late-shy', 'pod-delay-2s', 'pod-twitch', 'pod-rolebutton', 'pod-shyhost-typo', 'pod-declared-slow', 'pod-twitch-alone', 'pod-late-attr', 'pod-transcript-inert', 'pod-chip-slot', 'pod-clear-zero'].includes(SELFTEST)) { console.error('neon-verify: unknown --selftest ' + SELFTEST); process.exit(2); }
+if (SELFTEST && !['pod-never-shy', 'pod-late-shy', 'pod-delay-2s', 'pod-twitch', 'pod-rolebutton', 'pod-shyhost-typo', 'pod-declared-slow', 'pod-twitch-alone', 'pod-late-attr', 'pod-transcript-inert', 'pod-chip-slot', 'pod-clear-zero', 'pod-twitch-long'].includes(SELFTEST)) { console.error('neon-verify: unknown --selftest ' + SELFTEST); process.exit(2); }
 // T47 round 2: a CPU throttle for check 18 (CDP Emulation.setCPUThrottlingRate), so clean runs are shown on a slow host
 const CPU = argVal('--cpu', null);
 if (CPU !== null && !(Number(CPU) >= 1)) { console.error('neon-verify: --cpu takes a rate of 1 or more'); process.exit(2); }
@@ -1744,12 +1747,21 @@ for (const theme of ['basic-dark', 'basic-light', 'retro-light', 'nier-dark'].fi
    product's check, and the probe is taken away in the same task as data-shy goes on, with one more scroll event. The
    product then holds data-shy for its clear wait after that hit (350 ms, plus its 10 ms re-check): 18b fails when it
    holds it less than POD_EXPECTED.clearMs - POD_CLEAR_SLACK_MS, or more than the clear wait plus its re-check, the shy
-   slack and the longest frame gap of the probe. */
+   slack and the longest frame gap of the probe.
+   T92 (TOOLBATCH4 recheck a, finding 2): a twitch whose off-phases outlast the 350 ms clear wait makes every return a
+   new episode with a fresh deadline, so T58's per-episode deadline never ran out, while pixels showed the Pod back at
+   alpha .97-.99 over Review three times in 1.7 s. So the time the Pod stands above its shy target over a control is
+   also summed over a sliding window (POD_WINDOW_MS, 2 s) across episodes, and the sum may not pass
+   POD_WINDOW_ALLOW_MS (700 ms): twice the product's own fade-back (its 90 ms check and 180 ms fade, 540 ms) with the
+   shy and fade slacks. Measured on the clean page from batch 4's frame logs (KIT-BATCH5): the largest such sum in any
+   2 s window is 345 ms at 1x and 570 ms at 6x CPU throttling; the twitches reach 900 ms and more. */
 const POD_SHY_SLACK_MS = 80, POD_FADE_SLACK_MS = 60, POD_TARGET_SLACK = .02;
 /* T91: 18b's lower slack on the measured clear wait (the product reads Date.now, the check performance.now) */
 const POD_CLEAR_SLACK_MS = 20;
 /* T58: past the episode's own deadline, how long the Pod may be above its shy target over a control in one episode */
 const POD_EPISODE_ALLOW_MS = 300;
+/* T92: in any POD_WINDOW_MS, how long in all the Pod may be above its shy target over a control, across episodes */
+const POD_WINDOW_MS = 2000, POD_WINDOW_ALLOW_MS = 700;
 /* the values the product is meant to have (70-nier-pod-shy.js and nier-parts.js at the time of T57): the controls its shy
    test counts, its check interval, its clear wait, its fade and its shy opacity */
 const POD_EXPECTED = Object.freeze({ shyHost: 'button, a[href], summary, [role="button"], input, select, textarea', checkMs: 90, clearMs: 350, fadeMs: 180, target: .16 });
@@ -1849,6 +1861,21 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
         /* T91: the hidden jump chip's slot is moved back under the Pod (its pre-NieR place); the base counted the slot,
            visible or not, and T57's live filter dropped it */
         else if (kind === 'pod-chip-slot') css('html .chat-float > .jump-bottom:not(.is-visible) { right: 10px !important; }');
+        /* T92 (the batch-4 review's twitch-long3): for 1 s after any real scroll the Pod jumps off-screen (3000 px right)
+           for 380 ms, longer than the product's 350 ms clear wait, with data-shy cleared, and comes back for 220 ms; on
+           each return a scroll event lets the product's own check set data-shy. No fade delay */
+        else if (kind === 'pod-twitch-long') {
+          let until = 0, running = false, quiet = false;
+          const podEl = () => document.getElementById('o55np-pod');
+          const poke = () => { quiet = true; try { window.dispatchEvent(new Event('scroll')); } finally { quiet = false; } };
+          const cycle = () => {
+            const q = podEl();
+            if (!q || performance.now() > until) { running = false; if (q) q.style.translate = ''; poke(); return; }
+            q.style.translate = '3000px 0'; q.removeAttribute('data-shy');
+            setTimeout(() => { q.style.translate = ''; poke(); setTimeout(cycle, 220); }, 380);
+          };
+          window.addEventListener('scroll', () => { if (quiet) return; until = performance.now() + 1000; if (!running) { running = true; cycle(); } }, { capture: true, passive: true });
+        }
         else if (kind === 'pod-twitch-alone') {
           let until = 0, running = false, quiet = false;
           const podEl = () => document.getElementById('o55np-pod');
@@ -1864,7 +1891,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
       }, SELFTEST);
       /* T47 round 2: the fade-back mechanism, frame by frame (see above) */
       await p.evaluate(([HOST, P]) => {
-        const M = window.__nvPodOpaque = { phase: '', ep: null, over: [], worst: 0, worstAt: '', worstLate: 0, worstLateAt: '', frames: 0, shyAt: null, shyFade: null, shyTiming: '', lastFrame: null, gaps: [] };
+        const M = window.__nvPodOpaque = { phase: '', ep: null, over: [], worst: 0, worstAt: '', worstLate: 0, worstLateAt: '', frames: 0, shyAt: null, shyFade: null, shyTiming: '', lastFrame: null, gaps: [], win: [], winSum: 0, worstWin: 0, worstWinAt: '', winFlagged: {} };
         const fadeOf = pod => { const cs = getComputedStyle(pod), list = v => v.split(',').map(x => x.trim()), ms = x => x.endsWith('ms') ? parseFloat(x) : parseFloat(x) * 1000;
           const props = list(cs.transitionProperty), durs = list(cs.transitionDuration), dels = list(cs.transitionDelay); let worst = 0, txt = 'none';
           props.forEach((pr, i) => { if (pr !== 'opacity' && pr !== 'all') return; const d = ms(durs[i % durs.length]), dl = ms(dels[i % dels.length]); if (d + dl >= worst) { worst = d + dl; txt = `${pr} ${Math.round(dl)} ms delay + ${Math.round(d)} ms`; } });
@@ -1898,6 +1925,12 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           if (M.lastFrame !== null) { M.gaps.push([now, now - M.lastFrame]); if (M.gaps.length > 600) M.gaps.splice(0, 300); }
           M.lastFrame = now; M.frames++;
           const what = underNow(), op = pod ? +getComputedStyle(pod).opacity : 0, shy = !!pod && pod.hasAttribute('data-shy');
+          /* (e) T92: the time above the shy target over a control, summed over the last POD_WINDOW_MS across episodes */
+          if (what && op > P.target + P.targetSlack && dt > 0) { M.win.push([now, dt]); M.winSum += dt; }
+          while (M.win.length && M.win[0][0] <= now - P.windowMs) M.winSum -= M.win.shift()[1];
+          if (M.winSum > M.worstWin) { M.worstWin = M.winSum; M.worstWinAt = M.phase + (what ? ': ' + what : ''); }
+          if (M.winSum > P.windowAllowMs && !M.winFlagged[M.phase]) { M.winFlagged[M.phase] = true;
+            M.over.push({ phase: M.phase, kind: 'window', msg: `the Pod stood above its shy target over transcript controls for ${Math.round(M.winSum)} ms in all in the last ${P.windowMs} ms, across episodes (allowed ${P.windowAllowMs} ms: twice the product's ${P.checkMs} ms check and ${P.fadeMs} ms fade, with slack)${what ? '; now over ' + what + ', opacity ' + op : ''}` }); }
           if (M.ep && !what && now - M.ep.lastUnder >= P.clearMs) M.ep = null;   /* the episode ends after the clear wait */
           if (what) {
             if (!M.ep) M.ep = { phase: M.phase, from: now, what, lastUnder: now, spanFrom: now, under: true, opaqueFor: 0, late: 0, flagged: {} };
@@ -1922,7 +1955,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
           requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
-      }, [HOST, { checkMs: POD_EXPECTED.checkMs, clearMs: POD_EXPECTED.clearMs, fadeMs: POD_EXPECTED.fadeMs, target: POD_EXPECTED.target, shySlack: POD_SHY_SLACK_MS, fadeSlack: POD_FADE_SLACK_MS, targetSlack: POD_TARGET_SLACK, allowMs: POD_EPISODE_ALLOW_MS }]);
+      }, [HOST, { checkMs: POD_EXPECTED.checkMs, clearMs: POD_EXPECTED.clearMs, fadeMs: POD_EXPECTED.fadeMs, target: POD_EXPECTED.target, shySlack: POD_SHY_SLACK_MS, fadeSlack: POD_FADE_SLACK_MS, targetSlack: POD_TARGET_SLACK, allowMs: POD_EPISODE_ALLOW_MS, windowMs: POD_WINDOW_MS, windowAllowMs: POD_WINDOW_ALLOW_MS }]);
       const phase = label => p.evaluate(l => { window.__nvPodOpaque.phase = l; }, label);
       const ids = await p.evaluate(() => [...document.querySelectorAll('.thread-row')].map(r => r.dataset.id));
       for (const id of ids) {
@@ -2039,7 +2072,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
         });
         clears.push({ size: `${w}x${h}`, ...cw });
         console.log('MEASURE 18b the product\'s clear wait, measured ' + JSON.stringify(clears.at(-1))); }
-      const m = await p.evaluate(() => { const M = window.__nvPodOpaque; return { ms: Math.round(M.worst), at: M.worstAt, pastDeadlineMs: Math.round(M.worstLate), pastDeadlineAt: M.worstLateAt, frames: M.frames, longestFrameGap: Math.round(M.gaps.reduce((g, [, d]) => Math.max(g, d), 0)) }; });
+      const m = await p.evaluate(() => { const M = window.__nvPodOpaque; return { ms: Math.round(M.worst), at: M.worstAt, pastDeadlineMs: Math.round(M.worstLate), pastDeadlineAt: M.worstLateAt, windowMs: Math.round(M.worstWin), windowAt: M.worstWinAt, frames: M.frames, longestFrameGap: Math.round(M.gaps.reduce((g, [, d]) => Math.max(g, d), 0)) }; });
       opaque.push({ size: `${w}x${h}`, ...m });
       console.log('MEASURE Pod longest opaque time over a control (measured, not judged) ' + JSON.stringify(opaque.at(-1)));
       { const c = copies.filter(x => x.size === undefined); c.forEach(x => { x.size = `${w}x${h}`; });
@@ -2050,7 +2083,7 @@ if (THEMES.includes('nier-dark')) await sec('pod', async () => {
   { const lo = POD_EXPECTED.clearMs - POD_CLEAR_SLACK_MS, hiOf = c => POD_EXPECTED.clearMs + 10 + POD_SHY_SLACK_MS + (c.gap || 0);
     const wrong = clears.filter(c => c.error || c.heldMs === null || c.heldMs < lo || c.heldMs > hiOf(c));
     check(clears.length > 0 && !wrong.length, `18b Pod 042: the product's clear wait, measured from the running code (a probe control under the Pod, taken away as data-shy goes on), is the pinned ${POD_EXPECTED.clearMs} ms: data-shy held at least ${lo} ms and at most ${POD_EXPECTED.clearMs} + 10 ms re-check + ${POD_SHY_SLACK_MS} ms slack + the longest frame gap, at every window size`, { clears, wrong }); }
-  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom, each judged once the Pod has settled; at the bottom no transcript button either; faded back over any it passes, by the product's own steps, at the values pinned in the check: data-shy within ${POD_EXPECTED.checkMs} ms, a fade within ${POD_EXPECTED.fadeMs} ms, then opacity ${POD_EXPECTED.target}; and past each episode's own deadline at most ${POD_EPISODE_ALLOW_MS} ms above it over a control)`, { bad: bad.slice(0, 12), windows, unsettled, opaque, expected: POD_EXPECTED, declared: POD_DECLARED.found, cpu: CPU });
+  check(views > 0 && bad.length === 0, `18 Pod 042 clear of the jump chip, the bar, the queue, the decision panel and the composer (${views} views: 3 sizes x every thread x top and bottom, each judged once the Pod has settled; at the bottom no transcript button either; faded back over any it passes, by the product's own steps, at the values pinned in the check: data-shy within ${POD_EXPECTED.checkMs} ms, a fade within ${POD_EXPECTED.fadeMs} ms, then opacity ${POD_EXPECTED.target}; and past each episode's own deadline at most ${POD_EPISODE_ALLOW_MS} ms above it over a control, and in any ${POD_WINDOW_MS} ms at most ${POD_WINDOW_ALLOW_MS} ms in all)`, { bad: bad.slice(0, 12), windows, unsettled, opaque, expected: POD_EXPECTED, declared: POD_DECLARED.found, cpu: CPU });
 });
 
 /* ------------------------------------------------------------- check 19: the header word wears its mark's tone */
