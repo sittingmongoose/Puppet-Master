@@ -5911,7 +5911,7 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 29133,
+      "line_count": 29172,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 334,
       "plan_unit_ids": [
@@ -6436,7 +6436,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "4118d58b3fc0b452443a14b84c903dd51789207534e805754b00497374a7ee28",
+      "sha256": "b32ad84fb95c0e899d007401d255dbd1c4cd14ca85ef21f816f201e7bcbf3ebe",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 334
@@ -20243,7 +20243,7 @@
         "scripts/pm-command-payload-defs-check.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 21511,
+      "line_count": 21617,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 198,
       "plan_unit_ids": [
@@ -20528,7 +20528,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "8dec7c73173add5235f75fa804e6ae4a7b1b04897e302d7acdfe1671b28ee4c1",
+      "sha256": "369c58e9c40866249688690fe6a35c28e2ae8492a8499f0850079bbdbaa9d34f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 196,
@@ -21734,7 +21734,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-07T15:16:21Z",
+  "generated_at_utc": "2026-11-07T16:26:21Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

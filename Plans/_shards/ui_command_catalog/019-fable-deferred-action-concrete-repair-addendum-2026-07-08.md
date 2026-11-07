@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8827-L10590
+Source lines: L8827-L10696
 
-Source SHA256: `8dec7c73173add5235f75fa804e6ae4a7b1b04897e302d7acdfe1671b28ee4c1`
+Source SHA256: `369c58e9c40866249688690fe6a35c28e2ae8492a8499f0850079bbdbaa9d34f`
 
 ---
 
@@ -73,22 +73,37 @@ canonical_text: >-
   their owners validate syntax at run time, and an owner that needs a literal default first adds its validation to
   the checker (DL-333 coordinator resolution 11). scripts/pm-command-payload-defs-check.py checks this map against
   the overlay and every definition against this map. Amended 2026-11-07 (DL-341): a definition records every
-  judgment it makes in an optional judgments list, never in a YAML comment; each entry has a key (command_kind,
-  response_kind, disabled_reason_codes, error_codes, owner_request, owner_result, omitted:<field> for a field it
-  deliberately leaves out, or field:<arg path> for a judgment that is not that field's own gap_note), the choice
-  the definition made, equal to its own value for a fixed key, and a gap_note saying what canon lacks or where it
-  disagrees. A judgment carries no provenance, and a canon field whose source or gap_note says JUDGMENT, or a
-  definitions block with a YAML comment that says it, is a provenance finding. A field marked nullable: true may
-  be JSON null, with any required value. Enum values keep canon's exact spelling: non-empty strings without
-  surrounding whitespace, unique within the field. worktree_lifecycle_state is required when the command mutates
-  worktree state, as the overlay cell says: the map lists the mutating commands and the domain_action commands
-  that do not mutate (not_mutating), each with canon evidence that names it, and a domain_action it lists in
-  neither fails closed. identity_aliases records, per row group, a canon name that stands for an overlay identity
-  name, with canon evidence, so gist_id stands for memory_item_id and investigation_id for debug_session_id and
-  canon is never renamed. A conditional identity exemption keeps its field and requires it on every branch of
-  branch_field except exempt_branch: cmd.runtime.approve and cmd.runtime.decline define both the node shape and
-  the HITL-038 chat-tool shape, with blocked_sequence and allowed_action_id required only on the node branch.
-  Owner state maintenance_cutoffs_pending (DL-403) maps to not_configured.
+  judgment it makes in an optional judgments list; each entry has a key (command_kind, response_kind,
+  disabled_reason_codes, error_codes, owner_request, owner_result, aliases for which alias tokens it records,
+  omitted:<field> for a field it deliberately leaves out, or field:<arg path> for a judgment that is not that
+  field's own gap_note, where a [] step names a list field), the choice the definition made, equal to its own value
+  for a fixed key (for aliases the alias tokens it records, or none) and without repeats in a list, and a gap_note
+  saying what canon lacks or where it disagrees. A judgment carries no provenance, and a canon field whose source or
+  gap_note says JUDGMENT is a provenance finding. A definitions block holds no YAML comment: any # comment inside a
+  pm.command_payload_definitions.v1 fence is a C11 provenance finding, whatever it says, because comments are
+  invisible to tools and no word list can tell a recorded choice from a note. No string in a definitions block names
+  review or evidence material (review rounds and findings, fix rounds and their reports, review files, the
+  owner-answers folder, the evidence share, the Q5 design's sections or the fix reports' canon-conflict labels):
+  canon text stands on canon, and only a unit fence's source_lineage cites evidence. A field marked nullable: true
+  may be JSON null, with any required value, except a required row-group identity and a restated common optional
+  field: neither the overlay nor this map records a nullable one, so both are refused. A definition may restate a
+  common optional field, required or optional, only with its canonical type and with constraints that only narrow
+  the inherited ones; this replaces the Q5 design rule that allowed a restatement only to make the field required or
+  add constraints. Enum values keep canon's exact spelling: non-empty strings without surrounding whitespace, unique
+  within the field. worktree_lifecycle_state is required when the command mutates worktree state, as the overlay
+  cell says: the map lists the mutating commands and the domain_action commands that do not mutate (not_mutating),
+  both lists always present, each command with canon evidence that names it, and a domain_action it lists in neither
+  fails closed. identity_aliases records, per row group, a canon name that stands for an overlay identity name, with
+  canon evidence, so gist_id stands for memory_item_id and investigation_id for debug_session_id and canon is never
+  renamed. A conditional identity exemption keeps its field, requires it on every branch of branch_field except
+  exempt_branch and forbids it on exempt_branch: cmd.runtime.approve and cmd.runtime.decline define both the node
+  shape and the HITL-038 chat-tool shape, with blocked_sequence and allowed_action_id required on the node branch
+  and forbidden on the chat_tool branch. Canon names only the chat_tool value of approval_kind; the node branch
+  value is not canon, so the definition marks approval_kind a gap. A definition may list in owner_state_codes each
+  owner state it shows as a disabled reason, with the closed code owner_state_code_map gives it, which must be one
+  of its disabled_reason_codes. Owner states maintenance_cutoffs_pending (DL-403) and dedup_hold_pending (DL-444,
+  DL-445) map to not_configured, and the thirteen CRAU-095 local-runtime reason codes map to the closed codes the
+  map lists.
 gui_related: false
 gui_classification_reason: Records where command payload types live and how they are checked; no GUI behavior changes.
 split_recommended: false
@@ -98,7 +113,7 @@ acceptance_criteria:
   - "Every expected UCC-049..UCC-105 command has exactly one definition, in the owner unit this map routes it to, or is listed in contested."
   - "row_groups equal the overlay's row-specific identity cells, and envelope equals the overlay's payload_required and payload_optional bullets."
   - "Every non_definition_tokens entry quotes the canon that marks it, and every token a unit's compatibility or stale note marks is listed."
-  - "Every judgment a definition makes is in its judgments list with a key, a choice and a gap_note; no judgment claims provenance, and no canon field or YAML comment records one (DL-341)."
+  - "Every judgment a definition makes is in its judgments list with a key, a choice and a gap_note; no judgment claims provenance and no canon field records one; no definitions block holds a YAML comment, whatever it says (any # comment in the fence is a C11 finding), or a string that names review or evidence material (a C11 finding too) (DL-341)."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
   - python3 scripts/pm-command-payload-defs-check.py
@@ -121,6 +136,7 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/RESOLUTIONS.md"
   - "pm-mail 1107140349-9370 (pm7-build, 2026-11-07T14:03Z): coordinator resolutions 1-5 after definitions review round 1 (DL-341); /mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/defs-review/R1-DECISIONS.md and r1-opus-S1.md..r1-opus-S5.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/defs-review/r2-opus-S1.md..r2-opus-S6.md (definitions review round 2) and owner-answers/q5/P0C-BRIEF.md: the DL-341 amendment of 2026-11-07, with the stream C lead's proposals sent to pm7-build at 2026-11-07T15:54Z"
 preserved_exact_tokens:
   - UCC-230
   - pm.command_payload_definitions.v1
@@ -134,12 +150,15 @@ preserved_exact_tokens:
   - branch_field
   - exempt_branch
   - maintenance_cutoffs_pending
+  - dedup_hold_pending
+  - owner_state_codes
 negative_constraints:
   - Do not add payload fields to UI_Command_Catalog command rows.
   - Do not define a payload for an alias, retired, non-alias, source-lineage, outside-range or contested token.
   - Do not expand the overlay's closed error or disabled-reason sets; map owner states to closed codes instead.
   - Do not record an identity exemption anywhere but this map, and only with a decision.
-  - Do not record a judgment in a YAML comment or in a canon field; record it in the definition's judgments list.
+  - Do not write a YAML comment in a definitions block, and do not record a judgment in a canon field; record it in the definition's judgments list.
+  - Do not cite review or evidence material in a definitions block; cite canon, and keep evidence paths in a unit fence's source_lineage.
   - Do not rename canon to an overlay identity name; record an identity alias instead.
 owner_hints:
   - Plans/UI_Command_Catalog.md
@@ -284,7 +303,8 @@ command_payload_definition_map:
     - field: worktree_lifecycle_state
       when: mutating
       source: 'Overlay UCC-054 through UCC-055 identity cell: "`worktree_lifecycle_state` when mutating worktree state"
-        (DL-341); each command below is marked by its UCC-054 Worktree Topology Commands row'
+        (DL-341); each command below is marked by its row in this catalog''s section 2.5C project-scope git worktree
+        commands table (UCC-054)'
       commands:
       - command_id: cmd.git.worktree.create
         evidence:
@@ -1461,6 +1481,12 @@ command_payload_definition_map:
         recorded aliases
     note: 'DL-341: the bare K8s-era form; UCC-052 compatibility_only_notes also marks it a compatibility alias.'
   owner_state_code_map:
+  - owner_state: access_url_unresolved
+    maps_to: not_configured
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): no project
+      override, published host port or web-UI label gives an access URL, so the open action is disabled (Runtime access
+      URL resolution); applied under DL-333 coordinator resolution 6 (DL-341)'
   - owner_state: activation_not_active
     maps_to: blocked_state_required
     sources:
@@ -1477,6 +1503,11 @@ command_payload_definition_map:
     maps_to: blocked_state_required
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: bake_unavailable
+    maps_to: partial_capability
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the runtime is
+      reachable but has no bake capability; applied under DL-333 coordinator resolution 6 (DL-341)'
   - owner_state: blocker_missing
     maps_to: blocked_state_required
     sources:
@@ -1485,10 +1516,38 @@ command_payload_definition_map:
     maps_to: blocked_state_required
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: buildx_unavailable
+    maps_to: partial_capability
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the runtime is
+      reachable but has no buildx builder; applied under DL-333 coordinator resolution 6 (DL-341)'
   - owner_state: compile_terminal
     maps_to: blocked_state_required
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: compose_invalid
+    maps_to: blocked_state_required
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): a compose
+      validation failure whose repair is the editor handoff (CRAU-093); the command waits for a valid compose file;
+      applied under DL-333 coordinator resolution 6 (DL-341)'
+  - owner_state: compose_service_missing
+    maps_to: blocked_state_required
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): a compose
+      validation failure whose repair is the editor handoff (CRAU-093); the command waits for the named service; applied
+      under DL-333 coordinator resolution 6 (DL-341)'
+  - owner_state: container_unhealthy
+    maps_to: degraded
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the container
+      runs but fails its health check; applied under DL-333 coordinator resolution 6 (DL-341)'
+  - owner_state: dedup_hold_pending
+    maps_to: not_configured
+    sources:
+    - 'Plans/Decision_Log.md DL-444 and DL-445: the duplicate sweep''s automatic jobs and panel buttons stay unavailable
+      until the answer is applied and all remaining definition, review and recording approvals pass. Mapped as
+      maintenance_cutoffs_pending is (DL-403); a stream C lead proposal recorded in DL-341, not a coordinator resolution'
   - owner_state: dependency_conflict
     maps_to: blocked_state_required
     sources:
@@ -1509,6 +1568,32 @@ command_payload_definition_map:
     maps_to: blocked_state_required
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: image_missing
+    maps_to: blocked_state_required
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the image the
+      command needs does not exist until it is built or pulled; applied under DL-333 coordinator resolution 6 (DL-341)'
+  - owner_state: k8s_context_missing
+    maps_to: not_configured
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): no Kubernetes
+      context is configured; applied under DL-333 coordinator resolution 6 (DL-341)'
+  - owner_state: k8s_context_unreachable
+    maps_to: unreachable
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the Kubernetes
+      context exists but its cluster cannot be reached; applied under DL-333 coordinator resolution 6 (DL-341)'
+  - owner_state: k8s_namespace_missing
+    maps_to: not_configured
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the selected
+      namespace is not configured in the context; applied under DL-333 coordinator resolution 6 (DL-341)'
+  - owner_state: k8s_rollout_blocked
+    maps_to: blocked_state_required
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): a rollout
+      cannot progress, and the command waits for the rollout state; applied under DL-333 coordinator resolution 6
+      (DL-341)'
   - owner_state: ledger_sync_blocked
     maps_to: degraded
     sources:
@@ -1587,6 +1672,18 @@ command_payload_definition_map:
     maps_to: blocked_state_required
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: runtime_context_missing
+    maps_to: not_configured
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): no Docker
+      runtime context is configured (CRAU-099 carries the diagnosis); applied under DL-333 coordinator resolution 6
+      (DL-341)'
+  - owner_state: runtime_context_unreachable
+    maps_to: unreachable
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 (canonical local-runtime reason-code base enum): the runtime
+      context exists but its daemon cannot be reached (CRAU-099 carries the diagnosis); applied under DL-333 coordinator
+      resolution 6 (DL-341)'
   - owner_state: source_coverage_missing
     maps_to: blocked_state_required
     sources:
@@ -1718,9 +1815,11 @@ command_payload_definition_map:
     branch_field: approval_kind
     exempt_branch: chat_tool
     reason: 'DL-341 coordinator resolution 1: HITL-038 keeps one approval host with separate typed envelopes. The node
-      branch (OrchestratorNodeApprovalRequestV1) carries the blocked identity and keeps allowed_action_id required; the
-      chat-tool branch (RuntimeApproveV3ToolRequest, approval_kind chat_tool) binds run, request, tool and target and has no blocked
-      episode. Both shapes are defined.'
+      branch keeps the overlay''s blocked-run identity (run_id, blocked_sequence, allowed_action_id), so allowed_action_id is
+      required there; OrchestratorNodeApprovalRequestV1 itself carries run_id, node_id, blocked_sequence and an optional
+      attempt_id, and no allowed_action_id or approval_kind. The chat-tool branch (RuntimeApproveV3ToolRequest, approval_kind
+      chat_tool) binds run, request, tool and target, has no blocked episode and forbids allowed_action_id. Canon names
+      only the chat_tool value of approval_kind; the node branch value is not canon and the definition marks it a gap.'
   - command_id: cmd.runtime.approve
     field: blocked_sequence
     decision: DL-341
@@ -1728,9 +1827,11 @@ command_payload_definition_map:
     branch_field: approval_kind
     exempt_branch: chat_tool
     reason: 'DL-341 coordinator resolution 1: HITL-038 keeps one approval host with separate typed envelopes. The node
-      branch (OrchestratorNodeApprovalRequestV1) carries the blocked identity and keeps blocked_sequence required; the
-      chat-tool branch (RuntimeApproveV3ToolRequest, approval_kind chat_tool) binds run, request, tool and target and has no blocked
-      episode. Both shapes are defined.'
+      branch keeps the overlay''s blocked-run identity (run_id, blocked_sequence, allowed_action_id), so blocked_sequence is
+      required there; OrchestratorNodeApprovalRequestV1 itself carries run_id, node_id, blocked_sequence and an optional
+      attempt_id, and no allowed_action_id or approval_kind. The chat-tool branch (RuntimeApproveV3ToolRequest, approval_kind
+      chat_tool) binds run, request, tool and target, has no blocked episode and forbids blocked_sequence. Canon names
+      only the chat_tool value of approval_kind; the node branch value is not canon and the definition marks it a gap.'
   - command_id: cmd.runtime.decline
     field: allowed_action_id
     decision: DL-341
@@ -1738,9 +1839,11 @@ command_payload_definition_map:
     branch_field: approval_kind
     exempt_branch: chat_tool
     reason: 'DL-341 coordinator resolution 1: HITL-038 keeps one approval host with separate typed envelopes. The node
-      branch (OrchestratorNodeApprovalRequestV1) carries the blocked identity and keeps allowed_action_id required; the
-      chat-tool branch (RuntimeDeclineV3ToolRequest, approval_kind chat_tool) binds run, request, tool and target and has no blocked
-      episode. Both shapes are defined.'
+      branch keeps the overlay''s blocked-run identity (run_id, blocked_sequence, allowed_action_id), so allowed_action_id is
+      required there; OrchestratorNodeApprovalRequestV1 itself carries run_id, node_id, blocked_sequence and an optional
+      attempt_id, and no allowed_action_id or approval_kind. The chat-tool branch (RuntimeDeclineV3ToolRequest, approval_kind
+      chat_tool) binds run, request, tool and target, has no blocked episode and forbids allowed_action_id. Canon names
+      only the chat_tool value of approval_kind; the node branch value is not canon and the definition marks it a gap.'
   - command_id: cmd.runtime.decline
     field: blocked_sequence
     decision: DL-341
@@ -1748,9 +1851,11 @@ command_payload_definition_map:
     branch_field: approval_kind
     exempt_branch: chat_tool
     reason: 'DL-341 coordinator resolution 1: HITL-038 keeps one approval host with separate typed envelopes. The node
-      branch (OrchestratorNodeApprovalRequestV1) carries the blocked identity and keeps blocked_sequence required; the
-      chat-tool branch (RuntimeDeclineV3ToolRequest, approval_kind chat_tool) binds run, request, tool and target and has no blocked
-      episode. Both shapes are defined.'
+      branch keeps the overlay''s blocked-run identity (run_id, blocked_sequence, allowed_action_id), so blocked_sequence is
+      required there; OrchestratorNodeApprovalRequestV1 itself carries run_id, node_id, blocked_sequence and an optional
+      attempt_id, and no allowed_action_id or approval_kind. The chat-tool branch (RuntimeDeclineV3ToolRequest, approval_kind
+      chat_tool) binds run, request, tool and target, has no blocked episode and forbids blocked_sequence. Canon names
+      only the chat_tool value of approval_kind; the node branch value is not canon and the definition marks it a gap.'
   identity_aliases:
   - row_group: UCC-077..UCC-083
     overlay_name: debug_session_id
@@ -1759,8 +1864,9 @@ command_payload_definition_map:
     evidence:
       doc: Plans/Contracts_V0.md
       quote: '| `debug.investigation.started` | `investigation_id`, `project_id`, `thread_id?`'
-    note: 'DL-341 coordinator resolution 4: the debug investigation identity is investigation_id in Contracts_V0 CV-294
-      and assistant-chat-design.md section 12.0A (ACD-096 keeps the canonical header names).'
+    note: 'DL-341 coordinator resolution 4: the debug investigation identity is investigation_id in Contracts_V0 section
+      3.5 Debug investigation events (CV-123) and assistant-chat-design.md section 12.0A (ACD-096 keeps the canonical
+      header names).'
   - row_group: UCC-084..UCC-088
     overlay_name: memory_item_id
     canon_name: gist_id

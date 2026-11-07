@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L29133
+Source lines: L26794-L29172
 
-Source SHA256: `4118d58b3fc0b452443a14b84c903dd51789207534e805754b00497374a7ee28`
+Source SHA256: `b32ad84fb95c0e899d007401d255dbd1c4cd14ca85ef21f816f201e7bcbf3ebe`
 
 ---
 
@@ -2268,49 +2268,83 @@ status: accepted
 owner_doc: Plans/Decision_Log.md
 canonical_text: >-
   DL-341 amends the pm.command_payload_definitions.v1 format and the UCC-230 map in Plans/UI_Command_Catalog.md
-  after round 1 of the blind review of the 275 Q5 command payload definitions (DL-333). All five review slices
-  failed (3 blockers, 27 majors, 42 minors) while scripts/pm-command-payload-defs-check.py passed. Part of the
-  cause was the format and the map: writers had nowhere to record a judgment except a YAML comment, which no tool
-  reads, the vocabulary had no nullable form and forced snake_case enum values, and the map missed aliases and
-  rules that canon states. Format: a definition records each judgment it makes in an optional judgments list of
-  key, choice and gap_note entries. The key is command_kind, response_kind, disabled_reason_codes, error_codes,
-  owner_request, owner_result, omitted:<field> for a field it deliberately leaves out, or field:<arg path>; the
-  choice is what the definition chose, equal to its own value for a fixed key; the gap_note says what canon lacks
-  or where it disagrees. A judgment carries no provenance; a canon field whose source or gap_note says JUDGMENT,
-  and a definitions block with a YAML comment that says it, are provenance findings, and reviewers check
-  judgments as they check fields. A field marked nullable: true may be JSON null, with any required value. Enum
-  values keep canon's exact spelling: non-empty strings without surrounding whitespace, unique within the field.
-  Map: cmd.runtime.approve and cmd.runtime.decline define both the node approval shape and the HITL-038
-  chat-tool shape, through conditional identity exemptions that require blocked_sequence and allowed_action_id
-  on every approval_kind branch except chat_tool; owner state maintenance_cutoffs_pending (DL-403) maps to
-  not_configured; identity_aliases lets gist_id stand for memory_item_id (UCC-084..UCC-088) and investigation_id
-  for debug_session_id (UCC-077..UCC-083) without renaming canon. Canon already decided three further map
-  corrections, made here with their sources: cmd.terminal.focus_session, compose.save_scenario,
-  compose.run_scenario, set_context and set_namespace are recorded aliases with no definition;
-  cmd.runtime.locate_and_verify_recovery and cmd.runtime.abandon_recovery are pre-attempt admissible, so they
-  never require attempt_id; and worktree_lifecycle_state is required when a command mutates worktree state, as
-  the overlay cell says, rather than for every domain action, so cmd.git.worktree.request_prune, which never
-  mutates worktree state (GI-041), does not carry it. Jared's only words remain "approve all" (DL-333); the five
-  resolutions below are coordinator resolutions (pm7-build, 2026-11-07) under DL-333 and this entry, not owner
-  answers. This entry changes no owner-doc definition; the per-slice fixers bring the definitions to these rules.
+  after rounds 1 and 2 of the blind review of the 275 Q5 command payload definitions (DL-333). In round 1 all five
+  review slices failed (3 blockers, 27 majors, 42 minors) while scripts/pm-command-payload-defs-check.py passed.
+  Part of the cause was the format and the map: writers had nowhere to record a judgment except a YAML comment,
+  which no tool reads, the vocabulary had no nullable form and forced snake_case enum values, and the map missed
+  aliases and rules that canon states. Format: a definition records each judgment it makes in an optional judgments
+  list of key, choice and gap_note entries. The key is command_kind, response_kind, disabled_reason_codes,
+  error_codes, owner_request, owner_result, aliases, omitted:<field> for a field it deliberately leaves out, or
+  field:<arg path>; the choice is what the definition chose, equal to its own value for a fixed key; the gap_note
+  says what canon lacks or where it disagrees. A judgment carries no provenance, a canon field whose source or
+  gap_note says JUDGMENT is a provenance finding, and reviewers check judgments as they check fields. A definitions
+  block holds no YAML comment, whatever it says, and no string that names review or evidence material. A field
+  marked nullable: true may be JSON null, with any required value, except a required row-group identity or a
+  restated common optional field, which keeps its canonical type. Enum values keep canon's exact spelling: non-empty
+  strings without surrounding whitespace, unique within the field. Map: cmd.runtime.approve and cmd.runtime.decline
+  define both the node approval shape and the HITL-038 chat-tool shape, through conditional identity exemptions that
+  require blocked_sequence and allowed_action_id on every approval_kind branch except chat_tool and forbid them on
+  chat_tool; canon names only the chat_tool value of approval_kind, so the definition marks that field a gap. Owner
+  states maintenance_cutoffs_pending (DL-403) and dedup_hold_pending (DL-444, DL-445) map to not_configured, the
+  thirteen CRAU-095 local-runtime reason codes map to closed codes, and a definition may tie the owner states it
+  shows to their codes in owner_state_codes. identity_aliases lets gist_id stand for memory_item_id
+  (UCC-084..UCC-088) and investigation_id for debug_session_id (UCC-077..UCC-083) without renaming canon. Canon
+  already decided three further map corrections, made here with their sources: cmd.terminal.focus_session,
+  compose.save_scenario, compose.run_scenario, set_context and set_namespace are recorded aliases with no
+  definition; cmd.runtime.locate_and_verify_recovery and cmd.runtime.abandon_recovery are pre-attempt admissible, so
+  they never require attempt_id; and worktree_lifecycle_state is required when a command mutates worktree state, as
+  the overlay cell says, rather than for every domain action, so cmd.git.worktree.request_prune, which never mutates
+  worktree state (GI-041), does not carry it. This entry was amended in place on 2026-11-07, before it reached main,
+  after round 2 of the review (round_2_changes). Jared's only words remain "approve all" (DL-333). The coordinator's
+  ruling, quoted verbatim in coordinator_resolutions, is the only coordinator resolution in this entry; how it was
+  applied, the lead's implementation of resolution 2, the workers' own calls, the application of DL-333 resolution 6
+  and the lead's proposals are listed separately and labelled by who made them. This entry changes no owner-doc
+  definition; the per-slice fixers bring the definitions to these rules.
 coordinator_resolutions:
   - "Ruling (pm-mail 1107140349-9370, pm7-build, 2026-11-07T14:03Z), verbatim: \"All five as you recommend, recorded as coordinator resolutions under DL-333/DL-341. (1) (a): an identity exemption for the HITL-038 chat-tool branch, with both shapes defined; don't leave chat-tool approval without a command. (2) Yes to all three. Add checker rules so every judgment has a key, a choice and a gap_note, and no judgment can claim canon provenance; reviewers check judgments the same way as fields. (3) Yes. (4) Yes: aliases, never renaming canon. (5) Out of this branch, but not dropped: Jared wants everything finalized, so the eight unrouted ids become a follow-up packet (Q5b) in your queue, done before the final reseal.\""
-  - "Resolution 1 (cmd.runtime.approve and cmd.runtime.decline, round 1 S4 C1, option a): UCC-230 identity_exemptions records, for each command, blocked_sequence and allowed_action_id as conditional exemptions (condition required_when, branch_field approval_kind, exempt_branch chat_tool). The definition lists them, keeps both fields with required_when on the node branch, and offers the chat_tool branch in a required approval_kind enum, so both the OrchestratorNodeApprovalRequestV1 shape and the RuntimeApproveV3ToolRequest or RuntimeDeclineV3ToolRequest shape are defined. A conditional exemption is not optional: a definition that keeps only the node shape fails."
-  - "Resolution 2 (format): the optional judgments list, nullable: true on a field, and enum values in canon's own spelling. The checker validates the judgments shape, that each key names a part of the definition (or, for omitted:, a field it does not have), a non-blank choice and gap_note, unique keys, and a choice equal to the definition's own value for a fixed key. No judgment may carry a provenance key, a canon field whose source or gap_note contains the word JUDGMENT in any case is a C11 finding, and so is a definitions block whose fence holds a YAML comment with that word."
-  - "Resolution 3 (maintenance hold, AMS-141): owner state maintenance_cutoffs_pending maps to closed code not_configured in UCC-230 owner_state_code_map, citing DL-403, so the reason is machine-readable without widening the closed set."
-  - "Resolution 4 (identity names): UCC-230 identity_aliases records gist_id for memory_item_id (UCC-084..UCC-088) and investigation_id for debug_session_id (UCC-077..UCC-083), each with canon evidence the checker finds outside UCC-230 and that names the canon name. The checker types and requires the canon name as the overlay name it stands for and refuses a definition that carries both names."
-  - "Resolution 5 (ids outside UCC-049..UCC-105 that round 1 found unrouted, R1-DECISIONS call 5): not part of this entry; a follow-up packet Q5b settles them before the final reseal."
+resolutions_as_applied:
+  - "How the P0b worker applied resolution 1 (cmd.runtime.approve and cmd.runtime.decline, round 1 S4 C1, option a): UCC-230 identity_exemptions records, for each command, blocked_sequence and allowed_action_id as conditional exemptions (condition required_when, branch_field approval_kind, exempt_branch chat_tool). The definition lists them, keeps both fields with required_when on the node branch, and offers the chat_tool branch in a required approval_kind enum, so both the OrchestratorNodeApprovalRequestV1 shape and the RuntimeApproveV3ToolRequest or RuntimeDeclineV3ToolRequest shape are defined. P0c added that both fields are forbidden on the chat_tool branch and that approval_kind is a gap field (round_2_changes)."
+  - "How the P0b worker applied resolution 2 (format): the optional judgments list, nullable: true on a field, and enum values in canon's own spelling. The checker validates the judgments shape, that each key names a part of the definition (or, for omitted:, a field it does not have), a non-blank choice and gap_note, and unique keys."
+  - "How the P0b worker applied resolution 3 (maintenance hold, AMS-141): owner state maintenance_cutoffs_pending maps to closed code not_configured in UCC-230 owner_state_code_map, citing DL-403, so the reason is machine-readable without widening the closed set."
+  - "How the P0b worker applied resolution 4 (identity names): UCC-230 identity_aliases records gist_id for memory_item_id (UCC-084..UCC-088) and investigation_id for debug_session_id (UCC-077..UCC-083), each with canon evidence the checker finds outside UCC-230 and that names the canon name. The checker types and requires the canon name as the overlay name it stands for and refuses a definition that carries both names."
+  - "Resolution 5 (ids outside UCC-049..UCC-105 that round 1 found unrouted, R1-DECISIONS call 5) is not applied in this entry; a follow-up packet Q5b settles them before the final reseal."
+lead_implementation_of_resolution_2:
+  - "The stream C lead's implementation of resolution 2's \"no judgment can claim canon provenance\" (P0b task text, 2026-11-07T14:04Z), not the coordinator's words: (a) no judgment may carry a provenance key, even gap; (b) a canon field whose source or gap_note contains the word JUDGMENT in any case is a C11 finding; (c) a definitions block whose fence holds a YAML comment with that word is a C11 finding."
+  - "The lead's round 2 change to (c) (P0c task text, after round 2 S6 finding 7): any YAML comment in a definitions block is a C11 finding, whatever it says, because comments are invisible to tools and a word list cannot tell a choice from a note."
+worker_calls:
+  - "P0b worker's call, kept by the lead: for a fixed key, a judgment's choice equals the definition's own value (set equality for the two code lists), so a stale judgment cannot survive a later edit."
+  - "P0b worker's reading of resolution 1, kept by the lead: a conditional exemption is mandatory, so a definition that keeps only the node shape fails; read from \"don't leave chat-tool approval without a command\"."
+  - "P0b worker's call, kept by the lead: the JUDGMENT word rule also matches JUDGEMENT and the plurals; P0c extends it to snake_case compounds such as judgment_basis (round 2 S6 finding 7)."
+  - "P0b worker's classification of the worktree commands, kept by the lead: create, lock, prune, recover, release, remove, reuse and unlock mutate worktree state (lock and unlock set the git lock state; unlock's precondition is worktree_locked); request_prune and select do not (select persists per-project selection and filter state, which W-075 keeps an owner runtime/view record)."
+  - "P0c worker's calls: the checker enforces that approval_kind is a gap field, and a forbidden_when on the chat_tool branch may not also forbid a branch that requires the field; nullable is refused on a required row-group identity even where an identity exemption lets the definition leave the field out, since an exemption makes the field omissible, not nullable; a [] step in any judgment path must name a list field of the definition; a list choice may not repeat an entry; a whole-line YAML comment is reported against the definition of the next content line; owner_state_code_map may not map one owner state twice; the review-reference rule's list of names, read from the brief's examples and \"and the like\" (the Q5 design's sections and the fix reports' canon-conflict labels included, a future compile review not); the closed code chosen for each CRAU-095 code; and leaving CRAU-095's compatibility vocabulary unmapped (under_dl333_resolution_6)."
 canon_decided_changes:
   - "non_definition_tokens: cmd.terminal.focus_session, an alias of cmd.terminal.focus (UCC-202 canonical_text: \"cmd.terminal.focus is canonical and cmd.terminal.focus_session is its alias\"); compose.save_scenario and compose.run_scenario, compatibility aliases of cmd.docker.compose.scenario.save and .run (UCC-137 canonical_text: \"the flat compose.save_scenario and compose.run_scenario spellings recorded as compatibility aliases\"); set_context and set_namespace, compatibility aliases of cmd.docker.k8s.select_context and select_namespace (UCC-137 canonical_text; UCC-052 compatibility_only_notes). Round 1 S1 map items 1-2 and S3 M1."
   - "pre_attempt_admissible: cmd.runtime.locate_and_verify_recovery and cmd.runtime.abandon_recovery (UI_Command_Catalog.md Known-37 recovery-unavailable rows: \"Pre-attempt payloads omit `attempt_id`\"; Commands_System.md: \"Pre-attempt dispatch omits `attempt_id`\"; Contracts_V0.md: \"A pre-attempt request omits `attempt_id`\"). Round 1 S4 U1."
-  - "worktree_lifecycle_state: when mutating, as the overlay cell says (\"`worktree_lifecycle_state` when mutating worktree state\"). The map lists create, lock, prune, recover, release, remove, reuse and unlock as mutating and request_prune and select as not mutating, each with its UCC-054 Worktree Topology Commands row as evidence; GI-041 says \"request_prune never mutates worktree state\" and W-075 keeps the selected worktree an owner runtime/view record. A domain_action in the row group that the map lists in neither fails closed, so the rule checks every case the earlier domain_action rule covered. Round 1 S5 M1 and F10."
+  - "worktree_lifecycle_state: when mutating, as the overlay cell says (\"`worktree_lifecycle_state` when mutating worktree state\"). The map lists create, lock, prune, recover, release, remove, reuse and unlock as mutating and request_prune and select as not mutating, each with its row in the catalog's section 2.5C project-scope git worktree commands table (UCC-054) as evidence; the per-command classification is the P0b worker's call (worker_calls); GI-041 says \"request_prune never mutates worktree state\" and W-075 keeps the selected worktree an owner runtime/view record. A domain_action in the row group that the map lists in neither fails closed, so the rule checks every case the earlier domain_action rule covered. Round 1 S5 M1 and F10."
+under_dl333_resolution_6:
+  - "DL-333 coordinator resolution 6 (owner disabled states outside the overlay's closed set map to closed codes through UCC-230 owner_state_code_map), applied to the thirteen codes of the CRAU-095 canonical local-runtime reason-code base enum, each entry citing CRAU-095; no new ruling. runtime_context_missing, k8s_context_missing, k8s_namespace_missing and access_url_unresolved map to not_configured; runtime_context_unreachable and k8s_context_unreachable to unreachable; buildx_unavailable and bake_unavailable to partial_capability; container_unhealthy to degraded; compose_invalid, compose_service_missing, image_missing and k8s_rollout_blocked to blocked_state_required. CRAU-095's compatibility vocabulary is not a second base enum and is not mapped. Round 2 S1 finding 6 and map item 1."
+lead_proposals:
+  - "The stream C lead's proposals, sent to pm7-build at 2026-11-07T15:54Z with \"unless you object\"; no objection arrived. They are the lead's calls, not coordinator resolutions."
+  - "Lead proposal 1 (round 2 S2 map item M1): owner state dedup_hold_pending maps to not_configured, as maintenance_cutoffs_pending does. DL-444 and DL-445 keep the duplicate sweep's automatic jobs and panel buttons \"unavailable until your answer is applied and all remaining definition, review and recording approvals pass\"."
+  - "Lead proposal 2 (round 2 S1 map item 2): a judgments key aliases, for a choice about which alias tokens a definition records; its choice is those tokens, or none when the definition records no alias."
+  - "Lead proposal 3 (round 2 S2 map item M2): an optional per-definition owner_state_codes list of owner_state and code entries. Each owner state is in owner_state_code_map, its code is the map's code for it and is one of the definition's disabled_reason_codes, so a definition's tie to maintenance_cutoffs_pending or dedup_hold_pending is machine-readable."
+round_2_changes:
+  - "Round 2 (P0c, the stream C lead's task text, after definitions review round 2: r2-opus-S1.md..r2-opus-S6.md). The coordinator text above is unchanged."
+  - "No YAML comment in a definitions block (S6 finding 7, S1 finding 5): any # comment inside a pm.command_payload_definitions.v1 fence is a C11 finding, whatever it says. 137 comments remained at 0dd32a1253."
+  - "No review or evidence reference in a definitions block (S1 finding 9, S3 finding 7): a string that names review rounds or findings, fix rounds or their reports, review files, the defs-review or owner-answers folders, the evidence share, the Q5 design's sections or the fix reports' canon-conflict labels is a C11 finding; canon text stands on canon. A unit fence's source_lineage may keep evidence paths. 49 such strings remained at 0dd32a1253."
+  - "nullable: true is refused again, as before this entry, on a required row-group identity (C07) and on a restated common optional field (C08): neither the overlay's identity cells and payload_optional bullet nor UCC-230's row_groups and common_optional record a nullable field, so the checker has no source that could make one nullable (S6 finding 4)."
+  - "Restated common fields (S3 map item M3): a definition may restate a common optional field, required or optional, only with its canonical type and narrowing constraints. This supersedes the Q5 DESIGN.md section 4.3 rule that a restatement may only make the field required: true or add constraints; the checker already enforced the type."
+  - "Approve and decline (S6 findings 3 and 5): blocked_sequence and allowed_action_id are forbidden on the chat_tool branch (forbidden_when approval_kind in [chat_tool]), since HITL-038 refuses cross-variant fields. OrchestratorNodeApprovalRequestV1 carries run_id, node_id, blocked_sequence and an optional attempt_id and no allowed_action_id or approval_kind; the node branch keeps allowed_action_id from the overlay. Canon names only the chat_tool value of approval_kind, so its node branch value is not canon and the definition marks approval_kind a gap."
+  - "Shape rules (S6 finding 6): a [] step in a judgment path, omitted:<x>[] included, needs x to be a list field; a when: mutating entry lists not_mutating as well as commands; a list choice has no repeats."
+  - "Corrected labels (S6 finding 2): the worktree evidence is the catalog's section 2.5C project-scope git worktree commands table (UCC-054), not GitHub_Integration.md's Worktree Topology Commands; the investigation alias's contract unit is Contracts_V0 CV-123 (section 3.5 Debug investigation events), not CV-294."
+  - "Map additions under DL-333 resolution 6 (under_dl333_resolution_6) and the lead's proposals (lead_proposals) are listed above."
 gui_related: false
 gui_classification_reason: Records how command payload definitions state their judgments and how UCC-230 maps identities; no GUI behavior changes.
 split_recommended: false
-depends_on: [DL-333, HITL-038, DL-403, UCC-202, UCC-137, GI-041]
+depends_on: [DL-333, HITL-038, DL-403, UCC-202, UCC-137, GI-041, UCC-052, UCC-054, W-075, CV-123, CRAU-095, DL-444, DL-445]
 unblocks: []
 acceptance_criteria:
-  - "UCC-230 states the judgments list, nullable fields, canon enum spelling, the when-mutating rule, identity_aliases, the conditional approve and decline exemptions and owner state maintenance_cutoffs_pending, and lists the five recorded aliases and the two pre-attempt admissible commands."
+  - "UCC-230 states the judgments list with its aliases key, nullable fields and where they are refused, canon enum spelling, that a definitions block holds no YAML comment and no review or evidence reference, the restated common field rule, the when-mutating rule, identity_aliases, the conditional approve and decline exemptions with the chat_tool branch forbidden and approval_kind a gap, owner_state_codes, owner states maintenance_cutoffs_pending and dedup_hold_pending and the thirteen CRAU-095 codes, and lists the five recorded aliases and the two pre-attempt admissible commands."
   - "python3 scripts/pm-command-payload-defs-check.py --self-test passes with a passing and a failing case for every rule this entry adds."
   - "This entry edits no owner-doc definitions section; definitions that break a corrected rule are reported to the per-slice fixers."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
@@ -2335,6 +2369,9 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/defs-review/R1-DECISIONS.md"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/defs-review/r1-opus-S1.md, r1-opus-S2.md, r1-opus-S3.md, r1-opus-S4.md and r1-opus-S5.md (round 1 reviews, UCC-230 map items sections)"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/P0B-BRIEF.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/defs-review/r2-opus-S1.md, r2-opus-S2.md, r2-opus-S3.md, r2-opus-S4.md, r2-opus-S5.md and r2-opus-S6.md (round 2 reviews; S6 reviewed this entry)"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/P0C-BRIEF.md (round 2 changes, the stream C lead's task text)"
+  - "Stream C lead to pm7-build, 2026-11-07T15:54Z: lead proposals 1-3, sent with \"unless you object\"; no objection arrived"
 preserved_exact_tokens:
   - "DL-341"
   - "pm.command_payload_definitions.v1"
@@ -2345,6 +2382,8 @@ preserved_exact_tokens:
   - "maintenance_cutoffs_pending"
   - "approval_kind"
   - "chat_tool"
+  - "dedup_hold_pending"
+  - "owner_state_codes"
 owner_hints:
   - Plans/UI_Command_Catalog.md
 ```
