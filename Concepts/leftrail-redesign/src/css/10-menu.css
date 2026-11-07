@@ -34,6 +34,10 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .pmr-menu {
   --pm6-sprout-sx: 1 !important; --pm6-sprout-sy: 1 !important;
 }
 html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover, :focus-visible, .active) { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; box-shadow: none !important; }
+/* the row's neon glyph takes the row's paper ink too: the hover tags' ignite sets --nx-ink to --text on a hovered or
+   focused control (glyph-system pm7-hover-bridge.css), which in NieR is the bar's own ink, so an icon row's glyph went ink
+   on ink (FO-98's icon menu showed it); onboarding and the projects layer reset it the same way */
+html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover, :focus-visible, .active) svg.nx { --nx-ink: currentColor; }
 /* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
 html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover, :focus-visible, .active) :where(*) { color: inherit !important; }
 

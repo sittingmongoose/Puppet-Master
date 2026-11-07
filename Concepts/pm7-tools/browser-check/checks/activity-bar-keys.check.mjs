@@ -313,6 +313,25 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   await t.check(`${at} FO-98 ${first} (first): Move up is disabled, Escape gives the focus back to the icon`, m.open && /^Move up.*\(disabled\)$/.test(m.rows[0] || '') && !/disabled/.test(m.rows[1] || '') && foc.key === first, JSON.stringify({ menu: m, focus: foc.key }));
   if (!full) return;
 
+  // NieR: the focused row is an ink bar; its glyph must stand off it (the hover tags' ignite drew it in the bar's own ink)
+  for (const look of ['nier-light', 'nier-dark']) {
+    await t.app.look(look);
+    await f.waitForFunction(() => !document.getElementById('o55np-reboot'), null, { timeout: 15000 }).catch(() => {});
+    if (await reach(k)) { await kb.press('Shift+F10'); await menuUp(); await f.waitForTimeout(250); }
+    const g = await f.evaluate(() => {
+      const row = document.activeElement, svg = row && row.closest && row.closest('.pmr-menu') && row.querySelector('.pmr-mi-ico svg');
+      if (!svg) return null;
+      const rgb = (c) => (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+      const L = ([r, gg, b]) => { const f = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }; return 0.2126 * f(r) + 0.7152 * f(gg) + 0.0722 * f(b); };
+      const part = [...svg.querySelectorAll('path, line, polyline, circle, rect')].find((e) => getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden') || svg;
+      const st = rgb(getComputedStyle(part).stroke), bg = rgb(getComputedStyle(row).backgroundColor), a = L(st), c = L(bg);
+      return { row: row.textContent.trim(), stroke: st.join(), bg: bg.join(), ratio: +((Math.max(a, c) + 0.05) / (Math.min(a, c) + 0.05)).toFixed(2) };
+    });
+    await t.check(`${at} FO-98 ${look}: the focused menu row's glyph stands at 3:1 or more on its ink bar`, !!g && g.ratio >= 3, JSON.stringify(g));
+    await kb.press('Escape'); await menuGone();
+  }
+  await t.app.look('basic-dark');
+
   // the shell's own menu and open state, the rail skin unmounted (the review copy's Original rail)
   const swapped = await f.evaluate(() => { try { PMR.host.setConcept('current', { force: true }); return !document.documentElement.hasAttribute('data-rail-skin'); } catch (e) { return false; } });
   if (!swapped) { t.log(`${at} FO-98: the rail skin could not be unmounted here; the shell's own menu is not judged`); return; }
