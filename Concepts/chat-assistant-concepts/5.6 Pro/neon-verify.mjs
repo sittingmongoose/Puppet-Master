@@ -1716,7 +1716,7 @@ for (const theme of ['basic-dark', 'basic-light', 'retro-light', 'nier-dark'].fi
    Pod at alpha .37-.73 over a button for about 1.8 s per view. What the episode may spend above the target past its
    deadline is a committed allowance (POD_EPISODE_ALLOW_MS), not zero: the product samples what is under the Pod (its
    90 ms check, and no check at all during its 350 ms clear wait), so on a clean page a control can pass under an opaque
-   Pod for a few frames (at most 67 ms past the deadline at 1x on Nas1; see KIT-BATCH4). The data-shy step itself keeps
+   Pod for a few frames (at most 150 ms past the deadline at 1x in three clean runs on Nas1, 80 ms at 6x CPU throttling; see KIT-BATCH4). The data-shy step itself keeps
    its per-stretch deadline for the same reason: data-shy is off on a clean page when a control comes under the Pod
    during the clear wait.
    FO-76: the Activity wrap holds a hidden, inert fit sizer with two copies of every Activity item. A control is counted
