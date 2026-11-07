@@ -659,15 +659,20 @@
      through the same pin a node click sets (ui.pinUid): the panel keeps its node, its scroll and the focus in it; the
      pinned node reads open (aria-pressed), the core keeps showing the live subject and says "Follow the live step
      again", and the core click follows live again, as after any pin.
-     Only real input pins. A wheel, a touch, a scroll key with the focus in the panel, or a press on its scrollbar
-     marks the panel, and only a scroll of that same panel within 700 ms of the mark (or during the scrollbar drag)
+     Only real input pins. A wheel, a touch, a scroll key, or a press on its scrollbar marks the panel, and only a
+     scroll of that same panel within 700 ms of the mark (or during the scrollbar drag)
      pins it; app.js reads a reader's transcript scroll the same way. The browser clamping scrollTop when a patch
      shortens the panel, or a script setting it, comes with no mark and never pins. A Tab that moves the focus into the
      panel pins it too: the scroll keys only reach a panel that still holds the focus, and the next handover would
-     otherwise drop it before the first key.
+     otherwise drop it before the first key. A Tab pin stays when the focus leaves the panel, as a scroll pin stays.
+     A scroll key counts for the panel that holds the focus, or else for the panel the last press landed in while the
+     focus is on no control (round 2, F104-1): a click on the panel's words leaves the focus on the page, and the
+     browser then sends the scroll keys to the scroller under that click. Counting them there follows the browser's
+     own route; the panel is not made to take the focus, which would change the tab path and what a screen reader
+     hears on every click in the card. A key marks only; the pin still needs that panel to scroll.
      Scrolling back to the top keeps the pin. A pin made by a click does not end on a scroll either, and ending this one
      at the top would swap the subject under a reader who is reading its head; the pin shows, and the core ends it. */
-  var held = { el: null, at: 0, drag: false, tab: 0 };
+  var held = { el: null, at: 0, drag: false, tab: 0, press: null };
   var HOLD_KEYS = { PageUp: 1, PageDown: 1, ArrowUp: 1, ArrowDown: 1, Home: 1, End: 1, ' ': 1 };
   function panelOf(node) { return node && node.nodeType === 1 && node.closest ? node.closest('.orbit-panel-in') : null; }
   function markPanel(p) { held.el = p; held.at = performance.now(); }
@@ -684,10 +689,15 @@
   }
   document.addEventListener('wheel', function (e) { var p = panelOf(e.target); if (p) markPanel(p); }, { passive: true, capture: true });
   document.addEventListener('touchstart', function (e) { var p = panelOf(e.target); if (p) markPanel(p); }, { passive: true, capture: true });
-  document.addEventListener('keydown', function (e) {
+  /* Added with the plain method: in PMConcept7 the host (pm7-port/js/00-host.js) scopes the chat's document listeners
+     to events aimed at the chat, and a key pressed with the focus on the page is aimed at <body>, so a scoped listener
+     never heard the scroll keys after a click on the panel's words. The host adds its own page-wide dismiss listener
+     the same way. This one only marks a panel; it never acts on the key or stops it. */
+  EventTarget.prototype.addEventListener.call(document, 'keydown', function (e) {
     if (e.key === 'Tab') { held.tab = performance.now(); return; }
     if (!HOLD_KEYS[e.key] || e.altKey || e.ctrlKey || e.metaKey) return;
-    var p = panelOf(document.activeElement);
+    var a = document.activeElement, onPage = !a || a === document.body || a === document.documentElement;
+    var p = panelOf(a) || (onPage && held.press && held.press.isConnected ? held.press : null);
     if (p) markPanel(p);
   }, true);
   /* a press on the panel's own scrollbar: the press lands on the panel itself, right of its content box. Any other
@@ -695,6 +705,7 @@
   document.addEventListener('pointerdown', function (e) {
     var p = e.target;
     held.drag = false;
+    held.press = panelOf(p);
     if (e.button !== 0 || !p || !p.classList || !p.classList.contains('orbit-panel-in')) return;
     var r = p.getBoundingClientRect();
     if (e.clientX > r.left + p.clientLeft + p.clientWidth) { held.drag = true; markPanel(p); }

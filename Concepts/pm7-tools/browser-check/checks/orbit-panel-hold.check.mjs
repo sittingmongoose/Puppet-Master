@@ -11,13 +11,16 @@
 //             live: the panel shows the live subject and the next handover changes it again.
 //   keys      a real Tab from the core moves the focus onto the panel's X and pins it; ArrowDown scrolls the panel; two
 //             handovers keep the node, the focus on the X and the scroll.
+//             Shift+Tab then takes the focus out of the panel (to the core), and the pin stays over the next handover.
+//   click     a real click on the panel's words (not a control) leaves the focus on the page; PageDown then scrolls the
+//             panel and pins it, and three handovers keep its node and scroll (F104-1, opus-recheck-act8).
 //   scrollbar a real press on the panel's scrollbar track pages it down and pins it; a handover keeps it (skipped where
 //             scrollbars overlay the content and leave no gutter).
 //   no input  scrollTop set by script, then a clamp (the panel scrolled to its end by script and its last rows taken
 //             out, so the browser clamps scrollTop and fires scroll, as a patch that shortens it would) pin nothing,
 //             and the next handover changes the subject.
 // Fails group 7 c4ba49b137: the first handover replaces the panel (node, scroll and focus lost), and nothing pins.
-//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>   --set only=wheel,keys,scrollbar,none
+//   --set chat=<path or URL of a 5.6 Pro build (build.py --out)>   --set only=wheel,keys,click,scrollbar,none
 
 // In the app's frame: helpers the steps below read through window.__fo104.
 function install() {
@@ -25,6 +28,13 @@ function install() {
   const id = (e) => { if (!e) return 0; if (!ids.map.has(e)) ids.map.set(e, ++ids.n); return ids.map.get(e); };
   const stage = () => document.querySelector('.working-card:not(.is-done) .orbit-stage.is-open');
   const panel = () => { const s = stage(); return s && s.querySelector('.orbit-panel-in'); };
+  // what the reader sees at the panel's top: the first keyed element below its top edge and its offset there. A pinned
+  // panel keeps it even where the browser's scroll anchoring moves scrollTop (rows above the view grow as they stream)
+  const viewOf = (p) => {
+    const top = p.getBoundingClientRect().top + p.clientTop;
+    for (const e of p.querySelectorAll('[data-k]')) { const r = e.getBoundingClientRect(); if (r.height > 0 && r.bottom > top + 1) return { k: e.getAttribute('data-k'), dy: Math.round(r.top - top) }; }
+    return null;
+  };
   const snap = () => {
     const st = stage(); if (!st) return null;
     const p = st.querySelector('.orbit-panel-in'), core = st.querySelector('.orbit-core');
@@ -39,6 +49,7 @@ function install() {
       coreLabel: ((st.querySelector('[data-k="corelabel"]') || {}).textContent || '').trim(), live: live && live.getAttribute('data-k'),
       clock: w ? (w.clock != null ? w.clock : w.step * 2) : null, running: !!(w && w.running),
       focus: a && p && p.contains(a) ? id(a) : 0, focusKey: a ? (a.getAttribute('data-k') || a.tagName.toLowerCase()) : 'none',
+      view: p ? viewOf(p) : null,
     };
   };
   // a point inside the panel's content (not its scrollbar), the panel in view, and what a press there lands on
@@ -99,7 +110,10 @@ async function nextHandover(f, prev, tag) {
 // The panel kept across a handover: same node, scroll, subject and pin; the core and the live node moved on.
 async function held(t, tag, before, after, { focus } = {}) {
   await t.check(`${tag}: same panel node`, after.node === before.node, `node ${before.node} -> ${after.node}, ${before.k} -> ${after.k}`);
-  await t.check(`${tag}: scroll kept`, Math.abs(after.top - before.top) <= 1, `${before.top} -> ${after.top}`);
+  // scroll kept: scrollTop unchanged, or (where scroll anchoring moved it) the same row at the same place at the top
+  const sameView = !!(before.view && after.view && before.view.k === after.view.k && Math.abs(before.view.dy - after.view.dy) <= 2);
+  if (Math.abs(after.top - before.top) > 1 && after.node === before.node && sameView) t.log(`${tag}: scrollTop ${before.top} -> ${after.top} by the browser's scroll anchoring; the same row stays at the top (${before.view.k}, ${before.view.dy} -> ${after.view.dy} px)`);
+  await t.check(`${tag}: scroll kept`, Math.abs(after.top - before.top) <= 1 || (after.node === before.node && sameView), `${before.top} -> ${after.top}, view ${JSON.stringify(before.view)} -> ${JSON.stringify(after.view)}`);
   await t.check(`${tag}: panel still on its subject`, after.uid === before.uid, `${before.uid} -> ${after.uid}`);
   await t.check(`${tag}: pin shows`, after.pinned === 'node:' + after.uid && after.openCls && after.core === 'false' && after.coreTip === 'Follow the live step again',
     JSON.stringify({ pinned: after.pinned, open: after.openCls, core: after.core, tip: after.coreTip }));
@@ -154,6 +168,33 @@ async function keysCase(t, f, where) {
   s = await settled(f);
   await t.check(`${tag}: ArrowDown scrolls the panel`, s.top > 0, String(s.top));
   for (let h = 1; h <= 2; h++) { const n = await nextHandover(f, s, tag); await held(t, `${tag} handover ${h}`, s, n, { focus: true }); s = n; }
+  // a Tab out of the panel leaves the pin, as a scroll pin stays (the lead's ruling, round 2)
+  await t.page.keyboard.press('Shift+Tab');   // from the X back to the core: out of the panel
+  s = await f.evaluate(() => window.__fo104.snap());
+  const out = await nextHandover(f, s, tag);
+  await t.check(`${tag}: after Shift+Tab takes the focus out of the panel, the pin stays over the next handover`, s.focus === 0 && out.pinned === 'node:' + out.uid && out.node === s.node && out.uid === s.uid,
+    JSON.stringify({ focus: s.focusKey, pinned: out.pinned, node: [s.node, out.node], uid: [s.uid, out.uid] }));
+  const core = await f.evaluate(() => window.__fo104.aim('.orbit-core'));
+  await t.page.mouse.click(OFF.x + core.x, OFF.y + core.y);
+  await f.waitForTimeout(300);
+}
+
+// a click on the panel's words (not a control) leaves the focus on the page, and the browser then sends the scroll keys
+// to the scroller under that click (F104-1, opus-recheck-act8): PageDown scrolls the panel and pins it, and three
+// handovers keep its node and scroll
+async function clickKeysCase(t, f, where) {
+  const tag = `${where} click then keys`;
+  const s0 = await freshWindow(t, f, tag);
+  const a = await f.evaluate(() => window.__fo104.aim('.orbit-panel-title'));
+  await t.check(`${tag}: the pointer lands on the panel's words`, !!(a && a.ok), JSON.stringify(a), { hard: true });
+  await t.page.mouse.click(OFF.x + a.x, OFF.y + a.y);
+  const focus = await f.evaluate(() => { const e = document.activeElement; return !e || e === document.body || e === document.documentElement ? 'page' : (e.getAttribute('data-k') || e.tagName.toLowerCase()); });
+  await t.page.keyboard.press('PageDown');
+  await f.waitForFunction(() => { const s = window.__fo104.snap(); return !!s && s.top > 0; }, null, { timeout: 1000, polling: 25 }).catch(() => {});
+  let s = await settled(f);
+  await t.check(`${tag}: with the focus on the page, PageDown scrolls the panel and pins it before any handover`, focus === 'page' && s.top > 0 && s.pinned === 'node:' + s0.uid && s.node === s0.node,
+    JSON.stringify({ focus, top: s.top, pinned: s.pinned, uid: s.uid, was: s0.uid, node: [s0.node, s.node] }));
+  for (let h = 1; h <= 3; h++) { const n = await nextHandover(f, s, tag); await held(t, `${tag} handover ${h}`, s, n); s = n; }
   const core = await f.evaluate(() => window.__fo104.aim('.orbit-core'));
   await t.page.mouse.click(OFF.x + core.x, OFF.y + core.y);
   await f.waitForTimeout(300);
@@ -210,9 +251,10 @@ async function run(t, f, where) {
   OFF = await frameOffset(t, f);
   const s = await f.evaluate(() => window.__fo104.snap());
   await t.check(`${where}: a live Working card with the Orbit panel`, !!s, JSON.stringify(s), { hard: true });
-  const only = list(t.args.only, ['wheel', 'keys', 'scrollbar', 'none']);
+  const only = list(t.args.only, ['wheel', 'keys', 'click', 'scrollbar', 'none']);
   if (only.includes('wheel')) await wheelCase(t, f, where);
   if (only.includes('keys')) await keysCase(t, f, where);
+  if (only.includes('click')) await clickKeysCase(t, f, where);
   if (only.includes('scrollbar')) await scrollbarCase(t, f, where);
   if (only.includes('none')) await noInputCase(t, f, where);
 }
