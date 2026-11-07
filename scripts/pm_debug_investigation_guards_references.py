@@ -59,18 +59,19 @@ def references_target_schema(value, context):
 
 
 def references_case(case_value):
-    # Traversal and parsing only: every object node of the document in document
-    # order, each $id it declares, and each reference split into whether it is a
-    # string, its base, its fragment form (none, pointer or anchor) and its
+    # Traversal and parsing only: every object node of the document (breadth
+    # first), each $id it declares, and each reference split into whether it is
+    # a string, its base, its fragment form (none, pointer or anchor) and its
     # unescaped pointer keys. The rows judge them.
-    nodes, pending = [], [case_value]
-    while pending:
-        node = pending.pop()
+    pending, index = [case_value], 0
+    while index < len(pending):
+        node = pending[index]
+        index += 1
         if type(node) is dict:
-            nodes.append(node)
-            pending.extend(reversed(list(node.values())))
+            pending.extend(node.values())
         elif type(node) is list:
-            pending.extend(reversed(node))
+            pending.extend(node)
+    nodes = [node for node in pending if type(node) is dict]
     references = []
     for node in nodes:
         for key in ('$ref', '$dynamicRef'):
