@@ -46,6 +46,15 @@
   -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
 }
 §{glass}S :is(.pm7-scm-git-footer, .d-jj-foot) { -webkit-backdrop-filter: none; backdrop-filter: none; }
+/* FO-86: a short panel keeps about three rows of the list beside the open card. The list's scroller has a floor of three
+   rows below the tab strip (its top sits under the strip by design, --pm6-shrun-banner-h, so the floor counts from the
+   strip's foot; Jujutsu's scroller starts below its strip, 73-jj), and the card's footer takes what is left, scrolling its
+   own content when that is less than the card (1280x500: the card's 300 px left the list a 56 px box, 14 px of it below
+   the strip, and the footer ran 80 px past the panel). A taller panel gives the list more than the floor and the footer
+   its whole card, so nothing changes there. */
+§S { --d-list-floor: 132px; }
+§S > .sh-scroll { min-height: calc(var(--pm6-shrun-banner-h, 42px) + var(--d-list-floor)) !important; }
+§S :is(.pm7-scm-git-footer, .d-jj-foot) { flex: 0 1 auto !important; min-height: 0 !important; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: auto; }
 §S :is(.pm7-scm-git-footer, .pm7-scm-jj-view) .pm7-post-card {
   padding: 7px 7px 8px !important; border-radius: var(--d-R) !important; box-shadow: none !important;
   border: 1px solid var(--d-line) !important; background: color-mix(in srgb, var(--surface-elevated) 70%, transparent) !important;
