@@ -94,7 +94,7 @@ html:not([data-o55-nier="on"]) :is(#pm-o55-onboarding > .o55-win, .o55t-root > *
 /* a finished chapter's name (and its bead) takes you back to it: the name is a button that keeps the label's look */
 .o55-railjump { margin: 0; padding: 0; border: 0; background: none; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; line-height: inherit; cursor: pointer; border-radius: 3px; }
 .o55-railjump:hover { color: var(--text-primary); text-decoration: underline; text-underline-offset: 3px; }
-.o55-railjump:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 3px; }
+.o55-railjump:focus-visible { outline: 2px solid var(--o55-focus, var(--o55-accent)); outline-offset: 3px; }
 /* (the bead answers a press but keeps the default cursor: a pointer-cursor rule for it slowed the app's chat-edge drag
    with the window closed, frame gap p95 100 ms -> 300 ms in tools/perf/resize_perf.py, consistently across builds) */
 /* (FO-53: the narrow rail is beads only, and a finished chapter's name is then just the bead's hit area: its words are
@@ -134,7 +134,7 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
   background: transparent; color: var(--text-secondary); cursor: pointer; font: 600 13px/1 var(--body-font); }
 .o55-iconbtn:hover, .o55-sound:hover { background: color-mix(in srgb, var(--text-primary) 8%, transparent); color: var(--text-primary); }
 .o55-iconbtn:focus-visible, .o55-sound:focus-visible, .o55-btn:focus-visible, .o55-card:focus-visible, .o55-tile:focus-visible, .o55-link:focus-visible, .o55-toggle:focus-visible, .o55-seg button:focus-visible, .o55-detbtn:focus-visible {
-  --o55-face-outline: 2px solid var(--o55-accent); outline: var(--o55-face-outline); outline-offset: 2px; }
+  --o55-face-outline: 2px solid var(--o55-focus, var(--o55-accent)); outline: var(--o55-face-outline); outline-offset: 2px; }
 .o55-sound[aria-pressed="false"] { color: var(--text-muted); }
 .o55-sound[aria-pressed="false"] svg { opacity: 0.7; }
 
@@ -263,7 +263,11 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
   --o55-ink-fail: color-mix(in srgb, var(--accent-error) 75%, #000);
   /* Paper theatre's orange reads 2.8:1 as words on white and under white words: words take the tag's brick, the main
      action a brick a little lighter (5.2:1 under white) */
-  --o55-ink-accent: var(--o55-ink-tag); --o55-action: color-mix(in srgb, var(--o55-accent) 70%, #000); }
+  --o55-ink-accent: var(--o55-ink-tag); --o55-action: color-mix(in srgb, var(--o55-accent) 70%, #000);
+  /* FO-99: the keyboard focus ring takes the words' brick too. The plain orange ring read 2.64:1 against the white
+     footer beside it (Back's, at 2 px outside its border), under WCAG's 3:1 for a focus mark; the brick reads 5.7:1.
+     Only the ring changes: --o55-focus is unset in every other look, where the rings keep var(--o55-accent). */
+  --o55-focus: var(--o55-ink-accent); }
 /* SW-18: reserve normal-text contrast over the brightest selected Glass backing,
    including the material exposed by scrolling a narrow pane. Keep a blue tint in the ink. */
 #pm-o55-onboarding[data-family="glass"][data-mode="dark"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 25%, var(--text-primary));
@@ -563,7 +567,7 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph
 .o55-tipq::before { content: ''; position: absolute; inset: -6px; } /* a 34 px target round a 22 px mark */
 .o55-tipq:hover { color: var(--o55-accent); border-color: var(--o55-accent); }
 .o55-tipq[aria-expanded="true"] { color: var(--o55-on-accent); background: var(--o55-accent); border-color: var(--o55-accent); outline: 1.5px solid var(--o55-accent); outline-offset: 2px; }
-.o55-tipq:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 2px; }
+.o55-tipq:focus-visible { outline: 2px solid var(--o55-focus, var(--o55-accent)); outline-offset: 2px; }
 .o55-opt > .o55-card + .o55-tipq, .o55-opt > .o55-toggle + .o55-tipq { position: absolute; top: 50%; right: 16px; margin-top: -11px; }
 .o55-opt-inline { display: inline-flex; align-items: center; gap: 7px; }
 .o55-opt-inline > .o55-tipq, .o55-labq > .o55-tipq, .o55-row-q > .o55-tipq { width: 19px; height: 19px; font-size: 10.5px; }
@@ -696,7 +700,7 @@ html[data-motion="reduced"] #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55
 }
 /* The page's NieR reset removes native outlines; choices still need a keyboard ring. */
 #pm-o55-onboarding#pm-o55-onboarding :is(.o55-card, .o55-tile):focus-visible {
-  outline: 2px solid var(--o55-accent) !important; outline-offset: 2px !important;
+  outline: 2px solid var(--o55-focus, var(--o55-accent)) !important; outline-offset: 2px !important;
 }
 
 /* FO-73: button hit bounds never move. Press displacement and squeeze belong to

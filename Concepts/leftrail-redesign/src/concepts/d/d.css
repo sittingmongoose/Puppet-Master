@@ -2627,6 +2627,12 @@
 }
 [data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"])[data-lg="on"][data-theme^="glass"]:not(#pmfz) #lg-lenses .lg-lens[data-lg-for="rail-icons"][data-lg-focus]::after { opacity: 0 !important; }
 [data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"]):not(#pmfz)[data-lg="on"] #activityBar .icon[data-lg-focus]:focus-visible .symbol { outline: none !important; box-shadow: none !important; }
+/* FO-99: Friendly Light's accent, a pale sky blue, read 2.56 to 3.13:1 against the white band inside the ring and
+   1.9 to 2.9:1 against the bar's ground outside it, so there the ring (and the toggle's) takes the accent's ink, the
+   accent with a third of black (as the onboarding's words and focus ring do in this look): about 6:1 against both.
+   Only the ring's colour changes; its place, width and band are FO-96's, above. */
+[data-rail-skin="d"][data-theme^="friendly"][data-theme$="-light"]:not([data-o55-nier-parts~="brackets"]):not(#pmfz) #activityBar .icon:focus-visible .symbol,
+[data-rail-skin="d"][data-theme^="friendly"][data-theme$="-light"] #activityBar > .activity-bar-toggle:focus-visible { outline-color: color-mix(in srgb, var(--accent-primary) 66%, #000) !important; }
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar > .activity-bar-toggle:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 
 /* drag to reorder or hide: the ghost is the icon's tile lifted off the bar; the drop line is the accent, square in Retro
