@@ -16,15 +16,18 @@
 //   opens no editor; Open in new panel and Open to the side are unavailable (aria-disabled), a press on either says why
 //   (a note naming the folder), opens nothing and leaves the menu open; a folder the tree lists without its files
 //   (under node_modules) says so; and a file row's menu after a folder's has both again (Open in new panel opens it).
+// - FO-105: a left click on a Recent row marks nothing: after real clicks on the last three Recent rows (two of them open
+//   on base too), no Recent row carries the current-file mark (.active-file), and the tree's and Open editors' marks are
+//   as they were (base marked each clicked row, so marks piled up, and cleared the tree's).
 // Sizes 1920x1080, 1280x500 and 740x768, both surfaces, one test each.
-//   --set size=1280x500   --set looks=glass-dark,nier-light   --set parts=101,103a,103b,103c,102
+//   --set size=1280x500   --set looks=glass-dark,nier-light   --set parts=105,101,103a,103b,103c,102
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const SIZES = [[1920, 1080], [1280, 500], [740, 768]];
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-dark`, `${f}-light`]);
-const PARTS = ['101', '103a', '103b', '103c', '102'];
+const PARTS = ['105', '101', '103a', '103b', '103c', '102'];
 const list = (v, all) => (v ? String(v).split(',').map((s) => s.trim()).filter(Boolean) : all);
 const MENU = '#fileContextMenu';
 // the rows of each kind, in document order: a Changed item's row, an Open editors item's row, a Recent row (an .fm-openrow
@@ -161,6 +164,20 @@ async function cell(t, surface, w, h) {
 		const now = await fx();
 		return { err: opensOnly(now, r.want, 'preview', 'auto') && !refused(now) ? null : now, shown };
 	};
+
+	// FO-105: Recent clicks mark nothing, and leave the tree's and Open editors' marks as they were.
+	if (parts.includes('105')) {
+		const marks = () => f.evaluate((SEL) => ({
+			tree: [...document.querySelectorAll('#panel-files [role="tree"] .fm-row.active-file')].map((e) => e.getAttribute('data-path')),
+			editors: [...document.querySelectorAll(`${SEL.editors}.active-file`)].map((e) => e.getAttribute('data-frp')),
+			recent: [...document.querySelectorAll(`${SEL.recent}.active-file`)].map((e) => e.getAttribute('data-frp')),
+		}), SEL);
+		const before = await marks(), clicked = [];
+		for (const r of rows.filter((x) => x.kind === 'recent').slice(-3)) { const c = await leftClick(r); clicked.push({ row: r.want, opened: !c.err }); }
+		const after = await marks();
+		await t.check(`FO-105 ${tag}: after left clicks on three Recent rows no Recent row is marked`, !after.recent.length, JSON.stringify({ clicked, ...after }));
+		await t.check(`FO-105 ${tag}: after left clicks on three Recent rows the tree's and Open editors' marks are as they were`, JSON.stringify([after.tree, after.editors]) === JSON.stringify([before.tree, before.editors]), JSON.stringify({ before, after }));
+	}
 
 	// FO-103 A: each row names its own full path.
 	if (parts.includes('103a')) for (const r of rows)
