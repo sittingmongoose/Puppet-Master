@@ -900,135 +900,233 @@ export default async function (t) {
   const marks = ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch','data-shelf-pick','data-shelf-fold','data-shelf-disc','data-shelf-kb','data-shelf-kbs','data-shelf-later','data-shelf-later-tab'];
   await f.evaluate(marks=>document.querySelectorAll(marks.map(a=>`[${a}]`).join(',')).forEach(e=>{for(const a of marks)e.removeAttribute(a);}), marks);
 
-  // FO-93b: what a context menu opened by a key acts on. For every keyboard route the census opened (pane and key), on a
-  // fresh page each: (1) a fresh open by the key and Enter on Open hands PM_HOME.open the row's own path and makes it the
-  // active tab; (2) after a right-click on another row A (closed by Escape), the key on row B acts on B: Open, Copy path's
-  // Copy relative path (the copied text and its note name B) and Open with's Source editor. A row's own path is its
-  // data-path, else the full path its item shows (.fm-cpath). (3) A right-click on B and a press on Open act on B too.
-  // --set effects=0 skips this phase; --set effects=<pane,...> (explorer, changed, open) asks only those panes.
-  const kbRoutes = [];
-  for (const r of contextRoutes) {
-    if (r.input === 'mouse') continue;
-    const state = [r.engine, r.tab].filter(Boolean).join(' ') || 'panel';
-    if (!kbRoutes.some(k => k.panel === r.panel && k.state === state && k.input === r.input && k.menu === r.menu)) kbRoutes.push({ ...r, state });
-  }
+  // FO-93b (rounds 1 and 2): what a context menu acts on, read from each command's effect, for every row group of every
+  // pane where one opened. Per pane and input, on a fresh page: a fresh open and Open act on the row and make it the
+  // active tab. Then, for each row asked (the first and last row of every group: a tree's file rows and folder rows, each
+  // shelf; the rows are the elements that share the class of a row kind that opened the menu, focusable or not), every
+  // row command: Open, Open in new panel, Open to the side (PM_HOME.open's path and placement), Copy path › Copy relative
+  // path and Copy full path (the text copied and the note), Open with › each of its five ways (Source editor opens a file;
+  // the others, and Source editor on a folder, name the row in their note) and Reveal in terminal (the terminal's folder).
+  // Before each case the menu is opened on another row by another input and closed by Escape, rotating, so pointer→key,
+  // key→pointer and key→key all come before a case. The expected path is the row's data-path, else the path the page file
+  // authors for it (its own item's .fm-cpath, else its own .fm-path), never the running page's text, which the rail skin
+  // cuts to fit. Keys only on rows that take the focus. --set effects=0 skips the phase; effects=<pane,...> asks only those.
+  const FX_CMDS = [
+    { label: 'Open', how: 'open', where: 'auto' }, { label: 'Open in new panel', how: 'open', where: 'panel' }, { label: 'Open to the side', how: 'open', where: 'right' },
+    { branch: 'Copy path', label: 'Copy relative path', how: 'copy' }, { branch: 'Copy path', label: 'Copy full path', how: 'copyfull' },
+    { branch: 'Open with', label: 'Source editor', how: 'source' },
+    ...['Image viewer', 'Workspace preview', 'Detached preview', 'Diff review'].map(label => ({ branch: 'Open with', label, how: 'note' })),
+    { label: 'Reveal in terminal', how: 'terminal' }];
   const fxPanes = t.args.effects && t.args.effects !== '0' ? String(t.args.effects).split(',') : null;
-  if (t.args.effects !== '0') for (const rt of kbRoutes) {
-    if (fxPanes && !fxPanes.includes(rt.state)) continue;
-    const T = `${rt.panel} ${rt.state} FO-93b ${rt.input}`;
-    const sigs = ctxKinds.filter(k => k.panel === rt.panel && k.state === rt.state && k.got[rt.input] === rt.menu).map(k => k.sig);
-    const g = await t.app.open();
-    if (t.args.look) await t.app.look(t.args.look);
-    const ge = g === t.page.mainFrame() ? null : await g.frameElement(), goff = ge ? await ge.boundingBox() : { x: 0, y: 0 };
-    await g.evaluate(readers);
-    await g.waitForFunction(() => window.PM_HOME && typeof PM_HOME.open === 'function', null, { timeout: 15000 });
-    // Test-side recorders: the opens PM_HOME is asked for, the notes shown, and the text copied by either clipboard route.
-    await g.evaluate(() => {
-      const fx = window.__fx = { opens: [], toasts: [], copies: [] };
-      const open = PM_HOME.open; PM_HOME.open = function (spec, ...a) { fx.opens.push(JSON.parse(JSON.stringify(spec || {}))); return open.apply(this, [spec, ...a]); };
-      const say = window.toast; if (typeof say === 'function') window.toast = function (m, ...a) { fx.toasts.push(String(m)); return say.apply(this, [m, ...a]); };
-      try { const w = navigator.clipboard && navigator.clipboard.writeText && navigator.clipboard.writeText.bind(navigator.clipboard);
-        if (w) navigator.clipboard.writeText = x => { fx.copies.push(String(x)); return w(x).catch(() => {}); }; } catch (_) {}
-      document.addEventListener('copy', e => { const a = e.target && typeof e.target.value === 'string' ? e.target : document.activeElement;
-        fx.copies.push(a && typeof a.value === 'string' ? (a.selectionEnd > a.selectionStart ? a.value.slice(a.selectionStart, a.selectionEnd) : a.value) : String(getSelection())); }, true);
-    });
-    const slot = g.locator('#sidePanelSlot'), icon = g.locator(`#activityBar .icon[data-target="${rt.panel}"]`);
-    const pane = async () => {
-      if (!await slot.isVisible() || !await g.evaluate(p => document.querySelector('#sidePanelSlot > .side-panel-view.active')?.id === p, rt.panel)) {
-        await icon.click(); await g.waitForTimeout(400); if (!await slot.isVisible()) await icon.click();
-      }
-      if (rt.engine) await g.locator(`#${rt.panel} [data-pm7-scm-engine="${rt.engine}"]`).click();
-      if (rt.tab) {
-        const tab = await g.evaluate(([p, tab]) => { const e = [...document.querySelectorAll(`#${p} [role="tab"]`)].find(e => e.checkVisibility() && (e.dataset.tab || e.dataset.jjTab || e.textContent.trim()) === tab);
-          document.querySelectorAll('[data-shelf-fx-tab]').forEach(x => x.removeAttribute('data-shelf-fx-tab')); e?.setAttribute('data-shelf-fx-tab', ''); return !!e && !(e.classList.contains('active') || e.getAttribute('aria-selected') === 'true'); }, [rt.panel, rt.tab]);
-        if (tab) await g.locator('[data-shelf-fx-tab]').click();
-      }
-      await g.waitForTimeout(300);
-    };
-    await pane();
-    // Two file rows of the route's kinds (folders open nothing as a file), each with its own path: B the first, A the last.
-    const pick = await g.evaluate(([p, sigs]) => {
-      document.querySelectorAll('[data-shelf-fx]').forEach(e => e.removeAttribute('data-shelf-fx'));
-      const own = e => e.getAttribute('data-path') || e.closest('[data-acc]')?.querySelector('.fm-cpath')?.textContent.trim() || '';
-      const rows = __shelf.rows(document.getElementById(p)).filter(e => sigs.includes(__shelf.sig(e)) && e.getAttribute('data-kind') !== 'folder' && !(e.getAttribute('role') === 'treeitem' && e.hasAttribute('aria-expanded')) && own(e));
-      const b = rows[0], a = [...rows].reverse().find(e => own(e) !== own(b));
-      b?.setAttribute('data-shelf-fx', 'b'); a?.setAttribute('data-shelf-fx', 'a');
-      return { b: b ? own(b) : null, a: a ? own(a) : null, n: rows.length };
-    }, [rt.panel, sigs]);
-    await t.check(`${T}: two file rows with their own paths to act on`, !!pick.b && !!pick.a, JSON.stringify(pick), { hard: true });
-    const B = g.locator('[data-shelf-fx="b"]'), A = g.locator('[data-shelf-fx="a"]');
-    const fx = () => g.evaluate(() => JSON.parse(JSON.stringify(window.__fx)));
-    const clear = () => g.evaluate(() => { __fx.opens = []; __fx.toasts = []; __fx.copies = []; });
-    const isOpen = () => g.evaluate(k => __shelf.keys().includes(k), rt.menu);
-    const shut = () => g.waitForFunction(k => !__shelf.keys().includes(k), rt.menu, { timeout: 5000 }).then(() => true, () => false);
-    const rest = async () => {
-      const p = await g.evaluate(() => { const slot = document.getElementById('sidePanelSlot');
-        const busy = h => !h || (slot && slot.contains(h)) || !!h.closest('[role="menu"], [role="dialog"], [role="tooltip"], button, a, input, textarea, select, summary, [contenteditable], [title], [role="button"], [role="tab"], [data-pm-hover-label], [data-pm-hover-kind], [aria-describedby]');
-        for (const fx of [0.98, 0.9, 0.75, 0.6]) for (let y = innerHeight * 0.45; y < innerHeight - 30; y += 16) { const x = Math.round(innerWidth * fx); if (!busy(document.elementFromPoint(x, y))) return { x, y: Math.round(y) }; }
-        return { x: 2, y: 2 }; });
-      await t.page.mouse.move(goff.x + p.x, goff.y + p.y);
-    };
-    const keyOpen = async () => {
-      await pane(); await B.scrollIntoViewIfNeeded(); await rest(); await B.focus(); await t.page.keyboard.press(KEY[rt.input]);
-      return g.waitForFunction(k => __shelf.keys().includes(k), rt.menu, { timeout: 5000 }).then(() => true, () => false);
-    };
-    const rightA = async () => {
-      await pane(); await A.scrollIntoViewIfNeeded(); await A.click({ button: 'right' });
-      const up = await g.waitForFunction(k => __shelf.keys().includes(k), rt.menu, { timeout: 5000 }).then(() => true, () => false);
-      await t.check(`${T}: a right-click on ${pick.a} opens the menu`, up, '', { hard: true });
-      await t.page.keyboard.press('Escape'); await shut();
-    };
-    const focused = () => g.evaluate(() => (document.activeElement?.textContent || '').trim().replace(/\s+/g, ' '));
-    // Keys from the first item to the one whose label starts with the text (the menu's own ArrowDown order).
-    const keysTo = async (label) => {
-      for (let s = 0; s < 40; s++) { if ((await focused()).startsWith(label)) return true; await t.page.keyboard.press('ArrowDown'); }
-      return false;
-    };
-    const openedPath = async (want, how) => {
-      const ok = await g.waitForFunction(w => __fx.opens.some(o => o.path === w), want, { timeout: 3000 }).then(() => true, () => false);
-      const now = await fx();
-      await t.check(`${T}: ${how} hands PM_HOME.open ${want}, only`, ok && now.opens.length === 1 && now.opens[0].kind === 'editor' && now.opens[0].path === want, JSON.stringify(now.opens), { hard: true });
-    };
-    // (1) a fresh open by the key, Enter on Open
-    await clear();
-    await t.check(`${T}: a fresh key opens the menu on ${pick.b}`, await keyOpen(), '', { hard: true });
-    await t.check(`${T}: the focus is on Open`, await focused() === 'Open', await focused(), { hard: true });
-    await t.page.keyboard.press('Enter');
-    await openedPath(pick.b, 'a fresh key open and Enter on Open');
-    const active = await g.waitForFunction(w => PM_HOME.active && PM_HOME.active()?.tabId === 'file:' + w, pick.b, { timeout: 3000 }).then(() => true, () => false);
-    await t.check(`${T}: ${pick.b} becomes the active tab`, active, JSON.stringify(await g.evaluate(() => PM_HOME.active && PM_HOME.active())), { hard: true });
-    // (2) after a right-click on A, the key on B: Open
-    await rightA(); await clear();
-    await t.check(`${T}: after a right-click on ${pick.a}, the key opens the menu on ${pick.b}`, await keyOpen(), '', { hard: true });
-    await t.page.keyboard.press('Home'); await keysTo('Open'); await t.page.keyboard.press('Enter');
-    await openedPath(pick.b, `after a right-click on ${pick.a}, Enter on Open`);
-    // (2) Copy path's Copy relative path
-    await rightA(); await clear(); await keyOpen();
-    await t.check(`${T}: keys reach Copy path`, await keysTo('Copy path'), await focused(), { hard: true });
-    await t.page.keyboard.press('ArrowRight');
-    await t.check(`${T}: keys reach Copy relative path`, await keysTo('Copy relative path'), await focused(), { hard: true });
-    await t.page.keyboard.press('Enter');
-    const copied = await g.waitForFunction(w => __fx.copies.includes(w) && __fx.toasts.some(m => m.includes(w)), pick.b, { timeout: 3000 }).then(() => true, () => false);
-    await t.check(`${T}: after a right-click on ${pick.a}, Copy relative path copies ${pick.b} and says so`, copied, JSON.stringify(await fx()), { hard: true });
-    await shut();
-    // (2) Open with's Source editor
-    await rightA(); await clear(); await keyOpen();
-    await t.check(`${T}: keys reach Open with`, await keysTo('Open with'), await focused(), { hard: true });
-    await t.page.keyboard.press('ArrowRight');
-    await t.check(`${T}: keys reach Source editor`, await keysTo('Source editor'), await focused(), { hard: true });
-    await t.page.keyboard.press('Enter');
-    await openedPath(pick.b, `after a right-click on ${pick.a}, Open with Source editor`);
-    if (await isOpen()) { await t.page.keyboard.press('Escape'); await shut(); }
-    // (3) the pointer takes the same path: a right-click on B and a press on Open act on B
-    await clear(); await pane(); await B.scrollIntoViewIfNeeded(); await B.click({ button: 'right' });
-    await g.waitForFunction(k => __shelf.keys().includes(k), rt.menu, { timeout: 5000 }).catch(() => {});
-    await g.evaluate(k => { const m = __shelf.open().find(x => __shelf.key(x) === k);
-      const it = m && [...m.querySelectorAll('[role="menuitem"]')].find(i => i.closest('[role="menu"]') === m && i.textContent.trim() === 'Open');
-      it?.setAttribute('data-shelf-fx-open', ''); }, rt.menu);
-    await g.locator('[data-shelf-fx-open]').click();
-    await openedPath(pick.b, 'a right-click and a press on Open');
+  const ctxPanes = [];
+  for (const r of contextRoutes) {
+    const state = [r.engine, r.tab].filter(Boolean).join(' ') || 'panel';
+    if (!ctxPanes.some(k => k.panel === r.panel && k.state === state && k.menu === r.menu)) ctxPanes.push({ panel: r.panel, engine: r.engine, tab: r.tab, state, menu: r.menu });
   }
-  if (t.args.effects !== '0') await t.check('FO-93b every keyboard context route was asked what it acts on', kbRoutes.length >= 6 || !!only || !!t.args.inputs || !!fxPanes, JSON.stringify(kbRoutes.map(r => `${r.panel} ${r.state} ${r.input} ${r.menu}`)));
+  // The class a row kind's rows share: what the kinds of one route kind (role and box) have in common.
+  const rowClasses = (pn, state, menu) => {
+    const ks = ctxKinds.filter(k => k.panel === pn && k.state === state && CTX_INPUTS.some(i => k.got[i] === menu));
+    const out = new Set();
+    for (const k of ks) { const sib = ks.filter(o => o.role === k.role && o.box === k.box); sib.reduce((a, o) => a.filter(c => o.cls.includes(c)), k.cls).forEach(c => out.add(c)); }
+    return [...out];
+  };
+  // The path the page file authors for each row of those classes, in document order (rows the tree marks with data-path
+  // are named by it at run time instead).
+  const authoredPaths = (pn, toks) => f.evaluate(([html, pn, toks]) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html'), out = {};
+    for (const tok of toks) out[tok] = [...doc.querySelectorAll(`#${pn} .${CSS.escape(tok)}`)].map(r => {
+      if (r.getAttribute('data-path')) return r.getAttribute('data-path');
+      const item = r.closest('[data-acc]'), own = item && item.querySelectorAll(`.${CSS.escape(tok)}`).length === 1 ? item : null;
+      return ((own && own.querySelector('.fm-cpath')) || r.querySelector('.fm-path'))?.textContent.trim() || null;
+    });
+    return out;
+  }, [slot.html, pn, toks]);
+  const fxCases = [];
+  if (t.args.effects !== '0') for (const pn of ctxPanes) {
+    if (fxPanes && !fxPanes.includes(pn.state)) continue;
+    const toks = rowClasses(pn.panel, pn.state, pn.menu), authoredFx = await authoredPaths(pn.panel, toks);
+    for (const input of CTX_INPUTS) {
+      const T = `${pn.panel} ${pn.state} FO-93b ${input}`;
+      const g = await t.app.open();
+      if (t.args.look) await t.app.look(t.args.look);
+      const ge = g === t.page.mainFrame() ? null : await g.frameElement(), goff = ge ? await ge.boundingBox() : { x: 0, y: 0 };
+      await g.evaluate(readers);
+      await g.waitForFunction(() => window.PM_HOME && typeof PM_HOME.open === 'function', null, { timeout: 15000 });
+      // Test-side recorders: the opens and reveals PM_HOME is asked for, the notes shown, the text copied by either route.
+      await g.evaluate(() => {
+        const fx = window.__fx = { opens: [], reveals: [], toasts: [], copies: [] };
+        const open = PM_HOME.open; PM_HOME.open = function (spec, ...a) { fx.opens.push(JSON.parse(JSON.stringify(spec || {}))); return open.apply(this, [spec, ...a]); };
+        const reveal = PM_HOME.reveal; if (typeof reveal === 'function') PM_HOME.reveal = function (id, ...a) { fx.reveals.push(String(id)); return reveal.apply(this, [id, ...a]); };
+        const say = window.toast; if (typeof say === 'function') window.toast = function (m, ...a) { fx.toasts.push(String(m)); return say.apply(this, [m, ...a]); };
+        try { const w = navigator.clipboard && navigator.clipboard.writeText && navigator.clipboard.writeText.bind(navigator.clipboard);
+          if (w) navigator.clipboard.writeText = x => { fx.copies.push(String(x)); return w(x).catch(() => {}); }; } catch (_) {}
+        document.addEventListener('copy', e => { const a = e.target && typeof e.target.value === 'string' ? e.target : document.activeElement;
+          fx.copies.push(a && typeof a.value === 'string' ? (a.selectionEnd > a.selectionStart ? a.value.slice(a.selectionStart, a.selectionEnd) : a.value) : String(getSelection())); }, true);
+      });
+      const slotEl = g.locator('#sidePanelSlot'), icon = g.locator(`#activityBar .icon[data-target="${pn.panel}"]`);
+      const pane = async () => {
+        if (!await slotEl.isVisible() || !await g.evaluate(p => document.querySelector('#sidePanelSlot > .side-panel-view.active')?.id === p, pn.panel)) {
+          await icon.click(); await g.waitForTimeout(400); if (!await slotEl.isVisible()) await icon.click();
+        }
+        if (pn.engine) await g.locator(`#${pn.panel} [data-pm7-scm-engine="${pn.engine}"]`).click();
+        if (pn.tab) {
+          const tab = await g.evaluate(([p, tab]) => { const e = [...document.querySelectorAll(`#${p} [role="tab"]`)].find(e => e.checkVisibility() && (e.dataset.tab || e.dataset.jjTab || e.textContent.trim()) === tab);
+            document.querySelectorAll('[data-shelf-fx-tab]').forEach(x => x.removeAttribute('data-shelf-fx-tab')); e?.setAttribute('data-shelf-fx-tab', ''); return !!e && !(e.classList.contains('active') || e.getAttribute('aria-selected') === 'true'); }, [pn.panel, pn.tab]);
+          if (tab) await g.locator('[data-shelf-fx-tab]').click();
+        }
+      };
+      await pane();
+      // Shelves holding rows of these classes that are folded (Recent) are opened, as a person would, by their heads.
+      for (let pass = 0; pass < 6; pass++) {
+        const head = await g.evaluate(([p, toks]) => {
+          document.querySelectorAll('[data-shelf-fx-head]').forEach(x => x.removeAttribute('data-shelf-fx-head'));
+          const sel = toks.map(t => '.' + CSS.escape(t)).join(','), pane = document.getElementById(p);
+          const h = [...pane.querySelectorAll('[data-acc]:not(.open) > [data-collapse]')].find(h => h.checkVisibility() && !h.matches(sel) && h.parentElement.querySelector(sel));
+          h?.setAttribute('data-shelf-fx-head', ''); return !!h;
+        }, [pn.panel, toks]);
+        if (!head) break;
+        await g.locator('[data-shelf-fx-head]').click(); await g.waitForTimeout(300);
+      }
+      // Name each row and choose the rows to ask: the first and last of each group with an expected path.
+      const pick = await g.evaluate(([p, toks, authored]) => {
+        document.querySelectorAll('[data-shelf-fx]').forEach(e => { e.removeAttribute('data-shelf-fx'); e.removeAttribute('data-shelf-fx-want'); });
+        const pane = document.getElementById(p), mismatch = [];
+        for (const tok of toks) {
+          const live = [...pane.querySelectorAll('.' + CSS.escape(tok))], a = authored[tok] || [];
+          live.forEach((e, i) => { const w = e.getAttribute('data-path') || (live.length === a.length ? a[i] : null); if (w) e.setAttribute('data-shelf-fx-want', w); });
+          if (live.length !== a.length && live.some(e => !e.getAttribute('data-path'))) mismatch.push({ tok, live: live.length, authored: a.length });
+        }
+        const sel = toks.map(t => '.' + CSS.escape(t)).join(',');
+        const rows = [...pane.querySelectorAll(sel)].filter(e => !e.closest('[role="menu"]') && e.checkVisibility() && e.getBoundingClientRect().width && e.hasAttribute('data-shelf-fx-want'));
+        const groupOf = e => e.closest('[role="tree"]') || [...(function* () { for (let a = e.parentElement; a && a !== pane; a = a.parentElement) yield a; })()].find(a => a.matches('[data-acc]') && a.querySelectorAll(sel).length > 1) || pane;
+        const folder = e => e.getAttribute('data-kind') === 'folder' || (e.getAttribute('role') === 'treeitem' && e.hasAttribute('aria-expanded'));
+        const groups = new Map();
+        for (const e of rows) { const k = groupOf(e); const key = [...groups.keys()].find(x => x.el === k && x.folder === folder(e)) || { el: k, folder: folder(e) }; if (!groups.has(key)) groups.set(key, []); groups.get(key).push(e); }
+        const out = [];
+        for (const [key, list] of groups) for (const e of [list[0], list[list.length - 1]]) if (!out.some(o => o.el === e)) out.push({ el: e, g: key.el });
+        const glabel = gEl => (gEl.getAttribute('aria-label') || gEl.querySelector(':scope > [data-collapse]')?.textContent || gEl.id || '').trim().replace(/\s+/g, ' ');
+        return { mismatch, rows: out.map((o, i) => { o.el.setAttribute('data-shelf-fx', String(i));
+          return { i, want: o.el.getAttribute('data-shelf-fx-want'), folder: folder(o.el), keys: o.el.tabIndex >= 0 && !o.el.closest('[inert]'), group: glabel(o.g) }; }) };
+      }, [pn.panel, toks, authoredFx]);
+      await t.check(`${T}: the rows of ${toks.join(', ')} match the rows the page file authors`, !pick.mismatch.length, JSON.stringify(pick.mismatch), { hard: true });
+      const rowsI = pick.rows.filter(r => input === 'mouse' || r.keys);
+      t.log('FO93B-ROWS ' + JSON.stringify({ pane: pn.state, input, rows: rowsI }));
+      if (!rowsI.length) continue;
+      const fx = () => g.evaluate(() => JSON.parse(JSON.stringify(window.__fx)));
+      const clear = () => g.evaluate(() => { __fx.opens = []; __fx.reveals = []; __fx.toasts = []; __fx.copies = []; });
+      const isOpen = () => g.evaluate(k => __shelf.keys().includes(k), pn.menu);
+      const opened = () => g.waitForFunction(k => __shelf.keys().includes(k), pn.menu, { timeout: 5000 }).then(() => true, () => false);
+      const shut = () => g.waitForFunction(k => !__shelf.keys().length, pn.menu, { timeout: 5000 }).then(() => true, () => false);
+      const restPt = async () => {
+        const p = await g.evaluate(() => { const slot = document.getElementById('sidePanelSlot');
+          const busy = h => !h || (slot && slot.contains(h)) || !!h.closest('[role="menu"], [role="dialog"], [role="tooltip"], button, a, input, textarea, select, summary, [contenteditable], [title], [role="button"], [role="tab"], [data-pm-hover-label], [data-pm-hover-kind], [aria-describedby]');
+          for (const fx of [0.98, 0.9, 0.75, 0.6]) for (let y = innerHeight * 0.45; y < innerHeight - 30; y += 16) { const x = Math.round(innerWidth * fx); if (!busy(document.elementFromPoint(x, y))) return { x, y: Math.round(y) }; }
+          return { x: 2, y: 2 }; });
+        await t.page.mouse.move(goff.x + p.x, goff.y + p.y);
+      };
+      const rowLoc = r => g.locator(`[data-shelf-fx="${r.i}"]`);
+      const openOn = async (r, how) => {
+        await pane(); const loc = rowLoc(r); await loc.scrollIntoViewIfNeeded();
+        if (how === 'mouse') await loc.click({ button: 'right' });
+        else { await restPt(); await loc.focus(); await t.page.keyboard.press(KEY[how]); }
+        return opened();
+      };
+      const labelOf = () => g.evaluate(() => { const a = document.activeElement; return ((a && a.querySelector && a.querySelector('.fm-ctx-label')) || a)?.textContent.trim().replace(/\s+/g, ' ') || ''; });
+      const keysTo = async (label, prefix) => {
+        for (let s = 0; s < 40; s++) { const l = await labelOf(); if (prefix ? l.startsWith(label) : l === label) return true; await t.page.keyboard.press('ArrowDown'); }
+        return false;
+      };
+      // a press on an item of the open menu (a branch's item: its branch opened by the pointer first)
+      const clickItem = async (label, prefix, within) => {
+        const ok = await g.evaluate(([k, label, prefix, within]) => {
+          document.querySelectorAll('[data-shelf-fx-item]').forEach(x => x.removeAttribute('data-shelf-fx-item'));
+          const top = __shelf.open().find(x => __shelf.key(x) === k);
+          const m = within ? [...(top ? top.querySelectorAll('[role="menu"]') : [])].find(s => s.checkVisibility()) : top;
+          const lab = it => ((it.querySelector('.fm-ctx-label')) || it).textContent.trim().replace(/\s+/g, ' ');
+          const it = m && [...m.querySelectorAll('[role="menuitem"]')].find(i => i.closest('[role="menu"]') === m && i.checkVisibility() && (prefix ? lab(i).startsWith(label) : lab(i) === label));
+          it?.setAttribute('data-shelf-fx-item', ''); return !!it;
+        }, [pn.menu, label, prefix, within]);
+        if (ok) { if (prefix) await g.locator('[data-shelf-fx-item]').hover(); else await g.locator('[data-shelf-fx-item]').click(); }
+        return ok;
+      };
+      const run = async (cmd, how) => {
+        if (how === 'mouse') {
+          if (cmd.branch) {
+            if (!await clickItem(cmd.branch, true, false)) return `no ${cmd.branch}`;
+            await g.waitForFunction(k => __shelf.open().some(x => x !== __shelf.open().find(y => __shelf.key(y) === k) && __shelf.open().find(y => __shelf.key(y) === k)?.contains(x)), pn.menu, { timeout: 3000 }).catch(() => {});
+            if (!await clickItem(cmd.label, false, true)) return `no ${cmd.label}`;
+          } else if (!await clickItem(cmd.label, false, false)) return `no ${cmd.label}`;
+        } else {
+          await t.page.keyboard.press('Home');
+          if (cmd.branch) {
+            if (!await keysTo(cmd.branch, true)) return `keys reach no ${cmd.branch}`;
+            await t.page.keyboard.press('ArrowRight');
+          }
+          if (!await keysTo(cmd.label, false)) return `keys reach no ${cmd.label}`;
+          await t.page.keyboard.press('Enter');
+        }
+        return null;
+      };
+      const norm = s => String(s || '').replace(/\/+$/, '').replace(/^(?:~|\/home\/[^/]+|\/Users\/[^/]+)(?=\/|$)/, '');
+      let root = null;
+      // What a command did: null when it acted on the row as it should, else what happened.
+      const judge = async (cmd, r) => {
+        const want = r.want, until = fn => g.waitForFunction(fn, [want, cmd.where || null], { timeout: 3000, polling: 50 }).then(() => true, () => false);
+        if (cmd.how === 'open' || (cmd.how === 'source' && !r.folder)) {
+          await until(([w]) => __fx.opens.length > 0);
+          const now = await fx(), o = now.opens[0], where = cmd.how === 'open' ? cmd.where : 'auto';
+          return now.opens.length === 1 && o.kind === 'editor' && o.path === want && (o.where || 'auto') === where ? null : { opens: now.opens, toasts: now.toasts };
+        }
+        if (cmd.how === 'copy') { await until(([w]) => __fx.copies.includes(w) && __fx.toasts.some(m => m.includes(w))); const now = await fx(); return now.copies.includes(want) && now.toasts.some(m => m.includes(want)) ? null : { copies: now.copies, toasts: now.toasts }; }
+        if (cmd.how === 'copyfull') {
+          await until(([w]) => __fx.copies.some(c => c.endsWith('/' + w)));
+          const now = await fx(), c = now.copies.find(c => c.endsWith('/' + want) && c.length > want.length + 1);
+          if (c) root = c.slice(0, -(want.length + 1));
+          return c && now.toasts.some(m => m.includes(c)) ? null : { copies: now.copies, toasts: now.toasts };
+        }
+        if (cmd.how === 'source' || cmd.how === 'note') {
+          await until(([w]) => __fx.toasts.some(m => m.includes(w)));
+          const now = await fx(); return now.toasts.some(m => m.includes(want)) && !now.opens.length ? null : { opens: now.opens, toasts: now.toasts };
+        }
+        if (cmd.how === 'terminal') {
+          await until(() => __fx.opens.some(o => o.kind === 'terminal') || __fx.reveals.length > 0);
+          const now = await fx(), o = now.opens.find(o => o.kind === 'terminal'), id = now.reveals[now.reveals.length - 1];
+          const cwd = o ? o.cwd : await g.evaluate(id => { const sid = String(id || '').replace(/^terminal:/, ''); try { return (window.PMT && PMT.sessions ? PMT.sessions() : []).find(s => s.id === sid)?.cwd || null; } catch (_) { return null; } }, id);
+          const dir = r.folder ? want : (want.includes('/') ? want.slice(0, want.lastIndexOf('/')) : '');
+          return root != null && cwd != null && norm(cwd) === norm(root + (dir ? '/' + dir : '')) ? null : { opens: now.opens, reveals: now.reveals, cwd, root, dir };
+        }
+        return { unknown: cmd.how };
+      };
+      // (1) a fresh open on the first row, Open
+      const r0 = rowsI[0];
+      await clear();
+      await t.check(`${T}: a fresh open on ${r0.want}`, await openOn(r0, input), '', { hard: true });
+      const e0 = await run(FX_CMDS[0], input) || await judge(FX_CMDS[0], r0);
+      await t.check(`${T}: a fresh open and Open act on ${r0.want}`, !e0, JSON.stringify(e0), { hard: true });
+      const act = await g.waitForFunction(w => PM_HOME.active && PM_HOME.active()?.tabId === 'file:' + w, r0.want, { timeout: 3000 }).then(() => true, () => false);
+      await t.check(`${T}: ${r0.want} becomes the active tab`, act, JSON.stringify(await g.evaluate(() => PM_HOME.active && PM_HOME.active())), { hard: true });
+      // (2) every row asked, every command, each after an open on another row by another input
+      let turn = 0;
+      for (const r of rowsI) for (const cmd of FX_CMDS) {
+        const others = pick.rows.filter(o => o.i !== r.i);
+        if (others.length) {
+          const o = others[turn % others.length], ins = CTX_INPUTS.filter(i => i === 'mouse' || o.keys), how = ins[turn % ins.length]; turn++;
+          if (await openOn(o, how)) { await t.page.keyboard.press('Escape'); await shut(); }
+        }
+        await clear();
+        const up = await openOn(r, input);
+        const err = !up ? 'the menu did not open' : (await run(cmd, input)) || await judge(cmd, r);
+        fxCases.push({ pane: pn.state, input, row: r.want, cmd: cmd.label, ok: !err });
+        await t.check(`${T}: ${cmd.branch ? cmd.branch + ' › ' : ''}${cmd.label} acts on ${r.want}${r.folder ? ' (folder)' : ''}`, !err, JSON.stringify(err), { hard: true });
+        if (await isOpen()) { await t.page.keyboard.press('Escape'); await shut(); }
+      }
+    }
+  }
+  if (t.args.effects !== '0') {
+    const asked = new Set(fxCases.map(c => c.pane)), inputs = new Set(fxCases.map(c => c.input));
+    await t.check('FO-93b every pane with a context menu was asked, by every input', (asked.size >= 3 && inputs.size === CTX_INPUTS.length) || !!only || !!t.args.inputs || !!fxPanes, JSON.stringify({ panes: [...asked], inputs: [...inputs], cases: fxCases.length }));
+    t.log('FO93B-CASES ' + JSON.stringify(fxCases));
+  }
 
   await t.check('at least 14 known PMMenu identities exercised',new Set(routedRows.flatMap(r=>r.exercised)).size>=14,JSON.stringify(routedRows),{hard:true});
   t.log(JSON.stringify({initial:rows,routed:routedRows,popups:popupRows,context:contextRoutes,branches:branchRows}));
