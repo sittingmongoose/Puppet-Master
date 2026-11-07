@@ -678,40 +678,28 @@
           "maxLength": 256
         },
         "proof_ref": {
-          "oneOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
         },
         "recovery_ref": {
-          "oneOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
         },
         "linked_work_ref": {
-          "oneOf": [
-            {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 256
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1,
+          "maxLength": 256
         },
         "remaining_obligation_refs": {
           "type": "array",
