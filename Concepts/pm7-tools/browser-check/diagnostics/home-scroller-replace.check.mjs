@@ -11,6 +11,8 @@
 //   --set walk=0            skip the walk (idle window only)
 //   --set light=1           no DOM-method patching and no MutationObserver: detachment read once per frame only
 //   --set rects=1           record each tracked scroller's box whenever it changes (exact values)
+//   --set hammer=N          after the walk, N timed repeats of scrollIntoViewIfNeeded + boundingBox (hammerIndex=)
+//   (always) frameTimes: each rAF timestamp after the tracker starts; longTasks: [start, duration] of each long task
 import fs from 'node:fs';
 
 function tracker([paths, rects, light]) {
@@ -73,8 +75,10 @@ function tracker([paths, rects, light]) {
 	T.poll = poll;
 	if (!light) new MutationObserver(() => poll('mutation')).observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style', 'hidden'] });
 	// --set rects=1: each frame, each tracked scroller's box (rounded to 0.1 px), stored only when it changed
-	T.last = [];
-	const raf = () => {
+	T.last = []; T.frameTimes = []; T.longTasks = [];
+	try { new PerformanceObserver((l) => { for (const e of l.getEntries()) if (T.longTasks.length < 2000) T.longTasks.push([Math.round(e.startTime - T.t0), Math.round(e.duration)]); }).observe({ type: 'longtask' }); } catch {}
+	const raf = (ts) => {
+		if (ts && T.frameTimes.length < 20000) T.frameTimes.push(Math.round((ts - T.t0) * 10) / 10);
 		poll('frame');
 		if (T.rects) T.cur.forEach((e, i) => { if (!e) return; const r = e.getBoundingClientRect(); const k = [r.x, r.y, r.width, r.height].join(','); if (k !== T.last[i]) { T.last[i] = k; if (T.frames.length < 4000) T.frames.push({ t: now(), i, r: k }); } });
 		T.raf = requestAnimationFrame(raf);
@@ -82,9 +86,26 @@ function tracker([paths, rects, light]) {
 	return { desc: T.desc, role: T.role };
 }
 
+// --set ticks=1: an init script times every callback of a 500 ms setInterval (the chat's work clock, workTick) from its
+// start through the microtasks it queued (MutationObserver deliveries included), plus the next frame's rAF lag
+function tickTimer() {
+	const si = window.setInterval; const log = (window.__hstTicks = []);
+	window.setInterval = function (fn, ms, ...rest) {
+		if (typeof fn !== 'function' || Math.round(Number(ms)) !== 500) return si.call(this, fn, ms, ...rest);
+		return si.call(this, function (...a) {
+			const t0 = performance.now(); let err;
+			try { return fn.apply(this, a); } catch (e) { err = e; throw e; } finally {
+				const sync = performance.now() - t0;
+				queueMicrotask(() => { const micro = performance.now() - t0; requestAnimationFrame(() => { if (log.length < 5000) log.push([Math.round(t0), Math.round(sync * 10) / 10, Math.round(micro * 10) / 10, Math.round((performance.now() - t0) * 10) / 10]); }); });
+			}
+		}, ms, ...rest);
+	};
+}
+
 export default async function (t) {
 	const out = t.args?.out || (t.state && t.state.out);
 	const args = t.args || {};
+	if (String(args.ticks ?? '0') === '1') await t.page.context().addInitScript(tickTimer);
 	await t.viewport(1920, 1080);
 	const f = await t.app.open(); await t.app.look('glass-light');
 	const paths = await f.evaluate(() => {
@@ -116,12 +137,25 @@ export default async function (t) {
 			walk.push(rec);
 		}
 	}
+	// --set hammer=N: N repetitions of the old check's two handle-holding actions on scroller --set hammerIndex (default
+	// the last), each timed from the page's clock (an evaluate right before and right after), with its outcome
+	const hammer = [];
+	const hn = Number(args.hammer || 0), hi = args.hammerIndex === undefined ? paths.length - 1 : Number(args.hammerIndex);
+	for (let k = 0; k < hn && paths[hi]; k++) {
+		const e = f.locator(paths[hi]); const rec = {};
+		rec.start = await f.evaluate(() => Math.round(performance.now() - window.__hst.t0));
+		try { await e.scrollIntoViewIfNeeded(); rec.scrolled = await f.evaluate(() => Math.round(performance.now() - window.__hst.t0)); const r = await e.boundingBox(); rec.ok = !!r; if (!r) rec.error = 'Scroller vanished'; }
+		catch (err) { rec.ok = false; rec.error = String(err.message || err).split('\n')[0].slice(0, 80); }
+		rec.end = await f.evaluate(() => Math.round(performance.now() - window.__hst.t0));
+		hammer.push(rec);
+		await f.waitForTimeout(37 + (k * 53) % 211);
+	}
 	const walkMs = Date.now() - tWalk0;
 	const idleMs = Number(args.idleMs ?? 8000);
 	const mark = await f.evaluate(() => performance.now() - window.__hst.t0);
 	await f.waitForTimeout(idleMs);
-	const res = await f.evaluate((m) => { const T = window.__hst; T.poll('final'); cancelAnimationFrame(T.raf); return { tracked: T.desc, role: T.role, replaced: T.replaced, shifts: T.shifts, hiddenSpells: T.hiddenSpells, idleFrom: Math.round(m), elapsed: Math.round(performance.now() - T.t0), events: T.events, frames: T.frames, callCount: T.callCount, calls: T.calls }; }, mark);
-	res.walk = walk; res.walkMs = walkMs; res.idleMs = idleMs; res.page = t.args?.page || null;
+	const res = await f.evaluate((m) => { const T = window.__hst; T.poll('final'); cancelAnimationFrame(T.raf); const nv = performance.getEntriesByType('navigation')[0] || {}; return { ticks: (window.__hstTicks || []).map(([a, b, c, d]) => [Math.round(a - T.t0), b, c, d]), t0abs: Math.round(T.t0), nav: { responseEnd: Math.round(nv.responseEnd || 0), domInteractive: Math.round(nv.domInteractive || 0), domContentLoadedEnd: Math.round(nv.domContentLoadedEventEnd || 0), loadStart: Math.round(nv.loadEventStart || 0), loadEnd: Math.round(nv.loadEventEnd || 0) }, tracked: T.desc, role: T.role, replaced: T.replaced, shifts: T.shifts, hiddenSpells: T.hiddenSpells, idleFrom: Math.round(m), elapsed: Math.round(performance.now() - T.t0), events: T.events, frames: T.frames, frameTimes: T.frameTimes, longTasks: T.longTasks, callCount: T.callCount, calls: T.calls }; }, mark);
+	res.walk = walk; res.hammer = hammer; res.walkMs = walkMs; res.idleMs = idleMs; res.page = t.args?.page || null;
 	t.log('summary ' + JSON.stringify({ replaced: res.replaced, shifts: res.shifts, hiddenSpells: res.hiddenSpells, walk, callCount: res.callCount, events: res.events.length }));
 	if (out) fs.writeFileSync(out, JSON.stringify(res, null, 1));
 	await t.check('diagnostic recorded', true, '');
