@@ -8,7 +8,13 @@
 // (nine at the defaults basic-light / no-preference / safe / top-1) and every other check passing.
 // Any other failure, or a passing guard check, means this run proves nothing.
 // Self-test: --set coverIn=body-early repeats the old placement (a <body> child added before the
-// modal opens, which the modal then makes inert); the first FO-82 check must fail and stop the run.
+// modal opens); the first FO-82 check must fail and stop the run. It fails on the placement (the cover
+// is not inside the modal root: where BODY, inRoot false). The old reason given, that the modal then makes
+// such a cover inert, did not hold in opus-recheck-kit7's runs (inert: false, it owned the root's centre).
+// T54 (opus-recheck-kit7 K3): with --set inventoryOut the press check adds one visual-only held press on the
+// link (button-press-edges, for its crop); that press is not a guarded trial, so the no-native-press check
+// counts only pointerdowns outside it (it reports the visual-only ones apart), and the run still proves what
+// it says with inventoryOut set.
 import original from '../checks/button-press-edges.check.mjs';
 import {writeFile} from 'node:fs/promises';
 const GUARD='FO-73 only proven fractional own-scroller clip ';
@@ -29,7 +35,8 @@ export default async function(t){
   const pre=await f.evaluate(id=>{
    const root=O55.S.root,c=document.getElementById(id);
    // Count native presses that reach the page while the guard runs: a covered trial must not press.
-   window.__fo82Downs=0;window.addEventListener('pointerdown',e=>{if(e.isTrusted)window.__fo82Downs++;},true);
+   // (T54: a press made for the press check's visual-only crop is not a trial, and is counted apart)
+   window.__fo82Downs=0;window.__fo82Visual=0;window.addEventListener('pointerdown',e=>{if(!e.isTrusted)return;if(window.__press&&window.__press.trial==='visual-only')window.__fo82Visual++;else window.__fo82Downs++;},true);
    const r=root.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);
    return {where:c.parentElement===root?'modal root':c.parentElement?.tagName,inRoot:root.contains(c),rootInert:root.inert||!!root.closest('[inert]'),inert:c.inert||!!c.closest('[inert]'),pointerEvents:getComputedStyle(c).pointerEvents,visible:c.checkVisibility(),hit:hit?.id||hit?.tagName};
   },COVER);
@@ -40,7 +47,7 @@ export default async function(t){
   await original(t);
   const c=f.locator('#pm-o55-onboarding .o55-foot button.o55-btn').first();await c.scrollIntoViewIfNeeded();const b=await c.boundingBox();
   const own=await c.evaluate((e,id)=>{const r=e.getBoundingClientRect(),cover=document.getElementById(id),hit=document.elementFromPoint(r.x+r.width/2,r.y+1);
-   return {hit:hit?.id||hit?.tagName,inert:!cover||cover.inert||!!cover.closest('[inert]'),pointerEvents:cover&&getComputedStyle(cover).pointerEvents,downs:window.__fo82Downs};},COVER);
+   return {hit:hit?.id||hit?.tagName,inert:!cover||cover.inert||!!cover.closest('[inert]'),pointerEvents:cover&&getComputedStyle(cover).pointerEvents,downs:window.__fo82Downs,visualOnly:window.__fo82Visual};},COVER);
   await t.check('FO-82 cover still owns the tested point and is not inert',own.hit===COVER&&!own.inert&&own.pointerEvents!=='none',JSON.stringify(own));
   await t.check('FO-82 no trial reached a native press under the cover',own.downs===0,JSON.stringify(own));
   await t.check('FO-82 the press guard refused every covered trial',guard.length>0&&guard.every(g=>!g.ok),JSON.stringify({trials:guard.length,excused:guard.filter(g=>g.ok).map(g=>g.name)}));
