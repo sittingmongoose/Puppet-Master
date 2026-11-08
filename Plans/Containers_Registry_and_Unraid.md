@@ -7527,7 +7527,8 @@ command_payload_definitions:
             runtime identity; CRAU-017), and the Docker/Hosts route payload carries it as runtime_context_ref?
             (CRAU-092); CRAU-099's wrong_context diagnosis offers switch-context, which is this command. No row
             names this arg or types it. The arg takes CRAU-092's exact name and is typed ref by the UCC-230
-            _ref rule. Whether the selection persists per project is not stated.
+            _ref rule. The selected context persists per project with the panel state (section 2A,
+            Containers_Registry_and_Unraid.md:144).
         capability_snapshot_ref:
           type: ref
           required: true
