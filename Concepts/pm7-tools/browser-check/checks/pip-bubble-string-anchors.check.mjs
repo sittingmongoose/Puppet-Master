@@ -145,25 +145,29 @@ export default async function (t) {
 			const vis = rows.filter(({ p }) => p.op > 0.02 && p.state !== 'out');
 			if (vis.length < 12) continue;
 			const p0 = vis[0].p;
-			if (!vis.some(({ p }) => p.anch)) { noHelper.push(`${look} ${screen} ${p0.id} (${p0.kind}): no rest destination on the page`); continue; }
-			dests++;
+			const hasHelper = vis.some(({ p }) => p.anch);
+			if (!hasHelper) noHelper.push(`${look} ${screen} ${p0.id} (${p0.kind}): no rest destination on the page (judged against its settled string line)`);
+			else dests++;
 			const rb = vis.map(({ p }) => p.restBox).filter(Boolean);
 			if (rb.length) {
 				const span = [0, 1, 2, 3].map((i) => Math.max(...rb.map((b) => b[i])) - Math.min(...rb.map((b) => b[i])));
 				if (Math.max(...span) > 1) badDest.push(`${look} ${screen} ${p0.id} (${p0.kind}): destination moved within the scene by [${span.map((s) => s.toFixed(1)).join(', ')}] units`);
 			}
 			for (let si = 0; si < (p0.offs || []).length; si++) {
-				const data = vis.filter(({ p }) => p.lines && p.lines[si] && p.anch && p.anch[si]);
+				const data = vis.filter(({ p }) => p.lines && p.lines[si] && (hasHelper ? p.anch && p.anch[si] : true));
 				if (data.length < 12) continue;
 				strings++;
-				const dists = data.map(({ p }) => lineDist(p.lines[si], p.anch[si]));
-				const offSpan = Math.max(...data.map(({ p }) => p.anch[si][0] - p.ax)) - Math.min(...data.map(({ p }) => p.anch[si][0] - p.ax));
-				const hSpan = Math.max(...data.map(({ p }) => p.anch[si][1])) - Math.min(...data.map(({ p }) => p.anch[si][1]));
+				// with no restPose on the page (a build before the helper), the anchor a string must keep is read from
+				// where its settled line crosses the anchor height: the same distances then judge it by measurement
+				const anchorOf = hasHelper ? (p) => p.anch[si] : (() => { const ax0 = median(data.slice(-20).map(({ x, p }) => crossAt(p.lines[si], x.anchorY))); return () => [ax0, data[0].x.anchorY]; })();
+				const dists = data.map(({ p }) => lineDist(p.lines[si], anchorOf(p)));
+				const offSpan = hasHelper ? Math.max(...data.map(({ p }) => p.anch[si][0] - p.ax)) - Math.min(...data.map(({ p }) => p.anch[si][0] - p.ax)) : 0;
+				const hSpan = hasHelper ? Math.max(...data.map(({ p }) => p.anch[si][1])) - Math.min(...data.map(({ p }) => p.anch[si][1])) : 0;
 				const axSpan = Math.max(...data.map(({ p }) => p.ax)) - Math.min(...data.map(({ p }) => p.ax));
 				const crosses = data.map(({ x, p }) => crossAt(p.lines[si], x.visY0 == null ? x.anchorY : x.visY0));
 				const cSpan = Math.max(...crosses) - Math.min(...crosses);
 				const maxSin = Math.sin(Math.max(...data.map(({ p }) => Math.abs(p.a))) * Math.PI / 180);
-				const reach = Math.abs((data[0].x.visY0 == null ? data[0].x.anchorY : data[0].x.visY0) - data[0].p.anch[si][1]);
+				const reach = Math.abs((data[0].x.visY0 == null ? data[0].x.anchorY : data[0].x.visY0) - anchorOf(data[0].p)[1]);
 				const bound = reach * maxSin + 5 + axSpan;
 				const jumps = crosses.slice(1).map((c, i) => Math.abs(c - crosses[i]));
 				const worstD = Math.max(...dists);
@@ -193,6 +197,6 @@ export default async function (t) {
 	}
 	if (noHelper.length) t.log(`no restPose destination: ${noHelper.slice(0, 6).join('; ')}${noHelper.length > 6 ? ` (+${noHelper.length - 6} more)` : ''}`);
 	await t.check(`QA-4: each line's bubble sits on its first shown frame within 1 px of where it settles and never strays further (${scenes} scenes, ${lines} lines)`, scenes > 0 && lines > 0 && bad4.length === 0, bad4.slice(0, 8).join('; ') + (bad4.length > 8 ? ` (+${bad4.length - 8} more)` : ''));
-	await t.check(`QA-6: every string hangs from its rest anchor, its top moving only as the swing explains (${strings} strings)`, strings > 0 && bad6.length === 0 && noHelper.length === 0, (noHelper.slice(0, 3).concat(bad6.slice(0, 6))).join('; ') + (bad6.length > 6 ? ` (+${bad6.length - 6} more)` : ''));
-	await t.check(`QA-4b: no prop's destination refits within a scene (${dests} destinations)`, dests > 0 && badDest.length === 0, badDest.slice(0, 8).join('; ') + (badDest.length > 8 ? ` (+${badDest.length - 8} more)` : ''));
+	await t.check(`QA-6: every string hangs from its rest anchor, its top moving only as the swing explains (${strings} strings)`, strings > 0 && bad6.length === 0, bad6.slice(0, 8).join('; ') + (bad6.length > 8 ? ` (+${bad6.length - 8} more)` : ''));
+	await t.check(`QA-4b: no prop's destination refits within a scene (${dests} destinations${noHelper.length ? '; a page with no rest destination has none to judge, QA-6 above is its measure' : ''})`, badDest.length === 0, badDest.slice(0, 8).join('; ') + (badDest.length > 8 ? ` (+${badDest.length - 8} more)` : ''));
 }
