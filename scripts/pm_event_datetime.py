@@ -323,14 +323,16 @@ def _verify_dialect(validator, run):
     run.classes.add(cls)
 
 
-def _verify_use(validator, resolver=None):
+def _verify_use(validator, resolver=None, *, rehash=True):
     """Fix round 18: the effective configuration, recomputed at use, equals the pins fixed at construction.
 
     Every entry point that validates runs this before anything validates,
-    and again after each error it yields, since the caller's code ran in
-    between. Any difference raises, whatever route made it: evolution,
-    assignment or deletion, a copy, a substituted resolver or registry, a
-    changed resource map, or an in-place edit of any of them.
+    content hashes included. Any difference raises, whatever route made it:
+    evolution, assignment or deletion, a copy, a substituted resolver or
+    registry, a changed resource map, or an in-place edit of any of them.
+    A run that resumes after yielding an error runs it again, since the
+    caller's code ran in between, without re-hashing content (rehash=False):
+    that run has already refused its instance, and the next entry re-hashes.
     """
     from pm_event_datetime_inventory import DatetimeAdmissionError
     state = validator.__dict__
@@ -357,11 +359,11 @@ def _verify_use(validator, resolver=None):
     _verify_resolver(validator._resolver, pins, run)
     if resolver is not None:
         _verify_resolver(resolver, pins, run)
-    _verify_selection(validator.storage_selection, pins)
+    _verify_selection(validator.storage_selection, pins, rehash)
     return run
 
 
-def _verify_selection(selection, pins):
+def _verify_selection(selection, pins, rehash=True):
     """The selection is the bound one, with its pins, nodes, rows and resources as fixed, and content unchanged."""
     from pm_event_datetime_inventory import DatetimeAdmissionError, StorageSelection
     if selection is not pins.selection or type(selection) is not StorageSelection:
@@ -378,7 +380,8 @@ def _verify_selection(selection, pins):
     for key, entry in selection.resources.items():
         if entry is not pins.selected[key]:
             raise DatetimeAdmissionError("datetime_validator_use_selection_resources")
-    selection.verify_resources()
+    if rehash:
+        selection.verify_resources()
 
 
 def _verify_step(validator, resolver, run):
@@ -409,7 +412,8 @@ def _guarded(validator, resolver, body):
     references and in-place applicators), a step check suffices: no caller
     code runs while the run executes. Otherwise this call is an entry point:
     verify the whole configuration first, and again whenever the body
-    resumes after yielding an error to the caller.
+    resumes after yielding an error to the caller (by identity: content is
+    re-hashed at every entry).
     """
     runs = _runs()
     if runs and runs[-1].pins is _pins_of(validator):
@@ -426,7 +430,7 @@ def _guarded(validator, resolver, body):
         finally:
             runs.pop()
         yield error
-        run = _verify_use(validator, resolver)
+        run = _verify_use(validator, resolver, rehash=False)
 
 
 @lru_cache(maxsize=None)

@@ -2123,7 +2123,7 @@
   {
    "id": "hw-admission-no-resource-verification",
    "module": "pm_event_datetime",
-   "find": "    selection.verify_resources()\n",
+   "find": "    if rehash:\n        selection.verify_resources()\n",
    "replace": "",
    "witness": "check:datetime_unit_bound_resource_mutation_refused",
    "rule": "admission.pinned-resources"
@@ -2931,7 +2931,7 @@
   {
    "id": "hw-fix18-reverify-after-yield-dropped",
    "module": "pm_event_datetime",
-   "find": "        yield error\n        run = _verify_use(validator, resolver)\n",
+   "find": "        yield error\n        run = _verify_use(validator, resolver, rehash=False)\n",
    "replace": "        yield error\n",
    "witness": "check:datetime_unit_use_resumed_run_reverified",
    "rule": "validator.verified-at-use"
@@ -3022,6 +3022,14 @@
    "find": "    _DIALECTS[bound] = (dict(bound.VALIDATORS), bound.TYPE_CHECKER, frozenset(dir(bound)))\n",
    "replace": "    _DIALECTS[bound] = (dict(bound.VALIDATORS), bound.TYPE_CHECKER, frozenset())\n",
    "witness": "check:datetime_unit_use_assignment_shadow_refused",
+   "rule": "validator.verified-at-use"
+  },
+  {
+   "id": "hw-fix18-entry-rehash-skipped",
+   "module": "pm_event_datetime",
+   "find": "    _verify_selection(validator.storage_selection, pins, rehash)\n",
+   "replace": "    _verify_selection(validator.storage_selection, pins, False)\n",
+   "witness": "check:datetime_unit_bound_resource_mutation_refused",
    "rule": "validator.verified-at-use"
   }
  ],
@@ -3394,7 +3402,8 @@
     "hw-fix18-row-pin-no-fields",
     "hw-fix18-row-pin-no-profile",
     "hw-fix18-row-pin-no-classification",
-    "hw-fix18-shadow-names-unguarded"
+    "hw-fix18-shadow-names-unguarded",
+    "hw-fix18-entry-rehash-skipped"
    ]
   },
   {
