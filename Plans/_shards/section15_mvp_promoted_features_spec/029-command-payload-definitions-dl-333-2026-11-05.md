@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L13363-L15417
+Source lines: L13363-L15415
 
-Source SHA256: `5c32169a2eb7c61de76e565bbf154408276b8f2e563dd58b7cb8a139ff1f5019`
+Source SHA256: `811911007e37865fa9b2d193996f4cb37507ede894e77b258db72924624231e0`
 
 ---
 
@@ -509,8 +509,7 @@ command_payload_definitions:
             Canon does not say which closed action_type (:377) this capture uses. Choice: snapshot, the enum's
             page capture; the element or selection is not a field of the row (UI_Command_Catalog.md:831). The
             optional thread_id has no field in the request or the closed action arguments (:423) and stays on the
-            UICommand envelope (DL-341 open_owner_questions). Until native capture exists the handler fails
-            closed with handler_unavailable (UI_Command_Catalog.md:853).
+            UICommand envelope (DL-341 open_owner_questions).
     - command_id: cmd.browser.add_selection_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
       command_kind: domain_action
@@ -547,8 +546,7 @@ command_payload_definitions:
             Canon does not say which closed action_type (:377) this capture uses. Choice: snapshot, the enum's
             page capture; the element or selection is not a field of the row (UI_Command_Catalog.md:832). The
             optional thread_id has no field in the request or the closed action arguments (:423) and stays on the
-            UICommand envelope (DL-341 open_owner_questions). Until native capture exists the handler fails
-            closed with handler_unavailable (UI_Command_Catalog.md:853).
+            UICommand envelope (DL-341 open_owner_questions).
     - command_id: cmd.browser.add_selection_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
       command_kind: domain_action
