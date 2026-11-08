@@ -2,7 +2,7 @@
 
 Branch `plans/ea-w2-chain-wizard-20261104`; implementation **`8ea0e8de8cc8ac473bb43157848468fe7fc49b88`**. Start `7847bbc409e875a9bfddb02309cb0638690f798b`; no rebase. Guard-tool merge **`47eb2aa6359cd413bc634ccdb2575277ff31ccf8`** takes exact gated `004bdedd632d9463f3535190a6ed5772338cdce1`. Number merge **`5c0d54188378581237327af9008b5b3f162f40b0`** takes exact gated `a16f67c1ef21796758f4209ff12c0f4d12b86ce9`, after that tool merge. Generated merge conflicts were regenerated. Neither gated tool's files were edited.
 
-All eight families remain **8 PASS / 3 PARTIAL / 1 ABSENT**. Named phase proofs earn the bounded credit below. Complete check 11 and individual schema-keyword isolation remain unproved. Timestamp review is **interim only**; no date-time helper, validator or inventory gate was adopted. Native authority remains **NOT_RUN**. No prepared PASS, admission or new PlanUnit ID.
+All eight families remain **8 PASS / 3 PARTIAL / 1 ABSENT**. Named phase proofs earn the bounded credit below. Complete check 11 and individual schema-keyword isolation remain unproved (fix 1 below raises named phase proofs to 379 of 393; see "Sweep part 2A fix 1: missing witnesses"). Timestamp review is **interim only**; no date-time helper, validator or inventory gate was adopted. Native authority remains **NOT_RUN**. No prepared PASS, admission or new PlanUnit ID.
 
 ## Sweep part 2A: findings and responses
 
@@ -94,6 +94,120 @@ The `DISABLED` diagnostics are supplementary only. Their totals include the expl
 | `LE001` | The enforced bundle payload date-time validation precedes datetime.fromisoformat. No parser-specific invalid value survives it; timestamp work remains interim only. |
 
 These are evidence limitations, not a claim that all rows are mathematically unreachable. Earlier schema enforcement is not a proven duplicate without individual clause cuts. A missing coherent multi-generation/original-custody witness is missing coverage. Full check11 remains PARTIAL until those boundaries and individual schema predicates are covered and independently reviewed.
+
+## Sweep part 2A fix 1: missing witnesses
+
+This section supersedes the missing-witness entries in the "Unproved rows" table
+above. Each of the 55 rows was classified from the checker code, by probing the
+complete paths: **41 reachable** rows now have a coherent single-defect negative
+refused first at exactly that row, and **14 by-construction** rows stay unproved
+in their own tables for the reason cited. No gated guard-tool or NUMRULE file
+was edited; no date-time code was adopted; timestamp review stays **interim
+only**. Witnesses are in `scripts/pm_dcw_p2a_cases.py:296` (`cases`, fix-1
+section; helpers at `:39`) and `scripts/pm_dcw_legacy_guard_cases.py:54`, and
+run through the complete checkers in the guard collection
+(`scripts/pm_dcw_guard_suites.py:135`, `collect`).
+
+Two phase predicates were re-derived without changing any refusal: O207 now
+compares against `sorted(set(sequences))` computed in the checker
+(`scripts/pm_dcw_event_oracles.py:951`) and O219 against the derived current-key
+list and `[gid]` (`scripts/pm_dcw_event_oracles.py:967`), because the gated
+tool does not certify the `sorted(set(...))` call or the comprehension variable
+shadowing its engine alias in a table predicate. Only the generated
+`pm_dcw_table_108`/`pm_dcw_table_117` changed (`pm-dcw-table-generate.py
+--check` exits 0).
+
+| Guard | Class | Evidence (`path:line`) | Witness / reason |
+|---|---|---|---|
+| `O013` | reachable | Caller selects `row`; envelope `event_type` is pattern-only (`Plans/event_record.schema.json` `event_type`), payload schema binds only the payload copy in `event_body` (`scripts/pm_dcw_event_oracles.py:227`) | `bundle.revision_requested/p2a/O013`, refused `family` |
+| `O014` | by construction | Payload schema fixes `event_type` const (`Plans/event_payloads/bundle_revision/revision_requested.schema.json:61`), enforced in `event_body` (`scripts/pm_dcw_event_oracles.py:227`) before `envelope` O014 | Schema refuses first (`OE001`); own table 47 |
+| `O017` | reachable | `scope_kind` enum plus application/project conditionals (`Plans/event_record.schema.json` `allOf`); identity O016 is payload-derived | `bundle.revision_requested/p2a/O017` (application + null project), refused `scope` |
+| `O021` | reachable | O020 joins causation to parent only (`scripts/pm_dcw_event_oracles.py:271`) | `bundle.revision_requested/p2a/O021` (parent+causation moved together), refused `causation` |
+| `O041` | by construction | `durability_state` const `synced` (`Plans/event_append_receipt_contracts.schema.json:61`), custody schema first (`scripts/pm_dcw_event_oracles.py:302`) | Schema refuses first; own table 53 |
+| `O058` | reachable | Requested phase has no legacy field chain; O051 binds the latest payload only | `bundle.revision_completed/p2a/O058`, refused `source_phase_identity` |
+| `O060` | reachable | Slot `event_type` enum admits the sibling phase (`Plans/dcw/revision_run.schema.json:202`) | `bundle.revision_requested/p2a/O060`, refused `source_phase_identity` |
+| `O061` | reachable | Slot predecessor is a plain nullable string (`Plans/dcw/revision_run.schema.json:215`) | `bundle.revision_requested/p2a/O061`, refused `source_phase_identity` |
+| `O062` | reachable | Slot `source_ref` is a plain string (`Plans/dcw/revision_run.schema.json:210`) | `bundle.revision_requested/p2a/O062`, refused `source_ref` |
+| `O076` | reachable | Result annotation list has `minItems: 0` (`Plans/dcw/revision_run.schema.json:288`) | `bundle.revision_completed/p2a/O076`, refused `completion_outputs` |
+| `O077` | by construction | Same predecessor/`settled` as O057; `settled` changes only after O077 (`scripts/pm_dcw_event_oracles.py:364`, `:401`) | Entailed second site; no duplicate-set credit; own table 65 |
+| `O108` | by construction | Result `status` const `opened` (`Plans/dcw/wizard_open_evidence.schema.json:337`), inline schema at `scripts/pm_dcw_event_oracles.py:417` | Schema refuses first; own table 75 |
+| `O109` | by construction | Opened payload predecessor is `type: null` (`Plans/event_payloads/planning_wizard/wizard_opened.schema.json:117`) | Schema refuses first; own table 76 |
+| `O110` | by construction | Result `status` const `seed_loaded` (`Plans/dcw/wizard_seed_load_evidence.schema.json:337`), inline schema at `scripts/pm_dcw_event_oracles.py:417` | Schema refuses first; own table 77 |
+| `O112` | reachable | Authority original is read only at O111/O112 in the loaded branch | `wizard.deferred_payload.loaded/p2a/O112` (original recast `wizard.blocked`), refused `opened_original` |
+| `O115` | reachable | Generation `state` enum admits `staged` with null activation (checkpoint schema generation `state`/`allOf`) | `bundle.revision_requested/p2a/O115`, refused `index_currentness` |
+| `O117` | by construction | Coverage flag is `const: true` (`Plans/event_record_index_checkpoint.schema.json:343`), checkpoint schema first (`scripts/pm_dcw_event_oracles.py:472`) | Schema refuses first; own table 80 |
+| `O119` | reachable | O118 binds rows to `index_row_count` only; coverage count is a plain integer | `bundle.revision_requested/p2a/O119`, refused `index_coverage` |
+| `O124` | by construction | O123 exact durable/live equality plus the closed read-token shape below fixes 9 | Entailed by O123 + schema; own table 82 |
+| `O125` | by construction | Read token is closed with exactly 10 required fields (`Plans/event_record_index_checkpoint.schema.json:2570`), live token schema first (`scripts/pm_dcw_event_oracles.py:473`) | Schema refuses first; own table 83 |
+| `O128` | reachable | Earlier joins bind token to authority, not checkpoint to authority; checkpoint instance is a uuid string | `bundle.revision_requested/p2a/O128` (checkpoint side foreign), refused `index_currentness` |
+| `O129` | reachable | Token selection is schema-shaped only; O116 binds frontier, not tokens | `bundle.revision_requested/p2a/O129` (both token copies), refused `index_currentness` |
+| `O133` | reachable | O132 compares the two key copies, which move together | `bundle.revision_requested/p2a/O133`, refused `index_currentness` |
+| `O202` | reachable | Recomputed segments partition frames by segment identity; an orphan frame joins none | `bundle.revision_requested/p2a/O202`, refused `index_source_bytes` |
+| `O207` | reachable | Captured frame order is an independent source fact; derived blob/segment facts rebuild coherently | `bundle.revision_requested/p2a/O207` (reversed capture), refused `index_source_bytes` |
+| `O208` | reachable | A second frame may carry the same event at a new sequence | `bundle.revision_requested/p2a/O208`, refused `index_source_bytes` |
+| `O211` | reachable | O211 reads the captured-source gap copy; the enum at `Plans/event_record_index_checkpoint.schema.json:528` binds the separate coverage copy, joined later at O213 | `bundle.revision_requested/p2a/O211` (source/excluded reason foreign, selection chain reissued), refused `index_source_gaps` |
+| `O214` | reachable | Generation-id copies (field, transactions, tokens, ref) move together past O121/O127/O134 | `bundle.revision_requested/p2a/O214`, refused `index_generation_identity` |
+| `O216` | reachable | Checkpoint admits up to three generations; an inactive key may disagree with its id | `bundle.revision_requested/p2a/O216`, refused `index_generation_identity` |
+| `O217` | reachable | An inactive generation id need not derive from its anchor | `bundle.revision_requested/p2a/O217`, refused `index_generation_identity` |
+| `O218` | reachable | A correctly derived inactive generation may name another dataset | `bundle.revision_requested/p2a/O218`, refused `index_generation_identity` |
+| `O219` | reachable | A second correctly derived generation may also be `current` | `bundle.revision_requested/p2a/O219`, refused `index_generation_identity` |
+| `O220` | reachable | Anchor selection storage moves with a fully reissued generation (O215 derivation preserved) | `bundle.revision_requested/p2a/O220`, refused `index_generation_identity` |
+| `O221` | reachable | Anchor retained count is not a generation-derivation input; token anchor hashes move | `bundle.revision_requested/p2a/O221`, refused `index_anchor_prefix` |
+| `O223` | reachable | Same anchor-copy move as O221 | `bundle.revision_requested/p2a/O223`, refused `index_anchor_prefix` |
+| `O224` | reachable | Same anchor-copy move as O221 | `bundle.revision_requested/p2a/O224`, refused `index_anchor_prefix` |
+| `O225` | reachable | Same anchor-copy move as O221 | `bundle.revision_requested/p2a/O225`, refused `index_anchor_prefix` |
+| `O226` | reachable | Anchor selection field moves with a fully reissued generation | `bundle.revision_requested/p2a/O226`, refused `index_anchor_prefix` |
+| `O233` | reachable | Captured frame event is rebuilt coherently (bytes, rows, snapshot) with a foreign actor | `bundle.revision_requested/p2a/O233`, refused `index_event_join` |
+| `B001` | by construction | Row is derived from the envelope type (`scripts/pm_dcw_blockage_events.py:27`) and the payload fixes the same const (`Plans/event_payloads/planning_wizard/wizard_blocked.schema.json:32`) | Schema refuses first; own table 125 |
+| `B004` | reachable | Same scope construction as O017; B003 identity is payload-derived | `wizard.blocked/p2a-fix1/B004`, refused `scope` |
+| `B019` | reachable | Historical original is read from authority at B018/B019 | `wizard.unblocked/p2a-fix1/B019` (original recast), refused `blocked_original` |
+| `B023` | reachable | B022 copy moves with the payload ref; identity B003 does not bind `source_ref` | `wizard.blocked/p2a-fix1/B023`, refused `source_ref` |
+| `B054` | by construction | Unblocked payload predecessor is a required string (`Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json:68`); `previous` is null only when it is null | Schema refuses first; own table 131 |
+| `B063` | reachable | The authority action map has no schema check before B062/B063 | `wizard.unblocked/p2a-fix1/B063` (integer member), refused `clearing_action_type_remaining_before` |
+| `B069` | reachable | First refusal in blockage `verify`, before `envelope` | `wizard.blocked/p2a-fix1/B069` (`wizard.opened`), refused `family` |
+| `B085` | reachable | Inline-payload compatibility envelope needs no authority copy before B085 | `wizard.blocked/p2a-fix1/B085`, refused `original_custody_missing` |
+| `B093` | reachable | A restored predecessor source may carry a newer epoch than the authority | `wizard.unblocked/p2a-fix1/B093`, refused `restore_older_only` |
+| `B095` | reachable | An extra restored source with inventory but no custody reaches the loop | `wizard.unblocked/p2a-fix1/B095`, refused `restore_member` |
+| `B096` | reachable | Removing the first dependency's admission member leaves zero matches | `wizard.unblocked/p2a-fix1/B096`, refused `restore_member` |
+| `L001` | by construction | Payload `ts` requires `Z$` plus the date-time grammar (`Plans/event_payloads/bundle_revision/revision_requested.schema.json:81`) | Schema refuses first; own table 142. Interim only |
+| `L013` | reachable | Requested predecessor admits string or null (same schema, `predecessor_event_id`); the prior const-null claim is corrected | `bundle.revision_requested/legacy/requested_predecessor_present`, refused `request_predecessor` |
+| `L014` | reachable | Requested `phase_sequence` admits any nonnegative integer (same schema); identity copies move | `bundle.revision_requested/legacy/requested_sequence_nonzero`, refused `request_predecessor` |
+| `OE007` | by construction | `check_schema` converts `ValidationError` to `Refusal` (`scripts/pm_dcw_event_oracles.py:96`), caught by the first `except` (`:367`) before the `AssertionError`/`ValidationError` fallback (`:370`); canonical `validate` raises neither otherwise | Dead fallback with the canonical callback; own table 155 |
+| `LE001` | by construction | Every `Z$` value passing `valid_date_time` (`scripts/pm_dcw_event_oracles.py:838`: full-match grammar, calendar and seconds 00–59) parses after the `Z` substitution (fractional and `t`-separator probes accept; leap second fails the grammar) | No parser-only value survives; own table 160. Interim only |
+
+Note on O013: the fix-1 brief's example list named O013 as by-construction, but
+the code decides otherwise (see its row above), so it is witnessed here.
+
+**Totals and cuts (gated tool `004bdedd63`, credited exactly as reported):**
+collection 6,317 executions, 0 mismatches, 0 untracked exceptions, 393
+controls, 1,097 distinct negatives. Tool: 167 tables (153 PASS / 14 FAIL),
+24,842 evaluations; **379 of 393** phase rows proved (was 338). Per checker:
+`pm_dcw_event_oracles` 240/250 (was 210), `pm_dcw_blockage_events` 106/108
+(was 97), `pm_bundle_revision_events` 20/22 (was 18),
+`pm_dcw_registered_schemas` 13/13. Each new row: 1 own negative, 1 flip, 0
+stays, 0 masked, 0 unrelated changes, restoration matches
+([DCW.guard-removal.md](DCW.guard-removal.md), regenerated). The 14 FAIL tables
+are exactly the by-construction rows above, each alone in its table, so no
+proved row loses table credit. Supplementary `DISABLED` full-path diagnostics
+(unchanged meaning): of 1,097 distinct negatives, 934 cuts accept, 133 refuse
+later and 30 hit a derivation exception; later refusals and exceptions earn
+**zero complete-boundary isolation credit**. Family grades are unchanged at
+**8 PASS / 3 PARTIAL / 1 ABSENT** for all eight families, so the self-grade is
+unchanged. Evidence: `drafts/DCW/sweep-p2a-fix1/` (`SHA256SUMS`).
+
+| Command/group | Exit | Result |
+|---|---|---|
+| Ordinary complete checkers (6 DCW families) | 0 | PASS |
+| Blockage complete checkers (2) | 0 | PASS |
+| Standing regressions (6) | 0 | PASS |
+| Registered regressions (6) | 0 | PASS |
+| `pm-dcw-number-checks.py` (3,040 cases) | 0 | pass |
+| `pm_event_numbers.py --self-test --scope numbers` | 0 | pass |
+| `pm-dcw-table-generate.py --check` | 0 | 393 rows in 167 tables; current |
+| Guard collection | 0 | 6,317 executions, 0 mismatches / 0 untracked |
+| Gated tool (11 batches, `--include-unproved`) | 1 (expected) | 153 PASS / 14 FAIL tables; FAIL is exactly the 14 by-construction rows |
+Min available sampled at heavy starts: 12.9 GiB; no run paused below 10 GiB. No browsers.
+
 
 ## Sweep part 2B numbers: findings and responses
 

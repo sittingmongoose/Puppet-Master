@@ -1,14 +1,14 @@
 # DCW named phase guard results
 
-Implementation source and result bundle are pinned by the sweep report. All credit below is synthetic assertion/phase scope. Individual schema keywords, loop occurrences, compound predicate members and complete Python boundaries retain no automatic proof credit. No duplicate set is credited.
+Regenerated for sweep part 2A fix 1 from the gated tool run credited in `DCW.md` ("Sweep part 2A fix 1: missing witnesses"). All credit below is synthetic assertion/phase scope. Individual schema keywords, loop occurrences, compound predicate members and complete Python boundaries retain no automatic proof credit. No duplicate set is credited.
 
 ## Counts
 
 | Checker | Guards | Proved | Unproved |
 |---|---:|---:|---:|
-| `pm_dcw_event_oracles` | 250 | 210 | 40 |
-| `pm_dcw_blockage_events` | 108 | 97 | 11 |
-| `pm_bundle_revision_events` | 22 | 18 | 4 |
+| `pm_dcw_event_oracles` | 250 | 240 | 10 |
+| `pm_dcw_blockage_events` | 108 | 106 | 2 |
+| `pm_bundle_revision_events` | 22 | 20 | 2 |
 | `pm_dcw_registered_schemas` | 13 | 13 | 0 |
 
 ## Every cut row
@@ -29,15 +29,15 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `O010` | `scripts/pm_dcw_event_oracles.py:250` | PROVED | 6 / 6 | 38 | matches |
 | `O011` | `scripts/pm_dcw_event_oracles.py:251` | PROVED | 8 / 8 | 36 | matches |
 | `O012` | `scripts/pm_dcw_event_oracles.py:253` | PROVED | 6 / 6 | 38 | matches |
-| `O013` | `scripts/pm_dcw_event_oracles.py:262` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O013` | `scripts/pm_dcw_event_oracles.py:262` | PROVED | 1 / 1 | 0 | matches |
 | `O014` | `scripts/pm_dcw_event_oracles.py:263` | UNPROVED | 0 / 0 | 0 | unproved |
 | `O015` | `scripts/pm_dcw_event_oracles.py:264` | PROVED | 6 / 6 | 14 | matches |
 | `O016` | `scripts/pm_dcw_event_oracles.py:265` | PROVED | 6 / 6 | 14 | matches |
-| `O017` | `scripts/pm_dcw_event_oracles.py:266` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O017` | `scripts/pm_dcw_event_oracles.py:266` | PROVED | 1 / 1 | 0 | matches |
 | `O018` | `scripts/pm_dcw_event_oracles.py:268` | PROVED | 2 / 2 | 18 | matches |
 | `O019` | `scripts/pm_dcw_event_oracles.py:270` | PROVED | 1 / 1 | 19 | matches |
 | `O020` | `scripts/pm_dcw_event_oracles.py:271` | PROVED | 4 / 4 | 16 | matches |
-| `O021` | `scripts/pm_dcw_event_oracles.py:272` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O021` | `scripts/pm_dcw_event_oracles.py:272` | PROVED | 1 / 1 | 0 | matches |
 | `O022` | `scripts/pm_dcw_event_oracles.py:273` | PROVED | 1 / 1 | 19 | matches |
 | `O023` | `scripts/pm_dcw_event_oracles.py:274` | PROVED | 2 / 2 | 8 | matches |
 | `O024` | `scripts/pm_dcw_event_oracles.py:275` | PROVED | 4 / 4 | 6 | matches |
@@ -74,11 +74,11 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `O055` | `scripts/pm_dcw_event_oracles.py:353` | PROVED | 2 / 2 | 9 | matches |
 | `O056` | `scripts/pm_dcw_event_oracles.py:354` | PROVED | 1 / 1 | 10 | matches |
 | `O057` | `scripts/pm_dcw_event_oracles.py:364` | PROVED | 1 / 1 | 10 | matches |
-| `O058` | `scripts/pm_dcw_event_oracles.py:375` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O058` | `scripts/pm_dcw_event_oracles.py:375` | PROVED | 1 / 1 | 0 | matches |
 | `O059` | `scripts/pm_dcw_event_oracles.py:376` | PROVED | 3 / 3 | 8 | matches |
-| `O060` | `scripts/pm_dcw_event_oracles.py:377` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O061` | `scripts/pm_dcw_event_oracles.py:378` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O062` | `scripts/pm_dcw_event_oracles.py:379` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O060` | `scripts/pm_dcw_event_oracles.py:377` | PROVED | 1 / 1 | 0 | matches |
+| `O061` | `scripts/pm_dcw_event_oracles.py:378` | PROVED | 1 / 1 | 0 | matches |
+| `O062` | `scripts/pm_dcw_event_oracles.py:379` | PROVED | 1 / 1 | 0 | matches |
 | `O063` | `scripts/pm_dcw_event_oracles.py:380` | PROVED | 3 / 3 | 8 | matches |
 | `O064` | `scripts/pm_dcw_event_oracles.py:383` | PROVED | 4 / 4 | 5 | matches |
 | `O065` | `scripts/pm_dcw_event_oracles.py:384` | PROVED | 1 / 1 | 0 | matches |
@@ -92,7 +92,7 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `O073` | `scripts/pm_dcw_event_oracles.py:394` | PROVED | 1 / 1 | 8 | matches |
 | `O074` | `scripts/pm_dcw_event_oracles.py:396` | PROVED | 1 / 1 | 0 | matches |
 | `O075` | `scripts/pm_dcw_event_oracles.py:398` | PROVED | 1 / 1 | 8 | matches |
-| `O076` | `scripts/pm_dcw_event_oracles.py:399` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O076` | `scripts/pm_dcw_event_oracles.py:399` | PROVED | 1 / 1 | 0 | matches |
 | `O077` | `scripts/pm_dcw_event_oracles.py:401` | UNPROVED | 0 / 0 | 0 | unproved |
 | `O078` | `scripts/pm_dcw_event_oracles.py:407` | PROVED | 1 / 1 | 8 | matches |
 | `O079` | `scripts/pm_dcw_event_oracles.py:410` | PROVED | 1 / 1 | 8 | matches |
@@ -128,14 +128,14 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `O109` | `scripts/pm_dcw_event_oracles.py:454` | UNPROVED | 0 / 0 | 0 | unproved |
 | `O110` | `scripts/pm_dcw_event_oracles.py:456` | UNPROVED | 0 / 0 | 0 | unproved |
 | `O111` | `scripts/pm_dcw_event_oracles.py:458` | PROVED | 1 / 1 | 23 | matches |
-| `O112` | `scripts/pm_dcw_event_oracles.py:459` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O112` | `scripts/pm_dcw_event_oracles.py:459` | PROVED | 1 / 1 | 0 | matches |
 | `O113` | `scripts/pm_dcw_event_oracles.py:463` | PROVED | 1 / 1 | 23 | matches |
 | `O114` | `scripts/pm_dcw_event_oracles.py:465` | PROVED | 4 / 4 | 20 | matches |
-| `O115` | `scripts/pm_dcw_event_oracles.py:474` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O115` | `scripts/pm_dcw_event_oracles.py:474` | PROVED | 1 / 1 | 0 | matches |
 | `O116` | `scripts/pm_dcw_event_oracles.py:475` | PROVED | 6 / 6 | 18 | matches |
 | `O117` | `scripts/pm_dcw_event_oracles.py:476` | UNPROVED | 0 / 0 | 0 | unproved |
 | `O118` | `scripts/pm_dcw_event_oracles.py:478` | PROVED | 11 / 11 | 13 | matches |
-| `O119` | `scripts/pm_dcw_event_oracles.py:479` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O119` | `scripts/pm_dcw_event_oracles.py:479` | PROVED | 1 / 1 | 0 | matches |
 | `O120` | `scripts/pm_dcw_event_oracles.py:480` | PROVED | 1 / 1 | 23 | matches |
 | `O121` | `scripts/pm_dcw_event_oracles.py:481` | PROVED | 12 / 12 | 28 | matches |
 | `O122` | `scripts/pm_dcw_event_oracles.py:482` | PROVED | 8 / 8 | 32 | matches |
@@ -144,12 +144,12 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `O125` | `scripts/pm_dcw_event_oracles.py:485` | UNPROVED | 0 / 0 | 0 | unproved |
 | `O126` | `scripts/pm_dcw_event_oracles.py:487` | PROVED | 6 / 6 | 34 | matches |
 | `O127` | `scripts/pm_dcw_event_oracles.py:488` | PROVED | 1 / 1 | 0 | matches |
-| `O128` | `scripts/pm_dcw_event_oracles.py:489` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O129` | `scripts/pm_dcw_event_oracles.py:490` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O128` | `scripts/pm_dcw_event_oracles.py:489` | PROVED | 1 / 1 | 0 | matches |
+| `O129` | `scripts/pm_dcw_event_oracles.py:490` | PROVED | 1 / 1 | 0 | matches |
 | `O130` | `scripts/pm_dcw_event_oracles.py:491` | PROVED | 1 / 1 | 0 | matches |
 | `O131` | `scripts/pm_dcw_event_oracles.py:492` | PROVED | 1 / 1 | 0 | matches |
 | `O132` | `scripts/pm_dcw_event_oracles.py:493` | PROVED | 1 / 1 | 39 | matches |
-| `O133` | `scripts/pm_dcw_event_oracles.py:494` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O133` | `scripts/pm_dcw_event_oracles.py:494` | PROVED | 1 / 1 | 0 | matches |
 | `O134` | `scripts/pm_dcw_event_oracles.py:495` | PROVED | 1 / 1 | 0 | matches |
 | `O135` | `scripts/pm_dcw_event_oracles.py:496` | PROVED | 1 / 1 | 39 | matches |
 | `O136` | `scripts/pm_dcw_event_oracles.py:497` | PROVED | 6 / 6 | 21 | matches |
@@ -217,42 +217,42 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `O198` | `scripts/pm_dcw_event_oracles.py:927` | PROVED | 6 / 6 | 12 | matches |
 | `O199` | `scripts/pm_dcw_event_oracles.py:928` | PROVED | 1 / 1 | 0 | matches |
 | `O200` | `scripts/pm_dcw_event_oracles.py:929` | PROVED | 1 / 1 | 0 | matches |
-| `O202` | `scripts/pm_dcw_event_oracles.py:946` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O202` | `scripts/pm_dcw_event_oracles.py:946` | PROVED | 1 / 1 | 0 | matches |
 | `O203` | `scripts/pm_dcw_event_oracles.py:947` | PROVED | 6 / 6 | 12 | matches |
 | `O204` | `scripts/pm_dcw_event_oracles.py:948` | PROVED | 1 / 1 | 0 | matches |
 | `O205` | `scripts/pm_dcw_event_oracles.py:949` | PROVED | 1 / 1 | 0 | matches |
 | `O206` | `scripts/pm_dcw_event_oracles.py:950` | PROVED | 1 / 1 | 0 | matches |
-| `O207` | `scripts/pm_dcw_event_oracles.py:951` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O208` | `scripts/pm_dcw_event_oracles.py:952` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O207` | `scripts/pm_dcw_event_oracles.py:951` | PROVED | 1 / 1 | 0 | matches |
+| `O208` | `scripts/pm_dcw_event_oracles.py:952` | PROVED | 1 / 1 | 0 | matches |
 | `O209` | `scripts/pm_dcw_event_oracles.py:955` | PROVED | 1 / 1 | 84 | matches |
 | `O210` | `scripts/pm_dcw_event_oracles.py:956` | PROVED | 1 / 1 | 0 | matches |
-| `O211` | `scripts/pm_dcw_event_oracles.py:958` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O211` | `scripts/pm_dcw_event_oracles.py:958` | PROVED | 1 / 1 | 0 | matches |
 | `O212` | `scripts/pm_dcw_event_oracles.py:959` | PROVED | 1 / 1 | 0 | matches |
 | `O213` | `scripts/pm_dcw_event_oracles.py:960` | PROVED | 6 / 6 | 79 | matches |
-| `O214` | `scripts/pm_dcw_event_oracles.py:961` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O214` | `scripts/pm_dcw_event_oracles.py:961` | PROVED | 1 / 1 | 0 | matches |
 | `O215` | `scripts/pm_dcw_event_oracles.py:962` | PROVED | 6 / 6 | 79 | matches |
-| `O216` | `scripts/pm_dcw_event_oracles.py:964` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O217` | `scripts/pm_dcw_event_oracles.py:965` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O218` | `scripts/pm_dcw_event_oracles.py:966` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O219` | `scripts/pm_dcw_event_oracles.py:967` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O220` | `scripts/pm_dcw_event_oracles.py:968` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O221` | `scripts/pm_dcw_event_oracles.py:971` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O216` | `scripts/pm_dcw_event_oracles.py:964` | PROVED | 1 / 1 | 0 | matches |
+| `O217` | `scripts/pm_dcw_event_oracles.py:965` | PROVED | 1 / 1 | 0 | matches |
+| `O218` | `scripts/pm_dcw_event_oracles.py:966` | PROVED | 1 / 1 | 0 | matches |
+| `O219` | `scripts/pm_dcw_event_oracles.py:967` | PROVED | 1 / 1 | 0 | matches |
+| `O220` | `scripts/pm_dcw_event_oracles.py:968` | PROVED | 1 / 1 | 0 | matches |
+| `O221` | `scripts/pm_dcw_event_oracles.py:971` | PROVED | 1 / 1 | 0 | matches |
 | `O222` | `scripts/pm_dcw_event_oracles.py:972` | PROVED | 6 / 6 | 79 | matches |
-| `O223` | `scripts/pm_dcw_event_oracles.py:973` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O224` | `scripts/pm_dcw_event_oracles.py:974` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O225` | `scripts/pm_dcw_event_oracles.py:975` | UNPROVED | 0 / 0 | 0 | unproved |
-| `O226` | `scripts/pm_dcw_event_oracles.py:977` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O223` | `scripts/pm_dcw_event_oracles.py:973` | PROVED | 1 / 1 | 0 | matches |
+| `O224` | `scripts/pm_dcw_event_oracles.py:974` | PROVED | 1 / 1 | 0 | matches |
+| `O225` | `scripts/pm_dcw_event_oracles.py:975` | PROVED | 1 / 1 | 0 | matches |
+| `O226` | `scripts/pm_dcw_event_oracles.py:977` | PROVED | 1 / 1 | 0 | matches |
 | `O227` | `scripts/pm_dcw_event_oracles.py:979` | PROVED | 6 / 6 | 79 | matches |
 | `O228` | `scripts/pm_dcw_event_oracles.py:981` | PROVED | 60 / 60 | 25 | matches |
 | `O229` | `scripts/pm_dcw_event_oracles.py:982` | PROVED | 6 / 6 | 14 | matches |
 | `O230` | `scripts/pm_dcw_event_oracles.py:983` | PROVED | 6 / 6 | 14 | matches |
 | `O231` | `scripts/pm_dcw_event_oracles.py:989` | PROVED | 1 / 1 | 19 | matches |
 | `O232` | `scripts/pm_dcw_event_oracles.py:990` | PROVED | 1 / 1 | 19 | matches |
-| `O233` | `scripts/pm_dcw_event_oracles.py:991` | UNPROVED | 0 / 0 | 0 | unproved |
+| `O233` | `scripts/pm_dcw_event_oracles.py:991` | PROVED | 1 / 1 | 0 | matches |
 | `B001` | `scripts/pm_dcw_blockage_events.py:29` | UNPROVED | 0 / 0 | 0 | unproved |
 | `B002` | `scripts/pm_dcw_blockage_events.py:30` | PROVED | 2 / 2 | 18 | matches |
 | `B003` | `scripts/pm_dcw_blockage_events.py:31` | PROVED | 4 / 4 | 16 | matches |
-| `B004` | `scripts/pm_dcw_blockage_events.py:32` | UNPROVED | 0 / 0 | 0 | unproved |
+| `B004` | `scripts/pm_dcw_blockage_events.py:32` | PROVED | 1 / 1 | 0 | matches |
 | `B005` | `scripts/pm_dcw_blockage_events.py:34` | PROVED | 2 / 2 | 7 | matches |
 | `B006` | `scripts/pm_dcw_blockage_events.py:35` | PROVED | 1 / 1 | 8 | matches |
 | `B007` | `scripts/pm_dcw_blockage_events.py:37` | PROVED | 2 / 2 | 7 | matches |
@@ -267,11 +267,11 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `B016` | `scripts/pm_dcw_blockage_events.py:59` | PROVED | 1 / 1 | 0 | matches |
 | `B017` | `scripts/pm_dcw_blockage_events.py:71` | PROVED | 1 / 1 | 10 | matches |
 | `B018` | `scripts/pm_dcw_blockage_events.py:73` | PROVED | 1 / 1 | 9 | matches |
-| `B019` | `scripts/pm_dcw_blockage_events.py:74` | UNPROVED | 0 / 0 | 0 | unproved |
+| `B019` | `scripts/pm_dcw_blockage_events.py:74` | PROVED | 1 / 1 | 0 | matches |
 | `B020` | `scripts/pm_dcw_blockage_events.py:76` | PROVED | 1 / 1 | 9 | matches |
 | `B021` | `scripts/pm_dcw_blockage_events.py:98` | PROVED | 2 / 2 | 8 | matches |
 | `B022` | `scripts/pm_dcw_blockage_events.py:99` | PROVED | 2 / 2 | 8 | matches |
-| `B023` | `scripts/pm_dcw_blockage_events.py:100` | UNPROVED | 0 / 0 | 0 | unproved |
+| `B023` | `scripts/pm_dcw_blockage_events.py:100` | PROVED | 1 / 1 | 0 | matches |
 | `B024` | `scripts/pm_dcw_blockage_events.py:101` | PROVED | 2 / 2 | 8 | matches |
 | `B025` | `scripts/pm_dcw_blockage_events.py:102` | PROVED | 2 / 2 | 8 | matches |
 | `B026` | `scripts/pm_dcw_blockage_events.py:104` | PROVED | 7 / 7 | 6 | matches |
@@ -311,13 +311,13 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `B060` | `scripts/pm_dcw_blockage_events.py:164` | PROVED | 8 / 8 | 13 | matches |
 | `B061` | `scripts/pm_dcw_blockage_events.py:165` | PROVED | 4 / 4 | 17 | matches |
 | `B062` | `scripts/pm_dcw_blockage_events.py:167` | PROVED | 4 / 4 | 17 | matches |
-| `B063` | `scripts/pm_dcw_blockage_events.py:169` | UNPROVED | 0 / 0 | 0 | unproved |
+| `B063` | `scripts/pm_dcw_blockage_events.py:169` | PROVED | 1 / 1 | 0 | matches |
 | `B064` | `scripts/pm_dcw_blockage_events.py:170` | PROVED | 1 / 1 | 20 | matches |
 | `B065` | `scripts/pm_dcw_blockage_events.py:171` | PROVED | 1 / 1 | 10 | matches |
 | `B066` | `scripts/pm_dcw_blockage_events.py:172` | PROVED | 1 / 1 | 10 | matches |
 | `B067` | `scripts/pm_dcw_blockage_events.py:173` | PROVED | 1 / 1 | 10 | matches |
 | `B068` | `scripts/pm_dcw_blockage_events.py:174` | PROVED | 5 / 5 | 6 | matches |
-| `B069` | `scripts/pm_dcw_blockage_events.py:193` | UNPROVED | 0 / 0 | 0 | unproved |
+| `B069` | `scripts/pm_dcw_blockage_events.py:193` | PROVED | 1 / 1 | 0 | matches |
 | `B070` | `scripts/pm_dcw_blockage_events.py:195` | PROVED | 1 / 1 | 10 | matches |
 | `B071` | `scripts/pm_dcw_blockage_events.py:196` | PROVED | 2 / 2 | 9 | matches |
 | `B072` | `scripts/pm_dcw_blockage_events.py:197` | PROVED | 1 / 1 | 26 | matches |
@@ -333,7 +333,7 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `B082` | `scripts/pm_dcw_blockage_events.py:211` | PROVED | 8 / 8 | 13 | matches |
 | `B083` | `scripts/pm_dcw_blockage_events.py:212` | PROVED | 1 / 1 | 20 | matches |
 | `B084` | `scripts/pm_dcw_blockage_events.py:213` | PROVED | 1 / 1 | 9 | matches |
-| `B085` | `scripts/pm_dcw_blockage_events.py:216` | UNPROVED | 0 / 0 | 0 | unproved |
+| `B085` | `scripts/pm_dcw_blockage_events.py:216` | PROVED | 1 / 1 | 0 | matches |
 | `B086` | `scripts/pm_dcw_blockage_events.py:217` | PROVED | 2 / 2 | 8 | matches |
 | `B087` | `scripts/pm_dcw_blockage_events.py:227` | PROVED | 4 / 4 | 6 | matches |
 | `B088` | `scripts/pm_dcw_blockage_events.py:230` | PROVED | 1 / 1 | 9 | matches |
@@ -341,10 +341,10 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `B090` | `scripts/pm_dcw_blockage_events.py:236` | PROVED | 1 / 1 | 9 | matches |
 | `B091` | `scripts/pm_dcw_blockage_events.py:237` | PROVED | 1 / 1 | 13 | matches |
 | `B092` | `scripts/pm_dcw_blockage_events.py:238` | PROVED | 1 / 1 | 13 | matches |
-| `B093` | `scripts/pm_dcw_blockage_events.py:239` | UNPROVED | 0 / 0 | 0 | unproved |
+| `B093` | `scripts/pm_dcw_blockage_events.py:239` | PROVED | 1 / 1 | 0 | matches |
 | `B094` | `scripts/pm_dcw_blockage_events.py:242` | PROVED | 6 / 6 | 8 | matches |
-| `B095` | `scripts/pm_dcw_blockage_events.py:245` | UNPROVED | 0 / 0 | 0 | unproved |
-| `B096` | `scripts/pm_dcw_blockage_events.py:246` | UNPROVED | 0 / 0 | 0 | unproved |
+| `B095` | `scripts/pm_dcw_blockage_events.py:245` | PROVED | 1 / 1 | 0 | matches |
+| `B096` | `scripts/pm_dcw_blockage_events.py:246` | PROVED | 1 / 1 | 0 | matches |
 | `B097` | `scripts/pm_dcw_blockage_events.py:249` | PROVED | 2 / 2 | 12 | matches |
 | `B098` | `scripts/pm_dcw_blockage_events.py:251` | PROVED | 2 / 2 | 12 | matches |
 | `B099` | `scripts/pm_dcw_blockage_events.py:252` | PROVED | 2 / 2 | 12 | matches |
@@ -369,8 +369,8 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `L010` | `scripts/pm_bundle_revision_events.py:37` | PROVED | 1 / 1 | 7 | matches |
 | `L011` | `scripts/pm_bundle_revision_events.py:41` | PROVED | 1 / 1 | 7 | matches |
 | `L012` | `scripts/pm_bundle_revision_events.py:44` | PROVED | 1 / 1 | 7 | matches |
-| `L013` | `scripts/pm_bundle_revision_events.py:45` | UNPROVED | 0 / 0 | 0 | unproved |
-| `L014` | `scripts/pm_bundle_revision_events.py:46` | UNPROVED | 0 / 0 | 0 | unproved |
+| `L013` | `scripts/pm_bundle_revision_events.py:45` | PROVED | 1 / 1 | 0 | matches |
+| `L014` | `scripts/pm_bundle_revision_events.py:46` | PROVED | 1 / 1 | 0 | matches |
 | `L015` | `scripts/pm_bundle_revision_events.py:48` | PROVED | 1 / 1 | 7 | matches |
 | `L016` | `scripts/pm_bundle_revision_events.py:50` | PROVED | 3 / 3 | 5 | matches |
 | `L017` | `scripts/pm_bundle_revision_events.py:51` | PROVED | 1 / 1 | 14 | matches |
@@ -410,69 +410,3 @@ For a proved row, own negatives all flip under its single-row cut, peer negative
 | `F004` | `scripts/pm_dcw_event_oracles.py:940` | PROVED | 1 / 1 | 0 | matches |
 | `F005` | `scripts/pm_dcw_event_oracles.py:941` | PROVED | 1 / 1 | 0 | matches |
 | `F006` | `scripts/pm_dcw_event_oracles.py:1085` | PROVED | 1 / 1 | 0 | matches |
-
-## Every unproved guard and its reason
-
-| Guard | Predicate | Reason |
-|---|---|---|
-| `O013` | event['event_type'] == payload['event_type'] | The complete payload schema fixes event_type for the selected family; mismatching envelopes or selected rows in the corpus refuse before this equality. No independent envelope-versus-payload witness is credited. |
-| `O014` | payload['event_type'] == row['event_type'] | The selected family payload schema fixes this exact event_type. The payload-versus-row equality has no independent complete-path negative after that schema. |
-| `O017` | event['scope_kind'] == 'project' | Changing project scope reaches the shared envelope project/application constraints or the identity join before this project-only assertion; no independent scope witness is supplied. |
-| `O021` | event['parent_event_id'] == payload['predecessor_event_id'] | Current causation/predecessor witnesses stop at O020 or the earlier payload schema. Parent-to-payload predecessor equality has no independent negative in this corpus. |
-| `O041` | receipt['durability_state'] == 'synced' | custody_v2 validates first_append_receipt.durability_state as synced before this runtime equality. No per-const cut was performed. |
-| `O058` | p[k] == source[k] | The earlier legacy.validate predecessor identity joins and source/intent bindings reject the enumerated phase-copy defects first. Each loop-field occurrence still lacks its own full-path witness. |
-| `O060` | slot['event_type'] == name | The phase slot event_type has no isolated negative distinct from prepared_event dispatch and the source schema. Missing coverage is not a duplicate proof. |
-| `O061` | slot['predecessor_event_id'] == p['predecessor_event_id'] | The slot predecessor equality has no negative that reaches it independently of phase ordering and source-schema validation. |
-| `O062` | slot['source_ref'] == p['source_ref'] | The slot source_ref equality has no full-path negative independently separating it from payload source-ref derivation and source-schema constraints. |
-| `O076` | bool(result['annotation_outcome_refs']) | The completion annotation-output nonempty assertion lacks an independent complete-path negative after the completed payload/source shape checks. |
-| `O077` | p['predecessor_event_id'] not in settled | The earlier O057 checks membership of the same predecessor in the same settled set; a duplicate-set proof cutting both sites was not run. No duplicate credit is claimed. |
-| `O108` | result['status'] == 'opened' | The wizard-open source schema constrains result.status before this runtime opened assertion; its exact schema clause was not cut. |
-| `O109` | p['predecessor_event_id'] is None | The wizard-open payload schema fixes predecessor_event_id to null before this runtime assertion; no per-const schema cut. |
-| `O110` | result['status'] == 'seed_loaded' | The deferred-load source schema constrains result.status before the runtime seed_loaded assertion; no per-const schema cut. |
-| `O112` | opened['event_type'] == 'wizard.opened' | No independently reissued retained predecessor of a different family reached this row after original/source custody and payload selection. This is a missing witness, not an impossibility claim. |
-| `O115` | generation['state'] == 'current' | The current-generation state assertion has no isolated complete-path witness after checkpoint schema and current-generation selection. |
-| `O117` | frontier['coverage']['complete_to_captured_boundary'] is True | The checkpoint schema fixes complete_to_captured_boundary before this runtime assertion; no individual schema-const cut. |
-| `O119` | frontier['index_row_count'] == frontier['coverage']['retained_event_count'] | Row-count-versus-retained-count equality lacks an independent witness preserving the preceding row-count check and the complete captured-source/row membership facts. |
-| `O124` | len(reader['durable_token']) == 9 | Read-token schema and exact durable/live projection O123 precede this length check. No separate token-shape witness survives both. |
-| `O125` | len(reader['live_token']) == 10 | The live read-token schema closes its required fields before this length check. No separate per-member schema cuts were performed. |
-| `O128` | token['storage_instance_id'] == checkpoint['storage_instance_id'] | Changing the token Storage ID is refused earlier by O183, which joins the same token to authentic authority; O182 already binds the checkpoint to that authority. No duplicate-set proof or independent negative earns this later equality credit. |
-| `O129` | token['source_selection'] == frontier['source_selection'] | The token/frontier source_selection equality has no coherent independently reissued token witness preserving its earlier schema and source-selection joins. |
-| `O133` | index['checkpoint_key'] == 'event_record_index_checkpoint.v1:' + checkpoint['storage_instance_id'] | The checkpoint-key/root derivation assertion lacks a coherent witness moving checkpoint key, both token copies and checkpoint references independently of the prior token equality. |
-| `O202` | sum((s['retained_event_count'] for s in segments)) == len(frames) | Every frame must belong to exactly one source segment before this total can differ. No independent segment-membership witness reaches this count without another captured-source defect. |
-| `O207` | sequences == sorted(set(sequences)) | The source-order uniqueness assertion lacks a coherent original capture with distinct valid owner events that reaches it. Reordered/duplicate-source cases currently refuse earlier. |
-| `O208` | len({f['event']['event_id'] for f in frames}) == len(frames) | The event-ID uniqueness assertion lacks a coherent capture with duplicated authentic original IDs and otherwise lawful Storage sequence/order and owner custody. |
-| `O211` | g['reason'] in ('allocator_lease_abandoned', 'corruption_loss', 'retention_compaction') | The checkpoint schema constrains each sequence-gap reason before this runtime allowlist. A valid gap control is collected; no independent invalid reason or per-enum schema cut is credited. |
-| `O214` | gid == generation['generation_id'] | The selected generation is fetched by checkpoint.current_generation_id and the checkpoint schema precedes this equality. No independently inconsistent selected-generation witness is supplied. |
-| `O216` | k == g['generation_id'] | The map-key/generation-ID equality lacks a multi-generation complete control with an independently defective inactive generation. Current-generation aliases encounter prior joins first. |
-| `O217` | g['generation_id'] == index_generation(cp['storage_instance_id'], g['anchor']) | The per-generation identity derivation has no isolated inactive-generation witness; O215 already tests this derivation for the selected generation. No duplicate-set proof was run. |
-| `O218` | g['index_dataset_name'] == 'event_record_index.v2@' + k | The per-generation dataset-name derivation lacks a coherent inactive-generation witness preserving prior generation-ID and dataset lookup joins. |
-| `O219` | [k for k, g in cp['generations'].items() if g['state'] == 'current'] == [gid] | The exactly-one-current-generation assertion lacks an independent multi-generation control/negative after checkpoint schema constraints. |
-| `O220` | anchor['source_selection']['storage_instance_id'] == cp['storage_instance_id'] | The anchor-root equality lacks a coherent independent anchor/source/root witness that preserves prior generation derivation and selection joins. |
-| `O221` | anchor['retained_event_count'] <= len(frames) | The anchor retained-count bound lacks a coherent independently reissued anchor/generation witness; current cases stop at earlier generation or prefix bindings. |
-| `O223` | anchor['first_retained_sequence_id'] == (prefix[0]['event']['sequence_id'] if prefix else None) | The birth-anchor first sequence equality lacks a coherent independently reissued anchor, generation ID and token negative. No whole-anchor cut is used. |
-| `O224` | anchor['through_sequence_id'] == (prefix[-1]['event']['sequence_id'] if prefix else None) | The birth-anchor through sequence equality lacks a coherent independently reissued anchor, generation ID and token negative. No whole-anchor cut is used. |
-| `O225` | anchor['sequence_gaps_sha256'] == index_binding(birth_gaps) | The birth-anchor gap digest lacks a coherent independently reissued anchor/generation witness. Gap controls are covered separately; this exact digest row remains unproved. |
-| `O226` | exact_equal(anchor['source_selection'][k], source['source_selection'][k]) | Each anchor/source-selection field join lacks a separately reissued birth generation, ID and token witness. No compound anchor-removal set earns credit. |
-| `O233` | exact_equal(selected[0]['event'], event) | The selected original frame equality is preceded by source row reconstruction and O228 row-source matching. No independent full-path input reaches this later equality. |
-| `B001` | event['event_type'] == p['event_type'] | The selected blockage payload schema fixes event_type before envelope/payload family equality; no per-const schema cut. |
-| `B004` | event['scope_kind'] == 'project' | The shared envelope schema and blockage identity join precede the project-only scope assertion; no independent scope witness survives them. |
-| `B019` | original['event_type'] == 'wizard.blocked' | The retained predecessor family assertion lacks a coherent different-family original/source/custody control. Missing witness; no unreachable claim. |
-| `B023` | p['source_ref'] == row['source_family'] + ':' + identity(p)[1].split(':')[-1] | Source-reference derivation is bound by the earlier envelope identity and source_ref equality. No independent negative reaches this later derivation. |
-| `B054` | previous is not None | The predecessor requiredness assertion lacks a valid unblocked observation with the corresponding original absent after its preceding historical lookup/custody checks. |
-| `B063` | type(v) is str | The resolution-set schema validates member string type before this runtime type assertion; no individual item-type schema cut. |
-| `B069` | event['event_type'] in NAMES | The ordinary verify entry has no foreign-family witness with a complete otherwise valid DCW authority graph; foreign payload/schema probes exercise other boundaries. |
-| `B085` | original is not None | Compatibility-original absence has no independently missing original witness before source construction/custody. Removing the guard could also leave a dereference; no derivation credit. |
-| `B093` | source['recovery_epoch'] < a['recovery_epoch'] | The older-epoch comparison lacks a coherently admitted newer-source/older-authority restore witness preserving preceding restore admission joins. |
-| `B095` | custody is not None | Original custody is authenticated earlier by source_contract/original_receipt before restore membership. No independent absence witness reaches this later check. |
-| `B096` | len(matching) == 1 | The exactly-one matching restore member check lacks an independently reissued complete admission retaining all required member/owner facts. No schema/member compound cut. |
-| `L001` | payload['ts'].endswith('Z') | The bundle payload schema UTC-Z shape precedes this endswith assertion. No individual schema-pattern cut. Timestamp review remains interim only. |
-| `L013` | payload['predecessor_event_id'] is None | The requested payload schema fixes predecessor_event_id to null before this runtime assertion. No individual schema-const cut. |
-| `L014` | payload['phase_sequence'] == 0 | The requested payload schema fixes phase_sequence to zero before this runtime assertion. No individual schema-const cut. |
-| `OE007` | bundle_source: intrinsic parser/schema status | With the canonical callback every product refusal is now m.Refusal and is rethrown in the preceding except branch; no AssertionError/ValidationError witness is supplied for this legacy fallback. |
-| `LE001` | validate: intrinsic parser/schema status | The enforced bundle payload date-time validation precedes datetime.fromisoformat. No parser-specific invalid value survives it; timestamp work remains interim only. |
-
-## Full-path diagnostic cuts
-
-{"AttributeError": 3, "IndexError": 2, "KeyError": 1, "RecursionError": 1, "TypeError": 14, "UnboundLocalError": 7, "accept": 919, "causation": 4, "completion_outputs": 1, "current_child_join": 1, "durable_token": 8, "idempotency_conflict": 1, "identifier_whitespace": 6, "index_coverage": 6, "index_currentness": 1, "index_generation_identity": 6, "index_row_membership": 5, "index_source_binding": 12, "index_source_gaps": 1, "latest_source_event": 1, "materialized_source": 1, "original_authority": 18, "original_binding": 4, "original_document": 1, "original_receipt_equality": 2, "phase_order": 11, "phase_sequence": 1, "registered_schema_pointer": 1, "registered_schema_ref": 1, "schema": 7, "secret_or_path": 1, "source_phase_identity": 1, "token_shape": 6, "writer_policy": 1}
-
-These are ordinary complete-checker diagnostics using one disabled named row, outside the gated phase boundary. A later refusal or a derivation exception earns no complete-boundary credit. Accepting diagnostics do not certify the whole boundary. Full lists are preserved in `guard-results.json.gz`.

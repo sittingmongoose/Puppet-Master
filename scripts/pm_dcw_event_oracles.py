@@ -948,7 +948,7 @@ def index_content(index, reader, authority=None, event_validator=None):
     guard_rows.enforce('O204', {'site': 'O204', 'code': 'index_source_bytes', 'v0': typed_observation(source['segments']), 'v1': typed_observation(segments)})
     guard_rows.enforce('O205', {'site': 'O205', 'code': 'index_source_bytes', 'v0': typed_observation(source['manifest']['retained_inventory']), 'v1': typed_observation(segments)})
     guard_rows.enforce('O206', {'site': 'O206', 'code': 'index_source_bytes', 'v0': typed_observation(source['manifest']['durable_watermarks']), 'v1': typed_observation([dict(segment_name=s['segment_name'], durable_end_offset=s['source_durable_end_offset']) for s in segments])})
-    guard_rows.enforce('O207', {'site': 'O207', 'code': 'index_source_bytes', 'v0': sequences})
+    guard_rows.enforce('O207', {'site': 'O207', 'code': 'index_source_bytes', 'v0': sequences, 'v1': sorted(set(sequences))})
     guard_rows.enforce('O208', {'site': 'O208', 'code': 'index_source_bytes', 'v0': frames})
     holes = [(a + 1, b - 1) for a, b in zip(sequences, sequences[1:]) if b != a + 1]
     gaps = source['sequence_gaps']
@@ -964,7 +964,7 @@ def index_content(index, reader, authority=None, event_validator=None):
         guard_rows.enforce('O216', {'site': 'O216', 'code': 'index_generation_identity', 'v0': k, 'v1': g['generation_id']})
         guard_rows.enforce('O217', {'site': 'O217', 'code': 'index_generation_identity', 'v0': g['generation_id'], 'v1': index_generation(cp['storage_instance_id'], g['anchor'])})
         guard_rows.enforce('O218', {'site': 'O218', 'code': 'index_generation_identity', 'v0': g['index_dataset_name'], 'v1': k})
-    guard_rows.enforce('O219', {'site': 'O219', 'code': 'index_generation_identity', 'v0': list(cp['generations'].items()), 'v1': gid})
+    guard_rows.enforce('O219', {'site': 'O219', 'code': 'index_generation_identity', 'v0': [k for k, generation in cp['generations'].items() if generation['state'] == 'current'], 'v1': [gid]})
     guard_rows.enforce('O220', {'site': 'O220', 'code': 'index_generation_identity', 'v0': anchor['source_selection']['storage_instance_id'], 'v1': cp['storage_instance_id']})
     prefix = frames[:anchor['retained_event_count']]
     birth_gaps = [g for g in gaps if prefix and prefix[0]['event']['sequence_id'] <= g['first_sequence_id'] and (g['last_sequence_id'] <= prefix[-1]['event']['sequence_id'])]

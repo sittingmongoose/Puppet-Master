@@ -48,3 +48,10 @@ def cases(family=None):
             yield specimen('previous/sequence',prev=prev,expected='phase_sequence')
         else:
             yield specimen('unexpected_previous',prev=payload,expected='request_predecessor')
+            # Sweep part 2A fix 1: the requested payload schema admits a string
+            # predecessor and any nonnegative sequence, so L013/L014 refuse first.
+            p=copy.deepcopy(payload);p['predecessor_event_id']='evt-foreign'
+            yield specimen('requested_predecessor_present',p=p,e=dict(envelope,causation_event_id='evt-foreign'),expected='request_predecessor')
+            p=copy.deepcopy(payload);p['phase_sequence']=1
+            eid2,key2=legacy.identity(p)
+            yield specimen('requested_sequence_nonzero',p=p,e=dict(envelope,event_id=eid2,idempotency_key=key2),expected='request_predecessor')

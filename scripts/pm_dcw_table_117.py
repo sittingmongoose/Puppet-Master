@@ -4,7 +4,7 @@ import pm_guard_isolation as g
 def O219(value, context):
     if value['site'] != 'O219':
         return None
-    return None if ([k for k, g in value['v0'] if g['state'] == 'current'] == [value['v1']]) else value['code']
+    return None if (value['v0'] == value['v1']) else value['code']
 
 def case(value):
     context = None

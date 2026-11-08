@@ -4,7 +4,7 @@ import pm_guard_isolation as g
 def O207(value, context):
     if value['site'] != 'O207':
         return None
-    return None if (value['v0'] == sorted(set(value['v0']))) else value['code']
+    return None if (value['v0'] == value['v1']) else value['code']
 
 def case(value):
     context = None
