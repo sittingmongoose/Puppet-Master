@@ -8,39 +8,15 @@
 function mountBar(barEl) {
   /* FO-96 round 8: the key focus ring of the bar's tiles, one element above every layer of the page; CSS places it on the
      focused tile and shows it (80-bar.src.css), so nothing here decides whether it shows or where. */
-  const ring = document.getElementById('d-abring') || document.body.appendChild(PMR.h('i.d-abring', { id: 'd-abring', 'aria-hidden': 'true' }));
-  /* Round 9 (opus-recheck-f96h): outside the bar, the ring is not clipped by the bar's scroll box, so with the bar
-     scrolled until the key-focused tile is partly out of it, the whole ring was drawn over what lies beyond (the title
-     bar's logo, names shown at 1280x500). It is clipped to the scroll box here, as the tile's own outline was, rather than
-     hidden: a tile cut by a few pixels keeps its mark on what shows (CSS hides it, position-visibility, once the tile is
-     wholly out). Read only while a tile of the bar has a key focus, when the bar scrolls or changes size or the focus moves
-     in it; for a pointer it is one selector match. The clip is measured on the ring's own box, which CSS lays on the
-     tile's layout box: the tile's own transforms (Glass lifts an opened tile by 1.08 after the press) move neither the ring
-     nor the clip, where measured on the tile it went stale (round 10). The tile's size can still ease (Glass grows an
-     opened tile to 1.08, which the anchor follows): it is measured again when a transition or animation in the bar ends,
-     and when the focused tile's own running animations finish (no timer, nothing for a pointer). */
-  const waited = typeof WeakSet === 'function' ? new WeakSet() : null;
-  const clipRing = () => {
-    const a = document.activeElement, on = !!a && a !== barEl && barEl.contains(a) && a.matches('.icon:focus-visible');
-    let v = '';
-    if (on) {
-      if (waited && a.getAnimations) a.getAnimations({ subtree: true }).forEach(x => {
-        if (waited.has(x) || x.playState === 'finished' || !x.finished) return;
-        const end = x.effect && x.effect.getComputedTiming ? x.effect.getComputedTiming().endTime : Infinity;
-        if (!isFinite(end)) return;
-        waited.add(x); x.finished.then(clipRing, clipRing);
-      });
-      const t = ring.getBoundingClientRect(), b = barEl.getBoundingClientRect();
-      const top = b.top + barEl.clientTop, left = b.left + barEl.clientLeft, cut = [top - t.top, t.right - (left + barEl.clientWidth), t.bottom - (top + barEl.clientHeight), left - t.left].map(x => Math.max(0, x));
-      if (cut.some(x => x > 0.5)) v = 'inset(' + cut.map(x => x.toFixed(1) + 'px').join(' ') + ')';
-    }
-    if (ring.style.clipPath !== v) ring.style.clipPath = v;
-  };
-  barEl.addEventListener('scroll', clipRing, { passive: true });
-  barEl.addEventListener('focusin', clipRing);
-  barEl.addEventListener('keydown', clipRing);   /* a key turns :focus-visible on for a pointer-focused tile */
-  barEl.addEventListener('transitionend', clipRing); barEl.addEventListener('animationend', clipRing);
-  if (window.ResizeObserver) new ResizeObserver(clipRing).observe(barEl);
+  /* Rounds 9-11: outside the bar, the ring is not clipped by the bar's scroll box. It lies in a frame on that scroll box
+     (.d-abclip, clip-path: inset(0); CSS places it on the bar, 80-bar.src.css), and the frame clips it: a clip-path
+     clips its fixed descendants (it is not their containing block, so the ring's anchor still resolves), on the
+     compositor, so a fast wheel never shows the ring past the scroll box. Round 9 set the ring's own clip-path from
+     here on the bar's scroll, a frame or more behind the compositor (opus-recheck-f96i F3). Nothing here reads. */
+  if (!document.getElementById('d-abring')) {
+    const clip = document.getElementById('d-abclip') || document.body.appendChild(PMR.h('i.d-abclip', { id: 'd-abclip', 'aria-hidden': 'true' }));
+    clip.appendChild(PMR.h('i.d-abring', { id: 'd-abring', 'aria-hidden': 'true' }));
+  }
   const tile = PMR.h('span.d-abind', { 'aria-hidden': 'true' });
   barEl.insertBefore(tile, barEl.firstChild);
   const chatTile = PMR.h('span.d-abind.d-abind-chat', { 'aria-hidden': 'true' });

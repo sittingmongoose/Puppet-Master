@@ -105,8 +105,20 @@
     box-shadow: inset 0 0 0 5px rgb(from var(--surface) r g b / 1) !important;   /* opaque: Glass's surface is see-through */
   }
 }
-.d-abring { display: none; }
+/* Rounds 9-11: the ring lies in a frame laid on the bar's scroll box, which clips it there (clip-path: inset(0)) as the
+   bar clips the tiles, on the compositor while the bar scrolls (opus-recheck-f96i F3: round 9's script clip trailed a fast
+   wheel by 1 to 19 frames). The frame is the bar's border box less the bar's top and bottom borders: none, but Liquid
+   Glass's 1 px sheet border (glass.css). The ring never reaches the bar's sides. */
+.d-abring, .d-abclip { display: none; }
 @supports (anchor-name: --d-abfocus) {
+  §B { anchor-name: --d-abbar; }
+  §R:not([data-o55-nier-parts~="brackets"]) .d-abclip {
+    display: block; position: fixed; z-index: 2147483100; pointer-events: none; margin: 0; padding: 0; border: 0;
+    position-anchor: --d-abbar; left: anchor(left, -99px); right: anchor(right, 100vw);
+    top: calc(anchor(top, -99px) + var(--d-abbar-b, 0px)); bottom: calc(anchor(bottom, 100vh) + var(--d-abbar-b, 0px));
+    clip-path: inset(0);
+  }
+  §R[data-lg="on"][data-theme^="glass"] .d-abclip { --d-abbar-b: 1px; }
   §R:not([data-o55-nier-parts~="brackets"]) .d-abring {
     display: block; position: fixed; z-index: 2147483100; pointer-events: none; margin: 0; padding: 0; border: 0; box-sizing: border-box;
     position-anchor: --d-abfocus; top: anchor(top, -99px); left: anchor(left, -99px); width: anchor-size(width, 0px); height: anchor-size(height, 0px);
