@@ -1,10 +1,10 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_kind": "self_grade_sweep_part1_not_ready",
+  "assessment_kind": "self_grade_sweep_part2a_part2b_numbers_not_ready",
   "assessed_tree": {
     "branch": "plans/ea-w2-filemanager-20261104",
-    "commit": "acbb0d2a4aedce8d015b3f31a9748608c8d5dccb",
-    "read_method": "All twelve complete family suites with unfiltered registry validation; B4 complete-checker byte-mutation regression; unchanged cycle-8 B1-B3 driver (478 witnesses); readiness self-tests, shard regeneration/check and index generation/validation. The 15 F/SP/CV/ATS owner units match the reviewed 68fe8e3479 bytes; source quotes were rechecked and relocated. Prior guard accounting is historical, not current proof. Native NOT_RUN."
+    "commit": "62615d46d2f4fa1bc34ced6bdeac14a83280a889",
+    "read_method": "Sweep part 2A and part 2B numbers: all twelve complete family suites (7,246 fixture witnesses, 680 part 2A witnesses, 21 integrity witnesses), the differential against the merged pre-change checker, the gated guard tool (004bdedd63) over every Method B table, the shared number corpus through the complete checker and the number-scope self-test; shard and index regeneration. Every evidence quote below was rechecked at this commit and relocated where it moved. Native NOT_RUN."
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -113,8 +113,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29667,
-              "line_end": 29667,
+              "line_start": 29793,
+              "line_end": 29793,
               "quote": "Append uses only the frozen settled payload/identity and current native admission."
             },
             {
@@ -187,8 +187,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29674,
-              "line_end": 29674,
+              "line_start": 29800,
+              "line_end": 29800,
               "quote": "Missing original full value, v2 witness or native domain evidence fences;"
             },
             {
@@ -248,8 +248,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29604,
-              "line_end": 29604,
+              "line_start": 29730,
+              "line_end": 29730,
               "quote": "physical companion through their own F unit."
             },
             {
@@ -262,8 +262,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29715,
-              "line_end": 29715,
+              "line_start": 29841,
+              "line_end": 29841,
               "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact"
             }
           ],
@@ -336,8 +336,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29695,
-              "line_end": 29695,
+              "line_start": 29821,
+              "line_end": 29821,
               "quote": "Active-to-draining CAS closes new command acceptance,"
             },
             {
@@ -350,8 +350,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29869,
+              "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
             }
           ],
@@ -365,13 +365,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B4 is repaired: exact shared bytes restored, all registry failures are enforced, and the complete checker rejects the 28-reference mutant. This family passes its complete suite; SWEEP-NUM, SWEEP-12 and shared guard accounting remain open, so Q remains PARTIAL.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (184 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-150",
-              "line_start": 782,
-              "line_end": 782,
+              "line_start": 1090,
+              "line_end": 1090,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
@@ -384,9 +384,37 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-150",
-              "line_start": 1196,
-              "line_end": 1196,
-              "quote": "registry_failures = _codec.storage_value_registry_data_failures("
+              "line_start": 87,
+              "line_end": 87,
+              "quote": "def refuse(phase, facts, message=None, schema=None):"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-150",
+              "line_start": 1487,
+              "line_end": 1487,
+              "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-150",
+              "line_start": 1244,
+              "line_end": 1244,
+              "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-150",
+              "line_start": 7257,
+              "line_end": 7257,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-150",
+              "line_start": 24650,
+              "line_end": 24650,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             }
           ],
           "prior": {
@@ -394,7 +422,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle-8 B4 closed by implementation acbb0d2a4aedce8d015b3f31a9748608c8d5dccb; part-2 sweeps still prevent a Q upgrade and READY verdict."
+          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -496,8 +524,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29667,
-              "line_end": 29667,
+              "line_start": 29793,
+              "line_end": 29793,
               "quote": "Append uses only the frozen settled payload/identity and current native admission."
             },
             {
@@ -570,8 +598,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29674,
-              "line_end": 29674,
+              "line_start": 29800,
+              "line_end": 29800,
               "quote": "Missing original full value, v2 witness or native domain evidence fences;"
             },
             {
@@ -631,8 +659,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29604,
-              "line_end": 29604,
+              "line_start": 29730,
+              "line_end": 29730,
               "quote": "physical companion through their own F unit."
             },
             {
@@ -645,8 +673,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29715,
-              "line_end": 29715,
+              "line_start": 29841,
+              "line_end": 29841,
               "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact"
             }
           ],
@@ -719,8 +747,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29695,
-              "line_end": 29695,
+              "line_start": 29821,
+              "line_end": 29821,
               "quote": "Active-to-draining CAS closes new command acceptance,"
             },
             {
@@ -733,8 +761,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29869,
+              "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
             }
           ],
@@ -748,13 +776,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B4 is repaired: exact shared bytes restored, all registry failures are enforced, and the complete checker rejects the 28-reference mutant. This family passes its complete suite; SWEEP-NUM, SWEEP-12 and shared guard accounting remain open, so Q remains PARTIAL.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (185 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-151",
-              "line_start": 782,
-              "line_end": 782,
+              "line_start": 1090,
+              "line_end": 1090,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
@@ -767,9 +795,37 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-151",
-              "line_start": 1196,
-              "line_end": 1196,
-              "quote": "registry_failures = _codec.storage_value_registry_data_failures("
+              "line_start": 87,
+              "line_end": 87,
+              "quote": "def refuse(phase, facts, message=None, schema=None):"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-151",
+              "line_start": 1487,
+              "line_end": 1487,
+              "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-151",
+              "line_start": 1244,
+              "line_end": 1244,
+              "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-151",
+              "line_start": 7257,
+              "line_end": 7257,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-151",
+              "line_start": 24650,
+              "line_end": 24650,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             }
           ],
           "prior": {
@@ -777,7 +833,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle-8 B4 closed by implementation acbb0d2a4aedce8d015b3f31a9748608c8d5dccb; part-2 sweeps still prevent a Q upgrade and READY verdict."
+          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -879,8 +935,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29667,
-              "line_end": 29667,
+              "line_start": 29793,
+              "line_end": 29793,
               "quote": "Append uses only the frozen settled payload/identity and current native admission."
             },
             {
@@ -953,8 +1009,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29674,
-              "line_end": 29674,
+              "line_start": 29800,
+              "line_end": 29800,
               "quote": "Missing original full value, v2 witness or native domain evidence fences;"
             },
             {
@@ -1014,8 +1070,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29604,
-              "line_end": 29604,
+              "line_start": 29730,
+              "line_end": 29730,
               "quote": "physical companion through their own F unit."
             },
             {
@@ -1028,8 +1084,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29715,
-              "line_end": 29715,
+              "line_start": 29841,
+              "line_end": 29841,
               "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact"
             }
           ],
@@ -1102,8 +1158,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29695,
-              "line_end": 29695,
+              "line_start": 29821,
+              "line_end": 29821,
               "quote": "Active-to-draining CAS closes new command acceptance,"
             },
             {
@@ -1116,8 +1172,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29869,
+              "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
             }
           ],
@@ -1131,13 +1187,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B4 is repaired: exact shared bytes restored, all registry failures are enforced, and the complete checker rejects the 28-reference mutant. This family passes its complete suite; SWEEP-NUM, SWEEP-12 and shared guard accounting remain open, so Q remains PARTIAL.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (176 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-152",
-              "line_start": 782,
-              "line_end": 782,
+              "line_start": 1090,
+              "line_end": 1090,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
@@ -1150,9 +1206,37 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-152",
-              "line_start": 1196,
-              "line_end": 1196,
-              "quote": "registry_failures = _codec.storage_value_registry_data_failures("
+              "line_start": 87,
+              "line_end": 87,
+              "quote": "def refuse(phase, facts, message=None, schema=None):"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-152",
+              "line_start": 1487,
+              "line_end": 1487,
+              "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-152",
+              "line_start": 1244,
+              "line_end": 1244,
+              "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-152",
+              "line_start": 7257,
+              "line_end": 7257,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-152",
+              "line_start": 24650,
+              "line_end": 24650,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             }
           ],
           "prior": {
@@ -1160,7 +1244,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle-8 B4 closed by implementation acbb0d2a4aedce8d015b3f31a9748608c8d5dccb; part-2 sweeps still prevent a Q upgrade and READY verdict."
+          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -1262,8 +1346,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29667,
-              "line_end": 29667,
+              "line_start": 29793,
+              "line_end": 29793,
               "quote": "Append uses only the frozen settled payload/identity and current native admission."
             },
             {
@@ -1336,8 +1420,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29674,
-              "line_end": 29674,
+              "line_start": 29800,
+              "line_end": 29800,
               "quote": "Missing original full value, v2 witness or native domain evidence fences;"
             },
             {
@@ -1397,8 +1481,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29604,
-              "line_end": 29604,
+              "line_start": 29730,
+              "line_end": 29730,
               "quote": "physical companion through their own F unit."
             },
             {
@@ -1411,8 +1495,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29715,
-              "line_end": 29715,
+              "line_start": 29841,
+              "line_end": 29841,
               "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact"
             }
           ],
@@ -1485,8 +1569,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29695,
-              "line_end": 29695,
+              "line_start": 29821,
+              "line_end": 29821,
               "quote": "Active-to-draining CAS closes new command acceptance,"
             },
             {
@@ -1499,8 +1583,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29869,
+              "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
             }
           ],
@@ -1514,13 +1598,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B4 is repaired: exact shared bytes restored, all registry failures are enforced, and the complete checker rejects the 28-reference mutant. This family passes its complete suite; SWEEP-NUM, SWEEP-12 and shared guard accounting remain open, so Q remains PARTIAL.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (177 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-153",
-              "line_start": 782,
-              "line_end": 782,
+              "line_start": 1090,
+              "line_end": 1090,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
@@ -1533,9 +1617,37 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-153",
-              "line_start": 1196,
-              "line_end": 1196,
-              "quote": "registry_failures = _codec.storage_value_registry_data_failures("
+              "line_start": 87,
+              "line_end": 87,
+              "quote": "def refuse(phase, facts, message=None, schema=None):"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-153",
+              "line_start": 1487,
+              "line_end": 1487,
+              "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-153",
+              "line_start": 1244,
+              "line_end": 1244,
+              "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-153",
+              "line_start": 7257,
+              "line_end": 7257,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-153",
+              "line_start": 24650,
+              "line_end": 24650,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             }
           ],
           "prior": {
@@ -1543,7 +1655,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle-8 B4 closed by implementation acbb0d2a4aedce8d015b3f31a9748608c8d5dccb; part-2 sweeps still prevent a Q upgrade and READY verdict."
+          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -1645,8 +1757,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29667,
-              "line_end": 29667,
+              "line_start": 29793,
+              "line_end": 29793,
               "quote": "Append uses only the frozen settled payload/identity and current native admission."
             },
             {
@@ -1719,8 +1831,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29674,
-              "line_end": 29674,
+              "line_start": 29800,
+              "line_end": 29800,
               "quote": "Missing original full value, v2 witness or native domain evidence fences;"
             },
             {
@@ -1780,8 +1892,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29604,
-              "line_end": 29604,
+              "line_start": 29730,
+              "line_end": 29730,
               "quote": "physical companion through their own F unit."
             },
             {
@@ -1794,8 +1906,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29715,
-              "line_end": 29715,
+              "line_start": 29841,
+              "line_end": 29841,
               "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact"
             }
           ],
@@ -1868,8 +1980,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29695,
-              "line_end": 29695,
+              "line_start": 29821,
+              "line_end": 29821,
               "quote": "Active-to-draining CAS closes new command acceptance,"
             },
             {
@@ -1882,8 +1994,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29869,
+              "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
             }
           ],
@@ -1897,13 +2009,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B4 is repaired: exact shared bytes restored, all registry failures are enforced, and the complete checker rejects the 28-reference mutant. This family passes its complete suite; SWEEP-NUM, SWEEP-12 and shared guard accounting remain open, so Q remains PARTIAL.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (177 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-154",
-              "line_start": 782,
-              "line_end": 782,
+              "line_start": 1090,
+              "line_end": 1090,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
@@ -1916,9 +2028,37 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-154",
-              "line_start": 1196,
-              "line_end": 1196,
-              "quote": "registry_failures = _codec.storage_value_registry_data_failures("
+              "line_start": 87,
+              "line_end": 87,
+              "quote": "def refuse(phase, facts, message=None, schema=None):"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-154",
+              "line_start": 1487,
+              "line_end": 1487,
+              "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-154",
+              "line_start": 1244,
+              "line_end": 1244,
+              "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-154",
+              "line_start": 7257,
+              "line_end": 7257,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-154",
+              "line_start": 24650,
+              "line_end": 24650,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             }
           ],
           "prior": {
@@ -1926,7 +2066,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle-8 B4 closed by implementation acbb0d2a4aedce8d015b3f31a9748608c8d5dccb; part-2 sweeps still prevent a Q upgrade and READY verdict."
+          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -2028,8 +2168,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29667,
-              "line_end": 29667,
+              "line_start": 29793,
+              "line_end": 29793,
               "quote": "Append uses only the frozen settled payload/identity and current native admission."
             },
             {
@@ -2102,8 +2242,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29674,
-              "line_end": 29674,
+              "line_start": 29800,
+              "line_end": 29800,
               "quote": "Missing original full value, v2 witness or native domain evidence fences;"
             },
             {
@@ -2163,8 +2303,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29604,
-              "line_end": 29604,
+              "line_start": 29730,
+              "line_end": 29730,
               "quote": "physical companion through their own F unit."
             },
             {
@@ -2177,8 +2317,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29715,
-              "line_end": 29715,
+              "line_start": 29841,
+              "line_end": 29841,
               "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact"
             }
           ],
@@ -2251,8 +2391,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29695,
-              "line_end": 29695,
+              "line_start": 29821,
+              "line_end": 29821,
               "quote": "Active-to-draining CAS closes new command acceptance,"
             },
             {
@@ -2265,8 +2405,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29869,
+              "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
             }
           ],
@@ -2280,13 +2420,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B4 is repaired: exact shared bytes restored, all registry failures are enforced, and the complete checker rejects the 28-reference mutant. This family passes its complete suite; SWEEP-NUM, SWEEP-12 and shared guard accounting remain open, so Q remains PARTIAL.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (179 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-155",
-              "line_start": 782,
-              "line_end": 782,
+              "line_start": 1090,
+              "line_end": 1090,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
@@ -2299,9 +2439,37 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-155",
-              "line_start": 1196,
-              "line_end": 1196,
-              "quote": "registry_failures = _codec.storage_value_registry_data_failures("
+              "line_start": 87,
+              "line_end": 87,
+              "quote": "def refuse(phase, facts, message=None, schema=None):"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-155",
+              "line_start": 1487,
+              "line_end": 1487,
+              "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-155",
+              "line_start": 1244,
+              "line_end": 1244,
+              "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-155",
+              "line_start": 7257,
+              "line_end": 7257,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-155",
+              "line_start": 24650,
+              "line_end": 24650,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             }
           ],
           "prior": {
@@ -2309,7 +2477,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle-8 B4 closed by implementation acbb0d2a4aedce8d015b3f31a9748608c8d5dccb; part-2 sweeps still prevent a Q upgrade and READY verdict."
+          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -2411,8 +2579,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29667,
-              "line_end": 29667,
+              "line_start": 29793,
+              "line_end": 29793,
               "quote": "Append uses only the frozen settled payload/identity and current native admission."
             },
             {
@@ -2485,8 +2653,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29674,
-              "line_end": 29674,
+              "line_start": 29800,
+              "line_end": 29800,
               "quote": "Missing original full value, v2 witness or native domain evidence fences;"
             },
             {
@@ -2546,8 +2714,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29604,
-              "line_end": 29604,
+              "line_start": 29730,
+              "line_end": 29730,
               "quote": "physical companion through their own F unit."
             },
             {
@@ -2560,8 +2728,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29715,
-              "line_end": 29715,
+              "line_start": 29841,
+              "line_end": 29841,
               "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact"
             }
           ],
@@ -2634,8 +2802,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29695,
-              "line_end": 29695,
+              "line_start": 29821,
+              "line_end": 29821,
               "quote": "Active-to-draining CAS closes new command acceptance,"
             },
             {
@@ -2648,8 +2816,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29869,
+              "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
             }
           ],
@@ -2663,13 +2831,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B4 is repaired: exact shared bytes restored, all registry failures are enforced, and the complete checker rejects the 28-reference mutant. This family passes its complete suite; SWEEP-NUM, SWEEP-12 and shared guard accounting remain open, so Q remains PARTIAL.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (178 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-156",
-              "line_start": 782,
-              "line_end": 782,
+              "line_start": 1090,
+              "line_end": 1090,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
@@ -2682,9 +2850,37 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-156",
-              "line_start": 1196,
-              "line_end": 1196,
-              "quote": "registry_failures = _codec.storage_value_registry_data_failures("
+              "line_start": 87,
+              "line_end": 87,
+              "quote": "def refuse(phase, facts, message=None, schema=None):"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-156",
+              "line_start": 1487,
+              "line_end": 1487,
+              "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-156",
+              "line_start": 1244,
+              "line_end": 1244,
+              "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-156",
+              "line_start": 7257,
+              "line_end": 7257,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-156",
+              "line_start": 24650,
+              "line_end": 24650,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             }
           ],
           "prior": {
@@ -2692,7 +2888,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle-8 B4 closed by implementation acbb0d2a4aedce8d015b3f31a9748608c8d5dccb; part-2 sweeps still prevent a Q upgrade and READY verdict."
+          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -2794,8 +2990,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29667,
-              "line_end": 29667,
+              "line_start": 29793,
+              "line_end": 29793,
               "quote": "Append uses only the frozen settled payload/identity and current native admission."
             },
             {
@@ -2868,8 +3064,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29674,
-              "line_end": 29674,
+              "line_start": 29800,
+              "line_end": 29800,
               "quote": "Missing original full value, v2 witness or native domain evidence fences;"
             },
             {
@@ -2929,8 +3125,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29604,
-              "line_end": 29604,
+              "line_start": 29730,
+              "line_end": 29730,
               "quote": "physical companion through their own F unit."
             },
             {
@@ -2943,8 +3139,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29715,
-              "line_end": 29715,
+              "line_start": 29841,
+              "line_end": 29841,
               "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact"
             }
           ],
@@ -3017,8 +3213,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29695,
-              "line_end": 29695,
+              "line_start": 29821,
+              "line_end": 29821,
               "quote": "Active-to-draining CAS closes new command acceptance,"
             },
             {
@@ -3031,8 +3227,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29869,
+              "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
             }
           ],
@@ -3046,13 +3242,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B4 is repaired: exact shared bytes restored, all registry failures are enforced, and the complete checker rejects the 28-reference mutant. This family passes its complete suite; SWEEP-NUM, SWEEP-12 and shared guard accounting remain open, so Q remains PARTIAL.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (185 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-157",
-              "line_start": 782,
-              "line_end": 782,
+              "line_start": 1090,
+              "line_end": 1090,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
@@ -3065,9 +3261,37 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-157",
-              "line_start": 1196,
-              "line_end": 1196,
-              "quote": "registry_failures = _codec.storage_value_registry_data_failures("
+              "line_start": 87,
+              "line_end": 87,
+              "quote": "def refuse(phase, facts, message=None, schema=None):"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-157",
+              "line_start": 1487,
+              "line_end": 1487,
+              "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-157",
+              "line_start": 1244,
+              "line_end": 1244,
+              "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-157",
+              "line_start": 7257,
+              "line_end": 7257,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-157",
+              "line_start": 24650,
+              "line_end": 24650,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             }
           ],
           "prior": {
@@ -3075,7 +3299,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle-8 B4 closed by implementation acbb0d2a4aedce8d015b3f31a9748608c8d5dccb; part-2 sweeps still prevent a Q upgrade and READY verdict."
+          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -3177,8 +3401,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29667,
-              "line_end": 29667,
+              "line_start": 29793,
+              "line_end": 29793,
               "quote": "Append uses only the frozen settled payload/identity and current native admission."
             },
             {
@@ -3251,8 +3475,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29674,
-              "line_end": 29674,
+              "line_start": 29800,
+              "line_end": 29800,
               "quote": "Missing original full value, v2 witness or native domain evidence fences;"
             },
             {
@@ -3312,8 +3536,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29604,
-              "line_end": 29604,
+              "line_start": 29730,
+              "line_end": 29730,
               "quote": "physical companion through their own F unit."
             },
             {
@@ -3326,8 +3550,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29715,
-              "line_end": 29715,
+              "line_start": 29841,
+              "line_end": 29841,
               "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact"
             }
           ],
@@ -3400,8 +3624,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29695,
-              "line_end": 29695,
+              "line_start": 29821,
+              "line_end": 29821,
               "quote": "Active-to-draining CAS closes new command acceptance,"
             },
             {
@@ -3414,8 +3638,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29869,
+              "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
             }
           ],
@@ -3429,13 +3653,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B4 is repaired: exact shared bytes restored, all registry failures are enforced, and the complete checker rejects the 28-reference mutant. This family passes its complete suite; SWEEP-NUM, SWEEP-12 and shared guard accounting remain open, so Q remains PARTIAL.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (177 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-158",
-              "line_start": 782,
-              "line_end": 782,
+              "line_start": 1090,
+              "line_end": 1090,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
@@ -3448,9 +3672,37 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-158",
-              "line_start": 1196,
-              "line_end": 1196,
-              "quote": "registry_failures = _codec.storage_value_registry_data_failures("
+              "line_start": 87,
+              "line_end": 87,
+              "quote": "def refuse(phase, facts, message=None, schema=None):"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-158",
+              "line_start": 1487,
+              "line_end": 1487,
+              "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-158",
+              "line_start": 1244,
+              "line_end": 1244,
+              "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-158",
+              "line_start": 7257,
+              "line_end": 7257,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-158",
+              "line_start": 24650,
+              "line_end": 24650,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             }
           ],
           "prior": {
@@ -3458,7 +3710,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle-8 B4 closed by implementation acbb0d2a4aedce8d015b3f31a9748608c8d5dccb; part-2 sweeps still prevent a Q upgrade and READY verdict."
+          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -3560,8 +3812,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29667,
-              "line_end": 29667,
+              "line_start": 29793,
+              "line_end": 29793,
               "quote": "Append uses only the frozen settled payload/identity and current native admission."
             },
             {
@@ -3634,8 +3886,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29674,
-              "line_end": 29674,
+              "line_start": 29800,
+              "line_end": 29800,
               "quote": "Missing original full value, v2 witness or native domain evidence fences;"
             },
             {
@@ -3695,8 +3947,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29604,
-              "line_end": 29604,
+              "line_start": 29730,
+              "line_end": 29730,
               "quote": "physical companion through their own F unit."
             },
             {
@@ -3709,8 +3961,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29715,
-              "line_end": 29715,
+              "line_start": 29841,
+              "line_end": 29841,
               "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact"
             }
           ],
@@ -3783,8 +4035,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29695,
-              "line_end": 29695,
+              "line_start": 29821,
+              "line_end": 29821,
               "quote": "Active-to-draining CAS closes new command acceptance,"
             },
             {
@@ -3797,8 +4049,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29869,
+              "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
             }
           ],
@@ -3812,13 +4064,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B4 is repaired: exact shared bytes restored, all registry failures are enforced, and the complete checker rejects the 28-reference mutant. This family passes its complete suite; SWEEP-NUM, SWEEP-12 and shared guard accounting remain open, so Q remains PARTIAL.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (178 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-159",
-              "line_start": 782,
-              "line_end": 782,
+              "line_start": 1090,
+              "line_end": 1090,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
@@ -3831,9 +4083,37 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-159",
-              "line_start": 1196,
-              "line_end": 1196,
-              "quote": "registry_failures = _codec.storage_value_registry_data_failures("
+              "line_start": 87,
+              "line_end": 87,
+              "quote": "def refuse(phase, facts, message=None, schema=None):"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-159",
+              "line_start": 1487,
+              "line_end": 1487,
+              "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-159",
+              "line_start": 1244,
+              "line_end": 1244,
+              "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-159",
+              "line_start": 7257,
+              "line_end": 7257,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-159",
+              "line_start": 24650,
+              "line_end": 24650,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             }
           ],
           "prior": {
@@ -3841,7 +4121,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle-8 B4 closed by implementation acbb0d2a4aedce8d015b3f31a9748608c8d5dccb; part-2 sweeps still prevent a Q upgrade and READY verdict."
+          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -3943,8 +4223,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29667,
-              "line_end": 29667,
+              "line_start": 29793,
+              "line_end": 29793,
               "quote": "Append uses only the frozen settled payload/identity and current native admission."
             },
             {
@@ -4017,8 +4297,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29674,
-              "line_end": 29674,
+              "line_start": 29800,
+              "line_end": 29800,
               "quote": "Missing original full value, v2 witness or native domain evidence fences;"
             },
             {
@@ -4078,8 +4358,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29604,
-              "line_end": 29604,
+              "line_start": 29730,
+              "line_end": 29730,
               "quote": "physical companion through their own F unit."
             },
             {
@@ -4092,8 +4372,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29715,
-              "line_end": 29715,
+              "line_start": 29841,
+              "line_end": 29841,
               "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact"
             }
           ],
@@ -4166,8 +4446,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29695,
-              "line_end": 29695,
+              "line_start": 29821,
+              "line_end": 29821,
               "quote": "Active-to-draining CAS closes new command acceptance,"
             },
             {
@@ -4180,8 +4460,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29869,
+              "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
             }
           ],
@@ -4195,13 +4475,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B4 is repaired: exact shared bytes restored, all registry failures are enforced, and the complete checker rejects the 28-reference mutant. This family passes its complete suite; SWEEP-NUM, SWEEP-12 and shared guard accounting remain open, so Q remains PARTIAL.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (177 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-160",
-              "line_start": 782,
-              "line_end": 782,
+              "line_start": 1090,
+              "line_end": 1090,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
@@ -4214,9 +4494,37 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-160",
-              "line_start": 1196,
-              "line_end": 1196,
-              "quote": "registry_failures = _codec.storage_value_registry_data_failures("
+              "line_start": 87,
+              "line_end": 87,
+              "quote": "def refuse(phase, facts, message=None, schema=None):"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-160",
+              "line_start": 1487,
+              "line_end": 1487,
+              "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-160",
+              "line_start": 1244,
+              "line_end": 1244,
+              "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-160",
+              "line_start": 7257,
+              "line_end": 7257,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-160",
+              "line_start": 24650,
+              "line_end": 24650,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             }
           ],
           "prior": {
@@ -4224,7 +4532,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle-8 B4 closed by implementation acbb0d2a4aedce8d015b3f31a9748608c8d5dccb; part-2 sweeps still prevent a Q upgrade and READY verdict."
+          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -4326,8 +4634,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29667,
-              "line_end": 29667,
+              "line_start": 29793,
+              "line_end": 29793,
               "quote": "Append uses only the frozen settled payload/identity and current native admission."
             },
             {
@@ -4400,8 +4708,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29674,
-              "line_end": 29674,
+              "line_start": 29800,
+              "line_end": 29800,
               "quote": "Missing original full value, v2 witness or native domain evidence fences;"
             },
             {
@@ -4461,8 +4769,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29604,
-              "line_end": 29604,
+              "line_start": 29730,
+              "line_end": 29730,
               "quote": "physical companion through their own F unit."
             },
             {
@@ -4475,8 +4783,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29715,
-              "line_end": 29715,
+              "line_start": 29841,
+              "line_end": 29841,
               "quote": "The actual redb value validates operation_custody_value or family_control_value: either that exact"
             }
           ],
@@ -4549,8 +4857,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29695,
-              "line_end": 29695,
+              "line_start": 29821,
+              "line_end": 29821,
               "quote": "Active-to-draining CAS closes new command acceptance,"
             },
             {
@@ -4563,8 +4871,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-560",
-              "line_start": 29743,
-              "line_end": 29743,
+              "line_start": 29869,
+              "line_end": 29869,
               "quote": "A large family-control drain set uses the same complete-value reference"
             }
           ],
@@ -4578,13 +4886,13 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "B4 is repaired: exact shared bytes restored, all registry failures are enforced, and the complete checker rejects the 28-reference mutant. This family passes its complete suite; SWEEP-NUM, SWEEP-12 and shared guard accounting remain open, so Q remains PARTIAL.",
+          "finding": "Every product refusal is a named Method B table row; the gated tool proves 232 of 234 rows lane-wide (180 by this family's own witnesses), 0 masked, 0 unrelated changes. The CV-1100/SP-1100 number scope is adopted (2^60 producer counterexample now refused). PARTIAL remains: schema keywords are verdict rows not cut one by one, IS02/QJ03 are unprovable by construction, timestamps (CV-1101) and SP-1101 dispatch are part 2B.",
           "evidence": [
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-161",
-              "line_start": 782,
-              "line_end": 782,
+              "line_start": 1090,
+              "line_end": 1090,
               "quote": "def validate_settlement_inputs(payload, row, command_label=\"original command join\"):"
             },
             {
@@ -4597,9 +4905,37 @@
             {
               "path": "scripts/pm-filemanager-event-contracts.py",
               "unit": "F-161",
-              "line_start": 1196,
-              "line_end": 1196,
-              "quote": "registry_failures = _codec.storage_value_registry_data_failures("
+              "line_start": 87,
+              "line_end": 87,
+              "quote": "def refuse(phase, facts, message=None, schema=None):"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-161",
+              "line_start": 1487,
+              "line_end": 1487,
+              "quote": "failures = _codec.storage_value_registry_data_failures(registry, path_label=\"Plans/storage_value_registry.json\")"
+            },
+            {
+              "path": "scripts/pm-filemanager-event-contracts.py",
+              "unit": "F-161",
+              "line_start": 1244,
+              "line_end": 1244,
+              "quote": "digest, jcs_refusal = producer_semantic_digest(event), None"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "F-161",
+              "line_start": 7257,
+              "line_end": 7257,
+              "quote": "Every product refusal of the checker is one named row of a Method B guard table"
+            },
+            {
+              "path": "Plans/Contracts_V0.md",
+              "unit": "F-161",
+              "line_start": 24650,
+              "line_end": 24650,
+              "quote": "Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and"
             }
           ],
           "prior": {
@@ -4607,7 +4943,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Cycle-8 B4 closed by implementation acbb0d2a4aedce8d015b3f31a9748608c8d5dccb; part-2 sweeps still prevent a Q upgrade and READY verdict."
+          "change_reason": "Sweep part 2A guard tables and part 2B numbers adopted; part 2B timestamp items keep the cell PARTIAL."
         }
       },
       "remaining_gaps": [
@@ -4627,19 +4963,21 @@
       "notes": "Sweep part 1: B4 fixed; complete family suite passes. Q remains PARTIAL for shared number/date-time and guard-tool work, including restored redundant assertion accounting. Native NOT_RUN."
     }
   ],
-  "review_round": 8,
+  "review_round": "sweep-p2a+p2b-numbers",
   "review_before_counts": {
     "PASS": 108,
     "PARTIAL": 24,
     "ABSENT": 12
   },
   "prepared_families": 0,
-  "review_cap_note": "B4 repaired in sweep part 1; no lane is READY until part 2 shared NUMRULE and guard-tool adoption and reviews pass.",
-  "guard_table_ref": "reports/event-authority-20261104/DFM.guard-table.json",
+  "review_cap_note": "Part 2A (guard tables on the gated tool) and the part 2B number scope are adopted; the part 2B timestamp items (CV-1101, SWEEP-12) and SP-1101 retained dispatch remain, then Sol and Astra review. No lane is READY.",
+  "guard_table_ref": "reports/event-authority-20261104/DFM.guard-tables.json",
   "limitations": [
     "Membership ABSENT; event-history retention PENDING_RETENTION_DECISION; native execution and native filesystem alias authentication NOT_RUN.",
-    "SWEEP-NUM and SWEEP-12 remain part 2, including authenticated historical recipe selection.",
-    "SWEEP-GUARD: adopt the shared guard tables/tool; the restored EventRecord schema_id.type assertion invalidates seven old const-only removal witnesses. No current whole-lane proof or preparation PASS is claimed.",
-    "Plan-index validation passes; node readiness remains blocked_runtime_certification_incomplete. No landing, governance, Event admission or reseal is claimed."
+    "Guard tables: the gated tool proves 232 of 234 rows; IS02_integer_range and QJ03_jcs_other are unprovable by construction (named reasons) and earn no credit.",
+    "Each JSON Schema occurrence is one verdict row; schema keywords are not cut one by one in the shared tool.",
+    "Timestamp fields (part 2B, CV-1101 / SWEEP-12): the format checker in use does not enforce date-time; the review here is interim only.",
+    "SP-1101 authenticated retained-recipe dispatch is part 2B (its frozen resources carry the date-time profiles).",
+    "Plan-index validation compares against live origin/main; node readiness remains blocked_runtime_certification_incomplete. No landing, governance, Event admission or reseal is claimed."
   ]
 }

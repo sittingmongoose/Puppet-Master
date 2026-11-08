@@ -1,0 +1,8318 @@
+{
+ "schema_id": "pm.dfm.guard_tables.v1",
+ "head": "62615d46d2f4fa1bc34ced6bdeac14a83280a889",
+ "tool": "scripts/pm_guard_isolation.py",
+ "tool_sha256": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8",
+ "checker_sha256": "a405590d82a6c8ca61ddd4b50a351c61ff287b714a20a50514e9e27a7345efc7",
+ "source_sha256": {
+  "Plans/filemanager_event_contract_fixtures.json": "f03c6a24d27402c6d8f3f9a00f093e048cdfe1fc315cbadd43fc1da2b10986da",
+  "Plans/filemanager_event_p2a_cases.json": "b646431cbea7411b67b4812ed0b26c611e7a349b0743774c04084a86bf762cc8",
+  "scripts/pm-filemanager-event-contracts.py": "a405590d82a6c8ca61ddd4b50a351c61ff287b714a20a50514e9e27a7345efc7",
+  "scripts/pm-filemanager-table-generate.py": "abcc7a59e123ce7ce1697b13fa13e0f4b6f2ea44c1839cf193002a977fb8208e",
+  "scripts/pm_event_numbers.py": "31ae47086bacad7f078239baa9e9ec3a5118472298a9e26e878dcf2534819444",
+  "scripts/pm_filemanager_guard_suites.py": "728cf423dcaf4947b16d38b13528ef09abd03f485c81a8e0a6575a991b8039f2",
+  "scripts/pm_filemanager_table_acceptance_join.py": "b8016a1d4ef9057638592babefeae9cb7a9455c4f03123a240e72cf7a47fe017",
+  "scripts/pm_filemanager_table_append_row.py": "d5ff52d94ab7b013c7c8056acd61fc949a8990e2ebf1ba582a4d0fd81f35f4b8",
+  "scripts/pm_filemanager_table_backup_binding.py": "05661166903a38899a1b0bf18b545660bc00bcc719c92f929a815f05cda03b68",
+  "scripts/pm_filemanager_table_body_mode.py": "d2fc424049f819055b844ee94af1504bf6c1a4162365f343eda038675908f89a",
+  "scripts/pm_filemanager_table_checkpoint_binding.py": "c328d365a485797a20ee00ed32ca1001a969e37d9949e986f54e7f49b6816bd6",
+  "scripts/pm_filemanager_table_complete_event.py": "dc7e0172a2a42e78c8886ce6448637aff29637888ccab59086f81b5789823398",
+  "scripts/pm_filemanager_table_complete_event_identity.py": "53c22cafb8e15e0c2d124a65b71f05b5799fa38f4b7a5c210c74366459064b28",
+  "scripts/pm_filemanager_table_control_authority.py": "cd68bef9b79851237fcf717b86c4f731b30e34b541d4f1551e9215b042bb5df6",
+  "scripts/pm_filemanager_table_control_cas.py": "0051d2ee7954e68942963e751c8bcc1baeef0592bf6e4671a5f006e3961d65e2",
+  "scripts/pm_filemanager_table_control_cutoff.py": "a2de9685ca72f4697fedbb092869e6ad44a920b39febeb92f16d694333e456f1",
+  "scripts/pm_filemanager_table_control_edge.py": "9ed5d54956de0e060b6bd3c0084174a1219295944dd5fe5753e7c1e8bdeb8ac1",
+  "scripts/pm_filemanager_table_control_identity.py": "36988f163a5e59d26dbe512ca971d2073d8b21f7026507200d774768b09cbac0",
+  "scripts/pm_filemanager_table_control_issued.py": "f392869224f290eba20a5dac9401607d1e2d20306a6cdaffef1441dd08788d29",
+  "scripts/pm_filemanager_table_control_reader.py": "f0c8ff39236bc54a0bdcfb0361ef9ed574e48ec5b35d5a1c254f57ab5a055a5f",
+  "scripts/pm_filemanager_table_control_resolution.py": "b07278c0116296d3249f93f182f2d8ddc913735cc03bee8f197e18cbc4693fd6",
+  "scripts/pm_filemanager_table_control_row.py": "222937051aada9d9864417596ad5fc4d468c1d8e4b795dbbb1d90047b6df34d3",
+  "scripts/pm_filemanager_table_control_withdrawn.py": "dd03d76a4af4c8e0e72b216ccb171fecfae463cb9d765e9cfaa7038b2a1e8315",
+  "scripts/pm_filemanager_table_creation_container.py": "a4d873c9697a3c0fbd4daa1ad40234685ee924161189ca8bcf9df278eea265b3",
+  "scripts/pm_filemanager_table_creation_original.py": "efcab2490c3b04dede58bb44bb24562b53dfbc02a4d41a4230e8b8dd87a511c7",
+  "scripts/pm_filemanager_table_custody_identity.py": "ad64f258d70c5939d7c8409707eaa64a67f409c35e21dfbe4a5be2bcb143a360",
+  "scripts/pm_filemanager_table_descendant_count.py": "f0841431500c54ccf7ba92c7a35f9ea62af8803ec7b4f4f4e678660491845f1b",
+  "scripts/pm_filemanager_table_drain_input.py": "7f9d3d583e83a94f858e53426025bd5401fffdd6dffb83a02f7d7311c12aca08",
+  "scripts/pm_filemanager_table_drain_key.py": "917553b043bab381303dc7ac4090af390ea414a3f3ccb18a0bc2c42dd451c83d",
+  "scripts/pm_filemanager_table_event_inline_body.py": "3f754ea7507eb05e6232062615a8f94d247c552ce72c879f5d05376d3d79c79c",
+  "scripts/pm_filemanager_table_event_reference_inline.py": "c598e4c3f055b7611281c7302f3b45eb53fa5e2eb28076871e81b53facd65871",
+  "scripts/pm_filemanager_table_event_reference_size.py": "91999b8864060d52359e34a63fe6e50a9124b9206a6645a89a5e4f01e579eb92",
+  "scripts/pm_filemanager_table_event_value_encoding.py": "271fdc453fb1839173989f8fc4b972a4ba25615edd3a60ce127d97b97eafbcb1",
+  "scripts/pm_filemanager_table_export_destination.py": "d60f430e84d015da59176c8b372efb3f0a4bcf43330fee4987eaad749a123693",
+  "scripts/pm_filemanager_table_family_identity.py": "9fe7a1bf933db54aa114efa9cd447689239750bccefc349c871e7a4631035e89",
+  "scripts/pm_filemanager_table_fixture_set.py": "ed032250a1d6f3b2443c49996d8d07e86e4a36f3fb1cfcebbc5ad5f3fab27c68",
+  "scripts/pm_filemanager_table_full_value_request.py": "d621bac7892a986e8e33f75d21c20692d042faef1bd986e730df134520f8a018",
+  "scripts/pm_filemanager_table_full_value_resolver.py": "5ed672db1c319d469a0fd5effd5255144a103bfdb4f3173dc86b4ffa7e4ece84",
+  "scripts/pm_filemanager_table_full_value_result.py": "3edcbe81792ad7cecf4965e7b46e85c7d36f2399c6c03d53edfc4a1162a62dfd",
+  "scripts/pm_filemanager_table_historical_mode.py": "682b0fe9cad1553d9aba4e8a13e2817b1ae8a2fd2eda34a1ba9359b372260c27",
+  "scripts/pm_filemanager_table_identity_epoch.py": "e7360344547da40181b16b04d0956d433f6e00a56353c88b954cdde578377c4e",
+  "scripts/pm_filemanager_table_identity_tuple.py": "647347854a6875f15f1a10b96593a3526daac58aefd3268833363c803755f9a6",
+  "scripts/pm_filemanager_table_integer_slot.py": "0ad8f0de63d71c46051d4380f44483721a922954d051dbe154a279313876315f",
+  "scripts/pm_filemanager_table_integer_slot_range.py": "c776fe1406fa2abec0c84d89d88659e1453e6196ee32117a22412ed291d4c3a9",
+  "scripts/pm_filemanager_table_issued_receipt.py": "8bc51d826751c6b9b35454582934c6bad790cbd8140fac78547671253a744b03",
+  "scripts/pm_filemanager_table_late_change.py": "5fed69dfc3334d91e386a878ef867751871a942498d123034068a0ab1068b559",
+  "scripts/pm_filemanager_table_location_change.py": "6b56419182c246aab89662b526fe2998fb83996464b1b0e9b94b8712e89cdb55",
+  "scripts/pm_filemanager_table_operation_edge.py": "daf9b1257344d93b6c7e8e1575b2b2431f3f54fc21830c0688bcd0cb8a27471d",
+  "scripts/pm_filemanager_table_operation_edge_terminal.py": "48f491185f4e6591a49cf2af26222090ece3338068efe936c2cc0f251567a98f",
+  "scripts/pm_filemanager_table_operation_family.py": "663cbcc93c2ae193c2ef2b871daee64ce6f0b39411ed6ab0ac79b3ce0d411275",
+  "scripts/pm_filemanager_table_operation_identity.py": "e09a3b0e822701380cc33011aa7efd15c6de8bf9482c88dadedde5cf9d7ecb3f",
+  "scripts/pm_filemanager_table_operation_immutables.py": "b37d9a51febe9be43bbf5ac19807476336e15098143b0f1baa8a82832ed90aed",
+  "scripts/pm_filemanager_table_operation_resolution.py": "aa082ea6caf10cd51b194c5380dfdbc29904e3c5d542687974aa2ec3112deb01",
+  "scripts/pm_filemanager_table_operation_row.py": "c15e44a05a73c891e3ea6292f2c6e711df3149189b063ec0025569bb105129d7",
+  "scripts/pm_filemanager_table_operation_scope.py": "4eb73d5cbca5634a7660b987526c61358df1a97e3906c2f046c9b13b682aafe5",
+  "scripts/pm_filemanager_table_owner_adoption.py": "61912a38d84af91682e7ea1a000ea92733d0772c662ec099557914c6147a7d1e",
+  "scripts/pm_filemanager_table_owner_unit.py": "c1b4ba9b8d96c93cac7fb0898a035a3c5c35622f1941c2542237d9452346399b",
+  "scripts/pm_filemanager_table_path_coverage.py": "34dd02ab49b664d28f0f38164f1decd96dcc10ac85c2c8763e446b604a8bec8c",
+  "scripts/pm_filemanager_table_path_join.py": "f748f050a21849297071fe3ac0196463ff1e6759779860d1116b8fa9a2c78131",
+  "scripts/pm_filemanager_table_path_location.py": "e35641a203899241640dd45249c2f0c8a0d9bd975dc17c1a8861515de092575f",
+  "scripts/pm_filemanager_table_path_scope.py": "6134ef17221ffe93bbb318871e4f674c6f7d89808a1080ff48e709b9400c0cf8",
+  "scripts/pm_filemanager_table_payload_bytes.py": "4b4859fdeffa554f631136c83b67664a24637c6a38ffbdc85070801be6496186",
+  "scripts/pm_filemanager_table_payload_reference.py": "869fa15bf0dfdae18aacc24878a1b945a83d9ac3c7e1f1278dcfa82345d6aa1d",
+  "scripts/pm_filemanager_table_payload_referent.py": "328de6aa1ebc718085b8896b414387496ebd06fb55690312ce58b7f02105ad6a",
+  "scripts/pm_filemanager_table_payload_scope.py": "3b17d8a268702076beb938ce07736ee171767f1b42d3d6fe742031a5d207ae0f",
+  "scripts/pm_filemanager_table_producer_jcs.py": "653aabc807a9f597826b98ddf5bec2ce85054960f5d4a6a813ec7e9682538ca9",
+  "scripts/pm_filemanager_table_producer_jcs_other.py": "99b46b3cf30e8882d0ddc9085b85f4cbab5a53ecfcb2e96c1597227aef325181",
+  "scripts/pm_filemanager_table_redb_value_encoding.py": "027c453dc2e367d1e39f1c12623f772564b59df3a2758d7d26c2a3a3e354ae0d",
+  "scripts/pm_filemanager_table_registry_custody.py": "7e21032afd8e34c290f9b7529e32ccfdc82f3b65a7615778dafca83bbded4d99",
+  "scripts/pm_filemanager_table_registry_defs.py": "10f52ca19bcb1eacec8ff3c56abdd2556a4ab720961d10500551b0e58a53369e",
+  "scripts/pm_filemanager_table_registry_drift.py": "2b48ab60dc9e95b9f034db3be00942f033a9e7eef87fb5354d1bf2ab4bc37196",
+  "scripts/pm_filemanager_table_registry_failures.py": "6c3d94bd8d632e721b6445e8c4d771fe0a532edc6ff68d70b14b91e167d65d3b",
+  "scripts/pm_filemanager_table_rename_relation.py": "596ee1239e3c70a288535f9d16001295e9d88976459d5dbfc8b348cb28b2a148",
+  "scripts/pm_filemanager_table_retry_identity.py": "987100c0bf46b26920beeec92334fbcbf2986a719b4cfabcef12e933c4655f0a",
+  "scripts/pm_filemanager_table_retry_original.py": "10e8d8fe3f1805adcd294f557ae21671c40c8992bdc51cf35b8cc98896effa95",
+  "scripts/pm_filemanager_table_rule_event_record.py": "9b437ed8df4538927e5c91eb8f56f80562ec563e4c88c3ce0a5699ad6afbb312",
+  "scripts/pm_filemanager_table_rule_operation.py": "846c7fc227c0d396ec21d7d71c5cdfb43def166a5d64c7eee6b827aa8c1967a7",
+  "scripts/pm_filemanager_table_rule_payload.py": "53fae6c6be403541216f5af728a9a5a007a7ac12649e5ab7af451390a56f567d",
+  "scripts/pm_filemanager_table_rule_receipt.py": "62b2b026a60dc6f91812b26894b2aaf8184f4d196c0d12bd5ae1fa99242b7d3e",
+  "scripts/pm_filemanager_table_rule_registry.py": "f6a21b8a5fa4e433b84636f14334f33a43c80bf854273c96cec660fbbcb49832",
+  "scripts/pm_filemanager_table_schema_control_reference.py": "01e81e6ab0bee7d14794815332784575f0c5e84a1206e6b0edfc0a4c07d6cecd",
+  "scripts/pm_filemanager_table_schema_custody_v2.py": "701768b69fb5e7845bda8c110788de70dee6ca59d5a8dc9c01c840a727403d7c",
+  "scripts/pm_filemanager_table_schema_event_record.py": "a55a03c854ccf04add3234627e4ef7c6b7effddab1b5e406e48c5aece907ba50",
+  "scripts/pm_filemanager_table_schema_family_control.py": "fa696d839f64c433cb4365fe565454167e56de76af68d969320ed5140e357d91",
+  "scripts/pm_filemanager_table_schema_full_value_request.py": "22026481031571afc4aae22c8114e1f3bc88652caea807d438c50bc579000934",
+  "scripts/pm_filemanager_table_schema_full_value_result.py": "84dff7305f3d9bd5de954441222ff45f8cbfb0a8faebeee543c651e2f3f3505f",
+  "scripts/pm_filemanager_table_schema_meta.py": "3d0ea5c123cdee557faf0f8ace5ea3f024ec1118efd287d08249b858d0890d6d",
+  "scripts/pm_filemanager_table_schema_operation_custody.py": "fd92d6af23aaf0bdf84c307ef132bfeedcf3c07dbb46699e4890f1b00ec57ddd",
+  "scripts/pm_filemanager_table_schema_operation_reference.py": "bfc70cc74369f3bb43866fe9184b49fd382ae13119fdba1629446b59332edd63",
+  "scripts/pm_filemanager_table_schema_payload_file_copied.py": "0352e784fc3272ab26fd00985963547a2a1f75cb884ecf05236727af58baf5e1",
+  "scripts/pm_filemanager_table_schema_payload_file_created.py": "c83465afdc86df4d36b022c22edb659732fa0acf191b09b3b7e0659961a540bc",
+  "scripts/pm_filemanager_table_schema_payload_file_deleted.py": "103701ddcdf7da1588e7201fa7239def16c74b14ef438232ddeb25d8acff7c30",
+  "scripts/pm_filemanager_table_schema_payload_file_exported.py": "69b13b4ebb7353a189ec9bdaa79b9dbdd2fef6b36ca9833e1caf75a3ed5a4abc",
+  "scripts/pm_filemanager_table_schema_payload_file_moved.py": "4924ce1ba1dae9cee2542cc83d2b8d4c967f4b3182a3ecf8b341c16900fc4a0a",
+  "scripts/pm_filemanager_table_schema_payload_file_renamed.py": "3fa80cfddc736ac3439f1f14ed65b0f7ff6a7a047892688a7d33322e745abc21",
+  "scripts/pm_filemanager_table_schema_payload_folder_copied.py": "1b3b6bb434dcb049eb8c1993adca6d6f62551205bd115da93a9fe787a187666e",
+  "scripts/pm_filemanager_table_schema_payload_folder_created.py": "0b55de252f6699155fa47dfa9923d94676b06f77b38c4fc28764ca2567d2d61a",
+  "scripts/pm_filemanager_table_schema_payload_folder_deleted.py": "6eb3d1132c8af50c4a2a35871da9bfea061bb889af79f2be5b5f317a77778f2f",
+  "scripts/pm_filemanager_table_schema_payload_folder_exported.py": "55db694ce08fdc06e011ab9c2af0ff98c8286a17f7e867e0673250b0c38a36de",
+  "scripts/pm_filemanager_table_schema_payload_folder_moved.py": "cca5b2279caa40328d6d997ece8c45a445ffe8a1d8ec0d67365c25ea2b67f702",
+  "scripts/pm_filemanager_table_schema_payload_folder_renamed.py": "188b92b78b062810c43015f762e1dd4aa60503d5536829cdff8c58c8a39397dd",
+  "scripts/pm_filemanager_table_schema_ref.py": "5cf5359a877873b0245aa3e42ef29063319bb0a0a28e47c5f12dd7a4ac80255c",
+  "scripts/pm_filemanager_table_schema_storage_registry.py": "6b39df01d40be227548f53a4ba5fa5c9ce69081911d184824e7bebcbdff813d9",
+  "scripts/pm_filemanager_table_semantic_checks.py": "e1739def56bc3cd941bf66d41db5f29f99a274a7b2d13c3f06ce596deff4924c",
+  "scripts/pm_filemanager_table_settled_original_payload.py": "08f76df0c52eac93db1f46b819ca64ef4c5ee5acaa8f79056a2b82b9a3046403",
+  "scripts/pm_filemanager_table_settlement_command.py": "c1c079ad0e900cd7b798d881c593758961116608b639945efed79a942041c90b",
+  "scripts/pm_filemanager_table_settlement_inputs.py": "1dd8709e518fac1a72dede720e9f08022154c2fddcb10df8bb47b8f68c2e31cf",
+  "scripts/pm_filemanager_table_storage_profile.py": "1d5fbcde6df8750c58b5a693934ac981292852bdbb90f374d4f93451320d0d4c",
+  "scripts/pm_filemanager_table_storage_profile_present.py": "cddd1a184343a7dbeb20c7dcc0a29165f09fc56eeb813d63092aa1b3b6b398fc",
+  "scripts/pm_filemanager_table_subject_kind.py": "9d3a4875e08fce6d967e09bb6f21186d0ad4d4af3d5eda671a5306f0a1925916",
+  "scripts/pm_filemanager_table_subject_selection.py": "fa62b183a36378de28f077bc048db91ecc3f13e88833405fb1a2502717671e1e",
+  "scripts/pm_filemanager_table_terminal_proof.py": "364e77ce6dcae0e9f68aac255a0057c8acb5140e6968d6435c7fd2ee66232212",
+  "scripts/pm_filemanager_table_terminal_selection.py": "225a778f8675fee6296d230ff4aceff792e1ece6818785801c6bc8c77a34b3c6",
+  "scripts/pm_filemanager_table_trace_fences.py": "94948e78bea7776ed9bce1f7b65d1d878c14243839453270e7f42d8c2b3ee42b",
+  "scripts/pm_filemanager_table_trace_original_payload.py": "e7474a2cb4792b790c94b7e905f4d06f2098e446c2c67a0017d5e68713be633c",
+  "scripts/pm_filemanager_table_trace_reader.py": "f801ba3c005aa8c7dbf8cc13f87140c735b290b072eb1eaa023548029f5211e6",
+  "scripts/pm_filemanager_table_trace_sequence.py": "7f046f6bef9eeac86c029c2ada87f988d80b3845dd4ffe9273ccebfa0b71c16e",
+  "scripts/pm_filemanager_table_transition_storage.py": "e3d47983d9a6aeeb0c6a60e1c73bf2b2a53148524104d0ba7748c8e32ef4a19f",
+  "scripts/pm_filemanager_table_value_physical_size.py": "da05b752db1af24ee2d157ecdcbb64fb0e5072755fa16feb5b0b6b10cc9ef85f",
+  "scripts/pm_filemanager_table_value_reference_size.py": "dcef07182912b565cf6cd27c88aef4255430435874f8168438f85ebbf53b6cdd",
+  "scripts/pm_filemanager_table_writer_policy.py": "641aa6b5d6f64fde2a4a75e6c9e5df7f38748514dc950c3297f6afbc2588db42",
+  "scripts/pm_guard_isolation.py": "e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8"
+ },
+ "findings": [],
+ "totals": {
+  "tables": 115,
+  "rows": 234,
+  "proved": 232,
+  "unproved": [
+   "IS02_integer_range",
+   "QJ03_jcs_other"
+  ],
+  "negatives": 281,
+  "aliases": 7098,
+  "evaluations": 3951,
+  "masked": 0,
+  "unrelated": 0,
+  "complete_flips_accepted": 6690,
+  "complete_flips_refused_later": 689
+ },
+ "groups": {
+  "Schema verdicts (one row per occurrence) and schema document admission": {
+   "tables": 28,
+   "rows": 28,
+   "proved": 28,
+   "unproved": [],
+   "own": 28,
+   "own_flipped": 28,
+   "stays": 0,
+   "unrelated": 0,
+   "masked": 0
+  },
+  "Numbers: CV-1100 qualified JCS, current integer slots, SP-1100 EVENT_VALUE": {
+   "tables": 5,
+   "rows": 7,
+   "proved": 5,
+   "unproved": [
+    "IS02_integer_range",
+    "QJ03_jcs_other"
+   ],
+   "own": 5,
+   "own_flipped": 5,
+   "stays": 4,
+   "unrelated": 0,
+   "masked": 0
+  },
+  "SP-337/SP-339/SP-340 transport, encoding and profiles": {
+   "tables": 11,
+   "rows": 18,
+   "proved": 18,
+   "unproved": [],
+   "own": 22,
+   "own_flipped": 22,
+   "stays": 38,
+   "unrelated": 0,
+   "masked": 0
+  },
+  "Current writer replay policy": {
+   "tables": 1,
+   "rows": 2,
+   "proved": 2,
+   "unproved": [],
+   "own": 2,
+   "own_flipped": 2,
+   "stays": 2,
+   "unrelated": 0,
+   "masked": 0
+  },
+  "Path custody: coverage, joins, accepted locations": {
+   "tables": 3,
+   "rows": 10,
+   "proved": 10,
+   "unproved": [],
+   "own": 10,
+   "own_flipped": 10,
+   "stays": 28,
+   "unrelated": 0,
+   "masked": 0
+  },
+  "Represented subjects (create/copy/move/export/rename/delete)": {
+   "tables": 7,
+   "rows": 19,
+   "proved": 19,
+   "unproved": [],
+   "own": 19,
+   "own_flipped": 19,
+   "stays": 62,
+   "unrelated": 0,
+   "masked": 0
+  },
+  "Complete original EventRecord joins": {
+   "tables": 3,
+   "rows": 9,
+   "proved": 9,
+   "unproved": [],
+   "own": 14,
+   "own_flipped": 14,
+   "stays": 42,
+   "unrelated": 0,
+   "masked": 0
+  },
+  "Operation custody transitions (validate_operation_transition)": {
+   "tables": 10,
+   "rows": 24,
+   "proved": 24,
+   "unproved": [],
+   "own": 24,
+   "own_flipped": 24,
+   "stays": 52,
+   "unrelated": 0,
+   "masked": 0
+  },
+  "Family control transitions (validate_control_transition)": {
+   "tables": 8,
+   "rows": 22,
+   "proved": 22,
+   "unproved": [],
+   "own": 30,
+   "own_flipped": 30,
+   "stays": 64,
+   "unrelated": 0,
+   "masked": 0
+  },
+  "Original operation custody (validate_original_models)": {
+   "tables": 6,
+   "rows": 11,
+   "proved": 11,
+   "unproved": [],
+   "own": 16,
+   "own_flipped": 16,
+   "stays": 14,
+   "unrelated": 0,
+   "masked": 0
+  },
+  "Retained original custody (validate_historical_operation)": {
+   "tables": 15,
+   "rows": 39,
+   "proved": 39,
+   "unproved": [],
+   "own": 39,
+   "own_flipped": 39,
+   "stays": 110,
+   "unrelated": 0,
+   "masked": 0
+  },
+  "Family identity recipe (identity)": {
+   "tables": 2,
+   "rows": 7,
+   "proved": 7,
+   "unproved": [],
+   "own": 27,
+   "own_flipped": 27,
+   "stays": 102,
+   "unrelated": 0,
+   "masked": 0
+  },
+  "Current boundary trace (validate_case)": {
+   "tables": 9,
+   "rows": 24,
+   "proved": 24,
+   "unproved": [],
+   "own": 31,
+   "own_flipped": 31,
+   "stays": 86,
+   "unrelated": 0,
+   "masked": 0
+  },
+  "Checker integrity (main)": {
+   "tables": 7,
+   "rows": 14,
+   "proved": 14,
+   "unproved": [],
+   "own": 14,
+   "own_flipped": 14,
+   "stays": 24,
+   "unrelated": 0,
+   "masked": 0
+  }
+ },
+ "rows_proved_by_family": {
+  "file.copied": 184,
+  "file.created": 185,
+  "file.deleted": 176,
+  "file.exported": 177,
+  "file.moved": 177,
+  "file.renamed": 179,
+  "folder.copied": 178,
+  "folder.created": 185,
+  "folder.deleted": 177,
+  "folder.exported": 178,
+  "folder.moved": 177,
+  "folder.renamed": 180,
+  "shared": 17
+ },
+ "tables": [
+  {
+   "phase": "acceptance_join",
+   "group": "Operation custody transitions (validate_operation_transition)",
+   "rows": [
+    "AJ01_schema_id",
+    "AJ02_project",
+    "AJ03_operation",
+    "AJ04_receipt"
+   ],
+   "negatives": 4,
+   "aliases": 33,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "AJ01_schema_id",
+    "AJ02_project",
+    "AJ03_operation",
+    "AJ04_receipt"
+   ],
+   "unproved": {},
+   "row_families": {
+    "AJ01_schema_id": [
+     "file.moved"
+    ],
+    "AJ02_project": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "AJ03_operation": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "AJ04_receipt": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 37,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "acceptance_join.json.gz",
+   "report_sha256": "32d8871c331edff1250e3ceabfab963cd004769c60cce8d31c74098ac03fa6c1",
+   "evaluations": 65,
+   "cuts": {
+    "AJ01_schema_id": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "AJ02_project": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "AJ03_operation": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "AJ04_receipt": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "append_row",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "AR01_append_present"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "AR01_append_present"
+   ],
+   "unproved": {},
+   "row_families": {
+    "AR01_append_present": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:KeyError"
+    ],
+    "refused_later_count": 12
+   },
+   "report": "append_row.json.gz",
+   "report_sha256": "d112c2389a981a7e761651adfafd412be3b724efb5e15dd57136a6eb4cc268ab",
+   "evaluations": 8,
+   "cuts": {
+    "AR01_append_present": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "backup_binding",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "BK01_backup_equal"
+   ],
+   "negatives": 1,
+   "aliases": 35,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "BK01_backup_equal"
+   ],
+   "unproved": {},
+   "row_families": {
+    "BK01_backup_equal": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 36,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "backup_binding.json.gz",
+   "report_sha256": "181b56e8a2948ce93ac96cc2f998449ad4cb679eefcb68f14d27206302cd9d44",
+   "evaluations": 8,
+   "cuts": {
+    "BK01_backup_equal": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "body_mode",
+   "group": "Complete original EventRecord joins",
+   "rows": [
+    "BM01_body_mode"
+   ],
+   "negatives": 6,
+   "aliases": 90,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "BM01_body_mode"
+   ],
+   "unproved": {},
+   "row_families": {
+    "BM01_body_mode": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 96,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "body_mode.json.gz",
+   "report_sha256": "9d24acc2aacf0655d5f59b4aedaba07e2742508185fff183186c109c25dc106b",
+   "evaluations": 28,
+   "cuts": {
+    "BM01_body_mode": {
+     "own": 6,
+     "flipped": 6,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "checkpoint_binding",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "CB01_binding_fields",
+    "CB02_storage_instance",
+    "CB03_recovery_epoch",
+    "CB04_event_id",
+    "CB05_scope_partition"
+   ],
+   "negatives": 5,
+   "aliases": 67,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CB01_binding_fields",
+    "CB02_storage_instance",
+    "CB03_recovery_epoch",
+    "CB04_event_id",
+    "CB05_scope_partition"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CB01_binding_fields": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CB02_storage_instance": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CB03_recovery_epoch": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CB04_event_id": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CB05_scope_partition": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 72,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "checkpoint_binding.json.gz",
+   "report_sha256": "34b6bd8912673bd7be3767f6ef3037aadc52fac9a7f4168422a7b3b729182172",
+   "evaluations": 96,
+   "cuts": {
+    "CB01_binding_fields": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CB02_storage_instance": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CB03_recovery_epoch": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CB04_event_id": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CB05_scope_partition": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "complete_event",
+   "group": "Complete original EventRecord joins",
+   "rows": [
+    "CE01_body",
+    "CE02_event_type",
+    "CE03_project",
+    "CE04_scope_kind",
+    "CE05_correlation",
+    "CE06_occurred_at",
+    "CE07_payload_schema"
+   ],
+   "negatives": 7,
+   "aliases": 77,
+   "controls": 2,
+   "tool_controls": 2,
+   "tool_status": "PASS",
+   "proved": [
+    "CE01_body",
+    "CE02_event_type",
+    "CE03_project",
+    "CE04_scope_kind",
+    "CE05_correlation",
+    "CE06_occurred_at",
+    "CE07_payload_schema"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CE01_body": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CE02_event_type": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CE03_project": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CE04_scope_kind": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CE05_correlation": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CE06_occurred_at": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CE07_payload_schema": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 84,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "complete_event.json.gz",
+   "report_sha256": "673882d64e029a758a9a1a8d50c569a6a8f11d35f431b6d785247c6f53bfedbc",
+   "evaluations": 198,
+   "cuts": {
+    "CE01_body": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CE02_event_type": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CE03_project": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CE04_scope_kind": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CE05_correlation": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CE06_occurred_at": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CE07_payload_schema": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "complete_event_identity",
+   "group": "Complete original EventRecord joins",
+   "rows": [
+    "CE08_identity"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CE08_identity"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CE08_identity": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 12,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "complete_event_identity.json.gz",
+   "report_sha256": "6cc51d02a6232dee6683bcb1f3f1388ebe380bf3ec59aa8a20469d865188dd58",
+   "evaluations": 8,
+   "cuts": {
+    "CE08_identity": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "control_authority",
+   "group": "Family control transitions (validate_control_transition)",
+   "rows": [
+    "CA01_issuance_reader",
+    "CA02_issuance_drain",
+    "CA03_drain_membership",
+    "CA04_drain_reader",
+    "CA05_withdraw_drained",
+    "CA06_withdraw_cutoff"
+   ],
+   "negatives": 6,
+   "aliases": 66,
+   "controls": 4,
+   "tool_controls": 4,
+   "tool_status": "PASS",
+   "proved": [
+    "CA01_issuance_reader",
+    "CA02_issuance_drain",
+    "CA03_drain_membership",
+    "CA04_drain_reader",
+    "CA05_withdraw_drained",
+    "CA06_withdraw_cutoff"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CA01_issuance_reader": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CA02_issuance_drain": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CA03_drain_membership": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CA04_drain_reader": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CA05_withdraw_drained": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CA06_withdraw_cutoff": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 72,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "control_authority.json.gz",
+   "report_sha256": "2c92f988f163adbf188d318a80884fda3597383509b99b21c5eada76b4969429",
+   "evaluations": 190,
+   "cuts": {
+    "CA01_issuance_reader": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CA02_issuance_drain": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CA03_drain_membership": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CA04_drain_reader": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CA05_withdraw_drained": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CA06_withdraw_cutoff": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "control_cas",
+   "group": "Family control transitions (validate_control_transition)",
+   "rows": [
+    "CK01_key_unchanged",
+    "CK02_revision_step"
+   ],
+   "negatives": 2,
+   "aliases": 22,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CK01_key_unchanged",
+    "CK02_revision_step"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CK01_key_unchanged": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CK02_revision_step": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 24,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "control_cas.json.gz",
+   "report_sha256": "a26416c5e26e33148150162b6ad79b076e22230ee31163ab22ef46eeb515696f",
+   "evaluations": 21,
+   "cuts": {
+    "CK01_key_unchanged": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CK02_revision_step": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "control_cutoff",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "CX01_withdrawn_ceiling",
+    "CX02_sequence_ceiling"
+   ],
+   "negatives": 2,
+   "aliases": 22,
+   "controls": 2,
+   "tool_controls": 2,
+   "tool_status": "PASS",
+   "proved": [
+    "CX01_withdrawn_ceiling",
+    "CX02_sequence_ceiling"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CX01_withdrawn_ceiling": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CX02_sequence_ceiling": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 24,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "control_cutoff.json.gz",
+   "report_sha256": "c104d35aa01a4b075e273f80153422d296556eb16dc8ab12118f767b3ea38113",
+   "evaluations": 28,
+   "cuts": {
+    "CX01_withdrawn_ceiling": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CX02_sequence_ceiling": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "control_edge",
+   "group": "Family control transitions (validate_control_transition)",
+   "rows": [
+    "CT01_state_edge",
+    "CT02_admission_unchanged"
+   ],
+   "negatives": 2,
+   "aliases": 34,
+   "controls": 2,
+   "tool_controls": 2,
+   "tool_status": "PASS",
+   "proved": [
+    "CT01_state_edge",
+    "CT02_admission_unchanged"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CT01_state_edge": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CT02_admission_unchanged": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 36,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "control_edge.json.gz",
+   "report_sha256": "cb449c1242a1d8d7aced2af3f5072643d46911847ed9c8e7cbcd08d9f843bf02",
+   "evaluations": 28,
+   "cuts": {
+    "CT01_state_edge": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CT02_admission_unchanged": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "control_identity",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "CN01_control_key",
+    "CN02_event_type",
+    "CN03_storage_instance"
+   ],
+   "negatives": 3,
+   "aliases": 33,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CN01_control_key",
+    "CN02_event_type",
+    "CN03_storage_instance"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CN01_control_key": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CN02_event_type": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CN03_storage_instance": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 36,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "control_identity.json.gz",
+   "report_sha256": "8bc63cf013d568a2b1f60c22f69d394703ccb8292f5aff0b5788bbe5a0a4feea",
+   "evaluations": 40,
+   "cuts": {
+    "CN01_control_key": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CN02_event_type": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CN03_storage_instance": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "control_issued",
+   "group": "Family control transitions (validate_control_transition)",
+   "rows": [
+    "CI01_issued_type",
+    "CI02_issued_range",
+    "CI03_issued_admitted",
+    "CI04_issued_monotonic"
+   ],
+   "negatives": 4,
+   "aliases": 116,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CI01_issued_type",
+    "CI02_issued_range",
+    "CI03_issued_admitted",
+    "CI04_issued_monotonic"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CI01_issued_type": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CI02_issued_range": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CI03_issued_admitted": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CI04_issued_monotonic": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 120,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "control_issued.json.gz",
+   "report_sha256": "35d8e1b16de0175b623fd7842dd54f16725d49a104063d5badbd05e8c0bcf26b",
+   "evaluations": 65,
+   "cuts": {
+    "CI01_issued_type": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CI02_issued_range": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CI03_issued_admitted": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CI04_issued_monotonic": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "control_reader",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "CD01_not_prepared",
+    "CD02_reader_enabled"
+   ],
+   "negatives": 2,
+   "aliases": 34,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CD01_not_prepared",
+    "CD02_reader_enabled"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CD01_not_prepared": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CD02_reader_enabled": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 24,
+    "refused_later": [
+     "refused_later:control_cutoff:CX02_sequence_ceiling"
+    ],
+    "refused_later_count": 12
+   },
+   "report": "control_reader.json.gz",
+   "report_sha256": "0dfe3b95b5b3a26f9e5e469f80fb5a81b8b8adeaa473ce082075d59262d74c36",
+   "evaluations": 21,
+   "cuts": {
+    "CD01_not_prepared": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CD02_reader_enabled": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "control_resolution",
+   "group": "Family control transitions (validate_control_transition)",
+   "rows": [
+    "CQ01_resolution_equal"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CQ01_resolution_equal"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CQ01_resolution_equal": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 12,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "control_resolution.json.gz",
+   "report_sha256": "159cd26d23935eddc1f7f9cf867b97f7f8e32d21356573ec2cf81c3279e95943",
+   "evaluations": 8,
+   "cuts": {
+    "CQ01_resolution_equal": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "control_row",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "CL01_control_present"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CL01_control_present"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CL01_control_present": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:KeyError"
+    ],
+    "refused_later_count": 12
+   },
+   "report": "control_row.json.gz",
+   "report_sha256": "015464a42748aad405539e02282818f98651ebb6992506e4719aecaeb8287305",
+   "evaluations": 8,
+   "cuts": {
+    "CL01_control_present": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "control_withdrawn",
+   "group": "Family control transitions (validate_control_transition)",
+   "rows": [
+    "CW01_cutoff_kept",
+    "CW02_admitted_kept",
+    "CW03_reader_before",
+    "CW04_reader_after"
+   ],
+   "negatives": 4,
+   "aliases": 44,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CW01_cutoff_kept",
+    "CW02_admitted_kept",
+    "CW03_reader_before",
+    "CW04_reader_after"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CW01_cutoff_kept": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CW02_admitted_kept": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CW03_reader_before": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CW04_reader_after": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 48,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "control_withdrawn.json.gz",
+   "report_sha256": "ba323549a59790b0014db55f502ad1aed4d606ae33d12c3cc8be4b5edaf2199a",
+   "evaluations": 65,
+   "cuts": {
+    "CW01_cutoff_kept": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CW02_admitted_kept": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CW03_reader_before": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CW04_reader_after": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "creation_container",
+   "group": "Represented subjects (create/copy/move/export/rename/delete)",
+   "rows": [
+    "CC01_container_unique",
+    "CC02_container_folder",
+    "CC03_settled_container_ref",
+    "CC04_settled_container_folder",
+    "CC05_container_computer",
+    "CC06_container_root",
+    "CC07_container_parent"
+   ],
+   "negatives": 7,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CC01_container_unique",
+    "CC02_container_folder",
+    "CC03_settled_container_ref",
+    "CC04_settled_container_folder",
+    "CC05_container_computer",
+    "CC06_container_root",
+    "CC07_container_parent"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CC01_container_unique": [
+     "file.created",
+     "folder.created"
+    ],
+    "CC02_container_folder": [
+     "file.created",
+     "folder.created"
+    ],
+    "CC03_settled_container_ref": [
+     "file.created",
+     "folder.created"
+    ],
+    "CC04_settled_container_folder": [
+     "file.created",
+     "folder.created"
+    ],
+    "CC05_container_computer": [
+     "file.created",
+     "folder.created"
+    ],
+    "CC06_container_root": [
+     "file.created",
+     "folder.created"
+    ],
+    "CC07_container_parent": [
+     "file.created",
+     "folder.created"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 18,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "creation_container.json.gz",
+   "report_sha256": "db7b40d4088c13fd21c99dd22d24f7a928ce3c301a0f78dc32ae1aca692d2239",
+   "evaluations": 176,
+   "cuts": {
+    "CC01_container_unique": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CC02_container_folder": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CC03_settled_container_ref": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CC04_settled_container_folder": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CC05_container_computer": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CC06_container_root": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CC07_container_parent": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "creation_original",
+   "group": "Represented subjects (create/copy/move/export/rename/delete)",
+   "rows": [
+    "CO01_no_selected_root",
+    "CO02_destination_node_null",
+    "CO03_destination_absent"
+   ],
+   "negatives": 3,
+   "aliases": 3,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CO01_no_selected_root",
+    "CO02_destination_node_null",
+    "CO03_destination_absent"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CO01_no_selected_root": [
+     "file.created",
+     "folder.created"
+    ],
+    "CO02_destination_node_null": [
+     "file.created",
+     "folder.created"
+    ],
+    "CO03_destination_absent": [
+     "file.created",
+     "folder.created"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 6,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "creation_original.json.gz",
+   "report_sha256": "b327ecd679646e2dee5610c148ce2bd5c2e39e3d817da596c6000e6f06e5ed0f",
+   "evaluations": 40,
+   "cuts": {
+    "CO01_no_selected_root": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CO02_destination_node_null": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CO03_destination_absent": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "custody_identity",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "CU01_append_key",
+    "CU02_storage_instance",
+    "CU03_event_id",
+    "CU04_scope_partition",
+    "CU05_event_type",
+    "CU06_idempotency_key"
+   ],
+   "negatives": 6,
+   "aliases": 66,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CU01_append_key",
+    "CU02_storage_instance",
+    "CU03_event_id",
+    "CU04_scope_partition",
+    "CU05_event_type",
+    "CU06_idempotency_key"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CU01_append_key": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CU02_storage_instance": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CU03_event_id": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CU04_scope_partition": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CU05_event_type": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "CU06_idempotency_key": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 72,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "custody_identity.json.gz",
+   "report_sha256": "2d7319c528f054feb3026ac89f7c6167f384446b6f58b69167d57daa408bcf8a",
+   "evaluations": 133,
+   "cuts": {
+    "CU01_append_key": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CU02_storage_instance": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CU03_event_id": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CU04_scope_partition": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CU05_event_type": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "CU06_idempotency_key": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "descendant_count",
+   "group": "Current boundary trace (validate_case)",
+   "rows": [
+    "DS01_descendant_equal"
+   ],
+   "negatives": 1,
+   "aliases": 54,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "DS01_descendant_equal"
+   ],
+   "unproved": {},
+   "row_families": {
+    "DS01_descendant_equal": [
+     "folder.copied",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 55,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "descendant_count.json.gz",
+   "report_sha256": "170bd89e39b8c9f0e47d3b04ee19790ae4dafe6effd055559aa8d3ca52aa16df",
+   "evaluations": 8,
+   "cuts": {
+    "DS01_descendant_equal": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "drain_input",
+   "group": "Family control transitions (validate_control_transition)",
+   "rows": [
+    "DI01_drain_list"
+   ],
+   "negatives": 5,
+   "aliases": 91,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "DI01_drain_list"
+   ],
+   "unproved": {},
+   "row_families": {
+    "DI01_drain_list": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 24,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:TypeError",
+     "refused_later:drain_key:DK02_key_grammar"
+    ],
+    "refused_later_count": 72
+   },
+   "report": "drain_input.json.gz",
+   "report_sha256": "c611a4575b3d483a3c097e8bc2e6949497f5ee371b1e3cc84698d9c0bc865b9c",
+   "evaluations": 24,
+   "cuts": {
+    "DI01_drain_list": {
+     "own": 5,
+     "flipped": 5,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "drain_key",
+   "group": "Family control transitions (validate_control_transition)",
+   "rows": [
+    "DK01_key_type",
+    "DK02_key_grammar"
+   ],
+   "negatives": 6,
+   "aliases": 90,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "DK01_key_type",
+    "DK02_key_grammar"
+   ],
+   "unproved": {},
+   "row_families": {
+    "DK01_key_type": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "DK02_key_grammar": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 96,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "drain_key.json.gz",
+   "report_sha256": "4daa1e3dc02dc193cdc727a148438c85366b671fefdf4eb684391c7d38e3fb52",
+   "evaluations": 49,
+   "cuts": {
+    "DK01_key_type": {
+     "own": 5,
+     "flipped": 5,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "DK02_key_grammar": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "event_inline_body",
+   "group": "SP-337/SP-339/SP-340 transport, encoding and profiles",
+   "rows": [
+    "EB01_inline_type",
+    "EB02_inline_size"
+   ],
+   "negatives": 6,
+   "aliases": 78,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "EB01_inline_type",
+    "EB02_inline_size"
+   ],
+   "unproved": {},
+   "row_families": {
+    "EB01_inline_type": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "EB02_inline_size": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 84,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "event_inline_body.json.gz",
+   "report_sha256": "51ed61a18c1dea2df6df8cb47f7252608ee2997b89f1464b0eb860f2fd8f2079",
+   "evaluations": 49,
+   "cuts": {
+    "EB01_inline_type": {
+     "own": 5,
+     "flipped": 5,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "EB02_inline_size": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "event_reference_inline",
+   "group": "SP-337/SP-339/SP-340 transport, encoding and profiles",
+   "rows": [
+    "EB03_referenced_inline_empty"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "EB03_referenced_inline_empty"
+   ],
+   "unproved": {},
+   "row_families": {
+    "EB03_referenced_inline_empty": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 12,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "event_reference_inline.json.gz",
+   "report_sha256": "dc8717b15e4a1f2dd1d87689f918341459534380c2c2ace84f3b3d88d0d741ac",
+   "evaluations": 8,
+   "cuts": {
+    "EB03_referenced_inline_empty": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "event_reference_size",
+   "group": "SP-337/SP-339/SP-340 transport, encoding and profiles",
+   "rows": [
+    "EB04_referenced_above_limit"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "EB04_referenced_above_limit"
+   ],
+   "unproved": {},
+   "row_families": {
+    "EB04_referenced_above_limit": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 12,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "event_reference_size.json.gz",
+   "report_sha256": "f8139d2bb26ecb477b00429bdcba7b9b87c941f21171a66fd49b6204233e635d",
+   "evaluations": 8,
+   "cuts": {
+    "EB04_referenced_above_limit": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "event_value_encoding",
+   "group": "Numbers: CV-1100 qualified JCS, current integer slots, SP-1100 EVENT_VALUE",
+   "rows": [
+    "EV01_integer_range",
+    "EV02_event_value_other"
+   ],
+   "negatives": 2,
+   "aliases": 22,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "EV01_integer_range",
+    "EV02_event_value_other"
+   ],
+   "unproved": {},
+   "row_families": {
+    "EV01_integer_range": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "EV02_event_value_other": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:TypeError"
+    ],
+    "refused_later_count": 24
+   },
+   "report": "event_value_encoding.json.gz",
+   "report_sha256": "ed8b87cf2d1e26aed86ec95cb53860c0e84486ebde9e069f1d17e43d69312b8b",
+   "evaluations": 21,
+   "cuts": {
+    "EV01_integer_range": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "EV02_event_value_other": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "export_destination",
+   "group": "Represented subjects (create/copy/move/export/rename/delete)",
+   "rows": [
+    "XD01_destination_kind"
+   ],
+   "negatives": 1,
+   "aliases": 1,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "XD01_destination_kind"
+   ],
+   "unproved": {},
+   "row_families": {
+    "XD01_destination_kind": [
+     "file.exported",
+     "folder.exported"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "export_destination.json.gz",
+   "report_sha256": "b26bdc2fe00acf11783f4ca71a99b1d9b287b5dac9953cf07dc17348348fdec3",
+   "evaluations": 8,
+   "cuts": {
+    "XD01_destination_kind": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "family_identity",
+   "group": "Operation custody transitions (validate_operation_transition)",
+   "rows": [
+    "FI01_copy_distinct",
+    "FI02_create_distinct"
+   ],
+   "negatives": 2,
+   "aliases": 6,
+   "controls": 3,
+   "tool_controls": 3,
+   "tool_status": "PASS",
+   "proved": [
+    "FI01_copy_distinct",
+    "FI02_create_distinct"
+   ],
+   "unproved": {},
+   "row_families": {
+    "FI01_copy_distinct": [
+     "file.copied",
+     "folder.copied"
+    ],
+    "FI02_create_distinct": [
+     "file.created",
+     "folder.created"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 8,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "family_identity.json.gz",
+   "report_sha256": "3ffb8fe18ed16005e2df47d9d563a1f86209eb549be4537c0157798307337431",
+   "evaluations": 35,
+   "cuts": {
+    "FI01_copy_distinct": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "FI02_create_distinct": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "fixture_set",
+   "group": "Checker integrity (main)",
+   "rows": [
+    "FX01_family_known",
+    "FX02_twelve_rows",
+    "FX03_family_set"
+   ],
+   "negatives": 3,
+   "aliases": 0,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "FX01_family_known",
+    "FX02_twelve_rows",
+    "FX03_family_set"
+   ],
+   "unproved": {},
+   "row_families": {
+    "FX01_family_known": [
+     "shared"
+    ],
+    "FX02_twelve_rows": [
+     "shared"
+    ],
+    "FX03_family_set": [
+     "shared"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 3,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "fixture_set.json.gz",
+   "report_sha256": "78969b31211f47b1726c0abe2ba9d067d08d78ffc994068897f5cd9fb73aa13c",
+   "evaluations": 40,
+   "cuts": {
+    "FX01_family_known": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "FX02_twelve_rows": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "FX03_family_set": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "full_value_request",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "RQ01_request_event"
+   ],
+   "negatives": 1,
+   "aliases": 35,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RQ01_request_event"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RQ01_request_event": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 36,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "full_value_request.json.gz",
+   "report_sha256": "513ea27df3d402ea09cf2fa479e09c6e3b382da98452a89eaa8283061cbc0671",
+   "evaluations": 8,
+   "cuts": {
+    "RQ01_request_event": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "full_value_resolver",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "FV01_full_value_resolver"
+   ],
+   "negatives": 1,
+   "aliases": 23,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "FV01_full_value_resolver"
+   ],
+   "unproved": {},
+   "row_families": {
+    "FV01_full_value_resolver": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 24,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "full_value_resolver.json.gz",
+   "report_sha256": "343fc24af41b1aff20e99e81ae7217fc022408cb3d7a1e176b1b192d4536ca8d",
+   "evaluations": 8,
+   "cuts": {
+    "FV01_full_value_resolver": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "full_value_result",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "VR01_result_selected",
+    "VR02_value_commitment",
+    "VR03_producer_digest"
+   ],
+   "negatives": 3,
+   "aliases": 93,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "VR01_result_selected",
+    "VR02_value_commitment",
+    "VR03_producer_digest"
+   ],
+   "unproved": {},
+   "row_families": {
+    "VR01_result_selected": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "VR02_value_commitment": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "VR03_producer_digest": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 96,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "full_value_result.json.gz",
+   "report_sha256": "07a85a3e07a8271a7032dcf9351e318263336b6dbea575c810abf00afa14cf6b",
+   "evaluations": 40,
+   "cuts": {
+    "VR01_result_selected": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "VR02_value_commitment": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "VR03_producer_digest": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "historical_mode",
+   "group": "Original operation custody (validate_original_models)",
+   "rows": [
+    "HM01_mode_bool"
+   ],
+   "negatives": 6,
+   "aliases": 90,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "HM01_mode_bool"
+   ],
+   "unproved": {},
+   "row_families": {
+    "HM01_mode_bool": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 96,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "historical_mode.json.gz",
+   "report_sha256": "168f2d40e0686e5bb80e8455adddb7d70175adf558279f9b8c9ad0c242c08046",
+   "evaluations": 28,
+   "cuts": {
+    "HM01_mode_bool": {
+     "own": 6,
+     "flipped": 6,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "identity_epoch",
+   "group": "Family identity recipe (identity)",
+   "rows": [
+    "IE01_epoch_type",
+    "IE02_epoch_range"
+   ],
+   "negatives": 2,
+   "aliases": 166,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "IE01_epoch_type",
+    "IE02_epoch_range"
+   ],
+   "unproved": {},
+   "row_families": {
+    "IE01_epoch_type": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "IE02_epoch_range": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 168,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "identity_epoch.json.gz",
+   "report_sha256": "32446cacd528dc72883946ff8ce1be8222e85c094b82f761088ff1241a6acf61",
+   "evaluations": 21,
+   "cuts": {
+    "IE01_epoch_type": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "IE02_epoch_range": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "identity_tuple",
+   "group": "Family identity recipe (identity)",
+   "rows": [
+    "IT01_storage_string",
+    "IT02_project_string",
+    "IT03_operation_string",
+    "IT04_subject_string",
+    "IT05_rfc8785_preimage"
+   ],
+   "negatives": 25,
+   "aliases": 323,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "IT01_storage_string",
+    "IT02_project_string",
+    "IT03_operation_string",
+    "IT04_subject_string",
+    "IT05_rfc8785_preimage"
+   ],
+   "unproved": {},
+   "row_families": {
+    "IT01_storage_string": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "IT02_project_string": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "IT03_operation_string": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "IT04_subject_string": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "IT05_rfc8785_preimage": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:TypeError"
+    ],
+    "refused_later_count": 348
+   },
+   "report": "identity_tuple.json.gz",
+   "report_sha256": "ee97aa95a96f8cb352d17106e36594f48ccdc04dd14e62adcedc21cef7b5eaa6",
+   "evaluations": 416,
+   "cuts": {
+    "IT01_storage_string": {
+     "own": 6,
+     "flipped": 6,
+     "stays": 19,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "IT02_project_string": {
+     "own": 6,
+     "flipped": 6,
+     "stays": 19,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "IT03_operation_string": {
+     "own": 6,
+     "flipped": 6,
+     "stays": 19,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "IT04_subject_string": {
+     "own": 6,
+     "flipped": 6,
+     "stays": 19,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "IT05_rfc8785_preimage": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 24,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "integer_slot",
+   "group": "Numbers: CV-1100 qualified JCS, current integer slots, SP-1100 EVENT_VALUE",
+   "rows": [
+    "IS01_integer_type"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "IS01_integer_type"
+   ],
+   "unproved": {},
+   "row_families": {
+    "IS01_integer_type": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:redb_value_encoding:RV01_redb_encodable"
+    ],
+    "refused_later_count": 12
+   },
+   "report": "integer_slot.json.gz",
+   "report_sha256": "183f9b9a4c8200f83b7872397abbbba2669113071ca5cc7b915bdd55ab4142da",
+   "evaluations": 8,
+   "cuts": {
+    "IS01_integer_type": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "integer_slot_range",
+   "group": "Numbers: CV-1100 qualified JCS, current integer slots, SP-1100 EVENT_VALUE",
+   "rows": [
+    "IS02_integer_range"
+   ],
+   "negatives": 0,
+   "aliases": 0,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": null,
+   "proved": [],
+   "unproved": {
+    "IS02_integer_range": "by construction: every slot bound is read from the owner schema whose verdict row runs first on every current write, so an out-of-range exact integer is always refused by that schema row (joint-cut lane evidence below)"
+   },
+   "row_families": {
+    "IS02_integer_range": []
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": null,
+   "report_sha256": null,
+   "evaluations": null,
+   "cuts": {}
+  },
+  {
+   "phase": "issued_receipt",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "IR01_receipt_operation",
+    "IR02_receipt_event_id",
+    "IR03_receipt_sequence",
+    "IR04_receipt_barrier"
+   ],
+   "negatives": 4,
+   "aliases": 56,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "IR01_receipt_operation",
+    "IR02_receipt_event_id",
+    "IR03_receipt_sequence",
+    "IR04_receipt_barrier"
+   ],
+   "unproved": {},
+   "row_families": {
+    "IR01_receipt_operation": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "IR02_receipt_event_id": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "IR03_receipt_sequence": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "IR04_receipt_barrier": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 60,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "issued_receipt.json.gz",
+   "report_sha256": "0fbc937e487560004ffa873be40b35a4a7399df67adf08f563e45a89dbca5d48",
+   "evaluations": 65,
+   "cuts": {
+    "IR01_receipt_operation": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "IR02_receipt_event_id": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "IR03_receipt_sequence": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "IR04_receipt_barrier": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "late_change",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "LT01_final_operation",
+    "LT02_final_control",
+    "LT03_final_append",
+    "LT04_final_operation_value",
+    "LT05_final_control_value",
+    "LT06_final_payload_rows"
+   ],
+   "negatives": 6,
+   "aliases": 66,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "LT01_final_operation",
+    "LT02_final_control",
+    "LT03_final_append",
+    "LT04_final_operation_value",
+    "LT05_final_control_value",
+    "LT06_final_payload_rows"
+   ],
+   "unproved": {},
+   "row_families": {
+    "LT01_final_operation": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "LT02_final_control": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "LT03_final_append": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "LT04_final_operation_value": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "LT05_final_control_value": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "LT06_final_payload_rows": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 72,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "late_change.json.gz",
+   "report_sha256": "43991e92012ab5fe7f223a0604999208854cd1c370a777ba85f8da8454108cf1",
+   "evaluations": 133,
+   "cuts": {
+    "LT01_final_operation": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "LT02_final_control": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "LT03_final_append": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "LT04_final_operation_value": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "LT05_final_control_value": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "LT06_final_payload_rows": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "location_change",
+   "group": "Represented subjects (create/copy/move/export/rename/delete)",
+   "rows": [
+    "LC01_location_changed"
+   ],
+   "negatives": 1,
+   "aliases": 19,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "LC01_location_changed"
+   ],
+   "unproved": {},
+   "row_families": {
+    "LC01_location_changed": [
+     "file.copied",
+     "file.exported",
+     "file.moved",
+     "folder.copied",
+     "folder.exported",
+     "folder.moved"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 20,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "location_change.json.gz",
+   "report_sha256": "197203b2c299ce286fb7a979455bd9fe003b23049918d3823ead22e65f64348d",
+   "evaluations": 8,
+   "cuts": {
+    "LC01_location_changed": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "operation_edge",
+   "group": "Operation custody transitions (validate_operation_transition)",
+   "rows": [
+    "OE01_phase_edge",
+    "OE02_revision_step"
+   ],
+   "negatives": 2,
+   "aliases": 34,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "OE01_phase_edge",
+    "OE02_revision_step"
+   ],
+   "unproved": {},
+   "row_families": {
+    "OE01_phase_edge": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "OE02_revision_step": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:operation_edge_terminal:OT01_terminal_edge",
+     "refused_later:operation_edge_terminal:OT02_terminal_revision"
+    ],
+    "refused_later_count": 36
+   },
+   "report": "operation_edge.json.gz",
+   "report_sha256": "70bbe9e669880747fcc507fce63f32dba0773a0082f6a7565acb05c313ad97aa",
+   "evaluations": 21,
+   "cuts": {
+    "OE01_phase_edge": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "OE02_revision_step": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "operation_edge_terminal",
+   "group": "Operation custody transitions (validate_operation_transition)",
+   "rows": [
+    "OT01_terminal_edge",
+    "OT02_terminal_revision"
+   ],
+   "negatives": 2,
+   "aliases": 22,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "OT01_terminal_edge",
+    "OT02_terminal_revision"
+   ],
+   "unproved": {},
+   "row_families": {
+    "OT01_terminal_edge": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "OT02_terminal_revision": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 12,
+    "refused_later": [
+     "refused_later:terminal_selection:TL01_selected_is_before"
+    ],
+    "refused_later_count": 12
+   },
+   "report": "operation_edge_terminal.json.gz",
+   "report_sha256": "adcd6cd6808c5f43452072fbc4090e907ec8172302ea840d65d3925bdc33df02",
+   "evaluations": 21,
+   "cuts": {
+    "OT01_terminal_edge": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "OT02_terminal_revision": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "operation_family",
+   "group": "Original operation custody (validate_original_models)",
+   "rows": [
+    "OF01_event_type",
+    "OF02_operation_id",
+    "OF03_history_settled"
+   ],
+   "negatives": 3,
+   "aliases": 33,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "OF01_event_type",
+    "OF02_operation_id",
+    "OF03_history_settled"
+   ],
+   "unproved": {},
+   "row_families": {
+    "OF01_event_type": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "OF02_operation_id": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "OF03_history_settled": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 24,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:TypeError"
+    ],
+    "refused_later_count": 12
+   },
+   "report": "operation_family.json.gz",
+   "report_sha256": "5cbc898adc5c7c0791d3760e3f7edb6f1a429aa78792fe7cee2608c502d9ced1",
+   "evaluations": 40,
+   "cuts": {
+    "OF01_event_type": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "OF02_operation_id": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "OF03_history_settled": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "operation_identity",
+   "group": "Original operation custody (validate_original_models)",
+   "rows": [
+    "OK01_operation_key",
+    "OK02_receipt_ref"
+   ],
+   "negatives": 2,
+   "aliases": 34,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "OK01_operation_key",
+    "OK02_receipt_ref"
+   ],
+   "unproved": {},
+   "row_families": {
+    "OK01_operation_key": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "OK02_receipt_ref": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 36,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "operation_identity.json.gz",
+   "report_sha256": "c3bc7b2feeae6725c30ff9496902c85ca1f637e99c3aa2b7e7acdc39dca83a81",
+   "evaluations": 21,
+   "cuts": {
+    "OK01_operation_key": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "OK02_receipt_ref": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "operation_immutables",
+   "group": "Operation custody transitions (validate_operation_transition)",
+   "rows": [
+    "OI01_accepted_unchanged",
+    "OI02_settled_unchanged"
+   ],
+   "negatives": 2,
+   "aliases": 34,
+   "controls": 2,
+   "tool_controls": 2,
+   "tool_status": "PASS",
+   "proved": [
+    "OI01_accepted_unchanged",
+    "OI02_settled_unchanged"
+   ],
+   "unproved": {},
+   "row_families": {
+    "OI01_accepted_unchanged": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "OI02_settled_unchanged": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 36,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "operation_immutables.json.gz",
+   "report_sha256": "fc28afa2f24f7fd291001f64dcf3d5da8c7d4a654a42c6f3fa9f43dd2c378b80",
+   "evaluations": 28,
+   "cuts": {
+    "OI01_accepted_unchanged": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "OI02_settled_unchanged": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "operation_resolution",
+   "group": "Operation custody transitions (validate_operation_transition)",
+   "rows": [
+    "OP01_resolution_equal"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "OP01_resolution_equal"
+   ],
+   "unproved": {},
+   "row_families": {
+    "OP01_resolution_equal": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 12,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "operation_resolution.json.gz",
+   "report_sha256": "92ce47456359d09bad0562a4c1f0a671bcff902de2d456a23ab6b3aec9f06221",
+   "evaluations": 8,
+   "cuts": {
+    "OP01_resolution_equal": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "operation_row",
+   "group": "Original operation custody (validate_original_models)",
+   "rows": [
+    "OW01_operation_present"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "OW01_operation_present"
+   ],
+   "unproved": {},
+   "row_families": {
+    "OW01_operation_present": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:KeyError"
+    ],
+    "refused_later_count": 12
+   },
+   "report": "operation_row.json.gz",
+   "report_sha256": "60b4284d827d3e7d51682bb717ded0320c8863290892f8af4745c5f614cf4660",
+   "evaluations": 8,
+   "cuts": {
+    "OW01_operation_present": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "operation_scope",
+   "group": "Original operation custody (validate_original_models)",
+   "rows": [
+    "OS01_project",
+    "OS02_storage_instance",
+    "OS03_recovery_epoch"
+   ],
+   "negatives": 3,
+   "aliases": 33,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "OS01_project",
+    "OS02_storage_instance",
+    "OS03_recovery_epoch"
+   ],
+   "unproved": {},
+   "row_families": {
+    "OS01_project": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "OS02_storage_instance": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "OS03_recovery_epoch": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 24,
+    "refused_later": [
+     "refused_later:complete_event_identity:CE08_identity"
+    ],
+    "refused_later_count": 12
+   },
+   "report": "operation_scope.json.gz",
+   "report_sha256": "c17ee59436bcbaa3def5eb2b111c865b905ad771564a9034b15a1e837724caab",
+   "evaluations": 40,
+   "cuts": {
+    "OS01_project": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "OS02_storage_instance": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "OS03_recovery_epoch": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "owner_adoption",
+   "group": "Checker integrity (main)",
+   "rows": [
+    "OA01_owner_token"
+   ],
+   "negatives": 1,
+   "aliases": 0,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "OA01_owner_token"
+   ],
+   "unproved": {},
+   "row_families": {
+    "OA01_owner_token": [
+     "shared"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "owner_adoption.json.gz",
+   "report_sha256": "2750744e288f8f7654a6c1045681ebbaf78496a548be1f4f4777486066ee4711",
+   "evaluations": 8,
+   "cuts": {
+    "OA01_owner_token": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "owner_unit",
+   "group": "Checker integrity (main)",
+   "rows": [
+    "OU01_owner_unit_present"
+   ],
+   "negatives": 1,
+   "aliases": 0,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "OU01_owner_unit_present"
+   ],
+   "unproved": {},
+   "row_families": {
+    "OU01_owner_unit_present": [
+     "shared"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:owner_adoption:OA01_owner_token"
+    ],
+    "refused_later_count": 1
+   },
+   "report": "owner_unit.json.gz",
+   "report_sha256": "aac2380982af74abca0e0e3f83f791c2df156e8e32f1d984100f2a87f4c446dc",
+   "evaluations": 8,
+   "cuts": {
+    "OU01_owner_unit_present": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "path_coverage",
+   "group": "Path custody: coverage, joins, accepted locations",
+   "rows": [
+    "PC01_coverage_count",
+    "PC02_coverage_members"
+   ],
+   "negatives": 2,
+   "aliases": 34,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PC01_coverage_count",
+    "PC02_coverage_members"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PC01_coverage_count": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "PC02_coverage_members": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 36,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "path_coverage.json.gz",
+   "report_sha256": "21f6bcb6888bdb06faef1f627c2f6c41fd0048c15675e4eee21f9d9bc20f0b73",
+   "evaluations": 21,
+   "cuts": {
+    "PC01_coverage_count": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "PC02_coverage_members": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "path_join",
+   "group": "Path custody: coverage, joins, accepted locations",
+   "rows": [
+    "PJ01_path_project",
+    "PJ02_path_revision",
+    "PJ03_node_absence"
+   ],
+   "negatives": 3,
+   "aliases": 57,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PJ01_path_project",
+    "PJ02_path_revision",
+    "PJ03_node_absence"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PJ01_path_project": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "PJ02_path_revision": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "PJ03_node_absence": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 60,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "path_join.json.gz",
+   "report_sha256": "1a58dc16dba899048ebd129a5a2b5fdb369848e07a209aec88a58428ed1587a3",
+   "evaluations": 40,
+   "cuts": {
+    "PJ01_path_project": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "PJ02_path_revision": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "PJ03_node_absence": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "path_location",
+   "group": "Path custody: coverage, joins, accepted locations",
+   "rows": [
+    "PL01_project",
+    "PL02_revision",
+    "PL03_computer",
+    "PL04_root",
+    "PL05_components"
+   ],
+   "negatives": 5,
+   "aliases": 67,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PL01_project",
+    "PL02_revision",
+    "PL03_computer",
+    "PL04_root",
+    "PL05_components"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PL01_project": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "PL02_revision": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "PL03_computer": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "PL04_root": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "PL05_components": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 72,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "path_location.json.gz",
+   "report_sha256": "10d2acf81b43623a115d7e8073cfc5a75678e03646dc55af0d88e7f37ff7d9af",
+   "evaluations": 96,
+   "cuts": {
+    "PL01_project": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "PL02_revision": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "PL03_computer": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "PL04_root": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "PL05_components": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "path_scope",
+   "group": "Current boundary trace (validate_case)",
+   "rows": [
+    "PA01_source_scope",
+    "PA02_destination_scope",
+    "PA03_affected_scope"
+   ],
+   "negatives": 6,
+   "aliases": 18,
+   "controls": 3,
+   "tool_controls": 3,
+   "tool_status": "PASS",
+   "proved": [
+    "PA01_source_scope",
+    "PA02_destination_scope",
+    "PA03_affected_scope"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PA01_source_scope": [
+     "file.copied",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "PA02_destination_scope": [
+     "file.created",
+     "folder.created"
+    ],
+    "PA03_affected_scope": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 24,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "path_scope.json.gz",
+   "report_sha256": "9188a6a63b9c7c6d6c7c1706a1aedcc819272479d954c4548a424d76fbfc324e",
+   "evaluations": 90,
+   "cuts": {
+    "PA01_source_scope": {
+     "own": 2,
+     "flipped": 2,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "PA02_destination_scope": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "PA03_affected_scope": {
+     "own": 3,
+     "flipped": 3,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "payload_bytes",
+   "group": "SP-337/SP-339/SP-340 transport, encoding and profiles",
+   "rows": [
+    "PV02_referent_matches"
+   ],
+   "negatives": 1,
+   "aliases": 35,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PV02_referent_matches"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PV02_referent_matches": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 36,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "payload_bytes.json.gz",
+   "report_sha256": "dd8251b9ba5b1736c8caf10310c9cb30df9b3d929f60be35b8e2b265a43168fd",
+   "evaluations": 8,
+   "cuts": {
+    "PV02_referent_matches": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "payload_reference",
+   "group": "SP-337/SP-339/SP-340 transport, encoding and profiles",
+   "rows": [
+    "PR01_reference_type",
+    "PR02_reference_grammar"
+   ],
+   "negatives": 2,
+   "aliases": 22,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PR01_reference_type",
+    "PR02_reference_grammar"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PR01_reference_type": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "PR02_reference_grammar": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 24,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "payload_reference.json.gz",
+   "report_sha256": "952b57e4761a18a46ed86d57b9508be55c484cb8c087784c43c7f10c36ee8ef1",
+   "evaluations": 21,
+   "cuts": {
+    "PR01_reference_type": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "PR02_reference_grammar": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "payload_referent",
+   "group": "SP-337/SP-339/SP-340 transport, encoding and profiles",
+   "rows": [
+    "PV01_referent_present"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PV01_referent_present"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PV01_referent_present": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:KeyError"
+    ],
+    "refused_later_count": 12
+   },
+   "report": "payload_referent.json.gz",
+   "report_sha256": "4c1cff2fd90c3a90568fc6ffff5e2b2ff0e7b5a18bea351f72945e9d09a5f7be",
+   "evaluations": 8,
+   "cuts": {
+    "PV01_referent_present": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "payload_scope",
+   "group": "Current boundary trace (validate_case)",
+   "rows": [
+    "PS01_payload_project"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PS01_payload_project"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PS01_payload_project": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:operation_scope:OS01_project"
+    ],
+    "refused_later_count": 12
+   },
+   "report": "payload_scope.json.gz",
+   "report_sha256": "dc73311a3558be3f9215b05c1527549f59ee3721226bb41a88d740ea3c07f425",
+   "evaluations": 8,
+   "cuts": {
+    "PS01_payload_project": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "producer_jcs",
+   "group": "Numbers: CV-1100 qualified JCS, current integer slots, SP-1100 EVENT_VALUE",
+   "rows": [
+    "QJ01_jcs_binary64",
+    "QJ02_jcs_decimal"
+   ],
+   "negatives": 2,
+   "aliases": 22,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "QJ01_jcs_binary64",
+    "QJ02_jcs_decimal"
+   ],
+   "unproved": {},
+   "row_families": {
+    "QJ01_jcs_binary64": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "QJ02_jcs_decimal": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:full_value_result:VR03_producer_digest"
+    ],
+    "refused_later_count": 24
+   },
+   "report": "producer_jcs.json.gz",
+   "report_sha256": "f0344b7f8450d7abce6c0a2e42d738f5808879893325c8d6ae99a89b4c3b8e60",
+   "evaluations": 21,
+   "cuts": {
+    "QJ01_jcs_binary64": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "QJ02_jcs_decimal": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "producer_jcs_other",
+   "group": "Numbers: CV-1100 qualified JCS, current integer slots, SP-1100 EVENT_VALUE",
+   "rows": [
+    "QJ03_jcs_other"
+   ],
+   "negatives": 0,
+   "aliases": 0,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": null,
+   "proved": [],
+   "unproved": {
+    "QJ03_jcs_other": "by construction: every other qualified-JCS refusal of an EventRecord inside operation custody (lone surrogate, non-finite float, unsupported kind) is refused first by RV01 (SP-339 closed domain) or the EventRecord schema (preemption probes below)"
+   },
+   "row_families": {
+    "QJ03_jcs_other": []
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": null,
+   "report_sha256": null,
+   "evaluations": null,
+   "cuts": {}
+  },
+  {
+   "phase": "redb_value_encoding",
+   "group": "SP-337/SP-339/SP-340 transport, encoding and profiles",
+   "rows": [
+    "RV01_redb_encodable"
+   ],
+   "negatives": 1,
+   "aliases": 23,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RV01_redb_encodable"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RV01_redb_encodable": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:TypeError"
+    ],
+    "refused_later_count": 24
+   },
+   "report": "redb_value_encoding.json.gz",
+   "report_sha256": "236830f9cd89f0671df59c2d4b7e1169f03a09cc84bf30a5e22aabbf9fdb4003",
+   "evaluations": 8,
+   "cuts": {
+    "RV01_redb_encodable": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "registry_custody",
+   "group": "Checker integrity (main)",
+   "rows": [
+    "RC01_required_fields",
+    "RC02_backup_required",
+    "RC03_mutation_fence"
+   ],
+   "negatives": 3,
+   "aliases": 0,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RC01_required_fields",
+    "RC02_backup_required",
+    "RC03_mutation_fence"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RC01_required_fields": [
+     "shared"
+    ],
+    "RC02_backup_required": [
+     "shared"
+    ],
+    "RC03_mutation_fence": [
+     "shared"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [
+     "refused_later:registry_failures:RF01_registry_data"
+    ],
+    "refused_later_count": 1
+   },
+   "report": "registry_custody.json.gz",
+   "report_sha256": "6f22dae3258fc5765eccac2e20b1da24f56f00e69bd8b433678f013f554717d9",
+   "evaluations": 40,
+   "cuts": {
+    "RC01_required_fields": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "RC02_backup_required": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "RC03_mutation_fence": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "registry_defs",
+   "group": "Checker integrity (main)",
+   "rows": [
+    "RX01_embedded_defs"
+   ],
+   "negatives": 1,
+   "aliases": 0,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RX01_embedded_defs"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RX01_embedded_defs": [
+     "shared"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "registry_defs.json.gz",
+   "report_sha256": "bd309aa61c40b122b4c8aca82601c4143accb3202d429362b05ce7e094ec0b76",
+   "evaluations": 8,
+   "cuts": {
+    "RX01_embedded_defs": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "registry_drift",
+   "group": "Checker integrity (main)",
+   "rows": [
+    "RD01_properties",
+    "RD02_required",
+    "RD03_additional",
+    "RD04_one_of"
+   ],
+   "negatives": 4,
+   "aliases": 0,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RD01_properties",
+    "RD02_required",
+    "RD03_additional",
+    "RD04_one_of"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RD01_properties": [
+     "shared"
+    ],
+    "RD02_required": [
+     "shared"
+    ],
+    "RD03_additional": [
+     "shared"
+    ],
+    "RD04_one_of": [
+     "shared"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [
+     "refused_later:registry_failures:RF01_registry_data"
+    ],
+    "refused_later_count": 2
+   },
+   "report": "registry_drift.json.gz",
+   "report_sha256": "c70e40aa4abcdd0e7774492706cbf5474b1a8343037594907f823f3456bd6196",
+   "evaluations": 65,
+   "cuts": {
+    "RD01_properties": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "RD02_required": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "RD03_additional": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "RD04_one_of": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "registry_failures",
+   "group": "Checker integrity (main)",
+   "rows": [
+    "RF01_registry_data"
+   ],
+   "negatives": 1,
+   "aliases": 0,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RF01_registry_data"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RF01_registry_data": [
+     "shared"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "registry_failures.json.gz",
+   "report_sha256": "d0126ef4c456844dc5b6cd0622b02ad9bd806d0827e9e010d1e088f5d9c7d46a",
+   "evaluations": 8,
+   "cuts": {
+    "RF01_registry_data": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "rename_relation",
+   "group": "Represented subjects (create/copy/move/export/rename/delete)",
+   "rows": [
+    "RN01_same_computer",
+    "RN02_same_root",
+    "RN03_same_parent",
+    "RN04_new_basename"
+   ],
+   "negatives": 4,
+   "aliases": 4,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RN01_same_computer",
+    "RN02_same_root",
+    "RN03_same_parent",
+    "RN04_new_basename"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RN01_same_computer": [
+     "file.renamed",
+     "folder.renamed"
+    ],
+    "RN02_same_root": [
+     "file.renamed",
+     "folder.renamed"
+    ],
+    "RN03_same_parent": [
+     "file.renamed",
+     "folder.renamed"
+    ],
+    "RN04_new_basename": [
+     "file.renamed",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 8,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "rename_relation.json.gz",
+   "report_sha256": "2065daf15a185472e9702aacb134824b834dd0db299049738161026f232f470f",
+   "evaluations": 65,
+   "cuts": {
+    "RN01_same_computer": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "RN02_same_root": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "RN03_same_parent": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "RN04_new_basename": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "retry_identity",
+   "group": "Current boundary trace (validate_case)",
+   "rows": [
+    "RI01_retry_list",
+    "RI02_retry_equal"
+   ],
+   "negatives": 6,
+   "aliases": 114,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RI01_retry_list",
+    "RI02_retry_equal"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RI01_retry_list": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "RI02_retry_equal": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 120,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "retry_identity.json.gz",
+   "report_sha256": "ebd38f1bdc25b3dcc6062926cd908b7e396ec646faec7657e584f94398976e36",
+   "evaluations": 49,
+   "cuts": {
+    "RI01_retry_list": {
+     "own": 5,
+     "flipped": 5,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "RI02_retry_equal": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "retry_original",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "RT01_retry_event_id",
+    "RT02_retry_semantic"
+   ],
+   "negatives": 2,
+   "aliases": 22,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RT01_retry_event_id",
+    "RT02_retry_semantic"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RT01_retry_event_id": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "RT02_retry_semantic": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 24,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "retry_original.json.gz",
+   "report_sha256": "1ee8c2338ae6221e5f7901406a01bc8fb757f91c8094d0f6bb5367445ace95e9",
+   "evaluations": 21,
+   "cuts": {
+    "RT01_retry_event_id": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "RT02_retry_semantic": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "rule_event_record",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "RE01_event_record_definition"
+   ],
+   "negatives": 1,
+   "aliases": 33,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RE01_event_record_definition"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RE01_event_record_definition": [
+     "file.copied"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 34,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "rule_event_record.json.gz",
+   "report_sha256": "edbc3d99a50c4d7514ca1946fd12828dac5dd9e2ab0c41906028aa39fe229478",
+   "evaluations": 8,
+   "cuts": {
+    "RE01_event_record_definition": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "rule_operation",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "RO01_operation_definition"
+   ],
+   "negatives": 1,
+   "aliases": 116,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RO01_operation_definition"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RO01_operation_definition": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 117,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "rule_operation.json.gz",
+   "report_sha256": "43dc89a6ecd278f2cdfedc89346bfea5bbd37e5e5752f936fa37d5341f18a28f",
+   "evaluations": 8,
+   "cuts": {
+    "RO01_operation_definition": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "rule_payload",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "RP01_payload_definition"
+   ],
+   "negatives": 1,
+   "aliases": 585,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RP01_payload_definition"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RP01_payload_definition": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 586,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "rule_payload.json.gz",
+   "report_sha256": "fdf00c5903fbb105275b8ff8987250532b6681656d5cacb3d778b6965324a599",
+   "evaluations": 8,
+   "cuts": {
+    "RP01_payload_definition": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "rule_receipt",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "RR01_receipt_definition"
+   ],
+   "negatives": 1,
+   "aliases": 38,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RR01_receipt_definition"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RR01_receipt_definition": [
+     "file.copied"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 39,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "rule_receipt.json.gz",
+   "report_sha256": "c1f0d6b5b1c8aa950cd5703f401602c60c6bc81ac4a4798d9756529a1bce1740",
+   "evaluations": 8,
+   "cuts": {
+    "RR01_receipt_definition": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "rule_registry",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "RY01_registry_definition"
+   ],
+   "negatives": 1,
+   "aliases": 278,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RY01_registry_definition"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RY01_registry_definition": [
+     "file.copied"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 279,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "rule_registry.json.gz",
+   "report_sha256": "309317babead11b0bc40032e2469e34b2cc52293a9a1917aca9936a5272360e1",
+   "evaluations": 8,
+   "cuts": {
+    "RY01_registry_definition": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_control_reference",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "CR01_control_reference"
+   ],
+   "negatives": 1,
+   "aliases": 1,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CR01_control_reference"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CR01_control_reference": [
+     "file.copied"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 2,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_control_reference.json.gz",
+   "report_sha256": "7662ce07d9a1ece43addc53a73dae5a7d485422357734709e6eaaa77c4a20cec",
+   "evaluations": 8,
+   "cuts": {
+    "CR01_control_reference": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_custody_v2",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "CV01_custody_v2"
+   ],
+   "negatives": 1,
+   "aliases": 19,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "CV01_custody_v2"
+   ],
+   "unproved": {},
+   "row_families": {
+    "CV01_custody_v2": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 20,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_custody_v2.json.gz",
+   "report_sha256": "f0db551e7d965bdf8c8ffc986cd50c6449d7d18720c81129dddced8806444c53",
+   "evaluations": 8,
+   "cuts": {
+    "CV01_custody_v2": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_event_record",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "ER01_event_record"
+   ],
+   "negatives": 1,
+   "aliases": 24,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "ER01_event_record"
+   ],
+   "unproved": {},
+   "row_families": {
+    "ER01_event_record": [
+     "file.copied"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 25,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_event_record.json.gz",
+   "report_sha256": "2ab338dbcde4a74c47ab3e341cb318677c20390a1753ff3cc1e0d875c5b8bea9",
+   "evaluations": 8,
+   "cuts": {
+    "ER01_event_record": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_family_control",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "FC01_family_control"
+   ],
+   "negatives": 1,
+   "aliases": 35,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "FC01_family_control"
+   ],
+   "unproved": {},
+   "row_families": {
+    "FC01_family_control": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 36,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_family_control.json.gz",
+   "report_sha256": "7b8431035eba6042aa73ccf65d151ef96c2864fc879a626e649b88e27fb1ebdf",
+   "evaluations": 8,
+   "cuts": {
+    "FC01_family_control": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_full_value_request",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "FQ01_full_value_request"
+   ],
+   "negatives": 1,
+   "aliases": 15,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "FQ01_full_value_request"
+   ],
+   "unproved": {},
+   "row_families": {
+    "FQ01_full_value_request": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 16,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_full_value_request.json.gz",
+   "report_sha256": "fc5c41d2fb653badae8600c122fda39133259fa7d8fdeecb4c708adf6135b681",
+   "evaluations": 8,
+   "cuts": {
+    "FQ01_full_value_request": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_full_value_result",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "FR01_full_value_result"
+   ],
+   "negatives": 1,
+   "aliases": 18,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "FR01_full_value_result"
+   ],
+   "unproved": {},
+   "row_families": {
+    "FR01_full_value_result": [
+     "file.copied"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 19,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_full_value_result.json.gz",
+   "report_sha256": "54b40e556edfffa2032d7514f951152ec298c66bc92b754c6ea317c86883287d",
+   "evaluations": 8,
+   "cuts": {
+    "FR01_full_value_result": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_meta",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "SM01_meta_schema"
+   ],
+   "negatives": 1,
+   "aliases": 0,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "SM01_meta_schema"
+   ],
+   "unproved": {},
+   "row_families": {
+    "SM01_meta_schema": [
+     "shared"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_meta.json.gz",
+   "report_sha256": "7421d0ad8876027b46864dd60e2817cc49d3bcad240f22b3afe71fdadf4f8157",
+   "evaluations": 8,
+   "cuts": {
+    "SM01_meta_schema": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_operation_custody",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "OC01_operation_custody"
+   ],
+   "negatives": 1,
+   "aliases": 177,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "OC01_operation_custody"
+   ],
+   "unproved": {},
+   "row_families": {
+    "OC01_operation_custody": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 178,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_operation_custody.json.gz",
+   "report_sha256": "80b80b9209d5abed31643464757cc21406185199a15db5823ee49d4d58482fd7",
+   "evaluations": 8,
+   "cuts": {
+    "OC01_operation_custody": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_operation_reference",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "OR01_operation_reference"
+   ],
+   "negatives": 1,
+   "aliases": 2,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "OR01_operation_reference"
+   ],
+   "unproved": {},
+   "row_families": {
+    "OR01_operation_reference": [
+     "file.copied"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 3,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_operation_reference.json.gz",
+   "report_sha256": "5051658be643fbdc72c87c8cf32511ebe58441e9ca8d56336bcb040a3d5b2dc0",
+   "evaluations": 8,
+   "cuts": {
+    "OR01_operation_reference": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_payload_file_copied",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "PY01_file_copied_payload"
+   ],
+   "negatives": 1,
+   "aliases": 63,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PY01_file_copied_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PY01_file_copied_payload": [
+     "file.copied"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 64,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_payload_file_copied.json.gz",
+   "report_sha256": "80047f7b2cb94585f4cae56ac25f7f34b06b6108ba8003908e1b239e84a1bdf3",
+   "evaluations": 8,
+   "cuts": {
+    "PY01_file_copied_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_payload_file_created",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "PY02_file_created_payload"
+   ],
+   "negatives": 1,
+   "aliases": 61,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PY02_file_created_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PY02_file_created_payload": [
+     "file.created"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 62,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_payload_file_created.json.gz",
+   "report_sha256": "19ef9f898a3f4192055ce631d2add2dd2686939dbcdd7862b05b5b303532017c",
+   "evaluations": 8,
+   "cuts": {
+    "PY02_file_created_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_payload_file_deleted",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "PY03_file_deleted_payload"
+   ],
+   "negatives": 1,
+   "aliases": 61,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PY03_file_deleted_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PY03_file_deleted_payload": [
+     "file.deleted"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 62,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_payload_file_deleted.json.gz",
+   "report_sha256": "3c0c881d874b5c9c7ababc9ebfbd0c4582e9b3e8dce150eb092e03772357e2c3",
+   "evaluations": 8,
+   "cuts": {
+    "PY03_file_deleted_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_payload_file_exported",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "PY04_file_exported_payload"
+   ],
+   "negatives": 1,
+   "aliases": 64,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PY04_file_exported_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PY04_file_exported_payload": [
+     "file.exported"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 65,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_payload_file_exported.json.gz",
+   "report_sha256": "3ed043a304fb52216918425cf5c43dbcabb8b5ab13207fe8b3abfe31d81c51f5",
+   "evaluations": 8,
+   "cuts": {
+    "PY04_file_exported_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_payload_file_moved",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "PY05_file_moved_payload"
+   ],
+   "negatives": 1,
+   "aliases": 64,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PY05_file_moved_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PY05_file_moved_payload": [
+     "file.moved"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 65,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_payload_file_moved.json.gz",
+   "report_sha256": "ce2c53f8f7975a69880d498f2bce9ee4a6e41b82f6241ddecd0c88c15dc5d937",
+   "evaluations": 8,
+   "cuts": {
+    "PY05_file_moved_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_payload_file_renamed",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "PY06_file_renamed_payload"
+   ],
+   "negatives": 1,
+   "aliases": 64,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PY06_file_renamed_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PY06_file_renamed_payload": [
+     "file.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 65,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_payload_file_renamed.json.gz",
+   "report_sha256": "cf0fa77fa8b7fea4956f55b98f9efc879bb8fb3e44aa9a5df4f440b8a765709e",
+   "evaluations": 8,
+   "cuts": {
+    "PY06_file_renamed_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_payload_folder_copied",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "PY07_folder_copied_payload"
+   ],
+   "negatives": 1,
+   "aliases": 66,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PY07_folder_copied_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PY07_folder_copied_payload": [
+     "folder.copied"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 67,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_payload_folder_copied.json.gz",
+   "report_sha256": "3a86f11b047e38a2470bcf9aae90fb06ce717279525eff50fe19058f7aa9911b",
+   "evaluations": 8,
+   "cuts": {
+    "PY07_folder_copied_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_payload_folder_created",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "PY08_folder_created_payload"
+   ],
+   "negatives": 1,
+   "aliases": 61,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PY08_folder_created_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PY08_folder_created_payload": [
+     "folder.created"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 62,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_payload_folder_created.json.gz",
+   "report_sha256": "7ddb004e67f4c93ac70a5d55d7039e7335d7e83e19c0a7cd58052edb07e2a912",
+   "evaluations": 8,
+   "cuts": {
+    "PY08_folder_created_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_payload_folder_deleted",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "PY09_folder_deleted_payload"
+   ],
+   "negatives": 1,
+   "aliases": 64,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PY09_folder_deleted_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PY09_folder_deleted_payload": [
+     "folder.deleted"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 65,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_payload_folder_deleted.json.gz",
+   "report_sha256": "8c18f5e2b15af5d2becc87eee6af2a62760f303673fe89b5efdca3a4e6a21180",
+   "evaluations": 8,
+   "cuts": {
+    "PY09_folder_deleted_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_payload_folder_exported",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "PY10_folder_exported_payload"
+   ],
+   "negatives": 1,
+   "aliases": 67,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PY10_folder_exported_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PY10_folder_exported_payload": [
+     "folder.exported"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 68,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_payload_folder_exported.json.gz",
+   "report_sha256": "63f05349e093432e4802a5a9632f56ab8bb7893aa17c52f1ba7c13cd5ee21ac0",
+   "evaluations": 8,
+   "cuts": {
+    "PY10_folder_exported_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_payload_folder_moved",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "PY11_folder_moved_payload"
+   ],
+   "negatives": 1,
+   "aliases": 65,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PY11_folder_moved_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PY11_folder_moved_payload": [
+     "folder.moved"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 66,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_payload_folder_moved.json.gz",
+   "report_sha256": "610d651a34a71135878e50102f9d23c7d6f482bb9229557f74c7a5e89ed9e329",
+   "evaluations": 8,
+   "cuts": {
+    "PY11_folder_moved_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_payload_folder_renamed",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "PY12_folder_renamed_payload"
+   ],
+   "negatives": 1,
+   "aliases": 64,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "PY12_folder_renamed_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "PY12_folder_renamed_payload": [
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 65,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_payload_folder_renamed.json.gz",
+   "report_sha256": "319bb3215dbaabbd32223e3f2540de42af2edbba44f33d573998609b01b98ec3",
+   "evaluations": 8,
+   "cuts": {
+    "PY12_folder_renamed_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_ref",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "SR01_ref_resolves"
+   ],
+   "negatives": 1,
+   "aliases": 48,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "SR01_ref_resolves"
+   ],
+   "unproved": {},
+   "row_families": {
+    "SR01_ref_resolves": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed",
+     "shared"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 48,
+    "refused_later": [
+     "refused_later:registry_defs:RX01_embedded_defs"
+    ],
+    "refused_later_count": 1
+   },
+   "report": "schema_ref.json.gz",
+   "report_sha256": "eb6fced44cf305b1314264b601a7cf52aabfcd3adc563490d92b175802ba5e10",
+   "evaluations": 8,
+   "cuts": {
+    "SR01_ref_resolves": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "schema_storage_registry",
+   "group": "Schema verdicts (one row per occurrence) and schema document admission",
+   "rows": [
+    "RG01_storage_registry"
+   ],
+   "negatives": 1,
+   "aliases": 0,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "RG01_storage_registry"
+   ],
+   "unproved": {},
+   "row_families": {
+    "RG01_storage_registry": [
+     "shared"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 1,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "schema_storage_registry.json.gz",
+   "report_sha256": "61c944cf2dd113a3d54fbe65d4dd0a7bd09654970773731521be37f4368da21a",
+   "evaluations": 8,
+   "cuts": {
+    "RG01_storage_registry": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "semantic_checks",
+   "group": "Current boundary trace (validate_case)",
+   "rows": [
+    "SE01_semantic_exact"
+   ],
+   "negatives": 1,
+   "aliases": 271,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "SE01_semantic_exact"
+   ],
+   "unproved": {},
+   "row_families": {
+    "SE01_semantic_exact": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 272,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "semantic_checks.json.gz",
+   "report_sha256": "9da47baacd7c0e93c839bc2ac54906fc4687cddadf26a4c0f0f2451ca0e2d4fe",
+   "evaluations": 8,
+   "cuts": {
+    "SE01_semantic_exact": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "settled_original_payload",
+   "group": "Retained original custody (validate_historical_operation)",
+   "rows": [
+    "SO01_settled_payload"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "SO01_settled_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "SO01_settled_payload": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 12,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "settled_original_payload.json.gz",
+   "report_sha256": "eef21c1224939f6cc735b0e2dc4d6deaedd6343a1b3a74f1089e6953506f6262",
+   "evaluations": 8,
+   "cuts": {
+    "SO01_settled_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "settlement_command",
+   "group": "Operation custody transitions (validate_operation_transition)",
+   "rows": [
+    "SC01_command_id",
+    "SC02_handler_target",
+    "SC03_correlation",
+    "SC04_origin"
+   ],
+   "negatives": 4,
+   "aliases": 56,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "SC01_command_id",
+    "SC02_handler_target",
+    "SC03_correlation",
+    "SC04_origin"
+   ],
+   "unproved": {},
+   "row_families": {
+    "SC01_command_id": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "SC02_handler_target": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "SC03_correlation": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "SC04_origin": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 60,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "settlement_command.json.gz",
+   "report_sha256": "cbc8a16ce5efe9d2cc50bfea0a837938eb348cfe1773cbb7db7efcd4b2a42437",
+   "evaluations": 65,
+   "cuts": {
+    "SC01_command_id": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "SC02_handler_target": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "SC03_correlation": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "SC04_origin": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 3,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "settlement_inputs",
+   "group": "Operation custody transitions (validate_operation_transition)",
+   "rows": [
+    "SI01_source_path",
+    "SI02_destination_path",
+    "SI03_container",
+    "SI04_deletion_mode",
+    "SI05_completion_time"
+   ],
+   "negatives": 5,
+   "aliases": 55,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "SI01_source_path",
+    "SI02_destination_path",
+    "SI03_container",
+    "SI04_deletion_mode",
+    "SI05_completion_time"
+   ],
+   "unproved": {},
+   "row_families": {
+    "SI01_source_path": [
+     "file.copied",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "SI02_destination_path": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "SI03_container": [
+     "file.created",
+     "folder.created"
+    ],
+    "SI04_deletion_mode": [
+     "file.deleted",
+     "folder.deleted"
+    ],
+    "SI05_completion_time": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 60,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "settlement_inputs.json.gz",
+   "report_sha256": "03d64cbde185b71c45df3c51b5fd3a3d87e511453163197a1ccaa85cb0eaa577",
+   "evaluations": 96,
+   "cuts": {
+    "SI01_source_path": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "SI02_destination_path": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "SI03_container": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "SI04_deletion_mode": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "SI05_completion_time": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "storage_profile",
+   "group": "SP-337/SP-339/SP-340 transport, encoding and profiles",
+   "rows": [
+    "SF02_redb_file",
+    "SF03_storage_group",
+    "SF04_max_value_bytes",
+    "SF05_encoding_target",
+    "SF06_group_budget",
+    "SF07_schema_header"
+   ],
+   "negatives": 6,
+   "aliases": 402,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "SF02_redb_file",
+    "SF03_storage_group",
+    "SF04_max_value_bytes",
+    "SF05_encoding_target",
+    "SF06_group_budget",
+    "SF07_schema_header"
+   ],
+   "unproved": {},
+   "row_families": {
+    "SF02_redb_file": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "SF03_storage_group": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "SF04_max_value_bytes": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "SF05_encoding_target": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "SF06_group_budget": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "SF07_schema_header": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 408,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "storage_profile.json.gz",
+   "report_sha256": "21bd326224b4b2ec89cfaa413bea260dbdd949190dc5a7daa30016328daf3b9e",
+   "evaluations": 133,
+   "cuts": {
+    "SF02_redb_file": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "SF03_storage_group": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "SF04_max_value_bytes": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "SF05_encoding_target": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "SF06_group_budget": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "SF07_schema_header": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 5,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "storage_profile_present",
+   "group": "SP-337/SP-339/SP-340 transport, encoding and profiles",
+   "rows": [
+    "SF01_profile_present"
+   ],
+   "negatives": 1,
+   "aliases": 23,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "SF01_profile_present"
+   ],
+   "unproved": {},
+   "row_families": {
+    "SF01_profile_present": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:KeyError"
+    ],
+    "refused_later_count": 24
+   },
+   "report": "storage_profile_present.json.gz",
+   "report_sha256": "23a398d55a7aedf2afbf00c061ae1754b3d0c6db1b2f5aced90b4129400ce8cf",
+   "evaluations": 8,
+   "cuts": {
+    "SF01_profile_present": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "subject_kind",
+   "group": "Represented subjects (create/copy/move/export/rename/delete)",
+   "rows": [
+    "SK01_subject_ref",
+    "SK02_subject_kind"
+   ],
+   "negatives": 2,
+   "aliases": 54,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "SK01_subject_ref",
+    "SK02_subject_kind"
+   ],
+   "unproved": {},
+   "row_families": {
+    "SK01_subject_ref": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "SK02_subject_kind": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 56,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "subject_kind.json.gz",
+   "report_sha256": "0b200e2a95d5f9c1ad333de271cb283e12e8b6e14f37c29df90c7c5f8b7beacd",
+   "evaluations": 21,
+   "cuts": {
+    "SK01_subject_ref": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "SK02_subject_kind": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "subject_selection",
+   "group": "Represented subjects (create/copy/move/export/rename/delete)",
+   "rows": [
+    "SS01_selected_subject"
+   ],
+   "negatives": 1,
+   "aliases": 9,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "SS01_selected_subject"
+   ],
+   "unproved": {},
+   "row_families": {
+    "SS01_selected_subject": [
+     "file.copied",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 10,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "subject_selection.json.gz",
+   "report_sha256": "8a17d886e1a42cd34bb8977f7033228dcfb535223b79e7178ac93d7f20340553",
+   "evaluations": 8,
+   "cuts": {
+    "SS01_selected_subject": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "terminal_proof",
+   "group": "Operation custody transitions (validate_operation_transition)",
+   "rows": [
+    "TP01_proof_present"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "TP01_proof_present"
+   ],
+   "unproved": {},
+   "row_families": {
+    "TP01_proof_present": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 0,
+    "refused_later": [
+     "refused_later:derivation_requires_cut_row:TypeError"
+    ],
+    "refused_later_count": 12
+   },
+   "report": "terminal_proof.json.gz",
+   "report_sha256": "fc2eeb0012b4306426223bc491efee7da7d55264238172f7b702991ee5bf0222",
+   "evaluations": 8,
+   "cuts": {
+    "TP01_proof_present": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "terminal_selection",
+   "group": "Original operation custody (validate_original_models)",
+   "rows": [
+    "TL01_selected_is_before"
+   ],
+   "negatives": 1,
+   "aliases": 23,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "TL01_selected_is_before"
+   ],
+   "unproved": {},
+   "row_families": {
+    "TL01_selected_is_before": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 24,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "terminal_selection.json.gz",
+   "report_sha256": "723120033fac9346c831e9b77f43472602561750f854c67e33ae9423ee792097",
+   "evaluations": 8,
+   "cuts": {
+    "TL01_selected_is_before": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "trace_fences",
+   "group": "Current boundary trace (validate_case)",
+   "rows": [
+    "TF01_ordering",
+    "TF02_first_receipt",
+    "TF03_replay_effects",
+    "TF04_retry_appends",
+    "TF05_source_verified",
+    "TF06_access_allowed",
+    "TF07_restore_coherent"
+   ],
+   "negatives": 7,
+   "aliases": 689,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "TF01_ordering",
+    "TF02_first_receipt",
+    "TF03_replay_effects",
+    "TF04_retry_appends",
+    "TF05_source_verified",
+    "TF06_access_allowed",
+    "TF07_restore_coherent"
+   ],
+   "unproved": {},
+   "row_families": {
+    "TF01_ordering": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "TF02_first_receipt": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "TF03_replay_effects": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "TF04_retry_appends": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "TF05_source_verified": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "TF06_access_allowed": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "TF07_restore_coherent": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 696,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "trace_fences.json.gz",
+   "report_sha256": "8f0c78e1c85f2529dfc399d91ca6eb23761517fb012d01f3ac1bd3c916736e04",
+   "evaluations": 176,
+   "cuts": {
+    "TF01_ordering": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "TF02_first_receipt": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "TF03_replay_effects": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "TF04_retry_appends": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "TF05_source_verified": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "TF06_access_allowed": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "TF07_restore_coherent": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 6,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "trace_original_payload",
+   "group": "Current boundary trace (validate_case)",
+   "rows": [
+    "TO01_original_payload"
+   ],
+   "negatives": 1,
+   "aliases": 23,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "TO01_original_payload"
+   ],
+   "unproved": {},
+   "row_families": {
+    "TO01_original_payload": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 24,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "trace_original_payload.json.gz",
+   "report_sha256": "2ba312db9c49ac9642859ec3cb18ae5a03dd80d6e80d4ae33e3b84c6b44981be",
+   "evaluations": 8,
+   "cuts": {
+    "TO01_original_payload": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "trace_reader",
+   "group": "Current boundary trace (validate_case)",
+   "rows": [
+    "TR01_reader_revision",
+    "TR02_event_revision",
+    "TR03_reader_enabled"
+   ],
+   "negatives": 3,
+   "aliases": 117,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "TR01_reader_revision",
+    "TR02_event_revision",
+    "TR03_reader_enabled"
+   ],
+   "unproved": {},
+   "row_families": {
+    "TR01_reader_revision": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "TR02_event_revision": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "TR03_reader_enabled": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 120,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "trace_reader.json.gz",
+   "report_sha256": "a4473ddd8f3648c2778a0ad57bfaee5c1c68fb271c33e191c8f9b806a05e8148",
+   "evaluations": 40,
+   "cuts": {
+    "TR01_reader_revision": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "TR02_event_revision": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "TR03_reader_enabled": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 2,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "trace_sequence",
+   "group": "Current boundary trace (validate_case)",
+   "rows": [
+    "TQ01_sequence_type",
+    "TQ02_sequence_range",
+    "TQ03_cutoff_type",
+    "TQ04_cutoff_range",
+    "TQ05_within_cutoff"
+   ],
+   "negatives": 5,
+   "aliases": 247,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "TQ01_sequence_type",
+    "TQ02_sequence_range",
+    "TQ03_cutoff_type",
+    "TQ04_cutoff_range",
+    "TQ05_within_cutoff"
+   ],
+   "unproved": {},
+   "row_families": {
+    "TQ01_sequence_type": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "TQ02_sequence_range": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "TQ03_cutoff_type": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "TQ04_cutoff_range": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "TQ05_within_cutoff": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 252,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "trace_sequence.json.gz",
+   "report_sha256": "37bf2c7c9bd54d51fbcf461df36d4b41d69ca738e0b921b3349cc04f49d5c3ed",
+   "evaluations": 96,
+   "cuts": {
+    "TQ01_sequence_type": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "TQ02_sequence_range": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "TQ03_cutoff_type": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "TQ04_cutoff_range": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "TQ05_within_cutoff": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 4,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "transition_storage",
+   "group": "Operation custody transitions (validate_operation_transition)",
+   "rows": [
+    "TS01_storage_input"
+   ],
+   "negatives": 1,
+   "aliases": 155,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "TS01_storage_input"
+   ],
+   "unproved": {},
+   "row_families": {
+    "TS01_storage_input": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 156,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "transition_storage.json.gz",
+   "report_sha256": "606ed1df9f5bd0856d0ea32b6e697c74d32b9c1e45688f7d9dd9358c42234cfe",
+   "evaluations": 8,
+   "cuts": {
+    "TS01_storage_input": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "value_physical_size",
+   "group": "SP-337/SP-339/SP-340 transport, encoding and profiles",
+   "rows": [
+    "VS01_physical_within_limit"
+   ],
+   "negatives": 1,
+   "aliases": 47,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "VS01_physical_within_limit"
+   ],
+   "unproved": {},
+   "row_families": {
+    "VS01_physical_within_limit": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 48,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "value_physical_size.json.gz",
+   "report_sha256": "44b83f444cf411f864a2b1b6f355843ba8e9fff58c8405c00f424244d0e6d644",
+   "evaluations": 8,
+   "cuts": {
+    "VS01_physical_within_limit": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "value_reference_size",
+   "group": "SP-337/SP-339/SP-340 transport, encoding and profiles",
+   "rows": [
+    "VS02_referent_above_limit"
+   ],
+   "negatives": 1,
+   "aliases": 11,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "VS02_referent_above_limit"
+   ],
+   "unproved": {},
+   "row_families": {
+    "VS02_referent_above_limit": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 12,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "value_reference_size.json.gz",
+   "report_sha256": "0269385e60fb1230ce37e703cd67ed6dfa40b6a898764d752cffe71318032aa1",
+   "evaluations": 8,
+   "cuts": {
+    "VS02_referent_above_limit": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 0,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  },
+  {
+   "phase": "writer_policy",
+   "group": "Current writer replay policy",
+   "rows": [
+    "WR01_replay_only",
+    "WR02_family_policy"
+   ],
+   "negatives": 2,
+   "aliases": 46,
+   "controls": 1,
+   "tool_controls": 1,
+   "tool_status": "PASS",
+   "proved": [
+    "WR01_replay_only",
+    "WR02_family_policy"
+   ],
+   "unproved": {},
+   "row_families": {
+    "WR01_replay_only": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ],
+    "WR02_family_policy": [
+     "file.copied",
+     "file.created",
+     "file.deleted",
+     "file.exported",
+     "file.moved",
+     "file.renamed",
+     "folder.copied",
+     "folder.created",
+     "folder.deleted",
+     "folder.exported",
+     "folder.moved",
+     "folder.renamed"
+    ]
+   },
+   "complete_boundary_flips": {
+    "accepted": 48,
+    "refused_later": [],
+    "refused_later_count": 0
+   },
+   "report": "writer_policy.json.gz",
+   "report_sha256": "c94dbf8ee5421963ec34eff04c820c136ef1eeb9946893899d9748dd75ef783b",
+   "evaluations": 21,
+   "cuts": {
+    "WR01_replay_only": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    },
+    "WR02_family_policy": {
+     "own": 1,
+     "flipped": 1,
+     "stays": 1,
+     "unrelated": 0,
+     "masked": 0,
+     "proved": true
+    }
+   }
+  }
+ ]
+}
