@@ -1,0 +1,103 @@
+{
+  "audit_id": "audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity",
+  "bound_sha256": {
+    "atom_fidelity_matrix.jsonl": "50be49f27d558caf95958a7609d98fbce80391bfdacaa8fde55f07ef5629fd53",
+    "audit_report.json": "0a480e0f20ae727f836354e941079386f4ee172b8adca4fe379cd5e4c4ea3297",
+    "ledger_consistency.json": "f244996ee0eb95238d329a30e77a7b2038880d1ba67c8bdd85eb2751bc63cbed",
+    "owner_routing_findings.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "planunit_source_claims.jsonl": "446920a5507cd1dadcf8a814226743a63f0b4ca4f0b1f56e2bb197f902fafd3a",
+    "repair_closure_matrix.jsonl": "276a56583e715e9023a589e839d2605b65ffbfe5f1f640206fa2d14ccff745b8",
+    "semantic_risks.jsonl": "99704968d648d3482913f076650eb132bfde169662dd37860d4b049ac62645bf",
+    "validator_results.json": "4129058076be82750f26a12394d5e40073ef1a974c904b8e64e754ab573125d9"
+  },
+  "date": "2026-11-08",
+  "decision_ref": "Plans/Decision_Log.md#DL-470",
+  "historical_status": {
+    "from": "PASS_WITH_WARNINGS",
+    "reason": "The original source artifacts contain four missing_or_drift semantic risks and one source_lineage_supported_with_index_shape_warning claim: five rows required repair. A later repaired terminal result does not change the original audit status.",
+    "to": "BLOCKED"
+  },
+  "non_actionable_rows": [
+    {
+      "reason": "Rename Chain Wizard and Plan Wizard to Planning Wizard: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 2
+    },
+    {
+      "reason": "Planning Wizard uses one typed thread family: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 8
+    },
+    {
+      "reason": "Discover project-local test capabilities before WorkNode binding: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 83
+    },
+    {
+      "reason": "Research current testing methods online: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 84
+    },
+    {
+      "reason": "Record online testing research provenance: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 85
+    },
+    {
+      "reason": "Use exact final action label Approve And Build: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 101
+    },
+    {
+      "reason": "Approval freezes an immutable Approved Plan Pack: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 102
+    },
+    {
+      "reason": "Approved plans and indexes are downstream authority: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 103
+    },
+    {
+      "reason": "Approval transaction is atomic and outbox-backed: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 104
+    },
+    {
+      "reason": "PlanApproved is idempotent: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 105
+    },
+    {
+      "reason": "Automatically launch Plan Compile after approval: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 106
+    },
+    {
+      "reason": "Navigate immediately to Orchestrator Plan Compile: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 107
+    },
+    {
+      "reason": "Preserve design-only v1 and add runtime-capable v2: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 109
+    },
+    {
+      "reason": "Runtime contract carries explicit launch and adapter policy: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening. The June audit found no unclosed atom-fidelity gap and this matrix row itself says no canonical repair was required.",
+      "source_artifact": "atom_fidelity_matrix.jsonl",
+      "source_row": 110
+    },
+    {
+      "reason": "Superseded invalid invocation: missing --run-dir caused returncode 2 with no side effects; the corrected pm_plan_migration_validate invocation passed in the same audit. No unresolved repository repair was needed.",
+      "source_artifact": "validator_results.json",
+      "source_row": "invalid_invocations.pm_plan_migration_validate"
+    },
+    {
+      "reason": "The source result is status pass, returncode 0, no side effects. Its only warning says the absent matrix made completeness checking skip; adding the matrix resolved audit housekeeping. Registry row 280 remains that historical closure, without turning a passing source result into an actionable canonical defect.",
+      "source_artifact": "validator_results.json",
+      "source_row": "results.pm_audit_closure_validate_audit_004"
+    }
+  ],
+  "schema_id": "pm.audit_closure.audit_correction.v1"
+}

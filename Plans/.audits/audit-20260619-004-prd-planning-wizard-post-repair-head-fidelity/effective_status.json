@@ -1,9 +1,10 @@
 {
   "audit_id": "audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity",
   "effective_status": "PASS_WITH_WARNINGS",
-  "effective_terminal_report": "audit_report.json",
+  "effective_terminal_report": "post_repair_audit_report.json",
   "ledger_id": "pldg-20260618-001-prd-planning-wizard",
   "notes": [
+    "Historical status artifacts are preserved but superseded by this effective status projection.",
     "No open actionable repair is represented by this audit effective status."
   ],
   "original_repair_required_count": 5,
@@ -11,14 +12,18 @@
   "repair_required_count_source": "closure_validation",
   "schema_id": "pm.audit_effective_status.v1",
   "status_sources": {
+    "audit_correction": "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/audit_correction-20261108.json",
     "audit_report_repair_required_count": null,
     "audit_report_status": "PASS_WITH_WARNINGS",
+    "corrected_audit_report_status": "BLOCKED",
     "final_report_repair_required_count": null,
     "final_report_status": null,
-    "post_repair_repair_required_count": null,
-    "post_repair_status": null,
+    "post_repair_repair_required_count": 0,
+    "post_repair_status": "PASS_WITH_WARNINGS",
     "terminal_state_status": null
   },
-  "superseded_historical_reports": [],
-  "terminal_repair_state": "no_repair_required"
+  "superseded_historical_reports": [
+    "audit_report.json"
+  ],
+  "terminal_repair_state": "repair_validated"
 }
