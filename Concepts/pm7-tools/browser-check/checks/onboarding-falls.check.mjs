@@ -35,18 +35,29 @@ export default async function(t) {
       // Arm the observer before input. A choice click may finish after most of its fall, which would measure only
       // the final swing as a tiny descent and call its natural turning point a long midpoint stall.
       const captureKey=look+'-'+label;
-      const capture=f.evaluate(async ([duration,key])=>{
+      const capture=f.evaluate(async ([duration,key,paintTag])=>{
         const rows=[],until=performance.now()+duration,ids=new WeakMap();let nextId=0;
         window.__qa7FallArmed=key;
+        if(paintTag&&!window.__qa7FallTag){
+          const tag=document.createElement('div');tag.style.cssText='position:fixed;left:0;top:0;width:168px;height:8px;contain:strict;z-index:2147483647;pointer-events:none;view-transition-name:qa7-fall-tag';
+          const cells=[];for(let i=0;i<42;i++){const c=document.createElement('i');c.style.cssText=`position:absolute;left:${i*4}px;top:0;width:4px;height:8px;background:#808080`;tag.appendChild(c);cells.push(c);}
+          document.documentElement.appendChild(tag);window.__qa7FallTag={seq:0,cells,shown:[]};
+        }
         await new Promise(resolve=>{
-          const tick=ts=>{
+          let raf=0,lastTs=0,toggle=0,done=false;
+          const clock=document.createElement('i');clock.style.cssText='position:fixed;left:-10px;top:-10px;width:1px;height:1px;contain:strict;pointer-events:none';document.documentElement.appendChild(clock);
+          // ResizeObserver runs after the frame's rAF callbacks and layout, as the kit's Pip witness does.
+          const observer=new ResizeObserver(()=>{
+            const ts=lastTs||performance.now();
             const s=document.querySelector('#pm-o55-onboarding .pst')?.__pipStage;
             if(s)rows.push({ts,delivered:performance.now(),t:s.t,theme:s.theme,render:s.renderN,stage:s.id,live:s.live(),fps:s.frameRate(),pip:{head:s.H,dy:s.ps.dy},props:[...s.props].map(([id,p])=>({id,kind:p.spec.kind,state:p.state,op:p.op,settled:p.settled,len:p.len,target:s.propTarget(p).len,box:p.box,pos:p.pos,rest:p.restBox,ground:!!p.spec.ground,stack:p.spec.stack})),fx:s.fx.map(p=>{if(!ids.has(p))ids.set(p,++nextId);return {id:ids.get(p),kind:p.kind,follow:!!p.follow,x:p.x,y:p.y,life:p.life};})});
-            if(ts<until)requestAnimationFrame(tick);else resolve();
-          };requestAnimationFrame(tick);
+            if(paintTag&&s){const w=window.__qa7FallTag,seq=++w.seq;rows.at(-1).paintSeq=seq;const bits=[1,0];for(let i=0;i<20;i++)bits.push((seq>>i)&1);for(let i=0;i<20;i++)bits.push(1-((seq>>i)&1));bits.forEach((b,i)=>{if(w.shown[i]!==b){w.cells[i].style.background=b?'#fff':'#000';w.shown[i]=b;}});}
+            if(performance.now()>=until){done=true;cancelAnimationFrame(raf);observer.disconnect();clock.remove();resolve();}
+          });observer.observe(clock);
+          const tick=ts=>{if(done)return;lastTs=ts;clock.style.width=(++toggle%2+1)+'px';raf=requestAnimationFrame(tick);};raf=requestAnimationFrame(tick);
         });
-        return {screen:O55.S.sess.screen,rows};
-      },[Number(t.args.dwell||(screen==='creating'?7000:screen==='ready'?6500:1800)),captureKey]);
+        return {screen:O55.S.sess.screen,rows,tag:paintTag?{bits:20,block:4,x:0,y:0}:null};
+      },[Number(t.args.dwell||(screen==='creating'?7000:screen==='ready'?6500:1800)),captureKey,!!t.recording||!!t.args.paintTag]);
       await f.waitForFunction(key=>window.__qa7FallArmed===key,captureKey);
       if(entry.click)await f.locator('.o55-pane > .o55-layer:not(.o55-out) '+entry.click).first().click();
       if(entry.hover){await f.locator('.o55-pane > .o55-layer:not(.o55-out) '+entry.hover).first().hover();await f.waitForTimeout(450);}
