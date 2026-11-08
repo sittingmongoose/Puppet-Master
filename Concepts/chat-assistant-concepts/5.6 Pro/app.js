@@ -3242,6 +3242,8 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   /* The glide's time constant is real time; a late frame catches up the time it lost instead of falling further behind (P1, 2026-10-23: 302-367 ms on a loaded standalone). */
   function glideStep(ts){
     glideRAF=0;
+    // Onboarding covers the hosted chat. Its scroll reads otherwise force layout during the stage's drop (QA-7).
+    if(HOSTED&&document.documentElement.hasAttribute('data-o55-open')){ glideTs=0; return; }
     const el=tEl(); if(!el||!tStick){ glideTs=0; return; }
     if(followHoldFn&&followHoldFn()){ glideTs=0; return; }
     // Hosted resize drag: the transcript is rewrapping every frame and the glide's reads pay that
@@ -4506,6 +4508,9 @@ suggested path                    migration 0043, reversible</div></div></sectio
   }
   window.addEventListener('pm56-clock-scale',()=>{ if(workTimer) armWorkTimer(); });
   function workTick(){
+    // The covered concept demo has nothing to paint. Keep its timeline at this tick until onboarding closes;
+    // the existing interval then continues it, without catch-up work or a render behind the wizard (QA-7).
+    if(HOSTED&&document.documentElement.hasAttribute('data-o55-open')) return;
     // Hosted: a shell/Home resize drag owns the frame budget. The demo clock advances a fixed step
     // per tick, so skipping ticks while body.pm-resizing simply pauses the timeline mid-drag; the
     // next tick after release resumes it (no jump, no catch-up render storm).

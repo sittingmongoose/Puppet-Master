@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { onboardingApp } from '../helpers/onboarding-fields.mjs';
 
 const percentile = (xs, q) => [...xs].sort((a,b)=>a-b)[Math.min(xs.length-1,Math.floor(xs.length*q))] || 0;
-function motion(rows, kind = 'clipboard') {
+export function analyzeDrop(rows, kind = 'clipboard') {
   const samples = rows.flatMap(r => {
     const p = r.stage?.props.find(p=>p.kind===kind && p.state!=='out');
     return p && p.op > .1 ? [{ ...p, ts:r.ts, dt:r.dt, render:r.stage.render, y:p.rect.y+p.rect.height/2, k:r.stage.map.k }] : [];
@@ -33,7 +33,8 @@ function motion(rows, kind = 'clipboard') {
 export default async function(t) {
   const A = onboardingApp(t), looks = String(t.args.looks || 'glass-dark,glass-light,basic-dark,basic-light,friendly-dark,friendly-light,retro-dark,retro-light,nier-dark,nier-light').split(',');
   const out = [];
-  for (const look of looks) {
+  for (const look of looks) for (let rep=0;rep<Number(t.args.reps||1);rep++) {
+    const label=look+'-'+rep;
     await t.emulate({ reducedMotion: 'no-preference' });
     await A.boot({ look: look.split('-') });
     await A.click('pick', 'this'); await A.click('next', undefined, 'begin');
@@ -52,13 +53,13 @@ export default async function(t) {
       }; requestAnimationFrame(tick);
       performance.mark('qa7-drop-before');
     });
-    await t.mark(look + ' recovery kit Continue');
+    await t.mark(label + ' recovery kit Continue');
     await f.locator('.o55-layer:not(.o55-out) .o55-foot .o55-primary').click();
     await A.sleep(3700);
     const rows = await f.evaluate(() => window.__dropFrames);
-    const file = join(t.run.dir, look + '-progress.json'); writeFileSync(file, JSON.stringify(rows));
-    const result=motion(rows);
-    out.push({ look, frames:rows.length, screens:[...new Set(rows.map(x=>x.screen))], ...result });
+    const file = join(t.run.dir, label + '-progress.json'); writeFileSync(file, JSON.stringify(rows));
+    const result=analyzeDrop(rows);
+    out.push({ look, rep, frames:rows.length, screens:[...new Set(rows.map(x=>x.screen))], ...result });
     t.log(JSON.stringify(out.at(-1)));
     await t.check(look + ': Continue reaches backup list', rows.some(x=>x.screen === 'r-pick'), JSON.stringify(out.at(-1)));
     await t.check(look + ': measured visible middle of clipboard descent', result.covered, JSON.stringify(result));
@@ -67,7 +68,7 @@ export default async function(t) {
     if (t.args.trace) {
       const done = new Promise(r=>cdp.once('Tracing.tracingComplete',r)); await cdp.send('Tracing.end'); const { stream } = await done;
       let data=''; for (;;) { const ch=await cdp.send('IO.read',{handle:stream}); data+=ch.data; if(ch.eof)break; }
-      await cdp.send('IO.close',{handle:stream}); writeFileSync(join(t.run.dir,look+'-trace.json'),data);
+      await cdp.send('IO.close',{handle:stream}); writeFileSync(join(t.run.dir,label+'-trace.json'),data);
     }
     await cdp.detach();
   }
