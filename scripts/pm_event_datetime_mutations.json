@@ -454,9 +454,6 @@
    "predicate:site:datetime_inventory:scan.unsupported:dynamic#1:true row['sha256'] == pin#1": {
     "witness": "check:datetime_unit_scan_exclusion_pinned_unreadable_changed"
    },
-   "site:datetime_inventory:scan.inspect.strings:unreadable_schema_string_container#1": {
-    "witness": "check:datetime_unit_scan_unreadable_string_container"
-   },
    "site:datetime_inventory:scan.container:unreadable_mentioning_container#1": {
     "witness": "check:datetime_unit_scan_unreadable_fence"
    },
@@ -1527,6 +1524,102 @@
    },
    "regex:datetime_value_probe:_PositivePaths._map:match_call re.search(pattern, field)#1": {
     "witness": "check:datetime_unit_authority_unanchored_pattern_value"
+   },
+   "site:datetime:_fixed_checker_class.FixedFormatChecker.__setattr__:TypeError:datetime_format_checker_fixed#1": {
+    "witness": "check:datetime_unit_format_checker_table_fixed"
+   },
+   "site:datetime:_fixed_checker_class.FixedFormatChecker.__delattr__:TypeError:datetime_format_checker_fixed#1": {
+    "witness": "check:datetime_unit_format_checker_table_fixed"
+   },
+   "site:datetime:_bound_validator.post_init:TypeError:datetime_validator_binding_forged#1": {
+    "witness": "check:datetime_unit_bound_evolve_forged_binding_refused"
+   },
+   "site:datetime:_bound_validator.post_init:TypeError:datetime_validator_fixed_format_checker#1": {
+    "witness": "check:datetime_unit_bound_evolve_format_checker_none_refused"
+   },
+   "site:datetime:_bound_validator.post_init:TypeError:datetime_validator_fixed_registry#1": {
+    "witness": "check:datetime_unit_bound_evolve_registry_refused"
+   },
+   "site:datetime:_bound_validator.post_init:TypeError:datetime_validator_fixed_resolver#1": {
+    "witness": "check:datetime_unit_bound_evolve_resolver_legacy_refused"
+   },
+   "predicate:site:datetime:_bound_validator.post_init:TypeError:datetime_validator_fixed_resolver#1:false self._ref_resolver is not None#1": {
+    "witness": "check:datetime_unit_bound_evolve_resolver_legacy_refused"
+   },
+   "predicate:site:datetime:_bound_validator.post_init:TypeError:datetime_validator_fixed_resolver#1:false self._resolver._registry._retrieve is not binding.registry._retrieve#1": {
+    "witness": "check:datetime_unit_bound_evolve_resolver_foreign_refused"
+   },
+   "site:datetime:_bound_validator.post_init:TypeError:datetime_validator_fixed_storage_selection#1": {
+    "witness": "check:datetime_unit_bound_evolve_storage_selection_refused"
+   },
+   "site:datetime:_bound_validator.setattr_:TypeError:datetime_validator_fixed#1": {
+    "witness": "check:datetime_unit_bound_setattr_format_checker_refused"
+   },
+   "data:table_entry:datetime:<module>:drop_entry _FIXED_ATTRIBUTES 'format_checker'#1": {
+    "witness": "check:datetime_unit_bound_setattr_format_checker_refused"
+   },
+   "data:table_entry:datetime:<module>:drop_entry _FIXED_ATTRIBUTES '_registry'#1": {
+    "witness": "check:datetime_unit_bound_setattr_registry_refused"
+   },
+   "data:table_entry:datetime:<module>:drop_entry _FIXED_ATTRIBUTES '_resolver'#1": {
+    "witness": "check:datetime_unit_bound_setattr_resolver_refused"
+   },
+   "data:table_entry:datetime:<module>:drop_entry _FIXED_ATTRIBUTES '_ref_resolver'#1": {
+    "witness": "check:datetime_unit_bound_setattr_ref_resolver_refused"
+   },
+   "data:table_entry:datetime:<module>:drop_entry _FIXED_ATTRIBUTES 'storage_selection'#1": {
+    "witness": "check:datetime_unit_bound_setattr_storage_selection_refused"
+   },
+   "data:table_entry:datetime:<module>:drop_entry _FIXED_ATTRIBUTES 'datetime_binding'#1": {
+    "witness": "check:datetime_unit_bound_setattr_datetime_binding_refused"
+   },
+   "site:datetime_inventory:declarations:ValueError:unreadable field declaration keyword#1": {
+    "witness": "check:datetime_unit_scan_wrong_type_declaration_required"
+   },
+   "site:datetime_inventory:scan.inspect.serialized:unreadable_schema_string_container#1": {
+    "witness": "check:datetime_unit_scan_unreadable_string_container"
+   },
+   "site:datetime_inventory:scan.inspect.serialized:escaped_schema_string_container#1": {
+    "witness": "check:datetime_unit_scan_escaped_string_container_refused"
+   },
+   "site:datetime_inventory:scan.inspect.serialized:serialized_depth_exceeded#1": {
+    "witness": "check:datetime_unit_scan_serialized_depth_bound"
+   },
+   "site:datetime_inventory:scan.inspect.strings:serialized_key_container#1": {
+    "witness": "check:datetime_unit_scan_serialized_key_refused"
+   },
+   "boundary:datetime_inventory:scan.inspect.serialized:depth >= SERIALIZED_DEPTH:0#1": {
+    "witness": "check:datetime_unit_scan_serialized_depth_bound"
+   },
+   "data:collection_build:datetime_inventory:_json_layers:disable_build layers.append(decoded)#1": {
+    "witness": "check:datetime_unit_scan_json_layers"
+   },
+   "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('properties', dict)#1": {
+    "witness": "check:datetime_unit_scan_wrong_type_declaration_properties"
+   },
+   "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('dependentRequired', dict)#1": {
+    "witness": "check:datetime_unit_scan_wrong_type_declaration_dependentRequired"
+   },
+   "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('dependentSchemas', dict)#1": {
+    "witness": "check:datetime_unit_scan_wrong_type_declaration_dependentSchemas"
+   },
+   "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('patternProperties', dict)#1": {
+    "witness": "check:datetime_unit_scan_wrong_type_declaration_patternProperties"
+   },
+   "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('propertyNames', (bool, dict))#1": {
+    "witness": "check:datetime_unit_scan_wrong_type_declaration_propertyNames"
+   },
+   "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('required', list)#1": {
+    "witness": "check:datetime_unit_scan_wrong_type_declaration_required"
+   },
+   "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('enum', list)#1": {
+    "witness": "check:datetime_unit_scan_wrong_type_declaration_enum"
+   },
+   "data:walk_domain:datetime_inventory:declarations:walk_first _DECLARING_TYPES#1": {
+    "witness": "check:datetime_unit_scan_wrong_type_declaration_dependentRequired"
+   },
+   "data:walk_domain:datetime_inventory:scan.inspect.strings:walk_first obj.items()#1": {
+    "witness": "check:datetime_unit_scan_serialized_list_declaration"
    }
   }
  },
@@ -1735,16 +1828,16 @@
   {
    "id": "hw-validator-no-checker",
    "module": "pm_event_datetime",
-   "find": "        schema, registry=registry, format_checker=format_checker(profile=profile),",
-   "replace": "        schema, registry=registry,",
+   "find": "    checker = format_checker(profile=profile)\n    return _bound_validator(base)(",
+   "replace": "    checker = None\n    return _bound_validator(base)(",
    "witness": "check:datetime_validator_real_inventory_format_installed",
    "rule": "validator.installs-checker"
   },
   {
    "id": "hw-validator-profile-ignored",
    "module": "pm_event_datetime",
-   "find": "        schema, registry=registry, format_checker=format_checker(profile=profile),",
-   "replace": "        schema, registry=registry, format_checker=format_checker(),",
+   "find": "    checker = format_checker(profile=profile)\n",
+   "replace": "    checker = format_checker()\n",
    "witness": "check:datetime_validator_real_inventory_format_installed",
    "rule": "validator.installs-checker"
   },
@@ -1879,8 +1972,8 @@
   {
    "id": "hw-scan-escapes-not-decoded",
    "module": "pm_event_datetime_inventory",
-   "find": "        decoded = _JSON_U_ESCAPE.sub(lambda m: chr(int(m.group(1), 16)), body)\n        if decoded == body:\n            return (any(field in body for field in FIELDS) or",
-   "replace": "        decoded = body\n        if decoded == body:\n            return (any(field in body for field in FIELDS) or",
+   "find": "        decoded = _JSON_ESCAPE.sub(lambda m: json.loads('\"' + m.group(0) + '\"'), current)",
+   "replace": "        decoded = layers[-1]",
    "witness": "check:datetime_unit_scan_escaped_names",
    "rule": "scan.decoding"
   },
@@ -1895,7 +1988,7 @@
   {
    "id": "hw-scan-inline-code-ignored",
    "module": "pm_event_datetime_inventory",
-   "find": "                if child.type in (\"code_inline\", \"html_inline\") and \"{\" in child.content:",
+   "find": "                if child.type in (\"code_inline\", \"html_inline\") and any(\n                        \"{\" in layer for layer in _json_layers(child.content)):",
    "replace": "                if False:",
    "witness": "check:datetime_unit_scan_inline_code",
    "rule": "scan.decoding"
@@ -2374,6 +2467,171 @@
    "witness": "check:datetime_unit_date_time_precedence_profile_before_type",
    "rule": "profile.selection",
    "note": "T102 (B-DT13, owner-equivalent): date_time checks the value's type before the profile. CV-1101 names no precedence between them, so the current one is pinned by a self-check."
+  },
+  {
+   "id": "hw-fix17-B05-legacy-six-digit-fraction",
+   "module": "pm_event_datetime",
+   "find": "if fraction is None or len(fraction) != 9:",
+   "replace": "if fraction is None or len(fraction) not in (6, 9):",
+   "witness": "check:datetime_unit_profile_domain_legacy_normalization_output_fraction_length",
+   "rule": "profile.legacy-output",
+   "note": "Pre-check B05 (T161), the reviewer's edit."
+  },
+  {
+   "id": "hw-fix17-B08-composition-type-dropped",
+   "module": "pm_event_datetime",
+   "find": "{\"type\": \"string\", \"format\": \"date-time\",",
+   "replace": "{\"format\": \"date-time\",",
+   "witness": "check:datetime_unit_composition_type_alone_root",
+   "rule": "composition.storage-utc-z",
+   "note": "Pre-check B08 (T162), the reviewer's edit."
+  },
+  {
+   "id": "hw-fix17-I03-mentions-not-decoded",
+   "module": "pm_event_datetime_inventory",
+   "find": "    return any(field in layer for layer in _json_layers(body) for field in FIELDS)",
+   "replace": "    return any(field in body for field in FIELDS)",
+   "witness": "check:datetime_unit_scan_escaped_mention_fence_unclassified",
+   "rule": "scan.mentioning-container",
+   "note": "Pre-check I03 (T163): mentions_field stops decoding escapes. Re-pointed: the reviewer's find text named the old while loop, which _json_layers replaced."
+  },
+  {
+   "id": "hw-fix17-I05-serialized-objects-only",
+   "module": "pm_event_datetime_inventory",
+   "find": "if isinstance(decoded, (dict, list, str)):",
+   "replace": "if isinstance(decoded, dict):",
+   "witness": "check:datetime_unit_scan_serialized_list_declaration",
+   "rule": "scan.decoding",
+   "note": "Pre-check I05 (T164), the reviewer's edit."
+  },
+  {
+   "id": "hw-fix17-V04-automatic-empty-context-only",
+   "module": "pm_event_datetime_value_probe",
+   "find": "for field in fields for context in ({}, *contexts) for v in sweep))",
+   "replace": "for field in fields for context in ({},) for v in sweep))",
+   "survives": "Equivalent (pre-check V04, T165, checked by the reviewer): automatic credit already requires no dependencies. Without a dependency keyword (constraint_paths records required, dependent*, dependencies, min/maxProperties, unevaluatedProperties, const, enum and every applicator at each map node it reaches) a 2020-12 object's validity is a conjunction over its keys, so adding sibling keys can only remove accepted instances: no sweep value accepted in {} implies none in any context.",
+   "rule": "probe.automatic-credit",
+   "note": "Pre-check V04 (T165), the reviewer's edit; a declared survivor."
+  },
+  {
+   "id": "hw-fix17-composition-format-dropped",
+   "module": "pm_event_datetime",
+   "find": "{\"type\": \"string\", \"format\": \"date-time\",",
+   "replace": "{\"type\": \"string\",",
+   "witness": "check:datetime_unit_composition_format_alone_root",
+   "rule": "composition.storage-utc-z"
+  },
+  {
+   "id": "hw-fix17-composition-pattern-dropped",
+   "module": "pm_event_datetime",
+   "find": "\"format\": \"date-time\",\n                                                              \"pattern\": r\"Z(?![\\s\\S])\"},",
+   "replace": "\"format\": \"date-time\"},",
+   "witness": "check:datetime_unit_composition_pattern_alone_root",
+   "rule": "composition.storage-utc-z"
+  },
+  {
+   "id": "hw-fix17-composition-descend-dropped",
+   "module": "pm_event_datetime",
+   "find": "        self.storage_selection.admit(schema)\n        yield from _eventrecord_storage_properties(self, None, instance, schema)\n        yield from extended.descend(",
+   "replace": "        self.storage_selection.admit(schema)\n        yield from extended.descend(",
+   "witness": "check:datetime_unit_composition_type_alone_through_reference",
+   "rule": "composition.storage-utc-z"
+  },
+  {
+   "id": "hw-fix17-shape-ignores-bom",
+   "module": "pm_event_datetime_inventory",
+   "find": "_JSON_SHAPED = re.compile(r'[\\s\\ufeff]*[\\[{\"]')",
+   "replace": "_JSON_SHAPED = re.compile(r'[\\s]*[\\[{\"]')",
+   "witness": "check:datetime_unit_scan_shaped_string_container_refused",
+   "rule": "scan.decoding"
+  },
+  {
+   "id": "hw-fix17-shape-objects-only",
+   "module": "pm_event_datetime_inventory",
+   "find": "_JSON_SHAPED = re.compile(r'[\\s\\ufeff]*[\\[{\"]')",
+   "replace": "_JSON_SHAPED = re.compile(r'[\\s\\ufeff]*[{]')",
+   "witness": "check:datetime_unit_scan_shaped_string_container_refused",
+   "rule": "scan.decoding"
+  },
+  {
+   "id": "hw-fix17-escape-unicode-only",
+   "module": "pm_event_datetime_inventory",
+   "find": "_JSON_ESCAPE = re.compile(r'\\\\(?:[\"\\\\/bfnrt]|u[0-9a-fA-F]{4})')",
+   "replace": "_JSON_ESCAPE = re.compile(r'\\\\u[0-9a-fA-F]{4}')",
+   "witness": "check:datetime_unit_scan_escaped_string_container_refused",
+   "rule": "scan.decoding"
+  },
+  {
+   "id": "hw-fix17-escaped-layers-unchecked",
+   "module": "pm_event_datetime_inventory",
+   "find": "                elif any(_JSON_SHAPED.match(layer) for layer in _json_layers(obj)[1:]):",
+   "replace": "                elif False:",
+   "witness": "check:datetime_unit_scan_escaped_string_container_refused",
+   "rule": "scan.decoding"
+  },
+  {
+   "id": "hw-fix17-keys-not-scanned",
+   "module": "pm_event_datetime_inventory",
+   "find": "                    if schema_candidate(key) and any(_JSON_SHAPED.match(layer) for layer in _json_layers(key)):",
+   "replace": "                    if False:",
+   "witness": "check:datetime_unit_scan_serialized_key_refused",
+   "rule": "scan.decoding"
+  },
+  {
+   "id": "hw-fix17-depth-unbounded",
+   "module": "pm_event_datetime_inventory",
+   "find": "                if depth >= SERIALIZED_DEPTH:",
+   "replace": "                if False:",
+   "witness": "check:datetime_unit_scan_serialized_depth_bound",
+   "rule": "scan.decoding"
+  },
+  {
+   "id": "hw-fix17-depth-not-carried",
+   "module": "pm_event_datetime_inventory",
+   "find": "                inspect(decoded, path, here, depth + 1)",
+   "replace": "                inspect(decoded, path, here)",
+   "witness": "check:datetime_unit_scan_serialized_depth_bound",
+   "rule": "scan.decoding"
+  },
+  {
+   "id": "hw-fix17-checker-table-mutable",
+   "module": "pm_event_datetime",
+   "find": "    checker.checkers = MappingProxyType(dict(checker.checkers))\n",
+   "replace": "",
+   "witness": "check:datetime_unit_format_checker_table_fixed",
+   "rule": "validator.binding-fixed"
+  },
+  {
+   "id": "hw-fix17-checker-attributes-assignable",
+   "module": "pm_event_datetime",
+   "find": "    checker._fixed = True\n",
+   "replace": "",
+   "witness": "check:datetime_unit_format_checker_table_fixed",
+   "rule": "validator.binding-fixed"
+  },
+  {
+   "id": "hw-fix17-binding-unchecked",
+   "module": "pm_event_datetime",
+   "find": "    bound.__attrs_post_init__ = post_init\n",
+   "replace": "",
+   "witness": "check:datetime_unit_bound_evolve_format_checker_none_refused",
+   "rule": "validator.binding-fixed"
+  },
+  {
+   "id": "hw-fix17-assignment-unchecked",
+   "module": "pm_event_datetime",
+   "find": "    bound.__setattr__ = setattr_\n",
+   "replace": "",
+   "witness": "check:datetime_unit_bound_setattr_format_checker_refused",
+   "rule": "validator.binding-fixed"
+  },
+  {
+   "id": "hw-fix17-never-fixed",
+   "module": "pm_event_datetime",
+   "find": "        self.__dict__[\"_datetime_fixed\"] = True\n",
+   "replace": "",
+   "witness": "check:datetime_unit_bound_setattr_format_checker_refused",
+   "rule": "validator.binding-fixed"
   }
  ],
  "rules_source": "Predicate-level rules derived from the owner rows. Each lists generated point keys and hand-written mutation ids; every one must be caught with its witness failing. Declared survivors are never listed.",
@@ -2580,7 +2838,8 @@
     "predicate:site:datetime:date_time:date_time_utc_z#1:drop LEGACY_NORMALIZATION_OUTPUT#1",
     "site:datetime:date_time:date_time_legacy_fraction#1",
     "predicate:site:datetime:date_time:date_time_legacy_fraction#1:false fraction is None#1",
-    "predicate:site:datetime:date_time:date_time_legacy_fraction#1:false len(fraction) != 9#1"
+    "predicate:site:datetime:date_time:date_time_legacy_fraction#1:false len(fraction) != 9#1",
+    "hw-fix17-B05-legacy-six-digit-fraction"
    ]
   },
   {
@@ -2624,12 +2883,44 @@
    ]
   },
   {
+   "id": "validator.binding-fixed",
+   "owner": "CV-1101",
+   "rule": "The checker, closed registry, resolver and selection a datetime_validator is built with stay fixed: evolve, attrs.evolve, copy.replace and attribute assignment that change one raise TypeError, as the same argument to datetime_validator does; the deprecated .resolver property cannot install a legacy resolver; and the checker's own table is read-only. An evolve that changes only the schema keeps the checker and still checks timestamps.",
+   "mutations": [
+    "site:datetime:_fixed_checker_class.FixedFormatChecker.__setattr__:TypeError:datetime_format_checker_fixed#1",
+    "site:datetime:_fixed_checker_class.FixedFormatChecker.__delattr__:TypeError:datetime_format_checker_fixed#1",
+    "site:datetime:_bound_validator.post_init:TypeError:datetime_validator_binding_forged#1",
+    "site:datetime:_bound_validator.post_init:TypeError:datetime_validator_fixed_format_checker#1",
+    "site:datetime:_bound_validator.post_init:TypeError:datetime_validator_fixed_registry#1",
+    "site:datetime:_bound_validator.post_init:TypeError:datetime_validator_fixed_resolver#1",
+    "predicate:site:datetime:_bound_validator.post_init:TypeError:datetime_validator_fixed_resolver#1:false self._ref_resolver is not None#1",
+    "predicate:site:datetime:_bound_validator.post_init:TypeError:datetime_validator_fixed_resolver#1:false self._resolver._registry._retrieve is not binding.registry._retrieve#1",
+    "site:datetime:_bound_validator.post_init:TypeError:datetime_validator_fixed_storage_selection#1",
+    "site:datetime:_bound_validator.setattr_:TypeError:datetime_validator_fixed#1",
+    "data:table_entry:datetime:<module>:drop_entry _FIXED_ATTRIBUTES 'format_checker'#1",
+    "data:table_entry:datetime:<module>:drop_entry _FIXED_ATTRIBUTES '_registry'#1",
+    "data:table_entry:datetime:<module>:drop_entry _FIXED_ATTRIBUTES '_resolver'#1",
+    "data:table_entry:datetime:<module>:drop_entry _FIXED_ATTRIBUTES '_ref_resolver'#1",
+    "data:table_entry:datetime:<module>:drop_entry _FIXED_ATTRIBUTES 'storage_selection'#1",
+    "data:table_entry:datetime:<module>:drop_entry _FIXED_ATTRIBUTES 'datetime_binding'#1",
+    "hw-fix17-checker-table-mutable",
+    "hw-fix17-checker-attributes-assignable",
+    "hw-fix17-binding-unchecked",
+    "hw-fix17-assignment-unchecked",
+    "hw-fix17-never-fixed"
+   ]
+  },
+  {
    "id": "composition.storage-utc-z",
    "owner": "CV-1101",
-   "rule": "The enforced validator composes the CV-253 terminal-Z constraint on the Storage fields of every Storage-classified node.",
+   "rule": "The enforced validator composes CV-253 on the Storage fields of every Storage-classified node, at the root (iter_errors) and at every referenced fragment (descend): type string, the enforced date-time format and the terminal uppercase Z pattern, each refusing on its own even where the field's own schema is empty.",
    "mutations": [
     "hw-composition-lowercase-z",
-    "hw-composition-skipped"
+    "hw-composition-skipped",
+    "hw-fix17-B08-composition-type-dropped",
+    "hw-fix17-composition-format-dropped",
+    "hw-fix17-composition-pattern-dropped",
+    "hw-fix17-composition-descend-dropped"
    ]
   },
   {
@@ -2756,28 +3047,52 @@
   {
    "id": "scan.decoding",
    "owner": "guide",
-   "rule": "UTF-8/16/32 JSON, JSON Unicode escapes, CommonMark fences and JSON-shaped inline code are decoded before classification.",
+   "rule": "UTF-8/16/32 JSON, every JSON escape at every level, serialized JSON objects, arrays and strings up to SERIALIZED_DEPTH strings deep, CommonMark fences and JSON-shaped inline code (its braces escaped or not) are decoded before classification. A candidate string or key that is not decoded refuses by name: JSON-shaped but unreadable (after whitespace or byte order marks), JSON only once unescaped, a container key, or past the bound.",
    "mutations": [
     "hw-scan-utf8-only",
     "hw-scan-escapes-not-decoded",
     "hw-scan-fences-not-authoritative",
     "hw-scan-inline-code-ignored",
-    "hw-tb5-second-bom-kept"
+    "hw-tb5-second-bom-kept",
+    "site:datetime_inventory:scan.inspect.serialized:unreadable_schema_string_container#1",
+    "site:datetime_inventory:scan.inspect.serialized:escaped_schema_string_container#1",
+    "site:datetime_inventory:scan.inspect.serialized:serialized_depth_exceeded#1",
+    "site:datetime_inventory:scan.inspect.strings:serialized_key_container#1",
+    "boundary:datetime_inventory:scan.inspect.serialized:depth >= SERIALIZED_DEPTH:0#1",
+    "data:collection_build:datetime_inventory:_json_layers:disable_build layers.append(decoded)#1",
+    "data:walk_domain:datetime_inventory:scan.inspect.strings:walk_first obj.items()#1",
+    "hw-fix17-I05-serialized-objects-only",
+    "hw-fix17-shape-ignores-bom",
+    "hw-fix17-shape-objects-only",
+    "hw-fix17-escape-unicode-only",
+    "hw-fix17-escaped-layers-unchecked",
+    "hw-fix17-keys-not-scanned",
+    "hw-fix17-depth-unbounded",
+    "hw-fix17-depth-not-carried"
    ]
   },
   {
    "id": "scan.fail-closed",
    "owner": "guide",
-   "rule": "Duplicate keys, unreadable declaration regexes and propertyNames, unreadable candidates and a missing CommonMark parser fail closed.",
+   "rule": "Duplicate keys, unreadable declaration regexes and propertyNames, a declaring keyword of another JSON type that names either field, unreadable candidates and a missing CommonMark parser fail closed.",
    "mutations": [
     "site:datetime_inventory:_unique_object:ValueError:duplicate JSON key#1",
     "site:datetime_inventory:_commonmark_fences:ValueError:markdown-it-py is required by the datetime inventory gate#1",
     "site:datetime_inventory:declarations:ValueError:unreadable field declaration regex#1",
     "site:datetime_inventory:declarations:ValueError:unreadable propertyNames declaration#1",
-    "site:datetime_inventory:scan.inspect.strings:unreadable_schema_string_container#1",
+    "site:datetime_inventory:scan.inspect.serialized:unreadable_schema_string_container#1",
     "site:datetime_inventory:scan.container:unreadable_mentioning_container#1",
     "site:datetime_inventory:scan:unreadable_mentioning_container#1",
-    "site:datetime_inventory:scan:scan_read_failed#1"
+    "site:datetime_inventory:scan:scan_read_failed#1",
+    "site:datetime_inventory:declarations:ValueError:unreadable field declaration keyword#1",
+    "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('properties', dict)#1",
+    "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('dependentRequired', dict)#1",
+    "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('dependentSchemas', dict)#1",
+    "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('patternProperties', dict)#1",
+    "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('propertyNames', (bool, dict))#1",
+    "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('required', list)#1",
+    "data:table_entry:datetime_inventory:<module>:drop_entry _DECLARING_TYPES ('enum', list)#1",
+    "data:walk_domain:datetime_inventory:declarations:walk_first _DECLARING_TYPES#1"
    ]
   },
   {
@@ -2790,7 +3105,8 @@
     "predicate:site:datetime_inventory:scan.unsupported:dynamic#1:true row['sha256'] == pin#1",
     "site:datetime_inventory:scan.container:unclassified_mentioning_container#1",
     "site:datetime_inventory:scan:unclassified_mentioning_container#1",
-    "hw-tb5-block-origin-spelling"
+    "hw-tb5-block-origin-spelling",
+    "hw-fix17-I03-mentions-not-decoded"
    ]
   },
   {
@@ -3474,6 +3790,7 @@
    "normative": false,
    "rules": [
     "validator.installs-checker",
+    "validator.binding-fixed",
     "format.registered-predicate"
    ]
   },
@@ -3487,6 +3804,7 @@
     "format.registered-predicate",
     "format.type-independent",
     "validator.installs-checker",
+    "validator.binding-fixed",
     "probe.battery-trigger"
    ]
   },
@@ -3637,7 +3955,8 @@
    "normative": true,
    "rules": [
     "profile.selection",
-    "validator.installs-checker"
+    "validator.installs-checker",
+    "validator.binding-fixed"
    ],
    "note": "SP-1101 original selection is RetainedDispatcher in pm_event_numbers (number scope, its own rules table); the date-time code supplies only the profiles it selects, whose rules are profile.*. Family admission and native proof are outside the date-time code."
   },

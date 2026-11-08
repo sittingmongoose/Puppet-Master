@@ -95,10 +95,10 @@ def date_time(value, *, profile=EVENT_RECORD):
 
 def format_checker(*, profile=EVENT_RECORD):
     """Explicitly install the predicate; a bare FormatChecker can skip it."""
-    from jsonschema import FormatChecker
+    from types import MappingProxyType
     if type(profile) is not str or profile not in PROFILES:
         _refuse("date_time_profile")
-    checker = FormatChecker()
+    checker = _fixed_checker_class()()
 
     @checker.checks("date-time", raises=Refusal)
     def check(value):
@@ -107,7 +107,32 @@ def format_checker(*, profile=EVENT_RECORD):
         # which refuses a str subclass or StrEnum member (date_time_type).
         return True if not isinstance(value, str) else date_time(value, profile=profile) == value
 
+    checker.checkers = MappingProxyType(dict(checker.checkers))
+    checker._fixed = True
     return checker
+
+
+@lru_cache(maxsize=None)
+def _fixed_checker_class():
+    """A FormatChecker whose table is read-only once the predicate is in it (T166).
+
+    Its checkers mapping is a read-only proxy, so checks() and item assignment
+    raise TypeError, and assigning or deleting any attribute raises TypeError:
+    the table can never lose or replace date-time after format_checker()
+    returns, and deleting it cannot fall back to the stock class table.
+    """
+    from jsonschema import FormatChecker
+
+    class FixedFormatChecker(FormatChecker):
+        def __setattr__(self, name, value):
+            if "_fixed" in self.__dict__:
+                raise TypeError("datetime_format_checker_fixed: " + name)
+            super().__setattr__(name, value)
+
+        def __delattr__(self, name):
+            raise TypeError("datetime_format_checker_fixed: " + name)
+
+    return FixedFormatChecker
 
 
 def _eventrecord_storage_properties(validator, properties, instance, schema):
@@ -118,6 +143,23 @@ def _eventrecord_storage_properties(validator, properties, instance, schema):
                 yield from validator.descend(instance[field], {"type": "string", "format": "date-time",
                                                               "pattern": r"Z(?![\s\S])"},
                                              path=field, schema_path=field)
+
+
+class _Binding(tuple):
+    """The checker, closed registry and selection one datetime_validator fixed."""
+    __slots__ = ()
+
+    def __new__(cls, checker, registry, selection):
+        return super().__new__(cls, (checker, registry, selection))
+
+    checker = property(lambda self: self[0])
+    registry = property(lambda self: self[1])
+    selection = property(lambda self: self[2])
+
+
+# Attributes a bound validator never reassigns after construction (T166).
+_FIXED_ATTRIBUTES = ("format_checker", "_registry", "_resolver", "_ref_resolver", "storage_selection",
+                     "datetime_binding")
 
 
 @lru_cache(maxsize=None)
@@ -135,6 +177,7 @@ def _bound_validator(base):
     from pm_event_datetime_inventory import StorageSelection
     bound = make_class("InventoryDatetimeValidator", {
         "storage_selection": field(factory=StorageSelection, kw_only=True),
+        "datetime_binding": field(kw_only=True),
     }, bases=(extended,))
 
     def evolve(self, **changes):
@@ -146,6 +189,35 @@ def _bound_validator(base):
         return _bound_validator(selected)(**changes)
 
     bound.evolve = evolve
+
+    def post_init(self):
+        # T166: every construction checks the binding fixed at datetime_validator:
+        # this evolve, jsonschema's own (schema and _resolver only), attrs.evolve
+        # and copy.replace alike. A changed checker, registry, resolver or
+        # selection raises the TypeError construction gives.
+        extended.__attrs_post_init__(self)
+        binding = self.datetime_binding
+        if type(binding) is not _Binding:
+            raise TypeError("datetime_validator_binding_forged")
+        if self.format_checker is not binding.checker:
+            raise TypeError("datetime_validator_fixed_format_checker")
+        if self._registry is not binding.registry:
+            raise TypeError("datetime_validator_fixed_registry")
+        if self._ref_resolver is not None or self._resolver._registry._retrieve is not binding.registry._retrieve:
+            raise TypeError("datetime_validator_fixed_resolver")
+        if self.storage_selection is not binding.selection:
+            raise TypeError("datetime_validator_fixed_storage_selection")
+        self.__dict__["_datetime_fixed"] = True
+
+    def setattr_(self, name, value):
+        # After construction the binding cannot be reassigned either; this also
+        # stops the deprecated .resolver property installing a legacy resolver.
+        if name in _FIXED_ATTRIBUTES and "_datetime_fixed" in self.__dict__:
+            raise TypeError("datetime_validator_fixed: " + name)
+        object.__setattr__(self, name, value)
+
+    bound.__attrs_post_init__ = post_init
+    bound.__setattr__ = setattr_
 
     def iter_errors(self, instance, _schema=None):
         from pm_event_datetime_inventory import DatetimeAdmissionError
@@ -251,6 +323,18 @@ def datetime_validator(schema, *, profile=EVENT_RECORD, **kwargs):
         raise DatetimeAdmissionError("datetime_custom_resolver_unsupported")
     selection = StorageSelection()
     base, registry = _closed_datetime_graph(schema, kwargs.pop("registry", None), selection=selection)
+    return _bind(base, schema, registry, selection, profile, **kwargs)
+
+
+def _bind(base, schema, registry, selection, profile, **kwargs):
+    """Construct the bound validator with its binding fixed (T166).
+
+    The checker, the closed registry and the selection are fixed here: every
+    later construction (evolve, attrs.evolve, copy.replace) and assignment
+    that changes one of them raises TypeError, as a format_checker,
+    storage_selection or datetime_binding argument to datetime_validator does.
+    """
+    checker = format_checker(profile=profile)
     return _bound_validator(base)(
-        schema, registry=registry, format_checker=format_checker(profile=profile),
-        storage_selection=selection, **kwargs)
+        schema, registry=registry, format_checker=checker, storage_selection=selection,
+        datetime_binding=_Binding(checker, registry, selection), **kwargs)

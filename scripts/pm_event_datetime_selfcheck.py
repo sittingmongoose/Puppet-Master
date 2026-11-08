@@ -500,8 +500,7 @@ def _bound(schema, registry=None, selection=None, profile="event_record"):
     dt, _, _, _ = _mods()
     selection = selection or _selection()
     base, registry = dt._closed_datetime_graph(schema, registry, selection=selection)
-    return dt._bound_validator(base)(schema, registry=registry, format_checker=dt.format_checker(profile=profile),
-                                     storage_selection=selection)
+    return dt._bind(base, schema, registry, selection, profile)
 
 
 def _storage_schema():
@@ -3215,6 +3214,33 @@ def _detect_orphan(context):
     return any("names no known rule" in p for p in _fresh_problems(context, change))
 
 
+@check("datetime_gate_bar_detects_listed_survivor")
+def _detect_listed_survivor(context):
+    """Fix round 17: a hand-written declared survivor (V04) names its rule and is listed by none; listing it, or a
+    generated declared survivor, is a problem, and so is a witnessed hand-written mutation its rule omits."""
+    spec = _gate_bar().load_spec(context.root)
+    survivor = next(m for m in spec["mutations"] if m.get("survives"))
+    generated = next(k for k, e in spec["generated"]["points"].items() if e.get("survives"))
+
+    def list_hand(spec):
+        next(r for r in spec["rules"] if r["id"] == survivor["rule"])["mutations"].append(survivor["id"])
+
+    def list_generated(spec):
+        spec["rules"][0]["mutations"].append(generated)
+
+    def omit_witnessed(spec):
+        rule = next(r for r in spec["rules"] if r["id"] == "profile.legacy-output")
+        rule["mutations"].remove("hw-fix17-B05-legacy-six-digit-fraction")
+
+    quiet = not [p for p in _fresh_problems(context, lambda spec: None) if "survivor" in p]
+    return (quiet and survivor["id"] == "hw-fix17-V04-automatic-empty-context-only" and
+            any(p.endswith("lists the declared survivor %s; declared survivors are never listed" % survivor["id"])
+                for p in _fresh_problems(context, list_hand)) and
+            any(("lists the declared survivor %s;" % generated) in p for p in _fresh_problems(context, list_generated)) and
+            "mutation hw-fix17-B05-legacy-six-digit-fraction names rule profile.legacy-output, which does not list it"
+            in _fresh_problems(context, omit_witnessed))
+
+
 @check("datetime_gate_bar_detects_unnamed_rule")
 def _detect_unnamed_rule(context):
     def change(spec):
@@ -3273,3 +3299,717 @@ def _detect_cv1101_unselected(context):
 def _detect_pins_quiet(context):
     return not [p for p in _owner_pin_problems(context, "Plans/Contracts_V0.md", "### CV-1101 - ", "### CV-1101 - ")
                 if "changed" in p]
+
+
+# ---------------------------------------------------------------------------
+# N. Fix round 17 (TOOL-ISSUES T161-T166): each blind survivor's whole class.
+# ---------------------------------------------------------------------------
+
+# N1. T161 (B05): every finite parameter domain the gate checks, for every profile, with cases generated from the
+# owner profile table: every value of the domain and each boundary just outside it. CV-1101: the RFC 3339 grammar
+# is the same under every profile; storage_utc_z, coordination_utc_z and legacy_normalization_output admit only a
+# terminal uppercase Z; legacy_normalization_output admits exactly nine fractional digits. None: the profile adds
+# no restriction to that parameter.
+PROFILE_TABLE = {
+    E: {"zones": None, "fraction_lengths": None},
+    S: {"zones": ("Z",), "fraction_lengths": None},
+    C: {"zones": ("Z",), "fraction_lengths": None},
+    L: {"zones": ("Z",), "fraction_lengths": (9,)},
+}
+# IERS Bulletin C72 insertion days (CV-1101 pins the history through 2016-12-31), the test's own copy.
+C72_LEAP_DAYS = frozenset((
+    "1972-06-30", "1972-12-31", "1973-12-31", "1974-12-31", "1975-12-31", "1976-12-31", "1977-12-31", "1978-12-31",
+    "1979-12-31", "1981-06-30", "1982-06-30", "1983-06-30", "1985-06-30", "1987-12-31", "1989-12-31", "1990-12-31",
+    "1992-06-30", "1993-06-30", "1994-06-30", "1995-12-31", "1997-06-30", "1998-12-31", "2005-12-31", "2008-12-31",
+    "2012-06-30", "2015-06-30", "2016-12-31"))
+FRACTION_LENGTHS = (*range(0, 25), 30, 40)
+ZONE_FORMS = ("Z", "z", "+00:00", "-00:00", "+05:30", "-07:45", "+23:59", "-23:59", "+01:00", "-12:00")
+ZONE_OUTSIDE = ("", "ZZ", "Zz", "UTC", "GMT", "+0000", "+00", "+0:00", "+000:00", "+00:000", "+00:00:00", "00:00",
+                "*00:00", "Z ", " Z", "+00:00Z", "z+00:00", "\u2212" + "05:00")
+SEPARATOR_OUTSIDE = (" ", "_", "x", "", "TT", "Tt", "\t", "\n")
+DAY_YEARS = (2026, 2024, 1900, 2000, 0, 2100)
+_MONTH_DAYS = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+
+
+def _days_in(year, month):
+    leap = year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+    return 29 if month == 2 and leap else _MONTH_DAYS[month - 1]
+
+
+def _stamp(date="2026-01-01", separator="T", time="00:00:00", fraction=".123456789", zone="Z"):
+    # The base, 2026-01-01T00:00:00.123456789Z, is valid under every profile; each case changes one part.
+    return date + separator + time + fraction + zone
+
+
+def _zone_outcome(profile, zone):
+    zones = PROFILE_TABLE[profile]["zones"]
+    return None if zones is None or zone in zones else "date_time_utc_z"
+
+
+def _fraction_outcome(profile, digits):
+    lengths = PROFILE_TABLE[profile]["fraction_lengths"]
+    return None if lengths is None or digits in lengths else "date_time_legacy_fraction"
+
+
+def _two_digit_field(name, maximum, code, place):
+    """(parameter, value, outcome) for a two-digit field: every value of its range, then the boundary above it,
+    99, and one and three digits."""
+    def cases(profile):
+        out = [(n, place("%02d" % n), None) for n in range(0, maximum + 1)]
+        out += [(n, place("%02d" % n), code) for n in (maximum + 1, 99)]
+        out += [(text, place(text), "date_time_syntax") for text in ("0", "000")]
+        return out
+    return cases
+
+
+def _domain_fraction_length(profile):
+    digits = "1234567890" * 4
+    out = [(n, _stamp(fraction="." + digits[:n] if n else ""), _fraction_outcome(profile, n)) for n in FRACTION_LENGTHS]
+    return out + [(".", _stamp(fraction="."), "date_time_syntax"), (".1a", _stamp(fraction=".1a"), "date_time_syntax")]
+
+
+def _domain_zone(profile):
+    return ([(z, _stamp(zone=z), _zone_outcome(profile, z)) for z in ZONE_FORMS] +
+            [(z, _stamp(zone=z), "date_time_syntax") for z in ZONE_OUTSIDE])
+
+
+def _domain_offset_hour(profile):
+    out = [(s + "%02d" % h, _stamp(zone="%s%02d:00" % (s, h)), _zone_outcome(profile, "%s%02d:00" % (s, h)))
+           for s in "+-" for h in range(0, 24)]
+    out += [(s + "%02d" % h, _stamp(zone="%s%02d:00" % (s, h)), "date_time_offset_hour") for s in "+-" for h in (24, 99)]
+    return out + [(t, _stamp(zone="+" + t + ":00"), "date_time_syntax") for t in ("0", "000")]
+
+
+def _domain_offset_minute(profile):
+    out = [(s + "%02d" % m, _stamp(zone="%s00:%02d" % (s, m)), _zone_outcome(profile, "%s00:%02d" % (s, m)))
+           for s in "+-" for m in range(0, 60)]
+    out += [(s + "%02d" % m, _stamp(zone="%s00:%02d" % (s, m)), "date_time_offset_minute") for s in "+-" for m in (60, 99)]
+    return out + [(t, _stamp(zone="+00:" + t), "date_time_syntax") for t in ("0", "000")]
+
+
+def _domain_separator(profile):
+    return ([(s, _stamp(separator=s), None) for s in ("T", "t")] +
+            [(s, _stamp(separator=s), "date_time_syntax") for s in SEPARATOR_OUTSIDE])
+
+
+def _domain_date_time_separators(profile):
+    return ([("date " + s, "2026" + s + "01-01" + "T00:00:00.123456789Z", "date_time_syntax") for s in ("/", ".", "_", "")] +
+            [("date2 " + s, "2026-01" + s + "01" + "T00:00:00.123456789Z", "date_time_syntax") for s in ("/", ".", "_", "")] +
+            [("time " + s, _stamp(time="00" + s + "00:00"), "date_time_syntax") for s in ("-", ".", "_", "")] +
+            [("time2 " + s, _stamp(time="00:00" + s + "00"), "date_time_syntax") for s in ("-", "_", "")])
+
+
+def _domain_year(profile):
+    out = [(y, _stamp(date="%04d-01-01" % y), None) for y in range(0, 10000)]
+    return out + [(t, _stamp(date=t + "-01-01"), "date_time_syntax") for t in ("026", "12026", "+2026", "-2026")]
+
+
+def _domain_month(profile):
+    out = [(m, _stamp(date="2026-%02d-01" % m), None) for m in range(1, 13)]
+    out += [(m, _stamp(date="2026-%02d-01" % m), "date_time_month") for m in (0, 13, 99)]
+    return out + [(t, _stamp(date="2026-" + t + "-01"), "date_time_syntax") for t in ("1", "001")]
+
+
+def _domain_day(profile):
+    out = []
+    for year in DAY_YEARS:
+        for month in range(1, 13):
+            last = _days_in(year, month)
+            out += [((year, month, d), _stamp(date="%04d-%02d-%02d" % (year, month, d)), None) for d in range(1, last + 1)]
+            out += [((year, month, d), _stamp(date="%04d-%02d-%02d" % (year, month, d)), "date_time_day")
+                    for d in (0, last + 1)]
+    return out + [(t, _stamp(date="2026-01-" + t), "date_time_syntax") for t in ("1", "001")]
+
+
+def _domain_second(profile):
+    out = _two_digit_field("second", 59, "date_time_second", lambda t: _stamp(time="00:00:" + t))(profile)
+    # 60 is in range but is a real leap second only at a table instant; 2026-01-01T00:00:60 is not one.
+    return [(n, v, "date_time_leap_second" if n == 60 else c) for n, v, c in out] + \
+        [(61, _stamp(time="00:00:61"), "date_time_second")]
+
+
+def _domain_leap_second(profile):
+    out = []
+    for year in range(1971, 2028):
+        for month in range(1, 13):
+            day = "%04d-%02d-%02d" % (year, month, _days_in(year, month))
+            out.append((day, _stamp(date=day, time="23:59:60"), None if day in C72_LEAP_DAYS else "date_time_leap_second"))
+    return out
+
+
+PROFILE_DOMAINS = {
+    "fraction_length": _domain_fraction_length,
+    "zone": _domain_zone,
+    "offset_hour": _domain_offset_hour,
+    "offset_minute": _domain_offset_minute,
+    "separator": _domain_separator,
+    "date_time_separators": _domain_date_time_separators,
+    "year": _domain_year,
+    "month": _domain_month,
+    "day": _domain_day,
+    "hour": _two_digit_field("hour", 23, "date_time_hour", lambda t: _stamp(time=t + ":00:00")),
+    "minute": _two_digit_field("minute", 59, "date_time_minute", lambda t: _stamp(time="00:" + t + ":00")),
+    "second": _domain_second,
+    "leap_second": _domain_leap_second,
+}
+# The domains the format checker and the bound validator see for each profile, too.
+CHECKER_DOMAINS = ("fraction_length", "zone", "offset_hour", "offset_minute", "separator")
+
+
+def _profile_domain_check(profile, domain):
+    def run(context):
+        dt, _, _, _ = _mods()
+        cases = PROFILE_DOMAINS[domain](profile)
+        for _, value, expected in cases:
+            kind, result = outcome(dt.date_time, value, profile=profile)
+            if (kind, result) != (("accept", value) if expected is None else ("refuse", expected)):
+                return False
+            if expected is None and result is not value:
+                return False
+        return bool(cases)
+    return run
+
+
+def _profile_checker_check(profile):
+    def run(context):
+        dt, _, _, _ = _mods()
+        checker = dt.format_checker(profile=profile)
+        validator = _bound({"format": "date-time"}, profile=profile)
+        count = 0
+        for domain in CHECKER_DOMAINS:
+            for _, value, expected in PROFILE_DOMAINS[domain](profile):
+                count += 1
+                if checker.conforms(value, "date-time") != (expected is None):
+                    return False
+                if validator.is_valid(value) != (expected is None):
+                    return False
+        return count > 0
+    return run
+
+
+for _profile in PROFILE_TABLE:
+    for _domain in PROFILE_DOMAINS:
+        check("datetime_unit_profile_domain_%s_%s" % (_profile, _domain))(_profile_domain_check(_profile, _domain))
+    check("datetime_unit_profile_domain_%s_checker_and_validator" % _profile)(_profile_checker_check(_profile))
+
+
+@check("datetime_unit_profile_domain_table_complete")
+def _profile_domain_complete(context):
+    """The self-test fails when a gate profile has no table row, a profile or domain has no generated check or no
+    case, or a value the table names (and each boundary just outside it) has no case."""
+    dt, _, _, _ = _mods()
+    if tuple(PROFILE_TABLE) != dt.PROFILES:
+        return False
+    for profile, row in PROFILE_TABLE.items():
+        if set(row) != {"zones", "fraction_lengths"}:
+            return False
+        names = ["datetime_unit_profile_domain_%s_%s" % (profile, d) for d in PROFILE_DOMAINS]
+        names.append("datetime_unit_profile_domain_%s_checker_and_validator" % profile)
+        if any(name not in CHECKS for name in names):
+            return False
+        cases = {domain: PROFILE_DOMAINS[domain](profile) for domain in PROFILE_DOMAINS}
+        if any(not c for c in cases.values()):
+            return False
+        lengths = {p for p, _, _ in cases["fraction_length"]}
+        for n in row["fraction_lengths"] or ():
+            if not {n - 1, n, n + 1} <= lengths:
+                return False
+        zones = {p for p, _, _ in cases["zone"]}
+        if not set(row["zones"] or ()) <= zones:
+            return False
+    covered = {p for p, _, _ in PROFILE_DOMAINS["year"](E)}
+    days = {p for p, _, _ in PROFILE_DOMAINS["day"](E)}
+    leap = {p for p, _, e in PROFILE_DOMAINS["leap_second"](E) if e is None}
+    return (set(range(0, 10000)) <= covered and set(range(0, 25)) <= {p for p, _, _ in PROFILE_DOMAINS["fraction_length"](E)}
+            and all((y, m, d) in days for y in DAY_YEARS for m in range(1, 13) for d in range(0, _days_in(y, m) + 2))
+            and leap == C72_LEAP_DAYS and len(dt._LEAP_DAYS) == len(C72_LEAP_DAYS))
+
+
+@check("datetime_unit_profile_domain_dialects")
+def _dialect_domain(context):
+    """Every supported dialect URI, with and without its empty fragment, selects its class; each spelling just
+    outside the domain refuses (datetime_dialect_unsupported)."""
+    from jsonschema import Draft202012Validator, Draft201909Validator, Draft7Validator, Draft6Validator
+    dt, _, _, _ = _mods()
+    supported = {D202012: Draft202012Validator, D201909: Draft201909Validator,
+                 "http://json-schema.org/draft-07/schema": Draft7Validator,
+                 "http://json-schema.org/draft-06/schema": Draft6Validator}
+    for uri, cls in supported.items():
+        for spelling in (uri, uri + "#"):
+            if dt._dialect_validator({"$schema": spelling}) is not cls:
+                return False
+    outside = ("http://json-schema.org/draft-04/schema#", "http://json-schema.org/draft-03/schema#",
+               "https://json-schema.org/draft/next/schema", "http://json-schema.org/draft/2020-12/schema",
+               "https://json-schema.org/draft-07/schema#", D202012 + "/", D202012.upper(), "", " " + D202012,
+               D202012 + "#/", 4, None, [D202012], {"$id": D202012}, True)
+    return all(_admission_reason(dt._dialect_validator, {"$schema": uri}) == "datetime_dialect_unsupported"
+               for uri in outside)
+
+
+@check("datetime_unit_profile_domain_inventory_classification", slow=True)
+def _inventory_profile_domain(context):
+    """Every inventory classification under both inventory profiles: classification_profile_conflict exactly when a
+    Storage class and storage_utc_z disagree; a profile outside the inventory enum fails the inventory schema."""
+    storage_classes = ("EventRecord", "event_record_index", "original_storage_fields", "Storage issued original fields")
+    classes = (*storage_classes, "other_owner_observation", "source_lineage_schema_patch", "wildcard_non_timestamp",
+               "wildcard_non_timestamp_role", "wildcard_review_required")
+    for classification in classes:
+        for profile in ("storage_utc_z", "owner_schema"):
+            rows = [context.row(*(STORAGE if classification in storage_classes else NAMED))]
+            rows[0].update(classification=classification, profile=profile)
+            conflict = "classification_profile_conflict" in _codes(_validate(context, rows))
+            expected = (classification in storage_classes) != (profile == "storage_utc_z") or (
+                "CV-253" in rows[0]["owner"] and profile != "storage_utc_z")
+            if conflict != expected:
+                return False
+    for profile in ("event_record", "coordination_utc_z", "STORAGE_UTC_Z", ""):
+        rows = [context.row(*NAMED)]
+        rows[0]["profile"] = profile
+        if _codes(_validate(context, rows)) != {"inventory_schema"}:
+            return False
+    return True
+
+
+# N2. T162 (B08): each keyword the gate composes on a selected Storage field refuses on its own. The selection's own
+# field schemas are empty ({}), so the composed keyword is the only thing that can refuse; the plain validator over
+# the same schema accepts every one of these values. Both composition hooks: iter_errors at the root, and descend
+# at a referenced resource.
+UNTYPED_STORAGE = {"$schema": D202012, "$id": "urn:pm:scratch:untyped-storage", "type": "object",
+                   "properties": {"observed_at_utc": {}, "persisted_at_utc": {}}}
+COMPOSED_ALONE = {
+    "type": (123, 1.5, None, True, [], {}, ["2026-01-01T00:00:00Z"]),
+    "format": ("not-a-dateZ", "2026-02-30T00:00:00Z", "2015-12-31T23:59:60Z", "2026-01-01 00:00:00Z",
+               "2026-13-01T00:00:00Z"),
+    "pattern": ("2026-01-01T00:00:00+00:00", "2026-01-01T00:00:00-00:00", "2026-01-01T00:00:00z",
+                "2026-01-01T00:00:00+05:30"),
+}
+COMPOSED_GOOD = {"observed_at_utc": "2026-01-01T00:00:00.123456789123Z", "persisted_at_utc": "2016-12-31T23:59:60Z"}
+
+
+def _untyped_validators():
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    schema = copy.deepcopy(UNTYPED_STORAGE)
+    selection = _selection([(schema, {"": _storage_row(schema)})])
+    root = _bound(schema, selection=selection)
+    registry = Registry().with_resource(schema["$id"], Resource.from_contents(schema, default_specification=DRAFT202012))
+    wrapper = {"properties": {"event": {"$ref": schema["$id"]}}}
+    referenced = _bound(wrapper, registry, _selection([(schema, {"": _storage_row(schema)})]))
+    return schema, root, referenced
+
+
+def _composed_alone_check(keyword, hook):
+    def run(context):
+        from jsonschema import Draft202012Validator
+        dt, _, _, _ = _mods()
+        schema, root, referenced = _untyped_validators()
+        plain = Draft202012Validator(schema, format_checker=dt.format_checker())
+        wrap = (lambda v: v) if hook == "root" else (lambda v: {"event": v})
+        validator = root if hook == "root" else referenced
+        if not validator.is_valid(wrap(COMPOSED_GOOD)):
+            return False
+        for field in ("observed_at_utc", "persisted_at_utc"):
+            for value in COMPOSED_ALONE[keyword]:
+                instance = dict(COMPOSED_GOOD, **{field: value})
+                if not plain.is_valid(instance) or validator.is_valid(wrap(instance)):
+                    return False
+                if [e.validator for e in validator.iter_errors(wrap(instance))] != [keyword]:
+                    return False
+        return True
+    return run
+
+
+for _keyword in COMPOSED_ALONE:
+    for _hook in ("root", "through_reference"):
+        check("datetime_unit_composition_%s_alone_%s" % (_keyword, _hook))(_composed_alone_check(_keyword, _hook))
+
+
+# N3. T163 and T164 (I03, I05): the inventory scan decodes closed. Names spelled only through escapes, declarations
+# inside serialized arrays and serialized strings at every depth up to the bound; past the bound, an escaped
+# container, a container key and an unreadable or byte-order-marked string container each refuse by name.
+ESCAPED_NOTE = '{"description": "\\u006fbserved_at_utc"}'
+
+
+def _scan_codes(rows, errors):
+    return ([(r["origin"], r["pointer"], r["fields"]) for r in rows],
+            sorted((e["error"], e.get("origin")) for e in errors))
+
+
+@check("datetime_unit_scan_escaped_mention_fence_unclassified")
+def _scan_escaped_fence(context):
+    root = context.scratch()
+    write(root, "Plans/escaped.md", "# Escaped\n\n```json\n" + ESCAPED_NOTE + "\n```\n")
+    return _scan_codes(*_scan(root)) == ([], [("unclassified_mentioning_container", "fence:3")])
+
+
+@check("datetime_unit_scan_escaped_mention_json_doubly_escaped")
+def _scan_escaped_json(context):
+    root = context.scratch()
+    write(root, "Plans/escaped.json", '{"description": "\\\\u006fbserved_at_utc"}')
+    return _scan_codes(*_scan(root)) == ([], [("unclassified_mentioning_container", "json")])
+
+
+@check("datetime_unit_scan_escaped_mention_every_container")
+def _scan_escaped_containers(context):
+    """The same escaped-only mention, with no declaration, in each other container kind: a JSONL line, an indented
+    code block, inline code, an HTML block, a JSON value escaped three times and a UTF-16 JSON file."""
+    triple = json.dumps({"note": "\\\\\\u006fbserved_at_utc"})
+    cases = (("Plans/a.jsonl", '{"x": 1}\n' + ESCAPED_NOTE + "\n", ("unclassified_mentioning_container", "jsonl:2")),
+             ("Plans/b.md", "Text\n\n    " + ESCAPED_NOTE + "\n", ("unclassified_mentioning_container", "code:3")),
+             ("Plans/c.md", "Text `" + ESCAPED_NOTE + "` here\n", ("unclassified_mentioning_container", "code_inline:1:1")),
+             ("Plans/d.md", "<div>\n" + ESCAPED_NOTE + "\n</div>\n", ("unreadable_mentioning_container", "html:1")),
+             ("Plans/e.json", triple, ("unclassified_mentioning_container", "json")),
+             ("Plans/f.json", ESCAPED_NOTE.encode("utf-16"), ("unclassified_mentioning_container", "json")))
+    for path, body, expected in cases:
+        root = context.scratch()
+        write(root, path, body)
+        if _scan_codes(*_scan(root)) != ([], [expected]):
+            return False
+    return True
+
+
+@check("datetime_unit_scan_serialized_list_declaration")
+def _scan_serialized_list(context):
+    root = context.scratch()
+    hidden = [{"properties": {"persisted_at_utc": {"type": "string"}}}]
+    write(root, "Plans/list.json", {"properties": {"observed_at_utc": {"type": "string"}},
+                                    "examples": [json.dumps(hidden)]})
+    return _scan_codes(*_scan(root)) == ([("json", "", ["observed_at_utc"]),
+                                          ("json:string:/examples/0", "/0", ["persisted_at_utc"])], [])
+
+
+@check("datetime_unit_scan_doubly_serialized_declaration")
+def _scan_doubly_serialized(context):
+    root = context.scratch()
+    hidden = json.dumps(json.dumps({"properties": {"persisted_at_utc": {"type": "string"}}}))
+    write(root, "Plans/double.json", {"properties": {"observed_at_utc": {"type": "string"}}, "x": hidden})
+    rows, errors = _scan(root)
+    return _scan_codes(rows, errors) == ([("json", "", ["observed_at_utc"]),
+                                          ("json:string:/x:string:", "", ["persisted_at_utc"])], [])
+
+
+def _nested(levels):
+    value = {"properties": {"persisted_at_utc": {"type": "string"}}}
+    for _ in range(levels):
+        value = json.dumps(value)
+    return value
+
+
+@check("datetime_unit_scan_serialized_depth_bound")
+def _scan_depth_bound(context):
+    """A declaration SERIALIZED_DEPTH strings deep is found; one more string deep refuses (serialized_depth_exceeded)
+    at the string past the bound, never silently."""
+    _, inv, _, _ = _mods()
+    depth = inv.SERIALIZED_DEPTH
+    at_bound = context.scratch()
+    write(at_bound, "Plans/deep.json", {"x": _nested(depth)})
+    past = context.scratch()
+    write(past, "Plans/deep.json", {"x": _nested(depth + 1)})
+    origin = "json:string:/x" + ":string:" * (depth - 1)
+    return (depth == 8 and _scan_codes(*_scan(at_bound)) == ([(origin, "", ["persisted_at_utc"])], []) and
+            _scan_codes(*_scan(past)) == ([], [("serialized_depth_exceeded", origin + ":string:"),
+                                               ("unclassified_mentioning_container", "json")]))
+
+
+@check("datetime_unit_scan_source_document_at_depth_bound")
+def _scan_depth_source(context):
+    """_source_document reads the row SERIALIZED_DEPTH strings deep back to its node."""
+    _, inv, _, _ = _mods()
+    root = context.scratch()
+    write(root, "Plans/deep.json", {"x": _nested(inv.SERIALIZED_DEPTH)})
+    rows, errors = _scan(root)
+    return (not errors and len(rows) == 1 and
+            inv.at(inv._source_document(root, rows[0], {}), rows[0]["pointer"]) == {
+                "properties": {"persisted_at_utc": {"type": "string"}}})
+
+
+@check("datetime_unit_scan_escaped_string_container_refused")
+def _scan_escaped_container(context):
+    """A string that is a JSON container only once unescaped refuses (escaped_schema_string_container):
+    \\u-escaped braces or brackets, a string literal with escaped quotes, and doubly escaped braces."""
+    body = json.dumps({"properties": {"persisted_at_utc": {}}})
+    values = (body.replace("{", "\\u007b"), "\\u005b" + body + "]", '\\"' + json.dumps(body)[1:-1] + '\\"',
+              body.replace("{", "\\\\u007b"))
+    for value in values:
+        root = context.scratch()
+        write(root, "Plans/a.json", {"properties": {"observed_at_utc": {}}, "x": value})
+        if _scan_codes(*_scan(root)) != ([("json", "", ["observed_at_utc"])],
+                                         [("escaped_schema_string_container", "json:string:/x")]):
+            return False
+    return True
+
+
+@check("datetime_unit_scan_shaped_string_container_refused")
+def _scan_shaped_container(context):
+    """A string that starts like a JSON container after whitespace or byte order marks, and does not parse, refuses
+    (unreadable_schema_string_container); prose that mentions a field is still skipped."""
+    for value in ("\ufeff" + json.dumps({"properties": {"persisted_at_utc": {}}}), "\u00a0[{\"persisted_at_utc\": ",
+                  '\n "persisted_at_utc', "\ufeff\ufeff{\"persisted_at_utc\": 1}",
+                  json.dumps(json.dumps({"properties": {"persisted_at_utc": {}}}))[1:-1]):
+        root = context.scratch()
+        write(root, "Plans/a.json", {"properties": {"observed_at_utc": {}}, "x": value})
+        if _scan_codes(*_scan(root)) != ([("json", "", ["observed_at_utc"])],
+                                         [("unreadable_schema_string_container", "json:string:/x")]):
+            return False
+    root = context.scratch()
+    write(root, "Plans/a.json", {"properties": {"observed_at_utc": {}}, "x": "the persisted_at_utc field, \"quoted\""})
+    return _scan_codes(*_scan(root)) == ([("json", "", ["observed_at_utc"])], [])
+
+
+@check("datetime_unit_scan_serialized_key_refused")
+def _scan_serialized_key(context):
+    """A key that is (or unescapes to) a JSON container has no pointer to address it: it refuses
+    (serialized_key_container); an ordinary key naming a field does not."""
+    body = json.dumps({"properties": {"persisted_at_utc": {}}})
+    for key in (body, body.replace("{", "\\u007b"), " " + body):
+        root = context.scratch()
+        write(root, "Plans/a.json", {"properties": {"observed_at_utc": {}}, "m": {key: 1}})
+        origin = "json:key:/m/" + key.replace("~", "~0").replace("/", "~1")
+        if _scan_codes(*_scan(root)) != ([("json", "", ["observed_at_utc"])], [("serialized_key_container", origin)]):
+            return False
+    return True
+
+
+@check("datetime_unit_scan_inline_code_escaped_brace")
+def _scan_inline_escaped(context):
+    """Inline code whose braces are spelled only through escapes is a code container too."""
+    root = context.scratch()
+    write(root, "Plans/a.md", "Text `\\u007b\"note\": \"observed_at_utc\"}` here\n")
+    return _scan_codes(*_scan(root)) == ([], [("unreadable_mentioning_container", "code_inline:1:1")])
+
+
+def _wrong_type_declaration(keyword, value):
+    def run(context):
+        root = context.scratch()
+        write(root, "Plans/a.json", {"$defs": {"n": {keyword: value}}})
+        rows, errors = _scan(root)
+        return (not rows and [(e["error"], e.get("detail")) for e in errors] ==
+                [("scan_read_failed", "unreadable field declaration keyword: " + keyword)])
+    return run
+
+
+WRONG_TYPE_DECLARATIONS = {
+    "properties": ["observed_at_utc"], "dependentRequired": ["observed_at_utc"],
+    "dependentSchemas": [{"observed_at_utc": {}}], "patternProperties": "^observed_at_utc$",
+    "propertyNames": "observed_at_utc", "required": "observed_at_utc", "enum": "observed_at_utc",
+}
+for _keyword, _value in WRONG_TYPE_DECLARATIONS.items():
+    check("datetime_unit_scan_wrong_type_declaration_%s" % _keyword)(_wrong_type_declaration(_keyword, _value))
+
+
+@check("datetime_unit_scan_wrong_type_without_name_reads_nothing")
+def _scan_wrong_type_quiet(context):
+    """A declaring keyword of another type that names neither field (data such as "required": true) declares
+    nothing and refuses nothing."""
+    root = context.scratch()
+    write(root, "Plans/a.json", {"properties": {"observed_at_utc": {}}, "$defs": {"n": {"required": True,
+                                                                                         "enum": "x", "properties": 3}}})
+    return _scan_codes(*_scan(root)) == ([("json", "", ["observed_at_utc"])], [])
+
+
+@check("datetime_unit_admission_wrong_type_declaration_fails_closed")
+def _admission_wrong_type(context):
+    """Runtime admission reads declarations the same way: a wrong-typed keyword naming a field raises."""
+    dt, inv, _, _ = _mods()
+    try:
+        _bound({"properties": {"x": {"required": "observed_at_utc"}}}).is_valid({"x": {}})
+    except ValueError as error:
+        return not isinstance(error, inv.DatetimeAdmissionError) and \
+            str(error) == "unreadable field declaration keyword: required"
+    return False
+
+
+@check("datetime_unit_scan_json_layers")
+def _scan_json_layers(context):
+    """Every JSON escape decodes at every level, to the fixed point; text without escapes is one layer."""
+    _, inv, _, _ = _mods()
+    return (inv._json_layers("plain") == ["plain"] and
+            inv._json_layers("\\\\u006f") == ["\\\\u006f", "\\u006f", "o"] and
+            inv._json_layers('\\"\\/\\b\\f\\n\\r\\t') == ['\\"\\/\\b\\f\\n\\r\\t', '"/\b\f\n\r\t'] and
+            inv._json_layers("\\x\\u00") == ["\\x\\u00"] and
+            inv.mentions_field("\\\\\\\\u006fbserved_at_utc") and inv.schema_candidate("\\u0070atternProperties") and
+            inv.schema_candidate("pattern\\\\u0050roperties") and not inv.mentions_field("observed\\_at_utc"))
+
+
+# N4. T166: the bound validator's checker, registry, resolver and selection are fixed after construction, and so is
+# the checker's own table. Every route raises the TypeError a format_checker argument to datetime_validator raises.
+def _bound_timestamp():
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    target = {"$id": "urn:pm:scratch:ts", "type": "string", "format": "date-time"}
+    registry = Registry().with_resource(target["$id"], Resource.from_contents(target, default_specification=DRAFT202012))
+    return _bound({"properties": {"t": {"$ref": target["$id"]}}}, registry)
+
+
+def _type_error(build):
+    try:
+        build()
+    except TypeError as error:
+        return str(error)
+    except Exception as error:  # noqa: BLE001
+        return "exception:" + type(error).__name__
+    return None
+
+
+def _still_checks(validator):
+    return (validator.is_valid({"t": "2026-01-01T00:00:00Z"}) and not validator.is_valid({"t": "not-a-dateZ"}) and
+            not validator.is_valid({"t": "2026-02-30T00:00:00Z"}))
+
+
+@check("datetime_unit_bound_construction_format_checker_type_error")
+def _bound_construction(context):
+    """The reference: datetime_validator itself refuses a format_checker, storage_selection or datetime_binding
+    argument with TypeError."""
+    from jsonschema import FormatChecker
+    dt, _, _, _ = _mods()
+    return all(_type_error(lambda k=k, v=v: dt.datetime_validator({}, **{k: v})) is not None for k, v in
+               (("format_checker", None), ("format_checker", FormatChecker()), ("storage_selection", None),
+                ("datetime_binding", None)))
+
+
+def _evolve_refused(change, message):
+    def run(context):
+        validator = _bound_timestamp()
+        return _type_error(lambda: change(validator)) == message and _still_checks(validator)
+    return run
+
+
+def _foreign_resolver():
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    return Registry().with_resource("urn:pm:scratch:ts", Resource.from_contents(
+        {}, default_specification=DRAFT202012)).resolver()
+
+
+def _legacy_resolver():
+    from jsonschema.validators import _RefResolver
+    return _RefResolver.from_schema({})
+
+
+def _stock_checker():
+    from jsonschema import FormatChecker
+    return FormatChecker()
+
+
+EVOLVE_ROUTES = {
+    "format_checker_none": (lambda v: v.evolve(format_checker=None), "format_checker"),
+    "format_checker_stock": (lambda v: v.evolve(format_checker=_stock_checker()), "format_checker"),
+    "format_checker_other_profile": (lambda v: v.evolve(format_checker=_mods()[0].format_checker(profile=S)),
+                                     "format_checker"),
+    "registry": (lambda v: v.evolve(registry=_foreign_resolver()._registry), "registry"),
+    "resolver_legacy": (lambda v: v.evolve(resolver=_legacy_resolver()), "resolver"),
+    "resolver_foreign": (lambda v: v.evolve(_resolver=_foreign_resolver()), "resolver"),
+    "storage_selection": (lambda v: v.evolve(storage_selection=_selection()), "storage_selection"),
+}
+for _name, (_change, _field) in EVOLVE_ROUTES.items():
+    check("datetime_unit_bound_evolve_%s_refused" % _name)(
+        _evolve_refused(_change, "datetime_validator_fixed_" + _field))
+
+
+@check("datetime_unit_bound_evolve_forged_binding_refused")
+def _bound_forged(context):
+    import types
+    validator = _bound_timestamp()
+    binding = validator.datetime_binding
+    forged = types.SimpleNamespace(checker=binding.checker, registry=binding.registry, selection=binding.selection)
+    return (_type_error(lambda: validator.evolve(datetime_binding=forged)) == "datetime_validator_binding_forged" and
+            _type_error(lambda: validator.evolve(datetime_binding=tuple(binding))) == "datetime_validator_binding_forged")
+
+
+@check("datetime_unit_bound_replace_copies_refused")
+def _bound_replace(context):
+    """attrs.evolve and copy.replace build a new instance without the bound evolve: construction still refuses."""
+    import attrs
+    validator = _bound_timestamp()
+    message = "datetime_validator_fixed_format_checker"
+    return (_type_error(lambda: attrs.evolve(validator, format_checker=None)) == message and
+            _type_error(lambda: copy.replace(validator, format_checker=_stock_checker())) == message and
+            _type_error(lambda: attrs.evolve(validator, registry=_foreign_resolver()._registry)) ==
+            "datetime_validator_fixed_registry" and _still_checks(validator))
+
+
+@check("datetime_unit_bound_evolve_schema_only_still_checks")
+def _bound_evolve_control(context):
+    """Control: an evolve that changes only the schema works and still checks timestamps, and so does jsonschema's
+    own evolve through a reference (schema and _resolver)."""
+    validator = _bound_timestamp()
+    evolved = validator.evolve(schema={"properties": {"t": {"$ref": "urn:pm:scratch:ts"}}, "required": ["t"]})
+    return (_still_checks(validator) and _still_checks(evolved) and not evolved.is_valid({}) and
+            evolved.format_checker is validator.format_checker and
+            evolved.datetime_binding is validator.datetime_binding)
+
+
+def _setattr_refused(name, value):
+    def run(context):
+        validator = _bound_timestamp()
+        return (_type_error(lambda: setattr(validator, name, value(validator))) == "datetime_validator_fixed: " + name and
+                _still_checks(validator))
+    return run
+
+
+SETATTR_ROUTES = {
+    "format_checker": lambda v: None,
+    "_registry": lambda v: _foreign_resolver()._registry,
+    "_resolver": lambda v: _foreign_resolver(),
+    "_ref_resolver": lambda v: _legacy_resolver(),
+    "storage_selection": lambda v: _selection(),
+    "datetime_binding": lambda v: None,
+}
+for _name, _value in SETATTR_ROUTES.items():
+    check("datetime_unit_bound_setattr_%s_refused" % _name.lstrip("_"))(_setattr_refused(_name, _value))
+
+
+@check("datetime_unit_bound_deprecated_resolver_refused")
+def _bound_deprecated_resolver(context):
+    """Reading the deprecated .resolver property would install a legacy RefResolver: it raises instead."""
+    import warnings
+    validator = _bound_timestamp()
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
+        message = _type_error(lambda: validator.resolver)
+    return message == "datetime_validator_fixed: _ref_resolver" and validator._ref_resolver is None and \
+        _still_checks(validator)
+
+
+@check("datetime_unit_bound_other_attributes_assignable")
+def _bound_other_attributes(context):
+    """Control: only the fixed attributes are fixed; any other attribute assigns as before."""
+    validator = _bound_timestamp()
+    validator.note = 1
+    return validator.note == 1 and _still_checks(validator)
+
+
+@check("datetime_unit_format_checker_table_fixed")
+def _checker_table_fixed(context):
+    """The gate checker's table is read-only: checks(), item assignment, reassignment and deletion all raise
+    TypeError, and the checker still runs the predicate."""
+    dt, _, _, _ = _mods()
+    checker = dt.format_checker()
+
+    def replace_entry():
+        checker.checkers["date-time"] = (lambda value: True, ())
+
+    results = [_type_error(lambda: checker.checks("date-time")(lambda value: True)), _type_error(replace_entry),
+               _type_error(lambda: setattr(checker, "checkers", {})),
+               _type_error(lambda: delattr(checker, "checkers")),
+               _type_error(lambda: setattr(checker, "_fixed", False))]
+    return (results[2:] == ["datetime_format_checker_fixed: checkers", "datetime_format_checker_fixed: checkers",
+                            "datetime_format_checker_fixed: _fixed"] and None not in results[:2] and
+            not any(r.startswith("exception:") for r in results) and
+            not checker.conforms("not-a-dateZ", "date-time") and checker.conforms("2026-01-01T00:00:00Z", "date-time"))
+
+
+@check("datetime_unit_bound_fixed_routes_in_validator")
+def _bound_fixed_in_validator(context):
+    """A loosened table never reaches a validator: after every refused route the validator still refuses."""
+    validator = _bound_timestamp()
+    for attempt in (lambda: validator.format_checker.checkers.pop("date-time"),
+                    lambda: delattr(validator.format_checker, "checkers"),
+                    lambda: setattr(validator.format_checker, "checkers", {})):
+        try:
+            attempt()
+        except (TypeError, AttributeError):
+            pass
+        else:
+            return False
+    return _still_checks(validator)
