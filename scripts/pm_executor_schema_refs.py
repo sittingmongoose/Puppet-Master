@@ -14,9 +14,20 @@ from referencing.jsonschema import DRAFT202012
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def check_document(schema):
+    """Meta-validate one whole schema document; the 2020-12 meta-schema occurrence is one table row."""
+    from pm_executor_event_semantics import refuse
+    try:
+        jsonschema.Draft202012Validator.check_schema(schema)
+        error = None
+    except jsonschema.SchemaError as exc:
+        error = exc
+    refuse('schema_document', {'meta_valid': error is None}, '' if error is None else ': ' + error.message)
+
+
 @lru_cache(maxsize=128)
 def _check_schema_text(text):
-    jsonschema.Draft202012Validator.check_schema(json.loads(text))
+    check_document(json.loads(text))
 
 
 def _references(value):
@@ -50,6 +61,7 @@ def _check_local_references_cached(text, schema_path):
 
 
 def _check_reference_graph(text, schema_path):
+    from pm_executor_event_semantics import refuse
     schema = json.loads(text)
     _check_schema_text(text)
     if not list(_references(schema)):
@@ -102,11 +114,12 @@ def _check_reference_graph(text, schema_path):
                 if '$ref' in value:
                     ref = value['$ref']
                     try:
-                        target = resolver.lookup(ref).contents
-                    except Unresolvable as error:
-                        raise ValueError(f'unresolved schema $ref at {schema_path}{location}: {ref}') from error
-                    if not isinstance(target, (dict, bool)):
-                        raise ValueError(f'non-schema $ref target at {schema_path}{location}: {ref}')
+                        target, resolves = resolver.lookup(ref).contents, True
+                    except Unresolvable:
+                        target, resolves = None, False
+                    refuse('schema_reference', {'resolves': resolves, 'target_type': type(target).__name__ if resolves else None},
+                           message={'SR02_ref_resolves': f'unresolved schema $ref at {schema_path}{location}: {ref}',
+                                    'SR03_ref_target': f'non-schema $ref target at {schema_path}{location}: {ref}'})
                     count += 1
                 for key, child in value.items():
                     walk(child, resolver, location + '/' + key.replace('~', '~0').replace('/', '~1'))

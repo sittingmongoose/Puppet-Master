@@ -9,101 +9,153 @@ import jsonschema
 from pm_executor_schema_refs import check_lane_schemas, reference_cases
 
 ROOT = Path(__file__).resolve().parents[1]
+NON_RETRYABLE = ('graph_integrity', 'verification_failed', 'reviewer_findings', 'quota_exceeded')
+
 
 def identity(contract, payload, storage_instance_id):
-    from pm_executor_event_semantics import canonical, require
+    from pm_executor_event_semantics import canonical, refuse, tname
     # Apply each identity field's declared domain before making either hash.
     schema = json.loads((ROOT / contract['schema_ref']).read_text())
     for field in contract['identity_fields']:
         value, domain = payload[field], schema['properties'][field]
-        require((domain['type'] == 'string' and type(value) is str and len(value) >= domain['minLength'])
-                or (domain['type'] == 'integer' and type(value) is int and value >= domain['minimum']),
-                'identity declared field domain ' + field)
-    require(type(storage_instance_id) is str and bool(storage_instance_id), 'identity Storage string domain')
+        kind = domain.get('type')
+        bound = (domain['minLength'] if kind == 'string' and type(value) is str
+                 else domain['minimum'] if kind == 'integer' and type(value) is int else None)
+        refuse('identity_field', {
+            'domain_type': copy.deepcopy(kind), 'value_type': tname(value),
+            'length': len(value) if type(value) is str else None,
+            'number': value if type(value) is int else None, 'bound': bound}, ' ' + field)
+    refuse('identity_storage', {'storage_type': tname(storage_instance_id),
+                                'storage_nonempty': type(storage_instance_id) is str and bool(storage_instance_id)})
     inner = canonical([payload[k] for k in contract['identity_fields']])
     digest = lambda value: hashlib.sha256(value.encode('utf-8')).hexdigest()
     return ('executor:' + contract['event_type'] + ':v1:' + digest(inner),
             'evt_executor_' + digest(canonical([storage_instance_id, contract['event_type'], inner])))
 
+
 def validate(contract, payload, context):
-    from pm_executor_event_semantics import schema_validate, validate_append_policy, validate_payload_transport, validate_canonical_domain, same_value, instant
+    from pm_executor_event_semantics import (schema_validate, validate_append_policy, validate_payload_transport,
+                                             validate_canonical_domain, canonical, instant, refuse, q)
     validate_append_policy(contract, context['envelope']['replay_policy'])
     validate_payload_transport(payload, context['envelope'], context['payload_packs'], context['viewer'])
     validate_canonical_domain(context)
     schema_validate(contract['schema_ref'], payload)
-    for field in ('admitted', 'source_refs_valid', 'read_authorized', 'receipt_available', 'predicate_valid'):
-        if context[field] is not True:
-            raise ValueError(field)
-    if context['writer_withdrawn'] is not False or context['deletion_fenced'] is not False:
-        raise ValueError('withdrawal/deletion fence')
-    if payload['project_id'] != context['current_project_id']:
-        raise ValueError('Project join')
-    if not same_value(payload.get('replan_generation'), context['current_generation']):
-        raise ValueError('generation join')
+    flags = ('admitted', 'source_refs_valid', 'read_authorized', 'receipt_available', 'predicate_valid')
+    refuse('shape_flags', {field: copy.deepcopy(context[field]) for field in flags})
+    refuse('shape_fences', {'writer_withdrawn': copy.deepcopy(context['writer_withdrawn']),
+                            'deletion_fenced': copy.deepcopy(context['deletion_fenced'])})
+    refuse('shape_joins', {'payload_project': payload['project_id'], 'current_project': copy.deepcopy(context['current_project_id']),
+                           'payload_generation_canonical': canonical(payload.get('replan_generation')),
+                           'current_generation_canonical': canonical(context['current_generation'])})
     for p, c in [('attempt_id', 'expected_attempt_id'), ('blocked_sequence', 'expected_blocked_sequence'),
                  ('remediation_parent_attempt_id', 'expected_parent_attempt_id')]:
-        if p in payload and not same_value(payload[p], context[c]):
-            raise ValueError(p + ' source join')
+        if p in payload:
+            refuse('shape_source_field', {'payload_canonical': canonical(payload[p]), 'expected_canonical': canonical(context[c])},
+                   message=p + ' source join')
     name = contract['event_type']
     proof_schema = json.loads((ROOT / 'Plans/executor_event_source_proofs.schema.json').read_text())
     definition = proof_schema['$defs'][name.replace('.', '_')]
-    jsonschema.Draft202012Validator(definition).validate(context['source_facts'])
+    error = next(iter(jsonschema.Draft202012Validator(definition).iter_errors(context['source_facts'])), None)
+    refuse('source_facts_schema', {'schema_valid': error is None}, '' if error is None else ': ' + error.message)
     for key, value in payload.items():
         if key.endswith('_id') or key in ('blocked_sequence', 'remediation_generation', 'replan_generation', 'runtime_snapshot_ref'):
-            if not same_value(context['source_bindings'].get(key), value):
-                raise ValueError('canonical source binding: ' + key)
+            refuse('shape_binding', {'binding_canonical': canonical(context['source_bindings'].get(key)),
+                                     'payload_canonical': canonical(value)}, ' ' + key)
     for key in ('project_id', 'run_id', 'thread_id', 'attempt_id'):
-        if key in payload and not same_value(context['envelope'].get(key), payload[key]):
-            raise ValueError('envelope binding: ' + key)
+        if key in payload:
+            refuse('shape_envelope', {'envelope_canonical': canonical(context['envelope'].get(key)),
+                                      'payload_canonical': canonical(payload[key])}, ' ' + key)
+    facts = {'family': name, 'node_state': None, 'expected_node_state': None, 'fixed': None, 'child_success': None,
+             'child': None, 'parent': None, 'until': None, 'ts': None, 'graph_locked': None, 'packaging_passed': None,
+             'now': None, 'context_until': None}
     if name == 'node.completed':
-        expected = 'verified' if payload['result_outcome'] == 'done' else 'verify_pending'
-        if context['source_facts']['node_state'] != expected:
-            raise ValueError('node completion source state')
-    if name == 'remediation.resolved' and payload['resolution'] == 'fixed' and context['source_child_success'] is not True:
-        raise ValueError('fixed without child success')
-    if name == 'remediation.spawned' and payload['child_attempt_id'] == payload['remediation_parent_attempt_id']:
-        raise ValueError('child is parent')
-    if name == 'run.node_backoff_started' and instant(payload['backoff_until_utc']) < instant(payload['ts']):
-        raise ValueError('backoff before recorded observation')
-    if name == 'plan.decomposition_degraded' and context['graph_locked'] is not False:
-        raise ValueError('graph already locked')
-    if name == 'run.completed' and context['packaging_passed'] is not True:
-        raise ValueError('Document Set packaging')
-    if name == 'run.node_backoff_expired' and instant(context['now_utc'], utc=True) < instant(context['backoff_until_utc'], utc=True):
-        raise ValueError('backoff not elapsed')
-    if name in ('run.node_backoff_started', 'run.node_retry_scheduled') and payload['failure_class'] in ('graph_integrity', 'verification_failed', 'reviewer_findings', 'quota_exceeded'):
-        raise ValueError('non-retryable failure')
-    if name == 'attempt.completed':
-        if (payload['terminal_state'] == 'done') != payload.get('success', False):
-            raise ValueError('terminal success/failure mismatch')
-    if name == 'node.blocked' and payload.get('requires_safe_point_restore'):
-        if not payload.get('safe_point_id') or not payload.get('anchor_ref'):
-            raise ValueError('missing restore anchor')
+        facts['node_state'] = copy.deepcopy(context['source_facts']['node_state'])
+        facts['expected_node_state'] = 'verified' if payload['result_outcome'] == 'done' else 'verify_pending'
+    if name == 'remediation.resolved':
+        facts['fixed'] = payload['resolution'] == 'fixed'
+        facts['child_success'] = copy.deepcopy(context['source_child_success']) if facts['fixed'] else None
+    if name == 'remediation.spawned':
+        facts['child'], facts['parent'] = payload['child_attempt_id'], payload['remediation_parent_attempt_id']
+    if name == 'run.node_backoff_started':
+        facts['until'], facts['ts'] = q(instant(payload['backoff_until_utc'])), q(instant(payload['ts']))
+    if name == 'plan.decomposition_degraded':
+        facts['graph_locked'] = copy.deepcopy(context['graph_locked'])
+    if name == 'run.completed':
+        facts['packaging_passed'] = copy.deepcopy(context['packaging_passed'])
+    if name == 'run.node_backoff_expired':
+        facts['now'] = q(instant(context['now_utc'], utc=True))
+        facts['context_until'] = q(instant(context['backoff_until_utc'], utc=True))
+    refuse('shape_family', facts)
+    restore = name == 'node.blocked' and bool(payload.get('requires_safe_point_restore'))
+    refuse('shape_family_b', {
+        'family': name, 'retry_family': name in ('run.node_backoff_started', 'run.node_retry_scheduled'),
+        'failure_class': payload.get('failure_class') if name in ('run.node_backoff_started', 'run.node_retry_scheduled') else None,
+        'terminal_done': payload['terminal_state'] == 'done' if name == 'attempt.completed' else None,
+        'success': copy.deepcopy(payload.get('success', False)) if name == 'attempt.completed' else None,
+        'restore_required': restore, 'safe_point_present': bool(payload.get('safe_point_id')) if restore else None,
+        'anchor_present': bool(payload.get('anchor_ref')) if restore else None})
     if name == 'scheduler.pass':
         ready = payload['ready_nodes']
         ready_ids = [p['node_id'] for p in ready]
         selected = [p['node_id'] for p in payload['selected_nodes']]
         excluded = [p['node_id'] for p in payload['non_selected_nodes']]
-        if len(set(ready_ids)) != len(ready_ids) or len(set(selected + excluded)) != len(selected + excluded):
-            raise ValueError('duplicate node')
-        if set(selected + excluded) != set(ready_ids) or len(selected) > payload['available_slots']:
-            raise ValueError('capacity/partition')
         ranks = {'remediation': 3, 'unblocker': 2, 'normal': 1}
-        ordered = sorted(ready, key=lambda p: (-ranks[p['scheduler_lane']], -p['manual_priority'], -p['transitive_unblock_count'], instant(p['ready_since_utc']), p['node_id']))
-        if selected != [p['node_id'] for p in ordered[:len(selected)]]:
-            raise ValueError('selection order')
+        ready_unique = len(set(ready_ids)) == len(ready_ids)
+        partition_unique = len(set(selected + excluded)) == len(selected + excluded)
+        partitioned = ready_unique and partition_unique and set(selected + excluded) == set(ready_ids)
+        ordered = (sorted(ready, key=lambda p: (-ranks[p['scheduler_lane']], -p['manual_priority'], -p['transitive_unblock_count'],
+                                                instant(p['ready_since_utc']), p['node_id']))
+                   if partitioned and len(selected) <= payload['available_slots'] else None)
+        refuse('shape_scheduler', {
+            'ready_unique': ready_unique, 'partition_unique': partition_unique,
+            'ready_ids': sorted(set(ready_ids)), 'partition_ids': sorted(set(selected + excluded)),
+            'selected_count': len(selected), 'available_slots': payload['available_slots'], 'selected_ids': selected,
+            'ordered_ids': [p['node_id'] for p in ordered[:len(selected)]] if ordered is not None else selected})
         by_id = {p['node_id']: p for p in ready}
         for p in payload['selected_nodes']:
-            if p['score_tuple'] != by_id[p['node_id']] or p['lane'] != p['score_tuple']['scheduler_lane']:
-                raise ValueError('score join')
+            refuse('shape_scheduler_selected', {'score_tuple': copy.deepcopy(p['score_tuple']), 'ready_tuple': copy.deepcopy(by_id[p['node_id']]),
+                                                'lane': copy.deepcopy(p['lane']),
+                                                'tuple_lane': copy.deepcopy(p['score_tuple']['scheduler_lane'])
+                                                if type(p['score_tuple']) is dict and 'scheduler_lane' in p['score_tuple'] else None})
     return True
 
+
+def identity_replay_facts(contract, payload):
+    """Real dedupe algorithm checks: metadata cannot mint a second transition."""
+    from pm_executor_event_semantics import digest
+    ident = identity(contract, payload, 'store-001')
+    metadata = copy.deepcopy(payload)
+    metadata['ts'] = '2026-11-04T13:00:00Z'
+    sequence = copy.deepcopy(metadata)
+    sequence['event_sequence'] += 1
+    stored = {ident: (digest(payload), 'original-first-receipt')}
+    return {
+        'identity': list(ident), 'metadata_changed_identity': list(identity(contract, metadata, 'store-001')),
+        'sequence_changed_identity': list(identity(contract, sequence, 'store-001')),
+        'other_storage_event_id': identity(contract, payload, 'store-002')[1],
+        'recomputed_identity': list(ident) if stored.get(identity(contract, payload, 'store-001'), (None, None))[1] == 'original-first-receipt' else None,
+        'digest': stored[ident][0], 'metadata_changed_digest': digest(metadata)}
+
+
+def contract_integrity(contract, existing, cases):
+    """Refuse a contract that is admitted, has an open schema or lacks paired shape fixtures."""
+    from pm_executor_event_semantics import refuse
+    schema = json.loads((ROOT / contract['schema_ref']).read_text())
+    from pm_executor_schema_refs import check_document
+    check_document(schema)
+    refuse('integrity_contract', {
+        'admitted': contract['event_type'] in existing,
+        'additional_properties': copy.deepcopy(schema.get('additionalProperties')),
+        'accept_cases': len([x for x in cases if x['expected'] == 'accept']),
+        'reject_cases': len([x for x in cases if x['expected'] == 'reject'])}, ' ' + contract['event_type'])
+
+
 def main(family_name=None):
-    from pm_executor_event_semantics import expand_fixture_literals, mutate, fixture_encoding, digest
+    from pm_executor_event_semantics import expand_fixture_literals, mutate, fixture_encoding, refuse
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
     existing = {f['event_type'] for f in registry['families']}
-    assert len(contracts) == 16 and len({c['event_type'] for c in contracts}) == 16
+    refuse('integrity_contract_set', {'family_count': len(contracts), 'distinct_count': len({c['event_type'] for c in contracts})})
     if family_name is not None:
         contracts = [contract for contract in contracts if contract['event_type'] == family_name]
         if not contracts:
@@ -120,19 +172,15 @@ def main(family_name=None):
     for c in contracts:
         failures.extend(reference_cases(c, ref_fixtures[c['event_type']]))
         ref_cases += len(ref_fixtures[c['event_type']])
-        assert c['event_type'] not in existing, 'Draft must remain unadmitted'
-        schema = json.loads((ROOT / c['schema_ref']).read_text())
-        jsonschema.Draft202012Validator.check_schema(schema)
-        assert schema['additionalProperties'] is False
         cases = [x for x in fixtures if x['event_type'] == c['event_type']]
-        assert any(x['expected'] == 'accept' for x in cases)
-        assert any(x['expected'] == 'reject' for x in cases)
+        contract_integrity(c, existing, cases)
         for case in cases:
             if 'seed' in case:
                 seed = case['seed']
                 validate(c, seed['payload'], seed['context'])
                 rebuilt = mutate(seed, case['defect_changes'])
-                assert fixture_encoding([rebuilt['payload'], rebuilt['context']]) == fixture_encoding([case['payload'], case['context']]), case['case']
+                refuse('integrity_seed', {'kind': 'shape', 'rebuilt': fixture_encoding([rebuilt['payload'], rebuilt['context']]),
+                                          'specimen': fixture_encoding([case['payload'], case['context']])}, ' ' + case['case'])
             try:
                 validate(c, case['payload'], case['context'])
                 result = 'accept'
@@ -140,20 +188,10 @@ def main(family_name=None):
                 result = 'reject'
             if result != case['expected']:
                 failures.append((c['event_type'], case['case'], result))
-        # Real dedupe algorithm checks: metadata cannot mint a second transition.
-        p = copy.deepcopy(cases[0]['payload'])
-        ident = identity(c, p, 'store-001')
-        q = copy.deepcopy(p); q['ts'] = '2026-11-04T13:00:00Z'
-        assert identity(c, q, 'store-001') == ident
-        q['event_sequence'] += 1
-        assert identity(c, q, 'store-001') != ident
-        assert identity(c, p, 'store-002')[1] != ident[1]
-        original_digest = digest(p)
-        stored = {ident: (original_digest, 'original-first-receipt')}
-        assert stored[identity(c, p, 'store-001')][1] == 'original-first-receipt'
-        q = copy.deepcopy(p); q['ts'] = '2026-11-04T13:00:00Z'
-        assert identity(c, q, 'store-001') in stored
-        assert digest(q) != stored[ident][0]
+        facts = identity_replay_facts(c, copy.deepcopy(cases[0]['payload']))
+        refuse('identity_replay', {k: facts[k] for k in ('identity', 'sequence_changed_identity')})
+        refuse('identity_replay_fixed', {k: facts[k] for k in ('identity', 'metadata_changed_identity', 'other_storage_event_id',
+                                                               'recomputed_identity', 'digest', 'metadata_changed_digest')})
     print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(contracts), 'fixture_cases': len(fixtures), 'identity_replay_cases': len(contracts)*5, 'schema_reference_cases': ref_cases, 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return bool(failures)
 
