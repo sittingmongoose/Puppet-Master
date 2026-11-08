@@ -16,6 +16,14 @@ shared = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(shared)
 packed = shared.packed
 Draft202012Validator = shared.Draft202012Validator
+
+# Sweep part 2A guard tables (Method B, scripts/pm_guard_isolation.py).
+if str(ROOT / 'scripts') not in sys.path:
+    sys.path.insert(0, str(ROOT / 'scripts'))
+import pm_dg6a_table_concern_scope as _concern_scope_table  # noqa: E402
+
+_CONCERN_SCOPE_ROWS = [(name, guard.predicate) for name, guard in _concern_scope_table.case(None).table.guards.items()]
+CONCERN_SCOPE_RECORDER = None
 CREATORS = {'Runtime', 'Package Overseer', 'Seam Overseer', 'Corroboration', 'Graph Patch'}
 
 
@@ -128,13 +136,49 @@ def concern_result(context, original):
                 original_append_result_ref=original['original_append_result_ref'])
 
 
+def concern_scope_observation(value):
+    """The concern_scope table's FIELDS; project is a string post-schema."""
+    expected = 'project~' + base64.urlsafe_b64encode(value['project_id'].encode()).decode().rstrip('=')
+    return {'scope_partition_exact': bool(value['scope_partition'] == expected)}
+
+
 def checkpoint_errors(value, schema, original_context):
     found = shared.checkpoint_errors(value, schema, original_context)
     if not found:
-        expected = 'project~' + base64.urlsafe_b64encode(value['project_id'].encode()).decode().rstrip('=')
-        if value['scope_partition'] != expected:
-            found.append('Project checkpoint partition mismatch')
+        # The scope tail refuses only through pm_dg6a_table_concern_scope.py.
+        observed = concern_scope_observation(value)
+        first = None
+        for name, predicate in _CONCERN_SCOPE_ROWS:
+            code = predicate(observed, None)
+            if code is not None:
+                first = (name, code)
+                break
+        if CONCERN_SCOPE_RECORDER is not None:
+            CONCERN_SCOPE_RECORDER.append((copy.deepcopy(observed), first))
+        if first:
+            found.append(first[1])
     return found
+
+
+def checkpoint_scope_cases(checkpoint, schema, original):
+    """One-defect checkpoint-scope controls through the complete wrapper.
+
+    The coherent negatives move the original operation's scope_partition
+    with the checkpoint's, so only the scope derivation refuses.
+    """
+    assert not checkpoint_errors(checkpoint, schema, original)
+    cases = (
+        ('coherent_app_scope', 'app'),
+        ('coherent_foreign_partition', 'project~AAAA'),
+    )
+    for name, scope in cases:
+        value = copy.deepcopy(checkpoint)
+        context = copy.deepcopy(original)
+        value['scope_partition'] = scope
+        context['scope_partition'] = scope
+        actual = checkpoint_errors(value, schema, context)
+        assert actual == ['Project checkpoint partition mismatch'], (name, actual)
+    return 1 + len(cases)
 
 
 def historical_concern_page(request, expected, payload_schema, cp_schema):
@@ -275,7 +319,7 @@ def main():
     count += shared.trailing_lf_cases(original, op_schema)
     count += shared.trailing_lf_cases(original['payload'], payload_schema)
     checkpoint = fixture['checkpoint']
-    assert not checkpoint_errors(checkpoint, cp_schema, original)
+    count += checkpoint_scope_cases(checkpoint, cp_schema, original)
     count += shared.historical_reader_cases(fixture, checkpoint, lambda request, expected:
         historical_concern_page(request, expected, payload_schema, cp_schema))
     for case in fixture['history']['cases']:

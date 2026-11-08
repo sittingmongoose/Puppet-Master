@@ -36,6 +36,7 @@ import pm_dg6a_table_profile as profile_table  # noqa: E402
 import pm_dg6a_table_writer_policy as writer_table  # noqa: E402
 import pm_dg6a_table_cursor as cursor_table  # noqa: E402
 import pm_dg6a_table_panel_scope as panel_scope_table  # noqa: E402
+import pm_dg6a_table_concern_scope as concern_scope_table  # noqa: E402
 
 RETURN_SOURCE = 'return g.Case(table, check, context)'
 
@@ -301,6 +302,25 @@ def collect_panel_scope():
     return controls, negatives, len(records)
 
 
+def collect_concern_scope():
+    """The concern family's checkpoint_scope_cases through its complete wrapper."""
+    checker = load_checker('dg6a_concern_for_guard_tables_scope', 'pm-concern-created-contracts-check.py')
+    fixture = checker.load('Plans/concern_created_contracts/concern_created.fixtures.json')
+    cp_schema = checker.load('Plans/concern_created_contracts/concern_created_checkpoint.schema.json')
+    collected = []
+    checker.CONCERN_SCOPE_RECORDER = collected
+    try:
+        count = checker.checkpoint_scope_cases(fixture['checkpoint'], cp_schema, fixture['settled_operation'])
+    finally:
+        checker.CONCERN_SCOPE_RECORDER = None
+    assert len(collected) == count, (len(collected), count)
+    names = ('positive', 'coherent_app_scope', 'coherent_foreign_partition')
+    records = [('concern.created/' + name, 'concern.created', observed, first, name)
+               for name, (observed, first) in zip(names, collected)]
+    controls, negatives = dedupe(records)
+    return controls, negatives, len(records)
+
+
 PHASES = {
     'decision_citation': (decision_table, 'scripts/pm_dg6a_table_decision_citation.py', collect_decision_citation),
     'storage_schema': (storage_table, 'scripts/pm_dg6a_table_storage_schema.py', collect_storage_schema),
@@ -310,6 +330,7 @@ PHASES = {
     'writer_policy': (writer_table, 'scripts/pm_dg6a_table_writer_policy.py', collect_writer_policy),
     'cursor': (cursor_table, 'scripts/pm_dg6a_table_cursor.py', collect_cursor),
     'panel_scope': (panel_scope_table, 'scripts/pm_dg6a_table_panel_scope.py', collect_panel_scope),
+    'concern_scope': (concern_scope_table, 'scripts/pm_dg6a_table_concern_scope.py', collect_concern_scope),
 }
 
 
