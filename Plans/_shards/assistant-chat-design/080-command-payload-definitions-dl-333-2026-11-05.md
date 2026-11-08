@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L29062-L31338
+Source lines: L29062-L31346
 
-Source SHA256: `b8713596599ffc06c8f6b6dd0d1324c54caed2292cd7e8bdd2d31ea94d755be4`
+Source SHA256: `14c409ee680466ab3acf59da72e5136cf774a1ae160db2aa7ebfe1b61fb707e6`
 
 ---
 
@@ -34,9 +34,12 @@ canonical_text: >-
   reveal a tab and their production wiring rows require, and open and focus return CV-360's open result.
   Judgments the definitions make are in each definition's judgments list (DL-341).
   cmd.chat.worktree.bind_existing is a retired non-alias (DL-335) and gets no definition or alias here.
+  The six thread worktree commands take their disabled states from CV-159's backend-aware admission, not
+  from the older Git-only base clause, and cmd.chat.worktree.pr records the CV-160 compatibility alias
+  cmd.chat.worktree.create_pr.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible chat thread, Context Lens, thread worktree and context-detail commands.
-depends_on: [UCC-230, UCC-056, UCC-057, UCC-058, UCC-059, UCC-060, UCC-200, CV-360, ACD-191, ACD-192, ACD-193, ACD-194, ACD-460, ACD-461, DL-333, DL-335, DL-341]
+depends_on: [UCC-230, UCC-056, UCC-057, UCC-058, UCC-059, UCC-060, UCC-200, CV-360, CV-159, CV-160, ACD-191, ACD-192, ACD-193, ACD-194, ACD-460, ACD-461, DL-333, DL-335, DL-341]
 unblocks: []
 acceptance_criteria:
   - Every command that UCC-230 routes to ACD-637 has exactly one definition in the block below.
@@ -618,7 +621,7 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:ChatWorktreeCreateResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [blocked_state_required, not_configured, unsupported]
+      disabled_reason_codes: [blocked_state_required, not_configured, unsupported, permission_required]
       aliases:
         - {command_id: cmd.chat.worktree.*, kind: family_alias,
            source: "UCC-054 preserved_exact_tokens; UI_Command_Catalog.md:718; UCC-230 non_definition_tokens (thread-scoped family, concrete rows are UCC-058's)"}
@@ -627,8 +630,8 @@ command_payload_definitions:
           choice: domain_action
           gap_note: "The 2.6.1 row (UI_Command_Catalog.md:766) states no command_kind. Creating binds a new worktree to the thread (W.11), a durable binding change."
         - key: disabled_reason_codes
-          choice: [blocked_state_required, not_configured, unsupported]
-          gap_note: "Canon names no disabled code. Base when-clause (UI_Command_Catalog.md:762): activeThreadExists false is a blocked state, projectIsGitRepo false is not_configured, projectIsRemoteNonSSH is unsupported ('worktrees unsupported', :782); the row's !activeThreadHasWorktree visibility is a blocked state."
+          choice: [blocked_state_required, not_configured, unsupported, permission_required]
+          gap_note: "Canon names no disabled code. CV-159 admission (Contracts_V0.md:11194; acceptance :11201-11202; registration preamble :1878) requires an active thread bound to an actual Project/repository and the backend-supported worktree/change/review capability, current lease and permission. No active thread and no current lease are blocked states; a thread with no actual Project/repository target is not_configured, an action refusal rather than an app mode ban (:11202); a backend without the worktree/change/review capability, an unsupported remote target (projectIsRemoteNonSSH, 'worktrees unsupported', UI_Command_Catalog.md:782) and a Jujutsu route without JJ authority, which gets no direct Git fallback (Contracts_V0.md:11194), are unsupported; missing permission is permission_required. projectIsGitRepo is kept only as the original Git-reader guard (Contracts_V0.md:11194, :11203): false on a Git-reader route means no Git repository target (not_configured), and it never disables an admitted Jujutsu route. Canon conflict: the catalog's base when-clause activeThreadExists && projectIsGitRepo && !projectIsRemoteNonSSH (UI_Command_Catalog.md:762) is the older Git-only reading, which CV-159, the registration owner, retires as a universal test; this definition follows CV-159. The row's !activeThreadHasWorktree visibility (UI_Command_Catalog.md:766) is a blocked state."
     - command_id: cmd.chat.worktree.unbind
       ucc_units: [UCC-058, UCC-059]
       command_kind: domain_action
@@ -645,7 +648,7 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:ChatWorktreeLifecycleResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [blocked_state_required, not_configured, unsupported]
+      disabled_reason_codes: [blocked_state_required, not_configured, unsupported, permission_required]
       aliases:
         - {command_id: cmd.chat.worktree.*, kind: family_alias,
            source: "UCC-054 preserved_exact_tokens; UI_Command_Catalog.md:718; UCC-230 non_definition_tokens (thread-scoped family, concrete rows are UCC-058's)"}
@@ -654,8 +657,8 @@ command_payload_definitions:
           choice: domain_action
           gap_note: "The 2.6.1 row (UI_Command_Catalog.md:767) states no command_kind. Unbinding detaches the thread from its worktree, a durable binding change."
         - key: disabled_reason_codes
-          choice: [blocked_state_required, not_configured, unsupported]
-          gap_note: "Canon names no disabled code. activeThreadHasWorktree visibility and !activeThreadHasActiveRun enablement (UI_Command_Catalog.md:767) are read as blocked states; the base clauses (:762) as for create."
+          choice: [blocked_state_required, not_configured, unsupported, permission_required]
+          gap_note: "Canon names no disabled code. activeThreadHasWorktree visibility and !activeThreadHasActiveRun enablement (UI_Command_Catalog.md:767) are read as blocked states; the CV-159 admission states as for create (Contracts_V0.md:11194), not the older Git-only base clause (UI_Command_Catalog.md:762)."
     - command_id: cmd.chat.worktree.remove
       ucc_units: [UCC-058, UCC-059]
       command_kind: domain_action
@@ -678,7 +681,7 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:ChatWorktreeLifecycleResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [blocked_state_required, not_configured, unsupported]
+      disabled_reason_codes: [blocked_state_required, not_configured, unsupported, permission_required]
       aliases:
         - {command_id: cmd.chat.worktree.*, kind: family_alias,
            source: "UCC-054 preserved_exact_tokens; UI_Command_Catalog.md:718; UCC-230 non_definition_tokens (thread-scoped family, concrete rows are UCC-058's)"}
@@ -687,8 +690,8 @@ command_payload_definitions:
           choice: domain_action
           gap_note: "The 2.6.1 row (UI_Command_Catalog.md:768) states no command_kind. Removing detaches and prunes the thread worktree, a destructive owner write."
         - key: disabled_reason_codes
-          choice: [blocked_state_required, not_configured, unsupported]
-          gap_note: "Canon names no disabled code. activeThreadHasWorktree visibility and !activeThreadHasActiveRun enablement (UI_Command_Catalog.md:768) are read as blocked states; the base clauses (:762) as for create."
+          choice: [blocked_state_required, not_configured, unsupported, permission_required]
+          gap_note: "Canon names no disabled code. activeThreadHasWorktree visibility and !activeThreadHasActiveRun enablement (UI_Command_Catalog.md:768) are read as blocked states; the CV-159 admission states as for create (Contracts_V0.md:11194), not the older Git-only base clause (UI_Command_Catalog.md:762)."
     - command_id: cmd.chat.worktree.merge
       ucc_units: [UCC-058, UCC-059]
       command_kind: domain_action
@@ -726,7 +729,7 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:ChatWorktreeMergeResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [blocked_state_required, not_configured, unsupported]
+      disabled_reason_codes: [blocked_state_required, not_configured, unsupported, permission_required]
       aliases:
         - {command_id: cmd.chat.worktree.*, kind: family_alias,
            source: "UCC-054 preserved_exact_tokens; UI_Command_Catalog.md:718; UCC-230 non_definition_tokens (thread-scoped family, concrete rows are UCC-058's)"}
@@ -735,8 +738,8 @@ command_payload_definitions:
           choice: domain_action
           gap_note: "The 2.6.1 row (UI_Command_Catalog.md:769) states no command_kind. Merge runs the user-confirmed merge-back flow (W.8), an owner write."
         - key: disabled_reason_codes
-          choice: [blocked_state_required, not_configured, unsupported]
-          gap_note: "Canon names no disabled code. The enablement clause !activeThreadHasActiveRun && !worktreeDirty && !worktreeHasConflicts && !worktreeDetachedHead && !mergeLockHeld (UI_Command_Catalog.md:769) is read as blocked states; the base clauses (:762) as for create."
+          choice: [blocked_state_required, not_configured, unsupported, permission_required]
+          gap_note: "Canon names no disabled code. The enablement clause !activeThreadHasActiveRun && !worktreeDirty && !worktreeHasConflicts && !worktreeDetachedHead && !mergeLockHeld (UI_Command_Catalog.md:769) is read as blocked states; the CV-159 admission states as for create (Contracts_V0.md:11194), not the older Git-only base clause (UI_Command_Catalog.md:762)."
     - command_id: cmd.chat.worktree.pr
       ucc_units: [UCC-058, UCC-059]
       command_kind: domain_action
@@ -774,17 +777,22 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:ChatWorktreePrResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
-      disabled_reason_codes: [blocked_state_required, not_configured, unsupported]
+      disabled_reason_codes: [blocked_state_required, not_configured, unsupported, permission_required]
       aliases:
         - {command_id: cmd.chat.worktree.*, kind: family_alias,
            source: "UCC-054 preserved_exact_tokens; UI_Command_Catalog.md:718; UCC-230 non_definition_tokens (thread-scoped family, concrete rows are UCC-058's)"}
+        - {command_id: cmd.chat.worktree.create_pr, kind: compatibility_alias,
+           source: "CV-160 acceptance (Contracts_V0.md:11253) and the 7.1 registration note (:1889): a compatibility alias that may route to the canonical assistant worktree commands and is no replacement for them; UCC-230 non_definition_tokens targets it to this command"}
       judgments:
         - key: command_kind
           choice: domain_action
           gap_note: "The 2.6.1 row (UI_Command_Catalog.md:770) states no command_kind. PR opens the PR creation flow for the bound branch (W.8.6), an owner interaction with the forge."
+        - key: aliases
+          choice: [cmd.chat.worktree.*, cmd.chat.worktree.create_pr]
+          gap_note: "CV-160 lets cmd.chat.worktree.create_pr route to the canonical assistant worktree commands (Contracts_V0.md:1889, :11253) but names none of the six as its target. It is recorded here because this is the six's Create PR command (UI_Command_Catalog.md:770; Contracts_V0.md:1886). The other CV-160 alias, cmd.chat.worktree.open_files, is recorded on cmd.git.worktree.open, through which the catalog routes Open Files (UI_Command_Catalog.md:773)."
         - key: disabled_reason_codes
-          choice: [blocked_state_required, not_configured, unsupported]
-          gap_note: "Canon names no disabled code. projectHasGitHubRemote false (UI_Command_Catalog.md:770) is read as not_configured; activeThreadHasWorktree visibility and !activeThreadHasActiveRun && !worktreeDetachedHead enablement as blocked states; the base clauses (:762) as for create."
+          choice: [blocked_state_required, not_configured, unsupported, permission_required]
+          gap_note: "Canon names no disabled code. projectHasGitHubRemote false (UI_Command_Catalog.md:770) is read as not_configured; activeThreadHasWorktree visibility and !activeThreadHasActiveRun && !worktreeDetachedHead enablement as blocked states; the CV-159 admission states as for create (Contracts_V0.md:11194), not the older Git-only base clause (UI_Command_Catalog.md:762)."
     - command_id: cmd.chat.worktree.info
       ucc_units: [UCC-058, UCC-059]
       command_kind: shell_view
@@ -801,7 +809,7 @@ command_payload_definitions:
         response: Plans/ui_command_response.schema.json
         owner_result: local:ChatWorktreeInfoResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, handler_unavailable, internal_error]
-      disabled_reason_codes: [blocked_state_required, not_configured, unsupported]
+      disabled_reason_codes: [blocked_state_required, not_configured, unsupported, permission_required]
       aliases:
         - {command_id: cmd.chat.worktree.*, kind: family_alias,
            source: "UCC-054 preserved_exact_tokens; UI_Command_Catalog.md:718; UCC-230 non_definition_tokens (thread-scoped family, concrete rows are UCC-058's)"}
@@ -810,8 +818,8 @@ command_payload_definitions:
           choice: shell_view
           gap_note: "The 2.6.1 row (UI_Command_Catalog.md:771) states no command_kind. Info shows the binding and status without mutation, a read-only view of the owner binding store."
         - key: disabled_reason_codes
-          choice: [blocked_state_required, not_configured, unsupported]
-          gap_note: "Canon names no disabled code. activeThreadHasWorktree visibility (UI_Command_Catalog.md:771) is read as a blocked state; the base clauses (:762) as for create."
+          choice: [blocked_state_required, not_configured, unsupported, permission_required]
+          gap_note: "Canon names no disabled code. activeThreadHasWorktree visibility (UI_Command_Catalog.md:771) is read as a blocked state; the CV-159 admission states as for create (Contracts_V0.md:11194), not the older Git-only base clause (UI_Command_Catalog.md:762)."
     - command_id: cmd.chat.compact_context
       ucc_units: [UCC-060]
       command_kind: domain_action
@@ -853,7 +861,7 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18264), and its wiring row (catalog.chat_open_thread_context_details) carries CV-360's placement fields."
+          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18290), and its wiring row (catalog.chat_open_thread_context_details) carries CV-360's placement fields."
         mode:
           type: enum
           values: [preview, keep]
@@ -903,7 +911,7 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18264); a reveal of an open tab never moves it (CV-360)."
+          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18290); a reveal of an open tab never moves it (CV-360)."
         mode:
           type: enum
           values: [preview, keep]
@@ -953,7 +961,7 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18264), and its wiring row (catalog.chat_close_thread_context_details) carries CV-360's placement fields."
+          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18290), and its wiring row (catalog.chat_close_thread_context_details) carries CV-360's placement fields."
         mode:
           type: enum
           values: [preview, keep]
@@ -2047,7 +2055,7 @@ command_payload_definitions:
           gap_note: >-
             The row allows five source classes - current-turn attachment, selected artifact,
             project file allowed by FileSafe, clipboard image, recent OS screenshot
-            (UI_Command_Catalog.md:21693) - but no canon names the field or fixes canonical tokens
+            (UI_Command_Catalog.md:21719) - but no canon names the field or fixes canonical tokens
             for the classes. Choice: source_class as an opaque token of 1..64 (bounds chosen here),
             one of those five classes; alternative: a closed enum once an owner fixes the spellings.
             A project-file source still carries FileSafe and artifact permissions (UCC-101 negative
@@ -2059,7 +2067,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row chooses "the image the bridge reads" and shows the selected source
-            (UI_Command_Catalog.md:21693), so a class alone cannot pick one attachment, artifact,
+            (UI_Command_Catalog.md:21719), so a class alone cannot pick one attachment, artifact,
             FileSafe project file or clipboard image. image_ref is the overlay identity for
             UCC-101..UCC-105 (UI_Command_Catalog.md:8860 overlay row, image_ref?), typed ref by UCC-230's
             identity rule, but canon does not say that select_source carries it or for which classes.
@@ -2079,7 +2087,7 @@ command_payload_definitions:
           gap_note: "The production wiring row catalog.chat_vision_bridge_select_source names no request_schema_ref, and no typed owner request exists for the vision bridge yet."
         - key: disabled_reason_codes
           choice: [not_configured]
-          gap_note: "The row's only precondition is vision_bridge_available (UI_Command_Catalog.md:21693) and canon names no disabled code; false is read as not_configured."
+          gap_note: "The row's only precondition is vision_bridge_available (UI_Command_Catalog.md:21719) and canon names no disabled code; false is read as not_configured."
     - command_id: cmd.chat.vision_bridge.pick_recent_screenshot
       ucc_units: [UCC-101]
       command_kind: domain_action
@@ -2095,13 +2103,13 @@ command_payload_definitions:
       judgments:
         - key: omitted:image_ref
           choice: omitted
-          gap_note: "The row opens the recent OS screenshot picker and uses the screenshot the user picks; an ambiguous recent screenshot is never chosen silently (UI_Command_Catalog.md:21694). The picker chooses, so no input names the image; the overlay identity image_ref? is left out."
+          gap_note: "The row opens the recent OS screenshot picker and uses the screenshot the user picks; an ambiguous recent screenshot is never chosen silently (UI_Command_Catalog.md:21720). The picker chooses, so no input names the image; the overlay identity image_ref? is left out."
         - key: owner_request
           choice: none
           gap_note: "The production wiring row catalog.chat_vision_bridge_pick_recent_screenshot names no request_schema_ref, and no typed owner request exists for the vision bridge yet."
         - key: disabled_reason_codes
           choice: [not_configured, permission_required]
-          gap_note: "Canon names no disabled code. vision_bridge_available false is read as not_configured and recent_screenshot_access_allowed false (UI_Command_Catalog.md:21694) as permission_required."
+          gap_note: "Canon names no disabled code. vision_bridge_available false is read as not_configured and recent_screenshot_access_allowed false (UI_Command_Catalog.md:21720) as permission_required."
     - command_id: cmd.chat.vision_bridge.inspect
       ucc_units: [UCC-101]
       command_kind: navigation_wrapper
@@ -2114,7 +2122,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The overlay lists image_ref? for UCC-101..UCC-105 and the row opens the description for
-            the bridge result with its source image or artifact link (UI_Command_Catalog.md:21695);
+            the bridge result with its source image or artifact link (UI_Command_Catalog.md:21721);
             precondition vision_bridge_result_present makes the source subject mandatory per UCC-230
             identity rule, but no canon names the bridge-result identity field. Choice: image_ref
             binds the inspected result to its source image or artifact.
@@ -2128,7 +2136,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "The row's only precondition is vision_bridge_result_present (UI_Command_Catalog.md:21695) and canon names no disabled code; false is read as a blocked state."
+          gap_note: "The row's only precondition is vision_bridge_result_present (UI_Command_Catalog.md:21721) and canon names no disabled code; false is read as a blocked state."
     - command_id: cmd.chat.vision_bridge.rerun
       ucc_units: [UCC-101]
       command_kind: domain_action
@@ -2140,7 +2148,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row reruns "on the same source" (UI_Command_Catalog.md:21696); precondition
+            The row reruns "on the same source" (UI_Command_Catalog.md:21722); precondition
             vision_bridge_result_present makes the source subject mandatory per UCC-230 identity
             rule, but no canon names the field. Choice: the overlay identity image_ref carries the
             same source.
@@ -2151,7 +2159,7 @@ command_payload_definitions:
           constraints: {min_length: 1, max_length: 4096}
           provenance: gap
           gap_note: >-
-            The row reruns "with the user's question" (UI_Command_Catalog.md:21696) but names no
+            The row reruns "with the user's question" (UI_Command_Catalog.md:21722) but names no
             field. Choice: question, matching the row's label 'Rerun With A Question'; the bounds
             1..4096 are chosen here, canon states none.
       owner_request: none
@@ -2167,7 +2175,7 @@ command_payload_definitions:
           gap_note: "The production wiring row catalog.chat_vision_bridge_rerun names no request_schema_ref, and no typed owner request exists for the vision bridge yet."
         - key: disabled_reason_codes
           choice: [blocked_state_required, permission_required]
-          gap_note: "Canon names no disabled code. vision_bridge_result_present false (UI_Command_Catalog.md:21696) is read as a blocked state and permission_allowed false as permission_required."
+          gap_note: "Canon names no disabled code. vision_bridge_result_present false (UI_Command_Catalog.md:21722) is read as a blocked state and permission_allowed false as permission_required."
     - command_id: cmd.chat.vision_bridge.copy_description
       ucc_units: [UCC-101]
       command_kind: shell_view
@@ -2180,7 +2188,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row copies the derived description of the present bridge result
-            (UI_Command_Catalog.md:21697); precondition vision_bridge_result_present makes the
+            (UI_Command_Catalog.md:21723); precondition vision_bridge_result_present makes the
             source subject mandatory per UCC-230 identity rule, but no canon names the field.
             Choice: the overlay identity image_ref binds the copied description to its source.
       owner_request: none
@@ -2193,7 +2201,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "The row's only precondition is vision_bridge_result_present (UI_Command_Catalog.md:21697) and canon names no disabled code; false is read as a blocked state."
+          gap_note: "The row's only precondition is vision_bridge_result_present (UI_Command_Catalog.md:21723) and canon names no disabled code; false is read as a blocked state."
     - command_id: cmd.chat.vision_bridge.attach_result
       ucc_units: [UCC-101]
       command_kind: domain_action
@@ -2205,7 +2213,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row attaches the bridge result of the present source (UI_Command_Catalog.md:21698);
+            The row attaches the bridge result of the present source (UI_Command_Catalog.md:21724);
             precondition vision_bridge_result_present makes the source subject mandatory per UCC-230
             identity rule, but no canon names the field. Choice: the overlay identity image_ref binds
             the attached result to its source.
@@ -2215,7 +2223,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row's target is "the current turn or run" (UI_Command_Catalog.md:21698) and names no
+            The row's target is "the current turn or run" (UI_Command_Catalog.md:21724) and names no
             target field. Choice: the UCC-230 envelope common optional thread_id names the thread whose
             current turn receives the result; canon does not say which target field the row uses.
         run_id:
@@ -2224,7 +2232,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row's target may be "the current ... run" (UI_Command_Catalog.md:21698), and no target
+            The row's target may be "the current ... run" (UI_Command_Catalog.md:21724), and no target
             field is named. Choice: the UCC-230 envelope common optional run_id names the run target.
             Canon states no rule on whether exactly one of thread_id and run_id must be present.
       owner_request: none
@@ -2240,7 +2248,7 @@ command_payload_definitions:
           gap_note: "The production wiring row catalog.chat_vision_bridge_attach_result names no request_schema_ref, and no typed owner request exists for the vision bridge yet."
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "Canon names no disabled code. vision_bridge_result_present and attach_target_available false (UI_Command_Catalog.md:21698) are read as blocked states. The attachment stays labelled bridge-derived (ACD-425)."
+          gap_note: "Canon names no disabled code. vision_bridge_result_present and attach_target_available false (UI_Command_Catalog.md:21724) are read as blocked states. The attachment stays labelled bridge-derived (ACD-425)."
     - command_id: cmd.chat.vision_bridge.manage_permission
       ucc_units: [UCC-101]
       command_kind: navigation_wrapper
@@ -2253,7 +2261,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row opens the remembered always-accept image permission in its Permissions owner
-            (PS-121, UI_Command_Catalog.md:21699) scoped by project, user/account identity, source
+            (PS-121, UI_Command_Catalog.md:21725) scoped by project, user/account identity, source
             class, destination provider/account, provider-family policy, tool id and
             sensitivity/redaction class (UCC-101 preserved tokens), but no canon names a payload
             field; the permission record is inspectable and revocable without passing an image.
@@ -2268,7 +2276,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "The row's only precondition is remembered_vision_permission_present (UI_Command_Catalog.md:21699) and canon names no disabled code; false is read as a blocked state."
+          gap_note: "The row's only precondition is remembered_vision_permission_present (UI_Command_Catalog.md:21725) and canon names no disabled code; false is read as a blocked state."
   results:
     VisionBridgeSelectResultV1:
       fields:

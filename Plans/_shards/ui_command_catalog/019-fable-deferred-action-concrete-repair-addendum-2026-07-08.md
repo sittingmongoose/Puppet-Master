@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8827-L10794
+Source lines: L8827-L10820
 
-Source SHA256: `7a9552cbfabb859b6963fd952757846850e5bdf3a963a542d4a277f8b86a4b90`
+Source SHA256: `8523e81cb63e0c29221b466f9a166aa34a28eab85125b76507283c1943810e79`
 
 ---
 
@@ -1020,6 +1020,32 @@ command_payload_definition_map:
         alias'
     note: 'Q5 resolution 4 (DL-335): UCC-058 forbids exposing Bind Existing as this command, so it is retired and gets
       no definition.'
+  - token: cmd.chat.worktree.create_pr
+    disposition: compatibility_alias
+    targets:
+    - cmd.chat.worktree.pr
+    evidence:
+      doc: Plans/Contracts_V0.md
+      unit: CV-160
+      field: acceptance_criteria
+      quote: cmd.chat.worktree.open_files and cmd.chat.worktree.create_pr may route to canonical assistant worktree
+        commands.
+    note: CV-160 names no target among the canonical six; the alias goes to cmd.chat.worktree.pr, the six's Create PR
+      command (UCC-058 row; Contracts_V0 section 7.1 registration table). Recorded by DL-341 max_review_changes.
+  - token: cmd.chat.worktree.open_files
+    disposition: compatibility_alias
+    targets:
+    - cmd.git.worktree.open
+    evidence:
+      doc: Plans/Contracts_V0.md
+      unit: CV-160
+      field: acceptance_criteria
+      quote: cmd.chat.worktree.open_files and cmd.chat.worktree.create_pr may route to canonical assistant worktree
+        commands.
+    note: Canon conflict on the target. CV-160 lets the alias route to the canonical assistant worktree commands, none
+      of which opens files, while UCC-058 routes Open Files through the project-scope cmd.git.worktree.open and the
+      section 2.5C rules let the thread-scoped family normalize to project-scope worktree operations. The catalog keeps
+      aliases, so the target is cmd.git.worktree.open. Recorded by DL-341 max_review_changes.
   - token: cmd.chat.{new,archive,delete,rename,pin,export,search}
     disposition: family_alias
     targets:
