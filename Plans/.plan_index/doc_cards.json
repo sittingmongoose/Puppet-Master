@@ -1993,7 +1993,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7684,
+      "line_count": 7688,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 86,
       "plan_unit_ids": [
@@ -2154,7 +2154,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "00f7f465c0b028d0382f8d9a5d5050cb4017bb0f4ac4a2e40dd461801a7c9f26",
+      "sha256": "dcf299e2c18b46aa7c3c11c90ccb49eba2afe60bf9cbc25fa1b32a0d8d083754",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 85,
@@ -2276,7 +2276,10 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+        "python3 scripts/pm-ds15-deck2-contracts.py --family <family>",
         "python3 scripts/pm-ds15-event-contracts.py",
+        "python3 scripts/pm-ds15-guard-tables.py --out <dir>",
+        "python3 scripts/pm-ds15-number-corpus.py",
         "python3 scripts/pm-forge-backup-acceptance-verify.py",
         "python3 scripts/pm-integration-packet-audit.py census",
         "python3 scripts/pm-new-contracts-verify.py",
@@ -17557,7 +17560,7 @@
         "workspace_tab_identity_drift",
         "worktree_owner_boundary_drift"
       ],
-      "sha256": "509072e891dfed55c634be0fdb0a13d6e9d065457d53753d2185e14e933b10d4",
+      "sha256": "90cd08802528f44afeed97ce6584d109b22711f7797321f009d97c3803132eb4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 188,
@@ -21751,7 +21754,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-08T03:54:26Z",
+  "generated_at_utc": "2026-11-08T05:28:36Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
