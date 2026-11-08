@@ -2544,6 +2544,8 @@ body.pm-resizing #projectMenuBtn .pm6-tb-project-badge .nx-st::before { animatio
     }
     .activity-bar .icon .symbol { display: flex; align-items: center; justify-content: center; height: 20px; }
     .activity-bar .icon:hover { color: var(--text-primary); }
+    /* FO-96: the icons and More are buttons in the tab order; a key focus rings the item */
+    .activity-bar .icon:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
     .activity-bar .icon.active {
       color: var(--accent-lime);
     }
@@ -20839,6 +20841,15 @@ html[data-theme^="glass"] .activity-bar.collapsed .icon {
   color: var(--text-secondary) !important;
   transition: color var(--motion-fast) var(--ease-out) !important;
 }
+/* FO-96 (F96b-3, F96b-4, F96c-2): with the names shown, the rail's items keep their own height, as every other look's
+   do, and a short bar scrolls (it already has overflow-y: auto). Shrunk to fit a short window (29.7 px at 1280x500)
+   each name lay over the next item's icon and the first tile stood out above the bar, which cut its top. The collapsed
+   rail has no names to collide, so it still shrinks to fit as on main: kept at 40 px, 1280x500 needed 528 px in 411
+   and Artifacts, More and the names toggle fell below the fold. */
+html[data-theme^="glass"] .activity-bar:not(.collapsed) .icon {
+  flex-shrink: 0 !important;
+}
+
 html[data-theme^="glass"] .activity-bar.collapsed .icon {
   padding: 5px 0 !important;
 }
@@ -35286,6 +35297,10 @@ html[data-o55-nier-parts~="slice"]:not([data-motion="reduced"]) .pmr-menu {
   --pm6-sprout-sx: 1 !important; --pm6-sprout-sy: 1 !important;
 }
 html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover, :focus-visible, .active) { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; box-shadow: none !important; }
+/* the row's neon glyph takes the row's paper ink too: the hover tags' ignite sets --nx-ink to --text on a hovered or
+   focused control (glyph-system pm7-hover-bridge.css), which in NieR is the bar's own ink, so an icon row's glyph went ink
+   on ink (FO-98's icon menu showed it); onboarding and the projects layer reset it the same way */
+html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover, :focus-visible, .active) svg.nx { --nx-ink: currentColor; }
 /* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
 html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover, :focus-visible, .active) :where(.pm6-chat-modelcheck),
 html[data-o55-nier-parts~="cursor"] .pmr-menu .pmr-mi:is(:hover, :focus-visible, .active) :where(.pm6-chat-modeleffort),
@@ -36453,6 +36468,21 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 }
 [data-rail-skin="d"][data-theme^="glass"] #panel-source :is(.pm7-scm-git-footer),
 [data-rail-skin="d"][data-theme^="glass"] #panel-source :is(.d-jj-foot) { -webkit-backdrop-filter: none; backdrop-filter: none; }
+/* FO-86: a short panel keeps about three rows of the list beside the open card. The list's scroller has a floor of three
+   rows below the tab strip (its top sits under the strip by design, --pm6-shrun-banner-h, so the floor counts from the
+   strip's foot; Jujutsu's scroller starts below its strip, 73-jj), and the card's footer takes what is left, scrolling its
+   own content when that is less than the card (1280x500: the card's 300 px left the list a 56 px box, 14 px of it below
+   the strip, and the footer ran 80 px past the panel). A taller panel gives the list more than the floor and the footer
+   its whole card, so nothing changes there. */
+[data-rail-skin="d"] #panel-source { --d-list-floor: 132px; }
+[data-rail-skin="d"] #panel-source > .sh-scroll { min-height: calc(var(--pm6-shrun-banner-h, 42px) + var(--d-list-floor)) !important; }
+[data-rail-skin="d"] #panel-source :is(.pm7-scm-git-footer),
+[data-rail-skin="d"] #panel-source :is(.d-jj-foot) { flex: 0 1 auto !important; min-height: 0 !important; display: flex; flex-direction: column; }
+/* the card is what scrolls, not the footer: a footer that scrolls clips its own backdrop blur, which repainted the
+   footer of a tall panel 1-4 levels off in every look but Glass. A key's focus brings an action wholly into view with
+   the card's padding round it (without it the scroll stopped at a whole pixel and left a pixel or so of the action
+   under the card's edge). */
+[data-rail-skin="d"] #panel-source :is(.pm7-scm-git-footer, .d-jj-foot) > .pm7-post-card { flex: 0 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: auto; scroll-padding-block: 8px; }
 [data-rail-skin="d"] #panel-source :is(.pm7-scm-git-footer, .pm7-scm-jj-view) .pm7-post-card {
   padding: 7px 7px 8px !important; border-radius: var(--d-R) !important; box-shadow: none !important;
   border: 1px solid var(--d-line) !important; background: color-mix(in srgb, var(--surface-elevated) 70%, transparent) !important;
@@ -36672,7 +36702,9 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-source .pm7-scm-jj-view.d-jj > .d-hidden { display: none !important; }
 [data-rail-skin="d"] #panel-source .d-jj > .d-jj-strip { flex: none; }
 [data-rail-skin="d"] #panel-source .d-jj-scroll {
-  flex: 1 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; scrollbar-gutter: auto;
+  /* basis 0 and a floor of three rows (FO-86, 71-source): the list takes what the strip and the card leave, never less
+     than the floor, and the card's footer gives way below it (the same size as before wherever the floor is not met) */
+  flex: 1 1 0; min-height: var(--d-list-floor, 132px); overflow-x: hidden; overflow-y: auto; scrollbar-gutter: auto;
   padding: 0 var(--d-gx) 12px;
 }
 [data-rail-skin="d"] #panel-source .d-jj [hidden] { display: none !important; }
@@ -36682,7 +36714,7 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #panel-source .d-jj-strip.d-jj-scrolled::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--d-line); pointer-events: none;
 }
-[data-rail-skin="d"] #panel-source .d-jj-foot { flex: none; }
+[data-rail-skin="d"] #panel-source .d-jj-foot { flex: 0 1 auto; }
 
 /* rows */
 [data-rail-skin="d"] #panel-source .d-jj .sh-chg-h.d-jr {
@@ -38154,6 +38186,45 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 [data-rail-skin="d"] #activityBar:not(.collapsed) > .activity-bar-toggle::before { transform: rotate(180deg); }
 [data-rail-skin="d"] #activityBar > .activity-bar-toggle:hover { background: var(--d-hover) !important; color: var(--d-text) !important; }
 [data-rail-skin="d"] #activityBar > .activity-bar-toggle:focus-visible { outline: 2px solid var(--accent-primary); outline-offset: -2px; }
+/* FO-96: the icons and More are buttons in the tab order (shell.html). A key focus marks the tile they light, the
+   symbol box, from inside it, so the mark needs no room the bar may not have (F96-1: a ring outside the tile was cut
+   by the bar's edges, to nothing at 1280x500, and with the names shown a ring round the item crossed names wider or
+   lower than it). Two tones: a 3 px accent ring on the tile's edge and, inside it, a 2 px band of the surface the bar
+   is drawn on. The ring then has that ground on both sides, so it reads the same on a lit tile (the accent's own
+   family, where a plain ring read at 1.2:1 in Retro) as on an unlit one, and the band lifts a lit tile's fill off its
+   edge. 3 px, so the ring keeps two whole pixels of ink wherever a tile lands between pixels (Glass sizes and centres
+   its tiles to fractions; at 2 px its ring blended to 2.4:1 on Glass Light's ground). The glyph keeps about 2 px clear. NieR's target brackets take a key focus instead (19-nier-parts.js, as
+   on the toggle), so the mark stands down while that part is on. The :not(#pmfz) outranks Liquid Glass's own rule on
+   the symbol's shadow (html[data-lg="on"] … :not(#lgz) #activityBar .icon .symbol, two ids), which took the band. The
+   focused tile stands still, as a hovered one does (above): Glass presses a lit tile in by scale(.98), which smeared the
+   ring across three pixel rows at half its ink. */
+[data-rail-skin="d"] #activityBar .icon:focus-visible { outline: none; }
+[data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"]):not(#pmfz) #activityBar .icon:focus-visible .symbol {
+  outline: 3px solid var(--accent-primary) !important; outline-offset: -3px !important;
+  box-shadow: inset 0 0 0 5px var(--surface) !important;
+  box-shadow: inset 0 0 0 5px rgb(from var(--surface) r g b / 1) !important;   /* opaque: Glass's surface is see-through */
+  transform: none !important;
+}
+/* Glass with Liquid Glass on: the open panel's icon lies under the moving lens (glass.js), which magnifies and refracts
+   what is beneath it and lays its glint over its top band, so the mark is drawn on the lens itself while it carries
+   the focus (glass.js puts data-lg-focus on the lens and on its icon). The icon's own mark, seen through the glass,
+   stands down, and the glint steps aside so the mark's top edge keeps its ink. */
+[data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"])[data-lg="on"][data-theme^="glass"]:not(#pmfz) #lg-lenses .lg-lens[data-lg-for="rail-icons"][data-lg-focus] {
+  box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px var(--surface), var(--pm-switch-shadow, var(--lg-lens-drop)) !important;
+  box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px rgb(from var(--surface) r g b / 1), var(--pm-switch-shadow, var(--lg-lens-drop)) !important;
+}
+[data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"])[data-lg="on"][data-theme^="glass"]:not(#pmfz) #lg-lenses .lg-lens[data-lg-for="rail-icons"][data-lg-focus]::after { opacity: 0 !important; }
+[data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"]):not(#pmfz)[data-lg="on"][data-theme^="glass"] #activityBar .icon[data-lg-focus]:focus-visible .symbol { outline: none !important; box-shadow: none !important; }
+/* While the lens moves and does not carry the mark (it travels onto or off the key-focused icon, or fades in on it), its
+   refraction lies over the icon's own mark and washed it below 3:1 (sol-review-g8). For that motion glass.js shows a
+   cue on the icon's tile in the lenses' layer, above the lenses: this mark again, the same 3 px accent ring and opaque
+   ground band, unrefracted. It goes when the lens takes the mark or comes to rest. */
+.lg-rail-cue { display: none; }
+[data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"])[data-lg="on"][data-theme^="glass"]:not(#pmfz) .lg-rail-cue[data-lg-on] {
+  display: block; position: absolute; z-index: 5; pointer-events: none; box-sizing: border-box;
+  box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px var(--surface);
+  box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px rgb(from var(--surface) r g b / 1);
+}
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar > .activity-bar-toggle:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 
 /* drag to reorder or hide: the ghost is the icon's tile lifted off the bar; the drop line is the accent, square in Retro
@@ -38200,9 +38271,10 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
   transition: background-color var(--d-t1) var(--d-ease), color var(--d-t1) var(--d-ease), box-shadow var(--d-t1) var(--d-ease) !important;
 }
 /* empty, the button is the shell's muted affordance (opacity .45 on the whole item); the glyph stays muted, the name is
-   at full label ink so it reads (it still opens: the menu says how to hide an icon) */
+   at full label ink so it reads (it still opens: the menu says how to hide an icon). A key focus lifts it as a hover
+   does, so the focus ring on its tile is not muted with it (FO-96). */
 [data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"] { opacity: 1; }
-[data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"]:not(:hover, .is-menu-open, .pm-ab-drop-hot) .symbol { opacity: .45; }
+[data-rail-skin="d"] #activityBar > #abMoreBtn[data-empty="1"]:not(:hover, :focus-visible, .is-menu-open, .pm-ab-drop-hot) .symbol { opacity: .45; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn:hover .symbol { background: var(--d-hover) !important; transform: none !important; box-shadow: none !important; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open { color: var(--d-text) !important; opacity: 1; }
 [data-rail-skin="d"] #activityBar > #abMoreBtn.is-menu-open .symbol { background: var(--d-press) !important; }
@@ -71713,27 +71785,27 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
     <div class="main-area">
       <div class="left-panel">
         <nav class="activity-bar collapsed" id="activityBar" aria-label="Activity bar">
-          <div class="icon" title="Chat" data-ab-id="chat"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="icon-label">CHAT</span></div>
+          <div class="icon" role="button" tabindex="0" aria-label="Chat" title="Chat" data-ab-id="chat"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="icon-label">CHAT</span></div>
           <!-- home layer: the rail's Dashboard toggle is removed (the panels replaced the dashboard it showed) -->
-          <div class="icon active" title="File Manager" data-ab-id="files" data-target="panel-files"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></span><span class="icon-label">FILES</span></div>
+          <div class="icon active" role="button" tabindex="0" aria-label="Files" title="File Manager" data-ab-id="files" data-target="panel-files"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></span><span class="icon-label">FILES</span></div>
           <div class="pm6-ab-group" role="group" aria-label="Project" data-group="project">
-            <div class="icon" title="Search" data-ab-id="search" data-target="panel-search"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><span class="icon-label">SEARCH</span></div>
-            <div class="icon" data-ab-id="source" data-target="panel-source" data-pm-hover-label="Source Control" data-pm-hover-detail="See what changed, keep safe local history, publish online, review work, and open project backups."><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 15V9a3 3 0 0 0-3-3H9"/><line x1="6" y1="9" x2="6" y2="15"/></svg></span><span class="icon-label">SOURCE</span></div>
+            <div class="icon" role="button" tabindex="0" aria-label="Search" title="Search" data-ab-id="search" data-target="panel-search"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><span class="icon-label">SEARCH</span></div>
+            <div class="icon" role="button" tabindex="0" aria-label="Source" data-ab-id="source" data-target="panel-source" data-pm-hover-label="Source Control" data-pm-hover-detail="See what changed, keep safe local history, publish online, review work, and open project backups."><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 15V9a3 3 0 0 0-3-3H9"/><line x1="6" y1="9" x2="6" y2="15"/></svg></span><span class="icon-label">SOURCE</span></div>
           </div>
           <div class="pm6-ab-group" role="group" aria-label="Automation" data-group="automation">
-            <div class="icon" data-ab-id="repository_automation" data-legacy-ab-id="gh-actions github_actions git" data-canonical-occupant="repository_automation" data-target="panel-git" data-pm-hover-label="Actions &amp; Pipelines" data-pm-hover-detail="See checks, workflows, pipelines, logs, artifacts, and approvals from the connected service."><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></span><span class="icon-label">PIPELINES</span></div>
-            <div class="icon" title="Docker Manager" data-ab-id="docker" data-target="panel-docker"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="icon-label">DOCKER</span></div>
-            <div class="icon" title="Testing" data-ab-id="testing" data-target="panel-testing"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.8 2.8L16.4 9"/></svg></span><span class="icon-label">TESTS</span></div>
+            <div class="icon" role="button" tabindex="0" aria-label="Pipelines" data-ab-id="repository_automation" data-legacy-ab-id="gh-actions github_actions git" data-canonical-occupant="repository_automation" data-target="panel-git" data-pm-hover-label="Actions &amp; Pipelines" data-pm-hover-detail="See checks, workflows, pipelines, logs, artifacts, and approvals from the connected service."><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></span><span class="icon-label">PIPELINES</span></div>
+            <div class="icon" role="button" tabindex="0" aria-label="Docker" title="Docker Manager" data-ab-id="docker" data-target="panel-docker"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></span><span class="icon-label">DOCKER</span></div>
+            <div class="icon" role="button" tabindex="0" aria-label="Tests" title="Testing" data-ab-id="testing" data-target="panel-testing"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.2l2.8 2.8L16.4 9"/></svg></span><span class="icon-label">TESTS</span></div>
           </div>
-          <div class="icon" title="Debug" data-ab-id="run" data-target="panel-run"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span class="icon-label">DEBUG</span></div>
+          <div class="icon" role="button" tabindex="0" aria-label="Debug" title="Debug" data-ab-id="run" data-target="panel-run"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg></span><span class="icon-label">DEBUG</span></div>
           <div class="pm6-ab-group" role="group" aria-label="Communication" data-group="communication">
-            <div class="icon" title="Agents" data-ab-id="agents" data-target="panel-agents"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="2.5"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><path d="M9 12.5h.01M15 12.5h.01" stroke-width="2.4"/><path d="M9.5 16h5"/><path d="M3 12v4M21 12v4"/></svg></span><span class="icon-label">AGENTS</span></div>
+            <div class="icon" role="button" tabindex="0" aria-label="Agents" title="Agents" data-ab-id="agents" data-target="panel-agents"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="2.5"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><path d="M9 12.5h.01M15 12.5h.01" stroke-width="2.4"/><path d="M9.5 16h5"/><path d="M3 12v4M21 12v4"/></svg></span><span class="icon-label">AGENTS</span></div>
           </div>
           <div class="pm6-ab-group" role="group" aria-label="System" data-group="system">
-            <div class="icon" title="Runtime Artifacts" data-ab-id="artifacts" data-target="panel-artifacts"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></span><span class="icon-label">ARTIFACTS</span></div>
+            <div class="icon" role="button" tabindex="0" aria-label="Artifacts" title="Runtime Artifacts" data-ab-id="artifacts" data-target="panel-artifacts"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg></span><span class="icon-label">ARTIFACTS</span></div>
           </div>
-          <div class="icon" id="abMoreBtn" data-ab-id="more" data-empty="1" title="More"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></span><span class="icon-label">MORE</span></div>
-          <button class="activity-bar-toggle" id="activityBarToggle" title="Expand/Collapse">&gt;</button>
+          <div class="icon" role="button" tabindex="0" aria-label="More" id="abMoreBtn" data-ab-id="more" data-empty="1" title="More"><span class="symbol"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></span><span class="icon-label">MORE</span></div>
+          <button class="activity-bar-toggle" id="activityBarToggle" title="Expand/Collapse" aria-label="Expand or collapse the Activity bar">&gt;</button>
         </nav>
 
         <aside class="side-panel-slot" id="sidePanelSlot">
@@ -72034,17 +72106,17 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
           (+ elided parent dir); the .sh-accb body carries path, hunk stats, actions -->
           <div data-pane="changed" class="pm-hidden">
           <section class="sh-shelf open" data-acc style="--cat:var(--cat-warn)"><div class="sh-head" data-collapse><i data-ico="chevR" class="pm-ico sh-accchev"></i><span class="sh-hico"><i data-ico="diff" class="pm-ico sm"></i></span><span class="sh-hlabel">MODIFIED</span><span class="sh-hcount">3</span></div><div class="sh-accb"><div class="sh-body">
-          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge M keep"><i data-ico="diff" class="pm-ico"></i>M</span><span class="fm-cfile">recipes.rs</span><span class="fm-cdir">src/routes</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/routes/recipes.rs</div><div class="fm-chunks"><span class="add">+38</span><span class="del">-12</span><span class="meta">3 hunks</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> recipes.rs">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> recipes.rs">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> recipes.rs (confirm)">Discard</button></div></div></div></div>
-          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge M keep"><i data-ico="diff" class="pm-ico"></i>M</span><span class="fm-cfile">image.rs</span><span class="fm-cdir">src/services</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/services/image.rs</div><div class="fm-chunks"><span class="add">+21</span><span class="del">-6</span><span class="meta">2 hunks</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> image.rs">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> image.rs">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> image.rs (confirm)">Discard</button></div></div></div></div>
-          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge M keep"><i data-ico="diff" class="pm-ico"></i>M</span><span class="fm-cfile">ci.yml</span><span class="fm-cdir">.github/workflows</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">.github/workflows/ci.yml</div><div class="fm-chunks"><span class="add">+9</span><span class="del">-4</span><span class="meta">1 hunk</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> ci.yml">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> ci.yml">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> ci.yml (confirm)">Discard</button></div></div></div></div>
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse data-path="src/routes/recipes.rs"><span class="fm-gitbadge M keep"><i data-ico="diff" class="pm-ico"></i>M</span><span class="fm-cfile">recipes.rs</span><span class="fm-cdir">src/routes</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/routes/recipes.rs</div><div class="fm-chunks"><span class="add">+38</span><span class="del">-12</span><span class="meta">3 hunks</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> recipes.rs">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> recipes.rs">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> recipes.rs (confirm)">Discard</button></div></div></div></div>
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse data-path="src/services/image.rs"><span class="fm-gitbadge M keep"><i data-ico="diff" class="pm-ico"></i>M</span><span class="fm-cfile">image.rs</span><span class="fm-cdir">src/services</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/services/image.rs</div><div class="fm-chunks"><span class="add">+21</span><span class="del">-6</span><span class="meta">2 hunks</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> image.rs">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> image.rs">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> image.rs (confirm)">Discard</button></div></div></div></div>
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse data-path=".github/workflows/ci.yml"><span class="fm-gitbadge M keep"><i data-ico="diff" class="pm-ico"></i>M</span><span class="fm-cfile">ci.yml</span><span class="fm-cdir">.github/workflows</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">.github/workflows/ci.yml</div><div class="fm-chunks"><span class="add">+9</span><span class="del">-4</span><span class="meta">1 hunk</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> ci.yml">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> ci.yml">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> ci.yml (confirm)">Discard</button></div></div></div></div>
           </div></div></section>
           <section class="sh-shelf open" data-acc style="--cat:var(--graph-passed)"><div class="sh-head" data-collapse><i data-ico="chevR" class="pm-ico sh-accchev"></i><span class="sh-hico"><i data-ico="plus" class="pm-ico sm"></i></span><span class="sh-hlabel">ADDED</span><span class="sh-hcount">3</span></div><div class="sh-accb"><div class="sh-body">
-          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge A keep"><i data-ico="plus" class="pm-ico"></i>A</span><span class="fm-cfile">mixed_fractions.rs</span><span class="fm-cdir">src/services/import/normalize_units</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/services/import/normalize_units/mixed_fractions.rs</div><div class="fm-chunks"><span class="add">+214</span><span class="del">-0</span><span class="meta">new file</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> mixed_fractions.rs">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> mixed_fractions.rs">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> mixed_fractions.rs (confirm)">Discard</button></div></div></div></div>
-          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge A keep"><i data-ico="plus" class="pm-ico"></i>A</span><span class="fm-cfile">0002_ratings.sql</span><span class="fm-cdir">migrations</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">migrations/0002_ratings.sql</div><div class="fm-chunks"><span class="add">+36</span><span class="del">-0</span><span class="meta">new file</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> 0002_ratings.sql">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> 0002_ratings.sql">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> 0002_ratings.sql (confirm)">Discard</button></div></div></div></div>
-          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge A keep"><i data-ico="plus" class="pm-ico"></i>A</span><span class="fm-cfile">RecipeCard.svelte</span><span class="fm-cdir">web/src/lib</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">web/src/lib/RecipeCard.svelte</div><div class="fm-chunks"><span class="add">+148</span><span class="del">-0</span><span class="meta">new file</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> RecipeCard.svelte">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> RecipeCard.svelte">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> RecipeCard.svelte (confirm)">Discard</button></div></div></div></div>
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse data-path="src/services/import/normalize_units/mixed_fractions.rs"><span class="fm-gitbadge A keep"><i data-ico="plus" class="pm-ico"></i>A</span><span class="fm-cfile">mixed_fractions.rs</span><span class="fm-cdir">src/services/import/normalize_units</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/services/import/normalize_units/mixed_fractions.rs</div><div class="fm-chunks"><span class="add">+214</span><span class="del">-0</span><span class="meta">new file</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> mixed_fractions.rs">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> mixed_fractions.rs">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> mixed_fractions.rs (confirm)">Discard</button></div></div></div></div>
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse data-path="migrations/0002_ratings.sql"><span class="fm-gitbadge A keep"><i data-ico="plus" class="pm-ico"></i>A</span><span class="fm-cfile">0002_ratings.sql</span><span class="fm-cdir">migrations</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">migrations/0002_ratings.sql</div><div class="fm-chunks"><span class="add">+36</span><span class="del">-0</span><span class="meta">new file</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> 0002_ratings.sql">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> 0002_ratings.sql">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> 0002_ratings.sql (confirm)">Discard</button></div></div></div></div>
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse data-path="web/src/lib/RecipeCard.svelte"><span class="fm-gitbadge A keep"><i data-ico="plus" class="pm-ico"></i>A</span><span class="fm-cfile">RecipeCard.svelte</span><span class="fm-cdir">web/src/lib</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">web/src/lib/RecipeCard.svelte</div><div class="fm-chunks"><span class="add">+148</span><span class="del">-0</span><span class="meta">new file</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> RecipeCard.svelte">Stage</button><button class="pm-btn" data-demo-action="cmd.git.diff_open" data-demo-arg="cmd.git.diff_open -> RecipeCard.svelte">Open diff</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> RecipeCard.svelte (confirm)">Discard</button></div></div></div></div>
           </div></div></section>
           <section class="sh-shelf open" data-acc style="--cat:var(--cat-neutral)"><div class="sh-head" data-collapse><i data-ico="chevR" class="pm-ico sh-accchev"></i><span class="sh-hico"><i data-ico="warn" class="pm-ico sm"></i></span><span class="sh-hlabel">UNTRACKED</span><span class="sh-hcount">1</span></div><div class="sh-accb"><div class="sh-body">
-          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse><span class="fm-gitbadge Q keep">?</span><span class="fm-cfile">schema-org-recipe-structured-data-coverage-2026.md</span><span class="fm-cdir">docs</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">docs/schema-org-recipe-structured-data-coverage-2026.md</div><div class="fm-chunks"><span class="add">+64</span><span class="del">-0</span><span class="meta">untracked · not in index</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> schema-org-recipe docs">Stage</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> schema-org-recipe docs (confirm)">Discard</button></div></div></div></div>
+          <div class="fm-changeitem" data-acc><div class="fm-changerow" data-collapse data-path="docs/schema-org-recipe-structured-data-coverage-2026.md"><span class="fm-gitbadge Q keep">?</span><span class="fm-cfile">schema-org-recipe-structured-data-coverage-2026.md</span><span class="fm-cdir">docs</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">docs/schema-org-recipe-structured-data-coverage-2026.md</div><div class="fm-chunks"><span class="add">+64</span><span class="del">-0</span><span class="meta">untracked · not in index</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.git.stage_hunks" data-demo-arg="cmd.git.stage_hunks -> schema-org-recipe docs">Stage</button><button class="pm-btn danger" data-demo-action="cmd.git.discard_hunks" data-demo-arg="cmd.git.discard_hunks -> schema-org-recipe docs (confirm)">Discard</button></div></div></div></div>
           </div></div></section>
           <div class="pm-footnote">Git row badges are read-only and sourced from Source Control; stronger switch/manage/conflict worktree UI lives there. Default action for the same path across worktrees is side-by-side compare.</div>
           </div>
@@ -72054,16 +72126,16 @@ html:is([data-theme^="retro"], [data-o55-nier="on"]) .wpk-check { border-radius:
           RECENT rows stay single-action (open) and that shelf defaults collapsed. -->
           <div data-pane="open" class="pm-hidden">
           <section class="sh-shelf open" data-acc style="--cat:var(--cat-blue)"><div class="sh-head" data-collapse><i data-ico="chevR" class="pm-ico sh-accchev"></i><span class="sh-hico"><i data-ico="file" class="pm-ico sm"></i></span><span class="sh-hlabel">OPEN EDITORS</span><span class="sh-hcount">3</span></div><div class="sh-accb"><div class="sh-body">
-          <div class="fm-openitem" data-acc><div class="fm-openrow active-file" data-collapse><span class="fm-dirty" title="unsaved"></span><i data-ico="svelte" class="pm-ico fm-ficon svelte"></i><span class="fm-cfile">+page.svelte</span><span class="fm-cdir">web/src/routes/recipe/[id]</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">web/src/routes/recipe/[id]/+page.svelte</div><div class="fm-chunks"><span class="meta">unsaved changes · you are here</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.file.save_local_copy" data-demo-arg="cmd.file.save_local_copy -> +page.svelte">Save local copy</button><button class="pm-btn" data-demo-action="cmd.editor.close_tab" data-demo-arg="cmd.editor.close_tab -> +page.svelte (unsaved prompt)">Close</button><button class="pm-btn" data-demo-action="cmd.file.reveal" data-demo-arg="cmd.file.reveal -> recipe/[id]/+page.svelte in the tree">Reveal</button></div></div></div></div>
-          <div class="fm-openitem" data-acc><div class="fm-openrow" data-collapse><i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-cfile">recipes.rs</span><span class="fm-cdir">src/routes</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/routes/recipes.rs</div><div class="fm-chunks"><span class="meta">saved</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.file.save_local_copy" data-demo-arg="cmd.file.save_local_copy -> recipes.rs">Save local copy</button><button class="pm-btn" data-demo-action="cmd.editor.close_tab" data-demo-arg="cmd.editor.close_tab -> recipes.rs">Close</button><button class="pm-btn" data-demo-action="cmd.file.reveal" data-demo-arg="cmd.file.reveal -> recipes.rs in the tree">Reveal</button></div></div></div></div>
-          <div class="fm-openitem" data-acc><div class="fm-openrow" data-collapse><span class="fm-dirty" title="unsaved"></span><i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-cfile">mixed_fractions.rs</span><span class="fm-cdir">src/services/import/normalize_units</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/services/import/normalize_units/mixed_fractions.rs</div><div class="fm-chunks"><span class="meta">unsaved changes</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.file.save_local_copy" data-demo-arg="cmd.file.save_local_copy -> mixed_fractions.rs">Save local copy</button><button class="pm-btn" data-demo-action="cmd.editor.close_tab" data-demo-arg="cmd.editor.close_tab -> mixed_fractions.rs (unsaved prompt)">Close</button><button class="pm-btn" data-demo-action="cmd.file.reveal" data-demo-arg="cmd.file.reveal -> mixed_fractions.rs in the tree">Reveal</button></div></div></div></div>
+          <div class="fm-openitem" data-acc><div class="fm-openrow active-file" data-collapse data-path="web/src/routes/recipe/[id]/+page.svelte"><span class="fm-dirty" title="unsaved"></span><i data-ico="svelte" class="pm-ico fm-ficon svelte"></i><span class="fm-cfile">+page.svelte</span><span class="fm-cdir">web/src/routes/recipe/[id]</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">web/src/routes/recipe/[id]/+page.svelte</div><div class="fm-chunks"><span class="meta">unsaved changes · you are here</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.file.save_local_copy" data-demo-arg="cmd.file.save_local_copy -> +page.svelte">Save local copy</button><button class="pm-btn" data-demo-action="cmd.editor.close_tab" data-demo-arg="cmd.editor.close_tab -> +page.svelte (unsaved prompt)">Close</button><button class="pm-btn" data-demo-action="cmd.file.reveal" data-demo-arg="cmd.file.reveal -> recipe/[id]/+page.svelte in the tree">Reveal</button></div></div></div></div>
+          <div class="fm-openitem" data-acc><div class="fm-openrow" data-collapse data-path="src/routes/recipes.rs"><i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-cfile">recipes.rs</span><span class="fm-cdir">src/routes</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/routes/recipes.rs</div><div class="fm-chunks"><span class="meta">saved</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.file.save_local_copy" data-demo-arg="cmd.file.save_local_copy -> recipes.rs">Save local copy</button><button class="pm-btn" data-demo-action="cmd.editor.close_tab" data-demo-arg="cmd.editor.close_tab -> recipes.rs">Close</button><button class="pm-btn" data-demo-action="cmd.file.reveal" data-demo-arg="cmd.file.reveal -> recipes.rs in the tree">Reveal</button></div></div></div></div>
+          <div class="fm-openitem" data-acc><div class="fm-openrow" data-collapse data-path="src/services/import/normalize_units/mixed_fractions.rs"><span class="fm-dirty" title="unsaved"></span><i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-cfile">mixed_fractions.rs</span><span class="fm-cdir">src/services/import/normalize_units</span><i data-ico="chevR" class="pm-ico fm-cchev"></i></div><div class="sh-accb"><div class="fm-cbody"><div class="fm-cpath">src/services/import/normalize_units/mixed_fractions.rs</div><div class="fm-chunks"><span class="meta">unsaved changes</span></div><div class="fm-cacts"><button class="pm-btn" data-demo-action="cmd.file.save_local_copy" data-demo-arg="cmd.file.save_local_copy -> mixed_fractions.rs">Save local copy</button><button class="pm-btn" data-demo-action="cmd.editor.close_tab" data-demo-arg="cmd.editor.close_tab -> mixed_fractions.rs (unsaved prompt)">Close</button><button class="pm-btn" data-demo-action="cmd.file.reveal" data-demo-arg="cmd.file.reveal -> mixed_fractions.rs in the tree">Reveal</button></div></div></div></div>
           </div></div></section>
           <section class="sh-shelf" data-acc style="--cat:var(--cat-neutral)"><div class="sh-head" data-collapse><i data-ico="chevR" class="pm-ico sh-accchev"></i><span class="sh-hico"><i data-ico="clock" class="pm-ico sm"></i></span><span class="sh-hlabel">RECENT</span><span class="sh-hcount">5</span></div><div class="sh-accb"><div class="sh-body">
-          <div class="fm-openrow" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> image.rs"><i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-path">src/services/image.rs</span><span class="sh-k">12m</span></div>
-          <div class="fm-openrow" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> Editor.svelte"><i data-ico="svelte" class="pm-ico fm-ficon svelte"></i><span class="fm-path">web/src/lib/Editor.svelte</span><span class="sh-k">38m</span></div>
-          <div class="fm-openrow" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> 0001_init.sql"><i data-ico="db" class="pm-ico fm-ficon sql"></i><span class="fm-path">migrations/0001_init.sql</span><span class="sh-k">1h</span></div>
-          <div class="fm-openrow" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> Cargo.toml"><i data-ico="toml" class="pm-ico fm-ficon toml"></i><span class="fm-path">Cargo.toml</span><span class="sh-k">2h</span></div>
-          <div class="fm-openrow" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> README.md"><i data-ico="md" class="pm-ico fm-ficon md"></i><span class="fm-path">README.md</span><span class="sh-k">3h</span></div>
+          <div class="fm-openrow" data-path="src/services/image.rs" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> image.rs"><i data-ico="rust" class="pm-ico fm-ficon rs"></i><span class="fm-path">src/services/image.rs</span><span class="sh-k">12m</span></div>
+          <div class="fm-openrow" data-path="web/src/lib/Editor.svelte" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> Editor.svelte"><i data-ico="svelte" class="pm-ico fm-ficon svelte"></i><span class="fm-path">web/src/lib/Editor.svelte</span><span class="sh-k">38m</span></div>
+          <div class="fm-openrow" data-path="migrations/0001_init.sql" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> 0001_init.sql"><i data-ico="db" class="pm-ico fm-ficon sql"></i><span class="fm-path">migrations/0001_init.sql</span><span class="sh-k">1h</span></div>
+          <div class="fm-openrow" data-path="Cargo.toml" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> Cargo.toml"><i data-ico="toml" class="pm-ico fm-ficon toml"></i><span class="fm-path">Cargo.toml</span><span class="sh-k">2h</span></div>
+          <div class="fm-openrow" data-path="README.md" data-demo-action="cmd.file.open" data-demo-arg="cmd.file.open -> README.md"><i data-ico="md" class="pm-ico fm-ficon md"></i><span class="fm-path">README.md</span><span class="sh-k">3h</span></div>
           </div></div></section>
           <div class="pm-footnote">Open list is filtered by the active execution role and approval scope; reveal reuses an existing tree node instead of opening a duplicate buffer.</div>
           </div>
@@ -156277,6 +156349,66 @@ policies for tenant isolation, and add migration script.</textarea>
       } catch (err) {}
     }, true);
 
+    /* FO-96: every icon and More is a button in the tab order (role="button" tabindex="0" and its name in shell.html),
+       as each of the product's other bars puts each of its buttons in the tab order; none of them roves with arrow
+       keys. Enter and Space click the focused one, as they click a native button. A key its own control already took
+       is left alone: More's PMR menu answers Enter, Space and ArrowDown itself (PMR.menu.keys, 41-more.js). Without
+       that menu, ArrowDown opens the shell's own More tray when it is shut. */
+    bar.addEventListener('keydown', function (e) {
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.repeat) return;
+      var icon = e.target;
+      if (!icon || !icon.matches || !icon.matches('#activityBar .icon[data-ab-id]')) return;
+      var down = e.key === 'ArrowDown' && icon.id === 'abMoreBtn';
+      if (e.key !== 'Enter' && e.key !== ' ' && !down) return;
+      e.preventDefault();
+      if (down && document.querySelector('.pm-ab-tray:not(.pm-ab-ctx)')) return;
+      icon.click();
+    });
+
+    /* FO-98: each icon says whether what it opens is open, as the chat's own Activity strip does (aria-expanded and
+       aria-controls on each .activity-item). A panel icon (data-target) is expanded while its view is the side panel's
+       active view and that view is on screen; Chat, while the chat is on screen: Home's PMW.chatCol.isOpen() (shown,
+       and docked, popped out or opened over the centre; folded to its strip it is not, and the strip's own button
+       says "Open the chat", as the folded rail's overlay is not open while its icon stays lit; round 2, F98-1), else
+       its .active (the legacy toggle keeps it in step with the column). Several owners open and
+       close panels (the legacy rail toggle in script-038, Cozy Shelves' cozeSwitchPanel, Home's folded-rail overlay in
+       44-narrow.js, and the media rule that hides the slot below 1180 px), so the state is read from what reaches the
+       screen: the view's .active and whether it is displayed, once per frame after any of them changes it (the read
+       falls in the frame's own style pass), and only a change is written. More is a menu button: its menu keeps its
+       aria-expanded. */
+    var openQueued = 0;
+    function shown(el) { return typeof el.checkVisibility === 'function' ? el.checkVisibility() : el.getClientRects().length > 0; }
+    function syncOpenState() {
+      openQueued = 0;
+      $all('.icon[data-ab-id]', bar).forEach(function (icon) {
+        if (icon.id === 'abMoreBtn') return;
+        var target = icon.getAttribute('data-target'), view = target ? byId(target) : null;
+        var chat = !view && icon.getAttribute('data-ab-id') === 'chat';
+        if (!view && !chat) return;
+        var col = chat && window.PMW && window.PMW.chatCol && typeof window.PMW.chatCol.isOpen === 'function' ? window.PMW.chatCol : null;
+        var open = view ? view.classList.contains('active') && shown(view) : col ? !!col.isOpen() : icon.classList.contains('active');
+        var controls = view ? target : 'chatPanel', v = open ? 'true' : 'false';
+        if (icon.getAttribute('aria-controls') !== controls) icon.setAttribute('aria-controls', controls);
+        if (icon.getAttribute('aria-expanded') !== v) icon.setAttribute('aria-expanded', v);
+      });
+    }
+    function queueOpenState() { if (!openQueued) openQueued = requestAnimationFrame(syncOpenState); }
+    if (typeof MutationObserver === 'function') {
+      var openMo = new MutationObserver(queueOpenState);
+      openMo.observe(bar, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+      var slot = byId('sidePanelSlot');
+      if (slot) {
+        openMo.observe(slot, { attributes: true, attributeFilter: ['class', 'style', 'data-pm-rail-fold'] });
+        $all('.side-panel-view', slot).forEach(function (v) { openMo.observe(v, { attributes: true, attributeFilter: ['class'] }); });
+      }
+      var area = bar.closest ? bar.closest('.main-area') : null;
+      if (area) openMo.observe(area, { attributes: true, attributeFilter: ['data-pmw-rail', 'data-pmw-rail-peek', 'data-pmw-chat', 'data-pmw-chat-peek', 'data-pmw-chat-float'] });
+      var chatCol = byId('chatPanel');
+      if (chatCol) openMo.observe(chatCol, { attributes: true, attributeFilter: ['class'] });
+    }
+    window.addEventListener('resize', queueOpenState);
+    queueOpenState();
+
     document.addEventListener('keydown', function (e) {
       if (!e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) return;
       var n = parseInt(e.key, 10);
@@ -156324,7 +156456,7 @@ policies for tenant isolation, and add migration script.</textarea>
       lsSet(LS_KEY, JSON.stringify(order));
     }
     function killTray() {
-      var t = document.querySelector('.pm-ab-tray');
+      var t = document.querySelector('.pm-ab-tray:not(.pm-ab-ctx)');
       if (t && t.parentNode) t.parentNode.removeChild(t);
     }
 
@@ -156399,6 +156531,7 @@ policies for tenant isolation, and add migration script.</textarea>
       var g = drag.node.cloneNode(true);               /* ghost is a throwaway clone; the real node moves at drop */
       g.classList.add('pm-ab-ghost');
       g.classList.remove('active');
+      g.removeAttribute('tabindex'); g.removeAttribute('role'); g.setAttribute('aria-hidden', 'true');   /* a picture, not a control */
       var w = drag.fromTray ? moreBtn.getBoundingClientRect().width : drag.node.getBoundingClientRect().width;
       g.style.width = Math.max(32, Math.round(w)) + 'px';
       document.body.appendChild(g);
@@ -156484,6 +156617,151 @@ policies for tenant isolation, and add migration script.</textarea>
       armGesture(e, icon, icon.getAttribute('data-ab-id'), false, icon);
     });
 
+    /* ---- FO-98: reorder and hide by keys ----
+       The drag above is the pointer's way; every icon also has its own menu with Move up, Move down and Hide in More:
+       a right click, Shift+F10 or the Menu key opens it (as the Home tab strip's tab menu opens), and Alt+ArrowUp /
+       Alt+ArrowDown move the focused icon at once. The bar keeps its pattern (each icon a button in the tab order, no
+       roving; Ctrl+1..9 follow the order as they always did). A move keeps the focus on the icon; a hide gives it to
+       the next icon (the one before it when it was last; More when none is left). Each one is announced. A hidden
+       icon comes back from More's menu, at the end of the bar, and moves from there. The shell owns the moves and the
+       hide; a rail skin may draw the menu itself (PM_ACTIVITY_BAR.drawMenu, concept D's 41-more.js), else the shell
+       draws a small one in its tray's look. */
+    function iconName(node) { return node.getAttribute('aria-label') || node.getAttribute('data-pm-hover-label') || node.getAttribute('data-ab-id'); }
+    function say(text) { try { if (window.PM_HOME && typeof window.PM_HOME.announce === 'function') window.PM_HOME.announce(text); } catch (e) {} }
+    function moveIcon(node, delta, focus) {
+      var vis = visibleIcons(), i = vis.indexOf(node), j = i + delta;
+      if (i < 0 || j < 0 || j >= vis.length) return false;
+      var hadFocus = document.activeElement === node;
+      bar.insertBefore(node, delta < 0 ? vis[j] : (vis[j + 1] || moreBtn));   /* moved, not cloned */
+      persist();
+      if ((focus || hadFocus) && document.activeElement !== node) node.focus();   /* a moved node loses the focus */
+      say(iconName(node) + ' moved ' + (delta < 0 ? 'up' : 'down') + ', ' + (j + 1) + ' of ' + vis.length);
+      return true;
+    }
+    function hideIcon(node, focus) {
+      var vis = visibleIcons(), i = vis.indexOf(node);
+      if (i < 0) return false;
+      var hadFocus = node.contains(document.activeElement);
+      var next = vis[i + 1] || vis[i - 1] || moreBtn;
+      node.parentNode.removeChild(node);
+      hidden.push({ id: node.getAttribute('data-ab-id'), node: node });
+      syncMore();
+      persist();
+      if (focus || hadFocus) next.focus();
+      say(iconName(node) + ' hidden in More');
+      return true;
+    }
+    function iconActions(node) {
+      var vis = visibleIcons(), i = vis.indexOf(node);
+      return [
+        { id: 'up', label: 'Move up', key: 'Alt+↑', disabled: i <= 0 ? 'It is first on the bar' : null },
+        { id: 'down', label: 'Move down', key: 'Alt+↓', disabled: i >= vis.length - 1 ? 'It is last on the bar' : null },
+        { id: 'hide', label: 'Hide in More', key: null, disabled: null }
+      ];
+    }
+    /* focus: the action came from the keys (Alt+arrows, a menu row picked by a key, or a menu the keys opened), so
+       the focus lands on the bar */
+    function runAction(node, id, focus) {
+      if (!node.isConnected || node.parentNode !== bar) return false;
+      if (id === 'up' || id === 'down') return moveIcon(node, id === 'up' ? -1 : 1, focus);
+      if (id === 'hide') return hideIcon(node, focus);
+      return false;
+    }
+    /* the shell's own menu (no skin drew one): the tray's look, rows as menu items, arrows and Home/End between them,
+       Escape back to the icon, Tab on from the icon, a press outside closes it */
+    function closeCtx(returnTo) {
+      document.querySelectorAll('.pm-ab-ctx').forEach(function (m) { if (m.parentNode) m.parentNode.removeChild(m); });
+      document.removeEventListener('pointerdown', ctxOutside, true);
+      if (returnTo && returnTo.isConnected) returnTo.focus();
+    }
+    function ctxOutside(e) { var m = document.querySelector('.pm-ab-ctx'); if (m && !m.contains(e.target)) closeCtx(null); }
+    function shellMenu(node, d) {
+      closeCtx(null);
+      killTray();
+      var m = document.createElement('div');
+      m.className = 'pm-ab-tray pm-ab-ctx';
+      m.setAttribute('role', 'menu');
+      m.setAttribute('aria-label', d.name + ' on the Activity bar');
+      d.items.forEach(function (it) {
+        var row = document.createElement('button');
+        row.type = 'button';
+        row.className = 'pm-ab-tray-row';
+        row.setAttribute('role', 'menuitem');
+        row.tabIndex = -1;
+        row.textContent = it.label;
+        if (it.key) row.setAttribute('aria-keyshortcuts', it.key === 'Alt+↑' ? 'Alt+ArrowUp' : 'Alt+ArrowDown');
+        if (it.disabled) { row.setAttribute('aria-disabled', 'true'); row.title = it.disabled; }
+        row.addEventListener('click', function (ev) {
+          ev.stopPropagation();
+          if (it.disabled) return;
+          closeCtx(null);
+          d.run(it.id);
+        });
+        m.appendChild(row);
+      });
+      m.addEventListener('keydown', function (ev) {
+        var rows = $all('.pm-ab-tray-row', m), i = rows.indexOf(document.activeElement);
+        var go = ev.key === 'ArrowDown' ? i + 1 : ev.key === 'ArrowUp' ? i - 1 : ev.key === 'Home' ? 0 : ev.key === 'End' ? rows.length - 1 : null;
+        if (go != null) { ev.preventDefault(); rows[(go + rows.length) % rows.length].focus(); return; }
+        if (ev.key === 'Escape') { ev.preventDefault(); ev.stopPropagation(); closeCtx(node); return; }
+        if (ev.key === 'Tab') closeCtx(node);   /* back on the icon first, so Tab goes on from there */
+      });
+      /* the Menu key's own contextmenu comes on its keyup in Windows Chrome, to the row that now holds the focus */
+      m.addEventListener('contextmenu', function (ev) { ev.preventDefault(); });
+      document.body.appendChild(m);
+      var r = node.getBoundingClientRect();
+      var x = d.keyboard || d.x == null ? r.right + 8 : d.x, y = d.keyboard || d.y == null ? r.top : d.y;
+      m.style.left = Math.min(x, window.innerWidth - m.offsetWidth - 8) + 'px';
+      m.style.top = Math.min(y, Math.max(8, window.innerHeight - m.offsetHeight - 8)) + 'px';
+      var first = $all('.pm-ab-tray-row', m).filter(function (b) { return b.getAttribute('aria-disabled') !== 'true'; })[0];
+      if (first) first.focus();
+      setTimeout(function () { document.addEventListener('pointerdown', ctxOutside, true); }, 0);
+    }
+    /* FO-98 round 4. Which input a menu's action came from is read when the action runs, not taken from the input that
+       opened the menu: a right click's menu finished by End and Enter is a keyboard action, so a hide gives the focus
+       to the next icon and a move keeps it on the icon, never on the menu's anchor (B). A menu the keys opened still
+       lands the focus on the bar when a click finishes it, as before.
+       The key that opens an icon's menu may send a contextmenu of its own as well; that one is swallowed (the menu also
+       cancels one that reaches it), and no other. A real right click starts with a press, which ends the watch at once,
+       as the focus coming back to the bar does (the menu dismissed, or its action done); it ends after a second
+       anyway (C). */
+    var keyMenuAt = -1e9, lastInputKey = false;
+    document.addEventListener('keydown', function () { lastInputKey = true; }, true);
+    window.addEventListener('pointerdown', function () { lastInputKey = false; keyMenuAt = -1e9; }, true);
+    bar.addEventListener('focusin', function () { keyMenuAt = -1e9; });
+    function openIconMenu(node, x, y, keyboard) {
+      var d = { id: node.getAttribute('data-ab-id'), name: iconName(node), x: x, y: y, keyboard: !!keyboard, items: iconActions(node),
+        run: function (a) { return runAction(node, a, !!keyboard || lastInputKey); } };
+      var draw = window.PM_ACTIVITY_BAR && window.PM_ACTIVITY_BAR.drawMenu;
+      if (typeof draw === 'function') { try { if (draw(node, d)) return; } catch (err) {} }
+      shellMenu(node, d);
+    }
+    bar.addEventListener('keydown', function (e) {
+      if (e.defaultPrevented || e.repeat) return;
+      var icon = e.target;
+      if (!icon || !icon.matches || !icon.matches('#activityBar > .icon[data-ab-id]') || icon === moreBtn) return;
+      if ((e.key === 'F10' && e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) || e.key === 'ContextMenu') {
+        e.preventDefault();
+        openIconMenu(icon, null, null, true);
+        keyMenuAt = performance.now();   /* after the open: the focus has left the bar for the menu */
+        return;
+      }
+      if (e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
+        e.preventDefault();
+        runAction(icon, e.key === 'ArrowUp' ? 'up' : 'down', true);
+      }
+    });
+    bar.addEventListener('contextmenu', function (e) {
+      var icon = e.target && e.target.closest ? e.target.closest('#activityBar > .icon[data-ab-id]') : null;
+      if (!icon || icon === moreBtn) return;
+      e.preventDefault();
+      if (performance.now() - keyMenuAt < 1000) { keyMenuAt = -1e9; return; }   /* the companion of the key that opened its menu */
+      openIconMenu(icon, e.clientX, e.clientY, false);
+    });
+    window.PM_ACTIVITY_BAR = Object.assign(window.PM_ACTIVITY_BAR || {}, {
+      actions: iconActions, run: runAction, openMenu: openIconMenu, drawMenu: (window.PM_ACTIVITY_BAR && window.PM_ACTIVITY_BAR.drawMenu) || null
+    });
+
     /* ---- More tray popover (cloned from the terminal overflow-menu
        pattern: body-appended, outside-click close) ---- */
     function restoreHidden(id, beforeNode) {
@@ -156508,7 +156786,10 @@ policies for tenant isolation, and add migration script.</textarea>
       if (svg) ico.appendChild(svg.cloneNode(true));   /* display clone only; the real node stays in the map */
       row.appendChild(ico);
       var label = document.createElement('span');
-      label.textContent = h.node.getAttribute('title') || h.id;
+      /* the hover tags move an icon's title to data-pm-hover-native-title (pm-hover-tags-js), so the row reads its
+         name there, then its hover label or its own name, never a raw id while it has one (FO-96) */
+      label.textContent = h.node.getAttribute('title') || h.node.getAttribute('data-pm-hover-native-title') ||
+        h.node.getAttribute('data-pm-hover-label') || h.node.getAttribute('aria-label') || h.id;
       row.appendChild(label);
       row.addEventListener('click', function (ev) {    /* click = restore to end of visible */
         ev.stopPropagation();
@@ -156521,7 +156802,7 @@ policies for tenant isolation, and add migration script.</textarea>
       return row;
     }
     function refreshTray() {
-      var tray = document.querySelector('.pm-ab-tray');
+      var tray = document.querySelector('.pm-ab-tray:not(.pm-ab-ctx)');
       if (!tray) return;
       if (!hidden.length) { killTray(); return; }
       while (tray.firstChild) tray.removeChild(tray.firstChild);
@@ -156532,7 +156813,7 @@ policies for tenant isolation, and add migration script.</textarea>
       if (!btn) return;
       e.stopPropagation();       /* keep the legacy .icon body handler from claiming More */
       e.preventDefault();
-      var existing = document.querySelector('.pm-ab-tray');
+      var existing = document.querySelector('.pm-ab-tray:not(.pm-ab-ctx)');
       if (existing) { killTray(); return; }
       if (!hidden.length) return;
       var m = document.createElement('div');
@@ -158568,17 +158849,14 @@ policies for tenant isolation, and add migration script.</textarea>
     if (!tree || !ctx) return;
     var ctxTarget = null;
     function rowOf(el) { return el && el.closest ? el.closest('.fm-row, .fm-changerow, .fm-openrow') : null; }
-    /* the row File actions acts on: a tree row's own data-path, else the full path its own Changed or Open item shows in
-       its body (.fm-cpath; the row's folder text can be cut in the middle to fit the rail). A Recent row has neither: it
-       names its file in its demo arg ('cmd.file.open -> image.rs'), which the Home shim looks up in the file index. */
+    /* the row File actions acts on: every file row carries its own full path in data-path (the tree's rows, and the
+       Changed, Open editors and Recent rows: FO-103), so no row is named by its visible text, which the rail skin cuts in
+       the middle to fit, nor by a bare file name, which two files can share. A row without one is named only by the file
+       in its demo arg ('cmd.file.open -> image.rs (note)', the note dropped), which the Home shim looks up in the index. */
     function rowInfo(r) {
-      var p = r.getAttribute('data-path') || '', name = '';
-      if (!p) {
-        var item = r.closest('.fm-changeitem, .fm-openitem'), cp = item && item.querySelector('.fm-cpath');
-        p = cp ? cp.textContent.trim() : '';
-      }
-      if (!p) { var m = /->\s*(.+?)\s*$/.exec(r.getAttribute('data-demo-arg') || ''); name = m ? m[1] : ''; }
-      return { el: r, path: p, name: name, folder: r.getAttribute('data-kind') === 'folder' };
+      var p = r.getAttribute('data-path') || '';
+      var m = p ? null : /->\s*(.+?)(?:\s+\(.*\))?\s*$/.exec(r.getAttribute('data-demo-arg') || '');
+      return { el: r, path: p, name: m ? m[1] : '', folder: r.getAttribute('data-kind') === 'folder' };
     }
     /* File actions for a row, by the pointer (focus stays on the row) or by a key (focus moves to the first enabled item);
        either way it gives the focus back to the row when it closes holding it (FO-93). This is the one place the row is
@@ -193149,7 +193427,12 @@ PMR.state = (() => {
 
    PMR.menu.open(menu, anchor, opts) / toggle / close / closeAll / isOpen / trigger(menu, opts)
    menu = Menu from DATA.md ({ id, label, value?, search?, multi?, groups: [{ label?, items: [MenuItem] }] }) or an item array.
-   opts = { menus (id -> Menu, for submenus), onPick(item), align: 'start'|'end', width, side, keyboard }
+   opts = { menus (id -> Menu, for submenus), onPick(item), align: 'start'|'end', width, side, keyboard, context, returnTo }
+   returnTo: where the focus goes back when the menu closes by a key, in place of its anchor (FO-98 round 4: a context
+   menu at a point is anchored to a 1px box that takes no focus, so its icon gives the focus a place to come back to).
+   context: a context menu hung on a control whose own state is not a menu's (FO-98: an Activity bar icon, whose
+   aria-expanded says whether its panel is open): the anchor gets no aria-expanded and no is-menu-open, and a press on
+   it closes the menu like any press outside.
    multi: the items with a value are checkboxes (item.checked). A pick flips that item, calls onPick, which may change
    any item's checked (an "All" item that clears the others), redraws every check and leaves the menu open, so several
    can be chosen in one visit; an item with closes: true closes it after its pick. Escape or a click outside closes. */
@@ -193281,15 +193564,20 @@ function openMenu(def, anchor, opts) {
   place(entry);
   MENU_STACK.push(entry);
   if (opts.parent) opts.parent.children.push(entry);
-  anchor.setAttribute('aria-expanded', 'true');
-  anchor.classList.add('is-menu-open');
+  if (!opts.context) {
+    anchor.setAttribute('aria-expanded', 'true');
+    anchor.classList.add('is-menu-open');
+  }
   wireMenu(entry);
   window.PM6_SPROUT.open(entry.el, null, anchor);
   const keyboard = opts.keyboard != null ? opts.keyboard : lastInputWasKey;
   if (entry.search && !keyboard) entry.search.focus({ preventScroll: true });
   else if (keyboard) {
     const list = items(entry), sel = list.findIndex(b => b.classList.contains('active'));
-    focusItem(entry, sel >= 0 ? sel : 0);
+    /* FO-96: a menu with no rows (More with nothing hidden says how to hide an icon) takes the focus itself, so its
+       words are read and Escape closes it and gives the focus back */
+    if (list.length) focusItem(entry, sel >= 0 ? sel : 0);
+    else entry.el.focus({ preventScroll: true });
   } else entry.el.focus({ preventScroll: true });
   return entry.el;
 }
@@ -193301,12 +193589,15 @@ function closeEntry(entry, opts) {
   entry.children.slice().forEach(c => closeEntry(c, { silent: true }));
   MENU_STACK.splice(i, 1);
   if (entry.opts.parent) entry.opts.parent.children = entry.opts.parent.children.filter(c => c !== entry);
-  entry.anchor.setAttribute('aria-expanded', 'false');
-  entry.anchor.classList.remove('is-menu-open');
+  if (!entry.opts.context) {
+    entry.anchor.setAttribute('aria-expanded', 'false');
+    entry.anchor.classList.remove('is-menu-open');
+  }
   const el = entry.el;
   const done = () => { if (el.parentNode) el.parentNode.removeChild(el); };
   window.PM6_SPROUT.close(el, done, { instant: PMR.motion.reduced() });
-  if (opts.returnFocus && entry.anchor && entry.anchor.isConnected) entry.anchor.focus({ preventScroll: true });
+  const back = entry.opts.returnTo || entry.anchor;
+  if (opts.returnFocus && back && back.isConnected) back.focus({ preventScroll: true });
 }
 function closeAll(opts) { MENU_STACK.filter(e => !e.opts.parent).forEach(e => closeEntry(e, opts)); }
 
@@ -193383,7 +193674,7 @@ function openSub(entry, b, it, keyboard) {
 document.addEventListener('pointerdown', ev => {
   if (!MENU_STACK.length) return;
   if (MENU_STACK.some(e => e.el.contains(ev.target))) return;
-  if (MENU_STACK.some(e => e.anchor.contains(ev.target))) return;   // the trigger toggles itself
+  if (MENU_STACK.some(e => !e.opts.context && e.anchor.contains(ev.target))) return;   // the trigger toggles itself
   closeAll();
 }, true);
 window.addEventListener('resize', () => { if (MENU_STACK.length) closeAll(); });
@@ -196422,7 +196713,9 @@ function mountBar(barEl) {
    (kept out of sight under D, 81-more.src.css), the menu is drawn from that tray's rows, a pick clicks the shell's own
    row (restore at the end of the bar), and pressing a row and dragging hands the gesture to the shell's row, so a row
    dragged back onto the bar is restored where it is dropped. With nothing hidden, the menu says how to hide an icon.
-   Called from mountBar (40-bar.js); destroy() removes every listener and the hidden tray. */
+   Each icon's own menu (FO-98: Move up, Move down, Hide in More; right click, Shift+F10 or the Menu key) is drawn here
+   too: the shell owns those actions and asks a skin to draw the menu through PM_ACTIVITY_BAR.drawMenu (pm6-js-panels.js).
+   Called from mountBar (40-bar.js); destroy() removes every listener and the hidden tray, and gives the hook back. */
 
 const LF_MORE_ICON = { chat: 'chat', dashboard: 'layers', files: 'files', search: 'search', source: 'source', repository_automation: 'actions', docker: 'docker', testing: 'tests', run: 'play', agents: 'agents', artifacts: 'artifacts' };
 /* the shell labels a tray row by the icon's title and falls back to its raw id; these icons have no title */
@@ -196475,7 +196768,7 @@ function lfMountMore() {
     const t = tray(), list = t ? rowsOf(t) : [];
     const items = list.map(r => ({ label: r.label, icon: LF_MORE_ICON[r.id] || 'layers', _id: r.id }));
     const el = PMR.menu.open({
-      id: 'd-ab-more', label: 'Hidden from the bar', emptyText: 'Nothing is hidden. Drag an icon onto More to hide it.',
+      id: 'd-ab-more', label: 'Hidden from the bar', emptyText: 'Nothing is hidden. To hide an icon, drag it onto More, or choose Hide in More in its menu (right-click it, or Shift+F10).',
       groups: [{ label: items.length ? 'Hidden from the bar' : null, items }],
     }, btn, {
       side: true, width: 236,
@@ -196514,8 +196807,32 @@ function lfMountMore() {
 
   PMR.menu.keys(btn, on);
 
+  /* FO-98: an icon's own menu as the chat-style PMR.menu: at the pointer for a right click; beside the icon for a key,
+     the focus on its first row and back on the icon after Escape or a move (the shell gives it to the next icon after a
+     hide). A context menu (PMR.menu context): the icon's aria-expanded keeps saying whether its panel is open. Round 4:
+     a right click's menu closed by a key gives the focus back to the icon too (returnTo), not to the point it hangs on;
+     the shell reads a pick's own input, so End and Enter on Hide in More give it to the next icon. */
+  const ACT_ICON = { up: 'arrowUp', down: 'arrowDn', hide: 'eyeOff' };
+  const AB = window.PM_ACTIVITY_BAR || (window.PM_ACTIVITY_BAR = {});
+  const prevDraw = AB.drawMenu || null;
+  const drawMenu = (icon, d) => {
+    if (!D.on) return false;
+    PMR.menu.closeAll();
+    const menu = { id: 'd-ab-icon', label: d.name + ' on the Activity bar', groups: [{ label: d.name,
+      items: d.items.map(it => ({ label: it.label, icon: ACT_ICON[it.id] || null, key: it.key || null, disabled: it.disabled || null, _act: it.id })) }] };
+    const opts = { width: 220, context: true, returnTo: icon, onPick: it => { d.run(it._act); } };
+    const el = d.keyboard ? PMR.menu.open(menu, icon, Object.assign({ side: true, keyboard: true }, opts))
+      : PMR.menu.at(menu, d.x, d.y, Object.assign({ keyboard: false }, opts));
+    /* the Menu key's own contextmenu comes on its keyup in Windows Chrome, to the row that now holds the focus: the menu
+       takes it, so the browser's menu never opens over this one (round 2) */
+    if (el) el.addEventListener('contextmenu', ev => ev.preventDefault());
+    return !!el;
+  };
+  AB.drawMenu = drawMenu;
+
   return {
     destroy() {
+      if (AB.drawMenu === drawMenu) AB.drawMenu = prevDraw;
       offs.forEach(off => off());
       if (PMR.menu.isOpen(btn)) PMR.menu.closeAll();
       dropTray();
@@ -207557,7 +207874,8 @@ function fileOpenFromRow(ctx) {
   // a single click previews and leaves focus in the tree (arrows keep walking it); a double click keeps and moves focus
   var r = PM_HOME.open({ kind: 'editor', path: path, mode: dbl ? 'keep' : 'preview', where: e && e.altKey ? 'panel' : 'auto',
     background: !!(e && (e.ctrlKey || e.metaKey)), focus: dbl });
-  var host = el && el.closest ? el.closest('#panel-files') : null;
+  // the tree marks the file a click opened; a Recent row marks nothing (FO-105: its mark stayed on, so marks piled up)
+  var host = el && el.closest && el.classList.contains('fm-row') ? el.closest('#panel-files') : null;
   if (host && r.ok) {
     host.querySelectorAll('.fm-row.active-file').forEach(function (row) { row.classList.remove('active-file'); });
     el.classList.add('active-file');
@@ -207681,16 +207999,23 @@ shims.fileContextMenu = function () {
   if (menuEl.parentNode !== doc.body) doc.body.appendChild(menuEl);
   menuEl.style.setProperty('z-index', '10070', 'important');
   menuEl.setAttribute('data-pm-home-body-portal', 'true');
-  var target = null;
+  var target = null, folderEl = null;
+  function note(m) { try { if (window.toast) window.toast(m); } catch (_) {} }
   /* the row comes from the menu's owner, for a right-click and for Shift+F10 or the Menu key alike (pm-ctx-open,
-     pm6-js-cozy-shelves.js openFor) (FO-93b). A tree row's data-path is the tree's own id. A Changed or Open item's full
-     path is matched in the project's file index and, where the index does not hold it (an untracked file), used as it
-     stands: it is already a full path. A Recent row's bare file name only counts once the index finds it. */
+     pm6-js-cozy-shelves.js openFor) (FO-93b). Every file row names its own full path in data-path (the tree's rows, and
+     the Changed, Open editors and Recent rows), used as it stands: an untracked file the index does not hold opens too.
+     Any other name only counts once the project's file index finds it, so text that is not a project path opens no
+     tab (FO-103). */
   menuEl.addEventListener('pm-ctx-open', function (e) {
     var row = e.detail || null, own = row && row.el && row.el.getAttribute && row.el.getAttribute('data-path');
-    var path = !row ? null : own ? row.path : row.path ? (resolveProjectPath(row.path) || row.path) : row.name ? resolveProjectPath(row.name) : null;
+    var name = row && (row.path || row.name), path = own || (name ? resolveProjectPath(name) : null);
     target = path || null;
     ctxRow = path ? { path: path, folder: !!row.folder } : null;
+    // a folder opens in the tree (FO-102): Open expands it, and the two ways that open an editor elsewhere are unavailable
+    folderEl = path && row.folder ? row.el : null;
+    menuEl.querySelectorAll('[data-pmw-open="panel"], [data-pmw-open="side"]').forEach(function (b) {
+      if (folderEl) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled');
+    });
   });
   if (!menuEl.querySelector('[data-pmw-open]')) {
     var rows = [
@@ -207699,10 +208024,21 @@ shims.fileContextMenu = function () {
       var b = h('div', { class: 'fm-ctx-item pmw-ctx-item', role: 'menuitem', tabindex: '-1', 'data-pmw-open': r[0], text: r[1] });
       b.addEventListener('click', function (e) {
         e.stopPropagation();
+        // an unavailable item says why and leaves the menu open, as the menu's other aria-disabled items do (their notes
+        // go where the demo router's do: window.toast)
+        if (b.getAttribute('aria-disabled') === 'true') { if (target) note(target + ' is a folder: Open expands it in the tree.'); return; }
         // close through the menu's owner, so its register of open menus stays true (FO-84c)
         if (window.PMCozeMenu) window.PMCozeMenu.close(menuEl);
         else { menuEl.classList.remove('open', 'show', 'visible'); menuEl.style.display = 'none'; }
         if (!target) return;
+        if (folderEl) {
+          // the tree's own expand, as ArrowRight on the folder does (pm6-js-cozy-shelves.js treeKeyboard)
+          // (a folder the tree lists without its files, under node_modules, has nothing to expand and says so)
+          var node = folderEl.closest && folderEl.closest('.fm-node');
+          if (!node || !node.querySelector(':scope > .fm-children')) note(target + ' is a folder; its files are not listed here.');
+          else if (!node.classList.contains('open') && window.__fmAnimate) { window.__fmAnimate(node, true); if (window.__fmRefreshCollapse) window.__fmRefreshCollapse(); }
+          return;
+        }
         PM_HOME.open({ kind: 'editor', path: target, mode: 'keep', where: r[0] === 'open' ? 'auto' : r[0] === 'panel' ? 'panel' : 'right' });
       });
       return b;
@@ -258045,7 +258381,8 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
  *     renderApp (captured from ctx — never a private render path).
  *   - data-k rule: constant keys for the frame (orbit / orbdial / ring /
  *     core / orbpanel), instance-uid keys where a replay IS wanted
- *     (`opin:<uid>` replays the row cascade on a subject change,
+ *     (`opin:<uid>` replays the row cascade on a subject change, so a
+ *     reader's own scroll of the panel pins its subject: FO-104, by the actions;
  *     `orow:<uid>:<j>` materializes each row exactly once as it streams in).
  *   - Neon icons (step 3C): the live node and the core are dark discs whose
  *     lit glyph acts while the run runs; done and pending glyphs are drawn
@@ -258651,6 +258988,83 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     ctx.renderApp();
     return true;
   });
+
+  /* ---- the reader holds the panel (FO-104) ----------------------------
+     The panel follows the live subject and is keyed by it (opin:<uid>), so every handover of the work clock (one
+     subject per 2 s in the classic run) swapped in the next subject's panel: a reader scrolling it was sent back to its
+     top, and a key focus on its X was dropped. A reader's own scroll of the panel now pins it to the subject it shows,
+     through the same pin a node click sets (ui.pinUid): the panel keeps its node, its scroll and the focus in it; the
+     pinned node reads open (aria-pressed), the core keeps showing the live subject and says "Follow the live step
+     again", and the core click follows live again, as after any pin.
+     Only real input pins. A wheel, a touch, a scroll key, or a press on its scrollbar marks the panel, and only a
+     scroll of that same panel within 700 ms of the mark (or during the scrollbar drag)
+     pins it; app.js reads a reader's transcript scroll the same way. The browser clamping scrollTop when a patch
+     shortens the panel, or a script setting it, comes with no mark and never pins. A Tab that moves the focus into the
+     panel pins it too: the scroll keys only reach a panel that still holds the focus, and the next handover would
+     otherwise drop it before the first key. A Tab pin stays when the focus leaves the panel, as a scroll pin stays.
+     A scroll key counts for the panel that holds the focus, or else for the panel the last press landed in while the
+     focus is on no control (round 2, F104-1): a click on the panel's words leaves the focus on the page, and the
+     browser then sends the scroll keys to the scroller under that click. Counting them there follows the browser's
+     own route; the panel is not made to take the focus, which would change the tab path and what a screen reader
+     hears on every click in the card. A key marks only; the pin still needs that panel to scroll.
+     Scrolling back to the top keeps the pin. A pin made by a click does not end on a scroll either, and ending this one
+     at the top would swap the subject under a reader who is reading its head; the pin shows, and the core ends it. */
+  var held = { el: null, at: 0, drag: false, tab: 0, press: null };
+  var HOLD_KEYS = { PageUp: 1, PageDown: 1, ArrowUp: 1, ArrowDown: 1, Home: 1, End: 1, ' ': 1 };
+  function panelOf(node) { return node && node.nodeType === 1 && node.closest ? node.closest('.orbit-panel-in') : null; }
+  function markPanel(p) { held.el = p; held.at = performance.now(); }
+  function holdPanel(p) {
+    var card = p.closest('.working-card'), stage = p.closest('.orbit-stage');
+    if (!card || !stage || !stage.classList.contains('is-open')) return;
+    var ui = UI[card.dataset.cardUi || 'work'], uid = stage.getAttribute('data-orbit-focus');
+    if (!ui || ui.anim != null || !ui.list || uid == null || ui.pinUid === uid) return;
+    var at = ui.list.indexOf(uid);
+    if (at < 0) return;
+    ui.pin = at; ui.pinUid = uid;
+    /* the pin shows at once, not at the next tick (a paused run has none) */
+    requestAnimationFrame(rerender);
+  }
+  document.addEventListener('wheel', function (e) { var p = panelOf(e.target); if (p) markPanel(p); }, { passive: true, capture: true });
+  document.addEventListener('touchstart', function (e) { var p = panelOf(e.target); if (p) markPanel(p); }, { passive: true, capture: true });
+  /* Added with the plain method: in PMConcept7 the host (pm7-port/js/00-host.js) scopes the chat's document listeners
+     to events aimed at the chat, and a key pressed with the focus on the page is aimed at <body>, so a scoped listener
+     never heard the scroll keys after a click on the panel's words. The host adds its own page-wide dismiss listener
+     the same way. This one only marks a panel; it never acts on the key or stops it. */
+  EventTarget.prototype.addEventListener.call(document, 'keydown', function (e) {
+    if (e.key === 'Tab') { held.tab = performance.now(); return; }
+    if (!HOLD_KEYS[e.key] || e.altKey || e.ctrlKey || e.metaKey) return;
+    var a = document.activeElement, onPage = !a || a === document.body || a === document.documentElement;
+    var p = panelOf(a) || (onPage && held.press && held.press.isConnected ? held.press : null);
+    if (p) markPanel(p);
+  }, true);
+  /* a press on the panel's own scrollbar: the press lands on the panel itself, right of its content box. Any other
+     press ends a drag whose pointerup never came (a scrollbar drag can swallow it), and every press says which panel,
+     if any, the last press landed in. Added with the plain method, as the keydown listener above is: in PMConcept7 the
+     host scoped it to presses inside the chat, so a press elsewhere on the page left the panel as "the last press" and a
+     later scroll key marked it (round 3, F104-2). A press that lands outside the marked panel also ends the 700 ms mark a
+     wheel or a touch put on it, so a scroll of that panel in the rest of the window pins nothing (opus-recheck-act8c O1);
+     a touch's pointerdown comes before its touchstart, so a touch on a panel still marks it afresh. It only reads the
+     target and sets these fields. */
+  EventTarget.prototype.addEventListener.call(document, 'pointerdown', function (e) {
+    var p = e.target;
+    held.drag = false;
+    held.press = panelOf(p);
+    if (held.el !== held.press) held.el = null;
+    if (e.button !== 0 || !p || !p.classList || !p.classList.contains('orbit-panel-in')) return;
+    var r = p.getBoundingClientRect();
+    if (e.clientX > r.left + p.clientLeft + p.clientWidth) { held.drag = true; markPanel(p); }
+  }, true);
+  document.addEventListener('pointerup', function () { if (held.drag) { held.drag = false; held.at = performance.now(); } }, true);
+  document.addEventListener('pointercancel', function () { held.drag = false; }, true);
+  document.addEventListener('scroll', function (e) {
+    var p = e.target;
+    if (!p || !p.classList || !p.classList.contains('orbit-panel-in')) return;
+    if (held.el === p && (held.drag || performance.now() - held.at < 700)) holdPanel(p);
+  }, { passive: true, capture: true });
+  document.addEventListener('focusin', function (e) {
+    var p = panelOf(e.target);
+    if (p && performance.now() - held.tab < 700) holdPanel(p);
+  }, true);
   /* The panel X: collapse this card — live or completed — to its strip. */
   EXT.action('orbit-collapse', function (ctx, btn) {
     var b = cardBits(ctx, btn); if (!b) return false;
@@ -313709,7 +314123,7 @@ try {
     /* tag: the rail's tab strips' lenses carry data-lg-for="rail-tabs", so the rail skin can shape them (concept D,
        22-tabs.src.css: the chosen tab's own box, rounded to its track's inner radius) */
     { sel: '#sidePanelSlot .pm-segtab', items: '.pm-segtab-item', many: true, scrub: true, kind: 'lens', tag: 'rail-tabs' },
-    { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon,
+    { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon, tag: 'rail-icons',
       box: function (i) { return i.querySelector('.symbol') || i; }, label: function (i) { return i.querySelector('.symbol'); } },
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
     { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6, magRest: 1, magLift: 1, press: false,
@@ -313751,8 +314165,104 @@ try {
     var v = sp.querySelector(':scope > .side-panel-view.active');
     var icon = v && strip.querySelector('.icon[data-target="' + v.id + '"]');
     strip.querySelectorAll('.icon[data-lg-current]').forEach(function (i) { if (i !== icon) i.removeAttribute('data-lg-current'); });
-    if (icon && !icon.hasAttribute('data-lg-current')) icon.setAttribute('data-lg-current', ''); return icon;
+    if (icon && !icon.hasAttribute('data-lg-current')) { icon.setAttribute('data-lg-current', ''); queueRailFocus(); } return icon;
   }
+  /* FO-96 (F96-1): the open panel's icon lies under this lens, which magnifies and refracts what is beneath it, so a key
+     focus mark drawn on the icon could not be read there. While the icon has a key focus and the lens is painted at
+     rest on it, the lens carries the mark: data-lg-focus on the lens and on the icon (the rail skin, concept D
+     80-bar.src.css, draws it on the lens and stands the icon's own mark down). Otherwise neither carries the flag and
+     the icon shows its own mark. Kept in step whenever the rail's lens is synced (a panel opening, closing or changing
+     hides, shows or moves it: F96b-1; where it jumps or hides in one step, in that same sync, before the frame paints:
+     F96d-1), on focus moves and keys in the bar (a key turns :focus-visible on for a
+     mouse-focused icon with no focusin), and, while the lens travels to the focused icon or fades in on it, once more
+     when that motion ends, so the mark never sits on the item the focus has left (F96b-2). "Painted" is read from the
+     computed opacity, not from display: the lens is hidden by opacity.
+     While the lens moves and does not carry the mark (it travels onto or off the key-focused icon, fades in on it, or
+     passes over it), its refraction lies over the icon's own mark and washed it below 3:1 (2.2:1 at Search's bottom in
+     Glass Light, sol-review-g8). So for that motion the icon's own mark is drawn once more above the lenses, unrefracted:
+     the cue (the rail skin, 80-bar.src.css, draws it as the icon's mark). It goes in the sync that hands the mark to the
+     lens, or when the motion ends; it is placed only when it shows, and only for a key focus in the bar, so a pointer's
+     switch reads nothing more. The lens takes the mark only once it is painted in full: one still fading in (an arrival,
+     Reduced Motion's fade) drew a pale ring, near 2.3:1 just past half its opacity, so until its fade ends the cue holds
+     the mark. */
+  var railCueEl = null;
+  function railMotions(L) {
+    var out = [];
+    if (L.lens.getAnimations) L.lens.getAnimations().forEach(function (a) {
+      if (a === L.hopHide || (a.playState !== 'running' && a.playState !== 'pending') || !a.finished) return;
+      var end = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming().endTime : Infinity;
+      if (isFinite(end)) out.push(a);
+    });
+    return out;
+  }
+  function railCue(L, icon) {
+    if (!icon) { if (railCueEl && railCueEl.hasAttribute('data-lg-on')) railCueEl.removeAttribute('data-lg-on'); return; }
+    if (!railCueEl) railCueEl = el('i', { class: 'lg-rail-cue', 'aria-hidden': 'true' });
+    if (railCueEl.parentElement !== L.layer) L.layer.appendChild(railCueEl);
+    var sym = icon.querySelector('.symbol') || icon, b = sym.getBoundingClientRect(), lr = L.layer.getBoundingClientRect(), st = railCueEl.style;
+    st.left = (b.left - lr.left) + 'px'; st.top = (b.top - lr.top) + 'px'; st.width = b.width + 'px'; st.height = b.height + 'px';
+    st.borderRadius = getComputedStyle(sym).borderRadius;
+    if (!railCueEl.hasAttribute('data-lg-on')) railCueEl.setAttribute('data-lg-on', '');
+  }
+  var railFocusQ = 0, railAwaited = typeof WeakSet === 'function' ? new WeakSet() : null, railDueAnim = null, railDueT = 0, railDueTries = 0;
+  function railLensAt(lens, icon) {
+    var s = icon.querySelector('.symbol') || icon, a = lens.getBoundingClientRect(), b = s.getBoundingClientRect();
+    return Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 2 && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 2;
+  }
+  function syncRailFocus() {
+    railFocusQ = 0;
+    var bar = document.getElementById('activityBar');
+    if (!bar) return;
+    /* outside Glass the rail has no lens of its own (an adopting look keeps its lit icon), so no flag stays (F96c-1) */
+    var L = isGlass() && typeof lenses !== 'undefined' && lenses ? lenses.get(bar) : null, act = document.activeElement;
+    /* any rail lens still flagged counts, the live one or one left from an earlier look (outside Glass the rail has none) */
+    var flagged = bar.querySelector('.icon[data-lg-focus]') || document.querySelector('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]');
+    var cur = null, on = false, wait = false, kf = null;
+    if (act && act.matches && act.matches('#activityBar .icon')) {
+      try { kf = act.matches(':focus-visible') ? act : null; } catch (e) { kf = null; }
+      if (kf && act.matches('[data-lg-current]')) { var sp = document.getElementById('sidePanelSlot'); cur = sp && visible(sp) ? act : null; }
+    }
+    var cued = !!railCueEl && railCueEl.hasAttribute('data-lg-on');
+    if (!cur && !flagged && !cued && !(kf && L && L.anim)) return;
+    if (cur && L && L.lens && L.lens.isConnected && L.rect && !(typeof hiddenLenses !== 'undefined' && hiddenLenses.has(L))) {
+      var cs = getComputedStyle(L.lens);
+      if (cs.display !== 'none') { if (parseFloat(cs.opacity) > 0.98 && railLensAt(L.lens, cur)) on = true; else wait = true; }
+    }
+    bar.querySelectorAll('.icon[data-lg-focus]').forEach(function (i) { if (!on || i !== cur) i.removeAttribute('data-lg-focus'); });
+    document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]').forEach(function (x) { if (!on || !L || x !== L.lens) x.removeAttribute('data-lg-focus'); });
+    if (on && L && L.lens) L.lens.setAttribute('data-lg-focus', '');
+    if (on && !cur.hasAttribute('data-lg-focus')) cur.setAttribute('data-lg-focus', '');
+    var motions = kf && !on && L && L.lens && L.lens.isConnected && L.rect && !L.under && L.lens.style.opacity !== '0' ? railMotions(L) : null;
+    railCue(L, motions && motions.length ? kf : null);
+    /* the lens is on its way to the focused icon, or fading in on it. No poll (F96c-3). A travel() records its path
+       (L.path): one timer to the frame from which that path keeps the lens within the 2 px of the icon, as its spring's
+       last wobble takes another 60-100 ms to end; the frame's clock and the path's can be a frame apart, so a read there
+       that finds the lens still short looks again on each of at most three frames. Otherwise, and as the fallback, look
+       again when the lens's own motion ends (travel(), a ride on its strip's entrance, an arrival or reduced-motion fade:
+       every move of the lens that is not a jump is one of its Web Animations), in that frame, before it paints. A lens at
+       rest somewhere else waits for a strip sync to move it, and syncStripNow queues this itself; an endless animation (a
+       step look's hop hide, never in Glass) is not waited on, and the icon keeps its own mark meanwhile. */
+    var an = wait ? L.anim : null, T = an && L.path;
+    if (T && T.rects && T.rects.length && L.rect) {
+      if (an !== railDueAnim) {
+        var cx = L.rect.x + L.rect.w / 2, cy = L.rect.y + L.rect.h / 2, k = T.rects.length, q;
+        while (k > 0 && (q = T.rects[k - 1]) && Math.abs(q.x + q.w / 2 - cx) <= 1.5 && Math.abs(q.y + q.h / 2 - cy) <= 1.5) k--;
+        var due = k < T.rects.length ? T.rects[k].t : T.dur, ct = an.currentTime;
+        railDueAnim = an; railDueTries = 0; clearTimeout(railDueT);
+        railDueT = setTimeout(function () { railDueT = 0; queueRailFocus(); }, Math.max(0, due - (ct == null ? -17 : ct)));
+      } else if (!railDueT && railDueTries < 3) { railDueTries++; queueRailFocus(); }
+    }
+    if ((wait || (motions && motions.length)) && L.lens.getAnimations) (motions || railMotions(L)).forEach(function (a) {
+      if (railAwaited && railAwaited.has(a)) return;
+      if (railAwaited) railAwaited.add(a);
+      a.finished.then(railFocusNow, railFocusNow);
+    });
+  }
+  function queueRailFocus() { if (!railFocusQ) railFocusQ = requestAnimationFrame(syncRailFocus); }
+  function railFocusNow() { if (railFocusQ) { cancelAnimationFrame(railFocusQ); railFocusQ = 0; } syncRailFocus(); }
+  document.addEventListener('focusin', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) railFocusNow(); }, true);
+  document.addEventListener('focusout', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) queueRailFocus(); }, true);
+  document.addEventListener('keydown', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) queueRailFocus(); }, true);
   /* Every lens lives in one layer above the strips and the title bar (#lg-lenses), not inside them: from outside it sees
      the sheet, the wallpaper and the label together, and no sheet can cover it. */
   /* one layer per host surface: the app shell, or a window that floats above it (onboarding's window, a dialog in
@@ -314344,6 +314854,7 @@ try {
     if (!rides.length) return;
     rides.forEach(function (r) { if (r.L.lens.isConnected) { r.specs = rideRead(r.L, r.target); r.left = r.arrive ? arrivalLeft(r.target) : 0; } });
     rides.forEach(function (r) { if (r.specs) { if (r.arrive) arriveIn(r.L, r.left); rideApply(r.L, r.specs); } });
+    if (rides.some(function (r) { return r.rail && r.specs; })) railFocusNow();
   }
   function readStrip(cfg, strip) {
     cvWait.delete(strip);
@@ -314408,6 +314919,12 @@ try {
     });
   }
   function syncStripNow(cfg, strip, m) {
+    /* FO-96: the rail's lens may hide, show or move: re-read the focus flags. A move along a path is read next frame
+       (and timed by syncRailFocus); a jump or a one-step hide is read in this same call, before the frame paints, so the
+       lens never shows the mark on an icon the key focus is not on, nor leaves the focused icon unmarked (F96d-1:
+       Reduced Motion, Ctrl+2 with the focus on the open panel's icon, 1 or 2 frames with no mark). */
+    var rail = cfg.kind === 'lensIcon';
+    if (rail) queueRailFocus();
     if (!m && cvSkipped(strip)) { cvSkip(strip); return; }
     var L = lensFor(strip, cfg), P0 = L.pending;
     followStrip(strip, cfg);
@@ -314423,7 +314940,7 @@ try {
     if (L.pending && !L.pending.el.isConnected) { pressMark(L.pending, false); L.pending = null; }
     if (P0 && P0 !== L.pending) pressMark(P0, false);
     var pre = m && m.target === target ? m : null;
-    if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
+    if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { var shown = L.lens.style.opacity !== '0'; stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (shown) L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); if (rail && shown) railFocusNow(); return; }
     hiddenLenses.delete(L);
     if (L.scroller && L.scroller.isConnected) {
       var out;
@@ -314432,7 +314949,7 @@ try {
         var sr = L.scroller.getBoundingClientRect(), tr = boxRect(cfg.box ? (cfg.box(target).getBoundingClientRect ? cfg.box(target) : target) : target);
         out = tr.left < sr.left - 1 || tr.left + tr.width > sr.right + 1 || tr.top < sr.top - 1 || tr.top + tr.height > sr.bottom + 1;
       }
-      if (out) { stopLensTravel(L); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; return; }
+      if (out) { var was = L.lens.style.opacity !== '0'; stopLensTravel(L); if (was) L.lens.style.opacity = '0'; L.rect = null; if (rail && was) railFocusNow(); return; }
     }
     if (L.lens.style.opacity) L.lens.style.opacity = '';
     prewarmSoon(L, cfg, strip);
@@ -314440,7 +314957,7 @@ try {
     if (!R) R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
     var A = L.rect;
     if (L.dragging) return;
-    if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); return; }
+    if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); if (rail) railFocusNow(); return; }
     var quiet = reduced();
     var still = A && (quiet ? A.x === R.x && A.y === R.y && A.w === R.w && A.h === R.h : Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5);
     if ((quiet && !L.reducedAnim) || !switchOn()) stopLensTravel(L);
@@ -314452,15 +314969,23 @@ try {
     if (still) return;
     if (!A || quiet || !switchOn()) {
       stopLensTravel(L);
-      if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } ownRest(L); }; }
+      if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.path = null; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } ownRest(L); }; }
       setLensBox(L, R); L.tgt = target;
       /* a lens in the app-wide layer waits for its strip's entrance; one in its host's own layer (a page, a menu, a
          dialog) is part of that entrance already */
       if (!A && !quiet && switchOn()) {
-        if (lensRides) { stopRide(L); lensRides.push({ L: L, target: target, arrive: L.layer === layer }); }
+        if (lensRides) { stopRide(L); lensRides.push({ L: L, target: target, arrive: L.layer === layer, rail: rail }); }
         else { if (L.layer === layer) arrive(L, target); ride(L, target); }
         settleCheck(L);
+        if (rail && !lensRides) railFocusNow();
       }
+      /* a jump (Reduced Motion, or no switch motion) is read now. A first show in motion may fade in by an arrival or
+         ride, which a batched sync attaches later in this task: it is read once that is attached (here, or after the
+         batch's rides in syncStrips), not next frame. Read next frame, a lens shown at once at full opacity lay over the
+         key-focused icon's own mark, washing it, for the frames before the read handed it the mark (F96-1 round 6:
+         Enter opening Files in Glass Light, 2 or 3 frames at 4.7 and under on its sides while the panel's open held the
+         main thread). A fade in is read again at its end, with the cue holding the mark meanwhile. */
+      if (rail && (A || quiet || !switchOn())) railFocusNow();
       return;
     }
     /* the destination moved by a pixel or two (the chosen label turned bold): a move in flight carries on, re-based;
@@ -314971,7 +315496,7 @@ try {
     sheets.forEach(unpin);   /* the scroll has settled: anchored frost again, at the very spot it is pinned */
     if (root.hasAttribute('data-lg-demo-host') && document.getElementById('lg-demo-btn')) demo();
     applyWall();
-    if (!isGlass()) { unmountAll(switchLook); if (!switchLook) return; }
+    if (!isGlass()) { unmountAll(switchLook); if (!switchLook) { queueRailFocus(); return; } }
     else { syncSurfaces(scopes, sheets); ensureFrost(); }
     var covered = pageCovered(), todo = [];
     STRIPS.forEach(function (cfg) {
@@ -314980,7 +315505,7 @@ try {
       });
       strips.forEach(function (s) { if (s.matches(cfg.sel) && found.indexOf(s) < 0) found.push(s); });
       /* the activity bar's icon lens is Glass's own rail design; an adopting look keeps its own lit icon there */
-      if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); return; }
+      if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); queueRailFocus(); return; }
       found.forEach(function (s) {
         /* (a shown chip is put out whatever its box says: a look change clears every lens's box for the next sync to place
            it again, and a screen that left in that same sync kept its chip on screen at full opacity until the screen was
