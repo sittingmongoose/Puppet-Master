@@ -139,7 +139,7 @@ REVIEW_REFERENCE_RE = re.compile(
     r"|\bfix[\s-]*r\d+\b"
     r"|\bfix[\s-]+round\b"
     r"|\br\d+-(?:opus|sol|astra|sonnet|fable)\b"
-    r"|defs-review|owner-answers/|PuppetMaster-Evidence|closure-reaudit"
+    r"|defs-review|owner-answers/|PuppetMaster-Evidence|closure-reaudit|Plans/ledgers/"
     r"|\bR\d+-DECISIONS\b|-(?:BRIEF|REPORT|NOTE)\.md\b"
     r"|\bcanon\s+conflict\s+C\d+\b)"
     r"|\bDESIGN(?:\.md)?\s+(?:§\s*|section\s+)?\d")
@@ -3835,6 +3835,7 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
             ("the review folder", "per defs-review/R1-DECISIONS call 5"),
             ("the owner-answers folder", "settled in owner-answers/q5/RESOLUTIONS.md"),
             ("the evidence share", "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/notes.md"),
+            ("a ledger lineage path", "the name comes from Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/matrix.json"),
             ("a fix report's canon-conflict label", "Canon conflict C2: the row says query?"),
             ("a Q5 design section", "classed with the context selector (DESIGN 4.6)")]:
         @case(f"fail C11: a gap_note names review or evidence material ({label})", 1, {"C11"},

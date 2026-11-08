@@ -50988,6 +50988,7 @@ node_compile_hint: {mode: command_payload_definitions, create_worknodes: false, 
 source_lineage:
   - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to Q5"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
+  - "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json (destination_matrix), which UCC-103 lists as source lineage: display_name is a required destination field for Slack webhook only"
 preserved_exact_tokens: [cmd.notifications.destination.create, cmd.notifications.destination.update, cmd.notifications.destination.delete, cmd.notifications.destination.toggle, cmd.notifications.destination.test, cmd.notifications.mapping.update, cmd.notifications.override.set, cmd.sound.preview, cmd.sound.upload, cmd.sound.pack.import, cmd.sound.asset.delete, cmd.sound.asset.restore, cmd.sound.asset.export, cmd.sound.mapping.set]
 negative_constraints:
   - Do not add payload fields to UI_Command_Catalog command rows.
@@ -51026,12 +51027,10 @@ command_payload_definitions:
           constraints: {min_length: 1, max_length: 256}
           provenance: gap
           gap_note: >-
-            No canon PlanUnit names a destination label. The name comes from the ledger readiness matrix that
-            UCC-103 lists as source lineage
-            (Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json,
-            destination_matrix), which lists display_name as a required field for "Slack webhook" only.
-            JUDGMENT: required for all six providers, with the generic text bound; alternative: required for
-            Slack only and optional elsewhere.
+            No canon PlanUnit names a destination label; the name display_name comes from this unit's source
+            lineage, which lists it as required for the Slack webhook destination only. JUDGMENT: required for
+            all six providers, with the generic text bound; alternative: required for Slack only and optional
+            elsewhere.
         profile:
           type: contract
           ref: Plans/Contracts_V0.md#CV-298
