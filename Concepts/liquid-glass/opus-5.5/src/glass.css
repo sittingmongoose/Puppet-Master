@@ -878,11 +878,11 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) .o55t-ring { box-shadow: 0 0 0
 :is(html[data-lg="on"][data-theme^="glass"], html:not([data-theme^="glass"])):not(#lgz) .lg-lenses-local { display: block; position: absolute; inset: 0; z-index: 30; pointer-events: none; border-radius: inherit; }
 /* --pm-switch-layer: under (Q16; never in Glass): each lens is inside its own strip, over the strip's track and under its
    items, which are lifted to z-index 1 here where the rules above do not already */
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz) lg-under.lg-lenses-under { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz) lg-under.lg-lenses-under { display: block; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 /* a chip under its labels is not kept on a compositor layer of its own while it rests (that pulled every label above it onto
    a layer too); its travel animates on the compositor as any transform animation does */
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz) lg-under.lg-lenses-under .lg-lens { will-change: auto; }
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz) :is(#themeMenu .pm6-tt-mode, #panel-wizard .pm6-wiz-intent-chip, #pm-o55-onboarding .o55-seg button, #pm-o55-onboarding .o55-railitem) { position: relative; z-index: 1; }
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz) lg-under.lg-lenses-under .lg-lens { will-change: auto; }
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz) :is(#themeMenu .pm6-tt-mode, #panel-wizard .pm6-wiz-intent-chip, #pm-o55-onboarding .o55-seg button, #pm-o55-onboarding .o55-railitem) { position: relative; z-index: 1; }
 /* Settings' segmented choices (glass.js STRIPS under): in every look, Glass included, the chip is the control's own
    under-layer, so it scrolls with the control and stays under the sticky bars. It shows only while it moves
    (data-lg-moving): at rest the chosen segment wears the material in place (above), as it always did. While it moves it
@@ -901,6 +901,14 @@ html:not([data-theme^="glass"]):not(#lgz) lg-over.lg-hops { display: block; posi
 html:not([data-theme^="glass"]):not(#lgz):not(#lgy) lg-over.lg-hops .lg-hop { overflow: hidden; z-index: auto; will-change: opacity; }
 html:not(#lgz):not(#lgy):not(#lgx) .lg-hop .lg-twin,
 html:not(#lgz):not(#lgy):not(#lgx) .lg-hop .lg-twin * { color: var(--pm-switch-ink-on); -webkit-text-fill-color: currentColor; --nx-ink: currentColor; background: transparent; border-color: transparent; box-shadow: none; text-shadow: none; transition: none; animation: none; }
+/* Friendly's hop and Basic's snap (glass.js carry; stream F batch 9): while the chip travels it is one block of its
+   material above the labels, moving on the compositor, with its inverted copies in a layer that carries the block's
+   inverse transform (so they stay on their tabs) and, for the sticker, its hard shadow as a block of its own under it.
+   The block's edge is the look's --pm-switch-rim (the sticker's 2 px ink outline); its offset shadow is the shadow
+   block, so the block draws none of its own */
+html:not([data-theme^="glass"]):not(#lgz):not(#lgy) lg-over.lg-hops .lg-hop.lg-carry { will-change: transform; box-shadow: var(--pm-switch-rim, 0 0 0 0 transparent); }
+html:not([data-theme^="glass"]):not(#lgz):not(#lgy) lg-over.lg-hops .lg-carry-twins { display: block; position: absolute; left: 0; top: 0; transform-origin: 50% 50%; pointer-events: none; will-change: transform; }
+html:not([data-theme^="glass"]):not(#lgz):not(#lgy) lg-over.lg-hops .lg-carry-shadow { display: block; position: absolute; transform-origin: 50% 50%; pointer-events: none; will-change: transform; background: var(--pm-switch-stick, transparent); }
 /* while a press moves the chip ahead of the app's choice (glass.js pressMark), the pressed item reads as chosen and the
    one it leaves as not, so neither label sits in its old colour on the wrong ground (three ids: above the chosen ink). The
    item's own ink follows in every look that adopts the switcher (every look but Glass); under an opaque chip so do
@@ -910,35 +918,35 @@ html:not(#lgz):not(#lgy):not(#lgx) .lg-hop .lg-twin * { color: var(--pm-switch-i
    with no transition and no delay (Retro's icons strike 33 ms late): the app's click can hold the page for a third of a
    second while the chip glides on, and a change left waiting kept the old ink on the landed chip (Q16 review F3). */
 html:not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) [data-lg-press="on"],
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] .pmu-navtext,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] svg,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] path,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] circle,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] rect,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="on"] small,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="on"] svg,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="on"] path,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .side-link[data-lg-press="on"] svg,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .side-link[data-lg-press="on"] path,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="on"] svg,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="on"] path,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] svg,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] path { color: var(--pm-switch-ink-on) !important; transition: none !important; }
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] .pmu-navtext,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] svg,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] path,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] circle,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="on"] rect,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="on"] small,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="on"] svg,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="on"] path,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .side-link[data-lg-press="on"] svg,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .side-link[data-lg-press="on"] path,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="on"] svg,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="on"] path,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] svg,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="on"] path { color: var(--pm-switch-ink-on) !important; transition: none !important; }
 html:not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) [data-lg-press="off"],
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] .pmu-navtext,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] svg,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] path,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] circle,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] rect,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="off"] small,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="off"] svg,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="off"] path,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .side-link[data-lg-press="off"] svg,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .side-link[data-lg-press="off"] path,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="off"] svg,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="off"] path,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="off"] svg,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="off"] path { color: var(--pm-switch-ink) !important; transition: none !important; }
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] .pmu-navtext,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] svg,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] path,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] circle,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pmu-navbtn[data-lg-press="off"] rect,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="off"] small,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="off"] svg,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .domain-link[data-lg-press="off"] path,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .side-link[data-lg-press="off"] svg,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .side-link[data-lg-press="off"] path,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="off"] svg,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm-segtab-item[data-lg-press="off"] path,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="off"] svg,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) .pm6-tt-mode[data-lg-press="off"] path { color: var(--pm-switch-ink) !important; transition: none !important; }
 
 /* Settings' chapter header is a bar sheet under Liquid Glass (glass.js SURFACES): on the bare wallpaper its line, a 62 %
    tint, read 4.2:1 over Ribbons and 1.9-2.9:1 over Prism or Pool in Glass Dark (2026-10-14). The line takes the look's
@@ -963,7 +971,7 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #panel-settings .home-page > s
    look adopts the component by setting --pm-switch: lens in its theme block with its own values (CONTRACT.md, "The
    switcher"). glass.js then marks <html data-pm-switch="lens"> and runs the strips and lenses in that look too, without
    Glass's sheets, frost or refraction. The rules here name the looks, not that mark (B5, 2026-10-16):
-   html:not([data-theme^="glass"]) for the mark and :is(html[data-theme^="retro"], html[data-o55-nier="on"]) for its
+   html:not([data-theme^="glass"]) for the mark and :is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]) for its
    under layer, at the mark's specificity, so a change of look or NieR Mode restyles the page once, not a second time when
    glass.js flips the mark after layout. A look that opts out with --pm-switch other than lens is excluded here too. The
    defaults below have zero specificity; a look gets them for any token it leaves out.

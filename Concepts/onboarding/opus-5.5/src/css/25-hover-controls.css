@@ -42,6 +42,13 @@
   scale: .95; background-color: var(--pmc-fill-press); transition-duration: 0ms, 70ms, 40ms;
 }
 
+/* B1 Solid block (stream F batch 9): on a switcher's item the plate is the block's outline, a 1 px keyline of Basic's blue
+   with no fill (6.0:1 against the bar in Light, 7.5:1 in Dark), where the faint state plate read about 1.1:1 */
+#pmh-frame[data-pmh-family="basic"][data-pmh-kind="ctl"][data-pmh-variant="chip"] {
+  background: transparent; box-shadow: inset 0 0 0 1px var(--pm-switch-hover-line, var(--accent-primary));
+}
+#pmh-frame[data-pmh-family="basic"][data-pmh-kind="ctl"][data-pmh-variant="chip"].pmh-frame-press { background-color: transparent; }
+
 /* ===== FRIENDLY: "Bubble" =====
    The handheld and console menus' cursor (DS, 3DS, Wii and Wii U, Cocoon's shelf, iisu's tiles): a soft bubble in the
    look's own accent, a round ring, a 3 px halo (no blur) and, around it, an aura of the look's dot pattern that fades
@@ -119,9 +126,11 @@
    dot aura, the halo, the breathing and the press ripple. In a tab strip those drew past the chip on every side, and
    the strip cut the aura into dotted lines beside the tab and a second outline round the chip (Jared, 2026-10-28: the
    tab hover was "a different shape than the selector" with "artifacts from other animations coming in"). */
+/* F1 Sticker (stream F batch 9, Jared 2026-11-08): the chip it would become is a sticker, so the echo is the sticker's
+   outline drawn dashed in the secondary ink, with no fill (5.6:1 against the bar in Light, 7.1:1 in Dark) */
 #pmh-frame[data-pmh-family="friendly"][data-pmh-kind="ctl"][data-pmh-variant="chip"] {
-  background: var(--pm-switch-hover, var(--pmc-fill));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pm-switch-mark, var(--accent-primary)) 50%, transparent), 0 2px 6px -3px var(--pmc-drop);
+  background: transparent;
+  box-shadow: none; outline: 2px dashed var(--pm-switch-hover-line, var(--text-secondary)); outline-offset: -2px;
 }
 #pmh-frame[data-pmh-family="friendly"][data-pmh-kind="ctl"][data-pmh-variant="chip"] > i:first-child,
 #pmh-frame[data-pmh-family="friendly"][data-pmh-kind="ctl"][data-pmh-variant="chip"]::before,

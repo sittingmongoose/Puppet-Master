@@ -42,8 +42,14 @@
   /* - --pm-switch-motion (glide | step | cut): how the chip moves to a new choice. glide (unset) is the spring above;
        step is two hard jumps on a 33 ms tick (the tab half way, then its own), with no easing; cut puts it there at
        once. Retro steps
-       and NieR Mode cuts (Jared 2026-10-16; F3-438: joined highlights step in Retro and NieR; F3-621). */
+       and NieR Mode cuts (Jared 2026-10-16; F3-438: joined highlights step in Retro and NieR; F3-621). hop is Friendly's
+       sticker (a low arc with a small tilt, landing with a squash, 440 ms) and snap is Basic's block (straight across in
+       110 ms, no stretch); both carry the chip with its labels inverted (carry, below; stream F batch 9, Jared
+       2026-11-08: "I like F1 and B1"). */
   var switchLook = false, switchUnder = false, switchSwell = 1, switchLiquid = 1, switchMotion = 'glide';
+  /* the carried motions (carry, below): their length and their easing (a cubic Bezier over the whole trip), from the
+     concepts Jared picked (Concepts/selector-indicator-concepts, F1 and B1) */
+  var CARRY = { hop: { dur: 440, ease: [0.3, 0.7, 0.4, 1] }, snap: { dur: 110, ease: [0.2, 0, 0, 1] } };
   function tokenNumber(v, dflt) { var n = parseFloat(v); return isFinite(n) ? Math.max(0, Math.min(1, n)) : dflt; }
   function readSwitch() {
     var on = false, under = false, swell = 1, liquid = 1, motion = 'glide';
@@ -53,7 +59,7 @@
         if (on) {
           under = cs.getPropertyValue('--pm-switch-layer').trim() === 'under';
           swell = tokenNumber(cs.getPropertyValue('--pm-switch-swell'), 1); liquid = tokenNumber(cs.getPropertyValue('--pm-switch-liquid'), 1);
-          motion = cs.getPropertyValue('--pm-switch-motion').trim(); if (motion !== 'step' && motion !== 'cut') motion = 'glide';
+          motion = cs.getPropertyValue('--pm-switch-motion').trim(); if (!CARRY[motion] && motion !== 'step' && motion !== 'cut') motion = 'glide';
         }
       } catch (e) {}
     }
@@ -2152,7 +2158,8 @@
     if (still) return;
     if (!A || quiet || !switchOn()) {
       stopLensTravel(L);
-      if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.path = null; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } ownRest(L); }; }
+      /* (a carried chip, Friendly's sticker and Basic's block, changes at once under Reduce Motion: no fade either) */
+      if (A && quiet && !(CARRY[switchMotion] && !isGlass())) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.path = null; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } ownRest(L); }; }
       setLensBox(L, R); L.tgt = target;
       /* a lens in the app-wide layer waits for its strip's entrance; one in its host's own layer (a page, a menu, a
          dialog) is part of that entrance already */
@@ -2265,6 +2272,7 @@
   function hop(L, A, B, strip, cfg, target, vertical) {
     stopLensTravel(L);
     if (switchMotion === 'cut' || !A) { setLensBox(L, B); return; }
+    if (CARRY[switchMotion]) { carry(L, A, B, strip, cfg, target, vertical); return; }
     var stops = hopStops(A, B, strip, cfg, target, vertical);
     if (stops.length < 2 || !L.under) { setLensBox(L, B); return; }
     var now = strip.querySelector(cfg.items + (cfg.active || '.active')), weight = getComputedStyle(now || target).fontWeight;
@@ -2284,6 +2292,92 @@
     var P = L.pending && L.pending.el === target ? L.pending : null; if (P) L.hopPress = P;
     hopMark(L, target, 'off');
     L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, HOP_MS + 1);
+    L.hopSafety = setTimeout(function () { L.hopSafety = 0; if (L.hopFrames) { endHop(L); queueSync(L.strip); } }, 3000);
+  }
+  /* Friendly's hop and Basic's snap (stream F batch 9, Jared 2026-11-08: "I like F1 and B1"). Their chip is opaque and
+     under its labels, as Retro's is, but it travels: F1's sticker hops along a low arc with a small tilt and lands with a
+     squash (440 ms); B1's block snaps straight across in 110 ms and does not stretch. A chosen label's ink is not a
+     resting label's (Basic's words turn white on its blue, Friendly Dark's dark on its mint), so while the chip travels,
+     the chip drawn is a block of its material ABOVE the labels (lg-over, where a step's blocks go), holding an inverted
+     copy (twinOf) of every label it can cross. The copies sit in one layer inside the block that carries the exact inverse
+     of the block's transform, sampled every frame, so they stay still on their tabs while the block moves around them:
+     in every frame the words the chip covers, and only those, are in its ink. The real labels rest in their resting ink
+     underneath (the tab headed for is held 'off', as in a step, and a press marks the one left 'off'), and the chip under
+     them is hidden until the block has landed and the app has chosen the tab (hopSettle); then the block goes, and the
+     chip under the labels, with the chosen label's own ink, looks the same. Each moving part is a transform keyframed
+     every 1/60 s on the compositor, so a page switch that holds the main thread cannot stall it (as for a step, Q16
+     delta review R1). A sticker's hard shadow is a block of its own under the sticker (lg-carry-shadow), so its lift is
+     a transform too; its colour is the look's --pm-switch-stick (none in Basic). Glass never comes here (switchMotion is
+     glide in Glass). */
+  function bezierEase(p) {
+    var cx = 3 * p[0], bx = 3 * (p[2] - p[0]) - cx, ax = 1 - cx - bx, cy = 3 * p[1], by = 3 * (p[3] - p[1]) - cy, ay = 1 - cy - by;
+    var X = function (t) { return ((ax * t + bx) * t + cx) * t; }, Y = function (t) { return ((ay * t + by) * t + cy) * t; };
+    return function (x) {
+      if (x <= 0) return 0; if (x >= 1) return 1;
+      var lo = 0, hi = 1, t = x;
+      for (var i = 0; i < 24; i++) { var v = X(t); if (Math.abs(v - x) < 1e-5) break; if (v < x) lo = t; else hi = t; t = (lo + hi) / 2; }
+      return Y(t);
+    };
+  }
+  /* where the chip is at eased progress u of the trip: its box (x, y, w, h, in the strip's layer), and for the hop its
+     lift off the strip (0..1), tilt (0..1 of -2 deg) and squash. The hop's keyframes are F1's: half way and lifted at
+     0.45, landed and squashed (1.06 x 0.9) at 0.8, at rest at 1 */
+  function carryPose(motion, u, A, B) {
+    var s = u, lift = 0, sx = 1, sy = 1, p;
+    if (motion === 'hop') {
+      if (u <= 0.45) { p = u / 0.45; s = 0.5 * p; lift = p; }
+      else if (u <= 0.8) { p = (u - 0.45) / 0.35; s = 0.5 + 0.5 * p; lift = 1 - p; sx = 1 + 0.06 * p; sy = 1 - 0.1 * p; }
+      else { p = (u - 0.8) / 0.2; s = 1; sx = 1.06 - 0.06 * p; sy = 0.9 + 0.1 * p; }
+    }
+    return { x: A.x + (B.x - A.x) * s, y: A.y + (B.y - A.y) * s, w: A.w + (B.w - A.w) * s, h: A.h + (B.h - A.h) * s, lift: lift, sx: sx, sy: sy };
+  }
+  var CARRY_REACH = 8;   /* px past the trip's ends along the strip: a label the squashed or tilted chip can touch */
+  function carry(L, A, B, strip, cfg, target, vertical) {
+    if (!L.under || reduced()) { setLensBox(L, B); return; }
+    var C = CARRY[switchMotion], ease = bezierEase(C.ease), dur = C.dur, hopping = switchMotion === 'hop';
+    var now = strip.querySelector(cfg.items + (cfg.active || '.active')), weight = getComputedStyle(now || target).fontWeight;
+    var stick = hopping ? getComputedStyle(strip).getPropertyValue('--pm-switch-stick').trim() : '';
+    if (stick === 'transparent' || stick === 'none') stick = '';
+    /* every label the chip can cross: along the strip, between the trip's two ends and a little past them */
+    var lo = Math.min(vertical ? A.y : A.x, vertical ? B.y : B.x) - CARRY_REACH, hi = Math.max(vertical ? A.y + A.h : A.x + A.w, vertical ? B.y + B.h : B.x + B.w) + CARRY_REACH;
+    var crossed = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible).map(function (it) { return { it: it, r: rectIn(strip, it, 0) }; })
+      .filter(function (s) { var a = vertical ? s.r.y : s.r.x, b = a + (vertical ? s.r.h : s.r.w); return b > lo && a < hi; });
+    var over = overLayer(strip), tag = cfg.tag, box = function (e) { var st = e.style; st.left = B.x + 'px'; st.top = B.y + 'px'; st.width = B.w + 'px'; st.height = B.h + 'px'; };
+    var F = el('i', { class: 'lg-lens lg-hop lg-carry', 'aria-hidden': 'true' }), G = el('i', { class: 'lg-carry-twins', 'aria-hidden': 'true' }), S = null;
+    if (tag) F.setAttribute('data-lg-for', tag);
+    box(F); G.style.width = B.w + 'px'; G.style.height = B.h + 'px';
+    crossed.forEach(function (s) { G.appendChild(twinOf(s.it, { x: s.r.x - B.x, y: s.r.y - B.y, w: s.r.w, h: s.r.h }, weight)); });
+    F.appendChild(G);
+    if (stick) { S = el('i', { class: 'lg-carry-shadow', 'aria-hidden': 'true' }); if (tag) S.setAttribute('data-lg-for', tag); box(S); over.appendChild(S); }
+    over.appendChild(F);
+    if (S) S.style.borderRadius = getComputedStyle(F).borderRadius;   /* the block's own corner, whatever shapes it (a rail skin's) */
+    /* the frames: the block's transform (about its centre: translate, tilt, scale), its copies' exact inverse, and the
+       shadow's (the block's, pushed out by the sticker's rest offset, 2 px, growing to 4 x 6 px at the top of the hop).
+       A vertical strip lifts the sticker toward the light (up and left) instead of up its own path */
+    var fF = [], fG = [], fS = [], rects = [], n = Math.max(2, Math.ceil(dur / (1000 / 60))), cB = { x: B.x + B.w / 2, y: B.y + B.h / 2 };
+    for (var i = 0; i <= n; i++) {
+      var t = Math.min(dur, i * 1000 / 60), o = t / dur, P = carryPose(switchMotion, ease(o), A, B);
+      var lx = hopping ? (vertical ? -2 : 0) * P.lift : 0, ly = hopping ? (vertical ? -2 : -6) * P.lift : 0, rot = hopping ? -2 * P.lift : 0;
+      var dx = P.x + P.w / 2 - cB.x + lx, dy = P.y + P.h / 2 - cB.y + ly, kx = P.sx * P.w / B.w, ky = P.sy * P.h / B.h;
+      fF.push({ offset: o, transform: 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' });
+      fG.push({ offset: o, transform: 'scale(' + (1 / kx).toFixed(5) + ',' + (1 / ky).toFixed(5) + ') rotate(' + (-rot).toFixed(3) + 'deg) translate(' + (-dx).toFixed(2) + 'px,' + (-dy).toFixed(2) + 'px)' });
+      if (S) { var ox = 2 + 2 * P.lift, oy = 2 + 4 * P.lift; fS.push({ offset: o, transform: 'translate(' + (dx + ox).toFixed(2) + 'px,' + (dy + oy).toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' }); }
+      rects.push({ t: t, x: P.x, y: P.y, w: P.w, h: P.h });
+      if (t >= dur) break;
+    }
+    var timing = { duration: dur, easing: 'linear', fill: 'forwards' };
+    F.animate(fF, timing); G.animate(fG, timing); if (S) S.animate(fS, timing);
+    setLensBox(L, B);
+    /* the chip under the labels stays hidden while the block is up (as for a step's blocks) */
+    L.anim = L.hopHide = L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
+    L.path = { t0: performance.now(), dur: dur, rects: rects };
+    if (!L.hopMarks) L.hopMarks = new Map();
+    L.hopFrames = S ? [S, F] : [F]; L.hopTarget = target; L.hopEnd = performance.now() + dur;
+    var Pp = L.pending && L.pending.el === target ? L.pending : null; if (Pp) L.hopPress = Pp;
+    /* the labels underneath rest in their resting ink: the one headed for until the block lands on it, the one left at
+       once (a press marks it so; a change the app made has already taken its chosen look away) */
+    hopMark(L, target, 'off');
+    L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, dur + 1);
     L.hopSafety = setTimeout(function () { L.hopSafety = 0; if (L.hopFrames) { endHop(L); queueSync(L.strip); } }, 3000);
   }
   /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it. Only for

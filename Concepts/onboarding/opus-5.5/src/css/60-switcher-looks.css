@@ -5,79 +5,130 @@
    glass.js STRIPS and glass.css sections 6 and 12; CONTRACT.md, "The switcher"). Glass draws it as the clear lens Jared
    approved and sets none of these tokens. Each other look adopts it here, by tokens only, so it stays itself and is
    the same everywhere inside itself:
-   - Basic: a precise tinted chip with a crisp accent hairline, gliding with a little give;
-   - Friendly: a soft mint pebble with a glow, the page tabs' own plate (in place it keeps the plate's card body), gliding like
-     Glass's drop;
+   - Basic: B1, a solid block of Basic's blue with its words reversed out, square 3 px corners, no tint, hairline or shine,
+     snapping across in 110 ms (stream F batch 9, Jared 2026-11-08: "I like F1 and B1"); its segmented toggles take B2's
+     neutral well instead, as DR-069 asks;
+   - Friendly: F1, a sticker: a solid pastel chip (mint in the shell, peach in onboarding) with Friendly's 2 px ink outline
+     and a hard offset shadow, hopping to the next item and landing with a small squash; its segmented toggles are the
+     same sticker in the look's neutral card colour, as DR-069 asks;
    - Retro: a reverse-video phosphor block (opaque, square, the label inverted) that jumps in two hard steps on a 33 ms tick;
    - NieR Mode: the game's ink bar (opaque ink, paper words, square), cut straight to its tab; its hover ink bars stay as
      they are.
    The rules below name the adopting looks by the look itself, not by the <html data-pm-switch(-layer)> marks that glass.js
    sets from these tokens after the look's own restyle: html:not([data-theme^="glass"]) for "the switcher is on" and
-   :is(html[data-theme^="retro"], html[data-o55-nier="on"]) for "its chip is opaque". Keyed on the marks, every NieR toggle
+   :is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]) for "its chip is opaque". Keyed on the marks, every NieR toggle
    restyled the page a second time once glass.js flipped them (Q16, B5, with pm7-liquid-glass and pm7-motion-settings,
    2026-10-16). Same specificity as the marks. A look that opts out (--pm-switch other than lens) must be excluded here too.
    An opaque chip needs the lens under its labels (--pm-switch-layer: under). Labels: --pm-switch-ink at rest,
    --pm-switch-ink-on when chosen; inside an opaque chip every line and icon reads in that one ink, as reverse video and
    NieR's ink bar do. Reduce Motion: the chip jumps (glass.js). */
 
-/* ---- Basic --------------------------------------------------------------------------------------------------------- */
+/* ---- Basic: B1 Solid block ------------------------------------------------------------------------------------------
+   One opaque block of Basic's blue under its labels, the chosen words white in Light and dark navy in Dark, square 3 px
+   corners, no tint, hairline, catch light, glow or swell; it snaps straight across in 110 ms (glass.js carry). Hover is a
+   1 px blue keyline (25-hover-controls.css), focus a solid ring in the text colour (below). The colours are the concept's,
+   measured in the built page (Concepts/selector-indicator-concepts, B1: 7.0:1 words on the block in Light, 7.9:1 in
+   Dark; the block 6.0:1 and 7.5:1 against the bar). */
 html[data-theme="basic-dark"]:not([data-o55-nier="on"]) {
-  --pm-switch: lens;
+  --pm-switch: lens; --pm-switch-layer: under;
   --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
   --pm-switch-hover: color-mix(in srgb, var(--text-primary) 7%, transparent);
-  --pm-switch-fill: color-mix(in srgb, var(--accent-primary) 17%, transparent); --pm-switch-body: transparent;
-  --pm-switch-line: color-mix(in srgb, var(--accent-primary) 80%, transparent); --pm-switch-edge: transparent;
-  --pm-switch-top: rgba(255, 255, 255, .07); --pm-switch-bottom: transparent;
+  --pm-switch-fill: #64B5F6; --pm-switch-body: transparent;
+  --pm-switch-line: transparent; --pm-switch-edge: transparent;
+  --pm-switch-top: transparent; --pm-switch-bottom: transparent;
   --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
-  --pm-switch-shadow: 0 1px 2px rgba(0, 0, 0, .45);
-  --pm-switch-r: 6px; --pm-switch-r-in: 4px;
-  --pm-switch-ink: color-mix(in srgb, var(--text-primary) 72%, var(--text-secondary)); --pm-switch-ink-on: var(--text-primary);
-  --pm-switch-mark: var(--accent-primary);
-  --pm-switch-swell: .5; --pm-switch-liquid: .35;
+  --pm-switch-rim: 0 0 0 0 transparent; --pm-switch-stick: transparent; --pm-switch-shadow: 0 0 0 0 transparent;
+  --pm-switch-r: 3px; --pm-switch-r-in: 2px;
+  --pm-switch-ink: color-mix(in srgb, var(--text-primary) 72%, var(--text-secondary)); --pm-switch-ink-on: #0B1A2B;
+  --pm-switch-ink-hover: var(--text-primary);
+  --pm-switch-mark: var(--accent-primary); --pm-switch-mark-on: #0B1A2B;
+  --pm-switch-hover-line: #64B5F6; --pm-switch-focus: #E8E8E8;
+  --pm-switch-swell: 0; --pm-switch-liquid: 0;
+  --pm-switch-motion: snap;
 }
 html[data-theme="basic-light"]:not([data-o55-nier="on"]) {
-  --pm-switch: lens;
+  --pm-switch: lens; --pm-switch-layer: under;
   --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
   --pm-switch-hover: color-mix(in srgb, var(--text-primary) 6%, transparent);
-  --pm-switch-fill: color-mix(in srgb, var(--accent-primary) 11%, transparent); --pm-switch-body: transparent;
-  --pm-switch-line: color-mix(in srgb, var(--accent-primary) 70%, transparent); --pm-switch-edge: transparent;
-  --pm-switch-top: rgba(255, 255, 255, .55); --pm-switch-bottom: transparent;
+  --pm-switch-fill: #0056B3; --pm-switch-body: transparent;
+  --pm-switch-line: transparent; --pm-switch-edge: transparent;
+  --pm-switch-top: transparent; --pm-switch-bottom: transparent;
   --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
-  --pm-switch-shadow: 0 1px 2px rgba(16, 24, 40, .10);
-  --pm-switch-r: 6px; --pm-switch-r-in: 4px;
-  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: var(--text-primary);
-  --pm-switch-mark: var(--accent-primary);
-  --pm-switch-swell: .5; --pm-switch-liquid: .35;
+  --pm-switch-rim: 0 0 0 0 transparent; --pm-switch-stick: transparent; --pm-switch-shadow: 0 0 0 0 transparent;
+  --pm-switch-r: 3px; --pm-switch-r-in: 2px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: #FFFFFF;
+  --pm-switch-ink-hover: var(--text-primary);
+  --pm-switch-mark: var(--accent-primary); --pm-switch-mark-on: #FFFFFF;
+  --pm-switch-hover-line: #0056B3; --pm-switch-focus: #1A1A1A;
+  --pm-switch-swell: 0; --pm-switch-liquid: 0;
+  --pm-switch-motion: snap;
 }
 
-/* ---- Friendly: the page tabs' mint plate and glow, everywhere ------------------------------------------------------ */
+/* ---- Friendly: F1 Sticker ---------------------------------------------------------------------------------------------
+   A solid pastel sticker under its labels: mint in the shell, peach in onboarding (below), with Friendly's 2 px ink
+   outline (--pm-switch-rim, inside the chip, so it moves nothing) and a hard 2 px offset shadow (--pm-switch-stick). It hops
+   to the next item on a low arc with a small tilt and lands with a squash (glass.js carry). Hover is a dashed outline in the
+   secondary ink (25-hover-controls.css), focus a solid ring (below). The concept's colours (F1: the words 9.9:1 on the
+   sticker in Light, 10.5:1 in Dark; the sticker's edge 9.2:1 and 9.1:1 against the bar). */
 html[data-theme="friendly-dark"]:not([data-o55-nier="on"]) {
-  --pm-switch: lens;
+  --pm-switch: lens; --pm-switch-layer: under;
   --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
   --pm-switch-hover: color-mix(in srgb, var(--pm6-cozy-mint) 9%, transparent);
-  --pm-switch-fill: color-mix(in srgb, var(--pm6-cozy-mint) 17%, transparent); --pm-switch-body: color-mix(in srgb, var(--pm6-cozy-card-base) 55%, transparent);
-  --pm-switch-line: color-mix(in srgb, var(--pm6-cozy-mint) 42%, transparent); --pm-switch-edge: transparent;
-  --pm-switch-top: rgba(255, 255, 255, .08); --pm-switch-bottom: transparent;
+  --pm-switch-fill: #6FDABC; --pm-switch-body: transparent;
+  --pm-switch-line: transparent; --pm-switch-edge: transparent;
+  --pm-switch-top: transparent; --pm-switch-bottom: transparent;
   --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
-  --pm-switch-shadow: 0 0 14px color-mix(in srgb, var(--pm6-cozy-mint) 28%, transparent), 0 2px 6px -2px rgba(0, 0, 0, .4);
-  --pm-switch-r: 10px; --pm-switch-r-in: 7px;
-  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: color-mix(in srgb, var(--pm6-cozy-mint) 72%, #fff);
-  --pm-switch-mark: var(--pm6-cozy-mint);
-  --pm-switch-swell: .75; --pm-switch-liquid: .85;
+  --pm-switch-rim: inset 0 0 0 2px #1C1624; --pm-switch-stick: #8C8892;
+  --pm-switch-shadow: inset 0 0 0 2px #1C1624, 2px 2px 0 #8C8892;
+  --pm-switch-r: 9px; --pm-switch-r-in: 6px;
+  --pm-switch-ink: var(--text-secondary); --pm-switch-ink-on: #1C1624;
+  --pm-switch-ink-hover: var(--text-primary);
+  --pm-switch-mark: var(--pm6-cozy-mint); --pm-switch-mark-on: #1C1624;
+  --pm-switch-hover-line: #B4AEBE; --pm-switch-focus: #F0EDF4;
+  --pm-switch-swell: 0; --pm-switch-liquid: 0;
+  --pm-switch-motion: hop;
 }
 html[data-theme="friendly-light"]:not([data-o55-nier="on"]) {
-  --pm-switch: lens;
+  --pm-switch: lens; --pm-switch-layer: under;
   --pm-switch-track: color-mix(in srgb, var(--text-primary) 5%, transparent);
   --pm-switch-hover: color-mix(in srgb, var(--pm6-cozy-mint) 10%, transparent);
-  --pm-switch-fill: color-mix(in srgb, var(--pm6-cozy-mint) 20%, transparent); --pm-switch-body: color-mix(in srgb, var(--pm6-cozy-card-base) 72%, transparent);
-  --pm-switch-line: color-mix(in srgb, var(--pm6-cozy-mint) 55%, transparent); --pm-switch-edge: transparent;
-  --pm-switch-top: rgba(255, 255, 255, .8); --pm-switch-bottom: transparent;
+  --pm-switch-fill: #A7E5D4; --pm-switch-body: transparent;
+  --pm-switch-line: transparent; --pm-switch-edge: transparent;
+  --pm-switch-top: transparent; --pm-switch-bottom: transparent;
   --pm-switch-glint: transparent; --pm-switch-glint-blend: normal;
-  --pm-switch-shadow: 0 0 12px color-mix(in srgb, var(--pm6-cozy-mint) 30%, transparent), 0 2px 6px -3px rgba(74, 69, 80, .25);
-  --pm-switch-r: 10px; --pm-switch-r-in: 7px;
-  --pm-switch-ink: color-mix(in srgb, var(--text-primary) 70%, var(--text-secondary)); --pm-switch-ink-on: color-mix(in srgb, var(--accent-lime) 42%, #000);
-  --pm-switch-mark: var(--accent-lime);
-  --pm-switch-swell: .75; --pm-switch-liquid: .85;
+  --pm-switch-rim: inset 0 0 0 2px #4A4550; --pm-switch-stick: #4A4550;
+  --pm-switch-shadow: inset 0 0 0 2px #4A4550, 2px 2px 0 #4A4550;
+  --pm-switch-r: 9px; --pm-switch-r-in: 6px;
+  --pm-switch-ink: color-mix(in srgb, var(--text-primary) 70%, var(--text-secondary)); --pm-switch-ink-on: #2E2A33;
+  --pm-switch-ink-hover: var(--text-primary);
+  --pm-switch-mark: var(--accent-lime); --pm-switch-mark-on: #2E2A33;
+  --pm-switch-hover-line: #6B6473; --pm-switch-focus: #9E5038;
+  --pm-switch-swell: 0; --pm-switch-liquid: 0;
+  --pm-switch-motion: hop;
+}
+/* onboarding's sticker is peach, the window's own warm colour (F1, as drafted) */
+html[data-theme="friendly-light"]:not([data-o55-nier="on"]) #pm-o55-onboarding { --pm-switch-fill: #FAD0C4; }
+html[data-theme="friendly-dark"]:not([data-o55-nier="on"]) #pm-o55-onboarding { --pm-switch-fill: #FFAD93; }
+/* Segmented toggles take each look's neutral selection fill, never an accent (DR-069; DRY_Rules "every segmented toggle
+   use each look's neutral selection fill in Friendly, Glass and Basic"): in Basic, B2's pressed key (a flat well one step
+   darker than the bar, a grey 1 px keyline, the words in full black or white); in Friendly, F1's sticker in the window's
+   card colour. They are onboarding's one-of-several segments, Settings' segmented choices, the theme menu's Light / Dark /
+   Auto, Usage's range, the Customize screens' rows and the Planning Wizard's work type; the chip is inside each strip (an
+   opaque chip's layer), so these tokens on the strip reach it. Hover and focus follow the look. */
+html[data-theme="basic-light"]:not([data-o55-nier="on"]) :is(#pm-o55-onboarding .o55-seg, #pm-settings-root .segmented, #themeMenu .pm6-tt-modes, #pmuRange, .pmt-cz .pmw-ink-row, #panel-wizard .pm6-wiz-intent-row, .pmw-ink-row) {
+  --pm-switch-fill: #D3D7DD; --pm-switch-rim: inset 0 0 0 1px #5C6470; --pm-switch-shadow: inset 0 0 0 1px #5C6470; --pm-switch-r: 2px;
+  --pm-switch-ink-on: #000000; --pm-switch-mark-on: #000000;
+}
+html[data-theme="basic-dark"]:not([data-o55-nier="on"]) :is(#pm-o55-onboarding .o55-seg, #pm-settings-root .segmented, #themeMenu .pm6-tt-modes, #pmuRange, .pmt-cz .pmw-ink-row, #panel-wizard .pm6-wiz-intent-row, .pmw-ink-row) {
+  --pm-switch-fill: #0E0E0E; --pm-switch-rim: inset 0 0 0 1px #7A818C; --pm-switch-shadow: inset 0 0 0 1px #7A818C; --pm-switch-r: 2px;
+  --pm-switch-ink-on: #FFFFFF; --pm-switch-mark-on: #FFFFFF;
+}
+html[data-theme="friendly-light"]:not([data-o55-nier="on"]) :is(#pm-o55-onboarding .o55-seg, #pm-settings-root .segmented, #themeMenu .pm6-tt-modes, #pmuRange, .pmt-cz .pmw-ink-row, #panel-wizard .pm6-wiz-intent-row, .pmw-ink-row) {
+  --pm-switch-fill: #FFFFFF;
+}
+html[data-theme="friendly-dark"]:not([data-o55-nier="on"]) :is(#pm-o55-onboarding .o55-seg, #pm-settings-root .segmented, #themeMenu .pm6-tt-modes, #pmuRange, .pmt-cz .pmw-ink-row, #panel-wizard .pm6-wiz-intent-row, .pmw-ink-row) {
+  --pm-switch-fill: #45404E; --pm-switch-rim: inset 0 0 0 2px #C2BFC7; --pm-switch-shadow: inset 0 0 0 2px #C2BFC7, 2px 2px 0 #8C8892;
+  --pm-switch-ink-on: #F0EDF4; --pm-switch-mark-on: #F0EDF4;
 }
 
 /* ---- Retro: reverse video ------------------------------------------------------------------------------------------- */
@@ -147,7 +198,7 @@ html:not([data-theme^="glass"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root 
 /* an icon on an opaque chip takes its item's ink, as the words do, with the pointer on it too. The glyphs' hover ignite
    (pm7-hover-bridge.css) inks a hovered icon in the screen's --text, and on the chip (a chosen or pressed item under the
    pointer) or on NieR's hover bar that is the chip's own colour (Q16 review, resting-pointer press check) */
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn, .domain-link, .side-link, .index-link, .workspace-tab, .manager-tab, .pm6-tt-mode):is(.active, .is-active, .is-current, [aria-selected="true"], [aria-checked="true"], [data-lg-press="on"]) svg.nx,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn, .domain-link, .side-link, .index-link, .workspace-tab, .manager-tab, .pm6-tt-mode):is(.active, .is-active, .is-current, [aria-selected="true"], [aria-checked="true"], [data-lg-press="on"]) svg.nx,
 html[data-o55-nier="on"][data-o55-nier-parts~="cursor"]:not(#lgz) :is(.page-tab, #pmuRange > button, .pm-segtab-item, .orch-tab, .pmu-navbtn, .domain-link, .side-link, .index-link, .workspace-tab, .manager-tab):hover svg.nx { --nx-ink: currentColor; }
 
 /* None of these looks lights its chip with Glass's glint (--pm-switch-glint is transparent in each), so the glint's band,
@@ -158,22 +209,22 @@ html:not([data-theme^="glass"]):not(#lgz):not(#lgy) .lg-lens::after { content: n
    fading, so the tab under the chip is the one in the chip's ink in every frame (Q16 delta review: a 140-200 ms colour
    fade left a tab the chip had left still inked, and a tab it had reached not yet). One plain selector per kind of item
    and part, so the browser's ancestor filter rejects every other element. */
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) nav.page-tabs .page-tab,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuRange > button,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #sidePanelSlot .pm-segtab-item,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .orch-tabs .orch-tab,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn .pmu-navicon,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn .pmu-navtext,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link small,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .workspace-tab,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .manager-tab,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .segmented > button,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .pm51-index-group > .index-link,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #themeMenu .pm6-tt-mode,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #panel-wizard .pm6-wiz-intent-chip { transition-property: none; }
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) nav.page-tabs .page-tab,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pmuRange > button,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #sidePanelSlot .pm-segtab-item,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) .orch-tabs .orch-tab,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn .pmu-navicon,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pmuNav .pmu-navbtn .pmu-navtext,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link small,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .workspace-tab,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .manager-tab,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .segmented > button,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .pm51-index-group > .index-link,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #themeMenu .pm6-tt-mode,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #panel-wizard .pm6-wiz-intent-chip { transition-property: none; }
 
 /* ---- What the component does not draw, in the same material ----------------------------------------------------------
    The title bar's one-of-several menus (the look family, the project) are lists that live in a menu, not strips: the
@@ -197,23 +248,23 @@ html:not([data-theme^="glass"]):not([data-o55-nier="on"]) .pm6-tb-menu-item.is-s
    restyle, and a bare * keyed on it restyled the whole page a second time on every NieR toggle, 266 -> 58 ms of the
    flip on Nas1; keyed on the look, it rides the look's own restyle) */
 /* T2 build step: the .active-keyed '*' / ':where(*)' descendants below are rewritten at build time from onboarding/opus-5.5/tools/active_descendant_rules.json; a new descendant class or tag under these carriers needs an entry there (check: tools/active_descendant_guard.mjs). */
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link.active *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link.active *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .pm51-index-group > .index-link.is-active *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .workspace-tab.is-current *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .manager-tab[aria-selected="true"] *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pmuRange > button.active *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) nav.page-tabs .page-tab.active *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .orch-tabs .orch-tab.active *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #themeMenu .pm6-tt-mode[aria-checked="true"] *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #panel-wizard .pm6-wiz-intent-chip.sel *,
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .pm6-tb-menu-item.is-selected * {
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link.active *,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .domain-link.active *,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .pm51-index-group > .index-link.is-active *,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] *,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .workspace-tab.is-current *,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .manager-tab[aria-selected="true"] *,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pmuRange > button.active *,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) nav.page-tabs .page-tab.active *,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) .orch-tabs .orch-tab.active *,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #themeMenu .pm6-tt-mode[aria-checked="true"] *,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #panel-wizard .pm6-wiz-intent-chip.sel *,
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) .pm6-tb-menu-item.is-selected * {
   color: inherit; -webkit-text-fill-color: currentColor;
 }
 /* the items whose own words glass.css does not colour (it colours a service's name, not its row) */
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) :is(#pm-settings-root .resource-row[aria-current="true"], #panel-wizard .pm6-wiz-intent-chip.sel) { color: var(--pm-switch-ink-on); }
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] .status-dot { box-shadow: 0 0 0 1.5px var(--pm-switch-ink-on); }
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) :is(#pm-settings-root .resource-row[aria-current="true"], #panel-wizard .pm6-wiz-intent-chip.sel) { color: var(--pm-switch-ink-on); }
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) #pm-settings-root .resource-row[aria-current="true"] .status-dot { box-shadow: 0 0 0 1.5px var(--pm-switch-ink-on); }
 
 /* ---- The look's own marks that the component does not already set aside ----------------------------------------------
    The Orchestrator's views kept their 3 px underline under the chip (Basic's blue, Retro's green). */
@@ -242,7 +293,7 @@ html:not([data-theme^="glass"]) #panel-orchestrator .orch-tabs .orch-tab.active 
 /* an opaque chip reaches a pressed view before its click lands: the view's count takes the chip's ink with it, as it will
    once chosen (it kept the resting muted ink, 1.6:1 on NieR's ink bar and on Retro's lime, for the length of the press).
    Glass's own press-mark arms (glass.css) cover the other strips; this one count colours itself. */
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #panel-orchestrator .orch-tab[data-lg-press="on"] .orch-tab-badge { color: inherit; opacity: 1; }
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #panel-orchestrator .orch-tab[data-lg-press="on"] .orch-tab-badge { color: inherit; opacity: 1; }
 
 /* ---- Home panels: the chosen tab is seated on the panel's edge (Jared, 2026-10-15: "the tabs ... doesnt look like it is
    sitting well", on Retro's ":: Agents") ----------------------------------------------------------------------------------
@@ -277,14 +328,71 @@ html:not([data-theme^="glass"]):not(#lgz) .pmw-tab[data-active] .pmw-tclose:hove
    an opaque chip (the monochrome looks, where NieR already prints it in ink) gives it the chip's ink (it read 3.3-3.9:1 on
    the light looks' chips) */
 html:not([data-theme^="glass"]):not(#lgz) .pmw-tab[data-active] .pmw-exit { color: color-mix(in srgb, var(--pmw-bad) 62%, var(--pm-switch-ink-on)); }
-:is(html[data-theme^="retro"], html[data-o55-nier="on"]):not(#lgz) .pmw-tab[data-active] .pmw-exit { color: var(--pm-switch-ink-on); }
+:is(html[data-theme^="retro"], html[data-theme^="basic"], html[data-theme^="friendly"], html[data-o55-nier="on"]):not(#lgz) .pmw-tab[data-active] .pmw-exit { color: var(--pm-switch-ink-on); }
 html:not([data-theme^="glass"]) .pmw-plate { --pm-switch-shadow: 0 0 0 0 transparent; }
 html[data-theme="retro-dark"]:not([data-theme^="glass"]) .pmw-plate { --pm-switch-shadow: 0 0 7px color-mix(in srgb, var(--accent-lime) 24%, transparent); }
-html[data-theme="friendly-dark"]:not([data-theme^="glass"]) .pmw-plate { --pm-switch-shadow: 0 0 14px color-mix(in srgb, var(--pm6-cozy-mint) 28%, transparent); }
-html[data-theme="friendly-light"]:not([data-theme^="glass"]) .pmw-plate { --pm-switch-shadow: 0 0 12px color-mix(in srgb, var(--pm6-cozy-mint) 30%, transparent); }
+/* (Friendly's seated tab is the sticker with its outline and no offset shadow, which would fall on the panel's rule) */
+html[data-theme="friendly-dark"]:not([data-theme^="glass"]) .pmw-plate { --pm-switch-shadow: inset 0 0 0 2px #1C1624; }
+html[data-theme="friendly-light"]:not([data-theme^="glass"]) .pmw-plate { --pm-switch-shadow: inset 0 0 0 2px #4A4550; }
 /* a panel folded to a column of icon tabs: its chosen tab is the same chip, in place (it was the neutral press fill) */
 html:not([data-theme^="glass"]):not(#lgz) .pmw-strip[data-column] .pmw-tab[data-active] {
   background: linear-gradient(var(--pm-switch-fill), var(--pm-switch-fill)), linear-gradient(var(--pm-switch-body), var(--pm-switch-body));
   box-shadow: inset 0 0 0 .5px var(--pm-switch-line), inset 0 1px 0 var(--pm-switch-top), 0 0 0 .5px var(--pm-switch-edge), var(--pm-switch-shadow);
   border-radius: var(--pm-switch-r); color: var(--pm-switch-ink-on);
+}
+
+/* ---- F1 and B1 around the chip: the step rail's chip, focus, the chosen option and High Contrast (stream F batch 9) ----
+   Onboarding's step rail: the chip is the current step's word with 3 px round it (F1 and B1 as drafted: the word on its
+   sticker or block), not 6 px, which ran the chip down past the header's foot. */
+:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz) #pm-o55-onboarding .o55-raillist { --lg-lens-pad: 3px; }
+/* (and 6 px more at each side: each step's word box is 6 px wider, given back by its margins, so nothing moves) */
+:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz) #pm-o55-onboarding .o55-raillist .o55-raillabel { padding-left: 6px; padding-right: 6px; margin-left: -6px; margin-right: -6px; }
+/* the keyboard's focus ring on a switcher's item: Friendly's brick (Light) or paper (Dark), Basic's text colour, so it reads
+   beside the chip as well as on the bar */
+:is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy) :is(.title-bar .page-tabs .page-tab, #sidePanelSlot .pm-segtab-item, #pm-o55-onboarding .o55-seg button, #pmuRange > button, .orch-tabs .orch-tab):focus-visible { outline-color: var(--pm-switch-focus); }
+/* the chosen option: F1's peach sticker row (2 px ink outline, a 4 px hard ink shadow); B1's flat blue-tinted row inside a
+   2 px blue frame (the 1 px border and its 1 px inset, as before) with a solid blue icon tile and 4 px corners. Hover:
+   Friendly's dashed outline in the secondary ink, Basic's 1 px blue keyline. The border widths do not change, so a
+   choice moves nothing. */
+#pm-o55-onboarding[data-family="friendly"][data-mode="light"] { --o55-f1-row: #FDE7DF; --o55-f1-line: #4A4550; --o55-f1-shadow: #4A4550; --o55-f1-hover: #6B6473; }
+#pm-o55-onboarding[data-family="friendly"][data-mode="dark"] { --o55-f1-row: #594447; --o55-f1-line: #F0EDF4; --o55-f1-shadow: #8C8892; --o55-f1-hover: #B4AEBE; }
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="friendly"] .o55-card.o55-on {
+  --o55-face-background: var(--o55-f1-row); background: var(--o55-face-background);
+  --o55-face-border-color: var(--o55-f1-line); border-color: var(--o55-face-border-color);
+  --o55-face-shadow: 4px 4px 0 var(--o55-f1-shadow); box-shadow: var(--o55-face-shadow);
+}
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="friendly"] .o55-card.o55-card-parent.o55-on { --o55-face-shadow: 4px 0 0 var(--o55-f1-shadow); box-shadow: var(--o55-face-shadow); }
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="friendly"] .o55-card:not(.o55-on):hover { border-style: dashed; --o55-face-border-color: var(--o55-f1-hover); border-color: var(--o55-face-border-color); }
+#pm-o55-onboarding[data-family="basic"][data-mode="light"] { --o55-b1-row: #D3DDE9; --o55-b1-block: #0056B3; --o55-b1-on: #FFFFFF; }
+#pm-o55-onboarding[data-family="basic"][data-mode="dark"] { --o55-b1-row: #263039; --o55-b1-block: #64B5F6; --o55-b1-on: #0B1A2B; }
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="basic"] { --o55-card-r: 4px; }
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="basic"] .o55-glyph { border-radius: 3px; }
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="basic"] .o55-card.o55-on {
+  --o55-face-background: var(--o55-b1-row); background: var(--o55-face-background);
+  --o55-face-border-color: var(--o55-b1-block); border-color: var(--o55-face-border-color);
+}
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="basic"] .o55-card.o55-on .o55-glyph { background: var(--o55-b1-block); color: var(--o55-b1-on); }
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="basic"] .o55-card:not(.o55-on):hover { --o55-face-border-color: var(--o55-b1-block); border-color: var(--o55-face-border-color); }
+/* the suggestion chips are a joined segmented row: the look's neutral selection (DR-069), B2's well in Basic, the card
+   colour inside an ink edge in Friendly */
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="basic"][data-mode="light"] .o55-suggestchip.o55-on { border-color: #5C6470; background: #D3D7DD; color: #000000; }
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="basic"][data-mode="dark"] .o55-suggestchip.o55-on { border-color: #7A818C; background: #0E0E0E; color: #FFFFFF; }
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="friendly"] .o55-suggestchip.o55-on { border-color: var(--o55-f1-line); background: var(--o55-card-bg); color: var(--text-primary); box-shadow: inset 0 0 0 1px var(--o55-f1-line); }
+
+/* Windows High Contrast (forced colors): the chip is the system's selection, Highlight under HighlightText, in Friendly's
+   and Basic's own shapes; the sticker keeps an outline in the text colour and drops its shadow; a segmented toggle's well
+   is the window colour with a Highlight keyline. Forced colors drop the chip's painted fill (a gradient image), so these
+   parts opt out of the forcing and name system colours themselves. */
+@media (forced-colors: active) {
+  :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) :is(lg-under, lg-over) .lg-lens { forced-color-adjust: none; background: Highlight !important; box-shadow: none !important; }
+  :is(html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) :is(lg-under, lg-over) .lg-lens { box-shadow: inset 0 0 0 2px CanvasText !important; }
+  :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) lg-over .lg-carry-shadow { display: none !important; }
+  :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) :is(#pm-o55-onboarding .o55-seg, #pm-settings-root .segmented, #themeMenu .pm6-tt-modes, #pmuRange, .pmt-cz .pmw-ink-row, #panel-wizard .pm6-wiz-intent-row) > :is(lg-under, lg-over) .lg-lens { background: Canvas !important; box-shadow: inset 0 0 0 2px Highlight !important; }
+  :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) :is(nav.page-tabs .page-tab.active, #sidePanelSlot .pm-segtab-item.active, .orch-tabs .orch-tab.active, #pmuNav .pmu-navbtn.active, #pm-o55-onboarding .o55-railitem[data-state="current"] .o55-raillabel, #pm-settings-root :is(.rail-scroll > .side-link.active, .domain-link.active, .workspace-tab.is-current, .pm51-index-group > .index-link.is-active, .manager-tab[aria-selected="true"]), .lg-hop .lg-twin) { forced-color-adjust: none; color: HighlightText !important; }
+  :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) :is(nav.page-tabs .page-tab.active, #sidePanelSlot .pm-segtab-item.active, .orch-tabs .orch-tab.active, #pmuNav .pmu-navbtn.active, #pm-o55-onboarding .o55-railitem[data-state="current"] .o55-raillabel, #pm-settings-root :is(.rail-scroll > .side-link.active, .domain-link.active, .workspace-tab.is-current, .pm51-index-group > .index-link.is-active, .manager-tab[aria-selected="true"]), .lg-hop .lg-twin) * { color: HighlightText !important; }
+  :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) :is(nav.page-tabs .page-tab.active, #sidePanelSlot .pm-segtab-item.active, .orch-tabs .orch-tab.active):focus-visible { outline-color: CanvasText !important; }
+  :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) :is(.pm6-tb-menu-item.is-selected, #pm-settings-root .resource-row[aria-current="true"], .pmw-strip[data-column] .pmw-tab[data-active]) { forced-color-adjust: none; background: Highlight !important; color: HighlightText !important; box-shadow: none !important; }
+  :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) :is(.pm6-tb-menu-item.is-selected, #pm-settings-root .resource-row[aria-current="true"], .pmw-strip[data-column] .pmw-tab[data-active]) * { color: HighlightText !important; }
+  :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .segmented > button:is([aria-checked="true"], [aria-pressed="true"]) { forced-color-adjust: none; background: Canvas !important; color: CanvasText !important; box-shadow: inset 0 0 0 2px Highlight !important; }
+  html:not([data-o55-nier="on"]) #pm-o55-onboarding:is([data-family="basic"], [data-family="friendly"]) .o55-card.o55-on { border-color: Highlight !important; box-shadow: inset 0 0 0 2px Highlight !important; }
 }
