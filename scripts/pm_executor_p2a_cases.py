@@ -73,6 +73,8 @@ def action(case, contract, family, shapes, existing, root):
         cases = [row for row in cases if row['expected'] in document.get('keep_expected', ['accept', 'reject'])]
         registry = set(existing) | set(document.get('admitted', []))
         return lambda: contract_integrity(mutated, registry, cases)
+    if route == 'stock_schema':
+        return lambda: sem.stock_schema_validate(contract['schema_ref'], document['payload'])
     if route == 'schema_document':
         return lambda: refs.check_document(document['schema'])
     if route == 'schema_reference':

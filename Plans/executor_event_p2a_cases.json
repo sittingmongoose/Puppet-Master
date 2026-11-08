@@ -1644,6 +1644,44 @@
       "defect": "a JCS preimage string holding a lone surrogate"
     },
     {
+      "id": "PS02-control-stock-schema",
+      "family": "attempt.completed",
+      "route": "stock_schema",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "terminal_state": "failed",
+            "retry_count": 1,
+            "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+            "verification_result_refs": [
+              "verifier-001"
+            ],
+            "reviewer_result_refs": [
+              "reviewer-001"
+            ],
+            "safe_point_id": "safe_point_id-001",
+            "remediation_root_id": "remediation_root_id-001",
+            "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+            "failure_class": "verification_failed",
+            "backoff_until_utc": "2026-11-04T12:00:00Z"
+          }
+        }
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "the family baseline payload under the stock format checker (a control for the isolated schema route)"
+    },
+    {
       "id": "SR01-invalid-schema",
       "family": "attempt.completed",
       "route": "schema_document",

@@ -417,6 +417,8 @@ def build():
             'PV01_integer_range', 'event_sequence 2^64: a valid schema integer with no EVENT_VALUE MessagePack integer')
     literal('JQ03-lone-surrogate-jcs', AC, 'canonical', {'json': '{"text": "\\ud800"}'}, 'reject', 'JQ03_jcs_other',
             'a JCS preimage string holding a lone surrogate')
+    literal('PS02-control-stock-schema', AC, 'stock_schema', {'payload': FAMILIES[AC]['baseline']['payload']}, 'accept', None,
+            'the family baseline payload under the stock format checker (a control for the isolated schema route)')
     literal('SR01-invalid-schema', AC, 'schema_document', {'schema': {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'type': 5}},
             'reject', 'SR01_meta_schema', 'a schema document whose type keyword is the integer 5')
     # ---- CLI fixture-integrity witnesses
