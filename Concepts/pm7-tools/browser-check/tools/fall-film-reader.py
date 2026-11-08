@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Read QA-7 frame tags from a GPU film, then judge only the positions that film actually painted.
+"""Screen QA-7 main-thread rig motion using frame tags visible in a GPU film.
+
+Tags bind sampled geometry to encoded frames. Compositor animations can keep moving while a
+main-thread tag is held; those cases require direct native-pixel measurements for adjudication.
 
 python3 fall-film-reader.py --video film.mp4 --run run-folder --out film-progress.json
 Requires ffmpeg/ffprobe. Exit 1 means a painted motion/coverage failure; no third-party Python packages.
