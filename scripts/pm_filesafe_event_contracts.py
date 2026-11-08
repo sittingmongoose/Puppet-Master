@@ -13,6 +13,7 @@ import json
 from jsonschema import Draft202012Validator
 import pm_filesafe_schema_graph as schema_graph
 import pm_filesafe_tables as tables
+from pm_event_numbers import Refusal, qualified_jcs
 ROOT = Path(__file__).resolve().parents[1]
 EPOCH = datetime(1970, 1, 1, tzinfo=timezone.utc)
 MICROSECOND = timedelta(microseconds=1)
@@ -27,8 +28,8 @@ def partition(scope):
 def identity(event_type, payload):
     s = payload['scope']
     key = ('application@1:' + s['server_id'].encode().hex() + ':' if s['scope_kind'] == 'application' else 'filesafe@2:') + payload['operation_id'].encode().hex()
-    # All identity vector strings are ASCII; this is also their RFC8785 encoding.
-    raw = json.dumps(['df-event-v2', partition(s), event_type, key], ensure_ascii=False, separators=(',', ':')).encode()
+    # The unchanged df-event-v2 preimage; CV-1100 qualified RFC 8785 of four strings.
+    raw = qualified_jcs(['df-event-v2', partition(s), event_type, key])
     return key, 'evt_df_' + hashlib.sha256(raw).hexdigest()
 
 
@@ -40,6 +41,8 @@ def instant_us(value):
 
 def override_scope_semantic(grant, payload):
     scope, ctx = payload['scope'], payload['execution_context']
+    if tables.refused('override_scope_kind', {'grant_scope_kind': grant['scope_kind'], 'scope_kind': scope['scope_kind']}):
+        return False
     if tables.refused('override_scope_root', {
             'grant_scope_kind': grant['scope_kind'], 'scope_kind': scope['scope_kind'],
             'grant_project_id': grant['project_id'], 'scope_project_id': scope['project_id']}):
@@ -89,12 +92,32 @@ INLINE_PAYLOAD_LIMIT = 16 * 1024
 
 
 def payload_bytes(payload):
-    """The DF inline budget is the complete canonical UTF-8 JSON body, not chars."""
-    return json.dumps(payload, sort_keys=True, ensure_ascii=False,
-                      separators=(',', ':'), allow_nan=False).encode('utf-8')
+    """The DF inline budget is the complete canonical UTF-8 JSON body, not chars.
+
+    Canonical JSON is RFC 8785 qualified by CV-1100 (pm_event_numbers.qualified_jcs):
+    a value the JCS route cannot preserve raises Refusal before any effect.
+    """
+    return qualified_jcs(payload)
+
+
+def jcs_refusal(value):
+    """Observation: the CV-1100 qualified-JCS refusal reason of a value, or None."""
+    try:
+        qualified_jcs(value)
+        return None
+    except Refusal as error:
+        return error.reason
+
+
+def jcs_facts(value):
+    reason = jcs_refusal(value)
+    return {'binary64': reason == 'jcs_binary64', 'decimal': reason == 'jcs_decimal',
+            'other': reason is not None and reason not in ('jcs_binary64', 'jcs_decimal')}
 
 
 def semantic(payload, *, inline=True):
+    if inline and tables.refused('payload_jcs', jcs_facts(payload)):
+        return False
     if inline and tables.refused('payload_inline', {'inline_bytes': len(payload_bytes(payload))}):
         return False
     s, ctx = payload['scope'], payload['execution_context']
@@ -141,13 +164,19 @@ def contract_positive(family, index):
 def payload_validator(family):
     schema = json.loads((ROOT/('Plans/event_payloads/'+family.replace('.','_')+'_v2.schema.json')).read_text())
     graph, documents, registry = schema_graph.context(family)
-    return Draft202012Validator(schema, registry=registry, format_checker=schema_graph.format_checker())
+    return schema_graph.SlotValidator(schema, registry=registry, format_checker=schema_graph.format_checker())
+
+
+def schema_facts(validator, instance):
+    """Observation: structural errors and CV-1100 integer-slot refusals of one schema pass."""
+    structural, slots = schema_graph.split_errors(validator, instance)
+    return {'errors': structural, 'slot_type': len(slots)}
 
 
 def payload_failures(family, payload, layer, validator=None):
     """The payload CLI boundary: closed schema, then (semantic layer) the semantic oracle."""
     validator = payload_validator(family) if validator is None else validator
-    if tables.refused('contract_payload_schema', {'errors': schema_errors(validator, payload)}):
+    if tables.refused('contract_payload_schema', schema_facts(validator, payload)):
         return ['payload_schema']
     if layer == 'semantic' and not semantic(payload):
         return ['payload_semantics']
@@ -179,9 +208,9 @@ def main(families=None):
         failures.extend(schema_graph.negative_case_failures(f, graph, documents))
         if ref_errors:
             continue
-        validator = Draft202012Validator(schema, registry=registry, format_checker=schema_graph.format_checker())
+        validator = payload_validator(f)
         for p in row['positive_payloads']:
-            schema_refused = tables.refused('contract_payload_schema', {'errors': schema_errors(validator, p)})
+            schema_refused = tables.refused('contract_payload_schema', schema_facts(validator, p))
             if schema_refused or not semantic(p): failures.append(f+': positive '+str(list(validator.iter_errors(p))[:1]))
             counts[f]['positive'] += 1
         for case in row['negative_payloads']:

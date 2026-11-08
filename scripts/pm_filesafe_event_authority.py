@@ -29,6 +29,9 @@ import pm_filesafe_schema_graph as schema_graph
 import pm_filesafe_retention as retention_owner
 import pm_filesafe_tables as tables
 from pm_projects_refresh_contracts import semantic_hash
+from pm_event_numbers import (APP_PHYSICAL, EVENT_VALUE, FrozenRecipe, OriginalBinding, OriginalCustody,
+                              RecipeTuple, Refusal, RetainedDispatcher, decode_storage_value, full_value_commitment,
+                              loads_current_json, producer_semantic_digest, qualified_jcs, storage_value_bytes)
 
 ROOT = Path(__file__).resolve().parents[1]
 FAMILIES = (
@@ -53,10 +56,25 @@ def storage_owner():
     return module
 
 def full_commitment(event):
-    return hashlib.sha256(storage_owner().canonical_messagepack_bytes([
-        'pm.storage.original_event_value_commitment.v1','1.0.0',
-        'pm.seglog_frame_v2.event_value.canonical_msgpack.v1',
-        event['schema_id'], event['schema_version'], event])).hexdigest()
+    """CV-339 original_event_value_commitment.sha256 (shared SP-1100 EVENT_VALUE route)."""
+    return full_value_commitment(event)
+
+
+def full_value_facts(event):
+    """Observation: (CV-339 commitment or None, SP-1100 refusal reason or None)."""
+    try:
+        return full_value_commitment(event), None
+    except Refusal as error:
+        return None, error.reason
+
+
+def producer_facts(event):
+    """Observation: (CV-317 producer semantic digest or None, the qualified-JCS facts)."""
+    try:
+        return producer_semantic_digest(event), {'binary64': False, 'decimal': False, 'other': False}
+    except Refusal as error:
+        return None, {'binary64': error.reason == 'jcs_binary64', 'decimal': error.reason == 'jcs_decimal',
+                      'other': error.reason not in ('jcs_binary64', 'jcs_decimal')}
 
 def source_commitment(source):
     record = {k:v for k,v in source.items() if k != 'accepted_source_sha256'}
@@ -91,17 +109,13 @@ def exact_value_equal(left, right):
 
 
 def schema_errors(validator, instance):
-    """Observation: the number of errors the selected schema reports."""
-    return sum(1 for _ in validator.iter_errors(instance))
+    """Observation: the number of structural errors the selected schema reports."""
+    return payload_owner.schema_facts(validator, instance)['errors']
 
 
-def float_count(value):
-    """Observation: the number of float values anywhere in a JSON value."""
-    if isinstance(value, dict):
-        return sum(float_count(v) for v in value.values())
-    if isinstance(value, list):
-        return sum(float_count(v) for v in value)
-    return 1 if type(value) is float else 0
+def schema_facts(validator, instance):
+    """Observation: structural errors and CV-1100 integer-slot refusals of one schema pass."""
+    return payload_owner.schema_facts(validator, instance)
 
 
 def selected_source_failures(family, source, bank):
@@ -133,7 +147,7 @@ def context(family):
     graph,docs,registry=schema_graph.context(family)
     schema=docs[f'Plans/filesafe_event_sources/{slug}.schema.json']
     def validator(root):
-        return Draft202012Validator({'$ref':schema['$id']+'#/$defs/'+root},registry=registry,format_checker=schema_graph.format_checker())
+        return schema_graph.SlotValidator({'$ref':schema['$id']+'#/$defs/'+root},registry=registry,format_checker=schema_graph.format_checker())
     return graph,validator
 
 def graph_failures(family, graph=None):
@@ -169,13 +183,13 @@ def graph_failures(family, graph=None):
         doc=load(row['path'])
         if schema_graph.schema_document_refused(doc): failures.append('resource_schema:'+row['path'])
         failures += tables.codes('graph_resource_uri', {'document_id': doc.get('$id',row['uri']), 'uri': row['uri']})
+    failures += tables.codes('graph_admission', {'native_admission': graph['native_admission']})
     _,docs,registry=schema_graph.context(family)
     failures.extend(schema_graph.reference_failures(graph,docs,registry))
     failures.extend(schema_graph.negative_case_failures(family,graph,docs))
     failures.extend(retention_binding_failures(family,graph['retention_policy_ref']))
     failures.extend(retention_owner.binding_failures(family,graph))
     failures.extend(retention_owner.check(family))
-    failures += tables.codes('graph_admission', {'native_admission': graph['native_admission']})
     return failures
 
 def retention_binding_failures(family, policy):
@@ -196,43 +210,21 @@ def instant(value):
     return datetime.fromisoformat(value.upper().replace('Z','+00:00'))
 
 def decode_original(raw, codec):
-    """Strict decoder for the closed integer/string/bool application record domain."""
+    """Decode one original body with the codec its write-time edition selected.
+
+    pm.application.physical_messagepack.v1 is the shared SP-1100 APP_PHYSICAL
+    decoder (canonical bytes only); RFC8785 bodies are unique-key JSON whose
+    CV-1100 qualified RFC 8785 encoding equals the stored bytes exactly.
+    """
     data=bytes.fromhex(raw)
     if codec=='RFC8785':
         from pm_projects_refresh_contracts import unique_object
         value=json.loads(data,object_pairs_hook=unique_object)
-        if storage_owner().jcs_bytes(value)!=data:raise ValueError('noncanonical JSON')
+        if qualified_jcs(value)!=data:raise ValueError('noncanonical JSON')
         return value
-    offset=0
-    def take(n):
-        nonlocal offset
-        if offset+n>len(data):raise ValueError('torn MessagePack')
-        result=data[offset:offset+n];offset+=n;return result
-    def integer(n,signed=False):return int.from_bytes(take(n),'big',signed=signed)
-    def read():
-        tag=integer(1)
-        if tag<128:return tag
-        if tag>=224:return tag-256
-        if tag in (192,194,195):return {192:None,194:False,195:True}[tag]
-        if tag in range(204,208):return integer(2**(tag-204))
-        if tag in range(208,212):return integer(2**(tag-208),True)
-        if 160<=tag<=191:return take(tag-160).decode('utf-8')
-        if tag in (217,218,219):return take(integer({217:1,218:2,219:4}[tag])).decode('utf-8')
-        if 144<=tag<=159 or tag in (220,221):
-            n=tag-144 if tag<160 else integer(2 if tag==220 else 4)
-            return [read() for _ in range(n)]
-        if 128<=tag<=143 or tag in (222,223):
-            n=tag-128 if tag<144 else integer(2 if tag==222 else 4);result={}
-            for _ in range(n):
-                key=read()
-                if not isinstance(key,str) or key in result:raise ValueError('duplicate/nonstring key')
-                result[key]=read()
-            return result
-        raise ValueError('unsupported MessagePack type')
-    value=read()
-    if offset!=len(data) or storage_owner().canonical_messagepack_bytes(value)!=data:
-        raise ValueError('noncanonical MessagePack')
-    return value
+    if codec==APP_PHYSICAL:
+        return decode_storage_value(data, profile=APP_PHYSICAL)
+    raise ValueError('unsupported original body codec')
 
 
 def event_payload(family, event, bank):
@@ -243,6 +235,9 @@ def event_payload(family, event, bank):
     Physical pack durability remains native NOT_RUN.
     """
     inline = event['payload']
+    refused = tables.codes('payload_jcs', payload_owner.jcs_facts(inline))
+    if refused:
+        return None, refused
     refused = tables.codes('payload_inline_size', {'inline_bytes': len(payload_owner.payload_bytes(inline))})
     if refused:
         return None, refused
@@ -257,10 +252,11 @@ def event_payload(family, event, bank):
     if refused:
         return None, refused
     _, validator = context(family)
-    refused = tables.codes('payload_ref_descriptor', {
-        'float_count': float_count(descriptor), 'errors': schema_errors(validator('payload_reference'), descriptor)})
+    refused = tables.codes('payload_ref_descriptor', schema_facts(validator('payload_reference'), descriptor))
     if refused:
         return None, refused
+    if tables.refused('descriptor_jcs', payload_owner.jcs_facts(descriptor)):
+        return None, ['payload_reference_shape']
     refused = tables.codes('payload_ref_shape', {
         'canonical_text': payload_owner.payload_bytes(descriptor).decode('utf-8'), 'ref': ref, 'inline': inline})
     if refused:
@@ -298,29 +294,46 @@ def application_original_failures(family, candidate, bank):
     members={v['role']:v for v in source['body_members']}
     decoded={}
     schema=load(f'Plans/filesafe_event_sources/{family.replace(".","_")}.schema.json')
+    # SP-1101: the body codecs come from the write-time edition Storage custody
+    # recorded for this original source, never from the caller or a probe.
+    entry=(bank.get('original_custody') or {}).get(source['source_ref'])
+    refused=tables.codes('app_codec_pin', {
+        'entry_present': isinstance(entry, dict),
+        'recorded_manifest': entry.get('resource_manifest_sha256') if isinstance(entry, dict) else None,
+        'installed_manifest': resource_manifest(family)})
+    if refused:
+        return failures+refused
+    codecs=frozen_codecs(family)
     for role,fragment in graph['application_body_roots'].items():
         member=members.get(role)
         if tables.refused('app_body_role', {'member_present': member is not None}):
             failures.append('application_body_role');continue
         decode_error=None
         try:
-            value=decode_original(bank['bodies'][member['ref']],graph['application_body_codecs'][role])
-            selected=Draft202012Validator({'$ref':schema['$id']+fragment},
+            value=decode_original(bank['bodies'][member['ref']],codecs[role])
+            selected=schema_graph.SlotValidator({'$ref':schema['$id']+fragment},
                 registry=validator('materialization')._registry,format_checker=schema_graph.format_checker())
             if role.endswith('request'):
                 # Addressing fields are outside the original request-byte preimage.
                 expected={k:v for k,v in req.items() if k not in ('original_input_ref','original_input_sha256')}
                 checked={**value,'original_input_ref':req['original_input_ref'],'original_input_sha256':req['original_input_sha256']}
             else:expected=records[role];checked=value
-            errors=schema_errors(selected,checked);value_equal=value==expected
+            errors=schema_errors(selected,checked);value_equal=exact_value_equal(value,expected)
         except (KeyError,ValueError,TypeError,UnicodeError,struct.error) as error:
             decode_error=type(error).__name__
         if tables.refused('app_body_decode', {'decode_error': decode_error}):
             failures.append('application_body_decode:'+role);continue
-        failures += [code+':'+role for code in tables.codes('app_body_check', {'errors': errors, 'value_equal': value_equal})]
+        facts={'errors': errors, 'value_equal': value_equal}
+        failures += [code+':'+role for code in tables.codes('app_body_schema', facts)+tables.codes('app_body_check', facts)]
         decoded[role]=value
     if len(decoded)!=len(graph['application_body_roots']):return failures
-    def digest(value):return hashlib.sha256(storage_owner().jcs_bytes(value)).hexdigest()
+    # Manifest and index digests are SHA-256 of CV-1100 qualified RFC 8785.
+    for record in [records[k] for k in records if 'manifest' in k and records[k] is not None]:
+        for value in (record, *(() if record['scm'] is None else (record['scm']['index_entries'],))):
+            refused=tables.codes('manifest_jcs', payload_owner.jcs_facts(value))
+            if refused:
+                return failures+refused
+    def digest(value):return hashlib.sha256(qualified_jcs(value)).hexdigest()
     utf8=lambda x:x.encode('utf-8')
     manifests=[records[k] for k in records if 'manifest' in k and records[k] is not None]
     inventory=records['snapshot_blobs'];blobs=inventory['blobs']
@@ -350,7 +363,7 @@ def application_original_failures(family, candidate, bank):
                 **{'ctx_'+k: ctx[k] for k in ('root_id','root_generation','host_id','environment_id')}})
             # Synthetic lexical boundary. Native realpath/reparse/CAS checks stay NOT_RUN.
             failures += tables.codes('app_entry_path', {
-                'path': path, 'root': ctx['working_directory'].rstrip('/\\'),
+                'path': path, 'root': ctx['working_directory'].rstrip('/\\') if isinstance(ctx['working_directory'], str) else None,
                 'ignored': entry['ignored'], 'authorized_write_set': entry['authorized_write_set']})
             if entry['present'] and entry['kind']=='file':
                 matches=[v for v in blobs if v['payload_id']==entry['payload_id']]
@@ -366,9 +379,9 @@ def application_original_failures(family, candidate, bank):
                             'body_length': len(body), 'blob_length': blob['length'], 'entry_length': entry['length'],
                             'body_sha256': hashlib.sha256(body).hexdigest(), 'blob_sha256': blob['sha256'],
                             'entry_sha256': entry['blob_sha256']})
-                        failures += tables.codes('app_entry_blob_address', {
-                            'body_address': 'blake3:' + blake3.blake3(body).hexdigest(),
-                            'blob_payload_id': blob['payload_id'], 'entry_payload_id': entry['payload_id']})
+                        facts={'body_address': 'blake3:' + blake3.blake3(body).hexdigest(),
+                               'blob_payload_id': blob['payload_id'], 'entry_payload_id': entry['payload_id']}
+                        failures += tables.codes('app_entry_blob_address', facts)+tables.codes('app_entry_blob_join', facts)
                     failures += tables.codes('app_entry_blob_store', {
                         'store_raw': bank.get('payloads',{}).get(blob['payload_id']), 'raw': raw})
             else:
@@ -380,6 +393,7 @@ def application_original_failures(family, candidate, bank):
     failures += tables.codes('app_blob_inventory_complete', {
         'referenced': sorted(referenced), 'inventory': sorted({b['payload_id'] for b in blobs})})
     sp=records['safe_point_record'];mf=records['snapshot_manifest'];mh=digest(mf)
+    failures += tables.codes('app_safe_point_ids', {'record_node_id': sp['node_id'], 'record_attempt_id': sp['attempt_id']})
     failures += tables.codes('app_safe_point_subject', {
         'record_safe_point_id': sp['safe_point_id'], 'result_safe_point_id': p['safe_point_id'],
         'record_run_id': sp['run_id'], 'result_run_id': p['run_id'],
@@ -417,6 +431,7 @@ def application_original_failures(family, candidate, bank):
         failures += tables.codes('app_result_event', {'result_event_ref': tx['result_event_ref'], 'event_id': candidate['event']['event_id']})
         keys_a=('safe_point_id','restore_transaction_id','run_id','node_id','attempt_id','restore_outcome')
         keys_b=('target_state_sha256','pre_restore_state_sha256','post_restore_state_sha256','conflict_reason_code','recovered_after_restart')
+        failures += tables.codes('app_transaction_ids', {**{'tx_'+k: tx.get(k) for k in ('node_id','attempt_id')}, **{'result_'+k: p.get(k) for k in ('node_id','attempt_id')}})
         failures += tables.codes('app_transaction_result_a', {**{'tx_'+k: tx.get(k) for k in keys_a}, **{'result_'+k: p.get(k) for k in keys_a}})
         failures += tables.codes('app_transaction_result_b', {**{'tx_'+k: tx.get(k) for k in keys_b}, **{'result_'+k: p.get(k) for k in keys_b}})
         failures += tables.codes('app_safe_point_key', {
@@ -465,12 +480,18 @@ def application_original_failures(family, candidate, bank):
                     'expected_before_type': op['expected_before_type'], 'before_kind': b['kind'] if b else None,
                     'target_type': op['target_type'], 'target_kind': t['kind'] if t else None})
             kind=op['operation_kind']
+            kind_facts={
+                'kind': kind, 'before_present': b is not None, 'target_present': t is not None,
+                'before_content': None if b is None else {k: b[k] for k in content},
+                'target_content': None if t is None else {k: t[k] for k in content}}
+            failures += tables.codes('app_operation_presence', kind_facts)
             failures += tables.codes('app_operation_kind', {
                 'kind': kind, 'before_present': b is not None, 'target_present': t is not None,
                 'before_content': None if b is None else {k: b[k] for k in content},
                 'target_content': None if t is None else {k: t[k] for k in content}})
             failures += tables.codes('app_operation_staging', {
                 'kind': kind, 'stage_ref': op['stage_ref'], 'tombstone_ref': op['tombstone_ref']})
+        failures += tables.codes('app_journal_lease', {'mutation_lease_ref': tx['mutation_lease_ref']})
         failures += tables.codes('app_journal', {
             'operation_cursor': tx['operation_cursor'], 'operation_count': len(ops),
             'path_mutation_count': tx['path_mutation_count'], 'mutation_lease_ref': tx['mutation_lease_ref'],
@@ -491,7 +512,10 @@ def application_original_failures(family, candidate, bank):
                                           'hold_refs': tx['hold_refs'], 'post_sha256': posth, 'target_sha256': mh, 'pre_sha256': preh}),
         }
         phase,facts=equality[outcome]
-        failures += tables.codes(phase, facts)
+        state={'app_outcome_clean': 'app_outcome_clean_state', 'app_outcome_failed': 'app_outcome_failed_state',
+               'app_outcome_skipped': 'app_outcome_skipped_state', 'app_outcome_refused': 'app_outcome_refused_state',
+               'app_outcome_recovery': 'app_outcome_recovery_holds'}.get(phase)
+        failures += (tables.codes(state, facts) if state else [])+tables.codes(phase, facts)
         failures += tables.codes('app_outcome_fence', {'fence_active': tx['fence_active'], 'outcome': outcome})
         if outcome in ('restored_clean','restore_failed'):
             state='applied' if outcome=='restored_clean' else 'rolled_back'
@@ -504,17 +528,20 @@ def application_original_failures(family, candidate, bank):
 
 def materialization_failures(family, candidate, bank):
     graph,validator=context(family)
-    refused = tables.codes('mat_schema', {'errors': schema_errors(validator('materialization'), candidate)})
+    facts = schema_facts(validator('materialization'), candidate)
+    refused = tables.codes('mat_schema', facts)
+    if refused: return refused
+    refused = tables.codes('mat_integer_slots', facts)
     if refused: return refused
     source,event,custody=(candidate[k] for k in ('source','event','custody'))
-    refused = tables.codes('mat_numbers', {'float_count': float_count(candidate), 'bank_epoch_type': type(bank['writer_epoch']).__name__})
+    refused = tables.codes('mat_numbers', {'bank_epoch_type': type(bank['writer_epoch']).__name__})
     if refused: return refused
     refused = tables.codes('mat_replay', {'replay_policy': event['replay_policy']})
     if refused: return refused
     p, payload_errors = event_payload(family, event, bank)
     if payload_errors: return payload_errors
     req=source['original_request'];scope=req['scope'];ctx=req['execution_context']
-    refused = tables.codes('mat_payload_schema', {'errors': schema_errors(validator('Result'), p)})
+    refused = tables.codes('mat_payload_schema', schema_facts(validator('Result'), p))
     if refused: return refused
     failures=[]
     # Independently selected immutable source, not self-authentication by its hash.
@@ -537,8 +564,8 @@ def materialization_failures(family, candidate, bank):
     for k in graph['request_payload_joins']:
         if tables.refused('mat_request_subject', {'request_value': req.get(k), 'payload_value': p.get(k)}):
             failures.append('request_subject_join:'+k)
+    failures += tables.codes('mat_envelope_kind', {'event_scope_kind': event['scope_kind'], 'scope_kind': scope['scope_kind']})
     failures += tables.codes('mat_envelope_subject', {
-        'event_scope_kind': event['scope_kind'], 'scope_kind': scope['scope_kind'],
         'event_project_id': event['project_id'], 'scope_project_id': scope['project_id'],
         'event_thread_id': event['thread_id'], 'ctx_thread_id': ctx['thread_id'],
         'event_run_id': event['run_id'], 'ctx_run_id': ctx['run_id'],
@@ -561,7 +588,8 @@ def materialization_failures(family, candidate, bank):
             'raw_type': type(raw).__name__, 'recorded_sha256': member['sha256'],
             'computed_sha256': hashlib.sha256(bytes.fromhex(raw)).hexdigest() if isinstance(raw,str) else None})
     if family in ('filesafe.destructive_override_granted','filesafe.destructive_override_requested','safe_point.created','safe_point.restored'):
-        failures += tables.codes('mat_effect_context', {k: ctx[k] for k in ('thread_id','run_id','root_id','root_generation','working_directory')})
+        facts={k: ctx[k] for k in ('thread_id','run_id','root_id','root_generation','working_directory')}
+        failures += tables.codes('mat_effect_run', facts)+tables.codes('mat_effect_context', facts)
     if scope['scope_kind']=='application' and family.startswith('safe_point.'):
         failures += tables.codes('mat_application_ids', {'node_id': p['node_id'], 'attempt_id': p['attempt_id']})
         failures.extend(application_original_failures(family,candidate,bank))
@@ -569,13 +597,16 @@ def materialization_failures(family, candidate, bank):
         granted=p['authorized_scope'];requested=req['requested_scope']
         if not (payload_owner.override_scope_semantic(requested,p) and payload_owner.override_subset(granted,requested)):
             failures.append('grant_subset')
+        failures += tables.codes('mat_grant_order', {
+            'issued_us': payload_owner.instant_us(p['issued_at']), 'expires_us': payload_owner.instant_us(p['expires_at'])})
         failures += tables.codes('mat_grant_window', {
-            'issued_us': payload_owner.instant_us(p['issued_at']), 'expires_us': payload_owner.instant_us(p['expires_at']),
+            'expires_us': payload_owner.instant_us(p['expires_at']),
             'maximum_us': payload_owner.instant_us(req['maximum_expires_at']), 'ts_us': payload_owner.instant_us(p['ts'])})
     if 'native_project_record' in source:
         original=source['native_project_record']
         role=next(m for m in members if m['role']==graph['original_project_body_role'])
         raw=bank['bodies'].get(role['ref'])
+        failures += tables.codes('mat_project_body_present', {'raw_type': type(raw).__name__})
         failures += tables.codes('mat_project_original', {
             'original_project_id': original['project_id'], 'scope_project_id': scope['project_id'],
             'raw_type': type(raw).__name__,
@@ -604,11 +635,16 @@ def materialization_failures(family, candidate, bank):
         'custody_key': custody['idempotency_key'], 'idempotency_key': event['idempotency_key'],
         'custody_partition': custody['scope_partition'], 'scope_partition': scope['scope_partition']})
     receipt=custody['first_append_receipt']
+    digest, jcs = producer_facts(event)
+    refused = tables.codes('producer_jcs', jcs)
+    failures += refused or tables.codes('mat_semantic_digest', {'custody_digest': custody['producer_semantic_digest'], 'computed_digest': digest})
+    commitment, reason = full_value_facts(event)
+    refused = tables.codes('full_value_bytes', {'reason': reason})
+    failures += refused or tables.codes('mat_full_value', {
+        'custody_commitment': custody['original_event_value_commitment']['sha256'], 'computed_commitment': commitment})
+    receipt_facts = {'durability_state': receipt['durability_state']}
+    failures += tables.codes('mat_receipt_state', receipt_facts)
     failures += tables.codes('mat_receipt_values', {
-        'custody_digest': custody['producer_semantic_digest'],
-        'computed_digest': storage_owner().event_producer_semantic_digest(event),
-        'custody_commitment': custody['original_event_value_commitment']['sha256'],
-        'computed_commitment': full_commitment(event),
         'receipt_event_id': receipt['event_id'], 'event_id': event['event_id'],
         'receipt_sequence_id': receipt['sequence_id'], 'sequence_id': event['sequence_id'],
         'durability_class': receipt['durability_class'], 'durability_state': receipt['durability_state'],
@@ -623,20 +659,18 @@ def issued_failures(family, value, expected, bank):
     _, validator = context(family)
     refused = tables.codes('issued_original', {'equal': value == expected})
     if refused: return refused
-    refused = tables.codes('issued_numbers', {'float_count': float_count(value)})
-    if refused: return refused
     event, custody = value['event'], value['custody']
     schema = load(f'Plans/filesafe_event_sources/{family.replace(".","_")}.schema.json')
     # Validate the two exact imported roots, without requiring an original command/grant.
     for key in ('event', 'custody'):
-        selected = Draft202012Validator(schema['$defs']['materialization']['properties'][key],
+        selected = schema_graph.SlotValidator(schema['$defs']['materialization']['properties'][key],
             registry=validator('materialization')._registry, format_checker=schema_graph.format_checker())
-        refused = tables.codes('issued_schema', {'errors': schema_errors(selected, value[key])})
+        refused = tables.codes('issued_schema', schema_facts(selected, value[key]))
         if refused: return refused
     payload, payload_errors = event_payload(family, event, bank)
     if payload_errors: return payload_errors
     _, selected = context(family)
-    refused = tables.codes('issued_payload_schema', {'errors': schema_errors(selected('Result'), payload)})
+    refused = tables.codes('issued_payload_schema', schema_facts(selected('Result'), payload))
     if refused: return refused
     if not payload_owner.semantic(payload, inline=event['payload_ref'] is None):
         return ['issued_payload']
@@ -646,14 +680,138 @@ def issued_failures(family, value, expected, bank):
         'custody_key': custody['idempotency_key'], 'idempotency_key': event['idempotency_key']})
     if refused: return refused[:1]
     receipt = custody['first_append_receipt']
+    digest, jcs = producer_facts(event)
+    refused = tables.codes('producer_jcs', jcs) or tables.codes('issued_semantic_digest', {
+        'custody_digest': custody['producer_semantic_digest'], 'computed_digest': digest})
+    if refused: return ['issued_full_value_receipt'] if refused != ['producer_digest_unavailable'] else refused
+    commitment, reason = full_value_facts(event)
+    refused = tables.codes('full_value_bytes', {'reason': reason}) or tables.codes('issued_full_value', {
+        'custody_commitment': custody['original_event_value_commitment']['sha256'], 'computed_commitment': commitment})
+    if refused: return ['issued_full_value_receipt'] if refused != ['full_value_unavailable'] else refused
+    refused = tables.codes('issued_receipt_state', {'durability_state': receipt['durability_state']})
+    if refused: return refused
     return tables.codes('issued_receipt_values', {
-        'custody_digest': custody['producer_semantic_digest'],
-        'computed_digest': storage_owner().event_producer_semantic_digest(event),
-        'custody_commitment': custody['original_event_value_commitment']['sha256'],
-        'computed_commitment': full_commitment(event),
         'receipt_event_id': receipt['event_id'], 'event_id': event['event_id'],
         'receipt_sequence_id': receipt['sequence_id'], 'sequence_id': event['sequence_id'],
         'durability_state': receipt['durability_state'], 'durability_class': receipt['durability_class']})[:1]
+
+
+# --- SP-1101 retained originals (shared RetainedDispatcher) ---------------------------------
+# The synthetic bank's original_custody map models Storage's sealed custody catalogue: for each
+# issued original (and each original source) it records the write-time edition and the SHA-256
+# manifest of the frozen resources the original was written against. The installed
+# tuple -> frozen-verifier map is built from this head's resource bytes, outside request data;
+# an original whose recorded manifest differs (a replaced same-URI resource) resolves to no
+# verifier. The static model has one Server, so server_id is a fixed constant on both sides;
+# the binding's commitment field carries the CV-339 original event value commitment of the
+# EventRecord original (the original source commitment stays bound by the selected-source rows).
+DF_SERVER = 'filesafe-static-oracle'
+DF_EDITIONS = ('DF-prepared-v2',)
+LOCAL_SOURCE_PROFILES = {'project': 'pm.filesafe.original_source.canonical_msgpack_sha256.v1',
+                         'application': 'pm.application.semantic_hash.v1:accepted_source'}
+
+
+@lru_cache(maxsize=None)
+def resource_manifest(family):
+    """SHA-256 of the frozen resource manifest: every selected and preserved resource's bytes."""
+    graph = context(family)[0]
+    rows = [[row['path'], hashlib.sha256((ROOT / row['path']).read_bytes()).hexdigest()]
+            for row in graph['resources'] + graph['preserved_project_resources']]
+    return hashlib.sha256(qualified_jcs(rows)).hexdigest()
+
+
+def frozen_codecs(family):
+    """The application body codec map of the installed (this head's) frozen edition."""
+    return dict(context(family)[0]['application_body_codecs'])
+
+
+def recipe_tuple(family, scope_kind, edition, manifest):
+    slug = family.replace('.', '_')
+    payload_schema = load(f'Plans/event_payloads/{slug}_v2.schema.json')
+    graph = context(family)[0]
+    return RecipeTuple(
+        envelope_schema_id='pm.event.v0', envelope_schema_version='2.0.0',
+        payload_schema_id=payload_schema['$id'], payload_schema_version='2.0.0',
+        owner_source_id=graph['schema_id'], owner_edition=edition,
+        registry_revision='prepared-unadmitted:' + family, identity_recipe='df-event-v2',
+        producer_recipe='CV-317 RFC8785 producer projection', physical_profile=EVENT_VALUE,
+        full_value_profile='pm.storage.original_event_value_commitment.v1@1.0.0',
+        local_source_profile=LOCAL_SOURCE_PROFILES[scope_kind], payload_profile='SP-337 RFC8785 application/json',
+        resource_manifest_sha256=manifest)
+
+
+def binding_of(value):
+    """The SP-1101 binding of one {event, custody} original (raises Refusal on a malformed one)."""
+    event, custody = value['event'], value['custody']
+    return OriginalBinding(
+        storage_instance_id=custody['storage_instance_id'], scope_kind=event['scope_kind'], server_id=DF_SERVER,
+        project_id=event['project_id'], event_type=event['event_type'], event_id=event['event_id'],
+        idempotency_key=event['idempotency_key'], owner_operation_id=event['correlation_id'],
+        source_commitment=custody['original_event_value_commitment']['sha256'])
+
+
+class DFOriginalOwner:
+    """The original owner over the bank's sealed custody: authenticated originals, never request data."""
+
+    def __init__(self, family, bank):
+        self.family, self.bank = family, bank
+
+    def authenticated_original(self, original_ref):
+        value = self.bank['issued'].get(original_ref)
+        entry = (self.bank.get('original_custody') or {}).get(original_ref)
+        if not isinstance(value, dict) or set(value) != {'event', 'custody'} or not isinstance(entry, dict):
+            raise Refusal('original_missing')
+        binding = binding_of(value)
+        recipe = recipe_tuple(self.family, binding.scope_kind, entry.get('write_time_edition', ''),
+                              entry.get('resource_manifest_sha256', ''))
+        return OriginalCustody(binding=binding, recipe=recipe,
+                               record_bytes=storage_value_bytes(value['event'], profile=EVENT_VALUE),
+                               result_bytes=storage_value_bytes(value['event']['payload'], profile=EVENT_VALUE),
+                               receipt_bytes=storage_value_bytes(value['custody'], profile=EVENT_VALUE))
+
+
+def installed_recipes(family, verify):
+    """The exact tuple -> frozen verifier map, installed from this head's resources outside request data."""
+    manifest = resource_manifest(family)
+    return {recipe_tuple(family, kind, edition, manifest): FrozenRecipe(verify)
+            for edition in DF_EDITIONS for kind in ('project', 'application')}
+
+
+def retained_failures(family, event_id, expected, bank):
+    """Resolve one retained original through SP-1101, then verify it under its frozen recipe.
+
+    One authenticated recipe selection from Storage custody (no caller override, no
+    current-then-legacy probing); the frozen verifier recomputes the complete original
+    (issued rows) joined to the independently retained expectation.
+    """
+    found = []
+
+    def verify(custody):
+        found.extend(issued_failures(family, bank['issued'].get(event_id), expected, bank))
+        return not found
+    try:
+        expected_binding = binding_of(expected)
+        RetainedDispatcher(DFOriginalOwner(family, bank), installed_recipes(family, verify)).resolve(
+            event_id, expected_binding, disclose=lambda binding: True)
+        reason = None
+    except Refusal as error:
+        reason = error.reason
+    if found:
+        return found
+    facts = {'reason': reason}
+    return tables.codes('retained_dispatch', facts) + tables.codes('retained_dispatch_other', facts)
+
+
+def materialization_raw_failures(family, raw, bank):
+    """A current candidate given as JSON text: CV-1100 current raw grammar, then materialization."""
+    try:
+        candidate, reason = loads_current_json(raw), None
+    except Refusal as error:
+        candidate, reason = None, error.reason
+    refused = tables.codes('current_raw_json', {'reason': reason})
+    if refused:
+        return refused
+    return materialization_failures(family, candidate, bank)
 
 
 def generation_refused(bank_value, oracle_value):
@@ -683,7 +841,7 @@ class ProtocolOracle:
         if tables.refused('proto_resolve_storage', {
                 'bank_storage': self.bank['storage_instance_id'], 'custody_storage': original['custody']['storage_instance_id']}):
             return None
-        return None if issued_failures(self.family,value,expected,self.bank) else value
+        return None if retained_failures(self.family,original['event']['event_id'],expected,self.bank) else value
     def coverage_valid(self):
         if tables.refused('proto_coverage_generation', {
                 'bank_type': type(self.bank['source_generation']).__name__, 'oracle_type': type(self.source_generation).__name__,
@@ -691,7 +849,7 @@ class ProtocolOracle:
             return False
         if tables.refused('proto_coverage_keys', {'issued_keys': sorted(self.bank['issued']), 'boundary_keys': sorted(self.boundary)}):
             return False
-        unverified=len([k for k,v in self.boundary.items() if issued_failures(self.family,self.bank['issued'].get(k),v,self.bank)])
+        unverified=len([k for k,v in self.boundary.items() if retained_failures(self.family,k,v,self.bank)])
         return not tables.refused('proto_coverage_verified', {'unverified_count': unverified})
     def step(self,action,candidate=None):
         c=candidate or self.original
@@ -769,9 +927,11 @@ class ProtocolOracle:
             refused=tables.first('proto_retry_gate', {'recovery_refused': self.durable['recovery_refused'], 'durable_phase': self.durable['phase']})
             if refused: return refused
             original=self.durable['original']['event']
+            retry_digest, jcs = producer_facts(c['event'])
+            refused=tables.first('producer_jcs', jcs)
+            if refused: return refused
             refused=tables.first('proto_retry_semantic', {
-                'retry_digest': storage_owner().event_producer_semantic_digest(c['event']),
-                'original_digest': storage_owner().event_producer_semantic_digest(original)})
+                'retry_digest': retry_digest, 'original_digest': producer_semantic_digest(original)})
             if refused: return refused
             value=self.resolve_issued()
             refused=tables.first('proto_retry_result', {'issued_resolved': value is not None, 'receipt_present': self.receipt is not None})
@@ -812,7 +972,7 @@ class ProtocolOracle:
                     'candidate_equal': {k:c[k] for k in ('event','custody')}==expected,
                     'bank_storage': self.bank['storage_instance_id'], 'custody_storage': expected['custody']['storage_instance_id']})
                 or generation_refused(self.bank['reader_generation'], self.reader_generation)
-                or issued_failures(self.family,value,expected,self.bank)):
+                or retained_failures(self.family,eid,expected,self.bank)):
                 return 'read_unavailable'
             if action=='read_body':
                 # A separate body-dependent request retains the original owner's
@@ -845,10 +1005,10 @@ def mutate(document,path,value,remove=False):
 
 def check(families=FAMILIES, pack=None):
     pack=load('Plans/filesafe_event_authority_fixtures.json') if pack is None else pack
-    failures=schema_graph.format_case_failures();counts={}
+    failures=tables.codes('fixture_census', {'families': [r['event_type'] for r in pack['families']]})
+    failures+=schema_graph.format_case_failures();counts={}
     order=tables.table_order_errors()
     if order:failures.append('shared:table_require_order:'+','.join(order))
-    failures += tables.codes('fixture_census', {'families': [r['event_type'] for r in pack['families']]})
     for row in pack['families']:
         if row['event_type'] not in families: continue
         family=row['event_type'];counts[family]={'positive':0,'negative':0,'protocol':0}
@@ -897,7 +1057,7 @@ def check(families=FAMILIES, pack=None):
     import pm_filesafe_p2a_cases as p2a
     if families:
         failures.extend(p2a.case_failures(set(families) | {'shared'}, boundary=(
-            'materialization', 'issued', 'protocol', 'graph', 'retention_binding', 'retention_check', 'membership', 'census')))
+            'materialization', 'materialization_raw', 'issued', 'protocol', 'graph', 'retention_binding', 'retention_check', 'membership', 'census')))
     return {'status':'fail' if failures else 'pass','families':counts,'failures':failures,'native_execution':'NOT_RUN','membership':'ABSENT','authority':'synthetic contract cases only'}
 
 

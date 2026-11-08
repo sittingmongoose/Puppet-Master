@@ -64,13 +64,19 @@ def run(case):
     import pm_filesafe_retention as RT
     import pm_filesafe_schema_graph as SG
     kind, family = case['kind'], case.get('family')
-    if kind in ('materialization', 'issued', 'protocol'):
+    if kind in ('materialization', 'materialization_raw', 'issued', 'protocol'):
         base = seed(family, case['positive_index'])
         candidate, bank = copy.deepcopy((base['candidate'], base['bank']))
         apply_edits(candidate, [e for e in case.get('edits', []) if e['target'] == 'candidate'])
         apply_edits(bank, [e for e in case.get('edits', []) if e['target'] == 'bank'])
         if kind == 'materialization':
             return A.materialization_failures(family, candidate, bank)
+        if kind == 'materialization_raw':
+            raw = json.dumps(candidate, ensure_ascii=False)
+            for old, new in case['spellings']:
+                assert raw.count(old) == 1, old
+                raw = raw.replace(old, new)
+            return A.materialization_raw_failures(family, raw, bank)
         if kind == 'issued':
             expected = {k: candidate[k] for k in ('event', 'custody')}
             return A.issued_failures(family, bank['issued'].get(candidate['event']['event_id']), expected, bank)
@@ -136,6 +142,9 @@ def first_refusal(case):
                 current.append(record)
         index = case['target_step']
         refused = [r for r in steps[index] if r[2]]
+    elif case['kind'] == 'census':
+        # The census CLI also runs the format self-test first; only the census row decides here.
+        refused = [r for r in records if r is not STEP and r[2] and r[0] == 'fixture_census']
     else:
         refused = [r for r in records if r[2] and r is not STEP]
     first = (refused[0][0], refused[0][2][0][0]) if refused else None

@@ -17,10 +17,6 @@ def MJ01_project(value, context):
     return 'original_project_scope' if value['original_project_id'] != value['scope_project_id'] else None
 
 
-def MJ02_body_present(value, context):
-    return 'original_project_body_value' if value['raw_type'] != 'str' else None
-
-
 def MJ03_body_bytes(value, context):
     return 'original_project_body_value' if value['raw_type'] == 'str' and value['body_equal'] is not True else None
 
@@ -29,13 +25,11 @@ def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('MJ01_project', g.Invariant('/source/native_project_record/project_id', 'equals the scope project_id'), 'original_project_scope', MJ01_project),
-        g.Guard('MJ02_body_present', g.Invariant('/source/body_members', 'the bank holds the original Project body as a string'), 'original_project_body_value', MJ02_body_present),
         g.Guard('MJ03_body_bytes', g.Invariant('/source/native_project_record', 'the body bytes equal the canonical MessagePack of the record'), 'original_project_body_value', MJ03_body_bytes),
     ])
 
     def check(value):
         table.require('MJ01_project', value, context)
-        table.require('MJ02_body_present', value, context)
         table.require('MJ03_body_bytes', value, context)
         return True
     return g.Case(table, check, context)

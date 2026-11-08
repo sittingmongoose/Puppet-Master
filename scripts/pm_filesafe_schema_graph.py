@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import json
 import re
+import sys
 from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
@@ -12,7 +13,8 @@ from urllib.parse import urljoin
 from referencing import Registry, Resource
 from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
-from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema import Draft202012Validator, FormatChecker, validators, _keywords
+from pm_event_numbers import Refusal, current_integer
 
 import pm_filesafe_tables as tables
 
@@ -46,6 +48,81 @@ def date_time(value):
              'offset_hour': None if match[7] is None else int(match[8]),
              'offset_minute': None if match[7] is None else int(match[9])}
     return not tables.refused('date_time_fields', facts)
+
+
+_SLOTS = []
+
+
+def _integer_slot_type(validator, types, instance, schema):
+    """JSON Schema type, recording every value checked at an integer slot.
+
+    The mathematical integer check of JSON Schema admits 1.0; current typed
+    integer inputs require the exact integer primitive (CV-1100). Recording
+    keeps slot admission out of the schema's own result, so a slot inside a
+    oneOf/anyOf branch never turns into a structural combinator error; the
+    caller then runs pm_event_numbers.current_integer on each recorded value.
+    Range stays with the schema's minimum/maximum keywords.
+    """
+    yield from _keywords.type(validator, types, instance, schema)
+    names = [types] if isinstance(types, str) else types
+    if 'integer' in names and type(instance) is not bool and validator.is_type(instance, 'number'):
+        _SLOTS.append(instance)
+
+
+SlotValidator = validators.extend(Draft202012Validator, {'type': _integer_slot_type})
+
+
+def _slot_evolve(self, **changes):
+    """Keep slot admission installed across references into resources declaring $schema.
+
+    jsonschema's own evolve switches to the stock class of a resource's declared
+    dialect. Every DF resource declares Draft 2020-12; any other dialect fails closed.
+    """
+    from attrs import fields
+    schema = changes.setdefault('schema', self.schema)
+    if validators.validator_for(schema, default=Draft202012Validator) is not Draft202012Validator:
+        raise ValueError('DF slot admission supports Draft 2020-12 resources only')
+    for field in fields(type(self)):
+        if field.init and field.alias not in changes:
+            changes[field.alias] = getattr(self, field.name)
+    return type(self)(**changes)
+
+
+SlotValidator.evolve = _slot_evolve
+
+
+def split_errors(validator, instance):
+    """Observation: (structural error count, CV-1100 integer-slot refusal reasons)."""
+    previous = list(_SLOTS)
+    _SLOTS.clear()
+    try:
+        with exact_integer_text():
+            structural = sum(1 for _ in validator.iter_errors(instance))
+        reasons = []
+        for value in _SLOTS:
+            try:
+                current_integer(value)
+            except Refusal as error:
+                reasons.append(error.reason)
+    finally:
+        _SLOTS[:] = previous
+    return structural, reasons
+
+
+class exact_integer_text:
+    """Render integers exactly while schema errors are formatted (no value changes).
+
+    CV-1100 sets no global integer ceiling; Python's default 4,300-digit
+    str() limit would otherwise make a valid long integer crash an error message.
+    The previous limit is restored on exit.
+    """
+    def __enter__(self):
+        self.previous = sys.get_int_max_str_digits()
+        sys.set_int_max_str_digits(0)
+
+    def __exit__(self, *exc):
+        sys.set_int_max_str_digits(self.previous)
+        return False
 
 
 def format_checker():

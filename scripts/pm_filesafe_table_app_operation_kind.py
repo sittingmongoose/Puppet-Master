@@ -13,14 +13,6 @@ import pm_guard_isolation as g
 FIELDS = ('kind', 'before_present', 'target_present', 'before_content', 'target_content')
 
 
-def OK02_before_presence(value, context):
-    return 'application_operation_kind' if (value['kind'] == 'create') == value['before_present'] else None
-
-
-def OK03_target_presence(value, context):
-    return 'application_operation_kind' if (value['kind'] == 'delete') == value['target_present'] else None
-
-
 def OK04_metadata_content(value, context):
     return 'application_operation_kind' if value['kind'] == 'metadata' and value['before_present'] is True and value['target_present'] is True and value['before_content'] != value['target_content'] else None
 
@@ -28,14 +20,10 @@ def OK04_metadata_content(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('OK02_before_presence', g.Invariant('/restore_transaction/operations/operation_kind', 'create has no pre-restore entry; replace, delete and metadata have one'), 'application_operation_kind', OK02_before_presence),
-        g.Guard('OK03_target_presence', g.Invariant('/restore_transaction/operations/operation_kind', 'delete has no target entry; create, replace and metadata have one'), 'application_operation_kind', OK03_target_presence),
         g.Guard('OK04_metadata_content', g.Invariant('/restore_transaction/operations/operation_kind', 'metadata keeps kind, payload, digest, length, symlink target and gitlink'), 'application_operation_kind', OK04_metadata_content),
     ])
 
     def check(value):
-        table.require('OK02_before_presence', value, context)
-        table.require('OK03_target_presence', value, context)
         table.require('OK04_metadata_content', value, context)
         return True
     return g.Case(table, check, context)

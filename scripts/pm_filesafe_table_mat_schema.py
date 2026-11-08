@@ -20,7 +20,7 @@ def MS01_schema(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('MS01_schema', g.Invariant('/', 'the materialization schema reports no error'), 'materialization_schema', MS01_schema),
+        g.Guard('MS01_schema', g.Invariant('/', 'the materialization schema reports no structural error'), 'materialization_schema', MS01_schema),
     ])
 
     def check(value):

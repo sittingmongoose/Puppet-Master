@@ -46,6 +46,11 @@ SPEC = [
         R('SM01_meta_schema', '/meta_errors', 'the Draft 2020-12 meta-schema reports no error', 'schema_document_invalid', "value['meta_errors'] != 0"),
     ]),
     # ---------------------------------------------------------------- payload owner (semantic)
+    P('payload_jcs', 'Payload owner: CV-1100 qualified RFC 8785 encoding of the inline semantic body', [
+        R('PJ01_binary64', '/', 'the CV-1100 qualified RFC 8785 route preserves every integer through binary64', 'payload_unencodable', "value['binary64'] is True"),
+        R('PJ02_decimal', '/', 'the emitted RFC 8785 decimal equals every original number', 'payload_unencodable', "value['decimal'] is True"),
+        R('PJ03_other', '/', 'the qualified RFC 8785 route has no other refusal (non-finite, key or string domain)', 'payload_unencodable', "value['other'] is True"),
+    ]),
     P('payload_inline', 'Payload owner: SP-337 inline byte budget of the complete canonical JSON semantic body', [
         R('PI01_inline_limit', '/inline_bytes', 'the inline semantic body is at most 16,384 bytes', 'payload_inline_too_large', "value['inline_bytes'] > 16384"),
     ]),
@@ -56,8 +61,10 @@ SPEC = [
         R('PS04_node_id', '/node_id', 'a Project payload that names node_id gives a nonempty node_id', 'payload_orchestrator_ids', "value['scope_kind'] == 'project' and value['node_present'] is True and not value['node_id']"),
         R('PS05_attempt_id', '/attempt_id', 'a Project payload that names node_id gives a nonempty attempt_id', 'payload_orchestrator_ids', "value['scope_kind'] == 'project' and value['node_present'] is True and not value['attempt_id']"),
     ]),
-    P('override_scope_root', 'Override grant scope: kind and Project', [
+    P('override_scope_kind', 'Override grant scope: kind (behind the grant schema)', [
         R('OS01_kind', '/grant_scope_kind', 'equals the payload scope kind', 'override_scope', "value['grant_scope_kind'] != value['scope_kind']"),
+    ]),
+    P('override_scope_root', 'Override grant scope: kind and Project', [
         R('OS02_project', '/grant_project_id', 'equals the payload scope project_id', 'override_scope', "value['grant_project_id'] != value['scope_project_id']"),
     ]),
     P('override_scope_project', 'Override grant scope: Project run and worktree', [
@@ -113,7 +120,8 @@ SPEC = [
     ]),
     # ---------------------------------------------------------------- payload contract CLI
     P('contract_payload_schema', 'Payload contract CLI: closed payload schema', [
-        R('CS01_payload_schema', '/errors', 'the closed payload schema with the selected format checker reports no error', 'payload_schema', "value['errors'] != 0"),
+        R('CS01_payload_schema', '/errors', 'the closed payload schema with the selected format checker reports no structural error', 'payload_schema', "value['errors'] != 0"),
+        R('CS02a_slot_type', '/', 'every integer slot holds an exact integer (CV-1100 current admission)', 'payload_schema', "value['slot_type'] != 0"),
     ]),
     P('contract_identity_vector', 'Payload contract CLI: recorded identity vectors', [
         R('CI01_vector', '/computed', 'the recomputed (idempotency_key, event_id) equals the recorded vector', 'identity_vector', "value['computed'] != value['expected']"),
@@ -236,8 +244,13 @@ SPEC = [
         R('EP02_parse', '/payload_ref', 'is a JSON text', 'payload_reference_unavailable', "value['parse_error'] is not None"),
     ]),
     P('payload_ref_descriptor', 'SP-337: closed payload descriptor', [
-        R('EP03_numbers', '/payload_ref', 'descriptor numbers are integers', 'payload_reference_schema', "value['float_count'] != 0"),
-        R('EP04_schema', '/payload_ref', 'the payload_reference schema reports no error', 'payload_reference_schema', "value['errors'] != 0"),
+        R('EP04_schema', '/payload_ref', 'the payload_reference schema reports no structural error', 'payload_reference_schema', "value['errors'] != 0"),
+        R('EP03a_slot_type', '/payload_ref/byte_size', 'every integer slot holds an exact integer (CV-1100 current admission)', 'payload_reference_schema', "value['slot_type'] != 0"),
+    ]),
+    P('descriptor_jcs', 'SP-337: CV-1100 qualified RFC 8785 encoding of the descriptor', [
+        R('DJ01_binary64', '/', 'the CV-1100 qualified RFC 8785 route preserves every integer through binary64', 'payload_reference_shape', "value['binary64'] is True"),
+        R('DJ02_decimal', '/', 'the emitted RFC 8785 decimal equals every original number', 'payload_reference_shape', "value['decimal'] is True"),
+        R('DJ03_other', '/', 'the qualified RFC 8785 route has no other refusal (non-finite, key or string domain)', 'payload_reference_shape', "value['other'] is True"),
     ]),
     P('payload_ref_shape', 'SP-337: canonical descriptor text and empty inline body', [
         R('EP05_canonical', '/payload_ref', 'is the canonical JSON text of the descriptor', 'payload_reference_shape', "value['canonical_text'] != value['ref']"),
@@ -257,17 +270,20 @@ SPEC = [
     ]),
     # ---------------------------------------------------------------- authority: materialization
     P('mat_schema', 'Materialization: closed source/EventRecord/custody schema', [
-        R('MS01_schema', '/', 'the materialization schema reports no error', 'materialization_schema', "value['errors'] != 0"),
+        R('MS01_schema', '/', 'the materialization schema reports no structural error', 'materialization_schema', "value['errors'] != 0"),
     ]),
-    P('mat_numbers', 'Materialization: current integer admission', [
-        R('MN01_candidate_numbers', '/', 'no candidate number is a float', 'numeric_representation', "value['float_count'] != 0"),
+    P('mat_integer_slots', 'Materialization: CV-1100 current integer admission at every schema integer slot', [
+        R('MN01a_slot_type', '/', 'every integer slot holds an exact integer (CV-1100 current admission)', 'numeric_representation', "value['slot_type'] != 0"),
+    ]),
+    P('mat_numbers', 'Materialization: selected writer epoch type', [
         R('MN02_bank_epoch', '/writer_epoch', 'the selected writer epoch is an exact integer', 'numeric_representation', "value['bank_epoch_type'] != 'int'"),
     ]),
     P('mat_replay', 'Materialization: current writer replay policy', [
         R('MR01_replay_only', '/event/replay_policy', 'is not projector_replay_only', 'replay_only_not_appendable', "value['replay_policy'] == 'projector_replay_only'"),
     ]),
     P('mat_payload_schema', 'Materialization: resolved payload against the closed Result schema', [
-        R('MP01_payload_schema', '/payload', 'the Result schema reports no error', 'payload_schema', "value['errors'] != 0"),
+        R('MP01_payload_schema', '/payload', 'the Result schema reports no structural error', 'payload_schema', "value['errors'] != 0"),
+        R('MP02a_slot_type', '/payload', 'every integer slot holds an exact integer (CV-1100 current admission)', 'payload_schema', "value['slot_type'] != 0"),
     ]),
     P('mat_source_owner', 'Materialization: original owner, epoch, commitment and result', [
         R('MO01_storage', '/source/storage_instance_id', 'equals the selected Storage instance', 'original_owner_epoch', "value['source_storage'] != value['bank_storage']"),
@@ -289,8 +305,10 @@ SPEC = [
     P('mat_request_subject', 'Materialization: graph-declared request subject joins', [
         R('MQ01_subject', '/source/original_request', 'the request value equals the payload value', 'request_subject_join', "value['request_value'] != value['payload_value']"),
     ]),
-    P('mat_envelope_subject', 'Materialization: EventRecord subject copies', [
+    P('mat_envelope_kind', 'Materialization: EventRecord scope kind', [
         R('ME01_scope_kind', '/event/scope_kind', 'equals the request scope kind', 'envelope_scope', "value['event_scope_kind'] != value['scope_kind']"),
+    ]),
+    P('mat_envelope_subject', 'Materialization: EventRecord subject copies', [
         R('ME02_project', '/event/project_id', 'equals the request scope project_id', 'envelope_scope', "value['event_project_id'] != value['scope_project_id']"),
         R('ME03_thread', '/event/thread_id', 'equals the execution-context thread_id', 'envelope_thread_id', "value['event_thread_id'] != value['ctx_thread_id']"),
         R('ME04_run', '/event/run_id', 'equals the execution-context run_id', 'envelope_run_id', "value['event_run_id'] != value['ctx_run_id']"),
@@ -313,9 +331,11 @@ SPEC = [
         R('MB02_present', '/source/body_members/ref', 'the bank holds the body as a string', 'original_body_missing_or_changed', "value['raw_type'] != 'str'"),
         R('MB03_hash', '/source/body_members/sha256', 'equals the SHA-256 of the body bytes', 'original_body_missing_or_changed', "value['raw_type'] == 'str' and value['computed_sha256'] != value['recorded_sha256']"),
     ]),
+    P('mat_effect_run', 'Materialization: effect-capable run (behind the closed schema run requirement)', [
+        R('MX02_run', '/execution_context/run_id', 'is nonempty', 'effect_context_required', "not value['run_id']"),
+    ]),
     P('mat_effect_context', 'Materialization: effect-capable execution context', [
         R('MX01_thread', '/execution_context/thread_id', 'is nonempty', 'effect_context_required', "not value['thread_id']"),
-        R('MX02_run', '/execution_context/run_id', 'is nonempty', 'effect_context_required', "not value['run_id']"),
         R('MX03_root', '/execution_context/root_id', 'is nonempty', 'effect_context_required', "not value['root_id']"),
         R('MX04_generation', '/execution_context/root_generation', 'is nonempty', 'effect_context_required', "not value['root_generation']"),
         R('MX05_directory', '/execution_context/working_directory', 'is nonempty', 'effect_context_required', "not value['working_directory']"),
@@ -324,14 +344,18 @@ SPEC = [
         R('MA01_node', '/payload/node_id', 'is null', 'application_orchestrator_ids', "value['node_id'] is not None"),
         R('MA02_attempt', '/payload/attempt_id', 'is null', 'application_orchestrator_ids', "value['attempt_id'] is not None"),
     ]),
-    P('mat_grant_window', 'Materialization: granted override window', [
+    P('mat_grant_order', 'Materialization: granted override issued before expiry', [
         R('MG01_issued_before_expiry', '/payload/expires_at', 'issued_at is before expires_at', 'grant_expiry', "value['issued_us'] >= value['expires_us']"),
+    ]),
+    P('mat_grant_window', 'Materialization: granted override window', [
         R('MG02_requested_maximum', '/payload/expires_at', 'expires_at is at most the requested maximum', 'grant_expiry', "value['expires_us'] > value['maximum_us']"),
         R('MG03_live_at_issue', '/payload/ts', 'ts is at or before expires_at', 'grant_expired_at_issue', "value['ts_us'] > value['expires_us']"),
     ]),
+    P('mat_project_body_present', 'Materialization: native Project original body present', [
+        R('MJ02_body_present', '/source/body_members', 'the bank holds the original Project body as a string', 'original_project_body_value', "value['raw_type'] != 'str'"),
+    ]),
     P('mat_project_original', 'Materialization: native Project original record', [
         R('MJ01_project', '/source/native_project_record/project_id', 'equals the scope project_id', 'original_project_scope', "value['original_project_id'] != value['scope_project_id']"),
-        R('MJ02_body_present', '/source/body_members', 'the bank holds the original Project body as a string', 'original_project_body_value', "value['raw_type'] != 'str'"),
         R('MJ03_body_bytes', '/source/native_project_record', 'the body bytes equal the canonical MessagePack of the record', 'original_project_body_value', "value['raw_type'] == 'str' and value['body_equal'] is not True"),
     ]),
     P('mat_project_subject', 'Materialization: graph-declared native Project subject joins', [
@@ -360,13 +384,28 @@ SPEC = [
         R('MT04_idempotency_key', '/custody/idempotency_key', 'equals the EventRecord idempotency_key', 'receipt_idempotency_key', "value['custody_key'] != value['idempotency_key']"),
         R('MT05_partition', '/custody/scope_partition', 'equals the request scope partition', 'receipt_partition', "value['custody_partition'] != value['scope_partition']"),
     ]),
-    P('mat_receipt_values', 'Materialization: first-receipt digests, receipt and issued custody', [
+    P('producer_jcs', 'CV-317 producer projection: CV-1100 qualified RFC 8785 encoding', [
+        R('QJ01_binary64', '/', 'the CV-1100 qualified RFC 8785 route preserves every integer through binary64', 'producer_digest_unavailable', "value['binary64'] is True"),
+        R('QJ02_decimal', '/', 'the emitted RFC 8785 decimal equals every original number', 'producer_digest_unavailable', "value['decimal'] is True"),
+        R('QJ03_other', '/', 'the qualified RFC 8785 route has no other refusal (non-finite, key or string domain)', 'producer_digest_unavailable', "value['other'] is True"),
+    ]),
+    P('full_value_bytes', 'CV-339 full value: SP-1100 EVENT_VALUE physical bytes', [
+        R('FV01_integer_range', '/', 'every integer is inside the SP-1100 physical range', 'full_value_unavailable', "value['reason'] == 'physical_integer_range'"),
+        R('FV02_other', '/', 'the EVENT_VALUE profile and CV-339 edition have no other refusal', 'full_value_unavailable', "value['reason'] is not None and value['reason'] != 'physical_integer_range'"),
+    ]),
+    P('mat_semantic_digest', 'Materialization: first-receipt producer semantic digest', [
         R('MT06_semantic_digest', '/custody/producer_semantic_digest', 'equals the recomputed CV-317 producer semantic digest', 'receipt_semantic_digest', "value['custody_digest'] != value['computed_digest']"),
+    ]),
+    P('mat_full_value', 'Materialization: first-receipt full-value commitment', [
         R('MT07_full_value', '/custody/original_event_value_commitment/sha256', 'equals the recomputed CV-339 full-value commitment', 'receipt_full_value', "value['custody_commitment'] != value['computed_commitment']"),
+    ]),
+    P('mat_receipt_state', 'Materialization: first-receipt durability state (behind the receipt schema const)', [
+        R('MT11_durability_state', '/custody/first_append_receipt/durability_state', 'is synced', 'receipt_durability', "value['durability_state'] != 'synced'"),
+    ]),
+    P('mat_receipt_values', 'Materialization: first-receipt digests, receipt and issued custody', [
         R('MT08_receipt_event', '/custody/first_append_receipt/event_id', 'equals the EventRecord event_id', 'receipt_sequence', "value['receipt_event_id'] != value['event_id']"),
         R('MT09_receipt_sequence', '/custody/first_append_receipt/sequence_id', 'equals the EventRecord sequence_id', 'receipt_sequence', "value['receipt_sequence_id'] != value['sequence_id']"),
         R('MT10_durability_class', '/custody/first_append_receipt/durability_class', 'is barrier', 'receipt_durability', "value['durability_class'] != 'barrier'"),
-        R('MT11_durability_state', '/custody/first_append_receipt/durability_state', 'is synced', 'receipt_durability', "value['durability_state'] != 'synced'"),
         R('MT12_issued', '/event/event_id', 'the bank issued map holds exactly this event and custody', 'original_issued_custody', "value['issued_equal'] is not True"),
     ]),
     # ---------------------------------------------------------------- authority: application safe-point originals
@@ -376,8 +415,10 @@ SPEC = [
     P('app_body_decode', 'Application original: body bytes decode with the selected codec', [
         R('AB02_decode', '/source/body_members', 'decodes canonically with the selected codec', 'application_body_decode', "value['decode_error'] is not None"),
     ]),
-    P('app_body_check', 'Application original: decoded body schema and value', [
+    P('app_body_schema', 'Application original: decoded body against its declared root (behind the materialization schema)', [
         R('AB03_schema', '/source/body_members', 'the declared root schema reports no error', 'application_body_schema', "value['errors'] != 0"),
+    ]),
+    P('app_body_check', 'Application original: decoded body schema and value', [
         R('AB04_value', '/source/body_members', 'equals the source record (or the request without addressing fields)', 'application_body_value', "value['value_equal'] is not True"),
     ]),
     P('app_inventory', 'Application original: snapshot blob inventory', [
@@ -401,7 +442,7 @@ SPEC = [
         R('AE04_environment', '/entries/identity/environment_id', 'equals the execution-context environment_id', 'application_entry_context', "value['environment_id'] != value['ctx_environment_id']"),
     ]),
     P('app_entry_path', 'Application original: manifest entry lexical root boundary', [
-        R('AE05_under_root', '/entries/identity/canonical_absolute_path', 'starts with the working directory and a slash', 'application_entry_root', "not value['path'].startswith(value['root'] + '/')"),
+        R('AE05_under_root', '/entries/identity/canonical_absolute_path', 'starts with the (present) working directory and a slash', 'application_entry_root', "value['root'] is None or not value['path'].startswith(value['root'] + '/')"),
         R('AE06_no_parent', '/entries/identity/canonical_absolute_path', 'has no .. segment', 'application_entry_root', "'..' in value['path'].split('/')"),
         R('AE07_no_git', '/entries/identity/canonical_absolute_path', 'does not enter /.git/', 'application_entry_root', "'/.git/' in value['path']"),
         R('AE08_ignored_scope', '/entries/ignored', 'an ignored entry is in the authorized write set', 'application_ignored_scope', "value['ignored'] and not value['authorized_write_set']"),
@@ -418,9 +459,11 @@ SPEC = [
         R('AF05_body_sha256', '/snapshot_blobs/blobs/sha256', 'equals the SHA-256 of the body', 'application_blob_value', "value['body_sha256'] != value['blob_sha256']"),
         R('AF06_entry_sha256', '/entries/blob_sha256', 'equals the blob SHA-256', 'application_blob_value', "value['blob_sha256'] != value['entry_sha256']"),
     ]),
+    P('app_entry_blob_join', 'Application original: the matched blob carries the entry payload_id (selected by it)', [
+        R('AF08_entry_address', '/entries/payload_id', 'equals the blob payload_id', 'application_blob_address', "value['blob_payload_id'] != value['entry_payload_id']"),
+    ]),
     P('app_entry_blob_address', 'Application original: blob BLAKE3 address', [
         R('AF07_body_address', '/snapshot_blobs/blobs/payload_id', 'equals blake3: plus the BLAKE3 of the body', 'application_blob_address', "value['body_address'] != value['blob_payload_id']"),
-        R('AF08_entry_address', '/entries/payload_id', 'equals the blob payload_id', 'application_blob_address', "value['blob_payload_id'] != value['entry_payload_id']"),
     ]),
     P('app_entry_blob_store', 'Application original: pack store selection of the blob bytes', [
         R('AF09_store_selection', '/snapshot_blobs/blobs/payload_id', 'the pack store holds the same bytes under the payload_id', 'application_payload_store_selection', "value['store_raw'] != value['raw']"),
@@ -433,11 +476,13 @@ SPEC = [
     P('app_blob_inventory_complete', 'Application original: the inventory holds exactly the referenced blobs', [
         R('AC01_complete', '/snapshot_blobs/blobs', 'the referenced payload ids equal the inventory payload ids', 'application_complete_blob_inventory', "value['referenced'] != value['inventory']"),
     ]),
+    P('app_safe_point_ids', 'Application original: safe-point record orchestrator ids (behind the record schema null type)', [
+        R('SP03_node_id', '/safe_point_record/node_id', 'is null', 'application_safe_point_subject', "value['record_node_id'] is not None"),
+        R('SP04_attempt_id', '/safe_point_record/attempt_id', 'is null', 'application_safe_point_subject', "value['record_attempt_id'] is not None"),
+    ]),
     P('app_safe_point_subject', 'Application original: safe-point record subject', [
         R('SP01_safe_point_id', '/safe_point_record/safe_point_id', 'equals the result safe_point_id', 'application_safe_point_subject', "value['record_safe_point_id'] != value['result_safe_point_id']"),
         R('SP02_run_id', '/safe_point_record/run_id', 'equals the result run_id', 'application_safe_point_subject', "value['record_run_id'] != value['result_run_id']"),
-        R('SP03_node_id', '/safe_point_record/node_id', 'is null', 'application_safe_point_subject', "value['record_node_id'] is not None"),
-        R('SP04_attempt_id', '/safe_point_record/attempt_id', 'is null', 'application_safe_point_subject', "value['record_attempt_id'] is not None"),
         R('SP05_worktree_path', '/safe_point_record/worktree_path', 'equals the request working directory', 'application_safe_point_subject', "value['record_worktree_path'] != value['working_directory']"),
     ]),
     P('app_safe_point_manifest_a', 'Application original: safe-point record manifest reference and digests', [
@@ -484,12 +529,14 @@ SPEC = [
     P('app_result_event', 'Application original: restore transaction result-event pointer', [
         R('RE01_result_event', '/restore_transaction/result_event_ref', 'is null or this original event_id', 'application_result_event_join', "value['result_event_ref'] is not None and value['result_event_ref'] != value['event_id']"),
     ]),
+    P('app_transaction_ids', 'Application original: restore transaction orchestrator ids (behind the transaction schema null type)', [
+        R('TR04_node_id', '/restore_transaction/node_id', 'equals the result node_id', 'application_transaction_result', "value['tx_node_id'] != value['result_node_id']"),
+        R('TR05_attempt_id', '/restore_transaction/attempt_id', 'equals the result attempt_id', 'application_transaction_result', "value['tx_attempt_id'] != value['result_attempt_id']"),
+    ]),
     P('app_transaction_result_a', 'Application original: restore transaction equals the result (subject)', [
         R('TR01_safe_point_id', '/restore_transaction/safe_point_id', 'equals the result safe_point_id', 'application_transaction_result', "value['tx_safe_point_id'] != value['result_safe_point_id']"),
         R('TR02_transaction_id', '/restore_transaction/restore_transaction_id', 'equals the result restore_transaction_id', 'application_transaction_result', "value['tx_restore_transaction_id'] != value['result_restore_transaction_id']"),
         R('TR03_run_id', '/restore_transaction/run_id', 'equals the result run_id', 'application_transaction_result', "value['tx_run_id'] != value['result_run_id']"),
-        R('TR04_node_id', '/restore_transaction/node_id', 'equals the result node_id', 'application_transaction_result', "value['tx_node_id'] != value['result_node_id']"),
-        R('TR05_attempt_id', '/restore_transaction/attempt_id', 'equals the result attempt_id', 'application_transaction_result', "value['tx_attempt_id'] != value['result_attempt_id']"),
         R('TR06_outcome', '/restore_transaction/restore_outcome', 'equals the result restore_outcome', 'application_transaction_result', "value['tx_restore_outcome'] != value['result_restore_outcome']"),
     ]),
     P('app_transaction_result_b', 'Application original: restore transaction equals the result (states and recovery)', [
@@ -546,9 +593,11 @@ SPEC = [
         R('OP05_before_type', '/restore_transaction/operations/expected_before_type', 'equals the pre-restore kind (null when absent)', 'application_operation_subject', "value['expected_before_type'] != value['before_kind']"),
         R('OP06_target_type', '/restore_transaction/operations/target_type', 'equals the target kind (null when absent)', 'application_operation_subject', "value['target_type'] != value['target_kind']"),
     ]),
-    P('app_operation_kind', 'Application original: operation kind agrees with its entries', [
+    P('app_operation_presence', 'Application original: operation kind against entry presence (behind the operation schema and subject rows)', [
         R('OK02_before_presence', '/restore_transaction/operations/operation_kind', 'create has no pre-restore entry; replace, delete and metadata have one', 'application_operation_kind', "(value['kind'] == 'create') == value['before_present']"),
         R('OK03_target_presence', '/restore_transaction/operations/operation_kind', 'delete has no target entry; create, replace and metadata have one', 'application_operation_kind', "(value['kind'] == 'delete') == value['target_present']"),
+    ]),
+    P('app_operation_kind', 'Application original: operation kind agrees with its entries', [
         R('OK04_metadata_content', '/restore_transaction/operations/operation_kind', 'metadata keeps kind, payload, digest, length, symlink target and gitlink', 'application_operation_kind', "value['kind'] == 'metadata' and value['before_present'] is True and value['target_present'] is True and value['before_content'] != value['target_content']"),
     ]),
     P('app_operation_staging', 'Application original: operation staging and tombstones', [
@@ -557,39 +606,51 @@ SPEC = [
         R('ST03_delete_stage', '/restore_transaction/operations/stage_ref', 'delete has no stage', 'application_operation_staging', "value['kind'] == 'delete' and value['stage_ref'] is not None"),
         R('ST04_delete_tombstone', '/restore_transaction/operations/tombstone_ref', 'delete names a tombstone', 'application_operation_staging', "value['kind'] == 'delete' and not value['tombstone_ref']"),
     ]),
+    P('app_journal_lease', 'Application original: journal mutation lease (behind the transaction schema minLength)', [
+        R('JC03_lease', '/restore_transaction/mutation_lease_ref', 'is nonempty', 'application_journal_cursor_lease', "not value['mutation_lease_ref']"),
+    ]),
     P('app_journal', 'Application original: journal cursor, lease and restart', [
         R('JC01_cursor', '/restore_transaction/operation_cursor', 'is at most the operation count', 'application_journal_cursor_lease', "value['operation_cursor'] > value['operation_count']"),
         R('JC02_mutations', '/restore_transaction/path_mutation_count', 'is at most the operation count', 'application_journal_cursor_lease', "value['path_mutation_count'] > value['operation_count']"),
-        R('JC03_lease', '/restore_transaction/mutation_lease_ref', 'is nonempty', 'application_journal_cursor_lease', "not value['mutation_lease_ref']"),
         R('JC04_updated_at', '/restore_transaction/updated_at_utc', 'equals the result ts', 'application_journal_cursor_lease', "value['updated_at_utc'] != value['result_ts']"),
         R('JC05_restart', '/restore_transaction/restart_count', 'is positive exactly when the result says recovered_after_restart', 'application_journal_cursor_lease', "(value['restart_count'] > 0) != value['recovered_after_restart']"),
     ]),
-    P('app_outcome_clean', 'Application original: restored_clean equality', [
-        R('OQ01_committed', '/restore_transaction/phase', 'is committed', 'application_outcome_equality', "value['phase'] != 'committed'"),
+    P('app_outcome_clean_state', 'Application original: restored_clean end state (behind the payload restore rows)', [
         R('OQ02_post_is_target', '/restore_transaction/post_restore_state_sha256', 'the post manifest digest equals the target manifest digest', 'application_outcome_equality', "value['post_sha256'] != value['target_sha256']"),
         R('OQ03_scm_target', '/equality_result/scm_equal_target', 'is true', 'application_outcome_equality', "not value['scm_equal_target']"),
+    ]),
+    P('app_outcome_clean', 'Application original: restored_clean equality', [
+        R('OQ01_committed', '/restore_transaction/phase', 'is committed', 'application_outcome_equality', "value['phase'] != 'committed'"),
         R('OQ04_cursor_complete', '/restore_transaction/operation_cursor', 'equals the operation count', 'application_outcome_equality', "value['operation_cursor'] != value['operation_count']"),
     ]),
-    P('app_outcome_failed', 'Application original: restore_failed equality', [
-        R('OQ05_rolled_back', '/restore_transaction/phase', 'is rolled_back', 'application_outcome_equality', "value['phase'] != 'rolled_back'"),
+    P('app_outcome_failed_state', 'Application original: restore_failed end state (behind the payload restore rows)', [
         R('OQ06_post_is_pre', '/restore_transaction/post_restore_state_sha256', 'the post manifest digest equals the pre-restore manifest digest', 'application_outcome_equality', "value['post_sha256'] != value['pre_sha256']"),
         R('OQ07_scm_pre', '/equality_result/scm_equal_pre_restore', 'is true', 'application_outcome_equality', "not value['scm_equal_pre_restore']"),
     ]),
-    P('app_outcome_skipped', 'Application original: restore_skipped equality', [
-        R('OQ08_committed', '/restore_transaction/phase', 'is committed', 'application_outcome_equality', "value['phase'] != 'committed'"),
+    P('app_outcome_failed', 'Application original: restore_failed equality', [
+        R('OQ05_rolled_back', '/restore_transaction/phase', 'is rolled_back', 'application_outcome_equality', "value['phase'] != 'rolled_back'"),
+    ]),
+    P('app_outcome_skipped_state', 'Application original: restore_skipped states (behind the payload restore rows)', [
         R('OQ09_target_is_pre', '/restore_transaction/target_state_sha256', 'the target manifest digest equals the pre-restore manifest digest', 'application_outcome_equality', "value['target_sha256'] != value['pre_sha256']"),
         R('OQ10_pre_is_post', '/restore_transaction/post_restore_state_sha256', 'the pre-restore manifest digest equals the post manifest digest', 'application_outcome_equality', "value['pre_sha256'] != value['post_sha256']"),
+    ]),
+    P('app_outcome_skipped', 'Application original: restore_skipped equality', [
+        R('OQ08_committed', '/restore_transaction/phase', 'is committed', 'application_outcome_equality', "value['phase'] != 'committed'"),
         R('OQ11_no_mutation', '/restore_transaction/path_mutation_count', 'is zero', 'application_outcome_equality', "value['path_mutation_count'] != 0"),
+    ]),
+    P('app_outcome_refused_state', 'Application original: restore_refused end state (behind the payload restore rows)', [
+        R('OQ13_post_is_pre', '/restore_transaction/post_restore_state_sha256', 'the post manifest digest equals the pre-restore manifest digest', 'application_outcome_equality', "value['post_sha256'] != value['pre_sha256']"),
     ]),
     P('app_outcome_refused', 'Application original: restore_refused equality', [
         R('OQ12_rolled_back', '/restore_transaction/phase', 'is rolled_back', 'application_outcome_equality', "value['phase'] != 'rolled_back'"),
-        R('OQ13_post_is_pre', '/restore_transaction/post_restore_state_sha256', 'the post manifest digest equals the pre-restore manifest digest', 'application_outcome_equality', "value['post_sha256'] != value['pre_sha256']"),
         R('OQ14_no_mutation', '/restore_transaction/path_mutation_count', 'is zero', 'application_outcome_equality', "value['path_mutation_count'] != 0"),
+    ]),
+    P('app_outcome_recovery_holds', 'Application original: restore_recovery_required holds (behind the transaction schema minItems)', [
+        R('OQ17_holds', '/restore_transaction/hold_refs', 'is nonempty', 'application_outcome_equality', "not value['hold_refs']"),
     ]),
     P('app_outcome_recovery', 'Application original: restore_recovery_required equality', [
         R('OQ15_recovery_phase', '/restore_transaction/phase', 'is recovery_required', 'application_outcome_equality', "value['phase'] != 'recovery_required'"),
         R('OQ16_fence', '/restore_transaction/fence_active', 'is true', 'application_outcome_equality', "not value['fence_active']"),
-        R('OQ17_holds', '/restore_transaction/hold_refs', 'is nonempty', 'application_outcome_equality', "not value['hold_refs']"),
         R('OQ18_post_not_target', '/restore_transaction/post_restore_state_sha256', 'differs from the target manifest digest', 'application_outcome_equality', "value['post_sha256'] == value['target_sha256']"),
         R('OQ19_post_not_pre', '/restore_transaction/post_restore_state_sha256', 'differs from the pre-restore manifest digest', 'application_outcome_equality', "value['post_sha256'] == value['pre_sha256']"),
     ]),
@@ -612,27 +673,54 @@ SPEC = [
     P('issued_original', 'Retained issued custody: unchanged original', [
         R('IS03_unchanged', '/', 'equals the retained original event and custody', 'issued_original_changed', "value['equal'] is not True"),
     ]),
-    P('issued_numbers', 'Retained issued custody: integer numbers', [
-        R('IS04_numbers', '/', 'no number is a float', 'issued_numeric_representation', "value['float_count'] != 0"),
-    ]),
     P('issued_schema', 'Retained issued custody: imported EventRecord and custody roots', [
-        R('IS05_schema', '/', 'the imported root reports no error', 'issued_schema', "value['errors'] != 0"),
+        R('IS04a_slot_type', '/', 'every integer slot holds an exact integer (CV-1100 current admission)', 'issued_numeric_representation', "value['slot_type'] != 0"),
+        R('IS05_schema', '/', 'the imported root reports no structural error', 'issued_schema', "value['errors'] != 0"),
     ]),
     P('issued_payload_schema', 'Retained issued custody: resolved payload against the closed Result schema', [
-        R('IS06_payload_schema', '/event/payload', 'the Result schema reports no error', 'issued_payload', "value['errors'] != 0"),
+        R('IS06_payload_schema', '/event/payload', 'the Result schema reports no structural error', 'issued_payload', "value['errors'] != 0"),
+        R('IS07a_slot_type', '/event/payload', 'every integer slot holds an exact integer (CV-1100 current admission)', 'issued_payload', "value['slot_type'] != 0"),
     ]),
     P('issued_receipt_ids', 'Retained issued custody: custody identity joins', [
         R('IR01_event_id', '/custody/event_id', 'equals the issued event_id', 'issued_full_value_receipt', "value['custody_event_id'] != value['event_id']"),
         R('IR02_event_type', '/custody/event_type', 'equals the checked family', 'issued_full_value_receipt', "value['custody_event_type'] != value['family']"),
         R('IR03_idempotency_key', '/custody/idempotency_key', 'equals the issued idempotency_key', 'issued_full_value_receipt', "value['custody_key'] != value['idempotency_key']"),
     ]),
-    P('issued_receipt_values', 'Retained issued custody: digests and first receipt', [
+    P('issued_semantic_digest', 'Retained issued custody: producer semantic digest', [
         R('IR04_semantic_digest', '/custody/producer_semantic_digest', 'equals the recomputed CV-317 producer semantic digest', 'issued_full_value_receipt', "value['custody_digest'] != value['computed_digest']"),
+    ]),
+    P('issued_full_value', 'Retained issued custody: full-value commitment', [
         R('IR05_full_value', '/custody/original_event_value_commitment/sha256', 'equals the recomputed CV-339 full-value commitment', 'issued_full_value_receipt', "value['custody_commitment'] != value['computed_commitment']"),
+    ]),
+    P('issued_receipt_state', 'Retained issued custody: first-receipt durability state (behind the receipt schema const)', [
+        R('IR08_durability_state', '/custody/first_append_receipt/durability_state', 'is synced', 'issued_full_value_receipt', "value['durability_state'] != 'synced'"),
+    ]),
+    P('issued_receipt_values', 'Retained issued custody: digests and first receipt', [
         R('IR06_receipt_event', '/custody/first_append_receipt/event_id', 'equals the issued event_id', 'issued_full_value_receipt', "value['receipt_event_id'] != value['event_id']"),
         R('IR07_receipt_sequence', '/custody/first_append_receipt/sequence_id', 'equals the issued sequence_id', 'issued_full_value_receipt', "value['receipt_sequence_id'] != value['sequence_id']"),
-        R('IR08_durability_state', '/custody/first_append_receipt/durability_state', 'is synced', 'issued_full_value_receipt', "value['durability_state'] != 'synced'"),
         R('IR09_durability_class', '/custody/first_append_receipt/durability_class', 'is barrier', 'issued_full_value_receipt', "value['durability_class'] != 'barrier'"),
+    ]),
+    P('retained_dispatch', 'SP-1101 retained original: one authenticated recipe selection (shared RetainedDispatcher)', [
+        R('DD01_binding', '/', 'the authenticated original binding equals the retained expectation', 'retained_original_unavailable', "value['reason'] in ('original_binding', 'original_scope')"),
+        R('DD02_recipe', '/', 'the recorded write-time recipe tuple selects an installed frozen verifier', 'retained_original_unavailable', "value['reason'] in ('recipe_unknown', 'recipe_selection', 'recipe_tuple', 'recipe_resource_hash')"),
+        R('DD03_authority', '/', 'the original owner holds authenticated custody for the original', 'retained_original_unavailable', "value['reason'] in ('original_missing', 'original_authority', 'original_bytes_type')"),
+    ]),
+    P('retained_dispatch_other', 'SP-1101 retained original: remaining dispatcher refusals', [
+        R('DD04_other', '/', 'the dispatcher has no other refusal', 'retained_original_unavailable', "value['reason'] is not None and value['reason'] not in ('original_binding', 'original_scope', 'recipe_unknown', 'recipe_selection', 'recipe_tuple', 'recipe_resource_hash', 'original_missing', 'original_authority', 'original_bytes_type')"),
+    ]),
+    P('app_codec_pin', 'Application original: body codecs selected by the authenticated write-time edition (SP-1101)', [
+        R('CP01_custody', '/source/source_ref', 'Storage custody records the original source edition', 'application_body_codec_unpinned', "value['entry_present'] is not True"),
+        R('CP02_manifest', '/source/source_ref', 'the recorded frozen-resource manifest selects an installed codec map', 'application_body_codec_unpinned', "value['entry_present'] is True and value['recorded_manifest'] != value['installed_manifest']"),
+    ]),
+    P('manifest_jcs', 'Application original: CV-1100 qualified RFC 8785 encoding of manifests', [
+        R('AJ01_binary64', '/', 'the CV-1100 qualified RFC 8785 route preserves every integer through binary64', 'application_manifest_unencodable', "value['binary64'] is True"),
+        R('AJ02_decimal', '/', 'the emitted RFC 8785 decimal equals every original number', 'application_manifest_unencodable', "value['decimal'] is True"),
+        R('AJ03_other', '/', 'the qualified RFC 8785 route has no other refusal (non-finite, key or string domain)', 'application_manifest_unencodable', "value['other'] is True"),
+    ]),
+    P('current_raw_json', 'CV-1100 current raw JSON grammar of a current candidate', [
+        R('CR01_integer_token', '/', 'every integer token is 0 or -?[1-9][0-9]* (no -0, no plus)', 'current_raw_number', "value['reason'] == 'integer_token'"),
+        R('CR02_json_syntax', '/', 'the text is JSON (no leading zero, no bare word)', 'current_raw_number', "value['reason'] == 'json_syntax'"),
+        R('CR03_other', '/', 'no non-finite number, duplicate key or lone surrogate', 'current_raw_number', "value['reason'] is not None and value['reason'] not in ('integer_token', 'json_syntax')"),
     ]),
     # ---------------------------------------------------------------- authority: protocol oracle
     P('proto_replay', 'Protocol: current writer actions refuse projector_replay_only', [
