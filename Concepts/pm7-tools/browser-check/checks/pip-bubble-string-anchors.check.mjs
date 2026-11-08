@@ -132,7 +132,7 @@ export default async function (t) {
 			// NieR's box is painted-box judged: Pip hovers (a slow bob of the head), so its settling is read looser there
 			const tol = e.rows[0].fam === 'nier' ? 6 : 1;
 			if (Math.max(Math.abs(rels[0][0] - sx), Math.abs(rels[0][1] - sy)) > tol || worst > tol)
-				bad4.push(`${look} ${screen} '${e.rows[0].bub.text.slice(0, 32)}': first frame ${Math.abs(rels[0][0] - sx).toFixed(1)}/${Math.abs(rels[0][1] - sy).toFixed(1)} px from settled, worst ${worst.toFixed(1)} px at +${e.rows[wi].t - e.rows[0].t} ms (${e.rows.length} frames)`);
+				bad4.push(`${look} ${screen} '${e.rows[0].bub.text.slice(0, 32)}': first frame ${Math.abs(rels[0][0] - sx).toFixed(1)}/${Math.abs(rels[0][1] - sy).toFixed(1)} px from settled, worst ${worst.toFixed(1)} px at +${e.rows[wi].t - e.rows[0].t} ms (${e.rows.length} frames; settled [${sx.toFixed(1)}, ${sy.toFixed(1)}], first rels ${rels.slice(0, 5).map((r) => `[${r[0].toFixed(1)}, ${r[1].toFixed(1)}]`).join(' ')})`);
 		}
 		// ---- QA-6 + QA-4b: per (segment, prop) by destination slot
 		const byProp = new Map();
