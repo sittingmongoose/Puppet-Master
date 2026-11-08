@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L29201
+Source lines: L26794-L29202
 
-Source SHA256: `12aeb4d49e1485b1b395bb0175f7a719f2754caddab2b00c95b8c005a4b63256`
+Source SHA256: `00cce977fddef51edd004ab276ea478ef4b88950df85891a556044843cafc5ed`
 
 ---
 
@@ -2361,6 +2361,7 @@ crau_owner_questions:
   - "Docker/Kubernetes disabled reasons (asked of the Plans/Containers_Registry_and_Unraid.md owner): may Docker Manager command availability use blocked_state_required, outside the six-family taxonomy of UCC-053 and UI_Command_Catalog.md section 2.5B (Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability), for compose_invalid, compose_service_missing, image_missing and k8s_rollout_blocked? Containers_Registry_and_Unraid.md section 2B calls compose-up failure, unhealthy container, missing Docker context, cluster unreachable and rollout failure local-runtime blockers under a blocked/degraded classification, and CRAU-103 keeps unproven states manual-only, blocked, degraded or partial capability. Until the owner answers, the map keeps blocked_state_required for those four; if the taxonomy is binding, the nearest families are not_configured for the compose and image codes and degraded for k8s_rollout_blocked."
   - "Do the other nine CRAU-095 mappings (the P0c worker's choice by name) match the owner's meaning, in particular access_url_unresolved to not_configured and buildx_unavailable and bake_unavailable to partial_capability?"
 open_owner_questions:
+  - "Assistant worktree button visibility (asked of the assistant-chat-design.md owner): ACD-322 (canonical text and acceptance criterion) and W.1's validation surface hide the Worktree button when the active project has no git repository, while CV-159 (Contracts_V0.md) keeps projectIsGitRepo only as the original Git-reader guard and never as a universal test that excludes an admitted Jujutsu route. ACD-637's six cmd.chat.worktree.* definitions follow CV-159 and cite both. Should ACD-322 and W.1 show the button for an admitted Jujutsu project? Raised by the stream C lead after the recheck of the Sol 6.1 max fixes."
   - "Known-37 recovery-unavailable rows (asked of the UI_Command_Catalog.md Known-37 and Contracts_V0 recovery-unavailable owners): the catalog says disabled projections retain \"the exact owner reason, including stale projection, permission/storage failure, operation in progress, source verification failure, or missing explicit confirmation\", but names no owner-state token for storage failure, source verification failure or missing explicit confirmation. The recovery_unavailable_resolution_receipt reason_code enum (Plans/storage_value_registry.json) has storage_read_only, storage_io_exhausted, recovery_source_not_verified and explicit_confirmation_required, which are result reasons, not disabled states. Which tokens are those disabled states? Until an owner names them, the map has no entry for them and the definitions keep their gap-note mappings."
 gui_related: false
 gui_classification_reason: Records how command payload definitions state their judgments and how UCC-230 maps identities; no GUI behavior changes.

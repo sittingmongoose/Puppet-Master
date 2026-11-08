@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L5790-L7534
+Source lines: L5790-L7601
 
-Source SHA256: `b3597b48c672b6b129bd99fcc15fc655cbac22b2f0681eb4c91447632457245d`
+Source SHA256: `bf3db12553d8a5871239aa486a512b4dccdd4ab90d4edb19fba5ad0f71c43ed3`
 
 ---
 
@@ -24,8 +24,9 @@ canonical_text: >-
   The catalog keeps ids, labels, availability and aliases; the strict schema overlay keeps the common
   envelope and the closed code sets. GitHub_Integration worktree disabled states map to closed codes
   through the UCC-230 owner_state_code_map (DL-333 resolution 6); the closed set is not expanded.
-  release carries the W-082 lease fences its caller expects in expected_lease, and remove, prune, reuse
-  and recover carry them whenever the worktree has a lease, so the owner can refuse a stale fence.
+  release carries the W-082 lease fences its caller expects in expected_lease, remove, prune, reuse
+  and recover carry them whenever the worktree has a lease, and create carries them whenever it
+  materializes a reserved lease, so the owner can refuse a stale fence.
   cmd.git.worktree.open records the assistant alias cmd.chat.worktree.open_files (CV-160).
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible project-scope worktree commands (Worktrees rows, Review mode, destructive confirmations, lock actions).
@@ -411,6 +412,59 @@ command_payload_definitions:
             W-007 fixes the semantics ("the configured base branch or explicit ref", WorktreeGitImprovement.md:1231)
             but names no payload field. Choice: absent means the configured base branch; present is the explicit
             ref.
+        expected_lease:
+          type: object
+          required: false
+          default: none
+          fields:
+            lease_id:
+              type: id
+              required: true
+              default: none
+              provenance: gap
+              gap_note: "the lease the surface observed: the Worktree lease extension's lease_id (WorktreeGitImprovement.md:886; W-082 preserved token, :5682), typed id by the UCC-230 _id rule; canon does not make it an arg"
+            holder_identity_ref:
+              type: ref
+              required: true
+              default: none
+              provenance: gap
+              gap_note: "the holder the surface observed, W-082's holder fence (WorktreeGitImprovement.md:5653) under the shared lease record's name holder_identity_ref (Plans/shared_runtime_contracts.schema.json#/$defs/runtime_resource_lease); canon does not make it an arg"
+            generation:
+              type: integer
+              required: true
+              default: none
+              constraints: {minimum: 0}
+              provenance: gap
+              gap_note: "the lease generation the surface observed, W-082's generation fence (WorktreeGitImprovement.md:5653), named and typed as the shared lease record's generation, an integer from 0 (Plans/shared_runtime_contracts.schema.json#/$defs/runtime_resource_lease); canon does not make it an arg"
+            epoch:
+              type: integer
+              required: true
+              default: none
+              constraints: {minimum: 0}
+              provenance: gap
+              gap_note: "the lease epoch the surface observed, W-082's epoch fence (WorktreeGitImprovement.md:5653), named and typed as the shared lease record's epoch, an integer from 0 (Plans/shared_runtime_contracts.schema.json#/$defs/runtime_resource_lease); canon does not make it an arg"
+            topology_generation:
+              type: integer
+              required: true
+              default: none
+              constraints: {minimum: 0}
+              provenance: gap
+              gap_note: "the TopologyGeneration the lease binds (WorktreeGitImprovement.md:884), W-082's topology generation fence (:5653), spelled and typed as the shared command request envelope's topology_generation (Plans/shared_runtime_command_contracts.schema.json#/$defs/command_request_envelope); canon does not make it an arg"
+            source_location_id:
+              type: id
+              required: true
+              default: none
+              provenance: gap
+              gap_note: "the SourceLocationId the lease binds exactly (WorktreeGitImprovement.md:884), W-082's Source Location fence (:5653), spelled as the shared command request envelope's source_location_id (Plans/shared_runtime_command_contracts.schema.json#/$defs/command_request_envelope) and typed id by the UCC-230 _id rule; canon does not make it an arg"
+          provenance: gap
+          gap_note: >-
+            W-082 names the lease fences (holder, generation, epoch, topology generation and Source Location,
+            WorktreeGitImprovement.md:5653) and the Worktree lease extension names lease_id (:886), but canon
+            names no arg that carries the values a caller expects, and no typed carrier binds them for a
+            worktree command: the shared runtime_resource_lease is the lease record itself and has no topology
+            generation or Source Location, and the UICommand envelope carries none of the six. Choice: one
+            object holding the six values the dispatching surface observed, each named as canon's lease
+            records name it; the object's name and shape are not canon.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -447,6 +501,16 @@ command_payload_definitions:
           gap_note: >-
             The overlay names branch_ref as an optional identity of the group, and W-007 implies a branch input
             (verify existing branches, reuse safe ones), but canon does not say what create does when it is absent.
+        - key: field:expected_lease
+          choice: a create that materializes a reserved lease presents that reservation's lease edition; the owner compares lease_id, holder, generation, epoch, topology generation and Source Location with its current lease record and refuses any mismatch, or an absent expected_lease where its record holds a reservation for the worktree or run the envelope names, with stale_projection, before anything is materialized; a create with no reservation omits it
+          gap_note: >-
+            W-082 fences every create with holder, generation, epoch, topology generation and Source Location
+            (WorktreeGitImprovement.md:5653, :5666; the lease section, :888), and only the current reservation
+            generation may invoke cmd.git.worktree.create (:866), after ownership is recorded as the typed lease
+            (:865); W-084 sends child flows through this command (:5749). The owner's own lease record supplies
+            only the current side of that comparison, and canon names no field for the caller's side.
+            Optional, as on cmd.git.worktree.remove, because a create without a reservation (a Manual worktree,
+            GitHub_Integration.md:160) has no lease to present.
         - key: disabled_reason_codes
           choice: [not_configured, permission_required, blocked_state_required, stale_projection]
           gap_note: >-
@@ -1616,8 +1680,11 @@ command_payload_definitions:
             generation (:889), a release prepared for the earlier generation would otherwise carry the same args
             as one prepared for the current one. Canon names no field for the caller's side, and no existing
             typed carrier binds it.
-            Required here, because release acts only on a worktree whose ownership resolves
-            (UI_Command_Catalog.md:711), so the surface has observed its lease.
+            Required here, because release releases runtime ownership (UI_Command_Catalog.md:711), and runtime
+            ownership is recorded as the typed lease before anything is created (WorktreeGitImprovement.md:865;
+            W-082, :5653), so a worktree with runtime ownership to release has a lease the surface observed. A
+            worktree with no lease (the Manual owner label, GitHub_Integration.md:160) has no runtime ownership
+            to release; canon does not say whether release is offered on one.
       aliases: []
     - command_id: cmd.git.worktree.lock
       ucc_units: [UCC-054]
