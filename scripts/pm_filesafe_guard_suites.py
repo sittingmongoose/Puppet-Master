@@ -97,6 +97,11 @@ def witnesses(families=None):
                     found = found + A.issued_failures(f, case['bank'][stored].get(expected['event']['event_id']), expected, case['bank'])
                 return found
             out.append((f'{family}/positive/{case["id"]}', family, 'control', positive))
+        for case in row['positive'][:1]:
+            out.append((f'{family}/raw_positive/{case["id"]}', family, 'control',
+                        lambda case=case, f=family: A.materialization_raw_failures(
+                            f, json.dumps(copy.deepcopy(case['candidate']), ensure_ascii=False),
+                            copy.deepcopy(case['bank']))))
         for index, case in enumerate(row['negative']):
             out.append((f'{family}/negative/{index}/{case["id"]}', family, 'negative',
                         lambda case=case, f=family, r=row: authority_negative(f, r, case)))
@@ -171,11 +176,11 @@ def contract_cli(family):
     SG.schema_document_refused(schema)
     graph, documents, registry = SG.context(family)
     SG.reference_failures(graph, documents, registry)
-    validator = Draft202012Validator(schema, registry=registry, format_checker=SG.format_checker())
+    validator = C.payload_validator(family)
     row = next(r for r in json.loads((ROOT / 'Plans/filesafe_event_contract_fixtures.json').read_text())['families']
                if r['event_type'] == family)
     for p in row['positive_payloads']:
-        tables.refused('contract_payload_schema', {'errors': C.schema_errors(validator, p)})
+        tables.refused('contract_payload_schema', C.schema_facts(validator, p))
         C.semantic(p)
     for vector in row['identity_vectors']:
         p = row['positive_payloads'][vector['payload_index']]
@@ -191,10 +196,8 @@ def contract_cli(family):
 
 
 def contract_negative(family, case):
-    schema = json.loads((ROOT / ('Plans/event_payloads/' + family.replace('.', '_') + '_v2.schema.json')).read_text())
-    graph, documents, registry = SG.context(family)
-    validator = Draft202012Validator(schema, registry=registry, format_checker=SG.format_checker())
-    if tables.refused('contract_payload_schema', {'errors': C.schema_errors(validator, case['payload'])}):
+    validator = C.payload_validator(family)
+    if tables.refused('contract_payload_schema', C.schema_facts(validator, case['payload'])):
         return ['payload_schema']
     if case['layer'] == 'semantic' and not C.semantic(case['payload']):
         return ['payload_semantics']
