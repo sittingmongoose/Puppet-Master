@@ -7515,6 +7515,13 @@ command_payload_definitions:
             no field. This command is the user's lock action; run-owned locks are the system's auto-lock while a run,
             lane or package owns the worktree. So the owner records user provenance from the envelope actor_ref, and
             the payload carries no provenance field.
+        - key: omitted:expected_lease
+          choice: omitted
+          gap_note: >-
+            W-082's lease fences guard create, attach, renew, result capture, merge, release and cleanup
+            (WorktreeGitImprovement.md:5652-5654; the lease section, :888); a lock is not among them, so canon does not
+            require the caller's expected lease edition here. A run-owned lock is the system's auto-lock while
+            a run, lane or package owns the worktree (W-077, :5415), not this user action.
       aliases: []
     - command_id: cmd.git.worktree.unlock
       ucc_units: [UCC-054]
@@ -7560,6 +7567,13 @@ command_payload_definitions:
             cmd.git.worktree.unlock, UI_Command_Catalog.md:12591). W-077 says unlock of a run-owned lock while the
             owner is live "is refused with a blocked explanation naming the owner" (WorktreeGitImprovement.md:5418-5419);
             that refusal happens at dispatch, so blocked_state_required is added for it to travel in.
+        - key: omitted:expected_lease
+          choice: omitted
+          gap_note: >-
+            W-082's lease fences guard create, attach, renew, result capture, merge, release and cleanup
+            (WorktreeGitImprovement.md:5652-5654; the lease section, :888); an unlock is not among them, so canon does not
+            require the caller's expected lease edition here. Unlocking a run-owned lock while its owner is live
+            is refused from the owner's own lock record (W-077, :5418-5419), not from a caller-supplied fence.
       aliases: []
   results:
     WorktreeSelectResultV1:
