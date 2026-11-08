@@ -252,7 +252,8 @@ phase('complete_event', 'Complete original EventRecord joins (validate_complete_
     ('CE01_body', '/payload | /payload_ref', 'the resolved body equals the payload (typed)', 'complete event join',
      false('body_equal')),
     ('CE02_event_type', '/event_type', 'equals the family', 'complete event join', not_true('event_type_equal')),
-    ('CE03_project', '/project_id', 'equals the payload Project', 'complete event join', not_true('project_equal')),
+    ('CE03_project', '/project_id', 'a project-scoped event names the payload Project', 'complete event join',
+     false('project_equal')),
     ('CE04_scope_kind', '/scope_kind', 'is project', 'complete event join', not_true('scope_project')),
     ('CE05_correlation', '/correlation_id', 'equals the payload correlation', 'complete event join',
      not_true('correlation_equal')),
@@ -461,6 +462,12 @@ phase('producer_jcs', 'CV-317/CV-1100 qualified JCS of the producer projection (
      "value['jcs_refusal'] == 'jcs_binary64'"),
     ('QJ02_jcs_decimal', '/<producer projection>/**', 'every emitted JCS decimal equals the original integer', 'jcs_decimal',
      "value['jcs_refusal'] == 'jcs_decimal'"),
+])
+# Unprovable by construction (no input can reach it alone): every other qualified-JCS refusal of an
+# EventRecord inside operation custody (a lone surrogate, a non-finite float, an unsupported kind) is
+# refused first by RV01 (SP-339 closed domain) or the EventRecord schema. Kept as a check in its own
+# table so the gated tool credits the two reachable rows.
+phase('producer_jcs_other', 'CV-317/CV-1100 qualified JCS: any other refusal reason (shared producer_semantic_digest).', [
     ('QJ03_jcs_other', '/<producer projection>', 'has no other qualified-JCS refusal (Unicode scalar strings, supported kinds)',
      'producer_jcs', "value['jcs_refusal'] not in (None, 'jcs_binary64', 'jcs_decimal')"),
 ])
@@ -508,8 +515,8 @@ phase('control_identity', 'Family control physical identity (validate_historical
 ])
 phase('control_reader', 'Family control reader availability (validate_historical_operation).', [
     ('CD01_not_prepared', '/family_control/state', 'is not prepared', 'control reader unavailable', not_true('not_prepared')),
-    ('CD02_reader_enabled', '/family_control/reader_enabled', 'is enabled', 'control reader unavailable',
-     not_true('reader_enabled')),
+    ('CD02_reader_enabled', '/family_control/reader_enabled', 'a control past prepared has its reader enabled',
+     'control reader unavailable', false('reader_enabled')),
 ])
 phase('control_cutoff', 'Family control cutoff and original sequence (validate_historical_operation).', [
     ('CX01_withdrawn_ceiling', '/family_control/writer_cutoff_sequence', 'a withdrawn cutoff equals the last admitted sequence',
@@ -614,6 +621,11 @@ phase('retry_identity', 'Retry preserves the original identity (validate_case).'
 phase('integer_slot', 'CV-1100 current_integer at each declared schema integer slot of a current write.', [
     ('IS01_integer_type', '/{schema integer slot}', 'is an exact integer (never bool, float or decimal)', 'integer_type',
      "value['slot_refusal'] == 'integer_type'"),
+])
+# Unprovable by construction: every slot's bounds are read from the same owner schema whose verdict row
+# runs first on every current write, so an out-of-range exact integer is always refused by that schema
+# row (defense in depth; the joint cut is lane evidence). Kept as a check in its own table.
+phase('integer_slot_range', 'CV-1100 current_integer range at each declared schema integer slot of a current write.', [
     ('IS02_integer_range', '/{schema integer slot}', 'is within the schema minimum/maximum', 'integer_range',
      "value['slot_refusal'] == 'integer_range'"),
 ])

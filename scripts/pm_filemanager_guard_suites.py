@@ -70,6 +70,12 @@ def witnesses(fixtures=None, inputs=None):
         for case in row['boundary_cases']:
             yield (f'{name}/boundary/{case["name"]}', name, None if case['valid'] else case,
                    (lambda row=row, case=case: dfm.boundary_case(row, case)))
+    p2a = dfm.p2a_cases()
+    for row in fixtures['rows']:
+        name = row['event_type']
+        for case in p2a.get(name, []):
+            yield (f'{name}/p2a/{case["name"]}', name, None if case['valid'] else dict(case, expected_row=case['expected_row']),
+                   (lambda row=row, case=case: dfm.boundary_case(row, case)))
     for case_id, target, action in dfm.integrity_witnesses(inputs):
         yield (case_id, 'shared', None if target is None else {'name': case_id, 'expected_row': target}, action)
 
@@ -82,8 +88,10 @@ def expectation_problem(expectation, error):
         return 'negative witness accepted'
     if not isinstance(error, dfm.TableRefusal):
         return 'untracked refusal: ' + type(error).__name__ + ': ' + str(error)[:160]
-    if 'expected_row' in expectation:
-        return None if error.row == expectation['expected_row'] else 'refused by ' + error.row
+    if 'expected_row' in expectation and error.row != expectation['expected_row']:
+        return 'refused by ' + error.row
+    if 'expected_row' in expectation and 'expected_error' not in expectation:
+        return None
     try:
         dfm.check_negative_reason(expectation, error)
     except AssertionError as problem:

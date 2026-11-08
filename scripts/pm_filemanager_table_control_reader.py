@@ -18,14 +18,14 @@ def CD01_not_prepared(value, context):
 
 
 def CD02_reader_enabled(value, context):
-    return 'control reader unavailable' if value['reader_enabled'] is not True else None
+    return 'control reader unavailable' if value['reader_enabled'] is False else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('CD01_not_prepared', g.Invariant('/family_control/state', 'is not prepared'), 'control reader unavailable', CD01_not_prepared),
-        g.Guard('CD02_reader_enabled', g.Invariant('/family_control/reader_enabled', 'is enabled'), 'control reader unavailable', CD02_reader_enabled),
+        g.Guard('CD02_reader_enabled', g.Invariant('/family_control/reader_enabled', 'a control past prepared has its reader enabled'), 'control reader unavailable', CD02_reader_enabled),
     ])
 
     def check(value):

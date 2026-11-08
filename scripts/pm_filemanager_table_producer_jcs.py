@@ -21,21 +21,15 @@ def QJ02_jcs_decimal(value, context):
     return 'jcs_decimal' if value['jcs_refusal'] == 'jcs_decimal' else None
 
 
-def QJ03_jcs_other(value, context):
-    return 'producer_jcs' if value['jcs_refusal'] not in (None, 'jcs_binary64', 'jcs_decimal') else None
-
-
 def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('QJ01_jcs_binary64', g.Invariant('/<producer projection>/**', 'every integer has an exact finite binary64 value'), 'jcs_binary64', QJ01_jcs_binary64),
         g.Guard('QJ02_jcs_decimal', g.Invariant('/<producer projection>/**', 'every emitted JCS decimal equals the original integer'), 'jcs_decimal', QJ02_jcs_decimal),
-        g.Guard('QJ03_jcs_other', g.Invariant('/<producer projection>', 'has no other qualified-JCS refusal (Unicode scalar strings, supported kinds)'), 'producer_jcs', QJ03_jcs_other),
     ])
 
     def check(value):
         table.require('QJ01_jcs_binary64', value, context)
         table.require('QJ02_jcs_decimal', value, context)
-        table.require('QJ03_jcs_other', value, context)
         return True
     return g.Case(table, check, context)

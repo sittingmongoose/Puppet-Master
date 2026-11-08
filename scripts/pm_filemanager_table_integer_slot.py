@@ -17,19 +17,13 @@ def IS01_integer_type(value, context):
     return 'integer_type' if value['slot_refusal'] == 'integer_type' else None
 
 
-def IS02_integer_range(value, context):
-    return 'integer_range' if value['slot_refusal'] == 'integer_range' else None
-
-
 def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('IS01_integer_type', g.Invariant('/{schema integer slot}', 'is an exact integer (never bool, float or decimal)'), 'integer_type', IS01_integer_type),
-        g.Guard('IS02_integer_range', g.Invariant('/{schema integer slot}', 'is within the schema minimum/maximum'), 'integer_range', IS02_integer_range),
     ])
 
     def check(value):
         table.require('IS01_integer_type', value, context)
-        table.require('IS02_integer_range', value, context)
         return True
     return g.Case(table, check, context)

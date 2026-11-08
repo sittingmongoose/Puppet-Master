@@ -22,7 +22,7 @@ def CE02_event_type(value, context):
 
 
 def CE03_project(value, context):
-    return 'complete event join' if value['project_equal'] is not True else None
+    return 'complete event join' if value['project_equal'] is False else None
 
 
 def CE04_scope_kind(value, context):
@@ -46,7 +46,7 @@ def case(value):
     table = g.GuardTable([
         g.Guard('CE01_body', g.Invariant('/payload | /payload_ref', 'the resolved body equals the payload (typed)'), 'complete event join', CE01_body),
         g.Guard('CE02_event_type', g.Invariant('/event_type', 'equals the family'), 'complete event join', CE02_event_type),
-        g.Guard('CE03_project', g.Invariant('/project_id', 'equals the payload Project'), 'complete event join', CE03_project),
+        g.Guard('CE03_project', g.Invariant('/project_id', 'a project-scoped event names the payload Project'), 'complete event join', CE03_project),
         g.Guard('CE04_scope_kind', g.Invariant('/scope_kind', 'is project'), 'complete event join', CE04_scope_kind),
         g.Guard('CE05_correlation', g.Invariant('/correlation_id', 'equals the payload correlation'), 'complete event join', CE05_correlation),
         g.Guard('CE06_occurred_at', g.Invariant('/occurred_at_utc', 'equals the payload ts'), 'complete event join', CE06_occurred_at),

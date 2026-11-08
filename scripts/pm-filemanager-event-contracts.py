@@ -492,11 +492,76 @@ def payload_at_size(payload, target):
         raise AssertionError("unrepresentable payload fixture boundary")
 
 
+P2A_CASES = "Plans/filemanager_event_p2a_cases.json"
+
+
+def p2a_target(root, p, t):
+    """Fixture construction: the object a sweep part 2A witness step edits (never a validator)."""
+    m = t["custody_model"]
+    op = m["operation_rows"][m["operation_key"]]
+    return {"payload": p, "trace": t, "model": m, "operation": op, "event": op["complete_event"],
+            "control": m["control_rows"][m["control_key"]], "append": m["append_rows"][m["append_key"]]}[root]
+
+
+def p2a_set(target, path, value):
+    for key in path[:-1]:
+        target = target[key]
+    target[path[-1]] = copy.deepcopy(value)
+
+
+def apply_p2a_steps(name, p, t, steps):
+    """Fixture construction for sweep part 2A witnesses: one source change, then every copy moved."""
+    m = t["custody_model"]
+    for step in steps:
+        kind = step[0]
+        if kind == "set":
+            p2a_set(p2a_target(step[1], p, t), step[2], step[3])
+        elif kind == "synchronize":
+            synchronize_fixture(name, p, t, external_operation=False)
+        elif kind == "resync_event":
+            op = m["operation_rows"][m["operation_key"]]
+            fixture_event(t, op["complete_event"])
+        elif kind == "copies":
+            fixture_copies(t)
+        elif kind == "move_operation_key":
+            op = m["operation_rows"].pop(m["operation_key"])
+            m["operation_key"] = operation_key(op)
+            m["operation_rows"][m["operation_key"]] = op
+        elif kind == "payload_receipt_ref":
+            p["receipt_ref"] = receipt_ref(m["operation_rows"][m["operation_key"]])
+        elif kind == "move_control_key":
+            control = m["control_rows"].pop(m["control_key"])
+            m["control_key"] = control_key(control)
+            m["control_rows"][m["control_key"]] = control
+        elif kind == "extra_affected_path":
+            op = m["operation_rows"][m["operation_key"]]
+            extra = copy.deepcopy(op["accepted_path_snapshots"][0])
+            extra.update(path_ref="pm-path-ref:v1:project:p2aextra1", relative_components=["p2a", "extra"],
+                         node_ref="pmref:receipt:p2a_extra", node_kind="file")
+            p["affected_path_refs"].append(extra["path_ref"])
+            op["accepted_path_snapshots"].append(copy.deepcopy(extra))
+            op["settlement"]["path_snapshots"].append(copy.deepcopy(extra))
+        else:
+            raise AssertionError("unknown p2a step " + kind)
+
+
 def boundary_case(row, case):
     """Run named per-family counterexamples through the same complete validator."""
     name, scenario = row["event_type"], case["scenario"]
     p, t = copy.deepcopy(row["payload"]), copy.deepcopy(row["trace"])
     m = t["custody_model"]
+    if scenario == "p2a":
+        apply_p2a_steps(name, p, t, case["steps"])
+        return validate_case(name, p, t, historical=case.get("historical", False))
+    if scenario == "p2a-terminal":
+        # Direct terminal reader route: the exact effect-to-history CAS and its original proof, one change.
+        original = next(c for c in row["transition_cases"] if c["name"] == "effect-to-history")
+        before, after = copy.deepcopy(original["args"])
+        proof = terminal_fixture_proof(row["trace"], before)
+        for root, path, value in case.get("set", []):
+            p2a_set({"before": before, "after": after}[root], path, value)
+        return validate_case(name, after["settlement"]["payload"], proof, operation_candidate=after,
+                             transition_before=before)
     if scenario == "schema-rule":
         # A schema-only proof deliberately avoids unrelated custody joins. Its
         # accepting control and single JSON edit are authored in the fixture.
@@ -877,6 +942,7 @@ def admit_slots(slots, value, root):
                 continue
             reason = integer_refusal(slot, minimum=minimum, maximum=maximum)
             refuse("integer_slot", {"slot_refusal": reason}, message=f"{reason} at {root}{location}")
+            refuse("integer_slot_range", {"slot_refusal": reason}, message=f"{reason} at {root}{location}")
 
 
 def validate_path_coverage(paths, required_paths, label):
@@ -977,7 +1043,7 @@ def validate_complete_event(event_type, payload, context, event, payload_rows, *
     refuse("complete_event", {
         "body_equal": same_value(event_body(event, payload_rows), payload) if include_body else None,
         "event_type_equal": event["event_type"] == event_type,
-        "project_equal": event["project_id"] == payload["project_id"],
+        "project_equal": event["project_id"] == payload["project_id"] if event["scope_kind"] == "project" else None,
         "scope_project": event["scope_kind"] == "project",
         "correlation_equal": event["correlation_id"] == payload["correlation_id"],
         "occurred_equal": event["occurred_at_utc"] == payload["ts"],
@@ -1179,6 +1245,7 @@ def validate_historical_operation(event_type, payload, trace, model, row,
     except Refusal as refusal:
         digest, jcs_refusal = None, refusal.reason
     refuse("producer_jcs", {"jcs_refusal": jcs_refusal})
+    refuse("producer_jcs_other", {"jcs_refusal": jcs_refusal})
     refuse("full_value_result", {
         "result_equal": same_value(result, {k: stored[k] for k in result}),
         "commitment_equal": result["original_event_value_commitment"] == full_value_commitment(event),
@@ -1205,7 +1272,8 @@ def validate_historical_operation(event_type, payload, trace, model, row,
     refuse("control_identity", {"key_equal": model["control_key"] == control_key(control),
                                 "event_type_equal": control["event_type"] == event_type,
                                 "storage_equal": control["storage_instance_id"] == row["storage_instance_id"]})
-    refuse("control_reader", {"not_prepared": control["state"] != "prepared", "reader_enabled": bool(control["reader_enabled"])})
+    prepared = control["state"] == "prepared"
+    refuse("control_reader", {"not_prepared": not prepared, "reader_enabled": None if prepared else bool(control["reader_enabled"])})
     withdrawn = control["state"] == "withdrawn"
     ceiling = control["writer_cutoff_sequence"] if withdrawn else control["last_admitted_sequence"]
     refuse("control_cutoff", {
@@ -1522,12 +1590,31 @@ def run_integrity_witnesses(inputs):
     return count
 
 
+def p2a_cases():
+    return json.loads((ROOT / P2A_CASES).read_text())["rows"]
+
+
+def run_p2a_case(row, case):
+    """A sweep part 2A witness: a control must accept; a negative must refuse at exactly its row."""
+    try:
+        boundary_case(row, case)
+    except TableRefusal as error:
+        if case["valid"] or error.row != case["expected_row"]:
+            raise AssertionError(row["event_type"] + ": p2a witness " + case["name"] + " refused by " + error.row) from error
+        check_negative_reason(case, error)
+    else:
+        if not case["valid"]:
+            raise AssertionError(row["event_type"] + ": accepted p2a witness " + case["name"])
+
+
 def main(family=None):
     global SCHEMAS
     SCHEMAS = schema_registry()  # Fail before instances, even if no fixture visits a broken ref.
     inputs = integrity_inputs()
     fixtures = inputs["fixtures"]
     validate_fixture_set(fixtures, family)
+    witnesses = p2a_cases()
+    p2a = 0
     count = 0
     assessed_families = 0
     for row in fixtures["rows"]:
@@ -1567,11 +1654,15 @@ def main(family=None):
                 if not case["valid"]:
                     raise AssertionError(name + ": accepted negative boundary " + case["name"])
             count += 1
+        for case in witnesses.get(name, []):
+            run_p2a_case(row, case)
+            p2a += 1
         validate_owner_adoption(name, row["owner_unit"], inputs["owner"])
     validate_registry_contracts(inputs["registry"], inputs["registry_schema"], inputs["schema"])
     integrity = run_integrity_witnesses(inputs)
     print(json.dumps({"status": "pass", "families": assessed_families,
-                      "oracle_cases": count, "integrity_witnesses": integrity, "native_execution": "NOT_RUN"}))
+                      "oracle_cases": count, "sweep_p2a_witnesses": p2a, "integrity_witnesses": integrity,
+                      "native_execution": "NOT_RUN"}))
     return 0
 
 

@@ -43,7 +43,8 @@ def main():
     root = suites.ROOT
     sources = (sorted(root.glob('scripts/pm_filemanager*.py')) + [root / 'scripts/pm-filemanager-event-contracts.py',
                root / 'scripts/pm-filemanager-table-generate.py', root / 'scripts/pm_guard_isolation.py',
-               root / 'scripts/pm_event_numbers.py', root / 'Plans/filemanager_event_contract_fixtures.json'])
+               root / 'scripts/pm_event_numbers.py', root / 'Plans/filemanager_event_contract_fixtures.json',
+               root / 'Plans/filemanager_event_p2a_cases.json'])
     inputs = {str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sources}
     if args.load_collection:
         saved = pickle.loads(args.load_collection.read_bytes())
