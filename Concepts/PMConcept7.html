@@ -26876,7 +26876,7 @@ html:not([data-o55-nier="on"]) :where(.o55t-root > *):not(#t7.t7:not(*)) { --tex
 /* a finished chapter's name (and its bead) takes you back to it: the name is a button that keeps the label's look */
 .o55-railjump { margin: 0; padding: 0; border: 0; background: none; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; line-height: inherit; cursor: pointer; border-radius: 3px; }
 .o55-railjump:hover { color: var(--text-primary); text-decoration: underline; text-underline-offset: 3px; }
-.o55-railjump:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 3px; }
+.o55-railjump:focus-visible { outline: 2px solid var(--o55-focus, var(--o55-accent)); outline-offset: 3px; }
 /* (the bead answers a press but keeps the default cursor: a pointer-cursor rule for it slowed the app's chat-edge drag
    with the window closed, frame gap p95 100 ms -> 300 ms in tools/perf/resize_perf.py, consistently across builds) */
 /* (FO-53: the narrow rail is beads only, and a finished chapter's name is then just the bead's hit area: its words are
@@ -26916,7 +26916,7 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
   background: transparent; color: var(--text-secondary); cursor: pointer; font: 600 13px/1 var(--body-font); }
 .o55-iconbtn:hover, .o55-sound:hover { background: color-mix(in srgb, var(--text-primary) 8%, transparent); color: var(--text-primary); }
 .o55-iconbtn:focus-visible, .o55-sound:focus-visible, .o55-btn:focus-visible, .o55-card:focus-visible, .o55-tile:focus-visible, .o55-link:focus-visible, .o55-toggle:focus-visible, .o55-seg button:focus-visible, .o55-detbtn:focus-visible {
-  --o55-face-outline: 2px solid var(--o55-accent); outline: var(--o55-face-outline); outline-offset: 2px; }
+  --o55-face-outline: 2px solid var(--o55-focus, var(--o55-accent)); outline: var(--o55-face-outline); outline-offset: 2px; }
 .o55-sound[aria-pressed="false"] { color: var(--text-muted); }
 .o55-sound[aria-pressed="false"] svg { opacity: 0.7; }
 
@@ -26965,13 +26965,24 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
    wrap, at their own size */
 .o55-foot > .o55-btn, .o55-foot > .o55-opt-foot, .o55-foot > .o55-opt-foot > .o55-btn { min-width: 0; }
 .o55-foot > .o55-primary, .o55-foot > .o55-opt-foot > .o55-btn { white-space: normal; text-align: center; line-height: 1.2; padding-block: 8px; }
-/* ...and a footer with two of them, tight in the wide window, shows Back as its chevron alone, as at phone width (its name
-   stays for screen readers), so the two labels wrap to two lines, not three ('Enter / Puppet / Master' at 860) */
-#pm-o55-onboarding .o55-foot { container: o55foot / inline-size; }
-@container o55foot (max-width: 520px) {
-  #pm-o55-onboarding .o55-foot:has(> .o55-opt-foot ~ .o55-opt-foot) > .o55-back { padding-inline: 10px; }
-  #pm-o55-onboarding .o55-foot:has(> .o55-opt-foot ~ .o55-opt-foot) > .o55-back > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-}
+/* ...but Back never shrinks: it cannot wrap, so the footer's squeeze pushed its label 10-12 px past its outline and
+   crushed NieR's 6 px caret to nothing at 860 (FO-100), and with its chevron alone still cut the chevron 1-3 px and
+   NieR's caret to 4.7 px. It keeps its own width, chevron and label as shown; the other buttons wrap instead */
+#pm-o55-onboarding .o55-foot > .o55-back { flex-shrink: 0; }
+/* ...and before any of them wraps, a footer that has run out of room shows Back as its chevron alone, as at phone width
+   (its name stays for screen readers), so the other labels have its word's room before they wrap (group 6's 'Enter /
+   Puppet / Master' at 860 took three lines; the flex shares the shrink by each label's length, so the longest can still
+   take three in the narrowest band, NieR Dark at 810). Q4
+   (Jared, 2026-11-07: "A, do the change to only wrap when it doesn't fit"): that is decided by the footer's own fit, not
+   a fixed width. 60-ui-core.js fitFoot reads the footer's one-line width once (data-o55-fit="measure": the footer laid
+   out at max-content, without NieR's key prompts, which give way to everything) and marks it full or chevron from its
+   own width; the labels wrap, by the flex above, only when they still don't fit. Group 6 hid Back's word below a fixed
+   520 px, so Basic's labels went one line, two, one, two as the window narrowed. The chevron keeps at least 40 px
+   (NieR's was 27, narrower than at phone width) */
+#pm-o55-onboarding .o55-foot[data-o55-fit="measure"] { width: max-content !important; }
+#pm-o55-onboarding .o55-foot[data-o55-fit="measure"] .o55nw-keys { display: none !important; }
+#pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-foot[data-o55-fit="chevron"] > .o55-back { padding-inline: 10px; min-width: 40px; }
+#pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-foot[data-o55-fit="chevron"] > .o55-back > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 #pm-o55-onboarding[data-family="glass"] .o55-foot { background: color-mix(in srgb, #fff 4%, transparent); }
 .o55-footgrow { flex: 1; }
 .o55-footnote { font-size: 12.5px; color: var(--text-muted); }
@@ -27045,7 +27056,11 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
   --o55-ink-fail: color-mix(in srgb, var(--accent-error) 75%, #000);
   /* Paper theatre's orange reads 2.8:1 as words on white and under white words: words take the tag's brick, the main
      action a brick a little lighter (5.2:1 under white) */
-  --o55-ink-accent: var(--o55-ink-tag); --o55-action: color-mix(in srgb, var(--o55-accent) 70%, #000); }
+  --o55-ink-accent: var(--o55-ink-tag); --o55-action: color-mix(in srgb, var(--o55-accent) 70%, #000);
+  /* FO-99: the keyboard focus ring takes the words' brick too. The plain orange ring read 2.64:1 against the white
+     footer beside it (Back's, at 2 px outside its border), under WCAG's 3:1 for a focus mark; the brick reads 5.4-5.5:1.
+     Only the ring changes: --o55-focus is unset in every other look, where the rings keep var(--o55-accent). */
+  --o55-focus: var(--o55-ink-accent); }
 /* SW-18: reserve normal-text contrast over the brightest selected Glass backing,
    including the material exposed by scrolling a narrow pane. Keep a blue tint in the ink. */
 #pm-o55-onboarding[data-family="glass"][data-mode="dark"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 25%, var(--text-primary));
@@ -27271,7 +27286,7 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph
 #pm-o55-onboarding[data-o55-layout="narrow"] { --o55-pad: 22px; }
 /* at phone width Back is its chevron alone (its name stays for screen readers), so the primary keeps one line */
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-foot { padding-inline: 14px; gap: 8px; }
-#pm-o55-onboarding[data-o55-layout="narrow"] .o55-back { padding-inline: 10px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-back { padding-inline: 10px; min-width: 40px; } /* (its chevron alone keeps the wide window's 40 px minimum, Q4: it was 32 px in NieR, 36 in Glass, 38 in Basic; the phone layout has no target size of its own beyond the buttons' 40 px height) */
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-back > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-tiles { --o55-tileart-h: 84px; }
@@ -27352,7 +27367,7 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph
 .o55-tipq::before { content: ''; position: absolute; inset: -6px; } /* a 34 px target round a 22 px mark */
 .o55-tipq:hover { color: var(--o55-accent); border-color: var(--o55-accent); }
 .o55-tipq[aria-expanded="true"] { color: var(--o55-on-accent); background: var(--o55-accent); border-color: var(--o55-accent); outline: 1.5px solid var(--o55-accent); outline-offset: 2px; }
-.o55-tipq:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 2px; }
+.o55-tipq:focus-visible { outline: 2px solid var(--o55-focus, var(--o55-accent)); outline-offset: 2px; }
 .o55-opt > .o55-card + .o55-tipq, .o55-opt > .o55-toggle + .o55-tipq { position: absolute; top: 50%; right: 16px; margin-top: -11px; }
 .o55-opt-inline { display: inline-flex; align-items: center; gap: 7px; }
 .o55-opt-inline > .o55-tipq, .o55-labq > .o55-tipq, .o55-row-q > .o55-tipq { width: 19px; height: 19px; font-size: 10.5px; }
@@ -27491,7 +27506,7 @@ html[data-motion="reduced"] #pm-o55-onboarding :is(.o55-tile) { --o55-hover-y: 0
 /* The page's NieR reset removes native outlines; choices still need a keyboard ring. */
 #pm-o55-onboarding#pm-o55-onboarding :is(.o55-card):focus-visible,
 #pm-o55-onboarding#pm-o55-onboarding :is(.o55-tile):focus-visible {
-  outline: 2px solid var(--o55-accent) !important; outline-offset: 2px !important;
+  outline: 2px solid var(--o55-focus, var(--o55-accent)) !important; outline-offset: 2px !important;
 }
 
 /* FO-73: button hit bounds never move. Press displacement and squeeze belong to
@@ -28135,6 +28150,12 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding:not([data-o55-layout="na
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-key { display: inline-flex; align-items: center; gap: 8px; }
 html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55nw-key > b { padding: 3px 5px 3px 6px; font-weight: 600; letter-spacing: .14em; color: var(--o55-nier-on-ink); background: var(--o55-nier-ink); }
 </style><style data-pm-split-of="pm-o55-css" media="(max-width: 947px), (pointer: coarse)">@media (max-width: 947px), (pointer: coarse) { #pm-o55-onboarding .o55nw-keys { display: none !important; } }</style><style data-pm-split-of="pm-o55-css">
+/* FO-100: the prompts give way to the buttons. Their max-content row held the grow cell open, so from about 1070 px
+   down to 948 the footer squeezed its buttons instead: Back's caret was crushed to nothing and Continue's word ran 2-3 px
+   past its outline (11 px once Back stopped shrinking). Now the cell may shrink below them, and a prompt that no longer
+   fits leaves whole, the last first: the row wraps, and its one line (a keycap's height) is all that shows */
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-foot > .o55-footgrow { min-width: 0; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55nw-keys { max-width: 100%; flex-wrap: wrap; justify-content: center; height: calc(1lh + 6px); overflow: hidden; }
 
 /* ===================================================================================================== Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
@@ -35148,7 +35169,7 @@ html[data-theme="friendly-light"]:not([data-o55-nier="on"]) #panel-settings .pm5
 #pm-o55-onboarding .o55-checkline > .o55-check { display: inline-grid; place-items: center; width: 20px; height: 20px; margin-top: 1px; padding: 0; border-radius: 5px; background: transparent; color: var(--o55-win-bg); cursor: pointer; }
 #pm-o55-onboarding .o55-checkline > .o55-check.is-on { border-color: var(--o55-accent); background: var(--o55-accent); }
 #pm-o55-onboarding .o55-checkline > .o55-check[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
-#pm-o55-onboarding .o55-checkline > .o55-check:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 2px; }
+#pm-o55-onboarding .o55-checkline > .o55-check:focus-visible { outline: 2px solid var(--o55-focus, var(--o55-accent)); outline-offset: 2px; }
 /* FO-73: the empty box needs a face too: squeeze its painted ring, keeping the native target fixed. */
 #pm-o55-onboarding .o55-checkline > button.o55-check { border-width: 0 !important; background: transparent !important; }
 #pm-o55-onboarding .o55-checkface { display: inline-grid; place-items: center; box-sizing: border-box; width: 100%; height: 100%; min-width: 0; min-height: 0; border-width: 1.6px; border-style: inherit; border-color: inherit; border-radius: inherit; background: transparent; transition-property: scale, background-color; transition-duration: inherit; transition-timing-function: inherit; transition-delay: inherit; }
@@ -38215,6 +38236,12 @@ html[data-o55-nier="on"] .pmr-view { --pmr-st-ok: var(--o55-nier-ink); --pmr-st-
 }
 [data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"])[data-lg="on"][data-theme^="glass"]:not(#pmfz) #lg-lenses .lg-lens[data-lg-for="rail-icons"][data-lg-focus]::after { opacity: 0 !important; }
 [data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"]):not(#pmfz)[data-lg="on"][data-theme^="glass"] #activityBar .icon[data-lg-focus]:focus-visible .symbol { outline: none !important; box-shadow: none !important; }
+/* FO-99: Friendly Light's accent, a pale sky blue, read 2.56 to 3.13:1 against the white band inside the ring and
+   1.9 to 2.9:1 against the bar's ground outside it, so there the ring (and the toggle's) takes the accent's ink, the
+   accent with a third of black (as the onboarding's words and focus ring do in this look): about 6:1 against both.
+   Only the ring's colour changes; its place, width and band are FO-96's, above. */
+[data-rail-skin="d"][data-theme^="friendly"][data-theme$="-light"]:not([data-o55-nier-parts~="brackets"]):not(#pmfz) #activityBar .icon:focus-visible .symbol,
+[data-rail-skin="d"][data-theme^="friendly"][data-theme$="-light"] #activityBar > .activity-bar-toggle:focus-visible { outline-color: color-mix(in srgb, var(--accent-primary) 66%, #000) !important; }
 /* While the lens moves and does not carry the mark (it travels onto or off the key-focused icon, or fades in on it), its
    refraction lies over the icon's own mark and washed it below 3:1 (sol-review-g8). For that motion glass.js shows a
    cue on the icon's tile in the lenses' layer, above the lenses: this mark again, the same 3 px accent ring and opaque
@@ -70965,9 +70992,12 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) :where(.o55t-root .o55t-btn:no
   text-shadow: 0 1px 1px rgba(0, 0, 0, .25);
 }
 /* SW-18: reserve contrast at the brightest ground beneath glyphs, including
-   the radial highlight and hover brightening; the edge light and gradient stay. */
+   the radial highlight and hover brightening; the edge light and gradient stay.
+   CONTRAST-G6: Light's 0, 78, 170 left its hovered white word at 4.499:1 where the highlight is brightest (Done at
+   1920x900), so a one-level change in how the window's layers are composited (group 6's FO-83 and FO-87 stacking)
+   read it at 4.452. 0, 74, 164 reads 4.62:1 or more there at every size, on both surfaces. */
 html[data-lg="on"][data-theme="glass-dark"]:not(#lgz) :is(#pm-o55-onboarding .o55-btn.o55-primary) { --accent-primary-rgb: 18, 78, 168; }
-html[data-lg="on"][data-theme="glass-light"]:not(#lgz) :is(#pm-o55-onboarding .o55-btn.o55-primary) { --accent-primary-rgb: 0, 78, 170; }
+html[data-lg="on"][data-theme="glass-light"]:not(#lgz) :is(#pm-o55-onboarding .o55-btn.o55-primary) { --accent-primary-rgb: 0, 74, 164; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-btn.o55-primary:hover { filter: brightness(1.06); }
 /* choices: glass rows that light up when chosen */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding :is(.o55-card),
@@ -177221,6 +177251,55 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const note = foot.note ? `<span class="o55-footnote">${U.esc(foot.note)}</span>` : '';
     return `<footer class="o55-foot o55-st" style="--i:4">${back}${note}<span class="o55-footgrow">${secs.length || note ? '' : keysHtml(foot, choose)}</span>${sec}${pri}</footer>`;
   }
+  /* The footer's own fit (Q4, Jared 2026-11-07: "A, do the change to only wrap when it doesn't fit"). Back gives up its
+     word (its chevron stays, at least 40 px: 10-window.css) only when the footer's controls, laid out on one line at
+     their own widths, no longer fit in the footer; the other labels then wrap, by the footer's flex, only if they still
+     do not fit. So nothing wraps while it fits, and as the footer narrows no label returns to one line (group 6 hid the
+     word below a fixed 520 px whatever the footer held: Basic's labels went from one line to two, back to one, then
+     two). The one-line width is read once per footer, look and wording (the footer laid out at max-content for that one
+     read) and compared whenever the screen's layer changes size, after layout and before that frame is painted. */
+  const footNeed = new WeakMap();
+  function footKey(foot) {
+    const de = document.documentElement;
+    return [S.root.getAttribute('data-family'), S.root.getAttribute('data-mode'), S.root.getAttribute('data-o55-layout'), de.getAttribute('data-o55-nier'),
+      de.getAttribute('data-o55-nier-parts'), de.getAttribute('style'), document.body ? document.body.style.zoom : '', document.fonts ? document.fonts.status : '',
+      foot.childElementCount, foot.textContent].join('|');
+  }
+  /* the footer's width as laid out, which no transform reaches: the first reading is taken before the first paint, under
+     the window's opening keyframe, and a rotated box's bounding width grows with its height (Friendly's entrance turns
+     the window 0.6 degrees, so the drawn footer, labels on two lines, read 0.1 px wider than its one-line width and
+     kept Back's word at 1092 until the next resize; opus-recheck-look8b Q4-2) */
+  const footW = (foot) => parseFloat(getComputedStyle(foot).width) || 0;
+  function fitFoot(layer) {
+    const foot = layer && layer.isConnected ? layer.querySelector(':scope > .o55-foot') : null;
+    if (!foot) return;
+    if (!foot.querySelector(':scope > .o55-back') || S.root.getAttribute('data-o55-layout') === 'narrow') { if (foot.hasAttribute('data-o55-fit')) foot.removeAttribute('data-o55-fit'); return; }
+    const key = footKey(foot);
+    let need = footNeed.get(foot);
+    if (!need || need.key !== key || need.room == null) {
+      const room = footW(foot), was = foot.getAttribute('data-o55-fit');
+      foot.setAttribute('data-o55-fit', 'measure');
+      need = { key, w: footW(foot), room };
+      if (was === null) foot.removeAttribute('data-o55-fit'); else foot.setAttribute('data-o55-fit', was);
+      footNeed.set(foot, need);
+    }
+    /* exactly: a footer even one layout unit (1/64 px) short of its one-line width shrinks its labels, which wrap, so
+       Back's word must go there (a half-pixel allowance kept it while both labels wrapped, and a pixel narrower they went
+       back to one line: Friendly Light 1092, NieR Dark 1086, Glass Light 1039; opus-recheck-look8 Q4-1). Both widths are
+       the same element's used width, so equal layouts read equal and a unit short reads less, at any page zoom. */
+    const fit = need.w <= need.room ? 'full' : 'chevron';
+    if (foot.getAttribute('data-o55-fit') !== fit) foot.setAttribute('data-o55-fit', fit);
+  }
+  /* (the layer's width is the footer's; a size change re-reads the room, and the morph of a quiet redraw, which drops the
+     attribute, is answered from what was read) */
+  const footRoom = typeof ResizeObserver === 'function' ? new ResizeObserver((entries) => {
+    for (const e of entries) {
+      if (!e.target.isConnected) { footRoom.unobserve(e.target); continue; }
+      const foot = e.target.querySelector(':scope > .o55-foot'), need = foot && footNeed.get(foot);
+      if (need) need.room = null;
+      fitFoot(e.target);
+    }
+  }) : null;
   /* NieR Mode's key prompts (hero spec Q7): the keys the window answers, between Back and the primary, as ink keycaps
      with mono words; only while NieR Mode is painted (shown under YoRHa headers on a wide window with a fine pointer,
      11-window-nier.css), never beside other buttons, and hidden from screen readers (the keys are the window's own) */
@@ -177509,6 +177588,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     const rs = layer.querySelector('.o55-reason.o55-reason-show'), rsAt = rs ? +rs.dataset.at || 0 : 0, keepReason = rs && performance.now() - rsAt < 2600 ? rs : null;
     morphing = true;
     try { U.morph(layer, paneHtml(def)); } finally { morphing = false; }
+    fitFoot(layer);
     if (keepReason && !keepReason.isConnected) { keepReason.style.animationDelay = -(performance.now() - rsAt) + 'ms'; layer.appendChild(keepReason); }
     O55.tips.write(layer); armLoaders(layer);
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
@@ -177551,6 +177631,7 @@ window.O55_COPY={"chrome":{"brand":"Puppet Master","progressLabel":"Setup progre
     layer.setAttribute('data-screen', def.id);
     layer.innerHTML = paneHtml(def);
     pane.appendChild(layer);
+    if (footRoom) footRoom.observe(layer); /* (its first report, before the first paint, fits the footer: fitFoot) */
     O55.tips.write(layer); armLoaders(layer);
     holdColumn(layer);
     /* (a card's ? sits beside it in its option and comes in with it, on its index: p75, the ? circles floated on empty
@@ -257237,6 +257318,7 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
     s.setProperty('--ph-h', r.height + 'px');
     s.setProperty('--ph-pane', r.width + 'px');
     syncHistoryHead();
+    syncHandle();
     var flyout = document.querySelector('.history-flyout');
     if(flyout !== flyoutObserved){
       if(flyoutRO) flyoutRO.disconnect();
@@ -257246,6 +257328,18 @@ window.PM56_B17_MEDIA=Object.freeze({"image":"data:image/png;base64,iVBORw0KGgoA
         flyoutRO.observe(flyout);
       }
     }
+  }
+
+  /* The separator's values (the window-splitter pattern) follow the pane: its maximum is a share of the pane's width and
+     the width it reports is clamped by it. A column resize renders nothing, so they are written here as the render
+     writes them (historyChrome). The chat's own re-render on a narrow flip used to refresh them; since that re-render
+     went (FO-92), a flip left them stale, as every other column resize already did (opus-recheck-look8 FO92-N1). */
+  function syncHandle(){
+    var h = document.querySelector('[data-ph-resize]');
+    if(!h) return;
+    var max = String(Math.round(Math.min(W_MAX, paneWidth() * W_PANE))), now = String(clampWidth(widthNow()));
+    if(h.getAttribute('aria-valuemax') !== max) h.setAttribute('aria-valuemax', max);
+    if(h.getAttribute('aria-valuenow') !== now) h.setAttribute('aria-valuenow', now);
   }
 
   function syncHistoryHead(){
@@ -310544,6 +310638,10 @@ suggested path                    migration 0043, reversible</div></div></sectio
       // ResizeObserver runs after layout, before paint. Resolve dock/cover here;
       // another rAF would let the narrowed, still-docked panel paint first.
       const n=isNarrow(), p=activityDocked();
+      /* a narrow flip changes what renderApp draws only while History is pinned (its historyPinned is pinned and not
+         narrow), the rule the window's resize handler already keeps; with History closed or floating the re-render wrote
+         the same chat, in the first frame after a window shrink (FO-92), so that flip is only noted */
+      if(n!==lastNarrow&&state.historyMode!=='pinned') lastNarrow=n;
       /* renderApp keeps activityDockLayout, so a column it already widened for Activity Detail is not drawn twice */
       if(n!==lastNarrow||p!==activityDockLayout){ const moved=n===lastNarrow&&moveActivityPanel(p); lastNarrow=n; if(moved) syncJumpBottom(); else renderApp(); }
       else if(document.body && document.body.classList.contains('pm-resizing')){
