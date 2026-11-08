@@ -88,6 +88,16 @@ def source_commitment(source):
         return semantic_hash('accepted_source',preimage)
     return hashlib.sha256(storage_owner().canonical_messagepack_bytes(preimage)).hexdigest()
 
+def source_commitment_or_none(source):
+    """Observation: the recomputed source commitment, or None when the frozen
+    local recipe cannot encode the value (for example an integer outside the
+    canonical MessagePack range). The commitment row then refuses; the recipe
+    itself is unchanged."""
+    try:
+        return source_commitment(source)
+    except (KeyError, ValueError, TypeError, OverflowError):
+        return None
+
 
 def exact_value_equal(left, right):
     """Compare complete JSON values without Python's bool/int/float aliases.
@@ -551,7 +561,7 @@ def materialization_failures(family, candidate, bank):
         'source_epoch': source['writer_epoch'], 'bank_epoch': bank['writer_epoch'],
         'result_equal': source['original_result']==p})
     failures += tables.codes('mat_source_commitment', {
-        'computed_commitment': source_commitment(source), 'recorded_commitment': source['accepted_source_sha256']})
+        'computed_commitment': source_commitment_or_none(source), 'recorded_commitment': source['accepted_source_sha256']})
     slug=family.replace('.','_')
     failures += tables.codes('mat_selectors', {
         'event_type': event['event_type'], 'family': family, 'payload_schema_id': event['payload_schema_id'],
@@ -607,10 +617,14 @@ def materialization_failures(family, candidate, bank):
         role=next(m for m in members if m['role']==graph['original_project_body_role'])
         raw=bank['bodies'].get(role['ref'])
         failures += tables.codes('mat_project_body_present', {'raw_type': type(raw).__name__})
+        try:
+            original_bytes = storage_owner().canonical_messagepack_bytes(original)
+        except (KeyError, ValueError, TypeError, OverflowError):
+            original_bytes = None
         failures += tables.codes('mat_project_original', {
             'original_project_id': original['project_id'], 'scope_project_id': scope['project_id'],
             'raw_type': type(raw).__name__,
-            'body_equal': isinstance(raw,str) and bytes.fromhex(raw)==storage_owner().canonical_messagepack_bytes(original)})
+            'body_equal': isinstance(raw,str) and original_bytes is not None and bytes.fromhex(raw)==original_bytes})
         for key in graph['original_project_joins']:
             expected=scope['project_id'] if key=='project_id' else p.get(key)
             if tables.refused('mat_project_subject', {'original_value': original.get(key), 'expected_value': expected}):
@@ -980,7 +994,7 @@ class ProtocolOracle:
                 source=c['source'];request=source['original_request']
                 if (tables.refused('proto_body_schema', {'errors': schema_errors(context(self.family)[1]('source'), source)})
                     or selected_source_failures(self.family,source,self.bank)
-                    or tables.refused('proto_body_commitment', {'computed': source_commitment(source), 'recorded': source['accepted_source_sha256']})
+                    or tables.refused('proto_body_commitment', {'computed': source_commitment_or_none(source), 'recorded': source['accepted_source_sha256']})
                     or tables.refused('proto_body_result', {'result_equal': source['original_result']==event_payload(self.family,c['event'],self.bank)[0]})):
                     return 'read_unavailable'
                 members=source['body_members']+[{'ref':request['original_input_ref'],
