@@ -5,9 +5,10 @@ export default async function(t){
  // FO92-N1 (opus-recheck-look8, look8b): History's resize separator's values follow the chat column. Since FO-92 a
  // narrow flip (the column crossing 560 px) no longer re-renders the chat, and a column or window resize never did: after
  // each change the separator must already carry what a render writes (aria-valuemax, aria-valuenow). The work clock is
- // held (PM56_DEMO.setWorkStep) and every render counted (the afterRender slot): a step a render followed (the drawer
- // closing or coming back) is not judged, and each group must still judge steps that changed the values, so no redraw
- // can refresh them for the build under test. Floating (open), the column aimed at host widths across 560 both ways and
+ // held (PM56_DEMO.setWorkStep) and every render counted (the afterRender slot). The hold stops the primary work record
+ // only (other running records keep the 500 ms tick), so a change a render followed is made again from 9 px away, up to
+ // four times; one still followed by a render (the drawer closing or coming back) is not judged, and each group must
+ // still judge enough changes, so no redraw can refresh the values for the build under test. Floating (open), the column aimed at host widths across 560 both ways and
  // at plain widths; pinned, where the separator is what screen readers reach (the pinned column stops at about 639
  // px, so plain widths only); then window resizes while pinned, the column wide and the window narrowed under it, and
  // each window size with the column aimed at 700 again (opus-recheck-look8b's). Before Activity opens (its reserved
@@ -21,7 +22,7 @@ export default async function(t){
    window.__fo92n1=0;if(!window.__fo92n1Slot){window.__fo92n1Slot=true;window.PM56_EXT.slot('afterRender',(c,i)=>{if(i&&(i.phase==='overlay'||i.phase==='app'))window.__fo92n1++;});}
    await new Promise(r=>setTimeout(r,1200));const settling=window.__fo92n1;window.__fo92n1=0;
    await new Promise(r=>setTimeout(r,3000));const q=PM56_DEMO.getState();return {running:!!q.work.running,rendersAfterHold:settling,rendersIn3s:window.__fo92n1};});
-  await t.check('FO92-N1 fixture: the work clock held (no render in 3 s, once the hold has drawn)',!held.running&&held.rendersIn3s===0,JSON.stringify(held));
+  await t.check('FO92-N1 fixture: the work clock held (the primary work record stopped; renders in 3 s logged)',!held.running,JSON.stringify(held));
   const drawer=(want)=>f.evaluate(async want=>{
    const up=()=>!!document.querySelector('[data-ph-resize]')&&(document.body.dataset.phDrawer||'')===want;
    if(want==='open'){const b=document.querySelector('#pmRoot [data-action="toggle-history"]');if(b&&!/^(open|pinned)$/.test(document.body.dataset.phDrawer||''))b.click();}
@@ -36,13 +37,16 @@ export default async function(t){
    const H=window.PM56_HOST, two=()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))), settle=async()=>{await two();await new Promise(r=>setTimeout(r,300));await two();};
    const h=()=>document.querySelector('[data-ph-resize]'),read=()=>{const e=h();return e?[e.getAttribute('aria-valuemax'),e.getAttribute('aria-valuenow')]:null;};
    const row=(want,renders)=>{const before=read();window.PM56_EXT.ctx().renderOverlays();const render=read();return {kind,want,host:Math.round(H.width()),narrow:H.width()<560,mode:document.body.dataset.phDrawer||'',renders,before,render};};
+   const aim=async w=>{let set=w;for(let i=0;i<4;i++){PMW.chatCol.setWidth(set);await two();set+=w-H.width();}await settle();};
    const out=[];
-   /* (after a window resize, counted since before it: the window's own change, then the column aimed again from there) */
-   if(kind==='window'){await settle();out.push(row(null,window.__fo92n1));}
-   window.__fo92n1=0;
-   if(want!=null){let set=want;for(let i=0;i<4;i++){PMW.chatCol.setWidth(set);await two();set+=want-H.width();}}
-   await settle();
-   out.push(row(want,window.__fo92n1));
+   /* (after a window resize, counted since before it: the window's own change, read once its renders have stopped for
+      1 s, up to 3 s; then the column aimed again from there) */
+   if(kind==='window'){await settle();const t0=performance.now();let last=window.__fo92n1,since=t0;
+    while(performance.now()-t0<3000&&performance.now()-since<1000){await new Promise(r=>setTimeout(r,100));if(window.__fo92n1!==last){last=window.__fo92n1;since=performance.now();}}
+    out.push(row(null,window.__fo92n1));}
+   let r=null,tries=0;
+   for(;tries<4;tries++){if(tries)await aim(want+9);window.__fo92n1=0;await aim(want);r=row(want,window.__fo92n1);if(r.renders===0)break;}
+   r.tries=Math.min(tries+1,4);out.push(r);
    return out;
   },[want,kind||'column']).then(rows=>(kind==='window'?rows:rows[0]));
   const same=r=>!!(r.before&&r.render&&r.before.join()===r.render.join());
