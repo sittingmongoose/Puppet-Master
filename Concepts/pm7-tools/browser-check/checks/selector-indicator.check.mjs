@@ -256,6 +256,7 @@ export const tests = {
 	},
 
 	async 'motion'(t) {
+		await t.viewport(1920, 1080);   /* (a run of places leaves the last of its sizes) */
 		for (const surface of t.app.surfaces()) {
 			for (const look of list(t.args.looks, LOOKS)) {
 				const tag = `${look} ${surface}`;
@@ -319,6 +320,7 @@ export const tests = {
 	},
 
 	async 'no layout shift'(t) {
+		await t.viewport(1920, 1080);   /* (a run of places leaves the last of its sizes) */
 		for (const surface of t.app.surfaces()) {
 			for (const look of list(t.args.looks, LOOKS)) {
 				const tag = `${look} ${surface}`;
@@ -365,6 +367,7 @@ export const tests = {
 	},
 
 	async 'forced colors'(t) {
+		await t.viewport(1920, 1080);   /* (a run of places leaves the last of its sizes) */
 		for (const surface of t.app.surfaces()) {
 			for (const look of list(t.args.looks, LOOKS)) {
 				const tag = `${look} ${surface}`;
