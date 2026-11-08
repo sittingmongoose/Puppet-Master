@@ -46,7 +46,7 @@ export default async function(t) {
       // the final swing as a tiny descent and call its natural turning point a long midpoint stall.
       const captureKey=look+'-'+label;
       const capture=f.evaluate(async ([duration,key,paintTag])=>{
-        const rows=[],deadline=performance.now()+15000,ids=new WeakMap();let nextId=0,started=null;
+        const rows=[],deadline=performance.now()+15000,ids=new WeakMap(),bannerTimings=new Set();let nextId=0,started=null;
         window.__qa7FallArmed=key;
         if(paintTag&&!window.__qa7FallTag){
           const tag=document.createElement('div');tag.style.cssText='position:fixed;left:0;top:0;width:168px;height:8px;contain:strict;z-index:2147483647;pointer-events:none;view-transition-name:qa7-fall-tag';
@@ -64,7 +64,8 @@ export default async function(t) {
             if(s)rows.push({ts,delivered:performance.now(),t:s.t,theme:s.theme,render:s.renderN,stage:s.id,live:s.live(),fps:s.frameRate(),pip:{head:s.H,dy:s.ps.dy},props:[...s.props].map(([id,p])=>({id,kind:p.spec.kind,state:p.state,op:p.op,settled:p.settled,len:p.len,target:s.propTarget(p).len,box:p.box,pos:p.pos,rest:p.restBox,ground:!!p.spec.ground,stack:p.spec.stack})),fx:s.fx.map(p=>{if(!ids.has(p))ids.set(p,++nextId);return {id:ids.get(p),kind:p.kind,follow:!!p.follow,x:p.x,y:p.y,life:p.life};})});
             const card=document.querySelector('.o55fx-banner[data-hang]:not([data-wait]) .o55fx-bn-card');
             if(s&&card){
-              const anim=card.__qa7Descent||(card.__qa7Descent=card.getAnimations().find(a=>a.effect.getTiming().duration===230&&a.effect.getTiming().easing==='steps(6, end)'));
+              card.getAnimations().forEach(a=>bannerTimings.add(JSON.stringify(a.effect.getTiming())));
+              const anim=card.__qa7Descent||(card.__qa7Descent=card.getAnimations().find(a=>a.effect.getTiming().duration===230&&/^steps\(6(?:, end)?\)$/.test(a.effect.getTiming().easing)));
               if(anim){const b=card.getBoundingClientRect(),time=Number(anim.currentTime),phase=Math.max(0,Math.min(230,time-90));
                 card.__qa7DescentAt??=performance.now();
                 rows.at(-1).props.push({id:'act-card',kind:'act-card',state:performance.now()-card.__qa7DescentAt<=410?'in':'out',op:1,len:phase,target:230,box:[b.left,b.top,b.right,b.bottom]});}
@@ -79,13 +80,13 @@ export default async function(t) {
           });observer.observe(clock);
           const tick=ts=>{if(done)return;lastTs=ts;clock.style.width=(++toggle%2+1)+'px';raf=requestAnimationFrame(tick);};raf=requestAnimationFrame(tick);
         });
-        return {screen:O55.S.sess.screen,rows,tag:paintTag?{bits:20,block:4,x:0,y:0}:null};
+        return {screen:O55.S.sess.screen,rows,bannerTimings:[...bannerTimings],bannerPolicy:window.__qa7BannerPolicy,tag:paintTag?{bits:20,block:4,x:0,y:0}:null};
       },[Number(t.args.dwell||(screen==='creating'?7000:screen==='ready'?6500:1800)),captureKey,!!t.recording||!!t.args.paintTag]);
       await f.waitForFunction(key=>window.__qa7FallArmed===key,captureKey);
       if(entry.click)await f.locator('.o55-pane > .o55-layer:not(.o55-out) '+entry.click).first().click();
       if(entry.hover){await f.locator('.o55-pane > .o55-layer:not(.o55-out) '+entry.hover).first().hover();await f.waitForTimeout(450);}
       // Positive effect owner fixtures complement the default Ready fixture, which is intentionally calm without AI.
-      if(entry.effect)await f.evaluate(effect=>{const host=document.querySelector('#pm-o55-onboarding .pst'),s=host.__pipStage;if(effect==='ready')s.ready();else if(effect==='banner'){if(O55.nierFx.enabled('banner'))void O55.nierFx.banner({within:host,title:'Chapter complete',hang:true,inset:.08,at:.36,ms:1660,sound:false});}else s.cheer('clipboard',{sound:false});},entry.effect);
+      if(entry.effect)await f.evaluate(effect=>{const host=document.querySelector('#pm-o55-onboarding .pst'),s=host.__pipStage;if(effect==='ready')s.ready();else if(effect==='banner'){window.__qa7BannerPolicy={enabled:O55.nierFx.enabled('banner'),reduced:O55.motion.reduced(),lowResource:O55.motion.lowResource};if(window.__qa7BannerPolicy.enabled)void O55.nierFx.banner({within:host,title:'Chapter complete',hang:true,inset:.08,at:.36,ms:1660,sound:false});}else s.cheer('clipboard',{sound:false});},entry.effect);
       const result=await capture;
       writeFileSync(join(t.run.dir,look+'-'+label+'.json'),JSON.stringify(result));
       if(cdp){
@@ -131,7 +132,7 @@ export default async function(t) {
       await t.check(look+' '+label+': placement has continuous animation progress',bad.length===0,JSON.stringify(bad));
       await t.check(look+' '+label+': independent particles have no position jumps',bursts.every(p=>p.follow||p.maxSpeed<1600),JSON.stringify(bursts.filter(p=>!p.follow&&p.maxSpeed>=1600)));
       if(entry.effect==='ready'&&!t.args.reduced){const expected=look.startsWith('nier-')?0:60;await t.equal(look+': confetti follows its look policy',bursts.filter(p=>p.kind==='conf').length,expected);}
-      if(entry.effect==='banner')await t.check(look+': hanging act card follows its look policy',look.startsWith('nier-')?props.some(p=>p.kind==='act-card'&&p.covered):!props.some(p=>p.kind==='act-card'),JSON.stringify(props.filter(p=>p.kind==='act-card')));
+      if(entry.effect==='banner')await t.check(look+': hanging act card follows its look policy',look.startsWith('nier-')?props.some(p=>p.kind==='act-card'&&p.covered):!props.some(p=>p.kind==='act-card'),JSON.stringify({props:props.filter(p=>p.kind==='act-card'),policy:result.bannerPolicy,timings:result.bannerTimings}));
       // A fresh Creating fixture starts real owner work. The next Studio open respects that running commit.
       if(screen==='creating') await f.waitForFunction(()=>O55.S.sess.commit?.state!=='running',null,{timeout:30000});
     }
