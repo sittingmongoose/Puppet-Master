@@ -13387,10 +13387,10 @@ canonical_text: >-
   CV-360's placement fields go only on the routes its open-routes table lists (UI_Command_Catalog.md:18298-18318):
   open_workspace_preview and focus_browser_tab.
   BrowserActionRequestV2 requires a closed browser_action whose action_type enum names no share, revoke-share,
-  takeover, agent-control, detach, DevTools, dock, promotion or session-recovery action. The definitions of
-  share_with_agent, revoke_share_with_agent, take_over, pause_agent, let_agent_continue, stop_agent_keep_browser,
-  detach_browser_tab, open_devtools, toggle_devtools_dock, promote_to_normal_browsing, reopen, retry and
-  keep_closed keep the wired request, map the command onto no action_type, never turn share or revoke into a
+  takeover, agent-control, detach, DevTools, dock, promotion, session-recovery or session-tab reveal action. The
+  definitions of share_with_agent, revoke_share_with_agent, take_over, pause_agent, let_agent_continue,
+  stop_agent_keep_browser, detach_browser_tab, open_devtools, toggle_devtools_dock, focus_browser_tab,
+  promote_to_normal_browsing, reopen, retry and keep_closed keep the wired request, map the command onto no action_type, never turn share or revoke into a
   capture, and record the conflict in their owner_request judgments; a handler refuses them with
   handler_unavailable until the browser owner settles the request (DL-341).
 gui_related: true
@@ -13662,6 +13662,17 @@ command_payload_definitions:
             make it a reveal of the tab that hosts the session wherever it is, and CV-360 says a reveal never
             moves a tab, so placement changes nothing here. The definition follows CV-360's acceptance and the
             table, which name no exemption for reveal-only routes; the owner should say whether they are exempt.
+        - key: owner_request
+          choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
+          gap_note: >-
+            As recorded on cmd.browser.share_with_agent: the wired BrowserActionRequestV2 lists this command
+            (Plans/section15_browser_program_contracts.schema.json:5145) but requires a closed browser_action whose
+            action_type enum (:377) has no action that reveals the tab hosting a browser session (select_tab
+            selects a page tab inside the session), and neither the request nor the closed action arguments
+            (:423) has a field for where, mode, by or background, a layout/UI state change
+            (UI_Command_Catalog.md:827). The definition keeps the wired request and the catalog row's args, maps
+            the command onto no action_type, and a handler sends no BrowserActionRequestV2 for it and refuses it
+            with handler_unavailable until the browser owner settles the request (DL-341 open_owner_questions).
     - command_id: cmd.browser.detach_browser_tab
       ucc_units: [UCC-063, UCC-061, UCC-062]
       command_kind: domain_action
@@ -13843,6 +13854,15 @@ command_payload_definitions:
           gap_note: >-
             The row states no disabled reasons; unsupported stands for a host without the browser runtime and
             permission_required for the capture permission.
+        - key: owner_request
+          choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
+          gap_note: >-
+            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5160).
+            Canon does not say which closed action_type (:377) this capture uses. Choice: snapshot, the enum's
+            page capture; the element or selection is not a field of the row (UI_Command_Catalog.md:831). The
+            optional thread_id has no field in the request or the closed action arguments (:423) and stays on the
+            UICommand envelope (DL-341 open_owner_questions). Until native capture exists the handler fails
+            closed with handler_unavailable (UI_Command_Catalog.md:853).
     - command_id: cmd.browser.add_selection_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
       command_kind: domain_action
@@ -13872,6 +13892,15 @@ command_payload_definitions:
           gap_note: >-
             The row states no disabled reasons; the same choice as pick_element_for_chat (browser runtime,
             capture permission).
+        - key: owner_request
+          choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
+          gap_note: >-
+            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5136).
+            Canon does not say which closed action_type (:377) this capture uses. Choice: snapshot, the enum's
+            page capture; the element or selection is not a field of the row (UI_Command_Catalog.md:832). The
+            optional thread_id has no field in the request or the closed action arguments (:423) and stays on the
+            UICommand envelope (DL-341 open_owner_questions). Until native capture exists the handler fails
+            closed with handler_unavailable (UI_Command_Catalog.md:853).
     - command_id: cmd.browser.add_selection_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
       command_kind: domain_action
@@ -13909,6 +13938,16 @@ command_payload_definitions:
             The row states no disabled reasons; the same choice as pick_element_for_chat (browser runtime,
             capture permission). Until native capture exists the handler fails closed with
             handler_unavailable (capture event rules, UI_Command_Catalog.md:853).
+        - key: owner_request
+          choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
+          gap_note: >-
+            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5135).
+            Canon does not say which closed action_type (:377) this capture uses. Choice: screenshot. Neither the
+            request nor the closed action arguments (:423) has a field for the row's scope:'clip'
+            (UI_Command_Catalog.md:833) or for its optional thread_id, which stays on the UICommand envelope; the
+            definition keeps the row's scope arg, and how it reaches the owner is asked of the browser owner
+            (DL-341 open_owner_questions). Until native capture exists the handler fails closed with
+            handler_unavailable (UI_Command_Catalog.md:853).
     - command_id: cmd.browser.add_selection_full_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
       command_kind: domain_action
@@ -13945,6 +13984,16 @@ command_payload_definitions:
           gap_note: >-
             The row states no disabled reasons; the same choice as pick_element_for_chat (browser runtime,
             capture permission).
+        - key: owner_request
+          choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
+          gap_note: >-
+            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5134).
+            Canon does not say which closed action_type (:377) this capture uses. Choice: screenshot. Neither the
+            request nor the closed action arguments (:423) has a field for the row's scope:'full'
+            (UI_Command_Catalog.md:834) or for its optional thread_id, which stays on the UICommand envelope; the
+            definition keeps the row's scope arg, and how it reaches the owner is asked of the browser owner
+            (DL-341 open_owner_questions). Until native capture exists the handler fails closed with
+            handler_unavailable (UI_Command_Catalog.md:853).
     - command_id: cmd.browser.add_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
       command_kind: domain_action
@@ -13981,6 +14030,16 @@ command_payload_definitions:
           gap_note: >-
             The row states no disabled reasons; the same choice as pick_element_for_chat (browser runtime,
             capture permission).
+        - key: owner_request
+          choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
+          gap_note: >-
+            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5133).
+            Canon does not say which closed action_type (:377) this capture uses. Choice: screenshot. Neither the
+            request nor the closed action arguments (:423) has a field for the row's scope:'clip'
+            (UI_Command_Catalog.md:835) or for its optional thread_id, which stays on the UICommand envelope; the
+            definition keeps the row's scope arg, and how it reaches the owner is asked of the browser owner
+            (DL-341 open_owner_questions). Until native capture exists the handler fails closed with
+            handler_unavailable (UI_Command_Catalog.md:853).
     - command_id: cmd.browser.add_full_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
       command_kind: domain_action
@@ -14017,6 +14076,16 @@ command_payload_definitions:
           gap_note: >-
             The row states no disabled reasons; the same choice as pick_element_for_chat (browser runtime,
             capture permission).
+        - key: owner_request
+          choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
+          gap_note: >-
+            The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5132).
+            Canon does not say which closed action_type (:377) this capture uses. Choice: screenshot. Neither the
+            request nor the closed action arguments (:423) has a field for the row's scope:'full'
+            (UI_Command_Catalog.md:836) or for its optional thread_id, which stays on the UICommand envelope; the
+            definition keeps the row's scope arg, and how it reaches the owner is asked of the browser owner
+            (DL-341 open_owner_questions). Until native capture exists the handler fails closed with
+            handler_unavailable (UI_Command_Catalog.md:853).
     - command_id: cmd.browser.share_with_agent
       ucc_units: [UCC-064, UCC-061, UCC-062]
       command_kind: domain_action
