@@ -472,6 +472,51 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   }
   await t.check(`${at} FO-98: a right click on Search within a second of Shift+F10 and Escape on Files opens Search's menu (round 4, C)`,
     !!quick && quick.keyOpened && quick.inWindow && quick.search.open, JSON.stringify(quick));
+  // Sol's route to the same fault (sol-review-g8 F98-S1): a right click on Source and Escape, then Shift+F10 on Source
+  // and Escape, then a right click on Source 150 ms and again 350 ms after the key, or as soon after as input allows
+  // (Escape between them, so the second lands on the icon, not on the first menu). Each must open Source's menu, and the
+  // first must land inside the old one-second watch; before, both were dropped.
+  const sourceMenu = () => {
+    const ms = [...document.querySelectorAll('.pmr-menu[data-pmr-menu="d-ab-icon"], .pm-ab-ctx')].filter(x => x.isConnected
+      && /^Source\b/.test(x.getAttribute('aria-label') || '') && x.getClientRects().length > 0 && getComputedStyle(x).display !== 'none' && getComputedStyle(x).visibility !== 'hidden'
+      && !x.classList.contains('is-closing'));
+    return ms.length > 0;
+  };
+  let sol = null;
+  for (let n = 0; n < 2 && !(sol && sol.inWindow); n++) {
+    await rest();
+    const ob = await f.locator('#activityBar > .icon[data-ab-id="source"]').boundingBox();
+    if (!ob) break;
+    const at0 = { x: off.x + ob.x + ob.width / 2, y: off.y + ob.y + ob.height / 2 };
+    const first = await rightMenu('source');
+    if (first) { await kb.press('Escape'); await menuGone(); }
+    if ((await key()).key !== 'source' && !(await reach('source'))) break;
+    await f.evaluate(() => {
+      window.__fo98s = { key: 0, ctx: [] };
+      if (window.__fo98sOn) return;
+      window.__fo98sOn = true;
+      window.addEventListener('keydown', (e) => { if (e.key === 'F10' && e.shiftKey) window.__fo98s.key = performance.now(); }, true);
+      window.addEventListener('contextmenu', (e) => { if (e.target && e.target.closest && e.target.closest('#activityBar')) window.__fo98s.ctx.push(performance.now()); }, true);
+    });
+    await kb.press('Shift+F10'); await menuUp();
+    const keyOpened = (await f.evaluate(iconMenu)).open;
+    await kb.press('Escape'); await menuGone();
+    const opens = [];
+    for (const delay of [150, 350]) {
+      await f.waitForFunction((d) => performance.now() - window.__fo98s.key >= d, delay, { timeout: 2000 }).catch(() => {});
+      await t.page.mouse.click(at0.x, at0.y, { button: 'right' });
+      const ok = await f.waitForFunction(sourceMenu, null, { timeout: 350 }).then(() => true, () => false);
+      opens.push(ok);
+      if (ok) { await kb.press('Escape'); await menuGone(); }   /* a dropped click leaves nothing to close; no wait */
+    }
+    const s = await f.evaluate(() => window.__fo98s), ms = s.ctx.map(c => Math.round(c - s.key));
+    /* the first click must land inside the old second (over --host it lands about 0.4 s after the key); the second is
+       logged, and it must open too, inside the second or not */
+    sol = { first, keyOpened, opens, ms, inWindow: s.key > 0 && ms.length === 2 && ms[0] > 0 && ms[0] < 1000, secondInWindow: ms.length === 2 && ms[1] < 1000, try: n + 1 };
+    t.log(`${at} FO-98: Sol's route on Source: ${JSON.stringify(sol)}`);
+  }
+  await t.check(`${at} FO-98: right clicks on Source 150 and 350 ms after Shift+F10 and Escape, after a right click and Escape, each open Source's menu (sol-review-g8 F98-S1)`,
+    !!sol && sol.first && sol.keyOpened && sol.inWindow && sol.opens.length === 2 && sol.opens.every(Boolean), JSON.stringify(sol));
   await rest();
   const first = (await f.evaluate(barOrder))[0];
   if (await reach(first)) { await kb.press('Shift+F10'); await menuUp(); }
