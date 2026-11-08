@@ -131,10 +131,11 @@ async function pixels(t, f, rec, rimW) {
 	return { inside, edge, ground, groundL };
 }
 
-async function placeChecks(t, f, p, look, tag) {
+async function placeChecks(t, f, p, look, tag, wide = true) {
 	const W = WANT[look], want = W[p.type] || W.tab;
 	const rec = await f.evaluate((p) => window.__sel.read(p), p);
-	if (!rec.found) { if (p.optional) { t.log(`${p.name} not on this page (${tag})`); return null; } return t.check(`${p.name} ${tag}: chosen item shown`, false, 'no chosen item visible', {}); }
+	/* below 1920 x 1080 a place the layout folds away (the rail, Usage's range) is not asked for; the page tabs always are */
+	if (!rec.found) { if (p.optional || (!wide && p.name !== 'page tabs')) { t.log(`${p.name} not shown here (${tag})`); return null; } return t.check(`${p.name} ${tag}: chosen item shown`, false, 'no chosen item visible', {}); }
 	await t.check(`${p.name} ${tag}: has its chip`, !!rec.chip, JSON.stringify(rec));
 	if (!rec.chip) return null;
 	if (p.type === 'card') {
@@ -227,7 +228,7 @@ export const tests = {
 							await goPage(t, f, p.page); at = p.page;
 							if ((await f.evaluate(() => document.documentElement.getAttribute('data-theme'))) !== look) { t.log(`${p.page} changed the look; set again`); await t.app.look(look); await t.page.waitForTimeout(500); }
 						}
-						const rec = await placeChecks(t, f, p, look, tag);
+						const rec = await placeChecks(t, f, p, look, tag, w >= 1920);
 						if (rec && rec.chip && p.px) await pixelChecks(t, f, p, rec, look, tag);
 						if (p.name === 'page tabs' && w >= 1024) await hoverFocus(t, f, look, tag);
 					}
@@ -240,7 +241,7 @@ export const tests = {
 					let scr = null;
 					for (const p of ONB) {
 						if (p.screen !== scr) { await g.evaluate((s) => window.O55.ui.go(s), p.screen); await t.page.waitForTimeout(1500); scr = p.screen; }
-						const rec = await placeChecks(t, g, p, look, tag);
+						const rec = await placeChecks(t, g, p, look, tag, w >= 1024);
 						if (rec && rec.chip && p.px) await pixelChecks(t, g, p, rec, look, tag);
 					}
 				}

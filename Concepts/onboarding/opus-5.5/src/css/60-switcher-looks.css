@@ -380,6 +380,13 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="basic"] .o55-card
 }
 html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="basic"] .o55-card.o55-on .o55-glyph { background: var(--o55-b1-block); color: var(--o55-b1-on); }
 html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="basic"] .o55-card:not(.o55-on):hover { --o55-face-border-color: var(--o55-b1-block); border-color: var(--o55-face-border-color); }
+/* a chosen card's own next question hangs from it in the same sticker: its tray's hard shadow is the card's ink, not the
+   coral it had */
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="friendly"] .o55-under { box-shadow: 4px 0 0 var(--o55-f1-shadow), 4px 4px 0 var(--o55-f1-shadow); }
+/* the chosen look tile: Friendly's sticker edge (2 px ink, a 4 px hard ink shadow), Basic's 2 px blue frame with no glow
+   (the tile's own art keeps its look's colours; these inks are the window's) */
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="friendly"] .o55-tile.o55-on { --o55-face-border-color: var(--o55-f1-line); border-color: var(--o55-face-border-color); --o55-face-shadow: inset 0 0 0 1px var(--o55-f1-line), 4px 4px 0 var(--o55-f1-shadow); box-shadow: var(--o55-face-shadow); }
+html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="basic"] .o55-tile.o55-on { --o55-face-border-color: var(--o55-b1-block); border-color: var(--o55-face-border-color); --o55-face-shadow: inset 0 0 0 1px var(--o55-b1-block); box-shadow: var(--o55-face-shadow); }
 /* the suggestion chips are a joined segmented row: the look's neutral selection (DR-069), B2's well in Basic, the card
    colour inside an ink edge in Friendly */
 html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="basic"][data-mode="light"] .o55-suggestchip.o55-on { border-color: #5C6470; background: #D3D7DD; color: #000000; }
@@ -401,5 +408,5 @@ html:not([data-o55-nier="on"]) #pm-o55-onboarding[data-family="friendly"] .o55-s
   :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) :is(.pm6-tb-menu-item.is-selected, #pm-settings-root .resource-row[aria-current="true"], .pmw-strip[data-column] .pmw-tab[data-active]) { forced-color-adjust: none; background: Highlight !important; color: HighlightText !important; box-shadow: none !important; }
   :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) :is(.pm6-tb-menu-item.is-selected, #pm-settings-root .resource-row[aria-current="true"], .pmw-strip[data-column] .pmw-tab[data-active]) * { color: HighlightText !important; }
   :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy):not(#lgx) #pm-settings-root .segmented > button:is([aria-checked="true"], [aria-pressed="true"]) { forced-color-adjust: none; background: Canvas !important; color: CanvasText !important; box-shadow: inset 0 0 0 2px Highlight !important; }
-  html:not([data-o55-nier="on"]) #pm-o55-onboarding:is([data-family="basic"], [data-family="friendly"]) .o55-card.o55-on { border-color: Highlight !important; box-shadow: inset 0 0 0 2px Highlight !important; }
+  html:not([data-o55-nier="on"]) #pm-o55-onboarding:is([data-family="basic"], [data-family="friendly"]) :is(.o55-card, .o55-tile).o55-on { border-color: Highlight !important; box-shadow: inset 0 0 0 2px Highlight !important; }
 }
