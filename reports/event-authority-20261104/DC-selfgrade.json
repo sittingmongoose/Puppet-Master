@@ -1,6 +1,6 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-20261105-DC-SWEEP-P1-SELF-GRADE-COLLABORATIVE-PREP",
+  "assessment_id": "EA-20261107-DC-SWEEP-P2A-SELF-GRADE-COLLABORATIVE-PREP",
   "assessment_kind": "self_grade_prepared_families",
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -23,10 +23,11 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-collab-prep-20261104",
-    "commit": "8a57581d724f4b41c3c24a30ad08434711426aa4",
+    "commit": "ff8520b261e58e0a3d94b7c7d0676c8e0acca18c",
     "base": "d5ec2f70c0d69c469796eea9b9cfdae30f281f42",
-    "reviewed_head": "db160e829d8d9b94d0d034ed1593c994b018be6b",
-    "read_method": "Rebased owner/fixture/derived tree, verified sequentially. Following report-only commit changes no checker input."
+    "part_2a_start": "f27a51130c29b09f1a09c8800478b4590e40d722",
+    "tool_merge": "1990b6bd33",
+    "read_method": "Part 2A tree, no rebase this round; every quote relocated mechanically at the implementation commit."
   },
   "registry": {
     "path": "Plans/event_family_registry.json",
@@ -36,27 +37,33 @@
   },
   "status_meaning": {
     "PASS": "Owner text on the branch explicitly supports the criterion for this family, including adoption of shared prerequisites by name. Never native proof.",
-    "PARTIAL": "The shared method-B guard-table adoption and complete per-predicate proof remain open for positive_negative_oracles.",
+    "PARTIAL": "positive_negative_oracles stays PARTIAL for part 2B: the shared number rule (SW-N1..SW-N5) and the exact timestamp grammar with authenticated original selection (SW-F1; the part 2A timestamp review is interim only).",
     "ABSENT": "Not established."
   },
   "status_counts": {
+    "ABSENT": 18,
     "PASS": 180,
-    "PARTIAL": 18,
-    "ABSENT": 18
+    "PARTIAL": 18
   },
   "native_execution": "NOT_RUN",
   "review_before_counts": {
-    "PASS": 162,
-    "PARTIAL": 36,
-    "ABSENT": 18
+    "ABSENT": 18,
+    "PASS": 180,
+    "PARTIAL": 18
   },
   "guard_removal": {
-    "status": "PENDING_SHARED_TOOL",
-    "fresh_whole_lane": false,
-    "legacy_table_valid": false,
+    "status": "GUARD_TABLES_PROVED",
+    "method": "Method B guard tables on the gated shared tool scripts/pm_guard_isolation.py (004bdedd63)",
+    "tables": 111,
+    "rows": 322,
+    "rows_proved": 322,
+    "unproved": [],
+    "tool_status": {
+      "PASS": 111
+    },
     "sweep_item": "SW-P1",
-    "replacement": "scripts/pm_guard_isolation.py on plans/ea-guardtool-20261105",
-    "reason": "C4 fixture masks are repaired. SW-P1 still requires shared method-B guard tables and proof; no whole-lane guard-isolation PASS is claimed."
+    "result_path": "reports/event-authority-20261104/DC.guard-tables.json",
+    "legacy_machinery": "retired: guard_removal_report, schema_guard_removal_report, integrity_guard_removal_report, --guard-removal"
   },
   "rows": [
     {
@@ -124,7 +131,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -157,7 +164,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -200,7 +207,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -243,7 +250,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -276,7 +283,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -309,7 +316,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -415,7 +422,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -448,7 +455,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -491,7 +498,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -524,31 +531,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-231",
-              "line_start": 7354,
-              "line_end": 7354,
+              "line_start": 7357,
+              "line_end": 7357,
               "quote": "### ATS-231 - Oracles of collaboration.created",
               "excerpt_sha256": "5f59870673fb074560cc0441802f5f695e566e528ebe7a15810e7a0ad88f14dc",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -557,7 +584,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_collaboration_created",
@@ -640,7 +667,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -673,7 +700,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -716,7 +743,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -759,7 +786,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -792,7 +819,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -825,7 +852,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -931,7 +958,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -964,7 +991,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1007,7 +1034,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1040,31 +1067,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-232",
-              "line_start": 7430,
-              "line_end": 7430,
+              "line_start": 7433,
+              "line_end": 7433,
               "quote": "### ATS-232 - Oracles of collaboration.started",
               "excerpt_sha256": "8e6c820430bd0c38743f1e72139b9865fd5655939d7faac2a3c3ce27f6fe6910",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -1073,7 +1120,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_collaboration_started",
@@ -1156,7 +1203,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1189,7 +1236,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -1232,7 +1279,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1275,7 +1322,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1308,7 +1355,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1341,7 +1388,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -1447,7 +1494,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -1480,7 +1527,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -1523,7 +1570,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -1556,31 +1603,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-233",
-              "line_start": 7506,
-              "line_end": 7506,
+              "line_start": 7509,
+              "line_end": 7509,
               "quote": "### ATS-233 - Oracles of collaboration.paused",
               "excerpt_sha256": "fd303bf16067aa239f614b72800e240da5a04257c8d48c7ce16414a6c4d101e8",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -1589,7 +1656,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_collaboration_paused",
@@ -1672,7 +1739,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -1705,7 +1772,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -1748,7 +1815,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -1791,7 +1858,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -1824,7 +1891,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -1857,7 +1924,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -1963,7 +2030,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -1996,7 +2063,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2039,7 +2106,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2072,31 +2139,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-234",
-              "line_start": 7581,
-              "line_end": 7581,
+              "line_start": 7584,
+              "line_end": 7584,
               "quote": "### ATS-234 - Oracles of collaboration.resumed",
               "excerpt_sha256": "e1545fcdfea6f768417192bd2c77494b521cfa7a7ef9f600b7fcca05d1f68b12",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -2105,7 +2192,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_collaboration_resumed",
@@ -2188,7 +2275,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2221,7 +2308,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -2264,7 +2351,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2307,7 +2394,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2340,7 +2427,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2373,7 +2460,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -2479,7 +2566,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -2512,7 +2599,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -2555,7 +2642,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -2588,31 +2675,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-235",
-              "line_start": 7656,
-              "line_end": 7656,
+              "line_start": 7659,
+              "line_end": 7659,
               "quote": "### ATS-235 - Oracles of collaboration.cancelled",
               "excerpt_sha256": "a94f1ac15cad9a185fd5b1019afce23a560ddd87d685a9a87110aea39349c953",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -2621,7 +2728,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_collaboration_cancelled",
@@ -2704,7 +2811,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -2737,7 +2844,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -2780,7 +2887,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -2823,7 +2930,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -2856,7 +2963,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -2889,7 +2996,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -2995,7 +3102,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -3028,7 +3135,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3071,7 +3178,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3104,31 +3211,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-236",
-              "line_start": 7731,
-              "line_end": 7731,
+              "line_start": 7734,
+              "line_end": 7734,
               "quote": "### ATS-236 - Oracles of collaboration.completed",
               "excerpt_sha256": "1bac3e5fc94ff3b7991b5cdab799ca1e5342b8e7639958a091370e97005924f2",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -3137,7 +3264,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_collaboration_completed",
@@ -3220,7 +3347,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3253,7 +3380,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -3296,7 +3423,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3339,7 +3466,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3372,7 +3499,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3405,7 +3532,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -3511,7 +3638,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -3544,7 +3671,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -3587,7 +3714,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -3620,31 +3747,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-237",
-              "line_start": 7807,
-              "line_end": 7807,
+              "line_start": 7810,
+              "line_end": 7810,
               "quote": "### ATS-237 - Oracles of collaboration.failed",
               "excerpt_sha256": "a0556c82b675178a5a5b53798568e57cde44973c4dc66b219f8284ee9b25409a",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -3653,7 +3800,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_collaboration_failed",
@@ -3736,7 +3883,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -3769,7 +3916,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -3812,7 +3959,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -3855,7 +4002,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -3888,7 +4035,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -3921,7 +4068,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -4027,7 +4174,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -4060,7 +4207,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4103,7 +4250,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4136,31 +4283,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-238",
-              "line_start": 7882,
-              "line_end": 7882,
+              "line_start": 7885,
+              "line_end": 7885,
               "quote": "### ATS-238 - Oracles of collaboration.participant_started",
               "excerpt_sha256": "d4e84f0b46df93eb7acca2fce8b79886770954d61ab83658f4a1cd21e1cb909b",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -4169,7 +4336,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_collaboration_participant_started",
@@ -4252,7 +4419,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4285,7 +4452,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -4328,7 +4495,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4371,7 +4538,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4404,7 +4571,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4437,7 +4604,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -4543,7 +4710,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -4576,7 +4743,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -4619,7 +4786,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -4652,31 +4819,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-239",
-              "line_start": 7958,
-              "line_end": 7958,
+              "line_start": 7961,
+              "line_end": 7961,
               "quote": "### ATS-239 - Oracles of collaboration.participant_completed",
               "excerpt_sha256": "d78ef4595c8766d99cb4d19004c05ae8d134cd4543c8c58cafef8d22594682db",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -4685,7 +4872,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_collaboration_participant_completed",
@@ -4768,7 +4955,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -4801,7 +4988,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -4844,7 +5031,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -4887,7 +5074,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -4920,7 +5107,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -4953,7 +5140,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -5059,7 +5246,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -5092,7 +5279,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5135,7 +5322,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5168,31 +5355,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-240",
-              "line_start": 8034,
-              "line_end": 8034,
+              "line_start": 8037,
+              "line_end": 8037,
               "quote": "### ATS-240 - Oracles of collaboration.message_added",
               "excerpt_sha256": "348d71141f32e2e16ee998220c287b87180155be43f304c42bc94a9e623d8ca8",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -5201,7 +5408,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_collaboration_message_added",
@@ -5284,7 +5491,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5317,7 +5524,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -5360,7 +5567,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5403,7 +5610,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5436,7 +5643,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5469,7 +5676,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -5575,7 +5782,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -5608,7 +5815,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -5651,7 +5858,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -5684,31 +5891,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-241",
-              "line_start": 8110,
-              "line_end": 8110,
+              "line_start": 8113,
+              "line_end": 8113,
               "quote": "### ATS-241 - Oracles of collaboration.artifact_added",
               "excerpt_sha256": "862bedb44136a72df496e9ffd5e32e41abf0b6004bfc8e3bf933d596cfc05434",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -5717,7 +5944,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_collaboration_artifact_added",
@@ -5800,7 +6027,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -5833,7 +6060,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -5876,7 +6103,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -5919,7 +6146,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -5952,7 +6179,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -5985,7 +6212,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -6091,7 +6318,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -6124,7 +6351,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6167,7 +6394,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6200,31 +6427,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-242",
-              "line_start": 8186,
-              "line_end": 8186,
+              "line_start": 8189,
+              "line_end": 8189,
               "quote": "### ATS-242 - Oracles of collaboration.configuration_changed",
               "excerpt_sha256": "9fdfbbf0f2569521be8322bd7a41191221c3b45f2123e0a5e29c626ad380f569",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -6233,7 +6480,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_collaboration_configuration_changed",
@@ -6316,7 +6563,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6349,7 +6596,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -6392,7 +6639,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6435,7 +6682,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6468,7 +6715,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -6501,7 +6748,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -6607,7 +6854,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -6640,7 +6887,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -6683,7 +6930,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -6716,31 +6963,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-243",
-              "line_start": 8262,
-              "line_end": 8262,
+              "line_start": 8265,
+              "line_end": 8265,
               "quote": "### ATS-243 - Oracles of brainstorm.proposal_added",
               "excerpt_sha256": "e5161475ee9c5c97df27c1fa947550f8aaec2946eee1f58db1264a34df5be9a5",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -6749,7 +7016,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_brainstorm_proposal_added",
@@ -6832,7 +7099,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -6865,7 +7132,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -6908,7 +7175,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -6951,7 +7218,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -6984,7 +7251,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -7017,7 +7284,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -7123,7 +7390,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -7156,7 +7423,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -7199,7 +7466,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -7232,31 +7499,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-244",
-              "line_start": 8337,
-              "line_end": 8337,
+              "line_start": 8340,
+              "line_end": 8340,
               "quote": "### ATS-244 - Oracles of brainstorm.vote_added",
               "excerpt_sha256": "8a3c219592280e937e8882e2773077829dc3846787379debb6e1e4787a18d03a",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -7265,7 +7552,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_brainstorm_vote_added",
@@ -7348,7 +7635,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -7381,7 +7668,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -7424,7 +7711,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -7467,7 +7754,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -7500,7 +7787,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -7533,7 +7820,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -7639,7 +7926,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -7672,7 +7959,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -7715,7 +8002,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -7748,31 +8035,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-245",
-              "line_start": 8412,
-              "line_end": 8412,
+              "line_start": 8415,
+              "line_end": 8415,
               "quote": "### ATS-245 - Oracles of brainstorm.plan_synthesized",
               "excerpt_sha256": "456c18f3d47c9a44df3587101d68a5120dad54db0fa292777de4b14e3a82609a",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -7781,7 +8088,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_brainstorm_plan_synthesized",
@@ -7864,7 +8171,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -7897,7 +8204,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -7940,7 +8247,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -7983,7 +8290,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -8016,7 +8323,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -8049,7 +8356,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -8155,7 +8462,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -8188,7 +8495,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -8231,7 +8538,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -8264,31 +8571,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-246",
-              "line_start": 8487,
-              "line_end": 8487,
+              "line_start": 8490,
+              "line_end": 8490,
               "quote": "### ATS-246 - Oracles of review.finding_added",
               "excerpt_sha256": "8adcc89e3f3dd97e2b3c1ced872af02a94da2ead4baf5bd0baeb1c3a807fcff5",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -8297,7 +8624,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_review_finding_added",
@@ -8380,7 +8707,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -8413,7 +8740,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -8456,7 +8783,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -8499,7 +8826,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -8532,7 +8859,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -8565,7 +8892,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -8671,7 +8998,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -8704,7 +9031,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -8747,7 +9074,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -8780,31 +9107,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-247",
-              "line_start": 8562,
-              "line_end": 8562,
+              "line_start": 8565,
+              "line_end": 8565,
               "quote": "### ATS-247 - Oracles of review.finding_dispositioned",
               "excerpt_sha256": "9cf455261ab67d1238199197d9c2aebea3efe437d8f66732ea33b98800c0ae43",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -8813,7 +9160,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_review_finding_dispositioned",
@@ -8896,7 +9243,7 @@
             "status": "ABSENT"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "owner_doc": {
           "status": "PASS",
@@ -8929,7 +9276,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "producer": {
           "status": "PASS",
@@ -8972,7 +9319,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "closed_payload_schema": {
           "status": "PASS",
@@ -9015,7 +9362,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "scope_identity": {
           "status": "PASS",
@@ -9048,7 +9395,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "replay_idempotency": {
           "status": "PASS",
@@ -9081,7 +9428,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "retention": {
           "status": "PASS",
@@ -9187,7 +9534,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "transitions": {
           "status": "PASS",
@@ -9220,7 +9567,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "consumers_checkpoints": {
           "status": "PASS",
@@ -9263,7 +9610,7 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "compatibility_withdrawal": {
           "status": "PASS",
@@ -9296,31 +9643,51 @@
             "status": "PASS"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Re-read at the part 2A tree; no owner, schema or fixture change affects this criterion."
         },
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "partial_static_proof",
-          "finding": "C4-B1/B2/B3 fixture repairs and full static/self-tests pass. Guard locations and valid parents are inventoried. Complete method-B guard-table isolation is part 2; oracle grade stays PARTIAL and native execution stays NOT_RUN.",
+          "finding": "Method B guard tables (322 rows, 111 tables) are proved row by row on the gated shared tool; each row has its own single-defect negatives and no masked negative. The checker refuses only through the table rows. Oracles stay PARTIAL for part 2B (shared number rule SW-N1..SW-N5, exact timestamp grammar SW-F1); native execution stays NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Automated_Testing_System.md",
               "unit": "ATS-248",
-              "line_start": 8637,
-              "line_end": 8637,
+              "line_start": 8640,
+              "line_end": 8640,
               "quote": "### ATS-248 - Oracles of review.artifact_finalized",
               "excerpt_sha256": "86cd005104c85dd8f0977847a3c63a92a9e47481800d6a33634e5a37431adb84",
-              "file_sha256": "47603583797be60fba3eeb532651ca6424b88f930dd44bac6c8e61f133bb185e",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
               "quote_check": "exact"
             },
             {
               "path": "scripts/pm_collaboration_events.py",
               "unit": "contract_probes",
-              "line_start": 1536,
-              "line_end": 1536,
+              "line_start": 1674,
+              "line_end": 1674,
               "quote": "def contract_probes(root=ROOT, include_shapes=True):",
               "excerpt_sha256": "6348ad00495f69ab908b5dc978740cf4e02b47361556ad193163819b63390a9d",
-              "file_sha256": "38277fe5f5ca44adc3bc89c468e4ba3abac29852dde41b76869b476a40090ffa",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
+              "quote_check": "exact"
+            },
+            {
+              "path": "Plans/Automated_Testing_System.md",
+              "unit": "ATS-230",
+              "line_start": 7248,
+              "line_end": 7248,
+              "quote": "- Whole-lane check 11 runs on the gated shared guard tool `scripts/pm_guard_isolation.py` (Method B guard tables).",
+              "excerpt_sha256": "1e5636dcb31388e5f9d82e845036ea7aac3a1e7870ee4061dbd352a9025241d2",
+              "file_sha256": "9abfb49d1bd8150a90fc86ad87aab03fc0cbb72ebc68f4f1caaddd66d9a5a51a",
+              "quote_check": "exact"
+            },
+            {
+              "path": "scripts/pm_collaboration_events.py",
+              "unit": "table_refusals",
+              "line_start": 129,
+              "line_end": 129,
+              "quote": "def table_refusals(phase, facts, first=True):",
+              "excerpt_sha256": "5e2ada3c4caa79038f9362f507cae7a1a1912be63b4755516dd2f5df9a2dfd8c",
+              "file_sha256": "0867de34a2a2f152501755850cc2bf00626b7cd50ced1ea1dc31b36c9bedf191",
               "quote_check": "exact"
             }
           ],
@@ -9329,7 +9696,7 @@
             "status": "PARTIAL"
           },
           "change": "carried",
-          "change_reason": "Current owner support was re-read after rebase. Fixture and static checks pass; shared proof/native/admission boundaries are unchanged."
+          "change_reason": "Part 2A closes SW-P1 (guard tables proved); part 2B items keep the cell PARTIAL."
         }
       },
       "round_2_source_case_prefix": "source_review_artifact_finalized",
@@ -9354,7 +9721,6 @@
     "ABSENT": 18
   },
   "sweep_items": [
-    "SW-P1",
     "SW-N1",
     "SW-N2",
     "SW-N3",
@@ -9396,5 +9762,29 @@
     "mapping_path": "reports/event-authority-20261104/DC-sweep-p1-guards.json",
     "evidence_path": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DC/sweep-p1/fixture-audit.json",
     "evidence_sha256": "62ecf17302538343cb43d447bfbb9adb2fbd408818dcfd572926ad1de561aaa2"
+  },
+  "sweep_part_2a": {
+    "closed": [
+      "SW-P1"
+    ],
+    "part_2b": [
+      "SW-N1",
+      "SW-N2",
+      "SW-N3",
+      "SW-N4",
+      "SW-N5",
+      "SW-F1"
+    ],
+    "tables": 111,
+    "rows": 322,
+    "rows_proved": 322,
+    "distinct_negatives": 4149,
+    "excluded_two_row_witnesses": [
+      "source/source_collaboration_created_project:roster",
+      "source/source_collaboration_created_application:roster",
+      "source/source_collaboration_configuration_changed_project:roster",
+      "source/source_collaboration_configuration_changed_application:roster"
+    ],
+    "timestamp_review": "interim only (pm7-build, 2026-11-05 16:50Z)"
   }
 }
