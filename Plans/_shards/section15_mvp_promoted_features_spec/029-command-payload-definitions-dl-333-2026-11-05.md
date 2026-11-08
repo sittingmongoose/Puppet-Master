@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L13363-L15415
+Source lines: L13363-L15412
 
-Source SHA256: `811911007e37865fa9b2d193996f4cb37507ede894e77b258db72924624231e0`
+Source SHA256: `9f113c6e3f3fc2db0ee288f0eca75c6b7d6bdc1e60746289526fafc553ac1c42`
 
 ---
 
@@ -1545,19 +1545,6 @@ command_payload_definitions:
             Canon names "command replay or shell profile hints" (UI_Command_Catalog.md:888) without a field
             shape. JUDGMENT: command_ref, type ref, optional, for the replay hint; the overlay's command_ref?
             identity is the candidate name.
-        profile_ref:
-          type: ref
-          required: false
-          default: none
-          provenance: gap
-          gap_note: >-
-            Canon names "command replay or shell profile hints" (UI_Command_Catalog.md:888) without a field
-            shape; the default is the same folder and profile (UI_Command_Catalog.md:18740). The owner
-            request this definition names,
-            Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2, requires
-            profile_ref (a ref string, 1-256 characters) and cwd_root_ref, which carry the profile and the
-            folder. JUDGMENT: the UI arg takes that spelling and type, profile_ref (ref), optional, as the
-            row's profile hint; absent keeps the same profile (UI_Command_Catalog.md:18740), and a value overrides it.
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -1571,6 +1558,16 @@ command_payload_definitions:
           gap_note: >-
             Neither the terminal row (UI_Command_Catalog.md:888) nor the kept-commands row (:18740) states
             disabled reasons; unsupported stands for a host without a terminal runtime.
+        - key: omitted:profile_ref
+          choice: omitted
+          gap_note: >-
+            The kept-commands row fixes Restart session as a new session in the same tab, same folder and
+            profile (UI_Command_Catalog.md:18740), with no branch that changes the profile; the older terminal
+            row's "shell profile hints" (:888) sits in a payload column its lineage pointer calls history
+            (:890). So the definition takes no profile arg. The owner request,
+            Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2, requires
+            profile_ref and cwd_root_ref; the handler fills both from the bound session's existing profile and
+            folder, never from the caller.
     - command_id: cmd.terminal.clear_scrollback
       ucc_units: [UCC-072]
       command_kind: domain_action
