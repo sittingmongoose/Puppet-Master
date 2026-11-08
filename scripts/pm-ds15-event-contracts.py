@@ -4,70 +4,209 @@ import copy
 import hashlib
 import json, yaml
 import re
+import sys
+from decimal import Decimal
 from pathlib import Path
 import jsonschema
 import importlib.util
-from functools import lru_cache, wraps
+from functools import lru_cache
 from jsonschema.validators import extend
 from referencing import Registry, Resource
 from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT / 'scripts') not in sys.path:
+    sys.path.insert(0, str(ROOT / 'scripts'))
+from pm_event_numbers import (EVENT_VALUE, Refusal, current_integer, exact_boolean,  # noqa: E402
+                              full_value_commitment, loads_current_json, producer_semantic_bytes,
+                              producer_semantic_digest,
+                              storage_uint64, storage_value_bytes)
 FORMAT = jsonschema.FormatChecker()
 
+# Sweep part 2B numbers (CV-1100, SP-1100). Current inputs are admitted at every
+# schema integer slot by the shared current_integer, with the slot's own schema
+# bounds; Storage-assigned sequence/generation/offset metadata uses storage_uint64.
+# Raw JSON is parsed by loads_current_json, physical bytes are
+# storage_value_bytes(EVENT_VALUE) and the CV-339 commitment is
+# full_value_commitment. There is no blanket integer walk over a current input.
+CURRENT = 'current'
+STORAGE_UINT64_FIELDS = frozenset({
+    'sequence_id', 'segment_generation', 'byte_offset', 'durable_end_offset', 'manifest_generation',
+    'through_sequence_id', 'frontier_revision', 'selected_segment_generation', 'recovery_epoch',
+    'sequence', 'first_sequence', 'last_sequence', 'scan_low', 'scan_high', 'selected_high',
+    'admitted_sequence', 'withdrawal_frontier'})
 
-def numeric_atom_ok(value):
-    """The existing canonical MessagePack integer domain, also used by schemas."""
+# Frozen DS15 write-time recipe 'ds15-v1'. Every modelled retained original
+# (original event and payload, original context, first receipt, custody and
+# issued result) was written under it, so retained verification keeps its exact
+# integer domain and its producer JCS digits; no current number guard runs on a
+# retained original. Selecting this recipe through SP-1101's authenticated
+# dispatcher is a part 2B item: SP-1101 selects the frozen CV-1101 date-time
+# profile in the same authenticated tuple.
+V1 = 'ds15-v1'
+
+
+def v1_numeric_atom_ok(value):
+    """ds15-v1: the canonical MessagePack integer domain; floats were never written."""
     return (not isinstance(value, (int, float)) or isinstance(value, bool)
             or type(value) is int and -(2 ** 63) <= value <= 2 ** 64 - 1)
 
 
-def numbers_ok(value):
+def v1_numbers_ok(value):
     if isinstance(value, dict):
-        return all(numbers_ok(child) for child in value.values())
+        return all(v1_numbers_ok(child) for child in value.values())
     if isinstance(value, (list, tuple)):
-        return all(numbers_ok(child) for child in value)
-    return numeric_atom_ok(value)
+        return all(v1_numbers_ok(child) for child in value)
+    return v1_numeric_atom_ok(value)
 
 
-def integer_boundary(refusal):
-    """Refuse before comparisons or codecs; never catch unrelated model defects."""
-    def decorate(fn):
-        @wraps(fn)
-        def checked(*args, **kwargs):
-            if not numbers_ok((args, kwargs)):
-                return copy.deepcopy(refusal)
-            return fn(*args, **kwargs)
-        return checked
-    return decorate
+def v1_producer_digest(event):
+    """ds15-v1 producer-semantic digest (exact JCS integer digits), or None."""
+    if not v1_numbers_ok(event):
+        return None
+    try:
+        return _codec.event_producer_semantic_digest(event)
+    except (KeyError, TypeError, ValueError, UnicodeError):
+        return None
 
 
-def parse_integer(token):
-    if token == '-0':
-        raise ValueError('DS15 forbids the negative-zero JSON spelling')
-    return int(token)
+def producer_type_sensitive_paths(event):
+    """CV-1100: projection paths whose owners declare integers keep their numeric kind.
+
+    EventRecord declares producer_sequence_id an integer; each family payload schema
+    declares its own top-level integer fields.
+    """
+    paths = {('producer_sequence_id',)}
+    schema_id = event.get('payload_schema_id') if type(event) is dict else None
+    for path in PAYLOAD_SCHEMA_REFS.get(schema_id, ()):
+        props = read(path).get('properties', {})
+        for key, sub in props.items():
+            kinds = sub.get('type')
+            if 'integer' in (kinds if isinstance(kinds, list) else [kinds]):
+                paths.add(('payload', key))
+    return frozenset(paths)
 
 
-def parse_numeric_json(encoded):
-    """Keep lexical rejection before Python erases -0; JSON rejects 01 itself."""
-    value = json.loads(encoded, parse_int=parse_integer, object_pairs_hook=_app.unique_object)
-    if not numbers_ok(value):
-        raise ValueError('DS15 requires canonical-range JSON integers')
-    return value
+def current_producer_qualified(event):
+    """CV-1100: the current CV-317 projection has an exact qualified JCS encoding."""
+    try:
+        producer_semantic_bytes(event, type_sensitive_paths=producer_type_sensitive_paths(event))
+    except Refusal:
+        return False
+    return True
 
 
-def numeric_keyword(validator, enabled, instance, schema):
-    if enabled and not numbers_ok(instance):
-        yield jsonschema.ValidationError('DS15 requires canonical-range integers; floats are forbidden')
+def physical_size(value):
+    """SP-1100 EVENT_VALUE canonical bytes length, or None when no exact encoding exists."""
+    try:
+        return len(storage_value_bytes(value, profile=EVENT_VALUE))
+    except Refusal:
+        return None
+
+
+def typed(value):
+    """Exact typed value for joins (SP-1100): 1, 1.0, True and Decimal('1') are distinct."""
+    if type(value) is dict:
+        return ('dict', tuple(sorted((k, typed(v)) for k, v in value.items())))
+    if type(value) is list:
+        return ('list', tuple(typed(v) for v in value))
+    if type(value) is float:
+        return ('float', value.hex())
+    if isinstance(value, Decimal):
+        return (type(value).__name__, str(value))
+    return (type(value).__name__, value)
+
+
+def same(left, right):
+    """Typed join of two copies of one value; Python == would equate 1 and 1.0."""
+    return typed(left) == typed(right)
+
+
+def parse_owner_json(encoded):
+    """CV-1100 raw ingress: refuses -0, 01, nonfinite, duplicate keys, lone surrogates."""
+    return loads_current_json(encoded)
+
+
+def v1_numeric_keyword(validator, enabled, instance, schema):
+    if enabled and not v1_numbers_ok(instance):
+        yield jsonschema.ValidationError('ds15-v1 requires canonical-range integers; floats were never written')
 
 
 def exact_pattern(validator, pattern, instance, schema):
     if isinstance(instance, str) and re.fullmatch(pattern, instance) is None:
         yield jsonschema.ValidationError('String does not fully match identifier pattern')
 
-StrictValidator = extend(jsonschema.Draft202012Validator,
-                         {'pattern': exact_pattern, 'ds15IntegerDomain': numeric_keyword})
+StrictValidator = extend(jsonschema.Draft202012Validator, {'pattern': exact_pattern})
+V1Validator = extend(StrictValidator, {'ds15IntegerDomain': v1_numeric_keyword})
+
+
+def integer_slot_errors(validator, instance):
+    """CV-1100 current admission at every integer slot the schema declares.
+
+    Schema-directed, after the stock schema accepted the instance: follows
+    $ref, properties, patternProperties, additionalProperties, items,
+    prefixItems, allOf, the anyOf/oneOf branches the instance satisfies and
+    if/then/else. Python's jsonschema accepts 1.0 as an integer; this does not.
+    """
+    errors = []
+
+    def walk(v, schema, value, path):
+        if not isinstance(schema, dict):
+            return
+        if '$ref' in schema:
+            resolved = v._resolver.lookup(schema['$ref'])
+            walk(v.evolve(schema=resolved.contents, _resolver=resolved.resolver), resolved.contents, value, path)
+        kinds = schema.get('type')
+        kinds = kinds if isinstance(kinds, list) else [kinds]
+        if 'integer' in kinds and type(value) is not bool and isinstance(value, (int, float, Decimal)):
+            try:
+                if path and path[-1] in STORAGE_UINT64_FIELDS:
+                    storage_uint64(value)
+                else:
+                    current_integer(value, minimum=schema.get('minimum'), maximum=schema.get('maximum'))
+            except Refusal as exc:
+                errors.append(jsonschema.ValidationError('CV-1100 ' + exc.reason + ' at /' + '/'.join(map(str, path)),
+                                                         validator='current_integer'))
+        if isinstance(value, dict):
+            props = schema.get('properties', {})
+            patterns = schema.get('patternProperties', {})
+            for key, sub in props.items():
+                if key in value:
+                    walk(v, sub, value[key], path + (key,))
+            for pattern, sub in patterns.items():
+                for key in value:
+                    if re.search(pattern, key):
+                        walk(v, sub, value[key], path + (key,))
+            extra = schema.get('additionalProperties')
+            if isinstance(extra, dict):
+                for key in value:
+                    if key not in props and not any(re.search(p, key) for p in patterns):
+                        walk(v, extra, value[key], path + (key,))
+            for key, sub in schema.get('dependentSchemas', {}).items():
+                if key in value:
+                    walk(v, sub, value, path)
+        if isinstance(value, list):
+            prefix = schema.get('prefixItems', [])
+            items = schema.get('items')
+            for index, item in enumerate(value):
+                if index < len(prefix):
+                    walk(v, prefix[index], item, path + (index,))
+                elif isinstance(items, dict):
+                    walk(v, items, item, path + (index,))
+        for sub in schema.get('allOf', []):
+            walk(v, sub, value, path)
+        for keyword in ('anyOf', 'oneOf'):
+            for sub in schema.get(keyword, []):
+                if v.evolve(schema=sub).is_valid(value):
+                    walk(v, sub, value, path)
+        if 'if' in schema:
+            branch = 'then' if v.evolve(schema=schema['if']).is_valid(value) else 'else'
+            if branch in schema:
+                walk(v, schema[branch], value, path)
+
+    walk(validator, validator.schema, instance, ())
+    return errors
 _codec_spec = importlib.util.spec_from_file_location('pm_ds15_readiness_codec', ROOT / 'scripts/pm-implementation-readiness.py')
 _codec = importlib.util.module_from_spec(_codec_spec)
 _codec_spec.loader.exec_module(_codec)
@@ -82,24 +221,68 @@ _app_spec.loader.exec_module(_app)
 def read(path):
     return json.loads((ROOT / path).read_text())
 
+
+def _payload_schema_refs():
+    refs = {}
+    for manifest in ('Plans/ds15_event_contracts.json', 'Plans/ds15_deck2_contracts.json'):
+        if (ROOT / manifest).exists():
+            for row in read(manifest):
+                refs.setdefault(read(row['payload_schema_ref'])['$id'], []).append(row['payload_schema_ref'])
+    return refs
+
+
+PAYLOAD_SCHEMA_REFS = _payload_schema_refs()
+
+class exact_integer_text:
+    """CV-1100 sets no global integer cap: render long integers exactly while validating.
+
+    Scoped and restored; jsonschema renders an instance in its error messages, and the
+    memo key spells the instance, so a valid 4400-digit integer must not raise there.
+    """
+    def __enter__(self):
+        self.limit = sys.get_int_max_str_digits()
+        sys.set_int_max_str_digits(0)
+
+    def __exit__(self, *exc):
+        sys.set_int_max_str_digits(self.limit)
+        return False
+
+
+def _memo_default(value):
+    # Exact typed key for carriers JSON cannot spell (ParsedDecimal from loads_current_json).
+    return '\x00' + type(value).__name__ + ':' + repr(value)
+
+
 class MemoizedValidation:
-    """Cache exact validator errors by JSON value, never by mutable object id."""
-    def __init__(self, original):
+    """Cache exact validator errors by JSON value, never by mutable object id.
+
+    A current validator adds CV-1100 integer-slot admission after the stock
+    schema accepts; a ds15-v1 validator carries the frozen v1 integer domain.
+    """
+    def __init__(self, original, slots):
         self.original = original
+        self.slots = slots
         self.errors = {}
 
     def iter_errors(self, instance):
-        key = json.dumps(instance, sort_keys=True, ensure_ascii=True)
-        if key not in self.errors:
-            self.errors[key] = tuple(self.original.iter_errors(instance))
+        with exact_integer_text():
+            key = json.dumps(instance, sort_keys=True, ensure_ascii=True, default=_memo_default)
+            if key not in self.errors:
+                errors = tuple(self.original.iter_errors(instance))
+                if not errors and self.slots:
+                    errors = tuple(integer_slot_errors(self.original, instance))
+                self.errors[key] = errors
         return iter(self.errors[key])
 
     def validate(self, instance):
         self.original.validate(instance)
+        if self.slots:
+            for error in integer_slot_errors(self.original, instance):
+                raise error
 
 
-def validator(schema):
-    return cached_validator(json.dumps(schema, sort_keys=True))
+def validator(schema, recipe=CURRENT):
+    return cached_validator(json.dumps(schema, sort_keys=True), recipe)
 
 
 def check_reference_closure(schema, registry):
@@ -158,30 +341,34 @@ def schema_registry():
     return registry
 
 @lru_cache(maxsize=None)
-def cached_validator(encoded):
+def cached_validator(encoded, recipe=CURRENT):
     schema = json.loads(encoded)
-    # This explicitly adopted boundary profile also covers shared EventRecord,
-    # receipt and source resources without changing their global contracts.
-    schema.update(read('Plans/ds15_integer_domain.schema.json')['boundary_keywords'])
+    if recipe == V1:
+        # The frozen ds15-v1 boundary profile, applied only to retained originals.
+        schema.update(read('Plans/ds15_integer_domain.schema.json')['boundary_keywords'])
+    elif recipe != CURRENT:
+        raise AssertionError('unknown DS15 number recipe: ' + str(recipe))
     jsonschema.Draft202012Validator.check_schema(schema)
     registry = schema_registry()
     check_reference_closure(schema, registry)
-    return MemoizedValidation(StrictValidator(schema, registry=registry, format_checker=FORMAT))
+    kind = V1Validator if recipe == V1 else StrictValidator
+    return MemoizedValidation(kind(schema, registry=registry, format_checker=FORMAT), slots=recipe == CURRENT)
 
 @lru_cache(maxsize=1)
 def application_source_validator():
     schema = read('Plans/application_workflow_sources.schema.json')
     return validator({'$ref': schema['$id'] + '#/$defs/OriginalBrowserTransitionSource'})
 
-def identity_fields_types_ok(c, payload):
+def identity_fields_types_ok(c, payload, recipe=CURRENT):
     props = read(c['payload_schema_ref'])['properties']
     fields = [*c['identity_fields'], 'project_id' if c['scope_policy'] == 'project_only' else 'scope']
-    return all(not list(validator(props[k]).iter_errors(payload.get(k))) for k in fields)
+    return all(not list(validator(props[k], recipe).iter_errors(payload.get(k))) for k in fields)
 
 
-@integer_boundary(None)
-def identity(c, payload, source=None):
-    if not object_input_present(payload) or not identity_fields_types_ok(c, payload):
+def identity(c, payload, source=None, recipe=CURRENT):
+    if recipe == V1 and not v1_numbers_ok((payload, source)):
+        return None
+    if not object_input_present(payload) or not identity_fields_types_ok(c, payload, recipe):
         return None
     if c['scope_policy'] != 'project_only':
         if not object_input_present(payload.get('scope')):
@@ -193,22 +380,30 @@ def identity(c, payload, source=None):
                                            source['original_operation_id'].encode().hex())
     scope = [payload['project_id']] if c['scope_policy'] == 'project_only' else [payload['scope']]
     parts = [c['event_type'], c['family_revision'], *scope] + [payload[k] for k in c['identity_fields']]
-    return hashlib.sha256(_codec.canonical_messagepack_bytes(parts)).hexdigest()
+    # The DS15 identity recipe's canonical MessagePack array, through SP-1100's EVENT_VALUE profile
+    # (byte-identical to the ds15-v1 codec on every ds15-v1 value).
+    try:
+        return hashlib.sha256(storage_value_bytes(parts, profile=EVENT_VALUE)).hexdigest()
+    except Refusal:
+        return None
 
-@integer_boundary(None)
 def commitment(event):
-    if not authority_types_ok(event):
+    """CV-339 original_event_value_commitment of a retained original (ds15-v1)."""
+    if not v1_numbers_ok(event) or not authority_types_ok(event):
         return None
     domain = 'pm.storage.original_event_value_commitment.v1'
-    codec = 'pm.seglog_frame_v2.event_value.canonical_msgpack.v1'
-    preimage = [domain, '1.0.0', codec, event['schema_id'], event['schema_version'], event]
-    return {'schema_id': domain, 'schema_version': '1.0.0', 'codec': codec, 'domain': domain,
+    try:
+        sha256 = full_value_commitment(event)
+    except Refusal:
+        return None
+    return {'schema_id': domain, 'schema_version': '1.0.0', 'codec': EVENT_VALUE, 'domain': domain,
             'event_schema_id': event['schema_id'], 'event_schema_version': event['schema_version'],
-            'sha256': hashlib.sha256(_codec.canonical_messagepack_bytes(preimage)).hexdigest()}
+            'sha256': sha256}
 
-def shared_valid(kind, value):
+def shared_valid(kind, value, recipe=V1):
+    """First receipt, custody and issued result: Storage's records of a retained original."""
     schema = read('Plans/event_append_receipt_contracts.schema.json')
-    return not list(validator({'$defs': schema['$defs'], '$ref': '#/$defs/' + kind}).iter_errors(value))
+    return not list(validator({'$defs': schema['$defs'], '$ref': '#/$defs/' + kind}, recipe).iter_errors(value))
 
 def object_input_present(value):
     return isinstance(value, dict)
@@ -234,6 +429,23 @@ def admission_present(value):
     return value is not None
 
 
+def shared_boolean(value):
+    try:
+        exact_boolean(value)
+    except Refusal:
+        return False
+    return True
+
+
+def shared_nonnegative_integer(value):
+    """CV-1100 current_integer: exact int type, then minimum 0."""
+    try:
+        current_integer(value, minimum=0)
+    except Refusal:
+        return False
+    return True
+
+
 def authority_types_ok(value):
     """Exact types precede every boolean/numeric authority interpretation."""
     booleans = {'owner_command_authorized', 'config_inspected', 'committed',
@@ -249,21 +461,21 @@ def authority_types_ok(value):
                 'revision', 'frontier_revision', 'manifest_generation', 'recovery_epoch',
                 'selected_segment_generation', 'byte_offset', 'durable_end_offset'}
     if isinstance(value, dict):
-        return all((type(v) is bool if k in booleans else
-                    (type(v) is int and v >= 0 or k == 'admitted_sequence' and v is None) if k in integers else True)
+        return all((shared_boolean(v) if k in booleans else
+                    (k == 'admitted_sequence' and v is None or shared_nonnegative_integer(v)) if k in integers else True)
                    and authority_types_ok(v) for k, v in value.items())
     if isinstance(value, list):
         return all(authority_types_ok(v) for v in value)
     return True
 
 
-def context_types_ok(c, value, retained=False):
+def context_types_ok(c, value, retained=False, recipe=CURRENT):
     complete = read('Plans/ds15_authority_context.schema.json')
     validator(complete)
     schema = complete['$defs'][c['event_type']]
     if retained:
         schema = dict(schema, required=['scope', 'owner_command_authorized'])
-    return not list(validator(schema).iter_errors(value))
+    return not list(validator(schema, recipe).iter_errors(value))
 
 
 def app_hash(record):
@@ -276,7 +488,6 @@ def app_hash(record):
                      'workspace_id': record.get('workspace_id')}})
 
 
-@integer_boundary(False)
 def browser_source_ok(d, source):
     # The bank represents the existing owner's retained record bytes, resolved
     # by accepted_source_ref, independently of either observation of the source.
@@ -284,7 +495,7 @@ def browser_source_ok(d, source):
     if not browser_record_bytes_present(raw):
         return False
     try:
-        record = parse_numeric_json(raw)
+        record = parse_owner_json(raw)
     except (ValueError, UnicodeError):
         return False
     if list(validator(read('Plans/ds15_browser_owner_record.schema.json')).iter_errors(record)):
@@ -306,7 +517,7 @@ def browser_source_ok(d, source):
             or record['original_operation_id'] != source['original_operation_id']
             or record['interface_id'] != source['interface_id']
             or record['thread_id'] != source['thread_id']
-            or record['capture'] != p):
+            or not same(record['capture'], p)):
         return False
     for key in ('original_input', 'original_output'):
         original = source[key]
@@ -327,27 +538,35 @@ def browser_source_ok(d, source):
                for stage in source['stage_custody'].values())
 
 
-@integer_boundary(False)
-def envelope_ok(c, d, retry=True, historical=False):
+def envelope_ok(c, d, retry=True, historical=False, append=False):
     e, original = d['envelope'], d['original']['event']
     scope = d['context']['scope']
-    if (list(validator(read('Plans/event_record.schema.json')).iter_errors(e))
-            or list(validator(read('Plans/event_record.schema.json')).iter_errors(original))
+    # A historical read sees the retained original itself (ds15-v1); the original is always retained.
+    recipe = V1 if historical else CURRENT
+    if recipe == V1 and not v1_numbers_ok((e, d['payload'])):
+        return False
+    if not v1_numbers_ok(original):
+        return False
+    if (list(validator(read('Plans/event_record.schema.json'), recipe).iter_errors(e))
+            or list(validator(read('Plans/event_record.schema.json'), V1).iter_errors(original))
             or e['event_type'] != c['event_type'] or not re.fullmatch(r'[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+', e['event_type'])
             or (not historical and e['replay_policy'] != 'dedupe_by_idempotency_key')
             or (not historical and original['replay_policy'] != 'dedupe_by_idempotency_key')
             or e['scope_kind'] != ('application' if scope['kind'] == 'app' else 'project')
-            or e['project_id'] != scope['project_id'] or e['payload'] != d['payload']
+            or e['project_id'] != scope['project_id'] or not same(e['payload'], d['payload'])
             or scope != d['payload'].get('scope', {'kind': 'project', 'project_id': d['payload'].get('project_id')})
             or e['run_id'] != d['payload'].get('run_id') or e['thread_id'] != d['payload'].get('thread_id')
             or e['payload_schema_id'] != read(c['payload_schema_ref'])['$id']
             or d['scope_partition'] != _codec.scope_partition(e['scope_kind'], e['project_id'])
-            or len(_codec.canonical_messagepack_bytes(e['payload'])) > 16384):
+            or physical_size(e['payload']) is None or physical_size(e['payload']) > 16384):
+        return False
+    # CV-1100 producer route: a new append qualifies its full CV-317 projection before effects.
+    if append and not current_producer_qualified(e):
         return False
     # The retry equality domain excludes only Storage-assigned metadata. Full original
     # value custody below independently commits those original metadata fields too.
     if retry and (e['event_id'] != original['event_id']
-            or _codec.event_producer_semantic_digest(e) != _codec.event_producer_semantic_digest(original)):
+            or v1_producer_digest(e) is None or v1_producer_digest(e) != v1_producer_digest(original)):
         return False
     source = d.get('application_source')
     if scope['kind'] == 'app' and c['event_type'].startswith('catalog.install.'):
@@ -374,9 +593,8 @@ def envelope_ok(c, d, retry=True, historical=False):
                 or not all(isinstance(source.get(k), str) and 0 < len(source[k]) <= 256 and '\n' not in source[k]
                            for k in ('server_id', 'original_operation_id'))):
             return False
-    return e['idempotency_key'] == identity(c, e['payload'], source)
+    return e['idempotency_key'] == identity(c, e['payload'], source, recipe)
 
-@integer_boundary(False)
 def receipt_ok(d):
     r, custody, result, event = d['receipt'], d['custody'], d['issued_result'], d['original']['event']
     if not (shared_valid('AppendReceipt', r) and shared_valid('custody_v2', custody)
@@ -391,7 +609,8 @@ def receipt_ok(d):
             and custody['scope_partition'] == d['scope_partition']
             and custody['event_id'] == event['event_id'] and custody['event_type'] == event['event_type']
             and custody['idempotency_key'] == event['idempotency_key']
-            and custody['producer_semantic_digest'] == _codec.event_producer_semantic_digest(event))
+            and v1_producer_digest(event) is not None
+            and custody['producer_semantic_digest'] == v1_producer_digest(event))
 
 def original_evidence_ok(op, d):
     required = ['original', 'envelope', 'storage_instance_id', 'scope_partition']
@@ -420,8 +639,13 @@ def original_evidence_ok(op, d):
 
 
 def admission_numbers_ok(admitted, frontier):
-    return (type(admitted) is int and 0 <= admitted <= 2 ** 64 - 1
-            and type(frontier) is int and 0 <= frontier <= 2 ** 64 - 1)
+    """SP-1100 Storage sequences: storage_uint64 on both."""
+    try:
+        storage_uint64(admitted)
+        storage_uint64(frontier)
+    except Refusal:
+        return False
+    return True
 
 
 def index_inputs_ok(d):
@@ -429,15 +653,13 @@ def index_inputs_ok(d):
         {'source': d['selected_source'], 'rows': d['index_rows']}))
 
 
-@integer_boundary(False)
 def checkpoint_value_ok(c, cp):
     if (list(validator(read(c['checkpoint_schema_ref'])).iter_errors(cp))
-            or len(_codec.canonical_messagepack_bytes(cp)) > 16384):
+            or physical_size(cp) is None or physical_size(cp) > 16384):
         return False
     return True
 
 
-@integer_boundary(False)
 def token_matches_storage(token, storage_instance_id):
     key = 'event_record_index_checkpoint.v1:' + storage_instance_id
     return (token['storage_instance_id'] == storage_instance_id
@@ -454,11 +676,14 @@ def owner_text(c):
     unit = text[start:end if end != -1 else len(text)]
     return yaml.safe_load(unit.split('```yaml\n', 1)[1].split('\n```', 1)[0])['canonical_text']
 
-@integer_boundary(False)
-def payload_ok(c, p, x):
-    if not context_types_ok(c, x) or not authority_types_ok(x):
+def payload_ok(c, p, x, payload_recipe=CURRENT, context_recipe=CURRENT):
+    if context_recipe == V1 and not v1_numbers_ok(x):
         return False
-    if list(validator(read(c['payload_schema_ref'])).iter_errors(p)):
+    if payload_recipe == V1 and not v1_numbers_ok(p):
+        return False
+    if not context_types_ok(c, x, recipe=context_recipe) or not authority_types_ok(x):
+        return False
+    if list(validator(read(c['payload_schema_ref']), payload_recipe).iter_errors(p)):
         return False
     if not x['owner_command_authorized']:
         return False
@@ -480,7 +705,7 @@ def payload_ok(c, p, x):
         return False
     n = c['event_type']
     if n in ('catalog.install.started', 'catalog.install.completed'):
-        return (x['catalog_outcome_committed'] and x['catalog_owner_payload'] == p
+        return (x['catalog_outcome_committed'] and same(x['catalog_owner_payload'], p)
                 and x['catalog_phase'] == p['phase'] == n.rsplit('.', 1)[1])
     if n == 'doctor.custom_headless.checked':
         return x['config_inspected'] and x['doctor_invocation_id'] == p['doctor_invocation_id']
@@ -533,7 +758,6 @@ def payload_ok(c, p, x):
                           or (p['refresh_origin'] == 'filemanager.preview_refresh' and not p.get('browser_session_id'))))))
     raise AssertionError('Missing per-family transition oracle: ' + n)
 
-@integer_boundary({'result': 'REFUSE', 'effects': 0})
 def evaluate(c, op, d):
     """Normative reference model over concrete source/receipt/index values."""
     if not object_input_present(d):
@@ -549,13 +773,14 @@ def evaluate(c, op, d):
     if op == 'envelope_boundary':
         if not original_evidence_ok(op, d):
             return {'result': 'REFUSE', 'effects': 0}
-        return {'result': 'ACCEPT' if envelope_ok(c, d, retry=False) else 'REFUSE', 'effects': 0}
+        return {'result': 'ACCEPT' if envelope_ok(c, d, retry=False, append=True) else 'REFUSE', 'effects': 0}
     if op == 'checkpoint_boundary':
         return {'result': 'ACCEPT' if checkpoint_value_ok(c, d.get('checkpoint')) else 'REFUSE', 'effects': 0}
     if op == 'receipt_boundary':
         if not original_evidence_ok(op, d):
             return {'result': 'REFUSE', 'effects': 0}
-        if list(validator(read('Plans/event_record.schema.json')).iter_errors(d['original']['event'])):
+        if (not v1_numbers_ok(d['original']['event'])
+                or list(validator(read('Plans/event_record.schema.json'), V1).iter_errors(d['original']['event']))):
             return {'result': 'REFUSE', 'effects': 0}
         return {'result': 'ACCEPT' if receipt_ok(d) else 'REFUSE', 'effects': 0}
     if op == 'event_schema':
@@ -569,15 +794,16 @@ def evaluate(c, op, d):
         if 'projector_replay_only' in policies:
             return {'result': 'REFUSE', 'effects': 0, 'error': 'replay_only_not_appendable'}
     if op == 'payload':
-        return {'result': 'ACCEPT' if payload_ok(c, p, x) and envelope_ok(c, d, retry=False) else 'REFUSE', 'effects': 0}
+        return {'result': 'ACCEPT' if payload_ok(c, p, x) and envelope_ok(c, d, retry=False, append=True) else 'REFUSE', 'effects': 0}
     if op in ('recover', 'publish', 'read', 'checkpoint', 'rebuild'):
         o, r, out = d['original'], d['receipt'], d['outcome']
         if not outcome_present(out) or not out['committed'] or not d['backup_closure_verified']:
             return {'result': 'UNAVAILABLE', 'effects': 0}
-        if (not payload_ok(c, o['payload'], d['original_context'])
-                or p != o['payload'] or out['payload'] != o['payload']
-                or not envelope_ok(c, d, historical=op in ('read', 'checkpoint', 'rebuild'))
-                or out['event_id'] != o['event_id'] or o['event']['payload'] != o['payload']
+        if (not v1_numbers_ok(out) or not payload_ok(c, o['payload'], d['original_context'], V1, V1)
+                or not same(p, o['payload']) or not same(out['payload'], o['payload'])
+                or not envelope_ok(c, d, historical=op in ('read', 'checkpoint', 'rebuild'),
+                                   append=op == 'recover' and r is None)
+                or out['event_id'] != o['event_id'] or not same(o['event']['payload'], o['payload'])
                 or o['event']['event_id'] != o['event_id'] or o['idempotency_key'] != o['event']['idempotency_key']):
             return {'result': 'REFUSE', 'effects': 0}
         if p.get('outcome_ref', out['source_ref']) != out['source_ref']:
@@ -585,7 +811,7 @@ def evaluate(c, op, d):
         # Original transition/source validity was checked against original_context
         # above. Retained reads and receipt recovery survive later state changes.
         # New append recovery and publication still require the current joins.
-        if (op == 'publish' or (op == 'recover' and r is None)) and not payload_ok(c, o['payload'], x):
+        if (op == 'publish' or (op == 'recover' and r is None)) and not payload_ok(c, o['payload'], x, V1, CURRENT):
             return {'result': 'REFUSE', 'effects': 0}
         if op in ('read', 'checkpoint', 'rebuild') and (d['reader_withdrawn'] or d['reader_installed'] != c['consumer']):
             return {'result': 'UNAVAILABLE' if op == 'read' else 'REFUSE', 'effects': 0}
@@ -673,7 +899,7 @@ def evaluate(c, op, d):
 def evaluate_json(c, op, encoded):
     """Raw JSON ingress preserves the lexical fences before typed evaluation."""
     try:
-        data = parse_numeric_json(encoded)
+        data = parse_owner_json(encoded)
     except ValueError:
         return {'result': 'REFUSE', 'effects': 0}
     return evaluate(c, op, data)
@@ -825,11 +1051,10 @@ PREPARED_FAMILIES = {'doctor.custom_headless.checked', 'live.session.started', '
                      'dev.session.stopped', 'dev.session.restarting', 'preview.session.started',
                      'preview.session.refreshed', 'preview.session.stopped', 'catalog.install.started', 'catalog.install.completed'}
 
-@integer_boundary(False)
 def value_valid(schema_ref, value):
     if list(validator(read(schema_ref)).iter_errors(value)):
         return False
-    if len(_codec.canonical_messagepack_bytes(value)) > 16384:
+    if physical_size(value) is None or physical_size(value) > 16384:
         return False
     if schema_ref.endswith('dev_session_record_v2.schema.json') and value['dap'] is not None:
         dap = value['dap']
@@ -840,7 +1065,6 @@ def value_valid(schema_ref, value):
     return True
 
 
-@integer_boundary(None)
 def migrate(kind, source, evidence):
     """Static migration oracle only. It neither opens a store nor authorizes writes."""
     if list(validator(read('Plans/ds15_migration_inputs.schema.json')['$defs'][kind]).iter_errors({'source': source, 'evidence': evidence})):
@@ -948,11 +1172,26 @@ def numeric_input(case, negative=True):
     return c, parent
 
 
+def current_producer_digest(envelope):
+    """CV-1100 producer route of a current envelope: schema and integer slots, then qualified JCS."""
+    if list(validator(read('Plans/event_record.schema.json')).iter_errors(envelope)):
+        return None
+    try:
+        return producer_semantic_digest(envelope, type_sensitive_paths=producer_type_sensitive_paths(envelope))
+    except Refusal:
+        return None
+
+
 def numeric_operation(case, data):
     c = next(c for c in read('Plans/ds15_event_contracts.json') if c['event_type'] == case['event_type'])
     target = case['target']
     if target == 'atom':
-        return numbers_ok(data)
+        # CV-1100 current integer at a slot with no owner bound.
+        try:
+            current_integer(data)
+        except Refusal:
+            return False
+        return True
     if target == 'identity':
         return identity(c, data)
     if target == 'payload_schema':
@@ -964,9 +1203,7 @@ def numeric_operation(case, data):
     if target == 'commitment':
         return commitment(data['original']['event'])
     if target == 'digest':
-        # This adopted codec remains unchanged and integer-only. Validate the
-        # numeric prerequisite before asking it for canonical bytes.
-        return _codec.event_producer_semantic_digest(data['envelope']) if numbers_ok(data) else None
+        return current_producer_digest(data['envelope'])
     return evaluate(c, case['operation'], data)
 
 
@@ -981,21 +1218,33 @@ def numeric_wire(case):
     return encoded.replace(json.dumps(marker), case['token'])
 
 
-def numeric_guard_result(case, negative=True):
-    """The actual shared numeric prerequisite, isolated from dependent codecs."""
-    if case['token'] == '-0':
+# Spellings Python's json would silently normalize, so only the raw CV-1100 parser sees them.
+RAW_ONLY_TOKENS = ('-0', '01', '00', '-01')
+
+
+def numeric_case_results(case):
+    """(parent ok, raw-wire result, evaluate_json result or None, typed result or None) under CV-1100."""
+    c, parent = numeric_input(case, False)
+    parent_ok = proof_success(numeric_operation(case, parent))
+    encoded = numeric_wire(case)
+    try:
+        decoded = parse_owner_json(encoded)
+    except ValueError:
+        wire = False
+    else:
+        wire = proof_success(numeric_operation(case, decoded))
+    whole = proof_success(evaluate_json(c, case['operation'], encoded)) if case['target'] == 'evaluate' else None
+    if case['token'] in RAW_ONLY_TOKENS:
         try:
-            return parse_integer('-0' if negative else '0') == 0
+            parse_owner_json(case['token'])
         except ValueError:
-            return False
-    if case['token'] in ('01', '00', '-01'):
-        # Standard JSON grammar, not a lane-owned validation predicate.
-        try:
-            parse_numeric_json(case['token'] if negative else '1')
-        except ValueError:
-            return False
-        return True
-    return numbers_ok(numeric_input(case, negative)[1])
+            typed_result = None
+        else:
+            raise AssertionError((case['id'], 'noncanonical JSON spelling accepted'))
+        return parent_ok, wire, whole, typed_result, None
+    _, data = numeric_input(case)
+    got = numeric_operation(case, data)
+    return parent_ok, wire, whole, proof_success(got), (data, got)
 
 
 def check_numeric_contracts():
@@ -1005,32 +1254,15 @@ def check_numeric_contracts():
         own = [z for z in cases if z['event_type'] == family]
         assert {'1', '1.0', '1e0', '0', '-0', '01', '2.0', '0.0'} <= {z['token'] for z in own}
     for case in cases:
-        c, parent = numeric_input(case, False)
-        assert proof_success(numeric_operation(case, parent)), (case['id'], 'invalid numeric parent')
-        assert numeric_guard_result(case, False), (case['id'], 'invalid numeric prerequisite parent')
-        assert numeric_guard_result(case) == case['valid'], (case['id'], 'numeric guard')
-        encoded = numeric_wire(case)
-        try:
-            decoded = parse_numeric_json(encoded)
-        except ValueError:
-            assert not case['valid'], case['id']
-        else:
-            assert case['valid'] and proof_success(numeric_operation(case, decoded)), case['id']
-        if case['target'] == 'evaluate':
-            assert proof_success(evaluate_json(c, case['operation'], encoded)) == case['valid'], case['id']
-        # Raw lexical refusal is tested before -0 becomes indistinguishable
-        # from canonical zero; leading zeros fail the JSON grammar itself.
-        if case['token'] in ('-0', '01', '00', '-01'):
-            try:
-                parse_numeric_json(case['token'])
-            except ValueError:
-                pass
-            else:
-                raise AssertionError((case['id'], 'noncanonical JSON spelling accepted'))
+        c = next(c for c in read('Plans/ds15_event_contracts.json') if c['event_type'] == case['event_type'])
+        parent_ok, wire, whole, typed_ok, typed_run = numeric_case_results(case)
+        assert parent_ok, (case['id'], 'invalid numeric parent')
+        assert wire == case['valid'], (case['id'], 'raw wire through loads_current_json')
+        assert whole in (None, case['valid']), (case['id'], 'raw evaluate_json')
+        if typed_run is None:
             continue
-        _, data = numeric_input(case)
-        got = numeric_operation(case, data)
-        assert proof_success(got) == case['valid'], (case['id'], got)
+        assert typed_ok == case['valid'], (case['id'], typed_run[1])
+        data, got = typed_run
         if case.get('operation') == 'event_schema':
             valid = not list(validator(read('Plans/event_record.schema.json')).iter_errors(data['envelope']))
             assert valid == case['valid'], (case['id'], 'adopted EventRecord schema profile')
@@ -1039,13 +1271,13 @@ def check_numeric_contracts():
         if case.get('path', '').startswith('checkpoint/'):
             valid = not list(validator(read(c['checkpoint_schema_ref'])).iter_errors(data['checkpoint']))
             assert valid == case['valid'], (case['id'], 'checkpoint schema profile')
-        # Verify the same raw numeric token at the complete operation input.
+        # The same token at the complete operation input, through the current raw parser.
         try:
-            decoded = parse_numeric_json(json.dumps(data))
+            decoded = parse_owner_json(json.dumps(data))
         except ValueError:
             assert not case['valid'], case['id']
         else:
-            assert case['valid'] and numeric_operation(case, decoded) == got, case['id']
+            assert proof_success(numeric_operation(case, decoded)) == proof_success(got), case['id']
     return len(cases)
 
 

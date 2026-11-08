@@ -16,7 +16,8 @@ spec = importlib.util.spec_from_file_location('ds15_base', ROOT / 'scripts/pm-ds
 base = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(base)
 read = base.read
-valid = lambda schema, value: not list(base.validator(schema).iter_errors(value))
+CURRENT, V1 = base.CURRENT, base.V1
+valid = lambda schema, value, recipe=CURRENT: not list(base.validator(schema, recipe).iter_errors(value))
 legacy_evidence_ok = base.original_evidence_ok
 DECIDED_FAMILIES = {
     'browser.context_shared', 'browser.context_share_revoked',
@@ -26,11 +27,11 @@ DECIDED_FAMILIES = {
 }
 
 
-def context_ok(c, value, retained=False):
+def context_ok(c, value, retained=False, recipe=CURRENT):
     schema = copy.deepcopy(read('Plans/ds15_deck2_context.schema.json')['$defs'][c['event_type']])
     if retained:
         schema['required'] = ['scope', 'owner_command_authorized']
-    return valid(schema, value)
+    return valid(schema, value, recipe)
 
 
 def grants(values):
@@ -93,8 +94,10 @@ def transition_ok(c, p, t):
     raise AssertionError(n)
 
 
-def payload_ok(c, p, x):
-    if not valid(read(c['payload_schema_ref']), p) or not context_ok(c, x):
+def payload_ok(c, p, x, payload_recipe=CURRENT, context_recipe=CURRENT):
+    if (payload_recipe == V1 and not base.v1_numbers_ok(p)) or (context_recipe == V1 and not base.v1_numbers_ok(x)):
+        return False
+    if not valid(read(c['payload_schema_ref']), p, payload_recipe) or not context_ok(c, x, recipe=context_recipe):
         return False
     if not x['owner_command_authorized'] or not x['outcome_committed']:
         return False
@@ -127,38 +130,45 @@ def owner_record(c, d):
     if type(raw) is not str:
         return None
     try:
-        record = base.parse_numeric_json(raw)
+        record = base.parse_owner_json(raw)
     except (ValueError, UnicodeError):
         return None
     schema = read('Plans/ds15_deck2_sources.schema.json')['$defs'][c['event_type']]
     return record if valid(schema, record) else None
 
 
-def envelope_ok(c, d, retry=True, historical=False):
+def envelope_ok(c, d, retry=True, historical=False, append=False):
     e, original, p = d['envelope'], d['original']['event'], d['payload']
-    if not valid(read(c['payload_schema_ref']), p) or not context_ok(c, d.get('original_context')):
+    # A historical read sees the retained original itself (ds15-v1); the original is always retained.
+    recipe = V1 if historical else CURRENT
+    if (recipe == V1 and not base.v1_numbers_ok((e, p))) or not base.v1_numbers_ok((original, d.get('original_context'))):
+        return False
+    if not valid(read(c['payload_schema_ref']), p, recipe) or not context_ok(c, d.get('original_context'), recipe=V1):
         return False
     scope = p.get('scope', {'kind': 'project', 'project_id': p.get('project_id')})
-    if (not valid(read('Plans/event_record.schema.json'), e)
-            or not valid(read('Plans/event_record.schema.json'), original)
+    if (not valid(read('Plans/event_record.schema.json'), e, recipe)
+            or not valid(read('Plans/event_record.schema.json'), original, V1)
             or e['event_type'] != c['event_type'] or original['event_type'] != c['event_type']
             or e['payload_schema_id'] != read(c['payload_schema_ref'])['$id']
             or (not historical and (e['replay_policy'] != 'dedupe_by_idempotency_key'
                                     or original['replay_policy'] != 'dedupe_by_idempotency_key'))
             or e['scope_kind'] != ('application' if scope['kind'] == 'app' else 'project')
-            or e['project_id'] != scope['project_id'] or e['payload'] != p
+            or e['project_id'] != scope['project_id'] or not base.same(e['payload'], p)
             or e['thread_id'] != p.get('thread_id') or e['run_id'] is not None
             or d['context']['scope'] != scope
             or d['scope_partition'] != base._codec.scope_partition(e['scope_kind'], e['project_id'])
-            or len(base._codec.canonical_messagepack_bytes(p)) > 16384):
+            or base.physical_size(p) is None or base.physical_size(p) > 16384):
         return False
-    if retry and (e['event_id'] != original['event_id']
-                  or base._codec.event_producer_semantic_digest(e) != base._codec.event_producer_semantic_digest(original)):
+    # CV-1100 producer route: a new append qualifies its full CV-317 projection before effects.
+    if append and not base.current_producer_qualified(e):
+        return False
+    if retry and (e['event_id'] != original['event_id'] or base.v1_producer_digest(e) is None
+                  or base.v1_producer_digest(e) != base.v1_producer_digest(original)):
         return False
     record = owner_record(c, d)
     if record is None:
         return False
-    if (record['payload'] != p or record['storage_instance_id'] != d['storage_instance_id']
+    if (not base.same(record['payload'], p) or record['storage_instance_id'] != d['storage_instance_id']
             or record['scope'] != scope or record['transition'] != d['original_context']['transition']
             or record['event_type'] != c['event_type'] or not record['committed']
             or (not retry and record['transition'] != d['context']['transition'])):
@@ -170,7 +180,7 @@ def envelope_ok(c, d, retry=True, historical=False):
         expected = {'server_id': record['server_id'], 'original_operation_id': record['original_operation_id']}
         if source != expected or d['original'].get('application_source') != expected:
             return False
-    return e['idempotency_key'] == base.identity(c, p, source)
+    return e['idempotency_key'] == base.identity(c, p, source, recipe)
 
 
 def evidence_ok(op, d):

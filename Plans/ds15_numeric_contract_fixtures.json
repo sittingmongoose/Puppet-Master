@@ -117,7 +117,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "doctor.custom_headless.checked/atom/-9223372036854775809",
@@ -125,7 +132,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "doctor.custom_headless.checked/evaluate/envelope_boundary/envelope/sequence_id/integer",
@@ -1875,7 +1889,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "live.session.started/atom/-9223372036854775809",
@@ -1883,7 +1904,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "live.session.started/payload_schema/pid/integer",
@@ -2176,8 +2204,15 @@
     "target": "evaluate",
     "path": "envelope/payload/pid",
     "token": "123.0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "live.session.started/evaluate/event_schema/envelope/payload/pid/exponent",
@@ -2185,8 +2220,15 @@
     "target": "evaluate",
     "path": "envelope/payload/pid",
     "token": "123e0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "live.session.started/evaluate/event_schema/envelope/payload/pid/integral-float",
@@ -2194,8 +2236,15 @@
     "target": "evaluate",
     "path": "envelope/payload/pid",
     "token": "123.000",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "live.session.started/digest/envelope/payload/pid/integer",
@@ -3801,7 +3850,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "live.step.updated/atom/-9223372036854775809",
@@ -3809,7 +3865,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "live.step.updated/payload_schema/step_revision/integer",
@@ -4134,8 +4197,15 @@
     "target": "evaluate",
     "path": "envelope/payload/step_revision",
     "token": "1.0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "live.step.updated/evaluate/event_schema/envelope/payload/step_revision/exponent",
@@ -4143,8 +4213,15 @@
     "target": "evaluate",
     "path": "envelope/payload/step_revision",
     "token": "1e0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "live.step.updated/evaluate/event_schema/envelope/payload/step_revision/integral-float",
@@ -4152,8 +4229,15 @@
     "target": "evaluate",
     "path": "envelope/payload/step_revision",
     "token": "1.000",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "live.step.updated/digest/envelope/payload/step_revision/integer",
@@ -5831,7 +5915,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "live.artifact.created/atom/-9223372036854775809",
@@ -5839,7 +5930,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "live.artifact.created/evaluate/envelope_boundary/envelope/sequence_id/integer",
@@ -7589,7 +7687,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "live.session.completed/atom/-9223372036854775809",
@@ -7597,7 +7702,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "live.session.completed/evaluate/envelope_boundary/envelope/sequence_id/integer",
@@ -9347,7 +9459,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "live.session.degraded/atom/-9223372036854775809",
@@ -9355,7 +9474,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "live.session.degraded/payload_schema/degradation_revision/integer",
@@ -9680,8 +9806,15 @@
     "target": "evaluate",
     "path": "envelope/payload/degradation_revision",
     "token": "1.0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "live.session.degraded/evaluate/event_schema/envelope/payload/degradation_revision/exponent",
@@ -9689,8 +9822,15 @@
     "target": "evaluate",
     "path": "envelope/payload/degradation_revision",
     "token": "1e0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "live.session.degraded/evaluate/event_schema/envelope/payload/degradation_revision/integral-float",
@@ -9698,8 +9838,15 @@
     "target": "evaluate",
     "path": "envelope/payload/degradation_revision",
     "token": "1.000",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "live.session.degraded/digest/envelope/payload/degradation_revision/integer",
@@ -11377,7 +11524,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "browser.context_captured/atom/-9223372036854775809",
@@ -11385,7 +11539,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "browser.context_captured/evaluate/envelope_boundary/envelope/sequence_id/integer",
@@ -13135,7 +13296,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "dev.session.started/atom/-9223372036854775809",
@@ -13143,7 +13311,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "dev.session.started/payload_schema/workflow_revision/integer",
@@ -13468,8 +13643,15 @@
     "target": "evaluate",
     "path": "envelope/payload/workflow_revision",
     "token": "1.0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "dev.session.started/evaluate/event_schema/envelope/payload/workflow_revision/exponent",
@@ -13477,8 +13659,15 @@
     "target": "evaluate",
     "path": "envelope/payload/workflow_revision",
     "token": "1e0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "dev.session.started/evaluate/event_schema/envelope/payload/workflow_revision/integral-float",
@@ -13486,8 +13675,15 @@
     "target": "evaluate",
     "path": "envelope/payload/workflow_revision",
     "token": "1.000",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "dev.session.started/digest/envelope/payload/workflow_revision/integer",
@@ -15165,7 +15361,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "dev.session.stopping/atom/-9223372036854775809",
@@ -15173,7 +15376,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "dev.session.stopping/payload_schema/workflow_revision/integer",
@@ -15498,8 +15708,15 @@
     "target": "evaluate",
     "path": "envelope/payload/workflow_revision",
     "token": "1.0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "dev.session.stopping/evaluate/event_schema/envelope/payload/workflow_revision/exponent",
@@ -15507,8 +15724,15 @@
     "target": "evaluate",
     "path": "envelope/payload/workflow_revision",
     "token": "1e0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "dev.session.stopping/evaluate/event_schema/envelope/payload/workflow_revision/integral-float",
@@ -15516,8 +15740,15 @@
     "target": "evaluate",
     "path": "envelope/payload/workflow_revision",
     "token": "1.000",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "dev.session.stopping/digest/envelope/payload/workflow_revision/integer",
@@ -17195,7 +17426,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "dev.session.stopped/atom/-9223372036854775809",
@@ -17203,7 +17441,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "dev.session.stopped/payload_schema/workflow_revision/integer",
@@ -17528,8 +17773,15 @@
     "target": "evaluate",
     "path": "envelope/payload/workflow_revision",
     "token": "1.0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "dev.session.stopped/evaluate/event_schema/envelope/payload/workflow_revision/exponent",
@@ -17537,8 +17789,15 @@
     "target": "evaluate",
     "path": "envelope/payload/workflow_revision",
     "token": "1e0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "dev.session.stopped/evaluate/event_schema/envelope/payload/workflow_revision/integral-float",
@@ -17546,8 +17805,15 @@
     "target": "evaluate",
     "path": "envelope/payload/workflow_revision",
     "token": "1.000",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "dev.session.stopped/digest/envelope/payload/workflow_revision/integer",
@@ -19225,7 +19491,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "dev.session.restarting/atom/-9223372036854775809",
@@ -19233,7 +19506,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "dev.session.restarting/payload_schema/workflow_revision/integer",
@@ -19558,8 +19838,15 @@
     "target": "evaluate",
     "path": "envelope/payload/workflow_revision",
     "token": "1.0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "dev.session.restarting/evaluate/event_schema/envelope/payload/workflow_revision/exponent",
@@ -19567,8 +19854,15 @@
     "target": "evaluate",
     "path": "envelope/payload/workflow_revision",
     "token": "1e0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "dev.session.restarting/evaluate/event_schema/envelope/payload/workflow_revision/integral-float",
@@ -19576,8 +19870,15 @@
     "target": "evaluate",
     "path": "envelope/payload/workflow_revision",
     "token": "1.000",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "dev.session.restarting/digest/envelope/payload/workflow_revision/integer",
@@ -21255,7 +21556,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "preview.session.started/atom/-9223372036854775809",
@@ -21263,7 +21571,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "preview.session.started/payload_schema/preview_revision/integer",
@@ -21588,8 +21903,15 @@
     "target": "evaluate",
     "path": "envelope/payload/preview_revision",
     "token": "1.0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "preview.session.started/evaluate/event_schema/envelope/payload/preview_revision/exponent",
@@ -21597,8 +21919,15 @@
     "target": "evaluate",
     "path": "envelope/payload/preview_revision",
     "token": "1e0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "preview.session.started/evaluate/event_schema/envelope/payload/preview_revision/integral-float",
@@ -21606,8 +21935,15 @@
     "target": "evaluate",
     "path": "envelope/payload/preview_revision",
     "token": "1.000",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "preview.session.started/digest/envelope/payload/preview_revision/integer",
@@ -23285,7 +23621,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "preview.session.refreshed/atom/-9223372036854775809",
@@ -23293,7 +23636,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "preview.session.refreshed/payload_schema/preview_revision/integer",
@@ -23618,8 +23968,15 @@
     "target": "evaluate",
     "path": "envelope/payload/preview_revision",
     "token": "1.0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "preview.session.refreshed/evaluate/event_schema/envelope/payload/preview_revision/exponent",
@@ -23627,8 +23984,15 @@
     "target": "evaluate",
     "path": "envelope/payload/preview_revision",
     "token": "1e0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "preview.session.refreshed/evaluate/event_schema/envelope/payload/preview_revision/integral-float",
@@ -23636,8 +24000,15 @@
     "target": "evaluate",
     "path": "envelope/payload/preview_revision",
     "token": "1.000",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "preview.session.refreshed/digest/envelope/payload/preview_revision/integer",
@@ -25315,7 +25686,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "preview.session.stopped/atom/-9223372036854775809",
@@ -25323,7 +25701,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "preview.session.stopped/payload_schema/preview_revision/integer",
@@ -25648,8 +26033,15 @@
     "target": "evaluate",
     "path": "envelope/payload/preview_revision",
     "token": "1.0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "preview.session.stopped/evaluate/event_schema/envelope/payload/preview_revision/exponent",
@@ -25657,8 +26049,15 @@
     "target": "evaluate",
     "path": "envelope/payload/preview_revision",
     "token": "1e0",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "preview.session.stopped/evaluate/event_schema/envelope/payload/preview_revision/integral-float",
@@ -25666,8 +26065,15 @@
     "target": "evaluate",
     "path": "envelope/payload/preview_revision",
     "token": "1.000",
-    "valid": false,
-    "operation": "event_schema"
+    "valid": true,
+    "operation": "event_schema",
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: no blanket integer walk over a joined event. The EventRecord schema declares payload an open object, so its own boundary (event_schema) admits this family integer slot spelling; the family payload integer slot refuses it at payload admission (current_integer integer_type) and the producer route refuses it (qualified_jcs jcs_kind at the type-sensitive payload path)."
+    }
   },
   {
     "id": "preview.session.stopped/digest/envelope/payload/preview_revision/integer",
@@ -27453,7 +27859,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "catalog.install.started/atom/-9223372036854775809",
@@ -27461,7 +27874,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "catalog.install.started/evaluate/envelope_boundary/envelope/sequence_id/integer",
@@ -29211,7 +29631,14 @@
     "target": "atom",
     "token": "18446744073709551616",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "catalog.install.completed/atom/-9223372036854775809",
@@ -29219,7 +29646,14 @@
     "target": "atom",
     "token": "-9223372036854775809",
     "parent": 1,
-    "valid": false
+    "valid": true,
+    "number_rule": {
+      "was_valid": false,
+      "now_valid": true,
+      "refusing_row": null,
+      "rule": "CV-1100",
+      "reason": "CV-1100: current_integer at a slot whose owner sets no bound admits every exact JSON integer; the ds15-v1 atom domain -2^63..2^64-1 was a lane-local cap. Physical routes still refuse it (SP-1100 storage_value_bytes physical_integer_range) and Storage uint64 slots refuse it (storage_uint64)."
+    }
   },
   {
     "id": "catalog.install.completed/evaluate/envelope_boundary/envelope/sequence_id/integer",
