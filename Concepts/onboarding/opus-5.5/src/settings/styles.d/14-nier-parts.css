@@ -142,6 +142,14 @@ html[data-o55-nier-parts~="brackets"] .focus-ring { outline: 0 !important; box-s
   background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 2px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 2px 100% no-repeat;
   transition: transform 150ms cubic-bezier(.25, .9, .3, 1); }
 html[data-motion="reduced"] #o55np-reticle > i, html[data-motion="reduced"] #o55np-reticle { transition: none; }
+/* forced colors (Windows High Contrast) drop background images, so the corners above, two gradient bars each, vanished
+   there and NieR had no key focus mark at all (the brackets part takes every :focus-visible outline away; FO-96 round
+   10, opus-recheck-f96i). There each corner's two arms are its top and left borders, which the platform paints in the
+   user's own High Contrast colours like every other edge (box-sizing keeps the 10 px box, so each corner's transform
+   still places it). FO-117 (stream F batch 9) found the same gap and the fx brackets' one, in 05-nier-fx.css. */
+@media (forced-colors: active) {
+  #o55np-reticle > i { background: none; box-sizing: border-box; border-top: 2px solid CanvasText; border-left: 2px solid CanvasText; }
+}
 
 /* ---- Diamond loaders [diamonds]: spinners and busy marks become a slowly turning hollow diamond ---- */
 html[data-o55-nier-parts~="diamonds"] :is(.o55-spin, .o55-ph-active .o55-phmark, .thread-working-pulse) {

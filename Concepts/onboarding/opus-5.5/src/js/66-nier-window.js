@@ -172,7 +172,10 @@
   function inkOf(li, navR) {
     const r = li.getBoundingClientRect();
     if (r.width < 34) { const n = li.querySelector('.o55-railnode'), q = n ? n.getBoundingClientRect() : r; return { x: q.left - navR.left - 3, y: q.top - navR.top - 3, w: q.width + 6, h: q.height + 6 }; }
-    return { x: r.left - navR.left + 4, y: r.top - navR.top + 22, w: Math.max(4, r.width - 8), h: 23 };
+    /* the block walks at the height of the box it ends as, read from that ::after (with Pip on the rail the box sits
+       under the names, 10-window.css; the 22 px and 23 px written here before walked it 12 px above where it landed) */
+    const a = getComputedStyle(li, '::after'), top = parseFloat(a.top), h = parseFloat(a.height);
+    return { x: r.left - navR.left + 4, y: r.top - navR.top + (Number.isFinite(top) ? top : 22), w: Math.max(4, r.width - 8), h: Number.isFinite(h) ? h : 23 };
   }
   function railWalk(o) {
     o = o || {};

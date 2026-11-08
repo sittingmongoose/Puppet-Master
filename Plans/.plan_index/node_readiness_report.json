@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 18877,
+    "depends_on_edge_count": 19127,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22087,
-    "node_count": 7496,
+    "edge_count": 22337,
+    "node_count": 7519,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-06T11:16:45Z",
+  "generated_at_utc": "2026-11-08T14:10:12Z",
   "gui_related_units": {
-    "count": 3815,
+    "count": 3837,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -3834,6 +3834,50 @@
         }
       },
       {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-637",
+        "source_location": {
+          "heading": "ACD-637 - Chat Thread Lifecycle, Context Lens, Thread Worktree And Context Detail Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 29066,
+          "line": 29068,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-638",
+        "source_location": {
+          "heading": "ACD-638 - Chat Message, Code-Block, Rewind Revert And Message Details Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 30126,
+          "line": 30128,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-639",
+        "source_location": {
+          "heading": "ACD-639 - Chat Web Family And Stop Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 30562,
+          "line": 30564,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-chat-design.md",
+        "plan_unit_id": "ACD-640",
+        "source_location": {
+          "heading": "ACD-640 - Chat Vision Bridge Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 31044,
+          "line": 31046,
+          "path": "Plans/assistant-chat-design.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Azure_DevOps_Integration.md",
         "plan_unit_id": "ADO-001",
         "source_location": {
@@ -4347,6 +4391,17 @@
           "heading_level": 3,
           "heading_line": 2994,
           "line": 2996,
+          "path": "Plans/assistant-memory-subsystem.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/assistant-memory-subsystem.md",
+        "plan_unit_id": "AMS-141",
+        "source_location": {
+          "heading": "AMS-141 - Assistant Memory Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 3154,
+          "line": 3156,
           "path": "Plans/assistant-memory-subsystem.md"
         }
       },
@@ -7244,6 +7299,28 @@
         }
       },
       {
+        "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+        "plan_unit_id": "CRAU-115",
+        "source_location": {
+          "heading": "CRAU-115 - Docker Registry Kubernetes Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 6980,
+          "line": 6982,
+          "path": "Plans/Containers_Registry_and_Unraid.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Containers_Registry_and_Unraid.md",
+        "plan_unit_id": "CRAU-116",
+        "source_location": {
+          "heading": "CRAU-116 - Docker Hosts Run And Container Open Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 9176,
+          "line": 9178,
+          "path": "Plans/Containers_Registry_and_Unraid.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Commands_System.md",
         "plan_unit_id": "CS-003",
         "source_location": {
@@ -7999,6 +8076,17 @@
           "heading_level": 3,
           "heading_line": 10564,
           "line": 10566,
+          "path": "Plans/Commands_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Commands_System.md",
+        "plan_unit_id": "CS-125",
+        "source_location": {
+          "heading": "CS-125 - Debug Investigation Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 10728,
+          "line": 10730,
           "path": "Plans/Commands_System.md"
         }
       },
@@ -13543,6 +13631,17 @@
           "heading_level": 3,
           "heading_line": 8872,
           "line": 8874,
+          "path": "Plans/Executor_Protocol.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Executor_Protocol.md",
+        "plan_unit_id": "EP-236",
+        "source_location": {
+          "heading": "EP-236 - Runtime Recovery Command Payload Definitions (UCC-089..UCC-095)",
+          "heading_level": 3,
+          "heading_line": 9147,
+          "line": 9149,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -21566,6 +21665,39 @@
         }
       },
       {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-716",
+        "source_location": {
+          "heading": "F3-716 - Search Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 50378,
+          "line": 50380,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-717",
+        "source_location": {
+          "heading": "F3-717 - Notifications And Sounds Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 50944,
+          "line": 50946,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/FinalGUISpec.md",
+        "plan_unit_id": "F3-718",
+        "source_location": {
+          "heading": "F3-718 - Teacher Guided GUI Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 51654,
+          "line": 51656,
+          "path": "Plans/FinalGUISpec.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Forge_Integrations.md",
         "plan_unit_id": "FGI-001",
         "source_location": {
@@ -23300,6 +23432,17 @@
           "heading_level": 3,
           "heading_line": 8289,
           "line": 8291,
+          "path": "Plans/Goal_Runtime_System.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Goal_Runtime_System.md",
+        "plan_unit_id": "GRS-218",
+        "source_location": {
+          "heading": "GRS-218 - Goal Mode Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 8361,
+          "line": 8363,
           "path": "Plans/Goal_Runtime_System.md"
         }
       },
@@ -27891,6 +28034,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Orchestrator_Page.md",
+        "plan_unit_id": "OP-049",
+        "source_location": {
+          "heading": "OP-049 - History Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 2981,
+          "line": 2983,
+          "path": "Plans/Orchestrator_Page.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Cursor_Origin_Integration.md",
         "plan_unit_id": "ORI-001",
         "source_location": {
@@ -29475,6 +29629,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Plan_To_Node_Compilation.md",
+        "plan_unit_id": "PNC-037",
+        "source_location": {
+          "heading": "PNC-037 - Plan Compile Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 1754,
+          "line": 1756,
+          "path": "Plans/Plan_To_Node_Compilation.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Provider_OpenCode.md",
         "plan_unit_id": "PO-008",
         "source_location": {
@@ -30097,7 +30262,7 @@
           "heading": "PRDB-011 - Conflict, Scoring, Resource Defaults, And Approval Command Contract",
           "heading_level": 3,
           "heading_line": 929,
-          "line": 931,
+          "line": 933,
           "path": "Plans/PRD_Builder.md"
         }
       },
@@ -30107,8 +30272,19 @@
         "source_location": {
           "heading": "PRDB-013 - PRD Switcher And New Plan Under Selected Plan Scope",
           "heading_level": 3,
-          "heading_line": 1047,
-          "line": 1049,
+          "heading_line": 1050,
+          "line": 1052,
+          "path": "Plans/PRD_Builder.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/PRD_Builder.md",
+        "plan_unit_id": "PRDB-024",
+        "source_location": {
+          "heading": "PRDB-024 - PRD Builder Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 1111,
+          "line": 1113,
           "path": "Plans/PRD_Builder.md"
         }
       },
@@ -31180,6 +31356,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Planning_Wizard.md",
+        "plan_unit_id": "PWIZ-109",
+        "source_location": {
+          "heading": "PWIZ-109 - Planning Wizard Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 4152,
+          "line": 4154,
+          "path": "Plans/Planning_Wizard.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
         "plan_unit_id": "RAP-002",
         "source_location": {
@@ -31682,6 +31869,17 @@
           "heading_level": 3,
           "heading_line": 3158,
           "line": 3160,
+          "path": "Plans/Runtime_Artifacts_Panel.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Runtime_Artifacts_Panel.md",
+        "plan_unit_id": "RAP-129",
+        "source_location": {
+          "heading": "RAP-129 - Runtime Artifacts Navigation Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 3269,
+          "line": 3271,
           "path": "Plans/Runtime_Artifacts_Panel.md"
         }
       },
@@ -34150,6 +34348,28 @@
         }
       },
       {
+        "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "plan_unit_id": "SMPFS-328",
+        "source_location": {
+          "heading": "SMPFS-328 - Browser command payload definitions",
+          "heading_level": 3,
+          "heading_line": 13365,
+          "line": 13367,
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "plan_unit_id": "SMPFS-329",
+        "source_location": {
+          "heading": "SMPFS-329 - Terminal, dev-session and catalog command payload definitions",
+          "heading_level": 3,
+          "heading_line": 14524,
+          "line": 14526,
+          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        }
+      },
+      {
         "owner_doc": "Plans/storage-plan.md",
         "plan_unit_id": "SP-001",
         "source_location": {
@@ -36482,6 +36702,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Settings_System.md",
+        "plan_unit_id": "SSYS-076",
+        "source_location": {
+          "heading": "SSYS-076 - Settings Route Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 5656,
+          "line": 5658,
+          "path": "Plans/Settings_System.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Tools.md",
         "plan_unit_id": "T-001",
         "source_location": {
@@ -38335,8 +38566,8 @@
         "source_location": {
           "heading": "UCC-109 - Usage Route Payload And Legacy Chat Usage Alias Contract",
           "heading_level": 3,
-          "heading_line": 10398,
-          "line": 10400,
+          "heading_line": 10864,
+          "line": 10866,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38346,8 +38577,8 @@
         "source_location": {
           "heading": "UCC-110 - Run Graph Canvas Interaction Command Family",
           "heading_level": 3,
-          "heading_line": 10732,
-          "line": 10734,
+          "heading_line": 11198,
+          "line": 11200,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38357,8 +38588,8 @@
         "source_location": {
           "heading": "UCC-111 - Orchestrator Projection Actions And Safe Point Retry",
           "heading_level": 3,
-          "heading_line": 10802,
-          "line": 10804,
+          "heading_line": 11268,
+          "line": 11270,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38368,8 +38599,8 @@
         "source_location": {
           "heading": "UCC-112 - Wizard And Plan Compile Replay Commands",
           "heading_level": 3,
-          "heading_line": 10871,
-          "line": 10873,
+          "heading_line": 11337,
+          "line": 11339,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38379,8 +38610,8 @@
         "source_location": {
           "heading": "UCC-113 - Permissions Settings Command Family",
           "heading_level": 3,
-          "heading_line": 10925,
-          "line": 10927,
+          "heading_line": 11391,
+          "line": 11393,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38390,8 +38621,8 @@
         "source_location": {
           "heading": "UCC-114 - Testing Panel Command Rows",
           "heading_level": 3,
-          "heading_line": 10994,
-          "line": 10996,
+          "heading_line": 11460,
+          "line": 11462,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38401,8 +38632,8 @@
         "source_location": {
           "heading": "UCC-115 - Terminal Rule Coverage Completion Rows",
           "heading_level": 3,
-          "heading_line": 11057,
-          "line": 11059,
+          "heading_line": 11523,
+          "line": 11525,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38412,8 +38643,8 @@
         "source_location": {
           "heading": "UCC-116 - Account Provider Route And Usage Projection Commands",
           "heading_level": 3,
-          "heading_line": 11119,
-          "line": 11121,
+          "heading_line": 11585,
+          "line": 11587,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38423,8 +38654,8 @@
         "source_location": {
           "heading": "UCC-117 - Browser Pane Navigation Commands",
           "heading_level": 3,
-          "heading_line": 11184,
-          "line": 11186,
+          "heading_line": 11650,
+          "line": 11652,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38434,8 +38665,8 @@
         "source_location": {
           "heading": "UCC-118 - Projects List Lifecycle Commands",
           "heading_level": 3,
-          "heading_line": 11236,
-          "line": 11238,
+          "heading_line": 11702,
+          "line": 11704,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38445,8 +38676,8 @@
         "source_location": {
           "heading": "UCC-119 - Chat Composer Selector Queue And Web Operation Commands",
           "heading_level": 3,
-          "heading_line": 11306,
-          "line": 11308,
+          "heading_line": 11772,
+          "line": 11774,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38456,8 +38687,8 @@
         "source_location": {
           "heading": "UCC-120 - Settings Route And Transaction Composition",
           "heading_level": 3,
-          "heading_line": 11370,
-          "line": 11372,
+          "heading_line": 11836,
+          "line": 11838,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38467,8 +38698,8 @@
         "source_location": {
           "heading": "UCC-121 - Docker Container Start And Unraid Template Commands",
           "heading_level": 3,
-          "heading_line": 11489,
-          "line": 11491,
+          "heading_line": 11955,
+          "line": 11957,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38478,8 +38709,8 @@
         "source_location": {
           "heading": "UCC-122 - Forge Review Commands And Source Control Compatibility",
           "heading_level": 3,
-          "heading_line": 11543,
-          "line": 11545,
+          "heading_line": 12009,
+          "line": 12011,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38489,8 +38720,8 @@
         "source_location": {
           "heading": "UCC-123 - Case L Storage Access Root And Navigation Commands",
           "heading_level": 3,
-          "heading_line": 11603,
-          "line": 11605,
+          "heading_line": 12069,
+          "line": 12071,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38500,8 +38731,8 @@
         "source_location": {
           "heading": "UCC-124 - Case L Retention Hold Compaction And Deletion Commands",
           "heading_level": 3,
-          "heading_line": 11686,
-          "line": 11688,
+          "heading_line": 12152,
+          "line": 12154,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38511,8 +38742,8 @@
         "source_location": {
           "heading": "UCC-125 - Case L Exact Baseline And Restore Command Contract",
           "heading_level": 3,
-          "heading_line": 11799,
-          "line": 11801,
+          "heading_line": 12265,
+          "line": 12267,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38522,8 +38753,8 @@
         "source_location": {
           "heading": "UCC-126 - Case L Chat Revert And Conversation Restore Point Commands",
           "heading_level": 3,
-          "heading_line": 11876,
-          "line": 11878,
+          "heading_line": 12342,
+          "line": 12344,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38533,8 +38764,8 @@
         "source_location": {
           "heading": "UCC-127 - Cozy Shelves Reconciliation Adoption And Namespace Reservations",
           "heading_level": 3,
-          "heading_line": 12248,
-          "line": 12250,
+          "heading_line": 12714,
+          "line": 12716,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38544,8 +38775,8 @@
         "source_location": {
           "heading": "UCC-128 - GitHub Actions Namespace Promotion And Open-In-GitHub Adjudication",
           "heading_level": 3,
-          "heading_line": 12298,
-          "line": 12300,
+          "heading_line": 12764,
+          "line": 12766,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38555,8 +38786,8 @@
         "source_location": {
           "heading": "UCC-129 - Agents Panel Navigation Command Family",
           "heading_level": 3,
-          "heading_line": 12354,
-          "line": 12356,
+          "heading_line": 12820,
+          "line": 12822,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38566,8 +38797,8 @@
         "source_location": {
           "heading": "UCC-130 - Runtime Artifacts Panel Command Rows",
           "heading_level": 3,
-          "heading_line": 12403,
-          "line": 12405,
+          "heading_line": 12869,
+          "line": 12871,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38577,8 +38808,8 @@
         "source_location": {
           "heading": "UCC-131 - Source Control Branch Stash And Commit Rows",
           "heading_level": 3,
-          "heading_line": 12454,
-          "line": 12456,
+          "heading_line": 12920,
+          "line": 12922,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38588,8 +38819,8 @@
         "source_location": {
           "heading": "UCC-132 - Project-Scope Worktree Merge Lock Unlock And GitHub PR Create",
           "heading_level": 3,
-          "heading_line": 12512,
-          "line": 12514,
+          "heading_line": 12978,
+          "line": 12980,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38599,8 +38830,8 @@
         "source_location": {
           "heading": "UCC-133 - Search Result Navigation Scope And Flag Toggle Rows",
           "heading_level": 3,
-          "heading_line": 12569,
-          "line": 12571,
+          "heading_line": 13035,
+          "line": 13037,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38610,8 +38841,8 @@
         "source_location": {
           "heading": "UCC-134 - Testing Quarantine Rows And Run Session Scope Split",
           "heading_level": 3,
-          "heading_line": 12623,
-          "line": 12625,
+          "heading_line": 13089,
+          "line": 13091,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38621,8 +38852,8 @@
         "source_location": {
           "heading": "UCC-135 - File Manager Editor And Chat Navigation Rows",
           "heading_level": 3,
-          "heading_line": 12672,
-          "line": 12674,
+          "heading_line": 13138,
+          "line": 13140,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38632,8 +38863,8 @@
         "source_location": {
           "heading": "UCC-136 - Docker Container Lifecycle Adjudication Image And Cleanup Rows",
           "heading_level": 3,
-          "heading_line": 12763,
-          "line": 12765,
+          "heading_line": 13229,
+          "line": 13231,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38643,8 +38874,8 @@
         "source_location": {
           "heading": "UCC-137 - Docker Compose Group Verbs Scenario Aliases And Context Adjudication",
           "heading_level": 3,
-          "heading_line": 12830,
-          "line": 12832,
+          "heading_line": 13296,
+          "line": 13298,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38654,8 +38885,8 @@
         "source_location": {
           "heading": "UCC-138 - Panel Switch Destination Vocabulary Undock Alias And Terminal Focus Adjudication",
           "heading_level": 3,
-          "heading_line": 12888,
-          "line": 12890,
+          "heading_line": 13354,
+          "line": 13356,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38665,8 +38896,8 @@
         "source_location": {
           "heading": "UCC-139 - Run & Debug Family Catalog Registration",
           "heading_level": 3,
-          "heading_line": 13102,
-          "line": 13104,
+          "heading_line": 13568,
+          "line": 13570,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38676,8 +38907,8 @@
         "source_location": {
           "heading": "UCC-140 - Orchestrator Run-Control Trio Catalog Registration",
           "heading_level": 3,
-          "heading_line": 13379,
-          "line": 13381,
+          "heading_line": 13845,
+          "line": 13847,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38687,8 +38918,8 @@
         "source_location": {
           "heading": "UCC-141 - Debug Family Wiring Re-Home Record",
           "heading_level": 3,
-          "heading_line": 13437,
-          "line": 13439,
+          "heading_line": 13903,
+          "line": 13905,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38698,8 +38929,8 @@
         "source_location": {
           "heading": "UCC-142 - Debug Investigation Verification and Cleanup Catalog Registration",
           "heading_level": 3,
-          "heading_line": 13496,
-          "line": 13498,
+          "heading_line": 13962,
+          "line": 13964,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38709,8 +38940,8 @@
         "source_location": {
           "heading": "UCC-143 - Chat Open Alias Adjudication",
           "heading_level": 3,
-          "heading_line": 13565,
-          "line": 13567,
+          "heading_line": 14031,
+          "line": 14033,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38720,8 +38951,8 @@
         "source_location": {
           "heading": "UCC-144 - Home Workspace Command Routing And Leaf Semantics",
           "heading_level": 3,
-          "heading_line": 13700,
-          "line": 13702,
+          "heading_line": 14166,
+          "line": 14168,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38731,8 +38962,8 @@
         "source_location": {
           "heading": "UCC-145 - Shared Runtime Command Catalog Registration",
           "heading_level": 3,
-          "heading_line": 13830,
-          "line": 13832,
+          "heading_line": 14296,
+          "line": 14298,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38742,8 +38973,8 @@
         "source_location": {
           "heading": "UCC-146 - Usage Forecast Command Registration And Settings Destination Identity",
           "heading_level": 3,
-          "heading_line": 13954,
-          "line": 13956,
+          "heading_line": 14420,
+          "line": 14422,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38753,8 +38984,8 @@
         "source_location": {
           "heading": "UCC-147 - PMConcept7 Existing Command Census And View-Local Dispositions",
           "heading_level": 3,
-          "heading_line": 14066,
-          "line": 14068,
+          "heading_line": 14532,
+          "line": 14534,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38764,8 +38995,8 @@
         "source_location": {
           "heading": "UCC-148 - Exact owner command rows and reverse consumer routes",
           "heading_level": 3,
-          "heading_line": 13337,
-          "line": 13339,
+          "heading_line": 13803,
+          "line": 13805,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38775,8 +39006,8 @@
         "source_location": {
           "heading": "UCC-149 - Agent plugin command rows and reverse consumers",
           "heading_level": 3,
-          "heading_line": 13249,
-          "line": 13251,
+          "heading_line": 13715,
+          "line": 13717,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38786,8 +39017,8 @@
         "source_location": {
           "heading": "UCC-150 - Guided Tour focus route is catalog-external local presentation",
           "heading_level": 3,
-          "heading_line": 13176,
-          "line": 13178,
+          "heading_line": 13642,
+          "line": 13644,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38797,8 +39028,8 @@
         "source_location": {
           "heading": "UCC-151 - Exact Server And Egolite Catalog Rows",
           "heading_level": 3,
-          "heading_line": 14407,
-          "line": 14409,
+          "heading_line": 14873,
+          "line": 14875,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38808,8 +39039,8 @@
         "source_location": {
           "heading": "UCC-152 - Remaining Touch Reverse-GUI Closure",
           "heading_level": 3,
-          "heading_line": 14729,
-          "line": 14731,
+          "heading_line": 15195,
+          "line": 15197,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38819,8 +39050,8 @@
         "source_location": {
           "heading": "UCC-153 - ConnectionDraft Activation Catalog And Reverse Coverage",
           "heading_level": 3,
-          "heading_line": 14828,
-          "line": 14830,
+          "heading_line": 15294,
+          "line": 15296,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38830,8 +39061,8 @@
         "source_location": {
           "heading": "UCC-154 - Post-Integration Auth Alias Reverse Coverage",
           "heading_level": 3,
-          "heading_line": 14873,
-          "line": 14875,
+          "heading_line": 15339,
+          "line": 15341,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38841,8 +39072,8 @@
         "source_location": {
           "heading": "UCC-155 - Neutral Source-Control Concrete Catalog And Reverse Coverage",
           "heading_level": 3,
-          "heading_line": 14917,
-          "line": 14919,
+          "heading_line": 15383,
+          "line": 15385,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38852,8 +39083,8 @@
         "source_location": {
           "heading": "UCC-156 - Assistant Redesign Command Registration And Alias Census",
           "heading_level": 3,
-          "heading_line": 15196,
-          "line": 15198,
+          "heading_line": 15662,
+          "line": 15664,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38863,8 +39094,8 @@
         "source_location": {
           "heading": "UCC-157 - Assistant Redesign Retired Command Surfaces",
           "heading_level": 3,
-          "heading_line": 15256,
-          "line": 15258,
+          "heading_line": 15722,
+          "line": 15724,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38874,8 +39105,8 @@
         "source_location": {
           "heading": "Working Notebook Command Rows Addendum (2026-09-05)",
           "heading_level": 2,
-          "heading_line": 15361,
-          "line": 15365,
+          "heading_line": 15827,
+          "line": 15831,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38885,8 +39116,8 @@
         "source_location": {
           "heading": "15. UI Command Catalog Dispositions and Exact Reuse Rules (APR-023)",
           "heading_level": 3,
-          "heading_line": 15445,
-          "line": 15469,
+          "heading_line": 15911,
+          "line": 15935,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38896,8 +39127,8 @@
         "source_location": {
           "heading": "UCC-160 - Accepted Terminal Action Contracts",
           "heading_level": 3,
-          "heading_line": 15541,
-          "line": 15543,
+          "heading_line": 16007,
+          "line": 16009,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38907,8 +39138,8 @@
         "source_location": {
           "heading": "UCC-161 — Research Decision Review",
           "heading_level": 3,
-          "heading_line": 15642,
-          "line": 15644,
+          "heading_line": 16108,
+          "line": 16110,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38918,8 +39149,8 @@
         "source_location": {
           "heading": "UCC-162 — Jujutsu Accepted Action Planning And Admission Boundary",
           "heading_level": 3,
-          "heading_line": 15785,
-          "line": 15787,
+          "heading_line": 16251,
+          "line": 16253,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38929,8 +39160,8 @@
         "source_location": {
           "heading": "UCC-163 — Jujutsu Consumer Action Inventory And Return Context",
           "heading_level": 3,
-          "heading_line": 15890,
-          "line": 15892,
+          "heading_line": 16356,
+          "line": 16358,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38940,8 +39171,8 @@
         "source_location": {
           "heading": "UCC-164 - Consume The Central Command Response Contract",
           "heading_level": 3,
-          "heading_line": 15710,
-          "line": 15712,
+          "heading_line": 16176,
+          "line": 16178,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38951,8 +39182,8 @@
         "source_location": {
           "heading": "UCC-165 - Project Recovery And Forge Delete/CI Central Admission",
           "heading_level": 3,
-          "heading_line": 15949,
-          "line": 15951,
+          "heading_line": 16415,
+          "line": 16417,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38962,8 +39193,8 @@
         "source_location": {
           "heading": "UCC-166 - Commands Shortcuts Central Consumers",
           "heading_level": 3,
-          "heading_line": 16096,
-          "line": 16098,
+          "heading_line": 16562,
+          "line": 16564,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38973,8 +39204,8 @@
         "source_location": {
           "heading": "UCC-167 - Git Adapter Command Mapping And Availability",
           "heading_level": 3,
-          "heading_line": 16148,
-          "line": 16150,
+          "heading_line": 16614,
+          "line": 16616,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38984,8 +39215,8 @@
         "source_location": {
           "heading": "UCC-168 - Chat Busy Send Steer Command And Reused Chat Controls",
           "heading_level": 3,
-          "heading_line": 16201,
-          "line": 16203,
+          "heading_line": 16667,
+          "line": 16669,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -38995,8 +39226,8 @@
         "source_location": {
           "heading": "UCC-169 - Wand Module Source Surfaces And Catalog Revisions",
           "heading_level": 3,
-          "heading_line": 16330,
-          "line": 16332,
+          "heading_line": 16796,
+          "line": 16798,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39006,8 +39237,8 @@
         "source_location": {
           "heading": "UCC-170 - Wand Module Command Census",
           "heading_level": 3,
-          "heading_line": 16484,
-          "line": 16777,
+          "heading_line": 16950,
+          "line": 17243,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39017,8 +39248,8 @@
         "source_location": {
           "heading": "UCC-171 - Wand Module New Command Rows",
           "heading_level": 3,
-          "heading_line": 16883,
-          "line": 16916,
+          "heading_line": 17349,
+          "line": 17382,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39028,8 +39259,8 @@
         "source_location": {
           "heading": "UCC-172 - Wand Module Surfaces And Row Revisions After The Owner's Answers",
           "heading_level": 3,
-          "heading_line": 17020,
-          "line": 17048,
+          "heading_line": 17486,
+          "line": 17514,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39039,8 +39270,8 @@
         "source_location": {
           "heading": "UCC-173 - Wand Module Labels",
           "heading_level": 3,
-          "heading_line": 17148,
-          "line": 17169,
+          "heading_line": 17614,
+          "line": 17635,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39050,8 +39281,8 @@
         "source_location": {
           "heading": "UCC-174 - Wand Module Closure Command Rows",
           "heading_level": 3,
-          "heading_line": 17252,
-          "line": 17289,
+          "heading_line": 17718,
+          "line": 17755,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39061,8 +39292,8 @@
         "source_location": {
           "heading": "UCC-175 - ELI5 Sheet Surface And The ELI5 Setting Command",
           "heading_level": 3,
-          "heading_line": 17401,
-          "line": 17429,
+          "heading_line": 17867,
+          "line": 17895,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39072,8 +39303,8 @@
         "source_location": {
           "heading": "UCC-176 - Open Plan And A Bound Goal's Open Exact Plan · Vn Open One Exact Plan Version",
           "heading_level": 3,
-          "heading_line": 17669,
-          "line": 17671,
+          "heading_line": 18135,
+          "line": 18137,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39083,8 +39314,8 @@
         "source_location": {
           "heading": "UCC-188 - 5.6 Pro Chat Round Command Census And Subagent Open Reuse",
           "heading_level": 3,
-          "heading_line": 17576,
-          "line": 17578,
+          "heading_line": 18042,
+          "line": 18044,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39094,8 +39325,8 @@
         "source_location": {
           "heading": "UCC-200 - Panel Tab And Layout Commands, Menus, Lists And Open Routes",
           "heading_level": 3,
-          "heading_line": 18028,
-          "line": 18030,
+          "heading_line": 18494,
+          "line": 18496,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39105,8 +39336,8 @@
         "source_location": {
           "heading": "UCC-201 - Terminal Commands Re-Scoped To One Session Per Tab",
           "heading_level": 3,
-          "heading_line": 18415,
-          "line": 18417,
+          "heading_line": 18881,
+          "line": 18883,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39116,8 +39347,8 @@
         "source_location": {
           "heading": "UCC-202 - Duplicate Command Ids Settled",
           "heading_level": 3,
-          "heading_line": 18566,
-          "line": 18568,
+          "heading_line": 19032,
+          "line": 19034,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39127,8 +39358,8 @@
         "source_location": {
           "heading": "UCC-203 - The Chat Column's Commands And The Retired Chat Docking Rows",
           "heading_level": 3,
-          "heading_line": 18666,
-          "line": 18668,
+          "heading_line": 19132,
+          "line": 19134,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39138,8 +39369,8 @@
         "source_location": {
           "heading": "UCC-204 - Editor Appearance And Shared Control Dispatch",
           "heading_level": 3,
-          "heading_line": 18755,
-          "line": 18757,
+          "heading_line": 19221,
+          "line": 19223,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39149,8 +39380,8 @@
         "source_location": {
           "heading": "UCC-205 - Check It Across The Three Collaborative Kinds",
           "heading_level": 3,
-          "heading_line": 18875,
-          "line": 18877,
+          "heading_line": 19341,
+          "line": 19343,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39160,8 +39391,8 @@
         "source_location": {
           "heading": "UCC-206 - Grilling Controls Reuse The Question Host",
           "heading_level": 3,
-          "heading_line": 18958,
-          "line": 18960,
+          "heading_line": 19424,
+          "line": 19426,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39171,8 +39402,8 @@
         "source_location": {
           "heading": "UCC-207 - Chat Room Pause Switch And User Next Round",
           "heading_level": 3,
-          "heading_line": 19038,
-          "line": 19040,
+          "heading_line": 19504,
+          "line": 19506,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39182,8 +39413,8 @@
         "source_location": {
           "heading": "UCC-208 - Hosted Chat Producers Keep Their Existing Commands",
           "heading_level": 3,
-          "heading_line": 19116,
-          "line": 19118,
+          "heading_line": 19582,
+          "line": 19584,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39193,8 +39424,8 @@
         "source_location": {
           "heading": "UCC-209 - Project Box Command And Shortcut Producers",
           "heading_level": 3,
-          "heading_line": 19249,
-          "line": 19251,
+          "heading_line": 19715,
+          "line": 19717,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39204,8 +39435,8 @@
         "source_location": {
           "heading": "UCC-210 - Work Commands And Navigation",
           "heading_level": 3,
-          "heading_line": 19305,
-          "line": 19307,
+          "heading_line": 19771,
+          "line": 19773,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39215,8 +39446,8 @@
         "source_location": {
           "heading": "UCC-211 - Pip Editor And Settings Hosts",
           "heading_level": 3,
-          "heading_line": 19405,
-          "line": 19407,
+          "heading_line": 19871,
+          "line": 19873,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39226,8 +39457,8 @@
         "source_location": {
           "heading": "UCC-212 - DL-270 Chat Load-Older Command And Storage Dispositions",
           "heading_level": 3,
-          "heading_line": 19482,
-          "line": 19484,
+          "heading_line": 19948,
+          "line": 19950,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39237,8 +39468,8 @@
         "source_location": {
           "heading": "UCC-213 — Free Models route disable command",
           "heading_level": 3,
-          "heading_line": 19587,
-          "line": 19589,
+          "heading_line": 20053,
+          "line": 20055,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39248,8 +39479,8 @@
         "source_location": {
           "heading": "UCC-214 - Projects Refresh Settings",
           "heading_level": 3,
-          "heading_line": 19717,
-          "line": 19719,
+          "heading_line": 20183,
+          "line": 20185,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39259,8 +39490,8 @@
         "source_location": {
           "heading": "UCC-215 - Projects Refresh Projects",
           "heading_level": 3,
-          "heading_line": 19901,
-          "line": 19903,
+          "heading_line": 20367,
+          "line": 20369,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39270,8 +39501,8 @@
         "source_location": {
           "heading": "UCC-216 - Projects Refresh No Project",
           "heading_level": 3,
-          "heading_line": 20272,
-          "line": 20274,
+          "heading_line": 20738,
+          "line": 20740,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39281,8 +39512,8 @@
         "source_location": {
           "heading": "UCC-217 - Projects Refresh Automation",
           "heading_level": 3,
-          "heading_line": 20707,
-          "line": 20709,
+          "heading_line": 21173,
+          "line": 21175,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39292,8 +39523,8 @@
         "source_location": {
           "heading": "UCC-218 - Projects Refresh Goal Crew",
           "heading_level": 3,
-          "heading_line": 20867,
-          "line": 20869,
+          "heading_line": 21333,
+          "line": 21335,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -39303,8 +39534,8 @@
         "source_location": {
           "heading": "UCC-219 - Projects Refresh Plan Schedule",
           "heading_level": 3,
-          "heading_line": 21028,
-          "line": 21030,
+          "heading_line": 21494,
+          "line": 21496,
           "path": "Plans/UI_Command_Catalog.md"
         }
       },
@@ -40970,6 +41201,17 @@
         }
       },
       {
+        "owner_doc": "Plans/WorktreeGitImprovement.md",
+        "plan_unit_id": "W-095",
+        "source_location": {
+          "heading": "W-095 - Project-Scope Worktree Command Payload Definitions",
+          "heading_level": 3,
+          "heading_line": 5792,
+          "line": 5794,
+          "path": "Plans/WorktreeGitImprovement.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Wiring_Matrix.md",
         "plan_unit_id": "WM-002",
         "source_location": {
@@ -41989,10 +42231,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7496,
+  "plan_unit_count": 7519,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2813,
+      "high": 2836,
       "low": 9,
       "medium": 34,
       "standard": 4640
@@ -42649,7 +42891,7 @@
       "command_or_term_drift": 1,
       "command_override_visibility_drift": 1,
       "command_owner_boundary_drift": 1,
-      "command_payload_shape_drift": 2,
+      "command_payload_shape_drift": 25,
       "command_permission_precedence_drift": 1,
       "command_persona_resolution_drift": 1,
       "command_precondition_drift": 1,
@@ -46143,7 +46385,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7277,
+      "accepted": 7300,
       "retired": 196,
       "superseded": 23
     },
@@ -46162,7 +46404,7 @@
       "capability_matrix": 1,
       "command_binding": 20,
       "command_catalog": 3,
-      "command_contract": 61,
+      "command_contract": 83,
       "command_disposition": 4,
       "command_registration": 1,
       "command_registry": 4,
@@ -46176,7 +46418,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 240,
+      "decision": 241,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -46310,31 +46552,31 @@
       {
         "actual": "196e062d4fb5dd38b28bbed93d6370e3c9205a29169533116b28d46d2c3cc8e2",
         "error": "pnc019_source_hash_stale",
-        "expected": "6e6004f19709d7c9df7c211b786fbfa97cfa3e1dcf11e6befbf69fb621e7a77b",
+        "expected": "8480bbd169a8d51ba50a60c9d524101153a2a2f911194348eec6f27ac05b0d30",
         "source_path": "Plans/Plan_To_Node_Compilation.md"
       },
       {
         "actual": "fee6e23abff2aafb251f978165fdf014bcfe9a9beba3d805857ddf4212000ec0",
         "error": "pnc019_source_hash_stale",
-        "expected": "79283d3bca2817d9938a91ae294e40f949d206dc26b3a19dc7ed8207ab30f276",
+        "expected": "fbd7591fa699bc3a490cad2a61ec2f06645f00ff674fca6da68ccf2cc0cc3249",
         "source_path": "Plans/Planning_Wizard.md"
       },
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "18ef187b558dadb4f429dd076afc8327f6d4522c80f1c9ff103a560d89754636",
+        "expected": "0b05561f1eb83bf6b273023ae1ca8d3237cbaa391f7182dcb36ea7e21539ad2a",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
         "actual": "93074bc367a76d2b977006d394c063fd7ce21bd1bdcae4138bd6944bebb72785",
         "error": "pnc019_source_hash_stale",
-        "expected": "860f27ab0e44a3817daf74ef55416f5773bf78644e735f19ba2892827990c3d7",
+        "expected": "59ed224d15e3e1a8b69889f2cbb2bb3390f5053a1b3f899f5b3cb443b6427170",
         "source_path": "Plans/Goal_Runtime_System.md"
       },
       {
         "actual": "0c6d1ada4d9b06aad07ece508a27891ce1095685fb890b946181a1f5b3be97f7",
         "error": "pnc019_source_hash_stale",
-        "expected": "8e52e94127f5b4f633ce1318ba4657387074733a183c7ef1e6d7809e1f7f09f2",
+        "expected": "a6f3ca1d5c29b7c53a34bd588b513ecc44f0620816da4dd436e58da366891e6d",
         "source_path": "Plans/Orchestrator_Page.md"
       },
       {
@@ -46346,7 +46588,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "98447d333cdf4ff30fb4c1d473a5de432863a5fa3efd88c564112e55c376d1fc",
+        "expected": "62f831dc57ba873794b0a769caf531083f8c3a770b997a2892d4bde2fad8865f",
         "source_path": "Plans/UI_Command_Catalog.md"
       },
       {
@@ -46395,6 +46637,10 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Containers_Registry_and_Unraid.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Contracts_V0.md"
       },
       {
@@ -46427,7 +46673,19 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Orchestrator_Page.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/PRD_Builder.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Plan_Document_System.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Plan_To_Node_Compilation.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46444,6 +46702,10 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/Run_Modes.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/Runtime_Artifacts_Panel.md"
       },
       {
         "error": "event_authority_currentness_source_drift",
@@ -46471,7 +46733,15 @@
       },
       {
         "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/WorktreeGitImprovement.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/assistant-chat-design.md"
+      },
+      {
+        "error": "event_authority_currentness_source_drift",
+        "source_path": "Plans/assistant-memory-subsystem.md"
       },
       {
         "error": "event_authority_currentness_source_drift",

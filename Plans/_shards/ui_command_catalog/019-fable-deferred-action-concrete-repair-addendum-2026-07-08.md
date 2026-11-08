@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8827-L10392
+Source lines: L8827-L10858
 
-Source SHA256: `98447d333cdf4ff30fb4c1d473a5de432863a5fa3efd88c564112e55c376d1fc`
+Source SHA256: `62f831dc57ba873794b0a769caf531083f8c3a770b997a2892d4bde2fad8865f`
 
 ---
 
@@ -72,16 +72,48 @@ canonical_text: >-
   hold no data shapes. Fields of type timestamp, url or path take no literal default: their default is none,
   their owners validate syntax at run time, and an owner that needs a literal default first adds its validation to
   the checker (DL-333 coordinator resolution 11). scripts/pm-command-payload-defs-check.py checks this map against
-  the overlay and every definition against this map.
+  the overlay and every definition against this map. Amended 2026-11-07 (DL-341): a definition records every
+  judgment it makes in an optional judgments list; each entry has a key (command_kind, response_kind,
+  disabled_reason_codes, error_codes, owner_request, owner_result, aliases for which alias tokens it records,
+  omitted:<field> for a field it deliberately leaves out, or field:<arg path> for a judgment that is not that
+  field's own gap_note, where a [] step names a list field), the choice the definition made, equal to its own value
+  for a fixed key (for aliases the alias tokens it records, or none) and without repeats in a list, and a gap_note
+  saying what canon lacks or where it disagrees. A judgment carries no provenance, and a canon field whose source or
+  gap_note says JUDGMENT is a provenance finding. A definitions block holds no YAML comment: any # comment inside a
+  pm.command_payload_definitions.v1 fence is a C11 provenance finding, whatever it says, because comments are
+  invisible to tools and no word list can tell a recorded choice from a note. No string in a definitions block names
+  review or evidence material (review rounds and findings, fix rounds and their reports, review files, the
+  owner-answers folder, the evidence share, the Q5 design's sections or the fix reports' canon-conflict labels):
+  canon text stands on canon, and only a unit fence's source_lineage cites evidence. A field marked nullable: true
+  may be JSON null, with any required value, except a required row-group identity and a restated common optional
+  field: neither the overlay nor this map records a nullable one, so both are refused. A definition may restate a
+  common optional field, required or optional, only with its canonical type and with constraints that only narrow
+  the inherited ones; this replaces the Q5 design rule that allowed a restatement only to make the field required or
+  add constraints. Enum values keep canon's exact spelling: non-empty strings without surrounding whitespace, unique
+  within the field. worktree_lifecycle_state is required when the command mutates worktree state, as the overlay
+  cell says: the map lists the mutating commands and the domain_action commands that do not mutate (not_mutating),
+  both lists always present, each command with canon evidence that names it, and a domain_action it lists in neither
+  fails closed. identity_aliases records, per row group, a canon name that stands for an overlay identity name, with
+  canon evidence, so gist_id stands for memory_item_id and investigation_id for debug_session_id and canon is never
+  renamed. A conditional identity exemption keeps its field, requires it on every branch of branch_field except
+  exempt_branch and forbids it on exempt_branch: cmd.runtime.approve and cmd.runtime.decline define both the node
+  shape and the HITL-038 chat-tool shape, with blocked_sequence and allowed_action_id required on the node branch
+  and forbidden on the chat_tool branch. Canon names only the chat_tool value of approval_kind; the node branch
+  value is not canon, so the definition marks approval_kind a gap. A definition may list in owner_state_codes each
+  owner state it shows as a disabled reason, with the closed code owner_state_code_map gives it, which must be one
+  of its disabled_reason_codes. Owner states maintenance_cutoffs_pending (DL-403, DL-446, DL-447) and
+  dedup_hold_pending (DL-444, DL-445) map to not_configured, and the thirteen CRAU-095 local-runtime reason codes map to the closed codes the
+  map lists.
 gui_related: false
 gui_classification_reason: Records where command payload types live and how they are checked; no GUI behavior changes.
 split_recommended: false
-depends_on: [DL-333, CV-333, UCC-109]
+depends_on: [DL-333, CV-333, UCC-109, DL-341]
 unblocks: []
 acceptance_criteria:
   - "Every expected UCC-049..UCC-105 command has exactly one definition, in the owner unit this map routes it to, or is listed in contested."
   - "row_groups equal the overlay's row-specific identity cells, and envelope equals the overlay's payload_required and payload_optional bullets."
   - "Every non_definition_tokens entry quotes the canon that marks it, and every token a unit's compatibility or stale note marks is listed."
+  - "Every judgment a definition makes is in its judgments list with a key, a choice and a gap_note; no judgment claims provenance and no canon field records one; no definitions block holds a YAML comment, whatever it says (any # comment in the fence is a C11 finding), or a string that names review or evidence material (a C11 finding too) (DL-341)."
   - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
 validation_surfaces:
   - python3 scripts/pm-command-payload-defs-check.py
@@ -103,16 +135,31 @@ source_lineage:
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/DESIGN.md sections 4-6"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/RESOLUTIONS.md"
+  - "pm-mail 1107140349-9370 (pm7-build, 2026-11-07T14:03Z): coordinator resolutions 1-5 after definitions review round 1 (DL-341); /mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/defs-review/R1-DECISIONS.md and r1-opus-S1.md..r1-opus-S5.md"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/defs-review/r2-opus-S1.md..r2-opus-S6.md (definitions review round 2) and owner-answers/q5/P0C-BRIEF.md: the DL-341 amendment of 2026-11-07, with the stream C lead's proposals sent to pm7-build at 2026-11-07T15:54Z"
 preserved_exact_tokens:
   - UCC-230
   - pm.command_payload_definitions.v1
   - command_payload_definitions
   - command_payload_definition_map
+  - DL-341
+  - judgments
+  - nullable
+  - identity_aliases
+  - not_mutating
+  - branch_field
+  - exempt_branch
+  - maintenance_cutoffs_pending
+  - dedup_hold_pending
+  - owner_state_codes
 negative_constraints:
   - Do not add payload fields to UI_Command_Catalog command rows.
   - Do not define a payload for an alias, retired, non-alias, source-lineage, outside-range or contested token.
   - Do not expand the overlay's closed error or disabled-reason sets; map owner states to closed codes instead.
   - Do not record an identity exemption anywhere but this map, and only with a decision.
+  - Do not write a YAML comment in a definitions block, and do not record a judgment in a canon field; record it in the definition's judgments list.
+  - Do not cite review or evidence material in a definitions block; cite canon, and keep evidence paths in a unit fence's source_lineage.
+  - Do not rename canon to an overlay identity name; record an identity alias instead.
 owner_hints:
   - Plans/UI_Command_Catalog.md
   - Plans/Decision_Log.md
@@ -232,7 +279,8 @@ command_payload_definition_map:
         constraints:
           max_length: 256
     identity_typing: row-group identity fields ending in _id are type id and in _ref are type ref; they become required
-      only where the overlay marks them required or canon makes the subject mandatory, citing the source
+      only where the overlay marks them required or canon makes the subject mandatory, citing the source; a recorded
+      identity alias's canon name is typed and required as the overlay name it stands for (DL-341)
   row_groups:
   - id: UCC-049..UCC-053
     first: UCC-049
@@ -253,7 +301,55 @@ command_payload_definition_map:
     - field: repo_id
       when: always
     - field: worktree_lifecycle_state
-      when: domain_action
+      when: mutating
+      source: 'Overlay UCC-054 through UCC-055 identity cell: "`worktree_lifecycle_state` when mutating worktree state"
+        (DL-341); each command below is marked by its row in this catalog''s section 2.5C project-scope git worktree
+        commands table (UCC-054)'
+      commands:
+      - command_id: cmd.git.worktree.create
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.create` | Create Worktree | Creates a new git worktree at specified path'
+      - command_id: cmd.git.worktree.lock
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.lock` | Lock Worktree | Prevents accidental removal of worktree'
+      - command_id: cmd.git.worktree.prune
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.prune` | Prune Worktree | Prunes eligible stale worktree metadata'
+      - command_id: cmd.git.worktree.recover
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.recover` | Recover Worktree | Reopens or rebinds a worktree from stored lineage'
+      - command_id: cmd.git.worktree.release
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.release` | Release Worktree Ownership | Releases runtime ownership'
+      - command_id: cmd.git.worktree.remove
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.remove` | Remove Worktree | Removes an existing live worktree'
+      - command_id: cmd.git.worktree.reuse
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.reuse` | Reuse Worktree | Rebinds a clean, lineage-compatible worktree to a new run/lane/package owner'
+      - command_id: cmd.git.worktree.unlock
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.unlock` | Unlock Worktree | Removes lock from worktree'
+      not_mutating:
+      - command_id: cmd.git.worktree.request_prune
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.request_prune` | Request Worktree Prune | Requests an approval-gated prune of the selected worktree without mutating it'
+        note: 'GI-041 acceptance criterion: "request_prune never mutates worktree state".'
+      - command_id: cmd.git.worktree.select
+        evidence:
+          doc: Plans/UI_Command_Catalog.md
+          quote: '`cmd.git.worktree.select` | Select Worktree | Selects a worktree row and persists selected worktree/filter state per project'
+        note: 'Selection and filter state are per-project panel state, not worktree state; W-075 keeps the selected worktree
+          an owner runtime/view record.'
     optional_identity:
     - worktree_id
     - branch_ref
@@ -367,15 +463,20 @@ command_payload_definition_map:
   pre_attempt_admissible:
     field: attempt_id
     commands:
+    - cmd.runtime.abandon_recovery
     - cmd.runtime.approve
     - cmd.runtime.decline
+    - cmd.runtime.locate_and_verify_recovery
     - cmd.runtime.open_attempt_details
     - cmd.runtime.replan
     - cmd.runtime.resume_after_prerequisite
     - cmd.runtime.skip_node
     - cmd.runtime.start_fresh_attempt
-    source: References allowed_action_id table (minimum args with attempt_id?) and the Pre-attempt blocked rule;
-      UCC-092
+    source: 'References allowed_action_id table (minimum args with attempt_id?) and the Pre-attempt blocked rule;
+      UCC-092. Amended 2026-11-07 (DL-341): locate_and_verify_recovery and abandon_recovery, from the Known-37
+      recovery-unavailable catalog rows ("Pre-attempt payloads omit `attempt_id`"), Plans/Commands_System.md
+      ("Pre-attempt dispatch omits `attempt_id`") and Plans/Contracts_V0.md ("A pre-attempt request omits
+      `attempt_id`")'
   owners:
     routing_rule: an exact exception wins; otherwise the longest namespace (an id starting with cmd.<namespace>.)
       among the routes of the command's primary row group (the row group of its lowest-numbered token unit, else
@@ -919,6 +1020,32 @@ command_payload_definition_map:
         alias'
     note: 'Q5 resolution 4 (DL-335): UCC-058 forbids exposing Bind Existing as this command, so it is retired and gets
       no definition.'
+  - token: cmd.chat.worktree.create_pr
+    disposition: compatibility_alias
+    targets:
+    - cmd.chat.worktree.pr
+    evidence:
+      doc: Plans/Contracts_V0.md
+      unit: CV-160
+      field: acceptance_criteria
+      quote: cmd.chat.worktree.open_files and cmd.chat.worktree.create_pr may route to canonical assistant worktree
+        commands.
+    note: CV-160 names no target among the canonical six; the alias goes to cmd.chat.worktree.pr, the six's Create PR
+      command (UCC-058 row; Contracts_V0 section 7.1 registration table). Recorded by DL-341 max_review_changes.
+  - token: cmd.chat.worktree.open_files
+    disposition: compatibility_alias
+    targets:
+    - cmd.git.worktree.open
+    evidence:
+      doc: Plans/Contracts_V0.md
+      unit: CV-160
+      field: acceptance_criteria
+      quote: cmd.chat.worktree.open_files and cmd.chat.worktree.create_pr may route to canonical assistant worktree
+        commands.
+    note: Canon conflict on the target. CV-160 lets the alias route to the canonical assistant worktree commands, none
+      of which opens files, while UCC-058 routes Open Files through the project-scope cmd.git.worktree.open and the
+      section 2.5C rules let the thread-scoped family normalize to project-scope worktree operations. The catalog keeps
+      aliases, so the target is cmd.git.worktree.open. Recorded by DL-341 max_review_changes.
   - token: cmd.chat.{new,archive,delete,rename,pin,export,search}
     disposition: family_alias
     targets:
@@ -1089,6 +1216,22 @@ command_payload_definition_map:
       unit: UCC-052
       field: compatibility_only_notes
       quote: Existing cmd.k8s.*, set_context, and set_namespace rows are compatibility aliases
+  - token: cmd.orchestrator.restore_safe_point_then_retry
+    disposition: compatibility_alias
+    targets:
+    - cmd.runtime.restore_safe_point_then_retry
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: '`normalization.kind = compatibility_alias`, `normalizes_to_contract = cmd.runtime.restore_safe_point_then_retry`,
+        `alias_of_command_id = cmd.orchestrator.safe_point_retry`'
+    note: 'Owned by UCC-111, outside UCC-049..UCC-105. The exact recovery command contracts table gives its immediate
+      alias_of_command_id as the wrapper cmd.orchestrator.safe_point_retry, which is itself a wrapper
+      (normalization.kind wrapper, alias_of_command_id null) and not an alias, and its normalizes_to_contract as
+      cmd.runtime.restore_safe_point_then_retry; the Orchestrator safe-point retry prose calls it a compatibility alias
+      for that same runtime command. It accepts the wrapper input, applies the wrapper''s identical
+      permission-validation and consumption transform, and dispatches the exact canonical payload to the runtime
+      command''s handler, with no handler, result, effect, admission or idempotency domain of its own (Executor_Protocol.md
+      Approved baseline-target retry and restore lifecycle). Recorded by DL-341 max_review_changes.'
   - token: cmd.panel_tab.close
     disposition: owned_outside_range
     evidence:
@@ -1286,6 +1429,16 @@ command_payload_definition_map:
       unit: UCC-067
       field: stale_retired_dispositions
       quote: the detach and pane rows retire; replacements in UCC-201
+  - token: cmd.terminal.focus_session
+    disposition: alias
+    targets:
+    - cmd.terminal.focus
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-202
+      field: canonical_text
+      quote: cmd.terminal.focus is canonical and cmd.terminal.focus_session is its alias
+    note: 'DL-341: recorded alias metadata of cmd.terminal.focus (UCC-202, DL-180), with no handler or row of its own.'
   - token: cmd.terminal.kill_session
     disposition: owned_outside_range
     evidence:
@@ -1326,7 +1479,83 @@ command_payload_definition_map:
       field: canonical_text
       quote: Existing cmd.thread.request/spawn Send uses current local previews and receiver authority
     note: Owned by UCC-145 and UCC-216.
+  - token: cmd.worktree.provision
+    disposition: compatibility_alias
+    targets:
+    - cmd.git.worktree.create
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: '| `cmd.worktree.provision` / `cmd.worktree.release` | alias intents -> `cmd.git.worktree.create` / `cmd.git.worktree.release`; no new rows |'
+    note: 'Commands_System.md''s candidate census calls it a compatibility spelling, not registered, of
+      cmd.git.worktree.create, one of the seven compatibility intents of CS-066 and UCC-145; DRY_Rules.md and
+      Shared_Integration_Runtime.md normalize it to cmd.git.worktree.create, with only the existing thread wrapper
+      for a thread-scoped caller. Recorded by DL-341 max_review_changes.'
+  - token: cmd.worktree.release
+    disposition: compatibility_alias
+    targets:
+    - cmd.git.worktree.release
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: '| `cmd.worktree.provision` / `cmd.worktree.release` | alias intents -> `cmd.git.worktree.create` / `cmd.git.worktree.release`; no new rows |'
+    note: 'Commands_System.md''s candidate census calls it a compatibility spelling, not registered, of
+      cmd.git.worktree.release, one of the seven compatibility intents of CS-066 and UCC-145; DRY_Rules.md and
+      Shared_Integration_Runtime.md normalize it to cmd.git.worktree.release. Recorded by DL-341
+      max_review_changes.'
+  - token: compose.run_scenario
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.compose.scenario.run
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-137
+      field: canonical_text
+      quote: the flat compose.save_scenario and compose.run_scenario spellings recorded as compatibility aliases
+    note: 'DL-341: the flat spelling canon records (UCC-137; the Cozy Shelves table row for the scenario family).'
+  - token: compose.save_scenario
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.compose.scenario.save
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-137
+      field: canonical_text
+      quote: the flat compose.save_scenario and compose.run_scenario spellings recorded as compatibility aliases
+    note: 'DL-341: the flat spelling canon records (UCC-137; the Cozy Shelves table row for the scenario family).'
+  - token: set_context
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.k8s.select_context
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-137
+      field: canonical_text
+      quote: cmd.docker.k8s.select_context and cmd.docker.k8s.select_namespace are canonical with set_context and set_namespace
+        recorded aliases
+    note: 'DL-341: the bare K8s-era form; UCC-052 compatibility_only_notes also marks it a compatibility alias. The prototype
+      token cmd.docker.set_context is a different alias, of cmd.docker.context.select.'
+  - token: set_namespace
+    disposition: compatibility_alias
+    targets:
+    - cmd.docker.k8s.select_namespace
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      unit: UCC-137
+      field: canonical_text
+      quote: cmd.docker.k8s.select_context and cmd.docker.k8s.select_namespace are canonical with set_context and set_namespace
+        recorded aliases
+    note: 'DL-341: the bare K8s-era form; UCC-052 compatibility_only_notes also marks it a compatibility alias.'
   owner_state_code_map:
+  - owner_state: access_url_unresolved
+    maps_to: not_configured
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list access_url_unresolved in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      not_configured from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead
+      applies it (DL-341 under_dl333_resolution_6). Not configured is a family of the shared Docker/Kubernetes
+      disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured,
+      Unauthorized, Unreachable, Degraded, Partial capability); section 2A Runtime access URL resolution: when no
+      access URL is available, Docker Manager MUST show No direct access URL detected and disable the open action
+      rather than guessing'
   - owner_state: activation_not_active
     maps_to: blocked_state_required
     sources:
@@ -1343,6 +1572,15 @@ command_payload_definition_map:
     maps_to: blocked_state_required
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: bake_unavailable
+    maps_to: partial_capability
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list bake_unavailable in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      partial_capability from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C
+      lead applies it (DL-341 under_dl333_resolution_6). Partial capability is a family of the shared
+      Docker/Kubernetes disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph:
+      Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability)'
   - owner_state: blocker_missing
     maps_to: blocked_state_required
     sources:
@@ -1351,10 +1589,66 @@ command_payload_definition_map:
     maps_to: blocked_state_required
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: buildx_unavailable
+    maps_to: partial_capability
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list buildx_unavailable in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      partial_capability from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C
+      lead applies it (DL-341 under_dl333_resolution_6). Partial capability is a family of the shared
+      Docker/Kubernetes disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph:
+      Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability); section 2A persists
+      buildx readiness for the build surfaces'
   - owner_state: compile_terminal
     maps_to: blocked_state_required
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: compose_invalid
+    maps_to: blocked_state_required
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list compose_invalid in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      blocked_state_required from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream
+      C lead applies it (DL-341 under_dl333_resolution_6); by its name the command waits for a valid compose file.
+      CRAU-093: compose validation failures (compose_invalid, compose_service_missing) render as reason-coded rows
+      whose repair path is the editor handoff. Canon reads two ways here: blocked_state_required is not a family of
+      the shared Docker/Kubernetes disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph:
+      Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability), while
+      Plans/Containers_Registry_and_Unraid.md section 2B gives runtime identity a local-runtime blocked/degraded
+      classification and lists compose-up failure, unhealthy container, missing Docker context, cluster unreachable
+      and rollout failure among local-runtime blockers. Kept as the best fit and asked of the CRAU owner (DL-341
+      crau_owner_questions)'
+  - owner_state: compose_service_missing
+    maps_to: blocked_state_required
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list compose_service_missing in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      blocked_state_required from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream
+      C lead applies it (DL-341 under_dl333_resolution_6); by its name the command waits for the named compose
+      service. CRAU-093: compose validation failures (compose_invalid, compose_service_missing) render as reason-coded
+      rows whose repair path is the editor handoff. Canon reads two ways here: blocked_state_required is not a family
+      of the shared Docker/Kubernetes disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy
+      paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability), while
+      Plans/Containers_Registry_and_Unraid.md section 2B gives runtime identity a local-runtime blocked/degraded
+      classification and lists compose-up failure, unhealthy container, missing Docker context, cluster unreachable
+      and rollout failure among local-runtime blockers. Kept as the best fit and asked of the CRAU owner (DL-341
+      crau_owner_questions)'
+  - owner_state: container_unhealthy
+    maps_to: degraded
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list container_unhealthy in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to degraded from
+      the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead applies it (DL-341
+      under_dl333_resolution_6). Degraded is a family of the shared Docker/Kubernetes disabled-state taxonomy
+      (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized,
+      Unreachable, Degraded, Partial capability); section 2B lists unhealthy container among local-runtime blockers
+      under its blocked/degraded classification'
+  - owner_state: dedup_hold_pending
+    maps_to: not_configured
+    sources:
+    - 'Plans/Decision_Log.md DL-444 and DL-445: the duplicate sweep''s automatic jobs and panel buttons stay unavailable
+      until the answer is applied and all remaining definition, review and recording approvals pass. Mapped as
+      maintenance_cutoffs_pending is (DL-403); a stream C lead proposal recorded in DL-341, not a coordinator resolution'
   - owner_state: dependency_conflict
     maps_to: blocked_state_required
     sources:
@@ -1375,10 +1669,73 @@ command_payload_definition_map:
     maps_to: blocked_state_required
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: image_missing
+    maps_to: blocked_state_required
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list image_missing in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      blocked_state_required from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream
+      C lead applies it (DL-341 under_dl333_resolution_6); by its name the command waits for an image that is built or
+      pulled. Canon reads two ways here: blocked_state_required is not a family of the shared Docker/Kubernetes
+      disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured,
+      Unauthorized, Unreachable, Degraded, Partial capability), while Plans/Containers_Registry_and_Unraid.md section
+      2B gives runtime identity a local-runtime blocked/degraded classification and lists compose-up failure,
+      unhealthy container, missing Docker context, cluster unreachable and rollout failure among local-runtime
+      blockers. Kept as the best fit and asked of the CRAU owner (DL-341 crau_owner_questions)'
+  - owner_state: k8s_context_missing
+    maps_to: not_configured
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list k8s_context_missing in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      not_configured from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead
+      applies it (DL-341 under_dl333_resolution_6). Not configured is a family of the shared Docker/Kubernetes
+      disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured,
+      Unauthorized, Unreachable, Degraded, Partial capability)'
+  - owner_state: k8s_context_unreachable
+    maps_to: unreachable
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list k8s_context_unreachable in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to unreachable
+      from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead applies it
+      (DL-341 under_dl333_resolution_6). Unreachable is a family of the shared Docker/Kubernetes disabled-state
+      taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized,
+      Unreachable, Degraded, Partial capability); section 2B lists cluster unreachable among local-runtime blockers'
+  - owner_state: k8s_namespace_missing
+    maps_to: not_configured
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list k8s_namespace_missing in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      not_configured from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead
+      applies it (DL-341 under_dl333_resolution_6). Not configured is a family of the shared Docker/Kubernetes
+      disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured,
+      Unauthorized, Unreachable, Degraded, Partial capability)'
+  - owner_state: k8s_rollout_blocked
+    maps_to: blocked_state_required
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list k8s_rollout_blocked in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      blocked_state_required from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream
+      C lead applies it (DL-341 under_dl333_resolution_6); by its name the command waits for the rollout to progress.
+      Canon reads two ways here: blocked_state_required is not a family of the shared Docker/Kubernetes disabled-state
+      taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized,
+      Unreachable, Degraded, Partial capability), while Plans/Containers_Registry_and_Unraid.md section 2B gives
+      runtime identity a local-runtime blocked/degraded classification and lists compose-up failure, unhealthy
+      container, missing Docker context, cluster unreachable and rollout failure among local-runtime blockers. Kept as
+      the best fit and asked of the CRAU owner (DL-341 crau_owner_questions)'
   - owner_state: ledger_sync_blocked
     maps_to: degraded
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: maintenance_cutoffs_pending
+    maps_to: not_configured
+    sources:
+    - 'Plans/Decision_Log.md DL-403: memory maintenance waits for approved cutoffs, and the two maintenance buttons
+      show as unavailable with the reason until they exist; DL-341 coordinator resolution 3'
+    - 'Plans/Decision_Log.md DL-446 and DL-447: the cutoffs now exist (monthly summary: 90 idle days and score below
+      0.10; prune archive: 180 idle days and score below 0.05), and what still holds the two maintenance commands is
+      each card''s "Automatic jobs and panel buttons stay unavailable until your answer is applied and all remaining
+      definition, review and recording approvals pass". The owner state names that hold until it lifts; source added
+      by the stream C lead''s P0d task (DL-341 round_3_changes)'
   - owner_state: missing_approver
     maps_to: permission_required
     sources:
@@ -1448,6 +1805,37 @@ command_payload_definition_map:
     maps_to: blocked_state_required
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: runtime_context_missing
+    maps_to: not_configured
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list runtime_context_missing in the canonical
+      local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      not_configured from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead
+      applies it (DL-341 under_dl333_resolution_6). Not configured is a family of the shared Docker/Kubernetes
+      disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured,
+      Unauthorized, Unreachable, Degraded, Partial capability); CRAU-099 carries a typed daemon diagnosis inside this
+      code''s payload; section 2B lists missing Docker context among local-runtime blockers'
+  - owner_state: runtime_context_unreachable
+    maps_to: unreachable
+    sources:
+    - 'Plans/Containers_Registry_and_Unraid.md CRAU-095 and section 2B list runtime_context_unreachable in the
+      canonical local-runtime reason-code base enum; canon names the code and gives it no meaning there. Mapped to
+      unreachable from the code''s name: the P0c worker''s choice, under DL-333 resolution 6 as the stream C lead
+      applies it (DL-341 under_dl333_resolution_6). Unreachable is a family of the shared Docker/Kubernetes
+      disabled-state taxonomy (UCC-053; this catalog''s section 2.5B taxonomy paragraph: Unsupported, Not configured,
+      Unauthorized, Unreachable, Degraded, Partial capability); CRAU-099 carries a typed daemon diagnosis inside this
+      code''s payload'
+  - owner_state: safe_point_missing
+    maps_to: blocked_state_required
+    sources:
+    - 'Plans/UI_Command_Catalog.md UCC-111 and the Orchestrator projection-action and safe-point retry commands table:
+      cmd.orchestrator.safe_point_retry preserves the four pre-modal disabled reasons safe_point_missing,
+      state_changed, permission_denied, and operation_in_progress, and normalizes to
+      cmd.runtime.restore_safe_point_then_retry, which shares its admission decision; the safe-point/Chat-revert
+      section lets Orchestrator availability additionally expose safe_point_missing | state_changed |
+      operation_in_progress. Canon gives no closed code. Mapped to blocked_state_required (the command waits for a
+      safe point to exist; its precondition is safe_point_available): the P0d worker''s choice, under DL-333
+      resolution 6 as the stream C lead applies it (DL-341 under_dl333_resolution_6)'
   - owner_state: source_coverage_missing
     maps_to: blocked_state_required
     sources:
@@ -1516,6 +1904,16 @@ command_payload_definition_map:
     maps_to: stale_projection
     sources:
     - Plans/prd_planning_runtime_contracts.json ui_command_contracts disabled_reason_codes
+  - owner_state: state_changed
+    maps_to: stale_projection
+    sources:
+    - 'Plans/UI_Command_Catalog.md UCC-111 and the Orchestrator projection-action and safe-point retry commands table:
+      cmd.orchestrator.safe_point_retry preserves the four pre-modal disabled reasons safe_point_missing,
+      state_changed, permission_denied, and operation_in_progress, with the precondition state_current; the storage
+      fallback divergence dispositions also close their disabled reasons to a list that includes state_changed, which
+      the storage handler returns when a root-binding, hash or captured-generation component changed. Canon gives no
+      closed code. Mapped to stale_projection (the state the projection showed is no longer current): the P0d
+      worker''s choice, under DL-333 resolution 6 as the stream C lead applies it (DL-341 under_dl333_resolution_6)'
   - owner_state: topic_busy
     maps_to: blocked_state_required
     sources:
@@ -1572,5 +1970,73 @@ command_payload_definition_map:
     decision: DL-333
     reason: 'Q5 resolution 8: cmd.chat.new runs before a thread exists (thread_id is minted when the first user
       message commits); it carries draft identity (ChatNewRequestScopeV2).'
+  - command_id: cmd.runtime.approve
+    field: allowed_action_id
+    decision: DL-341
+    condition: required_when
+    branch_field: approval_kind
+    exempt_branch: chat_tool
+    reason: 'DL-341 coordinator resolution 1: HITL-038 keeps one approval host with separate typed envelopes. The node
+      branch keeps the overlay''s blocked-run identity (run_id, blocked_sequence, allowed_action_id), so allowed_action_id is
+      required there; OrchestratorNodeApprovalRequestV1 itself carries run_id, node_id, blocked_sequence and an optional
+      attempt_id, and no allowed_action_id or approval_kind. The chat-tool branch (RuntimeApproveV3ToolRequest, approval_kind
+      chat_tool) binds run, request, tool and target, has no blocked episode and forbids allowed_action_id. Canon names
+      only the chat_tool value of approval_kind; the node branch value is not canon and the definition marks it a gap.'
+  - command_id: cmd.runtime.approve
+    field: blocked_sequence
+    decision: DL-341
+    condition: required_when
+    branch_field: approval_kind
+    exempt_branch: chat_tool
+    reason: 'DL-341 coordinator resolution 1: HITL-038 keeps one approval host with separate typed envelopes. The node
+      branch keeps the overlay''s blocked-run identity (run_id, blocked_sequence, allowed_action_id), so blocked_sequence is
+      required there; OrchestratorNodeApprovalRequestV1 itself carries run_id, node_id, blocked_sequence and an optional
+      attempt_id, and no allowed_action_id or approval_kind. The chat-tool branch (RuntimeApproveV3ToolRequest, approval_kind
+      chat_tool) binds run, request, tool and target, has no blocked episode and forbids blocked_sequence. Canon names
+      only the chat_tool value of approval_kind; the node branch value is not canon and the definition marks it a gap.'
+  - command_id: cmd.runtime.decline
+    field: allowed_action_id
+    decision: DL-341
+    condition: required_when
+    branch_field: approval_kind
+    exempt_branch: chat_tool
+    reason: 'DL-341 coordinator resolution 1: HITL-038 keeps one approval host with separate typed envelopes. The node
+      branch keeps the overlay''s blocked-run identity (run_id, blocked_sequence, allowed_action_id), so allowed_action_id is
+      required there; OrchestratorNodeApprovalRequestV1 itself carries run_id, node_id, blocked_sequence and an optional
+      attempt_id, and no allowed_action_id or approval_kind. The chat-tool branch (RuntimeDeclineV3ToolRequest, approval_kind
+      chat_tool) binds run, request, tool and target, has no blocked episode and forbids allowed_action_id. Canon names
+      only the chat_tool value of approval_kind; the node branch value is not canon and the definition marks it a gap.'
+  - command_id: cmd.runtime.decline
+    field: blocked_sequence
+    decision: DL-341
+    condition: required_when
+    branch_field: approval_kind
+    exempt_branch: chat_tool
+    reason: 'DL-341 coordinator resolution 1: HITL-038 keeps one approval host with separate typed envelopes. The node
+      branch keeps the overlay''s blocked-run identity (run_id, blocked_sequence, allowed_action_id), so blocked_sequence is
+      required there; OrchestratorNodeApprovalRequestV1 itself carries run_id, node_id, blocked_sequence and an optional
+      attempt_id, and no allowed_action_id or approval_kind. The chat-tool branch (RuntimeDeclineV3ToolRequest, approval_kind
+      chat_tool) binds run, request, tool and target, has no blocked episode and forbids blocked_sequence. Canon names
+      only the chat_tool value of approval_kind; the node branch value is not canon and the definition marks it a gap.'
+  identity_aliases:
+  - row_group: UCC-077..UCC-083
+    overlay_name: debug_session_id
+    canon_name: investigation_id
+    decision: DL-341
+    evidence:
+      doc: Plans/Contracts_V0.md
+      quote: '| `debug.investigation.started` | `investigation_id`, `project_id`, `thread_id?`'
+    note: 'DL-341 coordinator resolution 4: the debug investigation identity is investigation_id in Contracts_V0 section
+      3.5 Debug investigation events (CV-123) and assistant-chat-design.md section 12.0A (ACD-096 keeps the canonical
+      header names).'
+  - row_group: UCC-084..UCC-088
+    overlay_name: memory_item_id
+    canon_name: gist_id
+    decision: DL-341
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: '| `cmd.chat.memory.verify` | `{ project_id, gist_id }` |'
+    note: 'DL-341 coordinator resolution 4: the memory item identity is gist_id in the catalog memory rows and in
+      Plans/assistant-memory-subsystem.md (MemoryGist).'
   contested: []
 ```

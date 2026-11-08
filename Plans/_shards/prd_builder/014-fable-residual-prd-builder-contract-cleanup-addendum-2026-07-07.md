@@ -2,9 +2,9 @@
 
 Source: `Plans/PRD_Builder.md`
 
-Source lines: L925-L986
+Source lines: L925-L989
 
-Source SHA256: `26a07a9fe4ca1c3262915145e219cd0db5151f4143bcfc1e4bab67d7b917afdb`
+Source SHA256: `e899d86a360e0b89baa977829bfa025cadbc144f66c450adcd4da03100b6fa36`
 
 ---
 
@@ -13,6 +13,8 @@ Source SHA256: `26a07a9fe4ca1c3262915145e219cd0db5151f4143bcfc1e4bab67d7b917afdb
 This addendum closes only residual FABLE Critical/High PRD Builder rows for conflict records, scoring defaults, resource defaults, and approval command naming. It does not certify runtime readiness or create build tasks.
 
 ### PRDB-011 - Conflict, Scoring, Resource Defaults, And Approval Command Contract
+
+Amended 2026-11-07 (DL-333): the user resolution command is now `cmd.prd_builder.conflict.resolve`, with the runtime contract row's fields `conflict_id`, `selected_claim_refs` and `resolution_reason` (`Plans/prd_planning_runtime_contracts.json` `ui_command_contracts`; PRDB-024), and `cmd.prd_builder.resolve_conflict` is its compatibility alias.
 
 ```yaml
 plan_unit_id: PRDB-011
@@ -32,6 +34,7 @@ unblocks: []
 acceptance_criteria:
   - ConflictRecord tie-break order is explicit user resolution, higher-authority source_ref, latest accepted user correction, higher confidence, then blocked_requires_user_decision.
   - User resolution command is cmd.prd_builder.resolve_conflict with prd_id, conflict_id, selected_value, optional rationale, and actor_ref.
+  - "Amended 2026-11-07 (DL-333): the user resolution command is cmd.prd_builder.conflict.resolve with the runtime contract row's fields conflict_id, selected_claim_refs and resolution_reason (Plans/prd_planning_runtime_contracts.json ui_command_contracts; PRDB-024); cmd.prd_builder.resolve_conflict is its compatibility alias; actor_ref travels in the UICommand envelope."
   - Readiness score defaults are completeness 0.35, evidence 0.25, conflicts 0.20, dependencies 0.10, resources 0.10, with approve threshold >= 0.85 and conflicts axis requiring no blocking conflicts.
   - Resource defaults include estimated_tokens = unknown, estimated_cost_microusd = unknown, max_review_minutes = 30, provider_preference = unset, and required_human_review = true when estimates are unknown.
   - The canonical approval command is cmd.prd_builder.approve_for_planning_wizard; compatibility alias cmd.prd_builder.approve_for_planning must project to the canonical command and emit the same approval receipt.

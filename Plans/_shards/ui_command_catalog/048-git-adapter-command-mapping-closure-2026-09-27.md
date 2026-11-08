@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L16132-L16283
+Source lines: L16598-L16749
 
-Source SHA256: `98447d333cdf4ff30fb4c1d473a5de432863a5fa3efd88c564112e55c376d1fc`
+Source SHA256: `62f831dc57ba873794b0a769caf531083f8c3a770b997a2892d4bde2fad8865f`
 
 ---
 
@@ -63,7 +63,7 @@ negative_constraints:
 
 ContractRef: ContractName:Plans/Source_Control_System.md#SCS-024, ContractName:Plans/Commands_System.md#CS-083, ContractName:Plans/Wiring_Matrix.md#WM-060
 
-### UCC-168 - Forge Review Edit And Runner Read Producers
+### Forge review edit and runner read producers
 
 `cmd.forge.review.edit` is the sole primary for a typed title/description patch of an exact provider review at an expected immutable revision. FGI-022 owns currentness, effective authority, remote_side_effect permission, target-bound confirmation and reconciliation guards. `cmd.forge.review.mark_ready` requires `draft=false`; the existing version.open/compare commands supply immutable review diff selection. Runner list and registration preview are FGI-022 owner-local read producers, with typed request/projection or preview/result records; they have no command-palette dispatch ID. Every Forge route remains `handler_unavailable` until native evidence exists.
 

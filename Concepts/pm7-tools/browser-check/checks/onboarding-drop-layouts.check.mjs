@@ -32,8 +32,14 @@ export default async function(t) {
         const props=rows.flatMap(r=>r.stage?.props.filter(p=>p.kind==='clipboard'&&p.state!=='out'&&p.op>.95)||[]);
         await t.check(label+': Reduced Motion places the prop immediately',props.length>10&&props.every(p=>Math.abs(p.len-p.target.len)<.01),String(props.length));
       } else {
-        await t.check(label+': visible descent covered',result.covered,JSON.stringify(result));
-        await t.check(label+': no midpoint stall or jump',result.covered&&result.maxSpeed<15&&result.maxStall<60,JSON.stringify(result));
+        const props=rows.flatMap(r=>r.screen==='r-pick'?r.stage?.props.filter(p=>p.kind==='clipboard'&&p.state!=='out')||[]:[]);
+        // enterUnder deliberately fades in place when NieR's fixed speech box leaves no lowering room.
+        // Require the full fade and the target length from the first, still-invisible sample; a pinned moving
+        // spring cannot take this branch, and every other layout must cover its actual descent.
+        const inPlace=look.startsWith('nier-')&&width===740&&props.length>10&&props[0].op<.1&&props.at(-1).op>.95&&props.every(p=>Math.abs(p.len-p.target.len)<.01);
+        all.at(-1).entryPolicy=inPlace?'NieR enterUnder: fade at destination':'descent';
+        await t.check(label+': intended entrance covered',result.covered||inPlace,JSON.stringify(all.at(-1)));
+        await t.check(label+': no midpoint stall or jump',inPlace||(result.covered&&result.maxSpeed<15&&result.maxStall<60),JSON.stringify(all.at(-1)));
       }
     }
   }

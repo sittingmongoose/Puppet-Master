@@ -5650,3 +5650,166 @@ owner_hints: [Plans/Settings_System.md, Plans/storage-plan.md, Plans/Backup_Rest
 ```
 
 ContractRef: ContractName:Plans/Decision_Log.md#DL-270, ContractName:Plans/storage-plan.md#SP-340, ContractName:Plans/usage-feature.md#UF-108, ContractName:Plans/Backup_Restore_System.md#BRS-031, ContractName:Plans/Settings_System.md#SSYS-026
+
+## Command payload definitions (DL-333, 2026-11-05)
+
+### SSYS-076 - Settings Route Command Payload Definitions
+
+```yaml
+plan_unit_id: SSYS-076
+unit_type: command_contract
+status: accepted
+owner_doc: Plans/Settings_System.md
+canonical_text: >-
+  Typed payload definition for the Settings route command that UI_Command_Catalog UCC-103 keeps current
+  (DL-333): cmd.settings.open, which opens exactly one stable Settings setting or manager/detail target
+  and preserves the Settings-owned exact return (SSYS-018, SSYS-019). The definitions block below gives
+  the command its args, owner result and narrowed error and disabled-reason codes in
+  pm.command_payload_definitions.v1. The catalog keeps ids, labels, availability and aliases; the strict
+  schema overlay keeps the common envelope and the closed code sets. The retired non-alias
+  cmd.settings.open_notifications spelling stays retired lineage and gets no definition and no alias.
+gui_related: true
+gui_classification_reason: Defines the arguments of the user-visible Settings open/navigation command.
+depends_on: [UCC-230, UCC-103, SSYS-018, SSYS-019, DL-333]
+unblocks: []
+acceptance_criteria:
+  - Every command that UCC-230 routes to SSYS-076 has exactly one definition in the block below.
+  - Every field has a vocabulary type, required, default and provenance; every gap field says what was missing.
+  - error_codes and disabled_reason_codes stay inside the overlay's closed sets.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+  - python3 scripts/pm-command-payload-defs-check.py
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_payload_shape_drift
+reasoning_tier: high
+context_scope: ucc_049_105_typed_definitions
+implementation_surfaces: [Plans/Settings_System.md, Plans/UI_Command_Catalog.md]
+node_compile_hint: {mode: command_payload_definitions, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to Q5"
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
+preserved_exact_tokens: [cmd.settings.open]
+negative_constraints:
+  - Do not add payload fields to UI_Command_Catalog command rows.
+  - Do not define a payload for an alias, retired, non-alias or source-lineage token; cmd.settings.open_notifications is retired non-alias lineage (UCC-103) and receives no alias entry here.
+  - Do not encode a bloom, breadcrumb, Back control or other presentation geometry into the definition (UCC-230 routes the current typed route only).
+owner_hints: [Plans/UI_Command_Catalog.md, Plans/Commands_System.md]
+```
+
+```yaml
+command_payload_definitions:
+  format: pm.command_payload_definitions.v1
+  owner_unit: SSYS-076
+  overlay: Plans/UI_Command_Catalog.md#UCC-230
+  definitions:
+    - command_id: cmd.settings.open
+      ucc_units: [UCC-103]
+      command_kind: navigation_wrapper
+      response_kind: owner_operation
+      args:
+        manager_id:
+          type: enum
+          values: [all-settings, general-appearance-input, providers-accounts-models, web-routes, media-routes, back-seat-driver, memory-context-instructions, goals-crew-personas, permissions-filesafe, commands-shortcuts, tools-integrations, testing-debug-capture, files-editor-terminal, notifications-sounds, source-control, browser-policy, containers-registries, storage-retention-recovery, project-history-artifacts, settings-transfer, settings-export-migration, server-claim-bootstrap, servers-hosts-environments, clients-continuity, project-hosting-files, project-sync-move-copy, ssh-remote, remote-access, server-backup-restore, project-backup, updates, project-defaults-templates, onboarding-guided-tour, doctor, usage-budgets, teacher-help, project-search-index, dry-method]
+          required: true
+          default: none
+          provenance: canon
+          source: "settings_route_request_v2 requires manager_id, the closed 38-value enum inline at $defs/settings_route_request_v2.properties.manager_id (Plans/settings_system_contracts.schema.json), in canon's kebab-case spelling (DL-341 keeps canon's enum spelling). $defs/manager_id is only the open pattern ^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$, so the closed set is written here."
+        target:
+          type: contract
+          ref: Plans/settings_system_contracts.schema.json#/$defs/settings_level_target_v1
+          required: true
+          default: none
+          provenance: canon
+          source: "settings_route_request_v2 requires target ($defs/settings_level_target_v1); SSYS-019 exact level/level_key owner-target context with nullable fields only when that identity is not applicable"
+        thing_id:
+          type: id
+          required: true
+          default: none
+          nullable: true
+          provenance: canon
+          source: "settings_route_request_v2 requires thing_id, anyOf string 1..256 or null (Plans/settings_system_contracts.schema.json); null when that identity is not applicable (SSYS-019)"
+        server_id:
+          type: id
+          required: true
+          default: none
+          nullable: true
+          provenance: canon
+          source: "settings_route_request_v2 requires server_id, anyOf string 1..256 or null (Plans/settings_system_contracts.schema.json); null when that identity is not applicable (SSYS-019)"
+        execution_host_id:
+          type: id
+          required: true
+          default: none
+          nullable: true
+          provenance: canon
+          source: "settings_route_request_v2 requires execution_host_id, anyOf string 1..256 or null (Plans/settings_system_contracts.schema.json); null when that identity is not applicable (SSYS-019)"
+        execution_environment_id:
+          type: id
+          required: true
+          default: none
+          nullable: true
+          provenance: canon
+          source: "settings_route_request_v2 requires execution_environment_id, anyOf string 1..256 or null (Plans/settings_system_contracts.schema.json); null when that identity is not applicable (SSYS-019)"
+        origin_route_ref:
+          type: ref
+          required: true
+          default: none
+          provenance: canon
+          source: "settings_route_request_v2 requires origin_route_ref (string 1..256); the return contract freezes the origin route (SSYS-019)"
+        origin_client_id:
+          type: id
+          required: true
+          default: none
+          provenance: canon
+          source: "settings_route_request_v2 requires origin_client_id (string 1..256)"
+        query:
+          type: string
+          required: true
+          default: none
+          constraints: {max_length: 16384}
+          provenance: canon
+          source: "settings_route_request_v2 requires query (string maxLength 16384); the return contract freezes the query (SSYS-019)"
+        scroll_anchor_ref:
+          type: ref
+          required: true
+          default: none
+          nullable: true
+          provenance: canon
+          source: "settings_route_request_v2 requires scroll_anchor_ref, anyOf string 1..256 or null (Plans/settings_system_contracts.schema.json); the return contract freezes the scroll anchor (SSYS-019)"
+        focus_ref:
+          type: ref
+          required: true
+          default: none
+          nullable: true
+          provenance: canon
+          source: "settings_route_request_v2 requires focus_ref, anyOf string 1..256 or null (Plans/settings_system_contracts.schema.json); the return contract freezes focus (SSYS-019)"
+        continuation_generation:
+          type: integer
+          required: true
+          default: none
+          constraints: {minimum: 0}
+          provenance: canon
+          source: "settings_route_request_v2 requires continuation_generation (integer minimum 0); a stale generation rejects return (SSYS-019)"
+        expires_at_utc:
+          type: timestamp
+          required: true
+          default: none
+          provenance: canon
+          source: "settings_route_request_v2 requires expires_at_utc (RFC 3339 date-time); no literal default (DL-333 coordinator resolution 11)"
+      owner_request: Plans/settings_system_contracts.schema.json#/$defs/settings_route_request_v2
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: Plans/settings_system_contracts.schema.json#/$defs/settings_route_return_v2
+      error_codes: [invalid_args, invalid_route, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, stale_projection]
+      aliases: []
+      judgments:
+        - key: owner_request
+          choice: Plans/settings_system_contracts.schema.json#/$defs/settings_route_request_v2
+          gap_note: "Canon disagrees on the request version: the wiring row's request_schema_ref is settings_route_request_v2 (Wiring_Matrix.production.json catalog.settings_open), while the catalog row says the target is carried by pm.settings_route_request.v1 (UI_Command_Catalog.md:11086) and Plans/Commands_System.md:5065 registers settings_route_request (pm.settings_route_request.v1). The definition follows the wiring row; the catalog and Commands_System text still name v1. Not settled here."
+        - key: response_kind
+          choice: owner_operation
+          gap_note: "The command is a navigation_wrapper (UI_Command_Catalog.md:11086), and CV-333 keeps local_projection for route/open without an owner result; here the wiring names an owner request and result (settings_route_request_v2 / settings_route_return_v2, a bounded route/open return with status returned, caller_unavailable or stale_return_refused), so owner_operation is chosen. Canon does not state the response_kind."
+        - key: disabled_reason_codes
+          choice: [not_configured, stale_projection]
+          gap_note: "No registration table states disabled reasons for this row; chosen from the closed set over the registration preconditions settings_registry_loaded && route_target_current (UI_Command_Catalog.md:11086): an unloaded settings registry maps to not_configured and a route target that is not current to stale_projection. SSYS-018 keeps handler_unavailable as the evidence boundary until the sole handler is observed; that is an error code, not a disabled code."
+```
