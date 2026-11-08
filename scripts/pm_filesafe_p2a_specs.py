@@ -144,9 +144,15 @@ def specs(builder):
                 old = b['issued'][c['event']['event_id']]
                 b['issued'][c['event']['event_id']] = {'event': copy.deepcopy(old['event'])}
 
+            def full_value_other(c, b):
+                c['event']['event_id'] = '\ud800'
+                c['custody']['event_id'] = '\ud800'
+                c['custody']['first_append_receipt']['event_id'] = '\ud800'
+
             for row, change, keep in (
                     ('IS01_object', issued_not_object, ('issued',)),
                     ('IS02_members', issued_missing_custody, ('issued',)),
+                    ('FV02_other', full_value_other, ('custody_digests',)),
                     ('IS04a_slot_type', setter(('event', 'sequence_id'), 70.0), ('custody_digests',)),
                     ('IS05_schema', setter(('event', 'redaction_profile'), 'df-p2a-unknown'), ('custody_digests',)),
                     ('IR01_event_id', setter(('custody', 'event_id'), 'evt_df_' + 'e' * 64), ()),
@@ -388,6 +394,14 @@ def protocol_specs():
                                                              {'action': 'read'}], ['read_unavailable'], 0),
             (f, 'original_project_0', 'DD03_authority', [], [{'edit': {'target': 'bank', 'path': '/original_custody/EID', 'remove': True}},
                                                             {'action': 'read'}], ['read_unavailable'], 0),
+            (f, 'original_project_0', 'DD04_other',
+             [{'target': 'candidate', 'path': '/event/sequence_id', 'value': 1 << 64},
+              {'target': 'candidate', 'path': '/custody/first_append_receipt/sequence_id', 'value': 1 << 64},
+              {'target': 'bank', 'path': '/issued/EID/event/sequence_id', 'value': 1 << 64},
+              {'target': 'bank', 'path': '/issued/EID/custody/first_append_receipt/sequence_id', 'value': 1 << 64},
+              {'target': 'bank', 'path': '/retained_boundary/EID/event/sequence_id', 'value': 1 << 64},
+              {'target': 'bank', 'path': '/retained_boundary/EID/custody/first_append_receipt/sequence_id', 'value': 1 << 64}],
+             [{'action': 'read'}], ['read_unavailable'], 0),
         ]
     return out
 
@@ -646,4 +660,6 @@ def payload_specs(builder):
         value[key] = float(value[key])
         out.append(dict(kind='payload_semantic', family=f, target_row='CS02a_slot_type', expected_error='payload_schema',
                         payload=value, id=cid(f, 'CS02a_slot_type', 'float'), defect=f'{key} given as a float'))
+    P_('filesafe.command_denied', 0, 'PJ03_other',
+       lambda p: p.__setitem__('command_preview', '\ud800'), 'lone-surrogate')
     return out
