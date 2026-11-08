@@ -39,7 +39,7 @@ export default async function(t) {
         await new Promise(resolve=>{
           const tick=ts=>{
             const s=document.querySelector('#pm-o55-onboarding .pst')?.__pipStage;
-            if(s)rows.push({ts,t:s.t,render:s.renderN,stage:s.id,live:s.live(),fps:s.frameRate(),pip:{head:s.H,dy:s.ps.dy},props:[...s.props].map(([id,p])=>({id,kind:p.spec.kind,state:p.state,op:p.op,settled:p.settled,len:p.len,target:s.propTarget(p).len,box:p.box,pos:p.pos,rest:p.restBox,ground:!!p.spec.ground,stack:p.spec.stack})),fx:s.fx.map(p=>{if(!ids.has(p))ids.set(p,++nextId);return {id:ids.get(p),kind:p.kind,x:p.x,y:p.y,life:p.life};})});
+            if(s)rows.push({ts,t:s.t,theme:s.theme,render:s.renderN,stage:s.id,live:s.live(),fps:s.frameRate(),pip:{head:s.H,dy:s.ps.dy},props:[...s.props].map(([id,p])=>({id,kind:p.spec.kind,state:p.state,op:p.op,settled:p.settled,len:p.len,target:s.propTarget(p).len,box:p.box,pos:p.pos,rest:p.restBox,ground:!!p.spec.ground,stack:p.spec.stack})),fx:s.fx.map(p=>{if(!ids.has(p))ids.set(p,++nextId);return {id:ids.get(p),kind:p.kind,x:p.x,y:p.y,life:p.life};})});
             if(ts<until)requestAnimationFrame(tick);else resolve();
           };requestAnimationFrame(tick);
         });
@@ -74,6 +74,7 @@ export default async function(t) {
       }
       const cell={look,screen:result.screen,label,props,effects:bursts};inventory.push(cell);t.log(JSON.stringify(cell));
       await t.equal(look+' '+label+': owner fixture opened',result.screen,screen);
+      await t.check(look+' '+label+': requested rig look painted',result.rows.length>10&&result.rows.every(r=>r.theme===look),JSON.stringify([...new Set(result.rows.map(r=>r.theme))]));
       const bad=props.filter(p=>p.covered&&(p.worst>15||p.maxStall>Math.max(60,300/(look==='retro-light'?10:look==='retro-dark'?20:120))));
       await t.check(look+' '+label+': falls have continuous middle progress',bad.length===0,JSON.stringify(bad));
       await t.check(look+' '+label+': particles have no position jumps',bursts.every(p=>p.maxSpeed<1600),JSON.stringify(bursts.filter(p=>p.maxSpeed>=1600)));

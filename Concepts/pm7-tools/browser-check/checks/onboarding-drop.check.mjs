@@ -33,7 +33,7 @@ export const beginDropCapture = (f, duration=3500) => f.evaluate(duration => {
   const tick = ts => {
     const host = document.querySelector('#pm-o55-onboarding .pst'), s = host?.__pipStage;
     rows.push({ ts, wall: performance.timeOrigin + ts, dt: rows.length ? ts - rows.at(-1).ts : 0, screen: O55.S.sess.screen,
-      stage: s ? { t: s.t, render: s.renderN, box: s.box, map: s.map, keepOff: s.keepOff, pipKeep: s.pipKeep,
+      stage: s ? { t: s.t, theme:s.theme, render: s.renderN, box: s.box, map: s.map, keepOff: s.keepOff, pipKeep: s.pipKeep,
         props: [...s.props].map(([id,p]) => ({ id, kind:p.spec.kind, state:p.state, len:p.len, lenv:p.lenv, op:p.op, a:p.a, box:p.box, pos:p.pos, off:p.restOff, target:s.propTarget(p), transform:p.el.getAttribute('transform'), rect:(()=>{const r=p.el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};})() })) } : null });
     if (ts - t0 < duration) requestAnimationFrame(tick);
   }; requestAnimationFrame(tick);

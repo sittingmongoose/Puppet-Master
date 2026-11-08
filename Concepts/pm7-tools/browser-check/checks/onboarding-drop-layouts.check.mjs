@@ -26,6 +26,8 @@ export default async function(t) {
       const rows=await f.evaluate(()=>window.__dropFrames);writeFileSync(join(t.run.dir,label+'.json'),JSON.stringify(rows));
       const result=analyzeDrop(rows);all.push({look,width,height,...result});t.log(JSON.stringify(all.at(-1)));
       await t.check(label+': backup list reached',rows.some(r=>r.screen==='r-pick'));
+      const shown=rows.filter(r=>r.screen==='r-pick'&&r.stage);
+      await t.check(label+': requested look actually painted',shown.length>10&&shown.every(r=>r.stage.theme===look),JSON.stringify([...new Set(shown.map(r=>r.stage.theme))]));
       if(t.args.reduced) {
         const props=rows.flatMap(r=>r.stage?.props.filter(p=>p.kind==='clipboard'&&p.state!=='out'&&p.op>.95)||[]);
         await t.check(label+': Reduced Motion places the prop immediately',props.length>10&&props.every(p=>Math.abs(p.len-p.target.len)<.01),String(props.length));
