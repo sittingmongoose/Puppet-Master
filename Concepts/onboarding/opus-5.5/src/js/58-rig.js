@@ -495,9 +495,20 @@
       // once a block is set down its strings are unhooked: they go slack, lift away and fade
       const off = pr.spec.ground && pr.landed ? clamp((this.t - pr.landT) / .55, 0, 1) : 0;
       const strOp = off ? Math.max(0, 1 - ease(off)) * pr.op : pr.op;
+      /* each string hangs from the anchor of the prop's rest pose (restPose: its destination's ax, scale and dy), the
+         same point on its first frame, through its swing and at rest, and is drawn straight from its tie through that
+         anchor and on above it. Drawn instead from a point 200 above the anchor at this frame's fit offset, the line
+         turned about that far point while the prop swung about the anchor, so where a string met the pane's top slid
+         across it as it swung and whenever fit's offset changed (QA-6: up to 25 units at the top edge) */
+      const rp = this.restPose(pr);
       pr.ties.forEach((t, i) => {
         const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1] - ease(off) * 70];
-        const top = [pr.ax + (pr.dx || 0) + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200];
+        /* the anchor stands over the pivot the prop swings from (pr.ax, with the destination's fit offset): a prop
+           kept from the last screen travels to its new slot on that pivot's spring, and its strings travel with it
+           instead of jumping to the new slot's anchor in one frame (r-pick to r-preview's restore) */
+        const anch = [pr.ax + (rp.ax - tg.ax) + (t[0] - tieMid[0]) * rp.sc, Lay.anchorY + rp.dy];
+        const av = [anch[0] - end[0], anch[1] - end[1]], al = Math.hypot(av[0], av[1]);
+        const top = al > 1 ? [anch[0] + av[0] / al * 200, anch[1] + av[1] / al * 200] : [anch[0], anch[1] - 200];
         pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
         pr.strs[i].setAttribute('opacity', R(strOp));
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
@@ -902,6 +913,12 @@
     sayNow(text, mood, owner) {
       const b = this.bubble, S = snd();
       if (this.typeT) this.typeT.cancel();
+      /* a new line takes its own place from its first frame: a place stepped aside to for the last line was kept into
+         this one for up to 2.5 s (bubbleRel), and a place the last line claimed kept the props' destinations fitted
+         around it (keepOff is in restPose's cache key), so a line could open where the old one had stood, settle
+         seconds later, and shift a resting prop's destination as the claim changed (QA-4: r-source opened 44-68 px
+         from where it settles; r-pick to r-preview's restore jumped as the clearance changed) */
+      if (text !== this.saying) { this.bubbleRel = null; this.bubbleRelT = 0; this.bubbleClaim = null; this.bubbleKeepOff = null; }
       this.saying = text; this.sayOwner = text ? owner || null : null;
       if (!text) { b.classList.remove('on', 'typing'); if (S && S.hush) S.hush(); return; }
       if (!b.classList.contains('on')) { b.classList.remove('on'); void b.offsetWidth; b.classList.add('on'); }
@@ -1337,7 +1354,12 @@
       if (tall) face[1] -= 12; else face[2] += 12;
       /* (a leaving prop too, while it shows: the bubble with the next screen's words moved onto a prop still fading out,
          FO-34, Basic Light A3) */
-      this.props.forEach((pr) => { if (pr.box && pr.op > .05) { const a = this.toScreen([pr.box[0], pr.box[1]]), c = this.toScreen([pr.box[2], pr.box[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
+      /* (at the box each prop will REST in (restPose's restBox), read for every prop that is staying, from its first
+         frame: at the box it falls through, the bubble stepped up or aside while a prop was lowered past it and
+         dropped back seconds later once the prop had settled and the step-aside was let go, and a prop not yet faded
+         in was no obstacle at all on the bubble's first frames (QA-4). A leaving prop keeps the box it is drawn in,
+         as above; holdUnder keeps it below the bubble as it lifts) */
+      this.props.forEach((pr) => { const rb = pr.state === 'out' ? (pr.op > .05 ? pr.box : null) : this.restPose(pr).box || pr.box; if (rb) { const a = this.toScreen([rb[0], rb[1]]), c = this.toScreen([rb[2], rb[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
       const v = this.vis, vs = v ? [this.toScreen([v.x0, v.y0]), this.toScreen([v.x1, v.y1])] : null;
       const X0 = Math.max(pad, vs ? vs[0][0] + pad : pad), X1 = Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Y0 = Math.max(top, vs ? vs[0][1] + 4 : top), Y1 = Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by);
       /* (and Pip's control bar: where a prop beside Pip took the usual place, the bubble went up over the sticks Pip hangs
