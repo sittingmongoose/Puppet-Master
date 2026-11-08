@@ -503,6 +503,20 @@
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
       });
     }
+    /* The shared destination used by the drop, the bubble's occupancy and the strings' suspension. It exists before
+       the first visible frame, independent of entry opacity, spring progress and swing. A scene/layout change refits
+       it; an outgoing prop keeps the place it left. Only preceding props participate, so the order has no cycle. */
+    restPose(pr) {
+      if (pr.state === 'out' && pr.restFit) return pr.restFit;
+      const tg = this.propTarget(pr), tm = [pr.ties.reduce((m, t) => m + t[0], 0) / pr.ties.length, tg.tieY];
+      const key = JSON.stringify([this.theme, this.layoutName, this.vis, this.lastScreen, this.spec.pip,
+        this.keepOff, this.pipAt, this.pipOff, this.pipBB,
+        Array.from(this.props, ([id, q]) => [id, q.state === 'out', q.spec])]);
+      if (pr.restFit && pr.restFit.key === key) return pr.restFit;
+      const fit = this.fit(pr, [tg.ax, this.L.anchorY + tg.len], tg.sc, tm, true);
+      pr.restBox = fit.box;
+      return (pr.restFit = Object.assign({ key, ax: tg.ax + fit.dx, sc: tg.sc * fit.f }, fit));
+    }
     /* how far a prop must move (dx, dy) or shrink (f) for its drawing, at its angle, to sit inside the pane's visible span
        (this.vis, from measure) with a margin, and off a speech box that cannot move out of its way (this.keepOff: NieR's
        fixed box, or a bubble that found no clear place); box is where it is then painted */
@@ -510,7 +524,7 @@
       const v = this.vis; let bb = pr.bb;
       if (!v) return { dx: 0, dy: 0, f: 1, box: null };
       if (!bb || !bb[2]) { bb = pr.bb = this.boxOf(pr.el); if (!bb || !bb[2]) return { dx: 0, dy: 0, f: 1, box: null }; }
-      const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], pr.a));
+      const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], destination ? 0 : pr.a));
       let lo = Math.min(...cs.map((c) => c[0])), hi = Math.max(...cs.map((c) => c[0])), tp = Math.min(...cs.map((c) => c[1])), bt = Math.max(...cs.map((c) => c[1])), f = 1;
       const pad = 8, room = v.x1 - v.x0 - pad * 2, hx = hang[0], hy = hang[1];
       const rest = pr.state !== 'out' && pr.spec.stack == null;
@@ -519,8 +533,7 @@
            side of another prop every frame: Recovery Kit > backup list pinned the clipboard above the restore box
            for 120 ms, then switched below it in one frame (QA-7). The other props' destinations participate too, so
            their entry opacity or progress cannot change this prop's landing place halfway down. */
-        const tg = this.propTarget(pr), at = [tg.ax + Math.sin(pr.a) * tg.len, this.L.anchorY + Math.cos(pr.a) * tg.len];
-        const fit = this.fit(pr, at, sc, tm, true); pr.restBox = fit.box;
+        const fit = this.restPose(pr);
         lo *= fit.f; hi *= fit.f; tp *= fit.f; bt *= fit.f;
         let dx = fit.dx, dy = fit.dy;
         // A swing still stays inside the pane; the incoming prop may pass its top edge on its strings.
@@ -569,8 +582,14 @@
            inside the pane, and is drawn a little smaller only when no way does */
         const obs = []; if (this.keepOff && visible > .05) obs.push(this.keepOff);
         /* (and off Pip's head where it hangs at rest: Retro's crop pushed a sign in from its cut side over Pip, FO-50) */
-        const pk = this.pipKeep; if (pk && visible > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
-        this.props.forEach((q) => { const b = destination ? q.restBox || q.box : q.box; if (q !== pr && b && q.placedN === this.renderN && (destination || q.op > .05) && q.state !== 'out') obs.push([b[0] - 4, b[1] - 4, b[2] + 4, b[3] + 4]); });
+        const pk = destination ? this.pipHead() : this.pipKeep; if (pk && visible > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
+        let before = true;
+        this.props.forEach((q) => {
+          if (q === pr) { before = false; return; }
+          if (q.state === 'out' || (destination ? !before : q.placedN !== this.renderN || q.op <= .05)) return;
+          const b = destination ? this.restPose(q).box : q.box;
+          if (b) obs.push([b[0] - 4, b[1] - 4, b[2] + 4, b[3] + 4]);
+        });
         const g = clear(obs);
         pr.restOff = { dx: dx - dxEdge, dy, g };
       } else if (pr.state === 'out') {
