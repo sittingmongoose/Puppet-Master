@@ -1,4 +1,165 @@
-# DX sweep part 1 — retention text and isolated graph-ID fixtures
+# Lane DX — sweep part 2A (guard tables on the gated tool) and part 2B numbers
+
+Branch `plans/ea-w2-executor-20261104`; start `d987fd25af`; gated tool merge `a2fe401091` (tool `004bdedd63`, eleven files, none edited); gated NUMRULE number-scope merge `3505142713` (exact commit `a16f67c1ef`, never the branch head); implementation head `51732062cb`. The delivery head is in the external `HEAD.txt`. No rebase onto main this round. Both merges brought no main commit into the lane (the NUMRULE merge base `fb441b27fd` is already on main).
+
+**All 16 families keep their part-1 grades (175 PASS / 1 PARTIAL / 16 ABSENT).** Part 2A closes P1: every refusal of the three DX checkers is one named row of a Method B guard table, and the gated tool proves **279 of 285 rows** in 112 tables; the other 6 rows cannot be refused by any input, and each sits in its own table with its reason so the other rows keep their credit. Part 2B numbers closes S-N1..S-N5 with the shared CV-1100/SP-1100/SP-1101 calls. `scheduler.pass` keeps its PARTIAL oracle cell for F19, which is a timestamp item (part 2B). Membership stays ABSENT; native execution is NOT_RUN. Sol and Astra review the lane once, after part 2B's timestamp items.
+
+## Sweep part 2A: findings and responses
+
+| Item | Disposition and change | Where | Verify |
+|---|---|---|---|
+| **Take the gated tool** | Merged `004bdedd63` with `--no-ff` as `a2fe401091`: exactly the eleven tool files, no conflict, none edited. | `scripts/pm_guard_isolation*.py`, `scripts/guard-isolation/README.md`, `Plans/guard_isolation_traps.json`, GUARDTOOL reports | `git diff --stat a2fe401091^1 a2fe401091` lists 11 files; `git diff a2fe401091 HEAD -- scripts/pm_guard_isolation.py` is empty. |
+| **P1 — guard tables** (fixed, `3af763b3df`) | Every refusal of `scripts/pm_executor_event_semantics.py`, `scripts/pm_executor_event_contracts.py` and `scripts/pm_executor_schema_refs.py` is one named predicate row of a phase table (`scripts/pm_executor_table_*.py`, at most eight rows each), generated from one row spec. The checkers derive the observation of the phase they are about to evaluate (recomputed digests and identities, typed values, resolved routes, presence) and refuse only through `refuse`/`refusal`. A derivation that depends on an earlier row of the same phase is computed only when that row passes. Compound `require(a and b ...)` leaves are split into one row each; a value row carries its type row's pass condition. Reused boundaries (string-list grants, dependency custody, schema occurrences) keep their callers' legacy messages. The receipt/replay trace model returns row codes as its outputs. The CLI fixture-integrity checks are rows too, and the semantic CLI fails unless every factory requires its rows in table order (IT01). | `scripts/pm_executor_event_semantics.py:82` (`table_refusals`), `:100` (`refusal`), `:106` (`refuse`), `:1265` (`check_table_order`); row spec `scripts/pm-executor-table-generate.py` | `python3 scripts/pm-executor-table-generate.py --check` (112 tables, 285 rows; no stale or extra module); both family CLIs pass for all 16 families. |
+| **P1 — behaviour preserved** (`3af763b3df`) | A per-witness differential ran the original checkers and the restructured ones over every existing witness. | `differential-summary.json` | 19,767 witnesses: every accept/reject result unchanged; 19,148 refusal messages identical; 619 changed, all explained: 610 `jsonschema` errors now refused through their schema row with the same text, 6 untracked `KeyError`s now refused by `source record set`, 3 raw HTTP-date parse errors now refused by `Retry-After HTTP-date`. All 32 family CLI outputs byte-identical. |
+| **Two-defect negatives the lane matrix reported** (fixed, `a6d1d5d6c6`) | Eight witness groups were refused by two rows of one table once the compound leaves were split. Each later row now carries the earlier row's pass condition where one defect precedes the other on the same field: NB03 (anchor, given a safe point), PK06 (descriptor size, given a self-consistent pack), RF02 (failure Storage class, given a null retry class), RT09 (prior attempt, given a joined failed attempt), SX11, RV03, PT04, PR04–PR06 (descriptor fields, given a resolved descriptor), GJ06, EF07. | `scripts/pm-executor-table-generate.py` rows of those names | Lane matrix: 0 problems in every table; tool: 0 masked negatives, 0 unrelated changes. |
+| **NB01 removed** (`a6d1d5d6c6`) | `pre-attempt omission` re-checked exactly the predicate EP02 (`episode attempt presence`) refuses earlier on the same path (payload `attempt_id` against the episode record's `attempt_id`); no input could reach it. Removing it changes no result for any input. | `scripts/pm_executor_event_semantics.py:801` (the comment that records EP02 owns it) | Differential and every CLI unchanged. |
+| **Missing negatives** (fixed, `2774354a58`, `569373ba68`, `51732062cb`) | `Plans/executor_event_p2a_cases.json` holds 76 witnesses (73 negatives for 72 rows, 3 controls), built by `scripts/pm-executor-p2a-cases.py` from named valid seeds of their own family. Each changes one fact and moves every copy of it (inline envelope payload, joined owner record, transition mirror, dependency refs) and rehashes every changed owner record; the builder keeps it only when the complete checker refuses it at exactly its target row, and the semantic CLI checks the row too. Four new modelled originals (and two more for DD01) get their own custody entries (`write_time_edition` `DX-sweep-p2a`); no existing custody entry changed. Note: commit `2774354a58`'s message says "64 negatives, 5 controls"; that commit actually held 67 negatives and 2 controls. | `scripts/pm_executor_p2a_cases.py:39` (`action`), `:112` (`run`) | `python3 scripts/pm-executor-p2a-cases.py --check`; the CLI's `sweep_p2a_witnesses` count is 76 across families. |
+| **Adapter and runner** (`7a69e2ab92`, `190face978`) | Suites come from the checkers' own witnesses run once under the observation recorder (26,311 witnesses: semantic capture/history/type/numeric/score/schema/reference/workgraph/helper/golden cases and their seeds, shape cases and seeds, 231 receipt traces, CLI integrity checks, part 2A witnesses). Accepted invocations give per-phase controls; each refused witness gives the observation of its refusal, targeted at the refusing row; each refusal a trace returns as an output is a negative. Untracked refusals, unexpected results and multi-record refusals are reported, never relabelled: the final collection has none. Negative IDs are numbered per phase (`190face978`; a trace can give several negatives of one row). | `scripts/pm_executor_guard_suites.py:66` (`witnesses`), `:195` (`collect`), `:272` (`complete_boundary_flip`), `:294` (`lane_matrix`), `:334` (`suite_for`); `scripts/pm-executor-guard-tables.py` | `python3 scripts/pm-executor-guard-tables.py --out <dir>` (batches with `--phase`, `--save-collection`/`--load-collection`). |
+| **Rows unprovable by construction** (`a6d1d5d6c6`, `190face978`) | Six rows have no input that can refuse them; each sits in its own table so the gated tool credits the rest: IR01, IR03, IR04, IR05 (identity-recipe self-checks: a pure function's properties), IF06 (numeric spelling independence once CV-1100 admits the spelling) and RM09 (payload generation within the ceiling, implied by the `remediation_generation` source join SJ01, RM08 and RM07, which refuse first on every path). They stay as checks; they earn no credit. | tables `identity_replay_fixed`, `integrity_numeric_fixed`, `remediation_ceiling_join` | `DX.guard-tables.json` `rows_unproved`. |
+| **Cross-table defense in depth, proved site by site** | On the current-writer routes the envelope Storage instance's type and non-emptiness are checked by transport (PT01, PT02) and again by the identity recipe (ID06, ID07); a retained read's Storage root is checked by HD05 and again by the SP-1101 binding inside DD01. Cutting PT01, PT02 or HD05 alone leaves each of its witnesses refused by its partner for the same defect; cutting both accepts it. Each partner also has negatives of its own route that only it refuses (the identity boundary has no transport; DD01's replaced-resource and foreign-family originals). | `duplicate-pairs.json` | PT01 alone → 288 refused by ID06; both → 288 accepted. PT02 → ID07: 32 / 32. HD05 → DD01: 32 / 32. |
+| **Part 2 items from part 1** | P1 fixed (above). S-N1..S-N5 fixed in the number pass (next section). F19 is a timestamp item: part 2B. | — | — |
+
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** no new PlanUnit, Decision Log or admission ID; SP-500..515 and ATS-250..257 change in place. New witness IDs are the part 2A case IDs in `Plans/executor_event_p2a_cases.json`.
+
+## Guard-table result
+
+The gated tool ran **109 table suites**: **279 rows proved**, 0 failed suites; the 3 tables of unprovable rows have no negative and get no tool run. 2,359 distinct single-row negatives (10,451 further witnesses with an identical observation ride as aliases), 38,349 tool evaluations. Lane-matrix problems: 0. Open collection findings: 0. Credit is the tool's own `rows[].proved`.
+
+Each cut swaps one table row to always-pass; the tool then runs every control and negative, checks the guard-call trace against the uncut baseline and runs a fresh restoration. Own negatives must be accepted after the cut ("flips"); every other negative must keep its exact refusal ("stays"). Controls given to the tool are every family's first control of the table, then the rest in recorded order up to 40; the lane matrix checks every control and negative directly.
+
+| Checker | Tables | Rows | Proved | Unproved (reason) | Cut: own flips / own | Cut: stays | Unrelated changes | Masked |
+|---|---:|---:|---:|---|---:|---:|---:|---:|
+| Capture route: dispatch, scope, envelope, source records, joins, transition, effects, publication (validate_capture) | 25 | 61 | 61/61 | none | 593/593 | 849 | 0 | 0 |
+| Family predicates: remediation, scheduler.pass, attempt/node families | 11 | 31 | 30/31 | RM09_payload_ceiling (by construction; see above) | 37/37 | 101 | 0 | 0 |
+| Retry/backoff EP-032 and SP-238 (validate_retry and helpers) | 14 | 45 | 45/45 | none | 128/128 | 402 | 0 | 0 |
+| SP-337 payload transport and packs, grants | 7 | 28 | 28/28 | none | 688/688 | 1434 | 0 | 0 |
+| Dependencies (validate_dependencies) | 7 | 10 | 10/10 | none | 69/69 | 138 | 0 | 0 |
+| Retained reader: recipe binding, custody, disclosure, SP-1101 dispatch | 6 | 15 | 15/15 | none | 607/607 | 2044 | 0 | 0 |
+| Shared number rule adoption (CV-1100, SP-1100) and owner value domain | 6 | 12 | 12/12 | none | 13/13 | 16 | 0 | 0 |
+| Owner clocks (instant; timestamp grammar part 2B) | 2 | 4 | 4/4 | none | 5/5 | 8 | 0 | 0 |
+| Identity recipe (pm_executor_event_contracts.identity) and replay self-checks | 4 | 12 | 8/12 | IR01_metadata_neutral, IR03_storage_bound, IR04_deterministic, IR05_body_digest (by construction; see above) | 22/22 | 66 | 0 | 0 |
+| Shape oracle (pm_executor_event_contracts.validate) | 10 | 30 | 30/30 | none | 145/145 | 474 | 0 | 0 |
+| Schema occurrences and reference admission | 4 | 5 | 5/5 | none | 5/5 | 2 | 0 | 0 |
+| Replay policy | 1 | 2 | 2/2 | none | 2/2 | 2 | 0 | 0 |
+| Receipt/replay trace model (run_trace) | 5 | 9 | 9/9 | none | 25/25 | 24 | 0 | 0 |
+| Fixture routes and authoring notation | 2 | 7 | 7/7 | none | 7/7 | 22 | 0 | 0 |
+| CLI fixture integrity | 8 | 14 | 13/14 | IF06_numeric_spelling (by construction; see above) | 13/13 | 20 | 0 | 0 |
+
+Rows each family's own witnesses prove (a row is credited per table; shared rows are proved by every family that reaches them, and family-specific rows only by their family):
+
+| Family | Rows proved by its own witnesses |
+|---|---:|
+| `attempt.completed` | 164 |
+| `attempt.started` | 115 |
+| `node.blocked` | 121 |
+| `node.completed` | 113 |
+| `node.started` | 113 |
+| `node.unblocked` | 113 |
+| `plan.decomposition_degraded` | 102 |
+| `remediation.resolved` | 114 |
+| `remediation.spawned` | 113 |
+| `run.completed` | 105 |
+| `run.graph_integrity_failed` | 102 |
+| `run.node_backoff_expired` | 125 |
+| `run.node_backoff_started` | 136 |
+| `run.node_ready` | 104 |
+| `run.node_retry_scheduled` | 141 |
+| `scheduler.pass` | 128 |
+| `shared` | 19 |
+
+**Runs.** The first full run (collection with complete-boundary flips, then one tool run per table) used inputs at `569373ba68`/`aaf6d90855`; 106 tables passed, and two failed on the lane's side: `integrity_numeric` (IF06 had no negative, which withholds the table's credit) and `trace_read` (the adapter gave two negatives one ID). After the fixes (`190face978`) and one more control witness (`51732062cb`), a fresh collection at `51732062cb` matched the first one on 107 tables exactly (control observations; negative targets, codes, observations, witnesses, flips and families). The 5 that differed are explained in `collection-compare.json` (the IF06 split, one more table-order control, one more stock-schema control, and a flip label in `current_number`); those 5 plus `trace_read` were re-run at `51732062cb` and all pass.
+
+**Phase boundary.** Tables are extracted observation boundaries (tool boundary `synthetic`), as in DC, DR and DG6B. The complete path is the full checker, which reaches every refusal through the same rows. As lane evidence beyond the tool, each refused witness was re-run through the whole checker with only its refusing row cut: 9,694 are then accepted and 3,116 are refused later by a distinct invariant on the same source fact (kinds per cut row in `flips.json`). The largest groups: a cut source join is caught by the complete source observation (SJ01 → SO01, 665); a cut inline payload join is caught by the source join, the scope Project or the JCS identity of the same changed field (PT03 → SJ01 338, SC01 192, JQ01 160, JQ02 160); the Storage-instance pair above (PT01 → ID06, 288); a cut row whose derivation then reads the refused value (for example a cut JCS row returns no text, a cut clock-spelling row leaves no instant): `derivation_requires_cut_row`, 663. None reaches a second row of its own table, so each stays a single-row negative for the tool.
+
+**What Astra keeps finding, probed for part 2A.** (1) Digests and identities are recomputed in derivation and compared by rows (SD01, DC03, HI01–HI03, PK03); forged copies are the negatives, and DD01 refuses an original authenticated for another family. (2) Storage-assigned fields are compared with the owner record (RV01–RV04, TX02, TX07, TX08), never trusted from the event; retry compares only the original semantic body (TA02). (3) The current-writer replay row AP01 never runs on a retained original (historical routes use HP01); retained `projector_replay_only` history stays accepted, and withdrawn, forged, unknown or replaced originals refuse (RB01–RB05, HI01–HI03, DD01). (4) Joins compare exact typed values (`typed`) on both sides; the number pass below removes the JCS range from joins. (5) SR02/SR03 resolve every `$ref` per document root, dormant branches included. (6) PT04 measures the encoded inline body; the reference route checks every descriptor and pack field (PR01–PR06, PK01–PK12). (7) Every capture runs source custody, dependencies and the publication order; required slots come from the adapter, never the caller (SS01). (8) Masked negatives: tool `masked` empty on every row; complete-boundary re-runs above. (9) Grades unchanged; the scheduler oracle cell stays PARTIAL. (10, 10a) The number pass below. (11) Type rows test the exact type name (`type(x).__name__`) and identity with `True`/`False`, with string, number, null, array and object negatives in the existing type fixtures. (12) Timestamp formats: part 2B; interim review below.
+
+## Sweep part 2B numbers: findings and responses
+
+The number scope was merged as the exact gated commit and adopted through the shared helper only: no NUMRULE file is edited and no date-time code is imported (`pm_event_datetime*` is not used anywhere in the DX checkers). The number recipes keep DX's recipe IDs (`executor-jcs-binary64-v1`, `executor-json-integer-v0`), identity preimages and tuple positions exactly.
+
+| Item | Disposition and change | Where | Verify |
+|---|---|---|---|
+| **S-N2 — qualified JCS** (fixed, `569373ba68`) | `canonical` uses the shared `qualified_jcs` for the current recipe, so an integer refuses unless its binary64 value and its emitted JCS decimal both equal it: 2^53 passes, 2^53+1 refuses `jcs_binary64` (JQ01), 2^60 refuses `jcs_decimal` (JQ02), and any other helper refusal (a lone surrogate) is JQ03. It runs only for actual identity/digest preimages. The frozen retained recipe `executor-json-integer-v0` keeps its exact integer JSON bytes. Current capture and shape writes now compute the event identity after transport, so the old blanket walk's job (refusing 2^53+1 event sequences) is done by the identity preimage itself. | `scripts/pm_executor_event_semantics.py:275` (`canonical`), `:679` (capture identity); `scripts/pm_executor_event_contracts.py:52` (shape identity) | Canonical golden, numeric and coherent-sequence cases; part 2A witness JQ03-lone-surrogate-jcs. |
+| **S-N3 — separate domains** (fixed, `569373ba68`) | Joins compare exact typed values (`typed`: the owner value domain, then exact JSON text; no JCS range), so Storage-assigned revisions and other joined integers are no longer capped by the JCS route. The capture-domain walk keeps only the owner value domain (CS01: null, string, boolean or integer; MK01: string keys). Retained routes never run current slot admission. | `:296` (`validate_canonical_domain`), `:309` (`typed`) | Every retained v0 original with integers above 2^53 still reads (all F15 history cases pass). |
+| **S-N1 — current tokens and slots** (fixed, `569373ba68`) | `run_numeric_case` parses spellings with the shared `loads_current_json` (CN01 `integer_token` refuses `-0`; CN02 `json_syntax` refuses `01`; CN03 refuses `NaN` and other refusals). Current writes call `current_integer` at every declared payload integer slot, nested slots included (IS01 `integer_type`, IS02 `integer_range`); identity integer domains use `current_integer` too (ID04, ID05). No blanket integer walk. | `:453` (`current_number`), `:463` (`admit_integer_slot`), `:482` (`admit_integer_slots`), `:1167` (`run_numeric_case`); `scripts/pm_executor_event_contracts.py:15` (`identity`) | Numeric cases; part 2A witness CN03-nonfinite-spelling. |
+| **S-N4 — physical bytes** (fixed, `569373ba68`) | `payload_bytes` is the shared `storage_value_bytes(..., profile=EVENT_VALUE)` (SP-1100's Case L-2 canonical MessagePack: exact signed/unsigned 64-bit integers, minimal widths, UTF-8 key order). PV01 refuses integers outside −2^63..2^64−1, PV02 any other refusal. The fixture codec and its scalar row PB01 are gone; every existing pack's bytes are unchanged (all referenced-payload cases pass). | `:439` (`payload_bytes`) | Witnesses PV01-uint64-overflow, PV02-lone-surrogate-bytes. |
+| **S-N5 — SP-1101 dispatch** (fixed, `569373ba68`) | The retained reader resolves the original through the shared `RetainedDispatcher`. `CustodyOwner` over the sealed custody catalogue returns the authenticated binding (Storage, scope, Project, family, event identity, source commitment) and the recipe tuple recorded for the original's write-time edition, including the SHA-256 manifest of the frozen resources it was written against (payload-schema bytes, semantic adapter, identity fields). The tuple → frozen-verifier map is installed from this head's resources outside request data. A replaced same-URI resource resolves to no verifier, and an original authenticated for another family fails the binding: both refuse DD01. Current disclosure runs as the dispatcher's `disclose` step. Recipe selection keeps the existing custody rows RB01–RB05 (one authenticated edition, no caller override, no current-then-legacy probing). Modelling assumption, stated: the static model records this head's resources as the frozen resources of each modelled edition; the static oracle has one Server and no native owner-operation id, so both binding fields are fixed constants on both sides. | `:967` (`CustodyOwner`), `:990` (`installed_recipes`), `:1002` (`_validate_history`); `Plans/executor_event_recipe_custody_fixtures.json` `resource_manifests` | Witnesses DD01-replaced-resource, DD01-foreign-family, the RB witnesses, and all 1,345 history cases. |
+| **Long integers** (fixed, `569373ba68`) | The corpus run found a real lane crash: a valid 4,400-digit integer (no schema maximum; CV-1100 allows no global cap) made `jsonschema` raise `ValueError` while it rendered an error message. Schema evaluation and typed join text now render integers exactly under a scoped, restored `int_max_str_digits(0)`; no integer value is changed. | `:121` (`exact_integer_text`) | Number-corpus run: 0 untracked results. |
+| **Fixture expectations** (`569373ba68`) | 292 cases that expected accept now reject under the shared rule. Each records its refusing row and CV-1100 reason in a `number_rule` field: 100 JQ02 (2^60-class decimals, including the coherent 2^60 sequence capture and shape of each family, and four canonical goldens), 64 CN01 (`-0`), 128 IS02 (negative `event_sequence` at the minimum-0 slot for the digest and payload-bytes boundaries). Nothing else in the fixtures changed. | `Plans/executor_event_semantic_fixtures.json`, `Plans/executor_event_contract_fixtures.json` | `numrule-flips.json` lists every case and row. |
+| **Owner text** (`aaf6d90855`) | Each SP-500..515 retained-recipe paragraph states the CV-1100 qualification of `executor-jcs-binary64-v1`, CV-1100 current-input admission, SP-1100 typed joins without a JCS range and SP-1101 dispatch pinning the frozen resources; the SP-337 paragraph names the EVENT_VALUE profile. Each ATS-250..257 family has a sweep acceptance paragraph naming the guard-table runner and the corpus run. | `Plans/storage-plan.md` (SP-500..515), `Plans/Automated_Testing_System.md` (ATS-250..257) | Shards and index regenerated; only Automated_Testing_System and storage-plan outputs changed. |
+| **Shared corpus through the complete checker** (`569373ba68`) | `scripts/pm-executor-number-corpus.py` places every number value of the shared corpus's number scope (81 values: raw spellings and exact integers) at each family's `event_sequence` slot and runs it through the four numeric boundaries, the complete current-writer capture (every copy moved, the operation record rehashed) and the receipt trace (append, then exact retry returning the first receipt). The expected outcome is composed from the shared helpers alone. | `scripts/pm-executor-number-corpus.py` | 6,432 route runs, 0 disagreements (1,840 accepted, 4,592 refused). |
+| **Number self-test** | `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | — | Exit 0, `"status": "pass"`, 580 of 580 cases. Credited exactly as reported. Environment note: msgpack here is 1.2.4 (the guide names 1.1.2); rfc8785 0.1.4, blake3 1.0.11, jsonschema 4.19.2, referencing 0.36.2. |
+
+`producer_semantic_bytes`/`_digest` are not used: DX defines no EventRecord producer projection; its identity and digest recipes are payload-only and keep their own preimages. `storage_uint64` is not used: no DX field is declared uint64 by its owner.
+
+## Timestamp fields — interim only
+
+This is my own review of the DX timestamp fields, and it is **interim only** (pm7-build, 2026-11-05 16:50Z), not a certification. No date-time code from NUMRULE is adopted, and no timestamp rule changed in this pass. The DX owner text (CV-500..515) sets a stricter field-owner profile than CV-1101's broad one: complete UTC strings `[Tt]` … `Z` with calendar validity, hours 00..23, minutes and seconds 00..59, no leap seconds, unlimited fraction digits, no trailing bytes; backoff clock observations need an uppercase T. What the checker does today:
+- **Payload schemas** (`ts`, `backoff_until_utc`, nested `ready_since_utc`): full-match patterns `^…[Tt]…Z(?![\s\S])` plus the strict format checker `valid_timestamp` (`scripts/pm_executor_event_semantics.py:406`), which re-checks the calendar (`calendar_valid`, `:416`). The isolated stock-checker route (`stock_schema_validate`) relies on the stock `FormatChecker` and the pattern.
+- **Parsed clocks** (`instant`, `:544`; rows TS01–TS03, TZ01): under the current recipe every `utc=True` clock needs uppercase T and Z (`UTC_TIME`, `:36`). That is stricter than CV-515 for ordinary scheduler ready and wake clocks, which admit a lowercase `t`: **F19**, still open.
+- **Retained v0 originals**: spelling-only schema checks; semantic clock parsing still applies (TS03 refuses a validly spelled 31 November). The v0 grammar is selected by the authenticated custody edition in code, not by a frozen date-time resource.
+- **Retry-After**: delta seconds, or an HTTP-date parsed by `email.utils.parsedate_to_datetime` that must carry a zone (RA01, RA02); obsolete HTTP-date forms are not checked against EP-032's exact grammar.
+
+## Part 2B items
+
+Timestamp items only; each needs CV-1101 (date-time gate not yet passed) and is left exactly as it was:
+- **F19 / CV-1101 field-owner profile.** `scripts/pm_executor_event_semantics.py:544` (`instant`, default `utc=True`), `:36` (`UTC_TIME`), `:652` (`validate_score_domain`), `:839` (`validate_scheduler` ready and wake sorts), `scripts/pm_executor_event_contracts.py:43` (`validate`: shape scheduler order and backoff clocks); owner `Plans/Contracts_V0.md` CV-515. Ordinary ready-since and wake clocks admit lowercase `t`; backoff observations keep uppercase T; final Z, calendar and full precision stay. Add coherent lowercase-`t` capture/shape/wake positives and replace the two `F19-wake-*-lower-t` negatives.
+- **CV-1101 adoption at the DX timestamp boundaries.** `valid_timestamp` (`:406`), `calendar_valid` (`:416`), `DATE_TIME` (`:35`), `schema_validate`/`stock_schema_validate` format checkers, the 16 payload schemas' timestamp patterns, rows TS01–TS03, TZ01, RA01, RA02: `datetime_validator`/`date_time` with DX's stricter owner profile selected explicitly; leap-second, offset, lowercase and trailing-byte negatives from the shared battery.
+- **SP-1101 frozen date-time profile for history.** `record_rules` (`:153`) and `valid_timestamp`'s v0 branch: the v0 spelling-only grammar becomes the frozen original resource/profile selected through the dispatcher, not a code branch.
+- **Retry-After HTTP-date grammar.** `retry_after_deadline` and `validate_retry` (`:575`): EP-032's exact HTTP-date grammar against `parsedate_to_datetime`'s permissive forms.
+
+## Family grades before and after
+
+P=PASS, Q=PARTIAL, A=ABSENT. Before is the part 1 self-grade; after is this self-grade at the implementation commit.
+
+| Family | Before → after |
+|---|---|
+| `attempt.completed` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `attempt.started` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `node.blocked` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `node.completed` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `node.started` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `node.unblocked` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `plan.decomposition_degraded` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `remediation.resolved` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `remediation.spawned` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `run.completed` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `run.graph_integrity_failed` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `run.node_backoff_expired` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `run.node_backoff_started` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `run.node_ready` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `run.node_retry_scheduled` | 11P / 0Q / 1A → 11P / 0Q / 1A |
+| `scheduler.pass` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+
+**175 PASS / 1 PARTIAL / 16 ABSENT → the same totals.** Every self-grade evidence quote was relocated at the implementation commit with zero misses (436 quotes: 305 moved line, 16 re-quoted for the extended SP-337 sentence, 44 pointed at the code that replaced the old line); each oracle cell also cites its ATS sweep paragraph, its SP number-rule sentence, `refuse`, the dispatcher call and slot admission.
+
+## Commands and evidence
+
+Heavy checkers ran one at a time; the tool's MemoryGate paused below 10 GB available and resumed at 11 GB, and it paused for most of the first run while other work held memory. PM7 work was not waited on or touched. Commits: `a2fe401091` (tool merge), `3505142713` (NUMRULE number-scope merge), `3af763b3df` (tables), `a6d1d5d6c6` (two-row splits), `2774354a58` (witnesses), `7a69e2ab92` (adapter, runner), `569373ba68` (numbers), `aaf6d90855` (owner text, shards, index), `190face978` (IF06 table, negative IDs), `51732062cb` (stock-schema control), then the report commit. Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DX/sweep-p2a/` (SHA-256 of every file in `SHA256SUMS`; large files gzipped).
+
+| Command | Exit | Outcome |
+|---|---:|---|
+| `git merge --no-ff 004bdedd63` | 0 | clean; 11 tool files, none edited |
+| `git merge --no-ff a16f67c1ef` | conflicts in generated files only | `Plans/_shards/contracts_v0`, `Plans/_shards/storage-plan`, `Plans/.plan_index` resolved by regenerating (shard generate, index generate, shard check pass), never by hand |
+| differential: original vs restructured checkers | 0 | 19,767 witnesses, 0 result changes, 0 unexplained message changes (`differential-summary.json`) |
+| `python3 scripts/pm-executor-table-generate.py --check` | 0 | 112 tables, 285 rows |
+| `python3 scripts/pm-executor-p2a-cases.py --check` | 0 | 76 witnesses, 6 custody additions; fixture and custody files current |
+| `python3 scripts/pm_executor_event_contracts.py --family F` (16 families) | 0 | `pass` each (`cli/`) |
+| `python3 scripts/pm_executor_event_semantics.py --family F` (16 families) | 0 | `pass` each, 76 part 2A witnesses in total (`cli/`) |
+| `python3 scripts/pm-executor-guard-tables.py --out ... --save-collection ...` (long-job `dx-p2a-gt`) | 1 | 106 tables PASS; `integrity_numeric`, `trace_read` failed on lane defects, fixed in `190face978` (`tool/gt2/`) |
+| same, `--collect-only` at `51732062cb`, then `--load-collection` for 6 tables | 1 / 0 | collection identical on 107 tables (`collection-compare.json`); the 6 re-run tables PASS (`tool/gt4/`); collect-only exits 1 only for the 6 unprovable rows |
+| joint-cut proof of the cross-table pairs | 0 | `duplicate-pairs.json` |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `pass`, 580/580 |
+| `python3 scripts/pm-executor-number-corpus.py --json ...` | 0 | 6,432 route runs, 0 disagreements |
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json` | 0 | `pass`; only `Plans/_shards/automated_testing_system/` and `Plans/_shards/storage-plan/` changed |
+| `python3 scripts/pm-plan-index.py generate` (15 currentness files hash-verified first) | 0 | `pass`; only Automated_Testing_System and storage-plan units changed |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | `pass` |
+| `python3 scripts/pm-plan-index.py validate` (origin/main `5cbb92a5aa`) | 1 | top-level `fail`, 30 failures: 21 `plan_unit_removal_ledger_invalid` in existing ledgers and 9 `plan_unit_removed_without_ledger_decision` (DL-333, DL-335..340, DL-349, UCC-230, added on main after this branch's base `d5ec2f70c0`); the identical set DC and DR recorded at the same origin/main; none names a DX file. Integration rebase owns them. |
+
+---
+
+
+# DX sweep part 1 — retention text and isolated graph-ID fixtures (earlier report, unchanged)
 
 Branch `plans/ea-w2-executor-20261104`; original lane head `976fc2bea824659e86baf3130fe8bc0ce877b70a`; rebased onto fetched main `d5ec2f70c0d69c469796eea9b9cfdae30f281f42`. Graded code/fixture head `52fb3ad7809f29eb7d4f37730530ed5ba3c2dc09`; the following report-only commit preserves that tree. Final pushed head is in `sweep-p1/head.txt`.
 
