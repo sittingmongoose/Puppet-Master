@@ -61,7 +61,14 @@ def run(family=None):
         print('waiting for 13.5 GiB',flush=True);time.sleep(15)
     corpus=m.load('Plans/event_number_recipe_corpus.json')
     raw_cases=[c for c in corpus['cases'] if corpus_api.number_case(c) and c['op'] in
-               ('token','slot','parse_token','current_json','current_json_slot','jcs','parse') and 'raw' in c]
+               ('token','slot','parse_token','current_json','current_json_slot','jcs','parse') and ('raw' in c or 'raw_hex' in c)]
+    scalar_cases=[]
+    for case in corpus['cases']:
+        if not corpus_api.number_case(case) or 'value' not in case:continue
+        encoded=case['value']
+        if encoded is None or type(encoded) in (str,bool,int,float) or (
+                type(encoded) is dict and len(encoded)==1 and next(iter(encoded)) in ('@int','@float','@decimal')):
+            scalar_cases.append((case,corpus_api._value(encoded)))
     families=[(r,r['positive']) for r in m.load('Plans/dcw_event_contract_fixtures.json')['families']]
     families += [(None,base(name)) for name in b.NAMES]
     results=[]
@@ -77,16 +84,17 @@ def run(family=None):
         # Every applicable raw corpus input traverses the actual current-caller
         # retry path. Expected code follows its declared nonnegative integer slot.
         for c in raw_cases:
+            raw=c['raw'] if 'raw' in c else bytes.fromhex(c['raw_hex'])
             try:
-                parsed=n.loads_current_json(c['raw'])
+                parsed=n.loads_current_json(raw)
                 if c['op']=='current_json_slot':
                     for key in c['path']:parsed=parsed[key]
             except n.Refusal as exc:
                 expected=c.get('error');integer_tokens=[]
-                if type(c['raw']) not in (str,bytes):expected='json_input_type'
+                if type(raw) not in (str,bytes):expected='json_input_type'
                 else:
                     integer_tokens=[]
-                    try:json.loads(c['raw'],parse_int=lambda t:integer_tokens.append(t) or 0)
+                    try:json.loads(raw,parse_int=lambda t:integer_tokens.append(t) or 0)
                     except (ValueError,TypeError):pass
                     if '-0' in integer_tokens:expected='integer_token'
                 if expected=='integer_token' and '-0' not in integer_tokens:expected='json_syntax'
@@ -106,8 +114,26 @@ def run(family=None):
                     elif Decimal(repr(converted))!=Decimal(parsed):expected='jcs_decimal'
                 except OverflowError:expected='jcs_binary64'
             record(name,'shared-slot/'+c['id'],complete(row,value,'retry'),expected)
+        # Typed scalar inputs from the other corpus operations also traverse the
+        # actual caller slot. Their original operation still has helper credit;
+        # this is a projection into this lane's nullable nonnegative integer slot.
+        for c,parsed in scalar_cases:
+            value=copy.deepcopy(original);value['retry_request']=copy.deepcopy(original['event'])
+            value['retry_request']['producer_sequence_id']=parsed
+            valid=type(parsed) is int and parsed>=0
+            expected=('accept' if m.exact_equal(parsed,original['event']['producer_sequence_id']) else 'idempotency_conflict') if valid or parsed is None else ('integer_range' if type(parsed) is int else 'integer_type')
+            if valid and parsed>2**53:
+                try:
+                    converted=float(parsed)
+                    if not math.isfinite(converted) or int(converted)!=parsed:expected='jcs_binary64'
+                    elif Decimal(repr(converted))!=Decimal(parsed):expected='jcs_decimal'
+                except OverflowError:expected='jcs_binary64'
+            record(name,'shared-scalar/'+c['id'],complete(row,value,'retry'),expected)
         for sequence in (2**53,2**53+1,2**63,2**64-1):
             value=metadata(row,original,sequence)
+            # Issue an old-edition original outside request data. Every route
+            # below must use its actual frozen recipe, not a current label.
+            m.install_fixture_originals(value,legacy=True)
             for operation in ('publish','retry','read','rebuild'):
                 record(name,'metadata/'+str(sequence)+'/'+operation,complete(row,copy.deepcopy(value),operation),'accept')
         # A genuine registered source frame proves frozen shared-envelope grammar
@@ -140,7 +166,7 @@ def run(family=None):
         current=copy.deepcopy(original);current['retry_request']=copy.deepcopy(current['event']);current['retry_request']['producer_sequence_id']=1.0
         record(name,'current-integral-float',complete(row,current,'retry'),'integer_type')
     return dict(status='pass' if all(r['passed'] for r in results) else 'fail',cases=len(results),results=results,
-                shared_corpus_raw_inputs=len(raw_cases),timestamp='interim only',native='NOT_RUN',membership='ABSENT')
+                shared_corpus_raw_inputs=len(raw_cases),shared_corpus_scalar_inputs=len(scalar_cases),timestamp='interim only',native='NOT_RUN',membership='ABSENT')
 
 
 if __name__=='__main__':

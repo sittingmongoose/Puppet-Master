@@ -25236,7 +25236,7 @@ canonical_text: 'NEWLY AUTHORED OWNER CONTRACT for wizard.blocked under DL-045 a
   source and event sizes, current retry versus retained history, complete mixed-source index/CAS, access, restore
   and withdrawal. New negatives preserve observational copies and have valid single-fact repair controls. Shared-tool
   predicate-isolation proof remains B3 sweep; no local proof-script rebuild or complete check-11 claim is made.
-  B2 format and SW-N1 number/historical recipe work remains explicitly pending. Native planning adapters, original
+  B2 timestamp-format adoption remains pending; timestamp review is interim only. The number-only bindings below do not change timestamp admission or retained timestamp strings. Native planning adapters, original
   authentication, append/lost-ack, CAS concurrency, actual Storage bytes/CRC, crash recovery, backup/restore, retention-boundary
   and access/deletion campaigns are authored obligations with execution NOT_RUN; static success never supplies native
   authority or admission.
@@ -25458,7 +25458,7 @@ canonical_text: 'NEWLY AUTHORED OWNER CONTRACT for wizard.unblocked under DL-045
   source and event sizes, current retry versus retained history, complete mixed-source index/CAS, access, restore
   and withdrawal. New negatives preserve observational copies and have valid single-fact repair controls. Shared-tool
   predicate-isolation proof remains B3 sweep; no local proof-script rebuild or complete check-11 claim is made.
-  B2 format and SW-N1 number/historical recipe work remains explicitly pending. Native planning adapters, original
+  B2 timestamp-format adoption remains pending; timestamp review is interim only. The number-only bindings below do not change timestamp admission or retained timestamp strings. Native planning adapters, original
   authentication, append/lost-ack, CAS concurrency, actual Storage bytes/CRC, crash recovery, backup/restore, retention-boundary
   and access/deletion campaigns are authored obligations with execution NOT_RUN; static success never supplies native
   authority or admission.

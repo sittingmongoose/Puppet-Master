@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json",
-  "title": "Generic EventRecord index checkpoint custody — external proposal",
+  "title": "Generic EventRecord index checkpoint custody \u2014 external proposal",
   "description": "NEW derived checkpoint; typed source-selection binding is a verified reader projection of existing CURRENT/manifest owners, not a replacement on-disk control format. Native parsing/auth/durability remain separate proof obligations.",
   "$defs": {
     "checkpoint": {
@@ -141,8 +141,7 @@
                           "pattern": "^[0-9a-f]{64}$"
                         },
                         "selected_segment_generation": {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
@@ -154,14 +153,12 @@
                           "pattern": "^[0-9a-f]{64}$"
                         },
                         "manifest_generation": {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
@@ -190,8 +187,7 @@
                     "first_retained_sequence_id": {
                       "anyOf": [
                         {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
@@ -203,8 +199,7 @@
                     "through_sequence_id": {
                       "anyOf": [
                         {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
@@ -214,8 +209,7 @@
                       ]
                     },
                     "retained_event_count": {
-                      "type": "integer",
-                      "format": "pm-uint",
+                      "type": "integer", "format": "pm-uint",
                       "minimum": 0,
                       "maximum": 18446744073709551615
                     },
@@ -248,8 +242,7 @@
                   ],
                   "properties": {
                     "publication_revision": {
-                      "type": "integer",
-                      "format": "pm-uint",
+                      "type": "integer", "format": "pm-uint",
                       "minimum": 0,
                       "maximum": 18446744073709551615
                     },
@@ -284,8 +277,7 @@
                           "pattern": "^[0-9a-f]{64}$"
                         },
                         "selected_segment_generation": {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
@@ -297,14 +289,12 @@
                           "pattern": "^[0-9a-f]{64}$"
                         },
                         "manifest_generation": {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
                         "recovery_epoch": {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
@@ -359,8 +349,7 @@
                         "first_retained_sequence_id": {
                           "anyOf": [
                             {
-                              "type": "integer",
-                              "format": "pm-uint",
+                              "type": "integer", "format": "pm-uint",
                               "minimum": 0,
                               "maximum": 18446744073709551615
                             },
@@ -372,8 +361,7 @@
                         "through_sequence_id": {
                           "anyOf": [
                             {
-                              "type": "integer",
-                              "format": "pm-uint",
+                              "type": "integer", "format": "pm-uint",
                               "minimum": 0,
                               "maximum": 18446744073709551615
                             },
@@ -397,8 +385,7 @@
                               ],
                               "properties": {
                                 "segment_generation": {
-                                  "type": "integer",
-                                  "format": "pm-uint",
+                                  "type": "integer", "format": "pm-uint",
                                   "minimum": 0,
                                   "maximum": 18446744073709551615
                                 },
@@ -407,20 +394,17 @@
                                   "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
                                 },
                                 "byte_offset": {
-                                  "type": "integer",
-                                  "format": "pm-uint",
+                                  "type": "integer", "format": "pm-uint",
                                   "minimum": 0,
                                   "maximum": 18446744073709551615
                                 },
                                 "frame_end_offset": {
-                                  "type": "integer",
-                                  "format": "pm-uint",
+                                  "type": "integer", "format": "pm-uint",
                                   "minimum": 0,
                                   "maximum": 18446744073709551615
                                 },
                                 "last_sequence_id": {
-                                  "type": "integer",
-                                  "format": "pm-uint",
+                                  "type": "integer", "format": "pm-uint",
                                   "minimum": 0,
                                   "maximum": 18446744073709551615
                                 },
@@ -436,8 +420,7 @@
                           ]
                         },
                         "retained_event_count": {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
@@ -464,8 +447,7 @@
                             ],
                             "properties": {
                               "segment_generation": {
-                                "type": "integer",
-                                "format": "pm-uint",
+                                "type": "integer", "format": "pm-uint",
                                 "minimum": 0,
                                 "maximum": 18446744073709551615
                               },
@@ -484,14 +466,12 @@
                                 "const": 0
                               },
                               "scanned_through_offset": {
-                                "type": "integer",
-                                "format": "pm-uint",
+                                "type": "integer", "format": "pm-uint",
                                 "minimum": 0,
                                 "maximum": 18446744073709551615
                               },
                               "source_durable_end_offset": {
-                                "type": "integer",
-                                "format": "pm-uint",
+                                "type": "integer", "format": "pm-uint",
                                 "minimum": 0,
                                 "maximum": 18446744073709551615
                               },
@@ -500,16 +480,14 @@
                                 "pattern": "^[0-9a-f]{64}$"
                               },
                               "retained_event_count": {
-                                "type": "integer",
-                                "format": "pm-uint",
+                                "type": "integer", "format": "pm-uint",
                                 "minimum": 0,
                                 "maximum": 18446744073709551615
                               },
                               "first_sequence_id": {
                                 "anyOf": [
                                   {
-                                    "type": "integer",
-                                    "format": "pm-uint",
+                                    "type": "integer", "format": "pm-uint",
                                     "minimum": 0,
                                     "maximum": 18446744073709551615
                                   },
@@ -521,8 +499,7 @@
                               "last_sequence_id": {
                                 "anyOf": [
                                   {
-                                    "type": "integer",
-                                    "format": "pm-uint",
+                                    "type": "integer", "format": "pm-uint",
                                     "minimum": 0,
                                     "maximum": 18446744073709551615
                                   },
@@ -556,14 +533,12 @@
                                 ]
                               },
                               "first_sequence_id": {
-                                "type": "integer",
-                                "format": "pm-uint",
+                                "type": "integer", "format": "pm-uint",
                                 "minimum": 0,
                                 "maximum": 18446744073709551615
                               },
                               "last_sequence_id": {
-                                "type": "integer",
-                                "format": "pm-uint",
+                                "type": "integer", "format": "pm-uint",
                                 "minimum": 0,
                                 "maximum": 18446744073709551615
                               },
@@ -622,14 +597,12 @@
                           "then": {
                             "properties": {
                               "first_retained_sequence_id": {
-                                "type": "integer",
-                                "format": "pm-uint",
+                                "type": "integer", "format": "pm-uint",
                                 "minimum": 0,
                                 "maximum": 18446744073709551615
                               },
                               "through_sequence_id": {
-                                "type": "integer",
-                                "format": "pm-uint",
+                                "type": "integer", "format": "pm-uint",
                                 "minimum": 0,
                                 "maximum": 18446744073709551615
                               },
@@ -646,8 +619,7 @@
                                 ],
                                 "properties": {
                                   "segment_generation": {
-                                    "type": "integer",
-                                    "format": "pm-uint",
+                                    "type": "integer", "format": "pm-uint",
                                     "minimum": 0,
                                     "maximum": 18446744073709551615
                                   },
@@ -656,20 +628,17 @@
                                     "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
                                   },
                                   "byte_offset": {
-                                    "type": "integer",
-                                    "format": "pm-uint",
+                                    "type": "integer", "format": "pm-uint",
                                     "minimum": 0,
                                     "maximum": 18446744073709551615
                                   },
                                   "frame_end_offset": {
-                                    "type": "integer",
-                                    "format": "pm-uint",
+                                    "type": "integer", "format": "pm-uint",
                                     "minimum": 0,
                                     "maximum": 18446744073709551615
                                   },
                                   "last_sequence_id": {
-                                    "type": "integer",
-                                    "format": "pm-uint",
+                                    "type": "integer", "format": "pm-uint",
                                     "minimum": 0,
                                     "maximum": 18446744073709551615
                                   },
@@ -680,8 +649,7 @@
                                 }
                               },
                               "retained_event_count": {
-                                "type": "integer",
-                                "format": "pm-uint",
+                                "type": "integer", "format": "pm-uint",
                                 "minimum": 1
                               }
                             }
@@ -690,8 +658,7 @@
                       ]
                     },
                     "index_row_count": {
-                      "type": "integer",
-                      "format": "pm-uint",
+                      "type": "integer", "format": "pm-uint",
                       "minimum": 0,
                       "maximum": 18446744073709551615
                     },
@@ -757,14 +724,12 @@
                           "pattern": "^[0-9a-f]{64}$"
                         },
                         "preserved_event_count": {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
                         "removed_event_count": {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
@@ -1009,8 +974,7 @@
                   "pattern": "^[0-9a-f]{64}$"
                 },
                 "selected_segment_generation": {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
@@ -1022,14 +986,12 @@
                   "pattern": "^[0-9a-f]{64}$"
                 },
                 "manifest_generation": {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
                 "recovery_epoch": {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
@@ -1058,8 +1020,7 @@
             "first_retained_sequence_id": {
               "anyOf": [
                 {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
@@ -1071,8 +1032,7 @@
             "through_sequence_id": {
               "anyOf": [
                 {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
@@ -1082,8 +1042,7 @@
               ]
             },
             "retained_event_count": {
-              "type": "integer",
-              "format": "pm-uint",
+              "type": "integer", "format": "pm-uint",
               "minimum": 0,
               "maximum": 18446744073709551615
             },
@@ -1116,8 +1075,7 @@
           ],
           "properties": {
             "publication_revision": {
-              "type": "integer",
-              "format": "pm-uint",
+              "type": "integer", "format": "pm-uint",
               "minimum": 0,
               "maximum": 18446744073709551615
             },
@@ -1152,8 +1110,7 @@
                   "pattern": "^[0-9a-f]{64}$"
                 },
                 "selected_segment_generation": {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
@@ -1165,14 +1122,12 @@
                   "pattern": "^[0-9a-f]{64}$"
                 },
                 "manifest_generation": {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
                 "recovery_epoch": {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
@@ -1227,8 +1182,7 @@
                 "first_retained_sequence_id": {
                   "anyOf": [
                     {
-                      "type": "integer",
-                      "format": "pm-uint",
+                      "type": "integer", "format": "pm-uint",
                       "minimum": 0,
                       "maximum": 18446744073709551615
                     },
@@ -1240,8 +1194,7 @@
                 "through_sequence_id": {
                   "anyOf": [
                     {
-                      "type": "integer",
-                      "format": "pm-uint",
+                      "type": "integer", "format": "pm-uint",
                       "minimum": 0,
                       "maximum": 18446744073709551615
                     },
@@ -1265,8 +1218,7 @@
                       ],
                       "properties": {
                         "segment_generation": {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
@@ -1275,20 +1227,17 @@
                           "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
                         },
                         "byte_offset": {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
                         "frame_end_offset": {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
                         "last_sequence_id": {
-                          "type": "integer",
-                          "format": "pm-uint",
+                          "type": "integer", "format": "pm-uint",
                           "minimum": 0,
                           "maximum": 18446744073709551615
                         },
@@ -1304,8 +1253,7 @@
                   ]
                 },
                 "retained_event_count": {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
@@ -1332,8 +1280,7 @@
                     ],
                     "properties": {
                       "segment_generation": {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
@@ -1352,14 +1299,12 @@
                         "const": 0
                       },
                       "scanned_through_offset": {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
                       "source_durable_end_offset": {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
@@ -1368,16 +1313,14 @@
                         "pattern": "^[0-9a-f]{64}$"
                       },
                       "retained_event_count": {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
                       "first_sequence_id": {
                         "anyOf": [
                           {
-                            "type": "integer",
-                            "format": "pm-uint",
+                            "type": "integer", "format": "pm-uint",
                             "minimum": 0,
                             "maximum": 18446744073709551615
                           },
@@ -1389,8 +1332,7 @@
                       "last_sequence_id": {
                         "anyOf": [
                           {
-                            "type": "integer",
-                            "format": "pm-uint",
+                            "type": "integer", "format": "pm-uint",
                             "minimum": 0,
                             "maximum": 18446744073709551615
                           },
@@ -1424,14 +1366,12 @@
                         ]
                       },
                       "first_sequence_id": {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
                       "last_sequence_id": {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
@@ -1490,14 +1430,12 @@
                   "then": {
                     "properties": {
                       "first_retained_sequence_id": {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
                       "through_sequence_id": {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
@@ -1514,8 +1452,7 @@
                         ],
                         "properties": {
                           "segment_generation": {
-                            "type": "integer",
-                            "format": "pm-uint",
+                            "type": "integer", "format": "pm-uint",
                             "minimum": 0,
                             "maximum": 18446744073709551615
                           },
@@ -1524,20 +1461,17 @@
                             "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
                           },
                           "byte_offset": {
-                            "type": "integer",
-                            "format": "pm-uint",
+                            "type": "integer", "format": "pm-uint",
                             "minimum": 0,
                             "maximum": 18446744073709551615
                           },
                           "frame_end_offset": {
-                            "type": "integer",
-                            "format": "pm-uint",
+                            "type": "integer", "format": "pm-uint",
                             "minimum": 0,
                             "maximum": 18446744073709551615
                           },
                           "last_sequence_id": {
-                            "type": "integer",
-                            "format": "pm-uint",
+                            "type": "integer", "format": "pm-uint",
                             "minimum": 0,
                             "maximum": 18446744073709551615
                           },
@@ -1548,8 +1482,7 @@
                         }
                       },
                       "retained_event_count": {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 1
                       }
                     }
@@ -1558,8 +1491,7 @@
               ]
             },
             "index_row_count": {
-              "type": "integer",
-              "format": "pm-uint",
+              "type": "integer", "format": "pm-uint",
               "minimum": 0,
               "maximum": 18446744073709551615
             },
@@ -1625,14 +1557,12 @@
                   "pattern": "^[0-9a-f]{64}$"
                 },
                 "preserved_event_count": {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
                 "removed_event_count": {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
@@ -1797,8 +1727,7 @@
           "pattern": "^[0-9a-f]{64}$"
         },
         "selected_segment_generation": {
-          "type": "integer",
-          "format": "pm-uint",
+          "type": "integer", "format": "pm-uint",
           "minimum": 0,
           "maximum": 18446744073709551615
         },
@@ -1810,14 +1739,12 @@
           "pattern": "^[0-9a-f]{64}$"
         },
         "manifest_generation": {
-          "type": "integer",
-          "format": "pm-uint",
+          "type": "integer", "format": "pm-uint",
           "minimum": 0,
           "maximum": 18446744073709551615
         },
         "recovery_epoch": {
-          "type": "integer",
-          "format": "pm-uint",
+          "type": "integer", "format": "pm-uint",
           "minimum": 0,
           "maximum": 18446744073709551615
         },
@@ -1872,8 +1799,7 @@
         "first_retained_sequence_id": {
           "anyOf": [
             {
-              "type": "integer",
-              "format": "pm-uint",
+              "type": "integer", "format": "pm-uint",
               "minimum": 0,
               "maximum": 18446744073709551615
             },
@@ -1885,8 +1811,7 @@
         "through_sequence_id": {
           "anyOf": [
             {
-              "type": "integer",
-              "format": "pm-uint",
+              "type": "integer", "format": "pm-uint",
               "minimum": 0,
               "maximum": 18446744073709551615
             },
@@ -1910,8 +1835,7 @@
               ],
               "properties": {
                 "segment_generation": {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
@@ -1920,20 +1844,17 @@
                   "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
                 },
                 "byte_offset": {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
                 "frame_end_offset": {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
                 "last_sequence_id": {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
@@ -1949,8 +1870,7 @@
           ]
         },
         "retained_event_count": {
-          "type": "integer",
-          "format": "pm-uint",
+          "type": "integer", "format": "pm-uint",
           "minimum": 0,
           "maximum": 18446744073709551615
         },
@@ -1977,8 +1897,7 @@
             ],
             "properties": {
               "segment_generation": {
-                "type": "integer",
-                "format": "pm-uint",
+                "type": "integer", "format": "pm-uint",
                 "minimum": 0,
                 "maximum": 18446744073709551615
               },
@@ -1997,14 +1916,12 @@
                 "const": 0
               },
               "scanned_through_offset": {
-                "type": "integer",
-                "format": "pm-uint",
+                "type": "integer", "format": "pm-uint",
                 "minimum": 0,
                 "maximum": 18446744073709551615
               },
               "source_durable_end_offset": {
-                "type": "integer",
-                "format": "pm-uint",
+                "type": "integer", "format": "pm-uint",
                 "minimum": 0,
                 "maximum": 18446744073709551615
               },
@@ -2013,16 +1930,14 @@
                 "pattern": "^[0-9a-f]{64}$"
               },
               "retained_event_count": {
-                "type": "integer",
-                "format": "pm-uint",
+                "type": "integer", "format": "pm-uint",
                 "minimum": 0,
                 "maximum": 18446744073709551615
               },
               "first_sequence_id": {
                 "anyOf": [
                   {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
@@ -2034,8 +1949,7 @@
               "last_sequence_id": {
                 "anyOf": [
                   {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
@@ -2069,14 +1983,12 @@
                 ]
               },
               "first_sequence_id": {
-                "type": "integer",
-                "format": "pm-uint",
+                "type": "integer", "format": "pm-uint",
                 "minimum": 0,
                 "maximum": 18446744073709551615
               },
               "last_sequence_id": {
-                "type": "integer",
-                "format": "pm-uint",
+                "type": "integer", "format": "pm-uint",
                 "minimum": 0,
                 "maximum": 18446744073709551615
               },
@@ -2135,14 +2047,12 @@
           "then": {
             "properties": {
               "first_retained_sequence_id": {
-                "type": "integer",
-                "format": "pm-uint",
+                "type": "integer", "format": "pm-uint",
                 "minimum": 0,
                 "maximum": 18446744073709551615
               },
               "through_sequence_id": {
-                "type": "integer",
-                "format": "pm-uint",
+                "type": "integer", "format": "pm-uint",
                 "minimum": 0,
                 "maximum": 18446744073709551615
               },
@@ -2159,8 +2069,7 @@
                 ],
                 "properties": {
                   "segment_generation": {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
@@ -2169,20 +2078,17 @@
                     "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
                   },
                   "byte_offset": {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
                   "frame_end_offset": {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
                   "last_sequence_id": {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
@@ -2193,8 +2099,7 @@
                 }
               },
               "retained_event_count": {
-                "type": "integer",
-                "format": "pm-uint",
+                "type": "integer", "format": "pm-uint",
                 "minimum": 1
               }
             }
@@ -2217,8 +2122,7 @@
       ],
       "properties": {
         "publication_revision": {
-          "type": "integer",
-          "format": "pm-uint",
+          "type": "integer", "format": "pm-uint",
           "minimum": 0,
           "maximum": 18446744073709551615
         },
@@ -2253,8 +2157,7 @@
               "pattern": "^[0-9a-f]{64}$"
             },
             "selected_segment_generation": {
-              "type": "integer",
-              "format": "pm-uint",
+              "type": "integer", "format": "pm-uint",
               "minimum": 0,
               "maximum": 18446744073709551615
             },
@@ -2266,14 +2169,12 @@
               "pattern": "^[0-9a-f]{64}$"
             },
             "manifest_generation": {
-              "type": "integer",
-              "format": "pm-uint",
+              "type": "integer", "format": "pm-uint",
               "minimum": 0,
               "maximum": 18446744073709551615
             },
             "recovery_epoch": {
-              "type": "integer",
-              "format": "pm-uint",
+              "type": "integer", "format": "pm-uint",
               "minimum": 0,
               "maximum": 18446744073709551615
             },
@@ -2328,8 +2229,7 @@
             "first_retained_sequence_id": {
               "anyOf": [
                 {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
@@ -2341,8 +2241,7 @@
             "through_sequence_id": {
               "anyOf": [
                 {
-                  "type": "integer",
-                  "format": "pm-uint",
+                  "type": "integer", "format": "pm-uint",
                   "minimum": 0,
                   "maximum": 18446744073709551615
                 },
@@ -2366,8 +2265,7 @@
                   ],
                   "properties": {
                     "segment_generation": {
-                      "type": "integer",
-                      "format": "pm-uint",
+                      "type": "integer", "format": "pm-uint",
                       "minimum": 0,
                       "maximum": 18446744073709551615
                     },
@@ -2376,20 +2274,17 @@
                       "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
                     },
                     "byte_offset": {
-                      "type": "integer",
-                      "format": "pm-uint",
+                      "type": "integer", "format": "pm-uint",
                       "minimum": 0,
                       "maximum": 18446744073709551615
                     },
                     "frame_end_offset": {
-                      "type": "integer",
-                      "format": "pm-uint",
+                      "type": "integer", "format": "pm-uint",
                       "minimum": 0,
                       "maximum": 18446744073709551615
                     },
                     "last_sequence_id": {
-                      "type": "integer",
-                      "format": "pm-uint",
+                      "type": "integer", "format": "pm-uint",
                       "minimum": 0,
                       "maximum": 18446744073709551615
                     },
@@ -2405,8 +2300,7 @@
               ]
             },
             "retained_event_count": {
-              "type": "integer",
-              "format": "pm-uint",
+              "type": "integer", "format": "pm-uint",
               "minimum": 0,
               "maximum": 18446744073709551615
             },
@@ -2433,8 +2327,7 @@
                 ],
                 "properties": {
                   "segment_generation": {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
@@ -2453,14 +2346,12 @@
                     "const": 0
                   },
                   "scanned_through_offset": {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
                   "source_durable_end_offset": {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
@@ -2469,16 +2360,14 @@
                     "pattern": "^[0-9a-f]{64}$"
                   },
                   "retained_event_count": {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
                   "first_sequence_id": {
                     "anyOf": [
                       {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
@@ -2490,8 +2379,7 @@
                   "last_sequence_id": {
                     "anyOf": [
                       {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
@@ -2525,14 +2413,12 @@
                     ]
                   },
                   "first_sequence_id": {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
                   "last_sequence_id": {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
@@ -2591,14 +2477,12 @@
               "then": {
                 "properties": {
                   "first_retained_sequence_id": {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
                   "through_sequence_id": {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 0,
                     "maximum": 18446744073709551615
                   },
@@ -2615,8 +2499,7 @@
                     ],
                     "properties": {
                       "segment_generation": {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
@@ -2625,20 +2508,17 @@
                         "pattern": "^seg-[0-9]{6,}-[0-9]{20}(-[0-9]{20}\\.seglog|\\.active)$"
                       },
                       "byte_offset": {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
                       "frame_end_offset": {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
                       "last_sequence_id": {
-                        "type": "integer",
-                        "format": "pm-uint",
+                        "type": "integer", "format": "pm-uint",
                         "minimum": 0,
                         "maximum": 18446744073709551615
                       },
@@ -2649,8 +2529,7 @@
                     }
                   },
                   "retained_event_count": {
-                    "type": "integer",
-                    "format": "pm-uint",
+                    "type": "integer", "format": "pm-uint",
                     "minimum": 1
                   }
                 }
@@ -2659,8 +2538,7 @@
           ]
         },
         "index_row_count": {
-          "type": "integer",
-          "format": "pm-uint",
+          "type": "integer", "format": "pm-uint",
           "minimum": 0,
           "maximum": 18446744073709551615
         },
@@ -2726,8 +2604,7 @@
           "pattern": "^[0-9a-f]{64}$"
         },
         "frontier_revision": {
-          "type": "integer",
-          "format": "pm-uint",
+          "type": "integer", "format": "pm-uint",
           "minimum": 0,
           "maximum": 18446744073709551615
         },
@@ -2770,8 +2647,7 @@
               "pattern": "^[0-9a-f]{64}$"
             },
             "selected_segment_generation": {
-              "type": "integer",
-              "format": "pm-uint",
+              "type": "integer", "format": "pm-uint",
               "minimum": 0,
               "maximum": 18446744073709551615
             },
@@ -2783,14 +2659,12 @@
               "pattern": "^[0-9a-f]{64}$"
             },
             "manifest_generation": {
-              "type": "integer",
-              "format": "pm-uint",
+              "type": "integer", "format": "pm-uint",
               "minimum": 0,
               "maximum": 18446744073709551615
             },
             "recovery_epoch": {
-              "type": "integer",
-              "format": "pm-uint",
+              "type": "integer", "format": "pm-uint",
               "minimum": 0,
               "maximum": 18446744073709551615
             },
