@@ -42,8 +42,14 @@
   /* - --pm-switch-motion (glide | step | cut): how the chip moves to a new choice. glide (unset) is the spring above;
        step is two hard jumps on a 33 ms tick (the tab half way, then its own), with no easing; cut puts it there at
        once. Retro steps
-       and NieR Mode cuts (Jared 2026-10-16; F3-438: joined highlights step in Retro and NieR; F3-621). */
+       and NieR Mode cuts (Jared 2026-10-16; F3-438: joined highlights step in Retro and NieR; F3-621). hop is Friendly's
+       sticker (a low arc with a small tilt, landing with a squash, 440 ms) and snap is Basic's block (straight across in
+       110 ms, no stretch); both carry the chip with its labels inverted (carry, below; stream F batch 9, Jared
+       2026-11-08: "I like F1 and B1"). */
   var switchLook = false, switchUnder = false, switchSwell = 1, switchLiquid = 1, switchMotion = 'glide';
+  /* the carried motions (carry, below): their length and their easing (a cubic Bezier over the whole trip), from the
+     concepts Jared picked (Concepts/selector-indicator-concepts, F1 and B1) */
+  var CARRY = { hop: { dur: 440, ease: [0.3, 0.7, 0.4, 1] }, snap: { dur: 110, ease: [0.2, 0, 0, 1] } };
   function tokenNumber(v, dflt) { var n = parseFloat(v); return isFinite(n) ? Math.max(0, Math.min(1, n)) : dflt; }
   function readSwitch() {
     var on = false, under = false, swell = 1, liquid = 1, motion = 'glide';
@@ -53,7 +59,7 @@
         if (on) {
           under = cs.getPropertyValue('--pm-switch-layer').trim() === 'under';
           swell = tokenNumber(cs.getPropertyValue('--pm-switch-swell'), 1); liquid = tokenNumber(cs.getPropertyValue('--pm-switch-liquid'), 1);
-          motion = cs.getPropertyValue('--pm-switch-motion').trim(); if (motion !== 'step' && motion !== 'cut') motion = 'glide';
+          motion = cs.getPropertyValue('--pm-switch-motion').trim(); if (!CARRY[motion] && motion !== 'step' && motion !== 'cut') motion = 'glide';
         }
       } catch (e) {}
     }
@@ -1408,6 +1414,9 @@
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
     { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6, magRest: 1, magLift: 1, press: false,
       box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; },
+      /* a carried chip's inverted copy is of the step's word alone (its styles hang on the step's own state, which a copy
+         of the whole step does not keep) */
+      twin: function (i) { return i.querySelector('.o55-raillabel'); },
       /* centred in the window's header between the brand and the header's controls: their widths and the header's place it */
       follow: function (strip) { var head = strip.closest('.o55-head'); return head ? [strip, head].concat(Array.prototype.slice.call(head.children)) : [strip]; } },
     { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1, mark: true,
@@ -1445,104 +1454,14 @@
     var v = sp.querySelector(':scope > .side-panel-view.active');
     var icon = v && strip.querySelector('.icon[data-target="' + v.id + '"]');
     strip.querySelectorAll('.icon[data-lg-current]').forEach(function (i) { if (i !== icon) i.removeAttribute('data-lg-current'); });
-    if (icon && !icon.hasAttribute('data-lg-current')) { icon.setAttribute('data-lg-current', ''); queueRailFocus(); } return icon;
+    if (icon && !icon.hasAttribute('data-lg-current')) icon.setAttribute('data-lg-current', ''); return icon;
   }
-  /* FO-96 (F96-1): the open panel's icon lies under this lens, which magnifies and refracts what is beneath it, so a key
-     focus mark drawn on the icon could not be read there. While the icon has a key focus and the lens is painted at
-     rest on it, the lens carries the mark: data-lg-focus on the lens and on the icon (the rail skin, concept D
-     80-bar.src.css, draws it on the lens and stands the icon's own mark down). Otherwise neither carries the flag and
-     the icon shows its own mark. Kept in step whenever the rail's lens is synced (a panel opening, closing or changing
-     hides, shows or moves it: F96b-1; where it jumps or hides in one step, in that same sync, before the frame paints:
-     F96d-1), on focus moves and keys in the bar (a key turns :focus-visible on for a
-     mouse-focused icon with no focusin), and, while the lens travels to the focused icon or fades in on it, once more
-     when that motion ends, so the mark never sits on the item the focus has left (F96b-2). "Painted" is read from the
-     computed opacity, not from display: the lens is hidden by opacity.
-     While the lens moves and does not carry the mark (it travels onto or off the key-focused icon, fades in on it, or
-     passes over it), its refraction lies over the icon's own mark and washed it below 3:1 (2.2:1 at Search's bottom in
-     Glass Light, sol-review-g8). So for that motion the icon's own mark is drawn once more above the lenses, unrefracted:
-     the cue (the rail skin, 80-bar.src.css, draws it as the icon's mark). It goes in the sync that hands the mark to the
-     lens, or when the motion ends; it is placed only when it shows, and only for a key focus in the bar, so a pointer's
-     switch reads nothing more. The lens takes the mark only once it is painted in full: one still fading in (an arrival,
-     Reduced Motion's fade) drew a pale ring, near 2.3:1 just past half its opacity, so until its fade ends the cue holds
-     the mark. */
-  var railCueEl = null;
-  function railMotions(L) {
-    var out = [];
-    if (L.lens.getAnimations) L.lens.getAnimations().forEach(function (a) {
-      if (a === L.hopHide || (a.playState !== 'running' && a.playState !== 'pending') || !a.finished) return;
-      var end = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming().endTime : Infinity;
-      if (isFinite(end)) out.push(a);
-    });
-    return out;
-  }
-  function railCue(L, icon) {
-    if (!icon) { if (railCueEl && railCueEl.hasAttribute('data-lg-on')) railCueEl.removeAttribute('data-lg-on'); return; }
-    if (!railCueEl) railCueEl = el('i', { class: 'lg-rail-cue', 'aria-hidden': 'true' });
-    if (railCueEl.parentElement !== L.layer) L.layer.appendChild(railCueEl);
-    var sym = icon.querySelector('.symbol') || icon, b = sym.getBoundingClientRect(), lr = L.layer.getBoundingClientRect(), st = railCueEl.style;
-    st.left = (b.left - lr.left) + 'px'; st.top = (b.top - lr.top) + 'px'; st.width = b.width + 'px'; st.height = b.height + 'px';
-    st.borderRadius = getComputedStyle(sym).borderRadius;
-    if (!railCueEl.hasAttribute('data-lg-on')) railCueEl.setAttribute('data-lg-on', '');
-  }
-  var railFocusQ = 0, railAwaited = typeof WeakSet === 'function' ? new WeakSet() : null, railDueAnim = null, railDueT = 0, railDueTries = 0;
-  function railLensAt(lens, icon) {
-    var s = icon.querySelector('.symbol') || icon, a = lens.getBoundingClientRect(), b = s.getBoundingClientRect();
-    return Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 2 && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 2;
-  }
-  function syncRailFocus() {
-    railFocusQ = 0;
-    var bar = document.getElementById('activityBar');
-    if (!bar) return;
-    /* outside Glass the rail has no lens of its own (an adopting look keeps its lit icon), so no flag stays (F96c-1) */
-    var L = isGlass() && typeof lenses !== 'undefined' && lenses ? lenses.get(bar) : null, act = document.activeElement;
-    /* any rail lens still flagged counts, the live one or one left from an earlier look (outside Glass the rail has none) */
-    var flagged = bar.querySelector('.icon[data-lg-focus]') || document.querySelector('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]');
-    var cur = null, on = false, wait = false, kf = null;
-    if (act && act.matches && act.matches('#activityBar .icon')) {
-      try { kf = act.matches(':focus-visible') ? act : null; } catch (e) { kf = null; }
-      if (kf && act.matches('[data-lg-current]')) { var sp = document.getElementById('sidePanelSlot'); cur = sp && visible(sp) ? act : null; }
-    }
-    var cued = !!railCueEl && railCueEl.hasAttribute('data-lg-on');
-    if (!cur && !flagged && !cued && !(kf && L && L.anim)) return;
-    if (cur && L && L.lens && L.lens.isConnected && L.rect && !(typeof hiddenLenses !== 'undefined' && hiddenLenses.has(L))) {
-      var cs = getComputedStyle(L.lens);
-      if (cs.display !== 'none') { if (parseFloat(cs.opacity) > 0.98 && railLensAt(L.lens, cur)) on = true; else wait = true; }
-    }
-    bar.querySelectorAll('.icon[data-lg-focus]').forEach(function (i) { if (!on || i !== cur) i.removeAttribute('data-lg-focus'); });
-    document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]').forEach(function (x) { if (!on || !L || x !== L.lens) x.removeAttribute('data-lg-focus'); });
-    if (on && L && L.lens) L.lens.setAttribute('data-lg-focus', '');
-    if (on && !cur.hasAttribute('data-lg-focus')) cur.setAttribute('data-lg-focus', '');
-    var motions = kf && !on && L && L.lens && L.lens.isConnected && L.rect && !L.under && L.lens.style.opacity !== '0' ? railMotions(L) : null;
-    railCue(L, motions && motions.length ? kf : null);
-    /* the lens is on its way to the focused icon, or fading in on it. No poll (F96c-3). A travel() records its path
-       (L.path): one timer to the frame from which that path keeps the lens within the 2 px of the icon, as its spring's
-       last wobble takes another 60-100 ms to end; the frame's clock and the path's can be a frame apart, so a read there
-       that finds the lens still short looks again on each of at most three frames. Otherwise, and as the fallback, look
-       again when the lens's own motion ends (travel(), a ride on its strip's entrance, an arrival or reduced-motion fade:
-       every move of the lens that is not a jump is one of its Web Animations), in that frame, before it paints. A lens at
-       rest somewhere else waits for a strip sync to move it, and syncStripNow queues this itself; an endless animation (a
-       step look's hop hide, never in Glass) is not waited on, and the icon keeps its own mark meanwhile. */
-    var an = wait ? L.anim : null, T = an && L.path;
-    if (T && T.rects && T.rects.length && L.rect) {
-      if (an !== railDueAnim) {
-        var cx = L.rect.x + L.rect.w / 2, cy = L.rect.y + L.rect.h / 2, k = T.rects.length, q;
-        while (k > 0 && (q = T.rects[k - 1]) && Math.abs(q.x + q.w / 2 - cx) <= 1.5 && Math.abs(q.y + q.h / 2 - cy) <= 1.5) k--;
-        var due = k < T.rects.length ? T.rects[k].t : T.dur, ct = an.currentTime;
-        railDueAnim = an; railDueTries = 0; clearTimeout(railDueT);
-        railDueT = setTimeout(function () { railDueT = 0; queueRailFocus(); }, Math.max(0, due - (ct == null ? -17 : ct)));
-      } else if (!railDueT && railDueTries < 3) { railDueTries++; queueRailFocus(); }
-    }
-    if ((wait || (motions && motions.length)) && L.lens.getAnimations) (motions || railMotions(L)).forEach(function (a) {
-      if (railAwaited && railAwaited.has(a)) return;
-      if (railAwaited) railAwaited.add(a);
-      a.finished.then(railFocusNow, railFocusNow);
-    });
-  }
-  function queueRailFocus() { if (!railFocusQ) railFocusQ = requestAnimationFrame(syncRailFocus); }
-  function railFocusNow() { if (railFocusQ) { cancelAnimationFrame(railFocusQ); railFocusQ = 0; } syncRailFocus(); }
-  document.addEventListener('focusin', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) railFocusNow(); }, true);
-  document.addEventListener('focusout', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) queueRailFocus(); }, true);
-  document.addEventListener('keydown', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) queueRailFocus(); }, true);
+  /* FO-96 (F96-1 round 8, the redesign): the key focus mark of a rail icon is not this lens's. The rail skin draws it as
+     one ring above every layer of the page (Glass's lenses and hover bead, the hover tags), placed on the focused tile
+     by CSS anchor positioning and shown by :focus-visible alone (concept D, 80-bar.src.css), so nothing here reads,
+     flags or times it, and the lens moves as it would with no focus at all. Rounds 4 to 7 handed the mark between the
+     icon and this lens; every round found another frame the handover missed (the lens carrying it away, a jump, the
+     travelling glass washing it, a held main thread, a pointer press), so the handover is gone. */
   /* Every lens lives in one layer above the strips and the title bar (#lg-lenses), not inside them: from outside it sees
      the sheet, the wallpaper and the label together, and no sheet can cover it. */
   /* one layer per host surface: the app shell, or a window that floats above it (onboarding's window, a dialog in
@@ -2134,7 +2053,6 @@
     if (!rides.length) return;
     rides.forEach(function (r) { if (r.L.lens.isConnected) { r.specs = rideRead(r.L, r.target); r.left = r.arrive ? arrivalLeft(r.target) : 0; } });
     rides.forEach(function (r) { if (r.specs) { if (r.arrive) arriveIn(r.L, r.left); rideApply(r.L, r.specs); } });
-    if (rides.some(function (r) { return r.rail && r.specs; })) railFocusNow();
   }
   function readStrip(cfg, strip) {
     cvWait.delete(strip);
@@ -2199,12 +2117,6 @@
     });
   }
   function syncStripNow(cfg, strip, m) {
-    /* FO-96: the rail's lens may hide, show or move: re-read the focus flags. A move along a path is read next frame
-       (and timed by syncRailFocus); a jump or a one-step hide is read in this same call, before the frame paints, so the
-       lens never shows the mark on an icon the key focus is not on, nor leaves the focused icon unmarked (F96d-1:
-       Reduced Motion, Ctrl+2 with the focus on the open panel's icon, 1 or 2 frames with no mark). */
-    var rail = cfg.kind === 'lensIcon';
-    if (rail) queueRailFocus();
     if (!m && cvSkipped(strip)) { cvSkip(strip); return; }
     var L = lensFor(strip, cfg), P0 = L.pending;
     followStrip(strip, cfg);
@@ -2220,7 +2132,7 @@
     if (L.pending && !L.pending.el.isConnected) { pressMark(L.pending, false); L.pending = null; }
     if (P0 && P0 !== L.pending) pressMark(P0, false);
     var pre = m && m.target === target ? m : null;
-    if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { var shown = L.lens.style.opacity !== '0'; stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (shown) L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); if (rail && shown) railFocusNow(); return; }
+    if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
     hiddenLenses.delete(L);
     if (L.scroller && L.scroller.isConnected) {
       var out;
@@ -2229,7 +2141,7 @@
         var sr = L.scroller.getBoundingClientRect(), tr = boxRect(cfg.box ? (cfg.box(target).getBoundingClientRect ? cfg.box(target) : target) : target);
         out = tr.left < sr.left - 1 || tr.left + tr.width > sr.right + 1 || tr.top < sr.top - 1 || tr.top + tr.height > sr.bottom + 1;
       }
-      if (out) { var was = L.lens.style.opacity !== '0'; stopLensTravel(L); if (was) L.lens.style.opacity = '0'; L.rect = null; if (rail && was) railFocusNow(); return; }
+      if (out) { stopLensTravel(L); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; return; }
     }
     if (L.lens.style.opacity) L.lens.style.opacity = '';
     prewarmSoon(L, cfg, strip);
@@ -2237,7 +2149,7 @@
     if (!R) R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
     var A = L.rect;
     if (L.dragging) return;
-    if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); if (rail) railFocusNow(); return; }
+    if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); return; }
     var quiet = reduced();
     var still = A && (quiet ? A.x === R.x && A.y === R.y && A.w === R.w && A.h === R.h : Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5);
     if ((quiet && !L.reducedAnim) || !switchOn()) stopLensTravel(L);
@@ -2245,27 +2157,27 @@
        the chip takes the chosen tab's box in the same sync: a tab that grows when chosen (the left rail's segments show
        their label) kept the chip at its unchosen width for a lazy sync, its chosen words running off the chip onto bare
        ground ("Curren", 2026-10-28 review, astra R4) */
-    if (L.hopFrames && L.hopTarget === target) { hopSettle(L); if (L.hopFrames) return; }
+    if (L.hopFrames && L.hopTarget === target) {
+      /* a carried chip whose tab changed size or place under it while it travels (the rail's tabs show the chosen tab's
+         word and fold the others to icons when the app chooses): the block is made again for the new box with fresh
+         copies, on the same clock, so it lands on the tab as it is now with the words as they are now */
+      var K = L.carry, KA = K ? carryAge(K) : 0;
+      if (K && KA < K.dur && L.rect && Math.max(Math.abs(L.rect.x - R.x), Math.abs(L.rect.y - R.y), Math.abs(L.rect.w - R.w), Math.abs(L.rect.h - R.h)) > 0.5) { endHop(L); carry(L, K.A, R, strip, cfg, target, K.vertical, performance.now() - KA); return; }
+      hopSettle(L); if (L.hopFrames) return;
+    }
     if (still) return;
     if (!A || quiet || !switchOn()) {
       stopLensTravel(L);
-      if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.path = null; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } ownRest(L); }; }
+      /* (a carried chip, Friendly's sticker and Basic's block, changes at once under Reduce Motion: no fade either) */
+      if (A && quiet && !(CARRY[switchMotion] && !isGlass())) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.path = null; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } ownRest(L); }; }
       setLensBox(L, R); L.tgt = target;
       /* a lens in the app-wide layer waits for its strip's entrance; one in its host's own layer (a page, a menu, a
          dialog) is part of that entrance already */
       if (!A && !quiet && switchOn()) {
-        if (lensRides) { stopRide(L); lensRides.push({ L: L, target: target, arrive: L.layer === layer, rail: rail }); }
+        if (lensRides) { stopRide(L); lensRides.push({ L: L, target: target, arrive: L.layer === layer }); }
         else { if (L.layer === layer) arrive(L, target); ride(L, target); }
         settleCheck(L);
-        if (rail && !lensRides) railFocusNow();
       }
-      /* a jump (Reduced Motion, or no switch motion) is read now. A first show in motion may fade in by an arrival or
-         ride, which a batched sync attaches later in this task: it is read once that is attached (here, or after the
-         batch's rides in syncStrips), not next frame. Read next frame, a lens shown at once at full opacity lay over the
-         key-focused icon's own mark, washing it, for the frames before the read handed it the mark (F96-1 round 6:
-         Enter opening Files in Glass Light, 2 or 3 frames at 4.7 and under on its sides while the panel's open held the
-         main thread). A fade in is read again at its end, with the cue holding the mark meanwhile. */
-      if (rail && (A || quiet || !switchOn())) railFocusNow();
       return;
     }
     /* the destination moved by a pixel or two (the chosen label turned bold): a move in flight carries on, re-based;
@@ -2352,7 +2264,7 @@
     if (L.hopHide) { var hh = L.hopHide; L.hopHide = null; if (L.anim === hh) L.anim = null; hh.cancel(); }
     var over = L.strip && L.strip.__lgOver; if (over && !over.children.length) { over.remove(); L.strip.__lgOver = null; if (L.strip.__lgPosOver && !L.strip.__lgUnder) { L.strip.style.removeProperty('position'); } L.strip.__lgPosOver = false; }
     if (L.hopMarks) { L.hopMarks.forEach(function (v, el) { hopOwned.delete(el); if (el.getAttribute('data-lg-press') === v) el.removeAttribute('data-lg-press'); }); L.hopMarks.clear(); }
-    var P = L.hopPress; L.hopPress = null; L.hopTarget = null;
+    var P = L.hopPress; L.hopPress = null; L.hopTarget = null; L.carry = null;
     if (P && L.pending === P && P.el.isConnected && !hopOwned.has(P.el)) P.el.setAttribute('data-lg-press', 'on');
     ownRest(L);
   }
@@ -2363,13 +2275,15 @@
     var T = L.hopTarget; if (!T || !L.hopFrames) return;
     if (!T.isConnected) { endHop(L); return; }
     var cfg = L.cfg; if (!T.matches(cfg.active || '.active')) return;
-    var wait = L.hopEnd - performance.now();
+    /* (a carried block lands by its own clock, which a long task right after the press may have held back) */
+    var K = L.carry, wait = K ? K.dur - carryAge(K) : L.hopEnd - performance.now();
     if (wait > 0) { if (!L.hopT) L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, wait + 1); return; }
     endHop(L);
   }
   function hop(L, A, B, strip, cfg, target, vertical) {
     stopLensTravel(L);
     if (switchMotion === 'cut' || !A) { setLensBox(L, B); return; }
+    if (CARRY[switchMotion]) { carry(L, A, B, strip, cfg, target, vertical); return; }
     var stops = hopStops(A, B, strip, cfg, target, vertical);
     if (stops.length < 2 || !L.under) { setLensBox(L, B); return; }
     var now = strip.querySelector(cfg.items + (cfg.active || '.active')), weight = getComputedStyle(now || target).fontWeight;
@@ -2389,6 +2303,104 @@
     var P = L.pending && L.pending.el === target ? L.pending : null; if (P) L.hopPress = P;
     hopMark(L, target, 'off');
     L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, HOP_MS + 1);
+    L.hopSafety = setTimeout(function () { L.hopSafety = 0; if (L.hopFrames) { endHop(L); queueSync(L.strip); } }, 3000);
+  }
+  /* Friendly's hop and Basic's snap (stream F batch 9, Jared 2026-11-08: "I like F1 and B1"). Their chip is opaque and
+     under its labels, as Retro's is, but it travels: F1's sticker hops along a low arc with a small tilt and lands with a
+     squash (440 ms); B1's block snaps straight across in 110 ms and does not stretch. A chosen label's ink is not a
+     resting label's (Basic's words turn white on its blue, Friendly Dark's dark on its mint), so while the chip travels,
+     the chip drawn is a block of its material ABOVE the labels (lg-over, where a step's blocks go), holding an inverted
+     copy (twinOf) of every label it can cross. The copies sit in one layer inside the block that carries the exact inverse
+     of the block's transform, sampled every frame, so they stay still on their tabs while the block moves around them:
+     in every frame the words the chip covers, and only those, are in its ink. The real labels rest in their resting ink
+     underneath (the tab headed for is held 'off', as in a step, and a press marks the one left 'off'), and the chip under
+     them is hidden until the block has landed and the app has chosen the tab (hopSettle); then the block goes, and the
+     chip under the labels, with the chosen label's own ink, looks the same. Each moving part is a transform keyframed
+     every 1/60 s on the compositor, so a page switch that holds the main thread cannot stall it (as for a step, Q16
+     delta review R1). A sticker's hard shadow is a block of its own under the sticker (lg-carry-shadow), so its lift is
+     a transform too; its colour is the look's --pm-switch-stick (none in Basic). Glass never comes here (switchMotion is
+     glide in Glass). */
+  function bezierEase(p) {
+    var cx = 3 * p[0], bx = 3 * (p[2] - p[0]) - cx, ax = 1 - cx - bx, cy = 3 * p[1], by = 3 * (p[3] - p[1]) - cy, ay = 1 - cy - by;
+    var X = function (t) { return ((ax * t + bx) * t + cx) * t; }, Y = function (t) { return ((ay * t + by) * t + cy) * t; };
+    return function (x) {
+      if (x <= 0) return 0; if (x >= 1) return 1;
+      var lo = 0, hi = 1, t = x;
+      for (var i = 0; i < 24; i++) { var v = X(t); if (Math.abs(v - x) < 1e-5) break; if (v < x) lo = t; else hi = t; t = (lo + hi) / 2; }
+      return Y(t);
+    };
+  }
+  /* where the chip is at eased progress u of the trip: its box (x, y, w, h, in the strip's layer), and for the hop its
+     lift off the strip (0..1), tilt (0..1 of -2 deg) and squash. The hop's keyframes are F1's: half way and lifted at
+     0.45, landed and squashed (1.06 x 0.9) at 0.8, at rest at 1 */
+  function carryPose(motion, u, A, B) {
+    var s = u, lift = 0, sx = 1, sy = 1, p;
+    if (motion === 'hop') {
+      if (u <= 0.45) { p = u / 0.45; s = 0.5 * p; lift = p; }
+      else if (u <= 0.8) { p = (u - 0.45) / 0.35; s = 0.5 + 0.5 * p; lift = 1 - p; sx = 1 + 0.06 * p; sy = 1 - 0.1 * p; }
+      else { p = (u - 0.8) / 0.2; s = 1; sx = 1.06 - 0.06 * p; sy = 0.9 + 0.1 * p; }
+    }
+    return { x: A.x + (B.x - A.x) * s, y: A.y + (B.y - A.y) * s, w: A.w + (B.w - A.w) * s, h: A.h + (B.h - A.h) * s, lift: lift, sx: sx, sy: sy };
+  }
+  /* how far a carried block is along its trip: from when its animation really started (its start time, set at the frame
+     that first drew it) to now, on the wall clock. A press the app answers with a long task before any frame leaves the
+     animation unstarted (no start time: it has not moved yet), and inside or right after a long task the animation's own
+     current time is the frame's from before it, so neither the wall clock from the press nor that current time is where
+     the block is drawn */
+  function carryAge(K) { var a = K.anim; return !a || a.startTime == null ? 0 : Math.max(0, performance.now() - a.startTime); }
+  var CARRY_REACH = 8;   /* px past the trip's ends along the strip: a label the squashed or tilted chip can touch */
+  function carry(L, A, B, strip, cfg, target, vertical, t0) {
+    if (!L.under || reduced()) { setLensBox(L, B); return; }
+    var start = t0 || performance.now(), age = Math.max(0, performance.now() - start);
+    var C = CARRY[switchMotion], ease = bezierEase(C.ease), dur = C.dur, hopping = switchMotion === 'hop';
+    var now = strip.querySelector(cfg.items + (cfg.active || '.active')), weight = getComputedStyle(now || target).fontWeight;
+    var stick = hopping ? getComputedStyle(strip).getPropertyValue('--pm-switch-stick').trim() : '';
+    if (stick === 'transparent' || stick === 'none') stick = '';
+    /* every label the chip can cross: along the strip, between the trip's two ends and a little past them */
+    var lo = Math.min(vertical ? A.y : A.x, vertical ? B.y : B.x) - CARRY_REACH, hi = Math.max(vertical ? A.y + A.h : A.x + A.w, vertical ? B.y + B.h : B.x + B.w) + CARRY_REACH;
+    var crossed = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible).map(function (it) { var w = (cfg.twin && cfg.twin(it)) || it; return { it: w, r: rectIn(strip, w, 0) }; })
+      .filter(function (s) { var a = vertical ? s.r.y : s.r.x, b = a + (vertical ? s.r.h : s.r.w); return b > lo && a < hi; });
+    var over = overLayer(strip), tag = cfg.tag, box = function (e) { var st = e.style; st.left = B.x + 'px'; st.top = B.y + 'px'; st.width = B.w + 'px'; st.height = B.h + 'px'; };
+    var F = el('i', { class: 'lg-lens lg-hop lg-carry', 'aria-hidden': 'true' }), G = el('i', { class: 'lg-carry-twins', 'aria-hidden': 'true' }), S = null;
+    if (tag) F.setAttribute('data-lg-for', tag);
+    box(F); G.style.width = B.w + 'px'; G.style.height = B.h + 'px';
+    crossed.forEach(function (s) { G.appendChild(twinOf(s.it, { x: s.r.x - B.x, y: s.r.y - B.y, w: s.r.w, h: s.r.h }, weight)); });
+    F.appendChild(G);
+    if (stick) { S = el('i', { class: 'lg-carry-shadow', 'aria-hidden': 'true' }); if (tag) S.setAttribute('data-lg-for', tag); box(S); over.appendChild(S); }
+    over.appendChild(F);
+    if (S) S.style.borderRadius = getComputedStyle(F).borderRadius;   /* the block's own corner, whatever shapes it (a rail skin's) */
+    /* the frames: the block's transform (about its centre: translate, tilt, scale), its copies' exact inverse, and the
+       shadow's (the block's, pushed out by the sticker's rest offset, 2 px, growing to 4 x 6 px at the top of the hop).
+       A vertical strip lifts the sticker toward the light (up and left) instead of up its own path */
+    var fF = [], fG = [], fS = [], rects = [], n = Math.max(2, Math.ceil(dur / (1000 / 60))), cB = { x: B.x + B.w / 2, y: B.y + B.h / 2 };
+    /* the lift stays inside the strip's own box: a strip at the top of a scroller (onboarding's segments, first in their
+       pane) clips anything above it, and a sticker lifted 6 px there lost its top edge for six frames (Windows film) */
+    var roomX = Math.max(0, Math.min(A.x, B.x)), roomY = Math.max(0, Math.min(A.y, B.y)), liftX = vertical ? Math.min(2, roomX) : 0, liftY = Math.min(vertical ? 2 : 6, roomY);
+    for (var i = 0; i <= n; i++) {
+      var t = Math.min(dur, i * 1000 / 60), o = t / dur, P = carryPose(switchMotion, ease(o), A, B);
+      var lx = hopping ? -liftX * P.lift : 0, ly = hopping ? -liftY * P.lift : 0, rot = hopping ? -2 * P.lift : 0;
+      var dx = P.x + P.w / 2 - cB.x + lx, dy = P.y + P.h / 2 - cB.y + ly, kx = P.sx * P.w / B.w, ky = P.sy * P.h / B.h;
+      fF.push({ offset: o, transform: 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' });
+      fG.push({ offset: o, transform: 'scale(' + (1 / kx).toFixed(5) + ',' + (1 / ky).toFixed(5) + ') rotate(' + (-rot).toFixed(3) + 'deg) translate(' + (-dx).toFixed(2) + 'px,' + (-dy).toFixed(2) + 'px)' });
+      if (S) { var ox = 2 + 2 * P.lift, oy = 2 + 4 * P.lift; fS.push({ offset: o, transform: 'translate(' + (dx + ox).toFixed(2) + 'px,' + (dy + oy).toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' }); }
+      rects.push({ t: t, x: P.x, y: P.y, w: P.w, h: P.h });
+      if (t >= dur) break;
+    }
+    var timing = { duration: dur, easing: 'linear', fill: 'forwards' };
+    var lead = null;
+    [[F, fF], [G, fG], [S, fS]].forEach(function (x) { if (!x[0]) return; var a = x[0].animate(x[1], timing); if (age) a.currentTime = Math.min(dur, age); if (!lead) lead = a; });
+    setLensBox(L, B);
+    /* the chip under the labels stays hidden while the block is up (as for a step's blocks) */
+    L.anim = L.hopHide = L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
+    L.path = { t0: start, dur: dur, rects: rects };
+    if (!L.hopMarks) L.hopMarks = new Map();
+    L.hopFrames = S ? [S, F] : [F]; L.hopTarget = target; L.hopEnd = start + dur;
+    L.carry = { A: A, t0: start, vertical: vertical, anim: lead, dur: dur };
+    var Pp = L.pending && L.pending.el === target ? L.pending : null; if (Pp) L.hopPress = Pp;
+    /* the labels underneath rest in their resting ink: the one headed for until the block lands on it, the one left at
+       once (a press marks it so; a change the app made has already taken its chosen look away) */
+    hopMark(L, target, 'off');
+    L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, Math.max(0, dur - age) + 1);
     L.hopSafety = setTimeout(function () { L.hopSafety = 0; if (L.hopFrames) { endHop(L); queueSync(L.strip); } }, 3000);
   }
   /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it. Only for
@@ -2776,7 +2788,7 @@
     sheets.forEach(unpin);   /* the scroll has settled: anchored frost again, at the very spot it is pinned */
     if (root.hasAttribute('data-lg-demo-host') && document.getElementById('lg-demo-btn')) demo();
     applyWall();
-    if (!isGlass()) { unmountAll(switchLook); if (!switchLook) { queueRailFocus(); return; } }
+    if (!isGlass()) { unmountAll(switchLook); if (!switchLook) return; }
     else { syncSurfaces(scopes, sheets); ensureFrost(); }
     var covered = pageCovered(), todo = [];
     STRIPS.forEach(function (cfg) {
@@ -2785,7 +2797,7 @@
       });
       strips.forEach(function (s) { if (s.matches(cfg.sel) && found.indexOf(s) < 0) found.push(s); });
       /* the activity bar's icon lens is Glass's own rail design; an adopting look keeps its own lit icon there */
-      if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); queueRailFocus(); return; }
+      if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); return; }
       found.forEach(function (s) {
         /* (a shown chip is put out whatever its box says: a look change clears every lens's box for the next sync to place
            it again, and a screen that left in that same sync kept its chip on screen at full opacity until the screen was

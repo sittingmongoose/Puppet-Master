@@ -29,15 +29,15 @@
    "rule": 3,
    "owner": "pm7-q16-consistency",
    "source": "Concepts/onboarding/opus-5.5/src/css/60-switcher-looks.css",
-   "original": ":is(html[data-theme^=\"retro\"], html[data-o55-nier=\"on\"]):not(#lgz) .orch-tabs .orch-tab.active *",
-   "replacement": ":is(html[data-theme^=\"retro\"], html[data-o55-nier=\"on\"]):not(#lgz) .orch-tabs .orch-tab.active :where(.orch-tab-badge,.orch-tab-badge-dot)",
+   "original": ":is(html[data-theme^=\"retro\"], html[data-theme^=\"basic\"], html[data-theme^=\"friendly\"], html[data-o55-nier=\"on\"]):not(#lgz) .orch-tabs .orch-tab.active *",
+   "replacement": ":is(html[data-theme^=\"retro\"], html[data-theme^=\"basic\"], html[data-theme^=\"friendly\"], html[data-o55-nier=\"on\"]):not(#lgz) .orch-tabs .orch-tab.active :where(.orch-tab-badge,.orch-tab-badge-dot)",
    "omit": false
   },
   {
    "rule": 4,
    "owner": "pm7-q16-consistency",
    "source": "Concepts/onboarding/opus-5.5/src/css/60-switcher-looks.css",
-   "original": ":is(html[data-theme^=\"retro\"], html[data-o55-nier=\"on\"]):not(#lgz) #pmuRange > button.active *",
+   "original": ":is(html[data-theme^=\"retro\"], html[data-theme^=\"basic\"], html[data-theme^=\"friendly\"], html[data-o55-nier=\"on\"]):not(#lgz) #pmuRange > button.active *",
    "replacement": "",
    "omit": true
   },
@@ -82,8 +82,8 @@
    "rule": 9,
    "owner": "pm7-q16-consistency",
    "source": "Concepts/onboarding/opus-5.5/src/css/60-switcher-looks.css",
-   "original": ":is(html[data-theme^=\"retro\"], html[data-o55-nier=\"on\"]):not(#lgz) #pm-settings-root .domain-link.active *",
-   "replacement": ":is(html[data-theme^=\"retro\"], html[data-o55-nier=\"on\"]):not(#lgz) #pm-settings-root .domain-link.active :where(.domain-copy,.icon,circle,path,rect,small,strong,svg)",
+   "original": ":is(html[data-theme^=\"retro\"], html[data-theme^=\"basic\"], html[data-theme^=\"friendly\"], html[data-o55-nier=\"on\"]):not(#lgz) #pm-settings-root .domain-link.active *",
+   "replacement": ":is(html[data-theme^=\"retro\"], html[data-theme^=\"basic\"], html[data-theme^=\"friendly\"], html[data-o55-nier=\"on\"]):not(#lgz) #pm-settings-root .domain-link.active :where(.domain-copy,.icon,circle,path,rect,small,strong,svg)",
    "omit": false
   },
   {
@@ -99,15 +99,15 @@
    "rule": 11,
    "owner": "pm7-q16-consistency",
    "source": "Concepts/onboarding/opus-5.5/src/css/60-switcher-looks.css",
-   "original": ":is(html[data-theme^=\"retro\"], html[data-o55-nier=\"on\"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link.active *",
-   "replacement": ":is(html[data-theme^=\"retro\"], html[data-o55-nier=\"on\"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link.active :where(.icon,path,span,svg)",
+   "original": ":is(html[data-theme^=\"retro\"], html[data-theme^=\"basic\"], html[data-theme^=\"friendly\"], html[data-o55-nier=\"on\"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link.active *",
+   "replacement": ":is(html[data-theme^=\"retro\"], html[data-theme^=\"basic\"], html[data-theme^=\"friendly\"], html[data-o55-nier=\"on\"]):not(#lgz) #pm-settings-root .rail-scroll > .side-link.active :where(.icon,path,span,svg)",
    "omit": false
   },
   {
    "rule": 12,
    "owner": "pm7-q16-consistency",
    "source": "Concepts/onboarding/opus-5.5/src/css/60-switcher-looks.css",
-   "original": ":is(html[data-theme^=\"retro\"], html[data-o55-nier=\"on\"]):not(#lgz) nav.page-tabs .page-tab.active *",
+   "original": ":is(html[data-theme^=\"retro\"], html[data-theme^=\"basic\"], html[data-theme^=\"friendly\"], html[data-o55-nier=\"on\"]):not(#lgz) nav.page-tabs .page-tab.active *",
    "replacement": "",
    "omit": true
   }
