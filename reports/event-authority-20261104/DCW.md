@@ -1,3 +1,213 @@
+# DCW — sweep part 2A and part 2B numbers
+
+Branch `plans/ea-w2-chain-wizard-20261104`; implementation **`8ea0e8de8cc8ac473bb43157848468fe7fc49b88`**. Start `7847bbc409e875a9bfddb02309cb0638690f798b`; no rebase. Guard-tool merge **`47eb2aa6359cd413bc634ccdb2575277ff31ccf8`** takes exact gated `004bdedd632d9463f3535190a6ed5772338cdce1`. Number merge **`5c0d54188378581237327af9008b5b3f162f40b0`** takes exact gated `a16f67c1ef21796758f4209ff12c0f4d12b86ce9`, after that tool merge. Generated merge conflicts were regenerated. Neither gated tool's files were edited.
+
+All eight families remain **8 PASS / 3 PARTIAL / 1 ABSENT**. Named phase proofs earn the bounded credit below. Complete check 11 and individual schema-keyword isolation remain unproved. Timestamp review is **interim only**; no date-time helper, validator or inventory gate was adopted. Native authority remains **NOT_RUN**. No prepared PASS, admission or new PlanUnit ID.
+
+## Sweep part 2A: findings and responses
+
+Source citations use delivered implementation tree `8ea0e8de8cc8ac473bb43157848468fe7fc49b88`. Commit provenance: `ed8ff2efab70ad625f31412d84f74732b8fb21fa` ports the rows and shared number calls; `a35e4f7c12087897231e3325355123289ba39364` repairs witnesses and implements verified frozen-digest dispatch; `de5e79619a46688e0e033202e0b2f09ea0defccb` completes the corpus and owner/derived updates; `8ea0e8de8cc8ac473bb43157848468fe7fc49b88` includes the renamed generated schema shard.
+
+| Item | Change / evidence | Location and verification |
+|---|---|---|
+| **SW-B3: guarded refusal port** (`ed8ff2efab`) | Ordinary six-family, blockage, legacy bundle and registered-source paths now dispatch product refusals to named source-backed predicates. The earlier AST proof engine is retired; its schema-label utilities remain for numeric builders. The old whole-pool check-11 claim stays superseded. | `scripts/pm_dcw_guard_rows.py:576` (`enforce`); `scripts/pm-dcw-table-generate.py:3780` (`outputs`); `scripts/pm_dcw_event_isolation.py:1`. Run `python3 scripts/pm-dcw-table-generate.py --check`, then the guard runner below. |
+| **Bounded proof adapter** (`ed8ff2efab`) | Complete append/retry/read/rebuild/compatibility/restore paths, standalone legacy shape/order checks, CLI preflights and an explicitly labelled SP278 codec-helper witness derive observations at their actual refusal sites. Valid complete executions supply controls. The gated tool gets fresh phase factories and performs its own cuts, peer matrix, trace checks and restoration. | `scripts/pm_dcw_guard_suites.py:25` (`witnesses`); `scripts/pm_dcw_guard_suites.py:135` (`collect`); `scripts/pm_dcw_guard_suites.py:194` (`suite_for`). The final collection has 6237 executions, zero mismatches and zero untracked exceptions. |
+| **Missing witnesses** (`a35e4f7c12`) | Added coherent original event/key/group, result/request/child, selected root/epoch, restore-member, token, manifest/frame/gap, registry/pointer/edition, intrinsic codec/parser and both CLI preflight witnesses. Repairs preserve independent source facts and reissue only their derived copies. A proposed O128 token-root witness actually refused O183 earlier; it was removed from O128's candidates and the clean collection rerun. | `scripts/pm_dcw_p2a_cases.py:39` (`cases`); `scripts/pm_dcw_p2a_cases.py:31` (`sync_index`); `scripts/pm_dcw_preflight_guard_cases.py:11` (`cases`); `scripts/pm_dcw_preflight_guard_cases.py:72` (`invoke`). All 143 focused witnesses pass their named row/result expectations. Every residual row is listed separately in the unproved table. |
+| **Frame predicates** (`a35e4f7c12`) | Split the former opaque O201 aggregate into F001–F005: actual source value bytes, start offset, end offset, schema ID and schema version. F006 attributes base64 parser refusal. Invalid frame facts stay invalid while the builder reissues dependent snapshot bindings. | `scripts/pm_dcw_event_oracles.py:897` (`index_content`); `scripts/pm_dcw_event_oracles.py:1080` (`source_frame_bytes`); `scripts/pm_dcw_index_fixtures.py:56` (`snapshot_source`). Tool tables 162–167 and complete read witnesses. |
+| **Observation / control defects** (`a35e4f7c12`) | O165 emits sorted IDs rather than an unsupported set. Family preflight predicates receive names rather than entire case banks. Success observations for physical/JCS/pointer/document intrinsic rows execute before return. O210 uses an unshadowed comprehension variable; B016 compares one iterated character to U+0020, exactly matching its original `ord(c)>=32` predicate within that input domain. Schema metadata equality uses an exact typed representation outside the physical codec's integer domain; a matching 4,400-digit annotation accepts and its one-unit mismatch refuses. | `scripts/pm_dcw_event_oracles.py:158` (`canonical_msgpack`); `scripts/pm_dcw_event_oracles.py:175` (`semantic_digest`); `scripts/pm_dcw_event_oracles.py:1060` (`schema_observation`); `scripts/pm_dcw_registered_schemas.py:19` (`pointer`); `scripts/pm_dcw_registered_schemas.py:39` (`document_at`). Corrected tables 018/022 and focused preflight controls pass. |
+| **Runner failure status** (`a35e4f7c12`) | A completed gated report with status FAIL now causes nonzero CLI exit. Collections refuse unresolved mismatches/exceptions. `--include-unproved` records the tool's missing-negative failures rather than silently omitting those rows. | `scripts/pm-dcw-guard-tables.py:37` (`main`); `scripts/pm-dcw-guard-tables.py:30` (`collection_progress`). Final missing-witness batch exits 1 as expected; its reports retain all unproved rows. Earlier table018 FAIL was an adapter-set defect, not a tool pass or tool bug. |
+| **Standing / registered regressions** (`ed8ff2efab`) | Keep complete ordinary regressions; retire broad shared-code removal credit. Standing check11 reports `SUPERSEDED_METHOD_B`. No diagnostic removal set is treated as a duplicate proof. | `scripts/pm_dcw_event_regressions.py:92` (`audit`); `scripts/pm_dcw_registered_regressions.py:27` (`audit`). Six standing and six registered suites: all 12 exit0, top-level PASS; standing11 is superseded. |
+
+### Guard-table result and exact limits
+
+| Checker | Guards | Proved phase rows | Unproved |
+|---|---|---|---|
+| pm_dcw_event_oracles | 250 | 210 | 40 |
+| pm_dcw_blockage_events | 108 | 97 | 11 |
+| pm_bundle_revision_events | 22 | 18 | 4 |
+| pm_dcw_registered_schemas | 13 | 13 | 0 |
+
+These are **named assertion/phase guards**, not a census of primitive JSON Schema predicates. The observation's `site` selects the assertion; peers in another site are outside that invocation. Some source assertions iterate fields or compare tuples. A proved phase does not separately prove every loop occurrence, tuple member, schema clause, selector, source adapter or complete Python boundary. Aggregate schema-status rows prove only refusal attribution, and their individual keyword cuts are **not run**. No duplicate-set credit is claimed.
+
+The gated reports prove 338 phase rows; 55 rows lack an independent negative. All 393 have accepted controls. The collection includes 153 standalone legacy shape/order invocations, 19 shortened-bank CLI preflight invocations and 2 SP278 helper invocations; N004’s negative is a helper-boundary witness and earns no full-family credit. The unproved rows do not reduce the recorded credit of other tables. Their named reasons, source locations and tool failures are in [DCW.guard-removal.md](DCW.guard-removal.md). It also lists **every row's own flips, peer counts and restoration result**. The cited compressed raw reports retain every cut result and complete trace, with the exact case IDs; `guard-results.json.gz` includes every row and the supplementary full-path cut result for every distinct negative.
+
+The `DISABLED` diagnostics are supplementary only. Their totals include the explicitly labelled N004 SP278 helper cut; that one cut is not a full-family invocation. Of 1056 distinct negative observations, 919 cuts accept, 109 refuse later, and 28 hit a derivation exception. The exact later guard/code or exception is recorded for each case. Later refusals and derivation exceptions earn **zero complete-boundary isolation credit**; none is excused as an unnamed duplicate. Even an accepting diagnostic cut is not a gated whole-boundary certificate. Source-backed phase results and these diagnostics are reported separately.
+
+### Unproved rows
+
+| Guard | Reason |
+|---|---|
+| `O013` | The complete payload schema fixes event_type for the selected family; mismatching envelopes or selected rows in the corpus refuse before this equality. No independent envelope-versus-payload witness is credited. |
+| `O014` | The selected family payload schema fixes this exact event_type. The payload-versus-row equality has no independent complete-path negative after that schema. |
+| `O017` | Changing project scope reaches the shared envelope project/application constraints or the identity join before this project-only assertion; no independent scope witness is supplied. |
+| `O021` | Current causation/predecessor witnesses stop at O020 or the earlier payload schema. Parent-to-payload predecessor equality has no independent negative in this corpus. |
+| `O041` | custody_v2 validates first_append_receipt.durability_state as synced before this runtime equality. No per-const cut was performed. |
+| `O058` | The earlier legacy.validate predecessor identity joins and source/intent bindings reject the enumerated phase-copy defects first. Each loop-field occurrence still lacks its own full-path witness. |
+| `O060` | The phase slot event_type has no isolated negative distinct from prepared_event dispatch and the source schema. Missing coverage is not a duplicate proof. |
+| `O061` | The slot predecessor equality has no negative that reaches it independently of phase ordering and source-schema validation. |
+| `O062` | The slot source_ref equality has no full-path negative independently separating it from payload source-ref derivation and source-schema constraints. |
+| `O076` | The completion annotation-output nonempty assertion lacks an independent complete-path negative after the completed payload/source shape checks. |
+| `O077` | The earlier O057 checks membership of the same predecessor in the same settled set; a duplicate-set proof cutting both sites was not run. No duplicate credit is claimed. |
+| `O108` | The wizard-open source schema constrains result.status before this runtime opened assertion; its exact schema clause was not cut. |
+| `O109` | The wizard-open payload schema fixes predecessor_event_id to null before this runtime assertion; no per-const schema cut. |
+| `O110` | The deferred-load source schema constrains result.status before the runtime seed_loaded assertion; no per-const schema cut. |
+| `O112` | No independently reissued retained predecessor of a different family reached this row after original/source custody and payload selection. This is a missing witness, not an impossibility claim. |
+| `O115` | The current-generation state assertion has no isolated complete-path witness after checkpoint schema and current-generation selection. |
+| `O117` | The checkpoint schema fixes complete_to_captured_boundary before this runtime assertion; no individual schema-const cut. |
+| `O119` | Row-count-versus-retained-count equality lacks an independent witness preserving the preceding row-count check and the complete captured-source/row membership facts. |
+| `O124` | Read-token schema and exact durable/live projection O123 precede this length check. No separate token-shape witness survives both. |
+| `O125` | The live read-token schema closes its required fields before this length check. No separate per-member schema cuts were performed. |
+| `O128` | Changing the token Storage ID is refused earlier by O183, which joins the same token to authentic authority; O182 already binds the checkpoint to that authority. No duplicate-set proof or independent negative earns this later equality credit. |
+| `O129` | The token/frontier source_selection equality has no coherent independently reissued token witness preserving its earlier schema and source-selection joins. |
+| `O133` | The checkpoint-key/root derivation assertion lacks a coherent witness moving checkpoint key, both token copies and checkpoint references independently of the prior token equality. |
+| `O202` | Every frame must belong to exactly one source segment before this total can differ. No independent segment-membership witness reaches this count without another captured-source defect. |
+| `O207` | The source-order uniqueness assertion lacks a coherent original capture with distinct valid owner events that reaches it. Reordered/duplicate-source cases currently refuse earlier. |
+| `O208` | The event-ID uniqueness assertion lacks a coherent capture with duplicated authentic original IDs and otherwise lawful Storage sequence/order and owner custody. |
+| `O211` | The checkpoint schema constrains each sequence-gap reason before this runtime allowlist. A valid gap control is collected; no independent invalid reason or per-enum schema cut is credited. |
+| `O214` | The selected generation is fetched by checkpoint.current_generation_id and the checkpoint schema precedes this equality. No independently inconsistent selected-generation witness is supplied. |
+| `O216` | The map-key/generation-ID equality lacks a multi-generation complete control with an independently defective inactive generation. Current-generation aliases encounter prior joins first. |
+| `O217` | The per-generation identity derivation has no isolated inactive-generation witness; O215 already tests this derivation for the selected generation. No duplicate-set proof was run. |
+| `O218` | The per-generation dataset-name derivation lacks a coherent inactive-generation witness preserving prior generation-ID and dataset lookup joins. |
+| `O219` | The exactly-one-current-generation assertion lacks an independent multi-generation control/negative after checkpoint schema constraints. |
+| `O220` | The anchor-root equality lacks a coherent independent anchor/source/root witness that preserves prior generation derivation and selection joins. |
+| `O221` | The anchor retained-count bound lacks a coherent independently reissued anchor/generation witness; current cases stop at earlier generation or prefix bindings. |
+| `O223` | The birth-anchor first sequence equality lacks a coherent independently reissued anchor, generation ID and token negative. No whole-anchor cut is used. |
+| `O224` | The birth-anchor through sequence equality lacks a coherent independently reissued anchor, generation ID and token negative. No whole-anchor cut is used. |
+| `O225` | The birth-anchor gap digest lacks a coherent independently reissued anchor/generation witness. Gap controls are covered separately; this exact digest row remains unproved. |
+| `O226` | Each anchor/source-selection field join lacks a separately reissued birth generation, ID and token witness. No compound anchor-removal set earns credit. |
+| `O233` | The selected original frame equality is preceded by source row reconstruction and O228 row-source matching. No independent full-path input reaches this later equality. |
+| `B001` | The selected blockage payload schema fixes event_type before envelope/payload family equality; no per-const schema cut. |
+| `B004` | The shared envelope schema and blockage identity join precede the project-only scope assertion; no independent scope witness survives them. |
+| `B019` | The retained predecessor family assertion lacks a coherent different-family original/source/custody control. Missing witness; no unreachable claim. |
+| `B023` | Source-reference derivation is bound by the earlier envelope identity and source_ref equality. No independent negative reaches this later derivation. |
+| `B054` | The predecessor requiredness assertion lacks a valid unblocked observation with the corresponding original absent after its preceding historical lookup/custody checks. |
+| `B063` | The resolution-set schema validates member string type before this runtime type assertion; no individual item-type schema cut. |
+| `B069` | The ordinary verify entry has no foreign-family witness with a complete otherwise valid DCW authority graph; foreign payload/schema probes exercise other boundaries. |
+| `B085` | Compatibility-original absence has no independently missing original witness before source construction/custody. Removing the guard could also leave a dereference; no derivation credit. |
+| `B093` | The older-epoch comparison lacks a coherently admitted newer-source/older-authority restore witness preserving preceding restore admission joins. |
+| `B095` | Original custody is authenticated earlier by source_contract/original_receipt before restore membership. No independent absence witness reaches this later check. |
+| `B096` | The exactly-one matching restore member check lacks an independently reissued complete admission retaining all required member/owner facts. No schema/member compound cut. |
+| `L001` | The bundle payload schema UTC-Z shape precedes this endswith assertion. No individual schema-pattern cut. Timestamp review remains interim only. |
+| `L013` | The requested payload schema fixes predecessor_event_id to null before this runtime assertion. No individual schema-const cut. |
+| `L014` | The requested payload schema fixes phase_sequence to zero before this runtime assertion. No individual schema-const cut. |
+| `OE007` | With the canonical callback every product refusal is now m.Refusal and is rethrown in the preceding except branch; no AssertionError/ValidationError witness is supplied for this legacy fallback. |
+| `LE001` | The enforced bundle payload date-time validation precedes datetime.fromisoformat. No parser-specific invalid value survives it; timestamp work remains interim only. |
+
+These are evidence limitations, not a claim that all rows are mathematically unreachable. Earlier schema enforcement is not a proven duplicate without individual clause cuts. A missing coherent multi-generation/original-custody witness is missing coverage. Full check11 remains PARTIAL until those boundaries and individual schema predicates are covered and independently reviewed.
+
+## Sweep part 2B numbers: findings and responses
+
+Number-call and expectation changes are in `ed8ff2efab`; frozen dispatch and large-value diagnostics are finalized in `a35e4f7c12`; corpus and owner/derived refinements are in `de5e79619a`. The delivered implementation is `8ea0e8de8cc8ac473bb43157848468fe7fc49b88`. Exact NUMRULE source files are unchanged from the gated merge. Local identity recipes retain their IDs, prefixes, array fields and tuple order; no logical cap was added.
+
+| Item | Change | Location / verification |
+|---|---|---|
+| **SW-N1: current tokens and slots** | Raw descriptor JSON uses `loads_current_json`; declared current integer slots call shared `current_integer` with their schema bounds through the current validator. Current caller retry admission is separate from verifying its authentic original. Storage-assigned sequence uses shared `storage_uint64`, retaining the whole domain through 2^64−1. Current checkpoint/read-token slots retain current admission. | `scripts/pm_dcw_event_oracles.py:71` (`_current_type`); `scripts/pm_dcw_event_oracles.py:1011` (`current_schema`); `scripts/pm_dcw_event_oracles.py:1050` (`admit_storage_sequence`); `scripts/pm_dcw_event_oracles.py:1022` (`admit_retry_request`); `scripts/pm_dcw_event_oracles.py:215` (`event_reference`). Number corpus/current-float/raw-token negatives and full-u64 publish/retry/read/rebuild positives. |
+| **Producer bytes** | `semantic_digest` calls shared `producer_semantic_digest` over the unchanged complete CV-317 projection. Qualifies the actual JCS route before effects; Storage-assigned metadata remains outside producer semantics. Exact local integer JSON identity/descriptor recipes keep their existing preimages. | `scripts/pm_dcw_event_oracles.py:175` (`semantic_digest`); `scripts/pm_dcw_event_oracles.py:780` (`canonical_json`). Full retry conflict cases and independent corpus endpoint expectations. |
+| **Physical profiles** | EventRecord/source/payload bytes use shared `storage_value_bytes(EVENT_VALUE)`; full commitments use `full_value_commitment`. Physical finite floats and signed zero remain distinct where the original schema permits them. SP-278 keeps `INDEX_BINDING` and the existing `pm.event_index.binding.msgpack_sha256.v1` wrapper. | `scripts/pm_dcw_event_oracles.py:158` (`canonical_msgpack`); `scripts/pm_dcw_event_oracles.py:168` (`commitment`); `scripts/pm_dcw_event_oracles.py:859` (`index_binding`); `scripts/pm_dcw_event_oracles.py:805` (`exact_equal`). All baseline fixtures, overflow/inline/reference paths, exact typed joins and full-u64 snapshots. |
+| **SP-1101 original selection** | Fixture issuance installs an external synthetic original catalog and exact RecipeTuple → FrozenRecipe map, keyed by event identity, full-event bytes and first-receipt bytes. Requests supply no credential or weaker-recipe flag. `RetainedDispatcher` selects once; current admission never runs on an authenticated passive original or earlier original in a current append. The frozen verifier recomputes the exact pre-sweep integer-JSON or current JCS digest selected by that tuple; comparisons and index projection use this verified digest. This static model installs this head’s unchanged local schema resources as the frozen resources of its one modelled original edition; it does not establish arbitrary historical edition support. Frozen shared resources remove lane-authored current integer annotations. | `scripts/pm_dcw_number_custody.py:30` (`install`); `scripts/pm_dcw_number_custody.py:61` (`resolve`); `scripts/pm_dcw_number_custody.py:15` (`semantic_for_recipe`); `scripts/pm_dcw_number_custody.py:72` (`selected_semantic_digest`); `scripts/pm_dcw_event_oracles.py:298` (`original_receipt`); `scripts/pm_dcw_event_oracles.py:186` (`original_semantic_digest`); `scripts/pm_dcw_event_oracles.py:1037` (`original_scope`); `scripts/pm_dcw_event_oracles.py:54` (`historical_boundary`). Retained integral-float registered originals, replay-only reads, coherent restore, forged-catalog refusal, caller retry refusal and opened-source custody cases. The catalog is a static adapter stand-in, **not native authentication**. |
+| **4,400-digit integer** | Exact parsing has no global cap. Actual Storage uint64 input refuses `integer_range`; family schema diagnostics refuse `schema` and generic registered-source diagnostics refuse `index_source_payload`. Owner integer slots without a schema maximum take the physical route’s existing range refusal, while separate schema probes exercise diagnostics. Safe schema numeric diagnostics do not crash on Python's integer-to-string limit. Typed schema metadata can carry an unbounded integer without selecting a physical route. | `scripts/pm_dcw_event_oracles.py:82` (`_safe_keyword`); `scripts/pm_dcw_event_oracles.py:96` (`check_schema`); `scripts/pm_dcw_event_oracles.py:1060` (`schema_observation`); `scripts/pm-dcw-number-checks.py:59` (`run`). 40 full-family number cases plus the huge matching/mismatching schema annotation controls. No interpreter-wide integer limit is disabled. `frozen-recipe.json` adds 5/5 exact original-number/first-receipt helper checks (including a wide frozen digest, current route refusal, forged digest and recipe override); that helper witness does not claim complete owner-protocol acceptance. |
+| **Expected-result changes** | **24**, all refusals remain refusals: 12 supplied-original sequence decimal/exponent cases change `schema` → `original_full_value`; 12 retained opened-predecessor prepared-copy cases change `schema` → `latest_source_event`. Frozen shared numeric validation now allows the original representation; exact original/copy joins still refuse the forged transient value. Each case ID, before/after result and reason is recorded. | `fixture-expectation-changes.json` in the evidence bundle, and `scripts/pm_dcw_event_numeric_cases.py:20` (`cases`); `scripts/pm_dcw_opened_custody_cases.py:13` (`cases`). Final family and collection runs use these exact expectations. |
+| **Owner / schema prose** | CV-590–597 cites CV-1100/SP-1100/SP-1101 beside each existing local identity, CV-317/CV-339, SP-278, SP-286 and SP-337 binding. Remove parsed-negative-zero normalization prose. Shared envelope/receipt frozen compatibility definitions lose lane-authored current-only pm-uint annotations; live checkpoint slots remain strict. No owner policy or product behavior choice was made. | `Plans/Contracts_V0.md:24611` (CV-590); `Plans/Contracts_V0.md:24688` (CV-591); `Plans/Contracts_V0.md:24765` (CV-592); `Plans/Contracts_V0.md:24842` (CV-593); `Plans/Contracts_V0.md:24920` (CV-594); `Plans/Contracts_V0.md:24993` (CV-595); `Plans/Contracts_V0.md:25068` (CV-596); `Plans/Contracts_V0.md:25290` (CV-597); `Plans/event_record.schema.json`; `Plans/event_append_receipt_contracts.schema.json`; `Plans/event_record_index_checkpoint.schema.json`. Shards/index regenerated; output scope and validation result below. |
+| **Shared corpus and credit** | 3040/3040 lane integration checks pass (exit0). 139 raw JSON/byte inputs and 216 typed scalar entries from the shared number corpus are projected into each of eight families’ actual nullable nonnegative producer-sequence caller slots. Parser refusals stop before a value exists; every parsed/projected value traverses the complete caller retry checker. The slot expectation follows this lane’s field domain and producer route, not the original corpus operation’s different bounds/profile. Full-u64 old-edition originals, receipt/retry/read/rebuild, retained registered integral-float frames, current floats, forged history and 4,400-digit cases run separately. Other corpus operations retain shared-helper credit only; no claim that all 580 original operations execute inside every lane path. | `python3 scripts/pm-dcw-number-checks.py --output <file>` and `python3 scripts/pm_event_numbers.py --self-test --scope numbers`. Shared helper: **580/580, 304 negatives, status pass, exit0**, credited exactly as reported. The number-only self-test confirms no date-time module import. |
+
+### Timestamp fields — interim only
+
+This review is **interim only**. Existing lane `valid_date_time`/format enforcement and legacy `datetime.fromisoformat` behavior remain. The previous round's valid leap-second refusal and non-Z Storage-time acceptance are still open; no timestamp correctness claim is added. Frozen number selection does not certify a frozen timestamp profile. No `pm_event_datetime`, `datetime_validator`, `date_time` or inventory gate is called.
+
+## Part 2B items
+
+Timestamp items only:
+
+- **SW-B2 / CV-1101 field profiles:** `scripts/pm_dcw_event_oracles.py:838` (`valid_date_time`); `scripts/pm_dcw_event_oracles.py:96` (`check_schema`); `scripts/pm_bundle_revision_events.py:17` (`validate`); `scripts/pm_dcw_blockage_events.py:23` (`envelope`); `scripts/pm_dcw_index_cases.py` timestamp cases. Apply the gated shared timestamp validator at complete envelope/source/receipt/checkpoint boundaries, selecting `storage_utc_z` for Storage observed/persisted times and the actual field-owner profile elsewhere. Preserve exact strings and permitted fractional precision; cover legitimate leap seconds, offsets, lowercase, malformed calendar values and trailing bytes.
+- **SP-1101 original timestamp profile:** `scripts/pm_dcw_number_custody.py:30` (`install`); `scripts/pm_dcw_event_oracles.py:47` (`frozen_shared`); `scripts/pm_dcw_event_oracles.py:54` (`historical_boundary`); `scripts/pm_dcw_event_oracles.py:1037` (`original_scope`). Extend the authentic original tuple/resources to the gated date-time profile. Preserve lawful retained original strings and avoid current-then-legacy probing; rerun history, retry and receipt cases with current request admission separate.
+
+No stopped DL-045 product-choice item remains. Retention answers stay with RT; native integrations and proof limitations are disclosed above rather than called timestamp work. Independent Sol/Astra review remains scheduled after both sweep parts under the brief.
+
+## Grades and verification
+
+| Family | Before | After |
+|---|---|---|
+| `bundle.revision_requested` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `bundle.revision_started` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `bundle.revision_completed` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `bundle.revision_interrupted` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `wizard.blocked` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `wizard.deferred_payload.loaded` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `wizard.opened` | 8 / 3 / 1 | 8 / 3 / 1 |
+| `wizard.unblocked` | 8 / 3 / 1 | 8 / 3 / 1 |
+
+`retention`, `compatibility_withdrawal` and `positive_negative_oracles` stay PARTIAL; `membership_version` stays ABSENT. The other eight criteria retain PASS. 292 exact quotations match the final implementation. Historical report and self-grade review fields are lineage, not current PASS claims.
+
+| Command/group | Exit | Minimum available GiB | Top-level result |
+|---|---|---|---|
+| number-lane | 0 | 18.15 | pass |
+| number-shared | 0 | 19.01 | pass |
+| bundle.revision_requested | 0 | 22.49 | pass |
+| bundle.revision_started | 0 | 22.52 | pass |
+| bundle.revision_completed | 0 | 22.92 | pass |
+| bundle.revision_interrupted | 0 | 22.67 | pass |
+| wizard.opened | 0 | 23.38 | pass |
+| wizard.deferred_payload.loaded | 0 | 21.36 | pass |
+| wizard.blocked | 0 | 22.3 | pass |
+| wizard.unblocked | 0 | 21.97 | pass |
+| standing-bundle.revision_requested | 0 | 21.12 | pass |
+| standing-bundle.revision_started | 0 | 20.5 | pass |
+| standing-bundle.revision_completed | 0 | 20.03 | pass |
+| standing-bundle.revision_interrupted | 0 | 20.67 | pass |
+| standing-wizard.opened | 0 | 21.28 | pass |
+| standing-wizard.deferred_payload.loaded | 0 | 19.22 | pass |
+| registered-bundle.revision_requested | 0 | 21.59 | pass |
+| registered-bundle.revision_started | 0 | 20.69 | pass |
+| registered-bundle.revision_completed | 0 | 19.25 | pass |
+| registered-bundle.revision_interrupted | 0 | 19.37 | pass |
+| registered-wizard.opened | 0 | 17.31 | pass |
+| registered-wizard.deferred_payload.loaded | 0 | 16.67 | pass |
+| shard-generate | 0 | 18.27 | pass |
+| index-generate | 0 | 17.43 | pass |
+| shard-check | 0 | 18.52 | pass |
+| index-validate | 1 | 16.99 | fail |
+
+Index validate was read at the top level against `origin/main` **`268a9382f7ba2efaf8909f5e69403a5afe82b114`**. Index validation remains FAIL: 53 diagnostics (21 unchanged ledger-input errors and 32 units present on newer main but absent at this branch’s merge base). Every failure path is byte-identical to the number-merge base; no unit was removed in this pass. index-failure-classification.json records the exact proof. No clean-index claim, unrelated repair or rebase is made. No governance reseal, baseline reset, registry append or Decision Log write was performed.
+
+Recurring classes retain direct full-path regressions: original/source/receipt/Project forgeries and assigned metadata; coherent historical reads after live changes, lawful replay-only history and forged/withdrawn originals; exact type-aware joins; eager unused local/external/transitive references; complete encoded byte sizes and independent event/source references; predecessor custody and restore dependencies; current-writer/retry policy and semantic-only comparison; exact failure exit handling. Schema clause, compound/loop occurrence and complete-boundary isolation limits remain explicit. Timestamp review stays interim only. Native source adapters/authentication, real Storage bytes/CRC, redb CAS/concurrency, append/lost-ack, crash recovery, backup/restore, access/deletion and retention campaigns remain **NOT_RUN**.
+
+## Delivery and evidence
+
+Evidence root: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/sweep-p2a/`. Only the cited compact/gzipped artifacts were copied there after all work. `SHA256SUMS` binds the report, self-grade, all table results, every cut, number results, expected-result changes, source pins and repository checks. Raw work stayed on the local VM. The reboot checkpoint WIP was preserved at `ed8ff2efab70ad625f31412d84f74732b8fb21fa` on both `wip/ea-dcw-20261108` remotes before restart; stopped work was rerun.
+
+| Cited artifact | SHA-256 |
+|---|---|
+| `DCW.guard-removal.md` | `c9df4d97afe025b895b938340becf9903a120ba138af98d6e681c0230d1a85cb` |
+| `DCW.number-expectations.json` | `58e0e69ada12ffb91dce1088abe60ea15fe14785a19074d809148c9a1c4a5ee8` |
+| `DCW.self-grade.json` | `4c3485a1bf32dfa7dcf38c694f7ee5f9fde75577c55f7b630e27d345c4bb9d7e` |
+| `adapter-fixes.json` | `1d3d8dee282c1fc0155b7d5675400b499bd2742d5b7d0cc0e7acda87c617a626` |
+| `case-banks.tar.gz` | `f0c181905caee23a614b5acfcd80fb9ac6bb87e79194569e2fa32d16e90bfcce` |
+| `collection-summary.json` | `4a9a67f00b4fc610cdd9348ed28b1f5d0da7f89d6a75d150c666500c2c35ac1f` |
+| `currentness-final-sha256.json` | `b72623c6887c9cb3b53eb0da0baf1e1b8c0b5d46fe116d4f25746361bbe73b8b` |
+| `dependencies.json` | `1d282634672fa2309b4967d6f7cafdb2db8311ece6c6fcebf4207a25db146cb1` |
+| `final-checks.tar.gz` | `a8fc86db9ddcc4dd7bda7a847ce38588b38d0995d846baf5750074fad967a157` |
+| `fixture-expectation-changes.json` | `58e0e69ada12ffb91dce1088abe60ea15fe14785a19074d809148c9a1c4a5ee8` |
+| `frozen-proof-comparison.json` | `a06399ed06365b7c86ee460694581aa3a46dfbc4df2f5f21d1642621480ec9c9` |
+| `frozen-recipe.json` | `9a5446b61f1434847b3b706aa3523835dbb0524ded607f0af161fa86fa9a1259` |
+| `guard-results.json.gz` | `731d99fd88d2b99eb4eb839d18f3e5a63d39060fa191a129d9f4fe87f7d88be6` |
+| `guard-tool-reports.tar.gz` | `f665c75c12b8a18cd318227e97476c12d25a7a1de1073b4d536d8df864f7faf5` |
+| `index-failure-classification.json` | `bb9848d4adcae29e2b30462868ded05b9f1353233760f3ec70ca55bd1a0656f1` |
+| `number-lane.json.gz` | `a747f12933630e65c896f0a114b23180ebdda1363537411b71fde5508f0ee958` |
+| `number-selftest.json` | `3e81a92755d356cfe5d3d84cc01c8ed2023ebbe614a4407c93c1789607950754` |
+| `proof-bank-comparison.json` | `a1df5b0354a1f1cd1d2a731fea0f16839cd0454eba2a2b03bd1c3aa22f93264d` |
+| `regeneration-scope.json` | `4038798c94e9a124eb85c1d621d5a924e02347c531e90dbb77f36ac2f355f4bd` |
+| `regrade-citations-final.json` | `1f6398661bcca47bd3883e31039c3b949b4fb2a2da9bb02f0f27a7cca57ca8de` |
+| `schema-number-diff.json` | `9cd634c0121363d93e6e49050833177c2b167a838ce932f76b181bbf974e10ed` |
+| `source-pins.json` | `c8e2aae2b0729770402d894e3b75b8a6da0d244d657a97400c743a81c614b968` |
+| `verification-programs.tar.gz` | `09e5269132fdd99b25c89ac54ac783b1da34b10c9ab4b1f2b55403f25dd35a7f` |
+| `verification-summary.json` | `d7edfff7433ae0a4c8b91cb62968389646e3469db0a82ec3162f6f3c7578a02d` |
+
+Heavy runs were serial, detached through long-job, bounded below 90 minutes per group. Starts require ≥13.5 GiB available; runs pause below10 and resume at13.5. The final suites sampled at least 16.67 GiB available; 0 low-memory pauses. Earlier low-memory preparation waited for the start threshold. No browsers, subagents, mailbox, main push, landing lock or governance changes. Both lane push URLs are verified at the delivered head and the worktree is removed after the push. **New IDs: none**; existing allocation remains CV-590–597, SP-575–579, ACD-571–574 and PWIZ-097/098.
+
+---
+
+# Part-1 and earlier report archive (superseded by the sweep result above)
+
 # DCW — sweep part 1 (2026-11-05)
 
 Branch `plans/ea-w2-chain-wizard-20261104`; tested implementation **`d9d930b925946c8c95726c6cb5b492507f11ec95`**; rebased onto `origin/main` **`d5ec2f70c0d69c469796eea9b9cfdae30f281f42`**. Input was cycle-10 head `4a7e59c94270b8a54c5b9e366b561ab697f2a54f`, review `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/reviews/DCW-sol/REVIEW-cycle10.md`. F1–F3 are repaired locally; readiness awaits part 2 and the instructed Sol/Astra review. Each family remains **8 PASS / 3 PARTIAL / 1 ABSENT**. No prepared PASS, admission or native authority is claimed.
@@ -67,7 +277,7 @@ Plan-index validation top-level status: **pass**. Its complete output has zero f
 
 **Recurring defect classes:** identity/source/actor/receipt/Project forgeries and custody paths run in the full family suites (items 1/2/7); retained read/rebuild after live changes, replay-only history and withdrawal remain tested (3/10a), with the format/number history limitations below; exact-type/descriptor/boolean/container negatives remain active (4/11); unused local/external/transitive refs run in the standing and registered suites (5); complete event/source 16-KiB/SP-337 and restore cases run in every family (6); focused independent guard controls resolve the listed masked inputs without claiming a complete inventory (8); PARTIAL grades preserve remaining limits (9); number spelling/domain and exact original-time profile remain part 2 (10/12/10a). No new serializer, number cap, timestamp grammar or proof framework was added. Native adapters/authentication, actual Storage bytes/CRC, redb CAS/concurrency, append/lost-ack, crash recovery, backup/restore, permission/deletion and retention-boundary campaigns remain **NOT_RUN**.
 
-## Part 2 items
+## Part 2 items (part-1 archive; superseded)
 
 - **SW-N1 / NUMRULE:** `scripts/pm_dcw_event_oracles.py:97–132,147–149,628–661,796,818–820`, CV-590–595 integer/parsed-negative-zero prose, shared envelope/receipt/checkpoint numeric schemas and all five physical source families plus both new families. Adopt CV-1100/SP-1100/SP-1101 at semantic, physical and authenticated original-write boundaries. Preserve full Storage uint64, physical floats and signed zero. No local cap or normalizer.
 - **SW-B2 / date-time:** `scripts/pm_dcw_event_oracles.py:688–709`, its format uses, `scripts/pm_dcw_index_cases.py:166–174`, both new families and the legacy validator in `scripts/pm_bundle_revision_events.py:22–30`. Compare DCW’s round-8 grammar with shared **CV-1101**, replacing it if they differ. The cycle-10 evidence already records non-Z offsets accepted and legitimate leap seconds refused; preserve permitted fraction precision, exact retained strings and authenticated original edition/recipe selection. No part-1 grammar change.

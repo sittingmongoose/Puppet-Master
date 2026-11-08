@@ -4,10 +4,11 @@
   "assessment_kind": "worker_self_grade_after_guard_tables_and_number_adoption",
   "assessed_tree": {
     "branch": "plans/ea-w2-chain-wizard-20261104",
-    "base": "d5ec2f70c0d69c469796eea9b9cfdae30f281f42",
-    "commit": "IMPLEMENTATION_COMMIT_PENDING",
+    "base": "7847bbc409e875a9bfddb02309cb0638690f798b",
+    "commit": "8ea0e8de8cc8ac473bb43157848468fe7fc49b88",
     "read_method": "Exact gated guard tool and number-only scope merged without rebase. Named assertion-phase rows are distinct from complete-boundary or schema-keyword proof. Timestamp review is interim only; native authority is NOT_RUN.",
-    "start_commit": "7847bbc409e875a9bfddb02309cb0638690f798b"
+    "start_commit": "7847bbc409e875a9bfddb02309cb0638690f798b",
+    "previous_part1_base": "d5ec2f70c0d69c469796eea9b9cfdae30f281f42"
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -149,8 +150,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 746,
-              "line_end": 751,
+              "line_start": 780,
+              "line_end": 785,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -298,8 +299,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 493,
-              "line_end": 493,
+              "line_start": 524,
+              "line_end": 524,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -352,8 +353,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_requested",
-              "line_start": 948,
-              "line_end": 948,
+              "line_start": 990,
+              "line_end": 990,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -386,8 +387,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_requested",
-              "line_start": 576,
-              "line_end": 577,
+              "line_start": 608,
+              "line_end": 609,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
@@ -413,29 +414,29 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 481,
-              "line_end": 481,
+              "line_start": 512,
+              "line_end": 512,
               "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 688,
-              "line_end": 688,
+              "line_start": 722,
+              "line_end": 722,
               "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 591,
+              "line_end": 591,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 658,
-              "line_end": 658,
+              "line_start": 692,
+              "line_end": 692,
               "quote": "schema_references(schema)"
             },
             {
@@ -467,11 +468,11 @@
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
             },
             {
-              "path": "scripts/pm_dcw_event_isolation.py",
-              "unit": "whole-pool counterfactual checker",
-              "line_start": 2,
-              "line_end": 5,
-              "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
+              "path": "scripts/pm_dcw_guard_suites.py",
+              "unit": "bounded phase suite and complete-path diagnostic",
+              "line_start": 3,
+              "line_end": 4,
+              "quote": "The original full append/retry/history/index paths derive each phase observation.\nThe proof boundary is that original table, not the whole Python CLI."
             },
             {
               "path": "scripts/pm_dcw_event_numeric_cases.py",
@@ -483,8 +484,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_requested",
-              "line_start": 948,
-              "line_end": 948,
+              "line_start": 990,
+              "line_end": 990,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -499,21 +500,22 @@
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2 sweep: adopt shared CV-1101 persisted UTC-Z/leap-second validation without tightening authentic history.",
-        "B3 sweep: adopt shared pm_guard_isolation.py; old merged-predicate proof is superseded.",
-        "SW-N1 sweep: adopt CV-1100/SP-1100/SP-1101 at owning numeric/physical/historical boundaries; preserve uint64, floats and signed zero."
+        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
+        "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py",
-        "scripts/pm_dcw_event_isolation.py",
         "scripts/pm_dcw_event_numeric_cases.py",
         "scripts/pm_dcw_index_cases.py",
         "scripts/pm_dcw_index_fixtures.py",
-        "scripts/pm_dcw_registered_regressions.py --family bundle.revision_requested"
+        "scripts/pm_dcw_registered_regressions.py --family bundle.revision_requested",
+        "scripts/pm-dcw-guard-tables.py",
+        "scripts/pm-dcw-number-checks.py"
       ],
-      "notes": "Round 9 closes B1 only. Membership ABSENT, retention PARTIAL, native NOT_RUN. B2, B3 and SW-N1 are sweep items; full technical prepared PASS is not claimed before their applicable evidence is complete.",
+      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -691,8 +693,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 746,
-              "line_end": 751,
+              "line_start": 780,
+              "line_end": 785,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -840,8 +842,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 493,
-              "line_end": 493,
+              "line_start": 524,
+              "line_end": 524,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -894,8 +896,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_started",
-              "line_start": 948,
-              "line_end": 948,
+              "line_start": 990,
+              "line_end": 990,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -928,8 +930,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_started",
-              "line_start": 576,
-              "line_end": 577,
+              "line_start": 608,
+              "line_end": 609,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
@@ -955,29 +957,29 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 481,
-              "line_end": 481,
+              "line_start": 512,
+              "line_end": 512,
               "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 688,
-              "line_end": 688,
+              "line_start": 722,
+              "line_end": 722,
               "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 591,
+              "line_end": 591,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 658,
-              "line_end": 658,
+              "line_start": 692,
+              "line_end": 692,
               "quote": "schema_references(schema)"
             },
             {
@@ -1009,11 +1011,11 @@
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
             },
             {
-              "path": "scripts/pm_dcw_event_isolation.py",
-              "unit": "whole-pool counterfactual checker",
-              "line_start": 2,
-              "line_end": 5,
-              "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
+              "path": "scripts/pm_dcw_guard_suites.py",
+              "unit": "bounded phase suite and complete-path diagnostic",
+              "line_start": 3,
+              "line_end": 4,
+              "quote": "The original full append/retry/history/index paths derive each phase observation.\nThe proof boundary is that original table, not the whole Python CLI."
             },
             {
               "path": "scripts/pm_dcw_event_numeric_cases.py",
@@ -1025,8 +1027,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_started",
-              "line_start": 948,
-              "line_end": 948,
+              "line_start": 990,
+              "line_end": 990,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -1041,21 +1043,22 @@
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2 sweep: adopt shared CV-1101 persisted UTC-Z/leap-second validation without tightening authentic history.",
-        "B3 sweep: adopt shared pm_guard_isolation.py; old merged-predicate proof is superseded.",
-        "SW-N1 sweep: adopt CV-1100/SP-1100/SP-1101 at owning numeric/physical/historical boundaries; preserve uint64, floats and signed zero."
+        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
+        "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py",
-        "scripts/pm_dcw_event_isolation.py",
         "scripts/pm_dcw_event_numeric_cases.py",
         "scripts/pm_dcw_index_cases.py",
         "scripts/pm_dcw_index_fixtures.py",
-        "scripts/pm_dcw_registered_regressions.py --family bundle.revision_started"
+        "scripts/pm_dcw_registered_regressions.py --family bundle.revision_started",
+        "scripts/pm-dcw-guard-tables.py",
+        "scripts/pm-dcw-number-checks.py"
       ],
-      "notes": "Round 9 closes B1 only. Membership ABSENT, retention PARTIAL, native NOT_RUN. B2, B3 and SW-N1 are sweep items; full technical prepared PASS is not claimed before their applicable evidence is complete.",
+      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -1233,8 +1236,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 746,
-              "line_end": 751,
+              "line_start": 780,
+              "line_end": 785,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -1382,8 +1385,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 493,
-              "line_end": 493,
+              "line_start": 524,
+              "line_end": 524,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -1436,8 +1439,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_completed",
-              "line_start": 948,
-              "line_end": 948,
+              "line_start": 990,
+              "line_end": 990,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -1470,8 +1473,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_completed",
-              "line_start": 576,
-              "line_end": 577,
+              "line_start": 608,
+              "line_end": 609,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
@@ -1497,29 +1500,29 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 481,
-              "line_end": 481,
+              "line_start": 512,
+              "line_end": 512,
               "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 688,
-              "line_end": 688,
+              "line_start": 722,
+              "line_end": 722,
               "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 591,
+              "line_end": 591,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 658,
-              "line_end": 658,
+              "line_start": 692,
+              "line_end": 692,
               "quote": "schema_references(schema)"
             },
             {
@@ -1551,11 +1554,11 @@
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
             },
             {
-              "path": "scripts/pm_dcw_event_isolation.py",
-              "unit": "whole-pool counterfactual checker",
-              "line_start": 2,
-              "line_end": 5,
-              "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
+              "path": "scripts/pm_dcw_guard_suites.py",
+              "unit": "bounded phase suite and complete-path diagnostic",
+              "line_start": 3,
+              "line_end": 4,
+              "quote": "The original full append/retry/history/index paths derive each phase observation.\nThe proof boundary is that original table, not the whole Python CLI."
             },
             {
               "path": "scripts/pm_dcw_event_numeric_cases.py",
@@ -1567,8 +1570,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_completed",
-              "line_start": 948,
-              "line_end": 948,
+              "line_start": 990,
+              "line_end": 990,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -1583,21 +1586,22 @@
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2 sweep: adopt shared CV-1101 persisted UTC-Z/leap-second validation without tightening authentic history.",
-        "B3 sweep: adopt shared pm_guard_isolation.py; old merged-predicate proof is superseded.",
-        "SW-N1 sweep: adopt CV-1100/SP-1100/SP-1101 at owning numeric/physical/historical boundaries; preserve uint64, floats and signed zero."
+        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
+        "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py",
-        "scripts/pm_dcw_event_isolation.py",
         "scripts/pm_dcw_event_numeric_cases.py",
         "scripts/pm_dcw_index_cases.py",
         "scripts/pm_dcw_index_fixtures.py",
-        "scripts/pm_dcw_registered_regressions.py --family bundle.revision_completed"
+        "scripts/pm_dcw_registered_regressions.py --family bundle.revision_completed",
+        "scripts/pm-dcw-guard-tables.py",
+        "scripts/pm-dcw-number-checks.py"
       ],
-      "notes": "Round 9 closes B1 only. Membership ABSENT, retention PARTIAL, native NOT_RUN. B2, B3 and SW-N1 are sweep items; full technical prepared PASS is not claimed before their applicable evidence is complete.",
+      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -1775,8 +1779,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 746,
-              "line_end": 751,
+              "line_start": 780,
+              "line_end": 785,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -1924,8 +1928,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 493,
-              "line_end": 493,
+              "line_start": 524,
+              "line_end": 524,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -1978,8 +1982,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_interrupted",
-              "line_start": 948,
-              "line_end": 948,
+              "line_start": 990,
+              "line_end": 990,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -2012,8 +2016,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_interrupted",
-              "line_start": 576,
-              "line_end": 577,
+              "line_start": 608,
+              "line_end": 609,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
@@ -2039,29 +2043,29 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 481,
-              "line_end": 481,
+              "line_start": 512,
+              "line_end": 512,
               "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 688,
-              "line_end": 688,
+              "line_start": 722,
+              "line_end": 722,
               "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 591,
+              "line_end": 591,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 658,
-              "line_end": 658,
+              "line_start": 692,
+              "line_end": 692,
               "quote": "schema_references(schema)"
             },
             {
@@ -2093,11 +2097,11 @@
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
             },
             {
-              "path": "scripts/pm_dcw_event_isolation.py",
-              "unit": "whole-pool counterfactual checker",
-              "line_start": 2,
-              "line_end": 5,
-              "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
+              "path": "scripts/pm_dcw_guard_suites.py",
+              "unit": "bounded phase suite and complete-path diagnostic",
+              "line_start": 3,
+              "line_end": 4,
+              "quote": "The original full append/retry/history/index paths derive each phase observation.\nThe proof boundary is that original table, not the whole Python CLI."
             },
             {
               "path": "scripts/pm_dcw_event_numeric_cases.py",
@@ -2109,8 +2113,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_interrupted",
-              "line_start": 948,
-              "line_end": 948,
+              "line_start": 990,
+              "line_end": 990,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -2125,21 +2129,22 @@
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2 sweep: adopt shared CV-1101 persisted UTC-Z/leap-second validation without tightening authentic history.",
-        "B3 sweep: adopt shared pm_guard_isolation.py; old merged-predicate proof is superseded.",
-        "SW-N1 sweep: adopt CV-1100/SP-1100/SP-1101 at owning numeric/physical/historical boundaries; preserve uint64, floats and signed zero."
+        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
+        "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py",
-        "scripts/pm_dcw_event_isolation.py",
         "scripts/pm_dcw_event_numeric_cases.py",
         "scripts/pm_dcw_index_cases.py",
         "scripts/pm_dcw_index_fixtures.py",
-        "scripts/pm_dcw_registered_regressions.py --family bundle.revision_interrupted"
+        "scripts/pm_dcw_registered_regressions.py --family bundle.revision_interrupted",
+        "scripts/pm-dcw-guard-tables.py",
+        "scripts/pm-dcw-number-checks.py"
       ],
-      "notes": "Round 9 closes B1 only. Membership ABSENT, retention PARTIAL, native NOT_RUN. B2, B3 and SW-N1 are sweep items; full technical prepared PASS is not claimed before their applicable evidence is complete.",
+      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -2458,9 +2463,9 @@
             {
               "path": "scripts/pm_dcw_blockage_events.py",
               "unit": "main",
-              "line_start": 296,
-              "line_end": 296,
-              "quote": "guard_isolation='B3_SWEEP',"
+              "line_start": 300,
+              "line_end": 300,
+              "quote": "guard_isolation='PARTIAL_PHASE_TABLES',"
             }
           ],
           "prior": {
@@ -2473,10 +2478,11 @@
       },
       "prepared_pass": false,
       "remaining_gaps": [
-        "Registry membership remains ABSENT by instruction; closed candidate revision 1.0.0 is prepared only.",
-        "Event history remains PENDING_RETENTION_DECISION with the exact question. Original source audit custody uses existing RP-AUTHORITY-INDEFINITE; receipt/index/checkpoint policies are explicitly retained.",
-        "CV-596 specifies retained-original dispatch, current-state independence, writer cutoff/drain, exact reader withdrawal and complete replacement rebuild; inherited B2 timestamp behavior awaits CV-1101.",
-        "Static positives and coherent single-defect negatives/repair controls are authored and executed. B2 date-time, SW-N1 number-domain and B3 shared-tool predicate-isolation evidence remain incomplete; no full prepared PASS is claimed."
+        "Membership/admission intentionally absent.",
+        "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
+        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
+        "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
       "disposition_evidence": [
         {
@@ -2497,7 +2503,9 @@
         "CV-339"
       ],
       "static_checks_seen": [
-        "scripts/pm_dcw_blockage_events.py --family wizard.blocked"
+        "scripts/pm_dcw_blockage_events.py --family wizard.blocked",
+        "scripts/pm-dcw-guard-tables.py",
+        "scripts/pm-dcw-number-checks.py"
       ],
       "sweep_part1": {
         "implementation_commit": "d9d930b925946c8c95726c6cb5b492507f11ec95",
@@ -2514,7 +2522,8 @@
           "PARTIAL": 3
         },
         "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/sweep-p1/targeted-controls.json"
-      }
+      },
+      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade."
     },
     {
       "event_type": "wizard.deferred_payload.loaded",
@@ -2636,15 +2645,15 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 746,
-              "line_end": 751,
+              "line_start": 780,
+              "line_end": 785,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 802,
-              "line_end": 802,
+              "line_start": 836,
+              "line_end": 836,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             }
           ],
@@ -2799,15 +2808,15 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 493,
-              "line_end": 493,
+              "line_start": 524,
+              "line_end": 524,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 802,
-              "line_end": 802,
+              "line_start": 836,
+              "line_end": 836,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             }
           ],
@@ -2860,8 +2869,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 948,
-              "line_end": 948,
+              "line_start": 990,
+              "line_end": 990,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -2894,8 +2903,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 576,
-              "line_end": 577,
+              "line_start": 608,
+              "line_end": 609,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
@@ -2921,29 +2930,29 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 481,
-              "line_end": 481,
+              "line_start": 512,
+              "line_end": 512,
               "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 688,
-              "line_end": 688,
+              "line_start": 722,
+              "line_end": 722,
               "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 591,
+              "line_end": 591,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 658,
-              "line_end": 658,
+              "line_start": 692,
+              "line_end": 692,
               "quote": "schema_references(schema)"
             },
             {
@@ -2975,11 +2984,11 @@
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
             },
             {
-              "path": "scripts/pm_dcw_event_isolation.py",
-              "unit": "whole-pool counterfactual checker",
-              "line_start": 2,
-              "line_end": 5,
-              "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
+              "path": "scripts/pm_dcw_guard_suites.py",
+              "unit": "bounded phase suite and complete-path diagnostic",
+              "line_start": 3,
+              "line_end": 4,
+              "quote": "The original full append/retry/history/index paths derive each phase observation.\nThe proof boundary is that original table, not the whole Python CLI."
             },
             {
               "path": "scripts/pm_dcw_event_numeric_cases.py",
@@ -2991,8 +3000,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 802,
-              "line_end": 802,
+              "line_start": 836,
+              "line_end": 836,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             },
             {
@@ -3005,8 +3014,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 948,
-              "line_end": 948,
+              "line_start": 990,
+              "line_end": 990,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -3021,22 +3030,23 @@
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2 sweep: adopt shared CV-1101 persisted UTC-Z/leap-second validation without tightening authentic history.",
-        "B3 sweep: adopt shared pm_guard_isolation.py; old merged-predicate proof is superseded.",
-        "SW-N1 sweep: adopt CV-1100/SP-1100/SP-1101 at owning numeric/physical/historical boundaries; preserve uint64, floats and signed zero."
+        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
+        "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py",
-        "scripts/pm_dcw_event_isolation.py",
         "scripts/pm_dcw_event_numeric_cases.py",
         "scripts/pm_dcw_opened_custody_cases.py",
         "scripts/pm_dcw_index_cases.py",
         "scripts/pm_dcw_index_fixtures.py",
-        "scripts/pm_dcw_registered_regressions.py --family wizard.deferred_payload.loaded"
+        "scripts/pm_dcw_registered_regressions.py --family wizard.deferred_payload.loaded",
+        "scripts/pm-dcw-guard-tables.py",
+        "scripts/pm-dcw-number-checks.py"
       ],
-      "notes": "Round 9 closes B1 only. Membership ABSENT, retention PARTIAL, native NOT_RUN. B2, B3 and SW-N1 are sweep items; full technical prepared PASS is not claimed before their applicable evidence is complete.",
+      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -3213,8 +3223,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 746,
-              "line_end": 751,
+              "line_start": 780,
+              "line_end": 785,
               "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
@@ -3369,8 +3379,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 493,
-              "line_end": 493,
+              "line_start": 524,
+              "line_end": 524,
               "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
@@ -3423,8 +3433,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.opened",
-              "line_start": 948,
-              "line_end": 948,
+              "line_start": 990,
+              "line_end": 990,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -3457,8 +3467,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.opened",
-              "line_start": 576,
-              "line_end": 577,
+              "line_start": 608,
+              "line_end": 609,
               "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
@@ -3484,29 +3494,29 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 481,
-              "line_end": 481,
+              "line_start": 512,
+              "line_end": 512,
               "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 688,
-              "line_end": 688,
+              "line_start": 722,
+              "line_end": 722,
               "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 560,
-              "line_end": 560,
+              "line_start": 591,
+              "line_end": 591,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 658,
-              "line_end": 658,
+              "line_start": 692,
+              "line_end": 692,
               "quote": "schema_references(schema)"
             },
             {
@@ -3538,11 +3548,11 @@
               "quote": "\"case_id\": \"event_pack_inventory\",\n          \"event_bytes\": 16385,\n          \"event_representation\": \"payload_reference\",\n          \"event_restored\": true,\n          \"event_defect\": \"inventory\",\n     "
             },
             {
-              "path": "scripts/pm_dcw_event_isolation.py",
-              "unit": "whole-pool counterfactual checker",
-              "line_start": 2,
-              "line_end": 5,
-              "quote": "Whole-pool DCW guard-removal proof. All mutations are confined to a module copy.\n\nThe fixture declares the precise guards/schema rules for each invariant. Removing\nan unrelated gua"
+              "path": "scripts/pm_dcw_guard_suites.py",
+              "unit": "bounded phase suite and complete-path diagnostic",
+              "line_start": 3,
+              "line_end": 4,
+              "quote": "The original full append/retry/history/index paths derive each phase observation.\nThe proof boundary is that original table, not the whole Python CLI."
             },
             {
               "path": "scripts/pm_dcw_event_numeric_cases.py",
@@ -3554,8 +3564,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.opened",
-              "line_start": 948,
-              "line_end": 948,
+              "line_start": 990,
+              "line_end": 990,
               "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
@@ -3570,21 +3580,22 @@
       "remaining_gaps": [
         "Membership/admission intentionally absent.",
         "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
-        "B2 sweep: adopt shared CV-1101 persisted UTC-Z/leap-second validation without tightening authentic history.",
-        "B3 sweep: adopt shared pm_guard_isolation.py; old merged-predicate proof is superseded.",
-        "SW-N1 sweep: adopt CV-1100/SP-1100/SP-1101 at owning numeric/physical/historical boundaries; preserve uint64, floats and signed zero."
+        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
+        "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
       "static_checks_seen": [
         "scripts/pm_bundle_revision_events.py",
         "scripts/pm_dcw_event_oracles.py",
         "scripts/pm_dcw_event_regressions.py",
-        "scripts/pm_dcw_event_isolation.py",
         "scripts/pm_dcw_event_numeric_cases.py",
         "scripts/pm_dcw_index_cases.py",
         "scripts/pm_dcw_index_fixtures.py",
-        "scripts/pm_dcw_registered_regressions.py --family wizard.opened"
+        "scripts/pm_dcw_registered_regressions.py --family wizard.opened",
+        "scripts/pm-dcw-guard-tables.py",
+        "scripts/pm-dcw-number-checks.py"
       ],
-      "notes": "Round 9 closes B1 only. Membership ABSENT, retention PARTIAL, native NOT_RUN. B2, B3 and SW-N1 are sweep items; full technical prepared PASS is not claimed before their applicable evidence is complete.",
+      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade.",
       "review_round_4": {
         "before": "8 PASS / 3 PARTIAL / 1 ABSENT",
         "after": "10 PASS / 1 PARTIAL / 1 ABSENT",
@@ -3903,9 +3914,9 @@
             {
               "path": "scripts/pm_dcw_blockage_events.py",
               "unit": "main",
-              "line_start": 296,
-              "line_end": 296,
-              "quote": "guard_isolation='B3_SWEEP',"
+              "line_start": 300,
+              "line_end": 300,
+              "quote": "guard_isolation='PARTIAL_PHASE_TABLES',"
             }
           ],
           "prior": {
@@ -3918,10 +3929,11 @@
       },
       "prepared_pass": false,
       "remaining_gaps": [
-        "Registry membership remains ABSENT by instruction; closed candidate revision 1.0.0 is prepared only.",
-        "Event history remains PENDING_RETENTION_DECISION with the exact question. Original source audit custody uses existing RP-AUTHORITY-INDEFINITE; receipt/index/checkpoint policies are explicitly retained.",
-        "CV-597 specifies retained-original dispatch, current-state independence, writer cutoff/drain, exact reader withdrawal and complete replacement rebuild; inherited B2 timestamp behavior awaits CV-1101.",
-        "Static positives and coherent single-defect negatives/repair controls are authored and executed. B2 date-time, SW-N1 number-domain and B3 shared-tool predicate-isolation evidence remain incomplete; no full prepared PASS is claimed."
+        "Membership/admission intentionally absent.",
+        "PENDING_RETENTION_DECISION for event and original source; RT decision required.",
+        "B2/CV-1101 timestamp adoption remains pending; timestamp review is interim only.",
+        "B3: gated phase tables adopted, with named unproved rows and no individual schema-keyword or complete-boundary isolation credit.",
+        "Native original-number custody, Storage I/O and operational campaigns remain NOT_RUN."
       ],
       "disposition_evidence": [
         {
@@ -3942,7 +3954,9 @@
         "CV-339"
       ],
       "static_checks_seen": [
-        "scripts/pm_dcw_blockage_events.py --family wizard.unblocked"
+        "scripts/pm_dcw_blockage_events.py --family wizard.unblocked",
+        "scripts/pm-dcw-guard-tables.py",
+        "scripts/pm-dcw-number-checks.py"
       ],
       "sweep_part1": {
         "implementation_commit": "d9d930b925946c8c95726c6cb5b492507f11ec95",
@@ -3959,7 +3973,8 @@
           "PARTIAL": 3
         },
         "evidence": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCW/sweep-p1/targeted-controls.json"
-      }
+      },
+      "notes": "Current sweep: 8 PASS / 3 PARTIAL / 1 ABSENT; no prepared PASS. Number scope adopted; phase proof and timestamp limitations remain explicit. Earlier review_round fields are historical lineage, not the current grade."
     }
   ],
   "summary": {
@@ -3972,14 +3987,13 @@
     "native_execution": "NOT_RUN",
     "current_evidence_quotes": 292,
     "sweep_items": [
-      "B2/CV-1101",
-      "B3/shared guard isolation",
-      "SW-N1/CV-1100/SP-1100/SP-1101"
+      "B2/CV-1101 timestamps only"
     ],
-    "complete_check11": "UNPROVED_PENDING_SHARED_TOOL",
+    "complete_check11": "PARTIAL_PHASE_TABLES; schema keywords and complete boundary unproved",
     "total_static_family_cases": 5951,
     "new_family_contract_cases": 477,
-    "new_family_repair_controls": 433
+    "new_family_repair_controls": 433,
+    "prior_static_case_counts": "The existing total_static_family_cases/new_family fields below are part-1 lineage; sweep_part2_verification supplies final counts."
   },
   "round5_verification": {
     "require_sites": 131,
@@ -4434,5 +4448,424 @@
       "SW-B3 shared guard-table/predicate-isolation tool"
     ],
     "native": "NOT_RUN"
+  },
+  "sweep_part2_verification": {
+    "implementation": "8ea0e8de8cc8ac473bb43157848468fe7fc49b88",
+    "guard_tool_merge": "47eb2aa6359cd413bc634ccdb2575277ff31ccf8",
+    "number_merge": "5c0d54188378581237327af9008b5b3f162f40b0",
+    "collection_cases": 6237,
+    "guard_rows": 393,
+    "phase_proved": 338,
+    "unproved": 55,
+    "schema_keyword_proof": "NOT_RUN",
+    "complete_boundary_proof": "NOT_CREDITED",
+    "number_lane_cases": 3040,
+    "number_helper_cases": 580,
+    "number_helper_negatives": 304,
+    "timestamp": "interim only",
+    "native": "NOT_RUN",
+    "checks": [
+      {
+        "name": "number-lane",
+        "command": [
+          "python3",
+          "scripts/pm-dcw-number-checks.py",
+          "--output",
+          "/home/sittingmongoose/pm-scratch/ea-dcw-resume/experiments/evidence/final-checks/number-lane.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "origin_main_after": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 72.03,
+        "min_available_GiB": 18.15,
+        "pauses": 0
+      },
+      {
+        "name": "number-shared",
+        "command": [
+          "python3",
+          "scripts/pm_event_numbers.py",
+          "--self-test",
+          "--scope",
+          "numbers"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "origin_main_after": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 2.02,
+        "min_available_GiB": 19.01,
+        "pauses": 0
+      },
+      {
+        "name": "bundle.revision_requested",
+        "command": [
+          "python3",
+          "scripts/pm_bundle_revision_events.py",
+          "--family",
+          "bundle.revision_requested"
+        ],
+        "origin_main": "f7764a650e80d91beb3e582d9544d8597763ae5c",
+        "exit": 0,
+        "seconds": 26.02,
+        "min_available_GiB": 22.49,
+        "pauses": 0
+      },
+      {
+        "name": "bundle.revision_started",
+        "command": [
+          "python3",
+          "scripts/pm_bundle_revision_events.py",
+          "--family",
+          "bundle.revision_started"
+        ],
+        "origin_main": "f7764a650e80d91beb3e582d9544d8597763ae5c",
+        "exit": 0,
+        "seconds": 36.02,
+        "min_available_GiB": 22.52,
+        "pauses": 0
+      },
+      {
+        "name": "bundle.revision_completed",
+        "command": [
+          "python3",
+          "scripts/pm_bundle_revision_events.py",
+          "--family",
+          "bundle.revision_completed"
+        ],
+        "origin_main": "f7764a650e80d91beb3e582d9544d8597763ae5c",
+        "exit": 0,
+        "seconds": 40.02,
+        "min_available_GiB": 22.92,
+        "pauses": 0
+      },
+      {
+        "name": "bundle.revision_interrupted",
+        "command": [
+          "python3",
+          "scripts/pm_bundle_revision_events.py",
+          "--family",
+          "bundle.revision_interrupted"
+        ],
+        "origin_main": "f7764a650e80d91beb3e582d9544d8597763ae5c",
+        "exit": 0,
+        "seconds": 42.02,
+        "min_available_GiB": 22.67,
+        "pauses": 0
+      },
+      {
+        "name": "wizard.opened",
+        "command": [
+          "python3",
+          "scripts/pm_bundle_revision_events.py",
+          "--family",
+          "wizard.opened"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 32.02,
+        "min_available_GiB": 23.38,
+        "pauses": 0
+      },
+      {
+        "name": "wizard.deferred_payload.loaded",
+        "command": [
+          "python3",
+          "scripts/pm_bundle_revision_events.py",
+          "--family",
+          "wizard.deferred_payload.loaded"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 64.03,
+        "min_available_GiB": 21.36,
+        "pauses": 0
+      },
+      {
+        "name": "wizard.blocked",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_blockage_events.py",
+          "--family",
+          "wizard.blocked"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 28.01,
+        "min_available_GiB": 22.3,
+        "pauses": 0
+      },
+      {
+        "name": "wizard.unblocked",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_blockage_events.py",
+          "--family",
+          "wizard.unblocked"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 44.01,
+        "min_available_GiB": 21.97,
+        "pauses": 0
+      },
+      {
+        "name": "standing-bundle.revision_requested",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_event_regressions.py",
+          "--family",
+          "bundle.revision_requested",
+          "--output",
+          "/home/sittingmongoose/pm-scratch/ea-dcw-resume/experiments/evidence/final-checks/standing-bundle.revision_requested.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 108.03,
+        "min_available_GiB": 21.12,
+        "pauses": 0
+      },
+      {
+        "name": "standing-bundle.revision_started",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_event_regressions.py",
+          "--family",
+          "bundle.revision_started",
+          "--output",
+          "/home/sittingmongoose/pm-scratch/ea-dcw-resume/experiments/evidence/final-checks/standing-bundle.revision_started.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 136.03,
+        "min_available_GiB": 20.5,
+        "pauses": 0
+      },
+      {
+        "name": "standing-bundle.revision_completed",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_event_regressions.py",
+          "--family",
+          "bundle.revision_completed",
+          "--output",
+          "/home/sittingmongoose/pm-scratch/ea-dcw-resume/experiments/evidence/final-checks/standing-bundle.revision_completed.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 154.04,
+        "min_available_GiB": 20.03,
+        "pauses": 0
+      },
+      {
+        "name": "standing-bundle.revision_interrupted",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_event_regressions.py",
+          "--family",
+          "bundle.revision_interrupted",
+          "--output",
+          "/home/sittingmongoose/pm-scratch/ea-dcw-resume/experiments/evidence/final-checks/standing-bundle.revision_interrupted.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 146.04,
+        "min_available_GiB": 20.67,
+        "pauses": 0
+      },
+      {
+        "name": "standing-wizard.opened",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_event_regressions.py",
+          "--family",
+          "wizard.opened",
+          "--output",
+          "/home/sittingmongoose/pm-scratch/ea-dcw-resume/experiments/evidence/final-checks/standing-wizard.opened.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 94.03,
+        "min_available_GiB": 21.28,
+        "pauses": 0
+      },
+      {
+        "name": "standing-wizard.deferred_payload.loaded",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_event_regressions.py",
+          "--family",
+          "wizard.deferred_payload.loaded",
+          "--output",
+          "/home/sittingmongoose/pm-scratch/ea-dcw-resume/experiments/evidence/final-checks/standing-wizard.deferred_payload.loaded.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 266.07,
+        "min_available_GiB": 19.22,
+        "pauses": 0
+      },
+      {
+        "name": "registered-bundle.revision_requested",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_registered_regressions.py",
+          "--family",
+          "bundle.revision_requested",
+          "--output",
+          "/home/sittingmongoose/pm-scratch/ea-dcw-resume/experiments/evidence/final-checks/registered-bundle.revision_requested.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "origin_main_after": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 150.05,
+        "min_available_GiB": 21.59,
+        "pauses": 0
+      },
+      {
+        "name": "registered-bundle.revision_started",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_registered_regressions.py",
+          "--family",
+          "bundle.revision_started",
+          "--output",
+          "/home/sittingmongoose/pm-scratch/ea-dcw-resume/experiments/evidence/final-checks/registered-bundle.revision_started.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "origin_main_after": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 160.05,
+        "min_available_GiB": 20.69,
+        "pauses": 0
+      },
+      {
+        "name": "registered-bundle.revision_completed",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_registered_regressions.py",
+          "--family",
+          "bundle.revision_completed",
+          "--output",
+          "/home/sittingmongoose/pm-scratch/ea-dcw-resume/experiments/evidence/final-checks/registered-bundle.revision_completed.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "origin_main_after": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 184.05,
+        "min_available_GiB": 19.25,
+        "pauses": 0
+      },
+      {
+        "name": "registered-bundle.revision_interrupted",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_registered_regressions.py",
+          "--family",
+          "bundle.revision_interrupted",
+          "--output",
+          "/home/sittingmongoose/pm-scratch/ea-dcw-resume/experiments/evidence/final-checks/registered-bundle.revision_interrupted.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "origin_main_after": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 178.05,
+        "min_available_GiB": 19.37,
+        "pauses": 0
+      },
+      {
+        "name": "registered-wizard.opened",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_registered_regressions.py",
+          "--family",
+          "wizard.opened",
+          "--output",
+          "/home/sittingmongoose/pm-scratch/ea-dcw-resume/experiments/evidence/final-checks/registered-wizard.opened.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "origin_main_after": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 158.05,
+        "min_available_GiB": 17.31,
+        "pauses": 0
+      },
+      {
+        "name": "registered-wizard.deferred_payload.loaded",
+        "command": [
+          "python3",
+          "scripts/pm_dcw_registered_regressions.py",
+          "--family",
+          "wizard.deferred_payload.loaded",
+          "--output",
+          "/home/sittingmongoose/pm-scratch/ea-dcw-resume/experiments/evidence/final-checks/registered-wizard.deferred_payload.loaded.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "origin_main_after": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 172.05,
+        "min_available_GiB": 16.67,
+        "pauses": 0
+      },
+      {
+        "name": "shard-generate",
+        "command": [
+          "python3",
+          "scripts/pm-shard-plans.py",
+          "--generate",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "origin_main_after": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 4.01,
+        "min_available_GiB": 18.27,
+        "pauses": 0
+      },
+      {
+        "name": "index-generate",
+        "command": [
+          "python3",
+          "scripts/pm-plan-index.py",
+          "generate"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "origin_main_after": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "exit": 0,
+        "seconds": 46.02,
+        "min_available_GiB": 17.43,
+        "pauses": 0
+      },
+      {
+        "name": "shard-check",
+        "command": [
+          "python3",
+          "scripts/pm-shard-plans.py",
+          "--check",
+          "--config",
+          "Plans/sharding_config.json"
+        ],
+        "origin_main": "9a9816c60b5ce2813343d626e7cab59a39ebf669",
+        "origin_main_after": "268a9382f7ba2efaf8909f5e69403a5afe82b114",
+        "exit": 0,
+        "seconds": 20.02,
+        "min_available_GiB": 18.52,
+        "pauses": 0
+      },
+      {
+        "name": "index-validate",
+        "command": [
+          "python3",
+          "scripts/pm-plan-index.py",
+          "validate"
+        ],
+        "origin_main": "268a9382f7ba2efaf8909f5e69403a5afe82b114",
+        "origin_main_after": "268a9382f7ba2efaf8909f5e69403a5afe82b114",
+        "exit": 1,
+        "seconds": 58.03,
+        "min_available_GiB": 16.99,
+        "pauses": 0
+      }
+    ]
   }
 }
