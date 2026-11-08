@@ -62,14 +62,14 @@ EXCLUDED = [
     ('denial', ('DE2_decision', 'DE3_not_dispatched'), LIVE_STATE),
     ('tr_tool_started', ('TS1_admitted', 'TS2_allowed'), LIVE_STATE),
     ('tr_config_migrated', ('CM2_legacy_value', 'CM6_enum_mapping'),
-     'the payload legacy value is read by its copy row and by the mapping row; before-only witnesses prove CM2 and coherent '
-     'witnesses prove CM6'),
+     'the payload legacy value is read by its copy row and by the mapping row; before-only legacy-value witnesses prove CM2 and '
+     'payload enum_value witnesses prove CM6'),
     ('gate_score', ('GS3_dispatch_ref_copy', 'GS7_scored_ref'),
-     'an emptied payload dispatch ref also differs from the dispatch copy; missing_ref_coherent proves GS7 and before-only '
-     'witnesses prove GS3'),
+     'an emptied payload dispatch ref also differs from the dispatch copy; missing_ref_coherent proves GS7 and payload changes to '
+     'another nonempty ref prove GS3'),
     ('gate_score', ('GS4_dispatch_tuple_copy', 'GS6_scored_node'),
-     'a payload dispatch tuple naming another node also differs from the dispatch copy; coherent tuple witnesses prove GS6 and '
-     'before-only witnesses prove GS4'),
+     'a payload dispatch tuple naming another node also differs from the dispatch copy; payload node_id witnesses prove GS6 and '
+     'payload tuple changes that keep its node prove GS4'),
     ('tr_gate_failed_b', ('GF6_evidence_present', 'GF7_evidence_copy'),
      'an emptied payload evidence list also differs from the report evidence; coherent witnesses prove GF6 and one-sided ones GF7'),
     ('tr_gate_passed_b', ('GP7_evidence_present', 'GP8_evidence_copy'),
@@ -78,25 +78,27 @@ EXCLUDED = [
      'an emptied blocked question set also differs from the payload copy; the other witnesses prove each row alone'),
     ('tr_tool_denied', ('TD1_copies', 'TD2_not_executed'),
      'the payload denial field is compared with its policy copy (TD1) and with its value rule; coherent witnesses prove TD2 and '
-     'policy-only witnesses prove TD1'),
+     'the altered_original_* witnesses prove TD1'),
     ('tr_tool_denied', ('TD1_copies', 'TD3_headless'),
      'the payload denial field is compared with its policy copy (TD1) and with its value rule; coherent witnesses prove TD3 and '
-     'policy-only witnesses prove TD1'),
+     'the altered_original_* witnesses prove TD1'),
     ('tr_tool_denied', ('TD1_copies', 'TD4_no_failure_class'),
      'the payload denial field is compared with its policy copy (TD1) and with its value rule; coherent witnesses prove TD4 and '
-     'policy-only witnesses prove TD1'),
+     'the altered_original_* witnesses prove TD1'),
     ('tr_tool_invoked', ('TI3_web_copies', 'TI6_copies'),
-     'payload meta is compared with the web request (TI3) and with its owner-result copy (TI6); outcome-coherent witnesses prove '
-     'TI3 and outcome-only witnesses prove TI6'),
+     'payload meta is compared with the web request (TI3) and with its owner-result copy (TI6); web-request witnesses prove TI3 '
+     'and owner-result witnesses prove TI6'),
     ('tr_tool_invoked', ('TI2_web_tool', 'TI3_web_copies', 'TI6_copies'),
      'a payload meta tool_id is compared with the tool name (TI2), the web request (TI3) and the owner-result copy (TI6); '
-     'the other witnesses prove each row alone'),
+     'tool_name, web-request and owner-result witnesses prove each row alone'),
     ('tr_usage_a', ('UE2_adjusted_after_settled', 'UE5_adjusted_at'),
      'moving a record to adjusted from an unsettled state also leaves it without adjusted_at_utc; the other witnesses prove each row alone'),
     ('usage_values_a', ('UV2_cost_copies', 'UV3_unknown_cost'),
-     'changing only the payload cost status also breaks its cost-record copy; record-coherent witnesses prove UV3'),
+     'changing only the payload cost status also breaks its cost-record copy; cost_minor_units witnesses '
+     '(unknown_cost_fabricates_zero) prove UV3 and cost_status witnesses prove UV2'),
     ('usage_values_a', ('UV1_cost_amount_copy', 'UV3_unknown_cost'),
-     'changing only the cost-record amount also breaks its payload copy; record-coherent witnesses prove UV3'),
+     'changing only the cost-record amount also breaks its payload copy; flat_cost_disagrees proves UV1 and cost_minor_units '
+     'witnesses prove UV3'),
     ('tr_worktree_deleted_b', ('WD8_no_blockers', 'WD10_no_safe_points'),
      'the coherent corpus sets the same safe point on the allocation and the payload; one-sided witnesses prove each row'),
     ('tr_worktree_deleted_b', ('WD8_no_blockers', 'WD9_no_active_locks'),
