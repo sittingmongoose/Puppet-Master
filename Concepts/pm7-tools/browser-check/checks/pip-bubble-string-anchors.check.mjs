@@ -46,6 +46,8 @@ function installSampler() {
 		if (!st || st.__qbsWrapped) return;
 		const direct = st.direct;
 		st.direct = function (...a) { S.directN++; return direct.apply(this, a); };
+		const place = st.placeBubble;
+		st.placeBubble = function (H, ang) { const r = place.call(this, H, ang); try { const s2 = this.toScreen(this.headXf(this.layoutName === 'portrait' ? [44, 30] : [58, 44], H, ang, 1, 1)), m = /^(-?[\d.]+)px (-?[\d.]+)px$/.exec(this.bubble.style.translate || ''); this.__relAtPlace = m ? [Math.round((+m[1] - s2[0]) * 100) / 100, Math.round((+m[2] - s2[1]) * 100) / 100] : null; } catch (e) { this.__relAtPlace = null; } return r; };
 		st.__qbsWrapped = true;
 	};
 	S.wrap();
@@ -65,7 +67,7 @@ function installSampler() {
 			fr.bub = { shown: +cs.opacity > 0.05 && cs.visibility !== 'hidden' && b.classList.contains('on') && /\S/.test(b.textContent || '') ? 1 : 0,
 				text: (b.textContent || '').trim(), ow: b.offsetWidth, oh: b.offsetHeight,
 				tr: tr ? [R2(+tr[1]), R2(+tr[2])] : null,
-				rel: tr ? [R2(+tr[1] - sp[0]), R2(+tr[2] - sp[1])] : null,
+				rel: st.__relAtPlace || (tr ? [R2(+tr[1] - sp[0]), R2(+tr[2] - sp[1])] : null),
 				boxRel: [R2(br.left - hr.left), R2(br.top - hr.top)] };
 			fr.visY0 = st.vis ? R2(st.vis.y0) : null;
 			fr.vis = st.vis ? [R2(st.vis.x0), R2(st.vis.y0), R2(st.vis.x1), R2(st.vis.y1)] : null;
@@ -82,7 +84,7 @@ function installSampler() {
 				// the anchor each string must hang from, from the destination the stage itself keeps (restPose): over the
 				// pivot at the destination's fit offset; absent on a page built before the helper, which fails by name
 				const anch = rp ? offs.map((o) => [R2(pr.ax + (rp.ax - tg.ax) + o * rp.sc), R2(st.L.anchorY + rp.dy)]) : null;
-				fr.props.push({ id, kind: pr.spec && pr.spec.kind, state: pr.state, op: R2(pr.op), ax: R2(pr.ax), tgAx: R2(tg.ax),
+				fr.props.push({ id, kind: pr.spec && pr.spec.kind, state: pr.state, grounded: pr.grounded ? 1 : 0, op: R2(pr.op), ax: R2(pr.ax), tgAx: R2(tg.ax),
 					a: R2(pr.a * 57.3), offs, anch, restBox: pr.restBox ? pr.restBox.map(R2) : null, lines });
 			});
 		} else fr.none = 1;
@@ -159,7 +161,8 @@ export default async function (t) {
 			// change inside that window is the scene change itself, judged from its first settled frame
 			let cut = 0;
 			for (let i = 1; i < Math.min(rows.length, 13); i++) if (JSON.stringify(rows[i].p.restBox) !== JSON.stringify(rows[i - 1].p.restBox)) cut = i;
-			const vis = rows.slice(cut).filter(({ p }) => p.op > 0.02 && p.state !== 'out');
+			// a grounded prop's strings unhook and lift away by design; they are not judged as hanging strings
+			const vis = rows.slice(cut).filter(({ p }) => p.op > 0.02 && p.state !== 'out' && !p.grounded);
 			if (vis.length < 12) continue;
 			const p0 = vis[0].p;
 			const hasHelper = vis.some(({ p }) => p.anch);
@@ -221,7 +224,7 @@ export default async function (t) {
 		t.log(`${look}: ${screens.length - unreached.length}/${screens.length} screens opened${unreached.length ? '; not opened: ' + unreached.join(', ') : ''}`);
 	}
 	if (noHelper.length) t.log(`no restPose destination: ${noHelper.slice(0, 6).join('; ')}${noHelper.length > 6 ? ` (+${noHelper.length - 6} more)` : ''}`);
-	await t.check(`QA-4: each line's bubble sits on its first shown frame within 1 px of where it settles and never strays further (${scenes} scenes, ${lines} lines)`, scenes > 0 && lines > 0 && bad4.length === 0, bad4.slice(0, 8).join('; ') + (bad4.length > 8 ? ` (+${bad4.length - 8} more)` : ''));
+	await t.check(`QA-4: each line's bubble sits on its first shown frame within 1 px of where it settles and never strays further (${scenes} scenes, ${lines} lines)`, scenes > 0 && lines > 0 && bad4.length === 0, `${bad4.length} line(s): ` + bad4.slice(0, 8).join('; ') + (bad4.length > 8 ? ` (+${bad4.length - 8} more)` : ''));
 	await t.check(`QA-6: every string hangs from its rest anchor, its top moving only as the swing explains (${strings} strings)`, strings > 0 && bad6.length === 0, bad6.slice(0, 8).join('; ') + (bad6.length > 8 ? ` (+${bad6.length - 8} more)` : ''));
 	await t.check(`QA-4b: no prop's destination refits within a scene (${dests} destinations${noHelper.length ? '; a page with no rest destination has none to judge, QA-6 above is its measure' : ''})`, badDest.length === 0, badDest.slice(0, 8).join('; ') + (badDest.length > 8 ? ` (+${badDest.length - 8} more)` : ''));
 }
