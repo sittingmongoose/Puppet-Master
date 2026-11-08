@@ -541,9 +541,11 @@ export default async function (t) {
       if (!p.wheeled && p.onTop) await loc.click(opts.at ? { position: opts.at, button: opts.button } : { button: opts.button });
       else await t.page.mouse.click(off.x + p.x, off.y + p.y, opts.button ? { button: opts.button } : {});
     };
-    // FO-84d: every disclosure the panel shows outside its scrollers (button[aria-expanded], not a tab or a popup
+    // FO-84d: every disclosure the panel shows outside its list scrollers (button[aria-expanded], not a tab or a popup
     // trigger; Source Control's Publish and review chevron in each engine) folds on one press and unfolds on a second,
-    // and Enter and Space on the focused control do the same.
+    // and Enter and Space on the focused control do the same. The list scrollers are the panel's .sh-scroll (Jujutsu's
+    // .d-jj-scroll) and any scroller inside them; a scroller elsewhere does not hide a disclosure (FO-86: at 1280x500
+    // Source Control's Publish footer scrolls its own card, chevron included).
     const disclosures = {};
     // --set disclosures=0 skips this census (to reach later Source Control assertions on a base without FO-84d; the
     // disclosure floor then fails by design)
@@ -551,7 +553,8 @@ export default async function (t) {
       if (t.args.disclosures === '0') return;
       const ctls = await panel.evaluate(p => {
         document.querySelectorAll('[data-shelf-disc]').forEach(e => e.removeAttribute('data-shelf-disc'));
-        const scs = [...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY));
+        const lists = [...p.querySelectorAll(':scope > .sh-scroll, .d-jj-scroll')];
+        const scs = [...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY) && lists.some(l => l.contains(a)));
         return [...p.querySelectorAll('button[aria-expanded]')].filter(e => e.checkVisibility() && e.getAttribute('role') !== 'tab' && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
           .map((e, i) => { e.setAttribute('data-shelf-disc', String(i)); return { i, label: e.getAttribute('aria-label') || (e.parentElement?.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40) || String(e.className) }; });
       });
@@ -988,10 +991,14 @@ export default async function (t) {
   // row command: Open, Open in new panel, Open to the side (PM_HOME.open's path and placement), Copy path › Copy relative
   // path and Copy full path (the text copied and the note), Open with › each of its five ways (Source editor opens a file;
   // the others, and Source editor on a folder, name the row in their note) and Reveal in terminal (the terminal's folder).
+  // On a folder (FO-102), Open expands it in the tree (folded first by the tree's own key; a folder the tree lists without
+  // its files says so) and opens no editor, and Open in new panel and Open to the side are unavailable: a press says why
+  // (a note naming the folder), opens nothing and leaves the menu open. The fresh open asks the first file row.
   // Before each case the menu is opened on another row by another input and closed by Escape, rotating, so pointer→key,
-  // key→pointer and key→key all come before a case. The expected path is the row's data-path, else the path the page file
-  // authors for it (its own item's .fm-cpath, else its own .fm-path), never the running page's text, which the rail skin
-  // cuts to fit. Keys only on rows that take the focus. --set effects=0 skips the phase; effects=<pane,...> asks only those.
+  // key→pointer and key→key all come before a case. The expected path is the path the page file shows for the row (its
+  // own item's .fm-cpath, else its own .fm-path), else its data-path (a tree row's only path): a source the product does
+  // not read (it reads data-path, FO-103), and never the running page's text, which the rail skin cuts to fit. Keys only
+  // on rows that take the focus. --set effects=0 skips the phase; effects=<pane,...> asks only those.
   const FX_CMDS = [
     { label: 'Open', how: 'open', where: 'auto' }, { label: 'Open in new panel', how: 'open', where: 'panel' }, { label: 'Open to the side', how: 'open', where: 'right' },
     { branch: 'Copy path', label: 'Copy relative path', how: 'copy' }, { branch: 'Copy path', label: 'Copy full path', how: 'copyfull' },
@@ -1011,14 +1018,13 @@ export default async function (t) {
     for (const k of ks) { const sib = ks.filter(o => o.role === k.role && o.box === k.box); sib.reduce((a, o) => a.filter(c => o.cls.includes(c)), k.cls).forEach(c => out.add(c)); }
     return [...out];
   };
-  // The path the page file authors for each row of those classes, in document order (rows the tree marks with data-path
-  // are named by it at run time instead).
+  // The path the page file shows for each row of those classes, in document order, else its data-path (a tree row shows
+  // only its name).
   const authoredPaths = (pn, toks) => f.evaluate(([html, pn, toks]) => {
     const doc = new DOMParser().parseFromString(html, 'text/html'), out = {};
     for (const tok of toks) out[tok] = [...doc.querySelectorAll(`#${pn} .${CSS.escape(tok)}`)].map(r => {
-      if (r.getAttribute('data-path')) return r.getAttribute('data-path');
       const item = r.closest('[data-acc]'), own = item && item.querySelectorAll(`.${CSS.escape(tok)}`).length === 1 ? item : null;
-      return ((own && own.querySelector('.fm-cpath')) || r.querySelector('.fm-path'))?.textContent.trim() || null;
+      return ((own && own.querySelector('.fm-cpath')) || r.querySelector('.fm-path'))?.textContent.trim() || r.getAttribute('data-path') || null;
     });
     return out;
   }, [slot.html, pn, toks]);
@@ -1079,7 +1085,7 @@ export default async function (t) {
         const pane = document.getElementById(p), mismatch = [];
         for (const tok of toks) {
           const live = [...pane.querySelectorAll('.' + CSS.escape(tok))], a = authored[tok] || [];
-          live.forEach((e, i) => { const w = e.getAttribute('data-path') || (live.length === a.length ? a[i] : null); if (w) e.setAttribute('data-shelf-fx-want', w); });
+          live.forEach((e, i) => { const w = (live.length === a.length ? a[i] : null) || e.getAttribute('data-path'); if (w) e.setAttribute('data-shelf-fx-want', w); });
           if (live.length !== a.length && live.some(e => !e.getAttribute('data-path'))) mismatch.push({ tok, live: live.length, authored: a.length });
         }
         const sel = toks.map(t => '.' + CSS.escape(t)).join(',');
@@ -1092,7 +1098,7 @@ export default async function (t) {
         for (const [key, list] of groups) for (const e of [list[0], list[list.length - 1]]) if (!out.some(o => o.el === e)) out.push({ el: e, g: key.el });
         const glabel = gEl => (gEl.getAttribute('aria-label') || gEl.querySelector(':scope > [data-collapse]')?.textContent || gEl.id || '').trim().replace(/\s+/g, ' ');
         return { mismatch, rows: out.map((o, i) => { o.el.setAttribute('data-shelf-fx', String(i));
-          return { i, want: o.el.getAttribute('data-shelf-fx-want'), folder: folder(o.el), keys: o.el.tabIndex >= 0 && !o.el.closest('[inert]'), group: glabel(o.g) }; }) };
+          return { i, want: o.el.getAttribute('data-shelf-fx-want'), folder: folder(o.el), expandable: o.el.hasAttribute('aria-expanded'), keys: o.el.tabIndex >= 0 && !o.el.closest('[inert]'), group: glabel(o.g) }; }) };
       }, [pn.panel, toks, authoredFx]);
       await t.check(`${T}: the rows of ${toks.join(', ')} match the rows the page file authors`, !pick.mismatch.length, JSON.stringify(pick.mismatch), { hard: true });
       const rowsI = pick.rows.filter(r => input === 'mouse' || r.keys);
@@ -1132,7 +1138,20 @@ export default async function (t) {
           const it = m && [...m.querySelectorAll('[role="menuitem"]')].find(i => i.closest('[role="menu"]') === m && i.checkVisibility() && (prefix ? lab(i).startsWith(label) : lab(i) === label));
           it?.setAttribute('data-shelf-fx-item', ''); return !!it;
         }, [pn.menu, label, prefix, within]);
-        if (ok) { if (prefix) await g.locator('[data-shelf-fx-item]').hover(); else await g.locator('[data-shelf-fx-item]').click(); }
+        const it = g.locator('[data-shelf-fx-item]');
+        if (ok && prefix) await it.hover();
+        else if (ok && await it.getAttribute('aria-disabled') !== 'true') await it.click();
+        else if (ok) {
+          // an unavailable item (FO-102): Playwright's click waits for it to be enabled, so a real press at its centre, once
+          // its box holds still for a frame (the menu sprouts open)
+          let bb = null;
+          for (let n = 0; n < 60; n++) {
+            const b = await it.boundingBox();
+            if (b && bb && ['x', 'y', 'width', 'height'].every(k => Math.abs(b[k] - bb[k]) < 0.5)) break;
+            bb = b; await g.evaluate(() => new Promise(res => requestAnimationFrame(() => res())));
+          }
+          if (bb) await t.page.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2);
+        }
         return ok;
       };
       const run = async (cmd, how) => {
@@ -1158,6 +1177,19 @@ export default async function (t) {
       // What a command did: null when it acted on the row as it should, else what happened.
       const judge = async (cmd, r) => {
         const want = r.want, until = fn => g.waitForFunction(fn, [want, cmd.where || null], { timeout: 3000, polling: 50 }).then(() => true, () => false);
+        if (cmd.how === 'open' && r.folder) {
+          // FO-102: Open expands the folder in the tree (one listed without its files says so), opens no editor and closes the
+          // menu; Open in new panel and Open to the side are unavailable, say why, open nothing and leave the menu open
+          const said = () => g.waitForFunction(w => __fx.toasts.some(m => m.startsWith(w + ' is a folder')), want, { timeout: 3000, polling: 50 }).then(() => true, () => false);
+          if (cmd.where === 'auto') {
+            const ok = r.expandable ? await g.waitForFunction(i => document.querySelector(`[data-shelf-fx="${i}"]`)?.getAttribute('aria-expanded') === 'true', r.i, { timeout: 3000, polling: 50 }).then(() => true, () => false) : await said();
+            const now = await fx(), menu = await isOpen();
+            return ok && !now.opens.length && !menu ? null : { expanded: await rowLoc(r).getAttribute('aria-expanded'), opens: now.opens, toasts: now.toasts, menuOpen: menu };
+          }
+          const ok = await said(), now = await fx(), menu = await isOpen();
+          const dis = await g.evaluate(w => document.querySelector(`#fileContextMenu [data-pmw-open="${w}"]`)?.getAttribute('aria-disabled') || null, cmd.where === 'panel' ? 'panel' : 'side');
+          return ok && !now.opens.length && menu && dis === 'true' ? null : { ariaDisabled: dis, opens: now.opens, toasts: now.toasts, menuOpen: menu };
+        }
         if (cmd.how === 'open' || (cmd.how === 'source' && !r.folder)) {
           await until(([w]) => __fx.opens.length > 0);
           const now = await fx(), o = now.opens[0], where = cmd.how === 'open' ? cmd.where : 'auto';
@@ -1183,8 +1215,8 @@ export default async function (t) {
         }
         return { unknown: cmd.how };
       };
-      // (1) a fresh open on the first row, Open
-      const r0 = rowsI[0];
+      // (1) a fresh open on the first file row (FO-102: Open on a folder opens no tab), Open
+      const r0 = rowsI.find(r => !r.folder) || rowsI[0];
       await clear();
       await t.check(`${T}: a fresh open on ${r0.want}`, await openOn(r0, input), '', { hard: true });
       const e0 = await run(FX_CMDS[0], input) || await judge(FX_CMDS[0], r0);
@@ -1198,6 +1230,12 @@ export default async function (t) {
         if (others.length) {
           const o = others[turn % others.length], ins = CTX_INPUTS.filter(i => i === 'mouse' || o.keys), how = ins[turn % ins.length]; turn++;
           if (await openOn(o, how)) { await t.page.keyboard.press('Escape'); await shut(); }
+        }
+        // a folder Open must expand: the folder is folded first, by the tree's own key (ArrowLeft on the focused row)
+        if (r.folder && r.expandable && cmd.how === 'open' && cmd.where === 'auto' && await rowLoc(r).getAttribute('aria-expanded') === 'true') {
+          await pane(); await rowLoc(r).scrollIntoViewIfNeeded(); await rowLoc(r).focus(); await t.page.keyboard.press('ArrowLeft');
+          const folded = await g.waitForFunction(i => document.querySelector(`[data-shelf-fx="${i}"]`)?.getAttribute('aria-expanded') === 'false', r.i, { timeout: 3000 }).then(() => true, () => false);
+          await t.check(`${T}: the folder ${r.want} folds by ArrowLeft before Open`, folded, '', { hard: true });
         }
         await clear();
         const up = await openOn(r, input);

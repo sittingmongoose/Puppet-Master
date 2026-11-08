@@ -7,7 +7,14 @@
 // its four target brackets; in Friendly Light the ring must stand 3:1 against both its neighbours (FO-99). The chat strip's FO-76 sizer copies stay inert
 // and out of the tab order. One test per size: 1920x1100 (everything), 1390x860, 1280x500, 1024x768 and 740x900 (all
 // but the chat switch, the Docker drag and the chat strip, which are judged at 1920). Both surfaces (--set sandbox=0|1).
+// FO-98 (section 5b): every icon's aria-expanded says whether its panel is on screen (Chat: the chat column) and its
+// aria-controls names it, at rest, after Enter opens and shuts a panel, after the folded rail's overlay is shut by
+// Escape, and in Playwright's accessibility tree; at 1920 and 740 each icon's own menu (Shift+F10, the Menu key, a right
+// click) moves it up and down and hides it in More by keys, Alt+ArrowUp/Down move it, Ctrl+N follows the new order, the
+// focus stays on the icon (the next one after a hide), each change is announced, and More's menu puts it back; at 1920
+// also the shell's own menu with the rail skin unmounted. The bar's order is put back at the end.
 //   --set size=1280x500   --set looks=basic-dark,nier-light   --set crops=1
+//   --set fo98=only (just section 5b)   --set fo98=off (without it)
 import { LOOKS } from '../browser-check.config.mjs';
 
 const frames = (f, n = 3) => f.evaluate(async n => { for (let i = 0; i < n; i++) await new Promise(requestAnimationFrame); }, n);
@@ -38,6 +45,43 @@ function railControls() {
   const shown = e => e.getClientRects().length > 0 && getComputedStyle(e).visibility !== 'hidden';
   return [...document.querySelectorAll('#activityBar .icon[data-ab-id], #activityBar > .activity-bar-toggle')].filter(shown)
     .map(e => ({ key: e.getAttribute('data-ab-id') || e.id, target: e.getAttribute('data-target') }));
+}
+
+// The rail's controls on screen at rest (K-F96c-2), with the bar scrolled to its top and the focus off it, as a person
+// first sees it: each tile's centre lies inside the bar's clip box and the window, and a point there hits the tile. The
+// collapsed rail holds all its controls so, in every look, as on main; with the names shown the bar may scroll instead
+// (overflow-y auto or scroll, with something to scroll), where scrolling it must bring the tile in (F96b-3). A Tab walk
+// proves none of this, as a focus scrolls the bar to it: Glass's collapsed rail at 1280x500 held 528 px in 411, with
+// Artifacts, More and the toggle below the fold and no scrollbar to say so (F96c-2). `below` lists the controls seen only
+// by scrolling; `trimmed`, the tiles in view whose edge the box cuts by more than 1 px (Friendly's toggle at 1280x500,
+// 5 px, on b622109459 as well: logged, not failed).
+function railAtRest() {
+  const bar = document.getElementById('activityBar');
+  if (!bar) return null;
+  const shown = e => e.getClientRects().length > 0 && getComputedStyle(e).visibility !== 'hidden';
+  const top0 = bar.scrollTop, oy = getComputedStyle(bar).overflowY;
+  bar.scrollTop = 0;
+  const scrolls = /^(auto|scroll|overlay)$/.test(oy) && bar.scrollHeight > bar.clientHeight + 1;
+  const clipBox = () => { const b = bar.getBoundingClientRect(), x0 = b.left + bar.clientLeft, y0 = b.top + bar.clientTop;
+    return { x0: Math.max(0, x0), y0: Math.max(0, y0), x1: Math.min(innerWidth, x0 + bar.clientWidth), y1: Math.min(innerHeight, y0 + bar.clientHeight) }; };
+  const inside = (q, c) => { const x = (q.left + q.right) / 2, y = (q.top + q.bottom) / 2; return y >= c.y0 && y <= c.y1 && x >= c.x0 && x <= c.x1; };
+  const cut = (q, c) => Math.round(Math.max(0, c.y0 - q.top, q.bottom - c.y1, c.x0 - q.left, q.right - c.x1));
+  const hits = (e, q) => { const h = document.elementFromPoint((q.left + q.right) / 2, (q.top + q.bottom) / 2); return !!h && (h === e || e.contains(h)); };
+  const rows = [...document.querySelectorAll('#activityBar .icon[data-ab-id], #activityBar > .activity-bar-toggle')].filter(shown).map(e => {
+    const s = e.querySelector(':scope > .symbol') || e, key = e.getAttribute('data-ab-id') || e.id;
+    let q = s.getBoundingClientRect(), c = clipBox();
+    if (inside(q, c) && hits(e, q)) return cut(q, c) > 1 ? { key, seen: 'at rest', cut: cut(q, c) } : { key, seen: 'at rest' };
+    const row = { key, bottom: Math.round(q.bottom), top: Math.round(q.top), box: [Math.round(c.y0), Math.round(c.y1)] };
+    if (!scrolls) return { ...row, seen: false };
+    bar.scrollTop += q.bottom > c.y1 ? q.bottom - c.y1 + 2 : q.top < c.y0 ? q.top - c.y0 - 2 : 0;
+    q = s.getBoundingClientRect(); c = clipBox();
+    const ok = inside(q, c) && hits(e, q);
+    bar.scrollTop = 0;
+    return { ...row, seen: ok ? 'by scrolling the bar' : false };
+  });
+  bar.scrollTop = top0;
+  return { overflowY: oy, client: bar.clientHeight, content: bar.scrollHeight, scrolls, rows, unseen: rows.filter(r => !r.seen).map(r => r.key),
+    below: rows.filter(r => r.seen === 'by scrolling the bar').map(r => r.key), trimmed: rows.filter(r => r.cut).map(r => `${r.key} ${r.cut}px`) };
 }
 
 // The focus mark, judged from painted pixels (F96-1). The item, its tile (the symbol box) and 12 px round them are
@@ -160,6 +204,241 @@ function moreState() {
     focusIn: shown && m.contains(document.activeElement), focusOnMore: document.activeElement === btn };
 }
 
+// FO-98: what each icon's open state is, read from what a person sees: a panel icon's view on screen (its .active and a
+// box of its own); for Chat, the chat itself on screen: shown, at least 120 px wide and inside the window, with its
+// folded strip ("Open the chat") not shown (round 2, K-act8-1: the strip was counted as open, so a Chat reading
+// expanded while the chat was folded passed); set beside it, the icon's aria-expanded, aria-controls, lit state and
+// whether a menu marked it.
+function openTruth() {
+  const out = {};
+  for (const ic of document.querySelectorAll('#activityBar > .icon[data-ab-id]')) {
+    const k = ic.getAttribute('data-ab-id');
+    if (k === 'more') continue;
+    const tg = ic.getAttribute('data-target'), view = tg && document.getElementById(tg);
+    let open = null, want = null;
+    if (view) { const r = view.getBoundingClientRect(); open = view.classList.contains('active') && r.width > 1 && r.height > 1; want = tg; }
+    else if (k === 'chat') {
+      const c = document.getElementById('chatPanel'), r = c && c.getBoundingClientRect(), strip = document.getElementById('pmw-chat-strip');
+      const folded = !!(strip && !strip.hidden && strip.getClientRects().length);
+      open = !!c && !c.classList.contains('hidden') && !folded && r.width >= 120 && r.right > 0 && r.left < innerWidth; want = 'chatPanel';
+    }
+    out[k] = { open, want, expanded: ic.getAttribute('aria-expanded'), controls: ic.getAttribute('aria-controls'), lit: ic.classList.contains('active'), menuMark: ic.classList.contains('is-menu-open') };
+  }
+  return out;
+}
+const barOrder = () => [...document.querySelectorAll('#activityBar > .icon[data-ab-id]')].map(i => i.getAttribute('data-ab-id'));
+function iconMenu() {
+  const m = document.querySelector('.pmr-menu[data-pmr-menu="d-ab-icon"]') || document.querySelector('.pm-ab-ctx');
+  const shown = !!m && m.isConnected && m.getClientRects().length > 0 && getComputedStyle(m).display !== 'none' && getComputedStyle(m).visibility !== 'hidden';
+  const rows = shown ? [...m.querySelectorAll('.pmr-mi, .pm-ab-tray-row')] : [];
+  const a = document.activeElement;
+  return { open: shown, kind: m ? (m.classList.contains('pm-ab-ctx') ? 'shell' : 'skin') : null, role: m && m.getAttribute('role'),
+    rows: rows.map(b => ((b.querySelector('.pm6-chat-modelname') || b).textContent.trim()) + (b.getAttribute('aria-disabled') === 'true' ? ' (disabled)' : '')),
+    focusRow: shown && m.contains(a) ? ((a.querySelector && a.querySelector('.pm6-chat-modelname')) || a).textContent.trim() : null };
+}
+
+// FO-98, at every size: each icon's open state is exposed (aria-expanded and aria-controls) and kept true as panels open
+// and close by keys and clicks, the folded rail's overlay included; at 1920 and 740, reorder and hide by keys (each
+// icon's menu by Shift+F10, the Menu key or a right click, Alt+ArrowUp/Down), back again, with the focus kept and each
+// change announced; at 1920 the shell's own menu with the rail skin unmounted too. The bar's order is put back at the end.
+async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
+  const settle = (n = 4) => frames(f, n);
+  const reach = async (k) => { await sentinel('#activityBar'); for (let i = 0; i < 16; i++) { await kb.press('Tab'); if ((await key()).key === k) return true; } return false; };
+  const live = () => f.evaluate(() => (document.getElementById('pmw-live') || {}).textContent || '');
+  const agree = async (label, extra) => {
+    await settle(); await f.waitForTimeout(80);
+    const s = await f.evaluate(openTruth);
+    const bad = Object.entries(s).filter(([, v]) => v.controls !== v.want || (v.expanded === 'true') !== !!v.open);
+    await t.check(`${at} FO-98 ${label}: each icon's aria-expanded says whether its panel (Chat: the chat column) is on screen, aria-controls names it`,
+      bad.length === 0 && (!extra || extra(s)), bad.length ? JSON.stringify(Object.fromEntries(bad)) : Object.entries(s).map(([k, v]) => `${k}=${v.expanded}${v.lit ? '*' : ''}`).join(' '));
+    return s;
+  };
+  const s0 = await agree('at rest');
+  // the accessibility tree, as a screen reader gets it
+  const snapOf = async (k) => (await f.locator(`#activityBar > .icon[data-ab-id="${k}"]`).ariaSnapshot()).split('\n')[0];
+  const openKey = Object.keys(s0).find(k => s0[k].want && s0[k].want !== 'chatPanel' && s0[k].open);
+  const shutKey = Object.keys(s0).find(k => s0[k].want && s0[k].want !== 'chatPanel' && !s0[k].open);
+  const so = openKey ? await snapOf(openKey) : '', ss = shutKey ? await snapOf(shutKey) : '';
+  t.log(`${at} FO-98 tree: ${so || '(no open panel)'} | ${ss}`);
+  await t.check(`${at} FO-98: the accessibility tree reads the open panel's icon as expanded and a shut one's as not`,
+    (!openKey || /\[expanded(=true)?\]/.test(so)) && !!shutKey && !/\[expanded(=true)?\]/.test(ss), JSON.stringify({ openKey, so, shutKey, ss }));
+  // a panel opened and shut by keys
+  if (await reach('search')) { await kb.press('Enter'); await agree('after Enter opens Search', s => s.search.expanded === 'true'); }
+  const folded = await f.evaluate(() => document.querySelector('.main-area')?.getAttribute('data-pmw-rail') === 'fold');
+  if (folded) {
+    await kb.press('Escape');
+    await agree('the folded rail\'s overlay shut by Escape (Search stays lit)', s => s.search.expanded === 'false' && s.search.lit);
+  } else if (full && await reach('search')) {
+    await kb.press('Enter');
+    await agree('after Enter shuts Search', s => s.search.expanded === 'false');
+  }
+  // Files lit and its panel open, as the page starts (folded: Files lit with its overlay shut)
+  const filesBack = async (label) => {
+    if (!(await reach('files'))) return;
+    await kb.press('Enter'); await agree(label, s => s.files.expanded === 'true');
+    if (folded) { await kb.press('Escape'); await agree(label + ', its overlay shut by Escape', s => s.files.expanded === 'false' && s.files.lit); }
+  };
+  await filesBack('after Enter opens Files again');
+  // the same by real mouse clicks (round 2, K-act8-3)
+  const clickIcon = async (ic) => { const b = await f.locator(`#activityBar > .icon[data-ab-id="${ic}"]`).boundingBox(); if (!b) return false; await t.page.mouse.click(off.x + b.x + b.width / 2, off.y + b.y + b.height / 2); await rest(); return true; };
+  if (await clickIcon('search')) await agree('after a click opens Search', s => s.search.expanded === 'true');
+  if (await clickIcon('files')) await agree('after a click opens Files', s => s.files.expanded === 'true');
+  if (folded && await reach('files')) { await kb.press('Escape'); await agree('Files\' overlay shut by Escape again', s => s.files.expanded === 'false'); }
+  if (full && await reach('chat')) {
+    await kb.press('Enter'); await f.waitForTimeout(900); await agree('after Enter switches the chat column');
+    await kb.press(' '); await f.waitForTimeout(900); await agree('after Space switches it back');
+  }
+  // the chat folded to its strip ("Open the chat"): Chat is not expanded; Enter on it opens the chat over the centre,
+  // which expands it, and Escape folds it back (round 2, F98-1)
+  const stripOn = () => f.evaluate(() => { const b = document.getElementById('pmw-chat-strip'); return !!(b && !b.hidden && b.getClientRects().length); });
+  const peeking = () => f.evaluate(() => !!document.querySelector('.main-area')?.hasAttribute('data-pmw-chat-peek'));
+  // At 740 the step is required, whatever ran before (round 3, K8b-1): section 5's 1920 test stores "Keep the chat open
+  // in narrow windows" on the normal page, and the 740 test that follows then never folded the chat, so the step only
+  // logged a skip and round 1 passed the default run. It turns that preference off for the step (as the chat's own
+  // "Keep the chat open in narrow windows" item does), fails by name if the chat still does not fold, and puts it back.
+  if (await peeking() && await reach('chat')) { await kb.press('Escape'); await f.waitForTimeout(500); }
+  const mustFold = at === '740x900';
+  const keptOpen = mustFold ? await f.evaluate(() => { const c = window.PMW && PMW.chatCol; if (!c || !c.keepOpen || !c.keepOpen()) return false; c.setKeepOpen(false); return true; }) : false;
+  if (mustFold) await f.waitForFunction(() => { const b = document.getElementById('pmw-chat-strip'); return !!(b && !b.hidden && b.getClientRects().length); }, null, { timeout: 4000 }).catch(() => {});
+  if (keptOpen) t.log(`${at} FO-98: "keep the chat open" was stored by an earlier test; turned off for the strip step`);
+  if (await stripOn()) {
+    await agree('the chat folded to its strip', s => s.chat.expanded === 'false' && s.chat.lit);
+    if (await reach('chat')) { await kb.press('Enter'); await f.waitForTimeout(700); }
+    await agree('after Enter opens the chat over the centre', s => s.chat.expanded === 'true');
+    await kb.press('Escape'); await f.waitForTimeout(700);
+    await agree('after Escape folds the chat back to its strip', s => s.chat.expanded === 'false');
+  } else if (mustFold) await t.check(`${at} FO-98: the chat folds to its strip at 740x900 for the strip step`, false, JSON.stringify(await f.evaluate(() => ({ keepOpen: !!(window.PMW && PMW.chatCol && PMW.chatCol.keepOpen && PMW.chatCol.keepOpen()), chatStrip: !!(window.PMW && PMW.narrow && PMW.narrow.state.chatStrip), chatW: Math.round(document.getElementById('chatPanel')?.getBoundingClientRect().width || 0) }))));
+  else t.log(`${at} FO-98: the chat is not folded to its strip at this size`);
+  if (keptOpen) { await f.evaluate(() => PMW.chatCol.setKeepOpen(true)); await f.waitForTimeout(500); }
+  // across the fold in one session (round 2, K-act8-3): the state is read again after the window narrows and widens
+  if (full) {
+    await t.viewport(740, 900); await f.waitForTimeout(1200);
+    await agree('the same session narrowed to 740x900');
+    await t.viewport(1920, 1100); await f.waitForTimeout(1200);
+    await agree('the same session back at 1920x1100', s => s.files.expanded === 'true');
+  }
+  if (!full && at !== '740x900') return;
+
+  // reorder and hide by keys, through the rail skin's menu
+  // an icon with a neighbour on each side, so it can move both ways (section 4's drag leaves Docker last)
+  const order0 = await f.evaluate(barOrder), visible0 = order0.filter(x => x !== 'more');
+  const middle = visible0.slice(1, -1), k = middle.includes('docker') ? 'docker' : middle[Math.floor(middle.length / 2)];
+  const i0 = order0.indexOf(k);
+  const menuUp = () => f.waitForFunction(() => { const m = document.querySelector('.pmr-menu[data-pmr-menu="d-ab-icon"], .pm-ab-ctx'); return !!m && m.getClientRects().length > 0 && m.contains(document.activeElement); }, null, { timeout: 2000 }).catch(() => {});
+  const menuGone = () => f.waitForFunction(() => { const m = document.querySelector('.pmr-menu[data-pmr-menu="d-ab-icon"], .pm-ab-ctx'); return !m || !m.isConnected || !m.getClientRects().length || getComputedStyle(m).display === 'none'; }, null, { timeout: 2000 }).catch(() => {});
+  let reached = await reach(k);
+  const exp0 = (await f.evaluate(openTruth))[k];
+  if (reached) { await kb.press('Shift+F10'); await menuUp(); }
+  let m = await f.evaluate(iconMenu);
+  const exp1 = (await f.evaluate(openTruth))[k];
+  await t.check(`${at} FO-98 ${k}: Shift+F10 opens its menu (Move up, Move down, Hide in More) with the focus on its first row, and leaves the icon's aria-expanded alone`,
+    reached && m.open && m.kind === 'skin' && m.role === 'menu' && /^Move up/.test(m.rows[0] || '') && /^Move down/.test(m.rows[1] || '') && /^Hide in More/.test(m.rows[2] || '') && /^Move up/.test(m.focusRow || '')
+      && exp1.expanded === exp0.expanded && !exp1.menuMark, JSON.stringify({ reached, menu: m, before: exp0, open: exp1 }));
+  if (m.open) { await kb.press('Enter'); await menuGone(); await settle(); await f.waitForTimeout(120); }
+  let order = await f.evaluate(barOrder), foc = await key(), said = await live();
+  await t.check(`${at} FO-98 ${k}: Move up moves it one place up, keeps the focus on it and is announced`,
+    order.indexOf(k) === i0 - 1 && order.filter(x => x !== k).join() === order0.filter(x => x !== k).join() && foc.key === k && /moved up/i.test(said), JSON.stringify({ order, focus: foc.key, said }));
+  await kb.press('Alt+ArrowDown'); await settle(); await f.waitForTimeout(120);
+  order = await f.evaluate(barOrder); foc = await key(); said = await live();
+  await t.check(`${at} FO-98 ${k}: Alt+ArrowDown moves it back down, the focus kept`, order.join() === order0.join() && foc.key === k && /moved down/i.test(said), JSON.stringify({ order, focus: foc.key, said }));
+  // Ctrl+1..9 follow the order, as they always did
+  await kb.press('Alt+ArrowUp'); await settle();
+  const ctrlN = await f.evaluate((k) => [...document.querySelectorAll('.activity-bar .icon[data-target]')].findIndex(i => i.getAttribute('data-ab-id') === k) + 1, k);
+  if (ctrlN >= 1 && ctrlN <= 9) {
+    await kb.press(`Control+${ctrlN}`); await settle(); await f.waitForTimeout(250);
+    await agree(`Ctrl+${ctrlN} opens ${k}'s panel at its new place`, s => s[k].expanded === 'true');
+    await filesBack('Files again after Ctrl+N');
+  } else t.log(`${at} FO-98: ${k} is past Ctrl+9 (${ctrlN})`);
+  if (await reach(k)) { await kb.press('Alt+ArrowDown'); await settle(); }
+  order = await f.evaluate(barOrder);
+  await t.check(`${at} FO-98 ${k}: back at its own place`, order.join() === order0.join(), order.join());
+  // hide by the Menu key, then back from More, then back to its place. Windows Chrome sends the Menu key's own
+  // contextmenu on its keyup, to the menu row that has the focus by then: it must arrive cancelled (round 2, K-act8-4)
+  await f.evaluate(() => { window.__fo98ctx = []; if (!window.__fo98ctxOn) { window.__fo98ctxOn = true; window.addEventListener('contextmenu', (e) => { window.__fo98ctx.push({ prevented: e.defaultPrevented, on: String((e.target && e.target.className) || (e.target && e.target.tagName) || '').slice(0, 40) }); }); } });
+  reached = await reach(k);
+  if (reached) { await kb.press('ContextMenu'); await menuUp(); await f.waitForTimeout(150); }
+  const ctxSeen = await f.evaluate(() => window.__fo98ctx.slice());
+  t.log(`${at} FO-98: contextmenu events after the Menu key: ${JSON.stringify(ctxSeen)}`);
+  await t.check(`${at} FO-98 ${k}: no contextmenu event from the Menu key reaches the page uncancelled`, ctxSeen.every((e) => e.prevented), JSON.stringify(ctxSeen));
+  m = await f.evaluate(iconMenu);
+  if (m.open) { await kb.press('End'); await kb.press('Enter'); await menuGone(); await settle(); await f.waitForTimeout(120); }
+  order = await f.evaluate(barOrder); foc = await key(); said = await live();
+  const nextKey = visible0[visible0.indexOf(k) + 1] || visible0[visible0.indexOf(k) - 1];
+  const empty = await f.evaluate(() => document.getElementById('abMoreBtn').getAttribute('data-empty'));
+  await t.check(`${at} FO-98 ${k}: the Menu key's menu hides it in More, the focus goes to the next icon and it is announced`,
+    reached && m.open && !order.includes(k) && empty === '0' && foc.key === nextKey && /hidden in More/i.test(said), JSON.stringify({ menu: m.rows, order, empty, focus: foc.key, want: nextKey, said }));
+  if (!order.includes(k) && await reach('more')) {
+    await kb.press('ArrowDown');
+    await f.waitForFunction(() => { const mm = document.querySelector('.pmr-menu[data-pmr-menu="d-ab-more"]'); return !!mm && mm.contains(document.activeElement); }, null, { timeout: 2000 }).catch(() => {});
+    await kb.press('Enter'); await settle(); await f.waitForTimeout(300);
+  }
+  order = await f.evaluate(barOrder);
+  await t.check(`${at} FO-98 ${k}: More's menu puts it back, at the end of the bar`, order[order.length - 2] === k && order[order.length - 1] === 'more', order.join());
+  if (await reach(k)) for (let n = 0; n < order0.length && (await f.evaluate(barOrder)).indexOf(k) > i0; n++) { await kb.press('Alt+ArrowUp'); await settle(1); }
+  order = await f.evaluate(barOrder); foc = await key();
+  await t.check(`${at} FO-98 ${k}: Alt+ArrowUp walks it back to its own place, the focus on it all the way`, order.join() === order0.join() && foc.key === k, JSON.stringify({ order, focus: foc.key }));
+  // a right click opens the same menu at the pointer; the first icon's Move up is disabled
+  const fb = await f.locator('#activityBar > .icon[data-ab-id="files"]').boundingBox();
+  if (fb) {
+    await t.page.mouse.click(off.x + fb.x + fb.width / 2, off.y + fb.y + fb.height / 2, { button: 'right' });
+    await f.waitForFunction(() => !!document.querySelector('.pmr-menu[data-pmr-menu="d-ab-icon"]'), null, { timeout: 2000 }).catch(() => {});
+    m = await f.evaluate(iconMenu);
+    const fx = (await f.evaluate(openTruth)).files;
+    await t.check(`${at} FO-98: a right click on Files opens its menu, and Files' aria-expanded is still its panel's`, m.open && m.rows.length === 3 && (fx.expanded === 'true') === !!fx.open && !fx.menuMark, JSON.stringify({ menu: m, files: fx }));
+    await kb.press('Escape'); await menuGone(); await rest();
+  }
+  const first = (await f.evaluate(barOrder))[0];
+  if (await reach(first)) { await kb.press('Shift+F10'); await menuUp(); }
+  m = await f.evaluate(iconMenu);
+  if (m.open) { await kb.press('Escape'); await menuGone(); }
+  foc = await key();
+  await t.check(`${at} FO-98 ${first} (first): Move up is disabled, Escape gives the focus back to the icon`, m.open && /^Move up.*\(disabled\)$/.test(m.rows[0] || '') && !/disabled/.test(m.rows[1] || '') && foc.key === first, JSON.stringify({ menu: m, focus: foc.key }));
+  if (!full) return;
+
+  // NieR: the focused row is an ink bar; its glyph must stand off it (the hover tags' ignite drew it in the bar's own ink)
+  for (const look of ['nier-light', 'nier-dark']) {
+    await t.app.look(look);
+    await f.waitForFunction(() => !document.getElementById('o55np-reboot'), null, { timeout: 15000 }).catch(() => {});
+    if (await reach(k)) { await kb.press('Shift+F10'); await menuUp(); await f.waitForTimeout(250); }
+    const g = await f.evaluate(() => {
+      const row = document.activeElement, svg = row && row.closest && row.closest('.pmr-menu') && row.querySelector('.pmr-mi-ico svg');
+      if (!svg) return null;
+      const rgb = (c) => (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+      const L = ([r, gg, b]) => { const f = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }; return 0.2126 * f(r) + 0.7152 * f(gg) + 0.0722 * f(b); };
+      const part = [...svg.querySelectorAll('path, line, polyline, circle, rect')].find((e) => getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden') || svg;
+      const st = rgb(getComputedStyle(part).stroke), bg = rgb(getComputedStyle(row).backgroundColor), a = L(st), c = L(bg);
+      return { row: row.textContent.trim(), stroke: st.join(), bg: bg.join(), ratio: +((Math.max(a, c) + 0.05) / (Math.min(a, c) + 0.05)).toFixed(2) };
+    });
+    await t.check(`${at} FO-98 ${look}: the focused menu row's glyph stands at 3:1 or more on its ink bar`, !!g && g.ratio >= 3, JSON.stringify(g));
+    await kb.press('Escape'); await menuGone();
+  }
+  await t.app.look('basic-dark');
+
+  // the shell's own menu and open state, the rail skin unmounted (the review copy's Original rail)
+  const swapped = await f.evaluate(() => { try { PMR.host.setConcept('current', { force: true }); return !document.documentElement.hasAttribute('data-rail-skin'); } catch (e) { return false; } });
+  if (!swapped) { t.log(`${at} FO-98: the rail skin could not be unmounted here; the shell's own menu is not judged`); return; }
+  await settle(6);
+  await agree('the rail skin unmounted, at rest');
+  reached = await reach(k);
+  if (reached) { await kb.press('Shift+F10'); await menuUp(); }
+  m = await f.evaluate(iconMenu);
+  await t.check(`${at} FO-98 ${k}, no rail skin: Shift+F10 opens the shell's own menu with the focus on its first row`, reached && m.open && m.kind === 'shell' && m.role === 'menu' && m.rows.length === 3 && /^Move up/.test(m.focusRow || ''), JSON.stringify(m));
+  if (m.open) { await kb.press('ArrowDown'); await kb.press('Enter'); await menuGone(); await settle(); }
+  order = await f.evaluate(barOrder); foc = await key();
+  await t.check(`${at} FO-98 ${k}, no rail skin: ArrowDown and Enter on Move down move it, the focus on it`, order.indexOf(k) === i0 + 1 && foc.key === k, JSON.stringify({ order, focus: foc.key }));
+  if (foc.key === k) { await kb.press('Shift+F10'); await menuUp(); await kb.press('Escape'); await menuGone(); }
+  foc = await key();
+  await t.check(`${at} FO-98 ${k}, no rail skin: Escape closes the shell's menu and gives the focus back to the icon`, foc.key === k && !(await f.evaluate(iconMenu)).open, foc.key);
+  await kb.press('Alt+ArrowUp'); await settle();
+  order = await f.evaluate(barOrder);
+  await t.check(`${at} FO-98 ${k}, no rail skin: Alt+ArrowUp puts it back`, order.join() === order0.join(), order.join());
+  if (await reach('search')) { await kb.press('Enter'); await agree('no rail skin, after Enter opens Search', s => s.search.expanded === 'true'); }
+  if (await reach('files')) { await kb.press('Enter'); await agree('no rail skin, after Enter opens Files', s => s.files.expanded === 'true'); }
+  await f.evaluate(() => PMR.host.setConcept('d', { force: true }));
+  await settle(6);
+  await agree('the rail skin mounted again');
+}
+
 const SIZES = [[1920, 1100], [1390, 860], [1280, 500], [1024, 768], [740, 900]];
 
 async function run(t, w, h) {
@@ -176,6 +455,8 @@ async function run(t, w, h) {
   const sentinel = async (sel, where = 'before') => { await f.evaluate(placeSentinel, [sel, where]); await f.locator('#fo96-sentinel').focus(); };
   const fe = surface === 'sandbox' ? await f.frameElement() : null, off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
   const rest = () => t.page.mouse.move(off.x + w - 30, off.y + h - 30);   /* the pointer away from the bar */
+  const fo98ctx = { at, kb, key, sentinel, rest, full, off };
+  if (t.args.fo98 === 'only') { await fo98(t, f, fo98ctx); await f.evaluate(() => document.getElementById('fo96-sentinel')?.remove()); return; }
 
   // 1. Tab from just before the bar walks every visible control in order, then leaves; Shift+Tab walks back.
   const controls = await f.evaluate(railControls);
@@ -191,6 +472,11 @@ async function run(t, w, h) {
   const back = [];
   for (let i = 0; i < controls.length; i++) { await kb.press('Shift+Tab'); back.push((await key()).key); }
   await t.check(`${at}: Shift+Tab walks the bar back`, JSON.stringify(back) === JSON.stringify(controls.map(c => c.key).reverse()), back.join(' '));
+  // ...and at rest, with the focus off the bar, every control of the collapsed rail is on screen (K-F96c-2)
+  await f.evaluate(placeSentinel, ['#activityBar', 'before']); await f.evaluate(() => document.getElementById('fo96-sentinel').focus({ preventScroll: true })); await frames(f, 2);
+  const seen1 = await f.evaluate(railAtRest);
+  t.log(`${at} at rest ${JSON.stringify(seen1)}`);
+  await t.check(`${at}: at rest every control of the collapsed rail is on screen`, !!seen1 && seen1.unseen.length === 0 && seen1.below.length === 0, JSON.stringify(seen1));
 
   // The painted mark on a control reached by a key. The control is reached by keys first, so the bar scrolls as it
   // will; the focus then steps to the sentinel without scrolling, the rest is captured, and a real Tab from the control
@@ -234,7 +520,14 @@ async function run(t, w, h) {
       const step = () => { const now = r ? [...r.children].map(i => i.style.transform + getComputedStyle(i).translate).join('|') : ''; still = now === last ? still + 1 : 0; last = now;
         if (still >= 3 || performance.now() - t0 > 1500) done(); else requestAnimationFrame(step); }; requestAnimationFrame(step); }));
     const now = await key();
-    const r1 = await t.pixels(region);
+    let r1 = await t.pixels(region);
+    // a read of NieR's brackets taken while one corner was still on its way in (K-F96c-4, a false stop: tl 0, bl 8 once,
+    // passing on a rerun): read once more after 500 ms, the focus unmoved. A corner still short then is a real fault.
+    if (b.brackets && !Object.values(corners(r0, r1, b.item, region.x - off.x, region.y - off.y)).every(n => n >= 6)) {
+      t.log(`${target}: NieR's brackets read short ${JSON.stringify(corners(r0, r1, b.item, region.x - off.x, region.y - off.y))}; read again after 500 ms`);
+      await f.waitForTimeout(500);
+      if ((await key()).key === target) r1 = await t.pixels(region);
+    }
     // the item, not its tile, which a focused tile's own style may move by a fraction (Glass's press scale is lifted)
     const moved = await f.evaluate(([k, t0]) => { const el = k === 'activityBarToggle' ? document.getElementById(k) : document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`); const q = el.getBoundingClientRect(); return Math.abs(q.x - t0.x) + Math.abs(q.y - t0.y) > 0.5; }, [target, b.item]);
     const ox = region.x - off.x, oy = region.y - off.y;
@@ -456,6 +749,9 @@ async function run(t, w, h) {
     await f.evaluate(() => document.getElementById('fo96-sentinel')?.remove());
   } else await f.evaluate(() => PMW.chatCol.show());   /* Chat lit, as at 1920 */
 
+  // 5b. FO-98: the open state, and reorder and hide by keys (above).
+  if (t.args.fo98 !== 'off') { await fo98(t, f, fo98ctx); await f.evaluate(() => PMW.chatCol.show()); }
+
   // 6. The painted focus mark in every look, on the two items lit by default (Chat, while the chat column shows, and
   // Files, the open panel; F96-1), an unlit item (Search) and More; then with the bar's names shown, on lit Files,
   // Search and Pipelines (its p is the bar's lowest letter), none of whose letters may be crossed or touched. In
@@ -499,10 +795,88 @@ async function run(t, w, h) {
       actsRead.length >= 3 && actsRead.every(ok), JSON.stringify(acts.map(a => ({ after: a.after, ...brief(a) }))));
     await t.check(`${at} ${look}: the lens never carries the mark away from the focused item when Enter changes the panel`, !!lens && lens.away === 0, JSON.stringify(lens));
     await rest();
+    // the collapsed bar at rest, focus off it: every control on screen (K-F96c-2)
+    await f.evaluate(placeSentinel, ['#activityBar', 'before']); await focusQuiet(null); await frames(f, 2);
+    const seen6 = await f.evaluate(railAtRest);
+    t.log(`${at} ${look} at rest ${JSON.stringify(seen6)}`);
+    await t.check(`${at} ${look}: at rest every control of the collapsed rail is on screen`, !!seen6 && seen6.unseen.length === 0 && seen6.below.length === 0, JSON.stringify(seen6));
+    // Reduced Motion, a panel shortcut with the key focus kept on the open panel's icon (K-F96d-1), and in motion a click
+    // on that icon. In Glass the lens
+    // carries the mark on the open panel's icon; Ctrl+2 opens another panel and the lens jumps there in one step, and
+    // Ctrl+1 brings it back. Every frame for 900 ms from each key is read after layout, just before paint (a
+    // ResizeObserver callback): the key-focused icon must have a mark in each (its own outline, or the flagged lens
+    // painted at rest on it), and no flagged lens may be away from it (F96d-1: one frame with neither on 981463667f, the
+    // lens and its ring already on Search). Reduced Motion is the app's own setting (data-motion="reduced", as Settings
+    // sets it) and the media query, so both surfaces take it; both are put back after.
+    if (/^glass-/.test(look)) {
+      // started (and awaited) before the key is sent, so no frame after it is missed; read back once it has run ms
+      const frameRead = ms => f.evaluate(ms => {
+        const P = window.__fo96f = { frames: 0, none: 0, away: 0, at: [], done: false }, t0 = performance.now(), probe = document.createElement('div');
+        Object.assign(probe.style, { position: 'fixed', left: '0', top: '0', width: '1px', height: '1px', opacity: '0', pointerEvents: 'none' });
+        document.body.appendChild(probe);
+        const ro = new ResizeObserver(() => {
+          const act = document.activeElement;
+          if (!act || !act.matches || !act.matches('#activityBar .icon') || !act.matches(':focus-visible')) return;
+          P.frames++;
+          const sym = act.querySelector('.symbol') || act, o = getComputedStyle(sym), b = sym.getBoundingClientRect();
+          const own = o.outlineStyle !== 'none' && parseFloat(o.outlineWidth) >= 2;
+          const L = [...document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]')].find(x => { const c = getComputedStyle(x); return c.display !== 'none' && parseFloat(c.opacity) > 0.5; });
+          let onLens = false;
+          if (L) { const a = L.getBoundingClientRect(); onLens = Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 3 && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 3; if (!onLens) P.away++; }
+          if (!own && !onLens) { P.none++; P.at.push(Math.round(performance.now() - t0)); }
+        });
+        ro.observe(probe);
+        let flip = false;
+        const step = () => { flip = !flip; probe.style.width = flip ? '2px' : '1px'; if (performance.now() - t0 < ms) requestAnimationFrame(step); else { ro.disconnect(); probe.remove(); P.done = true; } };
+        requestAnimationFrame(step);
+      }, ms);
+      // the side panel on screen (below 1920 it lies over the page and can be folded away while it keeps its open state)
+      const shown = () => f.evaluate(() => { const s = document.getElementById('sidePanelSlot'); return !!s && s.getClientRects().length > 0 && getComputedStyle(s).display !== 'none'; });
+      const was = await f.evaluate(() => { const r = document.documentElement, w = r.getAttribute('data-motion'); r.setAttribute('data-motion', 'reduced'); return w; });
+      await t.page.emulateMedia({ reducedMotion: 'reduce' });
+      if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+      if (!(await shown()) && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+      const reached = await tabTo('files');
+      await f.waitForTimeout(1600);
+      const pre = await f.evaluate(() => !!document.querySelector('#activityBar .icon[data-ab-id="files"][data-lg-focus]'));
+      const reads = [];
+      for (const [k, label] of [['Control+2', 'Ctrl+2, the lens leaves it'], ['Control+1', 'Ctrl+1, the lens comes back']]) {
+        await frameRead(900); await kb.press(k);
+        await f.waitForFunction(() => window.__fo96f && window.__fo96f.done, null, { timeout: 5000 }).catch(() => {});
+        const r = await f.evaluate(() => { const P = window.__fo96f; return { frames: P.frames, none: P.none, away: P.away, at: P.at.slice(0, 4), done: P.done }; });
+        reads.push({ key: label, ...r }); await f.waitForTimeout(300);
+      }
+      await f.evaluate(w => { const r = document.documentElement; if (w === null) r.removeAttribute('data-motion'); else r.setAttribute('data-motion', w); }, was);
+      await t.page.emulateMedia({ reducedMotion: 'no-preference' });
+      if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+      t.log(`${at} ${look} Reduced Motion, panel shortcuts with the focus kept on Files: lens carried the mark before ${pre}, ${JSON.stringify(reads)}`);
+      await t.check(`${at} ${look}: in Reduced Motion, Ctrl+2 and Ctrl+1 with the key focus kept on the open panel's icon leave it a mark in every frame, and no flagged lens away from it`,
+        reached && pre && reads.every(r => r.done && r.frames > 0 && r.none === 0 && r.away === 0), JSON.stringify({ reached, pre, reads }));
+      // ...and in motion, a real click on the key-focused open icon, with no key in the bar: the panel closes (at 1920) or
+      // folds away (below it, where the panel lies over the page and keeps its open state), and the lens hides in one
+      // step. 981463667f left one frame with no mark there. The panel is shown again after, by Enter.
+      if (!(await shown()) && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+      const reachedC = await tabTo('files');
+      await f.waitForTimeout(1600);
+      const preC = await f.evaluate(() => !!document.querySelector('#activityBar .icon[data-ab-id="files"][data-lg-focus]'));
+      await frameRead(900); await f.locator('#activityBar .icon[data-ab-id="files"]').click(); await rest();
+      await f.waitForFunction(() => window.__fo96f && window.__fo96f.done, null, { timeout: 5000 }).catch(() => {});
+      const click = await f.evaluate(() => { const P = window.__fo96f; return { frames: P.frames, none: P.none, away: P.away, at: P.at.slice(0, 4), done: P.done }; });
+      const closed = !(await shown());
+      if (closed && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+      if (!(await shown()) && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+      t.log(`${at} ${look} a click on the key-focused open Files: lens carried the mark before ${preC}, panel gone ${closed}, ${JSON.stringify(click)}`);
+      await t.check(`${at} ${look}: a real click on the key-focused open panel's icon leaves it a mark in every frame as the panel goes and the lens hides`,
+        reachedC && preC && click.done && click.frames > 0 && click.none === 0 && click.away === 0 && closed, JSON.stringify({ reachedC, preC, closed, click }));
+    }
     // the bar with its names shown (the toggle)
     await f.evaluate(() => document.getElementById('activityBarToggle').click());
     await f.waitForFunction(() => !document.getElementById('activityBar').classList.contains('collapsed'), null, { timeout: 5000 }).catch(() => {});
     await f.waitForTimeout(900);
+    await f.evaluate(placeSentinel, ['#activityBar', 'before']); await focusQuiet(null); await frames(f, 2);
+    const seenW = await f.evaluate(railAtRest);
+    t.log(`${at} ${look} names shown, at rest ${JSON.stringify(seenW)}`);
+    await t.check(`${at} ${look}, names shown: at rest every rail control is on screen, or the bar scrolls to it`, !!seenW && seenW.unseen.length === 0, JSON.stringify(seenW));
     // Chat (the first item, K-F96b-2), lit Files, Search and Pipelines (its p is the bar's lowest letter)
     const wide = [await painted('chat'), await painted('files'), await painted('search'), await painted('repository_automation')];
     t.log(`${at} ${look} names shown, marks ${JSON.stringify(wide.map(brief))}`);
@@ -518,6 +892,33 @@ async function run(t, w, h) {
     if (t.args.crops) {
       await sentinel('#activityBar'); await byTab('files')(); await f.waitForTimeout(450);
       await t.crop(`${at}-files-${surface}-${look}`, f.locator('#activityBar'), `${at} ${look}: lit Files with the key focus mark`);
+    }
+    // A family change with the key focus kept on the open panel's icon (K-F96c-1). In Glass the lens carries the mark;
+    // in the look it changes to (Basic, then Retro, each from this Glass look) the icon draws its own at once, with no
+    // focus flag left behind (F96c-1). The change is made with the rail idle (1.6 s on the icon: no sync of the lens
+    // still queued, which on b622109459 could clear the flag by chance). Last in the look, as the next look is set by
+    // the loop.
+    if (/^glass-/.test(look)) {
+      const flags = () => f.evaluate(() => { const i = document.querySelector('#activityBar .icon[data-ab-id="files"]'), L = document.querySelector('.lg-lens[data-lg-for="rail-icons"]');
+        return { theme: document.documentElement.getAttribute('data-theme'), iconFlag: !!i && i.hasAttribute('data-lg-focus'), lensFlag: !!L && L.hasAttribute('data-lg-focus'), keyFocus: !!i && document.activeElement === i && i.matches(':focus-visible') }; });
+      for (const fam of ['basic', 'retro']) {
+        if (fam !== 'basic') {
+          await t.app.look(look);
+          await f.waitForFunction(() => !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.(), null, { timeout: 20000 }).catch(() => {});
+          await frames(f, 4); await rest();
+        }
+        if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
+        const reached = await tabTo('files');
+        await f.waitForTimeout(1600);
+        const pre = await flags();
+        await f.evaluate(fam => PM_THEME.setFamily(fam, { persist: false }), fam);
+        await f.waitForFunction(fam => (document.documentElement.getAttribute('data-theme') || '').startsWith(fam + '-') && !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.(), fam, { timeout: 20000 }).catch(() => {});
+        await frames(f, 4);
+        const post = await flags(), r = await markNow('files');
+        t.log(`${at} ${look} -> ${fam} with the focus kept: before ${JSON.stringify(pre)}, after ${JSON.stringify(post)}, mark ${JSON.stringify(brief(r))}`);
+        await t.check(`${at} ${look}: a change to ${fam} with the key focus kept on the open panel's icon leaves it its own mark at 3:1 on every side and no focus flag`,
+          reached && pre.iconFlag && pre.lensFlag && post.keyFocus && !post.iconFlag && !post.lensFlag && !r.skipped && markOk(r), JSON.stringify({ pre, post, mark: brief(r) }));
+      }
     }
   }
   await f.evaluate(() => document.getElementById('fo96-sentinel')?.remove());

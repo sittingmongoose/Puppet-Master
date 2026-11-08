@@ -1452,11 +1452,12 @@
      rest on it, the lens carries the mark: data-lg-focus on the lens and on the icon (the rail skin, concept D
      80-bar.src.css, draws it on the lens and stands the icon's own mark down). Otherwise neither carries the flag and
      the icon shows its own mark. Kept in step whenever the rail's lens is synced (a panel opening, closing or changing
-     hides, shows or moves it: F96b-1), on focus moves and keys in the bar (a key turns :focus-visible on for a
-     mouse-focused icon with no focusin), and, while the lens travels to the focused icon, each frame until it arrives,
-     so the mark never sits on the item the focus has left (F96b-2). "Painted" is read from the computed opacity, not
-     from display: the lens is hidden by opacity. */
-  var railFocusQ = 0, railTravelUntil = 0;
+     hides, shows or moves it: F96b-1; where it jumps or hides in one step, in that same sync, before the frame paints:
+     F96d-1), on focus moves and keys in the bar (a key turns :focus-visible on for a
+     mouse-focused icon with no focusin), and, while the lens travels to the focused icon or fades in on it, once more
+     when that motion ends, so the mark never sits on the item the focus has left (F96b-2). "Painted" is read from the
+     computed opacity, not from display: the lens is hidden by opacity. */
+  var railFocusQ = 0, railAwaited = typeof WeakSet === 'function' ? new WeakSet() : null, railDueAnim = null, railDueT = 0, railDueTries = 0;
   function railLensAt(lens, icon) {
     var s = icon.querySelector('.symbol') || icon, a = lens.getBoundingClientRect(), b = s.getBoundingClientRect();
     return Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 2 && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 2;
@@ -1465,7 +1466,8 @@
     railFocusQ = 0;
     var bar = document.getElementById('activityBar');
     if (!bar) return;
-    var L = typeof lenses !== 'undefined' && lenses ? lenses.get(bar) : null, act = document.activeElement;
+    /* outside Glass the rail has no lens of its own (an adopting look keeps its lit icon), so no flag stays (F96c-1) */
+    var L = isGlass() && typeof lenses !== 'undefined' && lenses ? lenses.get(bar) : null, act = document.activeElement;
     /* any rail lens still flagged counts, the live one or one left from an earlier look (outside Glass the rail has none) */
     var flagged = bar.querySelector('.icon[data-lg-focus]') || document.querySelector('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]');
     var cur = null, on = false, wait = false;
@@ -1476,18 +1478,41 @@
     if (!cur && !flagged) return;
     if (cur && L && L.lens && L.lens.isConnected && L.rect && !(typeof hiddenLenses !== 'undefined' && hiddenLenses.has(L))) {
       var cs = getComputedStyle(L.lens);
-      if (cs.display !== 'none' && parseFloat(cs.opacity) > 0.5) { if (railLensAt(L.lens, cur)) on = true; else wait = true; }
+      if (cs.display !== 'none') { if (parseFloat(cs.opacity) > 0.5 && railLensAt(L.lens, cur)) on = true; else wait = true; }
     }
     bar.querySelectorAll('.icon[data-lg-focus]').forEach(function (i) { if (!on || i !== cur) i.removeAttribute('data-lg-focus'); });
     document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]').forEach(function (x) { if (!on || !L || x !== L.lens) x.removeAttribute('data-lg-focus'); });
     if (on && L && L.lens) L.lens.setAttribute('data-lg-focus', '');
     if (on && !cur.hasAttribute('data-lg-focus')) cur.setAttribute('data-lg-focus', '');
-    /* the lens is on its way to the focused icon: look again next frame, for as long as a travel lasts */
-    if (wait) { if (!railTravelUntil) railTravelUntil = performance.now() + 1500; if (performance.now() < railTravelUntil) queueRailFocus(); else railTravelUntil = 0; }
-    else railTravelUntil = 0;
+    /* the lens is on its way to the focused icon, or fading in on it. No poll (F96c-3). A travel() records its path
+       (L.path): one timer to the frame from which that path keeps the lens within the 2 px of the icon, as its spring's
+       last wobble takes another 60-100 ms to end; the frame's clock and the path's can be a frame apart, so a read there
+       that finds the lens still short looks again on each of at most three frames. Otherwise, and as the fallback, look
+       again when the lens's own motion ends (travel(), a ride on its strip's entrance, an arrival or reduced-motion fade:
+       every move of the lens that is not a jump is one of its Web Animations), in that frame, before it paints. A lens at
+       rest somewhere else waits for a strip sync to move it, and syncStripNow queues this itself; an endless animation (a
+       step look's hop hide, never in Glass) is not waited on, and the icon keeps its own mark meanwhile. */
+    var an = wait ? L.anim : null, T = an && L.path;
+    if (T && T.rects && T.rects.length && L.rect) {
+      if (an !== railDueAnim) {
+        var cx = L.rect.x + L.rect.w / 2, cy = L.rect.y + L.rect.h / 2, k = T.rects.length, q;
+        while (k > 0 && (q = T.rects[k - 1]) && Math.abs(q.x + q.w / 2 - cx) <= 1.5 && Math.abs(q.y + q.h / 2 - cy) <= 1.5) k--;
+        var due = k < T.rects.length ? T.rects[k].t : T.dur, ct = an.currentTime;
+        railDueAnim = an; railDueTries = 0; clearTimeout(railDueT);
+        railDueT = setTimeout(function () { railDueT = 0; queueRailFocus(); }, Math.max(0, due - (ct == null ? -17 : ct)));
+      } else if (!railDueT && railDueTries < 3) { railDueTries++; queueRailFocus(); }
+    }
+    if (wait && L.lens.getAnimations) L.lens.getAnimations().forEach(function (a) {
+      if (a.playState === 'finished' || (railAwaited && railAwaited.has(a))) return;
+      var end = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming().endTime : Infinity;
+      if (!isFinite(end) || !a.finished) return;
+      if (railAwaited) railAwaited.add(a);
+      a.finished.then(railFocusNow, railFocusNow);
+    });
   }
   function queueRailFocus() { if (!railFocusQ) railFocusQ = requestAnimationFrame(syncRailFocus); }
-  document.addEventListener('focusin', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) { railTravelUntil = 0; syncRailFocus(); } }, true);
+  function railFocusNow() { if (railFocusQ) { cancelAnimationFrame(railFocusQ); railFocusQ = 0; } syncRailFocus(); }
+  document.addEventListener('focusin', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) railFocusNow(); }, true);
   document.addEventListener('focusout', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) queueRailFocus(); }, true);
   document.addEventListener('keydown', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) queueRailFocus(); }, true);
   /* Every lens lives in one layer above the strips and the title bar (#lg-lenses), not inside them: from outside it sees
@@ -2145,7 +2170,12 @@
     });
   }
   function syncStripNow(cfg, strip, m) {
-    if (cfg.kind === 'lensIcon') queueRailFocus();   /* FO-96: the rail's lens may hide, show or move: re-read the focus flags */
+    /* FO-96: the rail's lens may hide, show or move: re-read the focus flags. A move along a path is read next frame
+       (and timed by syncRailFocus); a jump or a one-step hide is read in this same call, before the frame paints, so the
+       lens never shows the mark on an icon the key focus is not on, nor leaves the focused icon unmarked (F96d-1:
+       Reduced Motion, Ctrl+2 with the focus on the open panel's icon, 1 or 2 frames with no mark). */
+    var rail = cfg.kind === 'lensIcon';
+    if (rail) queueRailFocus();
     if (!m && cvSkipped(strip)) { cvSkip(strip); return; }
     var L = lensFor(strip, cfg), P0 = L.pending;
     followStrip(strip, cfg);
@@ -2161,7 +2191,7 @@
     if (L.pending && !L.pending.el.isConnected) { pressMark(L.pending, false); L.pending = null; }
     if (P0 && P0 !== L.pending) pressMark(P0, false);
     var pre = m && m.target === target ? m : null;
-    if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
+    if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { var shown = L.lens.style.opacity !== '0'; stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (shown) L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); if (rail && shown) railFocusNow(); return; }
     hiddenLenses.delete(L);
     if (L.scroller && L.scroller.isConnected) {
       var out;
@@ -2170,7 +2200,7 @@
         var sr = L.scroller.getBoundingClientRect(), tr = boxRect(cfg.box ? (cfg.box(target).getBoundingClientRect ? cfg.box(target) : target) : target);
         out = tr.left < sr.left - 1 || tr.left + tr.width > sr.right + 1 || tr.top < sr.top - 1 || tr.top + tr.height > sr.bottom + 1;
       }
-      if (out) { stopLensTravel(L); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; return; }
+      if (out) { var was = L.lens.style.opacity !== '0'; stopLensTravel(L); if (was) L.lens.style.opacity = '0'; L.rect = null; if (rail && was) railFocusNow(); return; }
     }
     if (L.lens.style.opacity) L.lens.style.opacity = '';
     prewarmSoon(L, cfg, strip);
@@ -2178,7 +2208,7 @@
     if (!R) R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
     var A = L.rect;
     if (L.dragging) return;
-    if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); return; }
+    if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); if (rail) railFocusNow(); return; }
     var quiet = reduced();
     var still = A && (quiet ? A.x === R.x && A.y === R.y && A.w === R.w && A.h === R.h : Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5);
     if ((quiet && !L.reducedAnim) || !switchOn()) stopLensTravel(L);
@@ -2190,7 +2220,7 @@
     if (still) return;
     if (!A || quiet || !switchOn()) {
       stopLensTravel(L);
-      if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } ownRest(L); }; }
+      if (A && quiet) { var an = L.lens.animate([{ opacity: 0.3 }, { opacity: 1 }], { duration: 140 }); L.anim = an; L.path = null; L.reducedAnim = true; an.onfinish = function () { if (L.anim === an) { L.anim = null; L.reducedAnim = false; } ownRest(L); }; }
       setLensBox(L, R); L.tgt = target;
       /* a lens in the app-wide layer waits for its strip's entrance; one in its host's own layer (a page, a menu, a
          dialog) is part of that entrance already */
@@ -2199,6 +2229,9 @@
         else { if (L.layer === layer) arrive(L, target); ride(L, target); }
         settleCheck(L);
       }
+      /* a jump (Reduced Motion, or no switch motion) is read now; a first show in motion fades in by an arrival or ride
+         that a batched sync may attach later in this task, and is read as before, next frame and at its end */
+      if (rail && (A || quiet || !switchOn())) railFocusNow();
       return;
     }
     /* the destination moved by a pixel or two (the chosen label turned bold): a move in flight carries on, re-based;
@@ -2709,7 +2742,7 @@
     sheets.forEach(unpin);   /* the scroll has settled: anchored frost again, at the very spot it is pinned */
     if (root.hasAttribute('data-lg-demo-host') && document.getElementById('lg-demo-btn')) demo();
     applyWall();
-    if (!isGlass()) { unmountAll(switchLook); if (!switchLook) return; }
+    if (!isGlass()) { unmountAll(switchLook); if (!switchLook) { queueRailFocus(); return; } }
     else { syncSurfaces(scopes, sheets); ensureFrost(); }
     var covered = pageCovered(), todo = [];
     STRIPS.forEach(function (cfg) {
@@ -2718,7 +2751,7 @@
       });
       strips.forEach(function (s) { if (s.matches(cfg.sel) && found.indexOf(s) < 0) found.push(s); });
       /* the activity bar's icon lens is Glass's own rail design; an adopting look keeps its own lit icon there */
-      if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); return; }
+      if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); queueRailFocus(); return; }
       found.forEach(function (s) {
         /* (a shown chip is put out whatever its box says: a look change clears every lens's box for the next sync to place
            it again, and a screen that left in that same sync kept its chip on screen at full opacity until the screen was

@@ -44,7 +44,8 @@ function fileOpenFromRow(ctx) {
   // a single click previews and leaves focus in the tree (arrows keep walking it); a double click keeps and moves focus
   var r = PM_HOME.open({ kind: 'editor', path: path, mode: dbl ? 'keep' : 'preview', where: e && e.altKey ? 'panel' : 'auto',
     background: !!(e && (e.ctrlKey || e.metaKey)), focus: dbl });
-  var host = el && el.closest ? el.closest('#panel-files') : null;
+  // the tree marks the file a click opened; a Recent row marks nothing (FO-105: its mark stayed on, so marks piled up)
+  var host = el && el.closest && el.classList.contains('fm-row') ? el.closest('#panel-files') : null;
   if (host && r.ok) {
     host.querySelectorAll('.fm-row.active-file').forEach(function (row) { row.classList.remove('active-file'); });
     el.classList.add('active-file');
@@ -168,16 +169,23 @@ shims.fileContextMenu = function () {
   if (menuEl.parentNode !== doc.body) doc.body.appendChild(menuEl);
   menuEl.style.setProperty('z-index', '10070', 'important');
   menuEl.setAttribute('data-pm-home-body-portal', 'true');
-  var target = null;
+  var target = null, folderEl = null;
+  function note(m) { try { if (window.toast) window.toast(m); } catch (_) {} }
   /* the row comes from the menu's owner, for a right-click and for Shift+F10 or the Menu key alike (pm-ctx-open,
-     pm6-js-cozy-shelves.js openFor) (FO-93b). A tree row's data-path is the tree's own id. A Changed or Open item's full
-     path is matched in the project's file index and, where the index does not hold it (an untracked file), used as it
-     stands: it is already a full path. A Recent row's bare file name only counts once the index finds it. */
+     pm6-js-cozy-shelves.js openFor) (FO-93b). Every file row names its own full path in data-path (the tree's rows, and
+     the Changed, Open editors and Recent rows), used as it stands: an untracked file the index does not hold opens too.
+     Any other name only counts once the project's file index finds it, so text that is not a project path opens no
+     tab (FO-103). */
   menuEl.addEventListener('pm-ctx-open', function (e) {
     var row = e.detail || null, own = row && row.el && row.el.getAttribute && row.el.getAttribute('data-path');
-    var path = !row ? null : own ? row.path : row.path ? (resolveProjectPath(row.path) || row.path) : row.name ? resolveProjectPath(row.name) : null;
+    var name = row && (row.path || row.name), path = own || (name ? resolveProjectPath(name) : null);
     target = path || null;
     ctxRow = path ? { path: path, folder: !!row.folder } : null;
+    // a folder opens in the tree (FO-102): Open expands it, and the two ways that open an editor elsewhere are unavailable
+    folderEl = path && row.folder ? row.el : null;
+    menuEl.querySelectorAll('[data-pmw-open="panel"], [data-pmw-open="side"]').forEach(function (b) {
+      if (folderEl) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled');
+    });
   });
   if (!menuEl.querySelector('[data-pmw-open]')) {
     var rows = [
@@ -186,10 +194,21 @@ shims.fileContextMenu = function () {
       var b = h('div', { class: 'fm-ctx-item pmw-ctx-item', role: 'menuitem', tabindex: '-1', 'data-pmw-open': r[0], text: r[1] });
       b.addEventListener('click', function (e) {
         e.stopPropagation();
+        // an unavailable item says why and leaves the menu open, as the menu's other aria-disabled items do (their notes
+        // go where the demo router's do: window.toast)
+        if (b.getAttribute('aria-disabled') === 'true') { if (target) note(target + ' is a folder: Open expands it in the tree.'); return; }
         // close through the menu's owner, so its register of open menus stays true (FO-84c)
         if (window.PMCozeMenu) window.PMCozeMenu.close(menuEl);
         else { menuEl.classList.remove('open', 'show', 'visible'); menuEl.style.display = 'none'; }
         if (!target) return;
+        if (folderEl) {
+          // the tree's own expand, as ArrowRight on the folder does (pm6-js-cozy-shelves.js treeKeyboard)
+          // (a folder the tree lists without its files, under node_modules, has nothing to expand and says so)
+          var node = folderEl.closest && folderEl.closest('.fm-node');
+          if (!node || !node.querySelector(':scope > .fm-children')) note(target + ' is a folder; its files are not listed here.');
+          else if (!node.classList.contains('open') && window.__fmAnimate) { window.__fmAnimate(node, true); if (window.__fmRefreshCollapse) window.__fmRefreshCollapse(); }
+          return;
+        }
         PM_HOME.open({ kind: 'editor', path: target, mode: 'keep', where: r[0] === 'open' ? 'auto' : r[0] === 'panel' ? 'panel' : 'right' });
       });
       return b;
