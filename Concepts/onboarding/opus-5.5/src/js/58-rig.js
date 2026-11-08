@@ -509,9 +509,11 @@
     restPose(pr) {
       if (pr.state === 'out' && pr.restFit) return pr.restFit;
       const tg = this.propTarget(pr), tm = [pr.ties.reduce((m, t) => m + t[0], 0) / pr.ties.length, tg.tieY];
+      const preceding = [];
+      for (const [id, q] of this.props) { if (q.state !== 'out') preceding.push([id, q.spec]); if (q === pr) break; }
       const key = JSON.stringify([this.theme, this.layoutName, this.vis, this.lastScreen, this.spec.pip,
-        this.keepOff, this.pipAt, this.pipOff, this.pipBB,
-        Array.from(this.props, ([id, q]) => [id, q.state === 'out', q.spec])]);
+        this.reduced, !!O55.motion.lowResource, H.part('sway-and-physics'),
+        this.keepOff, this.pipAt, this.pipOff, this.pipBB, pr.bb, preceding]);
       if (pr.restFit && pr.restFit.key === key) return pr.restFit;
       const fit = this.fit(pr, [tg.ax, this.L.anchorY + tg.len], tg.sc, tm, true);
       pr.restBox = fit.box;
