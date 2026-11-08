@@ -111,10 +111,11 @@ const ONB = [
 async function goPage(t, f, name) {
 	if (name === 'Home') return;
 	if (name === 'Settings chapter') {
-		/* the first chapter with section tabs and a segmented choice on screen (not the Look chapter: it shows the saved
-		   look, not the one the run set) */
+		/* the first chapter with section tabs and a segmented choice on screen */
 		const got = await f.evaluate(async () => {
-			const links = [...document.querySelectorAll('#pm-settings-root .rail-scroll .domain-link')].filter((x) => !/look|appearance|theme/i.test(x.textContent)).slice(0, 8);
+			/* (the Look chapter last: it puts the saved look back, which the run then sets again) */
+			const all = [...document.querySelectorAll('#pm-settings-root .rail-scroll .domain-link')], look = (x) => /look|appearance|theme/i.test(x.textContent);
+			const links = all.filter((x) => !look(x)).slice(0, 6).concat(all.filter(look));
 			const shown = (e) => { if (!e) return false; const r = e.getBoundingClientRect(); return r.width > 1 && r.bottom > 0 && r.top < innerHeight; };
 			for (const d of links) {
 				d.click(); await new Promise((res) => setTimeout(res, 1300));
