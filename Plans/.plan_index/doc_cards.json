@@ -4453,7 +4453,7 @@
         "unsafe_url_guess",
         "xml_shape_drift"
       ],
-      "sha256": "ba238201c083e8cd894554e5bb2dbb21405e1a17516bdef03e3748f6e7228b5c",
+      "sha256": "6954e95c65f413a0f96024f71bd75e90099d1a70b654f84cce70ff2c40edb04e",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 106
@@ -5911,7 +5911,7 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 29203,
+      "line_count": 29204,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 334,
       "plan_unit_ids": [
@@ -6436,7 +6436,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "892c2e851cbb78ad26130b4f5a29821ad962a3dabfd6857b5a9fdfa1bf9fb875",
+      "sha256": "4582304615fa2cd350e079f51e7026094e25f42a079837a6520e1fbfad2f53c2",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 334
@@ -21585,7 +21585,7 @@
         "future Source Control worktree manager",
         "future worktree lock manager"
       ],
-      "line_count": 7615,
+      "line_count": 7619,
       "path": "Plans/WorktreeGitImprovement.md",
       "plan_unit_count": 85,
       "plan_unit_ids": [
@@ -21699,7 +21699,7 @@
         "worktree_panel_filter_drift",
         "worktree_row_presentation_drift"
       ],
-      "sha256": "10ccbef1e9553d413c32ff8c785c44888a5fc17179b74fc3e8ccb9bc09db826b",
+      "sha256": "8f6f195d59a21c68ead9e0aca263402ae6ff76bade604d167104f5d9e6709ce4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 85
@@ -21734,7 +21734,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-08T05:10:19Z",
+  "generated_at_utc": "2026-11-08T05:25:56Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
