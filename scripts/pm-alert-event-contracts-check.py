@@ -29,9 +29,12 @@ Draft202012Validator = domain.validator
 if str(ROOT / 'scripts') not in sys.path:
     sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_dg6a_table_profile as _profile_table  # noqa: E402
+import pm_dg6a_table_writer_policy as _writer_table  # noqa: E402
 
 _PROFILE_ROWS = [(name, guard.predicate) for name, guard in _profile_table.case(None).table.guards.items()]
 PROFILE_RECORDER = None
+_WRITER_ROWS = [(name, guard.predicate) for name, guard in _writer_table.case(None).table.guards.items()]
+WRITER_RECORDER = None
 
 def load(path):
     return domain.loads((ROOT / path).read_text())
@@ -388,10 +391,46 @@ def profile_cases(registry, fid, kind, group):
         assert actual == [code], (fid, name, actual)
     return 1 + len(cases)
 
+def writer_policy_observation(policy):
+    """The writer_policy table's FIELDS for one policy value, derived only."""
+    return {
+        'policy_is_replay_only': bool(policy == 'projector_replay_only'),
+        'policy_is_dedupe': bool(policy == 'dedupe_by_idempotency_key'),
+    }
+
+
 def writer_policy_errors(policy):
-    if policy == 'projector_replay_only':
-        return ['replay_only_not_appendable']
-    return [] if policy == 'dedupe_by_idempotency_key' else ['unsupported current writer policy']
+    """Refuses only through scripts/pm_dg6a_table_writer_policy.py rows."""
+    observed = writer_policy_observation(policy)
+    first = None
+    for name, predicate in _WRITER_ROWS:
+        code = predicate(observed, None)
+        if code is not None:
+            first = (name, code)
+            break
+    if WRITER_RECORDER is not None:
+        WRITER_RECORDER.append((copy.deepcopy(observed), first))
+    return [first[1]] if first else []
+
+
+def writer_policy_cases():
+    """One-defect writer-policy controls, through the complete guard.
+
+    The fixtures exercise only dedupe and replay-only; the unsupported and
+    wrong-type spellings below are the missing WP02 negatives.
+    """
+    cases = (
+        ('dedupe', 'dedupe_by_idempotency_key', []),
+        ('replay_only', 'projector_replay_only', ['replay_only_not_appendable']),
+        ('unknown', 'append_once', ['unsupported current writer policy']),
+        ('trailing_space', 'dedupe_by_idempotency_key ', ['unsupported current writer policy']),
+        ('wrong_type_list', ['dedupe_by_idempotency_key'], ['unsupported current writer policy']),
+        ('wrong_type_none', None, ['unsupported current writer policy']),
+    )
+    for name, policy, expected in cases:
+        actual = writer_policy_errors(policy)
+        assert actual == expected, (name, actual)
+    return len(cases)
 
 def producer_digest(record):
     domain.semantic_numbers(record['payload'])
@@ -1038,6 +1077,7 @@ def main():
         row = next(row for row in values['families'] if row['family_id'] == fid)
         check_schema(row['value_schema'])
         count += profile_cases(values, fid, 'redb', 'settings_and_layout')
+    count += writer_policy_cases()
     print(json.dumps({'status':'pass','cases':count,'families':1 if selected else 4,'admission':'ABSENT','native':'NOT_RUN','retention':'PENDING_RETENTION_DECISION'}))
 
 if __name__ == '__main__':

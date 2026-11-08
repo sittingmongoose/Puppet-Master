@@ -33,6 +33,7 @@ import pm_dg6a_table_storage_schema as storage_table  # noqa: E402
 import pm_dg6a_table_current_header as current_table  # noqa: E402
 import pm_dg6a_table_current_context as context_table  # noqa: E402
 import pm_dg6a_table_profile as profile_table  # noqa: E402
+import pm_dg6a_table_writer_policy as writer_table  # noqa: E402
 
 RETURN_SOURCE = 'return g.Case(table, check, context)'
 
@@ -242,12 +243,30 @@ def collect_profile():
     return controls, negatives, len(records)
 
 
+def collect_writer_policy():
+    """The checker's writer_policy_cases builder, as run by every alert suite."""
+    checker = load_checker('dg6a_alert_for_guard_tables_writer', 'pm-alert-event-contracts-check.py')
+    collected = []
+    checker.WRITER_RECORDER = collected
+    try:
+        count = checker.writer_policy_cases()
+    finally:
+        checker.WRITER_RECORDER = None
+    assert len(collected) == count, (len(collected), count)
+    names = ('dedupe', 'replay_only', 'unknown', 'trailing_space', 'wrong_type_list', 'wrong_type_none')
+    records = [('writer_policy/' + name, 'alert', observed, first, name)
+               for name, (observed, first) in zip(names, collected)]
+    controls, negatives = dedupe(records)
+    return controls, negatives, len(records)
+
+
 PHASES = {
     'decision_citation': (decision_table, 'scripts/pm_dg6a_table_decision_citation.py', collect_decision_citation),
     'storage_schema': (storage_table, 'scripts/pm_dg6a_table_storage_schema.py', collect_storage_schema),
     'current_header': (current_table, 'scripts/pm_dg6a_table_current_header.py', collect_current_header),
     'current_context': (context_table, 'scripts/pm_dg6a_table_current_context.py', collect_current_context),
     'profile': (profile_table, 'scripts/pm_dg6a_table_profile.py', collect_profile),
+    'writer_policy': (writer_table, 'scripts/pm_dg6a_table_writer_policy.py', collect_writer_policy),
 }
 
 
