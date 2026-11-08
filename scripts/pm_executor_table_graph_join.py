@@ -34,7 +34,7 @@ def GJ05_graph_id_join(value, context):
 
 
 def GJ06_graph_revision_join(value, context):
-    return 'installed graph join' if value['node_revision_type'] == 'int' and value['run_revision_type'] == 'int' and value['node_revision'] != value['run_revision'] else None
+    return 'installed graph join' if value['node_revision_type'] == 'int' and value['run_revision_type'] == 'int' and value['node_revision'] >= 1 and value['run_revision'] >= 1 and value['node_revision'] != value['run_revision'] else None
 
 
 def GJ07_request_join(value, context):
@@ -49,7 +49,7 @@ def case(value):
         g.Guard('GJ03_run_revision_type', g.Invariant('/records/run/body/workgraph_revision', 'is an integer'), 'installed graph join', GJ03_run_revision_type),
         g.Guard('GJ04_run_revision_min', g.Invariant('/records/run/body/workgraph_revision', 'an integer revision is at least 1'), 'installed graph join', GJ04_run_revision_min),
         g.Guard('GJ05_graph_id_join', g.Invariant('/records/node/body/workgraph_id', 'equals the run graph id'), 'installed graph join', GJ05_graph_id_join),
-        g.Guard('GJ06_graph_revision_join', g.Invariant('/records/node/body/workgraph_revision', 'equals the run graph revision'), 'installed graph join', GJ06_graph_revision_join),
+        g.Guard('GJ06_graph_revision_join', g.Invariant('/records/node/body/workgraph_revision', 'a valid node revision equals the valid run revision'), 'installed graph join', GJ06_graph_revision_join),
         g.Guard('GJ07_request_join', g.Invariant('/records/node/body/source_request_id', 'equals the operation source request'), 'materialization request join', GJ07_request_join),
     ])
 

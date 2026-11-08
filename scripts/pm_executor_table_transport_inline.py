@@ -18,14 +18,14 @@ def PT03_inline_join(value, context):
 
 
 def PT04_inline_limit(value, context):
-    return 'oversized_inline_payload' if value['raw_size'] > 16384 else None
+    return 'oversized_inline_payload' if value['inline_canonical'] == value['payload_canonical'] and value['raw_size'] > 16384 else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('PT03_inline_join', g.Invariant('/envelope/payload', 'the inline body equals the logical payload'), 'inline logical payload join', PT03_inline_join),
-        g.Guard('PT04_inline_limit', g.Invariant('/envelope/payload', 'the logical MessagePack body is at most 16384 bytes'), 'oversized_inline_payload', PT04_inline_limit),
+        g.Guard('PT04_inline_limit', g.Invariant('/envelope/payload', 'the joined logical MessagePack body is at most 16384 bytes'), 'oversized_inline_payload', PT04_inline_limit),
     ])
 
     def check(value):

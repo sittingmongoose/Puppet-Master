@@ -10,7 +10,7 @@ semantic CLI asserts that the factory requires its rows in table order.
 FIELDS names every observation the rows read; the checker passes no other.
 """
 import pm_guard_isolation as g
-FIELDS = ('inline_empty', 'ref_type', 'ref_keys', 'size_type', 'ref_size', 'raw_size', 'ref_media')
+FIELDS = ('inline_empty', 'ref_type', 'ref_keys', 'descriptor', 'size_type', 'ref_size', 'raw_size', 'ref_media')
 
 
 def PR01_inline_empty(value, context):
@@ -26,15 +26,15 @@ def PR03_descriptor_keys(value, context):
 
 
 def PR04_size_type(value, context):
-    return 'payload ref byte size' if value['size_type'] != 'int' else None
+    return 'payload ref byte size' if value['descriptor'] is True and value['size_type'] != 'int' else None
 
 
 def PR05_size_value(value, context):
-    return 'payload ref byte size' if value['size_type'] == 'int' and value['ref_size'] != value['raw_size'] else None
+    return 'payload ref byte size' if value['descriptor'] is True and value['size_type'] == 'int' and value['ref_size'] != value['raw_size'] else None
 
 
 def PR06_media_type(value, context):
-    return 'payload ref media type' if value['ref_media'] != 'application/msgpack' else None
+    return 'payload ref media type' if value['descriptor'] is True and value['ref_media'] != 'application/msgpack' else None
 
 
 def case(value):
@@ -43,9 +43,9 @@ def case(value):
         g.Guard('PR01_inline_empty', g.Invariant('/envelope/payload', 'a referenced body leaves the inline payload empty'), 'referenced payload cannot remain inline', PR01_inline_empty),
         g.Guard('PR02_descriptor_object', g.Invariant('/envelope/payload_ref', 'is an object'), 'resolved SP-337 descriptor', PR02_descriptor_object),
         g.Guard('PR03_descriptor_keys', g.Invariant('/envelope/payload_ref', 'has exactly blake3, byte_size and media_type'), 'resolved SP-337 descriptor', PR03_descriptor_keys),
-        g.Guard('PR04_size_type', g.Invariant('/envelope/payload_ref/byte_size', 'is an integer'), 'payload ref byte size', PR04_size_type),
+        g.Guard('PR04_size_type', g.Invariant('/envelope/payload_ref/byte_size', 'a resolved descriptor size is an integer'), 'payload ref byte size', PR04_size_type),
         g.Guard('PR05_size_value', g.Invariant('/envelope/payload_ref/byte_size', 'an integer size equals the logical body length'), 'payload ref byte size', PR05_size_value),
-        g.Guard('PR06_media_type', g.Invariant('/envelope/payload_ref/media_type', 'is application/msgpack'), 'payload ref media type', PR06_media_type),
+        g.Guard('PR06_media_type', g.Invariant('/envelope/payload_ref/media_type', 'a resolved descriptor names application/msgpack'), 'payload ref media type', PR06_media_type),
     ])
 
     def check(value):

@@ -26,7 +26,7 @@ def SX10_restore_safe_point(value, context):
 
 
 def SX11_restore_anchor(value, context):
-    return 'missing restore anchor' if value['family'] == 'node.blocked' and value['restore_required'] is True and value['anchor_present'] is not True else None
+    return 'missing restore anchor' if value['family'] == 'node.blocked' and value['restore_required'] is True and value['safe_point_present'] is True and value['anchor_present'] is not True else None
 
 
 def case(value):

@@ -34,7 +34,7 @@ def PK05_pack_size_bytes(value, context):
 
 
 def PK06_pack_size_ref(value, context):
-    return 'payload pack byte size' if value['pack_size_type'] == 'int' and value['pack_size'] != value['ref_size'] else None
+    return 'payload pack byte size' if value['hex_decodes'] is True and value['pack_size_type'] == 'int' and value['stored_size'] == value['pack_size'] and value['pack_size'] != value['ref_size'] else None
 
 
 def case(value):
@@ -45,7 +45,7 @@ def case(value):
         g.Guard('PK03_blake3', g.Invariant('/payload_packs/*', 'BLAKE3 of the pack bytes equals the descriptor'), 'payload pack BLAKE3', PK03_blake3),
         g.Guard('PK04_pack_size_type', g.Invariant('/payload_packs/*/byte_size', 'is an integer'), 'payload pack byte size', PK04_pack_size_type),
         g.Guard('PK05_pack_size_bytes', g.Invariant('/payload_packs/*/byte_size', 'an integer pack size equals the pack byte length'), 'payload pack byte size', PK05_pack_size_bytes),
-        g.Guard('PK06_pack_size_ref', g.Invariant('/payload_packs/*/byte_size', 'an integer pack size equals the descriptor size'), 'payload pack byte size', PK06_pack_size_ref),
+        g.Guard('PK06_pack_size_ref', g.Invariant('/payload_packs/*/byte_size', 'a pack size equal to its byte length equals the descriptor size'), 'payload pack byte size', PK06_pack_size_ref),
     ])
 
     def check(value):

@@ -10,7 +10,7 @@ semantic CLI asserts that the factory requires its rows in table order.
 FIELDS names every observation the rows read; the checker passes no other.
 """
 import pm_guard_isolation as g
-FIELDS = ('generation_type', 'ceiling_type', 'generation', 'ceiling', 'generation_canonical', 'normalized_canonical', 'payload_generation')
+FIELDS = ('generation_type', 'ceiling_type', 'generation', 'ceiling', 'generation_canonical', 'normalized_canonical')
 
 
 def RM05_generation_type(value, context):
@@ -29,10 +29,6 @@ def RM08_normalized_generation(value, context):
     return 'normalized remediation generation' if value['generation_canonical'] != value['normalized_canonical'] else None
 
 
-def RM09_payload_ceiling(value, context):
-    return 'joined remediation generation ceiling' if value['payload_generation'] > value['ceiling'] else None
-
-
 def case(value):
     context = None
     table = g.GuardTable([
@@ -40,7 +36,6 @@ def case(value):
         g.Guard('RM06_ceiling_type', g.Invariant('/records/lineage/body/ceiling', 'is an integer'), 'remediation ceiling', RM06_ceiling_type),
         g.Guard('RM07_within_ceiling', g.Invariant('/records/lineage/body/generation', 'an integer generation is at most the integer ceiling'), 'remediation ceiling', RM07_within_ceiling),
         g.Guard('RM08_normalized_generation', g.Invariant('/records/lineage/body/remediation_generation', 'equals the lineage generation'), 'normalized remediation generation', RM08_normalized_generation),
-        g.Guard('RM09_payload_ceiling', g.Invariant('/payload/remediation_generation', 'is at most the lineage ceiling'), 'joined remediation generation ceiling', RM09_payload_ceiling),
     ])
 
     def check(value):
@@ -48,6 +43,5 @@ def case(value):
         table.require('RM06_ceiling_type', value, context)
         table.require('RM07_within_ceiling', value, context)
         table.require('RM08_normalized_generation', value, context)
-        table.require('RM09_payload_ceiling', value, context)
         return True
     return g.Case(table, check, context)

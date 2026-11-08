@@ -30,7 +30,7 @@ def RT08_failed_attempt(value, context):
 
 
 def RT09_prior_attempt(value, context):
-    return 'classified prior attempt' if value['retry_scheduled'] is True and value['prior_attempt'] != value['failure_attempt'] else None
+    return 'classified prior attempt' if value['retry_scheduled'] is True and value['failure_attempt'] == value['attempt_record'] and value['prior_attempt'] != value['failure_attempt'] else None
 
 
 def case(value):

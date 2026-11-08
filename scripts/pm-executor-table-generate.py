@@ -111,8 +111,8 @@ phase('transport_storage', 'SP-337: the envelope Storage instance is a nonempty 
 phase('transport_inline', 'SP-337 inline route: logical payload join and the 16 KiB limit.', [
     ('PT03_inline_join', '/envelope/payload', 'the inline body equals the logical payload', 'inline logical payload join',
      "value['inline_canonical'] != value['payload_canonical']"),
-    ('PT04_inline_limit', '/envelope/payload', 'the logical MessagePack body is at most 16384 bytes', 'oversized_inline_payload',
-     "value['raw_size'] > 16384"),
+    ('PT04_inline_limit', '/envelope/payload', 'the joined logical MessagePack body is at most 16384 bytes', 'oversized_inline_payload',
+     "value['inline_canonical'] == value['payload_canonical'] and value['raw_size'] > 16384"),
 ])
 phase('transport_ref', 'SP-337 reference route: empty inline body and the resolved descriptor.', [
     ('PR01_inline_empty', '/envelope/payload', 'a referenced body leaves the inline payload empty', 'referenced payload cannot remain inline',
@@ -120,11 +120,12 @@ phase('transport_ref', 'SP-337 reference route: empty inline body and the resolv
     ('PR02_descriptor_object', '/envelope/payload_ref', 'is an object', 'resolved SP-337 descriptor', "value['ref_type'] != 'dict'"),
     ('PR03_descriptor_keys', '/envelope/payload_ref', 'has exactly blake3, byte_size and media_type', 'resolved SP-337 descriptor',
      "value['ref_type'] == 'dict' and value['ref_keys'] != ['blake3', 'byte_size', 'media_type']"),
-    ('PR04_size_type', '/envelope/payload_ref/byte_size', 'is an integer', 'payload ref byte size', "value['size_type'] != 'int'"),
+    ('PR04_size_type', '/envelope/payload_ref/byte_size', 'a resolved descriptor size is an integer', 'payload ref byte size',
+     "value['descriptor'] is True and value['size_type'] != 'int'"),
     ('PR05_size_value', '/envelope/payload_ref/byte_size', 'an integer size equals the logical body length', 'payload ref byte size',
-     "value['size_type'] == 'int' and value['ref_size'] != value['raw_size']"),
-    ('PR06_media_type', '/envelope/payload_ref/media_type', 'is application/msgpack', 'payload ref media type',
-     "value['ref_media'] != 'application/msgpack'"),
+     "value['descriptor'] is True and value['size_type'] == 'int' and value['ref_size'] != value['raw_size']"),
+    ('PR06_media_type', '/envelope/payload_ref/media_type', 'a resolved descriptor names application/msgpack', 'payload ref media type',
+     "value['descriptor'] is True and value['ref_media'] != 'application/msgpack'"),
 ])
 phase('pack_presence', 'SP-337: the referenced pack is present (validate_pack_presence).', [
     ('PP01_pack_present', '/payload_packs/{blake3}', 'the pack named by the descriptor is present', 'missing payload pack',
@@ -139,8 +140,8 @@ phase('pack_bytes', 'SP-337 pack bytes: hex, BLAKE3 and byte sizes.', [
     ('PK04_pack_size_type', '/payload_packs/*/byte_size', 'is an integer', 'payload pack byte size', "value['pack_size_type'] != 'int'"),
     ('PK05_pack_size_bytes', '/payload_packs/*/byte_size', 'an integer pack size equals the pack byte length', 'payload pack byte size',
      "value['hex_decodes'] is True and value['pack_size_type'] == 'int' and value['stored_size'] != value['pack_size']"),
-    ('PK06_pack_size_ref', '/payload_packs/*/byte_size', 'an integer pack size equals the descriptor size', 'payload pack byte size',
-     "value['pack_size_type'] == 'int' and value['pack_size'] != value['ref_size']"),
+    ('PK06_pack_size_ref', '/payload_packs/*/byte_size', 'a pack size equal to its byte length equals the descriptor size', 'payload pack byte size',
+     "value['hex_decodes'] is True and value['pack_size_type'] == 'int' and value['stored_size'] == value['pack_size'] and value['pack_size'] != value['ref_size']"),
 ])
 phase('pack_custody', 'SP-337 pack custody: media, logical body, Project, Storage, durability and deletion.', [
     ('PK07_media', '/payload_packs/*/media_type', 'equals the descriptor media type', 'payload pack media type', "value['pack_media'] != value['ref_media']"),
@@ -288,7 +289,8 @@ phase('source_revision', 'Capture source records: exact revision and its expecte
     ('RV01_revision_type', '/records/*/revision', 'is an integer', 'source revision', "value['revision_type'] != 'int'"),
     ('RV02_revision_nonnegative', '/records/*/revision', 'an integer revision is not negative', 'source revision',
      "value['revision_type'] == 'int' and value['revision'] < 0"),
-    ('RV03_expected_type', '/expected_revisions/*', 'is an integer', 'source revision', "value['expected_type'] != 'int'"),
+    ('RV03_expected_type', '/expected_revisions/*', 'is an integer (for an integer revision)', 'source revision',
+     "value['revision_type'] == 'int' and value['expected_type'] != 'int'"),
     ('RV04_revision_join', '/records/*/revision', 'equals the expected revision by canonical bytes', 'source revision',
      "value['revision_type'] == 'int' and value['expected_type'] == 'int' and value['revision_canonical'] != value['expected_canonical']"),
 ])
@@ -321,8 +323,8 @@ phase('graph_join', 'Installed graph: node and run revisions, graph join and mat
     ('GJ04_run_revision_min', '/records/run/body/workgraph_revision', 'an integer revision is at least 1', 'installed graph join',
      "value['run_revision_type'] == 'int' and value['run_revision'] < 1"),
     ('GJ05_graph_id_join', '/records/node/body/workgraph_id', 'equals the run graph id', 'installed graph join', "value['node_graph'] != value['run_graph']"),
-    ('GJ06_graph_revision_join', '/records/node/body/workgraph_revision', 'equals the run graph revision', 'installed graph join',
-     "value['node_revision_type'] == 'int' and value['run_revision_type'] == 'int' and value['node_revision'] != value['run_revision']"),
+    ('GJ06_graph_revision_join', '/records/node/body/workgraph_revision', 'a valid node revision equals the valid run revision', 'installed graph join',
+     "value['node_revision_type'] == 'int' and value['run_revision_type'] == 'int' and value['node_revision'] >= 1 and value['run_revision'] >= 1 and value['node_revision'] != value['run_revision']"),
     ('GJ07_request_join', '/records/node/body/source_request_id', 'equals the operation source request', 'materialization request join',
      "value['node_request'] != value['operation_request']"),
 ])
@@ -355,7 +357,7 @@ phase('post_effects', 'Transition: committed post-state effects equal the adapte
     ('EF06_expected_nonnegative', '/semantic_adapter/effects/*', 'every integer adapter count is not negative', 'post-state effects',
      "value['expected_all_int'] is True and value['expected_min'] < 0"),
     ('EF07_effects_equal', '/post_state/effects', 'well-typed observed effects equal the adapter effects', 'post-state effects',
-     "value['observed_type'] == 'dict' and value['observed_keys'] == value['expected_keys'] and value['observed_all_int'] is True and value['expected_all_int'] is True and value['observed_pairs'] != value['expected_pairs']"),
+     "value['observed_type'] == 'dict' and value['observed_keys'] == value['expected_keys'] and value['observed_all_int'] is True and value['expected_all_int'] is True and value['observed_min'] >= 0 and value['expected_min'] >= 0 and value['observed_pairs'] != value['expected_pairs']"),
 ])
 phase('owner_predicate', 'Adapter owner predicates: each required owner-record value (typed).', [
     ('OP01_owner_predicate', '/records/{path}', 'equals the adapter requirement by canonical bytes', 'owner predicate',
@@ -371,12 +373,11 @@ phase('capture_attempt_completed', 'attempt.completed: terminal state agrees wit
     ('AC01_terminal_outcome', '/payload/terminal_state', 'done exactly when success is true', 'terminal outcome classification',
      "value['terminal_done'] != value['success']"),
 ])
-phase('capture_node_blocked', 'node.blocked: pre-attempt omission and restore anchor.', [
-    ('NB01_pre_attempt', '/payload/attempt_id', 'equals the episode attempt', 'pre-attempt omission', "value['payload_attempt'] != value['episode_attempt']"),
+phase('capture_node_blocked', 'node.blocked: restore anchor (the pre-attempt omission is EP02 of capture_episode).', [
     ('NB02_restore_safe_point', '/payload/safe_point_id', 'is present when a safe-point restore is required', 'restore anchor',
      "value['restore_required'] is True and value['safe_point_present'] is not True"),
     ('NB03_restore_anchor', '/payload/anchor_ref', 'is present when a safe-point restore is required', 'restore anchor',
-     "value['restore_required'] is True and value['anchor_present'] is not True"),
+     "value['restore_required'] is True and value['safe_point_present'] is True and value['anchor_present'] is not True"),
 ])
 phase('capture_node_unblocked', 'node.unblocked: resolution evidence and barrier.', [
     ('NU01_resolution', '/records/episode/body/resolution', 'equals the payload resolution', 'resolution evidence',
@@ -401,6 +402,8 @@ phase('remediation_generation', 'remediation.*: generation within the lineage ce
      "value['generation_type'] == 'int' and value['ceiling_type'] == 'int' and value['generation'] > value['ceiling']"),
     ('RM08_normalized_generation', '/records/lineage/body/remediation_generation', 'equals the lineage generation', 'normalized remediation generation',
      "value['generation_canonical'] != value['normalized_canonical']"),
+])
+phase('remediation_ceiling_join', 'remediation.*: the payload generation within the ceiling (implied by the source join, RM07 and RM08; reported unprovable).', [
     ('RM09_payload_ceiling', '/payload/remediation_generation', 'is at most the lineage ceiling', 'joined remediation generation ceiling',
      "value['payload_generation'] > value['ceiling']"),
 ])
@@ -417,7 +420,7 @@ phase('retry_identity', 'Retry: classification, error identity and attempt joins
     ('RT08_failed_attempt', '/records/failure/body/attempt_id', 'equals the failed attempt record', 'original failed attempt',
      "value['failure_attempt'] != value['attempt_record']"),
     ('RT09_prior_attempt', '/records/retry/body/prior_attempt_id', 'run.node_retry_scheduled: equals the failed attempt', 'classified prior attempt',
-     "value['retry_scheduled'] is True and value['prior_attempt'] != value['failure_attempt']"),
+     "value['retry_scheduled'] is True and value['failure_attempt'] == value['attempt_record'] and value['prior_attempt'] != value['failure_attempt']"),
 ])
 phase('retry_counter', 'Retry: the original per-error counter.', [
     ('RT04_used_type', '/records/retry/body/used', 'is an integer', 'original per-error retry counter', "value['used_type'] != 'int'"),
@@ -439,7 +442,8 @@ phase('retry_storage', 'Retry storage_io: the SP-238 adapter class.', [
 ])
 phase('retry_foreign_storage', 'Retry Executor classes: no Storage adapter class.', [
     ('RF01_retry_storage_null', '/records/retry/body/storage_io_class', 'is null', 'foreign Storage policy', "value['retry_storage'] is not None"),
-    ('RF02_failure_storage_null', '/records/failure/body/storage_io_class', 'is null', 'foreign Storage policy', "value['failure_storage'] is not None"),
+    ('RF02_failure_storage_null', '/records/failure/body/storage_io_class', 'is null (with a null retry class)', 'foreign Storage policy',
+     "value['retry_storage'] is None and value['failure_storage'] is not None"),
 ])
 phase('retry_limit', 'Retry: owner provenance, exact limit, budget and ordinal.', [
     ('RL01_policy_owner', '/records/retry/body/policy_owner_ref', 'names the classified owner policy', 'classified owner policy provenance',
@@ -657,7 +661,7 @@ phase('shape_family_b', 'Shape oracle: retry, terminal and restore-anchor family
     ('SX10_restore_safe_point', '/payload/safe_point_id', 'node.blocked restore: a safe point is named', 'missing restore anchor',
      "value['family'] == 'node.blocked' and value['restore_required'] is True and value['safe_point_present'] is not True"),
     ('SX11_restore_anchor', '/payload/anchor_ref', 'node.blocked restore: an anchor is named', 'missing restore anchor',
-     "value['family'] == 'node.blocked' and value['restore_required'] is True and value['anchor_present'] is not True"),
+     "value['family'] == 'node.blocked' and value['restore_required'] is True and value['safe_point_present'] is True and value['anchor_present'] is not True"),
 ])
 phase('shape_scheduler', 'Shape oracle scheduler.pass: unique candidates, partition, capacity, order and score joins.', [
     ('SY01_unique_ready', '/payload/ready_nodes', 'ready ids are unique', 'duplicate node', "value['ready_unique'] is not True"),
@@ -683,6 +687,10 @@ phase('fixture_route', 'Fixture dispatch: known type route, numeric boundary and
 
 
 # ===================================================================== CLI fixture integrity
+phase('integrity_table_order', 'Table integrity: each factory requires its rows in table order.', [
+    ('IT01_require_order', '/case/check', 'the factory requires every row in table order', 'table_require_order',
+     "value['require_order'] != value['table_order']"),
+])
 phase('integrity_closure', 'Fixture integrity: the semantic fixture families are exactly the selected contracts.', [
     ('IF01_family_closure', '/families', 'equals the selected contract families', 'fixture family closure',
      "value['fixture_families'] != value['contract_families']"),

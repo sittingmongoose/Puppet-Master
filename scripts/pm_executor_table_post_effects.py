@@ -38,7 +38,7 @@ def EF06_expected_nonnegative(value, context):
 
 
 def EF07_effects_equal(value, context):
-    return 'post-state effects' if value['observed_type'] == 'dict' and value['observed_keys'] == value['expected_keys'] and value['observed_all_int'] is True and value['expected_all_int'] is True and value['observed_pairs'] != value['expected_pairs'] else None
+    return 'post-state effects' if value['observed_type'] == 'dict' and value['observed_keys'] == value['expected_keys'] and value['observed_all_int'] is True and value['expected_all_int'] is True and value['observed_min'] >= 0 and value['expected_min'] >= 0 and value['observed_pairs'] != value['expected_pairs'] else None
 
 
 def case(value):

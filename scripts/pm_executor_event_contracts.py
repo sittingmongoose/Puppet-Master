@@ -151,11 +151,11 @@ def contract_integrity(contract, existing, cases):
 
 
 def main(family_name=None):
-    from pm_executor_event_semantics import expand_fixture_literals, mutate, fixture_encoding, refuse
+    from pm_executor_event_semantics import expand_fixture_literals, mutate, refuse, check_contract_set, check_shape_seed
     contracts = json.loads((ROOT / 'Plans/executor_event_contracts.json').read_text())['families']
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
     existing = {f['event_type'] for f in registry['families']}
-    refuse('integrity_contract_set', {'family_count': len(contracts), 'distinct_count': len({c['event_type'] for c in contracts})})
+    check_contract_set([c['event_type'] for c in contracts])
     if family_name is not None:
         contracts = [contract for contract in contracts if contract['event_type'] == family_name]
         if not contracts:
@@ -178,9 +178,7 @@ def main(family_name=None):
             if 'seed' in case:
                 seed = case['seed']
                 validate(c, seed['payload'], seed['context'])
-                rebuilt = mutate(seed, case['defect_changes'])
-                refuse('integrity_seed', {'kind': 'shape', 'rebuilt': fixture_encoding([rebuilt['payload'], rebuilt['context']]),
-                                          'specimen': fixture_encoding([case['payload'], case['context']])}, ' ' + case['case'])
+                check_shape_seed(case)
             try:
                 validate(c, case['payload'], case['context'])
                 result = 'accept'

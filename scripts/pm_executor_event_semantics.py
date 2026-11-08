@@ -442,7 +442,7 @@ def validate_payload_transport(payload, envelope, packs, viewer):
     descriptor = ref_is_dict and ref_keys == ['blake3', 'byte_size', 'media_type']
     size = ref['byte_size'] if descriptor else None
     refuse('transport_ref', {
-        'inline_empty': envelope['payload'] == {}, 'ref_type': tname(ref), 'ref_keys': ref_keys,
+        'inline_empty': envelope['payload'] == {}, 'ref_type': tname(ref), 'ref_keys': ref_keys, 'descriptor': descriptor,
         'size_type': tname(size) if descriptor else 'NoneType', 'ref_size': size if type(size) is int else None,
         'raw_size': len(raw), 'ref_media': copy.deepcopy(ref['media_type']) if descriptor else None})
     pack = packs.get(ref['blake3'])
@@ -717,8 +717,8 @@ def validate_capture(contract, payload, capture, *, historical=False):
         'expected_keys': sorted(effects), 'observed_all_int': observed_all_int,
         'observed_min': min(list(observed_effects.values()) + [0]) if observed_all_int else None,
         'expected_all_int': expected_all_int, 'expected_min': min(list(effects.values()) + [0]) if expected_all_int else None,
-        'observed_pairs': sorted(observed_effects.items()) if observed_all_int else None,
-        'expected_pairs': sorted(effects.items()) if expected_all_int else None})
+        'observed_pairs': [list(pair) for pair in sorted(observed_effects.items())] if observed_all_int else None,
+        'expected_pairs': [list(pair) for pair in sorted(effects.items())] if expected_all_int else None})
     for path, expected in adapter['requirements'].items():
         refuse('owner_predicate', {'observed_canonical': canonical(at(records, path)), 'expected_canonical': canonical(expected)},
                ' ' + path)
@@ -728,10 +728,9 @@ def validate_capture(contract, payload, capture, *, historical=False):
         refuse('capture_attempt_completed', {'terminal_done': payload['terminal_state'] == 'done',
                                              'success': copy.deepcopy(payload.get('success', False))})
     if name == 'node.blocked':
-        body = records['episode']['body']
         restore = bool(payload.get('requires_safe_point_restore'))
+        # The pre-attempt omission (payload attempt equals the episode attempt) is EP02, refused earlier on this path.
         refuse('capture_node_blocked', {
-            'payload_attempt': copy.deepcopy(payload.get('attempt_id')), 'episode_attempt': copy.deepcopy(body.get('attempt_id')),
             'restore_required': restore, 'safe_point_present': bool(payload.get('safe_point_id')),
             'anchor_present': bool(payload.get('anchor_ref'))})
     if name == 'node.unblocked':
@@ -755,8 +754,8 @@ def validate_capture(contract, payload, capture, *, historical=False):
             'generation_type': tname(generation), 'ceiling_type': tname(ceiling),
             'generation': generation if typed else None, 'ceiling': ceiling if typed else None,
             'generation_canonical': canonical(generation) if within else None,
-            'normalized_canonical': canonical(lineage['remediation_generation']) if within else None,
-            'payload_generation': payload['remediation_generation'] if within else None})
+            'normalized_canonical': canonical(lineage['remediation_generation']) if within else None})
+        refuse('remediation_ceiling_join', {'payload_generation': payload['remediation_generation'], 'ceiling': ceiling})
         if name == 'remediation.resolved':
             fixed = payload['resolution'] == 'fixed'
             refuse('remediation_fixed', {'fixed': fixed, 'child_result': copy.deepcopy(lineage['child_result']) if fixed else None})
@@ -1068,19 +1067,91 @@ def stock_schema_validate(path, value):
     refuse('payload_schema_stock', {'schema_valid': error is None}, '' if error is None else ': ' + error.message)
 
 
+def table_order_facts(phase, swap=None):
+    """The require order of a generated factory's check() (optionally with two require lines swapped) and its table order."""
+    import ast
+    lines = (ROOT / 'scripts' / (TABLE_PREFIX + phase + '.py')).read_text().splitlines(keepends=True)
+    if swap is not None:
+        requires = [i for i, line in enumerate(lines) if line.strip().startswith('table.require(')]
+        a, b = requires[swap[0]], requires[swap[1]]
+        lines[a], lines[b] = lines[b], lines[a]
+    tree = ast.parse(''.join(lines))
+    factory = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'case')
+    check = next(n for n in factory.body if isinstance(n, ast.FunctionDef) and n.name == 'check')
+    required = [c.args[0].value for c in ast.walk(check) if isinstance(c, ast.Call) and ast.unparse(c.func) == 'table.require']
+    return {'require_order': required, 'table_order': [name for name, _, _ in table_rows(phase)]}
+
+
+def check_table_order_text(phase, swap=None):
+    refuse('integrity_table_order', table_order_facts(phase, swap), ' ' + phase)
+    return True
+
+
+def table_phases(root=ROOT):
+    return sorted(path.stem[len(TABLE_PREFIX):] for path in (root / 'scripts').glob(TABLE_PREFIX + '*.py'))
+
+
+def check_table_order(root=ROOT):
+    """Refuse the first generated factory whose check() does not require its rows in table order."""
+    for phase in table_phases(root):
+        check_table_order_text(phase)
+    return True
+
+
 def table_order_errors(root=ROOT):
     """Each generated factory's check() requires its rows in exactly the table order."""
-    import ast
-    errors = []
-    for path in sorted((root / 'scripts').glob(TABLE_PREFIX + '*.py')):
-        phase = path.stem[len(TABLE_PREFIX):]
-        tree = ast.parse(path.read_text())
-        factory = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == 'case')
-        check = next(n for n in factory.body if isinstance(n, ast.FunctionDef) and n.name == 'check')
-        required = [c.args[0].value for c in ast.walk(check) if isinstance(c, ast.Call) and ast.unparse(c.func) == 'table.require']
-        if required != [name for name, _, _ in table_rows(phase)]:
-            errors.append(['table_require_order', phase])
-    return errors
+    return [['table_require_order', phase] for phase in table_phases(root)
+            if refusal('integrity_table_order', table_order_facts(phase))]
+
+
+def check_family_closure(fixture_families, contract_families):
+    refuse('integrity_closure', {'fixture_families': sorted(fixture_families), 'contract_families': sorted(contract_families)})
+    return True
+
+
+def check_contract_set(event_types):
+    refuse('integrity_contract_set', {'family_count': len(event_types), 'distinct_count': len(set(event_types))})
+    return True
+
+
+def check_type_case(case):
+    refuse('integrity_type_case', {'change_count': len(case['changes'])}, ' ' + case['case'])
+    return True
+
+
+def check_capture_seed(family, case):
+    seed = mutate(family['baseline'], case['seed_changes'])
+    specimen = mutate(family['baseline'], case['changes'])
+    refuse('integrity_seed', {'kind': 'capture', 'rebuilt': fixture_encoding(mutate(seed, case['defect_changes'])),
+                              'specimen': fixture_encoding(specimen)}, ' ' + case['case'])
+    return True
+
+
+def check_disclosure_seed(case):
+    refuse('integrity_seed', {'kind': 'disclosure', 'rebuilt': fixture_encoding(mutate(case['seed_disclosure'], case['disclosure_changes'])),
+                              'specimen': fixture_encoding(case['disclosure'])}, ' ' + case['case'])
+    return True
+
+
+def check_shape_seed(case):
+    rebuilt = mutate(case['seed'], case['defect_changes'])
+    refuse('integrity_seed', {'kind': 'shape', 'rebuilt': fixture_encoding([rebuilt['payload'], rebuilt['context']]),
+                              'specimen': fixture_encoding([case['payload'], case['context']])}, ' ' + case['case'])
+    return True
+
+
+def numeric_case(contract, baseline, case):
+    """A numeric boundary case: the result, then its canonical-spelling control and golden value."""
+    actual = run_numeric_case(contract, baseline, case)
+    observed = list(actual) if type(actual) is tuple else actual
+    # JSON -0 decodes to integer zero. It must have exactly the same
+    # identity/digest/bytes as 0, never a second spelling downstream.
+    control = run_numeric_case(contract, baseline, {**case, 'spelling': fixture_encoding(json.loads(case['spelling']))})
+    refuse('integrity_numeric', {
+        'has_golden': 'expected_value' in case, 'observed': numeric_observation(observed),
+        'golden': copy.deepcopy(case.get('expected_value')),
+        'actual': numeric_observation(actual), 'control': numeric_observation(control)})
+    return actual
 
 
 def main(family_name=None):
@@ -1124,7 +1195,7 @@ def main(family_name=None):
             failures.append(['helper', case['case'], result, reason])
     count, traces, score_cases, schema_cases, ref_cases, history_cases, numeric_cases, type_cases = 0, 0, 0, 0, 0, 0, 0, 0
     workgraph_id_cases = 0
-    refuse('integrity_closure', {'fixture_families': sorted(families), 'contract_families': sorted({c['event_type'] for c in contracts})})
+    check_family_closure(families, {c['event_type'] for c in contracts})
     for contract in contracts:
         family = families[contract['event_type']]
         for case in family.get('workgraph_id_cases', []):
@@ -1144,7 +1215,7 @@ def main(family_name=None):
             type_cases += 1
             seed, specimen = type_case_specimens(family, [row for row in shapes if row['event_type'] == contract['event_type']], case)
             validate_type_case(contract, case['route'], seed)
-            refuse('integrity_type_case', {'change_count': len(case['changes'])}, ' ' + case['case'])
+            check_type_case(case)
             try:
                 validate_type_case(contract, case['route'], specimen)
                 result = 'accept'
@@ -1157,18 +1228,8 @@ def main(family_name=None):
         for case in family.get('numeric_cases', []):
             numeric_cases += 1
             try:
-                actual = run_numeric_case(contract, family['baseline'], case)
+                numeric_case(contract, family['baseline'], case)
                 result = 'accept'
-                observed = list(actual) if type(actual) is tuple else actual
-                # JSON -0 decodes to integer zero. It must have exactly the same
-                # identity/digest/bytes as 0, never a second spelling downstream.
-                canonical_spelling = fixture_encoding(json.loads(case['spelling']))
-                control = run_numeric_case(contract, family['baseline'],
-                                           {**case, 'spelling': canonical_spelling})
-                refuse('integrity_numeric', {
-                    'has_golden': 'expected_value' in case, 'observed': numeric_observation(observed),
-                    'golden': copy.deepcopy(case.get('expected_value')),
-                    'actual': numeric_observation(actual), 'control': numeric_observation(control)})
             except ValueError:
                 result = 'reject'
             if result != case['expected']:
@@ -1179,8 +1240,7 @@ def main(family_name=None):
             if 'seed_changes' in case:
                 seed = mutate(family['baseline'], case['seed_changes'])
                 validate_capture(contract, seed['payload'], seed['capture'])
-                refuse('integrity_seed', {'kind': 'capture', 'rebuilt': fixture_encoding(mutate(seed, case['defect_changes'])),
-                                          'specimen': fixture_encoding(specimen)}, ' ' + case['case'])
+                check_capture_seed(family, case)
             try:
                 validate_capture(contract, specimen['payload'], specimen['capture'])
                 result = 'accept'
@@ -1196,9 +1256,7 @@ def main(family_name=None):
             if 'seed_disclosure' in case:
                 validate_history(contract, payload, original, case['retained_source_sha256'],
                                  case['seed_disclosure'])
-                refuse('integrity_seed', {'kind': 'disclosure',
-                                          'rebuilt': fixture_encoding(mutate(case['seed_disclosure'], case['disclosure_changes'])),
-                                          'specimen': fixture_encoding(case['disclosure'])}, ' ' + case['case'])
+                check_disclosure_seed(case)
             try:
                 actual = validate_history(contract, payload, original,
                                           case.get('retained_source_sha256', family['retained_source_sha256']), case['disclosure'])
@@ -1249,7 +1307,15 @@ def main(family_name=None):
                 result = 'reject'
             if result != case['expected']:
                 failures.append([contract['event_type'], case['case'], result])
-    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'schema_reference_cases': ref_cases, 'historical_read_cases': history_cases, 'numeric_boundary_cases': numeric_cases, 'exact_type_cases': type_cases, 'workgraph_id_boundary_cases': workgraph_id_cases, 'canonical_golden_cases': len(fixture_doc.get('canonical_golden_cases', [])), 'helper_cases': len(helper_cases), 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
+    p2a_cases = 0
+    if (ROOT / 'Plans/executor_event_p2a_cases.json').exists():
+        import pm_executor_p2a_cases as p2a
+        registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
+        p2a_failures, p2a_cases = p2a.run(json.loads((ROOT / 'Plans/executor_event_p2a_cases.json').read_text()),
+                                          {c['event_type']: c for c in contracts}, families, shapes,
+                                          {f['event_type'] for f in registry['families']}, ROOT)
+        failures.extend(p2a_failures)
+    print(json.dumps({'status': 'fail' if failures else 'pass', 'families': len(families), 'sweep_p2a_witnesses': p2a_cases, 'source_transition_cases': count, 'receipt_replay_withdrawal_traces': traces, 'source_score_domain_cases': score_cases, 'isolated_schema_cases': schema_cases, 'schema_reference_cases': ref_cases, 'historical_read_cases': history_cases, 'numeric_boundary_cases': numeric_cases, 'exact_type_cases': type_cases, 'workgraph_id_boundary_cases': workgraph_id_cases, 'canonical_golden_cases': len(fixture_doc.get('canonical_golden_cases', [])), 'helper_cases': len(helper_cases), 'failures': failures, 'native_execution': 'NOT_RUN'}, indent=2))
     return bool(failures)
 
 

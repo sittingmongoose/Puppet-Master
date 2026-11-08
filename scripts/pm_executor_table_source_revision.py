@@ -22,7 +22,7 @@ def RV02_revision_nonnegative(value, context):
 
 
 def RV03_expected_type(value, context):
-    return 'source revision' if value['expected_type'] != 'int' else None
+    return 'source revision' if value['revision_type'] == 'int' and value['expected_type'] != 'int' else None
 
 
 def RV04_revision_join(value, context):
@@ -34,7 +34,7 @@ def case(value):
     table = g.GuardTable([
         g.Guard('RV01_revision_type', g.Invariant('/records/*/revision', 'is an integer'), 'source revision', RV01_revision_type),
         g.Guard('RV02_revision_nonnegative', g.Invariant('/records/*/revision', 'an integer revision is not negative'), 'source revision', RV02_revision_nonnegative),
-        g.Guard('RV03_expected_type', g.Invariant('/expected_revisions/*', 'is an integer'), 'source revision', RV03_expected_type),
+        g.Guard('RV03_expected_type', g.Invariant('/expected_revisions/*', 'is an integer (for an integer revision)'), 'source revision', RV03_expected_type),
         g.Guard('RV04_revision_join', g.Invariant('/records/*/revision', 'equals the expected revision by canonical bytes'), 'source revision', RV04_revision_join),
     ])
 

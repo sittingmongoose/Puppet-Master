@@ -18,14 +18,14 @@ def RF01_retry_storage_null(value, context):
 
 
 def RF02_failure_storage_null(value, context):
-    return 'foreign Storage policy' if value['failure_storage'] is not None else None
+    return 'foreign Storage policy' if value['retry_storage'] is None and value['failure_storage'] is not None else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('RF01_retry_storage_null', g.Invariant('/records/retry/body/storage_io_class', 'is null'), 'foreign Storage policy', RF01_retry_storage_null),
-        g.Guard('RF02_failure_storage_null', g.Invariant('/records/failure/body/storage_io_class', 'is null'), 'foreign Storage policy', RF02_failure_storage_null),
+        g.Guard('RF02_failure_storage_null', g.Invariant('/records/failure/body/storage_io_class', 'is null (with a null retry class)'), 'foreign Storage policy', RF02_failure_storage_null),
     ])
 
     def check(value):
