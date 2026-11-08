@@ -20,8 +20,10 @@ export default async function(t) {
     {screen:'safe',label:'preview-online',hover:'[data-o55-do="online"]'},
     {screen:'safe',label:'preview-backup',hover:'[data-o55-do="backup"]'},
     {screen:'ready',label:'ready-confetti',effect:'ready'},
+    {screen:'where',label:'act-card',effect:'banner'},
     {screen:'r-pick',label:'choice-cheer',effect:'cheer'});
   if(t.args.variantsOnly)cases=cases.filter(c=>c.label!==c.screen);
+  if(t.args.labels)cases=cases.filter(c=>String(t.args.labels).split(',').includes(c.label));
   await t.check('requested scene/effect cases selected',cases.length>0,String(cases.length),{hard:true});
   const inventory=[];
   for(const look of looks) {
@@ -60,6 +62,12 @@ export default async function(t) {
             const s=document.querySelector('#pm-o55-onboarding .pst')?.__pipStage;
             if(s?.live()&&started===null)started=performance.now();
             if(s)rows.push({ts,delivered:performance.now(),t:s.t,theme:s.theme,render:s.renderN,stage:s.id,live:s.live(),fps:s.frameRate(),pip:{head:s.H,dy:s.ps.dy},props:[...s.props].map(([id,p])=>({id,kind:p.spec.kind,state:p.state,op:p.op,settled:p.settled,len:p.len,target:s.propTarget(p).len,box:p.box,pos:p.pos,rest:p.restBox,ground:!!p.spec.ground,stack:p.spec.stack})),fx:s.fx.map(p=>{if(!ids.has(p))ids.set(p,++nextId);return {id:ids.get(p),kind:p.kind,follow:!!p.follow,x:p.x,y:p.y,life:p.life};})});
+            const card=document.querySelector('.o55fx-banner[data-hang]:not([data-wait]) .o55fx-bn-card');
+            if(s&&card){
+              const anim=card.__qa7Descent||(card.__qa7Descent=card.getAnimations().find(a=>a.effect.getTiming().duration===230&&a.effect.getTiming().easing==='steps(6, end)'));
+              if(anim){const b=card.getBoundingClientRect(),time=Number(anim.currentTime),phase=Math.max(0,Math.min(230,time-90));
+                rows.at(-1).props.push({id:'act-card',kind:'act-card',state:time<=410?'in':'out',op:1,len:phase,target:230,box:[b.left,b.top,b.right,b.bottom]});}
+            }
             if(paintTag&&s){const w=window.__qa7FallTag,seq=++w.seq;rows.at(-1).paintSeq=seq;const bits=[1,0];for(let i=0;i<20;i++)bits.push((seq>>i)&1);for(let i=0;i<20;i++)bits.push(1-((seq>>i)&1));bits.forEach((b,i)=>{if(w.shown[i]!==b){w.cells[i].style.background=b?'#fff':'#000';w.shown[i]=b;}});}
             if((started!==null&&performance.now()-started>=duration)||performance.now()>=deadline){
               done=true;cancelAnimationFrame(raf);observer.disconnect();clock.remove();
@@ -76,7 +84,7 @@ export default async function(t) {
       if(entry.click)await f.locator('.o55-pane > .o55-layer:not(.o55-out) '+entry.click).first().click();
       if(entry.hover){await f.locator('.o55-pane > .o55-layer:not(.o55-out) '+entry.hover).first().hover();await f.waitForTimeout(450);}
       // Positive effect owner fixtures complement the default Ready fixture, which is intentionally calm without AI.
-      if(entry.effect)await f.evaluate(effect=>{const s=document.querySelector('#pm-o55-onboarding .pst').__pipStage;if(effect==='ready')s.ready();else s.cheer('clipboard',{sound:false});},entry.effect);
+      if(entry.effect)await f.evaluate(effect=>{const host=document.querySelector('#pm-o55-onboarding .pst'),s=host.__pipStage;if(effect==='ready')s.ready();else if(effect==='banner'){if(O55.nierFx.enabled('banner'))void O55.nierFx.banner({within:host,title:'Chapter complete',hang:true,inset:.08,at:.36,ms:1660,sound:false});}else s.cheer('clipboard',{sound:false});},entry.effect);
       const result=await capture;
       writeFileSync(join(t.run.dir,look+'-'+label+'.json'),JSON.stringify(result));
       if(cdp){
@@ -121,7 +129,8 @@ export default async function(t) {
       const bad=props.filter(p=>p.covered&&(p.worst>15||p.maxStall>Math.max(60,300/(look==='retro-light'?10:look==='retro-dark'?20:120))));
       await t.check(look+' '+label+': placement has continuous animation progress',bad.length===0,JSON.stringify(bad));
       await t.check(look+' '+label+': independent particles have no position jumps',bursts.every(p=>p.follow||p.maxSpeed<1600),JSON.stringify(bursts.filter(p=>!p.follow&&p.maxSpeed>=1600)));
-      if(entry.effect==='ready'&&!t.args.reduced)await t.check(look+': confetti owner exercised',bursts.filter(p=>p.kind==='conf').length===60,String(bursts.length));
+      if(entry.effect==='ready'&&!t.args.reduced){const expected=look.startsWith('nier-')?0:60;await t.equal(look+': confetti follows its look policy',bursts.filter(p=>p.kind==='conf').length,expected);}
+      if(entry.effect==='banner')await t.check(look+': hanging act card follows its look policy',look.startsWith('nier-')?props.some(p=>p.kind==='act-card'&&p.covered):!props.some(p=>p.kind==='act-card'),JSON.stringify(props.filter(p=>p.kind==='act-card')));
       // A fresh Creating fixture starts real owner work. The next Studio open respects that running commit.
       if(screen==='creating') await f.waitForFunction(()=>O55.S.sess.commit?.state!=='running',null,{timeout:30000});
     }
