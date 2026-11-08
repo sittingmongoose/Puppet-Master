@@ -137,7 +137,16 @@ def specs(builder):
                         continue  # the requested grant pins thread and root: OS07/OS11 refuse first
                     M(f, seed, row, lambda c, b, key=key: set_ctx(c, key, None), tag=scope)
             # Issued-layer witnesses: the candidate and the retained issued copy carry the same change.
+            def issued_not_object(c, b):
+                b['issued'][c['event']['event_id']] = []
+
+            def issued_missing_custody(c, b):
+                old = b['issued'][c['event']['event_id']]
+                b['issued'][c['event']['event_id']] = {'event': copy.deepcopy(old['event'])}
+
             for row, change, keep in (
+                    ('IS01_object', issued_not_object, ('issued',)),
+                    ('IS02_members', issued_missing_custody, ('issued',)),
                     ('IS04a_slot_type', setter(('event', 'sequence_id'), 70.0), ('custody_digests',)),
                     ('IS05_schema', setter(('event', 'redaction_profile'), 'df-p2a-unknown'), ('custody_digests',)),
                     ('IR01_event_id', setter(('custody', 'event_id'), 'evt_df_' + 'e' * 64), ()),
@@ -250,6 +259,45 @@ def specs(builder):
     M(cr, s, 'CO03_actor', lambda c, b: records(c)['safe_point_record'].__setitem__('created_by_actor_ref', 'actor:p2a'))
     for row, key in (('CS06_worktree_id', 'worktree_id'), ('CS07_worktree_path', 'worktree_path'), ('CS08_branch', 'branch_name')):
         M(cr, s, row, lambda c, b, key=key: payload(c).__setitem__(key, payload(c)[key] + '-p2a') if payload(c).get(key) else None)
+
+    def scm_worktree(c, b):
+        records(c)['snapshot_manifest']['scm']['worktree_path'] = '/work/p2a-other'
+        records(c)['safe_point_record']['scm']['worktree_path'] = '/work/p2a-other'
+        payload(c)['worktree_path'] = '/work/p2a-other'
+        propagate_target_manifest(builder, cr, c)
+    M(cr, s, 'AM04_scm_worktree', scm_worktree)
+    for row, keep_field in (('CS03_no_worktree_path', 'worktree_path'), ('CS04_no_branch', 'branch_name'),
+                            ('CS05_no_head', 'HEAD_sha')):
+        def scm_absent(c, b, keep_field=keep_field):
+            records(c)['snapshot_manifest']['scm'] = None
+            records(c)['safe_point_record']['scm'] = None
+            for key in ('worktree_id', 'worktree_path', 'branch_name', 'HEAD_sha'):
+                if key != keep_field:
+                    payload(c).pop(key, None)
+            propagate_target_manifest(builder, cr, c)
+        M(cr, s, row, scm_absent)
+
+    def symlink_without_target(c, b):
+        entry = records(c)['snapshot_manifest']['entries'][-1]
+        entry['kind'] = 'symlink'
+        entry['symlink_target_hex'] = None
+        entry['payload_id'] = None
+        entry['blob_sha256'] = None
+        records(c)['snapshot_blobs']['blobs'] = []
+        propagate_target_manifest(builder, cr, c)
+    M(cr, s, 'AS01_symlink_target', symlink_without_target)
+
+    def symlink_with_payload(c, b):
+        entry = records(c)['snapshot_manifest']['entries'][-1]
+        entry['kind'] = 'symlink'
+        entry['symlink_target_hex'] = '2f'
+        propagate_target_manifest(builder, cr, c)
+    M(cr, s, 'AS02_symlink_payload', symlink_with_payload)
+
+    def directory_with_payload(c, b):
+        records(c)['snapshot_manifest']['entries'][-1]['kind'] = 'directory'
+        propagate_target_manifest(builder, cr, c)
+    M(cr, s, 'AS03_nonfile_payload', directory_with_payload)
     rs = 'safe_point.restored'
     for row, key in (('TR01_safe_point_id', 'safe_point_id'), ('TR03_run_id', 'run_id'),
                      ('TR06_outcome', 'restore_outcome'),
@@ -277,6 +325,15 @@ def specs(builder):
     M(rs, s, 'JC05_restart', lambda c, b: records(c)['restore_transaction'].__setitem__('restart_count', records(c)['restore_transaction']['restart_count'] + 1))
     restored_specs(builder, M)
     number_specs(builder, M)
+
+    def body_result(c, b):
+        payload(c)['ts'] = '2026-11-04T12:00:09Z' if payload(c).get('ts') != '2026-11-04T12:00:09Z' else '2026-11-04T12:00:10Z'
+    case = builder.materialize_case('filesafe.command_denied', builder.seeds('filesafe.command_denied')['original_project_0'],
+                                    'BD03_result', body_result, keep=('payload',), kind='protocol')
+    case.pop('expected_error', None)
+    case.update(steps=[{'action': 'read_body'}], expected_results=['read_unavailable'], target_step=0,
+                id=cid('filesafe.command_denied', 'BD03_result', 'trace.project'), defect='decision-model trace')
+    out.append(case)
     return out
 
 
