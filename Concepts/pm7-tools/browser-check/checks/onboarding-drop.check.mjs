@@ -25,7 +25,7 @@ export function analyzeDrop(rows, kind = 'clipboard') {
   }
   const surround=samples.filter(p=>!moving.includes(p));
   return { covered:span>40 && moving.length>=4, samples:samples.length, span, maxSpeed, maxJump, maxStall,
-    middleFrameP95:percentile(moving.map(p=>p.dt),.95), surroundFrameP95:percentile(surround.map(p=>p.dt),.95), maxFrame:Math.max(...samples.map(p=>p.dt)) };
+    middleFrameP95:percentile(moving.map(p=>p.dt),.95), middleFrameMax:Math.max(0,...moving.map(p=>p.dt)), surroundFrameP95:percentile(surround.map(p=>p.dt),.95), maxFrame:Math.max(...samples.map(p=>p.dt)) };
 }
 
 export const beginDropCapture = (f, duration=3500) => f.evaluate(duration => {
@@ -67,6 +67,7 @@ export default async function(t) {
     await t.check(look + ': measured visible middle of clipboard descent', result.covered, JSON.stringify(result));
     await t.check(look + ': no midpoint jump or stall', result.covered && result.maxSpeed<15 && result.maxStall<60, JSON.stringify(result));
     await t.check(look + ': middle has no frame-time spike over surrounding animation', result.covered && result.middleFrameP95<=Math.max(33.5,result.surroundFrameP95*1.75),JSON.stringify(result));
+    await t.check(look + ': no isolated long middle frame',result.covered&&result.middleFrameMax<=Math.max(33.5,result.surroundFrameP95*1.75),JSON.stringify(result));
     if (t.args.trace) {
       const done = new Promise(r=>cdp.once('Tracing.tracingComplete',r)); await cdp.send('Tracing.end'); const { stream } = await done;
       let data=''; for (;;) { const ch=await cdp.send('IO.read',{handle:stream}); data+=ch.data; if(ch.eof)break; }
