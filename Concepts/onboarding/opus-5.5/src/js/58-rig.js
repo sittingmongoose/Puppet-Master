@@ -1383,7 +1383,28 @@
       const X0 = Math.max(pad, vs ? vs[0][0] + pad : pad), X1 = Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Y0 = Math.max(top, vs ? vs[0][1] + 4 : top), Y1 = Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by);
       /* (and Pip's control bar: where a prop beside Pip took the usual place, the bubble went up over the sticks Pip hangs
          from, Retro Dark's Look 'Soft and cosy. I like it.', FO-59) */
-      const bar = this.barBox(gap); if (bar) obs.push(bar);
+      /* (through the bar's whole swing from the speech point, as the face above: the head hangs from the hand on a
+         pendulum and the hand sways about its spot, so at this frame's pose alone the bar's edge reached the
+         bubble's usual place part-way into a line and the bubble stepped aside (QA-4, Friendly Dark Begin at 740:
+         8.1 px during the page's entry). The bar is read at the hand's spot, at each end of the swing, widened
+         by the sway and the rock) */
+      let bar = null;
+      {
+        const ps2 = this.ps;
+        if (ps2) {
+          const cx = ps2.C.x, cy = ps2.C.y;
+          ps2.C.x = ps2.Ct.x; ps2.C.y = ps2.Ct.y;
+          const bar0 = this.barBox(gap);
+          ps2.C.x = cx; ps2.C.y = cy;
+          if (bar0) {
+            const boxes = [bar0];
+            [-.15, .15].forEach((th2) => { const s2 = this.toScreen(this.headXf(spQ, this.headAt(ps2.Ct.x, ps2.Ct.y, th2, ps2.dy || 0), th2 * .9 + tiltT, 1, 1)), dx = sp[0] - s2[0], dy = sp[1] - s2[1]; boxes.push([bar0[0] + dx, bar0[1] + dy, bar0[2] + dx, bar0[3] + dy]); });
+            bar = [Math.min(...boxes.map((b) => b[0])), Math.min(...boxes.map((b) => b[1])), Math.max(...boxes.map((b) => b[2])), Math.max(...boxes.map((b) => b[3]))];
+            const sw = (this.fam.sway || 0) * (this.map ? this.map.k : 1), rk = (bar[2] - bar[0]) * Math.sin(this.rockMax == null ? .12 : this.rockMax) / 2;
+            bar[0] -= sw; bar[2] += sw; bar[1] -= rk; bar[3] += rk; obs.push(bar);
+          }
+        }
+      }
       const fx = (face[0] + face[2]) / 2, sideOf = (cx) => (cx + bw / 2 < fx ? 'L' : 'R');
       const over = (cx, cy, o) => cx < o[2] && cx + bw > o[0] && cy < o[3] && cy + bh > o[1];
       const fits = (cx, cy) => cx >= X0 - .5 && cx <= X1 + .5 && cy >= Y0 - .5 && cy <= Y1 + .5;

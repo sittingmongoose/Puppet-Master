@@ -64,6 +64,7 @@ function installSampler() {
 			fr.layout = st.layoutName; fr.fam = st.famName;
 			fr.bub = { shown: +cs.opacity > 0.05 && cs.visibility !== 'hidden' && b.classList.contains('on') && /\S/.test(b.textContent || '') ? 1 : 0,
 				text: (b.textContent || '').trim(), ow: b.offsetWidth, oh: b.offsetHeight,
+				tr: tr ? [R2(+tr[1]), R2(+tr[2])] : null,
 				rel: tr ? [R2(+tr[1] - sp[0]), R2(+tr[2] - sp[1])] : null,
 				boxRel: [R2(br.left - hr.left), R2(br.top - hr.top)] };
 			fr.visY0 = st.vis ? R2(st.vis.y0) : null;
@@ -123,16 +124,20 @@ export default async function (t) {
 		if (cur) eps.push(cur);
 		for (const e of eps) {
 			if (e.rows.length < 12) continue;
+			// deviation in whichever frame the place is anchored to: against the speech point when the bubble follows
+			// Pip, on the screen when an obstacle or the stage edge pins it while Pip sways (Retro's cramped banner)
 			const rels = e.rows.map((x) => x.fam === 'nier' || !x.bub.rel ? x.bub.boxRel : x.bub.rel);
+			const trs = e.rows.map((x) => x.bub.tr || x.bub.boxRel);
 			if (rels.some((r) => !r)) continue;
 			lines++;
-			const tail = rels.slice(-20), sx = median(tail.map((r) => r[0])), sy = median(tail.map((r) => r[1]));
-			const devs = rels.map((r) => Math.max(Math.abs(r[0] - sx), Math.abs(r[1] - sy)));
+			const sx = median(rels.slice(-20).map((r) => r[0])), sy = median(rels.slice(-20).map((r) => r[1]));
+			const tx = median(trs.slice(-20).map((r) => r[0])), ty = median(trs.slice(-20).map((r) => r[1]));
+			const devs = rels.map((r, i) => Math.max(Math.min(Math.abs(r[0] - sx), Math.abs(trs[i][0] - tx)), Math.min(Math.abs(r[1] - sy), Math.abs(trs[i][1] - ty))));
 			const worst = Math.max(...devs), wi = devs.indexOf(worst);
 			// NieR's box is painted-box judged: Pip hovers (a slow bob of the head), so its settling is read looser there
 			const tol = e.rows[0].fam === 'nier' ? 6 : 1;
-			if (Math.max(Math.abs(rels[0][0] - sx), Math.abs(rels[0][1] - sy)) > tol || worst > tol)
-				bad4.push(`${look} ${screen} '${e.rows[0].bub.text.slice(0, 32)}': first frame ${Math.abs(rels[0][0] - sx).toFixed(1)}/${Math.abs(rels[0][1] - sy).toFixed(1)} px from settled, worst ${worst.toFixed(1)} px at +${e.rows[wi].t - e.rows[0].t} ms (${e.rows.length} frames; settled [${sx.toFixed(1)}, ${sy.toFixed(1)}], first rels ${rels.slice(0, 5).map((r) => `[${r[0].toFixed(1)}, ${r[1].toFixed(1)}]`).join(' ')})`);
+			if (devs[0] > tol || worst > tol)
+				bad4.push(`${look} ${screen} '${e.rows[0].bub.text.slice(0, 32)}': first frame ${devs[0].toFixed(1)} px from settled, worst ${worst.toFixed(1)} px at +${e.rows[wi].t - e.rows[0].t} ms (${e.rows.length} frames; settled rel [${sx.toFixed(1)}, ${sy.toFixed(1)}] tr [${tx.toFixed(1)}, ${ty.toFixed(1)}], first rels ${rels.slice(0, 5).map((r) => `[${r[0].toFixed(1)}, ${r[1].toFixed(1)}]`).join(' ')})`);
 		}
 		// ---- QA-6 + QA-4b: per (segment, prop) by destination slot
 		const byProp = new Map();
