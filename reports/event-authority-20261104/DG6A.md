@@ -1,3 +1,52 @@
+# DG6A: sweep part 2A (in progress, WIP) and part 2B numbers (merge only)
+
+Branch `wip/ea-dg6a-20261108` from lane head `2a0ceaa355` (`origin/plans/ea-w2-gui-concerns-20261104`). Technical head for the checks below: `c99ded7de7`; this report commit is self-inclusive. No rebase. This session is a time-boxed first pass; the lane is not done and this section records exactly where it stopped. Resume notes: `/home/sittingmongoose/pm-scratch/ea-dg6a-resume/RESUME.md`.
+
+This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
+
+## Sweep part 2A: findings and responses
+
+| Item | Result | Commit | Where / how to verify |
+|---|---|---|---|
+| Gated guard tool merge | **Done, clean.** Exactly the tool's 11 files; none edited. | `5ce68412d9` merges `004bdedd63` | `git show --stat 5ce68412d9` |
+| Refusal-site inventory (step 2) | **Done.** Mechanical AST census plus manual additions (card5 `operation_guards` 77 `require` sites, compounds, per-key loops, 29 schema `iter_errors` sites, importlib loading, drivers to retire). | this commit | [DG6A.refusal-inventory.md](DG6A.refusal-inventory.md); regenerated at `c99ded7de7` by the scratch generator named in its header |
+| Guard table `decision_citation` (5 rows) | **Fixed (this phase only).** `decision_citation_errors` refuses only through rows; the compound type-or-text refusal is split into DC04/DC05, DC05 entailed by DC03/DC04. | `fdca07b70e` | `scripts/pm_dg6a_table_decision_citation.py`, derivation `scripts/pm-card5-event-contracts-check.py:154`, guard `:181`. Tool PASS below. |
+| Guard table `storage_schema` (6 rows) | **Fixed (this phase only).** Each registered surface row refuses only through rows, first code plus `:` + family id, pre-table order; SS02-SS06 entailed in sequence. | `56ee3e6bd9` | `scripts/pm_dg6a_table_storage_schema.py`, derivation `scripts/pm-card5-event-contracts-check.py:67`, guard `:98`. Tool PASS below. |
+| Guard table `current_header` (4 rows) | **Fixed (this phase only).** The disposition/replay-policy/admission opening chain of `current_errors` refuses only through rows; CU02-CU04 entailed in order. Context reads in the derivation use `.get` because the HISTORICAL_ONLY contexts carry no `admitted` key (the first complete-checker run caught a `KeyError` there); every existing case outcome is unchanged. The rest of `current_errors` earns no credit from this phase. | `c99ded7de7` | `scripts/pm_dg6a_table_current_header.py`, derivation `scripts/pm-card5-event-contracts-check.py:387`, guard `:402`. Tool PASS below. |
+| S1 remainder | **Open.** Everything in the refusal inventory outside the three phases above, including the `pm-dg6a-guard-check.py:389` / `:407-413` `history_shape` defect and retirement of `rejection_mutants`/`install`/`restore`/`duplicate_proofs`. Order and exact commands are in the resume notes. | none | [DG6A.refusal-inventory.md](DG6A.refusal-inventory.md) |
+
+**Guard-table results** (`python3 scripts/pm-dg6a-guard-tables.py --out <dir>` at `c99ded7de7`; witnesses are the checker's own one-defect cases collected under its recorders, deduped by observation; credit is copied from the tool):
+
+| Phase | Guards | Proved | Unproved | Collected -> controls/negatives | Evaluations | Tool | Report SHA-256 |
+|---|---|---|---|---|---|---|---|
+| `decision_citation` | DC01-DC05 (5) | 5/5 | none | 72 -> 1 / 5 | 96 | PASS | `e7f3a908cd86a2304d3707413ea9eb1ef3551adcf175228a95097ab18457a227` |
+| `storage_schema` | SS01-SS06 (6) | 6/6 | none | 298 -> 1 / 6 | 133 | PASS | `4a27af83e2fc78a8189a0d273de285fbcc6379e88a779444f1bfb427614d745b` |
+| `current_header` | CU01-CU04 (4) | 4/4 | none | 378 -> 1 / 5 | 78 | PASS | `6c00d4710ff97a6e3399368f5c0169b5f02c4dbed00ab4923d40116d1bfd85df` |
+
+Cut results: every row flips only its own negatives and stays on all others: DC01-DC05 flips 1/stays 4 each; SS01-SS06 flips 1/stays 5 each; CU01 flips 2/stays 3, CU02-CU04 flips 1/stays 4 each. Two-defect negatives reported by the tool: none (`failure_kinds` empty in all three suites). Evidence (VM local): `/home/sittingmongoose/pm-scratch/ea-dg6a-runs/guard-final-1/` (`summary.json`, per-phase tool JSON/Markdown).
+
+**Checks at `c99ded7de7` (serial):** all sixteen complete family checkers exit 0 with unchanged case counts: alert 460/463/463/476, panel 516/516, `concern.created` 622, card5 345/954/961/988/967/989/968/1014/968 (complete-family total 11,670, as sweep part 1). Guard runner exits 0 (table above). Shard generate/check and index generate pass for the NUMRULE merge regeneration (below). Not rerun this session, with reasons: `pm-dg6a-domain-check.py` (known S2 failure, next section), `pm-dg6a-guard-check.py` and `pm-dg6a-final-regression-check.py` (proof machinery being replaced; no credit is claimed from them here), `pm-plan-index.py validate` and `pm-storage-profile-check.py` (heavy; sweep part 1 records their states and nothing this session edits their inputs beyond the two merges' regenerated outputs).
+
+**Family grades before and after: unchanged.** All sixteen families stay 9 PASS / 2 PARTIAL / 1 ABSENT (C1 ABSENT, C7 PARTIAL, C12 PARTIAL). Three proved phases of one checker do not complete check 11 for any family, so no family is re-graded upward and `DG6A.self-grade.json` is unchanged. Native NOT_RUN.
+
+## Sweep part 2B numbers: findings and responses
+
+| Item | Result | Commit | Where / how to verify |
+|---|---|---|---|
+| Gated NUMRULE number-scope merge | **Done.** Exact commit `a16f67c1ef21796758f4209ff12c0f4d12b86ce9`, merged after the guard tool. All 163 conflicts were in `Plans/_shards/**` / `Plans/.plan_index/**` and were resolved by full regeneration, never by hand: `pm-shard-plans.py --generate` (99 docs, pass), `pm-plan-index.py generate` (7,526 units, pass), shard `--check` pass; only the `contracts_v0`/`storage-plan` shard trees and the six index files changed. No NUMRULE file edited. | `b789fd717b` | `git show --stat b789fd717b`; regen log `/home/sittingmongoose/pm-scratch/ea-dg6a-runs/regen1.log` |
+| Shared helper self-test | **Pass, credited exactly as reported.** `python3 scripts/pm_event_numbers.py --self-test --scope numbers` exits 0 with `"status": "pass"`, 580/580 cases (304 negatives), `datetime_inventory: NOT_RUN_SEPARATE_SUITE`, `guard_isolation: SWEEP_PENDING`, `native_authority: NOT_RUN`. This credits the merged helper only; no DG6A file calls it yet. | none (merged code) | Log `/home/sittingmongoose/pm-scratch/ea-dg6a-runs/numbers-selftest.log` SHA-256 `12fccc2a17e0492aaa4b7c7dbcd1d912b46cbe06f6c629f93a7aa806ba848359` |
+| Lane number adoption (S2 + stale expectations) | **Not done; next worker.** No date-time code adopted (`pm_event_datetime.datetime_validator`, `date_time`, inventory gate untouched). Exact locations below. | none | Part 2B items 1-3 below |
+
+## Part 2B items
+
+1. **Number adoption in `scripts/pm-dg6a-domain.py`.** Replace lane-local surrogates with the shared calls at `integer_token` (:52), `loads` (:62), `semantic_numbers` (:66-69, the blanket `SAFE_INTEGER = 9007199254740991` cap at :7) and keep `instant_key` (:78) exact timestamp comparison. Cite CV-1100 instead of repeating safe ceilings; bound only actually owner-bounded fields with `current_integer`; qualify the producer JCS route instead of redefining logical integer domains. Guide: `reports/event-authority-20261105/NUMRULE-ADOPTION.md:199-210`.
+2. **Number adoption in `scripts/pm-alert-event-contracts-check.py`.** `producer_digest` (:344) moves from `domain.semantic_numbers` + `_codec.event_producer_semantic_digest` to `producer_semantic_bytes`/`producer_semantic_digest` with the lane's declared `type_sensitive_paths`, keeping recipe/preimage exactly. `historical_guards` (:463) retains original schema type/format/number validation on history with current guards excluded; add authenticated recipe evidence (`RetainedDispatcher`) plus former-valid integral-float/large-metadata history positives. Owner wording beside CV-680..686, SP-660..666, F3-700..705 (guide :208) and the F3-706..714 codecs; regenerate shards/index after owner edits.
+3. **Stale number-boundary expectations.** `scripts/pm-dg6a-domain-check.py:141-142` invents a u64 default maximum and expects the standalone `prior_revision` leaf (`type integer, minimum 1`, no maximum) to refuse 18446744073709551616 (assertion at :101; six alert/panel selections exit 1, sweep part 1). Align with the shared owner domains during adoption; do not restore lowered schema maxima. Same for the numeric list at `scripts/pm-dg6a-domain-check.py:138,169,179,249` and `scripts/pm-dg6a-final-regression-check.py:144-148`. Shared corpus must run through each complete checker (`pm-ds15-number-corpus.py` / DF `pm-filesafe-number-corpus.py` are the models).
+4. **S1 remainder** (part 2A work, listed here so nothing is dropped): every refusal in [DG6A.refusal-inventory.md](DG6A.refusal-inventory.md) outside the three proved phases; alert shared-library phases first (panel/concern/card5 complete boundaries depend on them), then `operation_guards` per family branch, schema phases via the tool catalog, history phases (fixing the `history_shape` :389/:407-413 navigation defect), then retire `pm-dg6a-guard-check.py`'s proof machinery.
+5. **Date-time gate.** No date-time code adopted; existing enforced date-time/UUID grammar unchanged. This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
+
+---
+
 # DG6A: sweep part 1 (fixture pass)
 
 Branch `plans/ea-w2-gui-concerns-20261104`. **Fix commit:** `d3045f0ca5`. **Start:** text-pass head `5f61b7d259`. **Rebase:** none; the text pass did not abort its rebase, so this round stayed on base `2989975e8f`.
