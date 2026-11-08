@@ -35,6 +35,7 @@ import pm_dg6a_table_current_context as context_table  # noqa: E402
 import pm_dg6a_table_profile as profile_table  # noqa: E402
 import pm_dg6a_table_writer_policy as writer_table  # noqa: E402
 import pm_dg6a_table_cursor as cursor_table  # noqa: E402
+import pm_dg6a_table_panel_scope as panel_scope_table  # noqa: E402
 
 RETURN_SOURCE = 'return g.Case(table, check, context)'
 
@@ -279,6 +280,27 @@ def collect_cursor():
     return controls, negatives, len(records)
 
 
+def collect_panel_scope():
+    """Each panel family's checkpoint_scope_cases through its complete wrapper."""
+    checker = load_checker('dg6a_panel_for_guard_tables_scope', 'pm-panel-event-contracts-check.py')
+    records = []
+    names = ('positive', 'coherent_app_scope', 'coherent_foreign_partition')
+    for family in checker.load('Plans/panel_event_contracts/manifest.json')['families']:
+        fixture = checker.load('Plans/panel_event_contracts/' + family['slug'] + '.fixtures.json')
+        cp_schema = checker.load('Plans/panel_event_contracts/' + family['checkpoint'] + '.schema.json')
+        collected = []
+        checker.PANEL_SCOPE_RECORDER = collected
+        try:
+            count = checker.checkpoint_scope_cases(fixture['checkpoint'], cp_schema, fixture['settled_operation'])
+        finally:
+            checker.PANEL_SCOPE_RECORDER = None
+        assert len(collected) == count, (family['event_type'], len(collected), count)
+        for name, (observed, first) in zip(names, collected):
+            records.append((family['event_type'] + '/' + name, family['event_type'], observed, first, name))
+    controls, negatives = dedupe(records)
+    return controls, negatives, len(records)
+
+
 PHASES = {
     'decision_citation': (decision_table, 'scripts/pm_dg6a_table_decision_citation.py', collect_decision_citation),
     'storage_schema': (storage_table, 'scripts/pm_dg6a_table_storage_schema.py', collect_storage_schema),
@@ -287,6 +309,7 @@ PHASES = {
     'profile': (profile_table, 'scripts/pm_dg6a_table_profile.py', collect_profile),
     'writer_policy': (writer_table, 'scripts/pm_dg6a_table_writer_policy.py', collect_writer_policy),
     'cursor': (cursor_table, 'scripts/pm_dg6a_table_cursor.py', collect_cursor),
+    'panel_scope': (panel_scope_table, 'scripts/pm_dg6a_table_panel_scope.py', collect_panel_scope),
 }
 
 
