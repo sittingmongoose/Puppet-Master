@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L13363-L15385
+Source lines: L13363-L15387
 
-Source SHA256: `c1be81fa3d2c524d5484c66516b384f2979f048050f40116fbb2c77dbb7d4132`
+Source SHA256: `05f6c960c0d7f3540770e5a41234e5c80eb2331fb42e27036c2b9a413511bba9`
 
 ---
 
@@ -499,7 +499,8 @@ command_payload_definitions:
             The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5160).
             Canon does not say which closed action_type (:377) this capture uses. Choice: snapshot, the enum's
             page capture; the element or selection is not a field of the row (UI_Command_Catalog.md:831). The
-            optional thread_id has no field in the request or the closed action arguments (:423) and stays on the
+            optional thread_id has no field in the request or the closed action arguments
+            (Plans/section15_browser_program_contracts.schema.json:423) and stays on the
             UICommand envelope (DL-341 open_owner_questions).
     - command_id: cmd.browser.add_selection_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
@@ -536,7 +537,8 @@ command_payload_definitions:
             The wired BrowserActionRequestV2 lists this command (Plans/section15_browser_program_contracts.schema.json:5136).
             Canon does not say which closed action_type (:377) this capture uses. Choice: snapshot, the enum's
             page capture; the element or selection is not a field of the row (UI_Command_Catalog.md:832). The
-            optional thread_id has no field in the request or the closed action arguments (:423) and stays on the
+            optional thread_id has no field in the request or the closed action arguments
+            (Plans/section15_browser_program_contracts.schema.json:423) and stays on the
             UICommand envelope (DL-341 open_owner_questions).
     - command_id: cmd.browser.add_selection_screenshot_to_chat
       ucc_units: [UCC-064, UCC-061, UCC-062]
