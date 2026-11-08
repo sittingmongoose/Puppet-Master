@@ -66,7 +66,8 @@ export default async function(t) {
             if(s&&card){
               const anim=card.__qa7Descent||(card.__qa7Descent=card.getAnimations().find(a=>a.effect.getTiming().duration===230&&a.effect.getTiming().easing==='steps(6, end)'));
               if(anim){const b=card.getBoundingClientRect(),time=Number(anim.currentTime),phase=Math.max(0,Math.min(230,time-90));
-                rows.at(-1).props.push({id:'act-card',kind:'act-card',state:time<=410?'in':'out',op:1,len:phase,target:230,box:[b.left,b.top,b.right,b.bottom]});}
+                card.__qa7DescentAt??=performance.now();
+                rows.at(-1).props.push({id:'act-card',kind:'act-card',state:performance.now()-card.__qa7DescentAt<=410?'in':'out',op:1,len:phase,target:230,box:[b.left,b.top,b.right,b.bottom]});}
             }
             if(paintTag&&s){const w=window.__qa7FallTag,seq=++w.seq;rows.at(-1).paintSeq=seq;const bits=[1,0];for(let i=0;i<20;i++)bits.push((seq>>i)&1);for(let i=0;i<20;i++)bits.push(1-((seq>>i)&1));bits.forEach((b,i)=>{if(w.shown[i]!==b){w.cells[i].style.background=b?'#fff':'#000';w.shown[i]=b;}});}
             if((started!==null&&performance.now()-started>=duration)||performance.now()>=deadline){
