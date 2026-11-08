@@ -14,7 +14,7 @@
 // `browser-check frames <film> --run <folder>` gives the frames after each mark. --set looks=glass-dark limits the looks.
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { decodePng } from '../helpers/activity-cover-pixels.mjs';
+import { inflateSync } from 'node:zlib';
 import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 const LOOKS_FILM = ['glass-dark', 'glass-light'];
 
@@ -50,6 +50,30 @@ function ringSides(im, box, ink) {
   return { top: side(mid(L, R).map(x => span(T).map(y => [x, y]))), bottom: side(mid(L, R).map(x => span(B).map(y => [x, y]))),
     left: side(mid(T, B).map(y => span(L).map(x => [x, y]))), right: side(mid(T, B).map(y => span(R).map(x => [x, y]))) };
 }
+// A screencast PNG's top rows only (the rail's tiles sit near the top of the window): every row is inflated, but only
+// rows 0..rows-1 are unfiltered, as a row's filter reads the row above it. 8-bit RGB or RGBA, not interlaced (Chrome's).
+function decodeTop(bytes, rows) {
+  let width = 0, height = 0, ch = 4; const parts = [];
+  for (let p = 8; p < bytes.length;) {
+    const n = bytes.readUInt32BE(p), type = bytes.toString('ascii', p + 4, p + 8), data = bytes.subarray(p + 8, p + 8 + n);
+    if (type === 'IHDR') { width = data.readUInt32BE(0); height = data.readUInt32BE(4); ch = data[9] === 6 ? 4 : 3; if (data[8] !== 8 || data[12]) throw new Error('unexpected PNG format'); }
+    else if (type === 'IDAT') parts.push(data); else if (type === 'IEND') break;
+    p += n + 12;
+  }
+  const raw = inflateSync(Buffer.concat(parts)), stride = width * ch, h = Math.min(height, rows), px = Buffer.alloc(stride * h), out = Buffer.alloc(width * h * 4, 255);
+  for (let y = 0; y < h; y++) {
+    const f = raw[y * (stride + 1)], o = y * (stride + 1) + 1, r = y * stride;
+    for (let x = 0; x < stride; x++) {
+      const a = x >= ch ? px[r + x - ch] : 0, b = y ? px[r + x - stride] : 0, c = y && x >= ch ? px[r + x - stride - ch] : 0;
+      let pr = 0;
+      if (f === 1) pr = a; else if (f === 2) pr = b; else if (f === 3) pr = (a + b) >> 1; else if (f === 4) { const q = a + b - c, pa = Math.abs(q - a), pb = Math.abs(q - b), pc = Math.abs(q - c); pr = pa <= pb && pa <= pc ? a : pb <= pc ? b : c; }
+      px[r + x] = (raw[o + x] + pr) & 255;
+    }
+  }
+  if (ch === 4) return { width, height: h, data: px };
+  for (let i = 0, j = 0; i < px.length; i += 3, j += 4) { out[j] = px[i]; out[j + 1] = px[i + 1]; out[j + 2] = px[i + 2]; }
+  return { width, height: h, data: out };
+}
 // the tile and 24 px round it, native pixels, for a frame that fails (ring-frames/ in the run folder)
 function cropPng(im, box, file) {
   const x0 = Math.max(0, Math.floor(box.x) - 24), y0 = Math.max(0, Math.floor(box.y) - 24), x1 = Math.min(im.width, Math.ceil(box.x + box.width) + 24), y1 = Math.min(im.height, Math.ceil(box.y + box.height) + 24);
@@ -79,7 +103,8 @@ function markState(k) {
   return { active, keyFocus, own, onLens, iconFlag: el.hasAttribute('data-lg-focus'), lensFlag: !!lens && lens.hasAttribute('data-lg-focus'), files: isOpen('files'), search: isOpen('search') };
 }
 
-export default async function (t) {
+// The page, the key walk, the compositor frames and the pixel judge, shared by both tests.
+async function rig(t) {
   await t.viewport(1920, 1080);
   const f = await t.app.open();
   const kb = t.page.keyboard;
@@ -125,27 +150,37 @@ export default async function (t) {
     document.documentElement.appendChild(probe); const col = getComputedStyle(probe).color; probe.remove();
     c.fillStyle = col; c.fillRect(0, 0, 1, 1); return Array.from(c.getImageData(0, 0, 1, 1).data); }, k);
   // every frame of a press, judged: the tile is still (a focused tile stands still), the lens's resting box is read after
-  const judge = async (look, label, k, cap) => {
-    if (!cap) return;
+  let crops = 0;   /* the first 24 failing frames of a test are cropped */
+  const frameFaults = async (look, label, k, cap) => {
     const tile = await boxOf(`#activityBar .icon[data-ab-id="${k}"] .symbol`), lens = await boxOf('#lg-lenses .lg-lens[data-lg-for="rail-icons"]'), ink = await inkOf(k);
     const near = lens && tile && Math.abs(lens.x + lens.width / 2 - tile.x - tile.width / 2) <= 3 && Math.abs(lens.y + lens.height / 2 - tile.y - tile.height / 2) <= 3 ? lens : null;
-    const bad = [], seen = cap.got.length;
+    const bad = [], seen = cap.got.length, rows = Math.ceil(Math.max(tile.y + tile.height, near ? near.y + near.height : 0)) + 32;
     for (const fr of cap.got) {
-      const im = decodePng(Buffer.from(fr.data, 'base64')), sd = better(ringSides(im, tile, ink), near && ringSides(im, near, ink));
+      const im = decodeTop(Buffer.from(fr.data, 'base64'), rows), sd = better(ringSides(im, tile, ink), near && ringSides(im, near, ink));
       if (Object.values(sd).every(v => v.share >= 0.9)) continue;
       const ms = Math.round(fr.wall - cap.at);
       bad.push({ ms, sides: Object.fromEntries(Object.entries(sd).map(([q, v]) => [q, `${v.share} ${v.median}`])) });
-      if (bad.length <= 4 && t.run?.dir) { const dir = join(t.run.dir, 'ring-frames'); mkdirSync(dir, { recursive: true }); cropPng(im, tile, join(dir, `${look}-${label.replace(/[^a-z0-9]+/gi, '-')}-${ms}ms.png`)); }
+      if (bad.length <= 4 && crops++ < 24 && t.run?.dir) { const dir = join(t.run.dir, 'ring-frames'); mkdirSync(dir, { recursive: true }); cropPng(im, tile, join(dir, `${look}-${label.replace(/[^a-z0-9]+/gi, '-')}-${ms}ms.png`)); }
     }
     t.log(`${look} ${label}: ${seen} frames on pixels, ink ${ink.slice(0, 3)}, ${bad.length} without the ring at 3:1 on every side${bad.length ? ' ' + JSON.stringify(bad.slice(0, 6)) : ''}`);
+    return { seen, bad };
+  };
+  const judge = async (look, label, k, cap) => {
+    if (!cap) return;
+    const { seen, bad } = await frameFaults(look, label, k, cap);
     await t.check(`${look} ${label}: in every frame from the press, ${k}'s ring on pixels at 3:1 on every side`, seen >= 5 && bad.length === 0,
       seen < 5 ? `only ${seen} frames came` : JSON.stringify({ frames: seen, without: bad.length, first: bad.slice(0, 4) }));
   };
-  const filesOpen = { files: true, search: false }, shut = { files: false, search: false }, searchOpen = { files: false, search: true };
+  return { f, kb, looks, state, reach, step, film, frameFaults, cdp };
+}
+
+const filesOpen = { files: true, search: false }, shut = { files: false, search: false }, searchOpen = { files: false, search: true };
+const settle = async (f, look, t) => { await t.app.look(look); await f.waitForFunction(() => !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.(), null, { timeout: 20000 }).catch(() => {}); await f.waitForTimeout(800); };
+
+async function filmSteps(t) {
+  const { f, kb, looks, state, reach, step, cdp } = await rig(t);
   for (const look of looks) {
-    await t.app.look(look);
-    await f.waitForFunction(() => !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.(), null, { timeout: 20000 }).catch(() => {});
-    await f.waitForTimeout(800);
+    await settle(f, look, t);
     if (!(await state('files')).files) { await reach(look, 'files', 'to open Files first'); await kb.press('Enter'); await f.waitForTimeout(800); }
     await t.check(`${look}: Files is open before the film's steps`, (await state('files')).files, JSON.stringify(await state('files')), { hard: true });
     await step(look, 'Tab to Files (open)', 'files', filesOpen, async () => { await reach(look, 'files', 'the film\'s first step'); await t.mark(`${look}: Tab to Files`); }, false);
@@ -167,3 +202,65 @@ export default async function (t) {
   if (cdp) await cdp.detach().catch(() => {});
   await f.evaluate(() => document.getElementById('fo96-film-s')?.remove());
 }
+
+// F96-1 round 7 (opus-recheck-g8fix): the lens's arrivals on the key-focused Files under load. Under a 60 fps recorder
+// on Nas1 a travel onto Files washed its ring to 2.2-2.5:1 in about 1 of 25-30 arrivals, with no cue drawn: the frame
+// that starts a travel is committed to the compositor, which runs it, and anything the page decides about the mark
+// after that waits for the main thread. The load is made the same every time here: the check's own keydown listener
+// (on the window, capturing, so its frame callback is asked for before the app's), armed for one press, looks in each
+// frame for the rail lens's motion and, once it has one, holds the main thread for --set stall= ms (600; the panel's
+// own build held it 100-500 ms under the recorder): in a task right after that frame if the motion was already there in
+// the first frame after the key (that frame commits it), else at once, ahead of the page's own callbacks of the frame
+// after the one that started it. Every later frame then waits while the compositor runs the travel, as it did under the
+// recorder; what the page put in the travel's own frame is all that shows. With the key focus kept on Files, Search open: Ctrl+1
+// and Enter on Files in turn (the lens travels up onto Files), then Ctrl+2 (it leaves Files), --set arrivals= times
+// (30) in each look. Every compositor frame of each is judged as the film steps judge theirs; each arrival must also end
+// with Files open and the key focus on it.
+async function arrivals(t) {
+  const { f, kb, looks, state, reach, film, frameFaults } = await rig(t);
+  const n = Math.max(1, Number(t.args.arrivals || 30)), stall = Math.max(0, Number(t.args.stall ?? 600));
+  await f.evaluate(() => {
+    if (window.__fo96Stall) return;
+    const S = window.__fo96Stall = { arm: 0, held: 0, late: 0 };
+    window.addEventListener('keydown', () => { const ms = S.arm; if (!ms) return; S.arm = 0; let tries = 0;
+      const hold = () => { const t0 = performance.now(); while (performance.now() - t0 < ms) { /* held */ } S.held++; };
+      const look = () => {
+        const l = document.querySelector('.lg-lens[data-lg-for="rail-icons"]'), a = l && l.getAnimations().find(x => x.playState === 'running' || x.pending);
+        if (a) { if (!tries) setTimeout(hold, 0); else { S.late++; hold(); } return; }
+        if (++tries < 40) requestAnimationFrame(look);
+      };
+      requestAnimationFrame(look); }, true);
+  });
+  const press = async key => { await f.evaluate(ms => { window.__fo96Stall.arm = ms; }, stall); await kb.press(key); };
+  for (const look of looks) {
+    await settle(f, look, t);
+    await reach(look, 'files', 'to keep the key focus on Files');
+    if (!(await state('search')).search) { await kb.press('Control+2'); await f.waitForTimeout(1200); }
+    await t.check(`${look}: Search is open, with the key focus on Files, before the arrivals`, await state('files').then(s => s.search && s.active === 'files' && s.keyFocus), JSON.stringify(await state('files')), { hard: true });
+    const arrive = { bad: [], frames: 0, wrong: [] }, leave = { bad: [], frames: 0, wrong: [] };
+    for (let i = 0; i < n; i++) {
+      const how = i % 2 ? 'Enter' : 'Control+1';
+      let cap = await film(() => press(how));
+      let s = await state('files');
+      if (!(s.files && s.active === 'files' && s.keyFocus)) arrive.wrong.push({ i, how, s });
+      if (cap) { const r = await frameFaults(look, `arrival ${i + 1} (${how})`, 'files', cap); arrive.frames += r.seen; if (r.bad.length) arrive.bad.push({ i: i + 1, how, frames: r.bad.slice(0, 2) }); }
+      cap = await film(() => press('Control+2'));
+      s = await state('files');
+      if (!(s.search && s.active === 'files' && s.keyFocus)) leave.wrong.push({ i, s });
+      if (cap) { const r = await frameFaults(look, `leaving ${i + 1} (Ctrl+2)`, 'files', cap); leave.frames += r.seen; if (r.bad.length) leave.bad.push({ i: i + 1, frames: r.bad.slice(0, 2) }); }
+      if (arrive.wrong.length + leave.wrong.length > 2) break;
+    }
+    const held = await f.evaluate(() => window.__fo96Stall);
+    t.log(`${look} arrivals under a ${stall} ms stall: ${n} arrivals, ${arrive.frames} frames, ${arrive.bad.length} with a frame below 3:1; leaving: ${leave.frames} frames, ${leave.bad.length}; stalls held ${held.held} (${held.late} at once, in the frame after the one that started the motion)`);
+    await t.check(`${look}: each of ${n} arrivals on the key-focused Files (Ctrl+1, Enter) under a ${stall} ms main-thread stall ends with Files open and the key focus on it, and so does each Ctrl+2`,
+      arrive.wrong.length === 0 && leave.wrong.length === 0, JSON.stringify({ arrive: arrive.wrong.slice(0, 3), leave: leave.wrong.slice(0, 3) }));
+    await t.check(`${look}: in every frame of ${n} arrivals on the key-focused Files under a ${stall} ms main-thread stall, its ring on pixels at 3:1 on every side`,
+      arrive.frames >= 5 * n && arrive.bad.length === 0, JSON.stringify({ arrivals: n, frames: arrive.frames, failed: arrive.bad.length, first: arrive.bad.slice(0, 4) }));
+    await t.check(`${look}: in every frame of ${n} departures from the key-focused Files (Ctrl+2) under the stall, its ring on pixels at 3:1 on every side`,
+      leave.frames >= 5 * n && leave.bad.length === 0, JSON.stringify({ departures: n, frames: leave.frames, failed: leave.bad.length, first: leave.bad.slice(0, 4) }));
+    await kb.press('Control+1'); await f.waitForTimeout(1200);
+  }
+  await f.evaluate(() => document.getElementById('fo96-film-s')?.remove());
+}
+
+export const tests = { 'film steps': filmSteps, 'arrivals under a main-thread stall': arrivals };
