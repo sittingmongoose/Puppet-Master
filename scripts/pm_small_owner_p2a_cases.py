@@ -157,6 +157,12 @@ def run_all(dm):
     witness('RT08-producer-integer', 'retry', 'RT08_producer_integer',
             lambda: dm.current_retry(r0, incoming_rt8, copy.deepcopy(r0['receipt_authority'])))
 
+    # RS03: float leaf in an authority observation no join reads typed-ly.
+    authority3 = copy.deepcopy(r0['receipt_authority'])
+    authority3['source_selection'] = dict(authority3['source_selection'], recovery_epoch=0.0)
+    witness('RS03-authority-integer', 'resolve', 'RS03_authority_integer',
+            lambda: dm.resolve_original(r0, copy.deepcopy(r0['positive_event_record']), authority3))
+
     # RS14: foreign incoming event id (outside the producer digest).
     incoming14 = dict(copy.deepcopy(r0['positive_event_record']), event_id='evt_foreign')
     witness('RS14-incoming-event', 'resolve', 'RS14_incoming_event',

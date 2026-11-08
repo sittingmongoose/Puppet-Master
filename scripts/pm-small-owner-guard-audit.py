@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-"""DM guard-removal witnesses. Mutants live in memory; production guards stay intact.
+"""DM guard witness catalogue. Sweep part 2A retired the AST mutant matrix.
 
 Each probe starts from a passing input and changes one semantic fact. Observation
 copies (not independent facts) change together. The ordinary full checker runs the
-same witnesses. This audit removes each named enforcement rule, tests the entire
-witness matrix, and calls the full checker to prove that the mutant is caught.
+same witnesses through normal_checks. Guard isolation is now proved by the Method B
+guard tables (scripts/pm_small_owner_table_*.py) under the gated shared tool
+scripts/pm_guard_isolation.py, driven by scripts/pm-small-owner-guard-tables.py.
+The catalogue's source-edit strings are retained witness metadata only; no mutant
+is built or credited from them.
 """
 import contextlib
 import ast
@@ -826,89 +829,7 @@ def expected_probe_ids(guard, probes, containers):
 
 
 def main():
-    if len(sys.argv) not in (2,3):
-        raise SystemExit('usage: pm-small-owner-guard-audit.py <external-output.json> [guard-name-regex]')
-    source=SUBJECT.read_text();m=load(source)
-    fixtures=json.loads((ROOT/'Plans/small_owner_event_fixtures.json').read_text())
-    probes,mutants=catalogue(m,fixtures)
-    containers=container_rules(m,fixtures,probes)
-    mutants.update({guard:rule['edits'] for guard,rule in containers.items()})
-    schema_owners={json.loads((ROOT/r['schema']).read_text())['$id']:r['event_type'] for r in fixtures['families']}
-    m._guard_probe_catalogue=probes
-    normal_checks(m,fixtures)
-    table=[]
-    # Reuse an observed refusal only when the tested function and its complete
-    # transitive subject-function dependencies are byte-identical. This checks
-    # unchanged negatives without rerunning thousands of identical validators.
-    observed={}
-    def fingerprints(text):
-        tree=ast.parse(text)
-        funcs={n.name:n for n in tree.body if isinstance(n,ast.FunctionDef)}
-        def closure(name, seen=None):
-            seen=set() if seen is None else seen
-            if name in seen:return ''
-            seen.add(name)
-            node=funcs[name]
-            # Include callbacks passed as values (JSON numeric token hooks),
-            # not only syntactically direct calls.
-            calls=sorted({n.id for n in ast.walk(node) if isinstance(n,ast.Name) and n.id in funcs})
-            if any(isinstance(n,ast.Name) and n.id=='FORMATS' for n in ast.walk(node)):
-                calls=sorted(set(calls)|{'utc_datetime'})
-            if any(isinstance(n,ast.Name) and n.id=='DMValidator' for n in ast.walk(node)):
-                calls=sorted(set(calls)|{'integer_type'})
-            return ast.dump(node)+''.join(closure(c,seen) for c in calls)
-        return {name:hashlib.sha256(closure(name).encode()).hexdigest() for name in funcs}
-    for guard,edits in mutants.items():
-        if Path('/proc/meminfo').is_file():
-            available_kib=int(next(line.split()[1] for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:')))
-            if available_kib < 6*1024*1024:
-                raise SystemExit('RESOURCE PAUSE: under 6 GiB available; no further guard run')
-        if len(sys.argv)==3 and not re.search(sys.argv[2],guard):
-            continue
-        changed=source
-        schema_edits=[]
-        for old,new in edits:
-            if old.startswith('@schema:'):
-                schema_edits.append(json.loads(old.removeprefix('@schema:')))
-                continue
-            assert old in changed,(guard,old)
-            changed=changed.replace(old,new)
-        mutant=load(changed,schema_edits)
-        mutant._guard_probe_catalogue=probes
-        prints=fingerprints(changed)
-        flips=[];rejected=[];errors=[]
-        expected=expected_probe_ids(guard,probes,containers)
-        for p in probes:
-            try:
-                fn={'token_schema_valid':'read_token_validator','schema_references_valid':'assert_schema_references','schema_wellformed':'assert_schema_references','schema_valid':'resolved_payload',
-                    'msgpack_supported':'canonical_fixture_msgpack','current_json_valid':'decode_current_json','different_producer_digest':'producer_digest',
-                    'producer_hash_supported':'producer_digest'}.get(p['function'],p['function'])
-                affected=bool(schema_edits) and any(p['label'].startswith(schema_owners[e['schema_id']]+':') for e in schema_edits) and fn in ('resolved_payload','valid_event','resolve_original','resolve_full_value','reader_result','rebuild_publication','publication','current_retry')
-                key=(p['id'],prints[fn],json.dumps(schema_edits,sort_keys=True) if affected else '')
-                if key not in observed:
-                    observed[key]=p['accept'](invoke(mutant,p,'negative'))
-                accepted=observed[key]
-            except Exception as exc:
-                errors.append([p['id'],type(exc).__name__,str(exc)])
-                continue
-            (flips if accepted else rejected).append(p['id'])
-        stdout=io.StringIO();failure=None
-        try:
-            first=guard if any(p['guard']==guard for p in probes) else next(p['guard'] for p in probes if p['id'] in expected)
-            with contextlib.redirect_stdout(stdout):mutant.main(guard_first=first)
-        except AssertionError as exc:
-            failure=str(exc)
-        except Exception as exc:
-            errors.append(['full_checker',type(exc).__name__,str(exc)])
-        row=dict(guard=guard,edits=[dict(before=a,after=b) for a,b in edits],negatives_that_flip=flips,negatives_that_stay_rejected=rejected,expected_flips=expected,errors=errors,full_checker_failure=failure)
-        row['status']='PASS' if set(flips)==set(expected) and not errors and failure is not None else 'FAIL'
-        table.append(row)
-        print(guard,row['status'],len(flips),'flip',len(rejected),'stay rejected',flush=True)
-    out={'schema_id':'pm.dm.guard_removal.v1','native_execution':'NOT_RUN','guards':len(table),'probes':len(probes),'table':table,'status':'PASS' if all(r['status']=='PASS' for r in table) else 'FAIL'}
-    path=Path(sys.argv[1])
-    path.write_text(json.dumps(out,indent=2)+'\n')
-    print(out['status'],path)
-    return int(out['status']!='PASS')
+    raise SystemExit('retired in sweep part 2A: use scripts/pm-small-owner-guard-tables.py (Method B guard tables under the gated guard tool)')
 
 
 if __name__=='__main__':
