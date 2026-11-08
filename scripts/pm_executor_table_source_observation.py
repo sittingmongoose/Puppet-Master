@@ -20,7 +20,7 @@ def SO01_observation(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('SO01_observation', g.Invariant('/payload', 'equals the complete owner observation by canonical bytes'), 'complete source observation/presence', SO01_observation),
+        g.Guard('SO01_observation', g.Invariant('/payload', 'equals the complete owner observation by exact typed value'), 'complete source observation/presence', SO01_observation),
     ])
 
     def check(value):

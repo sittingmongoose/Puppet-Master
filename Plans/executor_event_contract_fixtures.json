@@ -54089,7 +54089,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "attempt.completed",
@@ -54738,7 +54744,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "attempt.started",
@@ -55383,7 +55395,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "node.blocked",
@@ -55990,7 +56008,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "node.completed",
@@ -56583,7 +56607,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "node.started",
@@ -57168,7 +57198,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "node.unblocked",
@@ -57735,7 +57771,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "plan.decomposition_degraded",
@@ -58317,7 +58359,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "remediation.resolved",
@@ -58951,7 +58999,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "remediation.spawned",
@@ -59552,7 +59606,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "run.completed",
@@ -60109,7 +60169,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "run.graph_integrity_failed",
@@ -60678,7 +60744,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "run.node_backoff_expired",
@@ -61269,7 +61341,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "run.node_backoff_started",
@@ -61859,7 +61937,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "run.node_ready",
@@ -62443,7 +62527,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "run.node_retry_scheduled",
@@ -63044,7 +63134,13 @@
         },
         "viewer": "viewer-001"
       },
-      "expected": "accept"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "event_type": "scheduler.pass",

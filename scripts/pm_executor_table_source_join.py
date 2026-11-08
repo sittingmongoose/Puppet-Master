@@ -20,7 +20,7 @@ def SJ01_source_join(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('SJ01_source_join', g.Invariant('/payload/{field}', 'equals the owner record field by canonical bytes'), 'source join', SJ01_source_join),
+        g.Guard('SJ01_source_join', g.Invariant('/payload/{field}', 'equals the owner record field by exact typed value'), 'source join', SJ01_source_join),
     ])
 
     def check(value):

@@ -14,17 +14,24 @@ NON_RETRYABLE = ('graph_integrity', 'verification_failed', 'reviewer_findings', 
 
 def identity(contract, payload, storage_instance_id):
     from pm_executor_event_semantics import canonical, refuse, tname
-    # Apply each identity field's declared domain before making either hash.
+    from pm_event_numbers import Refusal, current_integer
+    # Apply each identity field's declared domain before making either hash. An integer field is the
+    # shared CV-1100 current_integer at its schema slot (exact int, never bool or float, owner minimum).
     schema = json.loads((ROOT / contract['schema_ref']).read_text())
     for field in contract['identity_fields']:
         value, domain = payload[field], schema['properties'][field]
         kind = domain.get('type')
-        bound = (domain['minLength'] if kind == 'string' and type(value) is str
-                 else domain['minimum'] if kind == 'integer' and type(value) is int else None)
+        integer_refusal = None
+        if kind == 'integer':
+            try:
+                current_integer(value, minimum=domain.get('minimum'), maximum=domain.get('maximum'))
+            except Refusal as error:
+                integer_refusal = error.reason
         refuse('identity_field', {
             'domain_type': copy.deepcopy(kind), 'value_type': tname(value),
             'length': len(value) if type(value) is str else None,
-            'number': value if type(value) is int else None, 'bound': bound}, ' ' + field)
+            'bound': domain['minLength'] if kind == 'string' and type(value) is str else None,
+            'integer_refusal': integer_refusal}, ' ' + field)
     refuse('identity_storage', {'storage_type': tname(storage_instance_id),
                                 'storage_nonempty': type(storage_instance_id) is str and bool(storage_instance_id)})
     inner = canonical([payload[k] for k in contract['identity_fields']])
@@ -35,36 +42,42 @@ def identity(contract, payload, storage_instance_id):
 
 def validate(contract, payload, context):
     from pm_executor_event_semantics import (schema_validate, validate_append_policy, validate_payload_transport,
-                                             validate_canonical_domain, canonical, instant, refuse, q)
+                                             validate_canonical_domain, typed, instant, refuse, q, admit_integer_slots)
     validate_append_policy(contract, context['envelope']['replay_policy'])
     validate_payload_transport(payload, context['envelope'], context['payload_packs'], context['viewer'])
     validate_canonical_domain(context)
     schema_validate(contract['schema_ref'], payload)
+    admit_integer_slots(contract['schema_ref'], payload)
+    # Current identity inputs: the CV-1100 qualified JCS identity preimage (refusal before effects).
+    identity(contract, payload, context['envelope']['storage_instance_id'])
     flags = ('admitted', 'source_refs_valid', 'read_authorized', 'receipt_available', 'predicate_valid')
     refuse('shape_flags', {field: copy.deepcopy(context[field]) for field in flags})
     refuse('shape_fences', {'writer_withdrawn': copy.deepcopy(context['writer_withdrawn']),
                             'deletion_fenced': copy.deepcopy(context['deletion_fenced'])})
     refuse('shape_joins', {'payload_project': payload['project_id'], 'current_project': copy.deepcopy(context['current_project_id']),
-                           'payload_generation_canonical': canonical(payload.get('replan_generation')),
-                           'current_generation_canonical': canonical(context['current_generation'])})
+                           'payload_generation_canonical': typed(payload.get('replan_generation')),
+                           'current_generation_canonical': typed(context['current_generation'])})
     for p, c in [('attempt_id', 'expected_attempt_id'), ('blocked_sequence', 'expected_blocked_sequence'),
                  ('remediation_parent_attempt_id', 'expected_parent_attempt_id')]:
         if p in payload:
-            refuse('shape_source_field', {'payload_canonical': canonical(payload[p]), 'expected_canonical': canonical(context[c])},
+            refuse('shape_source_field', {'payload_canonical': typed(payload[p]), 'expected_canonical': typed(context[c])},
                    message=p + ' source join')
     name = contract['event_type']
     proof_schema = json.loads((ROOT / 'Plans/executor_event_source_proofs.schema.json').read_text())
     definition = proof_schema['$defs'][name.replace('.', '_')]
-    error = next(iter(jsonschema.Draft202012Validator(definition).iter_errors(context['source_facts'])), None)
-    refuse('source_facts_schema', {'schema_valid': error is None}, '' if error is None else ': ' + error.message)
+    from pm_executor_event_semantics import exact_integer_text
+    with exact_integer_text():
+        error = next(iter(jsonschema.Draft202012Validator(definition).iter_errors(context['source_facts'])), None)
+        message = '' if error is None else ': ' + error.message
+    refuse('source_facts_schema', {'schema_valid': error is None}, message)
     for key, value in payload.items():
         if key.endswith('_id') or key in ('blocked_sequence', 'remediation_generation', 'replan_generation', 'runtime_snapshot_ref'):
-            refuse('shape_binding', {'binding_canonical': canonical(context['source_bindings'].get(key)),
-                                     'payload_canonical': canonical(value)}, ' ' + key)
+            refuse('shape_binding', {'binding_canonical': typed(context['source_bindings'].get(key)),
+                                     'payload_canonical': typed(value)}, ' ' + key)
     for key in ('project_id', 'run_id', 'thread_id', 'attempt_id'):
         if key in payload:
-            refuse('shape_envelope', {'envelope_canonical': canonical(context['envelope'].get(key)),
-                                      'payload_canonical': canonical(payload[key])}, ' ' + key)
+            refuse('shape_envelope', {'envelope_canonical': typed(context['envelope'].get(key)),
+                                      'payload_canonical': typed(payload[key])}, ' ' + key)
     facts = {'family': name, 'node_state': None, 'expected_node_state': None, 'fixed': None, 'child_success': None,
              'child': None, 'parent': None, 'until': None, 'ts': None, 'graph_locked': None, 'packaging_passed': None,
              'now': None, 'context_until': None}

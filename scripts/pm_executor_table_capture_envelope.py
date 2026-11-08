@@ -20,7 +20,7 @@ def CE01_envelope_field(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('CE01_envelope_field', g.Invariant('/capture/envelope/{project_id,run_id,thread_id,attempt_id}', 'equals the payload field by canonical bytes'), 'envelope', CE01_envelope_field),
+        g.Guard('CE01_envelope_field', g.Invariant('/capture/envelope/{project_id,run_id,thread_id,attempt_id}', 'equals the payload field by exact typed value'), 'envelope', CE01_envelope_field),
     ])
 
     def check(value):

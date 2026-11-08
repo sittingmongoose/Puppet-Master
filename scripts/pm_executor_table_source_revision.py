@@ -35,7 +35,7 @@ def case(value):
         g.Guard('RV01_revision_type', g.Invariant('/records/*/revision', 'is an integer'), 'source revision', RV01_revision_type),
         g.Guard('RV02_revision_nonnegative', g.Invariant('/records/*/revision', 'an integer revision is not negative'), 'source revision', RV02_revision_nonnegative),
         g.Guard('RV03_expected_type', g.Invariant('/expected_revisions/*', 'is an integer (for an integer revision)'), 'source revision', RV03_expected_type),
-        g.Guard('RV04_revision_join', g.Invariant('/records/*/revision', 'equals the expected revision by canonical bytes'), 'source revision', RV04_revision_join),
+        g.Guard('RV04_revision_join', g.Invariant('/records/*/revision', 'equals the expected revision by exact typed value'), 'source revision', RV04_revision_join),
     ])
 
     def check(value):

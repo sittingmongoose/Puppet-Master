@@ -20,7 +20,7 @@ def OP01_owner_predicate(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('OP01_owner_predicate', g.Invariant('/records/{path}', 'equals the adapter requirement by canonical bytes'), 'owner predicate', OP01_owner_predicate),
+        g.Guard('OP01_owner_predicate', g.Invariant('/records/{path}', 'equals the adapter requirement by exact typed value'), 'owner predicate', OP01_owner_predicate),
     ])
 
     def check(value):

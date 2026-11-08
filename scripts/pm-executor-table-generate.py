@@ -53,11 +53,25 @@ phase('recipe_binding', 'SP-5xx: one authenticated write-time recipe per stored 
 phase('map_keys', 'Canonical maps: every key is a string (validate_payload_map_keys).', [
     ('MK01_string_keys', '/**', 'every map key is a string', 'payload map string keys', "value['all_keys_str'] is not True"),
 ])
-phase('canonical_scalar', 'Canonical scalars: JSON integer domain and, under the current recipe, exact binary64 integers.', [
+phase('canonical_scalar', 'DX owner value domain: null, string, boolean or integer scalars (no float aliases).', [
     ('CS01_scalar_domain', '/**', 'every scalar is null, string, boolean or integer', 'canonical integer value domain',
      "value['scalar_type'] not in ('NoneType', 'str', 'bool', 'int')"),
-    ('CS02_exact_binary64', '/**', 'under the current recipe an integer is an exact finite binary64 integer', 'canonical exact binary64 integer',
-     "value['scalar_type'] == 'int' and value['current_recipe'] is True and value['binary64_exact'] is not True"),
+])
+phase('jcs_qualification', 'CV-1100 qualified JCS of an actual identity/digest preimage under the current recipe (shared qualified_jcs).', [
+    ('JQ01_binary64', '/**', 'every integer has an exact finite binary64 value', 'jcs_binary64', "value['jcs_refusal'] == 'jcs_binary64'"),
+    ('JQ02_emitted_decimal', '/**', 'every emitted JCS decimal equals the original integer', 'jcs_decimal', "value['jcs_refusal'] == 'jcs_decimal'"),
+    ('JQ03_jcs_other', '/**', 'the preimage has no other JCS refusal (Unicode scalar strings, supported kinds)', 'jcs_preimage',
+     "value['jcs_refusal'] not in (None, 'jcs_binary64', 'jcs_decimal')"),
+])
+phase('current_number', 'CV-1100 current JSON number admission of a raw spelling (shared loads_current_json).', [
+    ('CN01_integer_token', '/spelling', 'an integer token is 0 or -?[1-9][0-9]* (no -0)', 'integer_token', "value['parse_refusal'] == 'integer_token'"),
+    ('CN02_json_syntax', '/spelling', 'is JSON (no leading zeros)', 'json_syntax', "value['parse_refusal'] == 'json_syntax'"),
+    ('CN03_json_other', '/spelling', 'has no other current JSON refusal (non-finite constants, duplicate keys, Unicode)', 'current_json',
+     "value['parse_refusal'] not in (None, 'integer_token', 'json_syntax')"),
+])
+phase('integer_slot', 'CV-1100 current_integer at each declared payload integer slot (current writes only).', [
+    ('IS01_integer_type', '/payload/{integer slot}', 'is an exact integer (never bool, float or decimal)', 'integer_type', "value['slot_refusal'] == 'integer_type'"),
+    ('IS02_integer_range', '/payload/{integer slot}', 'is within the schema minimum/maximum', 'integer_range', "value['slot_refusal'] == 'integer_range'"),
 ])
 
 # ===================================================================== payload schema occurrences
@@ -99,9 +113,10 @@ phase('historical_policy', 'Retained reader replay policy: the family policy or 
 ])
 
 # ===================================================================== SP-337 payload transport
-phase('payload_scalar', 'Logical payload MessagePack: the fixture integer/string scalar domain.', [
-    ('PB01_payload_scalar', '/payload/**', 'every payload scalar is null, string, integer or boolean', 'unsupported fixture payload value',
-     "value['scalar_type'] not in ('NoneType', 'str', 'int', 'bool')"),
+phase('physical_value', 'SP-1100 EVENT_VALUE canonical MessagePack of the logical payload (shared storage_value_bytes).', [
+    ('PV01_integer_range', '/payload/**', 'every integer is within -2^63..2^64-1', 'physical_integer_range', "value['physical_refusal'] == 'physical_integer_range'"),
+    ('PV02_physical_other', '/payload/**', 'the value has no other EVENT_VALUE refusal (Unicode scalar strings, supported types)', 'physical_value',
+     "value['physical_refusal'] not in (None, 'physical_integer_range')"),
 ])
 phase('transport_storage', 'SP-337: the envelope Storage instance is a nonempty string.', [
     ('PT01_storage_type', '/envelope/storage_instance_id', 'is a string', 'payload Storage string domain', "value['storage_type'] != 'str'"),
@@ -237,10 +252,10 @@ phase('identity_field', 'Identity inputs: each identity field in its declared pa
      "value['domain_type'] == 'string' and value['value_type'] != 'str'"),
     ('ID03_string_length', '/identity_fields/*', 'a string value meets minLength', 'identity declared field domain',
      "value['domain_type'] == 'string' and value['value_type'] == 'str' and value['length'] < value['bound']"),
-    ('ID04_integer_type', '/identity_fields/*', 'an integer-domain value is an integer', 'identity declared field domain',
-     "value['domain_type'] == 'integer' and value['value_type'] != 'int'"),
-    ('ID05_integer_minimum', '/identity_fields/*', 'an integer value meets minimum', 'identity declared field domain',
-     "value['domain_type'] == 'integer' and value['value_type'] == 'int' and value['number'] < value['bound']"),
+    ('ID04_integer_type', '/identity_fields/*', 'an integer-domain value passes CV-1100 current_integer type admission', 'identity declared field domain',
+     "value['domain_type'] == 'integer' and value['integer_refusal'] == 'integer_type'"),
+    ('ID05_integer_minimum', '/identity_fields/*', 'an integer value is within the schema minimum/maximum (current_integer range)', 'identity declared field domain',
+     "value['domain_type'] == 'integer' and value['integer_refusal'] == 'integer_range'"),
 ])
 phase('identity_storage', 'Identity inputs: the Storage instance is a nonempty string.', [
     ('ID06_storage_type', '/storage_instance_id', 'is a string', 'identity Storage string domain', "value['storage_type'] != 'str'"),
@@ -261,7 +276,7 @@ phase('capture_scope', 'Capture scope: Project, encoded partition and Storage ro
      "value['scope_storage'] != value['envelope_storage']"),
 ])
 phase('capture_envelope', 'Capture envelope: each mirrored identity field equals the payload (typed).', [
-    ('CE01_envelope_field', '/capture/envelope/{project_id,run_id,thread_id,attempt_id}', 'equals the payload field by canonical bytes', 'envelope',
+    ('CE01_envelope_field', '/capture/envelope/{project_id,run_id,thread_id,attempt_id}', 'equals the payload field by exact typed value', 'envelope',
      "value['envelope_canonical'] != value['payload_canonical']"),
 ])
 phase('capture_episode', 'node.blocked/node.unblocked: the episode record and its attempt presence.', [
@@ -291,7 +306,7 @@ phase('source_revision', 'Capture source records: exact revision and its expecte
      "value['revision_type'] == 'int' and value['revision'] < 0"),
     ('RV03_expected_type', '/expected_revisions/*', 'is an integer (for an integer revision)', 'source revision',
      "value['revision_type'] == 'int' and value['expected_type'] != 'int'"),
-    ('RV04_revision_join', '/records/*/revision', 'equals the expected revision by canonical bytes', 'source revision',
+    ('RV04_revision_join', '/records/*/revision', 'equals the expected revision by exact typed value', 'source revision',
      "value['revision_type'] == 'int' and value['expected_type'] == 'int' and value['revision_canonical'] != value['expected_canonical']"),
 ])
 phase('source_digest', 'Capture source records: the digest is recomputed from the body under its recipe.', [
@@ -302,11 +317,11 @@ phase('source_parents', 'Capture source records: parent refs equal the joined pa
      "value['parents'] != value['expected_parents']"),
 ])
 phase('source_join', 'Capture: each joined payload field equals its owner record field (typed).', [
-    ('SJ01_source_join', '/payload/{field}', 'equals the owner record field by canonical bytes', 'source join',
+    ('SJ01_source_join', '/payload/{field}', 'equals the owner record field by exact typed value', 'source join',
      "value['payload_canonical'] != value['source_canonical']"),
 ])
 phase('source_observation', 'Capture: the complete owner observation equals the payload, presence included.', [
-    ('SO01_observation', '/payload', 'equals the complete owner observation by canonical bytes', 'complete source observation/presence',
+    ('SO01_observation', '/payload', 'equals the complete owner observation by exact typed value', 'complete source observation/presence',
      "value['observation_canonical'] != value['payload_canonical']"),
 ])
 phase('capture_account', 'attempt.started: an account interpretation has its original snapshots.', [
@@ -360,7 +375,7 @@ phase('post_effects', 'Transition: committed post-state effects equal the adapte
      "value['observed_type'] == 'dict' and value['observed_keys'] == value['expected_keys'] and value['observed_all_int'] is True and value['expected_all_int'] is True and value['observed_min'] >= 0 and value['expected_min'] >= 0 and value['observed_pairs'] != value['expected_pairs']"),
 ])
 phase('owner_predicate', 'Adapter owner predicates: each required owner-record value (typed).', [
-    ('OP01_owner_predicate', '/records/{path}', 'equals the adapter requirement by canonical bytes', 'owner predicate',
+    ('OP01_owner_predicate', '/records/{path}', 'equals the adapter requirement by exact typed value', 'owner predicate',
      "value['observed_canonical'] != value['expected_canonical']"),
 ])
 phase('publication', 'Publication ordering: admission through publish.', [
@@ -500,7 +515,7 @@ phase('score_priority', 'Scheduler score tuples: manual_priority is an integer 0
      "value['priority_type'] == 'int' and value['priority'] > 100"),
 ])
 phase('scheduler_selection', 'scheduler.pass: source selection, unique candidates, partition and capacity.', [
-    ('SH01_source_selection', '/records/scheduler/body/selected_nodes', 'equals the payload selection by canonical bytes', 'scheduler source selection',
+    ('SH01_source_selection', '/records/scheduler/body/selected_nodes', 'equals the payload selection by exact typed value', 'scheduler source selection',
      "value['source_selected_canonical'] != value['payload_selected_canonical']"),
     ('SH02_unique_ready', '/payload/ready_nodes', 'ready node ids are unique', 'duplicate candidate', "value['ready_unique'] is not True"),
     ('SH03_unique_partition', '/payload/selected_nodes', 'selected and non-selected ids are unique together', 'duplicate candidate',
@@ -514,7 +529,7 @@ phase('scheduler_order', 'scheduler.pass: score ordering and each selected score
     ('SH06_order', '/payload/selected_nodes', 'are the first ready nodes in score order', 'score ordering', "value['selected_ids'] != value['ordered_ids']"),
 ])
 phase('scheduler_selected', 'scheduler.pass: each selected node carries its ready score tuple and lane.', [
-    ('SH07_score_tuple', '/payload/selected_nodes/*/score_tuple', 'equals the ready score tuple by canonical bytes', 'selected score',
+    ('SH07_score_tuple', '/payload/selected_nodes/*/score_tuple', 'equals the ready score tuple by exact typed value', 'selected score',
      "value['score_canonical'] != value['ready_canonical']"),
     ('SH08_lane', '/payload/selected_nodes/*/lane', 'equals the ready scheduler lane', 'selected score', "value['lane'] != value['ready_lane']"),
 ])
@@ -584,6 +599,11 @@ phase('history_scope', 'Retained reader: disclosure Project and Storage root.', 
      "value['storage'] != value['original_storage']"),
 ])
 
+phase('retained_dispatch', 'SP-1101: the original resolves through the shared RetainedDispatcher (authenticated binding, installed frozen recipe).', [
+    ('DD01_retained_dispatch', '/retained_source_sha256', 'resolves one authenticated original to its installed frozen verifier', 'retained_original_dispatch',
+     "value['dispatch_refusal'] is not None"),
+])
+
 # ===================================================================== receipt/replay model (run_trace)
 phase('trace_operation', 'Trace model: a known operation.', [
     ('TO01_known_operation', '/operations/*/op', 'is a modeled operation', 'unknown trace operation',
@@ -622,7 +642,7 @@ phase('shape_fences', 'Shape oracle: writer withdrawal and deletion fences are e
 ])
 phase('shape_joins', 'Shape oracle: Project and generation joins.', [
     ('SJ02_project', '/payload/project_id', 'equals the current Project', 'Project join', "value['payload_project'] != value['current_project']"),
-    ('SJ03_generation', '/payload/replan_generation', 'equals the current generation by canonical bytes', 'generation join',
+    ('SJ03_generation', '/payload/replan_generation', 'equals the current generation by exact typed value', 'generation join',
      "value['payload_generation_canonical'] != value['current_generation_canonical']"),
 ])
 phase('shape_source_field', 'Shape oracle: each source-joined payload field equals its expected source (typed).', [

@@ -10209,7 +10209,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -38917,7 +38923,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -38959,7 +38971,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -39001,7 +39019,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -39043,7 +39067,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -39151,25 +39181,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:attempt.completed:v1:38071e086aee4b1388d8bea515c519c094122992a1027782425df61bd0ae88f8",
-            "evt_executor_3ea75c827df53e5a760a40ce44566d05c565bbac1ad0c3db3550a3a8a920c111"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "d3956218178dfc2c12f66e7a9de157f86e61eb071e873d4f6bc6dbd59b3e982d"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -39211,8 +39253,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "4d9b23a7649636ce1df769c30069c3172174c1fd71f9916f0dcdf7ceb2a32a94"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -39225,7 +39272,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -39237,8 +39290,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "ae4843b80420c49cb895d5450a6be86e1d189bf0c2b0cef54d53b226b10675aa"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -39251,7 +39309,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -39269,7 +39333,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -39281,21 +39351,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "ee0f8837f61bb89a5dffdd1899cab3aa2ebf4b6f44f3380ad50e76e6d115df6b"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -39313,7 +39399,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -50995,7 +51087,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -88564,7 +88662,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -88606,7 +88710,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -88648,7 +88758,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -88690,7 +88806,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -88798,25 +88920,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:attempt.started:v1:38071e086aee4b1388d8bea515c519c094122992a1027782425df61bd0ae88f8",
-            "evt_executor_3454b946b3a61e236cd597cc922504824439f1d1aca933dcf11b2226cb093db1"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "d3426c51dadb60a749539fdb35b11577caf76fb4666613ecd2fa7cf0d258ff44"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -88858,8 +88992,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "6eeed31428e228396ad0afd57563cf3b469e7fd364f91f05b787bb78654bbf65"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -88872,7 +89011,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -88884,8 +89029,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "5cf128ddf438e087e9a4a5dfc4e30ffdd7dd3013b0ce2ff82f425973f34e469e"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -88898,7 +89048,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -88916,7 +89072,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -88928,21 +89090,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "e75a234f1c74265ab674f166996309602a795af0bc3357a77cd8230c78093fc2"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -88960,7 +89138,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -100579,7 +100763,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -121824,7 +122014,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -121866,7 +122062,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -121908,7 +122110,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -121950,7 +122158,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -122058,25 +122272,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:node.blocked:v1:c8e17d745917f27ea934c9b0d3d2a29491c254b9a345e7e8eb5b9de44c28d8f3",
-            "evt_executor_f30dc06ff05f96eca20c2df7b8bbd86b74a2db0bf7aa7c297877c7d3926ee3aa"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "3e451e2f97d56d78bffe05f592c7db32573af407607500fdcd99be645c92e113"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -122118,8 +122344,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "92abc2d783dc501cad150fed293ee60e1b8b18ae2f86d06e6830cffd2fffed71"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -122132,7 +122363,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -122144,8 +122381,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "4ca7451926b054e423477b0a2b44cfb863d7798624d37dd3df2c5e0cfaa3ed3f"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -122158,7 +122400,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -122176,7 +122424,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -122188,21 +122442,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "c17ac50c3904fdfc84baf00448f590b098a6b2153768b6c4b3270fe24d922215"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -122220,7 +122490,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -131347,7 +131623,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -155270,7 +155552,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -155312,7 +155600,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -155354,7 +155648,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -155396,7 +155696,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -155504,25 +155810,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:node.completed:v1:38071e086aee4b1388d8bea515c519c094122992a1027782425df61bd0ae88f8",
-            "evt_executor_c95d0b2d03a6bcf6a33ebbdaa1e6ae3bbb2af6f80e822a863e38d6d83324e1cf"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "f663aaa7a1c7d450d7d07d6f6861f3383a13335758affa1569d74545e7faf924"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -155564,8 +155882,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "e10886c62fbd1b16b3593ff0e7944621547f2a0e55aff6c1162174f98bbb3831"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -155578,7 +155901,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -155590,8 +155919,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "0642b6a5e33012c7bbb012842b8cc3bd09ab42529c28d65b4e20140b8168b46c"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -155604,7 +155938,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -155622,7 +155962,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -155634,21 +155980,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "13abb2ce3bb6af6d057e3cb6bcdc41ebf5498d254bcd9cfbd07aff2648a9df25"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -155666,7 +156028,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -164935,7 +165303,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -188746,7 +189120,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -188788,7 +189168,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -188830,7 +189216,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -188872,7 +189264,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -188980,25 +189378,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:node.started:v1:38071e086aee4b1388d8bea515c519c094122992a1027782425df61bd0ae88f8",
-            "evt_executor_4fe035425c844d13aa7f94509aea7a1eed420acec9dbe07138c6659f48d3bdf1"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "9c211e6dad7f40aeca4123f169262a90349c8082bde515cf5b600b0e387c1e0f"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -189040,8 +189450,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "9b7285a766e9f18d249b690d5278d6ae061b00388e9ab573cffab8f2be34865b"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -189054,7 +189469,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -189066,8 +189487,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "b77b953053c2c19fdc4fb136e1ddeeb25c82662aa03949cc0deeafb7f556d90a"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -189080,7 +189506,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -189098,7 +189530,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -189110,21 +189548,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "2f85c7c4d8aa5182455c3b399f0d77dd720a273f5093095bd0cd1f7df85694b2"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -189142,7 +189596,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -196933,7 +197393,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -209452,7 +209918,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -209494,7 +209966,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -209536,7 +210014,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -209578,7 +210062,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -209686,25 +210176,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:node.unblocked:v1:c8e17d745917f27ea934c9b0d3d2a29491c254b9a345e7e8eb5b9de44c28d8f3",
-            "evt_executor_29daf1ab7b2dc95361488ca975aa53e392961310370c0ae42c3e0a127f3f031f"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "7442a6548c1834b80111866a291da7ac2618714ff4ebf8387f32dd1d33a0cdf5"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -209746,8 +210248,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "bffae26f88aec3498f9b33e951d2b5fa7e4a346fe0c84be34737b2ad26aecbf2"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -209760,7 +210267,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -209772,8 +210285,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "e53a48634a7e5ee1cfb01191248557816092a3ff19dfd06f875f2cd3905a9993"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -209786,7 +210304,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -209804,7 +210328,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -209816,21 +210346,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "5b3e4abb880af50f8a5aba8ba53eef9cfe74c7dce0018d6f7bb83a640009f51f"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -209848,7 +210394,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -216197,7 +216749,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -229193,7 +229751,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -229235,7 +229799,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -229277,7 +229847,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -229319,7 +229895,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -229427,25 +230009,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:plan.decomposition_degraded:v1:9eb28ae0a7b64bc7dfaaa0989926964e895e32091593a1853963be92eed4035e",
-            "evt_executor_ed0b9e451e90ef55e1848f7188219ad254bf54d3e6ad11c4ce9da5e481f2095c"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "3abadc83cd577d7ba22facd436f1fd74262c9a618915d538607acb00831038a2"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -229487,8 +230081,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "ffe290c3079cf0a69a1fbaa648a2c59db774dba45b52d5e822925b70fbc45c75"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -229501,7 +230100,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -229513,8 +230118,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "fcb8a6735ba1ee495c43a6fe438859b303b5dca56108be91a090e646e4cb754a"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -229527,7 +230137,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -229545,7 +230161,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -229557,21 +230179,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "fe834a351c6ca5f638d860a9adda8eac2e324179a5bbb3655c975ff837eee740"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -229589,7 +230227,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -237907,7 +238551,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -250985,7 +251635,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -251027,7 +251683,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -251069,7 +251731,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -251111,7 +251779,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -251219,25 +251893,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:remediation.resolved:v1:3d1d7ab55d06554c99c9fca66faf41a24338c410a265bd6fc411bfabae146abd",
-            "evt_executor_345b03c5b7c36d027458bb5db885e19c2637b51ae9180ad3c7af68ac12edea5a"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "ba12ebcd22f8b17407a4fb3350df9b088c8ec46941a48dc559b41848f6f309ec"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -251279,8 +251965,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "e8f48139e690f3763903221d57470b828561c58f1f4cce4eeb69a7c9ec8694c5"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -251293,7 +251984,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -251305,8 +252002,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "72aa7dde7e627a3ec88a8d717fbbc3452cd240b0b86d913c76a624f05f509c6f"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -251319,7 +252021,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -251337,7 +252045,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -251349,21 +252063,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "79b6e783fca52dd191f92c3955b97937dc02fdb042a83edc48da25b7389d840a"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -251381,7 +252111,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -260046,7 +260782,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -273124,7 +273866,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -273166,7 +273914,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -273208,7 +273962,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -273250,7 +274010,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -273358,25 +274124,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:remediation.spawned:v1:3d1d7ab55d06554c99c9fca66faf41a24338c410a265bd6fc411bfabae146abd",
-            "evt_executor_bfe86f451601495438180cc6f4d396e1df1c99deaf8bd5f4c6abd6bef2840159"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "cab7645f3624ef6540b22d74065628bcf675475745125cc95348f9f5ed357d96"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -273418,8 +274196,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "20a4d5b0082c030446609653be0d0240dc0c459a8e5d452d04e27333054376ca"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -273432,7 +274215,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -273444,8 +274233,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "9491059b6ad785a727c3255a422772ad7c24427e35200964925f9a3ec26bc87d"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -273458,7 +274252,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -273476,7 +274276,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -273488,21 +274294,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "f9f872655bbb5dbc26f87740e3ae999a61d0427c1e2604d0f470f51c2fd59268"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -273520,7 +274342,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -280965,7 +281793,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -296447,7 +297281,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -296489,7 +297329,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -296531,7 +297377,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -296573,7 +297425,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -296681,25 +297539,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:run.completed:v1:0ea3d5d586f5ea94d6180f8cd06cee69f8a823d5a06e3f9d4974d0803217f81b",
-            "evt_executor_4e83c17f3215e6b223d276437d5715337947fbaaba495cc93b93e2cb15ef94e8"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "c05092d295bb3a3eefaf020f60184ead8bb1476e11a6b0607b7e4f60da7f400a"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -296741,8 +297611,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "af6deaccf8e508866c4dae4648daf91664b2fcbb408da25fe125689fae00b5d7"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -296755,7 +297630,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -296767,8 +297648,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "0d92e8907f52307279d4632c6c02d6b90d1138474016a06e1d9a6eda1424181e"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -296781,7 +297667,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -296799,7 +297691,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -296811,21 +297709,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "e298b544434b6bf7931f53719d4bd86576b1982c91a88fd665c454ba9935437c"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -296843,7 +297757,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -302849,7 +303769,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -315753,7 +316679,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -315795,7 +316727,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -315837,7 +316775,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -315879,7 +316823,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -315987,25 +316937,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:run.graph_integrity_failed:v1:0ea3d5d586f5ea94d6180f8cd06cee69f8a823d5a06e3f9d4974d0803217f81b",
-            "evt_executor_c0bf46ee15c5253c7324bdbb4347b6cb5cb97657b303c49b9e47530e45efe785"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "ba97a8f0c309233fe98c31e9813f5c9543be32ebe6021ae31c6ba3780ec848f8"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -316047,8 +317009,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "62b9259084112bc3c30625ae2f259d3b71798c4ecd9ae13c544151d1f18e61a2"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -316061,7 +317028,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -316073,8 +317046,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "06057240ee794ddfdcf1cb3146a3df9e0f7aef0c2ae762fad2629fc3373fbc07"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -316087,7 +317065,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -316105,7 +317089,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -316117,21 +317107,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "5ed2f5d97152cfde6cf434e1510c770c86e2478738e7033601da2e39934e6f75"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -316149,7 +317155,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -329191,7 +330203,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -342772,7 +343790,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -342814,7 +343838,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -342856,7 +343886,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -342898,7 +343934,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -343006,25 +344048,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:run.node_backoff_expired:v1:38071e086aee4b1388d8bea515c519c094122992a1027782425df61bd0ae88f8",
-            "evt_executor_b3ee776c05a196782796ed5fe0dcbef689f5963693c80e13541737e5c1b42abc"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "a928a2837a5e26d47b037cf76785fb2102111a42ea5e18c47d135a6f6190771f"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -343066,8 +344120,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "f9fac6447a8dda660333c89ae19719dca877e21fcf3854edc6cc3533bfef4d22"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -343080,7 +344139,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -343092,8 +344157,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "ede72f59c7d7d16ad5da5a221f7a41e93ca96243503672b35d640daeef4c3c49"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -343106,7 +344176,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -343124,7 +344200,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -343136,21 +344218,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "d83868eb4ed3e0817265790aac2d8d804361fc93e5a4784003eaf4faf5572abe"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -343168,7 +344266,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -358319,7 +359423,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -372207,7 +373317,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -372249,7 +373365,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -372291,7 +373413,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -372333,7 +373461,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -372441,25 +373575,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:run.node_backoff_started:v1:38071e086aee4b1388d8bea515c519c094122992a1027782425df61bd0ae88f8",
-            "evt_executor_061c85e7d6cdc3637fcff6b324ed86a91112c09ebace9b897b4446976a3586f7"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "af916c9e21f9d2dd232105d6e22c4693f887a185637326d47574e373f0c33f00"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -372501,8 +373647,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "433396058662a47eb0a1d675f1a2a6e51c4d397cc5f88d05ca6c2a4312e5325e"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -372515,7 +373666,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -372527,8 +373684,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "947168333b9357c84f1f9c465337e1b58518c4593032d152a527de088c9602b3"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -372541,7 +373703,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -372559,7 +373727,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -372571,21 +373745,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "c3c75959059c54443cfe7d90437a92cb92b2e27a55add57a9ad6502f85c494b6"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -372603,7 +373793,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -379085,7 +380281,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -390406,7 +391608,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -390448,7 +391656,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -390490,7 +391704,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -390532,7 +391752,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -390640,25 +391866,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:run.node_ready:v1:a913d40d4bf1e997bc1e2735b173382915c0fa2ecdd3b348750521ccf053bf63",
-            "evt_executor_61c2cd01e92186a6ed42a0ecaca40fac529fdea17aa1d1f79048ccad1001dd5c"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "df54bc87f1b815e47b3060042619fbadc8e7ab93f2a81e71c679468e74df9d00"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -390700,8 +391938,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "8b1eea3eca5b823d965c054fecfe7c8409f16dfc96a25f8b4c75b58e7f5b8ceb"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -390714,7 +391957,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -390726,8 +391975,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "44631fd96de6ed96283ca3be5e4f90d49b978f072fa7cbda089988cb2e25a5f3"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -390740,7 +391994,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -390758,7 +392018,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -390770,21 +392036,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "1309d739646f25f40114ed311294624b7ba80258aae5e3f65163451c0dc2b2ab"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -390802,7 +392084,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -406094,7 +407382,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -425214,7 +426508,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -425256,7 +426556,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -425298,7 +426604,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -425340,7 +426652,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -425448,25 +426766,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:run.node_retry_scheduled:v1:c142f0385a3ffca1f655fef22b4cfe6cd0b3e9574766342a6b73c62d7188f78f",
-            "evt_executor_94fbf499b25075efd86d501e7034c4747a80598b6af8daf9b12e1dbb08d5fba6"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "c5156608902d8461709a30dbdd25edbe4f650dd701fa46d917e39e499c004c33"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -425508,8 +426838,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "89d82a7771ef678b3d2797b1bf272e18cea0fedf310f07b26899d3eedef53e36"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -425522,7 +426857,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -425534,8 +426875,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "f1c05790c21b73f6d9ade31c2ad268c09fdb58408e224ae785ddfd8b4b4cb96e"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -425548,7 +426894,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -425566,7 +426918,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -425578,21 +426936,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "05882b1a6c6ac7251fd33f8107ea938b674d7390dd7f959cc935a6f0bd23a47d"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -425610,7 +426984,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -457653,7 +459033,13 @@
               "value": 1152921504606846976
             }
           ],
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-coherent-sequence-9007199254740993",
@@ -480303,7 +481689,13 @@
           "case": "F13-identity--0",
           "boundary": "identity",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-0",
@@ -480345,7 +481737,13 @@
           "case": "F13-digest--0",
           "boundary": "digest",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-0",
@@ -480387,7 +481785,13 @@
           "case": "F13-canonical--0",
           "boundary": "canonical",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-0",
@@ -480429,7 +481833,13 @@
           "case": "F13-payload_bytes--0",
           "boundary": "payload_bytes",
           "spelling": "-0",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "CN01_integer_token",
+            "reason": "CV-1100: a current JSON integer token is 0 or -?[1-9][0-9]*; -0 refuses (integer_token) before any identity, digest or byte route.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-0",
@@ -480537,25 +481947,37 @@
           "case": "F13-identity-1152921504606846976",
           "boundary": "identity",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": [
-            "executor:scheduler.pass:v1:bc432c9e95063edb6e7acd59b306eae1a9ae2d3f5289636d392451e3a3d2d9d6",
-            "evt_executor_6dba3b2d2693dd657517ddd432e32e37915c2197d3495f1f78a51f9d43e4ed0b"
-          ]
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest-1152921504606846976",
           "boundary": "digest",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "0df4defa1689c3fdd500f927912b7c34cfcc31f85eed6a90cae4ca806784939e"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical-1152921504606846976",
           "boundary": "canonical",
           "spelling": "1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes-1152921504606846976",
@@ -480597,8 +482019,13 @@
           "case": "F13-digest--9007199254740991",
           "boundary": "digest",
           "spelling": "-9007199254740991",
-          "expected": "accept",
-          "expected_value": "7b83b3e0fae6ca1491a2f13172447be95a9dddcd87253a72a627d9aefb9c47bd"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740991",
@@ -480611,7 +482038,13 @@
           "case": "F13-payload_bytes--9007199254740991",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740991",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--9007199254740992",
@@ -480623,8 +482056,13 @@
           "case": "F13-digest--9007199254740992",
           "boundary": "digest",
           "spelling": "-9007199254740992",
-          "expected": "accept",
-          "expected_value": "d385c75f95272a2e1f5a9235f578e531000c659254b645ee858a9a8adf7f2ba4"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--9007199254740992",
@@ -480637,7 +482075,13 @@
           "case": "F13-payload_bytes--9007199254740992",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740992",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--9007199254740993",
@@ -480655,7 +482099,13 @@
           "case": "F13-payload_bytes--9007199254740993",
           "boundary": "payload_bytes",
           "spelling": "-9007199254740993",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity--1152921504606846976",
@@ -480667,21 +482117,37 @@
           "case": "F13-digest--1152921504606846976",
           "boundary": "digest",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "129df22d9467d76832d81f7a1ff17fffc18f8deea04864d06a719813ae6d6fd2"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-canonical--1152921504606846976",
           "boundary": "canonical",
           "spelling": "-1152921504606846976",
-          "expected": "accept",
-          "expected_value": "{\"nested\":[-1152921504606847000]}"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "JQ02_emitted_decimal",
+            "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-payload_bytes--1152921504606846976",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846976",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-digest--1152921504606846977",
@@ -480699,7 +482165,13 @@
           "case": "F13-payload_bytes--1152921504606846977",
           "boundary": "payload_bytes",
           "spelling": "-1152921504606846977",
-          "expected": "accept"
+          "expected": "reject",
+          "number_rule": {
+            "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+            "refusing_row": "IS02_integer_range",
+            "reason": "CV-1100: current_integer at the event_sequence slot applies the schema minimum 0 (integer_range) before hashing or encoding.",
+            "changed_in": "DX sweep part 2B numbers"
+          }
         },
         {
           "case": "F13-identity-18446744073709551615",
@@ -481601,9 +483073,13 @@
     {
       "case": "F13-canonical-1152921504606846976",
       "json": "1152921504606846976",
-      "expected": "accept",
-      "canonical": "1152921504606847000",
-      "sha256": "fb2c76e2bae2715eba806c59577ddd5c0845a17edb83d31b0420ab960918fe1e"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "case": "F13-canonical-1152921504606846977",
@@ -481632,9 +483108,13 @@
     {
       "case": "F13-canonical--1152921504606846976",
       "json": "-1152921504606846976",
-      "expected": "accept",
-      "canonical": "-1152921504606847000",
-      "sha256": "3831749ebedddc17eaf64841f3acd2dd859b0685703c0b4215f264d2e097468c"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "case": "F13-canonical--1152921504606846977",
@@ -481649,9 +483129,13 @@
     {
       "case": "F13-canonical-1267650600228229401496703205376",
       "json": "1267650600228229401496703205376",
-      "expected": "accept",
-      "canonical": "1.2676506002282294e+30",
-      "sha256": "fc89c65a72ca5e5a9e13e75750cc2c8e7bb353386303341542fd173e28bd0cdd"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "case": "F13-canonical-1000000000000000000000",
@@ -481677,9 +483161,13 @@
     {
       "case": "F13-nested-large-integer",
       "json": "{\"a\": [1152921504606846976, -1152921504606846976, 9007199254740992, true, null]}",
-      "expected": "accept",
-      "canonical": "{\"a\":[1152921504606847000,-1152921504606847000,9007199254740992,true,null]}",
-      "sha256": "c40d3526e3084e34ebe22a46d45d43f087eea1ee912a1ced23174eb1b4bc3b9d"
+      "expected": "reject",
+      "number_rule": {
+        "owner": "CV-1100 (NUMRULE number scope a16f67c1ef)",
+        "refusing_row": "JQ02_emitted_decimal",
+        "reason": "CV-1100: 2^60-class integers have an exact binary64 value but the emitted JCS decimal differs from the original integer (jcs_decimal); the identity/digest route refuses before effects. Retained executor-json-integer-v0 originals keep their exact bytes.",
+        "changed_in": "DX sweep part 2B numbers"
+      }
     },
     {
       "case": "F13-escaped-strings",

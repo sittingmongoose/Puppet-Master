@@ -25,7 +25,7 @@ def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('SJ02_project', g.Invariant('/payload/project_id', 'equals the current Project'), 'Project join', SJ02_project),
-        g.Guard('SJ03_generation', g.Invariant('/payload/replan_generation', 'equals the current generation by canonical bytes'), 'generation join', SJ03_generation),
+        g.Guard('SJ03_generation', g.Invariant('/payload/replan_generation', 'equals the current generation by exact typed value'), 'generation join', SJ03_generation),
     ])
 
     def check(value):

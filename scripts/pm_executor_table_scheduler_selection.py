@@ -36,7 +36,7 @@ def SH05_capacity(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('SH01_source_selection', g.Invariant('/records/scheduler/body/selected_nodes', 'equals the payload selection by canonical bytes'), 'scheduler source selection', SH01_source_selection),
+        g.Guard('SH01_source_selection', g.Invariant('/records/scheduler/body/selected_nodes', 'equals the payload selection by exact typed value'), 'scheduler source selection', SH01_source_selection),
         g.Guard('SH02_unique_ready', g.Invariant('/payload/ready_nodes', 'ready node ids are unique'), 'duplicate candidate', SH02_unique_ready),
         g.Guard('SH03_unique_partition', g.Invariant('/payload/selected_nodes', 'selected and non-selected ids are unique together'), 'duplicate candidate', SH03_unique_partition),
         g.Guard('SH04_partition', g.Invariant('/payload/selected_nodes', 'selected plus non-selected equals the ready set'), 'candidate partition', SH04_partition),

@@ -1048,6 +1048,58 @@
       ]
     },
     {
+      "id": "DD01-replaced-resource",
+      "family": "attempt.completed",
+      "route": "history",
+      "seed": {
+        "kind": "history",
+        "name": "S10-history-valid-after-live-transition"
+      },
+      "expected": "reject",
+      "row": "DD01_retained_dispatch",
+      "defect": "custody pins a new original to other frozen payload-schema bytes than the installed resource (a replaced same-URI resource)",
+      "changes": [
+        {
+          "path": "original/capture/records/project/body/p2a_marker",
+          "value": "dd01-resource"
+        },
+        {
+          "path": "original/capture/records/project/sha256",
+          "value": "53b54b9dc964ee781f5214a2335e1f9a37717993750c8acf05f0688c596e4944"
+        },
+        {
+          "path": "retained_source_sha256",
+          "value": "fd4f7f003ee6132a1decd5eb6cd65a6f9936b708cadf2cbbd62a71669254f740"
+        }
+      ]
+    },
+    {
+      "id": "DD01-foreign-family",
+      "family": "attempt.completed",
+      "route": "history",
+      "seed": {
+        "kind": "history",
+        "name": "S10-history-valid-after-live-transition"
+      },
+      "expected": "reject",
+      "row": "DD01_retained_dispatch",
+      "defect": "custody authenticates a new original as node.started, read as attempt.completed",
+      "changes": [
+        {
+          "path": "original/capture/records/project/body/p2a_marker",
+          "value": "dd01-family"
+        },
+        {
+          "path": "original/capture/records/project/sha256",
+          "value": "77a15d5c080cef362d7dab460083e2ee915ec6e5c5db7f5c5b3f7615b26e7e40"
+        },
+        {
+          "path": "retained_source_sha256",
+          "value": "71cce3cc8f01f44f4ae1f6042dd254e96da4dbfb1b5fb8cc2f8350e2be08b549"
+        }
+      ]
+    },
+    {
       "id": "TS03-v0-impossible-date",
       "family": "run.node_backoff_started",
       "route": "history",
@@ -1164,6 +1216,28 @@
         {
           "path": "context/envelope/payload/safe_point_id",
           "value": "safe_point_id-001"
+        }
+      ]
+    },
+    {
+      "id": "PV02-lone-surrogate-bytes",
+      "family": "attempt.completed",
+      "route": "shape",
+      "seed": {
+        "kind": "shape",
+        "name": "positive"
+      },
+      "expected": "reject",
+      "row": "PV02_physical_other",
+      "defect": "node_id is a lone surrogate (payload and inline copy), which has no UTF-8 MessagePack string",
+      "changes": [
+        {
+          "path": "payload/node_id",
+          "value": "\ud800"
+        },
+        {
+          "path": "context/envelope/payload/node_id",
+          "value": "\ud800"
         }
       ]
     },
@@ -1522,6 +1596,52 @@
           ]
         }
       ]
+    },
+    {
+      "id": "CN03-nonfinite-spelling",
+      "family": "attempt.completed",
+      "route": "numeric",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "CN03",
+          "boundary": "digest",
+          "spelling": "NaN"
+        }
+      },
+      "expected": "reject",
+      "row": "CN03_json_other",
+      "defect": "the raw spelling NaN (a non-finite JSON constant)"
+    },
+    {
+      "id": "PV01-uint64-overflow",
+      "family": "attempt.completed",
+      "route": "numeric",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "PV01",
+          "boundary": "payload_bytes",
+          "spelling": "18446744073709551616"
+        }
+      },
+      "expected": "reject",
+      "row": "PV01_integer_range",
+      "defect": "event_sequence 2^64: a valid schema integer with no EVENT_VALUE MessagePack integer"
+    },
+    {
+      "id": "JQ03-lone-surrogate-jcs",
+      "family": "attempt.completed",
+      "route": "canonical",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "json": "{\"text\": \"\\ud800\"}"
+        }
+      },
+      "expected": "reject",
+      "row": "JQ03_jcs_other",
+      "defect": "a JCS preimage string holding a lone surrogate"
     },
     {
       "id": "SR01-invalid-schema",

@@ -18,9 +18,13 @@ from pathlib import Path
 
 import jsonschema
 from pm_executor_schema_refs import check_references, check_lane_schemas, reference_cases
-import msgpack
 from blake3 import blake3
-import rfc8785
+# Shared number rule (NUMRULE number scope, gated at a16f67c1ef): CV-1100 current tokens/slots and
+# qualified JCS, SP-1100 physical bytes, SP-1101 authenticated original dispatch. Date-time stays lane-local
+# (part 2B): no pm_event_datetime code is imported here.
+from pm_event_numbers import (EVENT_VALUE, Refusal, current_integer, loads_current_json, qualified_jcs,
+                              storage_value_bytes, RecipeTuple, OriginalBinding, OriginalCustody, FrozenRecipe,
+                              RetainedDispatcher)
 
 if __name__ == '__main__':
     # The identity module imports this name lazily. Keep one recipe context when
@@ -111,6 +115,22 @@ def refuse(phase, facts, suffix='', message=None):
 
 def tname(value):
     return type(value).__name__
+
+
+@contextmanager
+def exact_integer_text():
+    """Render integers of any length exactly while a derivation formats them (restored afterwards).
+
+    CV-1100 allows integers beyond Python's default 4300-digit str() limit (no global cap). jsonschema
+    renders instances in error messages and the typed join text writes them in decimal; under the
+    default limit both raise ValueError for a valid long integer. No integer value is changed.
+    """
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        yield
+    finally:
+        sys.set_int_max_str_digits(previous)
 
 
 def q(value):
@@ -253,25 +273,28 @@ def validate_workgraph_id(value, slot):
 
 
 def canonical(value):
-    # Preserve the owner's RFC8785 recipe, including ECMAScript number bytes and
-    # UTF-16 property ordering. The fixture input domain still refuses floats.
+    """The bytes of an actual identity/digest preimage under the selected record recipe.
+
+    Current writes and current identity inputs (executor-jcs-binary64-v1) use the shared CV-1100
+    qualified_jcs: actual RFC8785 bytes, refused before effects when an integer's binary64 value or its
+    emitted JCS decimal differs from the original integer (2^53+1, 2^60). The frozen retained recipe
+    executor-json-integer-v0 keeps its exact integer JSON bytes. The owner domain (null, string,
+    boolean, integer; string keys) is checked first.
+    """
     validate_canonical_domain(value)
     if record_rules() == RETAINED_RECIPE:
-        return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
-    def binary64(item):
-        if type(item) is dict:
-            return {key: binary64(child) for key, child in item.items()}
-        if type(item) is list:
-            return [binary64(child) for child in item]
-        # rfc8785 deliberately rejects Python ints outside the safe range. An
-        # exactly representable integer such as 2**60 is valid JCS input: after
-        # checking exactness, use the encoder's binary64 number serialization.
-        return float(item) if type(item) is int else item
-    return rfc8785.dumps(binary64(value)).decode('utf-8')
+        with exact_integer_text():
+            return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
+    try:
+        text, reason = qualified_jcs(value).decode('utf-8'), None
+    except Refusal as error:
+        text, reason = None, error.reason
+    refuse('jcs_qualification', {'jcs_refusal': reason})
+    return text
 
 
 def validate_canonical_domain(value):
-    """Refuse float aliases before any identity, body or custody digest is made."""
+    """The DX owner value domain: string map keys and null/string/boolean/integer scalars (no float aliases)."""
     if type(value) is dict:
         validate_payload_map_keys(value)
         for item in value.values():
@@ -280,20 +303,22 @@ def validate_canonical_domain(value):
         for item in value:
             validate_canonical_domain(item)
     else:
-        current = record_rules() == CURRENT_RECIPE
-        exact = None
-        if type(value) is int and current:
-            try:
-                number = float(value)
-            except OverflowError:
-                number = math.inf
-            exact = math.isfinite(number) and int(number) == value
-        refuse('canonical_scalar', {'scalar_type': tname(value), 'current_recipe': current, 'binary64_exact': exact})
+        refuse('canonical_scalar', {'scalar_type': tname(value)})
+
+
+def typed(value):
+    """Exact typed JSON text for joins: the owner domain, exact integers, never a JCS range (SP-1100).
+
+    A join compares owner values; it is not an identity preimage, so no JCS qualification applies.
+    """
+    validate_canonical_domain(value)
+    with exact_integer_text():
+        return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':'))
 
 
 def same_value(left, right):
     """Compare typed JSON values; Python's True == 1 cannot join source facts."""
-    return canonical(left) == canonical(right)
+    return typed(left) == typed(right)
 
 
 def grant_facts(value, values):
@@ -372,8 +397,10 @@ def schema_validate(path, value, *, whole_schema_refs=True, phase='payload_schem
     schema = _load_schema(path)
     if whole_schema_refs:
         check_references(schema, path)
-    error = next(iter(jsonschema.Draft202012Validator(schema, format_checker=strict_format_checker()).iter_errors(value)), None)
-    refuse(phase, {'schema_valid': error is None}, '' if error is None else ': ' + error.message)
+    with exact_integer_text():
+        error = next(iter(jsonschema.Draft202012Validator(schema, format_checker=strict_format_checker()).iter_errors(value)), None)
+        message = '' if error is None else ': ' + error.message
+    refuse(phase, {'schema_valid': error is None}, message)
 
 
 def valid_timestamp(value):
@@ -410,20 +437,54 @@ def validate_historical_policy(contract, policy):
 
 
 def payload_bytes(value):
-    """Case L-2 canonical MessagePack for these fixtures' integer/string domain.
+    """SP-337 logical payload bytes: the Case L-2 canonical MessagePack of SP-1100's EVENT_VALUE profile.
 
-    This is uncompressed logical payload transport, not the SP-278 digest
-    wrapper, producer-semantic digest, or a complete native EventRecord codec.
+    Uncompressed logical payload transport (exact signed/unsigned 64-bit integers, minimal widths,
+    UTF-8 key order), not the SP-278 digest wrapper, producer-semantic digest or a native codec.
     """
-    def ordered(item):
-        if type(item) is dict:
-            validate_payload_map_keys(item)
-            return {key: ordered(item[key]) for key in sorted(item, key=lambda key: key.encode('utf-8'))}
-        if type(item) is list:
-            return [ordered(child) for child in item]
-        refuse('payload_scalar', {'scalar_type': tname(item)})
-        return item
-    return msgpack.packb(ordered(value), use_bin_type=True, strict_types=True)
+    try:
+        raw, reason = storage_value_bytes(value, profile=EVENT_VALUE), None
+    except Refusal as error:
+        raw, reason = None, error.reason
+    refuse('physical_value', {'physical_refusal': reason})
+    return raw
+
+
+def current_number(spelling):
+    """CV-1100 current JSON number admission of a raw spelling (shared loads_current_json)."""
+    try:
+        value, reason = loads_current_json(spelling), None
+    except Refusal as error:
+        value, reason = None, error.reason
+    refuse('current_number', {'parse_refusal': reason})
+    return value
+
+
+def admit_integer_slot(domain, value, path):
+    """CV-1100 current_integer at one schema integer slot (nested properties and items included)."""
+    kind = domain.get('type')
+    if kind == 'integer':
+        try:
+            current_integer(value, minimum=domain.get('minimum'), maximum=domain.get('maximum'))
+            reason = None
+        except Refusal as error:
+            reason = error.reason
+        refuse('integer_slot', {'slot_refusal': reason}, ' ' + path)
+    elif kind == 'array' and type(value) is list and type(domain.get('items')) is dict:
+        for index, item in enumerate(value):
+            admit_integer_slot(domain['items'], item, path + '/' + str(index))
+    elif kind == 'object' and type(value) is dict:
+        for key, child in domain.get('properties', {}).items():
+            if key in value:
+                admit_integer_slot(child, value[key], path + '/' + key)
+
+
+def admit_integer_slots(schema_path, payload):
+    """Current writes only: every declared integer slot of the payload, never a blanket walk."""
+    schema = _load_schema(schema_path)
+    for key, domain in schema['properties'].items():
+        if type(payload) is dict and key in payload:
+            admit_integer_slot(domain, payload[key], key)
 
 
 def validate_payload_transport(payload, envelope, packs, viewer):
@@ -434,7 +495,7 @@ def validate_payload_transport(payload, envelope, packs, viewer):
     raw = payload_bytes(payload)
     ref = envelope['payload_ref']
     if ref is None:
-        refuse('transport_inline', {'inline_canonical': canonical(envelope['payload']), 'payload_canonical': canonical(payload),
+        refuse('transport_inline', {'inline_canonical': typed(envelope['payload']), 'payload_canonical': typed(payload),
                                     'raw_size': len(raw)})
         return
     ref_is_dict = type(ref) is dict
@@ -604,10 +665,18 @@ def validate_capture(contract, payload, capture, *, historical=False):
     """
     schema_validate(contract['schema_ref'], payload)
     if historical:
+        # A retained original keeps the integer grammar of its frozen write-time recipe (SP-1101):
+        # no current slot admission, no current append policy.
         validate_historical_policy(contract, capture['envelope']['replay_policy'])
     else:
+        admit_integer_slots(contract['schema_ref'], payload)
         validate_append_policy(contract, capture['envelope']['replay_policy'])
     validate_payload_transport(payload, capture['envelope'], capture['payload_packs'], capture['viewer'])
+    if not historical:
+        # A current write's identity inputs use executor-jcs-binary64-v1 (CV-1100 qualified JCS): an
+        # identity preimage the route cannot preserve (2^53+1, 2^60) refuses before effects.
+        from pm_executor_event_contracts import identity
+        identity(contract, payload, capture['envelope']['storage_instance_id'])
     validate_capture_domain(capture)
     adapter = contract['semantic_adapter']
     refuse('capture_dispatch', {'adapter': copy.deepcopy(capture['adapter']), 'adapter_id': adapter['id'],
@@ -620,8 +689,8 @@ def validate_capture(contract, payload, capture, *, historical=False):
                              'envelope_storage': capture['envelope']['storage_instance_id']})
     for field in ('project_id', 'run_id', 'thread_id', 'attempt_id'):
         if field in payload:
-            refuse('capture_envelope', {'envelope_canonical': canonical(capture['envelope'].get(field)),
-                                        'payload_canonical': canonical(payload[field])}, ' ' + field)
+            refuse('capture_envelope', {'envelope_canonical': typed(capture['envelope'].get(field)),
+                                        'payload_canonical': typed(payload[field])}, ' ' + field)
     records = capture['records']
     expected_slots = set(adapter['source_records'])
     if contract['event_type'] in ('node.blocked', 'node.unblocked'):
@@ -653,8 +722,8 @@ def validate_capture(contract, payload, capture, *, historical=False):
         joinable = type(revision) is int and revision >= 0 and type(expected) is int
         refuse('source_revision', {
             'revision_type': tname(revision), 'revision': revision if type(revision) is int else None,
-            'expected_type': tname(expected), 'revision_canonical': canonical(revision) if joinable else None,
-            'expected_canonical': canonical(expected) if joinable else None}, ' ' + slot)
+            'expected_type': tname(expected), 'revision_canonical': typed(revision) if joinable else None,
+            'expected_canonical': typed(expected) if joinable else None}, ' ' + slot)
         refuse('source_digest', {'declared_sha256': copy.deepcopy(record['sha256']),
                                  'recomputed_sha256': stored_digest(record['body'], record['sha256'])}, ' ' + slot)
         refuse('source_parents', {'parents': copy.deepcopy(record['parents']),
@@ -662,10 +731,10 @@ def validate_capture(contract, payload, capture, *, historical=False):
                ' ' + slot)
     for field, path in adapter['joins'].items():
         if field in payload:
-            refuse('source_join', {'payload_canonical': canonical(payload[field]), 'source_canonical': canonical(at(records, path))},
+            refuse('source_join', {'payload_canonical': typed(payload[field]), 'source_canonical': typed(at(records, path))},
                    ' ' + field)
     original = source_observation(adapter, records)
-    refuse('source_observation', {'observation_canonical': canonical(original), 'payload_canonical': canonical(payload)})
+    refuse('source_observation', {'observation_canonical': typed(original), 'payload_canonical': typed(payload)})
     if contract['event_type'] == 'attempt.started':
         execution = records['execution']['body']
         account_relevant = (execution.get('requested_account_id') is not None
@@ -690,11 +759,11 @@ def validate_capture(contract, payload, capture, *, historical=False):
     # Retain the mirror consistency check, but authenticate its complete field set
     # against the independently hashed source records above.
     refuse('transition_source', {
-        'observed_canonical': canonical(transition['observed_payload']), 'original_canonical': canonical(original),
-        'transition_sequence_canonical': canonical(transition['event_sequence']),
-        'payload_sequence_canonical': canonical(payload['event_sequence']),
-        'transition_revision_canonical': canonical(transition['revision']),
-        'record_revision_canonical': canonical(transition_record['revision']),
+        'observed_canonical': typed(transition['observed_payload']), 'original_canonical': typed(original),
+        'transition_sequence_canonical': typed(transition['event_sequence']),
+        'payload_sequence_canonical': typed(payload['event_sequence']),
+        'transition_revision_canonical': typed(transition['revision']),
+        'record_revision_canonical': typed(transition_record['revision']),
         'before': copy.deepcopy(transition['before']), 'record_state': copy.deepcopy(transition_record['body']['state'])})
     rules = [r for r in adapter['transitions']
              if transition['before'] == r['before']
@@ -703,10 +772,10 @@ def validate_capture(contract, payload, capture, *, historical=False):
     refuse('transition_post', {
         'after': copy.deepcopy(transition['after']), 'rule_after': rules[0]['after'],
         'post_state': copy.deepcopy(capture['post_state']['state']),
-        'post_revision_canonical': canonical(capture['post_state']['revision']),
-        'next_revision_canonical': canonical(transition['revision'] + 1),
-        'post_sequence_canonical': canonical(capture['post_state']['event_sequence']),
-        'payload_sequence_canonical': canonical(payload['event_sequence'])})
+        'post_revision_canonical': typed(capture['post_state']['revision']),
+        'next_revision_canonical': typed(transition['revision'] + 1),
+        'post_sequence_canonical': typed(capture['post_state']['event_sequence']),
+        'payload_sequence_canonical': typed(payload['event_sequence'])})
     effects = adapter.get('effects_by_failure_class', {}).get(payload.get('failure_class'), adapter['effects'])
     observed_effects = capture['post_state']['effects']
     observed_is_dict = type(observed_effects) is dict
@@ -720,7 +789,7 @@ def validate_capture(contract, payload, capture, *, historical=False):
         'observed_pairs': [list(pair) for pair in sorted(observed_effects.items())] if observed_all_int else None,
         'expected_pairs': [list(pair) for pair in sorted(effects.items())] if expected_all_int else None})
     for path, expected in adapter['requirements'].items():
-        refuse('owner_predicate', {'observed_canonical': canonical(at(records, path)), 'expected_canonical': canonical(expected)},
+        refuse('owner_predicate', {'observed_canonical': typed(at(records, path)), 'expected_canonical': typed(expected)},
                ' ' + path)
     validate_dependencies(contract, payload, capture)
     name = contract['event_type']
@@ -748,13 +817,13 @@ def validate_capture(contract, payload, capture, *, historical=False):
             'child_record': copy.deepcopy(records['child_attempt']['body']['attempt_id']),
             'root': payload['remediation_root_id'], 'root_record': copy.deepcopy(records['root']['body']['remediation_root_id'])})
         generation, ceiling = lineage['generation'], lineage['ceiling']
-        typed = type(generation) is int and type(ceiling) is int
-        within = typed and generation <= ceiling
+        both_int = type(generation) is int and type(ceiling) is int
+        within = both_int and generation <= ceiling
         refuse('remediation_generation', {
             'generation_type': tname(generation), 'ceiling_type': tname(ceiling),
-            'generation': generation if typed else None, 'ceiling': ceiling if typed else None,
-            'generation_canonical': canonical(generation) if within else None,
-            'normalized_canonical': canonical(lineage['remediation_generation']) if within else None})
+            'generation': generation if both_int else None, 'ceiling': ceiling if both_int else None,
+            'generation_canonical': typed(generation) if within else None,
+            'normalized_canonical': typed(lineage['remediation_generation']) if within else None})
         refuse('remediation_ceiling_join', {'payload_generation': payload['remediation_generation'], 'ceiling': ceiling})
         if name == 'remediation.resolved':
             fixed = payload['resolution'] == 'fixed'
@@ -778,8 +847,8 @@ def validate_scheduler(payload, records):
     excluded = [x['node_id'] for x in payload['non_selected_nodes']]
     ids = [x['node_id'] for x in ready]
     refuse('scheduler_selection', {
-        'source_selected_canonical': canonical(scheduler['selected_nodes']),
-        'payload_selected_canonical': canonical(payload['selected_nodes']),
+        'source_selected_canonical': typed(scheduler['selected_nodes']),
+        'payload_selected_canonical': typed(payload['selected_nodes']),
         'ready_unique': len(set(ids)) == len(ids), 'partition_unique': len(set(selected + excluded)) == len(selected + excluded),
         'ready_ids': sorted(set(ids)), 'partition_ids': sorted(set(selected + excluded)),
         'selected_count': len(selected), 'fill_count': min(len(ready), payload['available_slots'])})
@@ -788,7 +857,7 @@ def validate_scheduler(payload, records):
     refuse('scheduler_order', {'selected_ids': selected, 'ordered_ids': [x['node_id'] for x in ordered[:len(selected)]]})
     by_id = {x['node_id']: x for x in ready}
     for item in payload['selected_nodes']:
-        refuse('scheduler_selected', {'score_canonical': canonical(item['score_tuple']), 'ready_canonical': canonical(by_id[item['node_id']]),
+        refuse('scheduler_selected', {'score_canonical': typed(item['score_tuple']), 'ready_canonical': typed(by_id[item['node_id']]),
                                       'lane': item['lane'], 'ready_lane': by_id[item['node_id']]['scheduler_lane']})
     wakes_value = scheduler['wakes']
     wakes_list = type(wakes_value) is list
@@ -834,11 +903,11 @@ def validate_dependencies(contract, payload, capture):
         if field in ('runtime_snapshot_ref', 'execution_unit_context_ref'):
             for key in ('project_id', 'run_id', 'thread_id', 'node_id', 'attempt_id'):
                 if key in dependency['body'] and key in payload:
-                    refuse('dependency_subject', {'dependency_canonical': canonical(dependency['body'][key]),
-                                                  'payload_canonical': canonical(payload[key])}, ' ' + key)
+                    refuse('dependency_subject', {'dependency_canonical': typed(dependency['body'][key]),
+                                                  'payload_canonical': typed(payload[key])}, ' ' + key)
             for key in adapter['context_join_fields']:
-                refuse('dependency_identity', {'dependency_canonical': canonical(dependency['body'].get(key)),
-                                               'execution_canonical': canonical(records['execution']['body'].get(key))}, ' ' + key)
+                refuse('dependency_identity', {'dependency_canonical': typed(dependency['body'].get(key)),
+                                               'execution_canonical': typed(records['execution']['body'].get(key))}, ' ' + key)
     reference_fields = {k for k in payload if k.endswith('_ref') or k.endswith('_snapshot_id') or k == 'safe_point_id'}
     refuse('dependency_resolution', {'resolved_fields': sorted(capture['dependency_refs']), 'reference_fields': sorted(reference_fields)})
     for field in adapter['evidence_lists']:
@@ -848,6 +917,81 @@ def validate_dependencies(contract, payload, capture):
             refuse('dependency_presence', {'present': dependency is not None}, message=message)
             refuse('dependency_custody', dependency_custody_facts(dependency, payload, scope), message=message)
             refuse('grant', grant_facts(capture['viewer'], dependency['readers']), message=message)
+
+
+# --- SP-1101 retained-reader dispatch (shared RetainedDispatcher) ------------------------------------------
+# The static custody catalogue (Plans/executor_event_recipe_custody_fixtures.json) models the original
+# Storage owner: it authenticates the complete original by its SHA-256 commitment and records, per
+# write-time edition, the SHA-256 manifest of the frozen resources (payload schema bytes, semantic adapter,
+# identity fields) the original was written against. The installed frozen-verifier map is built outside
+# request data from the resources at this head; an original whose recorded manifest differs (a replaced
+# same-URI resource) resolves to no verifier and refuses. The static oracle has one Server and no native
+# owner-operation id: both binding fields are fixed constants on both sides (native custody is NOT_RUN).
+EXECUTOR_SERVER = 'executor-static-oracle'
+HISTORY_OPERATION = 'executor.retained_history_read'
+OWNER_EDITIONS = ('DX-before-RFC8785-fix7', 'DX-before-format-calendar-fix8', 'DX-current-control', 'DX-sweep-p2a')
+
+
+def custody_manifests():
+    path = ROOT / 'Plans/executor_event_recipe_custody_fixtures.json'
+    stat = path.stat()
+    return _custody_document(path, stat.st_mtime_ns, stat.st_size).get('resource_manifests', {})
+
+
+@lru_cache(maxsize=1)
+def _custody_document(path, mtime_ns, size):
+    return json.loads(path.read_text())
+
+
+def resource_manifest(contract):
+    """SHA-256 pin of the frozen resources a retained reader verifies an original with."""
+    schema_sha = hashlib.sha256((ROOT / contract['schema_ref']).read_bytes()).hexdigest()
+    adapter_sha = hashlib.sha256(fixture_encoding(contract['semantic_adapter']).encode()).hexdigest()
+    return hashlib.sha256(fixture_encoding({'payload_schema': [contract['schema_ref'], schema_sha], 'semantic_adapter': adapter_sha,
+                                             'identity_fields': contract['identity_fields']}).encode()).hexdigest()
+
+
+def recipe_tuple(contract, recipe_version, owner_edition, manifest):
+    """The SP-1101 recipe tuple of one DX family edition (existing DX recipe names; no new recipe id)."""
+    schema = _load_schema(contract['schema_ref'])
+    return RecipeTuple(
+        envelope_schema_id='pm.event.v0', envelope_schema_version='2.0.0',
+        payload_schema_id=schema['$id'], payload_schema_version=schema['properties']['schema_version']['const'],
+        owner_source_id=contract['semantic_adapter']['id'], owner_edition=owner_edition,
+        registry_revision='prepared-unadmitted:' + contract['family_revision'],
+        identity_recipe='executor:' + contract['event_type'] + ':v1', producer_recipe=recipe_version,
+        physical_profile=EVENT_VALUE, full_value_profile='pm.storage.original_event_value_commitment.v1',
+        local_source_profile=recipe_version, payload_profile='SP-337:application/msgpack', resource_manifest_sha256=manifest)
+
+
+class CustodyOwner:
+    """The original owner over the sealed custody catalogue: authenticated original custody, never request data."""
+
+    def __init__(self, contract, original, read_identity):
+        self.contract, self.original, self.read_identity = contract, original, read_identity
+
+    def authenticated_original(self, original_ref):
+        entry = custody_entry(original_ref)
+        # A custody entry may pin its own frozen-resource manifest (an original written against other resource bytes).
+        manifest = entry.get('resource_manifest_sha256', custody_manifests().get(entry.get('write_time_edition'), {})
+                             .get(entry.get('family', self.contract['event_type']), ''))
+        identity = entry.get('stored_identity', self.read_identity)
+        scope = self.original['capture']['scope']
+        binding = OriginalBinding(
+            storage_instance_id=scope['storage_instance_id'], scope_kind='project', server_id=EXECUTOR_SERVER,
+            project_id=scope['project_id'], event_type=entry.get('family', self.contract['event_type']),
+            event_id=identity[1], idempotency_key=identity[0], owner_operation_id=HISTORY_OPERATION,
+            source_commitment=original_ref)
+        recipe = recipe_tuple(self.contract, entry.get('recipe_version', CURRENT_RECIPE), entry.get('write_time_edition', ''), manifest)
+        return OriginalCustody(binding=binding, recipe=recipe, record_bytes=canonical(self.original).encode('utf-8'),
+                               result_bytes=b'history_only', receipt_bytes=json.dumps(identity).encode('utf-8'))
+
+
+def installed_recipes(contract, verify):
+    """The exact tuple -> frozen verifier map, installed from this head's resources outside request data."""
+    manifest = resource_manifest(contract)
+    return {recipe_tuple(contract, version, edition, manifest): FrozenRecipe(verify)
+            for edition in OWNER_EDITIONS for version in (CURRENT_RECIPE, RETAINED_RECIPE)}
 
 
 def validate_history(contract, payload, original, retained_source_sha256, disclosure):
@@ -861,6 +1005,8 @@ def _validate_history(contract, payload, original, retained_source_sha256, discl
     The hash is a test observation of immutable retained-source custody, not a new
     persisted event field or native admission proof. Original transition predicates
     use the original owner reads; disclosure uses current access/withdrawal fences.
+    The original resolves through the shared SP-1101 RetainedDispatcher: one authenticated
+    recipe selection, its frozen verifier, then current disclosure.
     """
     original_digest = digest(original)
     from pm_executor_event_contracts import identity
@@ -870,22 +1016,39 @@ def _validate_history(contract, payload, original, retained_source_sha256, discl
         'custody_identity': copy.deepcopy(custody_entry(retained_source_sha256).get('stored_identity', list(stored_identity))),
         'disclosure_identity': copy.deepcopy(disclosure.get('stored_identity', list(stored_identity))),
         'identity': list(stored_identity)})
-    # Authenticate the immutable original and its then-valid lifecycle first.
-    # The recorded viewer is evidence of original disclosure, never a current grant.
-    validate_capture(contract, payload, original['capture'], historical=True)
-    refuse('history_disclosure', {'reader_active': copy.deepcopy(disclosure['reader_active']),
-                                  'source_available': copy.deepcopy(disclosure['source_available']),
-                                  'event_deleted_at': copy.deepcopy(disclosure['event_deleted_at'])})
-    refuse('grant', grant_facts(disclosure['viewer'], disclosure['event_readers']), message='event access')
     refuse('history_scope', {'project': copy.deepcopy(disclosure['project_id']), 'payload_project': payload['project_id'],
                              'storage': copy.deepcopy(disclosure['storage_instance_id']),
                              'original_storage': copy.deepcopy(original['capture']['scope']['storage_instance_id'])})
-    # These are fresh owner read observations, separate from the pinned original.
-    current = {**original['capture'], 'viewer': disclosure['viewer'],
-               'payload_packs': disclosure['payload_packs'],
-               'dependencies': disclosure['dependencies']}
-    validate_payload_transport(payload, current['envelope'], current['payload_packs'], current['viewer'])
-    validate_dependencies(contract, payload, current)
+
+    def verify(custody):
+        # The frozen verifier: the complete original and its then-valid lifecycle under its own recipe.
+        # The recorded viewer is evidence of original disclosure, never a current grant.
+        validate_capture(contract, payload, original['capture'], historical=True)
+        return True
+
+    def disclose(binding):
+        refuse('history_disclosure', {'reader_active': copy.deepcopy(disclosure['reader_active']),
+                                      'source_available': copy.deepcopy(disclosure['source_available']),
+                                      'event_deleted_at': copy.deepcopy(disclosure['event_deleted_at'])})
+        refuse('grant', grant_facts(disclosure['viewer'], disclosure['event_readers']), message='event access')
+        # These are fresh owner read observations, separate from the pinned original.
+        current = {**original['capture'], 'viewer': disclosure['viewer'],
+                   'payload_packs': disclosure['payload_packs'],
+                   'dependencies': disclosure['dependencies']}
+        validate_payload_transport(payload, current['envelope'], current['payload_packs'], current['viewer'])
+        validate_dependencies(contract, payload, current)
+        return True
+    try:
+        expected = OriginalBinding(
+            storage_instance_id=disclosure['storage_instance_id'], scope_kind='project', server_id=EXECUTOR_SERVER,
+            project_id=payload['project_id'], event_type=contract['event_type'], event_id=stored_identity[1],
+            idempotency_key=stored_identity[0], owner_operation_id=HISTORY_OPERATION, source_commitment=retained_source_sha256)
+        dispatcher = RetainedDispatcher(CustodyOwner(contract, original, list(stored_identity)), installed_recipes(contract, verify))
+        dispatcher.resolve(retained_source_sha256, expected, disclose=disclose)
+        reason = None
+    except Refusal as error:
+        reason = error.reason
+    refuse('retained_dispatch', {'dispatch_refusal': reason})
     return {'result': 'history_only', 'effects': 0}
 
 
@@ -909,6 +1072,7 @@ def run_trace(contract, payload, scenario):
             p.update(operation.get('payload_changes', {}))
             try:
                 schema_validate(contract['schema_ref'], p)
+                admit_integer_slots(contract['schema_ref'], p)
             except (ValueError, jsonschema.ValidationError):
                 outputs.append('invalid_payload')
                 continue
@@ -1003,17 +1167,22 @@ def run_helper_case(case):
 def run_numeric_case(contract, baseline, case):
     """Probe the declared fixture numeric domain before hashing or encoding."""
     from pm_executor_event_contracts import identity
-    number = json.loads(case['spelling'])
+    # CV-1100: a raw spelling is parsed by the shared current JSON admission; -0, leading zeros and
+    # non-finite constants refuse here. Fractional/exponent tokens stay exact decimals for the slot.
+    number = current_number(case['spelling'])
     field = case.get('field', 'event_sequence')
     payload = {**baseline['payload'], field: number}
     boundary = case['boundary']
     refuse('fixture_route', {'kind': 'numeric_boundary', 'name': copy.deepcopy(boundary)}, ' ' + str(boundary))
     if boundary == 'identity':
         return identity(contract, payload, number if field == 'storage_instance_id' else 'store-001')
+    if boundary == 'canonical':
+        # A bare JCS preimage: no schema slot, only current JSON admission and qualification.
+        return canonical({'nested': [number]})
+    # The digest and payload-bytes boundaries carry the value in its payload slot: current_integer there.
+    admit_integer_slots(contract['schema_ref'], payload)
     if boundary == 'digest':
         return digest(payload)
-    if boundary == 'canonical':
-        return canonical({'nested': [number]})
     return payload_bytes(payload)
 
 
@@ -1063,8 +1232,10 @@ def numeric_observation(value):
 def stock_schema_validate(path, value):
     """Isolated schema cases: the exact-end guard under the stock format checker (one table row)."""
     schema = _load_schema(path)
-    error = next(iter(jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker()).iter_errors(value)), None)
-    refuse('payload_schema_stock', {'schema_valid': error is None}, '' if error is None else ': ' + error.message)
+    with exact_integer_text():
+        error = next(iter(jsonschema.Draft202012Validator(schema, format_checker=jsonschema.FormatChecker()).iter_errors(value)), None)
+        message = '' if error is None else ': ' + error.message
+    refuse('payload_schema_stock', {'schema_valid': error is None}, message)
 
 
 def table_order_facts(phase, swap=None):

@@ -10,7 +10,7 @@ semantic CLI asserts that the factory requires its rows in table order.
 FIELDS names every observation the rows read; the checker passes no other.
 """
 import pm_guard_isolation as g
-FIELDS = ('domain_type', 'value_type', 'length', 'bound', 'number')
+FIELDS = ('domain_type', 'value_type', 'length', 'bound', 'integer_refusal')
 
 
 def ID01_domain_declared(value, context):
@@ -26,11 +26,11 @@ def ID03_string_length(value, context):
 
 
 def ID04_integer_type(value, context):
-    return 'identity declared field domain' if value['domain_type'] == 'integer' and value['value_type'] != 'int' else None
+    return 'identity declared field domain' if value['domain_type'] == 'integer' and value['integer_refusal'] == 'integer_type' else None
 
 
 def ID05_integer_minimum(value, context):
-    return 'identity declared field domain' if value['domain_type'] == 'integer' and value['value_type'] == 'int' and value['number'] < value['bound'] else None
+    return 'identity declared field domain' if value['domain_type'] == 'integer' and value['integer_refusal'] == 'integer_range' else None
 
 
 def case(value):
@@ -39,8 +39,8 @@ def case(value):
         g.Guard('ID01_domain_declared', g.Invariant('/identity_fields/*', 'the field schema declares a string or integer domain'), 'identity declared field domain', ID01_domain_declared),
         g.Guard('ID02_string_type', g.Invariant('/identity_fields/*', 'a string-domain value is a string'), 'identity declared field domain', ID02_string_type),
         g.Guard('ID03_string_length', g.Invariant('/identity_fields/*', 'a string value meets minLength'), 'identity declared field domain', ID03_string_length),
-        g.Guard('ID04_integer_type', g.Invariant('/identity_fields/*', 'an integer-domain value is an integer'), 'identity declared field domain', ID04_integer_type),
-        g.Guard('ID05_integer_minimum', g.Invariant('/identity_fields/*', 'an integer value meets minimum'), 'identity declared field domain', ID05_integer_minimum),
+        g.Guard('ID04_integer_type', g.Invariant('/identity_fields/*', 'an integer-domain value passes CV-1100 current_integer type admission'), 'identity declared field domain', ID04_integer_type),
+        g.Guard('ID05_integer_minimum', g.Invariant('/identity_fields/*', 'an integer value is within the schema minimum/maximum (current_integer range)'), 'identity declared field domain', ID05_integer_minimum),
     ])
 
     def check(value):

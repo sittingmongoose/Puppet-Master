@@ -24,7 +24,7 @@ def SH08_lane(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('SH07_score_tuple', g.Invariant('/payload/selected_nodes/*/score_tuple', 'equals the ready score tuple by canonical bytes'), 'selected score', SH07_score_tuple),
+        g.Guard('SH07_score_tuple', g.Invariant('/payload/selected_nodes/*/score_tuple', 'equals the ready score tuple by exact typed value'), 'selected score', SH07_score_tuple),
         g.Guard('SH08_lane', g.Invariant('/payload/selected_nodes/*/lane', 'equals the ready scheduler lane'), 'selected score', SH08_lane),
     ])
 

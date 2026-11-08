@@ -45,6 +45,11 @@ def overlay_custody(source_sha256):
 
 
 sem.custody_entry = overlay_custody
+# SP-1101 frozen-resource manifests recorded by custody for every modelled write-time edition. The static
+# model's assumption, stated in the report: each modelled edition was written against this head's resources.
+MANIFESTS = {edition: {name: sem.resource_manifest(contract) for name, contract in sorted(CONTRACTS.items())}
+             for edition in sem.OWNER_EDITIONS}
+sem.custody_manifests = lambda: MANIFESTS
 
 
 def encoded(value):
@@ -339,6 +344,12 @@ def build():
     history_case('RB03-custody-source', AC, S10, marker('rb03'), 'RB03_entry_source',
                  'the custody entry of a new original pins a different complete original', custody=sem.CURRENT_RECIPE,
                  entry=lambda e: {**e, 'source_sha256': '0' * 64})
+    history_case('DD01-replaced-resource', AC, S10, marker('dd01-resource'), 'DD01_retained_dispatch',
+                 'custody pins a new original to other frozen payload-schema bytes than the installed resource (a replaced same-URI resource)',
+                 custody=sem.CURRENT_RECIPE, entry=lambda e: {**e, 'resource_manifest_sha256': '1' * 64})
+    history_case('DD01-foreign-family', AC, S10, marker('dd01-family'), 'DD01_retained_dispatch',
+                 'custody authenticates a new original as node.started, read as attempt.completed',
+                 custody=sem.CURRENT_RECIPE, entry=lambda e: {**e, 'family': 'node.started'})
     history_case('TS03-v0-impossible-date', BS, 'F15-retained-9007199254740991-dedupe_by_idempotency_key',
                  lambda d: edit_original(d, lambda c: c.body('failure', 'failed_at_utc', '2026-11-31T12:00:00Z')),
                  'TS03_parses', 'a retained v0 original whose failure clock is spelled validly but names 31 November',
@@ -369,6 +380,8 @@ def build():
                'a restore-required block naming its safe point (with its source binding) and anchor_ref', expected='accept')
     shape_case('SX11-restore-without-anchor', 'node.blocked', 'positive', restore(False), 'SX11_restore_anchor',
                'the anchored restore control without its anchor_ref')
+    shape_case('PV02-lone-surrogate-bytes', AC, 'positive', shape_payload('node_id', '\ud800'), 'PV02_physical_other',
+               'node_id is a lone surrogate (payload and inline copy), which has no UTF-8 MessagePack string')
     shape_seed = next(r for r in SHAPES if r['event_type'] == SP and r['case'] == 'score-priority-valid-boundary-50')
     excluded = copy.deepcopy(shape_seed['payload']['non_selected_nodes'])
     shape_case('SY02-duplicate-excluded', SP, 'score-priority-valid-boundary-50', shape_payload('non_selected_nodes', excluded + [excluded[0]]),
@@ -398,6 +411,12 @@ def build():
     literal('IR02-sequence-not-identity', AC, 'identity_replay', {'payload': FAMILIES[AC]['baseline']['payload']}, 'reject', 'IR02_sequence_bearing',
             'a contract copy whose identity fields omit event_sequence',
             contract_changes=[{'path': 'identity_fields', 'value': [f for f in CONTRACTS[AC]['identity_fields'] if f != 'event_sequence']}])
+    literal('CN03-nonfinite-spelling', AC, 'numeric', {'case': 'CN03', 'boundary': 'digest', 'spelling': 'NaN'}, 'reject',
+            'CN03_json_other', 'the raw spelling NaN (a non-finite JSON constant)')
+    literal('PV01-uint64-overflow', AC, 'numeric', {'case': 'PV01', 'boundary': 'payload_bytes', 'spelling': '18446744073709551616'}, 'reject',
+            'PV01_integer_range', 'event_sequence 2^64: a valid schema integer with no EVENT_VALUE MessagePack integer')
+    literal('JQ03-lone-surrogate-jcs', AC, 'canonical', {'json': '{"text": "\\ud800"}'}, 'reject', 'JQ03_jcs_other',
+            'a JCS preimage string holding a lone surrogate')
     literal('SR01-invalid-schema', AC, 'schema_document', {'schema': {'$schema': 'https://json-schema.org/draft/2020-12/schema', 'type': 5}},
             'reject', 'SR01_meta_schema', 'a schema document whose type keyword is the integer 5')
     # ---- CLI fixture-integrity witnesses
@@ -458,6 +477,7 @@ def main():
     failures, count = verify(doc)
     custody = dict(CUSTODY_DOC)
     custody['records'] = {**BASE_CUSTODY, **ADDED}
+    custody['resource_manifests'] = MANIFESTS
     problems = list(failures)
     if check:
         if not OUT.exists() or json.loads(OUT.read_text()) != doc:
