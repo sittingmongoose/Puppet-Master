@@ -14,22 +14,16 @@ FIELDS = ('schema_errors', 'number_errors')
 
 
 def D2_CONTEXT_RETAINED_schema(value, context):
-    return 'sch_d2_context_retained_schema' if value['schema_errors'] != 0 else None
-
-
-def D2_CONTEXT_RETAINED_numbers(value, context):
-    return 'sch_d2_context_retained_numbers' if value['number_errors'] != 0 else None
+    return 'sch_d2_context_retained_schema' if value['schema_errors'] + value['number_errors'] != 0 else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('D2_CONTEXT_RETAINED_schema', g.Invariant('/schema_errors', 'the current deck-2 context of a retained read validates (closed Draft 2020-12, full-match patterns, eager $ref closure)'), 'sch_d2_context_retained_schema', D2_CONTEXT_RETAINED_schema),
-        g.Guard('D2_CONTEXT_RETAINED_numbers', g.Invariant('/number_errors', 'CV-1100: every schema integer slot admits only an exact integer within its own bounds (storage_uint64 for Storage metadata), checked after the stock schema accepts'), 'sch_d2_context_retained_numbers', D2_CONTEXT_RETAINED_numbers),
+        g.Guard('D2_CONTEXT_RETAINED_schema', g.Invariant('/schema_errors', 'the current deck-2 context of a retained read validates (closed Draft 2020-12, full-match patterns, eager $ref closure; it declares no integer slot, so CV-1100 slot admission adds nothing)'), 'sch_d2_context_retained_schema', D2_CONTEXT_RETAINED_schema),
     ])
 
     def check(value):
         table.require('D2_CONTEXT_RETAINED_schema', value, context)
-        table.require('D2_CONTEXT_RETAINED_numbers', value, context)
         return True
     return g.Case(table, check, context)

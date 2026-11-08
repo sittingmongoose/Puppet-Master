@@ -14,22 +14,16 @@ FIELDS = ('schema_errors', 'number_errors')
 
 
 def D2_OWNER_RECORDS_schema(value, context):
-    return 'sch_d2_owner_records_schema' if value['schema_errors'] != 0 else None
-
-
-def D2_OWNER_RECORDS_numbers(value, context):
-    return 'sch_d2_owner_records_numbers' if value['number_errors'] != 0 else None
+    return 'sch_d2_owner_records_schema' if value['schema_errors'] + value['number_errors'] != 0 else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('D2_OWNER_RECORDS_schema', g.Invariant('/schema_errors', 'the deck-2 owner bank (a map of record text) validates (closed Draft 2020-12, full-match patterns, eager $ref closure)'), 'sch_d2_owner_records_schema', D2_OWNER_RECORDS_schema),
-        g.Guard('D2_OWNER_RECORDS_numbers', g.Invariant('/number_errors', 'CV-1100: every schema integer slot admits only an exact integer within its own bounds (storage_uint64 for Storage metadata), checked after the stock schema accepts'), 'sch_d2_owner_records_numbers', D2_OWNER_RECORDS_numbers),
+        g.Guard('D2_OWNER_RECORDS_schema', g.Invariant('/schema_errors', 'the deck-2 owner bank (a map of record text) validates (closed Draft 2020-12, full-match patterns, eager $ref closure; it declares no integer slot, so CV-1100 slot admission adds nothing)'), 'sch_d2_owner_records_schema', D2_OWNER_RECORDS_schema),
     ])
 
     def check(value):
         table.require('D2_OWNER_RECORDS_schema', value, context)
-        table.require('D2_OWNER_RECORDS_numbers', value, context)
         return True
     return g.Case(table, check, context)

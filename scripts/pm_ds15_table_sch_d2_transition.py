@@ -14,22 +14,16 @@ FIELDS = ('schema_errors', 'number_errors')
 
 
 def D2_TRANSITION_schema(value, context):
-    return 'sch_d2_transition_schema' if value['schema_errors'] != 0 else None
-
-
-def D2_TRANSITION_numbers(value, context):
-    return 'sch_d2_transition_numbers' if value['number_errors'] != 0 else None
+    return 'sch_d2_transition_schema' if value['schema_errors'] + value['number_errors'] != 0 else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('D2_TRANSITION_schema', g.Invariant('/schema_errors', 'a deck-2 catalog request transition validates (closed Draft 2020-12, full-match patterns, eager $ref closure)'), 'sch_d2_transition_schema', D2_TRANSITION_schema),
-        g.Guard('D2_TRANSITION_numbers', g.Invariant('/number_errors', 'CV-1100: every schema integer slot admits only an exact integer within its own bounds (storage_uint64 for Storage metadata), checked after the stock schema accepts'), 'sch_d2_transition_numbers', D2_TRANSITION_numbers),
+        g.Guard('D2_TRANSITION_schema', g.Invariant('/schema_errors', 'a deck-2 catalog request transition validates (closed Draft 2020-12, full-match patterns, eager $ref closure; it declares no integer slot, so CV-1100 slot admission adds nothing)'), 'sch_d2_transition_schema', D2_TRANSITION_schema),
     ])
 
     def check(value):
         table.require('D2_TRANSITION_schema', value, context)
-        table.require('D2_TRANSITION_numbers', value, context)
         return True
     return g.Case(table, check, context)

@@ -127,10 +127,7 @@ def with_spelling(data, path, spelling):
     base.patch(data, {path: MARKER})
     text = json.dumps(data)
     assert text.count(json.dumps(MARKER)) == 1, path
-    try:
-        return True, base.parse_owner_json(text.replace(json.dumps(MARKER), spelling))
-    except ValueError:
-        return False, None
+    return base.parse_operation_json(text.replace(json.dumps(MARKER), spelling))
 
 
 def accepted(result):
@@ -160,7 +157,7 @@ def routes(name, contract, sixteen):
         lo, hi = bounds.get('minimum'), bounds.get('maximum')
         payload = copy.deepcopy(payload_parent['payload'])
         out.append(('payload_slot', payload, slot,
-                    lambda d: not list(model.validator(schema).iter_errors(d)),
+                    lambda d: not model.schema_refused('sch_payload', model.validator(schema), d),
                     lambda s, lo=lo, hi=hi: admitted(s, lo, hi)))
         if slot in contract.get('identity_fields', []):
             out.append(('identity', payload, slot,

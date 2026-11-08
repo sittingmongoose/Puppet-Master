@@ -15,6 +15,7 @@ from pathlib import Path
 
 PREFIX = 'pm_ds15_table_'
 MODULES = {}
+NUMBERLESS = set()
 
 
 def module(name, doc, rows):
@@ -25,8 +26,21 @@ def module(name, doc, rows):
 
 
 def schema(name, subject, number):
-    """One schema occurrence: the complete stock verdict, then its number rule."""
+    """One schema occurrence: the complete stock verdict, then its number rule.
+
+    number=None: the schema declares no integer slot and accepts no number at any position,
+    so the number rule is vacuous; its errors (none can occur) still count in the verdict row.
+    """
     tag = name.upper().replace('SCH_', '')
+    if number is None:
+        module(name, f'Schema occurrence: {subject}.', [
+            (f'{tag}_schema', '/schema_errors',
+             f'{subject} validates (closed Draft 2020-12, full-match patterns, eager $ref closure; it declares no '
+             'integer slot, so CV-1100 slot admission adds nothing)', name + '_schema',
+             "value['schema_errors'] + value['number_errors'] != 0"),
+        ])
+        NUMBERLESS.add(name)
+        return
     words = {'slot': 'CV-1100: every schema integer slot admits only an exact integer within its own bounds '
                      '(storage_uint64 for Storage metadata), checked after the stock schema accepts',
              'v1': 'the retained original is inside the frozen ds15-v1 integer domain (no float, '
@@ -35,6 +49,8 @@ def schema(name, subject, number):
         (f'{tag}_schema', '/schema_errors',
          f'{subject} validates (closed Draft 2020-12, full-match patterns, eager $ref closure)', name + '_schema',
          "value['schema_errors'] != 0"),
+    ])
+    module(name + '_n', f'Schema occurrence number rule: {subject} (after the stock schema accepts).', [
         (f'{tag}_numbers', '/number_errors', words, name + '_numbers', "value['number_errors'] != 0"),
     ])
 
@@ -61,12 +77,12 @@ schema('sch_checkpoint', 'the proposed checkpoint value', 'slot')
 schema('sch_prior_checkpoint', 'the stored previous checkpoint value', 'slot')
 schema('sch_value', 'a DS15 stored value (dev session record v2, preview state v2, capture chip v2)', 'slot')
 schema('sch_migration_inputs', 'a migration source and its evidence', 'slot')
-schema('sch_d2_context', 'the current deck-2 original transition context', 'slot')
-schema('sch_d2_context_retained', 'the current deck-2 context of a retained read', 'slot')
-schema('sch_d2_context_v1', 'the retained deck-2 original transition context', 'v1')
-schema('sch_d2_source', 'the deck-2 owner record parsed from the owner bank', 'slot')
-schema('sch_d2_owner_records', 'the deck-2 owner bank (a map of record text)', 'slot')
-schema('sch_d2_transition', 'a deck-2 catalog request transition', 'slot')
+schema('sch_d2_context', 'the current deck-2 original transition context', None)
+schema('sch_d2_context_retained', 'the current deck-2 context of a retained read', None)
+schema('sch_d2_context_v1', 'the retained deck-2 original transition context', None)
+schema('sch_d2_source', 'the deck-2 owner record parsed from the owner bank', None)
+schema('sch_d2_owner_records', 'the deck-2 owner bank (a map of record text)', None)
+schema('sch_d2_transition', 'a deck-2 catalog request transition', None)
 
 module('schema_references', 'Standing check 9: eager schema reference closure.', [
     ('SR01_references_resolve', '/unresolved', 'every $ref and $dynamicRef resolves through the retained local resources, '
@@ -109,9 +125,12 @@ module('id_input', 'Identity recipe input.', [
     ('ID01_payload_object', '/payload_object', 'the identity payload is an object', 'identity_payload_not_object',
      "value['payload_object'] is not True"),
 ])
-module('id_scope', 'Identity recipe scope and application custody.', [
-    ('ID02_scope_object', '/scope_object', 'a scoped family payload carries an object scope', 'identity_scope_not_object',
+module('id_scope_entailed', 'Identity recipe scope (entailed: sch_id_fields validates the scope).', [
+    ('ID02_scope_object', '/scope_object', 'a scoped family payload carries an object scope; entailed: the identity field '
+     'schema (sch_id_fields) validates scope against its object schema first', 'identity_scope_not_object',
      "value['scoped'] is True and value['scope_object'] is not True"),
+])
+module('id_scope', 'Identity recipe application custody.', [
     ('ID03_application_custody', '/source_present', 'an application identity has original Server/owner-operation custody',
      'identity_application_custody', "value['application'] is True and value['source_present'] is not True"),
 ])
@@ -161,9 +180,11 @@ module('bs_joins', 'Browser owner record joined to the source and the payload.',
 ])
 for side, first in (('input', 13), ('output', 20)):
     n = lambda k: f'BS{first + k:02d}'
-    module(f'bs_{side}', f'Browser original_{side} body and controller evidence.', [
+    module(f'bs_{side}_body', f'Browser original_{side} body (checked before its fields).', [
         (f'{n(0)}_{side}_body', f'/{side}_body', f'original_{side} without controller evidence equals the record body',
          'browser_original_' + side, "value['body'] != value['record_body']"),
+    ])
+    module(f'bs_{side}', f'Browser original_{side} joined to the record and controller evidence.', [
         (f'{n(1)}_{side}_scope', f'/{side}_scope', f'original_{side} scope equals the record scope', 'browser_original_' + side,
          "value['scope'] != value['record_scope']"),
         (f'{n(2)}_{side}_profile', f'/{side}_profile_id', f'original_{side} profile equals the record profile',
@@ -198,16 +219,17 @@ module('bs_stages', 'Browser stage custody, every stage.', [
 module('env_dispatch', 'EventRecord envelope dispatch and current-writer replay policy.', [
     ('EN01_event_type', '/event_type', 'equals the family event type', 'envelope_dispatch',
      "value['event_type'] != value['family_event_type']"),
-    ('EN02_event_type_fullmatch', '/event_type_fullmatch', 'the event type fully matches the dotted-name grammar (no trailing LF)',
-     'envelope_dispatch', "value['event_type_fullmatch'] is not True"),
     ('EN03_envelope_dedupe', '/envelope_policy', 'a current envelope is dedupe_by_idempotency_key', 'envelope_policy',
      "value['historical'] is not True and value['envelope_policy'] != 'dedupe_by_idempotency_key'"),
     ('EN04_original_dedupe', '/original_policy', 'a current write\'s original is dedupe_by_idempotency_key', 'envelope_policy',
      "value['historical'] is not True and value['original_policy'] != 'dedupe_by_idempotency_key'"),
 ])
+module('env_dispatch_entailed', 'EventRecord event-type grammar (entailed: EN01 and the EventRecord pattern).', [
+    ('EN02_event_type_fullmatch', '/event_type_fullmatch', 'the event type fully matches the dotted-name grammar (no '
+     'trailing LF); entailed: it equals the family event type (EN01) and the EventRecord schema full-matches it',
+     'envelope_dispatch', "value['event_type_fullmatch'] is not True"),
+])
 module('env_scope', 'EventRecord envelope joined to the scope and payload.', [
-    ('EN05_scope_kind', '/scope_kind', 'equals the context scope kind (application or project)', 'envelope_join',
-     "value['scope_kind'] != value['expected_scope_kind']"),
     ('EN06_project', '/project_id', 'equals the context scope project_id', 'envelope_join',
      "value['project_id'] != value['scope_project_id']"),
     ('EN07_payload_copy', '/envelope_payload', 'the envelope payload equals the payload (typed)', 'envelope_join',
@@ -219,6 +241,11 @@ module('env_scope', 'EventRecord envelope joined to the scope and payload.', [
      "value['thread_id'] != value['payload_thread_id']"),
     ('EN11_payload_schema', '/payload_schema_id', 'equals the family payload schema $id', 'envelope_join',
      "value['payload_schema_id'] != value['family_payload_schema_id']"),
+])
+module('env_scope_entailed', 'EventRecord scope kind (entailed: the EventRecord schema ties scope_kind to a null or present '
+       'project_id, and EN06 joins that project_id to the context scope).', [
+    ('EN05_scope_kind', '/scope_kind', 'equals the context scope kind (application or project)', 'envelope_join',
+     "value['scope_kind'] != value['expected_scope_kind']"),
 ])
 module('env_storage', 'EventRecord Storage partition and SP-337 inline size.', [
     ('EN12_partition', '/scope_partition', 'equals the encoded Storage partition of the envelope scope', 'envelope_storage',
@@ -267,20 +294,22 @@ module('env_app_browser_a', 'Browser application source presence and original co
      "value['source_present'] is True and value['source'] != value['original_source']"),
 ])
 module('env_app_browser_b', 'Browser application source identity and scope.', [
-    ('EB03_schema_id', '/schema_id', 'is pm.application_source.browser_transition.v1', 'application_source',
-     "value['schema_id'] != 'pm.application_source.browser_transition.v1'"),
-    ('EB04_interface', '/interface_id', 'is owner.browser.transition.application@1.0.0', 'application_source',
-     "value['interface_id'] != 'owner.browser.transition.application@1.0.0'"),
     ('EB05_storage_instance', '/storage_instance_id', 'equals the operation Storage instance', 'application_source',
      "value['storage_instance_id'] != value['expected_storage_instance_id']"),
     ('EB06_thread', '/thread_id', 'equals the envelope thread_id', 'application_source',
      "value['thread_id'] != value['envelope_thread_id']"),
+    ('EB09_scope_server', '/scope_server_id', 'the source scope Server equals the source server_id', 'application_source',
+     "value['scope_server_id'] != value['server_id']"),
+])
+module('env_app_browser_b_entailed', 'Browser application source identity and scope (entailed: the OriginalBrowserTransitionSource schema fixes schema_id, interface_id and the application scope, so sch_app_source refuses first).', [
+    ('EB03_schema_id', '/schema_id', 'is pm.application_source.browser_transition.v1', 'application_source',
+     "value['schema_id'] != 'pm.application_source.browser_transition.v1'"),
+    ('EB04_interface', '/interface_id', 'is owner.browser.transition.application@1.0.0', 'application_source',
+     "value['interface_id'] != 'owner.browser.transition.application@1.0.0'"),
     ('EB07_scope_kind', '/scope_kind', 'the source scope is application', 'application_source',
      "value['scope_kind'] != 'application'"),
     ('EB08_scope_project', '/scope_project_id', 'the application source scope has no Project', 'application_source',
      "value['scope_project_id'] is not None"),
-    ('EB09_scope_server', '/scope_server_id', 'the source scope Server equals the source server_id', 'application_source',
-     "value['scope_server_id'] != value['server_id']"),
 ])
 module('env_app_browser_c', 'Browser application source original output.', [
     ('EB10_output_present', '/output_present', 'original_output is present', 'application_source',
@@ -290,11 +319,13 @@ module('env_app_browser_d', 'Browser application source profile joined to the co
     ('EB11_profile', '/profile_id', 'original_output profile equals the context scope profile', 'application_source',
      "value['profile_id'] != value['scope_profile_id']"),
 ])
-module('env_app_browser_entailed', 'Browser application source checks entailed by earlier rows (defence in depth).', [
+module('env_app_browser_entailed', 'Browser application source stage operations (entailed: BS09 and BS28).', [
     ('EB13_stage_operations', '/stage_operations', 'every stage operation is the source operation (entailed: BS09 and BS28)',
      'application_source', "any([s != value['original_operation_id'] for s in value['stage_operations']])"),
-    ('EB14_identity_text', '/identity_text_ok', 'server_id and original_operation_id are 1..256-character strings without LF '
-     '(entailed: the OriginalBrowserTransitionSource schema)', 'application_source', "value['identity_text_ok'] is not True"),
+])
+module('env_app_browser_e', 'Browser application source identity text.', [
+    ('EB14_identity_text', '/identity_text_ok', 'server_id and original_operation_id are 1..256-character strings without LF',
+     'application_source', "value['identity_text_ok'] is not True"),
 ])
 
 # ------------------------------------------------------------------ receipt and custody
@@ -377,6 +408,8 @@ module('tr_catalog_install', 'catalog.install.started/completed transition.', [
      "value['catalog_owner_payload'] != value['payload']"),
     ('TI03_phase', '/catalog_phase', 'the context phase equals the payload phase', 'transition_refused',
      "value['catalog_phase'] != value['payload_phase']"),
+])
+module('tr_catalog_install_entailed', 'catalog.install family phase (entailed: the family payload schema fixes phase).', [
     ('TI04_family_phase', '/payload_phase', 'the payload phase is the family suffix', 'transition_refused',
      "value['payload_phase'] != value['family_phase']"),
 ])
@@ -427,8 +460,6 @@ module('tr_live_degraded', 'live.session.degraded transition.', [
      "value['launch_outcome'] != value['expected_launch_outcome']"),
 ])
 module('tr_browser_a', 'browser.context_captured transition: target and thread.', [
-    ('TB01_target_resolution', '/target_resolution', 'is explicit, owning_surface or explicit_new_thread', 'transition_refused',
-     "value['target_resolution'] not in ('explicit', 'owning_surface', 'explicit_new_thread')"),
     ('TB02_payload_target', '/payload_target_resolution', 'the payload target resolution equals the context',
      'transition_refused', "value['payload_target_resolution'] != value['target_resolution']"),
     ('TB03_resolved_thread', '/resolved_thread_id', 'the resolved thread is the payload thread', 'transition_refused',
@@ -437,6 +468,11 @@ module('tr_browser_a', 'browser.context_captured transition: target and thread.'
     ('TB12_thread_scope', '/thread_scope', 'the thread scope is the payload scope', 'transition_refused',
      "value['thread_scope'] != value['scope']"),
     ('TB13_no_auto_send', '/auto_send', 'capture never auto-sends', 'transition_refused', "value['auto_send']"),
+])
+module('tr_browser_a_entailed', 'browser.context_captured target resolution (entailed: the family payload schema enumerates '
+       'exactly the allowed resolutions and TB02 joins the context to the payload).', [
+    ('TB01_target_resolution', '/target_resolution', 'is explicit, owning_surface or explicit_new_thread', 'transition_refused',
+     "value['target_resolution'] not in ('explicit', 'owning_surface', 'explicit_new_thread')"),
 ])
 module('tr_browser_b', 'browser.context_captured transition: the committed chip.', [
     ('TB05_chip', '/chip_id', 'the chip is the payload chip', 'transition_refused', "value['chip_id'] != value['payload_chip_id']"),
@@ -453,10 +489,6 @@ module('tr_browser_b', 'browser.context_captured transition: the committed chip.
      "value['provenance_ref'] != value['payload_provenance_ref']"),
 ])
 module('tr_dev_a', 'dev.session.* transition: workflow states and revision.', [
-    ('TV01_previous_state', '/previous_state', 'the payload previous state is a permitted predecessor', 'transition_refused',
-     "value['previous_state'] not in value['permitted_before']"),
-    ('TV02_workflow_state', '/workflow_state', 'the payload workflow state is the family state', 'transition_refused',
-     "value['workflow_state'] != value['family_state']"),
     ('TV03_context_state', '/context_workflow_state', 'the context workflow state is the payload previous state',
      'transition_refused', "value['context_workflow_state'] != value['previous_state']"),
     ('TV04_revision', '/workflow_revision', 'the workflow revision is the previous revision plus one', 'transition_refused',
@@ -467,6 +499,12 @@ module('tr_dev_a', 'dev.session.* transition: workflow states and revision.', [
      "not value['managed_outcome_committed']"),
     ('TV07_operation', '/operation_id', 'the context operation is the payload operation', 'transition_refused',
      "value['operation_id'] != value['payload_operation_id']"),
+])
+module('tr_dev_a_entailed', 'dev.session.* workflow states (entailed: the family payload schema fixes the permitted previous states and the workflow state).', [
+    ('TV01_previous_state', '/previous_state', 'the payload previous state is a permitted predecessor', 'transition_refused',
+     "value['previous_state'] not in value['permitted_before']"),
+    ('TV02_workflow_state', '/workflow_state', 'the payload workflow state is the family state', 'transition_refused',
+     "value['workflow_state'] != value['family_state']"),
 ])
 module('tr_dev_b', 'dev.session.* transition: family outcomes and DAP.', [
     ('TV08_started_launch', '/launch_outcome', 'dev.session.started was launched', 'transition_refused',
@@ -508,14 +546,16 @@ module('tr_preview_a', 'preview.session.* transition: subject, session and runti
 module('tr_preview_b', 'preview.session.started/stopped transition.', [
     ('TP06_started_state', '/session_state', 'started: the session was created', 'transition_refused',
      "value['family'] == 'preview.session.started' and value['session_state'] != 'created'"),
-    ('TP07_started_runtime', '/runtime_state', 'started: the runtime is loading', 'transition_refused',
-     "value['family'] == 'preview.session.started' and value['runtime_state'] != 'loading'"),
     ('TP08_stopped_state', '/session_state', 'stopped: the session was not already closed', 'transition_refused',
      "value['family'] == 'preview.session.stopped' and value['session_state'] == 'closed'"),
-    ('TP09_stopped_runtime', '/runtime_state', 'stopped: the runtime is closed', 'transition_refused',
-     "value['family'] == 'preview.session.stopped' and value['runtime_state'] != 'closed'"),
     ('TP10_stopped_settled', '/managed_resources_settled', 'stopped: managed resources settled', 'transition_refused',
      "value['family'] == 'preview.session.stopped' and not value['managed_resources_settled']"),
+])
+module('tr_preview_b_entailed', 'preview.session.started/stopped runtime state (entailed: the family payload schema fixes runtime_state).', [
+    ('TP07_started_runtime', '/runtime_state', 'started: the runtime is loading', 'transition_refused',
+     "value['family'] == 'preview.session.started' and value['runtime_state'] != 'loading'"),
+    ('TP09_stopped_runtime', '/runtime_state', 'stopped: the runtime is closed', 'transition_refused',
+     "value['family'] == 'preview.session.stopped' and value['runtime_state'] != 'closed'"),
 ])
 module('tr_preview_c', 'preview.session.refreshed transition.', [
     ('TP11_refresh_state', '/session_state', 'the session is ready, stale, degraded or error', 'transition_refused',
@@ -527,8 +567,6 @@ module('tr_preview_c', 'preview.session.refreshed transition.', [
      "not value['preview_revision'] > value['previous_revision']"),
 ])
 module('tr_preview_origin', 'preview.session.refreshed origin.', [
-    ('TP15_origin', '/refresh_origin', 'the origin is cmd.browser.reload or filemanager.preview_refresh', 'transition_refused',
-     "value['refresh_origin'] not in ('cmd.browser.reload', 'filemanager.preview_refresh')"),
     ('TP16_reload_session', '/payload_browser_session_id', 'a browser reload names a BrowserSession', 'transition_refused',
      "value['refresh_origin'] == 'cmd.browser.reload' and not value['payload_browser_session_id']"),
     ('TP17_reload_session_join', '/payload_browser_session_id', 'a browser reload BrowserSession is the context session',
@@ -536,6 +574,10 @@ module('tr_preview_origin', 'preview.session.refreshed origin.', [
      "and value['payload_browser_session_id'] != value['browser_session_id']"),
     ('TP18_filemanager_no_session', '/payload_browser_session_id', 'a file-manager refresh names no BrowserSession',
      'transition_refused', "value['refresh_origin'] == 'filemanager.preview_refresh' and bool(value['payload_browser_session_id'])"),
+])
+module('tr_preview_origin_entailed', 'preview.session.refreshed origin (entailed: the family payload schema enumerates refresh_origin).', [
+    ('TP15_origin', '/refresh_origin', 'the origin is cmd.browser.reload or filemanager.preview_refresh', 'transition_refused',
+     "value['refresh_origin'] not in ('cmd.browser.reload', 'filemanager.preview_refresh')"),
 ])
 
 # ------------------------------------------------------------------ evaluate: originals, readers, disclosure
@@ -560,12 +602,15 @@ module('ev_original_copies', 'Original payload copies (typed).', [
 module('ev_original_ids', 'Original identity copies.', [
     ('OC03_outcome_event', '/outcome_event_id', 'the outcome event is the original event', 'original_refused',
      "value['outcome_event_id'] != value['original_event_id']"),
-    ('OC04_event_payload', '/event_payload', 'the original event payload equals the original payload (typed)',
-     'original_refused', "value['event_payload'] != value['original_payload']"),
     ('OC05_event_id', '/event_event_id', 'the original event id is the original event_id', 'original_refused',
      "value['event_event_id'] != value['original_event_id']"),
     ('OC06_key', '/original_key', 'the original key is the original event key', 'original_refused',
      "value['original_key'] != value['event_key']"),
+])
+module('ev_original_ids_entailed', 'Original event payload copy (entailed: OC01, EN07 and EN17).', [
+    ('OC04_event_payload', '/event_payload', 'the original event payload equals the original payload (typed); entailed: the '
+     'payload equals it (OC01), the envelope payload equals the payload (EN07) and the producer digest of the envelope '
+     "equals the original event's (EN17)", 'original_refused', "value['event_payload'] != value['original_payload']"),
 ])
 module('ev_outcome_ref', 'Outcome source reference.', [
     ('OC07_outcome_ref', '/payload_outcome_ref', 'a payload outcome_ref is the outcome source_ref', 'original_refused',
@@ -661,16 +706,22 @@ module('cp_range', 'Checkpoint advance range.', [
      "value['scan_low'] != value['expected_low']"),
     ('CN02_rows', '/index_rows', 'the index rows are exactly the source rows in low..high', 'checkpoint_refused',
      "value['index_rows'] != value['expected_rows']"),
-    ('CN03_contiguous', '/row_sequences', 'the index rows are exactly low..high', 'checkpoint_refused',
-     "value['row_sequences'] != value['expected_row_sequences']"),
     ('CN04_through', '/through_sequence_id', 'the checkpoint advances through the scan high', 'checkpoint_refused',
      "value['through_sequence_id'] != value['scan_high']"),
     ('CN05_selected_high', '/scan_high', 'the scan high is the selected high', 'checkpoint_refused',
      "value['scan_high'] != value['selected_high']"),
 ])
-module('cp_prior', 'Prior checkpoint joined to the proposed one.', [
-    ('CN06_prior_storage', '/prior_storage_instance_id', 'prior token Storage instance equals the token', 'checkpoint_refused',
+module('cp_range_entailed', 'Index rows contiguous (entailed: CS04, CN02 and CN05).', [
+    ('CN03_contiguous', '/row_sequences', 'the index rows are exactly low..high; entailed: the source rows are contiguous '
+     '(CS04), the index rows are the source rows in low..high (CN02) and high is the source high (CS03, CN05)',
+     'checkpoint_refused', "value['row_sequences'] != value['expected_row_sequences']"),
+])
+module('cp_prior_entailed', 'Prior token Storage instance (entailed: TK01 on both tokens).', [
+    ('CN06_prior_storage', '/prior_storage_instance_id', 'prior token Storage instance equals the token; entailed: TK01 '
+     'binds both the token and the prior token to the event Storage instance', 'checkpoint_refused',
      "value['prior_storage_instance_id'] != value['storage_instance_id']"),
+])
+module('cp_prior', 'Prior checkpoint joined to the proposed one.', [
     ('CN07_prior_generation', '/prior_generation_id', 'prior token generation equals the token', 'checkpoint_refused',
      "value['prior_generation_id'] != value['generation_id']"),
     ('CN08_prior_anchor', '/prior_anchor', 'prior token generation anchor equals the token', 'checkpoint_refused',
@@ -736,6 +787,11 @@ module('mg_chip', 'Capture chip migration source.', [
      "value['source_thread_id'] != value['evidence_thread_id']"),
     ('MG11_scope', '/source_scope', 'the chip scope is the evidence scope', 'migration_refused',
      "value['source_scope'] != value['evidence_scope']"),
+])
+
+module('raw_ingress', 'CV-1100 raw JSON ingress of an operation input.', [
+    ('RI01_current_json', '/parse_refusal', 'the operation text parses under loads_current_json (no -0, 01, nonfinite, '
+     'duplicate key or lone surrogate)', 'raw_json_refused', "value['parse_refusal'] is not None"),
 ])
 
 # ------------------------------------------------------------------ number harness boundaries
@@ -840,12 +896,14 @@ module('d2_pl_gate', 'Deck-2 current transition authorization and joins.', [
      "value['context_scope'] != value['payload_scope']"),
     ('PG04_envelope_project', '/envelope_project_id', 'the context envelope project equals the scope project',
      'transition_refused', "value['envelope_project_id'] != value['scope_project_id']"),
-    ('PG05_no_run', '/envelope_run_id', 'the context envelope has no run', 'transition_refused',
-     "value['envelope_run_id'] is not None"),
     ('PG06_session_class', '/session_security_class', 'a browser family has an ordinary session', 'transition_refused',
      "value['browser_family'] is True and value['session_security_class'] != 'ordinary'"),
     ('PG07_safe_refs', '/unsafe_refs', 'no payload string is an absolute path, token-shaped or a forbidden ref',
      'transition_refused', "value['unsafe_refs'] != []"),
+])
+module('d2_pl_gate_entailed', 'Deck-2 context envelope run (entailed: the deck-2 context schema fixes envelope_run_id to null).', [
+    ('PG05_no_run', '/envelope_run_id', 'the context envelope has no run', 'transition_refused',
+     "value['envelope_run_id'] is not None"),
 ])
 module('d2_or_bytes', 'Deck-2 owner record text resolved by payload outcome_ref.', [
     ('OR01_record_text', '/raw_type', 'the owner bank holds exact text for outcome_ref', 'owner_record_missing',
@@ -866,8 +924,6 @@ module('d2_env_a', 'Deck-2 EventRecord dispatch and policy.', [
      'envelope_policy', "value['historical'] is not True and value['original_policy'] != 'dedupe_by_idempotency_key'"),
 ])
 module('d2_env_b', 'Deck-2 EventRecord joins.', [
-    ('DE06_scope_kind', '/scope_kind', 'equals the payload scope kind', 'envelope_join',
-     "value['scope_kind'] != value['expected_scope_kind']"),
     ('DE07_project', '/project_id', 'equals the payload scope project', 'envelope_join',
      "value['project_id'] != value['scope_project_id']"),
     ('DE08_payload_copy', '/envelope_payload', 'the envelope payload equals the payload (typed)', 'envelope_join',
@@ -878,6 +934,10 @@ module('d2_env_b', 'Deck-2 EventRecord joins.', [
     ('DE11_context_scope', '/context_scope', 'the context scope equals the payload scope', 'envelope_join',
      "value['context_scope'] != value['payload_scope']"),
 ])
+module('d2_env_b_entailed', 'Deck-2 envelope scope kind (entailed: the EventRecord schema ties scope_kind to a null or present project_id, and DE07 joins that project_id to the payload scope).', [
+    ('DE06_scope_kind', '/scope_kind', 'equals the payload scope kind', 'envelope_join',
+     "value['scope_kind'] != value['expected_scope_kind']"),
+])
 module('d2_env_c', 'Deck-2 EventRecord partition and owner record joins.', [
     ('ER01_record_payload', '/record_payload', 'the owner record payload equals the payload (typed)', 'owner_record_join',
      "value['record_payload'] != value['payload']"),
@@ -887,12 +947,14 @@ module('d2_env_c', 'Deck-2 EventRecord partition and owner record joins.', [
      "value['record_scope'] != value['payload_scope']"),
     ('ER04_record_original_transition', '/record_transition', 'the owner record transition is the original transition',
      'owner_record_join', "value['record_transition'] != value['original_transition']"),
-    ('ER05_record_event_type', '/record_event_type', 'the owner record event type is the family', 'owner_record_join',
-     "value['record_event_type'] != value['family_event_type']"),
     ('ER06_record_committed', '/record_committed', 'the owner record is committed', 'owner_record_join',
      "not value['record_committed']"),
     ('ER07_record_current_transition', '/record_transition', 'a current write\'s record transition is the current transition',
      'owner_record_join', "value['retry'] is not True and value['record_transition'] != value['current_transition']"),
+])
+module('d2_env_c_entailed', 'Deck-2 owner record event type (entailed: the sources schema fixes event_type per family definition).', [
+    ('ER05_record_event_type', '/record_event_type', 'the owner record event type is the family', 'owner_record_join',
+     "value['record_event_type'] != value['family_event_type']"),
 ])
 module('d2_env_d', 'Deck-2 owner record operation and application custody.', [
     ('ER08_record_operation', '/record_operation_id', 'the owner record operation is the payload operation_id',
@@ -907,6 +969,8 @@ module('d2_env_storage', 'Deck-2 EventRecord Storage partition and inline size.'
      "value['scope_partition'] != value['expected_partition']"),
     ('DE13_payload_encodable', '/payload_size', 'the payload has an exact SP-1100 EVENT_VALUE encoding', 'envelope_storage',
      "value['payload_size'] is None"),
+])
+module('d2_env_storage_entailed', 'Deck-2 inline size (entailed: every deck-2 payload schema bounds every string to 256 characters, so no admitted payload reaches 16384 encoded bytes).', [
     ('DE14_inline_limit', '/payload_size', 'the encoded inline payload is at most 16384 bytes (SP-337)', 'envelope_storage',
      "value['payload_size'] is not None and value['payload_size'] > 16384"),
 ])

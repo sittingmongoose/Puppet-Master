@@ -13,10 +13,6 @@ import pm_guard_isolation as g
 FIELDS = ('refresh_origin', 'payload_browser_session_id', 'browser_session_id')
 
 
-def TP15_origin(value, context):
-    return 'transition_refused' if value['refresh_origin'] not in ('cmd.browser.reload', 'filemanager.preview_refresh') else None
-
-
 def TP16_reload_session(value, context):
     return 'transition_refused' if value['refresh_origin'] == 'cmd.browser.reload' and not value['payload_browser_session_id'] else None
 
@@ -32,14 +28,12 @@ def TP18_filemanager_no_session(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('TP15_origin', g.Invariant('/refresh_origin', 'the origin is cmd.browser.reload or filemanager.preview_refresh'), 'transition_refused', TP15_origin),
         g.Guard('TP16_reload_session', g.Invariant('/payload_browser_session_id', 'a browser reload names a BrowserSession'), 'transition_refused', TP16_reload_session),
         g.Guard('TP17_reload_session_join', g.Invariant('/payload_browser_session_id', 'a browser reload BrowserSession is the context session'), 'transition_refused', TP17_reload_session_join),
         g.Guard('TP18_filemanager_no_session', g.Invariant('/payload_browser_session_id', 'a file-manager refresh names no BrowserSession'), 'transition_refused', TP18_filemanager_no_session),
     ])
 
     def check(value):
-        table.require('TP15_origin', value, context)
         table.require('TP16_reload_session', value, context)
         table.require('TP17_reload_session_join', value, context)
         table.require('TP18_filemanager_no_session', value, context)

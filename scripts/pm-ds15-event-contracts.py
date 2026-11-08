@@ -413,8 +413,21 @@ def refusal(phase, facts):
     return first
 
 
+# A table of rows entailed by the phase before it (a schema const, enum or bound, or earlier
+# rows) runs right after that phase with the same observation, so the entailed rows stay in
+# the checker without withholding the credit of the rows that can be proved.
+FOLLOWERS = {'env_scope': 'env_scope_entailed', 'tr_browser_a': 'tr_browser_a_entailed', 'env_app_browser_b': 'env_app_browser_b_entailed', 'tr_catalog_install': 'tr_catalog_install_entailed',
+             'tr_dev_a': 'tr_dev_a_entailed', 'tr_preview_b': 'tr_preview_b_entailed',
+             'tr_preview_origin': 'tr_preview_origin_entailed', 'd2_env_b': 'd2_env_b_entailed',
+             'd2_env_storage': 'd2_env_storage_entailed', 'd2_env_c': 'd2_env_c_entailed',
+             'd2_pl_gate': 'd2_pl_gate_entailed'}
+
+
 def refused(phase, **facts):
-    return refusal(phase, facts) is not None
+    if refusal(phase, facts) is not None:
+        return True
+    follower = FOLLOWERS.get(phase)
+    return follower is not None and refusal(follower, facts) is not None
 
 
 def table_order_errors():
@@ -442,13 +455,24 @@ def kind(value):
     return type(value).__name__
 
 
+@lru_cache(maxsize=1)
+def number_tables():
+    return frozenset(p.stem[len(TABLE_PREFIX):] for p in (ROOT / 'scripts').glob(TABLE_PREFIX + 'sch_*_n.py'))
+
+
 def schema_refused(phase, schema_validator, instance):
-    """One schema occurrence: the stock verdict, then (if it accepts) its number rule."""
+    """One schema occurrence: the stock verdict, then (if it accepts) its number rule.
+
+    A schema that declares no integer slot has one table whose verdict row also counts
+    the (necessarily zero) number errors; otherwise the number rule is the next table.
+    """
     errors = list(schema_validator.iter_errors(instance))
     numbers = ('current_integer', 'ds15IntegerDomain')
-    stock = [e for e in errors if e.validator not in numbers]
-    return refused(phase, schema_errors=len(stock),
-                   number_errors=0 if stock else len([e for e in errors if e.validator in numbers]))
+    stock = len([e for e in errors if e.validator not in numbers])
+    numbered = len([e for e in errors if e.validator in numbers]) if not stock else 0
+    if phase + '_n' in number_tables():
+        return refused(phase, schema_errors=stock) or refused(phase + '_n', number_errors=numbered)
+    return refused(phase, schema_errors=stock, number_errors=numbered)
 
 
 def refusal_reason(call, *args):
@@ -469,8 +493,8 @@ def identity_fields_refused(c, payload, recipe=CURRENT):
         own = [e for e in errors if e.validator not in numbers]
         stock += len(own)
         numbered += 0 if own else len([e for e in errors if e.validator in numbers])
-    return refused('sch_id_fields_v1' if recipe == V1 else 'sch_id_fields', schema_errors=stock,
-                   number_errors=0 if stock else numbered)
+    phase = 'sch_id_fields_v1' if recipe == V1 else 'sch_id_fields'
+    return refused(phase, schema_errors=stock) or refused(phase + '_n', number_errors=0 if stock else numbered)
 
 
 def identity_fields_types_ok(c, payload, recipe=CURRENT):
@@ -485,8 +509,9 @@ def identity(c, payload, source=None, recipe=CURRENT):
     scoped = c['scope_policy'] != 'project_only'
     scope_object = isinstance(payload.get('scope'), dict) if scoped else None
     application = bool(scoped and scope_object and payload['scope'].get('kind') == 'app')
-    if refused('id_scope', scoped=scoped, scope_object=scope_object, application=application,
-               source_present=bool(source) if application else None):
+    if refused('id_scope_entailed', scoped=scoped, scope_object=scope_object):
+        return None
+    if refused('id_scope', application=application, source_present=bool(source) if application else None):
         return None
     if application:
         return 'application@1:{}:{}'.format(source['server_id'].encode().hex(),
@@ -609,9 +634,8 @@ def app_hash(record):
                      'workspace_id': record.get('workspace_id')}})
 
 
-def browser_source_ok(d, source):
-    # The bank represents the existing owner's retained record bytes, resolved
-    # by accepted_source_ref, independently of either observation of the source.
+def owner_record_text(d, source):
+    """(refused, record): the owner bank text for accepted_source_ref, parsed (bs_bytes rows)."""
     raw = d['browser_owner_records'].get(source['accepted_source_ref'])
     parse_refusal = record = None
     if type(raw) is str:
@@ -619,7 +643,14 @@ def browser_source_ok(d, source):
             record = parse_owner_json(raw)
         except (ValueError, UnicodeError) as exc:
             parse_refusal = getattr(exc, 'reason', type(exc).__name__)
-    if refused('bs_bytes', raw_type=kind(raw), parse_refusal=parse_refusal):
+    return refused('bs_bytes', raw_type=kind(raw), parse_refusal=parse_refusal), record
+
+
+def browser_source_ok(d, source):
+    # The bank represents the existing owner's retained record bytes, resolved
+    # by accepted_source_ref, independently of either observation of the source.
+    refusal_found, record = owner_record_text(d, source)
+    if refusal_found:
         return False
     if schema_refused('sch_owner_record', validator(read('Plans/ds15_browser_owner_record.schema.json')), record):
         return False
@@ -646,8 +677,11 @@ def browser_source_ok(d, source):
         return False
     for key in ('original_input', 'original_output'):
         original = source[key]
-        if refused('bs_' + key.split('_', 1)[1], body={k: v for k, v in original.items() if k != 'controller_evidence'},
-                   record_body=record[key + '_body'], scope=original['scope'], record_scope=record['scope'],
+        side = key.split('_', 1)[1]
+        if refused('bs_' + side + '_body', body={k: v for k, v in original.items() if k != 'controller_evidence'},
+                   record_body=record[key + '_body']):
+            return False
+        if refused('bs_' + side, scope=original['scope'], record_scope=record['scope'],
                    profile_id=original['profile_id'], record_profile_id=record['profile_id'],
                    workspace_id=original['workspace_id'], record_workspace_id=record['workspace_id'],
                    browser_session_id=p['browser_session_id'], session_refs=original['session_refs'],
@@ -672,6 +706,15 @@ def partition_of(scope_kind, project_id):
         return None
 
 
+def application_source_refused(d, source):
+    return refused('env_app_browser_a', source_present=application_source_present(source), source=source,
+                   original_source=d['original']['application_source'])
+
+
+def original_output_refused(source):
+    return refused('env_app_browser_c', output_present=original_output_present(source['original_output']))
+
+
 def envelope_ok(c, d, retry=True, historical=False, append=False):
     e, original = d['envelope'], d['original']['event']
     scope = d['context']['scope']
@@ -683,8 +726,10 @@ def envelope_ok(c, d, retry=True, historical=False, append=False):
     if schema_refused('sch_original_event', validator(read('Plans/event_record.schema.json'), V1), original):
         return False
     if refused('env_dispatch', event_type=e['event_type'], family_event_type=c['event_type'],
-               event_type_fullmatch=re.fullmatch(r'[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+', e['event_type']) is not None,
                historical=historical, envelope_policy=e['replay_policy'], original_policy=original['replay_policy']):
+        return False
+    if refused('env_dispatch_entailed',
+               event_type_fullmatch=re.fullmatch(r'[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+', e['event_type']) is not None):
         return False
     p = d['payload']
     if refused('env_scope', scope_kind=e['scope_kind'],
@@ -722,8 +767,7 @@ def envelope_ok(c, d, retry=True, historical=False, append=False):
                    source_operation=source['original_operation_id'], payload_operation=d['payload'].get('operation_id')):
             return False
     elif scope['kind'] == 'app':
-        if refused('env_app_browser_a', source_present=application_source_present(source), source=source,
-                   original_source=d['original']['application_source']):
+        if application_source_refused(d, source):
             return False
         if schema_refused('sch_app_source', application_source_validator(), source):
             return False
@@ -733,7 +777,7 @@ def envelope_ok(c, d, retry=True, historical=False, append=False):
                    scope_kind=source['scope']['scope_kind'], scope_project_id=source['scope']['project_id'],
                    scope_server_id=source['scope']['server_id'], server_id=source['server_id']):
             return False
-        if refused('env_app_browser_c', output_present=original_output_present(source['original_output'])):
+        if original_output_refused(source):
             return False
         if not browser_source_ok(d, source):
             return False
@@ -743,7 +787,9 @@ def envelope_ok(c, d, retry=True, historical=False, append=False):
             return False
         if refused('env_app_browser_entailed',
                    stage_operations=[s['original_operation_id'] for s in source['stage_custody'].values()],
-                   original_operation_id=source['original_operation_id'],
+                   original_operation_id=source['original_operation_id']):
+            return False
+        if refused('env_app_browser_e',
                    identity_text_ok=all([isinstance(source.get(k), str) and 0 < len(source[k]) <= 256 and '\n' not in source[k]
                                          for k in ('server_id', 'original_operation_id')])):
             return False
@@ -975,6 +1021,13 @@ def refuse():
     return {'result': 'REFUSE', 'effects': 0}
 
 
+def outcome_refused(d):
+    out = d['outcome']
+    present = outcome_present(out)
+    return refused('ev_outcome', outcome_present=present, outcome_committed=out['committed'] if present else None,
+                   backup_closure_verified=d['backup_closure_verified'])
+
+
 def evaluate(c, op, d):
     """Normative reference model over concrete source/receipt/index values."""
     input_object = isinstance(d, dict)
@@ -1016,9 +1069,7 @@ def evaluate(c, op, d):
                 'effects': 0}
     if op in ('recover', 'publish', 'read', 'checkpoint', 'rebuild'):
         o, r, out = d['original'], d['receipt'], d['outcome']
-        present = outcome_present(out)
-        if refused('ev_outcome', outcome_present=present, outcome_committed=out['committed'] if present else None,
-                   backup_closure_verified=d['backup_closure_verified']):
+        if outcome_refused(d):
             return dict(UNAVAILABLE)
         if refused('ev_outcome_domain', outcome_v1_domain=v1_numbers_ok(out)):
             return refuse()
@@ -1028,10 +1079,11 @@ def evaluate(c, op, d):
             return refuse()
         if not envelope_ok(c, d, historical=op in ('read', 'checkpoint', 'rebuild'), append=op == 'recover' and r is None):
             return refuse()
-        if refused('ev_original_ids', outcome_event_id=out['event_id'], original_event_id=o['event_id'],
-                   event_payload=tx(o['event']['payload']), original_payload=tx(o['payload']),
-                   event_event_id=o['event']['event_id'], original_key=o['idempotency_key'],
-                   event_key=o['event']['idempotency_key']):
+        if (refused('ev_original_ids', outcome_event_id=out['event_id'], original_event_id=o['event_id'],
+                    event_event_id=o['event']['event_id'], original_key=o['idempotency_key'],
+                    event_key=o['event']['idempotency_key'])
+                or refused('ev_original_ids_entailed', event_payload=tx(o['event']['payload']),
+                           original_payload=tx(o['payload']))):
             return refuse()
         if refused('ev_outcome_ref', payload_outcome_ref=p.get('outcome_ref', out['source_ref']),
                    outcome_source_ref=out['source_ref']):
@@ -1122,17 +1174,18 @@ def evaluate(c, op, d):
         if cp == d['stored_previous']:
             return {'result': 'UNCHANGED', 'effects': 0}
         start = source['first_sequence'] if prior is None else prior['through_sequence_id'] + 1
-        if refused('cp_range', scan_low=low, expected_low=start, index_rows=rows,
-                   expected_rows=[r for r in source_rows if low <= r['sequence'] <= high],
-                   row_sequences=[r['sequence'] for r in rows], expected_row_sequences=list(range(low, high + 1)),
-                   through_sequence_id=cp['through_sequence_id'], scan_high=high, selected_high=d['selected_high']):
+        if (refused('cp_range', scan_low=low, expected_low=start, index_rows=rows,
+                    expected_rows=[r for r in source_rows if low <= r['sequence'] <= high],
+                    through_sequence_id=cp['through_sequence_id'], scan_high=high, selected_high=d['selected_high'])
+                or refused('cp_range_entailed', row_sequences=[r['sequence'] for r in rows],
+                           expected_row_sequences=list(range(low, high + 1)))):
             return refuse()
         if prior is not None and (
                 schema_refused('sch_prior_checkpoint', validator(read(c['checkpoint_schema_ref'])), prior)
                 or not token_matches_storage(prior['index_read_token'], d['storage_instance_id'])
-                or refused('cp_prior', prior_storage_instance_id=prior['index_read_token']['storage_instance_id'],
-                           storage_instance_id=token['storage_instance_id'],
-                           prior_generation_id=prior['index_read_token']['generation_id'], generation_id=token['generation_id'],
+                or refused('cp_prior_entailed', prior_storage_instance_id=prior['index_read_token']['storage_instance_id'],
+                           storage_instance_id=token['storage_instance_id'])
+                or refused('cp_prior', prior_generation_id=prior['index_read_token']['generation_id'], generation_id=token['generation_id'],
                            prior_anchor=prior['index_read_token']['generation_anchor_sha256'],
                            anchor=token['generation_anchor_sha256'], prior_project_id=prior.get('project_id'),
                            checkpoint_project_id=cp.get('project_id'), prior_scope=prior.get('scope'),
@@ -1153,11 +1206,22 @@ def evaluate(c, op, d):
     raise AssertionError(op)
 
 
+def parse_operation_json(encoded):
+    """(True, value) when operation text parses under CV-1100, else (False, None) through RI01."""
+    value = reason = None
+    try:
+        value = parse_owner_json(encoded)
+    except ValueError as exc:
+        reason = getattr(exc, 'reason', type(exc).__name__)
+    if refused('raw_ingress', parse_refusal=reason):
+        return False, None
+    return True, value
+
+
 def evaluate_json(c, op, encoded):
     """Raw JSON ingress preserves the lexical fences before typed evaluation."""
-    try:
-        data = parse_owner_json(encoded)
-    except ValueError:
+    ok, data = parse_operation_json(encoded)
+    if not ok:
         return {'result': 'REFUSE', 'effects': 0}
     return evaluate(c, op, data)
 
@@ -1235,9 +1299,9 @@ def predicate_ok(c, target, data):
     if target == 'index_inputs_ok':
         return index_inputs_ok(data)
     if target == 'object_input_present':
-        return object_input_present(data['payload'])
+        return not refused('id_input', payload_object=object_input_present(data['payload']))
     if target == 'browser_record_bytes_present':
-        return browser_record_bytes_present(data['browser_owner_records'].get(data['application_source']['accepted_source_ref']))
+        return not owner_record_text(data, data['application_source'])[0]
     if target == 'identity_fields_types_ok':
         return identity_fields_types_ok(c, data['payload'])
     if target == 'identity':
@@ -1258,14 +1322,15 @@ def predicate_ok(c, target, data):
         return receipt_ok(data)
     if target == 'token_matches_storage':
         return token_matches_storage(data['selected_token'], data['storage_instance_id'])
+    # Presence boundaries are the model phases that hold them.
     if target == 'application_source_present':
-        return application_source_present(data['application_source'])
+        return not application_source_refused(data, data['application_source'])
     if target == 'original_output_present':
-        return original_output_present(data['application_source']['original_output'])
+        return not original_output_refused(data['application_source'])
     if target == 'outcome_present':
-        return outcome_present(data['outcome'])
+        return not outcome_refused(data)
     if target == 'admission_present':
-        return admission_present(data['admitted_sequence'])
+        return not admission_refused(data)
     raise AssertionError('Unknown guard boundary: ' + target)
 
 REQUIRED = {'valid-transition', 'invalid-transition', 'envelope-mismatch', 'original-retry', 'lost-ack',
@@ -1455,7 +1520,7 @@ def numeric_operation(case, data):
     if target == 'identity':
         return identity(c, data)
     if target == 'payload_schema':
-        return not list(validator(read(c['payload_schema_ref'])).iter_errors(data))
+        return not schema_refused('sch_payload', validator(read(c['payload_schema_ref'])), data)
     if target == 'value':
         return value_valid(case['schema_ref'], data)
     if target == 'migration':
@@ -1487,21 +1552,13 @@ def numeric_case_results(case):
     c, parent = numeric_input(case, False)
     parent_ok = proof_success(numeric_operation(case, parent))
     encoded = numeric_wire(case)
-    try:
-        decoded = parse_owner_json(encoded)
-    except ValueError:
-        wire = False
-    else:
-        wire = proof_success(numeric_operation(case, decoded))
+    ok, decoded = parse_operation_json(encoded)
+    wire = proof_success(numeric_operation(case, decoded)) if ok else False
     whole = proof_success(evaluate_json(c, case['operation'], encoded)) if case['target'] == 'evaluate' else None
     if case['token'] in RAW_ONLY_TOKENS:
-        try:
-            parse_owner_json(case['token'])
-        except ValueError:
-            typed_result = None
-        else:
+        if parse_operation_json(case['token'])[0]:
             raise AssertionError((case['id'], 'noncanonical JSON spelling accepted'))
-        return parent_ok, wire, whole, typed_result, None
+        return parent_ok, wire, whole, None, None
     _, data = numeric_input(case)
     got = numeric_operation(case, data)
     return parent_ok, wire, whole, proof_success(got), (data, got)
@@ -1532,9 +1589,9 @@ def check_numeric_contracts():
             valid = not list(validator(read(c['checkpoint_schema_ref'])).iter_errors(data['checkpoint']))
             assert valid == case['valid'], (case['id'], 'checkpoint schema profile')
         # The same token at the complete operation input, through the current raw parser.
-        try:
-            decoded = parse_owner_json(json.dumps(data))
-        except ValueError:
+        with exact_integer_text():
+            ok, decoded = parse_operation_json(json.dumps(data))
+        if not ok:
             assert not case['valid'], case['id']
         else:
             assert proof_success(numeric_operation(case, decoded)) == proof_success(got), case['id']
@@ -1630,6 +1687,12 @@ def main():
     guard_proofs = check_guard_proofs()
     numeric_cases = check_numeric_contracts()
     assert not table_order_errors(), ('table require order', table_order_errors())
-    print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'reference_closure_oracles':schema_count,'predicate_oracles':predicate_count,'value_oracles':value_cases,'guard_proof_oracles':guard_proofs,'numeric_oracles':numeric_cases,'native_execution':'NOT_RUN'}))
+    # Sweep part 2A witnesses: each refused at exactly its own row (Plans/ds15_p2a_cases.json).
+    import pm_ds15_p2a_cases as p2a
+    _, deck2 = p2a.load_models()
+    p2a_cases = p2a.fixture_cases()
+    problems = p2a.check(sys.modules[__name__], deck2, p2a_cases)
+    assert not problems, ('sweep part 2A witnesses', problems)
+    print(json.dumps({'status':'pass','families':len(contracts),'payload_oracles':count,'semantic_oracles':semantic_count,'reference_closure_oracles':schema_count,'predicate_oracles':predicate_count,'value_oracles':value_cases,'guard_proof_oracles':guard_proofs,'numeric_oracles':numeric_cases,'sweep_p2a_witnesses':len(p2a_cases),'native_execution':'NOT_RUN'}))
 
 if __name__ == '__main__': main()

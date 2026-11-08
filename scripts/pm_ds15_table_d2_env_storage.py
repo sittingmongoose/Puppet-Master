@@ -21,21 +21,15 @@ def DE13_payload_encodable(value, context):
     return 'envelope_storage' if value['payload_size'] is None else None
 
 
-def DE14_inline_limit(value, context):
-    return 'envelope_storage' if value['payload_size'] is not None and value['payload_size'] > 16384 else None
-
-
 def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('DE12_partition', g.Invariant('/scope_partition', 'equals the encoded Storage partition of the envelope scope'), 'envelope_storage', DE12_partition),
         g.Guard('DE13_payload_encodable', g.Invariant('/payload_size', 'the payload has an exact SP-1100 EVENT_VALUE encoding'), 'envelope_storage', DE13_payload_encodable),
-        g.Guard('DE14_inline_limit', g.Invariant('/payload_size', 'the encoded inline payload is at most 16384 bytes (SP-337)'), 'envelope_storage', DE14_inline_limit),
     ])
 
     def check(value):
         table.require('DE12_partition', value, context)
         table.require('DE13_payload_encodable', value, context)
-        table.require('DE14_inline_limit', value, context)
         return True
     return g.Case(table, check, context)

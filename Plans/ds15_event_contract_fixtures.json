@@ -92506,18 +92506,18 @@
           "original/application_source/server_id": "server:app:1\n",
           "original/application_source/scope/server_id": "server:app:1\n",
           "original/application_source/original_input/scope/server_id": "server:app:1\n",
-          "original/application_source/original_input_semantic_sha256": "1d1802df6d2a13b2bdf0ae7f1f7fea457ffb1e30976f6f574a2472f8b1c0ed81",
+          "original/application_source/original_input_semantic_sha256": "4cfbcf78ff6ac2b551d89ffbd2f6657656d093ca3911d2f354996512a2b61cf9",
           "original/application_source/original_output/scope/server_id": "server:app:1\n",
-          "original/application_source/original_output_semantic_sha256": "1d1802df6d2a13b2bdf0ae7f1f7fea457ffb1e30976f6f574a2472f8b1c0ed81",
-          "original/application_source/source_sha256": "1044d053bd4a7f59a9e05647ba6a9c080dcd7355e488fa54f637c1f9446c9b56",
+          "original/application_source/original_output_semantic_sha256": "4cfbcf78ff6ac2b551d89ffbd2f6657656d093ca3911d2f354996512a2b61cf9",
+          "original/application_source/source_sha256": "a9354518f3d5eefa6160d64b9c558b730f66640a537efd9208031cec7a363122",
           "original/event/idempotency_key": "application@1:7365727665723a6170703a310a:636170747572653a6f7065726174696f6e3a31",
           "application_source/server_id": "server:app:1\n",
           "application_source/scope/server_id": "server:app:1\n",
           "application_source/original_input/scope/server_id": "server:app:1\n",
-          "application_source/original_input_semantic_sha256": "1d1802df6d2a13b2bdf0ae7f1f7fea457ffb1e30976f6f574a2472f8b1c0ed81",
+          "application_source/original_input_semantic_sha256": "4cfbcf78ff6ac2b551d89ffbd2f6657656d093ca3911d2f354996512a2b61cf9",
           "application_source/original_output/scope/server_id": "server:app:1\n",
-          "application_source/original_output_semantic_sha256": "1d1802df6d2a13b2bdf0ae7f1f7fea457ffb1e30976f6f574a2472f8b1c0ed81",
-          "application_source/source_sha256": "1044d053bd4a7f59a9e05647ba6a9c080dcd7355e488fa54f637c1f9446c9b56",
+          "application_source/original_output_semantic_sha256": "4cfbcf78ff6ac2b551d89ffbd2f6657656d093ca3911d2f354996512a2b61cf9",
+          "application_source/source_sha256": "a9354518f3d5eefa6160d64b9c558b730f66640a537efd9208031cec7a363122",
           "envelope/idempotency_key": "application@1:7365727665723a6170703a310a:636170747572653a6f7065726174696f6e3a31",
           "issued_result/original_event_value_commitment/sha256": "50ccb51ca9476ff09989a7388d31638a843475f7e6a137226bf1d631befcaa0d",
           "custody/idempotency_key": "application@1:7365727665723a6170703a310a:636170747572653a6f7065726174696f6e3a31",
@@ -95487,13 +95487,13 @@
           "original/application_source/original_output/session_refs": [
             "session:other"
           ],
-          "original/application_source/original_output_semantic_sha256": "1d1802df6d2a13b2bdf0ae7f1f7fea457ffb1e30976f6f574a2472f8b1c0ed81",
-          "original/application_source/source_sha256": "1044d053bd4a7f59a9e05647ba6a9c080dcd7355e488fa54f637c1f9446c9b56",
+          "original/application_source/original_output_semantic_sha256": "c84b1f12d0290f89386bd1ed41f3109feb01d6d7635a86e3e7b41d618ca3bba0",
+          "original/application_source/source_sha256": "4d8012b5701538d5a2c9f624da1ae676ea3ea86ed5aed0d0de74106350da4a81",
           "application_source/original_output/session_refs": [
             "session:other"
           ],
-          "application_source/original_output_semantic_sha256": "1d1802df6d2a13b2bdf0ae7f1f7fea457ffb1e30976f6f574a2472f8b1c0ed81",
-          "application_source/source_sha256": "1044d053bd4a7f59a9e05647ba6a9c080dcd7355e488fa54f637c1f9446c9b56"
+          "application_source/original_output_semantic_sha256": "c84b1f12d0290f89386bd1ed41f3109feb01d6d7635a86e3e7b41d618ca3bba0",
+          "application_source/source_sha256": "4d8012b5701538d5a2c9f624da1ae676ea3ea86ed5aed0d0de74106350da4a81"
         },
         "expected": {
           "result": "REFUSE",
