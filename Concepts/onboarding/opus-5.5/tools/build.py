@@ -433,6 +433,24 @@ def pip_fault_problems() -> list[str]:
     return problems
 
 
+FORCED_COLORS_BLOCK = re.compile(r'@media\s*\(\s*forced-colors\s*:\s*active\s*\)\s*\{')
+
+
+def outside_forced_colors(text: str) -> str:
+    """The CSS text with the inside of every `@media (forced-colors: active) { ... }` block blanked, newlines kept."""
+    out, i = [], 0
+    for m in FORCED_COLORS_BLOCK.finditer(text):
+        if m.start() < i:
+            continue
+        depth, j = 1, m.end()
+        while j < len(text) and depth:
+            depth += {'{': 1, '}': -1}.get(text[j], 0)
+            j += 1
+        out += [text[i:m.start()], re.sub(r'[^\n]', ' ', text[m.start():j])]
+        i = j
+    return ''.join(out) + text[i:]
+
+
 def lint_sources() -> list[str]:
     problems = []
     for p in sorted(SRC.rglob('*')):
@@ -449,7 +467,8 @@ def lint_sources() -> list[str]:
                     problems.append(f'page-wide :has() in {rel}: {m.group(0).strip()[:80]}')
                 if 'settings' in p.relative_to(SRC).parts and ':has(' in text:
                     problems.append(f':has() in Settings styles {rel}')
-                for m in re.finditer(r'border-(?:left|inline-start)\s*:\s*([^;]+);', text):
+                # forced colors paint borders in system colours and draw no accent stripe, so that one media block is exempt
+                for m in re.finditer(r'border-(?:left|inline-start)\s*:\s*([^;]+);', outside_forced_colors(text)):
                     width = re.search(r'(\d+(?:\.\d+)?)px', m.group(1))
                     if width and float(width.group(1)) >= 2:
                         problems.append(f'left accent border in {rel}: {m.group(0)}')

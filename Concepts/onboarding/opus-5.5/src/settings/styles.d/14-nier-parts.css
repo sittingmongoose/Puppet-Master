@@ -144,11 +144,11 @@ html[data-o55-nier-parts~="brackets"] .focus-ring { outline: 0 !important; box-s
 html[data-motion="reduced"] #o55np-reticle > i, html[data-motion="reduced"] #o55np-reticle { transition: none; }
 /* forced colors (Windows High Contrast) drop background images, so the corners above, two gradient bars each, vanished
    there and NieR had no key focus mark at all (the brackets part takes every :focus-visible outline away; FO-96 round
-   10, opus-recheck-f96i). There each corner's two arms are its top and left borders (a corner, not a side stripe), which the platform paints in the
+   10, opus-recheck-f96i). There each corner's two arms are its top and left borders, which the platform paints in the
    user's own High Contrast colours like every other edge (box-sizing keeps the 10 px box, so each corner's transform
    still places it). */
 @media (forced-colors: active) {
-  #o55np-reticle > i { background: none; box-sizing: border-box; border: 0 solid CanvasText; border-width: 2px 0 0 2px; }
+  #o55np-reticle > i { background: none; box-sizing: border-box; border-top: 2px solid CanvasText; border-left: 2px solid CanvasText; }
 }
 
 /* ---- Diamond loaders [diamonds]: spinners and busy marks become a slowly turning hollow diamond ---- */
