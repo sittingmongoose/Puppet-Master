@@ -10,7 +10,7 @@ export default async function(t) {
   await f.waitForFunction(()=>O55.S?.open);
   const screens=await f.evaluate(()=>Object.keys(O55.pipScenes.SCREENS));
   const selected=t.args.screens?String(t.args.screens).split(','):screens;
-  const cases=selected.map(screen=>({screen,label:screen}));
+  let cases=selected.map(screen=>({screen,label:screen}));
   if(!t.args.screens)cases.push(
     {screen:'where',label:'where-connect',click:'[data-o55-do="pick"][data-arg="connect"]'},
     {screen:'s-kind',label:'server-cloud',click:'[data-o55-do="kind"][data-arg="cloud"]'},
@@ -21,6 +21,8 @@ export default async function(t) {
     {screen:'safe',label:'preview-backup',hover:'[data-o55-do="backup"]'},
     {screen:'ready',label:'ready-confetti',effect:'ready'},
     {screen:'r-pick',label:'choice-cheer',effect:'cheer'});
+  if(t.args.variantsOnly)cases=cases.filter(c=>c.label!==c.screen);
+  await t.check('requested scene/effect cases selected',cases.length>0,String(cases.length),{hard:true});
   const inventory=[];
   for(const look of looks) {
     await t.emulate({reducedMotion:t.args.reduced?'reduce':'no-preference'});
@@ -30,11 +32,9 @@ export default async function(t) {
       await t.mark(look+' '+label+' entry');
       await f.evaluate(([id,scenario])=>O55.studio.onboarding.screen(id,scenario),[screen,entry.scenario||'fresh']);
       await f.waitForFunction(id=>O55.S.sess.screen===id,screen);
-      if(entry.click)await f.locator('.o55-pane > .o55-layer:not(.o55-out) '+entry.click).first().click();
-      if(entry.hover){await f.locator('.o55-pane > .o55-layer:not(.o55-out) '+entry.hover).first().hover();await f.waitForTimeout(450);}
-      // Positive effect owner fixtures complement the default Ready fixture, which is intentionally calm without AI.
-      if(entry.effect)await f.evaluate(effect=>{const s=document.querySelector('#pm-o55-onboarding .pst').__pipStage;if(effect==='ready')s.ready();else s.cheer('clipboard',{sound:false});},entry.effect);
-      const result=await f.evaluate(async duration=>{
+      // Arm the observer before input. A choice click may finish after most of its fall, which would measure only
+      // the final swing as a tiny descent and call its natural turning point a long midpoint stall.
+      const capture=f.evaluate(async duration=>{
         const rows=[],until=performance.now()+duration,ids=new WeakMap();let nextId=0;
         await new Promise(resolve=>{
           const tick=ts=>{
@@ -45,6 +45,11 @@ export default async function(t) {
         });
         return {screen:O55.S.sess.screen,rows};
       },Number(t.args.dwell||(screen==='creating'?7000:screen==='ready'?6500:1800)));
+      if(entry.click)await f.locator('.o55-pane > .o55-layer:not(.o55-out) '+entry.click).first().click();
+      if(entry.hover){await f.locator('.o55-pane > .o55-layer:not(.o55-out) '+entry.hover).first().hover();await f.waitForTimeout(450);}
+      // Positive effect owner fixtures complement the default Ready fixture, which is intentionally calm without AI.
+      if(entry.effect)await f.evaluate(effect=>{const s=document.querySelector('#pm-o55-onboarding .pst').__pipStage;if(effect==='ready')s.ready();else s.cheer('clipboard',{sound:false});},entry.effect);
+      const result=await capture;
       writeFileSync(join(t.run.dir,look+'-'+label+'.json'),JSON.stringify(result));
       const groups=new Map();
       for(const r of result.rows)for(const p of r.props){const key=r.stage+':'+p.id;if(!groups.has(key))groups.set(key,[]);groups.get(key).push({...p,ts:r.ts,render:r.render,fps:r.fps});}
