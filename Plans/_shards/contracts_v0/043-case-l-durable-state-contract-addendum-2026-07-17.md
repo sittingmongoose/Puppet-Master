@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L20722-L21122
+Source lines: L20844-L21245
 
-Source SHA256: `e7b7549dd4592a05f4e481fef7a7d69c21d8f9b56db8fc2cc9e10ed72f95bc5b`
+Source SHA256: `0db4b2dc7f2c895ce30d1330ea35a930c3b802c2bdce1f1ff24069ec2e95404c`
 
 ---
 
@@ -114,6 +114,7 @@ status: accepted
 owner_doc: Plans/Contracts_V0.md
 canonical_text: |-
   EventRecord 2.0 requires scope_kind application or project and conditionally null/non-empty project_id; enforces app-root-global event identity and scope-partition/event-type lifetime idempotency; normalizes admitted EventEnvelopeV1 values deterministically in memory only; and makes projector_replay_only non-appendable, idempotent, checkpoint-atomic, and incapable of external or canonical side effects. CV-366’s exact per-family scope/version table selects current app payloads; historical normalization remains registry-revision bound and replay-only. Existing scope policies are not globally flipped and no original Project event is restamped.
+  CV-1100 owns current exact integer inputs and purpose-specific recipe qualification; CV-1101 owns enforced EventRecord date-time checks and the selection of existing stricter owner profiles. SP-1101 selects the authenticated frozen original recipe, including its timestamp profile/resources, for retained reads and retries without narrowing this envelope schema.
 gui_related: false
 gui_classification_reason: Defines durable event identity, compatibility normalization, and replay safety.
 depends_on: [CV-087, CV-088, CV-309]
