@@ -4,7 +4,7 @@ Source: `Plans/Containers_Registry_and_Unraid.md`
 
 Source lines: L6978-L9829
 
-Source SHA256: `6954e95c65f413a0f96024f71bd75e90099d1a70b654f84cce70ff2c40edb04e`
+Source SHA256: `1507b856e3c600585ca02cb6aba930822c8a29f916daec215d098960c0451425`
 
 ---
 
@@ -2096,7 +2096,7 @@ command_payload_definitions:
     DockerBakePreviewResultV1:
       fields:
         bake_targets: {type: list, required: true, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}}, provenance: gap, gap_note: '"Previews resolved Bake targets and platforms" names the content in prose only; JUDGMENT: resolved target names'}
-        platforms: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}}, provenance: gap, gap_note: "resolved platforms per target; the pairing of target to platform is unstated, so a flat unique list is a judgment"}
+        platforms: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}}, constraints: {unique_items: true}, provenance: gap, gap_note: "resolved platforms per target; the pairing of target to platform is unstated, so a flat unique list is a judgment"}
         receipt_ref: {type: ref, required: false, default: none, provenance: gap, gap_note: "dispatch or owner receipt; wiring row requires a receipt or event effect (catalog.docker_bake_preview), shape typed nowhere"}
     DockerContainerLifecycleResultV1:
       fields:

@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L9145-L10677
+Source lines: L9145-L10679
 
-Source SHA256: `56109a8fbd28eb46a517a48a57e10676267c29fc1be4a0e47065ac4bec039424`
+Source SHA256: `41eea5f275e78b132ea2c28b11eaae5654e5f56aa093017c2416b73ee593a255`
 
 ---
 
@@ -1478,6 +1478,7 @@ command_payload_definitions:
     RuntimeRetryNowResult:
       fields:
         attempt_id: {type: id, required: false, default: none, provenance: gap, gap_note: "The successor attempt, present only when durable admission mints one (Plans/Executor_Protocol.md:688, restore-before-rerun step 5). A refused admission (UI_Command_Catalog.md:1220) or a safe_point target whose restore ends restore_refused, restore_failed or restore_recovery_required mints none (Plans/Executor_Protocol.md:697-701), so the field is optional; no typed result schema gives an outcome field to condition it on."}
+        worktree_id: {type: id, required: false, default: none, provenance: gap, gap_note: "The new isolated worktree a historical_commit baseline creates: the name is canon (\"the durable result carries the new worktree_id\", UI_Command_Catalog.md:1217, a target this command accepts, :1220; the new isolated worktree identity is linked, Plans/Executor_Protocol.md:671, and the baseline-preparation result is persisted before successor admission, :687), but no typed result schema places it. It is the destination worktree, distinct from the source worktree_id in the request. Present when the dispatch named baseline_target historical_commit and baseline preparation created the worktree, whether or not admission then minted a successor attempt_id; absent for safe_point and worktree_head targets, which name an existing worktree, and when preparation was refused or failed. The format has no condition on a request arg, so the presence rule is stated here."}
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "durable dispatch or owner receipt; canon states that the strict UICommandResponse contains a reference to the matching typed domain result only for the locate and abandon recovery commands (UI_Command_Catalog.md:144), and the same reference is assumed here; no typed result schema exists"}
     RuntimeResumeAfterPrerequisiteResult:
       fields:
@@ -1492,6 +1493,7 @@ command_payload_definitions:
     RuntimeStartFreshAttemptResult:
       fields:
         attempt_id: {type: id, required: false, default: none, provenance: gap, gap_note: "The successor attempt, present only when durable admission mints one (Plans/Executor_Protocol.md:688, step 5); a refused admission (UI_Command_Catalog.md:1220) or a failed safe_point restore (Plans/Executor_Protocol.md:697-701) mints none, so the field is optional; no typed result schema gives an outcome field to condition it on."}
+        worktree_id: {type: id, required: false, default: none, provenance: gap, gap_note: "The new isolated worktree a historical_commit baseline creates: the name is canon (\"the durable result carries the new worktree_id\", UI_Command_Catalog.md:1217, a target this command accepts, :1220; the new isolated worktree identity is linked, Plans/Executor_Protocol.md:671, and the baseline-preparation result is persisted before successor admission, :687), but no typed result schema places it. It is the destination worktree, distinct from the source worktree_id in the request. Present when the dispatch named baseline_target historical_commit and baseline preparation created the worktree, whether or not admission then minted a successor attempt_id; absent for safe_point and worktree_head targets, which name an existing worktree, and when preparation was refused or failed. The format has no condition on a request arg, so the presence rule is stated here."}
         receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "durable dispatch or owner receipt; no typed result schema exists"}
     RuntimeReplanResult:
       fields:

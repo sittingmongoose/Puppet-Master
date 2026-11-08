@@ -4453,7 +4453,7 @@
         "unsafe_url_guess",
         "xml_shape_drift"
       ],
-      "sha256": "6954e95c65f413a0f96024f71bd75e90099d1a70b654f84cce70ff2c40edb04e",
+      "sha256": "1507b856e3c600585ca02cb6aba930822c8a29f916daec215d098960c0451425",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 106
@@ -7040,7 +7040,7 @@
         "future Executor intake",
         "scripts/pm-implementation-readiness.py"
       ],
-      "line_count": 10677,
+      "line_count": 10679,
       "path": "Plans/Executor_Protocol.md",
       "plan_unit_count": 130,
       "plan_unit_ids": [
@@ -7214,7 +7214,7 @@
         "unverified_execution_completion",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "56109a8fbd28eb46a517a48a57e10676267c29fc1be4a0e47065ac4bec039424",
+      "sha256": "41eea5f275e78b132ea2c28b11eaae5654e5f56aa093017c2416b73ee593a255",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 130
@@ -8081,7 +8081,7 @@
         "tests/fixtures/pm7_shared",
         "tests/fixtures/usage_gui"
       ],
-      "line_count": 52083,
+      "line_count": 52082,
       "path": "Plans/FinalGUISpec.md",
       "plan_unit_count": 665,
       "plan_unit_ids": [
@@ -8896,7 +8896,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "640ca302be8db6f23cf3c41e248dd8f507df32494ab1f3a1679413fa58f01a87",
+      "sha256": "71175608e521de0b0d867db8a538d3ca94715fba4354735c26e7b952aa45dc7c",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 656,
@@ -21734,7 +21734,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-08T07:40:39Z",
+  "generated_at_utc": "2026-11-08T08:16:16Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
