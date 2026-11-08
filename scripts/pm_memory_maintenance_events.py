@@ -1164,6 +1164,14 @@ def run_numeric_writers(contexts):
                     raise AssertionError((event, literal, 'decimal spelling accepted as a Storage uint64'))
             assert before == untouched
             counts[event] += 1
+        # CV-1100: the current envelope verdict keeps the EventRecord owner's producer_sequence_id domain
+        # (a nullable non-negative integer); the interoperable 2^53-1 subset is not a product cap. DMEM's
+        # own producer writes null there, so a non-null value is refused by the producer join, never here.
+        # (A runtime float such as 1.0 is a JSON Schema integer; AP02 refuses it at the writer instead.)
+        for producer, valid in ((2**53, True), (2**53 + 1, True), (2**64, True), (-1, False), (True, False)):
+            value = {**canonical_value(before['operation'], event.rsplit('.', 1)[1]), 'producer_sequence_id': producer}
+            assert envelope_validator().is_valid(value) is valid, (event, producer)
+            counts[event] += 1
     return counts
 
 

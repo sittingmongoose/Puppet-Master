@@ -302,7 +302,7 @@ def archive(a, fixtures, families):
         # Part 2B numbers: a preserved number keeps its exact representation (Decimal digits and exponent,
         # float zero sign); a respelled or sign-flipped copy of the same value is not the original.
         selected = snap['selected_ids'][0]
-        for label, original, respelled in (('decimal-respelled', Decimal('0.0999'), Decimal('0.09990')),
+        for label, original, respelled in (('decimal-respelled', Decimal('0.0499'), Decimal('0.04990')),
                                            ('float-zero-sign', 0.0, -0.0)):
             source = edited(snap, (['memories', selected, 'usefulness_score'], original))
             result = a.archive_candidate(deepcopy(source), job)
