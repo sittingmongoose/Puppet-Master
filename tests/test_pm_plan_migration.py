@@ -548,6 +548,82 @@ class PmPlanMigrationLineageTests(unittest.TestCase):
         self.assertEqual(exemption["terminal_current_snapshot_run_id"], DEFAULT_DECLARATION_RUN_ID)
         self.assertEqual(report["checks"]["supersedes_run_ids"], sorted([previous_run_dir.name, MIDDLE_RUN_ID]))
 
+    def write_older_snapshot(self) -> Path:
+        older_run_dir = self.migrations / INTERMEDIATE_SNAPSHOT_RUN_ID
+        pm_plan_migration.write_json(
+            older_run_dir / "final_validation_summary.json",
+            {"run_id": INTERMEDIATE_SNAPSHOT_RUN_ID, "status": "COMPLETE", "supersedes_run_ids": [MIDDLE_RUN_ID]},
+        )
+        return older_run_dir
+
+    def test_snapshot_current_removes_older_snapshots_and_keeps_its_declared_predecessor(self) -> None:
+        previous_run_dir = self.write_stranded_002_topology()
+        older_run_dir = self.write_older_snapshot()
+
+        report = pm_plan_migration.cmd_snapshot_current(self.snapshot_args([previous_run_dir.name], dry_run=False))
+
+        self.assertEqual(report["status"], "pass", report)
+        self.assertEqual(report["checks"]["removed_superseded_run_ids"], [INTERMEDIATE_SNAPSHOT_RUN_ID])
+        self.assertEqual(report["checks"]["superseded_run_removal_failures"], [])
+        self.assertFalse(older_run_dir.exists())
+        self.assertTrue((previous_run_dir / "final_validation_summary.json").is_file())
+        self.assertTrue((self.migrations / DEFAULT_DECLARATION_RUN_ID).is_dir())
+        self.assertTrue((self.migrations / MIDDLE_RUN_ID).is_dir())
+        self.assertTrue((self.migrations / UNRELATED_PREDECESSOR_RUN_ID).is_dir())
+
+    def test_published_snapshot_still_validates_after_older_snapshots_are_removed(self) -> None:
+        previous_run_dir = self.write_stranded_002_topology()
+        self.write_older_snapshot()
+
+        report = pm_plan_migration.cmd_snapshot_current(self.snapshot_args([previous_run_dir.name], dry_run=False))
+
+        self.assertEqual(report["status"], "pass", report)
+        current_dir = self.migrations / DEFAULT_DECLARATION_RUN_ID
+        validation = pm_plan_migration.validate_run_dir(current_dir, require_current_pointer=True)
+        self.assertEqual(validation["status"], "pass", validation)
+        exemption, failures = pm_plan_migration.historical_scope_exemption(
+            self.migrations / MIDDLE_RUN_ID,
+            set(),
+            {"Plans/Test.md"},
+        )
+        self.assertEqual(failures, [])
+        self.assertIsNotNone(exemption)
+
+    def test_removing_the_declared_predecessor_fails_validation(self) -> None:
+        previous_run_dir = self.write_stranded_002_topology()
+        report = pm_plan_migration.cmd_snapshot_current(self.snapshot_args([previous_run_dir.name], dry_run=False))
+        self.assertEqual(report["status"], "pass", report)
+
+        (previous_run_dir / "final_validation_summary.json").unlink()
+
+        validation = pm_plan_migration.validate_run_dir(
+            self.migrations / DEFAULT_DECLARATION_RUN_ID,
+            require_current_pointer=True,
+        )
+        self.assertEqual(validation["status"], "fail")
+        self.assertIn("superseded_run_final_summary_missing", str(validation["failures"]))
+
+    def test_dry_run_keeps_older_snapshots(self) -> None:
+        previous_run_dir = self.write_stranded_002_topology()
+        older_run_dir = self.write_older_snapshot()
+
+        report = pm_plan_migration.cmd_snapshot_current(self.snapshot_args([previous_run_dir.name], dry_run=True))
+
+        self.assertEqual(report["status"], "pass", report)
+        self.assertTrue(older_run_dir.is_dir())
+
+    def test_failed_snapshot_publication_keeps_older_snapshots(self) -> None:
+        previous_run_dir = self.write_stranded_002_topology()
+        older_run_dir = self.write_older_snapshot()
+        failing = {"schema_id": "x", "run_id": DEFAULT_DECLARATION_RUN_ID, "status": "fail", "failures": [{"error": "x"}], "warnings": [], "checks": {}}
+        passing = {"schema_id": "x", "run_id": DEFAULT_DECLARATION_RUN_ID, "status": "pass", "failures": [], "warnings": [], "checks": {}}
+
+        with mock.patch.object(pm_plan_migration, "validate_run_dir", side_effect=[passing, failing]):
+            report = pm_plan_migration.cmd_snapshot_current(self.snapshot_args([previous_run_dir.name], dry_run=False))
+
+        self.assertEqual(report["status"], "fail")
+        self.assertTrue((older_run_dir / "final_validation_summary.json").is_file())
+
     def test_snapshot_current_does_not_duplicate_an_explicit_run_002(self) -> None:
         previous_run_dir = self.write_stranded_002_topology()
 
