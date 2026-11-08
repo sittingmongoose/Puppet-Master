@@ -28,6 +28,18 @@ export function analyzeDrop(rows, kind = 'clipboard') {
     middleFrameP95:percentile(moving.map(p=>p.dt),.95), surroundFrameP95:percentile(surround.map(p=>p.dt),.95), maxFrame:Math.max(...samples.map(p=>p.dt)) };
 }
 
+export const beginDropCapture = (f, duration=3500) => f.evaluate(duration => {
+  const rows = window.__dropFrames = [], t0 = performance.now();
+  const tick = ts => {
+    const host = document.querySelector('#pm-o55-onboarding .pst'), s = host?.__pipStage;
+    rows.push({ ts, wall: performance.timeOrigin + ts, dt: rows.length ? ts - rows.at(-1).ts : 0, screen: O55.S.sess.screen,
+      stage: s ? { t: s.t, render: s.renderN, box: s.box, map: s.map, keepOff: s.keepOff, pipKeep: s.pipKeep,
+        props: [...s.props].map(([id,p]) => ({ id, kind:p.spec.kind, state:p.state, len:p.len, lenv:p.lenv, op:p.op, a:p.a, box:p.box, pos:p.pos, off:p.restOff, target:s.propTarget(p), transform:p.el.getAttribute('transform'), rect:(()=>{const r=p.el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};})() })) } : null });
+    if (ts - t0 < duration) requestAnimationFrame(tick);
+  }; requestAnimationFrame(tick);
+  performance.mark('qa7-drop-before');
+},duration);
+
 // QA-7: real Recovery Kit route, with per-frame physics and painted transform witnesses.
 // --set looks=glass-dark --set trace=1 narrows the diagnostic film. Default: all ten looks.
 export default async function(t) {
@@ -42,17 +54,7 @@ export default async function(t) {
     await A.click('source', 'kit'); await A.click('kit', 'kit-loom'); await A.sleep(1200);
     const f = A.frame(), cdp = await t.page.context().newCDPSession(t.page);
     if (t.args.trace) await cdp.send('Tracing.start', { categories: 'devtools.timeline,v8.execute,blink.user_timing,cc,gpu,disabled-by-default-devtools.timeline.stack', transferMode: 'ReturnAsStream' });
-    await f.evaluate(() => {
-      const rows = window.__dropFrames = [], t0 = performance.now();
-      const tick = ts => {
-        const host = document.querySelector('#pm-o55-onboarding .pst'), s = host?.__pipStage;
-        rows.push({ ts, wall: performance.timeOrigin + ts, dt: rows.length ? ts - rows.at(-1).ts : 0, screen: O55.S.sess.screen,
-          stage: s ? { t: s.t, render: s.renderN, box: s.box, map: s.map, keepOff: s.keepOff, pipKeep: s.pipKeep,
-            props: [...s.props].map(([id,p]) => ({ id, kind:p.spec.kind, state:p.state, len:p.len, lenv:p.lenv, op:p.op, a:p.a, box:p.box, pos:p.pos, off:p.restOff, target:s.propTarget(p), transform:p.el.getAttribute('transform'), rect:(()=>{const r=p.el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};})() })) } : null });
-        if (ts - t0 < 3500) requestAnimationFrame(tick);
-      }; requestAnimationFrame(tick);
-      performance.mark('qa7-drop-before');
-    });
+    await beginDropCapture(f);
     await t.mark(label + ' recovery kit Continue');
     await f.locator('.o55-layer:not(.o55-out) .o55-foot .o55-primary').click();
     await A.sleep(3700);
