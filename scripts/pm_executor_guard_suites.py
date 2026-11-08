@@ -260,7 +260,8 @@ def add_negative(slot, observed, found, pair, family, flip):
     row, code = found
     k = key((row, observed))
     if k not in slot['negatives']:
-        slot['negatives'][k] = dict(id=f'negative/{pair}', value=observed, target=row, code=code, family=family,
+        # One witness (a trace) can give several distinct negatives of one row: number them per phase.
+        slot['negatives'][k] = dict(id=f'negative/{len(slot["negatives"])}/{pair}', value=observed, target=row, code=code, family=family,
                                     defect=f'{pair} ({family}): one source change', aliases=[], flips=[flip], families={family})
     else:
         slot['negatives'][k]['aliases'].append(pair)

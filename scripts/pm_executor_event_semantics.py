@@ -1318,10 +1318,9 @@ def numeric_case(contract, baseline, case):
     # JSON -0 decodes to integer zero. It must have exactly the same
     # identity/digest/bytes as 0, never a second spelling downstream.
     control = run_numeric_case(contract, baseline, {**case, 'spelling': fixture_encoding(json.loads(case['spelling']))})
-    refuse('integrity_numeric', {
-        'has_golden': 'expected_value' in case, 'observed': numeric_observation(observed),
-        'golden': copy.deepcopy(case.get('expected_value')),
-        'actual': numeric_observation(actual), 'control': numeric_observation(control)})
+    refuse('integrity_numeric', {'has_golden': 'expected_value' in case, 'observed': numeric_observation(observed),
+                                 'golden': copy.deepcopy(case.get('expected_value'))})
+    refuse('integrity_numeric_fixed', {'actual': numeric_observation(actual), 'control': numeric_observation(control)})
     return actual
 
 

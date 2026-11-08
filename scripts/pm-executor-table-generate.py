@@ -726,9 +726,11 @@ phase('integrity_seed', 'Fixture integrity: a negative is its named valid seed p
     ('IC08_shape_seed', '/cases/*/seed', 'shape seed plus defect changes encodes to the case', 'coherent shape seed',
      "value['kind'] == 'shape' and value['rebuilt'] != value['specimen']"),
 ])
-phase('integrity_numeric', 'Numeric boundary cases: golden result and spelling-independent result.', [
+phase('integrity_numeric', 'Numeric boundary cases: the golden result.', [
     ('IF05_numeric_golden', '/numeric_cases/*/expected_value', 'equals the recomputed result', 'numeric golden bytes/hash',
      "value['has_golden'] is True and value['observed'] != value['golden']"),
+])
+phase('integrity_numeric_fixed', 'Numeric boundary cases: a spelling-independent result (no input can refuse it once CV-1100 admits the spelling; reported unprovable).', [
     ('IF06_numeric_spelling', '/numeric_cases/*/spelling', 'gives the same result as its canonical spelling', 'numeric spelling canonical result',
      "value['actual'] != value['control']"),
 ])
