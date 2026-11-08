@@ -3486,19 +3486,25 @@ def validate_audit_correction(
                     matches = [item for item in source.get(group, []) if isinstance(item, dict) and item.get("name") == name]
                     if not matches:
                         raise ValueError("validator source row does not exist")
-                    if group == "invalid_invocations":
-                        # The actionability classifier reads only `results`, so an invalid invocation
-                        # that explicitly requires repair, or that had side effects, is checked here:
-                        # every record of that name, and a correction never exempts such a row.
-                        for item in matches:
-                            probe: list[str] = []
-                            explicit = explicit_repair_required(item, f"{label}:{row}", probe)
-                            side_effects = item.get("side_effect_count", 0)
-                            if probe:
-                                fail(f"source row {key}: {probe[0]}")
-                            elif explicit is True or (isinstance(side_effects, int) and side_effects > 0) \
-                                    or item.get("side_effects") or item.get("non_audit_side_effects"):
-                                fail(f"source row {key} is actionable; correction cannot excuse missing coverage")
+                    # Every record of that name is checked here, independently of the artifact-level
+                    # classification: the classifier reads only `results`, and an artifact-level
+                    # `repair_required: false` returns before its children are read. A correction never
+                    # exempts a record that explicitly requires repair, has malformed repair fields, had
+                    # side effects, or (for a result without an explicit false) did not pass.
+                    for item in matches:
+                        probe: list[str] = []
+                        explicit = explicit_repair_required(item, f"{label}:{row}", probe)
+                        side_effects = item.get("side_effect_count", 0)
+                        actionable_item = explicit is True or (isinstance(side_effects, int) and side_effects > 0) \
+                            or bool(item.get("side_effects")) or bool(item.get("non_audit_side_effects"))
+                        if group == "results" and explicit is not False:
+                            status_value = item.get("status")
+                            if not (status_value == "pass" or (status_value is None and item.get("exit_code") == 0)):
+                                actionable_item = True
+                        if probe:
+                            fail(f"source row {key}: {probe[0]}")
+                        elif actionable_item:
+                            fail(f"source row {key} is actionable; correction cannot excuse missing coverage")
                 else:
                     # v1 admits only physical JSONL rows and named validator-result rows.
                     raise ValueError("unsupported source-row address")
@@ -5888,6 +5894,11 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                 {"name": "superseded", "status": "invalid_invocation", "repair_required": True, "finding_level": "warning"}]}),
             ("invalid_invocation_side_effect", {"invalid_invocations": [
                 {"name": "superseded", "status": "invalid_invocation", "side_effect_count": 1}]}),
+            ("artifact_false_child_explicit", {"repair_required": False, "finding_level": "info", "results": [
+                {"name": "passing", "status": "pass", "repair_required": True, "finding_level": "warning"}]}),
+            ("artifact_false_child_failed", {"repair_required": False, "finding_level": "info", "results": [
+                {"name": "passing", "status": "fail"}]}),
+            ("result_side_effect", {"results": [{"name": "passing", "status": "pass", "side_effect_count": 1}]}),
         ):
             write_json(correction_dir / "validator_results.json", dict(validator_source, **update))
             result, errors = evaluate_receipt(json_correction())
@@ -5904,6 +5915,17 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         probe_report = validate_audit_dir(correction_dir, require_matrix=True, require_effective_status=False,
                                           source_artifacts=None, registry_path=correction_registry)
         check("correction_explicit_invalid_invocation_fails_atomically",
+              has(probe_report, "is actionable") and "audit_correction" not in probe_report
+              and has(probe_report, "status must be BLOCKED"), probe_report["errors"])
+        # Integration (review r2 F1): an artifact-level false must not hide an explicitly
+        # repair-required child result from the correction's guard.
+        write_json(correction_dir / "validator_results.json", dict(
+            validator_source, repair_required=False, finding_level="info",
+            results=[{"name": "passing", "status": "pass", "repair_required": True, "finding_level": "warning"}]))
+        write_json(correction_path, json_correction())
+        probe_report = validate_audit_dir(correction_dir, require_matrix=True, require_effective_status=False,
+                                          source_artifacts=None, registry_path=correction_registry)
+        check("correction_artifact_false_child_explicit_fails_atomically",
               has(probe_report, "is actionable") and "audit_correction" not in probe_report
               and has(probe_report, "status must be BLOCKED"), probe_report["errors"])
         write_json(correction_dir / "validator_results.json", validator_source)
