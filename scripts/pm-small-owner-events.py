@@ -2,12 +2,19 @@
 """Static DM contract oracles. Synthetic checks; no native execution proof."""
 import copy
 import os
+import sys
 import hashlib
 import json
 import base64
 import re
 import importlib.util
+from contextlib import contextmanager
 from functools import lru_cache
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from pm_event_numbers import (
+    EVENT_VALUE, Refusal, current_integer, current_integer_token as _shared_integer_token,
+    producer_semantic_bytes, producer_semantic_digest, storage_uint64, storage_value_bytes,
+)
 try:
     from blake3 import blake3
 except ImportError:
@@ -34,6 +41,23 @@ def utc_datetime(value):
 ROOT = Path(__file__).resolve().parents[1]
 INLINE_LIMIT = 16 * 1024
 MAX_SAFE_JSON_INTEGER = 2**53 - 1
+# Frozen retained-original recipe (SP-1101): the exact-decimal sorted-JSON
+# producer digest in force when DM retained originals were written. Current
+# writers use the shared CV-1100 producer route; this recipe is selected only
+# for retained originals in resolve_original, never for current admission.
+RETAINED_RECIPE_ID = 'dm-retained-producer-v1'
+
+
+@contextmanager
+def exact_integer_digits():
+    """Render/parse integers exactly; a 4,400-digit integer must reach a
+    refusal row, never crash the checker (CV-1100 sets no global cap)."""
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        yield
+    finally:
+        sys.set_int_max_str_digits(previous)
 
 
 def integer_type(checker, instance):
@@ -78,9 +102,9 @@ def exact_value(value, expected):
 
 
 def current_integer_token(token):
-    if token == '-0':
-        raise ValueError('noncanonical negative-zero integer token')
-    return int(token)
+    # Shared CV-1100 integer-token grammar (refuses -0, leading zeroes, ...).
+    with exact_integer_digits():
+        return _shared_integer_token(token)
 
 
 def current_float_token(token):
@@ -89,22 +113,24 @@ def current_float_token(token):
 
 def decode_current_json(text):
     """Current wire input only; retained JSON is decoded under its old recipe."""
-    return json.loads(text, parse_int=current_integer_token, parse_float=current_float_token, parse_constant=current_float_token)
+    with exact_integer_digits():
+        return json.loads(text, parse_int=current_integer_token, parse_float=current_float_token, parse_constant=current_float_token)
 
 
 def canonical_json_numbers(value, *, retained=False):
-    """RFC 8785 integer subset; integral float aliases have identical bytes.
+    """Integral float aliases have identical bytes; nonintegral floats refuse.
 
     Current admission still refuses floats. This separate canonicalization
     prevents a hash caller from ever assigning 1.0 a different digest from 1.
     Storage's u64 metadata is outside producer semantics, not rounded to binary64.
+    The current exact-range decision is the shared CV-1100 JCS qualification in
+    current_producer_numbers/producer_digest, not a lane-local cap; the retained
+    path keeps the frozen dm-retained-producer-v1 recipe with no current bound.
     """
     if type(value) is float:
         if not value.is_integer():
             raise ValueError('unsupported nonintegral JSON number')
         value = int(value)
-    if not retained and type(value) is int and abs(value) > MAX_SAFE_JSON_INTEGER:
-        raise ValueError('producer number outside exact RFC 8785 integer subset')
     if isinstance(value, dict):
         return {k: canonical_json_numbers(v, retained=retained) for k, v in value.items()}
     if isinstance(value, list):
@@ -112,12 +138,25 @@ def canonical_json_numbers(value, *, retained=False):
     return value
 
 
+def _current_integer_slots(value):
+    """Shared CV-1100 current_integer at every integer leaf of the selection."""
+    if type(value) is int:
+        current_integer(value)
+    elif isinstance(value, dict):
+        for child in value.values():
+            _current_integer_slots(child)
+    elif isinstance(value, list):
+        for child in value:
+            _current_integer_slots(child)
+
+
 def current_producer_numbers(event):
     selected = {k: event[k] for k in PRODUCER_FIELDS}
     if not integer_tree(selected):
         return False
     try:
-        canonical_json_numbers(selected)
+        _current_integer_slots(selected)
+        producer_semantic_bytes(canonical_json_numbers(selected))
     except ValueError:
         return False
     return True
@@ -197,7 +236,8 @@ def run_settings_retirement(cases):
 
 
 def digest(event, instance, payload):
-    return hashlib.sha256(json.dumps([event, '1.0.0', instance, payload['project_id'], payload['operation_id']], ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
+    with exact_integer_digits():
+        return hashlib.sha256(json.dumps([event, '1.0.0', instance, payload['project_id'], payload['operation_id']], ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
 
 
 def semantic(payload, scope, event):
@@ -273,47 +313,34 @@ REBUILD_GATES = (
 )
 
 
-def canonical_fixture_msgpack(value):
-    """Case L-2 exact subset used here: nil/bool/integers/UTF-8/arrays/maps.
-
-    DM payloads contain no float/binary values. Refuse unsupported values instead
-    of coercing them. The complete-value recipe is checked against canon's
-    pre-existing golden preimage as well as every exact-family retained value.
-    """
-    def sized(n, small, limits):
-        if n < small[0]:
-            return bytes([small[1] + n])
-        for bound, marker, size in limits:
-            if n < bound:
-                return bytes([marker]) + n.to_bytes(size, 'big')
-        raise ValueError('fixture value outside codec range')
-    if value is None:
-        return b'\xc0'
-    if type(value) is bool:
-        return b'\xc3' if value else b'\xc2'
-    if type(value) is int:
-        if 0 <= value <= 127:
-            return bytes([value])
-        if -32 <= value < 0:
-            return bytes([value & 255])
-        if value >= 0:
-            for size, marker in [(1, 0xcc), (2, 0xcd), (4, 0xce), (8, 0xcf)]:
-                if value < 1 << (8 * size):
-                    return bytes([marker]) + value.to_bytes(size, 'big')
-        else:
-            for size, marker in [(1, 0xd0), (2, 0xd1), (4, 0xd2), (8, 0xd3)]:
-                if value >= -(1 << (8 * size - 1)):
-                    return bytes([marker]) + value.to_bytes(size, 'big', signed=True)
-        raise ValueError('integer outside codec range')
-    if type(value) is str:
-        raw = value.encode('utf-8')
-        return sized(len(raw), (32, 0xa0), [(256, 0xd9, 1), (65536, 0xda, 2), (2**32, 0xdb, 4)]) + raw
+def _dm_codec_domain(value):
+    """DM's exact stored subset: nil/bool/integers/UTF-8/arrays/str-keyed maps."""
+    if value is None or type(value) is bool or type(value) is int or type(value) is str:
+        return
     if type(value) is list:
-        return sized(len(value), (16, 0x90), [(65536, 0xdc, 2), (2**32, 0xdd, 4)]) + b''.join(canonical_fixture_msgpack(v) for v in value)
-    if type(value) is dict and all(type(k) is str for k in value):
-        keys = sorted(value, key=lambda k: k.encode('utf-8'))
-        return sized(len(keys), (16, 0x80), [(65536, 0xde, 2), (2**32, 0xdf, 4)]) + b''.join(canonical_fixture_msgpack(k) + canonical_fixture_msgpack(value[k]) for k in keys)
+        for child in value:
+            _dm_codec_domain(child)
+        return
+    if type(value) is dict and list([type(k) is str for k in value]).count(False) == 0:
+        for child in value.values():
+            _dm_codec_domain(child)
+        return
     raise ValueError('unsupported fixture MessagePack type')
+
+
+def canonical_fixture_msgpack(value):
+    """SP-1100 EVENT_VALUE bytes over DM's exact subset (no float/binary).
+
+    Refuse unsupported values instead of coercing them. The complete-value
+    recipe is checked against canon's pre-existing golden preimage as well as
+    every exact-family retained value; the shared codec is byte-identical on
+    this subset.
+    """
+    _dm_codec_domain(value)
+    try:
+        return storage_value_bytes(value, profile=EVENT_VALUE)
+    except Refusal as error:
+        raise ValueError('fixture value outside codec range') from error
 
 
 def full_value_preimage(event):
@@ -325,20 +352,23 @@ def full_value_preimage(event):
 
 
 def producer_digest(event):
-    # Current writers admit exact integers only. Hash aliases canonically even
-    # when this utility is called independently of writer admission.
+    # Current CV-1100/CV-317 route: shared qualified JCS over the unchanged
+    # full producer projection. Hash aliases canonically even when this
+    # utility is called independently of writer admission.
     selected = canonical_json_numbers({k: event[k] for k in PRODUCER_FIELDS})
-    return hashlib.sha256(json.dumps(selected, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+    return producer_semantic_digest(selected)
 
 
 def retained_producer_digest(event):
-    """Verify the original integer recipe without applying a new writer bound.
+    """Verify the frozen dm-retained-producer-v1 recipe (SP-1101).
 
-    Historically valid MessagePack values are integer-only, including retained
-    u64 producer sequences. Do not restamp their protected digests or bytes.
+    Historically valid values are integer-only, including retained u64
+    producer sequences. Do not restamp their protected digests or bytes, and
+    never apply the current writer's JCS qualification to a retained original.
     """
     selected = canonical_json_numbers({k: event[k] for k in PRODUCER_FIELDS}, retained=True)
-    return hashlib.sha256(json.dumps(selected, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+    with exact_integer_digits():
+        return hashlib.sha256(json.dumps(selected, sort_keys=True, ensure_ascii=False, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
 
 
 def scope_partition(event):
@@ -505,6 +535,13 @@ def resolve_original(row, incoming, authority):
     if resolved_payload(authority['stored_event'], payload_schema, authority.get('payload_storage')) is None:
         return None
     stored, receipt, result = authority['stored_event'], authority['stored_custody']['first_append_receipt'], authority['original_append_result']
+    # Storage-assigned sequence identity is an exact SP-1100 uint64 at every join.
+    try:
+        storage_uint64(stored['sequence_id'])
+        storage_uint64(receipt['sequence_id'])
+        storage_uint64(result['sequence_id'])
+    except (ValueError, KeyError, TypeError):
+        return None
     custody = authority['stored_custody']
     expected_identity = (stored['event_id'], scope_partition(stored), stored['event_type'], stored['idempotency_key'], retained_producer_digest(stored))
     actual_identity = tuple(custody[k] for k in ['event_id', 'scope_partition', 'event_type', 'idempotency_key', 'producer_semantic_digest'])
