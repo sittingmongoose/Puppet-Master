@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-08T04:46:01Z",
+  "generated_at_utc": "2026-11-08T05:09:27Z",
   "index_path": "Plans/_shards/containers_registry_and_unraid/00-index.md",
-  "index_sha256": "f763ec4f74eef44aa9371dbe56374b255f7ee3fb405bfdc7e79c8fa1e52e711c",
+  "index_sha256": "d4bda32d2b3ccc2890c9a596ea2fcc0292e3236786fcbaf942d2b8cf1189bf34",
   "manifest_path": "Plans/_shards/containers_registry_and_unraid/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/containers_registry_and_unraid/001-preamble.md",
-      "sha256": "10d280eb1d8515bfb4d2d34d6ec4ed35c706bdfec006414d7e01493b45138585",
+      "sha256": "fb93affbd23bb6e74de5d39b4581e579bbcd40bbadda8ec4a71d4c1270b2f384",
       "shard_id": "001",
       "source_line_end": 1,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "Purpose and scope",
       "path": "Plans/_shards/containers_registry_and_unraid/002-purpose-and-scope.md",
-      "sha256": "936c10b8ba9bb892410c64a9e13b515bd8acc4d0923e8c454c3410b83a3fd5ee",
+      "sha256": "3f1e05d8e653bf7e3e1a584fed24fa756cb58245edc909d587810ef52949437f",
       "shard_id": "002",
       "source_line_end": 16,
       "source_line_start": 4,
@@ -26,7 +26,7 @@
     {
       "heading": "Relationship to existing plans",
       "path": "Plans/_shards/containers_registry_and_unraid/003-relationship-to-existing-plans.md",
-      "sha256": "032762edd7a440b8b65bd19fcfc5b59b121b21073e6eb9644f3e856b15a0500d",
+      "sha256": "1719d4007c343d08f84302438dcd9af70b2238789cdf7b92ab16d21d0067b3a7",
       "shard_id": "003",
       "source_line_end": 24,
       "source_line_start": 18,
@@ -35,7 +35,7 @@
     {
       "heading": "Product goals",
       "path": "Plans/_shards/containers_registry_and_unraid/004-product-goals.md",
-      "sha256": "197cf99d825ad0b51965d7fcd1468142f7e9450643146a8b36b4eee6da65c975",
+      "sha256": "2aa6907ea3e1f6e3f9e029226893576b257db3af234aa0d3a8952f9a732edf31",
       "shard_id": "004",
       "source_line_end": 34,
       "source_line_start": 26,
@@ -44,7 +44,7 @@
     {
       "heading": "User-visible surfaces",
       "path": "Plans/_shards/containers_registry_and_unraid/005-user-visible-surfaces.md",
-      "sha256": "8956d3ee3185fcb781e63d90bd48425b7825a3d581f500b96c74da1218575e14",
+      "sha256": "ae3d16e21bd8ca5db1e540adf6b57b52602d2b6f40cb9d028c66da309556e5d8",
       "shard_id": "005",
       "source_line_end": 244,
       "source_line_start": 36,
@@ -53,7 +53,7 @@
     {
       "heading": "Docker project detection and visibility rules",
       "path": "Plans/_shards/containers_registry_and_unraid/006-docker-project-detection-and-visibility-rules.md",
-      "sha256": "b857dac4a125c752f77fda2d4e954e0d5e9a0cda19ddd1284fc7301977ce5700",
+      "sha256": "5a080775825f6536da67226a25fed1215f6c12c2465802e2f45250484e562d77",
       "shard_id": "006",
       "source_line_end": 261,
       "source_line_start": 246,
@@ -62,7 +62,7 @@
     {
       "heading": "Authentication model",
       "path": "Plans/_shards/containers_registry_and_unraid/007-authentication-model.md",
-      "sha256": "a164a947a577e439d361f58a6f59a5d8336f45469bd3166363132b70f65e4727",
+      "sha256": "d591f2c0c3ea3c047bc41e88eab00d76b3e1c67bb97edfe6566b9e97eaf2ffcb",
       "shard_id": "007",
       "source_line_end": 352,
       "source_line_start": 263,
@@ -71,7 +71,7 @@
     {
       "heading": "DockerHub repository discovery, selection, and creation",
       "path": "Plans/_shards/containers_registry_and_unraid/008-dockerhub-repository-discovery-selection-and-creation.md",
-      "sha256": "1a2993685a28f69f675f538b70940f4d1791ccd39aad2bacce743b155b7ba3cc",
+      "sha256": "f66dd734af32af7a70f0a8b2f0bce455adf15cbb59a4826c50ea1d7fccb3a11f",
       "shard_id": "008",
       "source_line_end": 384,
       "source_line_start": 354,
@@ -80,7 +80,7 @@
     {
       "heading": "Build, run, preview, and publish flow",
       "path": "Plans/_shards/containers_registry_and_unraid/009-build-run-preview-and-publish-flow.md",
-      "sha256": "1833a20ca4953955fb56d62d14d910ee58ea241f92db47a36044b3fa1f3ef5da",
+      "sha256": "47d37e1624eece02038786a337281d12983d5b1bcf95486e95b38ec9d39d3bdd",
       "shard_id": "009",
       "source_line_end": 528,
       "source_line_start": 386,
@@ -89,7 +89,7 @@
     {
       "heading": "Unraid XML generation and distribution model",
       "path": "Plans/_shards/containers_registry_and_unraid/010-unraid-xml-generation-and-distribution-model.md",
-      "sha256": "03fed5bb3068a25d85ab9a04861c85ac723e203f3cdba1673759941f328280e6",
+      "sha256": "ae7b3a03ba52c84917a03140047d07f299d97dbde2b2c0de73763875d29eb8e2",
       "shard_id": "010",
       "source_line_end": 722,
       "source_line_start": 530,
@@ -98,7 +98,7 @@
     {
       "heading": "Unraid template repository setup, layout, and publishing",
       "path": "Plans/_shards/containers_registry_and_unraid/011-unraid-template-repository-setup-layout-and-publishing.md",
-      "sha256": "95805eba906523ce7aae8eb9b5bb16f75cf778b751f56a12c175cdf560a414a1",
+      "sha256": "ad43bd83bf608475fd59cb2ca83b1c923e7bc415e22aab4ad0a2c60ec1afb0dd",
       "shard_id": "011",
       "source_line_end": 839,
       "source_line_start": 724,
@@ -107,7 +107,7 @@
     {
       "heading": "`ca_profile.xml` behavior",
       "path": "Plans/_shards/containers_registry_and_unraid/012-ca_profile.xml-behavior.md",
-      "sha256": "022ce87e6c2f7d7e714933c0012b6078a8f7ee3f63474056a4545c34e72c56d3",
+      "sha256": "79799ccc56e40f4c2b75401ab57f2cab6e3d2809041b9809ae9f4b6d17901c67",
       "shard_id": "012",
       "source_line_end": 862,
       "source_line_start": 841,
@@ -116,7 +116,7 @@
     {
       "heading": "Data/state model to preserve in implementation docs",
       "path": "Plans/_shards/containers_registry_and_unraid/013-data-state-model-to-preserve-in-implementation-docs.md",
-      "sha256": "04b295253e70625ed8b37fcb11cf4ec70e3f687c9912395fcf8da32365e6fc5d",
+      "sha256": "29619388a4a8b74f314b9902ec186df5f7dd859f4275eb02bf852815f857af0d",
       "shard_id": "013",
       "source_line_end": 914,
       "source_line_start": 864,
@@ -125,7 +125,7 @@
     {
       "heading": "Safety and constraints",
       "path": "Plans/_shards/containers_registry_and_unraid/014-safety-and-constraints.md",
-      "sha256": "3b9474570100c87582653382ed9d96d1cdce2a59ab3f37e141a787d58382a424",
+      "sha256": "4e701452b5dbe6bb8eab63ac3bf14087716084cad151cf134a49ada1340528b3",
       "shard_id": "014",
       "source_line_end": 922,
       "source_line_start": 916,
@@ -134,7 +134,7 @@
     {
       "heading": "Initial non-goals",
       "path": "Plans/_shards/containers_registry_and_unraid/015-initial-non-goals.md",
-      "sha256": "e9ee91460741c77b4660674c211ea28275a27c32ae762ccace23caa8221cb3cc",
+      "sha256": "66d065dd3b8759fc87bc9c1ef637c139fb326cf68e2948c3545ef37b995a40ff",
       "shard_id": "015",
       "source_line_end": 929,
       "source_line_start": 924,
@@ -143,7 +143,7 @@
     {
       "heading": "Acceptance criteria",
       "path": "Plans/_shards/containers_registry_and_unraid/016-acceptance-criteria.md",
-      "sha256": "10dc4e144db87852414e2fc903e6fcf9404b6867a49c4f4308d0993462516aaa",
+      "sha256": "670cce8569fba6fdb1e2e99f4b8c50cc4e49c84488ab20ea1eb0db9027085631",
       "shard_id": "016",
       "source_line_end": 945,
       "source_line_start": 931,
@@ -152,7 +152,7 @@
     {
       "heading": "Remote Side-Effect Blocked Payload Normalization (2026-03-09)",
       "path": "Plans/_shards/containers_registry_and_unraid/017-remote-side-effect-blocked-payload-normalization-2026-03-09.md",
-      "sha256": "32a9877eb9b2d253f2468ef433d0179447f32106eb4f0f835df7aae6b119bbfd",
+      "sha256": "b6e2c439f4ac3f5a333189d49e3d410f519b657d6cd5849046cacdfcf9e3418c",
       "shard_id": "017",
       "source_line_end": 967,
       "source_line_start": 947,
@@ -161,7 +161,7 @@
     {
       "heading": "Owner / Consumer Map",
       "path": "Plans/_shards/containers_registry_and_unraid/018-owner-consumer-map.md",
-      "sha256": "82a15a98353e82c18d68f9460c371f4ec905c50865f46f3b749c6192319d84e4",
+      "sha256": "86cfbbd3e91167776babdd65c4d5dd2a0859d627323b9410aeb12337f47b5400",
       "shard_id": "018",
       "source_line_end": 973,
       "source_line_start": 969,
@@ -170,7 +170,7 @@
     {
       "heading": "PlanUnits",
       "path": "Plans/_shards/containers_registry_and_unraid/019-planunits.md",
-      "sha256": "09fae99279b7749ac01458462a0eca5d9b6edd4d5ba34c7e23d8c645cc8315e2",
+      "sha256": "0da35305945e4206a016686467add0e9d35ae5cad316bbd0423a4535a9949111",
       "shard_id": "019",
       "source_line_end": 5780,
       "source_line_start": 975,
@@ -179,7 +179,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260630-001-feature-intake",
       "path": "Plans/_shards/containers_registry_and_unraid/020-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
-      "sha256": "ad5db7a1cb288d3bf827d31f49dba5f557563fc50a9963387a1e77aed5dad1bc",
+      "sha256": "d3cc2bac44c4a983a9e3563760c695ad6a9fff24569a5a993d4be0f9aa3339e4",
       "shard_id": "020",
       "source_line_end": 6089,
       "source_line_start": 5782,
@@ -188,7 +188,7 @@
     {
       "heading": "Migration Coverage",
       "path": "Plans/_shards/containers_registry_and_unraid/021-migration-coverage.md",
-      "sha256": "6a8e7f9ccc6e45e72babcaf3de87ebf149bb92279e0a1eb57a534fad75ad0203",
+      "sha256": "70521d5b66ed1874305d6bfca8a48d1f3bc43dbe4cd57da3aa13c354114fcc82",
       "shard_id": "021",
       "source_line_end": 6101,
       "source_line_start": 6091,
@@ -197,7 +197,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/containers_registry_and_unraid/022-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "810ab26f75b5a560ec3cee1f3d77920409c6fa315b6106f35c54606070ceac79",
+      "sha256": "094b608f876960cf2ba4f226a591e2426ddff4b6d303a2fffa2ff5e554d66e79",
       "shard_id": "022",
       "source_line_end": 6111,
       "source_line_start": 6103,
@@ -206,7 +206,7 @@
     {
       "heading": "FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)",
       "path": "Plans/_shards/containers_registry_and_unraid/023-fable-remaining-action-plan-audit-lineage-notes-2026-07-08.md",
-      "sha256": "3535ef756ec8d6441e7d965b572c73f3d81494e7ffb263e2e1c3dfc2d7aaf105",
+      "sha256": "cfcf36a16c2c0709dc9d3833615bb99c015471f229bb35f39d8b921fe90bd2a2",
       "shard_id": "023",
       "source_line_end": 6118,
       "source_line_start": 6112,
@@ -215,7 +215,7 @@
     {
       "heading": "Cozy Shelves Panel Reconciliation Addendum - 2026-07-27",
       "path": "Plans/_shards/containers_registry_and_unraid/024-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
-      "sha256": "faf73123757cf56709e82b9d47aff974d2224f81eb9b49d8ae0ecb26f57af3ee",
+      "sha256": "4a6882d8a2793a57f5ba17808d6f2e9329cc46593a5b2ae15fd3de1d6193cac2",
       "shard_id": "024",
       "source_line_end": 6542,
       "source_line_start": 6120,
@@ -224,7 +224,7 @@
     {
       "heading": "Server-First Platform Capability Consumer Addendum - 2026-08-13",
       "path": "Plans/_shards/containers_registry_and_unraid/025-server-first-platform-capability-consumer-addendum-2026-08-13.md",
-      "sha256": "d51093ea35b686804f57e43e53a416fbe9743fc5ebd2ada76886cfbbd9b04b83",
+      "sha256": "61d1fcc9246805f8d0a203dd41e7708fcbe246447fdcbc5d1a751eab74146d77",
       "shard_id": "025",
       "source_line_end": 6976,
       "source_line_start": 6544,
@@ -233,16 +233,16 @@
     {
       "heading": "Command payload definitions (DL-333, 2026-11-05)",
       "path": "Plans/_shards/containers_registry_and_unraid/026-command-payload-definitions-dl-333-2026-11-05.md",
-      "sha256": "d98d67e05fde88d087e2c141917dc2d3066eaac3518efb75cf4fe8bdda91e1c1",
+      "sha256": "c6eb1546ae03d4c6c0dbe729e58861d907a5b3353dc883e896cddf806f8de5f3",
       "shard_id": "026",
-      "source_line_end": 9828,
+      "source_line_end": 9829,
       "source_line_start": 6978,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 9828,
+    "line_count": 9829,
     "path": "Plans/Containers_Registry_and_Unraid.md",
-    "sha256": "5aaa153b78f49733e7c7ad40e08cfffd80764191cf853f695c6d13a04b58fda6"
+    "sha256": "ba238201c083e8cd894554e5bb2dbb21405e1a17516bdef03e3748f6e7228b5c"
   }
 }
