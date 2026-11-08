@@ -176,7 +176,7 @@ def specs(row):
     extra_index = len(row["trace"]["custody_model"]["operation_rows"][m["operation_key"]]["settlement"]["path_snapshots"])
     add("settled-path-null-node", "PJ03_node_absence",
         p2a([["extra_affected_path"], ["synchronize"],
-             ["set", "operation", ["settlement", "path_snapshots", extra_index, "node_ref"], None]]))
+             ["set", "operation", ["settlement", "path_snapshots", extra_index, "node_ref"], None], ["copies"]]))
     add("extra-affected-path-control", None, p2a([["extra_affected_path"], ["synchronize"]]))
     if action == "created":
         container = next(r for r, e in accepted.items() if e["node_ref"] == p["destination_container_ref"])
