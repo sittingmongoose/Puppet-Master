@@ -16,7 +16,12 @@
 //     pointer resting on a third), read in every frame after layout: the ring may not be drawn in any (its box laid out
 //     on screen). The clicked tile is then captured focused by the pointer and again with the focus taken off by script
 //     (nothing else changes), and may not change: a ring gated on :focus instead of :focus-visible fails both.
-// All three tests on either surface (--set sandbox=1); --set looks= picks the looks.
+//   wheel flick (round 11, opus-recheck-f96i F3, K-i3): the clip must hold while the compositor scrolls. Names shown at
+//     1280x500, the key focus on Files, a fast wheel flick down over the bar (Files leaves at the top) and back up, every
+//     compositor frame (CDP screencast) read: the 8 rows just beyond the bar's scroll box, above and below it (the row next
+//     to it included), may not change against the same rows before the flick by more than 3 pixels in any frame. Basic
+//     Dark and Glass Light by default; e3ba1fee9c set the clip from a script on the bar's scroll, a frame or more behind.
+// All four tests on either surface (--set sandbox=1); --set looks= picks the looks.
 import { decodePng } from '../helpers/activity-cover-pixels.mjs';
 
 const settle = async (t, f, look) => {
@@ -68,12 +73,16 @@ async function scrollBox(t) {
   const geo = () => f.evaluate(() => {
     const bar = document.getElementById('activityBar'), b = bar.getBoundingClientRect(), s = document.querySelector('#activityBar .icon[data-ab-id="files"] .symbol').getBoundingClientRect();
     const ring = document.getElementById('d-abring'), rr = ring ? ring.getBoundingClientRect() : null, cs = ring ? getComputedStyle(ring) : null;
-    const m = cs && /inset\(([^)]*)\)/.exec(cs.clipPath || ''), ins = m ? m[1].trim().split(/\s+/).map(parseFloat) : [0, 0, 0, 0];
-    const [it, ir, ib, il] = ins.length === 1 ? [ins[0], ins[0], ins[0], ins[0]] : ins.length === 2 ? [ins[0], ins[1], ins[0], ins[1]] : ins.length === 3 ? [ins[0], ins[1], ins[2], ins[1]] : ins;
+    // what of the ring is painted: its box, cut by its own clip-path and by every ancestor's (round 11: a frame on the
+    // scroll box clips it), as inset()s
+    const insets = (e, r) => { const m = /inset\(([^)]*)\)/.exec(getComputedStyle(e).clipPath || ''); if (!m) return null; const v = m[1].trim().split(/\s+/).map(parseFloat);
+      const [t, ri, bo, l] = v.length === 1 ? [v[0], v[0], v[0], v[0]] : v.length === 2 ? [v[0], v[1], v[0], v[1]] : v.length === 3 ? [v[0], v[1], v[2], v[1]] : v; return { top: r.top + t, right: r.right - ri, bottom: r.bottom - bo, left: r.left + l }; };
+    let paint = rr && { top: rr.top, right: rr.right, bottom: rr.bottom, left: rr.left };
+    for (let e = ring; paint && e && e !== document.body; e = e.parentElement) { const c = insets(e, e.getBoundingClientRect()); if (c) paint = { top: Math.max(paint.top, c.top), right: Math.min(paint.right, c.right), bottom: Math.min(paint.bottom, c.bottom), left: Math.max(paint.left, c.left) }; }
     const top = b.top + bar.clientTop, left = b.left + bar.clientLeft;
     return { box: { top, left, bottom: top + bar.clientHeight, right: left + bar.clientWidth }, scrollTop: bar.scrollTop, scrollMax: bar.scrollHeight - bar.clientHeight, sym: { top: s.top, left: s.left, bottom: s.bottom, right: s.right, height: s.height },
       ring: rr && { top: rr.top, left: rr.left, bottom: rr.bottom, right: rr.right, width: rr.width }, shown: !!rr && cs.display !== 'none' && rr.width > 4,
-      painted: rr && { top: rr.top + it, right: rr.right - ir, bottom: rr.bottom - ib, left: rr.left + il }, clip: cs ? cs.clipPath : null,
+      painted: paint, clip: cs ? cs.clipPath + (ring.parentElement && ring.parentElement !== document.body ? ' / frame ' + getComputedStyle(ring.parentElement).clipPath : '') : null,
       keyFocus: document.activeElement?.getAttribute('data-ab-id') === 'files' && document.activeElement.matches(':focus-visible') };
   });
   for (const look of looks) {
@@ -103,7 +112,7 @@ async function scrollBox(t) {
     // the strip of the ring's box beyond the scroll box's top, with the ring and without it (the focus moved off, no scroll)
     await f.evaluate(() => { let st = document.getElementById('fo96-ring-tags'); if (!st) { st = document.createElement('style'); st.id = 'fo96-ring-tags'; st.textContent = '#pm-hover-tag-root { visibility: hidden !important; }'; document.head.appendChild(st); } });
     await f.waitForTimeout(300);
-    const top = Math.floor(g.ring.top), h = Math.floor(g.box.top) - top - 1;
+    const top = Math.floor(g.ring.top), h = Math.floor(g.box.top) - top;   /* up to and with the row next to the box (K-i2) */
     let beyond = null;
     if (h >= 2) {
       const r = { x: Math.floor(g.ring.left), y: top, width: Math.ceil(g.ring.width), height: h };
@@ -132,7 +141,7 @@ async function scrollBox(t) {
       const ok = q.painted.top >= q.box.top - 0.5 && q.painted.bottom <= q.box.bottom + 0.5 && q.painted.left >= q.box.left - 0.5 && q.painted.right <= q.box.right + 0.5
         && (q.ring.top >= q.box.top || Math.abs(q.painted.top - q.box.top) <= 0.5);
       let px = null;
-      const top2 = Math.floor(q.ring.top), h2 = Math.floor(q.box.top) - top2 - 1;
+      const top2 = Math.floor(q.ring.top), h2 = Math.floor(q.box.top) - top2;
       if (h2 >= 2) { const r = { x: Math.floor(q.ring.left), y: top2, width: Math.ceil(q.ring.width), height: h2 }; const w = await shot(t, r); await sentinel(f); await f.waitForTimeout(400); const wo = await shot(t, r); px = changed(w, wo); }
       t.log(`${look} opening Files by ${how} while cut ${c0.toFixed(1)} px: ${JSON.stringify({ opened, keyFocus: q.keyFocus, clip: q.clip, painted: q.painted, box: q.box, beyond: px })}`);
       await t.check(`${look}: opening the partly cut, key-focused Files by ${how} leaves its ring clipped at the scroll box's edge`, opened && c0 > 2 && q.keyFocus && ok && (px === null || px <= 3), JSON.stringify({ opened, cut: c0, keyFocus: q.keyFocus, painted: q.painted, box: q.box, clip: q.clip, beyond: px }));
@@ -190,4 +199,51 @@ async function pointerOnly(t) {
   }
 }
 
-export const tests = { 'forced colors': forcedColors, 'scroll box': scrollBox, 'pointer only': pointerOnly };
+async function wheelFlick(t) {
+  await t.viewport(1280, 500);
+  const f = await t.app.open();
+  await f.evaluate(() => { try { PMW.chatCol.show(); } catch (e) { /* none */ } });
+  await t.page.mouse.move(1240, 480);
+  const looks = t.args.looks ? String(t.args.looks).split(',') : ['basic-dark', 'glass-light'];
+  const cdp = await t.page.context().newCDPSession(t.page);
+  let frames = null;
+  cdp.on('Page.screencastFrame', e => { cdp.send('Page.screencastFrameAck', { sessionId: e.sessionId }).catch(() => {}); if (frames) frames.push({ wall: e.metadata.timestamp * 1000, data: e.data }); });
+  await f.evaluate(() => { const st = document.createElement('style'); st.id = 'fo96-ring-tags'; st.textContent = '#pm-hover-tag-root { visibility: hidden !important; }'; document.head.appendChild(st); });
+  for (const look of looks) {
+    await settle(t, f, look);
+    if (await f.evaluate(() => document.getElementById('activityBar').classList.contains('collapsed'))) { await f.evaluate(() => document.getElementById('activityBarToggle').click()); await f.waitForTimeout(700); }
+    await f.evaluate(() => { document.getElementById('activityBar').scrollTop = 0; });
+    const reached = await tabTo(t, f, 'files'); await f.waitForTimeout(400);
+    // the bar's scroll box in the window's pixels (the app frame is offset in the sandbox)
+    const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
+    const g = await f.evaluate(() => { const bar = document.getElementById('activityBar'), b = bar.getBoundingClientRect(); return { left: b.left + bar.clientLeft, top: b.top + bar.clientTop, width: bar.clientWidth, height: bar.clientHeight, max: bar.scrollHeight - bar.clientHeight }; });
+    const L = Math.floor(off.x + g.left), W = Math.ceil(g.width), T = Math.floor(off.y + g.top), B = Math.ceil(off.y + g.top + g.height);
+    const strips = [{ name: 'above', y: T - 8, h: 8 }, { name: 'below', y: B, h: 8 }];
+    const cut = (im, s) => { const d = []; for (let y = s.y; y < s.y + s.h; y++) for (let x = L; x < L + W; x++) { const i = (y * im.width + x) * 4; d.push(im.data[i], im.data[i + 1], im.data[i + 2]); } return d; };
+    const diff = (a, b) => { let n = 0; for (let i = 0; i < a.length; i += 3) if (Math.max(Math.abs(a[i] - b[i]), Math.abs(a[i + 1] - b[i + 1]), Math.abs(a[i + 2] - b[i + 2])) > 40) n++; return n; };
+    const ref = decodePng(await t.page.screenshot());
+    const refs = strips.map(s => cut(ref, s));
+    const bb = await f.locator('#activityBar').boundingBox();
+    await t.page.mouse.move(off.x + bb.x + bb.width / 2, off.y + bb.y + bb.height * 0.6);
+    frames = []; await cdp.send('Page.startScreencast', { format: 'png', everyNthFrame: 1 });
+    for (let i = 0; i < 25 && !frames.length; i++) await f.waitForTimeout(20);
+    for (let i = 0; i < 8; i++) await t.page.mouse.wheel(0, 90);   /* a fast flick down: Files leaves at the top */
+    await f.waitForTimeout(400);
+    for (let i = 0; i < 8; i++) await t.page.mouse.wheel(0, -90);  /* and back */
+    await f.waitForTimeout(600);
+    await cdp.send('Page.stopScreencast').catch(() => {}); const got = frames.sort((p, q) => p.wall - q.wall); frames = null;
+    await t.page.mouse.move(1240, 480);
+    const bad = []; let seen = 0;
+    for (const fr of got) { const im = decodePng(Buffer.from(fr.data, 'base64')); seen++;
+      strips.forEach((s, k) => { const n = diff(cut(im, s), refs[k]); if (n > 3) bad.push({ ms: Math.round(fr.wall - got[0].wall), strip: s.name, changed: n }); }); }
+    const st = await f.evaluate(() => ({ scrollTop: document.getElementById('activityBar').scrollTop, keyFocus: document.activeElement?.getAttribute('data-ab-id') === 'files' && document.activeElement.matches(':focus-visible') }));
+    t.log(`${look} wheel flick: ${seen} frames, scroll max ${g.max}, ${bad.length} strip reads changed ${bad.length ? JSON.stringify(bad.slice(0, 6)) : ''}; after ${JSON.stringify(st)}`);
+    await t.check(`${look}: through a fast wheel flick with the key focus on Files, nothing of the ring is painted beyond the bar's scroll box in any frame`, reached && seen >= 5 && g.max > 100 && bad.length === 0, JSON.stringify({ reached, frames: seen, max: g.max, bad: bad.slice(0, 6) }));
+    await f.evaluate(() => { document.getElementById('activityBar').scrollTop = 0; });
+    if (!(await f.evaluate(() => document.getElementById('activityBar').classList.contains('collapsed')))) { await f.evaluate(() => document.getElementById('activityBarToggle').click()); await f.waitForTimeout(500); }
+  }
+  await cdp.detach().catch(() => {});
+  await f.evaluate(() => { document.getElementById('fo96-ring-tags')?.remove(); document.getElementById('fo96-ring-s')?.remove(); });
+}
+
+export const tests = { 'forced colors': forcedColors, 'scroll box': scrollBox, 'pointer only': pointerOnly, 'wheel flick': wheelFlick };
