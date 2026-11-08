@@ -2373,9 +2373,12 @@
        shadow's (the block's, pushed out by the sticker's rest offset, 2 px, growing to 4 x 6 px at the top of the hop).
        A vertical strip lifts the sticker toward the light (up and left) instead of up its own path */
     var fF = [], fG = [], fS = [], rects = [], n = Math.max(2, Math.ceil(dur / (1000 / 60))), cB = { x: B.x + B.w / 2, y: B.y + B.h / 2 };
+    /* the lift stays inside the strip's own box: a strip at the top of a scroller (onboarding's segments, first in their
+       pane) clips anything above it, and a sticker lifted 6 px there lost its top edge for six frames (Windows film) */
+    var roomX = Math.max(0, Math.min(A.x, B.x)), roomY = Math.max(0, Math.min(A.y, B.y)), liftX = vertical ? Math.min(2, roomX) : 0, liftY = Math.min(vertical ? 2 : 6, roomY);
     for (var i = 0; i <= n; i++) {
       var t = Math.min(dur, i * 1000 / 60), o = t / dur, P = carryPose(switchMotion, ease(o), A, B);
-      var lx = hopping ? (vertical ? -2 : 0) * P.lift : 0, ly = hopping ? (vertical ? -2 : -6) * P.lift : 0, rot = hopping ? -2 * P.lift : 0;
+      var lx = hopping ? -liftX * P.lift : 0, ly = hopping ? -liftY * P.lift : 0, rot = hopping ? -2 * P.lift : 0;
       var dx = P.x + P.w / 2 - cB.x + lx, dy = P.y + P.h / 2 - cB.y + ly, kx = P.sx * P.w / B.w, ky = P.sy * P.h / B.h;
       fF.push({ offset: o, transform: 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px) rotate(' + rot.toFixed(3) + 'deg) scale(' + kx.toFixed(4) + ',' + ky.toFixed(4) + ')' });
       fG.push({ offset: o, transform: 'scale(' + (1 / kx).toFixed(5) + ',' + (1 / ky).toFixed(5) + ') rotate(' + (-rot).toFixed(3) + 'deg) translate(' + (-dx).toFixed(2) + 'px,' + (-dy).toFixed(2) + 'px)' });

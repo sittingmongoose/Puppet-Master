@@ -156,7 +156,7 @@ async function placeChecks(t, f, p, look, tag, wide = true) {
 	if (!p.plate && !p.inPlace) await t.check(`${p.name} ${tag}: corners ${W.r[0]}-${W.r[1]} px`, rec.radius >= W.r[0] && rec.radius <= W.r[1], `radius ${rec.radius}`);
 	if (!p.noWords) {
 		await t.check(`${p.name} ${tag}: chosen words in the chip's ink ${want[3]}`, near(rec.words && rec.words.slice(0, 3), hex(want[3]), 8), `words ${JSON.stringify(rec.words)}`);
-		if (rec.fill && rec.words) await t.check(`${p.name} ${tag}: words 4.5:1 on the chip`, ratio(rec.words.slice(0, 3), rec.fill.slice(0, 3)) >= 4.5, ratio(rec.words.slice(0, 3), rec.fill.slice(0, 3)).toFixed(2));
+		if (rec.fill && rec.words) { const wr = ratio(rec.words.slice(0, 3), rec.fill.slice(0, 3)); t.log(`MEASURE ${p.name} ${tag}: words on chip ${wr.toFixed(2)}`); await t.check(`${p.name} ${tag}: words 4.5:1 on the chip`, wr >= 4.5, wr.toFixed(2)); }
 	}
 	return rec;
 }
@@ -170,10 +170,12 @@ async function pixelChecks(t, f, p, rec, look, tag) {
 	/* the chip shows against the ground by its outline or by its fill, whichever stands out more (Friendly Dark's ink
 	   outline is as dark as its bar, and its mint fill carries the edge there) */
 	const edgeVs = Math.max(ratio(px.edge, px.ground), ratio(px.edge, px.groundL), ratio(px.inside, px.ground), ratio(px.inside, px.groundL));
+	t.log(`MEASURE ${p.name} ${tag}: painted chip vs ground ${edgeVs.toFixed(2)} (edge ${px.edge}, inside ${px.inside}, ground ${px.ground})`);
 	await t.check(`${p.name} ${tag}: painted chip 3:1 against the ground beside it (outline or fill)`, edgeVs >= 3, `edge ${px.edge} inside ${px.inside} ground ${px.ground}/${px.groundL} ${edgeVs.toFixed(2)}`);
 	const lab = p.label ? `${p.item} ${p.label}` : p.item;
 	try {
 		const pt = await paintedText(f.locator(lab).first());
+		if (pt.count > 0) t.log(`MEASURE ${p.name} ${tag}: painted words min ${pt.minimum.toFixed(2)} over ${pt.count} stems`);
 		if (pt.count > 0) await t.check(`${p.name} ${tag}: painted words 4.5:1 on the chip`, pt.minimum >= 4.5, `min ${pt.minimum.toFixed(2)} over ${pt.count} stems`);
 	} catch (e) { t.log(`${p.name} ${tag}: painted words not measured (${e.message})`); }
 }
@@ -192,6 +194,7 @@ async function hoverFocus(t, f, look, tag) {
 		const mx = Math.round(hov.rect[0] - clip.x + off[0]), ground = at(Math.max(0, mx - 3), Math.round(png.height / 2));
 		let best = 1;
 		for (let dx = 0; dx <= 2; dx++) for (let y = 4; y < png.height - 4; y++) { const v = at(Math.min(png.width - 1, mx + dx), y); best = Math.max(best, ratio(v, ground)); }
+		t.log(`MEASURE hover marker ${tag}: ${best.toFixed(2)}`);
 		await t.check(`hover marker ${tag}: 3:1 against the bar`, best >= 3, `best ${best.toFixed(2)} ${JSON.stringify(hov)}`);
 	} else t.log(`hover marker ${tag}: no marker element`);
 	await t.page.mouse.move(2, 400); await t.page.waitForTimeout(300);
@@ -204,6 +207,7 @@ async function hoverFocus(t, f, look, tag) {
 	const rgb = (s) => (/(\d+), (\d+), (\d+)/.exec(s) || []).slice(1, 4).map(Number);
 	if (ring.visible && ring.style !== 'none') {
 		const r = ratio(rgb(ring.color), rgb(ring.bar));
+		t.log(`MEASURE focus ring ${tag}: ${r.toFixed(2)}`);
 		await t.check(`focus ring ${tag}: 3:1 against the bar`, r >= 3, `${ring.color} on ${ring.bar}: ${r.toFixed(2)}`);
 	} else t.log(`focus ring ${tag}: not shown by focus() (${JSON.stringify(ring)})`);
 	await f.evaluate(() => document.activeElement && document.activeElement.blur());
