@@ -45,6 +45,7 @@ _CODEC_SPEC.loader.exec_module(_CODEC)
 if str(ROOT / 'scripts') not in sys.path:
     sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_memory_tables  # noqa: E402
+import pm_event_numbers as numbers  # noqa: E402  (NUMRULE number scope, gated a16f67c1ef)
 
 TABLE_PHASES = pm_memory_tables.PHASES
 _TABLE_ROWS = {}
@@ -161,8 +162,11 @@ def pure(function):
 @pure
 def value_size(value, historical=False):
     """Encoded SP-278 binding bytes of a stored value under its commitment number recipe (observation)."""
-    normalize = historical_numbers if historical else canonical_numbers
-    return len(_CODEC.binding_bytes(normalize(value)))
+    # SP-278 binding bytes through the shared dispatcher (pm_event_numbers.storage_value_bytes, INDEX_BINDING).
+    # A current value is admitted by the CV-1100 exact-integer rule first; a historical one keeps its
+    # frozen integer-json-v1 integral reading. Neither is normalized by the codec itself.
+    return len(numbers.storage_value_bytes(historical_numbers(value) if historical else canonical_numbers(value),
+                                           profile=numbers.INDEX_BINDING))
 
 
 def within_value_cap(value, historical=False):
@@ -174,10 +178,20 @@ def load(path):
 
 
 def json_numbers(text):
-    """Decode decimal/exponent tokens exactly, before any binary64 conversion.
+    """CV-1100 current parser: pm_event_numbers.loads_current_json, lossless.
 
-    Preserve invalid fractions as Decimal so validators/hash guards can refuse them. Schema bounds
-    and negative fixtures may themselves contain out-of-domain integers; loading is not admission.
+    Integer tokens become exact ints; fraction/exponent tokens (1.0, 1e0, -0.0) stay exact
+    ParsedDecimal carriers and are never folded into integers; NaN/Infinity, duplicate keys and
+    malformed integer tokens (01, +1, -0) refuse with the shared Refusal. Schema bounds and negative
+    fixtures may themselves contain out-of-domain integers; loading is not admission.
+    """
+    return numbers.loads_current_json(text)
+
+
+def frozen_json_numbers(text):
+    """The frozen integer-json-v1 reader's literal grammar (history oracles only, never current input).
+
+    It decoded decimal/exponent tokens exactly and read their integral values as integers.
     """
     def exact(token):
         value = Decimal(token)
@@ -186,16 +200,14 @@ def json_numbers(text):
 
 
 def canonical_numbers(value):
-    """One JSON number spelling for this integer-only contract, including -0 and integral exponents.
+    """CV-1100 current commitment numbers: exact integer primitives only (pm_event_numbers.current_integer).
 
-    JSON Schema's integer accepts 1.0. Normalize that mathematical integer before every hash;
-    nonintegral/nonfinite numbers have no representation in these maintenance recipes.
+    A float, Decimal or fraction/exponent token refuses (integer_type) instead of normalizing, and
+    there is no global safe-integer ceiling; field-owner ranges stay in their schemas. Booleans are
+    not numbers here. The local recipes' preimages, prefixes and tuple positions are unchanged.
     """
-    if type(value) in (int, float, Decimal):
-        finite = value.is_finite() if isinstance(value, Decimal) else (True if type(value) is int else math.isfinite(value))
-        if not finite or abs(value) > SAFE_INTEGER or value != int(value):
-            raise ValueError('non_integer_commitment_number')
-        return int(value) if finite else float(value)
+    if type(value) in (int, float) or isinstance(value, (Decimal, numbers.JsonNumber)):
+        return numbers.current_integer(value)
     if isinstance(value, dict):
         return {key: canonical_numbers(item) for key, item in value.items()}
     if isinstance(value, (list, tuple)):
@@ -228,7 +240,8 @@ def historical_numbers(value):
     with identical bytes on that subset; no caller-controlled recipe selector or fallback exists.
     Lossless Decimal ingestion preserves integers before encoding, including uint64 boundaries.
     """
-    if type(value) in (int, float, Decimal):
+    if type(value) in (int, float) or isinstance(value, Decimal):
+        # Carrier-neutral: an exact ParsedDecimal from the current parser reads as its integral value.
         finite = value.is_finite() if isinstance(value, Decimal) else (True if type(value) is int else math.isfinite(value))
         if not finite or value != int(value):
             raise ValueError('non_integer_commitment_number')
@@ -238,6 +251,14 @@ def historical_numbers(value):
     if isinstance(value, (list, tuple)):
         return [historical_numbers(item) for item in value]
     return value
+
+
+def frozen_view(value):
+    """The value as the frozen integer-json-v1 reader admitted it (integral numbers as ints), or None."""
+    try:
+        return historical_numbers(value)
+    except ValueError:
+        return None
 
 
 def historical_digest(value):
@@ -428,6 +449,10 @@ def formatted_value_matches(path, pointer, value):
 
 
 def target_schema_matches(target, kind, historical=False):
+    if historical:
+        target = frozen_view(target)
+        if target is None:
+            return False
     return validator('Plans/memory_maintenance_rebuild_target.schema.json',
                      ('historical_' if historical else '') + kind + '_target').is_valid(target)
 
@@ -501,6 +526,10 @@ def result_digest(row):
 
 
 def operation_schema_matches(row, name, historical=False):
+    if historical:
+        row = frozen_view(row)
+        if row is None:
+            return False
     return validator('Plans/memory_maintenance_operation.schema.json',
                      ('historical_' if historical else '') + name).is_valid(row)
 
@@ -585,7 +614,7 @@ STORAGE_UINT64_FIELDS = ('sequence_id',)
 
 
 def storage_uint64_types(value):
-    return all(field not in value or type(value[field]) is int for field in STORAGE_UINT64_FIELDS)
+    return not storage_uint64_errors(value)
 
 
 
@@ -669,13 +698,23 @@ def append_current(before, value, event):
     return state, output
 
 
+def uint64_refusal(value):
+    try:
+        numbers.storage_uint64(value)
+    except numbers.Refusal as refusal:
+        return refusal.reason
+    return None
+
+
 def storage_uint64_errors(value):
-    return [field for field in STORAGE_UINT64_FIELDS if field in value and type(value[field]) is not int]
+    """SP-1100 Storage uint64 metadata (pm_event_numbers.storage_uint64): [field, reason] per present failing field."""
+    return [[field, uint64_refusal(value[field])] for field in STORAGE_UINT64_FIELDS
+            if field in value and uint64_refusal(value[field]) is not None]
 
 
 def _append_current(before, value, event):
     state = deepcopy(before); row = state['operation']
-    require('ap_uint64', nonint_storage_fields=storage_uint64_errors(value))
+    require('ap_uint64', storage_uint64_refusals=storage_uint64_errors(value))
     require('ap_numbers', number_error=number_error({k: v for k, v in value.items() if k not in STORAGE_FIELDS}))
     require('ap_envelope', envelope_valid=envelope_validator().is_valid(value))
     require('ap_gate', replay_policy=value['replay_policy'], admitted=state['admitted'],
@@ -692,7 +731,8 @@ def _append_current(before, value, event):
             retry_same_identity=state['original'] is not None and same_identity)
     require('ap_payload', payload_valid=validator('Plans/memory_maintenance_event_payloads.schema.json',
                                                   event.replace('.', '_')).is_valid(value['payload']))
-    require('ap_inline', payload_bytes=len(_CODEC.binding_bytes(canonical_numbers(value['payload']))))
+    require('ap_inline', payload_bytes=len(numbers.storage_value_bytes(canonical_numbers(value['payload']),
+                                                                       profile=numbers.INDEX_BINDING)))
     require('ap_partition', dedupe_key=state['dedupe_key'],
             expected_dedupe_key=[scope_partition(row['project_id']), event, value['idempotency_key']])
     # The one start custody gate; terminal and start retries disclose an original, so it precedes that return.
@@ -986,12 +1026,14 @@ def historical_envelope_matches(value):
     definition = HISTORY_RECIPES.get(edition, 'historical_current') if all(type(v) is str for v in edition) else 'historical_current'
     # Unknown editions are tested against the closed 2.0.0 schema, which rejects their constants;
     # this is not a permissive recipe fallback. Both known editions use the same hash encoding.
-    return validator('Plans/memory_maintenance_event_record.schema.json', definition).is_valid(value)
+    # The frozen reader admitted integral spellings as integers; current parsing never narrows history.
+    return validator('Plans/memory_maintenance_event_record.schema.json', definition).is_valid(historical_numbers(value))
 
 
 def historical_payload_matches(value, expected):
-    return validator('Plans/memory_maintenance_event_payloads.schema.json',
-                     expected['event_type'].replace('.', '_')).is_valid(value.get('payload'))
+    payload = frozen_view(value.get('payload'))
+    return payload is not None and validator('Plans/memory_maintenance_event_payloads.schema.json',
+                                             expected['event_type'].replace('.', '_')).is_valid(payload)
 
 
 def historical_binding(value, expected):
@@ -1072,8 +1114,9 @@ def run_canonical_history(fixtures, families):
             before = deepcopy(state)
             try:
                 if case.get('number_literal') is not None:
-                    number = parse_json_number(case['number_literal'])
-                    assert digest(number) == digest(case['canonical_number']), case['name']
+                    # A retained original keeps its frozen integer-json-v1 reading of the literal.
+                    number = historical_numbers(frozen_json_numbers(case['number_literal']))
+                    assert historical_digest(number) == historical_digest(case['canonical_number']), case['name']
                 output = read_canonical_history(state, case['read'])
             except (Refusal, json.JSONDecodeError) as error:
                 reason = 'invalid_json_number' if isinstance(error, json.JSONDecodeError) else str(error)
@@ -1088,27 +1131,38 @@ def run_canonical_history(fixtures, families):
 
 
 def run_numeric_writers(contexts):
+    """CV-1100 current writer input: only the integer token 1 is an integer; 1.0 and 1e0 are exact decimal
+    carriers the Storage uint64 row refuses, and -0 and 01 are refused by the current parser itself."""
     counts = {}
     for family in contexts:
         event = family['event_type']
         states = family.get('writer_states', family.get('states'))
         before = states['before']; untouched = deepcopy(before)
         counts[event] = 0
-        for literal in ('1', '1.0', '1e0', '-0', '01'):
+        for literal, parser_refusal in (('1', None), ('1.0', None), ('1e0', None), ('-0', 'integer_token'), ('01', 'json_syntax')):
             try:
-                number = parse_json_number(literal)
-            except json.JSONDecodeError:
-                assert literal == '01'
-            else:
-                value = canonical_value(before['operation'], event.rsplit('.', 1)[1])
-                value['sequence_id'] = number
+                number = decode_json_number(literal)
+            except numbers.Refusal as refusal:
+                assert refusal.reason == parser_refusal, (literal, refusal.reason)
+                counts[event] += 1
+                continue
+            assert parser_refusal is None, literal
+            value = canonical_value(before['operation'], event.rsplit('.', 1)[1])
+            value['sequence_id'] = number
+            if type(number) is int:
                 after, output = append_current(before, value, event)
-                canonical = {**value, 'sequence_id': int(number)}
                 assert output == value and after['original']['full_value'] == value
-                assert after['original']['full_value_sha256'] == digest(canonical)
+                assert after['original']['full_value_sha256'] == digest(value)
                 assert after['append_count'] == before['append_count'] + 1
                 assert after['effect_count'] == before['effect_count']
-                assert before == untouched
+            else:
+                try:
+                    append_current(before, value, event)
+                except TableRefusal as refusal:
+                    assert (refusal.phase, refusal.row) == ('ap_uint64', 'AP01_storage_uint64'), (literal, refusal.row)
+                else:
+                    raise AssertionError((event, literal, 'decimal spelling accepted as a Storage uint64'))
+            assert before == untouched
             counts[event] += 1
     return counts
 
@@ -1467,6 +1521,23 @@ def storage_metadata():
     return result
 
 
+def number_corpus():
+    spec = importlib.util.spec_from_file_location('_dmem_number_corpus', ROOT / 'scripts/pm_memory_number_corpus.py')
+    result = importlib.util.module_from_spec(spec); spec.loader.exec_module(result)
+    return result
+
+
+def run_number_corpus(m, fixtures, families, writer=None):
+    """The shared NUMRULE number corpus through this checker's own number boundaries, per family."""
+    corpus = number_corpus(); counts = {}
+    for event in families:
+        results = corpus.run(m, fixtures, event, writer)
+        failed = [r for r in results if not r[1]]
+        assert not failed, ('number corpus', event, failed[:5])
+        counts[event] = {'agree': len(results) - 1, 'coverage': results[-1][2]}
+    return counts
+
+
 def guard_witnesses():
     spec = importlib.util.spec_from_file_location('_dmem_guard_witnesses', ROOT / 'scripts/pm_memory_guard_witnesses.py')
     result = importlib.util.module_from_spec(spec); spec.loader.exec_module(result)
@@ -1520,6 +1591,7 @@ def main():
     metadata = storage_metadata().run(__import__('sys').modules[__name__], contexts)
     policy = memory_policy().run(__import__('sys').modules[__name__], families)
     witnesses = guard_witnesses().maintenance(__import__('sys').modules[__name__], fixtures, families)
+    shared_numbers = run_number_corpus(__import__('sys').modules[__name__], fixtures, families)
     identifier_names = [case['name'] for case in fixtures['identifier_cases']]
     assert len(identifier_names) == len(set(identifier_names))
     assert {event.replace('.', '_') + ':' + name for event in families
@@ -1569,7 +1641,7 @@ def main():
                       'numeric_writer_cases': numeric_writers, 'boundary_domains': domains, 'write_recipes': recipes,
                       'storage_uint64': metadata, 'card6_policy': policy,
                       'schema_reference_cases': references, 'registry_mirrors_reference_checked': mirrors,
-                      'guard_table_witnesses': witnesses,
+                      'guard_table_witnesses': witnesses, 'shared_number_corpus': shared_numbers,
                       'guard_tables': {'phases': len(TABLE_PHASES), 'rows': sum(len(table_rows(p)) for p in TABLE_PHASES),
                                        'order': 'every factory requires its rows in table order'},
                       'native': 'NOT_RUN', 'admission': 'ABSENT', 'retention': 'PENDING_RETENTION_DECISION'}, indent=2))

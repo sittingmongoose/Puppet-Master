@@ -25,7 +25,7 @@ def retained_states(m, contexts):
     fixtures = json.loads((m.ROOT / 'Plans/memory_write_recipe_fixtures.json').read_text())
     assert fixtures['old_writer_commit'] == '77323e87d65908dbce2ea655ee344b6185a13ff1'
     assert fixtures['history_recipe'] == 'integer-json-v1'
-    assert fixtures['current_writer_recipe'] == 'safe-integer-write-v2'
+    assert fixtures['current_writer_recipe'] == 'cv1100-exact-integer-write-v3'
     for family in fixtures['families']:
         event = family['event_type']
         if event not in contexts:

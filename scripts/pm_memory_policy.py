@@ -16,9 +16,18 @@ CUTOFFS = {'monthly_summary': (90, Decimal('0.10'), 'DL-446'),
 
 
 def same(left, right):
-    """Preservation compares primitive types before values, recursively; no coercion."""
+    """Preservation compares primitive types before values, recursively; no coercion.
+
+    Numbers compare their exact representation, not only their value: a Decimal keeps its digits and
+    exponent (0.10 is not 0.1) and a float keeps its zero sign (-0.0 is not 0.0), so a respelled or
+    sign-flipped preserved number does not pass as the original.
+    """
     if type(left) is not type(right):
         return False
+    if isinstance(left, Decimal):
+        return left.as_tuple() == right.as_tuple() and getattr(left, 'numeric_kind', None) == getattr(right, 'numeric_kind', None)
+    if type(left) is float:
+        return left == right and math.copysign(1.0, left) == math.copysign(1.0, right)
     if isinstance(left, dict):
         return left.keys() == right.keys() and all(same(left[k], right[k]) for k in left)
     if isinstance(left, (list, tuple)):
@@ -73,8 +82,8 @@ def selection_observations(core, snapshot, job):
     yield 'ps_age', {'young_ids': [k for k, start in zip(keys, starts) if not captured - start >= days * 86400]}
     values = [m.get('usefulness_score') for m in selected]
     bad = [k for k, v in zip(keys, values)
-           if not (type(v) in (int, float, Decimal) and
-                   (v.is_finite() if type(v) is Decimal else math.isfinite(v) if type(v) is float else True))]
+           if not ((type(v) in (int, float) or isinstance(v, Decimal)) and
+                   (v.is_finite() if isinstance(v, Decimal) else math.isfinite(v) if type(v) is float else True))]
     yield 'ps_score', {'bad_type_ids': bad, 'high_ids': [] if bad else [k for k, v in zip(keys, values) if not v < score]}
 
 

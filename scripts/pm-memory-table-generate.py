@@ -169,8 +169,8 @@ phase('sgl_later', 'start_custody_gate: every later retained original cites exac
 
 # --------------------------------------------------------------- current writer (_append_current)
 phase('ap_uint64', '_append_current: Storage uint64 metadata types (SP-236), before producer numbers.', [
-    ('AP01_storage_uint64', '/sequence_id', 'every present Storage uint64 field is exactly an int', 'invalid_storage_uint64',
-     "value['nonint_storage_fields'] != []")])
+    ('AP01_storage_uint64', '/sequence_id', 'every present Storage uint64 field is an SP-1100 uint64 (exact int 0..2^64-1)',
+     'invalid_storage_uint64', "value['storage_uint64_refusals'] != []")])
 phase('ap_numbers', '_append_current: every producer-owned number has a commitment encoding.', [
     ('AP02_producer_numbers', '/** (producer fields)', 'every producer number encodes under the current commitment recipe',
      'invalid_number', "value['number_error'] is not None")])

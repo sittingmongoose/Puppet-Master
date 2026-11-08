@@ -18,232 +18,226 @@
   "numeric_cases": [
     {
       "literal": "0",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": true,
       "sequence_valid": true,
       "canonical": 0
     },
     {
       "literal": "-0",
-      "valid_json": true,
-      "commitment_valid": true,
-      "sequence_valid": true,
-      "canonical": 0
+      "current_parser_accepts": false,
+      "commitment_valid": false,
+      "sequence_valid": false
     },
     {
       "literal": "-0.0",
-      "valid_json": true,
-      "commitment_valid": true,
-      "sequence_valid": true,
-      "canonical": 0
+      "current_parser_accepts": true,
+      "commitment_valid": false,
+      "sequence_valid": false
     },
     {
       "literal": "-0e9",
-      "valid_json": true,
-      "commitment_valid": true,
-      "sequence_valid": true,
-      "canonical": 0
+      "current_parser_accepts": true,
+      "commitment_valid": false,
+      "sequence_valid": false
     },
     {
       "literal": "1",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": true,
       "sequence_valid": true,
       "canonical": 1
     },
     {
       "literal": "1.0",
-      "valid_json": true,
-      "commitment_valid": true,
-      "sequence_valid": true,
-      "canonical": 1
+      "current_parser_accepts": true,
+      "commitment_valid": false,
+      "sequence_valid": false
     },
     {
       "literal": "1e0",
-      "valid_json": true,
-      "commitment_valid": true,
-      "sequence_valid": true,
-      "canonical": 1
+      "current_parser_accepts": true,
+      "commitment_valid": false,
+      "sequence_valid": false
     },
     {
       "literal": "1.000",
-      "valid_json": true,
-      "commitment_valid": true,
-      "sequence_valid": true,
-      "canonical": 1
+      "current_parser_accepts": true,
+      "commitment_valid": false,
+      "sequence_valid": false
     },
     {
       "literal": "10e-1",
-      "valid_json": true,
-      "commitment_valid": true,
-      "sequence_valid": true,
-      "canonical": 1
+      "current_parser_accepts": true,
+      "commitment_valid": false,
+      "sequence_valid": false
     },
     {
       "literal": "0.1e1",
-      "valid_json": true,
-      "commitment_valid": true,
-      "sequence_valid": true,
-      "canonical": 1
+      "current_parser_accepts": true,
+      "commitment_valid": false,
+      "sequence_valid": false
     },
     {
       "literal": "9007199254740991",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": true,
       "sequence_valid": true,
       "canonical": 9007199254740991
     },
     {
       "literal": "9007199254740991.0",
-      "valid_json": true,
-      "commitment_valid": true,
-      "sequence_valid": true,
-      "canonical": 9007199254740991
+      "current_parser_accepts": true,
+      "commitment_valid": false,
+      "sequence_valid": false
     },
     {
       "literal": "9.007199254740991e15",
-      "valid_json": true,
-      "commitment_valid": true,
-      "sequence_valid": true,
-      "canonical": 9007199254740991
+      "current_parser_accepts": true,
+      "commitment_valid": false,
+      "sequence_valid": false
     },
     {
       "literal": "-9007199254740991",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": true,
       "sequence_valid": false,
       "canonical": -9007199254740991
     },
     {
       "literal": "-9007199254740991.0",
-      "valid_json": true,
-      "commitment_valid": true,
-      "sequence_valid": false,
-      "canonical": -9007199254740991
-    },
-    {
-      "literal": "9007199254740992",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
+      "literal": "9007199254740992",
+      "current_parser_accepts": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 9007199254740992
+    },
+    {
       "literal": "9007199254740992.0",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "9.007199254740992e15",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "-9007199254740992",
-      "valid_json": true,
-      "commitment_valid": false,
-      "sequence_valid": false
+      "current_parser_accepts": true,
+      "commitment_valid": true,
+      "sequence_valid": false,
+      "canonical": -9007199254740992
     },
     {
       "literal": "-9007199254740992.0",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "9007199254740993",
-      "valid_json": true,
-      "commitment_valid": false,
-      "sequence_valid": false
+      "current_parser_accepts": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 9007199254740993
     },
     {
       "literal": "9007199254740993.0",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "9.007199254740993e15",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "9007199254740993e0",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "1152921504606846976",
-      "valid_json": true,
-      "commitment_valid": false,
-      "sequence_valid": false
+      "current_parser_accepts": true,
+      "commitment_valid": true,
+      "sequence_valid": true,
+      "canonical": 1152921504606846976
     },
     {
       "literal": "1152921504606846976.0",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "1.152921504606846976e18",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "-1152921504606846976",
-      "valid_json": true,
-      "commitment_valid": false,
-      "sequence_valid": false
+      "current_parser_accepts": true,
+      "commitment_valid": true,
+      "sequence_valid": false,
+      "canonical": -1152921504606846976
     },
     {
       "literal": "1.0000000000000001",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "9007199254740990.9999999999999999",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "1.5",
-      "valid_json": true,
+      "current_parser_accepts": true,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "NaN",
-      "valid_json": true,
+      "current_parser_accepts": false,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "Infinity",
-      "valid_json": true,
+      "current_parser_accepts": false,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "01",
-      "valid_json": false,
+      "current_parser_accepts": false,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "+1",
-      "valid_json": false,
+      "current_parser_accepts": false,
       "commitment_valid": false,
       "sequence_valid": false
     },
     {
       "literal": "00",
-      "valid_json": false,
+      "current_parser_accepts": false,
       "commitment_valid": false,
       "sequence_valid": false
     }
@@ -326,5 +320,6 @@
     "old-note",
     "recent-note",
     "pinned-note"
-  ]
+  ],
+  "numeric_rule": "CV-1100 current integer grammar (0 or -?[1-9][0-9]*, no fraction, exponent, plus, leading zero or negative zero; exact int primitive, no global ceiling) and SP-1100 Storage uint64 0..2^64-1 for sequence_valid; superseded the safe-integer normalization expectations in sweep part 2B numbers"
 }

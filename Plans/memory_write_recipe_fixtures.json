@@ -14,7 +14,7 @@
     "Plans/event_record_index_checkpoint.schema.json": "f15e781edefe30694457361e145c44b5868a57d1e9c069a5b47a059395d577af"
   },
   "history_recipe": "integer-json-v1",
-  "current_writer_recipe": "safe-integer-write-v2",
+  "current_writer_recipe": "cv1100-exact-integer-write-v3",
   "families": [
     {
       "event_type": "memory.dedup_sweep.completed",

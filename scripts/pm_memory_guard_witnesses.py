@@ -299,6 +299,17 @@ def archive(a, fixtures, families):
             nowhere['memories'][k]['project_id'] = ''
         add('selection-empty-project', 'ps_scope', 'PS02_project_nonempty', lambda: a.archive_candidate(deepcopy(snap), job),
             lambda: a.archive_candidate(deepcopy(nowhere), job))
+        # Part 2B numbers: a preserved number keeps its exact representation (Decimal digits and exponent,
+        # float zero sign); a respelled or sign-flipped copy of the same value is not the original.
+        selected = snap['selected_ids'][0]
+        for label, original, respelled in (('decimal-respelled', Decimal('0.0999'), Decimal('0.09990')),
+                                           ('float-zero-sign', 0.0, -0.0)):
+            source = edited(snap, (['memories', selected, 'usefulness_score'], original))
+            result = a.archive_candidate(deepcopy(source), job)
+            changed = edited(result, (['memories', selected, 'usefulness_score'], respelled))
+            add('preserved-score-' + label, 'av_preserve', 'AV08_selected_fields',
+                lambda s=source, r=result: a.archive_validate(deepcopy(s), deepcopy(r), job),
+                lambda s=source, c=changed: a.archive_validate(deepcopy(s), deepcopy(c), job))
         before = W['before']; value = m.canonical_value(before['operation'], suffix)
         append = lambda state, v=value: a.append_current(deepcopy(state), deepcopy(v), event)
         add('writer-append-once-policy', 'aa_gate', 'AA04_replay_policy', lambda: append(before),

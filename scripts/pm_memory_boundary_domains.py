@@ -5,7 +5,7 @@ import json
 
 
 def finite_positive(m, value):
-    return type(value) in (int, float, m.Decimal) and (value.is_finite() if isinstance(value,m.Decimal)
+    return (type(value) in (int, float) or isinstance(value, m.Decimal)) and (value.is_finite() if isinstance(value,m.Decimal)
         else (True if type(value) is int else m.math.isfinite(value))) and value >= 0
 
 
@@ -60,9 +60,9 @@ def domain_cases(m, contexts, boundaries, archive=None):
         for number in fixtures['numeric_cases']:
             literal = number['literal']
             if not number['commitment_valid']:
-                guard = 'commitment_numbers' if number['valid_json'] else 'json_number_grammar'
+                guard = 'commitment_numbers' if number['current_parser_accepts'] else 'json_number_grammar'
                 add(event,guard,'parse-'+literal,lambda *a:m.parse_json_number(*a),('1',),(literal,))
-            if number['valid_json'] and not number['commitment_valid']:
+            if number['current_parser_accepts'] and not number['commitment_valid']:
                 parsed = m.json_numbers(literal)
                 if finite_positive(m,parsed):
                     add(event,'commitment_numbers','producer-number-'+literal,lambda n:m.numbers_supported(n),
@@ -70,7 +70,7 @@ def domain_cases(m, contexts, boundaries, archive=None):
         for mode,source in history[event]['states'].items():
             control = source['originals'][event]['full_value']
             for number in fixtures['numeric_cases']:
-                if number['valid_json'] and not number['commitment_valid']:
+                if number['current_parser_accepts'] and not number['commitment_valid']:
                     parsed = m.json_numbers(number['literal'])
                     if finite_positive(m,parsed) and parsed != int(parsed):
                         bad = {**control,'sequence_id':parsed}
@@ -123,8 +123,10 @@ def run(m, contexts, boundaries, archive=None):
             literal=case['literal']
             try:
                 number=m.json_numbers(literal)
-            except json.JSONDecodeError:
-                assert not case['valid_json'];continue
+            except m.numbers.Refusal:
+                # CV-1100 current parser: malformed JSON, NaN/Infinity and -0 refuse before any number exists.
+                assert not case['current_parser_accepts'],literal;continue
+            assert case['current_parser_accepts'],literal
             try:
                 actual=m.digest({'nested':[number]})
             except ValueError:

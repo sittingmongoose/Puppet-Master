@@ -12,18 +12,6 @@
           "properties": {
             "sequence_id": {
               "maximum": 18446744073709551615
-            },
-            "producer_sequence_id": {
-              "anyOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "integer",
-                  "minimum": 0,
-                  "maximum": 9007199254740991
-                }
-              ]
             }
           }
         }

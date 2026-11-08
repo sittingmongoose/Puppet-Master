@@ -211,7 +211,7 @@ def append_current(before, value, event):
     """The adopted boundary with invariant-specific checks (no blanket equality hiding a schema defect)."""
     cutoff_gate(before)
     state = deepcopy(before); row = state['operation']; suffix = event.rsplit('.', 1)[1]
-    core.require('ap_uint64', nonint_storage_fields=core.storage_uint64_errors(value))
+    core.require('ap_uint64', storage_uint64_refusals=core.storage_uint64_errors(value))
     core.require('ap_numbers', number_error=core.number_error({k: v for k, v in value.items()
                                                                if k not in core.STORAGE_FIELDS}))
     core.require('aa_envelope', envelope_valid=core.envelope_validator().is_valid(value))
@@ -454,10 +454,11 @@ def main():
     metadata = core.storage_metadata().run(core, contexts)
     policy = POLICY.run(core, families, __import__('sys').modules[__name__])
     witnesses = core.guard_witnesses().archive(__import__('sys').modules[__name__], fixtures, families)
+    shared_numbers = core.run_number_corpus(core, fixtures, families, append_current)
     print(json.dumps({'status':'pass','families':paths,'guard_cases':len(fixtures['guard_cases']),
                       'guard_case_oracle':guards,'canonical_history_cases':canonical_history,
                       'numeric_writer_cases':numeric_writers,'boundary_domains':domains,'write_recipes':recipes,
-                      'storage_uint64':metadata, 'card6_policy':policy, 'guard_table_witnesses':witnesses,
+                      'storage_uint64':metadata, 'card6_policy':policy, 'guard_table_witnesses':witnesses, 'shared_number_corpus':shared_numbers,
                       'payload_messagepack_upper_bounds':bounds,'native':'NOT_RUN','admission':'ABSENT',
                       'approved_cutoffs':{'monthly_summary':'DL-446: idle >=90 days AND score <0.10',
                                           'prune_archive':'DL-447: idle >=180 days AND score <0.05'},

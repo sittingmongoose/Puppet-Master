@@ -12,17 +12,17 @@ rows read; the checker passes exactly these.
 """
 import pm_guard_isolation as g
 
-FIELDS = ('nonint_storage_fields',)
+FIELDS = ('storage_uint64_refusals',)
 
 
 def AP01_storage_uint64(value, context):
-    return 'invalid_storage_uint64' if value['nonint_storage_fields'] != [] else None
+    return 'invalid_storage_uint64' if value['storage_uint64_refusals'] != [] else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('AP01_storage_uint64', g.Invariant('/sequence_id', 'every present Storage uint64 field is exactly an int'), 'invalid_storage_uint64', AP01_storage_uint64),
+        g.Guard('AP01_storage_uint64', g.Invariant('/sequence_id', 'every present Storage uint64 field is an SP-1100 uint64 (exact int 0..2^64-1)'), 'invalid_storage_uint64', AP01_storage_uint64),
     ])
 
     def check(value):
