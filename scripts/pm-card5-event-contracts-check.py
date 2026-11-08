@@ -24,6 +24,17 @@ packed = shared.packed
 exact = shared.exact_value
 load = shared.load
 
+# Sweep part 2A guard tables (Method B, scripts/pm_guard_isolation.py). Table
+# modules are underscore modules imported normally; witness collection stays
+# in the unscanned runner (scripts/pm-dg6a-guard-tables.py). RECORDER is set
+# only by that runner.
+if str(ROOT / 'scripts') not in sys.path:
+    sys.path.insert(0, str(ROOT / 'scripts'))
+import pm_dg6a_table_decision_citation as _decision_table  # noqa: E402
+
+_DECISION_ROWS = [(name, guard.predicate) for name, guard in _decision_table.case(None).table.guards.items()]
+DECISION_RECORDER = None
+
 
 def digest(value):
     return hashlib.sha256(packed(value)).hexdigest()
@@ -110,21 +121,50 @@ def storage_schema_cases(registry, family, schemas):
     return observations
 
 
-def decision_citation_errors(manifest, family, log):
-    """The manifest names the landed log; the family's decision and exact option text must be there."""
-    if manifest.get('decision_source') != 'Plans/Decision_Log.md':
-        return ['decision_source']
-    if 'decision_branch' in manifest:
-        return ['decision_branch_retained']
+def decision_citation_observation(manifest, family, log):
+    """The decision_citation table's FIELDS, derived from the complete input.
+
+    Derivation only computes observations; it decides no acceptance. The
+    section and option text are read exactly as the pre-table guard read
+    them; when the entry is not unique or the option is not a string there
+    is no section text to find, so option_text_in_section is False and the
+    entailed DC05 row stays silent under DC03/DC04.
+    """
     heading = '### ' + family['decision'] + ': '
-    if log.count(heading) != 1:
-        return ['decision_entry']
-    start = log.index(heading)
-    end = log.find('\n### ', start + 1)
-    section = log[start:end if end != -1 else len(log)]
-    if type(family['option_a']) is not str or '- **A (recommended):** ' + family['option_a'] + '\n' not in section + '\n':
-        return ['decision_option_text']
-    return []
+    unique = log.count(heading) == 1
+    section = ''
+    if unique:
+        start = log.index(heading)
+        end = log.find('\n### ', start + 1)
+        section = log[start:end if end != -1 else len(log)]
+    option_is_string = type(family['option_a']) is str
+    return {
+        'source_is_landed_log': manifest.get('decision_source') == 'Plans/Decision_Log.md',
+        'branch_key_present': 'decision_branch' in manifest,
+        'entry_is_unique': unique,
+        'option_is_string': option_is_string,
+        'option_text_in_section': bool(unique and option_is_string
+                                       and '- **A (recommended):** ' + family['option_a'] + '\n' in section + '\n'),
+    }
+
+
+def decision_citation_errors(manifest, family, log):
+    """The manifest names the landed log; the family's decision and exact option text must be there.
+
+    Refuses only through scripts/pm_dg6a_table_decision_citation.py rows, in
+    table order; the first refusing row's code is the one-element list the
+    pre-table guard returned.
+    """
+    observed = decision_citation_observation(manifest, family, log)
+    first = None
+    for name, predicate in _DECISION_ROWS:
+        code = predicate(observed, None)
+        if code is not None:
+            first = (name, code)
+            break
+    if DECISION_RECORDER is not None:
+        DECISION_RECORDER.append((copy.deepcopy(observed), first))
+    return [first[1]] if first else []
 
 
 def decision_citation_cases(manifest, family, log):
