@@ -44,7 +44,8 @@
  *     renderApp (captured from ctx — never a private render path).
  *   - data-k rule: constant keys for the frame (orbit / orbdial / ring /
  *     core / orbpanel), instance-uid keys where a replay IS wanted
- *     (`opin:<uid>` replays the row cascade on a subject change,
+ *     (`opin:<uid>` replays the row cascade on a subject change, so a
+ *     reader's own scroll of the panel pins its subject: FO-104, by the actions;
  *     `orow:<uid>:<j>` materializes each row exactly once as it streams in).
  *   - Neon icons (step 3C): the live node and the core are dark discs whose
  *     lit glyph acts while the run runs; done and pending glyphs are drawn
@@ -650,6 +651,83 @@
     ctx.renderApp();
     return true;
   });
+
+  /* ---- the reader holds the panel (FO-104) ----------------------------
+     The panel follows the live subject and is keyed by it (opin:<uid>), so every handover of the work clock (one
+     subject per 2 s in the classic run) swapped in the next subject's panel: a reader scrolling it was sent back to its
+     top, and a key focus on its X was dropped. A reader's own scroll of the panel now pins it to the subject it shows,
+     through the same pin a node click sets (ui.pinUid): the panel keeps its node, its scroll and the focus in it; the
+     pinned node reads open (aria-pressed), the core keeps showing the live subject and says "Follow the live step
+     again", and the core click follows live again, as after any pin.
+     Only real input pins. A wheel, a touch, a scroll key, or a press on its scrollbar marks the panel, and only a
+     scroll of that same panel within 700 ms of the mark (or during the scrollbar drag)
+     pins it; app.js reads a reader's transcript scroll the same way. The browser clamping scrollTop when a patch
+     shortens the panel, or a script setting it, comes with no mark and never pins. A Tab that moves the focus into the
+     panel pins it too: the scroll keys only reach a panel that still holds the focus, and the next handover would
+     otherwise drop it before the first key. A Tab pin stays when the focus leaves the panel, as a scroll pin stays.
+     A scroll key counts for the panel that holds the focus, or else for the panel the last press landed in while the
+     focus is on no control (round 2, F104-1): a click on the panel's words leaves the focus on the page, and the
+     browser then sends the scroll keys to the scroller under that click. Counting them there follows the browser's
+     own route; the panel is not made to take the focus, which would change the tab path and what a screen reader
+     hears on every click in the card. A key marks only; the pin still needs that panel to scroll.
+     Scrolling back to the top keeps the pin. A pin made by a click does not end on a scroll either, and ending this one
+     at the top would swap the subject under a reader who is reading its head; the pin shows, and the core ends it. */
+  var held = { el: null, at: 0, drag: false, tab: 0, press: null };
+  var HOLD_KEYS = { PageUp: 1, PageDown: 1, ArrowUp: 1, ArrowDown: 1, Home: 1, End: 1, ' ': 1 };
+  function panelOf(node) { return node && node.nodeType === 1 && node.closest ? node.closest('.orbit-panel-in') : null; }
+  function markPanel(p) { held.el = p; held.at = performance.now(); }
+  function holdPanel(p) {
+    var card = p.closest('.working-card'), stage = p.closest('.orbit-stage');
+    if (!card || !stage || !stage.classList.contains('is-open')) return;
+    var ui = UI[card.dataset.cardUi || 'work'], uid = stage.getAttribute('data-orbit-focus');
+    if (!ui || ui.anim != null || !ui.list || uid == null || ui.pinUid === uid) return;
+    var at = ui.list.indexOf(uid);
+    if (at < 0) return;
+    ui.pin = at; ui.pinUid = uid;
+    /* the pin shows at once, not at the next tick (a paused run has none) */
+    requestAnimationFrame(rerender);
+  }
+  document.addEventListener('wheel', function (e) { var p = panelOf(e.target); if (p) markPanel(p); }, { passive: true, capture: true });
+  document.addEventListener('touchstart', function (e) { var p = panelOf(e.target); if (p) markPanel(p); }, { passive: true, capture: true });
+  /* Added with the plain method: in PMConcept7 the host (pm7-port/js/00-host.js) scopes the chat's document listeners
+     to events aimed at the chat, and a key pressed with the focus on the page is aimed at <body>, so a scoped listener
+     never heard the scroll keys after a click on the panel's words. The host adds its own page-wide dismiss listener
+     the same way. This one only marks a panel; it never acts on the key or stops it. */
+  EventTarget.prototype.addEventListener.call(document, 'keydown', function (e) {
+    if (e.key === 'Tab') { held.tab = performance.now(); return; }
+    if (!HOLD_KEYS[e.key] || e.altKey || e.ctrlKey || e.metaKey) return;
+    var a = document.activeElement, onPage = !a || a === document.body || a === document.documentElement;
+    var p = panelOf(a) || (onPage && held.press && held.press.isConnected ? held.press : null);
+    if (p) markPanel(p);
+  }, true);
+  /* a press on the panel's own scrollbar: the press lands on the panel itself, right of its content box. Any other
+     press ends a drag whose pointerup never came (a scrollbar drag can swallow it), and every press says which panel,
+     if any, the last press landed in. Added with the plain method, as the keydown listener above is: in PMConcept7 the
+     host scoped it to presses inside the chat, so a press elsewhere on the page left the panel as "the last press" and a
+     later scroll key marked it (round 3, F104-2). A press that lands outside the marked panel also ends the 700 ms mark a
+     wheel or a touch put on it, so a scroll of that panel in the rest of the window pins nothing (opus-recheck-act8c O1);
+     a touch's pointerdown comes before its touchstart, so a touch on a panel still marks it afresh. It only reads the
+     target and sets these fields. */
+  EventTarget.prototype.addEventListener.call(document, 'pointerdown', function (e) {
+    var p = e.target;
+    held.drag = false;
+    held.press = panelOf(p);
+    if (held.el !== held.press) held.el = null;
+    if (e.button !== 0 || !p || !p.classList || !p.classList.contains('orbit-panel-in')) return;
+    var r = p.getBoundingClientRect();
+    if (e.clientX > r.left + p.clientLeft + p.clientWidth) { held.drag = true; markPanel(p); }
+  }, true);
+  document.addEventListener('pointerup', function () { if (held.drag) { held.drag = false; held.at = performance.now(); } }, true);
+  document.addEventListener('pointercancel', function () { held.drag = false; }, true);
+  document.addEventListener('scroll', function (e) {
+    var p = e.target;
+    if (!p || !p.classList || !p.classList.contains('orbit-panel-in')) return;
+    if (held.el === p && (held.drag || performance.now() - held.at < 700)) holdPanel(p);
+  }, { passive: true, capture: true });
+  document.addEventListener('focusin', function (e) {
+    var p = panelOf(e.target);
+    if (p && performance.now() - held.tab < 700) holdPanel(p);
+  }, true);
   /* The panel X: collapse this card — live or completed — to its strip. */
   EXT.action('orbit-collapse', function (ctx, btn) {
     var b = cardBits(ctx, btn); if (!b) return false;

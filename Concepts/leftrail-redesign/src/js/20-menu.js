@@ -6,7 +6,12 @@
 
    PMR.menu.open(menu, anchor, opts) / toggle / close / closeAll / isOpen / trigger(menu, opts)
    menu = Menu from DATA.md ({ id, label, value?, search?, multi?, groups: [{ label?, items: [MenuItem] }] }) or an item array.
-   opts = { menus (id -> Menu, for submenus), onPick(item), align: 'start'|'end', width, side, keyboard }
+   opts = { menus (id -> Menu, for submenus), onPick(item), align: 'start'|'end', width, side, keyboard, context, returnTo }
+   returnTo: where the focus goes back when the menu closes by a key, in place of its anchor (FO-98 round 4: a context
+   menu at a point is anchored to a 1px box that takes no focus, so its icon gives the focus a place to come back to).
+   context: a context menu hung on a control whose own state is not a menu's (FO-98: an Activity bar icon, whose
+   aria-expanded says whether its panel is open): the anchor gets no aria-expanded and no is-menu-open, and a press on
+   it closes the menu like any press outside.
    multi: the items with a value are checkboxes (item.checked). A pick flips that item, calls onPick, which may change
    any item's checked (an "All" item that clears the others), redraws every check and leaves the menu open, so several
    can be chosen in one visit; an item with closes: true closes it after its pick. Escape or a click outside closes. */
@@ -138,8 +143,10 @@ function openMenu(def, anchor, opts) {
   place(entry);
   MENU_STACK.push(entry);
   if (opts.parent) opts.parent.children.push(entry);
-  anchor.setAttribute('aria-expanded', 'true');
-  anchor.classList.add('is-menu-open');
+  if (!opts.context) {
+    anchor.setAttribute('aria-expanded', 'true');
+    anchor.classList.add('is-menu-open');
+  }
   wireMenu(entry);
   window.PM6_SPROUT.open(entry.el, null, anchor);
   const keyboard = opts.keyboard != null ? opts.keyboard : lastInputWasKey;
@@ -161,12 +168,15 @@ function closeEntry(entry, opts) {
   entry.children.slice().forEach(c => closeEntry(c, { silent: true }));
   MENU_STACK.splice(i, 1);
   if (entry.opts.parent) entry.opts.parent.children = entry.opts.parent.children.filter(c => c !== entry);
-  entry.anchor.setAttribute('aria-expanded', 'false');
-  entry.anchor.classList.remove('is-menu-open');
+  if (!entry.opts.context) {
+    entry.anchor.setAttribute('aria-expanded', 'false');
+    entry.anchor.classList.remove('is-menu-open');
+  }
   const el = entry.el;
   const done = () => { if (el.parentNode) el.parentNode.removeChild(el); };
   window.PM6_SPROUT.close(el, done, { instant: PMR.motion.reduced() });
-  if (opts.returnFocus && entry.anchor && entry.anchor.isConnected) entry.anchor.focus({ preventScroll: true });
+  const back = entry.opts.returnTo || entry.anchor;
+  if (opts.returnFocus && back && back.isConnected) back.focus({ preventScroll: true });
 }
 function closeAll(opts) { MENU_STACK.filter(e => !e.opts.parent).forEach(e => closeEntry(e, opts)); }
 
@@ -243,7 +253,7 @@ function openSub(entry, b, it, keyboard) {
 document.addEventListener('pointerdown', ev => {
   if (!MENU_STACK.length) return;
   if (MENU_STACK.some(e => e.el.contains(ev.target))) return;
-  if (MENU_STACK.some(e => e.anchor.contains(ev.target))) return;   // the trigger toggles itself
+  if (MENU_STACK.some(e => !e.opts.context && e.anchor.contains(ev.target))) return;   // the trigger toggles itself
   closeAll();
 }, true);
 window.addEventListener('resize', () => { if (MENU_STACK.length) closeAll(); });

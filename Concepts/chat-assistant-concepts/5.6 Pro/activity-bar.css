@@ -178,7 +178,7 @@ html[data-ab-ready] .activity-item[data-hover-domain="changes"] .count::after {
   padding: 0 12px;
   gap: 6px;
 }
-html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-bar[data-variant="2"] .activity-item {
+html[data-ab-ready] .activity-wrap.is-ab-icon-only > .activity-bar[data-variant="2"] .activity-item {
   width: 30px;
   min-width: 30px;
   padding: 0;
@@ -557,37 +557,60 @@ html[data-ab-ready] .activity-bar .activity-item {
   flex: 0 0 auto;
   min-width: max-content;
 }
-html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item {
+html[data-ab-ready] .activity-wrap.is-ab-icon-only > :where(.activity-bar) .activity-item {
   min-width: 0;
 }
 
-/* JS-driven compact beats viewport media that hid labels at 1100/590/390. */
-html[data-ab-ready] .activity-wrap:not(.is-ab-compact):not(.is-ab-icon-only) .activity-item .label {
+/* JS-driven compact beats viewport media that hid labels at 1100/590/390. A tier
+   class reaches only the bar that is its direct child: the wrap's own bar, or a
+   fit row's copy in the hidden sizer below, so the live tier never changes the
+   widths app.js measures the tiers by. :where() keeps each rule's specificity. */
+html[data-ab-ready] :is(.activity-wrap, .activity-fit):not(.is-ab-compact):not(.is-ab-icon-only) > :where(.activity-bar) .activity-item .label {
   display: inline;
 }
-html[data-ab-ready] .activity-wrap.is-ab-compact .activity-item .label,
-html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item .label { display: none; }
-html[data-ab-ready] .activity-wrap:not(.is-ab-icon-only) .activity-item .count { display: inline; }
-html[data-ab-ready] .activity-wrap:not(.is-ab-icon-only) .activity-item[data-hover-domain="changes"] .count {
+html[data-ab-ready] :is(.activity-wrap, .activity-fit).is-ab-compact > :where(.activity-bar) .activity-item .label,
+html[data-ab-ready] .activity-wrap.is-ab-icon-only > :where(.activity-bar) .activity-item .label { display: none; }
+html[data-ab-ready] :is(.activity-wrap, .activity-fit):not(.is-ab-icon-only) > :where(.activity-bar) .activity-item .count { display: inline; }
+html[data-ab-ready] :is(.activity-wrap, .activity-fit):not(.is-ab-icon-only) > :where(.activity-bar) .activity-item[data-hover-domain="changes"] .count {
   display: inline-flex;
 }
-html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item .count { display: none; }
-html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item { padding: 0 8px; }
+html[data-ab-ready] .activity-wrap.is-ab-icon-only > :where(.activity-bar) .activity-item .count { display: none; }
+html[data-ab-ready] .activity-wrap.is-ab-icon-only > :where(.activity-bar) .activity-item { padding: 0 8px; }
 
 @media (max-width: 1100px) {
-  html[data-ab-ready] .activity-wrap:not(.is-ab-compact):not(.is-ab-icon-only) .activity-item .label { display: inline; }
+  html[data-ab-ready] :is(.activity-wrap, .activity-fit):not(.is-ab-compact):not(.is-ab-icon-only) > :where(.activity-bar) .activity-item .label { display: inline; }
 }
 @media (max-width: 590px) {
-  html[data-ab-ready] .activity-wrap:not(.is-ab-compact):not(.is-ab-icon-only) .activity-item .label { display: inline; }
+  html[data-ab-ready] :is(.activity-wrap, .activity-fit):not(.is-ab-compact):not(.is-ab-icon-only) > :where(.activity-bar) .activity-item .label { display: inline; }
 }
 @media (max-width: 390px) {
-  html[data-ab-ready] .activity-wrap:not(.is-ab-icon-only) .activity-item .count { display: inline; }
-  html[data-ab-ready] .activity-wrap:not(.is-ab-icon-only) .activity-item[data-hover-domain="changes"] .count {
+  html[data-ab-ready] :is(.activity-wrap, .activity-fit):not(.is-ab-icon-only) > :where(.activity-bar) .activity-item .count { display: inline; }
+  html[data-ab-ready] :is(.activity-wrap, .activity-fit):not(.is-ab-icon-only) > :where(.activity-bar) .activity-item[data-hover-domain="changes"] .count {
     display: inline-flex;
   }
 }
 
 .activity-wrap { container: pmActivityBar / inline-size; }
+
+/* The fit sizer (app.js renderActivityBar and syncActivityCompact, FO-76): the
+   bar twice, labelled and compact, inside the live wrap, so both copies take
+   its cascade, container and media regime and inherited host variables. They
+   are laid out at max-content and observed; never painted, hit or announced.
+   Inherited inline padding makes the sizer's content box the wrap's content
+   width. Strict containment and the clip keep the copies' layout and overflow
+   out of the live strip and every scroller above it; nothing in them moves. */
+.activity-wrap > .activity-sizer {
+  position: absolute; left: 0; right: 0; top: 0; height: 0;
+  margin: 0; border: 0; padding: 0; padding-inline: inherit; box-sizing: border-box;
+  visibility: hidden; pointer-events: none;
+  overflow: clip; contain: strict;
+}
+.activity-sizer > .activity-fit > .activity-bar {
+  width: max-content !important; min-width: 0 !important; max-width: none !important;
+}
+.activity-sizer, .activity-sizer *, .activity-sizer *::before, .activity-sizer *::after {
+  animation: none !important; transition: none !important;
+}
 
 /* Tier 1 — tighten before deleting. Measured: the five labelled items need
    427px of content, and the pane gives 413px at the default 1440px layout, so
@@ -596,7 +619,7 @@ html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item { padding: 0 8
   html[data-ab-ready] .activity-item { padding: 0 6px; gap: 4px; }
   html[data-ab-ready] .activity-item .label { font-size: 10.5px; }
   html[data-ab-ready] .activity-item .count { font-size: 9.5px; }
-  html[data-ab-ready] .activity-wrap.is-ab-icon-only .activity-item { padding: 0 8px; }
+  html[data-ab-ready] .activity-wrap.is-ab-icon-only > :where(.activity-bar) .activity-item { padding: 0 8px; }
   /* Items keep their size and the bar scrolls, instead of every item being
      squeezed until its nowrap text clips. `.activity-bar` already carries
      overscroll-behavior:contain from Wave 1B; the 4px bar padding leaves room

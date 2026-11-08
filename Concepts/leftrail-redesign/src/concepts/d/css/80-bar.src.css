@@ -116,7 +116,17 @@
   }
   /* the tile's own corner, which Liquid Glass sets on the symbol (glass.css, #activityBar .icon .symbol) */
   §R[data-lg="on"][data-theme^="glass"]:not([data-o55-nier-parts~="brackets"]) .d-abring { border-radius: var(--pm-ctl-r); }
+  /* FO-99 (the look lane): Friendly Light's accent, a pale sky blue, read 2.56 to 3.13:1 against the white band inside
+     the ring and 1.9 to 2.9:1 against the bar's ground outside it, so there the ring takes the accent's ink, the accent
+     with a third of black (as the onboarding's words and focus ring do in this look): about 5 to 5.7:1 against both. */
+  §{friendly,light}R:not([data-o55-nier-parts~="brackets"]) .d-abring {
+    box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--accent-primary) 66%, #000), inset 0 0 0 5px var(--surface);
+    box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--accent-primary) 66%, #000), inset 0 0 0 5px rgb(from var(--surface) r g b / 1);
+  }
 }
+/* FO-99: the toggle's own outline, and the tiles' outline where anchor positioning is missing, take the same ink */
+§{friendly,light}R:not([data-o55-nier-parts~="brackets"]):not(#pmfz) #activityBar .icon:focus-visible .symbol,
+§{friendly,light}B > .activity-bar-toggle:focus-visible { outline-color: color-mix(in srgb, var(--accent-primary) 66%, #000) !important; }
 §R[data-o55-nier="on"] #activityBar > .activity-bar-toggle:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 
 /* drag to reorder or hide: the ghost is the icon's tile lifted off the bar; the drop line is the accent, square in Retro

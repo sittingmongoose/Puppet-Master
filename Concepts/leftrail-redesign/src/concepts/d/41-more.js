@@ -3,7 +3,9 @@
    (kept out of sight under D, 81-more.src.css), the menu is drawn from that tray's rows, a pick clicks the shell's own
    row (restore at the end of the bar), and pressing a row and dragging hands the gesture to the shell's row, so a row
    dragged back onto the bar is restored where it is dropped. With nothing hidden, the menu says how to hide an icon.
-   Called from mountBar (40-bar.js); destroy() removes every listener and the hidden tray. */
+   Each icon's own menu (FO-98: Move up, Move down, Hide in More; right click, Shift+F10 or the Menu key) is drawn here
+   too: the shell owns those actions and asks a skin to draw the menu through PM_ACTIVITY_BAR.drawMenu (pm6-js-panels.js).
+   Called from mountBar (40-bar.js); destroy() removes every listener and the hidden tray, and gives the hook back. */
 
 const LF_MORE_ICON = { chat: 'chat', dashboard: 'layers', files: 'files', search: 'search', source: 'source', repository_automation: 'actions', docker: 'docker', testing: 'tests', run: 'play', agents: 'agents', artifacts: 'artifacts' };
 /* the shell labels a tray row by the icon's title and falls back to its raw id; these icons have no title */
@@ -56,7 +58,7 @@ function lfMountMore() {
     const t = tray(), list = t ? rowsOf(t) : [];
     const items = list.map(r => ({ label: r.label, icon: LF_MORE_ICON[r.id] || 'layers', _id: r.id }));
     const el = PMR.menu.open({
-      id: 'd-ab-more', label: 'Hidden from the bar', emptyText: 'Nothing is hidden. Drag an icon onto More to hide it.',
+      id: 'd-ab-more', label: 'Hidden from the bar', emptyText: 'Nothing is hidden. To hide an icon, drag it onto More, or choose Hide in More in its menu (right-click it, or Shift+F10).',
       groups: [{ label: items.length ? 'Hidden from the bar' : null, items }],
     }, btn, {
       side: true, width: 236,
@@ -95,8 +97,32 @@ function lfMountMore() {
 
   PMR.menu.keys(btn, on);
 
+  /* FO-98: an icon's own menu as the chat-style PMR.menu: at the pointer for a right click; beside the icon for a key,
+     the focus on its first row and back on the icon after Escape or a move (the shell gives it to the next icon after a
+     hide). A context menu (PMR.menu context): the icon's aria-expanded keeps saying whether its panel is open. Round 4:
+     a right click's menu closed by a key gives the focus back to the icon too (returnTo), not to the point it hangs on;
+     the shell reads a pick's own input, so End and Enter on Hide in More give it to the next icon. */
+  const ACT_ICON = { up: 'arrowUp', down: 'arrowDn', hide: 'eyeOff' };
+  const AB = window.PM_ACTIVITY_BAR || (window.PM_ACTIVITY_BAR = {});
+  const prevDraw = AB.drawMenu || null;
+  const drawMenu = (icon, d) => {
+    if (!D.on) return false;
+    PMR.menu.closeAll();
+    const menu = { id: 'd-ab-icon', label: d.name + ' on the Activity bar', groups: [{ label: d.name,
+      items: d.items.map(it => ({ label: it.label, icon: ACT_ICON[it.id] || null, key: it.key || null, disabled: it.disabled || null, _act: it.id })) }] };
+    const opts = { width: 220, context: true, returnTo: icon, onPick: it => { d.run(it._act); } };
+    const el = d.keyboard ? PMR.menu.open(menu, icon, Object.assign({ side: true, keyboard: true }, opts))
+      : PMR.menu.at(menu, d.x, d.y, Object.assign({ keyboard: false }, opts));
+    /* the Menu key's own contextmenu comes on its keyup in Windows Chrome, to the row that now holds the focus: the menu
+       takes it, so the browser's menu never opens over this one (round 2) */
+    if (el) el.addEventListener('contextmenu', ev => ev.preventDefault());
+    return !!el;
+  };
+  AB.drawMenu = drawMenu;
+
   return {
     destroy() {
+      if (AB.drawMenu === drawMenu) AB.drawMenu = prevDraw;
       offs.forEach(off => off());
       if (PMR.menu.isOpen(btn)) PMR.menu.closeAll();
       dropTray();

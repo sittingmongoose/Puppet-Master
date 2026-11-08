@@ -71,7 +71,11 @@ html:not([data-o55-nier="on"]) :is(#pm-o55-onboarding > .o55-win, .o55t-root > *
 
 /* header + rail */
 .o55-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px; height: 58px; padding: 0 12px 0 18px; border-bottom: 1px solid var(--o55-line);
-  background: color-mix(in srgb, var(--surface) 94%, var(--text-primary) 2%); position: relative; z-index: 3; }
+  background: color-mix(in srgb, var(--surface) 94%, var(--text-primary) 2%); position: relative; z-index: 10; }
+/* (FO-81: the header, and the look menu that drops from it, lie over everything in the window's interior: its screens
+   (z-index 0 to 2), Adjust NieR's panel (3, 13-nier-look.css), which replaces the interior and, at the header's old 3,
+   painted over the open menu because it comes later, and the Safe screen's toast (6). Glass's lens layer (30, drawn
+   over its strips, the menu's Light / Dark among them) and NieR's reboot cover (60) stay above it.) */
 #pm-o55-onboarding[data-family="glass"] .o55-head { background: color-mix(in srgb, #fff 5%, transparent); }
 .o55-brand { display: flex; align-items: center; gap: 9px; font: 700 14px/1 var(--display-font, var(--body-font)); letter-spacing: 0.01em; white-space: nowrap; }
 .o55-logo { color: var(--o55-accent); }
@@ -90,7 +94,7 @@ html:not([data-o55-nier="on"]) :is(#pm-o55-onboarding > .o55-win, .o55t-root > *
 /* a finished chapter's name (and its bead) takes you back to it: the name is a button that keeps the label's look */
 .o55-railjump { margin: 0; padding: 0; border: 0; background: none; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; line-height: inherit; cursor: pointer; border-radius: 3px; }
 .o55-railjump:hover { color: var(--text-primary); text-decoration: underline; text-underline-offset: 3px; }
-.o55-railjump:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 3px; }
+.o55-railjump:focus-visible { outline: 2px solid var(--o55-focus, var(--o55-accent)); outline-offset: 3px; }
 /* (the bead answers a press but keeps the default cursor: a pointer-cursor rule for it slowed the app's chat-edge drag
    with the window closed, frame gap p95 100 ms -> 300 ms in tools/perf/resize_perf.py, consistently across builds) */
 /* (FO-53: the narrow rail is beads only, and a finished chapter's name is then just the bead's hit area: its words are
@@ -130,12 +134,16 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
   background: transparent; color: var(--text-secondary); cursor: pointer; font: 600 13px/1 var(--body-font); }
 .o55-iconbtn:hover, .o55-sound:hover { background: color-mix(in srgb, var(--text-primary) 8%, transparent); color: var(--text-primary); }
 .o55-iconbtn:focus-visible, .o55-sound:focus-visible, .o55-btn:focus-visible, .o55-card:focus-visible, .o55-tile:focus-visible, .o55-link:focus-visible, .o55-toggle:focus-visible, .o55-seg button:focus-visible, .o55-detbtn:focus-visible {
-  --o55-face-outline: 2px solid var(--o55-accent); outline: var(--o55-face-outline); outline-offset: 2px; }
+  --o55-face-outline: 2px solid var(--o55-focus, var(--o55-accent)); outline: var(--o55-face-outline); outline-offset: 2px; }
 .o55-sound[aria-pressed="false"] { color: var(--text-muted); }
 .o55-sound[aria-pressed="false"] svg { opacity: 0.7; }
 
 /* body: stage + pane */
-.o55-body { display: grid; grid-template-columns: minmax(300px, 42%) minmax(0, 1fr); min-height: 0; }
+.o55-body { display: grid; grid-template-columns: minmax(300px, 42%) minmax(0, 1fr); min-height: 0; position: relative; z-index: 0; }
+/* (FO-83: the interior is a layer of its own, under the header (10) and Adjust NieR's panel (3, 13-nier-look.css), and
+   Glass draws its strips' lenses inside it (data-lg-lens-host, 60-ui-core.js). In the window's lens layer (30) the lens
+   of a screen the panel covers painted over the editor, and one under the open look menu over the menu, in every frame
+   from the panel's rise to its close; here no lens of the interior can paint above anything the interior lies under.) */
 /* clipped, never scrollable: overflow hidden still makes a scroll container, and Glass's world (its caustics, back ellipse
    and reflection) reaches past the box, so focus, scrollIntoView or scroll anchoring could scroll it and Pip's whole
    painted stage slid ~250 px left and 60 px up inside an unmoved panel (final run FO-15); overflow: clip cannot scroll */
@@ -144,6 +152,15 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 .o55-pane > .o55-layer { position: absolute; inset: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr); background: var(--o55-win-bg); } /* the footer's buttons never widen the column past the window */
 #pm-o55-onboarding[data-family="glass"] .o55-pane > .o55-layer { background: transparent; }
 .o55-scroll { display: flex; flex-direction: column; overflow: auto; min-height: 0; overscroll-behavior: contain; scrollbar-width: thin; }
+/* (FO-87: the screen's scroller owns its whole visible box. The footer under it is positioned and painted after it, and
+   Chromium's hit-testing gave the footer the scroller's last visible row, about 1 px above the footer's own top edge, in
+   every look: the bottom row of a control a scroll had just brought to the edge (Retro's Server guest checkbox, a
+   whole-pixel scroll leaving its last 0.39 px under the edge) pressed the footer. As the layer's grid item the scroller
+   takes a z-index with no position, so nothing inside it gets a new containing block; its clip ends where the footer
+   begins, so the footer keeps its own box. The refusal reason that floats above the footer is the layer's own, not the
+   footer's (FO87-N1): inside the footer, the footer's entrance fade made it a stacking context under the scroller for
+   up to a second, and the scroller's words painted over the reason.) */
+.o55-pane > .o55-layer > .o55-scroll { z-index: 1; }
 .o55-content { margin-block: auto; padding: 32px var(--o55-pad) 28px; max-width: 640px; width: 100%; box-sizing: border-box; }
 /* centred as a screen comes in, then held where it opened: a line appearing or going inside it grows or shrinks the
    column downward instead of re-centring it in one frame (p76: jumps of 20-29 px; 60-ui-core.js holdColumn) */
@@ -159,9 +176,31 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 
 /* footer + buttons */
 .o55-foot { position: relative; display: flex; align-items: center; gap: 10px; padding: 14px 22px 16px; border-top: 1px solid var(--o55-line); background: color-mix(in srgb, var(--surface) 96%, var(--text-primary) 2%); }
-/* a long primary label wraps inside its button rather than pushing past the window */
-.o55-foot > .o55-btn { min-width: 0; }
-.o55-foot > .o55-primary { white-space: normal; text-align: center; line-height: 1.2; padding-block: 8px; }
+/* a long primary label wraps inside its button rather than pushing past the window. A footer button with a ? of its own
+   (Ready's Tour and Enter, Welcome's Skip) sits with it in an .o55-opt-foot wrapper, which these rules did not reach: the
+   wrapper kept both buttons' labels on one line, and between 808 and about 950 wide (the wide window beside its stage)
+   Ready's footer ran past the window, Take the Guided Tour cut 25-99 px and its ? outside (FO88-N2). There both labels may
+   wrap, at their own size */
+.o55-foot > .o55-btn, .o55-foot > .o55-opt-foot, .o55-foot > .o55-opt-foot > .o55-btn { min-width: 0; }
+.o55-foot > .o55-primary, .o55-foot > .o55-opt-foot > .o55-btn { white-space: normal; text-align: center; line-height: 1.2; padding-block: 8px; }
+/* ...but Back never shrinks: it cannot wrap, so the footer's squeeze pushed its label 10-12 px past its outline and
+   crushed NieR's 6 px caret to nothing at 860 (FO-100), and with its chevron alone still cut the chevron 1-3 px and
+   NieR's caret to 4.7 px. It keeps its own width, chevron and label as shown; the other buttons wrap instead */
+#pm-o55-onboarding .o55-foot > .o55-back { flex-shrink: 0; }
+/* ...and before any of them wraps, a footer that has run out of room shows Back as its chevron alone, as at phone width
+   (its name stays for screen readers), so the other labels have its word's room before they wrap (group 6's 'Enter /
+   Puppet / Master' at 860 took three lines; the flex shares the shrink by each label's length, so the longest can still
+   take three in the narrowest band, NieR Dark at 810). Q4
+   (Jared, 2026-11-07: "A, do the change to only wrap when it doesn't fit"): that is decided by the footer's own fit, not
+   a fixed width. 60-ui-core.js fitFoot reads the footer's one-line width once (data-o55-fit="measure": the footer laid
+   out at max-content, without NieR's key prompts, which give way to everything) and marks it full or chevron from its
+   own width; the labels wrap, by the flex above, only when they still don't fit. Group 6 hid Back's word below a fixed
+   520 px, so Basic's labels went one line, two, one, two as the window narrowed. The chevron keeps at least 40 px
+   (NieR's was 27, narrower than at phone width) */
+#pm-o55-onboarding .o55-foot[data-o55-fit="measure"] { width: max-content !important; }
+#pm-o55-onboarding .o55-foot[data-o55-fit="measure"] .o55nw-keys { display: none !important; }
+#pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-foot[data-o55-fit="chevron"] > .o55-back { padding-inline: 10px; min-width: 40px; }
+#pm-o55-onboarding:not([data-o55-layout="narrow"]) .o55-foot[data-o55-fit="chevron"] > .o55-back > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 #pm-o55-onboarding[data-family="glass"] .o55-foot { background: color-mix(in srgb, #fff 4%, transparent); }
 .o55-footgrow { flex: 1; }
 .o55-footnote { font-size: 12.5px; color: var(--text-muted); }
@@ -192,7 +231,10 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
 #pm-o55-onboarding[data-family="retro"] .o55-btn { border: 2px solid var(--text-primary); text-transform: uppercase; font-family: var(--display-font); font-size: 12.5px; letter-spacing: 0.05em; box-shadow: 4px 4px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
 #pm-o55-onboarding[data-family="retro"] .o55-btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 color-mix(in srgb, var(--text-primary) 35%, transparent); }
 #pm-o55-onboarding[data-family="retro"] .o55-btn.o55-ghost { border-color: transparent; box-shadow: none; }
-.o55-reason { position: absolute; right: 22px; bottom: calc(100% + 8px); max-width: 340px; padding: 9px 12px; border-radius: 9px; font-size: 13px; line-height: 1.4; background: var(--text-primary); color: var(--background); opacity: 0; transform: translateY(6px); pointer-events: none; }
+/* the refusal reason: a child of the screen's layer, placed in the footer's grid row, and above the scroller (1)
+   whatever the footer's own animation does (60-ui-core.js showReason). It stands where it stood as the footer's child:
+   7 px over the footer's 1 px top rule (8 px over its padding edge then) */
+.o55-reason { position: absolute; grid-row: 2; grid-column: 1; z-index: 2; right: 22px; bottom: calc(100% + 7px); max-width: 340px; padding: 9px 12px; border-radius: 9px; font-size: 13px; line-height: 1.4; background: var(--text-primary); color: var(--background); opacity: 0; transform: translateY(6px); pointer-events: none; }
 .o55-reason.o55-reason-show { animation: o55-reason 2600ms ease both; }
 @keyframes o55-reason { 0% { opacity: 0; transform: translateY(6px); } 8%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
 
@@ -232,7 +274,11 @@ html[data-lg="on"][data-theme^="retro"]:not([data-o55-nier="on"]) #pm-o55-onboar
   --o55-ink-fail: color-mix(in srgb, var(--accent-error) 75%, #000);
   /* Paper theatre's orange reads 2.8:1 as words on white and under white words: words take the tag's brick, the main
      action a brick a little lighter (5.2:1 under white) */
-  --o55-ink-accent: var(--o55-ink-tag); --o55-action: color-mix(in srgb, var(--o55-accent) 70%, #000); }
+  --o55-ink-accent: var(--o55-ink-tag); --o55-action: color-mix(in srgb, var(--o55-accent) 70%, #000);
+  /* FO-99: the keyboard focus ring takes the words' brick too. The plain orange ring read 2.64:1 against the white
+     footer beside it (Back's, at 2 px outside its border), under WCAG's 3:1 for a focus mark; the brick reads 5.4-5.5:1.
+     Only the ring changes: --o55-focus is unset in every other look, where the rings keep var(--o55-accent). */
+  --o55-focus: var(--o55-ink-accent); }
 /* SW-18: reserve normal-text contrast over the brightest selected Glass backing,
    including the material exposed by scrolling a narrow pane. Keep a blue tint in the ink. */
 #pm-o55-onboarding[data-family="glass"][data-mode="dark"] { --o55-ink-tag: color-mix(in srgb, var(--o55-accent) 25%, var(--text-primary));
@@ -451,7 +497,7 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph
 #pm-o55-onboarding[data-o55-layout="narrow"] { --o55-pad: 22px; }
 /* at phone width Back is its chevron alone (its name stays for screen readers), so the primary keeps one line */
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-foot { padding-inline: 14px; gap: 8px; }
-#pm-o55-onboarding[data-o55-layout="narrow"] .o55-back { padding-inline: 10px; }
+#pm-o55-onboarding[data-o55-layout="narrow"] .o55-back { padding-inline: 10px; min-width: 40px; } /* (its chevron alone keeps the wide window's 40 px minimum, Q4: it was 32 px in NieR, 36 in Glass, 38 in Basic; the phone layout has no target size of its own beyond the buttons' 40 px height) */
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-back > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 #pm-o55-onboarding[data-o55-layout="narrow"] .o55-tiles { --o55-tileart-h: 84px; }
@@ -532,7 +578,7 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph
 .o55-tipq::before { content: ''; position: absolute; inset: -6px; } /* a 34 px target round a 22 px mark */
 .o55-tipq:hover { color: var(--o55-accent); border-color: var(--o55-accent); }
 .o55-tipq[aria-expanded="true"] { color: var(--o55-on-accent); background: var(--o55-accent); border-color: var(--o55-accent); outline: 1.5px solid var(--o55-accent); outline-offset: 2px; }
-.o55-tipq:focus-visible { outline: 2px solid var(--o55-accent); outline-offset: 2px; }
+.o55-tipq:focus-visible { outline: 2px solid var(--o55-focus, var(--o55-accent)); outline-offset: 2px; }
 .o55-opt > .o55-card + .o55-tipq, .o55-opt > .o55-toggle + .o55-tipq { position: absolute; top: 50%; right: 16px; margin-top: -11px; }
 .o55-opt-inline { display: inline-flex; align-items: center; gap: 7px; }
 .o55-opt-inline > .o55-tipq, .o55-labq > .o55-tipq, .o55-row-q > .o55-tipq { width: 19px; height: 19px; font-size: 10.5px; }
@@ -665,7 +711,7 @@ html[data-motion="reduced"] #pm-o55-onboarding :is(.o55-card, .o55-tile) { --o55
 }
 /* The page's NieR reset removes native outlines; choices still need a keyboard ring. */
 #pm-o55-onboarding#pm-o55-onboarding :is(.o55-card, .o55-tile):focus-visible {
-  outline: 2px solid var(--o55-accent) !important; outline-offset: 2px !important;
+  outline: 2px solid var(--o55-focus, var(--o55-accent)) !important; outline-offset: 2px !important;
 }
 
 /* FO-73: button hit bounds never move. Press displacement and squeeze belong to

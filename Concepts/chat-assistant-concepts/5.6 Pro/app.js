@@ -2123,7 +2123,14 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     const defs=activityDefs();
     const items=Object.entries(defs);
     if(!items.length) return '';
-    return `<div class="activity-wrap${abCompactTier>=1?' is-ab-compact':''}${abCompactTier>=2?' is-ab-icon-only':''}" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}"><i class="state-mark ${d.state}"></i>${COLLAB_DOMAINS[id]&&!hasIcon(d.icon)?kindMark(id,12,'users'):icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span></button>`;}).join('')}</div></div>`;
+    // The hidden sizer holds the bar twice, labelled and compact, laid out at max-content inside the live wrap: the
+    // same cascade, container and media regime and inherited host variables, so syncActivityCompact's observer reads
+    // every tier width from layout. The copies carry no action, domain id or accessible name (aria-hidden, inert);
+    // data-hover-domain and .active stay, because the bar's rules size items by them.
+    const inner=(id,d)=>`<i class="state-mark ${d.state}"></i>${COLLAB_DOMAINS[id]&&!hasIcon(d.icon)?kindMark(id,12,'users'):icon(d.icon,12)}<span class="label">${d.label}</span><span class="count">${d.count}</span>`;
+    const isActive=id=>state.activity.open&&state.activity.scope==='focus'&&state.activity.domain===id;
+    const fitRow=tier=>`<div class="activity-fit${tier?' is-ab-compact':''}"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}">${items.map(([id,d])=>`<button class="activity-item ${isActive(id)?'active':''}" data-hover-domain="${id}" tabindex="-1">${inner(id,d)}</button>`).join('')}</div></div>`;
+    return `<div class="activity-wrap${abCompactTier>=1?' is-ab-compact':''}${abCompactTier>=2?' is-ab-icon-only':''}" data-k="activity-wrap"><div class="activity-bar" data-variant="${state.variants[3]}" data-domains="${items.length}" aria-label="Thread activity">${items.map(([id,d])=>{const active=isActive(id);return `<button class="activity-item ${active?'active':''}" data-action="open-activity" data-domain="${id}" data-hover-domain="${id}" aria-label="${esc(d.label)} activity, ${esc(d.count)}" aria-haspopup="dialog" aria-controls="activity-domain-preview" aria-expanded="${active?'true':'false'}">${inner(id,d)}</button>`;}).join('')}</div><div class="activity-sizer" data-k="activity-sizer" aria-hidden="true" inert>${fitRow(0)}${fitRow(1)}</div></div>`;
   }
   function renderJumpBottom(){
     const working=turnBusy();
@@ -2338,7 +2345,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   function renderStatusBar(){ return `<footer class="status-bar"><span>${icon('check-circle',10)} Agent · ${esc(selectedModel().name)} · ${formatElapsed(state.work.elapsed)}</span><span class="center">${esc(state.worktree)} · Local server</span><span class="right">Ready · ${state.context.compacted?'Context compacted':`Context ${(window.PM56_CTX&&window.PM56_CTX.ringPct)?window.PM56_CTX.ringPct():64}%`} ${icon('info',10)}</span></footer>`; }
 
   let composerRO=null, composerCompact=false, labeledToolsMin=0, measuringCompact=false;
-  let abCompactTier=0, abMeasuring=false;
+  let abCompactTier=0;
   function toolsContentWidth(tools){
     const kids=[...tools.children];
     if(!kids.length) return 0;
@@ -2353,7 +2360,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     measuringCompact=false;
     return w;
   }
-  let composerMeasureCache=null, activityMeasureCache=null;
+  let composerMeasureCache=null;
   function syncComposerCompact(){
     if(measuringCompact) return;
     const box=document.querySelector('.composer-box');
@@ -2407,39 +2414,19 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     if(strip) observeLensStrip(strip);
     else if(lensStripObserved&&composerRO){ composerRO.unobserve(lensStripObserved); lensStripObserved=null; }
   }
-  function activityRowWidth(bar){
-    const kids=[...bar.querySelectorAll(':scope > .activity-item')];
-    if(!kids.length) return 0;
-    const gap=parseFloat(getComputedStyle(bar).columnGap||getComputedStyle(bar).gap)||0;
-    return kids.reduce((n,el)=>n+el.getBoundingClientRect().width,0)+gap*Math.max(0,kids.length-1);
-  }
-  function measureActivityTier(wrap, bar, tier){
-    abMeasuring=true;
-    wrap.classList.add('is-measuring');
-    wrap.classList.toggle('is-ab-compact', tier>=1);
-    wrap.classList.toggle('is-ab-icon-only', tier>=2);
-    const w=activityRowWidth(bar);
-    wrap.classList.remove('is-measuring');
-    abMeasuring=false;
-    return w;
-  }
-  function syncActivityCompact(){
-    if(abMeasuring) return;
-    const wrap=document.querySelector('.activity-wrap');
-    const bar=wrap&&wrap.querySelector('.activity-bar');
-    if(!wrap||!bar||!bar.querySelector('.activity-item')){
-      abCompactTier=0;
-      return;
-    }
-    const cs=getComputedStyle(wrap);
-    const avail=wrap.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+  /* Activity tiers (FO-76). renderActivityBar puts a hidden sizer in the wrap: the bar again, labelled and compact,
+     at max-content. One ResizeObserver reads the sizer's content box (the wrap's content width, through inherited
+     padding) and both copies' border boxes as layout delivers them, so text, counts, fonts, hosted rules, generated
+     content and the container and media regimes all reach the fit through layout, a Chat revealed after hiding
+     included, and a resize step reads three stored numbers instead of probing the live strip. The copies' widths do
+     not depend on the tier chosen, so the 8 px hysteresis below cannot feed back into them. */
+  const abFit={ro:null,mo:null,sizer:null,rows:[],bar:null,foreign:null,avail:0,labeled:0,compact:0};
+  function applyActivityTier(){
+    const wrap=abFit.sizer&&abFit.sizer.parentElement;
+    const {avail,labeled,compact}=abFit;
+    // A hidden Chat lays nothing out: keep the tier until the observer reports the revealed sizes.
+    if(!wrap||avail<=0||labeled<=0||compact<=0) return;
     const slack=8;
-    // Tier widths are intrinsic to the bar's content/font/theme, not to the available width (see
-    // syncComposerCompact): keep the container width out of the cache key.
-    const signature=[bar.textContent,bar.dataset.variant,state.theme,document.fonts?.status].join('|');
-    if(!activityMeasureCache||activityMeasureCache.node!==bar||activityMeasureCache.key!==signature)
-      activityMeasureCache={node:bar,key:signature,labeled:measureActivityTier(wrap,bar,0),compact:measureActivityTier(wrap,bar,1)};
-    const {labeled,compact}=activityMeasureCache;
     let tier=abCompactTier;
     if(tier===0){
       if(avail+0.5<labeled) tier=avail+0.5<compact?2:1;
@@ -2451,6 +2438,67 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     abCompactTier=tier;
     wrap.classList.toggle('is-ab-compact', tier>=1);
     wrap.classList.toggle('is-ab-icon-only', tier>=2);
+  }
+  function onActivityFit(entries){
+    for(const e of entries){
+      const box=e.target===abFit.sizer?e.contentBoxSize:e.borderBoxSize;
+      const w=box&&box[0]?box[0].inlineSize:e.contentRect.width;
+      if(e.target===abFit.sizer) abFit.avail=w;
+      else if(e.target===abFit.rows[0]) abFit.labeled=w;
+      else if(e.target===abFit.rows[1]) abFit.compact=w;
+    }
+    applyActivityTier();
+  }
+  /* An item another layer put into the live strip, which the template never renders (the background-activity
+     concept's Processes button is one), is copied into both fit rows at the same place, so the fit measures every
+     item the strip actually shows. A MutationObserver on the live bar and on the rows runs this; it reads no layout.
+     The rows are written only when what is foreign changed: such a layer may rewrite its item with the same values on
+     a timer and re-insert it from its own observer, and an unconditional write here would answer it forever. The
+     copies lose ids, actions, domain ids, ARIA and tab stops, as the template's copies do. */
+  const AB_COPY_DROP=/^(?:id|tabindex|data-action|data-domain|aria-.*)$/;
+  function mirrorForeignActivityItems(){
+    const {bar,rows}=abFit;
+    if(!bar||!bar.isConnected||rows.length!==2) return;
+    const order=[...rows[0].children].filter(e=>!e.hasAttribute('data-ab-foreign')).map(e=>e.getAttribute('data-hover-domain'));
+    const plan=[];
+    let j=0;
+    for(const e of bar.children){
+      if(j<order.length&&e.getAttribute('data-action')==='open-activity'&&e.getAttribute('data-domain')===order[j]){ j++; continue; }
+      plan.push({e,before:j<order.length?order[j]:null});
+    }
+    const key=plan.map(p=>p.before+'\n'+p.e.outerHTML).join('\n\n');
+    if(key===abFit.foreign&&rows.every(r=>r.querySelectorAll(':scope > [data-ab-foreign]').length===plan.length)) return;
+    abFit.foreign=key;
+    for(const row of rows){
+      for(const n of row.querySelectorAll(':scope > [data-ab-foreign]')) n.remove();
+      for(const p of plan){
+        const c=p.e.cloneNode(true);
+        for(const n of [c,...c.querySelectorAll('*')]) for(const a of [...n.attributes]) if(AB_COPY_DROP.test(a.name)) n.removeAttribute(a.name);
+        c.setAttribute('data-ab-foreign','');
+        row.insertBefore(c,p.before?row.querySelector(`:scope > [data-hover-domain="${CSS.escape(p.before)}"]:not([data-ab-foreign])`):null);
+      }
+    }
+  }
+  // Called on every chrome sync: it (re)arms the observers when render replaced the sizer or the live bar, brings
+  // the copies of foreign items up to date, and reads no layout.
+  function syncActivityCompact(){
+    const sizer=document.querySelector('.activity-wrap > .activity-sizer');
+    const rows=sizer?[...sizer.querySelectorAll(':scope > .activity-fit > .activity-bar')]:[];
+    const bar=sizer?sizer.parentElement.querySelector(':scope > .activity-bar'):null;
+    if(!sizer||rows.length!==2){
+      if(abFit.sizer){ abFit.ro.disconnect(); abFit.mo.disconnect(); abFit.sizer=null; abFit.rows=[]; abFit.bar=null; }
+      abCompactTier=0;
+      return;
+    }
+    if(sizer!==abFit.sizer||rows[0]!==abFit.rows[0]||rows[1]!==abFit.rows[1]||bar!==abFit.bar){
+      if(!abFit.ro){ abFit.ro=new ResizeObserver(onActivityFit); abFit.mo=new MutationObserver(mirrorForeignActivityItems); }
+      else { abFit.ro.disconnect(); abFit.mo.disconnect(); }
+      Object.assign(abFit,{sizer,rows,bar,foreign:null,avail:0,labeled:0,compact:0});
+      abFit.ro.observe(sizer);
+      for(const row of rows){ abFit.ro.observe(row,{box:'border-box'}); abFit.mo.observe(row,{childList:true}); }
+      if(bar) abFit.mo.observe(bar,{childList:true,subtree:true,attributes:true,characterData:true});
+    }
+    mirrorForeignActivityItems();
   }
   function syncChatChrome(){
     syncComposerCompact();
@@ -2464,12 +2512,12 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
     // Hosted resize drags resize the chat column every frame; the chrome syncs below read rects and
     // scroll metrics after each width write. Dock heights and the jump pill may lag one cadence
     // mid-drag (the editor/terminal kinds use the same 120ms rule); a trailing sync lands on release.
-    // The two compact tiers are not held: they compare a cached intrinsic width against the current
-    // one (no measuring), and on the pass-3 tape their one-cadence lag showed as labels overflowing
-    // for 1-2 frames at each threshold crossing.
+    // The composer's compact tier is not held: it compares a cached intrinsic width against the current
+    // one (no measuring), and on the pass-3 tape a one-cadence lag showed as labels overflowing for
+    // 1-2 frames at each threshold crossing. The Activity tier needs no call here: its own observer
+    // decides it at layout delivery in the same frame (syncActivityCompact).
     if(document.body && document.body.classList.contains('pm-resizing') && performance.now()-chromeLastSync<100){
       syncComposerCompact();
-      syncActivityCompact();
       if(!chromeTrailT) chromeTrailT=setTimeout(()=>{chromeTrailT=null;chromeLastSync=performance.now();syncChatChrome();},100);
       return;
     }
@@ -5647,6 +5695,10 @@ suggested path                    migration 0043, reversible</div></div></sectio
       // ResizeObserver runs after layout, before paint. Resolve dock/cover here;
       // another rAF would let the narrowed, still-docked panel paint first.
       const n=isNarrow(), p=activityDocked();
+      /* a narrow flip changes what renderApp draws only while History is pinned (its historyPinned is pinned and not
+         narrow), the rule the window's resize handler already keeps; with History closed or floating the re-render wrote
+         the same chat, in the first frame after a window shrink (FO-92), so that flip is only noted */
+      if(n!==lastNarrow&&state.historyMode!=='pinned') lastNarrow=n;
       /* renderApp keeps activityDockLayout, so a column it already widened for Activity Detail is not drawn twice */
       if(n!==lastNarrow||p!==activityDockLayout){ const moved=n===lastNarrow&&moveActivityPanel(p); lastNarrow=n; if(moved) syncJumpBottom(); else renderApp(); }
       else if(document.body && document.body.classList.contains('pm-resizing')){
@@ -5764,7 +5816,8 @@ suggested path                    migration 0043, reversible</div></div></sectio
            non-zero, and any harness reading them saw three permanent zeros as
            measurements. They now point at what renderActivityBar,
            renderMenu and the artifact renderers actually produce. */
-        activityDomains: qa('.activity-item[data-hover-domain]').length,
+        // The live strip only: the hidden fit sizer holds two more copies of every item.
+        activityDomains: qa('.activity-wrap > .activity-bar > .activity-item[data-hover-domain]').length,
         artifacts: qa('[data-artifact-id]').length,
         menus: qa('.overlay-menu').length,
         decisionVisible: Boolean(q('.decision-host:not([hidden])')?.textContent?.trim()),

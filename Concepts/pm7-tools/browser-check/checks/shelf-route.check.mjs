@@ -33,6 +33,9 @@ async function authoredSlot(t) {
   return { url, html: null };
 }
 
+// T55: the rail's reveal of an opened expander (30-motion.js revealInView, 15-jj.js's expander): its delay after the
+// click's frame, and the longest its smooth scroll may take to end once begun (a stated bound, failing by name)
+const REVEAL_MS = 120, REVEAL_END_MS = 2000;
 export default async function (t) {
   if (t.args.blockMenu) await t.page.addInitScript(id => {
     window.__blockedShelfMenu = 0;
@@ -94,7 +97,8 @@ export default async function (t) {
       window.addEventListener(type, e => { if (hit(e, 'hover')) { window.__blockedBranch++; e.stopImmediatePropagation(); } }, true);
     window.addEventListener('keydown', e => { if (e.key === 'ArrowRight' && hit(e, 'key')) { window.__blockedBranch++; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
   }, String(t.args.blockBranch));
-  // --set inputs=<shift-f10,menu-key,...> probes only those context inputs (to isolate FO-93 on a base; the floors then fail by design)
+  // --set inputs=<shift-f10,menu-key,...> probes only those context inputs (to isolate FO-93 or FO-93b's key routes on an
+  // earlier build); the per-pane context floor then asks those inputs, the run-wide floors fail by design
   const CTX_INPUTS = t.args.inputs ? String(t.args.inputs).split(',') : INPUTS;
   await t.viewport(Number(t.args.width || 1920),Number(t.args.height || 1080)); const f = await t.app.open();
   if(t.args.look) await t.app.look(t.args.look);
@@ -114,12 +118,12 @@ export default async function (t) {
     await t.page.mouse.move(off.x + p.x, off.y + p.y);
   };
   // Test-only readers: which menus are open, and a stable key for each (id, PMR id, or parent › label).
-  await f.evaluate(() => {
+  const readers = () => {
     const key = m => { const up = m.parentElement && m.parentElement.closest('[role="menu"]'); return m.id || m.dataset.pmrMenu || ((up ? key(up) + ' › ' : '') + (m.getAttribute('aria-label') || 'menu')); };
     const open = () => [...document.querySelectorAll('[role="menu"]')].filter(m => m.classList.contains('is-open') && !m.classList.contains('is-closing') && m.checkVisibility());
     // Row kinds for the context census: tag, classes (less state classes) and role, and for a tree's rows file or folder
     // (data-kind, else aria-expanded: a parent or a leaf). box: the nearest tree, grid, list or listbox, else the parent.
-    const cls = e => [...e.classList].filter(c => !/^(active|selected|open|on|focus|hover|pmr-cur|is-|has-)/.test(c)).sort();
+    const cls = e => [...e.classList].filter(c => !/^(active|selected|open|on|focus|hover|pmr-cur|o55np-cur|is-|has-)/.test(c)).sort(); /* o55np-cur-*: NieR's hovered-item state (19-nier-parts.js), transient like hover */
     const kind = e => e.hasAttribute('data-kind') ? (e.dataset.kind === 'folder' ? 'folder' : 'file') : e.getAttribute('role') === 'treeitem' ? (e.hasAttribute('aria-expanded') ? 'parent' : 'leaf') : '';
     const sig = e => e.tagName + '.' + cls(e).join('.') + '[' + (e.getAttribute('role') || '') + ']' + (kind(e) ? '{' + kind(e) + '}' : '');
     const box = e => { const q = (e.parentElement && e.parentElement.closest('[role="tree"],[role="treegrid"],[role="grid"],[role="listbox"],[role="list"],[role="table"]')) || e.parentElement;
@@ -127,7 +131,8 @@ export default async function (t) {
     const rows = p => [...p.querySelectorAll('[tabindex]:not([tabindex="-1"]), button, a[href], input, select, textarea, summary, [role="treeitem"], [role="row"], [role="option"], [role="listitem"], [role="gridcell"]')]
       .filter(e => !e.closest('[role="menu"]') && e.checkVisibility() && e.getBoundingClientRect().width);
     window.__shelf = { key, open, keys: () => open().map(key), cls, sig, box, rows };
-  });
+  };
+  await f.evaluate(readers);
   // Preserve the original initial-view census; the complete routed inventory below
   // independently includes hidden tabs and collapsed shelves. Zero here is initial-only.
   const expected = {'panel-files':0,'panel-search':1,'panel-source':0,'panel-git':0,
@@ -177,7 +182,7 @@ export default async function (t) {
   const targets = await f.locator('#activityBar .icon[data-target]').evaluateAll(es => es.filter(e => e.getBoundingClientRect().width).map(e=>e.dataset.target));
   await t.check('expected activity routes present', JSON.stringify([...targets].sort()) === JSON.stringify(Object.keys(expected).sort()), JSON.stringify(targets), {hard:true});
   const rows=[]; let reached=0; const routedRows=[];
-  const opened = new Set(), contextRoutes = [], popupRows = [], branchRows = [], branchDone = new Set();
+  const opened = new Set(), contextRoutes = [], popupRows = [], branchRows = [], branchDone = new Set(), ctxKinds = [];
   let current = null;
   // Assert one open menu: items, a reachable first item, its nested branches, then Escape closes it.
   // reopen: opens the same menu again by the same route, for the pick (FO-84b).
@@ -478,7 +483,15 @@ export default async function (t) {
     // control is reached again.
     let roomState = 'panel', folding = false;
     const reach = async (loc, at = null) => {
-      await loc.scrollIntoViewIfNeeded({ timeout: 3000 }).catch(() => {});
+      // T70 (opus-recheck-kit8 finding C): a failed scroll is no longer swallowed silently. A control that cannot be
+      // scrolled to because its side panel (or the folded rail's overlay) closed, or because it is hidden, fails at once
+      // and by name; a control the panel's own layout covers still goes on to the wheel and the fold below.
+      const scrolled = await loc.scrollIntoViewIfNeeded({ timeout: 3000 }).then(() => null, (e) => String(e && e.message || e).split('\n')[0]);
+      if (scrolled !== null) {
+        const st = await loc.evaluate(e => { const slot = document.getElementById('sidePanelSlot'), view = e.closest('.side-panel-view');
+          return { slot: !!slot && slot.checkVisibility(), view: !view || view.checkVisibility(), shown: e.isConnected && e.checkVisibility(), what: (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40) }; }).catch(() => ({ slot: false, view: false, shown: false, what: 'detached' }));
+        await t.check(`${target} ${roomState}: the control to reach (${st.what}) is in an open, shown side panel when its scroll fails`, st.slot && st.view && st.shown, JSON.stringify({ ...st, scroll: scrolled }), { hard: true });
+      }
       let p = null, wheeled = false;
       for (let pass = 0; pass < 3; pass++) {
         await stable(loc);
@@ -493,6 +506,9 @@ export default async function (t) {
             .filter(([x, y]) => { const h = document.elementFromPoint(x, y), own = !!h && (h === e || e.contains(h)); if (!own && h && !cover) cover = h; return own; }).length;
           // Only the panel's own layout (its strips and cards) asks for room; a tooltip or a menu over the control does not.
           const view = e.closest('.side-panel-view'), coverIn = !!cover && !!view && view.contains(cover);
+          // (T69: what covers it and what it covers, for makeRoom to fold only the region holding the cover)
+          document.querySelectorAll('[data-shelf-cover], [data-shelf-covered]').forEach(x => { x.removeAttribute('data-shelf-cover'); x.removeAttribute('data-shelf-covered'); });
+          if (cover) { cover.setAttribute('data-shelf-cover', ''); e.setAttribute('data-shelf-covered', ''); }
           const coverOf = cover ? cover.tagName + '.' + String(cover.className?.baseVal ?? cover.className).trim().split(/\s+/).slice(0, 2).join('.') : null;
           const what = (e.getAttribute('aria-label') || e.textContent || e.className || e.tagName).toString().trim().replace(/\s+/g, ' ').slice(0, 40);
           if (h0 && (h0 === e || e.contains(h0))) return { x: px, y: py, onTop: true, hits, what, coverIn, coverOf };
@@ -525,9 +541,11 @@ export default async function (t) {
       if (!p.wheeled && p.onTop) await loc.click(opts.at ? { position: opts.at, button: opts.button } : { button: opts.button });
       else await t.page.mouse.click(off.x + p.x, off.y + p.y, opts.button ? { button: opts.button } : {});
     };
-    // FO-84d: every disclosure the panel shows outside its scrollers (button[aria-expanded], not a tab or a popup
+    // FO-84d: every disclosure the panel shows outside its list scrollers (button[aria-expanded], not a tab or a popup
     // trigger; Source Control's Publish and review chevron in each engine) folds on one press and unfolds on a second,
-    // and Enter and Space on the focused control do the same.
+    // and Enter and Space on the focused control do the same. The list scrollers are the panel's .sh-scroll (Jujutsu's
+    // .d-jj-scroll) and any scroller inside them; a scroller elsewhere does not hide a disclosure (FO-86: at 1280x500
+    // Source Control's Publish footer scrolls its own card, chevron included).
     const disclosures = {};
     // --set disclosures=0 skips this census (to reach later Source Control assertions on a base without FO-84d; the
     // disclosure floor then fails by design)
@@ -535,7 +553,8 @@ export default async function (t) {
       if (t.args.disclosures === '0') return;
       const ctls = await panel.evaluate(p => {
         document.querySelectorAll('[data-shelf-disc]').forEach(e => e.removeAttribute('data-shelf-disc'));
-        const scs = [...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY));
+        const lists = [...p.querySelectorAll(':scope > .sh-scroll, .d-jj-scroll')];
+        const scs = [...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY) && lists.some(l => l.contains(a)));
         return [...p.querySelectorAll('button[aria-expanded]')].filter(e => e.checkVisibility() && e.getAttribute('role') !== 'tab' && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
           .map((e, i) => { e.setAttribute('data-shelf-disc', String(i)); return { i, label: e.getAttribute('aria-label') || (e.parentElement?.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40) || String(e.className) }; });
       });
@@ -557,6 +576,10 @@ export default async function (t) {
     // a control the census must press is covered (reach above), fold the panel's expanded regions outside its scrollers
     // as a person would (real presses on aria-expanded="true" controls that are not tabs or popup triggers), assert each
     // fold took, and say which control asked for the room. Returns how many folded; a second call finds none.
+    // T69 (opus-recheck-kit8 finding B): only the expanded region that holds what covers the control folds (the nearest
+    // ancestor of the expanded control that contains the cover and not the covered control), never every expanded region
+    // of the panel; and a fold that hides a popup trigger the census would press fails by name (hard), so nothing the
+    // census walks is skipped at this size while it is covered at no other.
     const makeRoom = async (state, why) => {
       folding = true;
       try {
@@ -564,15 +587,23 @@ export default async function (t) {
           document.querySelectorAll('[data-shelf-fold]').forEach(e => e.removeAttribute('data-shelf-fold'));
           // The panel's regions outside every scroller (the panel itself counts when it scrolls); never a row of a tree or list.
           const scs = [p, ...p.querySelectorAll('*')].filter(a => a.scrollHeight > a.clientHeight + 4 && /auto|scroll/.test(getComputedStyle(a).overflowY) && a.checkVisibility() && a.clientHeight > 0);
+          const cover = document.querySelector('[data-shelf-cover]'), covered = document.querySelector('[data-shelf-covered]');
+          document.querySelectorAll('[data-shelf-fold-region]').forEach(e => e.removeAttribute('data-shelf-fold-region'));
+          const regionOf = e => { if (!cover) return null; for (let a = e; a && a !== p; a = a.parentElement) if (a.contains(cover) && !(covered && a.contains(covered))) return a; return null; };
           return [...p.querySelectorAll('[aria-expanded="true"]')].filter(e => e.checkVisibility() && !/^(tab|treeitem|row|option|gridcell|listitem)$/.test(e.getAttribute('role') || '') && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
-            .map((e, i) => { e.setAttribute('data-shelf-fold', String(i)); return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60) }; });
+            .map(e => ({ e, region: regionOf(e) })).filter(x => x.region)
+            .map(({ e, region }, i) => { e.setAttribute('data-shelf-fold', String(i)); region.setAttribute('data-shelf-fold-region', String(i));
+              return { i, label: (e.getAttribute('aria-label') || e.closest('[class]').className || '').toString().slice(0, 60), region: (region.tagName + '.' + String(region.className?.baseVal ?? region.className).trim().split(/\s+/).slice(0, 2).join('.')).slice(0, 60) }; });
         });
+        const triggersIn = (i) => panel.evaluate((p, i) => { const r = p.querySelector(`[data-shelf-fold-region="${i}"]`); return r ? [...r.querySelectorAll('[aria-haspopup]:not([aria-haspopup="false"])')].filter(e => e.checkVisibility()).map(e => e.getAttribute('aria-controls') || (e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ').slice(0, 40)) : []; }, i);
         for (const fo of folds) {
-          const ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), fp = await reach(ctl);
+          const ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`), before = await triggersIn(fo.i), fp = await reach(ctl);
           await t.page.mouse.click(off.x + fp.x, off.y + fp.y);
           const folded = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'false', await ctl.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
           await t.check(`${target} ${state} short panel: pressing its expanded control (${fo.label}) folds it to make room for the list`, folded,
             JSON.stringify({ fold: fo, covered: { what: why.what, onTop: why.onTop, hits: why.hits, by: why.coverOf } }), { hard: true });
+          const after = await triggersIn(fo.i), hidden = before.filter(x => !after.includes(x));
+          await t.check(`${target} ${state} short panel: the folded region (${fo.region}) hid no popup trigger the census walks`, !hidden.length, JSON.stringify({ hidden, before }), { hard: true });
         }
         if (folds.length) await f.waitForTimeout(500);
         return folds.length;
@@ -638,8 +669,40 @@ export default async function (t) {
     // class are one route kind: once one of them opens a menu, every other one must open that menu by every input (a
     // route that stops working fails; it does not look like a row that never had one). What each row kind opened is
     // remembered for the later walk, which asks another row of every kind that opened a menu again after the whole panel.
-    const ctxKinds = [], ruleDone = new Set();
+    const ruleDone = new Set();
+    // T68 (opus-recheck-kit8 finding A): row kinds that live only inside collapsed tree folders (this fixture's modified
+    // and added files, all below a collapsed folder) were never probed, so a dead File actions route on them passed whole.
+    // Before the census, every collapsed folder of every tree in the pane opens by the tree's own key (ArrowRight on the
+    // focused row), each asserted (hard), until none is left collapsed; then the tree is let settle.
+    const openFolders = async (state) => {
+      const opened = [];
+      for (let n = 0; ; n++) {
+        const next = await panel.evaluate(p => {
+          document.querySelectorAll('[data-shelf-folder]').forEach(e => e.removeAttribute('data-shelf-folder'));
+          const e = [...p.querySelectorAll('[role="tree"] [role="treeitem"][aria-expanded="false"]')].find(x => !x.closest('[role="menu"]') && x.checkVisibility() && x.getBoundingClientRect().width);
+          if (!e) return null;
+          e.setAttribute('data-shelf-folder', '');
+          return (e.getAttribute('data-path') || e.getAttribute('aria-label') || e.textContent).trim().replace(/\s+/g, ' ').slice(0, 60);
+        });
+        if (next === null) break;
+        if (!await t.check(`${target} ${state} collapsed tree folders open in a bounded walk`, n < 200, `${n} opened`, { hard: true })) break;
+        const row = panel.locator('[data-shelf-folder]');
+        await reach(row);
+        await row.focus(); await t.page.keyboard.press('ArrowRight');
+        const ok = await f.waitForFunction(e => e.getAttribute('aria-expanded') === 'true', await row.elementHandle(), { timeout: 2000 }).then(() => true, () => false);
+        await t.check(`${target} ${state} tree folder ${next} opens by ArrowRight for the context census`, ok, '', { hard: true });
+        opened.push(next);
+      }
+      if (opened.length) {
+        await panel.evaluate(p => new Promise(res => { const tr = [...p.querySelectorAll('[role="tree"]')]; let last = '', same = 0, n = 0;
+          const tick = () => { const k = tr.map(x => x.getBoundingClientRect().height).join(); same = k === last ? same + 1 : 0; last = k; if (same >= 3 || ++n > 120) res(); else requestAnimationFrame(tick); };
+          requestAnimationFrame(tick); }));
+        t.log(`${target} ${state}: ${opened.length} collapsed tree folders opened for the context census: ${opened.join(', ')}`);
+      }
+      return opened.length;
+    };
     const contextCensus = async (state, engine, tab) => {
+      await openFolders(state);
       const cands = await panel.evaluate(p => {
         document.querySelectorAll('[data-shelf-probe]').forEach(e => e.removeAttribute('data-shelf-probe'));
         const seen = new Set(), out = [];
@@ -792,18 +855,40 @@ export default async function (t) {
           // footer (Source Control's Publish card at 1280x500) covers it.
           const hp = await reach(head, {x:8,y:8});
           await t.check(`${target} accordion head on top where it is pressed`, hp.onTop, JSON.stringify(hp), {hard:true});
+          // T55: listen to the head's own scrollers before the press, so the rail's reveal scroll is seen from its start
+          await head.evaluate(e => { const W = window.__shelfReveal = { at: performance.now(), scs: [] };
+            for (let a = e.parentElement; a; a = a.parentElement) if (a.scrollHeight > a.clientHeight) {
+              const s = { el: a, scrolled: 0, ended: 0 }; W.scs.push(s);
+              a.addEventListener('scroll', () => { s.scrolled = performance.now(); }, { passive: true });
+              a.addEventListener('scrollend', () => { s.ended = performance.now(); }, { passive: true });
+            } });
           await pressAt(head, hp, { at: {x:8,y:8} });
           await t.check(`${target} displayed accordion expanded`,await head.evaluate(e=>e.closest('[data-acc]').classList.contains('open')),JSON.stringify(await head.evaluate((e,hp)=>{const r=e.getBoundingClientRect(),h=document.elementFromPoint(hp.x,hp.y);return {text:e.textContent.trim().replace(/\s+/g,' ').slice(0,40),cls:e.className,acc:e.closest('[data-acc]').className,r:[r.x,r.y,r.width,r.height].map(Math.round),hp,hitNow:h?.tagName+'.'+(h?.className?.baseVal??h?.className),own:!!h&&(h===e||e.contains(h))};},hp)),{hard:true});
           // The rail skin scrolls an expander opened near the bottom into view 120 ms after the click, smoothly
-          // (15-jj.js, 30-motion.js revealInView): let its scrollers come to rest before the next press, or the
-          // next head moves under its press point (a slow machine pressed mid-scroll, on the card above).
-          await head.evaluate(e => new Promise(res => {
-            const scs = []; for (let a = e.parentElement; a; a = a.parentElement) if (a.scrollHeight > a.clientHeight) scs.push(a);
-            const t0 = performance.now(); let last = '', same = 0;
-            const tick = () => { const k = scs.map(x => x.scrollTop).join(); same = k === last ? same + 1 : 0; last = k;
-              if ((same >= 12 && performance.now() - t0 > 250) || performance.now() - t0 > 3000) res(); else requestAnimationFrame(tick); };
-            requestAnimationFrame(tick);
-          }));
+          // (15-jj.js, 30-motion.js revealInView): let that reveal finish before the next press, or the next head moves
+          // under its press point (a slow machine pressed mid-scroll, on the card above). T55 (opus-recheck-kit7 K4): the
+          // wait is the reveal's own completion, not a guess from the scroll position (a 250 ms floor and a silent 3 s
+          // cap): the rail decides at its own delay (REVEAL_MS, pinned: 120 ms, 0 under reduced motion) after the click's
+          // frame, and a scroll it starts ends with that scroller's scrollend. So: wait out the delay and two frames, then
+          // every head scroller that scrolled since the press must reach its scrollend; one that does not within
+          // REVEAL_END_MS fails by name.
+          const reveal = await head.evaluate((e, [ms, endMs]) => new Promise(res => {
+            const W = window.__shelfReveal, reduced = matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'reduced';
+            const decide = W.at + (reduced ? 0 : ms);
+            const raf2 = () => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+            (async () => {
+              while (performance.now() < decide) await new Promise(r => requestAnimationFrame(r));
+              await raf2();
+              const t1 = performance.now();
+              for (;;) {
+                const open = W.scs.filter(s => s.scrolled && s.ended < s.scrolled);
+                if (!open.length) return res({ ok: true, ms: Math.round(performance.now() - W.at), scrolled: W.scs.filter(s => s.scrolled).length });
+                if (performance.now() - t1 > endMs) return res({ ok: false, ms: Math.round(performance.now() - W.at), open: open.map(s => s.el.className.toString().slice(0, 40)) });
+                await new Promise(r => requestAnimationFrame(r));
+              }
+            })();
+          }), [REVEAL_MS, REVEAL_END_MS]);
+          await t.check(`${target} accordion reveal finished (the rail's own scroll ended) before the next press`, reveal.ok, JSON.stringify(reveal), { hard: true });
           opened=true;
         }
         if(!opened)break;
@@ -876,7 +961,7 @@ export default async function (t) {
     await t.check(target+' popup menu floor', (expectedPopups[target] || []).every(k => row.popups.includes(k)), JSON.stringify({ floor: expectedPopups[target] || [], popups: row.popups }), { hard: true });
     for (const tab of expectedContext[target] || []) {
       const inputs = new Set(contextRoutes.filter(r => r.panel === target && r.tab === tab).map(r => r.input));
-      await t.check(`${target} ${tab} context menu reached by every input`, INPUTS.every(i => inputs.has(i)),
+      await t.check(`${target} ${tab} context menu reached by every input`, CTX_INPUTS.every(i => inputs.has(i)),
         JSON.stringify({ inputs: [...inputs], blocked: await f.evaluate(() => window.__blockedContext || 0) }), { hard: true });
     }
   }
@@ -894,9 +979,282 @@ export default async function (t) {
     await t.page.mouse.click(off.x + out.x, off.y + out.y);
     await t.check("a click outside the side panel and its menus closes the folded rail's overlay", await f.locator('#sidePanelSlot').isHidden(), JSON.stringify(out), { hard: true });
   }
+  // The main walk's frame is read here for the last time: the FO-93b phase below opens fresh pages, then the floors run.
+  const blocked = await f.evaluate(() => ({ __blockedShelfMenu: window.__blockedShelfMenu || 0, __blockedContext: window.__blockedContext || 0, __blockedContextOn: window.__blockedContextOn || 0, __blockedPopup: window.__blockedPopup || 0, __blockedBranch: window.__blockedBranch || 0 }));
+  const marks = ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch','data-shelf-pick','data-shelf-fold','data-shelf-disc','data-shelf-kb','data-shelf-kbs','data-shelf-later','data-shelf-later-tab'];
+  await f.evaluate(marks=>document.querySelectorAll(marks.map(a=>`[${a}]`).join(',')).forEach(e=>{for(const a of marks)e.removeAttribute(a);}), marks);
+
+  // FO-93b (rounds 1 and 2): what a context menu acts on, read from each command's effect, for every row group of every
+  // pane where one opened. Per pane and input, on a fresh page: a fresh open and Open act on the row and make it the
+  // active tab. Then, for each row asked (the first and last row of every group: a tree's file rows and folder rows, each
+  // shelf; the rows are the elements that share the class of a row kind that opened the menu, focusable or not), every
+  // row command: Open, Open in new panel, Open to the side (PM_HOME.open's path and placement), Copy path › Copy relative
+  // path and Copy full path (the text copied and the note), Open with › each of its five ways (Source editor opens a file;
+  // the others, and Source editor on a folder, name the row in their note) and Reveal in terminal (the terminal's folder).
+  // On a folder (FO-102), Open expands it in the tree (folded first by the tree's own key; a folder the tree lists without
+  // its files says so) and opens no editor, and Open in new panel and Open to the side are unavailable: a press says why
+  // (a note naming the folder), opens nothing and leaves the menu open. The fresh open asks the first file row.
+  // Before each case the menu is opened on another row by another input and closed by Escape, rotating, so pointer→key,
+  // key→pointer and key→key all come before a case. The expected path is the path the page file shows for the row (its
+  // own item's .fm-cpath, else its own .fm-path), else its data-path (a tree row's only path): a source the product does
+  // not read (it reads data-path, FO-103), and never the running page's text, which the rail skin cuts to fit. Keys only
+  // on rows that take the focus. --set effects=0 skips the phase; effects=<pane,...> asks only those.
+  const FX_CMDS = [
+    { label: 'Open', how: 'open', where: 'auto' }, { label: 'Open in new panel', how: 'open', where: 'panel' }, { label: 'Open to the side', how: 'open', where: 'right' },
+    { branch: 'Copy path', label: 'Copy relative path', how: 'copy' }, { branch: 'Copy path', label: 'Copy full path', how: 'copyfull' },
+    { branch: 'Open with', label: 'Source editor', how: 'source' },
+    ...['Image viewer', 'Workspace preview', 'Detached preview', 'Diff review'].map(label => ({ branch: 'Open with', label, how: 'note' })),
+    { label: 'Reveal in terminal', how: 'terminal' }];
+  const fxPanes = t.args.effects && t.args.effects !== '0' ? String(t.args.effects).split(',') : null;
+  const ctxPanes = [];
+  for (const r of contextRoutes) {
+    const state = [r.engine, r.tab].filter(Boolean).join(' ') || 'panel';
+    if (!ctxPanes.some(k => k.panel === r.panel && k.state === state && k.menu === r.menu)) ctxPanes.push({ panel: r.panel, engine: r.engine, tab: r.tab, state, menu: r.menu });
+  }
+  // The class a row kind's rows share: what the kinds of one route kind (role and box) have in common.
+  const rowClasses = (pn, state, menu) => {
+    const ks = ctxKinds.filter(k => k.panel === pn && k.state === state && CTX_INPUTS.some(i => k.got[i] === menu));
+    const out = new Set();
+    for (const k of ks) { const sib = ks.filter(o => o.role === k.role && o.box === k.box); sib.reduce((a, o) => a.filter(c => o.cls.includes(c)), k.cls).forEach(c => out.add(c)); }
+    return [...out];
+  };
+  // The path the page file shows for each row of those classes, in document order, else its data-path (a tree row shows
+  // only its name).
+  const authoredPaths = (pn, toks) => f.evaluate(([html, pn, toks]) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html'), out = {};
+    for (const tok of toks) out[tok] = [...doc.querySelectorAll(`#${pn} .${CSS.escape(tok)}`)].map(r => {
+      const item = r.closest('[data-acc]'), own = item && item.querySelectorAll(`.${CSS.escape(tok)}`).length === 1 ? item : null;
+      return ((own && own.querySelector('.fm-cpath')) || r.querySelector('.fm-path'))?.textContent.trim() || r.getAttribute('data-path') || null;
+    });
+    return out;
+  }, [slot.html, pn, toks]);
+  const fxCases = [];
+  // Read from the walk's own frame before the first fresh page replaces it (on the sandbox surface it goes with it).
+  const fxSpecs = [];
+  if (t.args.effects !== '0') for (const pn of ctxPanes) {
+    if (fxPanes && !fxPanes.includes(pn.state)) continue;
+    const toks = rowClasses(pn.panel, pn.state, pn.menu);
+    fxSpecs.push({ pn, toks, authoredFx: await authoredPaths(pn.panel, toks) });
+  }
+  for (const { pn, toks, authoredFx } of fxSpecs) {
+    for (const input of CTX_INPUTS) {
+      const T = `${pn.panel} ${pn.state} FO-93b ${input}`;
+      const g = await t.app.open();
+      if (t.args.look) await t.app.look(t.args.look);
+      const ge = g === t.page.mainFrame() ? null : await g.frameElement(), goff = ge ? await ge.boundingBox() : { x: 0, y: 0 };
+      await g.evaluate(readers);
+      await g.waitForFunction(() => window.PM_HOME && typeof PM_HOME.open === 'function', null, { timeout: 15000 });
+      // Test-side recorders: the opens and reveals PM_HOME is asked for, the notes shown, the text copied by either route.
+      await g.evaluate(() => {
+        const fx = window.__fx = { opens: [], reveals: [], toasts: [], copies: [] };
+        const open = PM_HOME.open; PM_HOME.open = function (spec, ...a) { fx.opens.push(JSON.parse(JSON.stringify(spec || {}))); return open.apply(this, [spec, ...a]); };
+        const reveal = PM_HOME.reveal; if (typeof reveal === 'function') PM_HOME.reveal = function (id, ...a) { fx.reveals.push(String(id)); return reveal.apply(this, [id, ...a]); };
+        const say = window.toast; if (typeof say === 'function') window.toast = function (m, ...a) { fx.toasts.push(String(m)); return say.apply(this, [m, ...a]); };
+        try { const w = navigator.clipboard && navigator.clipboard.writeText && navigator.clipboard.writeText.bind(navigator.clipboard);
+          if (w) navigator.clipboard.writeText = x => { fx.copies.push(String(x)); return w(x).catch(() => {}); }; } catch (_) {}
+        document.addEventListener('copy', e => { const a = e.target && typeof e.target.value === 'string' ? e.target : document.activeElement;
+          fx.copies.push(a && typeof a.value === 'string' ? (a.selectionEnd > a.selectionStart ? a.value.slice(a.selectionStart, a.selectionEnd) : a.value) : String(getSelection())); }, true);
+      });
+      const slotEl = g.locator('#sidePanelSlot'), icon = g.locator(`#activityBar .icon[data-target="${pn.panel}"]`);
+      const pane = async () => {
+        if (!await slotEl.isVisible() || !await g.evaluate(p => document.querySelector('#sidePanelSlot > .side-panel-view.active')?.id === p, pn.panel)) {
+          await icon.click(); await g.waitForTimeout(400); if (!await slotEl.isVisible()) await icon.click();
+        }
+        if (pn.engine) await g.locator(`#${pn.panel} [data-pm7-scm-engine="${pn.engine}"]`).click();
+        if (pn.tab) {
+          const tab = await g.evaluate(([p, tab]) => { const e = [...document.querySelectorAll(`#${p} [role="tab"]`)].find(e => e.checkVisibility() && (e.dataset.tab || e.dataset.jjTab || e.textContent.trim()) === tab);
+            document.querySelectorAll('[data-shelf-fx-tab]').forEach(x => x.removeAttribute('data-shelf-fx-tab')); e?.setAttribute('data-shelf-fx-tab', ''); return !!e && !(e.classList.contains('active') || e.getAttribute('aria-selected') === 'true'); }, [pn.panel, pn.tab]);
+          if (tab) await g.locator('[data-shelf-fx-tab]').click();
+        }
+      };
+      await pane();
+      // Shelves holding rows of these classes that are folded (Recent) are opened, as a person would, by their heads.
+      for (let pass = 0; pass < 6; pass++) {
+        const head = await g.evaluate(([p, toks]) => {
+          document.querySelectorAll('[data-shelf-fx-head]').forEach(x => x.removeAttribute('data-shelf-fx-head'));
+          const sel = toks.map(t => '.' + CSS.escape(t)).join(','), pane = document.getElementById(p);
+          const h = [...pane.querySelectorAll('[data-acc]:not(.open) > [data-collapse]')].find(h => h.checkVisibility() && !h.matches(sel) && h.parentElement.querySelector(sel));
+          h?.setAttribute('data-shelf-fx-head', ''); return !!h;
+        }, [pn.panel, toks]);
+        if (!head) break;
+        await g.locator('[data-shelf-fx-head]').click(); await g.waitForTimeout(300);
+      }
+      // Name each row and choose the rows to ask: the first and last of each group with an expected path.
+      const pick = await g.evaluate(([p, toks, authored]) => {
+        document.querySelectorAll('[data-shelf-fx]').forEach(e => { e.removeAttribute('data-shelf-fx'); e.removeAttribute('data-shelf-fx-want'); });
+        const pane = document.getElementById(p), mismatch = [];
+        for (const tok of toks) {
+          const live = [...pane.querySelectorAll('.' + CSS.escape(tok))], a = authored[tok] || [];
+          live.forEach((e, i) => { const w = (live.length === a.length ? a[i] : null) || e.getAttribute('data-path'); if (w) e.setAttribute('data-shelf-fx-want', w); });
+          if (live.length !== a.length && live.some(e => !e.getAttribute('data-path'))) mismatch.push({ tok, live: live.length, authored: a.length });
+        }
+        const sel = toks.map(t => '.' + CSS.escape(t)).join(',');
+        const rows = [...pane.querySelectorAll(sel)].filter(e => !e.closest('[role="menu"]') && e.checkVisibility() && e.getBoundingClientRect().width && e.hasAttribute('data-shelf-fx-want'));
+        const groupOf = e => e.closest('[role="tree"]') || [...(function* () { for (let a = e.parentElement; a && a !== pane; a = a.parentElement) yield a; })()].find(a => a.matches('[data-acc]') && a.querySelectorAll(sel).length > 1) || pane;
+        const folder = e => e.getAttribute('data-kind') === 'folder' || (e.getAttribute('role') === 'treeitem' && e.hasAttribute('aria-expanded'));
+        const groups = new Map();
+        for (const e of rows) { const k = groupOf(e); const key = [...groups.keys()].find(x => x.el === k && x.folder === folder(e)) || { el: k, folder: folder(e) }; if (!groups.has(key)) groups.set(key, []); groups.get(key).push(e); }
+        const out = [];
+        for (const [key, list] of groups) for (const e of [list[0], list[list.length - 1]]) if (!out.some(o => o.el === e)) out.push({ el: e, g: key.el });
+        const glabel = gEl => (gEl.getAttribute('aria-label') || gEl.querySelector(':scope > [data-collapse]')?.textContent || gEl.id || '').trim().replace(/\s+/g, ' ');
+        return { mismatch, rows: out.map((o, i) => { o.el.setAttribute('data-shelf-fx', String(i));
+          return { i, want: o.el.getAttribute('data-shelf-fx-want'), folder: folder(o.el), expandable: o.el.hasAttribute('aria-expanded'), keys: o.el.tabIndex >= 0 && !o.el.closest('[inert]'), group: glabel(o.g) }; }) };
+      }, [pn.panel, toks, authoredFx]);
+      await t.check(`${T}: the rows of ${toks.join(', ')} match the rows the page file authors`, !pick.mismatch.length, JSON.stringify(pick.mismatch), { hard: true });
+      const rowsI = pick.rows.filter(r => input === 'mouse' || r.keys);
+      t.log('FO93B-ROWS ' + JSON.stringify({ pane: pn.state, input, rows: rowsI }));
+      if (!rowsI.length) continue;
+      const fx = () => g.evaluate(() => JSON.parse(JSON.stringify(window.__fx)));
+      const clear = () => g.evaluate(() => { __fx.opens = []; __fx.reveals = []; __fx.toasts = []; __fx.copies = []; });
+      const isOpen = () => g.evaluate(k => __shelf.keys().includes(k), pn.menu);
+      const opened = () => g.waitForFunction(k => __shelf.keys().includes(k), pn.menu, { timeout: 5000 }).then(() => true, () => false);
+      const shut = () => g.waitForFunction(k => !__shelf.keys().length, pn.menu, { timeout: 5000 }).then(() => true, () => false);
+      const restPt = async () => {
+        const p = await g.evaluate(() => { const slot = document.getElementById('sidePanelSlot');
+          const busy = h => !h || (slot && slot.contains(h)) || !!h.closest('[role="menu"], [role="dialog"], [role="tooltip"], button, a, input, textarea, select, summary, [contenteditable], [title], [role="button"], [role="tab"], [data-pm-hover-label], [data-pm-hover-kind], [aria-describedby]');
+          for (const fx of [0.98, 0.9, 0.75, 0.6]) for (let y = innerHeight * 0.45; y < innerHeight - 30; y += 16) { const x = Math.round(innerWidth * fx); if (!busy(document.elementFromPoint(x, y))) return { x, y: Math.round(y) }; }
+          return { x: 2, y: 2 }; });
+        await t.page.mouse.move(goff.x + p.x, goff.y + p.y);
+      };
+      const rowLoc = r => g.locator(`[data-shelf-fx="${r.i}"]`);
+      const openOn = async (r, how) => {
+        await pane(); const loc = rowLoc(r); await loc.scrollIntoViewIfNeeded();
+        if (how === 'mouse') await loc.click({ button: 'right' });
+        else { await restPt(); await loc.focus(); await t.page.keyboard.press(KEY[how]); }
+        return opened();
+      };
+      const labelOf = () => g.evaluate(() => { const a = document.activeElement; return ((a && a.querySelector && a.querySelector('.fm-ctx-label')) || a)?.textContent.trim().replace(/\s+/g, ' ') || ''; });
+      const keysTo = async (label, prefix) => {
+        for (let s = 0; s < 40; s++) { const l = await labelOf(); if (prefix ? l.startsWith(label) : l === label) return true; await t.page.keyboard.press('ArrowDown'); }
+        return false;
+      };
+      // a press on an item of the open menu (a branch's item: its branch opened by the pointer first)
+      const clickItem = async (label, prefix, within) => {
+        const ok = await g.evaluate(([k, label, prefix, within]) => {
+          document.querySelectorAll('[data-shelf-fx-item]').forEach(x => x.removeAttribute('data-shelf-fx-item'));
+          const top = __shelf.open().find(x => __shelf.key(x) === k);
+          const m = within ? [...(top ? top.querySelectorAll('[role="menu"]') : [])].find(s => s.checkVisibility()) : top;
+          const lab = it => ((it.querySelector('.fm-ctx-label')) || it).textContent.trim().replace(/\s+/g, ' ');
+          const it = m && [...m.querySelectorAll('[role="menuitem"]')].find(i => i.closest('[role="menu"]') === m && i.checkVisibility() && (prefix ? lab(i).startsWith(label) : lab(i) === label));
+          it?.setAttribute('data-shelf-fx-item', ''); return !!it;
+        }, [pn.menu, label, prefix, within]);
+        const it = g.locator('[data-shelf-fx-item]');
+        if (ok && prefix) await it.hover();
+        else if (ok && await it.getAttribute('aria-disabled') !== 'true') await it.click();
+        else if (ok) {
+          // an unavailable item (FO-102): Playwright's click waits for it to be enabled, so a real press at its centre, once
+          // its box holds still for a frame (the menu sprouts open)
+          let bb = null;
+          for (let n = 0; n < 60; n++) {
+            const b = await it.boundingBox();
+            if (b && bb && ['x', 'y', 'width', 'height'].every(k => Math.abs(b[k] - bb[k]) < 0.5)) break;
+            bb = b; await g.evaluate(() => new Promise(res => requestAnimationFrame(() => res())));
+          }
+          if (bb) await t.page.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2);
+        }
+        return ok;
+      };
+      const run = async (cmd, how) => {
+        if (how === 'mouse') {
+          if (cmd.branch) {
+            if (!await clickItem(cmd.branch, true, false)) return `no ${cmd.branch}`;
+            await g.waitForFunction(k => __shelf.open().some(x => x !== __shelf.open().find(y => __shelf.key(y) === k) && __shelf.open().find(y => __shelf.key(y) === k)?.contains(x)), pn.menu, { timeout: 3000 }).catch(() => {});
+            if (!await clickItem(cmd.label, false, true)) return `no ${cmd.label}`;
+          } else if (!await clickItem(cmd.label, false, false)) return `no ${cmd.label}`;
+        } else {
+          await t.page.keyboard.press('Home');
+          if (cmd.branch) {
+            if (!await keysTo(cmd.branch, true)) return `keys reach no ${cmd.branch}`;
+            await t.page.keyboard.press('ArrowRight');
+          }
+          if (!await keysTo(cmd.label, false)) return `keys reach no ${cmd.label}`;
+          await t.page.keyboard.press('Enter');
+        }
+        return null;
+      };
+      const norm = s => String(s || '').replace(/\/+$/, '').replace(/^(?:~|\/home\/[^/]+|\/Users\/[^/]+)(?=\/|$)/, '');
+      let root = null;
+      // What a command did: null when it acted on the row as it should, else what happened.
+      const judge = async (cmd, r) => {
+        const want = r.want, until = fn => g.waitForFunction(fn, [want, cmd.where || null], { timeout: 3000, polling: 50 }).then(() => true, () => false);
+        if (cmd.how === 'open' && r.folder) {
+          // FO-102: Open expands the folder in the tree (one listed without its files says so), opens no editor and closes the
+          // menu; Open in new panel and Open to the side are unavailable, say why, open nothing and leave the menu open
+          const said = () => g.waitForFunction(w => __fx.toasts.some(m => m.startsWith(w + ' is a folder')), want, { timeout: 3000, polling: 50 }).then(() => true, () => false);
+          if (cmd.where === 'auto') {
+            const ok = r.expandable ? await g.waitForFunction(i => document.querySelector(`[data-shelf-fx="${i}"]`)?.getAttribute('aria-expanded') === 'true', r.i, { timeout: 3000, polling: 50 }).then(() => true, () => false) : await said();
+            const now = await fx(), menu = await isOpen();
+            return ok && !now.opens.length && !menu ? null : { expanded: await rowLoc(r).getAttribute('aria-expanded'), opens: now.opens, toasts: now.toasts, menuOpen: menu };
+          }
+          const ok = await said(), now = await fx(), menu = await isOpen();
+          const dis = await g.evaluate(w => document.querySelector(`#fileContextMenu [data-pmw-open="${w}"]`)?.getAttribute('aria-disabled') || null, cmd.where === 'panel' ? 'panel' : 'side');
+          return ok && !now.opens.length && menu && dis === 'true' ? null : { ariaDisabled: dis, opens: now.opens, toasts: now.toasts, menuOpen: menu };
+        }
+        if (cmd.how === 'open' || (cmd.how === 'source' && !r.folder)) {
+          await until(([w]) => __fx.opens.length > 0);
+          const now = await fx(), o = now.opens[0], where = cmd.how === 'open' ? cmd.where : 'auto';
+          return now.opens.length === 1 && o.kind === 'editor' && o.path === want && (o.where || 'auto') === where ? null : { opens: now.opens, toasts: now.toasts };
+        }
+        if (cmd.how === 'copy') { await until(([w]) => __fx.copies.includes(w) && __fx.toasts.some(m => m.includes(w))); const now = await fx(); return now.copies.includes(want) && now.toasts.some(m => m.includes(want)) ? null : { copies: now.copies, toasts: now.toasts }; }
+        if (cmd.how === 'copyfull') {
+          await until(([w]) => __fx.copies.some(c => c.endsWith('/' + w)));
+          const now = await fx(), c = now.copies.find(c => c.endsWith('/' + want) && c.length > want.length + 1);
+          if (c) root = c.slice(0, -(want.length + 1));
+          return c && now.toasts.some(m => m.includes(c)) ? null : { copies: now.copies, toasts: now.toasts };
+        }
+        if (cmd.how === 'source' || cmd.how === 'note') {
+          await until(([w]) => __fx.toasts.some(m => m.includes(w)));
+          const now = await fx(); return now.toasts.some(m => m.includes(want)) && !now.opens.length ? null : { opens: now.opens, toasts: now.toasts };
+        }
+        if (cmd.how === 'terminal') {
+          await until(() => __fx.opens.some(o => o.kind === 'terminal') || __fx.reveals.length > 0);
+          const now = await fx(), o = now.opens.find(o => o.kind === 'terminal'), id = now.reveals[now.reveals.length - 1];
+          const cwd = o ? o.cwd : await g.evaluate(id => { const sid = String(id || '').replace(/^terminal:/, ''); try { return (window.PMT && PMT.sessions ? PMT.sessions() : []).find(s => s.id === sid)?.cwd || null; } catch (_) { return null; } }, id);
+          const dir = r.folder ? want : (want.includes('/') ? want.slice(0, want.lastIndexOf('/')) : '');
+          return root != null && cwd != null && norm(cwd) === norm(root + (dir ? '/' + dir : '')) ? null : { opens: now.opens, reveals: now.reveals, cwd, root, dir };
+        }
+        return { unknown: cmd.how };
+      };
+      // (1) a fresh open on the first file row (FO-102: Open on a folder opens no tab), Open
+      const r0 = rowsI.find(r => !r.folder) || rowsI[0];
+      await clear();
+      await t.check(`${T}: a fresh open on ${r0.want}`, await openOn(r0, input), '', { hard: true });
+      const e0 = await run(FX_CMDS[0], input) || await judge(FX_CMDS[0], r0);
+      await t.check(`${T}: a fresh open and Open act on ${r0.want}`, !e0, JSON.stringify(e0), { hard: true });
+      const act = await g.waitForFunction(w => PM_HOME.active && PM_HOME.active()?.tabId === 'file:' + w, r0.want, { timeout: 3000 }).then(() => true, () => false);
+      await t.check(`${T}: ${r0.want} becomes the active tab`, act, JSON.stringify(await g.evaluate(() => PM_HOME.active && PM_HOME.active())), { hard: true });
+      // (2) every row asked, every command, each after an open on another row by another input
+      let turn = 0;
+      for (const r of rowsI) for (const cmd of FX_CMDS) {
+        const others = pick.rows.filter(o => o.i !== r.i);
+        if (others.length) {
+          const o = others[turn % others.length], ins = CTX_INPUTS.filter(i => i === 'mouse' || o.keys), how = ins[turn % ins.length]; turn++;
+          if (await openOn(o, how)) { await t.page.keyboard.press('Escape'); await shut(); }
+        }
+        // a folder Open must expand: the folder is folded first, by the tree's own key (ArrowLeft on the focused row)
+        if (r.folder && r.expandable && cmd.how === 'open' && cmd.where === 'auto' && await rowLoc(r).getAttribute('aria-expanded') === 'true') {
+          await pane(); await rowLoc(r).scrollIntoViewIfNeeded(); await rowLoc(r).focus(); await t.page.keyboard.press('ArrowLeft');
+          const folded = await g.waitForFunction(i => document.querySelector(`[data-shelf-fx="${i}"]`)?.getAttribute('aria-expanded') === 'false', r.i, { timeout: 3000 }).then(() => true, () => false);
+          await t.check(`${T}: the folder ${r.want} folds by ArrowLeft before Open`, folded, '', { hard: true });
+        }
+        await clear();
+        const up = await openOn(r, input);
+        const err = !up ? 'the menu did not open' : (await run(cmd, input)) || await judge(cmd, r);
+        fxCases.push({ pane: pn.state, input, row: r.want, cmd: cmd.label, ok: !err });
+        await t.check(`${T}: ${cmd.branch ? cmd.branch + ' › ' : ''}${cmd.label} acts on ${r.want}${r.folder ? ' (folder)' : ''}`, !err, JSON.stringify(err), { hard: true });
+        if (await isOpen()) { await t.page.keyboard.press('Escape'); await shut(); }
+      }
+    }
+  }
+  if (t.args.effects !== '0') {
+    const asked = new Set(fxCases.map(c => c.pane)), inputs = new Set(fxCases.map(c => c.input));
+    await t.check('FO-93b every pane with a context menu was asked, by every input', (asked.size >= 3 && inputs.size === CTX_INPUTS.length) || !!only || !!t.args.inputs || !!fxPanes, JSON.stringify({ panes: [...asked], inputs: [...inputs], cases: fxCases.length }));
+    t.log('FO93B-CASES ' + JSON.stringify(fxCases));
+  }
+
   await t.check('at least 14 known PMMenu identities exercised',new Set(routedRows.flatMap(r=>r.exercised)).size>=14,JSON.stringify(routedRows),{hard:true});
   t.log(JSON.stringify({initial:rows,routed:routedRows,popups:popupRows,context:contextRoutes,branches:branchRows}));
-  if(t.args.blockMenu) await t.check('capture blocker intercepted requested menu',await f.evaluate(()=>window.__blockedShelfMenu)>0,t.args.blockMenu,{hard:true});
+  if(t.args.blockMenu) await t.check('capture blocker intercepted requested menu',blocked.__blockedShelfMenu>0,t.args.blockMenu,{hard:true});
   await t.check('workflow Ref route exercised',routedRows.find(r=>r.target==='panel-git')?.exercised.includes('shDispRefCI'),'',{hard:true});
   await t.check('all rail targets inspected and reachable shelf menus exercised',targets.length===Object.keys(expected).length&&reached===Object.values(expected).reduce((a,b)=>a+b,0),JSON.stringify({reached,rows}));
   // Completeness against the authored census, plus floors for what only a route can show.
@@ -907,7 +1265,5 @@ export default async function (t) {
   await t.check('at least 2 nested menu branches exercised', new Set(branchRows.map(b => b.sub)).size >= 2, JSON.stringify(branchRows));
   await t.check('at least 6 popup menus beyond the PMMenu wrappers exercised', new Set(popupRows.filter(r => !r.controls).map(r => r.identity)).size >= 6, JSON.stringify(popupRows));
   for (const [arg, hits] of [['blockContext', '__blockedContext'], ['blockContextOn', '__blockedContextOn'], ['blockPopup', '__blockedPopup'], ['blockBranch', '__blockedBranch']])
-    if (t.args[arg]) await t.check(`capture blocker ${arg} intercepted input`, await f.evaluate(h => window[h] || 0, hits) > 0, String(t.args[arg]));
-  const marks = ['data-shelf-case','data-shelf-route','data-shelf-pop','data-shelf-probe','data-shelf-tab','data-shelf-branch','data-shelf-pick','data-shelf-fold','data-shelf-disc','data-shelf-kb','data-shelf-kbs','data-shelf-later','data-shelf-later-tab'];
-  await f.evaluate(marks=>document.querySelectorAll(marks.map(a=>`[${a}]`).join(',')).forEach(e=>{for(const a of marks)e.removeAttribute(a);}), marks);
+    if (t.args[arg]) await t.check(`capture blocker ${arg} intercepted input`, (blocked[hits] || 0) > 0, String(t.args[arg]));
 }

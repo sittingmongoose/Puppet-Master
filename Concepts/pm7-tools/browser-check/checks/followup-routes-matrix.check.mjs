@@ -12,7 +12,9 @@ for(const look of LOOKS) for(const [width,height] of [[1280,900],[740,900],[1280
   Object.assign(t.args,{look,width,height,only:'c-pair',codeOnly:1,depth:1});
   await t.viewport(width,height);
   for(const [name,run] of Object.entries({empty,cheer,fallback,shelf,studio})) await t.step(name,async()=>{
-   await run(t);
+   // 'only' is this matrix's c-pair route filter; shelf-route reads its own --set only=<panel ids>, so hide it there
+   const kept=t.args.only; if(name==='shelf') delete t.args.only;
+   try { await run(t); } finally { if(name==='shelf') t.args.only=kept; }
    const size=await t.page.evaluate(()=>({width:innerWidth,height:innerHeight}));
    await t.check('requested viewport retained',size.width===width&&size.height===height,JSON.stringify(size));
   });

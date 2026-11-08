@@ -1020,13 +1020,24 @@
     if (!tree || !ctx) return;
     var ctxTarget = null;
     function rowOf(el) { return el && el.closest ? el.closest('.fm-row, .fm-changerow, .fm-openrow') : null; }
+    /* the row File actions acts on: every file row carries its own full path in data-path (the tree's rows, and the
+       Changed, Open editors and Recent rows: FO-103), so no row is named by its visible text, which the rail skin cuts in
+       the middle to fit, nor by a bare file name, which two files can share. A row without one is named only by the file
+       in its demo arg ('cmd.file.open -> image.rs (note)', the note dropped), which the Home shim looks up in the index. */
+    function rowInfo(r) {
+      var p = r.getAttribute('data-path') || '';
+      var m = p ? null : /->\s*(.+?)(?:\s+\(.*\))?\s*$/.exec(r.getAttribute('data-demo-arg') || '');
+      return { el: r, path: p, name: m ? m[1] : '', folder: r.getAttribute('data-kind') === 'folder' };
+    }
     /* File actions for a row, by the pointer (focus stays on the row) or by a key (focus moves to the first enabled item);
-       either way it gives the focus back to the row when it closes holding it (FO-93) */
+       either way it gives the focus back to the row when it closes holding it (FO-93). This is the one place the row is
+       known: pm-ctx-open carries it, for every input, to whatever else acts on the menu's commands (FO-93b: the Home
+       shim's Open items, Copy path, Open with, Reveal in terminal). */
     function openFor(r, x, y, byKey) {
       ctxTarget = r;
       var paste = byId('fmCtxPaste');
       if (paste) paste.setAttribute('aria-disabled', r.getAttribute('data-kind') === 'folder' ? 'false' : 'true');
-      ctx.dispatchEvent(new CustomEvent('pm-ctx-open'));
+      ctx.dispatchEvent(new CustomEvent('pm-ctx-open', { detail: rowInfo(r) }));
       PMMenu.openAt(ctx, x, y, { returnTo: r, focus: byKey });
     }
     panel.addEventListener('contextmenu', function (ev) {

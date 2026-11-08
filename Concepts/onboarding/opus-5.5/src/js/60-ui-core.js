@@ -47,7 +47,8 @@
       + `<div class="o55-headctl"><span class="o55-lookslot"></span><span class="o55-talkslot"></span><span class="o55-soundslot"></span>`
       + `<button type="button" class="o55-iconbtn o55-close" data-o55-do="close" data-pm-hover-exempt="true" aria-label="${U.esc(T('chrome.close'))}" title="${U.esc(closeTitle())}">`
       + `${U.nx('close', 18, 'control') || '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'}<span>${U.esc(T('chrome.close'))}</span></button></div></header>`
-      + `<div class="o55-body"><div class="o55-stage o55-scene-host"></div><section class="o55-pane"></section></div>`
+      /* the interior holds its own strips' Glass lenses, in its own layer under the header and Adjust NieR (FO-83, 10-window.css) */
+      + `<div class="o55-body" data-lg-lens-host=""><div class="o55-stage o55-scene-host"></div><section class="o55-pane"></section></div>`
       + `<div class="o55-live" aria-live="polite" role="status"></div></div>`;
     document.body.appendChild(root);
     S.root = root;
@@ -61,6 +62,9 @@
     root.addEventListener('input', onInput);
     root.addEventListener('change', onInput);
     ['keydown', 'keyup', 'keypress'].forEach((ev) => root.addEventListener(ev, onKey));
+    /* the look menu closes on Escape wherever focus is: a press on its own padding or on a note's words leaves focus on
+       the page's body, where the window's own keys never hear it (FO-89); the window's Escape (onKey) closes the menu */
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && S.open && S.lookOpen && (e.target === document.body || e.target === document.documentElement)) onKey(e); });
     root.addEventListener('pointerdown', (e) => { if (e.target.closest('.o55-scrim')) nudge(); });
     /* Input never waits for a performance (hero spec section 1 rule 7): a press or a key while the stage or the skin is
        still playing a moment snaps it to its end state. Caught on the way down, never prevented, so it still acts. */
@@ -86,6 +90,11 @@
       if (hv.byFocus && !to) { hv.byFocus = false; wantHover(null); }
     });
     window.addEventListener('resize', () => { if (S.open) layoutClass(); });
+    /* ...and in the frame the size changes, before it is painted: the root is fixed to the viewport, so its own size is the
+       window's. In a page resized by the page that holds it (a frame in the same process) the window's resize event comes
+       only after that frame, and a slower one after that: the wide two-column window was painted at 740, its stage and
+       Take the guided tour cut at the window's edge, for 0.3-1.8 s (FO-88). T3's sandbox, in its own process, had it at once */
+    new ResizeObserver(() => { if (S.open) layoutClass(); }).observe(root);
     return root;
   }
   /* The window's brand mark is Pip (DL-235, DR-076: the one kit), still (the brand mark never animates) and drawn in the
@@ -410,6 +419,55 @@
     const note = foot.note ? `<span class="o55-footnote">${U.esc(foot.note)}</span>` : '';
     return `<footer class="o55-foot o55-st" style="--i:4">${back}${note}<span class="o55-footgrow">${secs.length || note ? '' : keysHtml(foot, choose)}</span>${sec}${pri}</footer>`;
   }
+  /* The footer's own fit (Q4, Jared 2026-11-07: "A, do the change to only wrap when it doesn't fit"). Back gives up its
+     word (its chevron stays, at least 40 px: 10-window.css) only when the footer's controls, laid out on one line at
+     their own widths, no longer fit in the footer; the other labels then wrap, by the footer's flex, only if they still
+     do not fit. So nothing wraps while it fits, and as the footer narrows no label returns to one line (group 6 hid the
+     word below a fixed 520 px whatever the footer held: Basic's labels went from one line to two, back to one, then
+     two). The one-line width is read once per footer, look and wording (the footer laid out at max-content for that one
+     read) and compared whenever the screen's layer changes size, after layout and before that frame is painted. */
+  const footNeed = new WeakMap();
+  function footKey(foot) {
+    const de = document.documentElement;
+    return [S.root.getAttribute('data-family'), S.root.getAttribute('data-mode'), S.root.getAttribute('data-o55-layout'), de.getAttribute('data-o55-nier'),
+      de.getAttribute('data-o55-nier-parts'), de.getAttribute('style'), document.body ? document.body.style.zoom : '', document.fonts ? document.fonts.status : '',
+      foot.childElementCount, foot.textContent].join('|');
+  }
+  /* the footer's width as laid out, which no transform reaches: the first reading is taken before the first paint, under
+     the window's opening keyframe, and a rotated box's bounding width grows with its height (Friendly's entrance turns
+     the window 0.6 degrees, so the drawn footer, labels on two lines, read 0.1 px wider than its one-line width and
+     kept Back's word at 1092 until the next resize; opus-recheck-look8b Q4-2) */
+  const footW = (foot) => parseFloat(getComputedStyle(foot).width) || 0;
+  function fitFoot(layer) {
+    const foot = layer && layer.isConnected ? layer.querySelector(':scope > .o55-foot') : null;
+    if (!foot) return;
+    if (!foot.querySelector(':scope > .o55-back') || S.root.getAttribute('data-o55-layout') === 'narrow') { if (foot.hasAttribute('data-o55-fit')) foot.removeAttribute('data-o55-fit'); return; }
+    const key = footKey(foot);
+    let need = footNeed.get(foot);
+    if (!need || need.key !== key || need.room == null) {
+      const room = footW(foot), was = foot.getAttribute('data-o55-fit');
+      foot.setAttribute('data-o55-fit', 'measure');
+      need = { key, w: footW(foot), room };
+      if (was === null) foot.removeAttribute('data-o55-fit'); else foot.setAttribute('data-o55-fit', was);
+      footNeed.set(foot, need);
+    }
+    /* exactly: a footer even one layout unit (1/64 px) short of its one-line width shrinks its labels, which wrap, so
+       Back's word must go there (a half-pixel allowance kept it while both labels wrapped, and a pixel narrower they went
+       back to one line: Friendly Light 1092, NieR Dark 1086, Glass Light 1039; opus-recheck-look8 Q4-1). Both widths are
+       the same element's used width, so equal layouts read equal and a unit short reads less, at any page zoom. */
+    const fit = need.w <= need.room ? 'full' : 'chevron';
+    if (foot.getAttribute('data-o55-fit') !== fit) foot.setAttribute('data-o55-fit', fit);
+  }
+  /* (the layer's width is the footer's; a size change re-reads the room, and the morph of a quiet redraw, which drops the
+     attribute, is answered from what was read) */
+  const footRoom = typeof ResizeObserver === 'function' ? new ResizeObserver((entries) => {
+    for (const e of entries) {
+      if (!e.target.isConnected) { footRoom.unobserve(e.target); continue; }
+      const foot = e.target.querySelector(':scope > .o55-foot'), need = foot && footNeed.get(foot);
+      if (need) need.room = null;
+      fitFoot(e.target);
+    }
+  }) : null;
   /* NieR Mode's key prompts (hero spec Q7): the keys the window answers, between Back and the primary, as ink keycaps
      with mono words; only while NieR Mode is painted (shown under YoRHa headers on a wide window with a fine pointer,
      11-window-nier.css), never beside other buttons, and hidden from screen readers (the keys are the window's own) */
@@ -617,7 +675,9 @@
      never one of them. */
   const MOVED_ON = new Set(['another', 'elsewhere', 'useTailscale', 'useCode', 'useSsh', 'useSmb', 'useAlt', 'tokenOn', 'tokenOff',
     'manualOn', 'manualOff', 'otherAccount', 'cancelAdd', 'cancelSignin', 'skip', 'skipOnline', 'later']);
-  function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit()); }
+  /* (not while Adjust NieR's editor covers the stage: a ? then opens its note in the form, the look menu's own, as the
+     narrow layout does; on the stage it lay under the editor, unseen, FO-81 recheck) */
+  function holdsTip() { return !!(S.root && S.root.getAttribute('data-o55-layout') === 'wide' && O55.pipStage && O55.pipStage.h.kit() && !(O55.nierLook && O55.nierLook.panelOpen && O55.nierLook.panelOpen())); }
   O55.pipStage.holdsTip = holdsTip;
 
   /* Hover intent: a choice previews only once the pointer has rested on it for DWELL ms, so moving across the list to
@@ -696,7 +756,8 @@
     const rs = layer.querySelector('.o55-reason.o55-reason-show'), rsAt = rs ? +rs.dataset.at || 0 : 0, keepReason = rs && performance.now() - rsAt < 2600 ? rs : null;
     morphing = true;
     try { U.morph(layer, paneHtml(def)); } finally { morphing = false; }
-    if (keepReason && !keepReason.isConnected) { const ft = layer.querySelector('.o55-foot'); if (ft) { keepReason.style.animationDelay = -(performance.now() - rsAt) + 'ms'; ft.appendChild(keepReason); } }
+    fitFoot(layer);
+    if (keepReason && !keepReason.isConnected) { keepReason.style.animationDelay = -(performance.now() - rsAt) + 'ms'; layer.appendChild(keepReason); }
     O55.tips.write(layer); armLoaders(layer);
     /* a sheet that just opened is brought into view (it is drawn at the end of the content, often below the fold) */
     const sheet = !hadSheet && layer.querySelector('.o55-sheet[data-open="true"]');
@@ -738,6 +799,7 @@
     layer.setAttribute('data-screen', def.id);
     layer.innerHTML = paneHtml(def);
     pane.appendChild(layer);
+    if (footRoom) footRoom.observe(layer); /* (its first report, before the first paint, fits the footer: fitFoot) */
     O55.tips.write(layer); armLoaders(layer);
     holdColumn(layer);
     /* (a card's ? sits beside it in its option and comes in with it, on its index: p75, the ? circles floated on empty
@@ -1123,7 +1185,8 @@
     if (!reason) return;
     const layer = t.closest('.o55-layer'); if (!layer) return;
     let tip = layer.querySelector('.o55-reason');
-    if (!tip) { tip = document.createElement('div'); tip.className = 'o55-reason'; tip.setAttribute('role', 'note'); layer.querySelector('.o55-foot').appendChild(tip); }
+    /* the layer's own, beside the scroller and the footer, never inside the footer (FO87-N1, 10-window.css .o55-reason) */
+    if (!tip) { tip = document.createElement('div'); tip.className = 'o55-reason'; tip.setAttribute('role', 'note'); layer.appendChild(tip); }
     tip.textContent = reason; tip.style.animationDelay = ''; tip.dataset.at = String(performance.now()); tip.classList.remove('o55-reason-show'); void tip.offsetWidth; tip.classList.add('o55-reason-show');
   }
   /* typing ticks at most one per 120 ms, the chat's rate (ACD-475; O55.sound's RATE.type matches it) */

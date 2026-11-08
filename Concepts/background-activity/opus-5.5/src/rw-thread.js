@@ -64,12 +64,34 @@
     if (btn.getAttribute('data-html') !== html) { btn.innerHTML = html; btn.setAttribute('data-html', html); }
   }
   function realBar() { return doc.querySelector('.pm56-activity-bar'); }
+  /* Since 2026-10-29 the chat has its own Processes domain (5.6 Pro app.js activityDefs, shown while the thread's
+     work has processes), so this layer's button and its Activity Detail tab stand down wherever the chat already
+     shows one, and are injected as before where it does not (another thread, or a host without the domain): the
+     strip and the filter then hold exactly one Processes. The chat's own items carry data-domain, ours do not. */
+  function chatHasProcesses(scope) {
+    return !!(scope && scope.querySelector(':scope > [data-domain="processes"]:not([data-rw-domain]):not([data-rw-tab])'));
+  }
   /* There while a process runs (or waits for input); a scheduled run or a finished one alone does not keep it. */
   function shown() { return counts().live > 0 || ui.open || ui.hoverOpen; }
+  /* When the chat's own Processes appears (a switch to a thread that has it) while this layer's view or hover card is
+     open, both were opened from the button that now stands down: close them through their own paths, so no panel or
+     card outlives its button. Only on that change: opening the view on purpose where the chat already shows Processes
+     (the lab, #thread) still works, and nothing reopens when the chat's goes and the button comes back. */
+  var chatHad = false;
   function placeButton() {
     var bar = realBar();
     if (!bar) return;
-    if (!shown()) { if (btn.parentNode) btn.parentNode.removeChild(btn); return; }
+    var chat = chatHasProcesses(bar), appeared = chat && !chatHad;
+    chatHad = chat;
+    if (appeared) {
+      clearTimeout(hoverT); /* a card due to open from the leaving button would open with nothing to anchor it */
+      if (ui.open || ui.hoverOpen) {
+        if (ui.hoverOpen) { clearTimeout(leaveT); hideCard(); }
+        if (ui.open) T.close();
+        return;
+      }
+    }
+    if (!shown() || chat) { if (btn.parentNode) btn.parentNode.removeChild(btn); return; }
     /* After Subagents: the compaction tiers drop the right-hand domains first, and Processes is not a file-level one. */
     var after = bar.querySelector('.activity-item[data-domain="subagents"]') || bar.querySelector('.activity-item[data-domain="todo"]') || bar.querySelector('.activity-item[data-domain="goal"]');
     var ref = after ? after.nextSibling : bar.firstChild;
@@ -81,7 +103,7 @@
     var filt = doc.querySelector('#pmRoot .activity-panel .activity-filter');
     if (!filt) return;
     var tab = filt.querySelector('[data-rw-tab]');
-    if (!shown()) { if (tab) tab.remove(); filt.style.setProperty('--activity-n', String(filt.querySelectorAll('button').length)); return; }
+    if (!shown() || chatHasProcesses(filt)) { if (tab) tab.remove(); filt.style.setProperty('--activity-n', String(filt.querySelectorAll('button').length)); return; }
     if (!tab) {
       tab = doc.createElement('button');
       tab.setAttribute('data-k', 'rw-tab'); tab.setAttribute('data-rw-tab', 'processes');

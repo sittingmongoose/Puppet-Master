@@ -61,7 +61,8 @@
       if (!d) return;
       const glyphs = '#%&*+=<>/\\01';
       const goal = text.toUpperCase().slice(0, 28);
-      if (goal === this.decoded) return;
+      /* (a new layout: the label as it reads, decoded, at once: SW-23. It stayed blank, the new HUD never written) */
+      if (goal === this.decoded) { if (this.relayout) { if (this.decT) this.decT.cancel(); d.textContent = goal; } return; }
       this.decoded = goal;
       if (this.decT) this.decT.cancel();
       if (this.reduced || !goal) { d.textContent = goal; return; }

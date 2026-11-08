@@ -4,10 +4,19 @@
 // at that size; More also opens on ArrowDown, its menu takes the focus, and Escape gives it back to More. A key focus
 // paints a mark on every side of the item's tile at 3:1 or more against what was painted there before, in every look,
 // lit or not, collapsed or with the names shown, and never crosses or touches a name's letters (F96-1); NieR's mark is
-// its four target brackets. Friendly Light's 3:1 is held back for FO-99. The chat strip's FO-76 sizer copies stay inert
+// its four target brackets; in Friendly Light the ring must stand 3:1 against both its neighbours (FO-99). The chat strip's FO-76 sizer copies stay inert
 // and out of the tab order. One test per size: 1920x1100 (everything), 1390x860, 1280x500, 1024x768 and 740x900 (all
 // but the chat switch, the Docker drag and the chat strip, which are judged at 1920). Both surfaces (--set sandbox=0|1).
-//   --set size=1280x500   --set looks=basic-dark,nier-light   --set crops=1   --set fo99=1 (Friendly Light held to 3:1)
+// FO-98 (section 5b): every icon's aria-expanded says whether its panel is on screen (Chat: the chat column) and its
+// aria-controls names it, at rest, after Enter opens and shuts a panel, after the folded rail's overlay is shut by
+// Escape, and in Playwright's accessibility tree; at 1920 and 740 each icon's own menu (Shift+F10, the Menu key, a right
+// click) moves it up and down and hides it in More by keys, Alt+ArrowUp/Down move it, Ctrl+N follows the new order, the
+// focus stays on the icon (the next one after a hide), each change is announced, and More's menu puts it back; at 1920
+// also the shell's own menu with the rail skin unmounted. Round 4: a right click's menu finished by keys keeps the focus
+// on the bar (Escape: the icon; a move: the moved icon; a hide: the next icon), and a right click soon after a key's menu
+// opens its own. The bar's order is put back at the end.
+//   --set size=1280x500   --set looks=basic-dark,nier-light   --set crops=1
+//   --set fo98=only (just section 5b)   --set fo98=off (without it)
 import { LOOKS } from '../browser-check.config.mjs';
 
 const frames = (f, n = 3) => f.evaluate(async n => { for (let i = 0; i < n; i++) await new Promise(requestAnimationFrame); }, n);
@@ -117,7 +126,7 @@ function boxOf(key) {
 // origin is (ox, oy) in page pixels.
 const Yv = (d, i) => 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
 const ratio = (p, q) => (Math.max(p, q) + 0.05) / (Math.min(p, q) + 0.05);
-function scanline(rest, focus, pts) {
+function scanline(rest, focus, pts, both = false) {
   const px = pts.map(([x, y]) => (x < 0 || y < 0 || x >= rest.width || y >= rest.height) ? null : 4 * (y * rest.width + x));
   let core = -1, best = 40;
   px.forEach((i, k) => { if (i == null) return; const d = Math.abs(Yv(focus.data, i) - Yv(rest.data, i)); if (d > best) { best = d; core = k; } });
@@ -131,14 +140,17 @@ function scanline(rest, focus, pts) {
   while (b < px.length - 1 && same(b + 1)) b++;
   const lc = L(px[core]);
   const beside = (from, step) => { let m = 0; for (let k = 1; k <= 2; k++) { const j = from + step * k; if (j < 0 || j >= px.length || px[j] == null) break; m = Math.max(m, ratio(lc, L(px[j]))); } return m; };
-  // the better of its two neighbours, as opus-recheck-f96 judged it: a two-tone mark has its ground band on one side
-  return Math.max(beside(a, -1), beside(b, 1));
+  // the better of its two neighbours, as opus-recheck-f96 judged it: a two-tone mark has its ground band on one side.
+  // `both` (FO-99, Friendly Light, whose ring lies between the white band and the bar's pale ground): the worse of the
+  // two, so the ring must stand 3:1 against each (its old pale-blue ring read about 3:1 against the band and 1.9 to
+  // 2.9:1 against the ground)
+  return both ? Math.min(beside(a, -1), beside(b, 1)) : Math.max(beside(a, -1), beside(b, 1));
 }
-function sides(rest, focus, tile, ox, oy) {
+function sides(rest, focus, tile, ox, oy, both = false) {
   const L = Math.round(tile.x - ox), T = Math.round(tile.y - oy), Rr = Math.round(tile.x + tile.w - ox), B = Math.round(tile.y + tile.h - oy);
   const mid = (p, q) => { const out = []; for (let v = Math.round(p + (q - p) * 0.2); v < Math.round(p + (q - p) * 0.8); v++) out.push(v); return out; };
   const span = e => { const out = []; for (let v = e - 6; v < e + 6; v++) out.push(v); return out; };
-  const side = lines => { const got = lines.map(pts => scanline(rest, focus, pts)).sort((p, q) => p - q); const n = got.length;
+  const side = lines => { const got = lines.map(pts => scanline(rest, focus, pts, both)).sort((p, q) => p - q); const n = got.length;
     return { share: n ? +(got.filter(v => v >= 3).length / n).toFixed(2) : 0, worst: n ? +got[0].toFixed(2) : 0, median: n ? +got[Math.floor(n / 2)].toFixed(2) : 0 }; };
   return {
     top: side(mid(L, Rr).map(x => span(T).map(y => [x, y]))),
@@ -155,9 +167,9 @@ function corners(rest, focus, item, ox, oy) {
   const corner = (cx, cy, dx, dy) => { let n = 0; for (let y = cy - 6; y < cy + 8; y++) for (let x = cx - 6; x < cx + 8; x++) { const xx = dx > 0 ? x : 2 * cx - x, yy = dy > 0 ? y : 2 * cy - y; if (contrastAt(rest, focus, xx, yy) >= 3) n++; } return n; };
   return { tl: corner(L, T, 1, 1), tr: corner(Rr, T, -1, 1), bl: corner(L, B, 1, -1), br: corner(Rr, B, -1, -1) };
 }
-// a mark passes when every side (every corner for NieR) is there at 3:1; `soft` (FO-99) asks only that every side changed
-const markOk = (r, soft) => !!r && r.focused && (r.brackets ? Object.values(r.corners).every(n => n >= 6)
-  : Object.values(r.sides).every(sd => soft ? sd.share >= 0.9 || sd.median > 1.5 : sd.share >= 0.9) && (!r.clip || Object.values(r.clip).every(v => v <= 1)));
+// a mark passes when every side (every corner for NieR) is there at 3:1
+const markOk = r => !!r && r.focused && (r.brackets ? Object.values(r.corners).every(n => n >= 6)
+  : Object.values(r.sides).every(sd => sd.share >= 0.9) && (!r.clip || Object.values(r.clip).every(v => v <= 1)));
 const brief = r => r && { key: r.key, lit: r.lit, focused: r.focused, ...(r.unreached ? { unreached: true } : {}), ...(r.skipped ? { skipped: r.skipped } : {}), ...(r.moved ? { moved: true } : {}), ...(r.clip && Object.values(r.clip).some(v => v > 1) ? { clip: r.clip } : {}),
   ...(r.corners ? { corners: r.corners } : {}), ...(r.sides ? { sides: Object.fromEntries(Object.entries(r.sides).map(([k, v]) => [k, `${v.share} ${v.worst}-${v.median}`])) } : {}), ...(r.names ? { names: r.names } : {}) };
 
@@ -210,6 +222,384 @@ function moreState() {
     focusIn: shown && m.contains(document.activeElement), focusOnMore: document.activeElement === btn };
 }
 
+// FO-98: what each icon's open state is, read from what a person sees: a panel icon's view on screen (its .active and a
+// box of its own); for Chat, the chat itself on screen: shown, at least 120 px wide and inside the window, with its
+// folded strip ("Open the chat") not shown (round 2, K-act8-1: the strip was counted as open, so a Chat reading
+// expanded while the chat was folded passed); set beside it, the icon's aria-expanded, aria-controls, lit state and
+// whether a menu marked it.
+function openTruth() {
+  const out = {};
+  for (const ic of document.querySelectorAll('#activityBar > .icon[data-ab-id]')) {
+    const k = ic.getAttribute('data-ab-id');
+    if (k === 'more') continue;
+    const tg = ic.getAttribute('data-target'), view = tg && document.getElementById(tg);
+    let open = null, want = null;
+    if (view) { const r = view.getBoundingClientRect(); open = view.classList.contains('active') && r.width > 1 && r.height > 1; want = tg; }
+    else if (k === 'chat') {
+      const c = document.getElementById('chatPanel'), r = c && c.getBoundingClientRect(), strip = document.getElementById('pmw-chat-strip');
+      const folded = !!(strip && !strip.hidden && strip.getClientRects().length);
+      open = !!c && !c.classList.contains('hidden') && !folded && r.width >= 120 && r.right > 0 && r.left < innerWidth; want = 'chatPanel';
+    }
+    out[k] = { open, want, expanded: ic.getAttribute('aria-expanded'), controls: ic.getAttribute('aria-controls'), lit: ic.classList.contains('active'), menuMark: ic.classList.contains('is-menu-open') };
+  }
+  return out;
+}
+const barOrder = () => [...document.querySelectorAll('#activityBar > .icon[data-ab-id]')].map(i => i.getAttribute('data-ab-id'));
+function iconMenu() {
+  const m = document.querySelector('.pmr-menu[data-pmr-menu="d-ab-icon"]') || document.querySelector('.pm-ab-ctx');
+  const shown = !!m && m.isConnected && m.getClientRects().length > 0 && getComputedStyle(m).display !== 'none' && getComputedStyle(m).visibility !== 'hidden';
+  const rows = shown ? [...m.querySelectorAll('.pmr-mi, .pm-ab-tray-row')] : [];
+  const a = document.activeElement;
+  return { open: shown, kind: m ? (m.classList.contains('pm-ab-ctx') ? 'shell' : 'skin') : null, role: m && m.getAttribute('role'),
+    rows: rows.map(b => ((b.querySelector('.pm6-chat-modelname') || b).textContent.trim()) + (b.getAttribute('aria-disabled') === 'true' ? ' (disabled)' : '')),
+    focusRow: shown && m.contains(a) ? ((a.querySelector && a.querySelector('.pm6-chat-modelname')) || a).textContent.trim() : null };
+}
+
+// FO-98, at every size: each icon's open state is exposed (aria-expanded and aria-controls) and kept true as panels open
+// and close by keys and clicks, the folded rail's overlay included; at 1920 and 740, reorder and hide by keys (each
+// icon's menu by Shift+F10, the Menu key or a right click, Alt+ArrowUp/Down), back again, with the focus kept and each
+// change announced; at 1920 the shell's own menu with the rail skin unmounted too. The bar's order is put back at the end.
+async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
+  const settle = (n = 4) => frames(f, n);
+  const reach = async (k) => { await sentinel('#activityBar'); for (let i = 0; i < 16; i++) { await kb.press('Tab'); if ((await key()).key === k) return true; } return false; };
+  // what the live region said since the last drain(), every announcement in turn (round 4): reading only its last text
+  // let a demo's own announcement ("cargo test --workspace failed ...") that came after a move's hide the move's
+  await f.evaluate(() => {
+    if (window.__fo98said) return;
+    window.__fo98said = [];
+    const watch = (el) => new MutationObserver(() => { const tx = el.textContent || ''; if (tx) window.__fo98said.push(tx); }).observe(el, { childList: true, characterData: true, subtree: true });
+    const el = document.getElementById('pmw-live');
+    if (el) { watch(el); return; }
+    const mo = new MutationObserver(() => { const e = document.getElementById('pmw-live'); if (e) { mo.disconnect(); watch(e); if (e.textContent) window.__fo98said.push(e.textContent); } });
+    mo.observe(document.body, { childList: true });
+  });
+  const drain = () => f.evaluate(() => { (window.__fo98said || []).splice(0); });
+  const live = () => f.evaluate(() => (window.__fo98said || []).splice(0).join(' | '));
+  const agree = async (label, extra) => {
+    await settle(); await f.waitForTimeout(80);
+    const s = await f.evaluate(openTruth);
+    const bad = Object.entries(s).filter(([, v]) => v.controls !== v.want || (v.expanded === 'true') !== !!v.open);
+    await t.check(`${at} FO-98 ${label}: each icon's aria-expanded says whether its panel (Chat: the chat column) is on screen, aria-controls names it`,
+      bad.length === 0 && (!extra || extra(s)), bad.length ? JSON.stringify(Object.fromEntries(bad)) : Object.entries(s).map(([k, v]) => `${k}=${v.expanded}${v.lit ? '*' : ''}`).join(' '));
+    return s;
+  };
+  const s0 = await agree('at rest');
+  // the accessibility tree, as a screen reader gets it
+  const snapOf = async (k) => (await f.locator(`#activityBar > .icon[data-ab-id="${k}"]`).ariaSnapshot()).split('\n')[0];
+  const openKey = Object.keys(s0).find(k => s0[k].want && s0[k].want !== 'chatPanel' && s0[k].open);
+  const shutKey = Object.keys(s0).find(k => s0[k].want && s0[k].want !== 'chatPanel' && !s0[k].open);
+  const so = openKey ? await snapOf(openKey) : '', ss = shutKey ? await snapOf(shutKey) : '';
+  t.log(`${at} FO-98 tree: ${so || '(no open panel)'} | ${ss}`);
+  await t.check(`${at} FO-98: the accessibility tree reads the open panel's icon as expanded and a shut one's as not`,
+    (!openKey || /\[expanded(=true)?\]/.test(so)) && !!shutKey && !/\[expanded(=true)?\]/.test(ss), JSON.stringify({ openKey, so, shutKey, ss }));
+  // a panel opened and shut by keys
+  if (await reach('search')) { await kb.press('Enter'); await agree('after Enter opens Search', s => s.search.expanded === 'true'); }
+  const folded = await f.evaluate(() => document.querySelector('.main-area')?.getAttribute('data-pmw-rail') === 'fold');
+  if (folded) {
+    await kb.press('Escape');
+    await agree('the folded rail\'s overlay shut by Escape (Search stays lit)', s => s.search.expanded === 'false' && s.search.lit);
+  } else if (full && await reach('search')) {
+    await kb.press('Enter');
+    await agree('after Enter shuts Search', s => s.search.expanded === 'false');
+  }
+  // Files lit and its panel open, as the page starts (folded: Files lit with its overlay shut)
+  const filesBack = async (label) => {
+    if (!(await reach('files'))) return;
+    await kb.press('Enter'); await agree(label, s => s.files.expanded === 'true');
+    if (folded) { await kb.press('Escape'); await agree(label + ', its overlay shut by Escape', s => s.files.expanded === 'false' && s.files.lit); }
+  };
+  await filesBack('after Enter opens Files again');
+  // the same by real mouse clicks (round 2, K-act8-3)
+  const clickIcon = async (ic) => { const b = await f.locator(`#activityBar > .icon[data-ab-id="${ic}"]`).boundingBox(); if (!b) return false; await t.page.mouse.click(off.x + b.x + b.width / 2, off.y + b.y + b.height / 2); await rest(); return true; };
+  if (await clickIcon('search')) await agree('after a click opens Search', s => s.search.expanded === 'true');
+  if (await clickIcon('files')) await agree('after a click opens Files', s => s.files.expanded === 'true');
+  if (folded && await reach('files')) { await kb.press('Escape'); await agree('Files\' overlay shut by Escape again', s => s.files.expanded === 'false'); }
+  if (full && await reach('chat')) {
+    await kb.press('Enter'); await f.waitForTimeout(900); await agree('after Enter switches the chat column');
+    await kb.press(' '); await f.waitForTimeout(900); await agree('after Space switches it back');
+  }
+  // the chat folded to its strip ("Open the chat"): Chat is not expanded; Enter on it opens the chat over the centre,
+  // which expands it, and Escape folds it back (round 2, F98-1)
+  const stripOn = () => f.evaluate(() => { const b = document.getElementById('pmw-chat-strip'); return !!(b && !b.hidden && b.getClientRects().length); });
+  const peeking = () => f.evaluate(() => !!document.querySelector('.main-area')?.hasAttribute('data-pmw-chat-peek'));
+  // At 740 the step is required, whatever ran before (round 3, K8b-1): section 5's 1920 test stores "Keep the chat open
+  // in narrow windows" on the normal page, and the 740 test that follows then never folded the chat, so the step only
+  // logged a skip and round 1 passed the default run. It turns that preference off for the step (as the chat's own
+  // "Keep the chat open in narrow windows" item does), fails by name if the chat still does not fold, and puts it back.
+  if (await peeking() && await reach('chat')) { await kb.press('Escape'); await f.waitForTimeout(500); }
+  const mustFold = at === '740x900';
+  const keptOpen = mustFold ? await f.evaluate(() => { const c = window.PMW && PMW.chatCol; if (!c || !c.keepOpen || !c.keepOpen()) return false; c.setKeepOpen(false); return true; }) : false;
+  if (mustFold) await f.waitForFunction(() => { const b = document.getElementById('pmw-chat-strip'); return !!(b && !b.hidden && b.getClientRects().length); }, null, { timeout: 4000 }).catch(() => {});
+  if (keptOpen) t.log(`${at} FO-98: "keep the chat open" was stored by an earlier test; turned off for the strip step`);
+  if (await stripOn()) {
+    await agree('the chat folded to its strip', s => s.chat.expanded === 'false' && s.chat.lit);
+    if (await reach('chat')) { await kb.press('Enter'); await f.waitForTimeout(700); }
+    await agree('after Enter opens the chat over the centre', s => s.chat.expanded === 'true');
+    await kb.press('Escape'); await f.waitForTimeout(700);
+    await agree('after Escape folds the chat back to its strip', s => s.chat.expanded === 'false');
+  } else if (mustFold) await t.check(`${at} FO-98: the chat folds to its strip at 740x900 for the strip step`, false, JSON.stringify(await f.evaluate(() => ({ keepOpen: !!(window.PMW && PMW.chatCol && PMW.chatCol.keepOpen && PMW.chatCol.keepOpen()), chatStrip: !!(window.PMW && PMW.narrow && PMW.narrow.state.chatStrip), chatW: Math.round(document.getElementById('chatPanel')?.getBoundingClientRect().width || 0) }))));
+  else t.log(`${at} FO-98: the chat is not folded to its strip at this size`);
+  if (keptOpen) { await f.evaluate(() => PMW.chatCol.setKeepOpen(true)); await f.waitForTimeout(500); }
+  // across the fold in one session (round 2, K-act8-3): the state is read again after the window narrows and widens
+  if (full) {
+    await t.viewport(740, 900); await f.waitForTimeout(1200);
+    await agree('the same session narrowed to 740x900');
+    await t.viewport(1920, 1100); await f.waitForTimeout(1200);
+    await agree('the same session back at 1920x1100', s => s.files.expanded === 'true');
+  }
+  if (!full && at !== '740x900') return;
+
+  // reorder and hide by keys, through the rail skin's menu
+  // an icon with a neighbour on each side, so it can move both ways (section 4's drag leaves Docker last)
+  const order0 = await f.evaluate(barOrder), visible0 = order0.filter(x => x !== 'more');
+  const middle = visible0.slice(1, -1), k = middle.includes('docker') ? 'docker' : middle[Math.floor(middle.length / 2)];
+  const i0 = order0.indexOf(k);
+  const menuUp = () => f.waitForFunction(() => { const m = document.querySelector('.pmr-menu[data-pmr-menu="d-ab-icon"], .pm-ab-ctx'); return !!m && m.getClientRects().length > 0 && m.contains(document.activeElement); }, null, { timeout: 2000 }).catch(() => {});
+  const menuGone = () => f.waitForFunction(() => { const m = document.querySelector('.pmr-menu[data-pmr-menu="d-ab-icon"], .pm-ab-ctx'); return !m || !m.isConnected || !m.getClientRects().length || getComputedStyle(m).display === 'none'; }, null, { timeout: 2000 }).catch(() => {});
+  let reached = await reach(k);
+  const exp0 = (await f.evaluate(openTruth))[k];
+  if (reached) { await kb.press('Shift+F10'); await menuUp(); }
+  let m = await f.evaluate(iconMenu);
+  const exp1 = (await f.evaluate(openTruth))[k];
+  await t.check(`${at} FO-98 ${k}: Shift+F10 opens its menu (Move up, Move down, Hide in More) with the focus on its first row, and leaves the icon's aria-expanded alone`,
+    reached && m.open && m.kind === 'skin' && m.role === 'menu' && /^Move up/.test(m.rows[0] || '') && /^Move down/.test(m.rows[1] || '') && /^Hide in More/.test(m.rows[2] || '') && /^Move up/.test(m.focusRow || '')
+      && exp1.expanded === exp0.expanded && !exp1.menuMark, JSON.stringify({ reached, menu: m, before: exp0, open: exp1 }));
+  await drain();
+  if (m.open) { await kb.press('Enter'); await menuGone(); await settle(); await f.waitForTimeout(120); }
+  let order = await f.evaluate(barOrder), foc = await key(), said = await live();
+  await t.check(`${at} FO-98 ${k}: Move up moves it one place up, keeps the focus on it and is announced`,
+    order.indexOf(k) === i0 - 1 && order.filter(x => x !== k).join() === order0.filter(x => x !== k).join() && foc.key === k && /moved up/i.test(said), JSON.stringify({ order, focus: foc.key, said }));
+  await drain(); await kb.press('Alt+ArrowDown'); await settle(); await f.waitForTimeout(120);
+  order = await f.evaluate(barOrder); foc = await key(); said = await live();
+  await t.check(`${at} FO-98 ${k}: Alt+ArrowDown moves it back down, the focus kept`, order.join() === order0.join() && foc.key === k && /moved down/i.test(said), JSON.stringify({ order, focus: foc.key, said }));
+  // Ctrl+1..9 follow the order, as they always did
+  await kb.press('Alt+ArrowUp'); await settle();
+  const ctrlN = await f.evaluate((k) => [...document.querySelectorAll('.activity-bar .icon[data-target]')].findIndex(i => i.getAttribute('data-ab-id') === k) + 1, k);
+  if (ctrlN >= 1 && ctrlN <= 9) {
+    await kb.press(`Control+${ctrlN}`); await settle(); await f.waitForTimeout(250);
+    await agree(`Ctrl+${ctrlN} opens ${k}'s panel at its new place`, s => s[k].expanded === 'true');
+    await filesBack('Files again after Ctrl+N');
+  } else t.log(`${at} FO-98: ${k} is past Ctrl+9 (${ctrlN})`);
+  if (await reach(k)) { await kb.press('Alt+ArrowDown'); await settle(); }
+  order = await f.evaluate(barOrder);
+  await t.check(`${at} FO-98 ${k}: back at its own place`, order.join() === order0.join(), order.join());
+  // hide by the Menu key, then back from More, then back to its place. Windows Chrome sends the Menu key's own
+  // contextmenu on its keyup, to the menu row that has the focus by then: it must arrive cancelled (round 2, K-act8-4)
+  await f.evaluate(() => { window.__fo98ctx = []; if (!window.__fo98ctxOn) { window.__fo98ctxOn = true; window.addEventListener('contextmenu', (e) => { window.__fo98ctx.push({ prevented: e.defaultPrevented, on: String((e.target && e.target.className) || (e.target && e.target.tagName) || '').slice(0, 40) }); }); } });
+  reached = await reach(k);
+  if (reached) { await kb.press('ContextMenu'); await menuUp(); await f.waitForTimeout(150); }
+  const ctxSeen = await f.evaluate(() => window.__fo98ctx.slice());
+  t.log(`${at} FO-98: contextmenu events after the Menu key: ${JSON.stringify(ctxSeen)}`);
+  await t.check(`${at} FO-98 ${k}: no contextmenu event from the Menu key reaches the page uncancelled`, ctxSeen.every((e) => e.prevented), JSON.stringify(ctxSeen));
+  m = await f.evaluate(iconMenu);
+  await drain();
+  if (m.open) { await kb.press('End'); await kb.press('Enter'); await menuGone(); await settle(); await f.waitForTimeout(120); }
+  order = await f.evaluate(barOrder); foc = await key(); said = await live();
+  const nextKey = visible0[visible0.indexOf(k) + 1] || visible0[visible0.indexOf(k) - 1];
+  const empty = await f.evaluate(() => document.getElementById('abMoreBtn').getAttribute('data-empty'));
+  await t.check(`${at} FO-98 ${k}: the Menu key's menu hides it in More, the focus goes to the next icon and it is announced`,
+    reached && m.open && !order.includes(k) && empty === '0' && foc.key === nextKey && /hidden in More/i.test(said), JSON.stringify({ menu: m.rows, order, empty, focus: foc.key, want: nextKey, said }));
+  if (!order.includes(k) && await reach('more')) {
+    await kb.press('ArrowDown');
+    await f.waitForFunction(() => { const mm = document.querySelector('.pmr-menu[data-pmr-menu="d-ab-more"]'); return !!mm && mm.contains(document.activeElement); }, null, { timeout: 2000 }).catch(() => {});
+    await kb.press('Enter'); await settle(); await f.waitForTimeout(300);
+  }
+  order = await f.evaluate(barOrder);
+  await t.check(`${at} FO-98 ${k}: More's menu puts it back, at the end of the bar`, order[order.length - 2] === k && order[order.length - 1] === 'more', order.join());
+  if (await reach(k)) for (let n = 0; n < order0.length && (await f.evaluate(barOrder)).indexOf(k) > i0; n++) { await kb.press('Alt+ArrowUp'); await settle(1); }
+  order = await f.evaluate(barOrder); foc = await key();
+  await t.check(`${at} FO-98 ${k}: Alt+ArrowUp walks it back to its own place, the focus on it all the way`, order.join() === order0.join() && foc.key === k, JSON.stringify({ order, focus: foc.key }));
+  // a right click opens the same menu at the pointer; the first icon's Move up is disabled
+  const fb = await f.locator('#activityBar > .icon[data-ab-id="files"]').boundingBox();
+  if (fb) {
+    await t.page.mouse.click(off.x + fb.x + fb.width / 2, off.y + fb.y + fb.height / 2, { button: 'right' });
+    await f.waitForFunction(() => !!document.querySelector('.pmr-menu[data-pmr-menu="d-ab-icon"]'), null, { timeout: 2000 }).catch(() => {});
+    m = await f.evaluate(iconMenu);
+    const fx = (await f.evaluate(openTruth)).files;
+    await t.check(`${at} FO-98: a right click on Files opens its menu, and Files' aria-expanded is still its panel's`, m.open && m.rows.length === 3 && (fx.expanded === 'true') === !!fx.open && !fx.menuMark, JSON.stringify({ menu: m, files: fx }));
+    await kb.press('Escape'); await menuGone(); await rest();
+  }
+  // a right click's menu finished by keys (round 4, B): the focus follows the key that finished it, not the press that
+  // opened it. Escape gives it back to the icon, ArrowDown and Enter on Move up keep it on the moved icon, and End and
+  // Enter on Hide in More give it to the next icon, as the Menu key's menu does; before, all three left it on <body>
+  const rightMenu = async (ic) => {
+    const b = await f.locator(`#activityBar > .icon[data-ab-id="${ic}"]`).boundingBox();
+    if (!b) return false;
+    await t.page.mouse.click(off.x + b.x + b.width / 2, off.y + b.y + b.height / 2, { button: 'right' });
+    await menuUp();
+    return (await f.evaluate(iconMenu)).open;
+  };
+  const nextOf = (o, ic) => { const v = o.filter(x => x !== 'more'), i = v.indexOf(ic); return v[i + 1] || v[i - 1]; };
+  let opened = await rightMenu(k);
+  if (opened) { await kb.press('Escape'); await menuGone(); }
+  foc = await key();
+  await t.check(`${at} FO-98 ${k}: Escape on a right click's menu gives the focus back to the icon (round 4, B)`, opened && foc.key === k && !(await f.evaluate(iconMenu)).open, JSON.stringify({ opened, focus: foc.key }));
+  await rest();
+  opened = await rightMenu(k);
+  await drain();
+  if (opened) { await kb.press('ArrowDown'); await kb.press('Enter'); await menuGone(); await settle(); await f.waitForTimeout(120); }
+  order = await f.evaluate(barOrder); foc = await key(); said = await live();
+  await t.check(`${at} FO-98 ${k}: a right click's menu, ArrowDown and Enter on Move up move it up and keep the focus on it (round 4, B)`,
+    opened && order.indexOf(k) === i0 - 1 && foc.key === k && /moved up/i.test(said), JSON.stringify({ opened, order, focus: foc.key, said }));
+  if (order.indexOf(k) === i0 - 1 && (foc.key === k || await reach(k))) { await kb.press('Alt+ArrowDown'); await settle(); }   /* undo only a move that happened */
+  await rest();
+  const orderB = await f.evaluate(barOrder), nextB = nextOf(orderB, k);
+  opened = await rightMenu(k);
+  await drain();
+  if (opened) { await kb.press('End'); await kb.press('Enter'); await menuGone(); await settle(); await f.waitForTimeout(120); }
+  order = await f.evaluate(barOrder); foc = await key(); said = await live();
+  await t.check(`${at} FO-98 ${k}: a right click's menu, End and Enter on Hide in More hide it and give the focus to the next icon (round 4, B)`,
+    opened && orderB.join() === order0.join() && !order.includes(k) && foc.key === nextB && /hidden in More/i.test(said), JSON.stringify({ opened, before: orderB, order, focus: foc.key, want: nextB, said }));
+  if (!order.includes(k) && await reach('more')) {
+    await kb.press('ArrowDown');
+    await f.waitForFunction(() => { const mm = document.querySelector('.pmr-menu[data-pmr-menu="d-ab-more"]'); return !!mm && mm.contains(document.activeElement); }, null, { timeout: 2000 }).catch(() => {});
+    await kb.press('Enter'); await settle(); await f.waitForTimeout(300);
+  }
+  if (await reach(k)) for (let n = 0; n < order0.length && (await f.evaluate(barOrder)).indexOf(k) > i0; n++) { await kb.press('Alt+ArrowUp'); await settle(1); }
+  order = await f.evaluate(barOrder);
+  await t.check(`${at} FO-98 ${k}: back at its own place after the right click's hide`, order.join() === order0.join(), order.join());
+  // a right click soon after a key's menu (round 4, C): Shift+F10 on Files, Escape, then a right click on Search within
+  // a second of the key. Only the key's own contextmenu is swallowed, so Search's menu opens; before, every right click
+  // on the bar was dropped for a second after the key. The second is timed in the page; a run too slow to land inside
+  // it tries once more and then fails by name.
+  const searchMenu = () => {
+    const ms = [...document.querySelectorAll('.pmr-menu[data-pmr-menu="d-ab-icon"], .pm-ab-ctx')].filter(x => x.isConnected
+      && /^Search\b/.test(x.getAttribute('aria-label') || '') && x.getClientRects().length > 0 && getComputedStyle(x).display !== 'none' && getComputedStyle(x).visibility !== 'hidden');
+    return { open: ms.length > 0, label: ms.length ? ms[0].getAttribute('aria-label') : null, focusIn: ms.length > 0 && ms[0].contains(document.activeElement) };
+  };
+  let quick = null;
+  for (let n = 0; n < 2 && !(quick && quick.inWindow); n++) {
+    await rest();
+    const sb = await f.locator('#activityBar > .icon[data-ab-id="search"]').boundingBox();
+    if (!sb || !(await reach('files'))) break;
+    await f.evaluate(() => {
+      window.__fo98c = { key: 0, ctx: 0 };
+      if (window.__fo98cOn) return;
+      window.__fo98cOn = true;
+      window.addEventListener('keydown', (e) => { if (e.key === 'F10' && e.shiftKey) window.__fo98c.key = performance.now(); }, true);
+      window.addEventListener('contextmenu', (e) => { if (e.target && e.target.closest && e.target.closest('#activityBar')) window.__fo98c.ctx = performance.now(); }, true);
+    });
+    await kb.press('Shift+F10'); await menuUp();
+    const keyOpened = (await f.evaluate(iconMenu)).open;
+    await kb.press('Escape');
+    await t.page.mouse.click(off.x + sb.x + sb.width / 2, off.y + sb.y + sb.height / 2, { button: 'right' });
+    await f.waitForFunction(searchMenu, null, { timeout: 1500 }).catch(() => {});
+    const c = await f.evaluate(() => window.__fo98c), sm = await f.evaluate(searchMenu);
+    quick = { keyOpened, inWindow: c.key > 0 && c.ctx > c.key && c.ctx - c.key < 1000, ms: Math.round(c.ctx - c.key), search: sm, try: n + 1 };
+    t.log(`${at} FO-98: right click on Search after Shift+F10 and Escape on Files: ${JSON.stringify(quick)}`);
+    await kb.press('Escape'); await menuGone();
+  }
+  await t.check(`${at} FO-98: a right click on Search within a second of Shift+F10 and Escape on Files opens Search's menu (round 4, C)`,
+    !!quick && quick.keyOpened && quick.inWindow && quick.search.open, JSON.stringify(quick));
+  // Sol's route to the same fault (sol-review-g8 F98-S1): a right click on Source and Escape, then Shift+F10 on Source
+  // and Escape, then a right click on Source 150 ms and again 350 ms after the key, or as soon after as input allows
+  // (Escape between them, so the second lands on the icon, not on the first menu). Each must open Source's menu, and the
+  // first must land inside the old one-second watch; before, both were dropped.
+  const sourceMenu = () => {
+    const ms = [...document.querySelectorAll('.pmr-menu[data-pmr-menu="d-ab-icon"], .pm-ab-ctx')].filter(x => x.isConnected
+      && /^Source\b/.test(x.getAttribute('aria-label') || '') && x.getClientRects().length > 0 && getComputedStyle(x).display !== 'none' && getComputedStyle(x).visibility !== 'hidden'
+      && !x.classList.contains('is-closing'));
+    return ms.length > 0;
+  };
+  let sol = null;
+  for (let n = 0; n < 2 && !(sol && sol.inWindow); n++) {
+    await rest();
+    const ob = await f.locator('#activityBar > .icon[data-ab-id="source"]').boundingBox();
+    if (!ob) break;
+    const at0 = { x: off.x + ob.x + ob.width / 2, y: off.y + ob.y + ob.height / 2 };
+    const first = await rightMenu('source');
+    if (first) { await kb.press('Escape'); await menuGone(); }
+    if ((await key()).key !== 'source' && !(await reach('source'))) break;
+    await f.evaluate(() => {
+      window.__fo98s = { key: 0, ctx: [] };
+      if (window.__fo98sOn) return;
+      window.__fo98sOn = true;
+      window.addEventListener('keydown', (e) => { if (e.key === 'F10' && e.shiftKey) window.__fo98s.key = performance.now(); }, true);
+      window.addEventListener('contextmenu', (e) => { if (e.target && e.target.closest && e.target.closest('#activityBar')) window.__fo98s.ctx.push(performance.now()); }, true);
+    });
+    await kb.press('Shift+F10'); await menuUp();
+    const keyOpened = (await f.evaluate(iconMenu)).open;
+    await kb.press('Escape'); await menuGone();
+    const opens = [];
+    for (const delay of [150, 350]) {
+      await f.waitForFunction((d) => performance.now() - window.__fo98s.key >= d, delay, { timeout: 2000 }).catch(() => {});
+      await t.page.mouse.click(at0.x, at0.y, { button: 'right' });
+      const ok = await f.waitForFunction(sourceMenu, null, { timeout: 350 }).then(() => true, () => false);
+      opens.push(ok);
+      if (ok) { await kb.press('Escape'); await menuGone(); }   /* a dropped click leaves nothing to close; no wait */
+    }
+    const s = await f.evaluate(() => window.__fo98s), ms = s.ctx.map(c => Math.round(c - s.key));
+    /* the first click must land inside the old second (over --host it lands about 0.4 s after the key); the second is
+       logged, and it must open too, inside the second or not */
+    sol = { first, keyOpened, opens, ms, inWindow: s.key > 0 && ms.length === 2 && ms[0] > 0 && ms[0] < 1000, secondInWindow: ms.length === 2 && ms[1] < 1000, try: n + 1 };
+    t.log(`${at} FO-98: Sol's route on Source: ${JSON.stringify(sol)}`);
+  }
+  await t.check(`${at} FO-98: right clicks on Source 150 and 350 ms after Shift+F10 and Escape, after a right click and Escape, each open Source's menu (sol-review-g8 F98-S1)`,
+    !!sol && sol.first && sol.keyOpened && sol.inWindow && sol.opens.length === 2 && sol.opens.every(Boolean), JSON.stringify(sol));
+  await rest();
+  const first = (await f.evaluate(barOrder))[0];
+  if (await reach(first)) { await kb.press('Shift+F10'); await menuUp(); }
+  m = await f.evaluate(iconMenu);
+  if (m.open) { await kb.press('Escape'); await menuGone(); }
+  foc = await key();
+  await t.check(`${at} FO-98 ${first} (first): Move up is disabled, Escape gives the focus back to the icon`, m.open && /^Move up.*\(disabled\)$/.test(m.rows[0] || '') && !/disabled/.test(m.rows[1] || '') && foc.key === first, JSON.stringify({ menu: m, focus: foc.key }));
+  if (!full) return;
+
+  // NieR: the focused row is an ink bar; its glyph must stand off it (the hover tags' ignite drew it in the bar's own ink)
+  for (const look of ['nier-light', 'nier-dark']) {
+    await t.app.look(look);
+    await f.waitForFunction(() => !document.getElementById('o55np-reboot'), null, { timeout: 15000 }).catch(() => {});
+    if (await reach(k)) { await kb.press('Shift+F10'); await menuUp(); await f.waitForTimeout(250); }
+    const g = await f.evaluate(() => {
+      const row = document.activeElement, svg = row && row.closest && row.closest('.pmr-menu') && row.querySelector('.pmr-mi-ico svg');
+      if (!svg) return null;
+      const rgb = (c) => (c.match(/[\d.]+/g) || []).slice(0, 3).map(Number);
+      const L = ([r, gg, b]) => { const f = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }; return 0.2126 * f(r) + 0.7152 * f(gg) + 0.0722 * f(b); };
+      const part = [...svg.querySelectorAll('path, line, polyline, circle, rect')].find((e) => getComputedStyle(e).display !== 'none' && getComputedStyle(e).visibility !== 'hidden') || svg;
+      const st = rgb(getComputedStyle(part).stroke), bg = rgb(getComputedStyle(row).backgroundColor), a = L(st), c = L(bg);
+      return { row: row.textContent.trim(), stroke: st.join(), bg: bg.join(), ratio: +((Math.max(a, c) + 0.05) / (Math.min(a, c) + 0.05)).toFixed(2) };
+    });
+    await t.check(`${at} FO-98 ${look}: the focused menu row's glyph stands at 3:1 or more on its ink bar`, !!g && g.ratio >= 3, JSON.stringify(g));
+    await kb.press('Escape'); await menuGone();
+  }
+  await t.app.look('basic-dark');
+
+  // the shell's own menu and open state, the rail skin unmounted (the review copy's Original rail)
+  const swapped = await f.evaluate(() => { try { PMR.host.setConcept('current', { force: true }); return !document.documentElement.hasAttribute('data-rail-skin'); } catch (e) { return false; } });
+  if (!swapped) { t.log(`${at} FO-98: the rail skin could not be unmounted here; the shell's own menu is not judged`); return; }
+  await settle(6);
+  await agree('the rail skin unmounted, at rest');
+  reached = await reach(k);
+  if (reached) { await kb.press('Shift+F10'); await menuUp(); }
+  m = await f.evaluate(iconMenu);
+  await t.check(`${at} FO-98 ${k}, no rail skin: Shift+F10 opens the shell's own menu with the focus on its first row`, reached && m.open && m.kind === 'shell' && m.role === 'menu' && m.rows.length === 3 && /^Move up/.test(m.focusRow || ''), JSON.stringify(m));
+  if (m.open) { await kb.press('ArrowDown'); await kb.press('Enter'); await menuGone(); await settle(); }
+  order = await f.evaluate(barOrder); foc = await key();
+  await t.check(`${at} FO-98 ${k}, no rail skin: ArrowDown and Enter on Move down move it, the focus on it`, order.indexOf(k) === i0 + 1 && foc.key === k, JSON.stringify({ order, focus: foc.key }));
+  if (foc.key === k) { await kb.press('Shift+F10'); await menuUp(); await kb.press('Escape'); await menuGone(); }
+  foc = await key();
+  await t.check(`${at} FO-98 ${k}, no rail skin: Escape closes the shell's menu and gives the focus back to the icon`, foc.key === k && !(await f.evaluate(iconMenu)).open, foc.key);
+  await kb.press('Alt+ArrowUp'); await settle();
+  order = await f.evaluate(barOrder);
+  await t.check(`${at} FO-98 ${k}, no rail skin: Alt+ArrowUp puts it back`, order.join() === order0.join(), order.join());
+  // the shell's own menu opened by a right click and finished by keys (round 4, B): the focus stays on the moved icon
+  opened = await rightMenu(k);
+  m = await f.evaluate(iconMenu);
+  if (opened && m.kind === 'shell') { await kb.press('ArrowDown'); await kb.press('Enter'); await menuGone(); await settle(); }
+  order = await f.evaluate(barOrder); foc = await key();
+  await t.check(`${at} FO-98 ${k}, no rail skin: a right click's menu, ArrowDown and Enter on Move down move it, the focus on it (round 4, B)`,
+    opened && m.kind === 'shell' && order.indexOf(k) === i0 + 1 && foc.key === k, JSON.stringify({ opened, kind: m.kind, order, focus: foc.key }));
+  if (order.indexOf(k) === i0 + 1 && (foc.key === k || await reach(k))) { await kb.press('Alt+ArrowUp'); await settle(); }   /* undo only a move that happened */
+  await rest();
+  order = await f.evaluate(barOrder);
+  await t.check(`${at} FO-98 ${k}, no rail skin: Alt+ArrowUp puts it back after the right click's move`, order.join() === order0.join(), order.join());
+  if (await reach('search')) { await kb.press('Enter'); await agree('no rail skin, after Enter opens Search', s => s.search.expanded === 'true'); }
+  if (await reach('files')) { await kb.press('Enter'); await agree('no rail skin, after Enter opens Files', s => s.files.expanded === 'true'); }
+  await f.evaluate(() => PMR.host.setConcept('d', { force: true }));
+  await settle(6);
+  await agree('the rail skin mounted again');
+}
+
 const SIZES = [[1920, 1100], [1390, 860], [1280, 500], [1024, 768], [740, 900]];
 
 async function run(t, w, h) {
@@ -226,6 +616,8 @@ async function run(t, w, h) {
   const sentinel = async (sel, where = 'before') => { await f.evaluate(placeSentinel, [sel, where]); await f.locator('#fo96-sentinel').focus(); };
   const fe = surface === 'sandbox' ? await f.frameElement() : null, off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
   const rest = () => t.page.mouse.move(off.x + w - 30, off.y + h - 30);   /* the pointer away from the bar */
+  const fo98ctx = { at, kb, key, sentinel, rest, full, off };
+  if (t.args.fo98 === 'only') { await fo98(t, f, fo98ctx); await f.evaluate(() => document.getElementById('fo96-sentinel')?.remove()); return; }
 
   // 1. Tab from just before the bar walks every visible control in order, then leaves; Shift+Tab walks back.
   const controls = await f.evaluate(railControls);
@@ -253,6 +645,8 @@ async function run(t, w, h) {
   // the control before it in the bar as it is now (at 1920 the Docker drag puts Docker back just before More)
   const before = async target => { const now = await f.evaluate(railControls), i = now.findIndex(c => c.key === target); return i > 0 ? now[i - 1].key : null; };
   const focusQuiet = k => f.evaluate(k => { const el = k ? (k === 'activityBarToggle' ? document.getElementById(k) : document.querySelector(`#activityBar .icon[data-ab-id="${k}"]`)) : document.getElementById('fo96-sentinel'); if (el) el.focus({ preventScroll: true }); }, k);
+  // FO-99: whether a ring side is read against both its neighbours (Friendly Light, set per look below)
+  let both = false;
   const painted = async (target) => {
     await sentinel('#activityBar');
     await byTab(target)();
@@ -314,7 +708,7 @@ async function run(t, w, h) {
       t.log(`debug ${target} over ` + JSON.stringify(await f.evaluate(([x, y, w, hh]) => [[x + 1, y + hh / 2], [x + w / 2, y + 1], [x + w / 2, y + hh - 1]].map(([px, py]) => document.elementsFromPoint(px, py).slice(0, 3).map(e => (e.id ? '#' + e.id : '') + '.' + String(e.className?.baseVal ?? e.className).split(' ').slice(0, 2).join('.'))), [b.tile.x, b.tile.y, b.tile.w, b.tile.h])));
     }
     return { key: target, lit: b.lit, focused: now.key === target && !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
-      ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy), sides(r0, r1, b.item, ox, oy)) }),
+      ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, both), sides(r0, r1, b.item, ox, oy, both)) }),
       ...(named ? { names: lettersCrossed(r0, bare, r1, nameBoxes.map(q => ({ x: q.x + off.x - region.x, y: q.y + off.y - region.y, w: q.w, h: q.h }))) } : {}) };
   };
   // The mark as it is now, after a key or a click acted on the focused control (K-F96b-1: a panel closing or changing
@@ -350,7 +744,7 @@ async function run(t, w, h) {
     await focusQuiet(await before(target)); await kb.press('Tab'); await f.waitForTimeout(150);
     const ox = region.x - off.x, oy = region.y - off.y;
     return { key: target, lit: b.lit, focused: !moved, moved, brackets: b.brackets, clip: b.brackets ? null : b.clip,
-      ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy), sides(r0, r1, b.item, ox, oy)) }) };
+      ...(b.brackets ? { corners: corners(r0, r1, b.item, ox, oy) } : { sides: bestSides(sides(r0, r1, b.tile, ox, oy, both), sides(r0, r1, b.item, ox, oy, both)) }) };
   };
   // Frames where the lens carries the mark away from the focused control (F96b-2), sampled every frame from just before
   // a key until 900 ms after it; only a page whose rail lens can carry the mark (Glass with Liquid Glass on) can count any.
@@ -516,11 +910,14 @@ async function run(t, w, h) {
     await f.evaluate(() => document.getElementById('fo96-sentinel')?.remove());
   } else await f.evaluate(() => PMW.chatCol.show());   /* Chat lit, as at 1920 */
 
+  // 5b. FO-98: the open state, and reorder and hide by keys (above).
+  if (t.args.fo98 !== 'off') { await fo98(t, f, fo98ctx); await f.evaluate(() => PMW.chatCol.show()); }
+
   // 6. The painted focus mark in every look, on the two items lit by default (Chat, while the chat column shows, and
   // Files, the open panel; F96-1), an unlit item (Search) and More; then with the bar's names shown, on lit Files,
-  // Search and Pipelines (its p is the bar's lowest letter), none of whose letters may be crossed or touched. Friendly
-  // Light's accent is under 3:1 on its own ground (FO-99, logged for batch 8): there each side must change and the
-  // contrast is logged, unless --set fo99=1 holds it to 3:1.
+  // Search and Pipelines (its p is the bar's lowest letter), none of whose letters may be crossed or touched. In
+  // Friendly Light each side is read against both its neighbours (FO-99: the accent's pale blue read under 3:1 on the
+  // bar's ground; the ring now takes the accent's ink there, 80-bar.src.css).
   const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
   for (const look of looks) {
     await t.app.look(look);
@@ -530,12 +927,13 @@ async function run(t, w, h) {
       window.PM_NIER?.wanted?.() === window.PM_NIER?.on?.() && !document.getElementById('o55np-reboot'), null, { timeout: 20000 }).catch(() => {});
     await frames(f, 4);
     await rest();
-    const known = look === 'friendly-light' && !t.args.fo99;
-    const ok = r => markOk(r, known);
+    both = look === 'friendly-light';
+    const ok = markOk;
+    const both3 = both ? ' against both its neighbours' : '';
     const rows = [await painted('chat'), await painted('files'), await painted('search'), await painted('more')];
     t.log(`${at} ${look} marks ${JSON.stringify(rows.map(brief))}`);
     await t.check(`${at} ${look}: Chat and Files are lit, Search and More are not`, rows[0]?.lit && rows[1]?.lit && rows[2] && !rows[2].lit && rows[3] && !rows[3].lit, JSON.stringify(rows.map(r => r && [r.key, r.lit])));
-    await t.check(`${at} ${look}: a key focus mark on every side ${known ? '(3:1 held back for FO-99)' : 'at 3:1 or more'} on lit Chat and Files, on Search and on More`, rows.every(ok), JSON.stringify(rows.map(brief)));
+    await t.check(`${at} ${look}: a key focus mark on every side at 3:1 or more${both3} on lit Chat and Files, on Search and on More`, rows.every(ok), JSON.stringify(rows.map(brief)));
     // Keys acting on the open panel's icon (F96b-1): Enter (at 1920 it closes the panel), Enter again, a real click on
     // the focused icon, then Enter on Search (the panel changes, F96b-2); the mark is read after each, and no frame may
     // show the lens carrying it away from the focused control. Files is left open again.
@@ -554,7 +952,7 @@ async function run(t, w, h) {
     if (!(await f.evaluate(panelState, 'files')).open && await tabTo('files')) { await kb.press('Enter'); await frames(f, 4); }
     t.log(`${at} ${look} after keys ${JSON.stringify(acts.map(a => ({ after: a.after, ...brief(a) })))} lens ${JSON.stringify(lens)}`);
     const actsRead = acts.filter(a => !a.skipped);
-    await t.check(`${at} ${look}: the key focus mark ${known ? '(FO-99)' : 'at 3:1 on every side'} after Enter, Enter again and a click on the open panel's icon, and after Enter changes the panel`,
+    await t.check(`${at} ${look}: the key focus mark at 3:1 on every side${both3} after Enter, Enter again and a click on the open panel's icon, and after Enter changes the panel`,
       actsRead.length >= 3 && actsRead.every(ok), JSON.stringify(acts.map(a => ({ after: a.after, ...brief(a) }))));
     await t.check(`${at} ${look}: the lens never carries the mark away from the focused item when Enter changes the panel`, !!lens && lens.away === 0, JSON.stringify(lens));
     await rest();
@@ -645,7 +1043,7 @@ async function run(t, w, h) {
     // Chat (the first item, K-F96b-2), lit Files, Search and Pipelines (its p is the bar's lowest letter)
     const wide = [await painted('chat'), await painted('files'), await painted('search'), await painted('repository_automation')];
     t.log(`${at} ${look} names shown, marks ${JSON.stringify(wide.map(brief))}`);
-    await t.check(`${at} ${look}, names shown: a key focus mark on every side ${known ? '(FO-99)' : 'at 3:1 or more'} on Chat, lit Files, Search and Pipelines, and no name's letters in view are crossed or touched`,
+    await t.check(`${at} ${look}, names shown: a key focus mark on every side at 3:1 or more${both3} on Chat, lit Files, Search and Pipelines, and no name's letters in view are crossed or touched`,
       wide.every(ok) && wide[1]?.lit && wide.every(r => r && r.names && r.names.letters >= 15 && r.names.crossed === 0), JSON.stringify(wide.map(brief)));
     if (t.args.crops) {
       await sentinel('#activityBar'); await byTab('files')(); await f.waitForTimeout(450);

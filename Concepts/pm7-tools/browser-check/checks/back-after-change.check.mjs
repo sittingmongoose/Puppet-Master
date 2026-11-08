@@ -431,7 +431,7 @@ const rawIn = (texts, refs) => { const hits = []; for (const [where, text] of te
 /* the screen's own selection: its chosen cards and switches, and what its fields hold */
 const SEL = () => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)') || document; const sheet = [...document.querySelectorAll('.o55-sheet[data-open="true"]')].find((x) => !x.closest('.o55-out')) || null;
   const scope = [l, sheet].filter(Boolean), q = (sel) => scope.flatMap((x) => [...x.querySelectorAll(sel)]);
-  return { screen: O55.S.sess.screen, on: q('[role="radio"][aria-checked="true"], [role="switch"][aria-checked="true"]').map((b) => b.getAttribute('data-o55-do') + ':' + (b.getAttribute('data-arg') || '')).sort(),
+  return { screen: O55.S.sess.screen, on: q('[role="radio"][aria-checked="true"], [role="switch"][aria-checked="true"], [role="checkbox"][aria-checked="true"]').map((b) => b.getAttribute('data-o55-do') + ':' + (b.getAttribute('data-arg') || '')).sort(),
     fields: q('input[type="text"], input:not([type]), textarea').map((i) => i.id + '=' + i.value).sort() }; };
 /* a real click, or its click event when Playwright refuses the control as unstable. That was reported as the pane drifting
    about 0.3 px a frame; it is one card trembling (fo-kit, 2026-11-04): after Review > Edit name > Change the pointer rests
@@ -441,7 +441,38 @@ const SEL = () => { const l = document.querySelector('.o55-pane > .o55-layer:not
    person's click lands, and this row judges what the click does */
 const clickOrSend = async (A, sel) => { const el = A.frame().locator(sel).filter({ visible: true }).first(); await el.click({ timeout: 4000 }).catch(async () => { await el.dispatchEvent('click'); }); await A.sleep(300); };
 /* another value on the screen, not continued: a card or switch not chosen, else a field typed differently */
-const pickOther = async (A, which = 'first', revealed = false) => {
+/* the last pick pickOther made, for the walk's took-check (T37): its action and argument, or the field it typed in */
+let LAST_PICK = null;
+/* T37: whether the last pick took. A typed pick took when its field now holds the text typed and (T51, TOOLBATCH2
+   pre-check finding 6) the session's answers follow the field: they differ between the field emptied and the field
+   holding the text (read after any click that revealed the field). A field's DOM value alone is not the app taking
+   it (its bind handler made a no-op, s-wait's server.addr never changed, and the walk passed). ANSWERS holds every input path the
+   product declares (60-ui-core.js INPUTS: r-unlock's restore.typed and restore.bad, s-confirm's server.codeEdited,
+   nas-pmpair's nas.pairing, beside what it already held), so a password field (r-unlock's phrase, in neither SEL nor
+   ANSWERS by value) is seen through its typed flag. A value the product keeps only outside the session (c-pair's
+   code) cannot be shown taken and fails closed; the walk types into none. Any other pick took when the screen's own
+   selection or the session's answers differ from before it (pre: [ANSWERS, SEL] read just before the pick).
+   T66 (TOOLBATCH4, REVIEW-kit-tb3-opus finding 5): a typed pick took only when the session moved from the state the
+   screen was reached with, as well as from the state just before the typing (after any click that revealed the
+   field). On r-unlock the forward walk already leaves restore.typed set, so typing again left the answers exactly as
+   the screen was reached, the pick counted as taken, and a Back that took nothing back there passed. Where typing
+   leaves the session as it stood, the pick is the other way: the field is emptied and left empty (restore.typed goes
+   false), which Back must take back. */
+const pickTook = async (A, pre) => {
+  if (LAST_PICK && LAST_PICK.field) {
+    const holds = await A.frame().evaluate(([id, v]) => { const i = document.getElementById(id); return !!i && i.value === v; }, [LAST_PICK.field, LAST_PICK.typed]);
+    const now = JSON.stringify(await A.frame().evaluate(ANSWERS));
+    LAST_PICK.held = holds; LAST_PICK.moved = now !== LAST_PICK.reached; LAST_PICK.follows = now !== LAST_PICK.preTyping;
+    return holds && LAST_PICK.moved && LAST_PICK.follows;
+  }
+  return JSON.stringify(pre) !== JSON.stringify([await A.frame().evaluate(ANSWERS), await A.frame().evaluate(SEL)]);
+};
+/* why a pick did not take, for the walk's message */
+const tookWhy = () => (LAST_PICK && LAST_PICK.field ? (LAST_PICK.held === false ? `the field does not hold ${LAST_PICK.emptied ? 'the emptiness left' : 'the text typed'}` : !LAST_PICK.follows ? 'the field holds the text typed but the session\'s answers did not change' : 'the session\'s answers are those the screen was reached with') : 'neither the screen\'s selection nor the session\'s answers changed');
+const pickOther = async (A, which = 'first', revealed = false, reached = null) => {
+  LAST_PICK = null;
+  /* (T66: the answers as the screen was reached, before any click that reveals a field) */
+  if (reached === null) reached = JSON.stringify(await A.frame().evaluate(ANSWERS));
   /* Read choices after the screen's own entrance completes; an entering card can still have opacity zero. */
   await A.frame().waitForFunction(() => !document.querySelector('.o55-pane > .o55-layer.o55-entering, .o55-pane > .o55-layer.o55-hold, .o55-pane > .o55-layer.o55-out'), null, { timeout: 8000 });
   const c = await A.frame().evaluate((which) => { const l = document.querySelector('.o55-pane > .o55-layer:not(.o55-out)'), sheet = [...document.querySelectorAll('.o55-sheet[data-open="true"]')].find((x) => !x.closest('.o55-out')) || null;
@@ -454,20 +485,38 @@ const pickOther = async (A, which = 'first', revealed = false) => {
     if (which === 'last' && all.length < 2) return null;
     const b = which === 'last' ? all[all.length - 1] : all[0]; if (b) { b.setAttribute('data-kit-pick', '1'); return { do: b.getAttribute('data-o55-do'), arg: b.getAttribute('data-arg'), sheet: !!sheet && sheet.contains(b) }; }
     if (which === 'last') return null;
-    const f = [...(l || document).querySelectorAll('input[type="text"], input[type="password"], input:not([type])')].find((i) => shown(i) && !i.disabled && !i.readOnly);
-    return f ? { field: f.id, value: f.value } : null; }, which);
+    /* (T66: a field the screen marks invalid first, the one it asks to be fixed: s-confirm's code after a wrong code) */
+    const fs = [...(l || document).querySelectorAll('input[type="text"], input[type="password"], input:not([type])')].filter((i) => shown(i) && !i.disabled && !i.readOnly);
+    const f = fs.find((i) => i.getAttribute('aria-invalid') === 'true') || fs[0];
+    if (f) return { field: f.id, value: f.value };
+    /* (T37: a checkbox is an input too: s-ready's waiting guest's words, ticked or not. It comes after cards and fields,
+       so a screen that had either picks as before; ticking or unticking it is the pick, and Back must take it back) */
+    const x = [...new Set([sheet, l].filter(Boolean).flatMap((y) => [...y.querySelectorAll('[role="checkbox"][data-o55-do]')]))].find((b) => shown(b) && b.getAttribute('aria-disabled') !== 'true' && !b.disabled);
+    if (x) { x.setAttribute('data-kit-pick', '1'); return { do: x.getAttribute('data-o55-do'), arg: x.getAttribute('data-arg'), sheet: !!sheet && sheet.contains(x), checkbox: x.getAttribute('aria-checked') === 'true' }; }
+    return null; }, which);
   if (!c) {
     /* A found Server is the only card on s-wait. Its address link exposes a real editable alternative. */
     if (!revealed && which === 'first' && (await A.snap()).screen === 's-wait' && await A.has('manualOn')) {
-      await A.click('manualOn'); return pickOther(A, which, true);
+      await A.click('manualOn'); return pickOther(A, which, true, reached);
     }
     /* GitHub is the only card until Other services is expanded. Reveal it, then require an actual choice. */
     if (!revealed && which === 'first' && (await A.snap()).screen === 'online-service' && await A.has('others')) {
-      await A.click('others'); return pickOther(A, which, true);
+      await A.click('others'); return pickOther(A, which, true, reached);
     }
     return null;
   }
-  if (c.field) { await A.fill(c.field, (c.value || '') + ' changed'); await A.sleep(400); return 'typed ' + c.field; }
+  LAST_PICK = c; c.reached = reached;
+  /* (T51, T66: the answers just before the typing, after any click that revealed the field, so the took-check sees the
+     session follow the field itself, not the reveal. The text is typed; if it leaves the session as it stood (r-unlock's
+     restore.typed, already set on the way forward), the field is taken the other way: emptied and left empty. A
+     protected field reads empty whatever was typed (r-unlock's phrase), and emptying an empty field sends the product
+     nothing, so it gets one character first: the product then sees it emptied for real) */
+  if (c.field) { c.preTyping = JSON.stringify(await A.frame().evaluate(ANSWERS)); c.typed = (c.value || '') + ' changed';
+    await A.fill(c.field, c.typed); await A.sleep(400);
+    if (JSON.stringify(await A.frame().evaluate(ANSWERS)) === c.preTyping) {
+      await A.fill(c.field, '.'); await A.sleep(200); await A.fill(c.field, ''); await A.sleep(400); c.typed = ''; c.emptied = true;
+      return 'emptied ' + c.field + ' (the text typed left the session as it stood)'; }
+    return 'typed ' + c.field; }
   /* (the exact element chosen, wherever it is; when something on the page keeps it from a real click, its click event is
      sent instead: this row judges what a pick does, the click-reachability of every control is the audit's) */
   /* A refresh strips test-only attributes. Re-find this same action/argument inside its original surface, so a
@@ -480,7 +529,7 @@ const pickOther = async (A, which = 'first', revealed = false) => {
     how = ' (sent; at its centre: ' + await A.frame().evaluate((selector) => { const b = document.querySelector(selector); if (!b) return 'gone'; const r = b.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2, h = document.elementFromPoint(x, y);
       return h ? (h === b || b.contains(h) ? 'itself' : h.tagName.toLowerCase() + '.' + String(h.className || '').replace(/\s+/g, '.') + (h.closest('[data-key]') ? ' in ' + h.closest('[data-key]').getAttribute('data-key') : '')) + ' @' + Math.round(x) + ',' + Math.round(y) + ' in ' + innerWidth + 'x' + innerHeight : 'nothing @' + Math.round(x) + ',' + Math.round(y); }, selector) + ')';
     await el.dispatchEvent('click'); });
-  await A.sleep(500); return 'picked ' + c.do + ':' + c.arg + how; };
+  await A.sleep(500); return (c.checkbox === undefined ? 'picked ' : c.checkbox ? 'unticked ' : 'ticked ') + c.do + ':' + c.arg + how; };
 /* the answers as the session holds them: the plan (but its revision counter), and what each picker keeps of its choice */
 const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.map(canon) : v && typeof v === 'object' ? Object.keys(v).sort().reduce((o, k) => { o[k] = canon(v[k]); return o; }, {}) : v);
   const d = canon(S.sess.drafts.main); delete d.project_draft_revision; const n = S.sess.nas || {}, r = S.sess.restore || {}, ol = S.sess.online || {}, b = S.sess.backup || {}, u = S.sess.ui || {};
@@ -488,18 +537,23 @@ const ANSWERS = () => { const S = O55.S, canon = (v) => (Array.isArray(v) ? v.ma
   return { draft: d, connect: [c.manual || false, c.addr || '', c.openProject || null, JSON.stringify(cn)], nasTyped: [n.manual || false, n.addr || '', n.port == null ? null : String(n.port)], addresses: JSON.stringify(canon((S.sess.online || {}).addresses || {})),
     facts: JSON.stringify(canon({ hosts: S.env.here.knownHosts || {}, auth: (S.env.devices || []).map((x) => [x.id, (x.authorized || []).slice().sort()]), nasFacts: S.sess.nasFacts || {} })),
     nas: [n.device || null, n.method || null, n.share || null, n.volume || null, n.at || null, n.profile || null, !!n.trusted, !!n.installed, n.choice ? n.choice.id : null],
-    restore: [r.source || null, r.kit || null, r.cloud || null, r.device || null, r.pick || null, r.reachedFor || null], online: [ol.forge || null, ol.variant || null, ol.wanted === undefined ? null : !!ol.wanted],
+    restore: [r.source || null, r.kit || null, r.cloud || null, r.device || null, r.pick || null, r.reachedFor || null, !!r.typed, !!r.bad], online: [ol.forge || null, ol.variant || null, ol.wanted === undefined ? null : !!ol.wanted],
     backup: [b.dest || null, b.sub || null], ui: [u.where || null, u.whereAt || null, u.begin || null, u.beginSub || null],
-    server: (() => { const v = S.sess.server || {}; return [v.kind || null, v.target || null, !!v.manual, v.addr || '', v.platform || null, v.name || '', !!v.selfConfirmed]; })(), signin: (() => { const si = S.sess.signin || {}; return [si.state || null, !!si.tokenTyped, si.method || null, si.account || null]; })(),
-    nasPick: [n.key || null, n.user || '', n.userEdit || false], accounts: JSON.stringify(canon(S.sess.forgeAccounts || {})) }; };
+    /* (T37: and which waiting guests' words are ticked on s-ready, a pending input Back must take back) */
+    server: (() => { const v = S.sess.server || {}; return [v.kind || null, v.target || null, !!v.manual, v.addr || '', v.platform || null, v.name || '', !!v.selfConfirmed, (v.candidates || []).filter((c) => c.confirmed).map((c) => c.id).sort(), !!v.codeEdited]; })(), signin: (() => { const si = S.sess.signin || {}; return [si.state || null, !!si.tokenTyped, si.method || null, si.account || null]; })(),
+    /* (T51: the product's declared inputs not held above: nas-pmpair's pairing way, r-unlock's typed and bad flags in
+       restore, s-confirm's codeEdited in server; 60-ui-core.js INPUTS lists each) */
+    nasPick: [n.key || null, n.user || '', n.userEdit || false, n.pairing === undefined ? null : JSON.stringify(n.pairing)], accounts: JSON.stringify(canon(S.sess.forgeAccounts || {})) }; };
 /* Exemptions audited against the renderers, not inferred from NO_TXN (which can still have inputs):
    welcome: no answer; look: appearance applies live and is retained; review: confirmation, Edit leads to input owners.
    nas-identity: trust/stop, settled host fact; nas-install: install/check/retry operations on this completed route.
    nas-mounted: readability operation; its Other action navigates to nas-find, which owns the volume alternatives.
-   r-preview: apply/retry operation. s-ready: completed invite/approval route; waiting guest checkbox rollback is
-   separately asserted in row 21. c-pair: paired identity on this completed route; unfinished code entry is not exempt.
-   c-ready is deliberately absent: its project radios are pending inputs even after the connection completed. */
-const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'nas-mounted', 'r-preview', 's-ready']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
+   r-preview: apply/retry operation. c-pair: paired identity on this completed route; unfinished code entry is not exempt.
+   c-ready is deliberately absent: its project radios are pending inputs even after the connection completed.
+   s-ready is absent too (T37, astra-review-sw41): a completed Server setup leaves a waiting guest whose words are an
+   enabled checkbox (68-screens-server.js match, rolled back by its discard), so it is exempt only in NO_PICK_DONE, when
+   no guest is waiting. */
+const NO_PICK = ['welcome', 'look', 'review', 'nas-identity', 'nas-install', 'nas-mounted', 'r-preview']; /* (s-wait, s-confirm, c-review, nas-pmpair and r-unlock are picked or typed on too: Astra delta3) */ /* (the key, user, token and Server kind steps are picked on too: lead 1103074359) */
 /* NO_PICK only after completion: these owner screens replace their form with a success banner.
    Keep their unfinished forms eligible: pairing methods on c-review, name/code on s-confirm, token on online-signin. */
 const NO_PICK_DONE = (screen) => {
@@ -514,6 +568,14 @@ const NO_PICK_DONE = (screen) => {
     const server = S.env.pmServers.concat(S.env.vpnServers || []).find((s) => s.id === ref);
     /* Missing controls (or an unresolved Server) cannot authorize skipping the picker. */
     return !!server && Array.isArray(server.projects) && server.projects.length < 2;
+  }
+  /* s-ready has nothing to pick only when no guest waits: by the session's records, as the renderer decides it (a waiting
+     candidate of the open invite's generation with an adopted run, 68-screens-server.js body), and by the screen (no words
+     checkbox drawn). A waiting guest the screen does not draw cannot authorize skipping the picker either (T37). */
+  if (screen === 's-ready') {
+    const sv = O55.S.sess.server || {}, open = Date.now() <= (sv.pairUntil || 0);
+    const waiting = (sv.candidates || []).some((c) => c.state === 'waiting' && open && c.gen === sv.pairGen && !!(sv.runOk && sv.runOk[c.id]));
+    return !waiting && !document.querySelector('.o55-pane > .o55-layer:not(.o55-out) [role="checkbox"]');
   }
   return !!done && ((screen === 'c-review' && !!O55.S.sess.drafts.connect.server_trust_confirmed)
     || (screen === 's-confirm' && !!O55.S.sess.server.claimed)
@@ -536,7 +598,7 @@ async function pickBackWalk(A, bad, label, judged = null) {
   for (let i = 0; i < 40; i++) {
     if (judged) { generic(s, run, label + ' Back#' + i, bad); run.push(s.screen); judge(s, judged.stale || [], label + ' Back#' + i, bad); }
     seq.push(s.screen); if (!s.back) break;
-    const before = await A.frame().evaluate(ANSWERS); let did = null;
+    const before = await A.frame().evaluate(ANSWERS); let did = null, moved = '';
     /* Renderer-fault negative: records still contain alternatives, but their controls are absent.
        The original missing-pick assertion below must reject c-ready in both rich rows. */
     if (s.screen === 'c-ready' && SELFTEST === 'missingprojects') await A.frame().evaluate(() => {
@@ -548,9 +610,36 @@ async function pickBackWalk(A, bad, label, judged = null) {
       if (s.screen === 'safe' && await A.has('backup')) { await A.click('backup'); await sheetOpen(); await A.sleep(400); }
       /* SW-41 negative: suppress only the Back-walk selector, leaving Edit picks intact.
          --set selftest=nopick (every screen), or nopick:<screen> (one hole after real picks). */
+      const pre = [await A.frame().evaluate(ANSWERS), await A.frame().evaluate(SEL)], pending0 = s.screen === 'c-ready' ? await A.frame().evaluate(() => O55.S.sess.connect.openProject) : null;
+      /* T37 negative: --set selftest=noop:<screen> turns that screen's own actions into no-ops for the pick only (its
+         click is dispatched and lands, nothing happens: astra-review-sw41's no-op project click), so the took-check below
+         must fail it. The page's handlers come back before Back. */
+      if (SELFTEST === 'noop:' + s.screen) await A.frame().evaluate((id) => { const d = O55.screens.defs[id]; window.__kitNoop = Object.assign({}, d.do);
+        Object.keys(d.do || {}).forEach((k) => { if (k !== 'back' && k !== 'next') d.do[k] = function () {}; }); }, s.screen);
+      /* T51 negative: --set selftest=nobind:<screen> turns that screen's field bindings (its def.bind handlers) into no-ops
+         for the pick only, so the text lands in the field and the session never sees it (the pre-check's nobind:s-wait);
+         the took-check must fail it. The handlers come back before Back. */
+      if (SELFTEST === 'nobind:' + s.screen) await A.frame().evaluate((id) => { const d = O55.screens.defs[id]; window.__kitNobind = Object.assign({}, d.bind);
+        Object.keys(d.bind || {}).forEach((k) => { d.bind[k] = function () {}; }); }, s.screen);
       did = SELFTEST === 'nopick' || SELFTEST === 'nopick:' + s.screen ? null : await pickOther(A);
+      if (SELFTEST === 'noop:' + s.screen) await A.frame().evaluate((id) => { Object.assign(O55.screens.defs[id].do, window.__kitNoop); delete window.__kitNoop; }, s.screen);
+      const nobound = SELFTEST === 'nobind:' + s.screen ? !!(LAST_PICK && LAST_PICK.field) : null;
+      const took = did ? await pickTook(A, pre) : null;
+      if (SELFTEST === 'nobind:' + s.screen) { await A.frame().evaluate((id) => { Object.assign(O55.screens.defs[id].bind, window.__kitNobind); delete window.__kitNobind; }, s.screen);
+        if (!nobound) bad.push(`selftest nobind:${s.screen}: the walk typed nothing on ${s.screen} (${did || 'no pick'}), so the self-test exercised nothing`); }
       if (!did) bad.push(`${label} ${s.screen}: nothing to pick or type on this Back-walk screen, so nothing was checked`);
+      /* T37: a pick counts only once it took. An attempted click proves nothing (astra-review-sw41 minor: a no-op project
+         click was logged as a pick): the screen's own selection or the session's answers must differ before Back, the
+         c-ready project must be the one clicked and not the one before, and a ticked guest's words must have flipped. */
+      if (did) {
+        if (!took) bad.push(`${label} ${s.screen}: ${did}, but ${tookWhy()} before Back, so the pick did not take and nothing was checked`);
+        if (s.screen === 'c-ready' && LAST_PICK && LAST_PICK.do === 'pickProject') { const p1 = await A.frame().evaluate(() => O55.S.sess.connect.openProject);
+          if (p1 !== LAST_PICK.arg || p1 === pending0) bad.push(`${label} c-ready: ${did}, but the pending project is ${JSON.stringify(p1)} (it was ${JSON.stringify(pending0)}), not the one clicked`); }
+        if (s.screen === 's-ready' && LAST_PICK && LAST_PICK.do === 'match') { const c1 = await A.frame().evaluate((id) => !!((O55.S.sess.server.candidates || []).find((c) => c.id === id) || {}).confirmed, LAST_PICK.arg);
+          if (c1 === !!LAST_PICK.checkbox) bad.push(`${label} s-ready: ${did}, but the guest's words are still ${c1 ? 'ticked' : 'unticked'}`); } }
       const now = (await A.snap()).screen; if (now !== s.screen) { bad.push(`${label} ${s.screen}: ${did} went on to ${now} without Continue`); break; }
+      /* (T66: which of the session's answers the pick changed, named in the walk's log) */
+      if (did) { const a1 = await A.frame().evaluate(ANSWERS); moved = Object.keys(a1).filter((k) => JSON.stringify(a1[k]) !== JSON.stringify(before[k])).map((k) => k === 'server' || k === 'nasPick' || k === 'restore' ? k + JSON.stringify(a1[k]) : k).join(', '); }
     }
     /* A swallowed Back plus an unrelated title refresh must still fail at this screen. */
     if (s.screen === 'where' && (SELFTEST === 'ignoreback' || SELFTEST === 'ignoreback-text')) {
@@ -562,7 +651,11 @@ async function pickBackWalk(A, bad, label, judged = null) {
     }
     const pendingProject = s.screen === 'c-ready' ? await A.frame().evaluate(() => O55.S.sess.connect.openProject) : null;
     const pre = await A.frame().evaluate(BACK_DISMISS);
+    /* T66 negative: --set selftest=backnoop:<screen> makes Back on that screen take nothing back (its transaction dropped
+       and its own discard made a no-op: the review's rv-backnoop), so the answers compare below must fail it */
+    if (SELFTEST === 'backnoop:' + s.screen) await A.frame().evaluate((id) => { O55.S.sess.txn = null; const d = O55.screens.defs[id]; if (d.discard) { window.__kitDiscard = d.discard; d.discard = function () {}; } }, s.screen);
     await pressBack(A); let n = await look(A);
+    if (SELFTEST === 'backnoop:' + s.screen) await A.frame().evaluate((id) => { if (window.__kitDiscard) { O55.screens.defs[id].discard = window.__kitDiscard; delete window.__kitDiscard; } }, s.screen);
     if (n.screen === s.screen) {
       const post = await A.frame().evaluate(BACK_DISMISS);
       if ((pre.sheet && !post.sheet) || (pre.menu && !post.menu)) { await pressBack(A); n = await look(A); }
@@ -571,10 +664,17 @@ async function pickBackWalk(A, bad, label, judged = null) {
     if (judged) toReviewOk(s, n, i, run, label, bad);
     /* Negative: retain the concrete pending project instead of the expected Back rollback. */
     if (s.screen === 'c-ready' && SELFTEST === 'keepproject') await A.frame().evaluate((v) => { O55.S.sess.connect.openProject = v; }, pendingProject);
-    if (did) { picked.push(s.screen + ' ' + did); const after = await A.frame().evaluate(ANSWERS), ch = Object.keys(before).filter((k) => JSON.stringify(before[k]) !== JSON.stringify(after[k]));
+    /* T37 negative: --set selftest=keepguest ticks the guest's words again after Back (s-ready's discard undone), so the
+       answers compare below must fail it */
+    if (s.screen === 's-ready' && SELFTEST === 'keepguest' && did && LAST_PICK && LAST_PICK.do === 'match') await A.frame().evaluate((id) => { const c = (O55.S.sess.server.candidates || []).find((x) => x.id === id); if (c) c.confirmed = true; }, LAST_PICK.arg);
+    if (did) { picked.push(s.screen + ' ' + did + (moved ? ' [' + moved + ']' : '')); const after = await A.frame().evaluate(ANSWERS), ch = Object.keys(before).filter((k) => JSON.stringify(before[k]) !== JSON.stringify(after[k]));
       if (ch.length) bad.push(`${label} ${s.screen}: ${did}, then Back, changed ${ch.map((k) => k === 'draft' ? 'draft(' + Object.keys(Object.assign({}, before.draft, after.draft)).filter((x) => JSON.stringify(before.draft[x]) !== JSON.stringify(after.draft[x])).slice(0, 6).join(', ') + ')' : k + ' ' + JSON.stringify(before[k]) + ' > ' + JSON.stringify(after[k])).join('; ')}`); }
     s = n;
   }
+  /* (T51: a nobind:<screen> self-test on a walk that never reaches that screen exercised nothing, and fails by name:
+     the online-import walk, for one, never shows online-signin, so nobind:online-signin passed there) */
+  if (SELFTEST.startsWith('nobind:') && !seq.includes(SELFTEST.slice(7))) bad.push(`selftest ${SELFTEST}: ${label}'s Back walk never reached ${SELFTEST.slice(7)} (${seq.join(' > ')}), so the self-test exercised nothing`);
+  if (SELFTEST.startsWith('backnoop:') && !picked.some((x) => x.startsWith(SELFTEST.slice(9) + ' '))) bad.push(`selftest ${SELFTEST}: ${label}'s Back walk picked nothing on ${SELFTEST.slice(9)} (${seq.join(' > ')}), so the self-test exercised nothing`);
   return { seq, picked };
 }
 const filesHere = async (A) => { await A.click('edit', 'name', 'name'); await A.click('change'); await A.click('loc', 'auto'); await A.click('sheet-close').catch(() => {}); await A.sleep(500); await onToReview(A); };
@@ -598,6 +698,21 @@ const ABANDON_NOT = { 'Home NAS files over SSH': NAS_STEPS, 'Home NAS files moun
   'a completed new Server': [...SERVER_STEPS, 'away', 'away-setup'], 'a connected existing Server': ['c-route', 'c-review', 'c-pair', 'c-ready'],
   'restore from a Recovery Kit': ['r-source', 'r-unlock', 'r-pick', 'r-preview'], 'restore from a cloud drive': ['r-source', 'r-unlock', 'r-pick', 'r-preview'],
   'online import': ['ex-repos'], 'online new copy': ['online-service', 'online-signin', 'online-details'], 'away with Tailscale': [...SERVER_STEPS, 'away', 'away-setup'] };
+/* T66 (TOOLBATCH4, REVIEW-kit-tb3-opus finding 6): Back walks that start on the two screens no rich configuration's Back
+   walk reaches, so their declared inputs (INPUTS) actually change under a pick and Back must take them back: nas-pmpair
+   on a Home NAS that runs Puppet Master (another pairing way picked: nas.pairing), and s-confirm on a new Server after
+   a wrong setup code (the code typed again: server.codeEdited, which changes only while the mismatch shows). The focused
+   SW-41 test runs them by --set rich (any part of their names); rows 20 and 21 keep RICH. */
+const PICK_WALKS = [
+  ['a Puppet Master NAS at its pairing step', async (A) => { await A.boot({ scenario: 'fresh+homeNasPm' });
+    await fromBegin(A, 'device'); await A.click('next', undefined, 'nas-find'); await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="nas-home"]'), null, 8000);
+    await A.click('device', 'nas-home'); await A.waitEnabled('next').catch(() => {}); await pressOn(A); await A.sleep(900); return 'nas-pmpair'; }],
+  ['a new Server at its code step after a wrong code', async (A) => { await A.click('pick', 'server'); await A.click('next', undefined, 's-kind'); await pressOn(A); await A.sleep(600);
+    await A.waitFor(() => !!document.querySelector('.o55-card[data-arg="pm:new"]'), null, 8000); await A.click('pick', 'pm:new'); await pressOn(A); await A.sleep(600);
+    if ((await A.snap()).screen !== 's-confirm') return 's-confirm';
+    await A.fill('o55f-code', '000 000'); await A.sleep(300); await pressOn(A);
+    await A.waitFor(() => (O55.S.sess.server || {}).orClaimErr === 'setup_code_mismatch', null, 8000).catch(() => {}); await A.sleep(500); return 's-confirm'; }]
+];
 /* --set rich=<part of a name>,… runs only those rich configurations in rows 20 and 21 and in the focused SW-41 test */
 const richOf = (t) => (t.args.rich ? RICH.filter(([k]) => String(t.args.rich).split(',').some((x) => k.includes(x))) : RICH);
 /* (a filter that names no rich configuration fails, rather than running none of them and passing) */
@@ -675,7 +790,22 @@ export const tests = {
      every eligible screen, or nopick:begin to require failure after other screens really were picked. */
   /* (online new copy by default; --set rich filters as in rows 20 and 21, richOf, and a filter matching nothing fails) */
   async 'SW-41 · every Back-walk picker must offer a change'(t) {
-    const kinds = t.args.rich ? await richOrFail(t, 'SW-41') : RICH.filter(([k]) => k === 'online new copy');
+    const walks = t.args.rich ? PICK_WALKS.filter(([k]) => String(t.args.rich).split(',').some((x) => k.includes(x))) : [];
+    const kinds = t.args.rich ? (walks.length && !richOf(t).length ? [] : await richOrFail(t, 'SW-41')) : RICH.filter(([k]) => k === 'online new copy');
+    /* T66: the Back walks from nas-pmpair and s-confirm, each screen's pick changing its declared input */
+    for (const [kind, reach] of walks)
+      await flow(t, `SW-41 ${kind} Back walk`, async (A, bad) => {
+        const want = await reach(A), at = (await A.snap()).screen;
+        if (at !== want) { bad.push(`SW-41 ${kind}: never reached ${want} (on ${at}), so nothing of this walk was checked`); return; }
+        const err = want === 's-confirm' ? await A.frame().evaluate(() => (O55.S.sess.server || {}).orClaimErr || null) : null;
+        if (want === 's-confirm' && err !== 'setup_code_mismatch') { bad.push(`SW-41 ${kind}: the wrong code did not show its mismatch (${err}), so codeEdited could not change`); return; }
+        const a0 = await A.frame().evaluate(ANSWERS);
+        const w = await pickBackWalk(A, bad, `SW-41 ${kind}`);
+        const mine = w.picked.find((x) => x.startsWith(want + ' '));
+        if (!mine) bad.push(`SW-41 ${kind}: nothing was picked on ${want}`);
+        if (w.seq[w.seq.length - 1] !== 'welcome') bad.push(`SW-41 ${kind}: Back stopped on ${w.seq[w.seq.length - 1]}`);
+        t.log(`SW-41 ${kind} Back screens: ${w.seq.join(' > ')}; picks: ${w.picked.join(' | ')}; answers at ${want}: ${JSON.stringify(want === 's-confirm' ? a0.server : a0.nasPick)}`);
+      });
     for (const [kind, est] of kinds)
       await flow(t, `SW-41 ${kind} Back walk`, async (A, bad) => {
         await est(A); await A.screen('review');
@@ -1217,8 +1347,10 @@ export const tests = {
            pick or type fails, except the verification steps the lead's ruling leaves without picks, NO_PICK) */
         for (const [tg, which] of links.flatMap((x) => [[x, 'first'], [x, 'last']])) {
           const before = await A.frame().evaluate(SNAP20);
-          await A.click('edit', tg); await A.sleep(700); const sel0 = await A.frame().evaluate(SEL);
+          await A.click('edit', tg); await A.sleep(700); const sel0 = await A.frame().evaluate(SEL), ansE = await A.frame().evaluate(ANSWERS);
           const did = await pickOther(A, which);
+          /* (T37: an Edit pick, too, counts only once it took) */
+          if (did && !await pickTook(A, [ansE, sel0])) bad.push(`21 ${kind} Edit ${tg}: ${did} on ${sel0.screen}, but ${tookWhy()}: the pick did not take, so nothing was checked`);
           if (!did) { if (which === 'first') { if (NO_PICK.includes(sel0.screen) || await A.frame().evaluate(NO_PICK_DONE, sel0.screen)) t.log(`21 ${kind} Edit ${tg}: ${sel0.screen} is a verification step, nothing to pick`); else bad.push(`21 ${kind} Edit ${tg}: nothing to pick or type on ${sel0.screen}, so nothing was checked`); }
             for (let i = 0; i < 3 && (await A.snap()).screen !== 'review'; i++) { await pressBack(A); await A.sleep(700); } continue; }
           if ((await A.snap()).screen !== sel0.screen) { bad.push(`21 ${kind} Edit ${tg}: ${did} left ${sel0.screen} for ${(await A.snap()).screen} without Continue`); break; }
