@@ -2651,6 +2651,9 @@
     display: block; position: fixed; z-index: 2147483100; pointer-events: none; margin: 0; padding: 0; border: 0; box-sizing: border-box;
     position-anchor: --d-abfocus; top: anchor(top, -99px); left: anchor(left, -99px); width: anchor-size(width, 0px); height: anchor-size(height, 0px);
     position-visibility: anchors-visible; border-radius: var(--d-Rbar);
+    /* forced colors (Windows High Contrast) drop box-shadow: a transparent outline on the ring's own box is painted in a
+       system colour there, and in no other mode (opus-recheck-f96h) */
+    outline: 3px solid transparent; outline-offset: -3px;
     box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px var(--surface);
     box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px rgb(from var(--surface) r g b / 1);   /* opaque: Glass's surface is see-through */
   }
