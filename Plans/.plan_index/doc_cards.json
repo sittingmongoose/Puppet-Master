@@ -1993,7 +1993,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7629,
+      "line_count": 7664,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 82,
       "plan_unit_ids": [
@@ -2150,7 +2150,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "4d554bfae6e00808f20418e0e5dc0f5f8efaa49226ebd0c95d97237c9c274493",
+      "sha256": "e4335b9d4f2752c5adc26dc8fc72193023ccb395ca9553cb8de4f6802ec03b23",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 81,
@@ -2271,6 +2271,10 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
+        "python3 scripts/pm-filesafe-guard-tables.py --out DIR",
+        "python3 scripts/pm-filesafe-number-corpus.py",
+        "python3 scripts/pm-filesafe-p2a-cases.py --check",
+        "python3 scripts/pm-filesafe-table-generate.py --check",
         "python3 scripts/pm-forge-backup-acceptance-verify.py",
         "python3 scripts/pm-integration-packet-audit.py census",
         "python3 scripts/pm-new-contracts-verify.py",
@@ -2303,6 +2307,7 @@
         "python3 scripts/pm-working-notebook-contracts.py",
         "python3 scripts/pm7-canon-check.py",
         "python3 scripts/pm_coordination_events.py",
+        "python3 scripts/pm_event_numbers.py --self-test --scope numbers",
         "python3 scripts/pm_filesafe_event_authority.py",
         "python3 scripts/pm_filesafe_event_contracts.py",
         "reports/event-authority-20260911/step-08-current-child-scope-validation.md",
@@ -4597,7 +4602,7 @@
         "scripts/pm_event_datetime.py",
         "scripts/pm_event_numbers.py"
       ],
-      "line_count": 25362,
+      "line_count": 25380,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 372,
       "plan_unit_ids": [
@@ -5336,7 +5341,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "c55089001981fb4c165372f8abaab2a8a76aecc5edc1555ad9d954afb5a8dd83",
+      "sha256": "296187a0ff9d99273f84d027725343ea2de54e352e7a9e8ee953b4271990b802",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 371,
@@ -18818,7 +18823,7 @@
         "scripts/pm-implementation-readiness.py",
         "scripts/pm_event_numbers.py"
       ],
-      "line_count": 30321,
+      "line_count": 30339,
       "path": "Plans/storage-plan.md",
       "plan_unit_count": 352,
       "plan_unit_ids": [
@@ -19298,7 +19303,7 @@
         "usage_view_state_becomes_second_policy_or_preview_store",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "0d6aa204c37c637a20426613f25aec1d042c59b983597a4afb10660eb4c7778e",
+      "sha256": "d0e1874e2d11ce57d2019c6735a6b7a6e2a350565f5d58a84055ce740aed137d",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 348,
@@ -21682,7 +21687,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-08T14:08:26Z",
+  "generated_at_utc": "2026-11-08T20:00:06Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

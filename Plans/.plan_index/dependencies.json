@@ -118231,7 +118231,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-08T14:08:25Z",
+  "generated_at_utc": "2026-11-08T20:00:06Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -132370,8 +132370,8 @@
       "source_location": {
         "heading": "ATS-276 - filesafe.destructive_override_granted, filesafe.destructive_override_requested oracles",
         "heading_level": 3,
-        "heading_line": 7321,
-        "line": 7323,
+        "heading_line": 7328,
+        "line": 7330,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -132387,8 +132387,8 @@
       "source_location": {
         "heading": "ATS-277 - filesafe.guard_init_failed, filesafe.path_denied oracles",
         "heading_level": 3,
-        "heading_line": 7401,
-        "line": 7403,
+        "heading_line": 7415,
+        "line": 7417,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -132404,8 +132404,8 @@
       "source_location": {
         "heading": "ATS-278 - filesafe.policy_degraded oracles",
         "heading_level": 3,
-        "heading_line": 7484,
-        "line": 7486,
+        "heading_line": 7505,
+        "line": 7507,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -132421,8 +132421,8 @@
       "source_location": {
         "heading": "ATS-279 - safe_point.created, safe_point.restored oracles",
         "heading_level": 3,
-        "heading_line": 7553,
-        "line": 7555,
+        "heading_line": 7581,
+        "line": 7583,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -145528,8 +145528,8 @@
       "source_location": {
         "heading": "CV-551 - filesafe.destructive_override_denied closed contract",
         "heading_level": 3,
-        "heading_line": 24688,
-        "line": 24690,
+        "heading_line": 24690,
+        "line": 24692,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145545,8 +145545,8 @@
       "source_location": {
         "heading": "CV-552 - filesafe.destructive_override_granted closed contract",
         "heading_level": 3,
-        "heading_line": 24772,
-        "line": 24774,
+        "heading_line": 24776,
+        "line": 24778,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145562,8 +145562,8 @@
       "source_location": {
         "heading": "CV-553 - filesafe.destructive_override_requested closed contract",
         "heading_level": 3,
-        "heading_line": 24857,
-        "line": 24859,
+        "heading_line": 24863,
+        "line": 24865,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145579,8 +145579,8 @@
       "source_location": {
         "heading": "CV-554 - filesafe.guard_init_failed closed contract",
         "heading_level": 3,
-        "heading_line": 24939,
-        "line": 24941,
+        "heading_line": 24947,
+        "line": 24949,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145596,8 +145596,8 @@
       "source_location": {
         "heading": "CV-555 - filesafe.path_denied closed contract",
         "heading_level": 3,
-        "heading_line": 25019,
-        "line": 25021,
+        "heading_line": 25029,
+        "line": 25031,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145613,8 +145613,8 @@
       "source_location": {
         "heading": "CV-556 - filesafe.policy_degraded closed contract",
         "heading_level": 3,
-        "heading_line": 25100,
-        "line": 25102,
+        "heading_line": 25112,
+        "line": 25114,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145630,8 +145630,8 @@
       "source_location": {
         "heading": "CV-557 - safe_point.created closed contract",
         "heading_level": 3,
-        "heading_line": 25181,
-        "line": 25183,
+        "heading_line": 25195,
+        "line": 25197,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -145647,8 +145647,8 @@
       "source_location": {
         "heading": "CV-558 - safe_point.restored closed contract",
         "heading_level": 3,
-        "heading_line": 25274,
-        "line": 25276,
+        "heading_line": 25290,
+        "line": 25292,
         "path": "Plans/Contracts_V0.md"
       },
       "status": "accepted",
@@ -230545,8 +230545,8 @@
       "source_location": {
         "heading": "SP-551 - filesafe.destructive_override_denied persistence and read contract",
         "heading_level": 3,
-        "heading_line": 29783,
-        "line": 29785,
+        "heading_line": 29785,
+        "line": 29787,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -230562,8 +230562,8 @@
       "source_location": {
         "heading": "SP-552 - filesafe.destructive_override_granted persistence and read contract",
         "heading_level": 3,
-        "heading_line": 29851,
-        "line": 29853,
+        "heading_line": 29855,
+        "line": 29857,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -230579,8 +230579,8 @@
       "source_location": {
         "heading": "SP-553 - filesafe.destructive_override_requested persistence and read contract",
         "heading_level": 3,
-        "heading_line": 29918,
-        "line": 29920,
+        "heading_line": 29924,
+        "line": 29926,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -230596,8 +230596,8 @@
       "source_location": {
         "heading": "SP-554 - filesafe.guard_init_failed persistence and read contract",
         "heading_level": 3,
-        "heading_line": 29986,
-        "line": 29988,
+        "heading_line": 29994,
+        "line": 29996,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -230613,8 +230613,8 @@
       "source_location": {
         "heading": "SP-555 - filesafe.path_denied persistence and read contract",
         "heading_level": 3,
-        "heading_line": 30054,
-        "line": 30056,
+        "heading_line": 30064,
+        "line": 30066,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -230630,8 +230630,8 @@
       "source_location": {
         "heading": "SP-556 - filesafe.policy_degraded persistence and read contract",
         "heading_level": 3,
-        "heading_line": 30122,
-        "line": 30124,
+        "heading_line": 30134,
+        "line": 30136,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -230647,8 +230647,8 @@
       "source_location": {
         "heading": "SP-557 - safe_point.created persistence and read contract",
         "heading_level": 3,
-        "heading_line": 30189,
-        "line": 30191,
+        "heading_line": 30203,
+        "line": 30205,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
@@ -230664,8 +230664,8 @@
       "source_location": {
         "heading": "SP-558 - safe_point.restored persistence and read contract",
         "heading_level": 3,
-        "heading_line": 30257,
-        "line": 30259,
+        "heading_line": 30273,
+        "line": 30275,
         "path": "Plans/storage-plan.md"
       },
       "status": "accepted",
