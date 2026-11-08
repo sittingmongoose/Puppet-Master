@@ -503,23 +503,54 @@
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
       });
     }
+    /* The shared destination used by the drop, the bubble's occupancy and the strings' suspension. It exists before
+       the first visible frame, independent of entry opacity, spring progress and swing. A scene/layout change refits
+       it; an outgoing prop keeps the place it left. Only preceding props participate, so the order has no cycle. */
+    restPose(pr) {
+      if (pr.state === 'out' && pr.restFit) return pr.restFit;
+      const tg = this.propTarget(pr), tm = [pr.ties.reduce((m, t) => m + t[0], 0) / pr.ties.length, tg.tieY];
+      const preceding = [];
+      for (const [id, q] of this.props) { if (q.state !== 'out') preceding.push([id, q.spec]); if (q === pr) break; }
+      const key = JSON.stringify([this.theme, this.layoutName, this.vis, this.lastScreen, this.spec.pip,
+        this.reduced, !!O55.motion.lowResource, H.part('sway-and-physics'),
+        this.keepOff, this.pipAt, this.pipOff, this.pipBB, pr.bb, preceding]);
+      if (pr.restFit && pr.restFit.key === key) return pr.restFit;
+      const fit = this.fit(pr, [tg.ax, this.L.anchorY + tg.len], tg.sc, tm, true);
+      pr.restBox = fit.box;
+      return (pr.restFit = Object.assign({ key, ax: tg.ax + fit.dx, sc: tg.sc * fit.f }, fit));
+    }
     /* how far a prop must move (dx, dy) or shrink (f) for its drawing, at its angle, to sit inside the pane's visible span
        (this.vis, from measure) with a margin, and off a speech box that cannot move out of its way (this.keepOff: NieR's
        fixed box, or a bubble that found no clear place); box is where it is then painted */
-    fit(pr, hang, sc, tm) {
+    fit(pr, hang, sc, tm, destination) {
       const v = this.vis; let bb = pr.bb;
       if (!v) return { dx: 0, dy: 0, f: 1, box: null };
       if (!bb || !bb[2]) { bb = pr.bb = this.boxOf(pr.el); if (!bb || !bb[2]) return { dx: 0, dy: 0, f: 1, box: null }; }
-      const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], pr.a));
+      const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], destination ? 0 : pr.a));
       let lo = Math.min(...cs.map((c) => c[0])), hi = Math.max(...cs.map((c) => c[0])), tp = Math.min(...cs.map((c) => c[1])), bt = Math.max(...cs.map((c) => c[1])), f = 1;
       const pad = 8, room = v.x1 - v.x0 - pad * 2, hx = hang[0], hy = hang[1];
+      const rest = pr.state !== 'out' && pr.spec.stack == null;
+      if (rest && !destination) {
+        /* Fit the destination, then lower the prop into it on its spring. Fitting the moving pose picked the nearest
+           side of another prop every frame: Recovery Kit > backup list pinned the clipboard above the restore box
+           for 120 ms, then switched below it in one frame (QA-7). The other props' destinations participate too, so
+           their entry opacity or progress cannot change this prop's landing place halfway down. */
+        const fit = this.restPose(pr);
+        lo *= fit.f; hi *= fit.f; tp *= fit.f; bt *= fit.f;
+        let dx = fit.dx, dy = fit.dy;
+        // A swing still stays inside the pane; the incoming prop may pass its top edge on its strings.
+        if (hx + hi + dx > v.x1 - pad) dx = v.x1 - pad - (hx + hi);
+        if (hx + lo + dx < v.x0 + pad) dx = v.x0 + pad - (hx + lo);
+        if (hy + bt + dy > v.y1 - pad) dy = v.y1 - pad - (hy + bt);
+        return { dx, dy, f: fit.f, box: [hx + lo + dx, hy + tp + dy, hx + hi + dx, hy + bt + dy] };
+      }
       if (hi - lo > room && room > 0) { f = room / (hi - lo); lo *= f; hi *= f; tp *= f; bt *= f; }
       let dx = 0, dy = 0;
       if (hx + hi > v.x1 - pad) dx = v.x1 - pad - (hx + hi);
       if (hx + lo + dx < v.x0 + pad) dx = v.x0 + pad - (hx + lo);
       /* (up and down too, for a prop at rest: one coming in or going out passes the top edge on its strings, and Creating's
          blocks stand on the floor) */
-      const rest = pr.state !== 'out' && pr.spec.stack == null, dxEdge = dx;
+      const dxEdge = dx, visible = destination ? 1 : pr.op;
       /* the least move (inside the pane) that clears every box in obs, or drawn a little smaller only when no way does */
       const clear = (obs) => {
         const L0 = lo, H0 = hi, T0 = tp, B0 = bt, f0 = f; let g = 1;
@@ -547,14 +578,20 @@
       };
       if (rest) {
         if (hy + bt > v.y1 - pad) dy = v.y1 - pad - (hy + bt);
-        if (pr.op > .95 && hy + tp + dy < v.y0 + pad) dy = v.y0 + pad - (hy + tp);
+        if (visible > .95 && hy + tp + dy < v.y0 + pad) dy = v.y0 + pad - (hy + tp);
         /* off what it must not touch: a speech box that cannot move (keepOff) and the props already placed this frame
            (the name's sign and the service's mark at a short window); it moves the least way that clears them all,
            inside the pane, and is drawn a little smaller only when no way does */
-        const obs = []; if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
+        const obs = []; if (this.keepOff && visible > .05) obs.push(this.keepOff);
         /* (and off Pip's head where it hangs at rest: Retro's crop pushed a sign in from its cut side over Pip, FO-50) */
-        const pk = this.pipKeep; if (pk && pr.op > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
-        this.props.forEach((q) => { if (q !== pr && q.box && q.placedN === this.renderN && q.op > .05 && q.state !== 'out') obs.push([q.box[0] - 4, q.box[1] - 4, q.box[2] + 4, q.box[3] + 4]); });
+        const pk = destination ? this.pipHead(0, null, true) : this.pipKeep; if (pk && visible > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
+        let before = true;
+        this.props.forEach((q) => {
+          if (q === pr) { before = false; return; }
+          if (q.state === 'out' || (destination ? !before : q.placedN !== this.renderN || q.op <= .05)) return;
+          const b = destination ? this.restPose(q).box : q.box;
+          if (b) obs.push([b[0] - 4, b[1] - 4, b[2] + 4, b[3] + 4]);
+        });
         const g = clear(obs);
         pr.restOff = { dx: dx - dxEdge, dy, g };
       } else if (pr.state === 'out') {
@@ -672,7 +709,7 @@
     }
     /* Pip's head where it hangs at rest from the hand's spot, on the floor it rests on: the box the props keep off (fit);
        swing: the swing's reach, rad (by default the one under way); now: the head as render() draws it this frame */
-    pipHead(swing, now) {
+    pipHead(swing, now, resting) {
       const ps = this.ps, Lay = this.L, s = Lay.s;
       if (!ps || !this.pipReach(ps.tiltT)) return null;
       const box = (cx, cy, ang, th) => {
@@ -683,24 +720,28 @@
         return [x + r[0], y + r[1], x + r[2], y + r[3]];
       };
       const join = (a, c) => [Math.min(a[0], c[0]), Math.min(a[1], c[1]), Math.max(a[2], c[2]), Math.max(a[3], c[3])];
-      let b = box(ps.Ct.x, ps.Ct.y, ps.tiltT);
+      /* A destination reserves Pip's canonical rest pose. A current swing or travelling hand must not change a
+         prop's fixed suspension when a scene is refitted (QA-6); the ordinary collision box still takes their reach. */
+      const pip = this.spec.pip || {}, asleep = resting ? pip.pose === 'asleep' : ps.asleep;
+      const at = resting && this.pipAt ? [this.pipAt[0] + (this.pipOff || [0, 0])[0], this.pipAt[1] + (this.pipOff || [0, 0])[1] + (asleep ? Lay.rope * .72 : 0)] : [ps.Ct.x, ps.Ct.y];
+      let b = box(at[0], at[1], resting ? (pip.tilt != null ? pip.tilt : asleep ? -.2 : 0) : ps.tiltT);
       /* (and, while the hand travels to a new spot, as Pip wakes and rises from the floor, the head where it hangs now:
          the box takes its whole way, so a sign beside where it rises to is not under it as it comes. Retro Dark Name 860
          showed 40 px2 painted as Pip woke, sol-review-retro-1's awake guard. Not within the idle drift, so resting props
          do not shift as Pip sways) */
-      if (Math.hypot(ps.C.x - ps.Ct.x, ps.C.y - ps.Ct.y) > 8) b = join(b, box(ps.C.x, ps.C.y, ps.tilt + ps.th * .9, ps.th));
+      if (!resting && Math.hypot(ps.C.x - ps.Ct.x, ps.C.y - ps.Ct.y) > 8) b = join(b, box(ps.C.x, ps.C.y, ps.tilt + ps.th * .9, ps.th));
       /* (and the room its idle drift takes, awake: a sign beside the resting head was under it as it swayed, Retro Dark 860) */
       const F = this.fam, still = this.reduced || !!O55.motion.lowResource || !H.part('sway-and-physics');
       /* (and the room the swing under way takes, to its next peak either side, the head turned with it as render() turns
          it: a prop lowered in, or swinging back, beside a swinging Pip keeps off its head, as off the resting one) */
-      const A = still ? 0 : swing != null ? swing : this.swingAmp(ps.th, ps.thv, F.w, F.damp);
+      const A = still || resting ? 0 : swing != null ? swing : this.swingAmp(ps.th, ps.thv, F.w, F.damp);
       if (A > .002) [-1, -.5, .5, 1].forEach((q) => { b = join(b, box(ps.Ct.x, ps.Ct.y, ps.tiltT + A * q * .9, A * q)); });
-      const sw = still ? 0 : F.sway * (ps.asleep ? .2 : 1), bob = still || !F.bob ? 0 : F.bob * .6;
+      const sw = still ? 0 : F.sway * (asleep ? .2 : 1), bob = still || !F.bob ? 0 : F.bob * .6;
       b = [b[0] - sw, b[1] - bob, b[2] + sw, b[3] + bob];
       /* (and the head where it is drawn now, turned, stretched and lifted as render() draws it: with no room to swing Pip
          wiggled, and the turn took its head 4 units past that box into the forge held at its edge as the forge swung in,
          Glass Light 860, retro-c4) */
-      if (now) {
+      if (now && !resting) {
         const h = this.pipBB.h, c = Math.cos(now.ang), n = Math.sin(now.ang);
         const p = [[h[0], h[1]], [h[0] + h[2], h[1]], [h[0], h[1] + h[3]], [h[0] + h[2], h[1] + h[3]]].map(([x, y]) => {
           const u = (x - 32) * now.sx * s, v = ((y - 59.5) * now.sy + 28) * s;
