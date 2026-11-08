@@ -32,11 +32,14 @@ if str(ROOT / 'scripts') not in sys.path:
     sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_dg6a_table_decision_citation as _decision_table  # noqa: E402
 import pm_dg6a_table_storage_schema as _storage_table  # noqa: E402
+import pm_dg6a_table_current_header as _current_table  # noqa: E402
 
 _DECISION_ROWS = [(name, guard.predicate) for name, guard in _decision_table.case(None).table.guards.items()]
 DECISION_RECORDER = None
 _STORAGE_ROWS = [(name, guard.predicate) for name, guard in _storage_table.case(None).table.guards.items()]
 STORAGE_RECORDER = None
+_CURRENT_ROWS = [(name, guard.predicate) for name, guard in _current_table.case(None).table.guards.items()]
+CURRENT_RECORDER = None
 
 
 def digest(value):
@@ -381,16 +384,36 @@ def failed(guards):
     return [name for name, valid in guards.items() if not valid]
 
 
+def current_header_observation(context, family):
+    """The current_header table's FIELDS, derived from (family, context) only.
+
+    Context reads use .get: the HISTORICAL_ONLY family's current contexts
+    carry no admitted key (the pre-table chain returned at CU01 before
+    reading it), and a missing key is the False fact either way.
+    """
+    return {
+        'disposition_is_historical_only': bool(family['disposition'] == 'HISTORICAL_ONLY'),
+        'policy_is_replay_only': bool(context.get('replay_policy') == 'projector_replay_only'),
+        'policy_is_dedupe': bool(context.get('replay_policy') == 'dedupe_by_idempotency_key'),
+        'admitted_is_true': context.get('admitted') is True,
+    }
+
+
 def current_errors(operation, context, family, schema):
-    if family['disposition'] == 'HISTORICAL_ONLY':
-        return ['compatibility_no_new_writes']
-    # Neither retries nor normal appends may request a replay-only writer policy.
-    if context['replay_policy'] == 'projector_replay_only':
-        return ['replay_only_not_appendable']
-    if context['replay_policy'] != 'dedupe_by_idempotency_key':
-        return ['unsupported_replay_policy']
-    if context['admitted'] is not True:
-        return ['family_not_admitted']
+    # The opening chain refuses only through
+    # scripts/pm_dg6a_table_current_header.py rows, in table order; neither
+    # retries nor normal appends may request a replay-only writer policy.
+    observed = current_header_observation(context, family)
+    first = None
+    for name, predicate in _CURRENT_ROWS:
+        code = predicate(observed, None)
+        if code is not None:
+            first = (name, code)
+            break
+    if CURRENT_RECORDER is not None:
+        CURRENT_RECORDER.append((copy.deepcopy(observed), first))
+    if first:
+        return [first[1]]
     errors = failed(operation_guards(operation, family, schema))
     if errors:
         return errors

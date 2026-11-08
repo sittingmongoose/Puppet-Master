@@ -15,6 +15,7 @@ Usage: python3 scripts/pm-dg6a-guard-tables.py --out <dir> [--phase <phase>]...
 With no --phase, every phase runs serially in declaration order.
 """
 import argparse
+import copy
 import hashlib
 import importlib.util
 import json
@@ -28,6 +29,7 @@ if str(ROOT / 'scripts') not in sys.path:
 import pm_guard_isolation as g  # noqa: E402
 import pm_dg6a_table_decision_citation as decision_table  # noqa: E402
 import pm_dg6a_table_storage_schema as storage_table  # noqa: E402
+import pm_dg6a_table_current_header as current_table  # noqa: E402
 
 RETURN_SOURCE = 'return g.Case(table, check, context)'
 
@@ -100,9 +102,62 @@ def collect_storage_schema():
     return controls, negatives, len(records)
 
 
+def collect_current_header():
+    """Every fixture current-stage case through the complete current_errors.
+
+    Setup and patch application mirror the checker's main; each current_errors
+    call records exactly one header observation, and its full result is
+    asserted against the fixture expectation, as main asserts it.
+    """
+    checker = load_checker('dg6a_card5_for_guard_tables_current', 'pm-card5-event-contracts-check.py')
+    manifest = checker.load('Plans/card5_event_contracts/manifest.json')
+    registry = checker.load('Plans/storage_value_registry.json')
+    records = []
+    for family in manifest['families']:
+        fixture = checker.load(family['fixture'])
+        schemas = {k: checker.load(family[k]) for k in ('payload_schema', 'checkpoint_schema')}
+        if family['operation_schema']:
+            schemas['operation_schema'] = checker.load(family['operation_schema'])
+        for schema in schemas.values():
+            checker.shared.check_schema(schema)
+        for surface in ('operation', 'checkpoint'):
+            if family[surface + '_schema'] is not None:
+                row = next(r for r in registry['families'] if r['family_id'] == family['slug'] + '_' + surface)
+                schemas[surface + '_schema'] = row['value_schema']
+        collected = []
+        checker.CURRENT_RECORDER = collected
+        cases = []
+        try:
+            for case in fixture['cases']:
+                if case['stage'] != 'current':
+                    continue
+                value = copy.deepcopy(fixture['bases'][case['base']])
+                for patch in case['patches']:
+                    if not patch['path']:
+                        value = copy.deepcopy(patch['value'])
+                        continue
+                    target = value
+                    for part in patch['path'][:-1]:
+                        target = target[part]
+                    target[patch['path'][-1]] = copy.deepcopy(patch['value'])
+                actual = checker.current_errors(value['operation'], value['context'], family,
+                                                  schemas.get('operation_schema'))
+                assert actual == case['expected'], (family['event_type'], case['name'], actual, case['expected'])
+                cases.append(case)
+        finally:
+            checker.CURRENT_RECORDER = None
+        assert len(collected) == len(cases), (family['event_type'], len(collected), len(cases))
+        for case, (observed, first) in zip(cases, collected):
+            records.append((family['event_type'] + '/' + case['name'], family['event_type'],
+                            observed, first, case['name']))
+    controls, negatives = dedupe(records)
+    return controls, negatives, len(records)
+
+
 PHASES = {
     'decision_citation': (decision_table, 'scripts/pm_dg6a_table_decision_citation.py', collect_decision_citation),
     'storage_schema': (storage_table, 'scripts/pm_dg6a_table_storage_schema.py', collect_storage_schema),
+    'current_header': (current_table, 'scripts/pm_dg6a_table_current_header.py', collect_current_header),
 }
 
 
