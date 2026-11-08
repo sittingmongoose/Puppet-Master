@@ -24,6 +24,7 @@ export default async function(t) {
     {screen:'r-pick',label:'choice-cheer',effect:'cheer'});
   if(t.args.variantsOnly)cases=cases.filter(c=>c.label!==c.screen);
   if(t.args.labels)cases=cases.filter(c=>String(t.args.labels).split(',').includes(c.label));
+  if(Number(t.args.reps)>1)cases=Array.from({length:Number(t.args.reps)},(_,rep)=>cases.map(c=>({...c,label:c.label+'-r'+rep}))).flat();
   await t.check('requested scene/effect cases selected',cases.length>0,String(cases.length),{hard:true});
   const inventory=[];
   for(const look of looks) {
@@ -97,7 +98,7 @@ export default async function(t) {
       const groups=new Map();
       // Model continuity uses the animation clock. Physical frame intervals/holds are judged by the tagged film;
       // callback delivery can bunch after a long task, and records that never painted are not film frames.
-      for(const r of result.rows)for(const p of r.props){const key=r.stage+':'+p.id;if(!groups.has(key))groups.set(key,[]);groups.get(key).push({...p,ts:r.t*1000,render:r.render,fps:r.fps});}
+      for(const r of result.rows)for(const p of r.props){const key=r.stage+':'+p.id;if(!groups.has(key))groups.set(key,[]);groups.get(key).push({...p,ts:r.t*1000,render:p.kind==='act-card'?p.box.map(x=>Math.round(x*100)).join(','):r.render,fps:r.fps});}
       const props=[];
       for(const [id,all]of groups) {
         const visible=all.filter(p=>p.op>.1&&p.state!=='out'&&p.box);

@@ -58,7 +58,9 @@ def main():
         cases[case] += 1
         for p in row['props']:
             if p['state'] != 'out' and p['op'] > .1 and p.get('box'):
-                props[(case, p['id'])].append((frame, p, row['fps'], row['render']))
+                # The act card is a separate six-step compositor animation, rather than a rig draw.
+                draw = tuple(round(v, 2) for v in p['box']) if p['kind'] == 'act-card' else row['render']
+                props[(case, p['id'])].append((frame, p, row['fps'], draw))
         for p in row['fx']:
             effects[(case, p['id'])].append((frame, p, row['render']))
     if proc.wait() != 0:
