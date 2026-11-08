@@ -7520,7 +7520,9 @@ command_payload_definitions:
           gap_note: >-
             W-082's lease fences guard create, attach, renew, result capture, merge, release and cleanup
             (WorktreeGitImprovement.md:5652-5654; the lease section, :888); a lock is not among them, so canon does not
-            require the caller's expected lease edition here. A run-owned lock is the system's auto-lock while
+            require the caller's expected lease edition here. W-082's acceptance criterion bars a stale lease
+            holder from mutating a worktree (:5666); a user lock is not made under a lease, so it does not reach
+            this command. A run-owned lock is the system's auto-lock while
             a run, lane or package owns the worktree (W-077, :5415), not this user action.
       aliases: []
     - command_id: cmd.git.worktree.unlock
@@ -7572,7 +7574,9 @@ command_payload_definitions:
           gap_note: >-
             W-082's lease fences guard create, attach, renew, result capture, merge, release and cleanup
             (WorktreeGitImprovement.md:5652-5654; the lease section, :888); an unlock is not among them, so canon does not
-            require the caller's expected lease edition here. Unlocking a run-owned lock while its owner is live
+            require the caller's expected lease edition here. W-082's acceptance criterion bars a stale lease
+            holder from mutating a worktree (:5666); a user unlock is not made under a lease, so it does not
+            reach this command. Unlocking a run-owned lock while its owner is live
             is refused from the owner's own lock record (W-077, :5418-5419), not from a caller-supplied fence.
       aliases: []
   results:
