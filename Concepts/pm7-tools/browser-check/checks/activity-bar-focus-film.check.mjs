@@ -235,7 +235,7 @@ const installStall = f => f.evaluate(() => {
     const look = () => {
       const l = document.querySelector('.lg-lens[data-lg-for="rail-icons"]'), a = l && l.getAnimations().find(x => x.playState === 'running' || x.pending);
       if (a) { if (!tries) setTimeout(hold, 0); else { S.late++; hold(); } return; }
-      if (++tries < 40) requestAnimationFrame(look);
+      if (++tries < 150) requestAnimationFrame(look);   /* 2.5 s: a held press's motion starts on its release (in Reduced Motion, the jump's fade) */
     };
     requestAnimationFrame(look); };
   window.addEventListener('keydown', go, true); window.addEventListener('pointerdown', go, true);
