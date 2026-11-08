@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L17125-L18172
+Source lines: L17126-L18231
 
-Source SHA256: `08edbb754e7f7eea1d2cfbf9e883e88e5e1cafe4db6959489e45d56460db1d61`
+Source SHA256: `958bc83a7c73f1754c0e7385a4128467fe348c826af7dc2660cd7d139f9c73d2`
 
 ---
 
@@ -749,6 +749,7 @@ canonical_text: >-
   Amended 2026-10-31 (DL-270): SP-336 acknowledges an ordinary group after one data sync of its segment, keeps the
   watermark in the segment, syncs the manifest at rotation, gives barrier-class events a full flush, and creates
   stores atomically.
+  SP-1100 preserves the exact physical numeric/profile domain and original payload bytes; CV-1100 qualifies only the selected semantic preimage, and SP-1101 authenticates frozen original-recipe selection for retained reads and retries.
 gui_related: true
 gui_classification_reason: Integrity loss and recovery create persistent blocked/read-only disclosure and recovery-report actions.
 split_recommended: false
@@ -782,6 +783,63 @@ negative_constraints:
   - Do not acknowledge on write or buffer flush alone.
 owner_hints: [Plans/storage-plan.md]
 ```
+
+### SP-1100 - Exact Storage Numbers And Physical Domains
+
+```yaml
+plan_unit_id: SP-1100
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: |-
+  The canonical EventRecord MessagePack integer representation is the existing signed/unsigned exact range −2^63 through 2^64−1, with minimal type-preserving widths; physical sequence/generation and owner-defined checkpoint/receipt uint fields retain 0 through 2^64−1. A source field with a broader logical schema remains valid source data when this physical route is unavailable. General EventRecord floats are finite IEEE754 values, retain float type even when integral, retain signed zero, and use float32 only with exact value and zero-sign preservation, otherwise float64. SP-278’s uint-only binding codec and CV-366’s app physical profile remain separate, exact selected profiles. Canonical stored byte decoding rejects alternate/nonminimal tags, duplicate/unordered keys, forbidden tags, invalid Unicode and trailing values according to that selected profile. Payload-pack IDs and byte sizes cover the actual exact original media/profile bytes, never a newly normalized substitute.
+  CV-1100 supplies current integer-token/type admission separately from the physical codec and separately from historical validation. Keep sequence_id, segment_generation, selected_segment_generation, manifest_generation, recovery_epoch and any owner-declared uint64 receipt/checkpoint/count/offset/byte-size fields exact; a field's inclusion in a joined witness does not impose a JCS range. Byte arithmetic is checked in its declared domain before allocation or publication, and :020 key padding is unchanged. Source schemas with broader mathematical domains are never capped by this route. SP-1101 selects the authenticated original profile for retained values, including CV-366's distinct declared-binary and float64 profile.
+  The shared reference helper and corpus are bounded static codec evidence only. They supply no native parser/resource qualification, Storage metadata assignment, CURRENT/manifest authority, append, durability, custody, payload admission or Event Authority clearance.
+gui_related: false
+gui_classification_reason: Defines exact numbers, byte profiles and original recipe custody; no visual presentation.
+depends_on:
+- SP-026
+- SP-236
+- CV-1100
+unblocks: []
+acceptance_criteria:
+- Storage uint64 fields include 2^53+1, 2^60, 2^63 and 2^64-1 without float narrowing; physical integer endpoints
+  and overflow are checked exactly.
+- EventRecord MessagePack preserves integral float type and positive/negative zero, with minimal lossless float32
+  or float64.
+- Selected profile rejects nonminimal/forbidden tags, duplicate/unordered maps, invalid Unicode and trailing data;
+  app and SP-278 profiles retain their distinct restrictions.
+- Payload sizes and hashes use exact original selected media/profile bytes, including retained payloads.
+validation_surfaces:
+- python3 scripts/pm_event_numbers.py --self-test
+- Plans/event_number_recipe_corpus.json
+- python3 scripts/pm-plan-index.py validate
+risk_class: numeric_identity_or_retained_recipe_drift
+reasoning_tier: high
+context_scope: event_authority_shared_number_recipe_contract
+implementation_surfaces:
+- Plans/storage-plan.md
+- scripts/pm_event_numbers.py
+- Plans/event_number_recipe_corpus.json
+node_compile_hint:
+  mode: owner_contract_only
+  create_worknodes: false
+  create_nodeseeds: false
+  runtime_enabled: false
+source_lineage:
+- /mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/surveys/NUMRULE/REPORT.md#4-proposed-owner-rule
+- Plans/Decision_Log.md#DL-045
+preserved_exact_tokens:
+- SP-1100
+negative_constraints:
+- No global numeric ceiling, alternate hash domain, envelope field, registry service, family admission or native
+  proof.
+- No rehash, restamp, backfill, current-then-legacy fallback or fabricated original custody.
+owner_hints:
+- Plans/storage-plan.md
+```
+
+ContractRef: ContractName:Plans/Contracts_V0.md#CV-1100, ContractName:Plans/Contracts_V0.md#CV-339, ContractName:Plans/storage-plan.md#SP-236, ContractName:Plans/storage-plan.md#SP-1101
 
 ### SP-237 - Case L Retention Compaction Deletion And Quarantine
 
