@@ -20,12 +20,14 @@ export default async function(t) {
       await f.evaluate(()=>O55.studio.onboarding.screen('r-source','fresh'));await f.waitForTimeout(900);
       const layer=f.locator('.o55-pane > .o55-layer:not(.o55-out)');
       await layer.locator('[data-o55-do="source"][data-arg="kit"]').click();
-      await layer.locator('[data-o55-do="kit"][data-arg="kit-loom"]').click();
+      const kit=layer.locator('[data-o55-do="kit"]').first(),kitId=await kit.getAttribute('data-arg');await kit.click();
       await f.waitForTimeout(500);await beginDropCapture(f);
       await layer.locator('.o55-foot .o55-primary').click();await f.waitForTimeout(3700);
       const rows=await f.evaluate(()=>window.__dropFrames);writeFileSync(join(t.run.dir,label+'.json'),JSON.stringify(rows));
-      const result=analyzeDrop(rows);all.push({look,width,height,...result});t.log(JSON.stringify(all.at(-1)));
+      const result=analyzeDrop(rows);all.push({look,width,height,kit:kitId,...result});t.log(JSON.stringify(all.at(-1)));
       await t.check(label+': backup list reached',rows.some(r=>r.screen==='r-pick'));
+      const shown=rows.filter(r=>r.screen==='r-pick'&&r.stage);
+      await t.check(label+': requested look actually painted',shown.length>10&&shown.every(r=>r.stage.theme===look),JSON.stringify([...new Set(shown.map(r=>r.stage.theme))]));
       if(t.args.reduced) {
         const props=rows.flatMap(r=>r.stage?.props.filter(p=>p.kind==='clipboard'&&p.state!=='out'&&p.op>.95)||[]);
         await t.check(label+': Reduced Motion places the prop immediately',props.length>10&&props.every(p=>Math.abs(p.len-p.target.len)<.01),String(props.length));
