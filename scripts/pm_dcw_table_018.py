@@ -19,7 +19,7 @@ def O164(value, context):
 def O165(value, context):
     if value['site'] != 'O165':
         return None
-    return None if (value['v0'] <= {m['event_id'] for m in value['v1']}) else value['code']
+    return None if (set(value['v0']) <= {m['event_id'] for m in value['v1']}) else value['code']
 
 def O167(value, context):
     if value['site'] != 'O167':

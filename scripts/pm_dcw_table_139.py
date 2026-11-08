@@ -9,7 +9,7 @@ def B106(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('B106', g.Invariant('/v0', "source['value_schema'] == m.load(row['source_schema'])"), 'refused', B106),
+        g.Guard('B106', g.Invariant('/v0', 'The materialized source schema equals the owner schema with exact nested types'), 'refused', B106),
     ])
 
     def check(value):

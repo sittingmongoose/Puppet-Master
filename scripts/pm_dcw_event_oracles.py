@@ -4,6 +4,7 @@ Synthetic authority inputs stand for independently authenticated owner/store ada
 They test composition, never establish that those native adapters exist or ran.
 """
 import base64
+import binascii
 import copy
 import hashlib
 import json
@@ -40,6 +41,7 @@ def load(path):
     return value
 HISTORICAL = ContextVar('dcw_historical_original', default=False)
 PASSIVE = ContextVar('dcw_passive_original', default=False)
+ORIGINAL_DIGESTS = ContextVar('dcw_authenticated_original_digests', default=None)
 SHARED_SCHEMAS = ('Plans/event_record.schema.json', 'Plans/event_append_receipt_contracts.schema.json')
 
 def frozen_shared(schema):
@@ -56,11 +58,14 @@ def historical_boundary(function):
         operation = kwargs.get('operation', args[2] if function.__name__ == 'verify' and len(args) > 2 else args[1])
         token = HISTORICAL.set(operation in ('read', 'rebuild', 'compatibility_read', 'retry'))
         passive = PASSIVE.set(operation in ('read', 'rebuild', 'compatibility_read'))
+        digests = ORIGINAL_DIGESTS.set({}) if ORIGINAL_DIGESTS.get() is None else None
         try:
             return function(*args, **kwargs)
         finally:
             HISTORICAL.reset(token)
             PASSIVE.reset(passive)
+            if digests is not None:
+                ORIGINAL_DIGESTS.reset(digests)
     return wrapped
 
 def _current_type(validator, expected, instance, schema):
@@ -153,11 +158,12 @@ def compact_digest(value):
 def canonical_msgpack(value):
     """SP-236/SP-1100 EventRecord physical profile, including float kind/sign."""
     try:
-        return numbers.storage_value_bytes(value, profile=numbers.EVENT_VALUE)
+        result = numbers.storage_value_bytes(value, profile=numbers.EVENT_VALUE)
     except numbers.Refusal as exc:
         guard_rows.enforce('OE003', {'site': 'OE003', 'code': exc.reason, 'v0': 'refused'})
     else:
         guard_rows.enforce('OE003', {'site': 'OE003', 'code': 'accept', 'v0': None})
+    return result
 
 def commitment(event):
     domain = 'pm.storage.original_event_value_commitment.v1'
@@ -169,11 +175,31 @@ SEMANTIC_FIELDS = 'event_type scope_kind project_id thread_id run_id node_id att
 def semantic_digest(event):
     """CV-317/CV-1100: the unchanged complete producer projection."""
     try:
-        return numbers.producer_semantic_digest(event)
+        result = numbers.producer_semantic_digest(event)
     except numbers.Refusal as exc:
         guard_rows.enforce('OE004', {'site': 'OE004', 'code': exc.reason, 'v0': 'refused'})
     else:
         guard_rows.enforce('OE004', {'site': 'OE004', 'code': 'accept', 'v0': None})
+    return result
+
+
+def original_semantic_digest(event, authority=None, slot=None):
+    """Use a verified original recipe; current callers still use semantic_digest."""
+    key = hashlib.sha256(canonical_msgpack(event)).hexdigest()
+    cache = ORIGINAL_DIGESTS.get()
+    if cache is not None and key in cache:
+        return cache[key]
+    if authority is not None and slot is not None:
+        custody = authority['custody'].get(event['event_id'])
+        if custody is not None:
+            try:
+                selected = number_custody.resolve(event, custody['first_append_receipt'],
+                    authority['storage_instance_id'], slot['source_ref'])
+            except numbers.Refusal:
+                pass
+            else:
+                return number_custody.selected_semantic_digest(selected)
+    return semantic_digest(event)
 
 def event_identity(payload):
     name = payload['event_type']
@@ -279,7 +305,14 @@ def original_receipt(event, slot, authority):
     guard_rows.enforce('O033', {'site': 'O033', 'code': 'receipt_identity', 'v0': custody['event_type'], 'v1': event['event_type']})
     guard_rows.enforce('O034', {'site': 'O034', 'code': 'receipt_identity', 'v0': custody['idempotency_key'], 'v1': event['idempotency_key']})
     guard_rows.enforce('O035', {'site': 'O035', 'code': 'receipt_scope', 'v0': custody['scope_partition'], 'v1': base64.urlsafe_b64encode(event['project_id'].encode()).decode().rstrip('=')})
-    guard_rows.enforce('O036', {'site': 'O036', 'code': 'idempotency_conflict', 'v0': custody['producer_semantic_digest'], 'v1': semantic_digest(event)})
+    selection_error = None
+    try:
+        selected = number_custody.resolve(event, custody['first_append_receipt'], authority['storage_instance_id'], slot['source_ref'])
+    except numbers.Refusal as exc:
+        selection_error = exc.reason
+        selected = None
+    expected_semantic = number_custody.selected_semantic_digest(selected) if selected is not None else semantic_digest(event)
+    guard_rows.enforce('O036', {'site': 'O036', 'code': 'idempotency_conflict', 'v0': custody['producer_semantic_digest'], 'v1': expected_semantic})
     guard_rows.enforce('O037', {'site': 'O037', 'code': 'original_full_value', 'v0': typed_observation(authority['events'].get(event['event_id'])), 'v1': typed_observation(event)})
     guard_rows.enforce('O038', {'site': 'O038', 'code': 'original_commitment', 'v0': typed_observation(custody['original_event_value_commitment']), 'v1': typed_observation(commitment(event))})
     receipt = custody['first_append_receipt']
@@ -298,12 +331,12 @@ def original_receipt(event, slot, authority):
     guard_rows.enforce('O048', {'site': 'O048', 'code': 'receipt_group', 'v0': event['event_id'], 'v1': group['event_ids']})
     guard_rows.enforce('O049', {'site': 'O049', 'code': 'receipt_durability', 'v0': group['durability_class'], 'v1': receipt['durability_class']})
     guard_rows.enforce('O050', {'site': 'O050', 'code': 'receipt_durability', 'v0': receipt['durability_class'], 'v1': group['sync']})
-    try:
-        number_custody.resolve(event, receipt, authority['storage_instance_id'], slot['source_ref'])
-    except numbers.Refusal as exc:
-        guard_rows.enforce('N001', {'site': 'N001', 'code': exc.reason, 'v0': 'refused'})
+    if selection_error is not None:
+        guard_rows.enforce('N001', {'site': 'N001', 'code': selection_error, 'v0': 'refused'})
     else:
         guard_rows.enforce('N001', {'site': 'N001', 'code': 'original_authority', 'v0': None})
+        if ORIGINAL_DIGESTS.get() is not None:
+            ORIGINAL_DIGESTS.get()[hashlib.sha256(canonical_msgpack(event)).hexdigest()] = expected_semantic
 
 def bundle_source(row, scenario, legacy_validate, historical=False):
     source, authority, event = (scenario['source'], scenario['authority'], scenario['event'])
@@ -533,7 +566,7 @@ def verify(row, scenario, operation, legacy_validate):
                 original_row = dict(row, schema=next((r['schema'] for r in load('Plans/dcw_event_contract_fixtures.json')['families'] if r['event_type'] == original['event_type'])))
                 ref = event_reference(original_row, original)
                 guard_rows.enforce('O164', {'site': 'O164', 'code': 'restore_event_payload_inventory', 'v0': typed_observation(authority.get('restored_event_payloads', {}).get(ref['blake3'])), 'v1': typed_observation({k: ref[k] for k in ('byte_size', 'media_type')})})
-        guard_rows.enforce('O165', {'site': 'O165', 'code': 'restore_members', 'v0': ids, 'v1': admission['members']})
+        guard_rows.enforce('O165', {'site': 'O165', 'code': 'restore_members', 'v0': sorted(ids), 'v1': admission['members']})
         for member in admission['members']:
             c = authority['custody'].get(member['event_id'])
             guard_rows.enforce('O166', {'site': 'O166', 'code': 'restore_members', 'v0': c})
@@ -556,7 +589,8 @@ def verify(row, scenario, operation, legacy_validate):
             admit_retry_request(row, scenario['retry_request'])
             if 'replay_policy' in scenario['retry_request']:
                 writer_policy(scenario['retry_request']['replay_policy'])
-            guard_rows.enforce('O178', {'site': 'O178', 'code': 'idempotency_conflict', 'v0': semantic_digest(scenario['retry_request']), 'v1': semantic_digest(event)})
+            original_slot = scenario['source']['phases'][-1] if row['event_type'].startswith('bundle.') else scenario['source']
+            guard_rows.enforce('O178', {'site': 'O178', 'code': 'idempotency_conflict', 'v0': semantic_digest(scenario['retry_request']), 'v1': original_semantic_digest(event, authority, original_slot)})
         original_receipt(event, scenario['source']['phases'][-1] if row['event_type'].startswith('bundle.') else scenario['source'], authority)
     if operation in ('read', 'rebuild', 'compatibility_read'):
         guard_rows.enforce('O179', {'site': 'O179', 'code': 'reader_withdrawn', 'v0': control['reader_withdrawn']})
@@ -585,6 +619,8 @@ def verify(row, scenario, operation, legacy_validate):
         index_read(index, scenario['reader'], authority)
         index_event(index, event, authority)
     guard_rows.enforce('O186', {'site': 'O186', 'code': 'reader_effect_forbidden' if operation in ('read', 'rebuild', 'compatibility_read') else 'effect_not_authorized', 'v0': control['requested_effects']})
+    if operation in ('append', 'publish'):
+        semantic_digest(event)
     return 'accept'
 
 def patch(value, mutation):
@@ -647,9 +683,9 @@ def run(legacy_validate, family=None):
     from pm_dcw_event_numeric_cases import cases as numeric_cases
     fixtures = load('Plans/dcw_event_contract_fixtures.json')
     checks = 0
-    guard_rows.enforce('O187', {'site': 'O187', 'code': 'family_inventory', 'v0': fixtures['families']})
-    guard_rows.enforce('O188', {'site': 'O188', 'code': 'family_inventory', 'v0': fixtures['families']})
-    guard_rows.enforce('O189', {'site': 'O189', 'code': 'family_inventory', 'v0': family, 'v1': fixtures['families']})
+    guard_rows.enforce('O187', {'site': 'O187', 'code': 'family_inventory', 'v0': [r['event_type'] for r in fixtures['families']]})
+    guard_rows.enforce('O188', {'site': 'O188', 'code': 'family_inventory', 'v0': [r['event_type'] for r in fixtures['families']]})
+    guard_rows.enforce('O189', {'site': 'O189', 'code': 'family_inventory', 'v0': family, 'v1': [r['event_type'] for r in fixtures['families']]})
     for schema_path in SCHEMAS:
         schema = load(str(schema_path.relative_to(ROOT)))
         Draft202012Validator.check_schema(schema)
@@ -659,7 +695,7 @@ def run(legacy_validate, family=None):
         source = next((f for f in registry['families'] if f['family_id'] == row['source_family']))
         guard_rows.enforce('O190', {'site': 'O190', 'code': 'materialized_source', 'v0': source['status']})
         guard_rows.enforce('O191', {'site': 'O191', 'code': 'materialized_source', 'v0': source['value_schema_ref'], 'v1': row['source_schema']})
-        guard_rows.enforce('O192', {'site': 'O192', 'code': 'materialized_source', 'v0': source['value_schema'], 'v1': load(row['source_schema'])})
+        guard_rows.enforce('O192', {'site': 'O192', 'code': 'materialized_source', 'v0': schema_observation(source['value_schema']), 'v1': schema_observation(load(row['source_schema']))})
         guard_rows.enforce('O193', {'site': 'O193', 'code': 'original_backup_contract', 'v0': source['recovery_disposition']['backup_required']})
         guard_rows.enforce('O194', {'site': 'O194', 'code': 'original_backup_contract', 'v0': source['restore_disposition']['mutation_fence_on_unresolved']})
         guard_rows.enforce('O195', {'site': 'O195', 'code': 'original_backup_contract', 'v0': source['restore_disposition']['mode']})
@@ -836,7 +872,7 @@ def index_key(event):
     return 'event_record_index.v2:' + index_partition(event) + ':' + str(event['sequence_id']).zfill(20) + ':' + event['event_id']
 
 def index_prefix(frames):
-    return index_binding(dict(domain='pm.event_index.retained_prefix.v1', entries=[dict(sequence_id=f['event']['sequence_id'], event_id=f['event']['event_id'], scope_partition=index_partition(f['event']), source_value_bytes_sha256=hashlib.sha256(base64.b64decode(f['source_value_bytes_base64'], validate=True)).hexdigest()) for f in frames]))
+    return index_binding(dict(domain='pm.event_index.retained_prefix.v1', entries=[dict(sequence_id=f['event']['sequence_id'], event_id=f['event']['event_id'], scope_partition=index_partition(f['event']), source_value_bytes_sha256=hashlib.sha256(source_frame_bytes(f['source_value_bytes_base64'])).hexdigest()) for f in frames]))
 
 def index_selection(source, storage_instance_id):
     manifest = source['manifest']
@@ -853,7 +889,7 @@ def index_generation(storage_instance_id, anchor):
 def index_row(frame, generation, checkpoint_key):
     event = frame['event']
     birth = generation['anchor']['source_selection']
-    return dict(schema_id='pm.storage_value.event_record_index.v2', schema_version='2.0.0', **{k: event[k] for k in ('scope_kind', 'project_id', 'sequence_id', 'event_id', 'event_type', 'idempotency_key', 'correlation_id', 'causation_event_id', 'persisted_at_utc', 'redaction_profile')}, scope_partition=index_partition(event), source_locator=dict(**{k: frame[k] for k in ('segment_generation', 'segment_name', 'byte_offset')}, sequence_id=event['sequence_id']), publication_locator=dict(manifest_generation=birth['manifest_generation'], recovery_epoch=birth['recovery_epoch'], survivor_prefix_sha256=birth['manifest_survivor_prefix_sha256'], checkpoint_ref=checkpoint_key + '#/generations/' + generation['generation_id'], compaction_translation_manifest_ref=None), payload_sha256=hashlib.sha256(canonical_msgpack(event['payload'])).hexdigest(), producer_semantic_digest=semantic_digest(event), source_schema_id=event['schema_id'], source_schema_version=event['schema_version'], projector_replay_only=event['replay_policy'] == 'projector_replay_only')
+    return dict(schema_id='pm.storage_value.event_record_index.v2', schema_version='2.0.0', **{k: event[k] for k in ('scope_kind', 'project_id', 'sequence_id', 'event_id', 'event_type', 'idempotency_key', 'correlation_id', 'causation_event_id', 'persisted_at_utc', 'redaction_profile')}, scope_partition=index_partition(event), source_locator=dict(**{k: frame[k] for k in ('segment_generation', 'segment_name', 'byte_offset')}, sequence_id=event['sequence_id']), publication_locator=dict(manifest_generation=birth['manifest_generation'], recovery_epoch=birth['recovery_epoch'], survivor_prefix_sha256=birth['manifest_survivor_prefix_sha256'], checkpoint_ref=checkpoint_key + '#/generations/' + generation['generation_id'], compaction_translation_manifest_ref=None), payload_sha256=hashlib.sha256(canonical_msgpack(event['payload'])).hexdigest(), producer_semantic_digest=original_semantic_digest(event), source_schema_id=event['schema_id'], source_schema_version=event['schema_version'], projector_replay_only=event['replay_policy'] == 'projector_replay_only')
 
 def index_rows_digest(rows):
     return index_binding(dict(domain='pm.event_index.row_set.v1', entries=[dict(key=k, value=v) for k, v in sorted(rows.items(), key=lambda pair: (pair[1]['sequence_id'], pair[1]['event_id']))]))
@@ -893,20 +929,22 @@ def index_content(index, reader, authority=None, event_validator=None):
     guard_rows.enforce('O200', {'site': 'O200', 'code': 'index_source_binding', 'v0': source['manifest']['survivor_prefix_sha256'], 'v1': index_prefix(frames)})
     blobs = []
     segments = []
-    frame_bytes_valid = True
     for segment in source['segments']:
         members = [f for f in frames if (f['segment_generation'], f['segment_name']) == (segment['segment_generation'], segment['segment_name'])]
         blob = b''
         for frame in members:
             raw = canonical_msgpack(frame['event'])
-            frame_bytes_valid &= base64.b64decode(frame['source_value_bytes_base64'], validate=True) == raw and exact_equal(frame['byte_offset'], len(blob)) and exact_equal(frame['frame_end_offset'], len(blob) + len(raw)) and (frame['source_schema_id'] == frame['event']['schema_id']) and (frame['source_schema_version'] == frame['event']['schema_version'])
+            guard_rows.enforce('F001', {'site':'F001','code':'index_source_bytes','v0':source_frame_bytes(frame['source_value_bytes_base64']),'v1':raw})
+            guard_rows.enforce('F002', {'site':'F002','code':'index_source_bytes','v0':typed_observation(frame['byte_offset']),'v1':typed_observation(len(blob))})
+            guard_rows.enforce('F003', {'site':'F003','code':'index_source_bytes','v0':typed_observation(frame['frame_end_offset']),'v1':typed_observation(len(blob)+len(raw))})
+            guard_rows.enforce('F004', {'site':'F004','code':'index_source_bytes','v0':frame['source_schema_id'],'v1':frame['event']['schema_id']})
+            guard_rows.enforce('F005', {'site':'F005','code':'index_source_bytes','v0':frame['source_schema_version'],'v1':frame['event']['schema_version']})
             blob += raw
         blobs.append(blob)
         segments.append(dict(segment_generation=segment['segment_generation'], segment_name=segment['segment_name'], state=segment['state'], scan_start_offset=0, scanned_through_offset=len(blob), source_durable_end_offset=len(blob), source_durable_bytes_sha256=hashlib.sha256(blob).hexdigest(), retained_event_count=len(members), first_sequence_id=members[0]['event']['sequence_id'] if members else None, last_sequence_id=members[-1]['event']['sequence_id'] if members else None))
     sequences = [f['event']['sequence_id'] for f in frames]
-    guard_rows.enforce('O201', {'site': 'O201', 'code': 'index_source_bytes', 'v0': frame_bytes_valid})
     guard_rows.enforce('O202', {'site': 'O202', 'code': 'index_source_bytes', 'v0': sum((s['retained_event_count'] for s in segments)), 'v1': frames})
-    guard_rows.enforce('O203', {'site': 'O203', 'code': 'index_source_bytes', 'v0': base64.b64decode(source['source_bytes_base64'], validate=True), 'v1': b''.join(blobs)})
+    guard_rows.enforce('O203', {'site': 'O203', 'code': 'index_source_bytes', 'v0': source_frame_bytes(source['source_bytes_base64']), 'v1': b''.join(blobs)})
     guard_rows.enforce('O204', {'site': 'O204', 'code': 'index_source_bytes', 'v0': typed_observation(source['segments']), 'v1': typed_observation(segments)})
     guard_rows.enforce('O205', {'site': 'O205', 'code': 'index_source_bytes', 'v0': typed_observation(source['manifest']['retained_inventory']), 'v1': typed_observation(segments)})
     guard_rows.enforce('O206', {'site': 'O206', 'code': 'index_source_bytes', 'v0': typed_observation(source['manifest']['durable_watermarks']), 'v1': typed_observation([dict(segment_name=s['segment_name'], durable_end_offset=s['source_durable_end_offset']) for s in segments])})
@@ -1017,3 +1055,34 @@ def admit_storage_sequence(value):
         guard_rows.enforce('N003', {'site':'N003','code':exc.reason,'v0':'refused'})
     else:
         guard_rows.enforce('N003', {'site':'N003','code':'storage_uint64','v0':None})
+
+
+def schema_observation(value):
+    """Exact schema-data observation, independent of a Storage numeric profile.
+
+    Schema numeric keywords can exceed the physical EventRecord number domain.
+    Tags retain numeric type and float bits; dictionary order has no authority.
+    This is proof/metadata representation, never a product identity/hash recipe.
+    """
+    from decimal import Decimal
+    def typed(item):
+        if item is None:return ['null']
+        if type(item) is bool:return ['bool',item]
+        if type(item) is int:return ['int',format(Decimal(item),'f')]
+        if type(item) is float:return ['float64',struct.pack('>d',item).hex()]
+        if type(item) is str:return ['str',item]
+        if type(item) is list:return ['array',[typed(v) for v in item]]
+        if type(item) is dict:return ['object',[[k,typed(item[k])] for k in sorted(item)]]
+        raise TypeError('schema data is outside its JSON primitive domain')
+    return json.dumps(typed(value),ensure_ascii=True,separators=(',',':'))
+
+
+def source_frame_bytes(value):
+    """Decode the captured source byte observation before any hash or join."""
+    try:
+        result=base64.b64decode(value,validate=True)
+    except (binascii.Error,ValueError,TypeError) as exc:
+        guard_rows.enforce('F006', {'site':'F006','code':'index_source_bytes','v0':'refused'})
+    else:
+        guard_rows.enforce('F006', {'site':'F006','code':'index_source_bytes','v0':None})
+    return result

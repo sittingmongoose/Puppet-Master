@@ -37,7 +37,7 @@ def case(value):
         g.Guard('O175', g.Invariant('/v0', "type(authority['writable_projects']) is list"), 'refused', O175),
         g.Guard('O176', g.Invariant('/v0', "payload['project_id'] in authority['writable_projects']"), 'refused', O176),
         g.Guard('O177', g.Invariant('/v0', "control['writer_cutoff'] is False or (control['writer_cutoff'] is True and operation != 'append' and (control['pending_disposition'] == 'drain_original'))"), 'refused', O177),
-        g.Guard('O178', g.Invariant('/v0', "semantic_digest(scenario['retry_request']) == semantic_digest(event)"), 'refused', O178),
+        g.Guard('O178', g.Invariant('/v0', 'Current caller semantic digest equals the authenticated original semantic digest'), 'refused', O178),
         g.Guard('O179', g.Invariant('/v0', "control['reader_withdrawn'] is False"), 'refused', O179),
         g.Guard('O180', g.Invariant('/v0', "control['reader_schema_version'] == payload['schema_version']"), 'refused', O180),
     ])

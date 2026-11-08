@@ -39,7 +39,7 @@ def case(value):
         g.Guard('O031', g.Invariant('/v0', "custody['storage_instance_id'] == authority['storage_instance_id']"), 'refused', O031),
         g.Guard('O033', g.Invariant('/v0', "custody['event_type'] == event['event_type']"), 'refused', O033),
         g.Guard('O035', g.Invariant('/v0', "custody['scope_partition'] == 'project~' + base64.urlsafe_b64encode(event['project_id'].encode()).decode().rstrip('=')"), 'refused', O035),
-        g.Guard('O036', g.Invariant('/v0', "custody['producer_semantic_digest'] == semantic_digest(event)"), 'refused', O036),
+        g.Guard('O036', g.Invariant('/v0', 'Original custody producer_semantic_digest equals its verified frozen original recipe digest'), 'refused', O036),
     ])
 
     def check(value):

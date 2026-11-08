@@ -224,7 +224,7 @@ def verify(s, operation):
     if operation == 'retry' and 'retry_request' in s:
         m.writer_policy(s['retry_request']['replay_policy'])
         m.admit_retry_request(row_for(event['event_type']), s['retry_request'])
-        m.guard_rows.enforce('B087', {'site': 'B087', 'code': 'idempotency_conflict', 'v0': m.semantic_digest(s['retry_request']), 'v1': m.semantic_digest(event)})
+        m.guard_rows.enforce('B087', {'site': 'B087', 'code': 'idempotency_conflict', 'v0': m.semantic_digest(s['retry_request']), 'v1': m.original_semantic_digest(event)})
     dependencies = dict(a['sources'])
     dependencies[event['event_id']] = s['source']
     m.guard_rows.enforce('B088', {'site': 'B088', 'code': 'restore_boundary', 'v0': control['restored_boundary_sha256'], 'v1': a['restored_boundary_sha256']})
@@ -264,6 +264,8 @@ def verify(s, operation):
         m.index_read(s['index'], s['reader'], a, event_validator=validate_index_event)
         m.index_event(s['index'], event, a)
     m.guard_rows.enforce('B104', {'site': 'B104', 'code': 'reader_effect_forbidden' if historical else 'effect_not_authorized', 'v0': control['requested_effects']})
+    if operation in ('append', 'publish'):
+        m.semantic_digest(event)
     return 'accept'
 
 def outcome(s, operation):
@@ -282,7 +284,7 @@ def main(family):
     row = next((r for r in fixtures['families'] if r['event_type'] == family))
     source = next((f for f in m.load('Plans/storage_value_registry.json')['families'] if f['family_id'] == row['source_family']))
     m.guard_rows.enforce('B105', {'site': 'B105', 'code': 'materialized_source', 'v0': source['value_schema_ref'], 'v1': row['source_schema']})
-    m.guard_rows.enforce('B106', {'site': 'B106', 'code': 'materialized_source', 'v0': source['value_schema'], 'v1': m.load(row['source_schema'])})
+    m.guard_rows.enforce('B106', {'site': 'B106', 'code': 'materialized_source', 'v0': m.schema_observation(source['value_schema']), 'v1': m.schema_observation(m.load(row['source_schema']))})
     m.guard_rows.enforce('B107', {'site': 'B107', 'code': 'backup_contract', 'v0': source['recovery_disposition']['backup_required']})
     m.guard_rows.enforce('B108', {'site': 'B108', 'code': 'backup_contract', 'v0': source['restore_disposition']['mutation_fence_on_unresolved']})
     counts = dict(positive=0, negative=0, repair_controls=0)
@@ -295,7 +297,7 @@ def main(family):
             assert outcome(copy.deepcopy(case['repair']), case['operation']) == 'accept', (family, case['id'], 'repair')
             counts['repair_controls'] += 1
         results.append(dict(case_id=case['id'], operation=case['operation'], outcome=actual))
-    print(json.dumps(dict(status='PASS', family=family, counts=counts, results=results, membership='ABSENT', retention='PARTIAL', guard_isolation='B3_SWEEP', timestamp='B2_SWEEP', number_domain='SW_N1', native='NOT_RUN'), indent=2))
+    print(json.dumps(dict(status='PASS', family=family, counts=counts, results=results, membership='ABSENT', retention='PARTIAL', guard_isolation='PARTIAL_PHASE_TABLES', timestamp='interim only', number_domain='NUMBER_SCOPE_ADOPTED', native='NOT_RUN'), indent=2))
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--family', choices=NAMES, required=True)

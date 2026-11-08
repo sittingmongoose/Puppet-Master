@@ -36,7 +36,7 @@ def case(value):
     table = g.GuardTable([
         g.Guard('B084', g.Invariant('/v0', "p['project_id'] in a['writable_projects']"), 'refused', B084),
         g.Guard('B086', g.Invariant('/v0', "m.exact_equal(dict(event, replay_policy=original['replay_policy']), original)"), 'refused', B086),
-        g.Guard('B087', g.Invariant('/v0', "m.semantic_digest(s['retry_request']) == m.semantic_digest(event)"), 'refused', B087),
+        g.Guard('B087', g.Invariant('/v0', 'Current caller semantic digest equals the authenticated original semantic digest'), 'refused', B087),
         g.Guard('B088', g.Invariant('/v0', "control['restored_boundary_sha256'] == a['restored_boundary_sha256']"), 'refused', B088),
         g.Guard('B089', g.Invariant('/v0', 'admission is not None'), 'refused', B089),
         g.Guard('B090', g.Invariant('/v0', "admission['storage_instance_id'] == a['storage_instance_id']"), 'refused', B090),

@@ -50,7 +50,12 @@ def capture(events, storage_instance_id, recovery_epoch=0):
 
 
 def snapshot(events, storage_instance_id, recovery_epoch=0):
-    source = capture(events, storage_instance_id, recovery_epoch); coverage = m.index_coverage(source)
+    return snapshot_source(capture(events, storage_instance_id, recovery_epoch), storage_instance_id)
+
+
+def snapshot_source(source, storage_instance_id):
+    """Issue only derived copies; leave the input source fact untouched."""
+    coverage = m.index_coverage(source)
     # Preserve the generic owner's exact wire shape, replacing every binding.
     example = m.load('Plans/event_index_consumer_adoption_fixtures.json')['positive']['both_full_owner_joins']
     index = copy.deepcopy(example['generic']); cp = index['checkpoint']

@@ -4,7 +4,7 @@ import pm_guard_isolation as g
 def B016(value, context):
     if value['site'] != 'B016':
         return None
-    return None if (ord(value['v0']) >= 32) else value['code']
+    return None if (value['v0'] >= ' ') else value['code']
 
 def case(value):
     context = None

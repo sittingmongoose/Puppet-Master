@@ -4,7 +4,7 @@ import pm_guard_isolation as g
 def O210(value, context):
     if value['site'] != 'O210':
         return None
-    return None if ([(g['first_sequence_id'], g['last_sequence_id']) for g in value['v0']] == value['v1']) else value['code']
+    return None if ([(gap['first_sequence_id'], gap['last_sequence_id']) for gap in value['v0']] == value['v1']) else value['code']
 
 def case(value):
     context = None

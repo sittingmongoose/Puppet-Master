@@ -30,19 +30,20 @@ def pointer(document, fragment):
                 value = value[int(token)]
             else:
                 value = value[token]
-        return value
     except (KeyError, IndexError, TypeError, ValueError) as exc:
         m.guard_rows.enforce('RE001', {'site': 'RE001', 'code': 'registered_schema_pointer', 'v0': 'refused'})
     else:
         m.guard_rows.enforce('RE001', {'site': 'RE001', 'code': 'registered_schema_pointer', 'v0': None})
+    return value
 
 def document_at(path):
     try:
-        return m.load(path)
+        result = m.load(path)
     except (OSError, TypeError, ValueError) as exc:
         m.guard_rows.enforce('RE002', {'site': 'RE002', 'code': 'registered_schema_path', 'v0': 'refused'})
     else:
         m.guard_rows.enforce('RE002', {'site': 'RE002', 'code': 'registered_schema_path', 'v0': None})
+    return result
 
 @lru_cache(maxsize=8)
 def catalog(loader):

@@ -4,6 +4,12 @@ RECORDER and DISABLED are supplementary lane diagnostics. The gated tool itself
 only swaps table entries, and neither reads nor uses these diagnostic seams.
 """
 import copy
+import pm_dcw_table_167
+import pm_dcw_table_166
+import pm_dcw_table_165
+import pm_dcw_table_164
+import pm_dcw_table_163
+import pm_dcw_table_162
 import pm_dcw_table_000
 import pm_dcw_table_001
 import pm_dcw_table_002
@@ -107,7 +113,6 @@ import pm_dcw_table_099
 import pm_dcw_table_100
 import pm_dcw_table_101
 import pm_dcw_table_102
-import pm_dcw_table_103
 import pm_dcw_table_104
 import pm_dcw_table_105
 import pm_dcw_table_106
@@ -369,7 +374,6 @@ FACTORIES = {
     'O198': pm_dcw_table_023.case,
     'O199': pm_dcw_table_101.case,
     'O200': pm_dcw_table_102.case,
-    'O201': pm_dcw_table_103.case,
     'O202': pm_dcw_table_104.case,
     'O203': pm_dcw_table_023.case,
     'O204': pm_dcw_table_105.case,
@@ -557,6 +561,12 @@ FACTORIES = {
     'H002': pm_dcw_table_045.case,
     'N003': pm_dcw_table_045.case,
     'N004': pm_dcw_table_161.case,
+    'F001': pm_dcw_table_162.case,
+    'F002': pm_dcw_table_163.case,
+    'F003': pm_dcw_table_164.case,
+    'F004': pm_dcw_table_165.case,
+    'F005': pm_dcw_table_166.case,
+    'F006': pm_dcw_table_167.case,
 }
 
 RECORDER = None

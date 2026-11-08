@@ -12,6 +12,14 @@ _ISSUED = {}
 _RECIPES = {}
 
 
+def semantic_for_recipe(event, legacy):
+    if legacy:
+        # The actual pre-sweep DCW integer-JSON recipe, not current JCS.
+        from pm_dcw_event_oracles import digest, SEMANTIC_FIELDS
+        return digest({key:event[key] for key in SEMANTIC_FIELDS})
+    return n.producer_semantic_digest(event)
+
+
 def binding(event, storage_instance, operation_ref):
     raw=n.storage_value_bytes(event, profile=n.EVENT_VALUE)
     return n.OriginalBinding(storage_instance, event['scope_kind'], 'dcw-static-owner', event['project_id'],
@@ -22,7 +30,8 @@ def binding(event, storage_instance, operation_ref):
 def install(event, receipt, storage_instance, operation_ref, resource_manifest, *, legacy=False):
     """Called by a fixture's original issuer, before its negative mutation."""
     raw=n.storage_value_bytes(event, profile=n.EVENT_VALUE)
-    result=n.storage_value_bytes(dict(operation_ref=operation_ref),profile=n.EVENT_VALUE)
+    result=n.storage_value_bytes(dict(operation_ref=operation_ref,
+        producer_semantic_digest=semantic_for_recipe(event,legacy)),profile=n.EVENT_VALUE)
     receipt_bytes=n.storage_value_bytes(receipt,profile=n.EVENT_VALUE)
     recipe=n.RecipeTuple(event['schema_id'],event['schema_version'],event['payload_schema_id'],
         event['payload'].get('schema_version','1.0.0'), 'dcw-owner-original',
@@ -38,7 +47,9 @@ def install(event, receipt, storage_instance, operation_ref, resource_manifest, 
         authentic=_ISSUED.get(ref)
         return authentic is not None and candidate==authentic and (
             n.storage_value_bytes(n.decode_storage_value(candidate.record_bytes,profile=n.EVENT_VALUE),
-                                  profile=n.EVENT_VALUE)==candidate.record_bytes)
+                                  profile=n.EVENT_VALUE)==candidate.record_bytes) and (
+            n.decode_storage_value(candidate.result_bytes,profile=n.EVENT_VALUE)['producer_semantic_digest']==
+            semantic_for_recipe(n.decode_storage_value(candidate.record_bytes,profile=n.EVENT_VALUE),legacy))
     _RECIPES[recipe]=n.FrozenRecipe(verify_issued)
 
 
@@ -56,6 +67,11 @@ def resolve(event, receipt, storage_instance, operation_ref, *, recipe_override=
     if selected.receipt_bytes!=n.storage_value_bytes(receipt,profile=n.EVENT_VALUE):
         raise n.Refusal('original_verification')
     return selected
+
+
+def selected_semantic_digest(selected):
+    """Read only after RetainedDispatcher verified the exact frozen recipe."""
+    return n.decode_storage_value(selected.result_bytes,profile=n.EVENT_VALUE)['producer_semantic_digest']
 
 
 def install_scenario(scenario, resource_manifest, *, legacy=False):

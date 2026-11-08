@@ -95,7 +95,30 @@ def number_witnesses(family=None):
         yield dict(id=name+'/numbers/forged-original-catalog',family=name,row=row,value=value,operation='publish',expected='original_authority')
 
 
+def p2a_witnesses(family=None):
+    from pm_dcw_p2a_cases import cases
+    for witness in cases():
+        if family and witness['family']!=family:continue
+        yield witness
+        if 'repair' in witness:
+            control=dict(witness,id=witness['id']+'/control',value=copy.deepcopy(witness['repair']),expected='accept',target=None)
+            if control.get('kind')=='configured':
+                control['overrides']=witness.get('repair_overrides',{})
+                if not control['overrides']:control['kind']=None
+            yield control
+
+
 def invoke(witness):
+    if witness.get('kind')=='binding':
+        m.index_binding(witness['value'])
+        return 'accept'
+    if witness.get('kind')=='configured':
+        original=m.load;overrides=witness['overrides']
+        m.load=lambda path:overrides[path] if path in overrides else original(path)
+        try:
+            plain=dict(witness,kind=None)
+            return invoke(plain)
+        finally:m.load=original
     if witness.get('kind')=='preflight':
         from pm_dcw_preflight_guard_cases import invoke as preflight
         return preflight(witness)
@@ -113,7 +136,7 @@ def collect(family=None, progress=None, items=None):
     collection=dict(controls={}, negatives={}, aliases={}, mismatches=[], untracked=[], cuts=[], counts={})
     from itertools import chain
     from pm_dcw_preflight_guard_cases import cases as preflight_cases
-    for w in (items if items is not None else chain(witnesses(family), number_witnesses(family), preflight_cases())):
+    for w in (items if items is not None else chain(witnesses(family), number_witnesses(family), preflight_cases(), p2a_witnesses(family))):
         recorded=[]; rows.RECORDER=recorded
         try:
             actual=invoke(w)
@@ -127,6 +150,8 @@ def collect(family=None, progress=None, items=None):
         finally:
             rows.RECORDER=None
         collection['counts'][w['family']]=collection['counts'].get(w['family'],0)+1
+        if w.get('target') and actual!='accept' and (not recorded or recorded[-1][0]!=w['target']):
+            collection['mismatches'].append(dict(id=w['id'],target=w['target'],actual_row=recorded[-1][0] if recorded else None))
         if actual!=w['expected']:
             collection['mismatches'].append(dict(id=w['id'],expected=w['expected'],actual=actual))
         if actual=='accept':

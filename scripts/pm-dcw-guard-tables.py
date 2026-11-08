@@ -27,14 +27,21 @@ def wait_start():
         print('waiting for 13.5 GiB before heavy start',flush=True);time.sleep(15)
 
 
+def collection_progress(collection):
+    print('cases',sum(collection['counts'].values()),flush=True)
+    if memory()<10:
+        print('collection paused below 10 GiB',flush=True)
+        wait_start()
+
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--collect',action='store_true')
     parser.add_argument('--from-collection');parser.add_argument('--out',required=True)
-    parser.add_argument('--start',type=int,default=0);parser.add_argument('--count',type=int,default=16)
+    parser.add_argument('--start',type=int,default=0);parser.add_argument('--count',type=int,default=16);parser.add_argument('--include-unproved',action='store_true')
     args=parser.parse_args();signal.alarm(5400);out=Path(args.out);out.mkdir(parents=True,exist_ok=True)
     wait_start()
     if args.collect:
-        c=collect(progress=lambda c:print('cases',sum(c['counts'].values()),flush=True))
+        c=collect(progress=collection_progress)
         (out/'collection.pkl').write_bytes(pickle.dumps(c,protocol=5))
         summary={k:v for k,v in c.items() if k not in ('controls','negatives')}
         summary['controls']=list(c['controls']);summary['negative_rows']={k:len(v) for k,v in c['negatives'].items()}
@@ -47,7 +54,7 @@ def main():
     results=[]
     for p in paths[args.start:args.start+args.count]:
         wait_start();suite=suite_for(p.stem,c)
-        if not suite.negatives:
+        if not suite.negatives and not args.include_unproved:
             results.append(dict(table=p.stem,status='unproved',reason='no complete-path negative in the lane corpus'))
             continue
         print('tool',p.stem,len(suite.controls),len(suite.negatives),flush=True)
@@ -58,6 +65,7 @@ def main():
         results.append(summary)
         print(p.stem,report.get('status'),flush=True)
     (out/('batch-%03d.json'%args.start)).write_text(json.dumps(results,indent=2)+'\n')
+    if any(r['status']=='FAIL' for r in results):raise SystemExit(1)
 
 
 if __name__=='__main__':main()

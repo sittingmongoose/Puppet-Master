@@ -4,7 +4,7 @@ import pm_guard_isolation as g
 def O187(value, context):
     if value['site'] != 'O187':
         return None
-    return None if ({r['event_type'] for r in value['v0']} == {'bundle.revision_requested', 'bundle.revision_started', 'bundle.revision_completed', 'bundle.revision_interrupted', 'wizard.opened', 'wizard.deferred_payload.loaded'}) else value['code']
+    return None if (set(value['v0']) == {'bundle.revision_requested', 'bundle.revision_started', 'bundle.revision_completed', 'bundle.revision_interrupted', 'wizard.opened', 'wizard.deferred_payload.loaded'}) else value['code']
 
 def O188(value, context):
     if value['site'] != 'O188':
@@ -14,7 +14,7 @@ def O188(value, context):
 def O189(value, context):
     if value['site'] != 'O189':
         return None
-    return None if (value['v0'] is None or value['v0'] in {r['event_type'] for r in value['v1']}) else value['code']
+    return None if (value['v0'] is None or value['v0'] in value['v1']) else value['code']
 
 def O190(value, context):
     if value['site'] != 'O190':
@@ -39,7 +39,7 @@ def case(value):
         g.Guard('O189', g.Invariant('/v0', "family is None or family in {r['event_type'] for r in fixtures['families']}"), 'refused', O189),
         g.Guard('O190', g.Invariant('/v0', "source['status'] == 'materialized'"), 'refused', O190),
         g.Guard('O191', g.Invariant('/v0', "source['value_schema_ref'] == row['source_schema']"), 'refused', O191),
-        g.Guard('O192', g.Invariant('/v0', "source['value_schema'] == load(row['source_schema'])"), 'refused', O192),
+        g.Guard('O192', g.Invariant('/v0', 'The materialized source schema equals the owner schema with exact nested types'), 'refused', O192),
     ])
 
     def check(value):

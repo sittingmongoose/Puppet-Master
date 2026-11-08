@@ -66,8 +66,9 @@ def run(family=None):
     families += [(None,base(name)) for name in b.NAMES]
     results=[]
     def record(name,case,actual,expected):
-        while available_memory()<10:
-            print('paused below 10 GiB',flush=True);time.sleep(15)
+        if available_memory()<10:
+            while available_memory()<13.5:
+                print('paused; waiting for 13.5 GiB',flush=True);time.sleep(15)
         results.append(dict(family=name,case=case,actual=actual,expected=expected,passed=actual==expected))
     for row,original in families:
         name=original['event']['event_type']
@@ -127,6 +128,15 @@ def run(family=None):
         huge=n.loads_current_json('9'*4400)
         probe=copy.deepcopy(original);probe['event']['sequence_id']=huge
         record(name,'4400-digit-integer',complete(row,probe,'publish'),'integer_range')
+        probe=copy.deepcopy(original)
+        field='phase_sequence' if 'phase_sequence' in probe['event']['payload'] else 'schema_version'
+        probe['event']['payload'][field]=huge
+        record(name,'4400-digit-owner-route',complete(row,probe,'publish'),'physical_integer_range' if field=='phase_sequence' else 'schema')
+        probe=copy.deepcopy(original);probe['event']['schema_version']=huge
+        record(name,'4400-digit-schema-diagnostic',complete(row,probe,'publish'),'schema')
+        probe=copy.deepcopy(value)
+        probe['index']['current_source']['frames'][-1]['event']['payload']['schema_version']=huge
+        record(name,'4400-digit-registered-schema-diagnostic',complete(row,probe,'read'),'index_source_payload')
         current=copy.deepcopy(original);current['retry_request']=copy.deepcopy(current['event']);current['retry_request']['producer_sequence_id']=1.0
         record(name,'current-integral-float',complete(row,current,'retry'),'integer_type')
     return dict(status='pass' if all(r['passed'] for r in results) else 'fail',cases=len(results),results=results,
