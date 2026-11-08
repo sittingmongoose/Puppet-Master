@@ -22,7 +22,7 @@
   },
   "assessed_tree": {
     "branch": "plans/ea-w2-debug-20261104",
-    "commit": "c19ffddf8ff2e23b85bcf9c42ad48af8e651265d",
+    "commit": "759deb18c1",
     "normative_files_sha256": {
       "Plans/Contracts_V0.md": "f1cca0bc6560f5249d314c5a6f7924ac0b0a3eb6d9b635b0e87281a4b64264c8",
       "Plans/storage-plan.md": "44e597736a7a8f005032e1dba771ccfa5cf00ad5f34085cb61e884c914a75c7b",
@@ -38,7 +38,38 @@
     "review_round_2_fix_commit": "1ace7c32935eee55e147a98a05bbca8091707b0c",
     "review_round_3_fix_commit": "d77cc98f8f7ae9594efd876bc7e02f733319a085",
     "standing_checker_sha256": "9d5fdb5afd0933ca54a010cc34a10256014bcc57664b0d79c051f117d47042e7",
-    "base": "e42ce235b4711325ced818c777f070c3ee0d7952"
+    "base": "e42ce235b4711325ced818c777f070c3ee0d7952",
+    "sweep_part_2a_files_sha256": {
+      "Plans/debug_investigation_event_fixtures.json": "2e9899505281a4e323cd446e7f175d5f0f17d2055f8cf56720b65913796b672a",
+      "Plans/debug_investigation_event_payloads.schema.json": "ae5832ccea575c071892d1ec85804da05debd08c40cfd52243d5b5d13982b10d",
+      "scripts/pm-debug-investigation-events.py": "3139a3fc9a835dab1e1d6f0fedfa81ee6560f4b317efd6464d52d0d37cd38857",
+      "scripts/pm-debug-investigation-standing-checks.py": "8533b13303c7184832ad0356a1a18bcd47e0014ee2378df68bd5bfc290cd3333",
+      "scripts/pm_debug_investigation_guard_constants.py": "f1a425dceef95ca0966e32be4f2f7e6211b1cb2cb3eae1a8ebb8c2ba609d1b2d",
+      "scripts/pm_debug_investigation_guard_suites.py": "00fbcf473c0f471f49a1784da24ceda58a63401f9e6d14c06fff7eebe964631c",
+      "scripts/pm_debug_investigation_guards_admission.py": "16c8635088691bb7ba5164adee37c967bf84fe6ca8e60de2043b7d4340eaf9da",
+      "scripts/pm_debug_investigation_guards_envelope.py": "a0252dae931d128d495b316f2a5a0c9121c18880be8cf1ac4b93bbc0a0a9ac46",
+      "scripts/pm_debug_investigation_guards_family.py": "f13357c5e025ebf22733d9da03ba38b2a74398ec5a8269f6de8152afb77852b8",
+      "scripts/pm_debug_investigation_guards_instrumentation.py": "47ae48147305ad546bbcadf6b0890b75b7865a3f902ec50d89d06d46c69f7f69",
+      "scripts/pm_debug_investigation_guards_instrumentation_detail.py": "eb00bc584fe50bfce596b76b45fc6a277b9a2b1559234f77fcf2a9d10c47ddb7",
+      "scripts/pm_debug_investigation_guards_instrumentation_detail_required.py": "76dd3a46fe90690e64be2cf99a997c2102a7fc6bcf0ade1977d6ade343a33c8b",
+      "scripts/pm_debug_investigation_guards_instrumentation_detail_values_a.py": "dfec004d31748e347ff93c2e9197ca62e9d88c82d43dadd5d33920de062042f3",
+      "scripts/pm_debug_investigation_guards_instrumentation_detail_values_b.py": "b185d017d3cdcdea15da94aba3a7b0c6929b02e192d9d52b0a3d78b39459ea6d",
+      "scripts/pm_debug_investigation_guards_instrumentation_detail_values_c.py": "0113b28dfc5b6770e746f36ecdb99d7bb9ffbcc2f004834258c0de315fee8158",
+      "scripts/pm_debug_investigation_guards_instrumentation_detail_values_d.py": "598ce85508b8f17abdec744dcac44e751104e944f24ef8e3e7642772a828dee5",
+      "scripts/pm_debug_investigation_guards_instrumentation_handoff.py": "e3f39a95306f16f69d7fc08044e98ca77a9b30b074714593af00eeb80c43585b",
+      "scripts/pm_debug_investigation_guards_instrumentation_joins.py": "14d72f00871da5f714035ca369a92e6e5eb8cf61ce4d69be6877c79532fe61b2",
+      "scripts/pm_debug_investigation_guards_instrumentation_retry.py": "ebf762cd341319b8c628009b7ac79c246239506bde27fd02da22e043810971a9",
+      "scripts/pm_debug_investigation_guards_instrumentation_source.py": "4542503f324df56fb688e8b201ddb162dbe9c578982ca4c8d23acfe01051c33c",
+      "scripts/pm_debug_investigation_guards_instrumentation_source_values.py": "32bfab7e55654bc660df6521928edaad58f7fe2682bcfb264f62db9fb54fabe9",
+      "scripts/pm_debug_investigation_guards_lifecycle.py": "da3bf5086fec8a3bc066853557bfc0c223f25cfb4ee4b3da53439c461fc75c89",
+      "scripts/pm_debug_investigation_guards_payload.py": "20786a56c34541be97c21e8149f9f7018e90c005110087d2f2cc3c7b18bebd48",
+      "scripts/pm_debug_investigation_guards_payload_values.py": "5abd8b6dc7050f7a03811328271df654efe689b3711ca0d6f19333606f4c4a7f",
+      "scripts/pm_debug_investigation_guards_references.py": "2b5fc0f35e29768e83268fadf01e16d397c7289f60c52681f525c7d14b566e42",
+      "scripts/pm_debug_investigation_guards_retained.py": "102422e2ef124f266c78d41093c9fd6b1068adc72914970846423bf3fcb6ea17",
+      "scripts/pm_debug_investigation_guards_retry.py": "d7420c2925c8f2cf2c843f79ca3ea768639e2367bc05a208b0d6977f40366877",
+      "scripts/pm_debug_investigation_guards_target_payload.py": "1db3288ee98351ff13d73410d6c9334549a22c740e503dfbd826cee35dac6205",
+      "scripts/pm_debug_investigation_transitions.py": "839e26a9290677e3c41fa303136840591147e5ff8d7fe8bc6e9b1b301ab9dc6c"
+    }
   },
   "native_execution": "NOT_RUN",
   "rows": [
@@ -298,7 +329,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "finding": "Fixture positives and single-defect negatives for every guard row; each negative names its row and is refused by exactly one phase. Sweep part 2A: every refusal of the lane checkers is a named guard-table row; the shared guard-isolation tool (004bdedd63) proved every row of every phase suite (513 rows, 32 suites, no masked negative); see DDBG.md \"Guard-table result\" and DDBG.guard-tables.md. Native execution remains NOT_RUN; number adoption is part 2B.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -313,14 +344,19 @@
               "line_start": 5,
               "line_end": 5,
               "quote": "\"event_type\": \"debug.investigation.context_item_added\","
+            },
+            {
+              "path": "reports/event-authority-20261104/DDBG.guard-tables.md",
+              "unit": "guard tables",
+              "quote": "per-row cut results of every phase suite"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md",
+            "source": "DDBG sweep part 1 self-grade",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+          "change": "evidence_strengthened",
+          "change_reason": "Part 2A replaced the lane proof with the shared tool; status unchanged."
         }
       },
       "pass_count": 10,
@@ -593,7 +629,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "finding": "Fixture positives and single-defect negatives for every guard row; each negative names its row and is refused by exactly one phase. Sweep part 2A: every refusal of the lane checkers is a named guard-table row; the shared guard-isolation tool (004bdedd63) proved every row of every phase suite (513 rows, 32 suites, no masked negative); see DDBG.md \"Guard-table result\" and DDBG.guard-tables.md. Native execution remains NOT_RUN; number adoption is part 2B.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -608,14 +644,19 @@
               "line_start": 332,
               "line_end": 332,
               "quote": "\"event_type\": \"debug.investigation.context_item_state_changed\","
+            },
+            {
+              "path": "reports/event-authority-20261104/DDBG.guard-tables.md",
+              "unit": "guard tables",
+              "quote": "per-row cut results of every phase suite"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md",
+            "source": "DDBG sweep part 1 self-grade",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+          "change": "evidence_strengthened",
+          "change_reason": "Part 2A replaced the lane proof with the shared tool; status unchanged."
         }
       },
       "pass_count": 10,
@@ -888,7 +929,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "finding": "Fixture positives and single-defect negatives for every guard row; each negative names its row and is refused by exactly one phase. Sweep part 2A: every refusal of the lane checkers is a named guard-table row; the shared guard-isolation tool (004bdedd63) proved every row of every phase suite (513 rows, 32 suites, no masked negative); see DDBG.md \"Guard-table result\" and DDBG.guard-tables.md. Native execution remains NOT_RUN; number adoption is part 2B.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -903,14 +944,19 @@
               "line_start": 657,
               "line_end": 657,
               "quote": "\"event_type\": \"debug.investigation.exported\","
+            },
+            {
+              "path": "reports/event-authority-20261104/DDBG.guard-tables.md",
+              "unit": "guard tables",
+              "quote": "per-row cut results of every phase suite"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md",
+            "source": "DDBG sweep part 1 self-grade",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+          "change": "evidence_strengthened",
+          "change_reason": "Part 2A replaced the lane proof with the shared tool; status unchanged."
         }
       },
       "pass_count": 10,
@@ -1183,7 +1229,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "finding": "Fixture positives and single-defect negatives for every guard row; each negative names its row and is refused by exactly one phase. Sweep part 2A: every refusal of the lane checkers is a named guard-table row; the shared guard-isolation tool (004bdedd63) proved every row of every phase suite (513 rows, 32 suites, no masked negative); see DDBG.md \"Guard-table result\" and DDBG.guard-tables.md. Native execution remains NOT_RUN; number adoption is part 2B.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1198,14 +1244,19 @@
               "line_start": 970,
               "line_end": 970,
               "quote": "\"event_type\": \"debug.investigation.imported\","
+            },
+            {
+              "path": "reports/event-authority-20261104/DDBG.guard-tables.md",
+              "unit": "guard tables",
+              "quote": "per-row cut results of every phase suite"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md",
+            "source": "DDBG sweep part 1 self-grade",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+          "change": "evidence_strengthened",
+          "change_reason": "Part 2A replaced the lane proof with the shared tool; status unchanged."
         }
       },
       "pass_count": 10,
@@ -1485,7 +1536,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "finding": "Fixture positives and single-defect negatives for every guard row; each negative names its row and is refused by exactly one phase. Sweep part 2A: every refusal of the lane checkers is a named guard-table row; the shared guard-isolation tool (004bdedd63) proved every row of every phase suite (513 rows, 32 suites, no masked negative); see DDBG.md \"Guard-table result\" and DDBG.guard-tables.md. Native execution remains NOT_RUN; number adoption is part 2B.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1500,14 +1551,19 @@
               "line_start": 1282,
               "line_end": 1282,
               "quote": "\"event_type\": \"debug.investigation.instrumentation_state_changed\","
+            },
+            {
+              "path": "reports/event-authority-20261104/DDBG.guard-tables.md",
+              "unit": "guard tables",
+              "quote": "per-row cut results of every phase suite"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md",
-            "status": "PARTIAL"
+            "source": "DDBG sweep part 1 self-grade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
+          "change": "evidence_strengthened",
+          "change_reason": "Part 2A replaced the lane proof with the shared tool; status unchanged."
         }
       },
       "pass_count": 8,
@@ -1779,7 +1835,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "finding": "Fixture positives and single-defect negatives for every guard row; each negative names its row and is refused by exactly one phase. Sweep part 2A: every refusal of the lane checkers is a named guard-table row; the shared guard-isolation tool (004bdedd63) proved every row of every phase suite (513 rows, 32 suites, no masked negative); see DDBG.md \"Guard-table result\" and DDBG.guard-tables.md. Native execution remains NOT_RUN; number adoption is part 2B.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -1794,14 +1850,19 @@
               "line_start": 3623,
               "line_end": 3623,
               "quote": "\"event_type\": \"debug.investigation.started\","
+            },
+            {
+              "path": "reports/event-authority-20261104/DDBG.guard-tables.md",
+              "unit": "guard tables",
+              "quote": "per-row cut results of every phase suite"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md",
+            "source": "DDBG sweep part 1 self-grade",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+          "change": "evidence_strengthened",
+          "change_reason": "Part 2A replaced the lane proof with the shared tool; status unchanged."
         }
       },
       "pass_count": 10,
@@ -2074,7 +2135,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "finding": "Fixture positives and single-defect negatives for every guard row; each negative names its row and is refused by exactly one phase. Sweep part 2A: every refusal of the lane checkers is a named guard-table row; the shared guard-isolation tool (004bdedd63) proved every row of every phase suite (513 rows, 32 suites, no masked negative); see DDBG.md \"Guard-table result\" and DDBG.guard-tables.md. Native execution remains NOT_RUN; number adoption is part 2B.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -2089,14 +2150,19 @@
               "line_start": 4183,
               "line_end": 4183,
               "quote": "\"event_type\": \"debug.investigation.target_bound\","
+            },
+            {
+              "path": "reports/event-authority-20261104/DDBG.guard-tables.md",
+              "unit": "guard tables",
+              "quote": "per-row cut results of every phase suite"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md",
+            "source": "DDBG sweep part 1 self-grade",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+          "change": "evidence_strengthened",
+          "change_reason": "Part 2A replaced the lane proof with the shared tool; status unchanged."
         }
       },
       "pass_count": 10,
@@ -2369,7 +2435,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "finding": "Fixture positives and single-defect negatives for every guard row; each negative names its row and is refused by exactly one phase. Sweep part 2A: every refusal of the lane checkers is a named guard-table row; the shared guard-isolation tool (004bdedd63) proved every row of every phase suite (513 rows, 32 suites, no masked negative); see DDBG.md \"Guard-table result\" and DDBG.guard-tables.md. Native execution remains NOT_RUN; number adoption is part 2B.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -2384,14 +2450,19 @@
               "line_start": 4531,
               "line_end": 4531,
               "quote": "\"event_type\": \"debug.investigation.verification_recorded\","
+            },
+            {
+              "path": "reports/event-authority-20261104/DDBG.guard-tables.md",
+              "unit": "guard tables",
+              "quote": "per-row cut results of every phase suite"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md",
+            "source": "DDBG sweep part 1 self-grade",
             "status": "PASS"
           },
-          "change": "carried",
-          "change_reason": "Unchanged family contract re-read after rebase; common static regressions pass. No native or admission claim."
+          "change": "evidence_strengthened",
+          "change_reason": "Part 2A replaced the lane proof with the shared tool; status unchanged."
         }
       },
       "pass_count": 10,
@@ -2671,7 +2742,7 @@
         "positive_negative_oracles": {
           "status": "PASS",
           "representation": "exact_normative_owner",
-          "finding": "Current exact-family owner and companion explicitly bind this criterion. Static checks pass; native execution remains NOT_RUN. Shared-tool proof and number adoption await part 2.",
+          "finding": "Fixture positives and single-defect negatives for every guard row; each negative names its row and is refused by exactly one phase. Sweep part 2A: every refusal of the lane checkers is a named guard-table row; the shared guard-isolation tool (004bdedd63) proved every row of every phase suite (513 rows, 32 suites, no masked negative); see DDBG.md \"Guard-table result\" and DDBG.guard-tables.md. Native execution remains NOT_RUN; number adoption is part 2B.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
@@ -2686,14 +2757,19 @@
               "line_start": 4950,
               "line_end": 4950,
               "quote": "\"event_type\": \"debug.investigation.state_changed\","
+            },
+            {
+              "path": "reports/event-authority-20261104/DDBG.guard-tables.md",
+              "unit": "guard tables",
+              "quote": "per-row cut results of every phase suite"
             }
           ],
           "prior": {
-            "source": "REVIEW-astra-3.md",
-            "status": "ABSENT"
+            "source": "DDBG sweep part 1 self-grade",
+            "status": "PASS"
           },
-          "change": "upgraded",
-          "change_reason": "DL-428/429 close the two holds; all current quotations and file hashes refreshed. Seven earlier contracts, schemas and fixture objects are unchanged."
+          "change": "evidence_strengthened",
+          "change_reason": "Part 2A replaced the lane proof with the shared tool; status unchanged."
         }
       },
       "pass_count": 0,
@@ -3148,5 +3224,693 @@
         "positive_negative_oracles": "ABSENT"
       }
     }
+  },
+  "sweep_part_2a": {
+    "tool_merge": "c6070a0dac (004bdedd632d9463f3535190a6ed5772338cdce1)",
+    "head": "759deb18c1",
+    "ready": false,
+    "reason": "Part 2B (NUMRULE adoption) and the single Sol max then Astra max review of the lane remain.",
+    "all_suites_proved": true,
+    "suites": {
+      "admission_suite": {
+        "status": "PASS",
+        "rows": 5,
+        "proved": 5,
+        "controls": 9,
+        "negatives": 54,
+        "evaluations": 1008,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "33705f53fdbc2d6773b550e62e29689d306e20083a4b39fee202382d835c3aee",
+        "inputs_and_modules_match_head": true
+      },
+      "envelope_suite": {
+        "status": "PASS",
+        "rows": 13,
+        "proved": 13,
+        "controls": 2,
+        "negatives": 63,
+        "evaluations": 2600,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "89a873b87be80dd09c0747f6f92ff2c03ef363de6496e1d162f093c015798e2f",
+        "inputs_and_modules_match_head": true
+      },
+      "family_suite": {
+        "status": "PASS",
+        "rows": 4,
+        "proved": 4,
+        "controls": 72,
+        "negatives": 6,
+        "evaluations": 1014,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "ea39a7ba98cb0cff23232364544f52a2c8631b54868718ac911b8e73835e843e",
+        "inputs_and_modules_match_head": true
+      },
+      "instrumentation_detail_required_suite": {
+        "status": "PASS",
+        "rows": 15,
+        "proved": 15,
+        "controls": 36,
+        "negatives": 15,
+        "evaluations": 2346,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "8f44d01a7982610303f5e2d0894a6120efe84fe1169fe0e1dee3e6e4496e035d",
+        "inputs_and_modules_match_head": true
+      },
+      "instrumentation_detail_suite": {
+        "status": "PASS",
+        "rows": 19,
+        "proved": 19,
+        "controls": 36,
+        "negatives": 19,
+        "evaluations": 3190,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "ae17e507a815098dc7009684733814a0384d7d23d302e83b29fd0a211cc35110",
+        "inputs_and_modules_match_head": true
+      },
+      "instrumentation_detail_values_a_suite": {
+        "status": "PASS",
+        "rows": 15,
+        "proved": 15,
+        "controls": 3,
+        "negatives": 15,
+        "evaluations": 828,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "6b730a4d5f073f190c363cb9894910e7dc5523d52b8a8a357b3af2ba320264cf",
+        "inputs_and_modules_match_head": true
+      },
+      "instrumentation_detail_values_b_suite": {
+        "status": "PASS",
+        "rows": 10,
+        "proved": 10,
+        "controls": 13,
+        "negatives": 30,
+        "evaluations": 1333,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "ac676308150e00cc6a84c1f5e2cb144837379607d69bc6ffbfe79fa346a5e3d1",
+        "inputs_and_modules_match_head": true
+      },
+      "instrumentation_detail_values_c_suite": {
+        "status": "PASS",
+        "rows": 16,
+        "proved": 16,
+        "controls": 19,
+        "negatives": 20,
+        "evaluations": 1911,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "6c23a55042044e2120b0f0911199305a409bad084494c5d7af0d636b7f0adcf9",
+        "inputs_and_modules_match_head": true
+      },
+      "instrumentation_detail_values_d_suite": {
+        "status": "PASS",
+        "rows": 15,
+        "proved": 15,
+        "controls": 7,
+        "negatives": 15,
+        "evaluations": 1012,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "18ca7e9a954c0b72928eacb04478dc433fc036e5ba047a4e24fda0420141657f",
+        "inputs_and_modules_match_head": true
+      },
+      "instrumentation_handoff_suite": {
+        "status": "PASS",
+        "rows": 12,
+        "proved": 12,
+        "controls": 36,
+        "negatives": 12,
+        "evaluations": 1776,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "48c4cc78b56b3af2eef9a027f9e93b229c2849bce2b6970d142fd5ab5b027218",
+        "inputs_and_modules_match_head": true
+      },
+      "instrumentation_joins_suite": {
+        "status": "PASS",
+        "rows": 11,
+        "proved": 11,
+        "controls": 36,
+        "negatives": 11,
+        "evaluations": 1598,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "fdc2a4cc53ea5be63d45b1869ec6fa6d8e0a9b7b742feb1cadab0dcd05fcf39b",
+        "inputs_and_modules_match_head": true
+      },
+      "instrumentation_retry_suite": {
+        "status": "PASS",
+        "rows": 13,
+        "proved": 13,
+        "controls": 36,
+        "negatives": 15,
+        "evaluations": 2040,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "438a5a81f04dbc206b30954b7ce34a21ada0498b5d41d66ac445326d42f5fa91",
+        "inputs_and_modules_match_head": true
+      },
+      "instrumentation_source_suite": {
+        "status": "PASS",
+        "rows": 11,
+        "proved": 11,
+        "controls": 14,
+        "negatives": 11,
+        "evaluations": 850,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "ea217c53416a07df369aa1871968ec92c313751244e1547991481a556a25e0ca",
+        "inputs_and_modules_match_head": true
+      },
+      "instrumentation_source_values_suite": {
+        "status": "PASS",
+        "rows": 19,
+        "proved": 19,
+        "controls": 14,
+        "negatives": 27,
+        "evaluations": 2378,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "99bf8f14ba16a2148a38132b6975f65b9743c9a2fc08e5fd7e6526fb5caf9f04",
+        "inputs_and_modules_match_head": true
+      },
+      "instrumentation_suite": {
+        "status": "PASS",
+        "rows": 12,
+        "proved": 12,
+        "controls": 37,
+        "negatives": 12,
+        "evaluations": 1813,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "20dc9899d0d940ade9737999b2553bb6e97d119214df8e8ee75c446bea1dcba4",
+        "inputs_and_modules_match_head": true
+      },
+      "lifecycle_suite": {
+        "status": "PASS",
+        "rows": 21,
+        "proved": 21,
+        "controls": 16,
+        "negatives": 43,
+        "evaluations": 3776,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "9359fc7dd654682f26e539a09d53b72159a3744bcafda03032ebe8e442aae683",
+        "inputs_and_modules_match_head": true
+      },
+      "payload_context_item_added_suite": {
+        "status": "PASS",
+        "rows": 36,
+        "proved": 36,
+        "controls": 1,
+        "negatives": 36,
+        "evaluations": 4033,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "f4b075f52e4ed9aa4b2e775e6cfc87f8f2cf1561b3002de0a15b21c38f0706a7",
+        "inputs_and_modules_match_head": true
+      },
+      "payload_context_item_state_changed_suite": {
+        "status": "PASS",
+        "rows": 23,
+        "proved": 23,
+        "controls": 1,
+        "negatives": 23,
+        "evaluations": 1680,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "b8ff7650bc9f36242cbaeae7602cecf4fc38fffbdc10135e34934f5ca91359e4",
+        "inputs_and_modules_match_head": true
+      },
+      "payload_exported_suite": {
+        "status": "PASS",
+        "rows": 28,
+        "proved": 28,
+        "controls": 1,
+        "negatives": 28,
+        "evaluations": 2465,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "b3b63468c3be0f8644ad23693e9a182899e1d1878b21ce711ab388dffd9d29c0",
+        "inputs_and_modules_match_head": true
+      },
+      "payload_imported_suite": {
+        "status": "PASS",
+        "rows": 24,
+        "proved": 24,
+        "controls": 1,
+        "negatives": 24,
+        "evaluations": 1825,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "dd6841faed12fe6485a4d2a1e49d2fff783ea0ffc996949b426f689575a27b81",
+        "inputs_and_modules_match_head": true
+      },
+      "payload_instrumentation_state_changed_suite": {
+        "status": "PASS",
+        "rows": 13,
+        "proved": 13,
+        "controls": 31,
+        "negatives": 13,
+        "evaluations": 1760,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "4c4d6ea1b92ff4504b68a584cf55256acc92e4d0cedb647e6d3e32b2e830c3cd",
+        "inputs_and_modules_match_head": true
+      },
+      "payload_started_suite": {
+        "status": "PASS",
+        "rows": 16,
+        "proved": 16,
+        "controls": 11,
+        "negatives": 17,
+        "evaluations": 1372,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "48355068728a089c4f1f0dddbe1d1e09ba3976cf9d5930085e48f9dd9094aa4d",
+        "inputs_and_modules_match_head": true
+      },
+      "payload_state_changed_suite": {
+        "status": "PASS",
+        "rows": 9,
+        "proved": 9,
+        "controls": 14,
+        "negatives": 9,
+        "evaluations": 644,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "35b06e07771bec69ab901013049eef9c459d084846ac37f33ab5d5b00e752609",
+        "inputs_and_modules_match_head": true
+      },
+      "payload_target_bound_suite": {
+        "status": "PASS",
+        "rows": 9,
+        "proved": 9,
+        "controls": 1,
+        "negatives": 11,
+        "evaluations": 336,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "e9a3fe8a20a48c0863d09bc6db35510af672767195b08b6b5731541c37707fd1",
+        "inputs_and_modules_match_head": true
+      },
+      "payload_values_instrumentation_state_changed_suite": {
+        "status": "PASS",
+        "rows": 21,
+        "proved": 21,
+        "controls": 31,
+        "negatives": 21,
+        "evaluations": 3328,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "8ef0dbe7294d26d0694e109ca00b6ae7eedf0114a26f9efbf5c50da8161af80d",
+        "inputs_and_modules_match_head": true
+      },
+      "payload_values_started_suite": {
+        "status": "PASS",
+        "rows": 25,
+        "proved": 25,
+        "controls": 11,
+        "negatives": 25,
+        "evaluations": 2736,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "f84b486a72f73c0b905c3afd432c9ecd16262e1a8aef01727c13244412c2ae5d",
+        "inputs_and_modules_match_head": true
+      },
+      "payload_values_state_changed_suite": {
+        "status": "PASS",
+        "rows": 24,
+        "proved": 24,
+        "controls": 14,
+        "negatives": 24,
+        "evaluations": 2774,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "a81364ab3c4a06dfb54b2758ceaec84004b2cb3efa1b0a5f11dd7dda3d65d9f0",
+        "inputs_and_modules_match_head": true
+      },
+      "payload_values_target_bound_suite": {
+        "status": "PASS",
+        "rows": 28,
+        "proved": 28,
+        "controls": 1,
+        "negatives": 28,
+        "evaluations": 2465,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "6494beb53376dbe5e43bc50aeeb14b6a2efe53e9d3949836150819cf64224992",
+        "inputs_and_modules_match_head": true
+      },
+      "payload_verification_recorded_suite": {
+        "status": "PASS",
+        "rows": 23,
+        "proved": 23,
+        "controls": 1,
+        "negatives": 23,
+        "evaluations": 1680,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "632ec7edfb663a1db905c88ed8497b9a35d8a446e7e1eb2e0350ce1afe086e0e",
+        "inputs_and_modules_match_head": true
+      },
+      "references_suite": {
+        "status": "PASS",
+        "rows": 4,
+        "proved": 4,
+        "controls": 1,
+        "negatives": 5,
+        "evaluations": 78,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "3094c44a8b40480eef31edb1366f9cefc1db13c15f6389d788a250531d3046c3",
+        "inputs_and_modules_match_head": true
+      },
+      "retained_suite": {
+        "status": "PASS",
+        "rows": 9,
+        "proved": 9,
+        "controls": 9,
+        "negatives": 81,
+        "evaluations": 2520,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "e033281c7b72d37c5b9871c8196412b570aecc40cf01d852296ff1b3f34ae7f3",
+        "inputs_and_modules_match_head": true
+      },
+      "retry_request_suite": {
+        "status": "PASS",
+        "rows": 10,
+        "proved": 10,
+        "controls": 2,
+        "negatives": 10,
+        "evaluations": 372,
+        "masked": 0,
+        "unrelated_changes": 0,
+        "unproved": [],
+        "report_sha256": "c2be36be9abc24bae8c3e05eb90a490497136956beca6370c8e50f2440bd870d",
+        "inputs_and_modules_match_head": true
+      }
+    },
+    "before_grades": {
+      "debug.investigation.context_item_added": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.context_item_state_changed": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.exported": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.imported": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.instrumentation_state_changed": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PASS",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.started": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.target_bound": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.verification_recorded": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.state_changed": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PASS",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      }
+    },
+    "after_grades": {
+      "debug.investigation.context_item_added": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.context_item_state_changed": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.exported": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.imported": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.instrumentation_state_changed": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PASS",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.started": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.target_bound": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.verification_recorded": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PARTIAL",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      },
+      "debug.investigation.state_changed": {
+        "membership_version": "ABSENT",
+        "owner_doc": "PASS",
+        "producer": "PASS",
+        "closed_payload_schema": "PASS",
+        "scope_identity": "PASS",
+        "replay_idempotency": "PASS",
+        "retention": "PASS",
+        "redaction_custody": "PASS",
+        "transitions": "PASS",
+        "consumers_checkpoints": "PASS",
+        "compatibility_withdrawal": "PASS",
+        "positive_negative_oracles": "PASS"
+      }
+    },
+    "interim_only": "My own review of the timestamp fields (occurred_at_utc in the digest fields; observed_at_utc and persisted_at_utc in the retained rows) is interim only.",
+    "part_2b_items": [
+      "semantic_digest/identity canonical encoding (scripts/pm_debug_investigation_guards_retained.py)",
+      "inline body and detail sizing (family, instrumentation_detail modules)",
+      "integer schema fields and predicates (exported counts, binding_revision, retry counts, attempt_number, retries_used)",
+      "timestamp fields under the shared date-time rule"
+    ]
   }
 }
