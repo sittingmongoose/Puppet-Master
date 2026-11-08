@@ -13653,15 +13653,6 @@ command_payload_definitions:
           choice: [unsupported]
           gap_note: >-
             The row states no disabled reasons; unsupported stands for a host without the browser runtime.
-        - key: field:where
-          choice: carry CV-360's where, mode, by and background
-          gap_note: >-
-            Canon conflict: CV-360's acceptance (Contracts_V0.md:23646) says every open route UCC-200 lists
-            carries the four placement fields, and the open-routes table lists this route
-            (UI_Command_Catalog.md:18330), but the row and its wiring entry catalog.browser_focus_browser_tab
-            make it a reveal of the tab that hosts the session wherever it is, and CV-360 says a reveal never
-            moves a tab, so placement changes nothing here. The definition follows CV-360's acceptance and the
-            table, which name no exemption for reveal-only routes; the owner should say whether they are exempt.
         - key: owner_request
           choice: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
           gap_note: >-
@@ -14732,16 +14723,6 @@ command_payload_definitions:
           gap_note: >-
             Neither the terminal row (UI_Command_Catalog.md:881) nor the kept-commands row (:18752) states
             disabled reasons; unsupported stands for a host without a terminal runtime.
-        - key: field:where
-          choice: carry CV-360's where, mode, by and background
-          gap_note: >-
-            Canon conflict: CV-360's acceptance (Contracts_V0.md:23646) says every open route UCC-200 lists
-            carries the four placement fields, and the open-routes table lists this route
-            (UI_Command_Catalog.md:18331), but the kept-commands row makes it a focus of the same live
-            session's tab that never collapses into open (:18752), and its wiring entry catalog.terminal_show
-            reveals the tab wherever it is; CV-360 says a reveal never moves a tab, so placement changes
-            nothing here. The definition follows CV-360's acceptance and the table, which name no exemption
-            for reveal-only routes; the owner should say whether they are exempt.
     - command_id: cmd.terminal.rerun
       ucc_units: [UCC-067, UCC-069]
       command_kind: domain_action
@@ -14849,16 +14830,6 @@ command_payload_definitions:
           gap_note: >-
             Neither the terminal row (UI_Command_Catalog.md:884) nor the kept-commands row (:18753) states
             disabled reasons; unsupported stands for a host without a terminal runtime.
-        - key: field:where
-          choice: carry CV-360's where, mode, by and background
-          gap_note: >-
-            Canon conflict: CV-360's acceptance (Contracts_V0.md:23646) says every open route UCC-200 lists
-            carries the four placement fields, and the open-routes table lists this route
-            (UI_Command_Catalog.md:18331), but the kept-commands row (:18753) and its wiring entry
-            catalog.terminal_focus make it a reveal of the session's tab, else the most recently focused
-            terminal tab, wherever it is; CV-360 says a reveal never moves a tab, so placement changes nothing
-            here. The definition follows CV-360's acceptance and the table, which name no exemption for
-            reveal-only routes; the owner should say whether they are exempt.
         - key: omitted:terminal_pane_id
           choice: omitted
           gap_note: >-
@@ -14897,7 +14868,8 @@ command_payload_definitions:
             Canon names "command replay or shell profile hints" (UI_Command_Catalog.md:888) without a field
             shape. JUDGMENT: command_ref, type ref, optional, for the replay hint; the overlay's command_ref?
             identity is the candidate name. The hint is never replayed automatically: a restart records the
-            newly resolved environment without automatic command replay (SMPFS-164, :11683-11685).
+            newly resolved environment without automatic command replay (SMPFS-164 acceptance criterion,
+            Section15_MVP_Promoted_Features_Spec.md:11666-11669).
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
