@@ -309,7 +309,15 @@ async function arrivals(t) {
 // focus tag has shown (the tag fades out over Files, N2). Every compositor frame is judged as the film steps judge
 // theirs; each route must end with the key focus on Files and the panel it should have. --set clicks= reps (6).
 async function pointerRoutes(t) {
-  const { f, kb, looks, state, reach, film, frameFaults } = await rig(t);
+  const { f, kb, looks, state, reach, film, frameFaults, cdp } = await rig(t);
+  // Search's focus tag fades out over 240 ms (ease-out), so it lies over Files' ring for one to three frames, which the
+  // screencast's 15 or so a second catch only sometimes (a 60 fps film caught it in 6 of 6 Shift+Tabs on a617252319). For
+  // that press the page's animations run at --set slowTag= (0.1) of their speed, through the DevTools Animation domain,
+  // so the fade lasts ten times as long; the ring itself has no animation and is not slowed.
+  const slowTag = Number(t.args.slowTag ?? 0.1);
+  const pace = async rate => { if (!cdp || !(slowTag > 0 && slowTag < 1)) return;
+    await cdp.send('Animation.enable').catch(() => {}); await cdp.send('Animation.setPlaybackRate', { playbackRate: rate }).catch(() => {});
+    if (rate === 1) await cdp.send('Animation.disable').catch(() => {}); };   /* enabled only while slowed: its events are not wanted */
   const n = Math.max(1, Number(t.args.clicks || 6)), stall = Math.max(0, Number(t.args.stall ?? 600));
   const motion = await pinMotion(t, f);
   await installStall(f);
@@ -335,7 +343,7 @@ async function pointerRoutes(t) {
       { name: `a quick click under a ${stall} ms stall, the pointer moved off`, reps: n, load: stall, act: async () => { await t.page.mouse.move(...(await centre('files'))); await t.page.mouse.down(); await t.page.mouse.up(); await away(); }, end: 'files' },
       { name: `a press held 900 ms under a ${stall} ms stall`, reps: Math.ceil(n / 2), load: stall, act: async () => { await t.page.mouse.move(...(await centre('files'))); await t.page.mouse.down(); await f.waitForTimeout(900); await t.page.mouse.up(); }, end: 'files' },
       { name: 'the pointer resting on the key-focused Files', reps: Math.ceil(n / 2), load: 0, act: async () => { await t.page.mouse.move(...(await centre('files'))); await f.waitForTimeout(600); }, end: 'search' },
-      { name: 'Shift+Tab back to Files after Search\'s focus tag shows', reps: n, load: 0, from: 'search', pre: async () => { await kb.press('Tab'); await f.waitForTimeout(1200); }, act: () => kb.press('Shift+Tab'), end: 'search' },
+      { name: 'Shift+Tab back to Files after Search\'s focus tag shows', reps: n, load: 0, from: 'search', pre: async () => { await kb.press('Tab'); await f.waitForTimeout(1200); await pace(slowTag); }, act: () => kb.press('Shift+Tab'), after: () => pace(1), end: 'search' },
     ];
     for (const r of routes) {
       if (!stall && r.load) continue;
@@ -346,6 +354,7 @@ async function pointerRoutes(t) {
         if (r.pre) await r.pre();
         if (r.load) { await f.evaluate(ms => { window.__fo96Stall.arm = ms; }, r.load); armed++; }
         const cap = await film(async () => { await t.mark(`${look}: ${r.name} ${i + 1}`); await r.act(); });
+        if (r.after) await r.after();
         const s = await state('files');
         const ok = s.active === 'files' && s.keyFocus === true && (r.end === 'files' ? s.files : s.search);
         if (!ok) out.wrong.push({ i: i + 1, s });
