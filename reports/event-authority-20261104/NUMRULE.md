@@ -2491,3 +2491,183 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUM
 | `replay/plan2.json.gz` (the partition check) | `3950bfd23a1aebe6457d19cd36d836e7abedca231f244330677c303877bffa54` |
 
 The drivers are in `tools/`: the review's `host-input-repro.py`, `p1_mutant.py`, `host_string_sweep.py`, `points.py`, `plan_chunks.py`, `resplit.py`, `verify_partition.py`, `run_chunk.py` and `merge_replay.py`. `results/run-input-sha256.txt.gz` pins the inputs every run read.
+
+
+## Fix round 17 (date-time): survivor classes
+
+**Source:** the blind Opus pre-check of `0b2ed73b4d`, `REVIEW-numrule-datetime-p1fix-opus.md` (claude_me), scored 15 of 20 (bar: 18). Nothing in it was REAL. TOOL-ISSUES T161-T166. The brief was `lanes/NUMRULE-DT-FIX17.md`: close each survivor's whole class, not just its one mutation.
+
+- **Base:** `0b2ed73b4d` on `plans/ea-numrule-20261105`. Worked in one local sparse worktree (`Plans`, `scripts`, `reports`, `tests`). Pushed fast-forward, no force.
+- **Commits:** `fb04d2f19b` (the fixes, the checks and the mutation set) and this report.
+- **Files touched:** `scripts/pm_event_datetime.py`, `scripts/pm_event_datetime_inventory.py`, `scripts/pm_event_datetime_selfcheck.py`, `scripts/pm_event_datetime_mutations.py`, `scripts/pm_event_datetime_mutations.json` and this report. `git diff 0b2ed73b4d..HEAD -- 'scripts/pm_event_numbers*' Plans` is empty.
+- **Production behaviour is unchanged on every committed input** (Rerun results, below): every inventory row and classification, the battery and its pin, the inventory pin, and the committed-tree scan, byte for byte.
+- **Behaviour findings:** none. No fix changed a committed result.
+
+### Class 1 (T161, B05): finite parameter domains, covered exhaustively
+
+**Location, cause, fix.** The legacy profile's fraction length was tested at 0, 3, 8, 10 and 12 digits but never 6, so `len(fraction) not in (6, 9)` survived. The hand-written cases came from examples, not from the domains. The fix is an owner profile table in `pm_event_datetime_selfcheck.py` (`PROFILE_TABLE`: for each profile, the zones and fraction lengths CV-1101 lets it admit). For every profile and every domain, the cases are generated from that table and from the grammar's own ranges: every value in the domain and each boundary just outside it. Expected outcomes come from the table and the grammar, never from the gate's code. The test keeps its own copy of the IERS C72 insertion days and its own month lengths and leap-year rule.
+
+**Instances found** (every finite parameter domain the gate checks):
+
+| Domain | Where the gate checks it | Cases now (per profile, all four profiles) |
+|---|---|---|
+| Profile names | `pm_event_datetime.py:18` (`PROFILES`), `:57`, `:99` | `datetime_unit_profile_domain_table_complete`: the table's profiles equal `PROFILES`, in order |
+| Fraction length | `pm_event_datetime.py:20` (grammar), `:91` (legacy: exactly 9) | 0-24, 30 and 40 digits, an empty fraction and a non-digit (`_fraction_length`) |
+| Zone forms and case | `:21` (grammar), `:88` (Z-only profiles) | 10 zone spellings in the domain and 18 just outside (`_zone`) |
+| Offset hour | `:79` | every hour 00-23 with each sign; 24 and 99; one and three digits (`_offset_hour`) |
+| Offset minute | `:81` | every minute 00-59 with each sign; 60 and 99; one and three digits (`_offset_minute`) |
+| Date/time separator | `:20` (`[Tt]`) | `T`, `t`; 8 spellings just outside (`_separator`) |
+| Date and time field separators | `:20` | `-` and `:`; each swapped or dropped (`_date_time_separators`) |
+| Year (width 4) | `:20` | every year 0000-9999; 3 and 5 digits, a sign (`_year`) |
+| Month | `:66` | 01-12; 00, 13, 99; one and three digits (`_month`) |
+| Day per month | `:68` | every day of every month in 2026, 2024, 1900, 2000, 0000 and 2100; day 00 and last + 1; widths (`_day`) |
+| Hour, minute | `:70`, `:72` | every value; 24 or 60, and 99; widths (`_hour`, `_minute`) |
+| Second | `:74`, `:84` | 00-59; 60 off a leap instant (`date_time_leap_second`); 61, 99; widths (`_second`) |
+| Leap seconds | `:29` (`_LEAP_DAYS`), `:84-87` | every month end of 1971-2027 at `23:59:60`: accepted exactly on the 27 C72 days (`_leap_second`) |
+| Format checker per profile | `:96-112` | the checker conforms exactly where the table accepts, over the fraction, zone, offset and separator domains (`_checker_and_validator`) |
+| Bound validator per profile | `:329` (`_bind`) | the same values through `_bound({"format": "date-time"}, profile=…)` |
+| Dialects | `:259-271` | each of the four supported URIs with and without `#`; 15 spellings just outside, non-strings included (`datetime_unit_profile_domain_dialects`) |
+| Inventory classification and profile | `pm_event_datetime_inventory.py:645-648`; the inventory schema's enums | all 9 classifications under both inventory profiles (`classification_profile_conflict` exactly on disagreement); 4 profiles outside the enum (`datetime_unit_profile_domain_inventory_classification`) |
+
+The value probe's tables (`SWEEP_ZONES`, `NON_TIMESTAMP_CONTROLS`, `ANNOTATIONS`, `ASSERTIONS`, `REFERENCES`, `UNIONS`, `DYNAMIC`, `pm_event_datetime_value_probe.py:40-69`) and the year-sweep range (`:90`, `:113`) are not profile parameters. Each entry is already an enumerated `data_table_entry` point with its own witness, and `datetime_unit_year_sweep_complete` checks the range.
+
+**New checks:** 59. That is 13 domains × 4 profiles, 4 checker-and-validator checks, the completeness check, the dialect domain and the inventory domain. **The self-test fails** when a gate profile has no table row, a profile or domain has no generated check or no case, a value the table names lacks its own case or a boundary case either side of it, or the leap domain disagrees with the C72 table.
+
+### Class 2 (T162, B08): composed schema keywords stand alone
+
+**Location, cause, fix.** `pm_event_datetime.py:143-144` composes `{"type": "string", "format": "date-time", "pattern": "Z(?![\s\S])"}` on each Storage field of a Storage-classified node. Every committed Storage field schema already refuses non-strings (212 of 212), so dropping `type` survived. The fix is a synthetic selection whose own field schemas are empty (`UNTYPED_STORAGE`), so the composed keyword is the only thing that can refuse. For each keyword, the plain validator over the same schema accepts every value, the bound validator refuses each one, and the only error is that keyword's.
+
+**Instances found** (every place the gate adds schema keywords to a selected field): one composition, `_eventrecord_storage_properties` (`:138-145`), with three keywords and two hooks: `iter_errors` at the root (`:229`) and `descend` at every fragment, references included (`:241`). The gate's other schema construction, the value probe's selector (`pm_event_datetime_value_probe.py:226`), wraps a `$ref` and adds no keyword to a field.
+
+**New checks:** `datetime_unit_composition_{type,format,pattern}_alone_{root,through_reference}` (6). **Drop-one mutations** (each caught by its own check): `hw-fix17-B08-composition-type-dropped` (the reviewer's edit), `hw-fix17-composition-format-dropped`, `hw-fix17-composition-pattern-dropped`, and `hw-fix17-composition-descend-dropped` (the `descend` hook).
+
+### Class 3 (T163, T164; I03, I05): the inventory scan decodes closed
+
+**Location, cause, fix.** `mentions_field` and `schema_candidate` decoded only `\u` escapes (`pm_event_datetime_inventory.py:132-147` at the base). A serialized string was parsed once, with no depth bound. A candidate that did not start with `{`, `[` or `"` after `lstrip()` was skipped silently. That included a byte order mark before the brace, and JSON whose quotes or braces appear only as escapes. Keys were never examined. And no witness exercised the escaped-mention or serialized-array branches. The fix:
+
+- **`_json_layers` (`:136-150`):** the text, then each layer with every JSON escape decoded (`\"`, `\\`, `\/`, `\b`, `\f`, `\n`, `\r`, `\t` and `\u` alike), to the fixed point. Every layer is shorter, so the list is finite. `mentions_field` (`:153`) and `schema_candidate` (`:158`) test every layer.
+- **`inspect.serialized` (`:405-419`):** a candidate string that is JSON is parsed (object, array or string) and inspected one level deeper, up to `SERIALIZED_DEPTH = 8` strings (`:131`). A candidate string otherwise refuses by name:
+  - JSON-shaped but unreadable, after whitespace or byte order marks (`_JSON_SHAPED`, `:129`): `unreadable_schema_string_container`;
+  - JSON only once unescaped (no pointer reaches it): `escaped_schema_string_container`;
+  - one more string past the bound: `serialized_depth_exceeded`.
+
+  A candidate is skipped only when no layer of it is JSON-shaped: prose.
+- **`inspect.strings` (`:421-434`):** a key that is, or unescapes to, a JSON container refuses (`serialized_key_container`), because a key has no pointer of its own.
+- **Inline code (`:253`):** inline code whose braces appear only as escapes is a container too.
+- **Measured on the committed tree before the change** (`measure_scan.py`): 282 scanned files; the deepest serialized string is 1 deep (6,488 strings); 40,452 non-JSON candidate strings, none with any escape; 0 byte-order-marked or escaped containers; 0 JSON-shaped keys; 0 inline code with escaped braces; 0 wrong-typed declaring keywords. With the new code the committed scan is byte-identical (`scan-base.json` = `scan-new.json`: 233 rows, 0 errors, gate pass).
+
+**Other scanners and decoders searched for the same skip-on-unknown shape:**
+
+| Instance | Verdict |
+|---|---|
+| `declarations` (`:170-224`): a declaring keyword of another JSON type (for example `"required": "observed_at_utc"`, `"properties": [...]`) was read as declaring nothing | **Fixed** (`:165-182`). One that names either field raises `unreadable field declaration keyword: <key>` (fail closed, in the scan and in runtime admission alike). One that names neither, such as data with `"required": true`, still declares nothing. |
+| `_markdown_blocks` inline filter (`:253`) | **Fixed** (above) |
+| `inspect.strings` keys | **Fixed** (above) |
+| `_exclusion_schema_paths` skips undecodable files and fences (`:295`, `:301`, `:307`) and does not decode serialized strings | **Not fail-open, unchanged.** A file or fence that does not parse as JSON cannot be a loadable JSON schema. The references that make another file loadable are read from the referrer, which parsed. A string inside a document is never a resource a resolver loads. The scan itself still refuses every undecodable mentioning container, unless an exclusion pins it. |
+| `decoded_documents` (`:227`) skips blank JSONL lines | **Not a declaration.** A blank line holds nothing; any other undecodable line raises. |
+| `container` / the file loop skip non-candidates (`:439`, `:463`) | **Closed.** A candidate is now any escape layer naming a field or a wildcard keyword. Text with no candidate in any layer cannot declare either field. |
+| Value probe `_PositivePaths` (`pm_event_datetime_value_probe.py:436-440`, `:488-490`) | **Closed by design.** Only annotations and same-instance assertions are skipped; every other keyword is recorded as unproven and routes to review. |
+| Value probe sibling contexts skip boolean sibling schemas (`:264-273`) | **Equivalent** (the V04 argument). Without a dependency keyword, which is recorded and withholds automatic credit, a sibling key can only remove accepted instances. |
+
+**New checks** (21): an escaped-only mention with no declaration in a `Plans/*.md` JSON fence (`fence:3`) and in a JSON file with doubly escaped raw text; the same mention in a JSONL line, indented code, inline code, an HTML block, a JSON value escaped three times and a UTF-16 file; a declaration in a serialized array (the reviewer's I05 input); one in a doubly serialized object (`json:string:/x:string:`); one exactly 8 strings deep (found, and read back by `_source_document`) and one 9 deep (refused); escaped containers (4 spellings); byte-order-marked, NBSP-led and quote-escaped containers, with prose control; container keys (3 spellings); inline code with escaped braces; one wrong-typed declaring keyword per keyword (7) and a control; runtime admission of a wrong-typed keyword; and `_json_layers` itself.
+
+**Mutations:** `hw-fix17-I03-mentions-not-decoded`, re-pointed (the reviewer's find text named the old `while` loop, which `_json_layers` replaced; the semantic edit is the same: `mentions_field` stops decoding). `hw-fix17-I05-serialized-objects-only` is the reviewer's edit. `hw-fix17-shape-ignores-bom`, `-shape-objects-only`, `-escape-unicode-only`, `-escaped-layers-unchecked`, `-keys-not-scanned`, `-depth-unbounded` and `-depth-not-carried` cover the decoders. Generated points cover every new refusal site, the depth boundary, `_DECLARING_TYPES` entry by entry, and the two new loop domains. `_json_layers` was written so that disabling its `append` still ends at the fixed point. A first version looped forever under that mutant, which the replay would have counted as a runner exception, never as caught.
+
+### Class 4 (T166): the bound validator cannot be loosened after construction
+
+**Location, cause, fix.** The bound `evolve` (`pm_event_datetime.py:140-146` at the base, `:183-189` now) forwarded any change, so `datetime_validator(schema).evolve(format_checker=None)` dropped the date-time check. The same change at construction raises `TypeError`. The fix fixes the binding at construction (`_bind`, `:329-340`). A `_Binding` (`:148-158`) records the checker, the closed registry and the selection. Every construction runs `post_init` (`:193-210`), whether it comes from the bound `evolve`, jsonschema's own internal evolve (`schema` and `_resolver` only), `attrs.evolve` or `copy.replace`. `post_init` raises `TypeError` when the binding is forged, or when the checker, the registry, the resolver (a legacy `RefResolver`, or a `_resolver` over another registry's retrieval) or the selection differs. After construction, assignment to any of the fixed attributes (`_FIXED_ATTRIBUTES`, `:161`) raises `TypeError` (`setattr_`, `:212-216`). Reading the deprecated `.resolver` property, which would install a legacy `RefResolver`, raises too. The gate's checker (`format_checker`, `:96-112`; `_fixed_checker_class`, `:115-135`) holds its table as a read-only mapping and refuses attribute assignment and deletion. So `checks()`, item assignment, reassignment and deletion of `checkers` all raise, and deleting it can never fall back to the stock class table.
+
+**Routes found and closed** (`bypass_routes.py`, a timestamp behind a `$ref`; base `0b2ed73b4d` → head):
+
+| Route | Base | Head |
+|---|---|---|
+| `evolve(format_checker=None)` / `=FormatChecker()` | accepts `not-a-dateZ` | `TypeError: datetime_validator_fixed_format_checker` |
+| `evolve(_resolver=<resolver over another registry>)`, and the same through `attrs.evolve` | accepts | `TypeError: datetime_validator_fixed_resolver` |
+| `evolve(resolver=<legacy RefResolver>)` | fails on use | `TypeError: datetime_validator_fixed_resolver` |
+| `evolve(registry=…)` | ignored | `TypeError: datetime_validator_fixed_registry` |
+| `attrs.evolve(v, format_checker=None)`, `copy.replace(v, format_checker=…)` | accepts | `TypeError: datetime_validator_fixed_format_checker` |
+| `v.format_checker = None` / `= FormatChecker()`, `v._resolver = …` | accepts | `TypeError: datetime_validator_fixed: <attribute>` |
+| `v._registry = …`, `v._ref_resolver = …`, `v.storage_selection = …`, `v.datetime_binding = …` | inert or fails on use | `TypeError: datetime_validator_fixed: <attribute>` |
+| reading `v.resolver` (deprecated) | installs a legacy resolver; fails on use | `TypeError: datetime_validator_fixed: _ref_resolver` |
+| `v.format_checker.checkers.pop("date-time")`, item replacement, `checks("date-time")`, reassigning or deleting `checkers` | accepts | `TypeError` or `AttributeError` (read-only mapping) |
+| `copy.copy(v)` | fails on use (the copy loses `storage_selection`) | the same |
+| control: `evolve(schema=…)` | checks timestamps | checks timestamps; same checker, same binding |
+
+Out of scope, and said so: `object.__setattr__`, writing `__dict__` directly, or rebuilding the registry through the private `v._resolver._registry` can rebind any Python object. Neither the gate nor jsonschema can stop that.
+
+**Committed callers:** `git grep` of `evolve(`, `attrs.evolve`, `copy.replace(` and `__replace__` at `0b2ed73b4d`, Plans excluded, finds one call: `scripts/pm_ui_command_response.py:69`, on another validator. No committed code evolves, replaces or assigns into a `datetime_validator`, still true at the head. No caller touches `.format_checker`, `.checkers`, `._resolver`, `._registry` or `storage_selection` of one.
+
+**New checks** (21): each `evolve` route (7), a forged binding (2 forms), `attrs.evolve` and `copy.replace`, the `evolve(schema=…)` control, assignment to each fixed attribute (6), the deprecated `.resolver`, an ordinary attribute still assignable, the checker's table, the table through a validator, and the construction reference (`datetime_validator(…, format_checker=…)` raises `TypeError`). **Mutations:** every new refusal site and both resolver predicates as generated points; `_FIXED_ATTRIBUTES` entry by entry; and `hw-fix17-checker-table-mutable`, `-checker-attributes-assignable`, `-binding-unchecked`, `-assignment-unchecked` and `-never-fixed`. They sit under a new rule, `validator.binding-fixed` (CV-1101), named by statement rows `CV-1101:canonical_text:5.1` and `5.2` and `CV-1101:negative_constraints:2.1`. `hw-validator-no-checker` and `hw-validator-profile-ignored` are re-pointed at `_bind`; their witness and rule are unchanged.
+
+### Class 5 (T165, V04): an equivalent survivor, declared
+
+`hw-fix17-V04-automatic-empty-context-only` is the reviewer's edit at `pm_event_datetime_value_probe.py:364`, declared with the reviewer's checked reason. Automatic credit already requires no dependencies. `constraint_paths` records `required`, `dependent*`, `dependencies`, `min/maxProperties`, `unevaluatedProperties`, `const`, `enum` and every applicator at each map node it reaches. Without them a 2020-12 object's validity is a conjunction over its keys, so the empty-context sweep implies every context's. It names rule `probe.automatic-credit`.
+
+**Tool fix this needed:** the rules-table check demanded that every hand-written mutation's rule list it, but a rule is caught only when every listed mutation makes its witness fail. So no hand-written survivor could pass both. `check_rules_table` (`pm_event_datetime_mutations.py`) now applies the set's own stated rule ("Declared survivors are never listed"). A declared survivor, hand-written or generated, names its rule and is listed by none, and listing one is a problem. `datetime_gate_bar_detects_listed_survivor` checks all three cases.
+
+### The pre-check mutations in the hand-written set
+
+| Pre-check | Committed as | Rule | Witness |
+|---|---|---|---|
+| B05 | `hw-fix17-B05-legacy-six-digit-fraction` (the reviewer's edit) | `profile.legacy-output` | `datetime_unit_profile_domain_legacy_normalization_output_fraction_length` |
+| B08 | `hw-fix17-B08-composition-type-dropped` (the reviewer's edit) | `composition.storage-utc-z` | `datetime_unit_composition_type_alone_root` |
+| I03 | `hw-fix17-I03-mentions-not-decoded` (re-pointed, same semantics) | `scan.mentioning-container` | `datetime_unit_scan_escaped_mention_fence_unclassified` |
+| I05 | `hw-fix17-I05-serialized-objects-only` (the reviewer's edit) | `scan.decoding` | `datetime_unit_scan_serialized_list_declaration` |
+| V04 | `hw-fix17-V04-automatic-empty-context-only` (the reviewer's edit) | `probe.automatic-credit` | declared survivor (above) |
+
+Rule texts updated: `composition.storage-utc-z` (all three keywords, both hooks, each alone), `scan.decoding` (every escape layer, the depth bound, the named refusals) and `scan.fail-closed` (wrong-typed declaring keywords). New rule: `validator.binding-fixed`. Under the 11:03Z clarification the next pre-check writes its own unsteered 20, so committing these five does not weaken it.
+
+Before the full replay, every new generated point (32) and every new or re-pointed witnessed hand-written mutation (23) was run against its own witness under the gate's own `installed()`. Each witness fails by returning `False`, never by an exception (`why_caught.py`).
+
+### Totals
+
+| | Base `0b2ed73b4d` | Now `fb04d2f19b` |
+|---|---:|---:|
+| Enumerated sites (generated points) | 495 | **526**: 32 new, 1 moved (`unreadable_schema_string_container` from `scan.inspect.strings` to `scan.inspect.serialized`), same witness |
+| Generated declared survivors | 12 | 12 (unchanged) |
+| Hand-written mutations | 103 | **123**: 20 new, 4 re-pointed (`hw-validator-no-checker`, `hw-validator-profile-ignored`, `hw-scan-escapes-not-decoded`, `hw-scan-inline-code-ignored`) |
+| Hand-written declared survivors | 0 | 1 (V04) |
+| Owner statements / rows | 108 / 108 (96 with rules, 12 reasons) | 108 / 108 (96 with rules, 12 reasons) |
+| Rules | 72 | **73** (`validator.binding-fixed`) |
+| Self-checks | 618 | **726** (108 new) |
+| Replay rows | 598 | **649** |
+
+### Rerun results
+
+| Check | Result at `fb04d2f19b` |
+|---|---|
+| date-time `--self-test` | **pass**: 731 checks (726 + 5 freshness), 0 failures, 0 freshness problems; 5 min 21 s, 114 MB |
+| `--self-test --scope all`, fresh process | **pass**: 13,626 of 13,626 cases; every case outcome identical to the reviewer's base record of `0b2ed73b4d` (`scope-all-compare.json`: 0 changed, 0 added); date-time inventory identical (233 nodes: 133 Storage, 89 other-owner, 3 automatic, 8 roles, 0 unclassified); 1,052 owner integration checks all true (the 944 base checks unchanged and the 108 new); guard isolation identical; 16 min 59 s, 745 MB |
+| committed-tree scan, base code vs new code | **byte-identical** output (233 rows, 0 errors; `scan-base.json` = `scan-new.json`), and the gate passes with the committed inventory pin |
+| production behaviour | every committed row classification, the battery and its pin (`datetime_unit_battery_committed`), and the inventory pin unchanged |
+| date-time `--mutations`, every row | **649 of 649: 636 caught, each by its own committed witness (`witness_failed`); 13 declared survivors (12 generated and V04), each surviving the complete `survivor_witnesses()` suite (1,620 to 1,984 s each); 0 undeclared survivors; 0 build errors, 0 runner exceptions, 0 not applied; `problems` empty; 73 of 73 rules caught; 96 of 96 statement rows caught, 12 reason rows; every chunk's intact run 726 of 726 self-checks** |
+| the five pre-check mutations | B05, B08, I03 and I05 each caught by its own new witness; V04 a declared survivor that survives every witness |
+| number scope | `git diff --stat 0b2ed73b4d..HEAD -- 'scripts/pm_event_numbers*'` empty; `Plans/` unchanged |
+
+**How the replay ran:**
+- **Chunks.** It ran detached as 17 `--only` chunks through the gate's own CLI (`run_chunk.py` → `pm_event_datetime_mutations.main`): one chunk per declared survivor, closed under the CLI's substring rule (`plan17.py`), and four chunks of 156 witnessed rows. `verify_partition.py` shows with that rule that the chunks partition all 649 rows exactly: 0 overlap, 0 missing. `merge_replay.py` joins them the way `run_mutations` aggregates a full run.
+- **Memory gate.** A scheduler started a chunk only at 13.5 GB available or more. Below 10 GB it would have stopped the newest chunk and requeued it from the start; that never happened. PM7 browser tests had priority.
+- **Lead holds.** The lead held every heavy run from 06:05Z to 13:39Z, while stream F used the memory.
+- **The reboot.** The VM rebooted at about 16:18Z. Chunks S-01 to S-06 had already written complete results, and those were kept. S-07 to S-09, which were running, and the 8 queued chunks were rerun from the start; their interrupted logs are in `replay/stopped/`. No partial result is used: a chunk writes its result only when it ends.
+- **Before the reboot.** The work was pushed as `wip/ea-numrule-fix17-20261108` at `fb04d2f19b`.
+
+**Environment.** A disposable venv over the system Python 3.14.4 pinned `msgpack==1.1.2`, with `jsonschema` 4.19.2, `rfc8785` 0.1.4 and `blake3` 1.0.11, the review's versions. Scratch and runs stayed on the VM's local disk; only cited evidence went to the share.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix17/` (`SHA256SUMS` binds every file in it).
+
+| Evidence | SHA-256 |
+|---|---|
+| `results/dt-selftest-final.json` | `e33b8e6846180129704612c279b1714b8491416af9a6a116106ca109b4f40ed8` |
+| `results/scope-all-final.json.gz` | `a517ece340ec56d2140d02ac461584965168f6f128a906f4e0de20979bac5650` |
+| `results/scope-all-compare.json` (against the reviewer's `scope-all-0b2ed73b4d.json.gz`) | `b3fac990354a3635365e219a4e75601bf1d8d28e8c4dcf95e36e650a911abb5b` |
+| `results/scan-new.json` (equal to `scan-base.json`) | `8e41d66382c0b66a7383a0c0125f69c12d20109a26cf676e5862e1a2bc0d3c82` |
+| `results/measure-base.json` (the committed tree's decoding inputs) | `2ed9277376d00be6b2fa5bcd8642ee0e2450f0f94bed7aa4b7d5a9deb0ca7c31` |
+| `results/bypass-base.json` / `bypass-head.json` (the T166 routes) | `c33f4c2a26e9d41b9a8e0254564d7e698792d201903eebc1f55a0353ccee0371` / `9f4737f9dc693d803f8cd07c73291871b371bdb60fd709a9ab9e6b9a6893c57a` |
+| `results/new-points-witnessed.json` (32 points, own witness each) | `a3112f39bd3b9178d439dc4b03f18c97f87b2ed1ff88e049974c9021b29a6931` |
+| `results/new-hand-witnessed.json` (23 hand-written, own witness each) | `f459f9cdeaef1794eb78b1bce006744f4458f5b2ec8920d6749f41076d4e44e1` |
+| `results/points-head.json` (526 points; `points-base.json` beside it) | `8c8e7a15f89de56dda6f475b34843907153dc20dc8971be1799de5a7108595b3` |
+| `replay/merged.json` (all 649 rows; the 17 chunks beside it) | `f6e851a15cb24f8ceb7d081276b36b9e6fc13deb5a706c6f8a6486ca2091efc5` |
+| `replay/merged.summary.json` | `2212c1cd1e64c1baaa9e5507808d69f2be68643ec848dfcdc3ff3371b3ab790e` |
+| `replay/plan.json` / `replay/partition-check.json` | `970a3ad978c34713282dee67400bdf31b2933a07985dc4748403025dd0b48b9a` / `e03bfa57bb2885f222f09f201c422aa1a5d989cb5398792a4831a187784a8c07` |
+
+The drivers are in `tools/`: `measure_scan.py`, `scan_dump.py`, `bypass_routes.py`, `check_points.py`, `why_caught.py`, `new_hand.py`, `edit_set.py`, `plan17.py`, `scheduler.py`, `final_runs.sh`, `compare_scope_all.py`, `mark_tool_issues.py`, and the earlier round's `run_chunk.py`, `verify_partition.py`, `merge_replay.py` and `points.py`.
