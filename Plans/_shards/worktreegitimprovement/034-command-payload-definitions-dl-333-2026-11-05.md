@@ -4,7 +4,7 @@ Source: `Plans/WorktreeGitImprovement.md`
 
 Source lines: L5790-L7625
 
-Source SHA256: `8a69102d5f5605971e1614ff9deb1e598d970d86f5e9323b4cd72a09a090b771`
+Source SHA256: `e881a7b6671cfeb35a10fc348a2c27809aa69968b1688c259665697fc70eb1e2`
 
 ---
 
@@ -227,9 +227,9 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             No field names the open focus or target. The alias cmd.git.worktree.open_files supplies a "File
-            Manager focus" argument (UI_Command_Catalog.md:702 and the Cozy Shelves alias table row at :12479), and
+            Manager focus" argument (UI_Command_Catalog.md:702 and the Cozy Shelves alias table row at :12495), and
             the retired cmd.git.worktree.open_other folded a "target argument" into open (alias table row at
-            :12480); neither names the field or its values. Choice: absent means the worktree root itself (the
+            :12496); neither names the field or its values. Choice: absent means the worktree root itself (the
             row's own behavior, :701); present is a target surface name. The bounds 1..256 are not canon. A typed
             union of focus targets is the alternative, and no canon enumerates one.
       owner_request: none
@@ -262,7 +262,7 @@ command_payload_definitions:
             (UI_Command_Catalog.md:714) and names no single target. It is recorded on open, not on select, because
             the alias ends in the open (the select is the selection open already requires, precondition
             worktree_selected, :701), and one alias token is recorded on one definition. open_files is open's alias
-            (:702, :12479). GitHub_Integration.md:2115 lists switch among its Command IDs; the catalog, which keeps
+            (:702, :12495). GitHub_Integration.md:2115 lists switch among its Command IDs; the catalog, which keeps
             aliases, makes it an alias, and this definition follows the catalog. cmd.chat.worktree.open_files is
             recorded here too. Canon conflict: CV-160 lets it route to the canonical assistant worktree commands
             (Contracts_V0.md:1889, :11253), but none of the six opens files, while the catalog routes Open Files
@@ -271,7 +271,7 @@ command_payload_definitions:
             takes its side.
       aliases:
         - {command_id: cmd.git.worktree.open_files, kind: compatibility_alias,
-           source: "UCC-054 compatibility_only_notes; UI_Command_Catalog.md:702 and the Cozy Shelves alias table row cmd.git.worktree.open_files (:12479, open plus File Manager focus argument)"}
+           source: "UCC-054 compatibility_only_notes; UI_Command_Catalog.md:702 and the Cozy Shelves alias table row cmd.git.worktree.open_files (:12495, open plus File Manager focus argument)"}
         - {command_id: cmd.git.worktree.switch, kind: compatibility_alias,
            source: "UCC-054 compatibility_only_notes; UI_Command_Catalog.md:714 (compatibility alias for select plus open until callers migrate)"}
         - {command_id: cmd.chat.worktree.open_files, kind: compatibility_alias,
@@ -524,7 +524,7 @@ command_payload_definitions:
             (UI_Command_Catalog.md:704), and stale_projection is the 2.0B clause.
       aliases:
         - {command_id: cmd.worktree.provision, kind: compatibility_alias,
-           source: "Commands_System.md:4087 (compatibility spelling, not registered; canonical command cmd.git.worktree.create) and the catalog's candidate compatibility and rejection table (UI_Command_Catalog.md:14237, alias intent, no new row); a thread-scoped caller may use only the existing thread wrapper (DRY_Rules.md:2272; Shared_Integration_Runtime.md:352); UCC-230 non_definition_tokens targets it to this command"}
+           source: "Commands_System.md:4087 (compatibility spelling, not registered; canonical command cmd.git.worktree.create) and the catalog's candidate compatibility and rejection table (UI_Command_Catalog.md:14253, alias intent, no new row); a thread-scoped caller may use only the existing thread wrapper (DRY_Rules.md:2272; Shared_Integration_Runtime.md:352); UCC-230 non_definition_tokens targets it to this command"}
     - command_id: cmd.git.worktree.remove
       ucc_units: [UCC-054, UCC-055]
       command_kind: domain_action
@@ -1691,7 +1691,7 @@ command_payload_definitions:
             to release; canon does not say whether release is offered on one.
       aliases:
         - {command_id: cmd.worktree.release, kind: compatibility_alias,
-           source: "Commands_System.md:4088 (compatibility spelling, not registered; canonical command cmd.git.worktree.release) and the catalog's candidate compatibility and rejection table (UI_Command_Catalog.md:14237, alias intent, no new row); DRY_Rules.md:2273 and Shared_Integration_Runtime.md:353 normalize it to this command; UCC-230 non_definition_tokens targets it to this command"}
+           source: "Commands_System.md:4088 (compatibility spelling, not registered; canonical command cmd.git.worktree.release) and the catalog's candidate compatibility and rejection table (UI_Command_Catalog.md:14253, alias intent, no new row); DRY_Rules.md:2273 and Shared_Integration_Runtime.md:353 normalize it to this command; UCC-230 non_definition_tokens targets it to this command"}
     - command_id: cmd.git.worktree.lock
       ucc_units: [UCC-054]
       command_kind: domain_action
@@ -1708,7 +1708,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:712; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.lock, :12612) per UCC-230 identity_typing"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_selected (UI_Command_Catalog.md:712; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.lock, :12628) per UCC-230 identity_typing"
         worktree_lifecycle_state:
           type: enum
           required: true
@@ -1768,7 +1768,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_locked (UI_Command_Catalog.md:713; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.unlock, :12613): the locked worktree is the subject, per UCC-230 identity_typing"
+          source: "overlay UCC-054..UCC-055 optional identity worktree_id; made required by the row precondition worktree_locked (UI_Command_Catalog.md:713; Cozy Shelves Worktree and GitHub PR row cmd.git.worktree.unlock, :12629): the locked worktree is the subject, per UCC-230 identity_typing"
         worktree_lifecycle_state:
           type: enum
           required: true
@@ -1793,7 +1793,7 @@ command_payload_definitions:
           gap_note: >-
             The narrowing rule adds blocked_state_required only when the disabled reasons include it, and the
             row's disabled reasons are stale_projection and permission_required (Cozy Shelves row
-            cmd.git.worktree.unlock, UI_Command_Catalog.md:12613). W-077 says unlock of a run-owned lock while the
+            cmd.git.worktree.unlock, UI_Command_Catalog.md:12629). W-077 says unlock of a run-owned lock while the
             owner is live "is refused with a blocked explanation naming the owner" (WorktreeGitImprovement.md:5418-5419);
             that refusal happens at dispatch, so blocked_state_required is added for it to travel in.
         - key: omitted:expected_lease

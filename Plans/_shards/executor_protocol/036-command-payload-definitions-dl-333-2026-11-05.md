@@ -2,9 +2,9 @@
 
 Source: `Plans/Executor_Protocol.md`
 
-Source lines: L9145-L10679
+Source lines: L9145-L10681
 
-Source SHA256: `41eea5f275e78b132ea2c28b11eaae5654e5f56aa093017c2416b73ee593a255`
+Source SHA256: `0b05561f1eb83bf6b273023ae1ca8d3237cbaa391f7182dcb36ea7e21539ad2a`
 
 ---
 
@@ -737,14 +737,16 @@ command_payload_definitions:
         - {owner_state: operation_in_progress, code: blocked_state_required}
         - {owner_state: safe_point_missing, code: blocked_state_required}
         - {owner_state: state_changed, code: stale_projection}
-      aliases: []
+      aliases:
+        - {command_id: cmd.orchestrator.restore_safe_point_then_retry, kind: compatibility_alias,
+           source: "UI_Command_Catalog.md:10958 (it normalizes to this command and remains a compatibility alias for it) and the exact recovery command contracts table (UI_Command_Catalog.md:11186: normalization.kind compatibility_alias, normalizes_to_contract cmd.runtime.restore_safe_point_then_retry, alias_of_command_id cmd.orchestrator.safe_point_retry, the wrapper of :11185, whose own alias_of_command_id is null); it accepts the wrapper input with its optional permission_snapshot_id and applies the wrapper's identical permission-validation and consumption transform before dispatching this command's exact canonical payload, with no handler, result, effect, admission or idempotency domain of its own (UI_Command_Catalog.md:10963; Plans/Executor_Protocol.md:677); UCC-230 non_definition_tokens targets it to this command"}
       judgments:
         - key: command_kind
           choice: domain_action
           gap_note: "Canon requires command_kind metadata on recovery commands (UI_Command_Catalog.md:6852) but states no value for this command; domain_action because it runs the FileSafe restore and admits a successor attempt (Plans/Executor_Protocol.md:676-688)."
         - key: disabled_reason_codes
           choice: [blocked_state_required, stale_projection, permission_required]
-          gap_note: "No catalog row states disabled reasons for cmd.runtime.restore_safe_point_then_retry itself. Its wrapper cmd.orchestrator.safe_point_retry, which shares its admission decision (Plans/Executor_Protocol.md:677), keeps safe_point_missing, state_changed, permission_denied and operation_in_progress (UI_Command_Catalog.md:10946). All four map through UCC-230 owner_state_code_map: permission_denied to permission_required, operation_in_progress to blocked_state_required, safe_point_missing to blocked_state_required and state_changed to stale_projection (the last two added to the map under DL-341), recorded in owner_state_codes."
+          gap_note: "No catalog row states disabled reasons for cmd.runtime.restore_safe_point_then_retry itself. Its wrapper cmd.orchestrator.safe_point_retry, which shares its admission decision (Plans/Executor_Protocol.md:677), keeps safe_point_missing, state_changed, permission_denied and operation_in_progress (UI_Command_Catalog.md:10962). All four map through UCC-230 owner_state_code_map: permission_denied to permission_required, operation_in_progress to blocked_state_required, safe_point_missing to blocked_state_required and state_changed to stale_projection (the last two added to the map under DL-341), recorded in owner_state_codes."
         - key: field:idempotency_key
           choice: required
           gap_note: "Canon disagrees: the catalog minimum args require idempotency_key (UI_Command_Catalog.md:1203), while Plans/Executor_Protocol.md:677 gives the exact canonical payload { project_id, run_id, node_id, blocked_sequence, attempt_id, safe_point_id, repo_id, worktree_id, baseline_target: \"safe_point\" } with no idempotency_key (and no allowed_action_id, which the overlay and Plans/Executor_Protocol.md:676 require). The definition follows the catalog row and the overlay; not settled here."
