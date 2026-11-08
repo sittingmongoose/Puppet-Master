@@ -7459,8 +7459,8 @@ command_payload_definitions:
           required: false
           default: none
           values: [follow, paused_snapshot, historical_view]
-          provenance: canon
-          source: "section 2A stream continuity: each stream surface MUST distinguish follow, paused_snapshot, and historical_view (Containers_Registry_and_Unraid.md Runtime stream, port-forward, crash-gap, and network trust continuity)"
+          provenance: gap
+          gap_note: "The three values are canon: each stream surface MUST distinguish follow, paused_snapshot and historical_view (section 2A Runtime stream, port-forward, crash-gap, and network trust continuity, Containers_Registry_and_Unraid.md:418). Canon names no command argument for them: the 2.5A logs row (UI_Command_Catalog.md:638) carries no payload field. JUDGMENT: the field name log_mode, carrying the mode on the command, and leaving it optional are this definition's choices."
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -8720,8 +8720,8 @@ command_payload_definitions:
           required: false
           default: none
           values: [follow, paused_snapshot, historical_view]
-          provenance: canon
-          source: "2.5B logs row names follow, paused snapshot, and historical modes; section 2A stream continuity fixes the tokens follow, paused_snapshot, historical_view"
+          provenance: gap
+          gap_note: "The three values are canon: the 2.5B logs row names follow, paused snapshot and historical modes (UI_Command_Catalog.md:677), and section 2A stream continuity fixes the tokens follow, paused_snapshot and historical_view (Containers_Registry_and_Unraid.md:418). Canon names no command argument for them. JUDGMENT: the field name log_mode, carrying the mode on the command, and leaving it optional are this definition's choices, as for cmd.docker.container.view_logs."
         kubernetes_context:
           type: string
           required: false

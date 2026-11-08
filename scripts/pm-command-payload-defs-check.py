@@ -1749,10 +1749,13 @@ def check_definition(ctx: Context, block: Block, owner_unit: str, definition: An
                     detail=f"needs forbidden_when {{field: {branch_field}, in: [{exempt_branch}]}}", **where)
         branch_spec = args.get(branch_field)
         offered = branch_spec.get("values") if isinstance(branch_spec, dict) and branch_spec.get("type") == "enum" else None
+        # UCC-230 requires the field on every branch except the exempt one, so the discriminator offers
+        # exactly the exempt branch and the branches that require it, and is never null (Sol max 6).
         if (not isinstance(offered, list) or exempt_branch not in offered or any(b not in offered for b in branches)
-                or branch_spec.get("required") is not True):
+                or set(map(str, offered)) != set(map(str, branches)) | {str(exempt_branch)}
+                or branch_spec.get("required") is not True or branch_spec.get("nullable") is True):
             rep.add("C07", "conditional_exemption_branch_not_offered", field=branch_field,
-                    detail=f"{branch_field} must be a required enum offering {exempt_branch} and {branches}", **where)
+                    detail=f"{branch_field} must be a required, non-nullable enum offering exactly {exempt_branch} and {branches}", **where)
         elif branch_spec.get("provenance") != "gap":
             # Canon names only the exempt branch's value (the chat-tool const); the other branches'
             # values are not canon, so the definition marks the discriminator a gap (DL-341, P0c).
@@ -3647,6 +3650,16 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         d = approve(fx)
         d["args"]["approval_kind"]["values"] = ["node"]
         del d["args"]["tool_id"]
+
+    @case("fail C07: approve's approval_kind offers a branch that requires neither identity", 1, {"C07"},
+          kinds={"conditional_exemption_branch_not_offered"})
+    def _(fx: Fixture) -> None:
+        approve(fx)["args"]["approval_kind"]["values"] = ["node", "chat_tool", "another_node"]
+
+    @case("fail C07: approve's approval_kind is nullable, so null requires neither identity", 1, {"C07"},
+          kinds={"conditional_exemption_branch_not_offered"})
+    def _(fx: Fixture) -> None:
+        approve(fx)["args"]["approval_kind"]["nullable"] = True
 
     @case("fail C07: a definition claims a conditional exemption the map does not record", 1, {"C07"},
           kinds={"identity_exemption_not_recorded_in_map"})
