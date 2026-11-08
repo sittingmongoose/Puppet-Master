@@ -59,5 +59,25 @@ export const tests = {
 		const sideways = await t.page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
 		await t.check('no sideways page scroll at 390', sideways <= 0, `${sideways} px`);
 		await indOnItems(t, 'phone 390');
+	},
+	async 'Windows 125 % scaling and real forced colors'(t) {
+		// a 1920 x 1080 screen at Windows' default 125 % scaling is a 1536 x 864 CSS viewport at device scale 1.25
+		await t.newContext({ viewport: { width: 1536, height: 864 }, deviceScaleFactor: 1.25 });
+		await t.goto(t.app.url()); await wait(t);
+		await t.audit('1536 at 1.25', { maxStops: 120 });
+		await indOnItems(t, '1536 at 1.25');
+		// Windows High Contrast as Edge reports it: (forced-colors: active). The page must switch its demos to system colours
+		await t.page.emulateMedia({ forcedColors: 'active' });
+		await t.until('forced colors seen', () => document.documentElement.classList.contains('fc'));
+		const hc = await t.page.evaluate(() => ['f1', 'f2', 'f3', 'b1', 'b2'].map((id) => {
+			const d = document.querySelector(`#${id} .demo.light`), ind = d.querySelector('.page-tabs > .ind'), tab = d.querySelector('.page-tab.active');
+			const probe = document.createElement('span'); probe.style.cssText = 'background:Highlight;color:HighlightText'; d.appendChild(probe);
+			const hl = getComputedStyle(probe).backgroundColor, hlt = getComputedStyle(probe).color; probe.remove();
+			const s = getComputedStyle(ind), want = id === 'b2' ? s.borderTopColor : s.backgroundColor;
+			return { id, ok: want === hl && (id === 'b2' || getComputedStyle(tab).color === hlt), got: want, hl };
+		}));
+		await t.check('forced colors: every concept marks the chosen tab with the system Highlight', hc.every((x) => x.ok), JSON.stringify(hc.filter((x) => !x.ok)));
+		await t.audit('1536 at 1.25, forced colors', { maxStops: 120 });
+		if (t.args.shots) await t.crop('fc-f1', '#f1 .pair', 'F1 under real forced colors');
 	}
 };
