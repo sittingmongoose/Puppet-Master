@@ -109,15 +109,18 @@
     laptop(p) {
       let s = p.shadow(30, 44);
       s += p.rect(-40, -44, 80, 54, 8, 'body', 'a') + p.rect(-33, -37, 66, 40, 4, 'screen');
-      // a tiny Pip face on the screen
-      s += p.circle(-8, -20, 3, 'light') + p.circle(8, -20, 3, 'light') + `<path d="M-6 -12Q0 -7 6 -12" ${p.fam === 'friendly' ? 'stroke="#fff" stroke-opacity=".9"' : `stroke="${p.fam === 'nier' ? p.w.paper : p.fam === 'retro' ? (p.w.tube === 'phosphor' ? p.w.bright : p.w.paper) : '#fff'}"`} stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
+      // a tiny Pip face on the screen, centred on it (QA-5: as drawn at -20/-12 its painted ink stood 1.16 low
+      // of the screen's centre, stage-symbol-centre in Basic and Glass)
+      s += p.circle(-8, -21.2, 3, 'light') + p.circle(8, -21.2, 3, 'light') + `<path d="M-6 -13.2Q0 -8.2 6 -13.2" ${p.fam === 'friendly' ? 'stroke="#fff" stroke-opacity=".9"' : `stroke="${p.fam === 'nier' ? p.w.paper : p.fam === 'retro' ? (p.w.tube === 'phosphor' ? p.w.bright : p.w.paper) : '#fff'}"`} stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
       s += p.path('M-50 10H50L44 22H-44Z', 'shade', 'a') + p.rect(-9, 12, 18, 4, 2, 'panel', 'a');
       return { svg: s, ties: [[0, -44]], foot: 24 };
     },
     phone(p) {
       let s = p.shadow(34, 20);
       s += p.rect(-18, -34, 36, 66, 8, 'body', 'b') + p.rect(-13, -27, 26, 48, 4, 'screen') + p.circle(0, 25, 2.6, 'light');
-      s += p.circle(-5, -6, 2.4, 'light') + p.circle(5, -6, 2.4, 'light');
+      /* Pip's eyes on the screen's centre, as the laptop's face sits on its screen's (QA-5; at -6 they stood
+         3 above the screen's centre of -3, where a face's eyes sit at its middle) */
+      s += p.circle(-5, -3, 2.4, 'light') + p.circle(5, -3, 2.4, 'light');
       return { svg: s, ties: [[0, -34]], foot: 32 };
     },
     server(p) {
@@ -146,8 +149,11 @@
     restore(p) {
       let s = p.shadow(40, 38);
       s += p.rect(-38, -16, 76, 54, 8, 'body', 'd') + p.rect(-42, -26, 84, 16, 5, 'shade', 'd');
-      s += p.circle(0, 12, 15, 'panel', 'd');
-      s += `<path d="M-8 4A10 10 0 1 1 -9 16" ${p.fam === 'friendly' ? `stroke="${p.w.ink}"` : `stroke="${p.w.ink}"`} stroke-width="${p.fam === 'retro' ? 2.4 : 2.6}" fill="none" stroke-linecap="round"/>` + p.path('M-12 -1L-7 6L-14 7Z', 'ink');
+      /* QA-5: the circle sits on the body's centre (0, 11) and the rewind mark is centred on it by its ink: as
+         drawn against a circle at 12 its painted ink centred (-1.9, -1.9) off it (stage-symbol-centre, Basic
+         and Glass), so the pair is carried (2, 0.9) as the circle takes (0, 11) */
+      s += p.circle(0, 11, 15, 'panel', 'd');
+      s += `<g transform="translate(2 0.9)"><path d="M-8 4A10 10 0 1 1 -9 16" ${p.fam === 'friendly' ? `stroke="${p.w.ink}"` : `stroke="${p.w.ink}"`} stroke-width="${p.fam === 'retro' ? 2.4 : 2.6}" fill="none" stroke-linecap="round"/>` + p.path('M-12 -1L-7 6L-14 7Z', 'ink') + '</g>';
       return { svg: s, ties: [[-30, -26], [30, -26]], foot: 40 };
     },
     // the sign sizes itself to the name: one line as large as fits, then two or three smaller lines, and only
@@ -182,8 +188,12 @@
       let s = p.shadow(36, 52);
       s += p.rect(x0, y0, W, H, 10, 'body', 'e') + p.rect(x0 + 8, y0 + 8, W - 16, H - 16, 6, 'panel', 'e');
       s += p.circle(x0 + 14, y0 + 6, 2.6, 'shade', 'e') + p.circle(-x0 - 14, y0 + 6, 2.6, 'shade', 'e');
-      const cy = y0 + H / 2 + 1;
-      s += txt ? lines.map((l, i) => p.text(0, cy + (i - (lines.length - 1) / 2) * lh, l, size * k, 'ink')).join('') : `<g class="st-caret">${p.rect(-1.5, cy - 11, 3, 22, 1, 'ink')}</g>`;
+      /* QA-5: the words centred in the panel by their ink. This once sat at centre + 1, where the ink read
+         1.0 low in Basic and Glass (Inter's central baseline already centres its ink). Retro's and NieR's
+         faces centre their em box, whose middle stands off the ink's: at the panel's centre their ink read
+         0.75-1 low and 0.55 right (Retro), 1.5 low (NieR), stage-symbol-centre on 'Loom' at 20; carried back */
+      const cy = y0 + H / 2, SO = { retro: [-0.55, -0.85], nier: [0, -1.5] }[p.fam] || [0, 0];
+      s += txt ? lines.map((l, i) => p.text(SO[0], cy + SO[1] + (i - (lines.length - 1) / 2) * lh, l, size * k, 'ink')).join('') : `<g class="st-caret">${p.rect(-1.5, cy - 11, 3, 22, 1, 'ink')}</g>`;
       return { svg: s, ties: [[x0 + 14, y0], [-x0 - 14, y0]], foot: y0 + H };
     },
     vault(p) {
@@ -228,13 +238,18 @@
       for (let i = 0; i < rows; i++) {
         const y = -22 + i * 17;
         s += p.rect(-24, y - 5, 10, 10, 2, 'panel', 'e') + p.line(-8, y, 20, y);
-        if (i < ticks) s += `<path d="M-22 ${y}L-19 ${y + 3}L-13 ${y - 4}" stroke="${p.fam === 'basic' ? p.w.accent : p.fam === 'nier' ? p.w.ink : p.w.hues.b}" stroke-width="${p.fam === 'retro' ? 2.4 : 2.8}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+        /* the tick centred in its box by its ink (QA-5: drawn from -22 it centred 1.5 right and 0.5 high of it) */
+        if (i < ticks) s += `<path d="M-23.5 ${y + 0.5}L-20.5 ${y + 3.5}L-14.5 ${y - 3.5}" stroke="${p.fam === 'basic' ? p.w.accent : p.fam === 'nier' ? p.w.ink : p.w.hues.b}" stroke-width="${p.fam === 'retro' ? 2.4 : 2.8}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
       }
       return { svg: s, ties: [[0, -52]], foot: 52 };
     },
     block(p, o) {
       const hue = (o && o.hue) || 'a', icon = (o && o.icon) || 'dot';
       let s = p.rect(-26, -22, 52, 44, 8, 'body', hue);
+      /* QA-5: each icon centred in the block by its ink, not by where its path was drawn from (measured on the
+         painted prop by stage-symbol-centre; history's clock stood 2 low, the folder 1.5, rewind 1 left):
+         the carry that puts each drawn ink box's centre on the block's (0, 0) */
+      const CENTRE = { folder: [0, -1.5], history: [0, -2], cloud: [-0.75, 0], check: [-0.5, -0.5], nas: [0, -0.5], restore: [1, 0.8], stack: [0, 0.2] };
       const ic = {
         folder: p.path('M-12 -6H-3L0 -3H12V9H-12Z', 'ink'),
         history: `<circle cx="0" cy="2" r="9" fill="none" stroke="${p.w.ink}" stroke-width="${p.fam === 'retro' ? 2.4 : 2.6}"/>` + p.line(0, 2, 0, -3) + p.line(0, 2, 4, 4),
@@ -247,7 +262,8 @@
         restore: `<path d="M-8 -2A9 9 0 1 1 -5 6" fill="none" stroke="${p.w.ink}" stroke-width="2.6" stroke-linecap="round"/>` + p.path('M-12 -6L-8 -1L-3 -6Z', 'ink'),
         stack: p.path('M0 -9L11 -3L0 3L-11 -3Z', 'ink') + `<path d="M-11 2L0 8L11 2" fill="none" stroke="${p.w.ink}" stroke-width="2.4" stroke-linejoin="round"/>`
       }[icon] || '';
-      return { svg: s + ic, ties: [[0, -22]], foot: 22 };
+      const c = CENTRE[icon];
+      return { svg: s + (c ? `<g transform="translate(${c[0]} ${c[1]})">${ic}</g>` : ic), ties: [[0, -22]], foot: 22 };
     },
     orb(p, o) {
       const lit = o && o.lit, label = (o && o.label) || '', hue = (o && o.hue) || 'e';
@@ -255,7 +271,10 @@
       if (lit && (p.fam === 'friendly' || p.fam === 'glass')) s += `<circle r="30" fill="${p.w.hues[hue]}" opacity=".22"/>`;
       s += p.circle(0, 0, 22, lit ? 'body' : 'panel', hue);
       if (lit) s += p.circle(0, 0, 13, 'accent', hue);
-      s += p.text(0, 1, label, 15, lit ? (p.fam === 'nier' ? 'light' : 'ink') : 'ink', lit ? '' : ' opacity=".55"');
+      /* QA-5: the label centred in the orb by its ink (at y 1 it read 0.5 low in Basic, 0.77 in Glass and
+         1.09 low, 0.43 left in NieR's face: the same em-box offset as the sign's, carried back per family) */
+      const OO = { nier: [0.4, -1.05] }[p.fam] || [0, 0];
+      s += p.text(OO[0], 0.4 + OO[1], label, 15, lit ? (p.fam === 'nier' ? 'light' : 'ink') : 'ink', lit ? '' : ' opacity=".55"');
       s += p.rect(-6, -30, 12, 8, 2, 'shade', hue);
       return { svg: s, ties: [[0, -30]], foot: 22 };
     },

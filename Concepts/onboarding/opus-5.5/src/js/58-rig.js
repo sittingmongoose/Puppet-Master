@@ -1499,8 +1499,15 @@
      it like a zip line as the current-chapter marker: the string dips under Pip's weight, Pip slides to the current
      chapter on each look's own spring and swings when it stops, and the walked part of the string is in the accent.
      Retro steps the slide (Retro Light at ten frames a second, like its paper); NieR glides on a rigid track. Reduced
-     Motion puts Pip in place. The loop runs only while Pip is moving, and never during a drag. */
-  const rail = PIP.rail = { x: null, v: 0, dip: 0, dv: 0, ang: 0, av: 0, cur: -1, raf: 0, last: 0, nav: null, xs: [] };
+     Motion puts Pip in place. The loop runs only while Pip is moving, and never during a drag.
+     QA-1 (Jared, 2026-11-08: "the progress bar indicator at the top that has pip move across the line runs through the
+     circles and the section around the text cuts down into the other section"): the string is cut at every bead that is
+     drawn, so it never runs through a hollow bead; a bead Pip's mark covers is not drawn (Pip stands in for it, as it
+     always has for the current one), so Pip never slides over a bead, the one it is leaving included; and the string
+     sits at the rail's --o55-rail-y (10-window.css), high enough that the label under it and the look's chip round the
+     label stay inside the header. */
+  const rail = PIP.rail = { x: null, v: 0, dip: 0, dv: 0, ang: 0, av: 0, cur: -1, raf: 0, last: 0, nav: null, xs: [], ws: [], y0: 10 };
+  let railCut = 0;
   const SPRING = { friendly: [70, 11], glass: [26, 7.5], basic: [90, 19], retro: [110, 15], nier: [60, 16] };
   rail.mount = function mount(nav, cur, theme) {
     const K = H.kit(); if (!nav || !K) return;
@@ -1508,7 +1515,8 @@
     /* (the rail's markup holds both, kept by the window's morph: 60-ui-core.js renderRail) */
     const svg = nav.querySelector(':scope > .o55-railzip'), pip = nav.querySelector(':scope > .o55-railpip');
     if (!svg || !pip) return;
-    if (!svg.firstChild) svg.innerHTML = '<path class="o55-railzip-str"/><path class="o55-railzip-hi"/><circle class="o55-railzip-eye" r="2.6"/><circle class="o55-railzip-eye" r="2.6"/>';
+    /* (the mask holds a hole per drawn bead: the string and its walked part stop at each bead's edge, 58-rig.js rail.draw) */
+    if (!svg.firstChild) { const id = `o55-railcut-${++railCut}`; svg.innerHTML = `<defs><mask id="${id}" maskUnits="userSpaceOnUse"><rect class="o55-railzip-cutall" fill="#fff"/><g class="o55-railzip-holes"></g></mask></defs><g mask="url(#${id})"><path class="o55-railzip-str"/><path class="o55-railzip-hi"/></g><circle class="o55-railzip-eye" r="2.6"/><circle class="o55-railzip-eye" r="2.6"/>`; }
     if (pip.getAttribute('data-theme-pip') !== theme) { pip.setAttribute('data-theme-pip', theme); pip.innerHTML = K.svg({ theme, px: 24, decorative: true }); }
     /* the rail's own size: a layout change (narrow, short, a look's labels) moves its beads after any window resize
        event has fired, so the rail measures again whenever it changes size (final check: Pip and its rope stayed at
@@ -1518,6 +1526,9 @@
     rail.measure();
     if (rail.cur !== -1 && cur !== rail.cur && !O55.motion.reduced()) rail.av += (cur > rail.cur ? -1 : 1) * 0.6;
     rail.cur = cur;
+    /* drawn now, where Pip is: the window's morph has just dropped the beads' inline state (their sag, and the hiding of
+       the bead Pip is leaving), and a draw left to the next frame let that bead show under Pip for a frame */
+    if (rail.px != null) rail.draw(rail.px, rail.pdip || 0, rail.pang || 0);
     rail.kick();
   };
   /* bead x positions, read once per render and on a resize (never per frame) */
@@ -1527,8 +1538,12 @@
     const nav = rail.nav; if (!nav) return;
     const nr = nav.getBoundingClientRect(), w = nav.offsetWidth || nr.width, k = nr.width && w ? nr.width / w : 1;
     rail.W = w;
+    const y = parseFloat(getComputedStyle(nav).getPropertyValue('--o55-rail-y'));
+    rail.y0 = Number.isFinite(y) ? y : 10;
     rail.nodes = Array.from(nav.querySelectorAll('.o55-railitem .o55-railnode'));
-    rail.xs = rail.nodes.map((n) => { const r = n.getBoundingClientRect(); return (r.left + r.width / 2 - nr.left) / k; });
+    const rs = rail.nodes.map((n) => n.getBoundingClientRect());
+    rail.xs = rs.map((r) => (r.left + r.width / 2 - nr.left) / k);
+    rail.ws = rs.map((r) => r.width / k);
   };
   /* measured again after a size change; a new window layout (wide, narrow, short) puts Pip at its bead at once, where a
      chapter change lets it travel */
@@ -1554,8 +1569,9 @@
     if (!rail.force && (document.body.classList.contains('pm-resizing') || document.hidden)) { setTimeout(rail.kick, 250); return; }
     const tn = now(), dt = Math.min(0.04, tn - rail.last) / H.speed(); rail.last = tn;
     const fam = String(rail.theme || 'basic-dark').split('-')[0], rigid = fam === 'nier', red = O55.motion.reduced();
-    /* (the string sits where the concept has it, clear of the window's top edge with Pip's bar under it: Muse M3) */
-    const W = rail.W, y0 = 14, x0 = 6, x1 = W - 6, tx = rail.xs[Math.max(0, rail.cur)] || x0, weight = rigid ? 0 : fam === 'basic' ? 2 : 4;
+    /* (the string sits where the concept has it, clear of the window's top edge with Pip's bar under it: Muse M3; its
+       height is the rail's --o55-rail-y, read by rail.measure) */
+    const x0 = 6, tx = rail.xs[Math.max(0, rail.cur)] || x0, weight = rigid ? 0 : fam === 'basic' ? 2 : 4;
     if (rail.x == null || red) { rail.x = tx; rail.v = 0; rail.dip = weight; rail.dv = 0; rail.ang = 0; rail.av = 0; }
     const M2 = SPRING[fam] || SPRING.basic, ax = M2[0] * (tx - rail.x) - M2[1] * rail.v;
     rail.v += ax * dt; rail.x += rail.v * dt;
@@ -1567,23 +1583,44 @@
     rail.drawn = tn;
     let px = rail.x, dip = Math.max(0, rail.dip);
     if (fam === 'retro') { px = Math.round(px / 4) * 4; dip = Math.round(dip); }
+    rail.draw(px, dip, rail.ang);
+    if (moving && !red) rail.kick();
+  };
+  /* The rail as it stands with Pip at px, the string dipped dip px under it and Pip turned ang radians: the string, its
+     walked part, the beads on it and Pip. (Called by the tick and, at once, by a mount.) */
+  rail.draw = function draw(px, dip, ang) {
+    const nav = rail.nav; if (!nav || !nav.isConnected || !rail.xs.length) return;
+    rail.px = px; rail.pdip = dip; rail.pang = ang;
+    const W = rail.W, y0 = rail.y0, x0 = 6, x1 = W - 6;
     const yAt = (x) => (x <= px ? y0 + dip * (x - x0) / Math.max(1, px - x0) : y0 + dip * (x1 - x) / Math.max(1, x1 - px));
     const k = 6, d = dip > 0.4 ? `M${x0} ${y0}L${R(px - k)} ${R(yAt(px - k))}Q${R(px)} ${R(y0 + dip)} ${R(px + k)} ${R(yAt(px + k))}L${x1} ${y0}` : `M${x0} ${y0}H${x1}`;
+    /* Pip's mark is 24 px hung from its pin (12, 5.4) and turned about it: how far its box reaches either side of px */
+    const c = Math.abs(Math.cos(ang)), sn = Math.abs(Math.sin(ang)), reach = 12 * c + 18.6 * sn;
+    /* each bead is threaded on the string, so it sits where the string sags (QA round 2, Q4; set every frame drawn: a
+       re-render of the rail drops the inline offset, and the mount that follows draws again). A bead within Pip's reach
+       is not drawn, and the string is cut at every bead that is, a hair inside its edge so string and outline meet */
+    const holes = [];
+    (rail.nodes || []).forEach((n, i) => {
+      const dy = R(yAt(rail.xs[i]) - y0), half = (rail.ws[i] || 0) / 2, under = half > 0 && Math.abs(rail.xs[i] - px) < reach + half + 1;
+      n.style.translate = dy ? `0 ${dy}px` : '';
+      n.style.visibility = under ? 'hidden' : '';
+      if (half > 0 && !under) holes.push(`<circle cx="${R(rail.xs[i])}" cy="${R(y0 + dy)}" r="${R(Math.max(0, half - 0.5))}" fill="#000"/>`);
+    });
     const svg = nav.querySelector(':scope > .o55-railzip');
     if (svg) {
       svg.setAttribute('viewBox', `0 0 ${R(W)} 40`);
       svg.querySelector('.o55-railzip-str').setAttribute('d', d);
       svg.querySelector('.o55-railzip-hi').setAttribute('d', dip > 0.4 ? `M${x0} ${y0}L${R(px - k)} ${R(yAt(px - k))}Q${R(px)} ${R(y0 + dip)} ${R(px)} ${R(y0 + dip)}` : `M${x0} ${y0}H${R(px)}`);
+      const all = svg.querySelector('.o55-railzip-cutall'), hg = svg.querySelector('.o55-railzip-holes');
+      if (all) { all.setAttribute('x', '-20'); all.setAttribute('y', '-20'); all.setAttribute('width', R(W + 40)); all.setAttribute('height', '80'); }
+      const mask = all && all.parentNode; if (mask) { mask.setAttribute('x', '-20'); mask.setAttribute('y', '-20'); mask.setAttribute('width', R(W + 40)); mask.setAttribute('height', '80'); }
+      const hs = holes.join(''); if (hg && hg.__h !== hs) { hg.innerHTML = hs; hg.__h = hs; }
       const eyes = svg.querySelectorAll('.o55-railzip-eye');
       eyes[0].setAttribute('cx', x0); eyes[0].setAttribute('cy', y0); eyes[1].setAttribute('cx', R(x1)); eyes[1].setAttribute('cy', y0);
     }
-    /* each bead is threaded on the string, so it sits where the string sags (QA round 2, Q4; set every frame drawn: a
-       re-render of the rail drops the inline offset, and the mount that follows draws again) */
-    (rail.nodes || []).forEach((n, i) => { const dy = R(yAt(rail.xs[i]) - y0); n.style.translate = dy ? `0 ${dy}px` : ''; });
     /* the mark's pin (32, 14.5 of 64) rides the string; at 24 px that is (12, 5.4) */
     const pip = nav.querySelector(':scope > .o55-railpip');
-    if (pip) pip.style.transform = `translate(${R(px - 12)}px, ${R(y0 + dip - 5.4)}px) rotate(${R(rail.ang * 57.3)}deg)`;
-    if (moving && !red) rail.kick();
+    if (pip) pip.style.transform = `translate(${R(px - 12)}px, ${R(y0 + dip - 5.4)}px) rotate(${R(ang * 57.3)}deg)`;
   };
   /* (on the next frame: the window's layout class, 60-ui-core.js layoutClass, is set by a resize listener of its own) */
   window.addEventListener('resize', () => { if (rail.nav && rail.nav.isConnected) requestAnimationFrame(rail.relayout); });

@@ -48,6 +48,10 @@
 .o55fx-brk[data-gone] { opacity: 0; }
 .o55fx-brk > i { position: absolute; width: 11px; height: 11px;
   background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 2px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 2px 100% no-repeat; }
+/* FO-117: forced colours strips the gradients these corners are drawn with (see 14-nier-parts.css); as borders there */
+@media (forced-colors: active) {
+  .o55fx-brk > i { background: none !important; border: 0 solid CanvasText; border-width: 2px 0 0 2px; box-sizing: border-box; }
+}
 .o55fx-brk > i:nth-child(1) { left: 0; top: 0; }
 .o55fx-brk > i:nth-child(2) { right: 0; top: 0; transform: scaleX(-1); }
 .o55fx-brk > i:nth-child(3) { left: 0; bottom: 0; transform: scaleY(-1); }
