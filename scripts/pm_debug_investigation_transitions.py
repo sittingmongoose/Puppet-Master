@@ -482,6 +482,13 @@ def retained_probes(case):
             target = target[key]
         target[path[-1]] = replacement
         return result
+
+    def forged(path, candidates):
+        # The first candidate that differs from the original's own value, so the probe always forges.
+        target = original['case']
+        for key in path:
+            target = target.get(key) if type(target) is dict else None
+        return offered(path, next(candidate for candidate in candidates if candidate != target))
     controls = [('retained original after live changes', value())]
     negatives = [
         ('withdrawn history', value(withdrawn=True), 'retained.withdrawn', 'withdrawn'),
@@ -495,11 +502,13 @@ def retained_probes(case):
          'retained.identity', 'forged_history_identity'),
         ('forged semantic body', value(offered=offered(('payload', case['mutation_field']), case['mutation_value'])),
          'retained.body', 'forged_history_body'),
-        ('forged Storage sequence', value(offered=offered(('envelope', 'sequence_id'), 999)),
+        ('forged Storage sequence', value(offered=forged(('envelope', 'sequence_id'), (999, 998))),
          'retained.sequence', 'forged_storage_metadata'),
-        ('forged Storage observed time', value(offered=offered(('envelope', 'observed_at_utc'), '2026-11-04T01:00:00Z')),
+        ('forged Storage observed time', value(offered=forged(('envelope', 'observed_at_utc'),
+                                                              ('2026-11-04T01:00:00Z', '2026-11-04T02:00:00Z'))),
          'retained.observed', 'forged_storage_metadata'),
-        ('forged Storage persisted time', value(offered=offered(('envelope', 'persisted_at_utc'), '2026-11-04T01:00:01Z')),
+        ('forged Storage persisted time', value(offered=forged(('envelope', 'persisted_at_utc'),
+                                                               ('2026-11-04T01:00:01Z', '2026-11-04T02:00:01Z'))),
          'retained.persisted', 'forged_storage_metadata')]
     return controls, negatives
 
