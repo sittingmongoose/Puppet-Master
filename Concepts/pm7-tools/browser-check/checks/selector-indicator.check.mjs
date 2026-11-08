@@ -111,9 +111,19 @@ const ONB = [
 async function goPage(t, f, name) {
 	if (name === 'Home') return;
 	if (name === 'Settings chapter') {
-		/* (not the Look chapter: it shows the saved look, not the one the run set) */
-		await f.evaluate(() => { const d = [...document.querySelectorAll('#pm-settings-root .rail-scroll .domain-link')].find((x) => !/look|appearance|theme/i.test(x.textContent)); if (d) d.click(); });
-		await t.page.waitForTimeout(1600); return;
+		/* the first chapter with section tabs and a segmented choice on screen (not the Look chapter: it shows the saved
+		   look, not the one the run set) */
+		const got = await f.evaluate(async () => {
+			const links = [...document.querySelectorAll('#pm-settings-root .rail-scroll .domain-link')].filter((x) => !/look|appearance|theme/i.test(x.textContent)).slice(0, 8);
+			const shown = (e) => { if (!e) return false; const r = e.getBoundingClientRect(); return r.width > 1 && r.bottom > 0 && r.top < innerHeight; };
+			for (const d of links) {
+				d.click(); await new Promise((res) => setTimeout(res, 1300));
+				if (shown(document.querySelector('#pm-settings-root .segmented > button[aria-checked="true"]'))) return d.textContent.trim().slice(0, 40);
+			}
+			return null;
+		});
+		t.log(`Settings chapter with a segmented choice: ${got}`);
+		return;
 	}
 	await f.evaluate((n) => { const e = [...document.querySelectorAll('nav.page-tabs .page-tab')].find((x) => x.textContent.trim().startsWith(n)); if (e) e.click(); }, name);
 	await t.page.waitForTimeout(1800);
