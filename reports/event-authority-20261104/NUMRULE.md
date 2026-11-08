@@ -2413,3 +2413,81 @@ Each `hw-tb5-*` mutation is the review's blind edit, committed with its rule and
 The full date-time `--mutations` replay (590 rows, about 2 h 45 min in batch 4) was not rerun. A caught row is judged by its own committed witness alone, and this batch changes no production code and no existing check; the only rows whose judgment changes are the 12 declared survivors, which must now survive 23 more witnesses, and they do (above).
 
 Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH5/numrule/` (`results/`: the date-time self-test, the `hw-tb5` replay, the survivors over their new witnesses, both blind replays (the number one before pinning B-N10 and B-N12 too), the number `--mutations` run and the `--scope all` run; `tools/`: the run scripts, `dt_survivors.py` and the review's `blind_run.py`).
+
+
+## Sol max gate finding 1 (REAL): fix
+
+**Source:** `REVIEW-gate-solmax-numrule.md` finding 1 (`SOL-NUM-GATE-20261107-01`): a REAL false pass of `datetime_validator` on the committed EventRecord schema row. Fixed at once, outside the tool batch (`test-tool-bar.md`).
+
+- **Base:** `a16f67c1ef` on `plans/ea-numrule-20261105`. Worked in one local sparse worktree (`Plans`, `scripts`, `reports`); fast-forward push, no force.
+- **Commits:** `a73b395e54` (the fix, its negatives and the mutation set) and this report.
+- **Files touched:** `scripts/pm_event_datetime.py`, `scripts/pm_event_datetime_selfcheck.py`, `scripts/pm_event_datetime_mutations.json`, and this report. No schema, corpus, inventory, exclusion or number-scope file changed.
+
+### Location, cause and fix
+
+| | |
+|---|---|
+| **Where** | `scripts/pm_event_datetime.py:108` (was `:106`), `format_checker`'s `check`. |
+| **Why** | It selected values by exact type: `True if type(value) is not str else date_time(...)`. JSON Schema treats a `str` subclass or a stdlib `StrEnum` member as a string. Such a value skipped the predicate, so `Plans/event_record.schema.json#/$defs/date_time_string` accepted `not-a-dateZ` at `occurred_at_utc`, `observed_at_utc` and `persisted_at_utc`. The Storage terminal-`Z` pattern also matches its final `Z`. Direct `date_time` already refused it (`date_time_type`). |
+| **Fix** | Select with `isinstance(value, str)`: every value the validator treats as a string calls `date_time`, which refuses a non-exact `str` with `date_time_type`. Non-strings still pass the format check (`datetime_unit_format_checker_non_string_passes`). Schema bytes are unchanged. |
+
+### The new negatives
+
+They are self-checks in `pm_event_datetime_selfcheck.py`, so every suite runs them: the date-time `--self-test`; `--scope all`, through `regression_checks` → `run_all`, listed among its owner integration checks; and the replay, in its intact run, as `check:` witnesses and in `survivor_witnesses()`, so every declared survivor must survive them.
+
+- **`datetime_validator_real_eventrecord_<field>_<kind>_refused`**, six checks: each of `occurred_at_utc`, `observed_at_utc` and `persisted_at_utc`, for `str_subclass` (the existing `StrSub`) and `str_enum` (a stdlib `enum.StrEnum` member). Each runs `datetime_validator` over the complete committed EventRecord schema, built from `Plans/seglog_frame_v2_wire_fixtures.json` `base_event`:
+  - `base_event` is valid;
+  - with the field replaced by the host value, for `not-a-dateZ` and for `base_event`'s own valid text alike, every error is a `format` error at that field whose cause is `date_time_type`;
+  - the JSON round trip of the malformed value is a plain `str` and is still refused (`date_time_syntax`).
+- **`datetime_unit_format_checker_str_subclass_runs_predicate`:** the checker itself, under `event_record` and `storage_utc_z`, refuses both kinds with both texts (`date_time_type`) and still accepts a valid plain string.
+
+### Mutation set
+
+- **`hw-solgate-format-exact-str-selection`** (new; rule `format.type-independent`) restores `type(value) is not str`. Its witness is `check:datetime_validator_real_eventrecord_occurred_at_utc_str_subclass_refused`. Under the mutant, with one witness per run, each of the seven new checks fails. Each of the five existing format and EventRecord checks passes, which is the gap the review found: `datetime_unit_format_checker_non_string_passes`, `_runs_predicate`, `_storage_profile`, `datetime_validator_real_inventory_format_installed` and `_envelope_storage_fields`.
+- **`hw-format-non-string` and `hw-format-profile-ignored`:** `find` and `replace` re-pointed at the changed line; each is still caught by its committed witness.
+- **Rule `format.type-independent`:** its text now states the selection. Format applies to every value JSON Schema treats as a string and to nothing else. A non-string passes. A string, a `str` subclass or `StrEnum` member included, runs the predicate, which refuses a non-exact `str`.
+- **Generated points:** 495, the same keys; none new, none stale. No committed row moves: 17 points of `pm_event_datetime.py` shift two lines, and committed entries carry no line. No inventory row or pin moves: the scan universe is `Plans/`, and no committed file pins these scripts.
+
+### Other exact-type string gates
+
+An AST listing of every `type(x) is [not] str` in `pm_event_datetime*.py`, `pm_event_numbers.py` and `pm_event_index_binding.py` finds 25 sites. The format checker was the only place where a string-like value skipped its check, so nothing else changed:
+
+- **Every other gate refuses.** Driven with `StrSub` and a `StrEnum` member, each refuses: `date_time_type`, `date_time_profile` (in `date_time` and `format_checker`), `integer_token`, `json_number_token`, `replay_policy`, `json_input_type`, `jcs_type`, `jcs_key_type`, `physical_type`, `physical_key_type`, `binding_domain`, `payload_id_type`, `payload_media`, `recipe_tuple`, `original_binding`, `original_scope` and `original_query`. `binding_bytes` raises `TypeError`. None accepts.
+- **`pm_event_numbers.py:176`** (the walk in `loads_exact`) sees only `json.loads` output: built-in `str`, behind the exact-type `raw` gate.
+- **The hits in `_mutations.py` and `_selfcheck.py`** are tool code: AST constants and test assertions.
+- **The inventory and the value probe** select with `isinstance`, which includes subclasses, so nothing skips there.
+
+### Rerun results
+
+| Check | Base `a16f67c1ef` | Now `a73b395e54` |
+|---|---|---|
+| reviewer's `host-input-repro.py`, unmodified | 6 false passes; output equal to the review's `host-input-repro.json` | **0 false passes:** all six refused. The 9 JSON round-trip controls are still refused, `base_event` is still valid, and direct `date_time` is unchanged. |
+| date-time `--self-test` | pass, 616 checks | **pass, 623 checks** (618 + 5 freshness), 0 failures, 0 freshness problems; 495 points, 12 declared survivors, 103 hand-written mutations; 4 min 42 s |
+| `--self-test --scope all` | pass, 13,626 cases, 937 owner integration checks | **pass, 13,626 of 13,626 cases**, every case outcome identical to the review's base record; **944 owner integration checks all true** (937 + the 7 new); date-time inventory identical (233 nodes: 133 Storage, 89 other-owner, 3 automatic, 8 roles, 0 unclassified); 14 min 13 s, 479 MB peak |
+| number `--self-test --scope numbers` | pass, 580 cases, 63 owner checks | **JSON-equal to the review's base record** |
+| number `--scope numbers --mutations` | 423: 418 caught, 5 declared survivors | **JSON-equal to the review's base record** |
+| date-time `--mutations`, the full replay | NOT_RUN in the gate review (blocked by this finding) | **598 of 598 rows: 586 caught, each by its committed witness (`witness_failed`), 12 declared survivors, 0 undeclared**; 0 build errors, 0 runner exceptions, 0 not applied, `problems` empty; 72 of 72 rules caught; 96 of 96 statement rows caught, 12 reason rows; every chunk's intact run 618 of 618 self-checks; survivors 1,540 to 1,691 s each, against a 3,600 s limit |
+
+The replay ran detached as 12 `--only` chunks through the gate's own CLI (`pm_event_datetime_mutations.main`), because a full run is longer than 2 hours on one command. `verify_partition.py` shows, with the CLI's own substring rule, that the chunks partition the 598 committed rows exactly: 0 overlap, 0 missing. The first plan's chunks A and B each held four or five survivors. Both were stopped and re-split, one survivor per sub-chunk and closed under substring selection, so `site:…#1` travels with its `predicate:site:…#1:…` rows. No result of the stopped runs is used; their logs are in `replay/stopped/`. `merge_replay.py` joins the chunks the way `run_mutations` aggregates a full run: the rows, then the rule and statement verdicts over every row, then the totals. Each declared survivor survived the complete `survivor_witnesses()` suite, 8,039 witnesses (618 self-checks, 6,539 cases, 870 regression and 12 integration checks; 8,025 at the base), with the seven new checks included. A first launch was stopped after four minutes, with no result used: my first rewrite of the mutation set had escaped two `’` characters as `\u2019`. The JSON meant the same, but the bytes differed. The set was rewritten byte-faithfully, the commit amended before any push, and every run reported here for `a73b395e54` was started again at that commit.
+
+Runs used a disposable venv over the system Python 3.14.4 that pins `msgpack==1.1.2`, with `rfc8785` 0.1.4, `blake3` 1.0.11 and `jsonschema` 4.19.2, the review's versions. Available memory was at least 15 GiB at every check. Scratch and runs stayed on the VM's local disk; only the cited evidence below was copied to the share.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/sol-gate-p1/`. `SHA256SUMS` binds every file in it.
+
+| Evidence | SHA-256 |
+|---|---|
+| `results/host-input-repro-fix.json.gz` (the reviewer's script, unmodified, at `a73b395e54`) | `23df149a015872995e96dcea2f5edfbae6bc5bd2b49e7492b00b15e9c886280a` |
+| `results/host-input-repro-base.json.gz` (at `a16f67c1ef`, equal to the review's record) | `348e025f33be2f434585f2fff3e26a3ee4c3ec8723a4442d3a0bb941d9a150e7` |
+| `results/p1-mutant.json.gz` (the new mutant over each check, one run per witness) | `73b02a8229608777fe9ef84b1cec4cb0cdb49050e056b916599afcc073a413b5` |
+| `results/host-string-sweep.json.gz` (the 25 exact-type gates and their host-value outcomes) | `be8d3d026eb694850b427366830eb77c8b41233c2ecfe66d1fd99d5d098ad293` |
+| `results/dt-selftest.json.gz` | `e5e306c12bbb57184aa56378a0df8bc9e7b40034fac2c608f4f1edf2b890a81e` |
+| `results/scope-all.json.gz` | `ed9e896d525fca3d16c8c8ff6c780a65475f9df1e63cb7c8d282557b9f940b3f` |
+| `results/num-selftest.json.gz` | `f0eeae179d0be4f43576f93e20bc96d82631955a0f8cfd23e20ddb990a371f82` |
+| `results/num-mutations.json.gz` | `5d603b662a00a239d082981f9e524e851892d00a49138eb707eb2d28052f8d42` |
+| `results/points-fix.json.gz` (495 points; `points-base.json.gz` beside it) | `01d4f64a81e331f339cdcc48b887590374e33aac1113627e18257f4c666de617` |
+| `replay/merged.json.gz` (all 598 rows; the 12 chunks beside it) | `faaa1fbd9a5ffb55cddb0474934077f36bf6bafc40a73ce1557e67d6aa3418b7` |
+| `replay/merged.summary.json.gz` | `fa784c820de0cf4bb5c634f8e1327fff26c76339f519ac7374323aa6fe24fd87` |
+| `results/survivor-witnesses.json.gz` (the suite a declared survivor must survive) | `cbe92c1a22f255df309c307e64354fbd8eb194a7afe9ae5bbefba5d11450a899` |
+| `replay/plan2.json.gz` (the partition check) | `3950bfd23a1aebe6457d19cd36d836e7abedca231f244330677c303877bffa54` |
+
+The drivers are in `tools/`: the review's `host-input-repro.py`, `p1_mutant.py`, `host_string_sweep.py`, `points.py`, `plan_chunks.py`, `resplit.py`, `verify_partition.py`, `run_chunk.py` and `merge_replay.py`. `results/run-input-sha256.txt.gz` pins the inputs every run read.
