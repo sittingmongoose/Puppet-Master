@@ -5,7 +5,6 @@ The injected resolver is synthetic test authority, never caller input or runtime
 DL-446/DL-447 supply the approved cutoffs; the other activation gates remain.
 """
 from copy import deepcopy
-from contextlib import contextmanager
 from pathlib import Path
 import importlib.util
 import json
@@ -39,76 +38,46 @@ def payload_from(row, suffix):
 core.payload_from = payload_from
 
 # Distinct module instance: the eight-family checker and its original fixture expectations are untouched.
+# Every refusal below is one row of a DMEM phase table (core.require); check 11 is the shared guard tool
+# run over those tables (scripts/pm-memory-guard-tables.py), never a removal of checker code.
 _original_transition, _original_append, _original_accept = core.transition, core.append_current, core.accept
-_original_require = core.require
-_REMOVED = None
-_REQUESTED_EVENT = None
 
 
-def guard(name, test, reason=None):
-    if name != _REMOVED:
-        _original_require(test, reason or name)
-
-
-def start_custody_gate(state, first_start=False, writer_event=None, canonical_history=False):
-    """SP-636/SP-637 gate, with the canonical comparisons split by invariant for check 11.
+def canonical_start_checks(canonical, row, expected):
+    """SP-636/SP-637 started-writer canonical original, split by invariant.
 
     These are the original predicates; no retained value is repaired, substituted or reconstructed as proof.
     """
-    core.require(core.flag(state['withdrawn'], False), 'permission_or_withdrawal')
-    row = state['operation']; started = event_type(row, 'started'); completed = event_type(row, 'completed')
-    expected = (core.canonical_value if canonical_history else core.full_value)(row, 'started'); start_id = expected['event_id']
-    record = state['originals'].get(started)
-    canonical = state.get('original') if writer_event == started else None
-    terminal = state.get('original') if writer_event == completed else None
-    later = [x.get('full_value') if isinstance(x, dict) else None
-             for x in (state['originals'].get(completed), terminal) if x is not None]
-    receipt_recorded = row['phase'] != 'accepted' or row['started_event_id'] is not None
-    core.require(row['phase'] in core.lawful_phases(row), 'start_receipt_missing')
-    core.require(row['started_event_id'] == (None if row['phase'] == 'accepted' else start_id), 'start_receipt_missing')
-    if receipt_recorded or later:
-        core.require(record is not None, 'start_receipt_missing')
-        core.require(writer_event != started or canonical is not None, 'start_receipt_missing')
-    elif not first_start:
-        core.require(record is not None or canonical is not None, 'start_receipt_missing')
-    if record is not None:
-        core.require((core.historical_matches if canonical_history else core.original_matches)(record, expected), 'start_receipt_missing')
-    if canonical is not None:
-        value = canonical.get('full_value') if isinstance(canonical, dict) else None
-        reference = core.canonical_value(row, 'started')
-        core.require(isinstance(value, dict) and core.original_matches(canonical, value), 'start_receipt_missing')
-        guard('envelope_schema', core.historical_envelope_matches(value), 'start_receipt_missing')
-        guard('payload_schema', core.validator('Plans/memory_maintenance_event_payloads.schema.json',
-                                               started.replace('.', '_')).is_valid(value['payload']), 'start_receipt_missing')
-        producer = set(reference) - core.STORAGE_FIELDS - {'payload', 'replay_policy'}
-        guard('semantic_binding', core.retained_binding({k: value[k] for k in producer}, {k: reference[k] for k in producer}), 'start_receipt_missing')
-        guard('replay_policy', value['replay_policy'] == reference['replay_policy'], 'start_receipt_missing')
-        guard('semantic_binding', core.retained_binding(value['payload'], reference['payload']), 'start_receipt_missing')
-    for value in later:
-        core.require(isinstance(value, dict) and value.get('causation_event_id') == start_id
-                     and isinstance(value.get('payload'), dict)
-                     and value['payload'].get('started_event_id') == start_id, 'start_receipt_missing')
+    value = canonical.get('full_value') if isinstance(canonical, dict) else None
+    reference = core.canonical_value(row, 'started')
+    started = event_type(row, 'started')
+    core.require('asc_object', is_object=isinstance(value, dict))
+    # original_matches(canonical, value) with value = canonical['full_value']: its binding conjunct
+    # compares the value with itself and cannot refuse, so it has no row.
+    core.retained_check(canonical, None, 'asc', binding=False)
+    core.require('asc_envelope', envelope_valid=core.historical_envelope_matches(value))
+    producer = set(reference) - core.STORAGE_FIELDS - {'payload', 'replay_policy'}
+    core.require('asc_payload_schema', payload_valid=core.validator('Plans/memory_maintenance_event_payloads.schema.json',
+                                                                    started.replace('.', '_')).is_valid(value['payload']))
+    core.require('asc_joins', producer_matches=core.retained_binding({k: value[k] for k in producer}, {k: reference[k] for k in producer}),
+                 replay_policy=value['replay_policy'], reference_replay_policy=reference['replay_policy'],
+                 payload_matches=core.retained_binding(value['payload'], reference['payload']))
 
-core.start_custody_gate = start_custody_gate
+core.canonical_start_checks = canonical_start_checks
 
 
 def cutoff_gate(state):
     row = state['operation']; job = COMMANDS[row['command_id']]
     record = state.get('cutoff_authorities', {}).get(row['cutoff_ref'])
-    guard('cutoffs_unavailable', record is not None)
-    # A removed availability guard models an unchecked missing-policy dispatch; no real policy is invented.
-    if record is None:
-        return
-    shape = isinstance(record, dict) and set(record) == {'job','scope_kind','project_id','cutoff_ref','selection_contract_sha256','approval_decision_ref'}
-    guard('cutoff_record', shape)
-    if not shape:
-        return
-    guard('cutoff_reference', record['cutoff_ref'] == row['cutoff_ref'])
-    guard('cutoff_unique', sum(isinstance(value, dict) and value.get('cutoff_ref') == row['cutoff_ref']
-                               for value in state['cutoff_authorities'].values()) <= 1)
-    guard('cutoff_scope', record['job'] == job and record['scope_kind'] == 'project'
-          and record['project_id'] == row['project_id'])
-    guard('cutoff_commitment', core.digest(record) == row['cutoff_sha256'])
+    core.require('cg_present', record_present=record is not None)
+    core.require('cg_record', shape_valid=isinstance(record, dict) and set(record) == {
+        'job', 'scope_kind', 'project_id', 'cutoff_ref', 'selection_contract_sha256', 'approval_decision_ref'})
+    core.require('cg_body', record_cutoff_ref=record['cutoff_ref'], cutoff_ref=row['cutoff_ref'],
+                 naming_count=sum(isinstance(value, dict) and value.get('cutoff_ref') == row['cutoff_ref']
+                                  for value in state['cutoff_authorities'].values()),
+                 job=record['job'], expected_job=job, scope_kind=record['scope_kind'],
+                 project_id=record['project_id'], expected_project_id=row['project_id'])
+    core.require('cg_commitment', cutoff_sha256=row['cutoff_sha256'], record_sha256=core.digest(record))
 
 
 def panel(state):
@@ -129,23 +98,26 @@ def memory_fields(memories):
     return all('evidence_refs' in memory and 'version_ref' in memory for memory in memories.values())
 
 
+def missing_memory_fields(memories):
+    return sorted(k for k, memory in memories.items() if not ('evidence_refs' in memory and 'version_ref' in memory))
+
+
 def archive_candidate(before, job):
-    guard('memory_flags', memory_flags(before.get('memories')))
-    guard('memory_fields', memory_fields(before['memories']))
+    core.require('ac_flags', flags_valid=memory_flags(before.get('memories')))
+    core.require('ac_fields', missing_fields=missing_memory_fields(before['memories']))
     after = deepcopy(before)
     selected = before.get('selected_ids')
     # Exact type before any value test; an array ID would otherwise raise inside the set below.
-    guard('selection_ids_type', POLICY.string_list(selected))
-    guard('selection_unique', selected == sorted(set(selected)))
-    guard('selection_exists', all(k in before['memories'] for k in selected))
-    guard('selection_pinned', all(before['memories'][k]['pinned'] is not True for k in selected if k in before['memories']))
-    guard('selection_kind', job != 'monthly_summary'
-          or all(before['memories'][k].get('kind') == 'Note' for k in selected if k in before['memories']))
+    core.require('ac_ids_type', ids_valid=POLICY.string_list(selected))
+    memories = before['memories']
+    present = [k for k in selected if k in memories]
     # Exact type before the summary union: 1 and True collapse there, and a string would iterate as characters.
-    guard('selection_evidence_type', all(POLICY.string_list(before['memories'][k]['evidence_refs'])
-                                         for k in selected if k in before['memories']))
-    for name, valid in POLICY.selection_checks(core, before, job):
-        guard(name, valid)
+    core.require('ac_selection', selected_ids=selected, sorted_unique_ids=sorted(set(selected)),
+                 missing_ids=[k for k in selected if k not in memories],
+                 pinned_ids=[k for k in present if memories[k]['pinned'] is True],
+                 non_note_ids=[k for k in present if memories[k].get('kind') != 'Note'] if job == 'monthly_summary' else [],
+                 bad_evidence_ids=[k for k in present if not POLICY.string_list(memories[k]['evidence_refs'])])
+    POLICY.selection_require(core, before, job)
     for key in selected:
         if key in after['memories']:
             after['memories'][key]['archived'] = True
@@ -156,49 +128,65 @@ def archive_candidate(before, job):
     return after
 
 
-def archive_checks(before, after, job):
-    flags = memory_flags(before['memories']) and memory_flags(after.get('memories'))
-    yield 'memory_flags', flags
-    if not flags:
+def archive_observations(before, after, job):
+    """Postconditions as (phase, facts), lazily and in the original order."""
+    before_flags = memory_flags(before['memories'])
+    yield 'av_before_flags', {'before_valid': before_flags}
+    if not before_flags:
+        return
+    after_flags = memory_flags(after.get('memories'))
+    yield 'av_after_flags', {'after_valid': after_flags}
+    if not after_flags:
         return
     # A malformed output owns this one refusal; the predicates below read these fields by name.
-    fields = memory_fields(after['memories'])
-    yield 'memory_fields', fields
-    if not fields:
+    missing = missing_memory_fields(after['memories'])
+    yield 'av_fields', {'missing_fields': missing}
+    if missing:
         return
     # The job writes only memories and the summary; every other snapshot field stays exact.
     state = ('memories', 'summary')
-    yield 'snapshot_preserved', POLICY.same({k: v for k, v in after.items() if k not in state},
-                                            {k: v for k, v in before.items() if k not in state})
+    yield 'av_snapshot', {'snapshot_same': POLICY.same({k: v for k, v in after.items() if k not in state},
+                                                       {k: v for k, v in before.items() if k not in state})}
     source = before['memories']; result = after['memories']; selected = set(before['selected_ids'])
-    yield 'originals_preserved', set(source) <= set(result)
     # Each check owns a distinct defect; absent originals are checked above, not misreported as lost refs.
     common = set(source) & set(result)
-    yield 'evidence_preserved', all(POLICY.same(source[k]['evidence_refs'], result[k]['evidence_refs']) for k in common)
-    yield 'versions_preserved', all(POLICY.same(source[k]['version_ref'], result[k]['version_ref']) for k in common)
-    # Together with evidence/versions above this compares each selected original in full except archived.
-    # Keep those independently tested fields out of this predicate, avoiding an unnamed duplicate guard.
-    yield 'selected_fields_preserved', all(POLICY.same(
-        {field: value for field, value in source[k].items() if field not in ('archived', 'evidence_refs', 'version_ref')},
-        {field: value for field, value in result[k].items() if field not in ('archived', 'evidence_refs', 'version_ref')})
-        for k in common & selected if source[k]['pinned'] is not True)
-    yield 'pins_preserved', all(POLICY.same(source[k], result[k]) for k in common if source[k]['pinned'] is True)
-    yield 'selected_archived', all(result[k]['archived'] for k in common & selected if source[k]['pinned'] is not True)
-    yield 'unselected_preserved', all(POLICY.same(source[k], result[k]) for k in common - selected if source[k]['pinned'] is not True)
-    yield 'no_extra_memories', set(result) <= set(source)
+    unpinned_selected = sorted(k for k in common & selected if source[k]['pinned'] is not True)
+    yield 'av_preserve', {
+        'lost_ids': sorted(set(source) - set(result)),
+        'evidence_changed': sorted(k for k in common if not POLICY.same(source[k]['evidence_refs'], result[k]['evidence_refs'])),
+        'versions_changed': sorted(k for k in common if not POLICY.same(source[k]['version_ref'], result[k]['version_ref'])),
+        # Together with evidence/versions above this compares each selected original in full except archived.
+        # Keep those independently tested fields out of this predicate, avoiding an unnamed duplicate guard.
+        'selected_changed': [k for k in unpinned_selected if not POLICY.same(
+            {field: value for field, value in source[k].items() if field not in ('archived', 'evidence_refs', 'version_ref')},
+            {field: value for field, value in result[k].items() if field not in ('archived', 'evidence_refs', 'version_ref')})],
+        'pins_changed': sorted(k for k in common if source[k]['pinned'] is True and not POLICY.same(source[k], result[k]))}
+    yield 'av_disposition', {
+        'unarchived_ids': [k for k in unpinned_selected if not result[k]['archived']],
+        'unselected_changed': sorted(k for k in common - selected
+                                     if source[k]['pinned'] is not True and not POLICY.same(source[k], result[k])),
+        'extra_ids': sorted(set(result) - set(source))}
     if job == 'monthly_summary':
         expected = {'original_ids': before['selected_ids'],
                     'evidence_refs': sorted({r for k in selected for r in source[k]['evidence_refs']})}
-        yield 'summary_provenance', POLICY.same(after.get('summary'), expected)
+        yield 'av_summary', {'summary_matches': POLICY.same(after.get('summary'), expected)}
     else:
-        yield 'no_prune_summary', (('summary' in after) == ('summary' in before)
-                                   and POLICY.same(after.get('summary'), before.get('summary')))
+        yield 'av_no_summary', {'present_after': 'summary' in after, 'present_before': 'summary' in before,
+                                'summary_same': POLICY.same(after.get('summary'), before.get('summary'))}
 
 
 def archive_validate(before, after, job):
-    for name, valid in archive_checks(before, after, job):
-        guard(name, valid)
+    for phase, facts in archive_observations(before, after, job):
+        core.require(phase, **facts)
     return True
+
+
+def archive_errors(before, after, job):
+    """Lane oracle: every failing postcondition site, as the former generator listed them."""
+    errors = []
+    for phase, facts in archive_observations(before, after, job):
+        errors += POLICY.phase_codes(core, phase, facts)
+    return errors
 
 
 def transition(before, action):
@@ -207,16 +195,11 @@ def transition(before, action):
     candidate = None
     if action['op'] == 'settle' and action.get('status') == 'succeeded':
         job = COMMANDS[before['operation']['command_id']]
-        guard('selection_scope', before['archive']['project_id'] == before['operation']['project_id'])
+        core.require('at_scope', project_id=before['archive']['project_id'],
+                     operation_project_id=before['operation']['project_id'])
         candidate = archive_candidate(before['archive'], job)
         archive_validate(before['archive'], candidate, job)
-    global _REQUESTED_EVENT
-    requested = _REQUESTED_EVENT
-    try:
-        _REQUESTED_EVENT = action.get('event_type')
-        after, output = _original_transition(before, action)
-    finally:
-        _REQUESTED_EVENT = requested
+    after, output = _original_transition(before, action)
     if candidate is not None:
         after['archive'] = candidate
     if action['op'] != 'crash':
@@ -228,36 +211,37 @@ def append_current(before, value, event):
     """The adopted boundary with invariant-specific checks (no blanket equality hiding a schema defect)."""
     cutoff_gate(before)
     state = deepcopy(before); row = state['operation']; suffix = event.rsplit('.', 1)[1]
-    core.require(core.storage_uint64_types(value), 'invalid_storage_uint64')
-    guard('commitment_numbers', core.numbers_supported({k: v for k, v in value.items()
-                                                      if k not in core.STORAGE_FIELDS}), 'invalid_number')
-    guard('envelope_schema', core.envelope_validator().is_valid(value))
-    if value['replay_policy'] == 'projector_replay_only' and _REMOVED != 'replay_policy':
-        raise core.Refusal('replay_only_not_appendable')
-    guard('replay_policy', value['replay_policy'] == 'dedupe_by_idempotency_key')
-    guard('admission', core.flag(state['admitted'], True))
-    guard('permission_or_withdrawal', core.flag(state['permission'], True) and core.flag(state['withdrawn'], False))
-    guard('operation_valid', core.valid_operation(row, core.operation_name(event), state['original'] is not None))
+    core.require('ap_uint64', nonint_storage_fields=core.storage_uint64_errors(value))
+    core.require('ap_numbers', number_error=core.number_error({k: v for k, v in value.items()
+                                                               if k not in core.STORAGE_FIELDS}))
+    core.require('aa_envelope', envelope_valid=core.envelope_validator().is_valid(value))
+    core.require('aa_gate', replay_policy=value['replay_policy'], admitted=state['admitted'],
+                 permission=state['permission'], withdrawn=state['withdrawn'])
+    core.operation_check(row, core.operation_name(event), state['original'] is not None, prefix='aop', target_prefix=None)
     expected = core.canonical_value(row, suffix)
     producer_fields = set(expected) - core.STORAGE_FIELDS - {'payload', 'replay_policy'}
-    guard('semantic_binding', all(value[k] == expected[k] for k in producer_fields), 'producer_join')
-    guard('payload_schema', core.validator('Plans/memory_maintenance_event_payloads.schema.json',
-                                          event.replace('.', '_')).is_valid(value['payload']))
-    guard('semantic_binding', all(value['payload'].get(k) == v for k, v in expected['payload'].items()), 'payload_join')
+    core.require('aa_producer', mismatched_fields=sorted(k for k in producer_fields if not value[k] == expected[k]))
+    core.require('aa_payload', payload_valid=core.validator('Plans/memory_maintenance_event_payloads.schema.json',
+                                                            event.replace('.', '_')).is_valid(value['payload']))
+    core.require('aa_payload_join', mismatched_fields=sorted(k for k, v in expected['payload'].items()
+                                                             if not value['payload'].get(k) == v))
     # The closed schema's bounded fields prove its entire MessagePack payload is below 16 KiB.
     # No unreachable second inline-cap guard obscures schema-negative isolation.
-    guard('partition', state['dedupe_key'] == [core.scope_partition(row['project_id']), event, value['idempotency_key']])
+    core.require('aa_partition', dedupe_key=state['dedupe_key'],
+                 expected_dedupe_key=[core.scope_partition(row['project_id']), event, value['idempotency_key']])
     core.start_custody_gate(state, first_start=suffix == 'started', writer_event=event)
     if state['original'] is not None:
         original = state['original']['full_value']
         if suffix == 'completed':
-            guard('original_value', core.original_matches(state['original'], original)
-                  and core.historical_envelope_matches(original)
-                  and core.retained_binding({k: original[k] for k in set(expected) - core.STORAGE_FIELDS},
-                                           {k: value[k] for k in set(expected) - core.STORAGE_FIELDS}))
+            # original_matches(state['original'], original): its binding conjunct is the value itself (no row).
+            core.retained_check(state['original'], None, 'aao', binding=False)
+            core.require('aao_envelope', envelope_valid=core.historical_envelope_matches(original))
+            core.require('aao_projection', projection_matches=core.retained_binding(
+                {k: original[k] for k in set(expected) - core.STORAGE_FIELDS},
+                {k: value[k] for k in set(expected) - core.STORAGE_FIELDS}))
         output = deepcopy(original)
     else:
-        guard('phase', row['phase'] == ('accepted' if suffix == 'started' else 'effect_committed'))
+        core.require('aa_phase', phase=row['phase'], required_phase='accepted' if suffix == 'started' else 'effect_committed')
         state['original'] = core.retained(value); state['append_count'] += 1
         output = deepcopy(value)
     core.start_custody_gate(before, first_start=suffix == 'started', writer_event=event)
@@ -274,83 +258,9 @@ def accept(payload, contract, context):
 
 core.transition, core.append_current, core.accept = transition, append_current, accept
 
-# Logical guard groups span redundant checks of the same invariant. All original sites are restored in finally.
-REASONS = {'invalid_operation': 'operation_valid', 'invalid_operation_after': 'operation_valid',
-           'start_receipt_missing': 'start_custody', 'not_admitted': 'admission',
-           'permission_or_withdrawal': 'permission_or_withdrawal',
-           'replay_only_not_appendable': 'replay_policy', 'replay_policy_mismatch': 'replay_policy',
-           'envelope_join': 'semantic_binding', 'idempotency_conflict': 'semantic_binding',
-           'invalid_payload': 'payload_schema', 'invalid_event_record': 'envelope_schema',
-           'inline_payload_too_large': 'inline_cap', 'scope_partition_mismatch': 'partition',
-           'original_value_changed': 'original_value', 'original_missing': 'original_custody', 'request_changed': 'request',
-           'operation_cas_conflict': 'operation_cas', 'wrong_phase': 'phase',
-           'terminal_receipt_missing': 'terminal_custody', 'source_changed': 'source',
-           'repeated_effect': 'effect_once', 'committed_effect_cannot_fail': 'effect_once',
-           'outcome_invalid': 'outcome', 'unknown_action': 'action', 'unknown_event': 'history_event'}
+# Deliberately no live cutoff check in history; retained bytes valid when written do not depend on today's policy.
+read_history = core.read_history
 
-def _require(test, reason):
-    name = REASONS.get(reason, reason)
-    if reason == 'original_missing' and (_REQUESTED_EVENT or '').endswith('.started'):
-        name = 'start_custody'
-    if name != _REMOVED:
-        _original_require(test, reason)
-
-core.require = _require
-
-_ISOLATION = None
-
-
-def guard_isolation():
-    """Load the sibling audit by absolute path, including when this checker is imported by a reviewer."""
-    global _ISOLATION
-    if _ISOLATION is None:
-        spec = importlib.util.spec_from_file_location('_dmem_guard_isolation', ROOT / 'scripts/pm_memory_guard_isolation.py')
-        _ISOLATION = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(_ISOLATION)
-    return _ISOLATION
-
-
-@contextmanager
-def removed(name):
-    """Audit-only removal of one logical guard, restored even when a probe fails."""
-    global _REMOVED
-    if name == 'semantic_binding':
-        custody_mutant = guard_isolation().custody_mutant
-        saved = _REMOVED
-        try:
-            _REMOVED = name
-            with custody_mutant(core, 'custody_binding', archive=True):
-                yield
-        finally:
-            _REMOVED = saved
-        return
-    if name.startswith('custody_'):
-        custody_mutant = guard_isolation().custody_mutant
-        with custody_mutant(core, name, archive=True):
-            yield
-        return
-    saved = _REMOVED
-    try:
-        _REMOVED = name
-        yield
-    finally:
-        _REMOVED = saved
-
-
-_core_read_history = core.read_history
-
-def read_history(state, event):
-    # Deliberately no live cutoff check; retained bytes valid when written do not depend on today's policy.
-    global _REQUESTED_EVENT
-    requested = _REQUESTED_EVENT
-    try:
-        _REQUESTED_EVENT = event
-        return _core_read_history(state, event)
-    finally:
-        _REQUESTED_EVENT = requested
-
-
-core.read_history = read_history
 
 def probe(case, fixtures, contracts):
     """The actual model entry points, not a parallel classifier. Negative mutations are fixture-declared."""
@@ -372,7 +282,9 @@ def probe(case, fixtures, contracts):
             ctx = {'event_type':case['event_type'], 'states':family['states'], 'writer_states':family['writer_states']}
             result = core.matrix_call(adopted, ctx, case['path'], case.get('matrix_edits', []), contracts)
             if result[0] == 'refused':
-                raise core.Refusal(result[1] if result[1] is not False else case['refusal'])
+                # The reduced boundary returns False; the harness reports the case's labelled refusal for it.
+                assert context == before, (case['name'], 'refusal mutated its inputs')
+                return {'accepted': False, 'refusal': result[1] if result[1] is not False else case['refusal']}
         elif kind == 'writer':
             result = append_current(state, value, case['event_type'])
         elif kind == 'phase':
@@ -382,7 +294,8 @@ def probe(case, fixtures, contracts):
         elif kind == 'panel':
             result = panel(state)
             if not result['available']:
-                raise core.Refusal('cutoffs_unavailable')
+                assert context == before, (case['name'], 'refusal mutated its inputs')
+                return {'accepted': False, 'refusal': 'cutoffs_unavailable'}
         elif kind == 'archive_candidate':
             result = archive_candidate(context['state']['archive'], COMMANDS[state['operation']['command_id']])
         elif kind == 'archive':
@@ -390,17 +303,21 @@ def probe(case, fixtures, contracts):
         elif kind == 'history':
             result = read_history(state, case['read'])
         elif kind == 'checkpoint':
-            result = core.checkpoint_identity_matches(case['checkpoint'], state['operation'], case['value'], case['event_type'])
-            guard('checkpoint_join', result)
+            # Boolean SP-278 boundary (its rows are recorded); the harness labels a refusal checkpoint_join.
+            if not core.checkpoint_identity_matches(case['checkpoint'], state['operation'], case['value'], case['event_type']):
+                assert context == before, (case['name'], 'refusal mutated its inputs')
+                return {'accepted': False, 'refusal': 'checkpoint_join'}
         elif kind == 'schema':
-            result = (core.envelope_validator() if case.get('definition') is None else
-                      core.validator(case['schema'], case['definition'])).is_valid(case['value'])
-            guard(case['guard'], result)
+            # Schema verdict oracle (no checker boundary): the harness labels a refusal with its guard name.
+            if not (core.envelope_validator() if case.get('definition') is None else
+                    core.validator(case['schema'], case['definition'])).is_valid(case['value']):
+                return {'accepted': False, 'refusal': case['guard']}
         elif kind == 'references':
             docs = deepcopy(core.checked_documents()); doc = docs[case['schema']]
             doc['$defs'][case['definition']]['$defs'] = {'dormant': {'$ref': '#/$defs/not_present'}}
-            guard('references_resolve', not core.unresolved_references(docs))
-            result = True
+            # Standing check 9 oracle over a mutated document: the harness labels an unresolved reference.
+            if core.unresolved_references(docs):
+                return {'accepted': False, 'refusal': 'references_resolve'}
         else:
             raise AssertionError(kind)
     except core.Refusal as error:
@@ -434,20 +351,9 @@ def run_guards(fixtures, contracts):
             assert probe(control, fixtures, contracts)['accepted'], (case['name'], 'invalid positive control')
         result = probe(case, fixtures, contracts)
         assert result == {'accepted': False, 'refusal': case['refusal']}, (case['name'], result)
-    table = []
-    for name in sorted({case['guard'] for case in cases}):
-        own = [c for c in cases if c['guard'] == name]
-        others = [c for c in cases if c['guard'] != name]
-        with removed(name):
-            flipped = [c['name'] for c in own if probe(c, fixtures, contracts)['accepted']]
-            stayed = [c['name'] for c in others if probe(c, fixtures, contracts)
-                      == {'accepted': False, 'refusal': c['refusal']}]
-        assert len(flipped) == len(own), (name, 'masked negative', set(c['name'] for c in own)-set(flipped))
-        assert len(stayed) == len(others), (name, 'unrelated negative changed', set(c['name'] for c in others)-set(stayed))
-        table.append({'guard': name, 'negatives_that_flip': flipped, 'other_negatives_stay_rejected': len(stayed),
-                      'other_negatives': [c['name'] for c in others], 'restored': True})
-    assert _REMOVED is None
-    return table
+    # Check 11 is the shared guard tool over the phase tables (scripts/pm-memory-guard-tables.py);
+    # the former lane-local removal loop is retired.
+    return {'cases': len(cases), 'controls_accepted': len(cases), 'negatives_refused_exactly': len(cases)}
 
 
 def run_adopted_paths(fixtures, contracts):
@@ -510,6 +416,7 @@ def main():
     fixtures = core.load('Plans/memory_archive_event_fixtures.json')
     families = {f['event_type']: f for f in contracts['families']}
     assert len(families) == 4 and {f['event_type'] for f in fixtures['families']} == set(families)
+    assert not core.table_order_errors(), ('table order', core.table_order_errors())
     registered = {x['event_type'] for x in core.load('Plans/event_family_registry.json')['families']}
     assert not set(families) & registered
     if args.family:
@@ -546,10 +453,11 @@ def main():
     recipes = core.write_recipes().run(core, contexts, __import__('sys').modules[__name__])
     metadata = core.storage_metadata().run(core, contexts)
     policy = POLICY.run(core, families, __import__('sys').modules[__name__])
+    witnesses = core.guard_witnesses().archive(__import__('sys').modules[__name__], fixtures, families)
     print(json.dumps({'status':'pass','families':paths,'guard_cases':len(fixtures['guard_cases']),
-                      'guard_removal_table':guards,'canonical_history_cases':canonical_history,
+                      'guard_case_oracle':guards,'canonical_history_cases':canonical_history,
                       'numeric_writer_cases':numeric_writers,'boundary_domains':domains,'write_recipes':recipes,
-                      'storage_uint64':metadata, 'card6_policy':policy,
+                      'storage_uint64':metadata, 'card6_policy':policy, 'guard_table_witnesses':witnesses,
                       'payload_messagepack_upper_bounds':bounds,'native':'NOT_RUN','admission':'ABSENT',
                       'approved_cutoffs':{'monthly_summary':'DL-446: idle >=90 days AND score <0.10',
                                           'prune_archive':'DL-447: idle >=180 days AND score <0.05'},

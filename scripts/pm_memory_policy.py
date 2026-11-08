@@ -38,8 +38,8 @@ def instant(core, value):
     Fraction conversion retain every fractional digit without context rounding or
     an integer-string conversion limit. No timestamp precision cap is introduced.
     """
-    core.require(type(value) is str and core.enforced_formats().conforms(value, 'date-time'),
-                 'selection_timestamp')
+    core.require('pt_instant', value_type=type(value).__name__,
+                 conforms=core.enforced_formats().conforms(value, 'date-time') if type(value) is str else None)
     fraction, zone = re.fullmatch(r'(?:\.([0-9]+))?([Zz]|[+-][0-9]{2}:[0-9]{2})', value[19:]).groups()
     whole = datetime.fromisoformat(value[:19].replace('t', 'T') + ('+00:00' if zone in ('Z', 'z') else zone))
     offset = whole.utcoffset()
@@ -48,31 +48,52 @@ def instant(core, value):
     return seconds + Fraction(Decimal('0.' + fraction)) if fraction else Fraction(seconds)
 
 
-def selection_checks(core, snapshot, job):
+def selection_observations(core, snapshot, job):
     """Only selected, already resolved originals; no count trigger or cross-scope pool.
 
     Kind/pin/existence/uniqueness checks stay at the existing archive boundary. Pins are
     excluded here before reading a score. An absent edit/access independently falls back
     to creation, then the later instant wins. Fractional days are compared as durations.
+    Yields (phase, facts) lazily in the original order; instants are parsed only when reached.
     """
     days, score, _ = CUTOFFS[job]
-    selected = [snapshot['memories'][key] for key in snapshot['selected_ids']
-                if key in snapshot['memories'] and snapshot['memories'][key]['pinned'] is not True]
-    yield 'selection_scope', (type(snapshot['project_id']) is str and bool(snapshot['project_id'])
-                              and all(m.get('project_id') == snapshot['project_id'] for m in selected))
+    keys = [key for key in snapshot['selected_ids']
+            if key in snapshot['memories'] and snapshot['memories'][key]['pinned'] is not True]
+    selected = [snapshot['memories'][key] for key in keys]
+    project = snapshot['project_id']
+    yield 'ps_scope', {'project_type': type(project).__name__,
+                       'project_empty': (not project) if type(project) is str else None,
+                       'foreign_ids': [k for k, m in zip(keys, selected) if not m.get('project_id') == project]}
     # Exact flag type belongs to archive.memory_flags; this predicate owns active vs archived.
-    yield 'selection_active', all(not m['archived'] for m in selected if type(m['archived']) is bool)
+    yield 'ps_active', {'archived_ids': [k for k, m in zip(keys, selected) if type(m['archived']) is bool and m['archived']]}
     captured = instant(core, snapshot['captured_at'])
     starts = [max(instant(core, m.get('created_at') if m.get('updated_at') is None else m['updated_at']),
                   instant(core, m.get('created_at') if m.get('last_access_at') is None else m['last_access_at']))
               for m in selected]
-    yield 'selection_age', all(captured - start >= days * 86400 for start in starts)
+    yield 'ps_age', {'young_ids': [k for k, start in zip(keys, starts) if not captured - start >= days * 86400]}
     values = [m.get('usefulness_score') for m in selected]
-    valid = all(type(v) in (int, float, Decimal) and
-                (v.is_finite() if type(v) is Decimal else math.isfinite(v) if type(v) is float else True)
-                for v in values)
-    yield 'selection_score_type', valid
-    yield 'selection_score', all(v < score for v in values) if valid else True
+    bad = [k for k, v in zip(keys, values)
+           if not (type(v) in (int, float, Decimal) and
+                   (v.is_finite() if type(v) is Decimal else math.isfinite(v) if type(v) is float else True))]
+    yield 'ps_score', {'bad_type_ids': bad, 'high_ids': [] if bad else [k for k, v in zip(keys, values) if not v < score]}
+
+
+def selection_require(core, snapshot, job):
+    for phase, facts in selection_observations(core, snapshot, job):
+        core.require(phase, **facts)
+
+
+def phase_codes(core, phase, facts):
+    """The distinct refusal codes of one phase's failing rows (one former check site), in row order."""
+    return list(dict.fromkeys(code for _, code in core.table_failures(phase, facts)))
+
+
+def selection_errors(core, snapshot, job):
+    """Lane oracle: every failing selection site, as the former generator listed them."""
+    errors = []
+    for phase, facts in selection_observations(core, snapshot, job):
+        errors += phase_codes(core, phase, facts)
+    return errors
 
 
 def dedup_candidate(core, before):
@@ -81,31 +102,33 @@ def dedup_candidate(core, before):
     Selection always uses the oldest original then stable note ID.
     """
     memories = before.get('memories'); ids = before.get('eligible_ids')
-    core.require(type(memories) is dict and type(before.get('merge_records')) is list
-                 and all(type(m) is dict and 'evidence_refs' in m and 'versions' in m for m in memories.values()),
-                 'dedup_input_shape')
+    members = memories if type(memories) is dict else {}
+    core.require('dc_input', memories_type=type(memories).__name__, merge_records_type=type(before.get('merge_records')).__name__,
+                 nonobject_ids=[k for k, m in members.items() if type(m) is not dict],
+                 no_evidence_ids=[k for k, m in members.items() if type(m) is dict and 'evidence_refs' not in m],
+                 no_versions_ids=[k for k, m in members.items() if type(m) is dict and 'versions' not in m])
     # Exact type before any value test: a string would otherwise read as a group of characters.
-    core.require(type(ids) is list, 'dedup_eligible_group')
-    core.require(len(ids) >= 2, 'dedup_eligible_group')
+    core.require('dc_group_type', ids_type=type(ids).__name__)
+    core.require('dc_group_min', count=len(ids))
     # Object keys are strings, so the type test keeps a wrong-type ID out of the lookup and the set below.
-    core.require(all(type(k) is str and k in memories for k in ids), 'dedup_eligible_group')
-    core.require(len(ids) == len(set(ids)), 'dedup_eligible_group')
+    core.require('dc_group_exists', bad_ids=[k for k in ids if not (type(k) is str and k in memories)])
+    core.require('dc_group_unique', count=len(ids), distinct_count=len(set(ids)))
     # Work on resolved originals after validating the complete requested group.
     # The caller's eligible_ids remain untouched; existence is owned by the guard above.
     ids = [key for key in ids if key in memories]
     group = [memories[k] for k in ids]
-    core.require(all(type(m.get('pinned')) is bool and type(m.get('archived')) is bool
-                     for m in memories.values()), 'dedup_flags')
+    dedup_flags(core, memories)
     # A pin cannot enter this group, even if its hash matches. No pin is scored or changed.
-    core.require(all(not m.get('pinned') and not m.get('archived') for m in group
-                     if type(m.get('pinned')) is bool and type(m.get('archived')) is bool), 'dedup_protected')
-    core.require(type(before.get('project_id')) is str and bool(before['project_id'])
-                 and all(m.get('project_id') == before['project_id'] for m in group), 'dedup_scope')
+    core.require('dc_protected', pinned_ids=[k for k, m in zip(ids, group) if m.get('pinned')],
+                 archived_ids=[k for k, m in zip(ids, group) if m.get('archived')])
+    project = before.get('project_id')
+    core.require('dc_scope', project_type=type(project).__name__, project_empty=(not project) if type(project) is str else None,
+                 foreign_ids=[k for k, m in zip(ids, group) if not m.get('project_id') == project])
     # Exact type before the set test: 1, True and 1.0 hash alike, and would read as one identical group.
-    core.require(all(type(m.get('embed_text_hash')) is str for m in group), 'dedup_identical')
-    core.require(len({m['embed_text_hash'] for m in group}) == 1, 'dedup_identical')
+    core.require('dc_hash_type', bad_hash_ids=[k for k, m in zip(ids, group) if type(m.get('embed_text_hash')) is not str])
+    core.require('dc_hash', distinct_hashes=len({m['embed_text_hash'] for m in group}))
     # Exact type before the union: 1 and True collapse there, and a string would iterate as characters.
-    core.require(all(string_list(m['evidence_refs']) for m in group), 'dedup_evidence_type')
+    core.require('dc_evidence_type', bad_evidence_ids=[k for k, m in zip(ids, group) if not string_list(m['evidence_refs'])])
     oldest = min(ids, key=lambda key: (instant(core, memories[key].get('created_at')), key))
     survivor = oldest
     after = deepcopy(before)
@@ -120,6 +143,11 @@ def dedup_candidate(core, before):
     return after
 
 
+def dedup_flags(core, memories):
+    core.require('dc_flags', bad_pinned_ids=[k for k, m in memories.items() if type(m.get('pinned')) is not bool],
+                 bad_archived_ids=[k for k, m in memories.items() if type(m.get('archived')) is not bool])
+
+
 def dedup_output_shape(after):
     result = after.get('memories'); records = after.get('merge_records')
     return (type(result) is dict
@@ -128,44 +156,50 @@ def dedup_output_shape(after):
             and set(records[-1]) == {'original_ids', 'survivor_id', 'original_evidence_refs'})
 
 
-def dedup_checks(core, before, after):
-    """Independent postconditions; a malformed outcome can violate more than one."""
+def dedup_observations(core, before, after):
+    """Independent postconditions as (phase, facts), lazily and in the original order."""
     source = before['memories']
-    core.require(all(type(m.get('pinned')) is bool and type(m.get('archived')) is bool
-                     for m in source.values()), 'dedup_flags')
+    result = after.get('memories'); records = after.get('merge_records')
+    members = result if type(result) is dict else {}
+    last = records[-1] if type(records) is list and records else None
     # A malformed output owns this one refusal; the predicates below read its fields by name.
-    shape = dedup_output_shape(after)
-    yield 'dedup_output_shape', shape
-    if not shape:
+    yield 'dv_shape', {'memories_type': type(result).__name__,
+                       'nonobject_ids': [k for k, m in members.items() if type(m) is not dict],
+                       'missing_field_ids': [k for k, m in members.items()
+                                             if type(m) is dict and not {'evidence_refs', 'versions', 'archived'} <= set(m)],
+                       'records_type': type(records).__name__,
+                       'records_count': len(records) if type(records) is list else None,
+                       'last_type': type(last).__name__ if type(records) is list and records else None,
+                       'last_keys': sorted(last) if type(last) is dict else None}
+    if not dedup_output_shape(after):
         return
     result = after['memories']
     # The job writes only memories and merge_records; every other snapshot field stays exact.
     state = ('memories', 'merge_records')
-    yield 'dedup_snapshot', same({k: v for k, v in after.items() if k not in state},
-                                 {k: v for k, v in before.items() if k not in state})
+    yield 'dv_snapshot', {'snapshot_same': same({k: v for k, v in after.items() if k not in state},
+                                                {k: v for k, v in before.items() if k not in state})}
     # Output flags compare to these exact Booleans through same(), or `is` for
     # the selected archived flag. This enforces their types without coercion.
     ids = before['eligible_ids']; common = set(source) & set(result)
     record = after['merge_records'][-1]; survivor = record['survivor_id']
     oldest = min(ids, key=lambda key: (instant(core, source[key]['created_at']), key))
-    yield 'dedup_survivor', survivor == oldest
-    yield 'dedup_originals', set(result) == set(source)
-    yield 'dedup_lineage', (same(after['merge_records'][:-1], before['merge_records'])
-                            and same(record['original_ids'], sorted(ids))
-                            and same(record['original_evidence_refs'], {k: source[k]['evidence_refs'] for k in sorted(ids)}))
-    yield 'dedup_evidence', all(same(result[k]['evidence_refs'],
-                                (sorted({r for i in ids for r in source[i]['evidence_refs']})
-                                 if k == survivor else source[k]['evidence_refs'])) for k in common)
-    yield 'dedup_versions', all(same(result[k]['versions'], source[k]['versions']) for k in common)
-    yield 'dedup_disposition', all(result[k]['archived'] is (k != survivor) for k in set(ids) & common)
-    yield 'dedup_links', (all(result[k].get('survivor_id') == survivor for k in set(ids) & common - {survivor})
-                          and same({f: v for f, v in result.get(survivor, {}).items() if f == 'survivor_id'},
-                                   {f: v for f, v in source.get(survivor, {}).items() if f == 'survivor_id'}))
-    yield 'dedup_original_fields', all(same(
+    yield 'dv_survivor', {'survivor_matches': survivor == oldest}
+    yield 'dv_originals', {'same_ids': set(result) == set(source)}
+    yield 'dv_lineage', {'prior_same': same(after['merge_records'][:-1], before['merge_records']),
+                         'ids_same': same(record['original_ids'], sorted(ids)),
+                         'evidence_same': same(record['original_evidence_refs'], {k: source[k]['evidence_refs'] for k in sorted(ids)})}
+    yield 'dv_evidence', {'changed_ids': sorted(k for k in common if not same(
+        result[k]['evidence_refs'], (sorted({r for i in ids for r in source[i]['evidence_refs']})
+                                     if k == survivor else source[k]['evidence_refs'])))}
+    yield 'dv_versions', {'changed_ids': sorted(k for k in common if not same(result[k]['versions'], source[k]['versions']))}
+    yield 'dv_disposition', {'wrong_ids': sorted(k for k in set(ids) & common if result[k]['archived'] is not (k != survivor))}
+    yield 'dv_links', {'unlinked_ids': sorted(k for k in set(ids) & common - {survivor} if not result[k].get('survivor_id') == survivor),
+                       'survivor_link_same': same({f: v for f, v in result.get(survivor, {}).items() if f == 'survivor_id'},
+                                                  {f: v for f, v in source.get(survivor, {}).items() if f == 'survivor_id'})}
+    yield 'dv_fields', {'changed_ids': sorted(k for k in set(ids) & common if not same(
         {f: v for f, v in result[k].items() if f not in ('evidence_refs', 'versions', 'archived', 'survivor_id')},
-        {f: v for f, v in source[k].items() if f not in ('evidence_refs', 'versions', 'archived', 'survivor_id')})
-        for k in set(ids) & common)
-    yield 'dedup_unselected', all(same(result[k], source[k]) for k in common - set(ids))
+        {f: v for f, v in source[k].items() if f not in ('evidence_refs', 'versions', 'archived', 'survivor_id')}))}
+    yield 'dv_unselected', {'changed_ids': sorted(k for k in common - set(ids) if not same(result[k], source[k]))}
 
 
 def typed_edits(value, edits):
@@ -182,9 +216,19 @@ def typed_edits(value, edits):
 
 
 def dedup_validate(core, before, after):
-    for name, valid in dedup_checks(core, before, after):
-        core.require(valid, name)
+    dedup_flags(core, before['memories'])
+    for phase, facts in dedup_observations(core, before, after):
+        core.require(phase, **facts)
     return True
+
+
+def dedup_errors(core, before, after):
+    """Lane oracle: every failing postcondition site, as the former generator listed them."""
+    dedup_flags(core, before['memories'])
+    errors = []
+    for phase, facts in dedup_observations(core, before, after):
+        errors += phase_codes(core, phase, facts)
+    return errors
 
 
 def run(core, families, archive=None):
@@ -212,7 +256,7 @@ def run(core, families, archive=None):
                 else:
                     after = typed_edits(deepcopy(case.get('after', dedup_candidate(core, before))),
                                         case.get('after_edits', []))
-                    errors = [name for name, valid in dedup_checks(core, before, after) if not valid]
+                    errors = dedup_errors(core, before, after)
                     try:
                         dedup_validate(core, before, after)
                     except core.Refusal as error:
@@ -242,13 +286,13 @@ def run(core, families, archive=None):
                                                     for key in before['selected_ids']):
                     errors.append('selection_kind')
                 try:
-                    errors += [name for name, valid in selection_checks(core, before, job) if not valid]
+                    errors += selection_errors(core, before, job)
                 except core.Refusal as error:
                     errors.append(str(error))
                 try:
                     after = archive.archive_candidate(before, job)
                     after = typed_edits(deepcopy(case.get('after', after)), case.get('after_edits', []))
-                    errors += [name for name, valid in archive.archive_checks(before, after, job) if not valid]
+                    errors += archive.archive_errors(before, after, job)
                     archive.archive_validate(before, after, job)
                 except core.Refusal as error:
                     assert str(error) == case.get('refusal'), (case['name'], str(error))
