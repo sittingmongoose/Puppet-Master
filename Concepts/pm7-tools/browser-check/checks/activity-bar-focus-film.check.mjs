@@ -146,7 +146,9 @@ async function rig(t) {
     frames = []; await cdp.send('Page.startScreencast', { format: 'png', everyNthFrame: 1, maxWidth: 1920, maxHeight: 1080 });
     for (let i = 0; i < 60 && !frames.length; i++) await f.waitForTimeout(25);
     const at = Date.now(); await act(); await f.waitForTimeout(1200);
-    await cdp.send('Page.stopScreencast').catch(() => {}); const got = frames; frames = null; return { at, got };
+    /* in frame order: screencast frames can arrive out of it, and a late frame from before the press, read after one from
+       after it, would end the Shift+Tab lead-in early and count as a missing ring (a film showed the ring move in one frame) */
+    await cdp.send('Page.stopScreencast').catch(() => {}); const got = frames.sort((p, q) => p.wall - q.wall); frames = null; return { at, got };
   };
   const boxOf = async sel => { const l = f.locator(sel); return (await l.count()) ? l.first().boundingBox() : null; };
   // the accent as the tile resolves it, in 8-bit sRGB (the canvas converts any CSS colour)
@@ -173,7 +175,8 @@ async function rig(t) {
       if (whole) continue;
       const ms = Math.round(fr.wall - cap.at);
       bad.push({ ms, sides: Object.fromEntries(Object.entries(sd).map(([q, v]) => [q, `${v.share} ${v.median}`])) });
-      if (bad.length <= 4 && crops++ < 24 && t.run?.dir) { const dir = join(t.run.dir, 'ring-frames'); mkdirSync(dir, { recursive: true }); cropPng(im, tile, join(dir, `${look}-${label.replace(/[^a-z0-9]+/gi, '-')}-${ms}ms.png`)); }
+      const span = prev ? { x: Math.min(tile.x, prev.x), y: Math.min(tile.y, prev.y), width: Math.max(tile.x + tile.width, prev.x + prev.width) - Math.min(tile.x, prev.x), height: Math.max(tile.y + tile.height, prev.y + prev.height) - Math.min(tile.y, prev.y) } : tile;
+      if (bad.length <= 4 && crops++ < 24 && t.run?.dir) { const dir = join(t.run.dir, 'ring-frames'); mkdirSync(dir, { recursive: true }); cropPng(im, span, join(dir, `${look}-${label.replace(/[^a-z0-9]+/gi, '-')}-${ms}ms.png`)); }
     }
     t.log(`${look} ${label}: ${seen} frames on pixels${passed ? ` (${passed} leading frames still before the press)` : ''}, ink ${ink.slice(0, 3)}, ${bad.length} without the ring at 3:1 on every side${bad.length ? ' ' + JSON.stringify(bad.slice(0, 6)) : ''}`);
     return { seen: seen - passed, bad };
@@ -181,8 +184,9 @@ async function rig(t) {
   const judge = async (look, label, k, cap) => {
     if (!cap) return;
     const { seen, bad } = await frameFaults(look, label, k, cap);
-    await t.check(`${look} ${label}: in every frame from the press, ${k}'s ring on pixels at 3:1 on every side`, seen >= 5 && bad.length === 0,
-      seen < 5 ? `only ${seen} frames came` : JSON.stringify({ frames: seen, without: bad.length, first: bad.slice(0, 4) }));
+    // at least the frame before the press and one after it (a page with little moving, as in Reduced Motion, sends few)
+    await t.check(`${look} ${label}: in every frame from the press, ${k}'s ring on pixels at 3:1 on every side`, seen >= 2 && bad.length === 0,
+      seen < 2 ? `only ${seen} frames came` : JSON.stringify({ frames: seen, without: bad.length, first: bad.slice(0, 4) }));
   };
   return { f, kb, looks, state, reach, step, film, frameFaults, cdp };
 }
@@ -335,6 +339,7 @@ async function pointerRoutes(t) {
     ];
     for (const r of routes) {
       if (!stall && r.load) continue;
+      if (t.args.route && !r.name.includes(String(t.args.route))) continue;   /* --set route=<part of a route's name> */
       const out = { bad: [], frames: 0, wrong: [] }; let armed = 0; const held0 = await f.evaluate(() => window.__fo96Stall.held);
       for (let i = 0; i < r.reps; i++) {
         await ready(look);
