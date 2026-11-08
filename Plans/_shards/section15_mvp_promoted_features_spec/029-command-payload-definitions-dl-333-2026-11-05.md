@@ -2,9 +2,9 @@
 
 Source: `Plans/Section15_MVP_Promoted_Features_Spec.md`
 
-Source lines: L13363-L15412
+Source lines: L13363-L15413
 
-Source SHA256: `9f113c6e3f3fc2db0ee288f0eca75c6b7d6bdc1e60746289526fafc553ac1c42`
+Source SHA256: `722958a7a7bdc5344e20f49b519b068909d5ef0c12483340b572fb6402d99f12`
 
 ---
 
@@ -1189,8 +1189,8 @@ canonical_text: >-
   row its args, owner request and owner result in pm.command_payload_definitions.v1. The catalog keeps
   ids, labels, events and aliases; the strict schema overlay (UCC-230) keeps the common envelope and the
   closed code sets. Canon leaves the rerun replay reference and same-session flag, the restart/replace
-  policy and hints, the dev start mode and target, and the catalog item_type spellings and version format
-  untyped; each is marked provenance gap and left open for the compile review rather than invented.
+  policy and command-replay hint (Restart session's profile is fixed, so it takes no profile hint), the dev
+  start mode and target, and the catalog item_type spellings and version format untyped; each is marked provenance gap and left open for the compile review rather than invented.
   Shared conventions of the definitions block: terminal row cites are the terminal command table
   (UI_Command_Catalog.md:880-888, whose payload column is history under DL-333 resolution 10) and the kept
   terminal commands table (UCC-201, UI_Command_Catalog.md:18731-18743), which states each terminal
@@ -1544,7 +1544,8 @@ command_payload_definitions:
           gap_note: >-
             Canon names "command replay or shell profile hints" (UI_Command_Catalog.md:888) without a field
             shape. JUDGMENT: command_ref, type ref, optional, for the replay hint; the overlay's command_ref?
-            identity is the candidate name.
+            identity is the candidate name. The hint is never replayed automatically: a restart records the
+            newly resolved environment without automatic command replay (SMPFS-164, :11667-11669).
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
