@@ -21,6 +21,8 @@
 //   step rail, the segments and the chosen option are pixel-identical between main and this build (Reduce Motion, both
 //   surfaces), less the GPU's own noise: the same page loaded twice differs by up to 1 level on Glass Light's frosted
 //   ground, so a pixel counts as changed past 2 levels. --set glassCrops=<dir> writes each pair (main, build).
+// - film (--set film=1, alone, with --record; --set parts=tabs,bar,rail,onb, looks=): every move above, marked, with a
+//   person's click, for frame-by-frame review of the hop, the squash and the snap.
 //   --set looks=friendly-light,...   --set sizes=1920x1080,1024x768,740x900,390x844   --set base=<page>
 import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 import { paintedText } from '../helpers/painted-text.mjs';
@@ -33,6 +35,10 @@ const list = (v, all) => (v ? String(v).split(',').map((s) => s.trim()).filter(B
 const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
 const lum = (c) => c.map((v) => v / 255).map((v) => (v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4)).reduce((a, v, i) => a + v * [0.2126, 0.7152, 0.0722][i], 0);
 const ratio = (a, b) => (Math.max(lum(a), lum(b)) + 0.05) / (Math.min(lum(a), lum(b)) + 0.05);
+const center = (f, sel, text) => f.evaluate(([sel, text]) => {
+	const e = [...document.querySelectorAll(sel)].find((x) => !text || x.textContent.trim().startsWith(text) || x.getAttribute('aria-label')?.startsWith(text));
+	if (!e) return null; const r = e.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2];
+}, [sel, text]);
 const near = (a, b, tol = 10) => a && b && a.every((v, i) => Math.abs(v - b[i]) <= tol);
 
 /* what each look draws: [fill, rim colour or null, rim width, words] for a tab-like chip, a segmented toggle's chip, and
@@ -390,6 +396,72 @@ export const tests = {
 				} finally { await t.page.emulateMedia({ forcedColors: 'none' }); }
 			}
 		}
+	},
+
+	/* --set film=1 with --record: the moves to watch frame by frame, each one marked (the page tabs, the Activity bar, the
+	   rail's tabs, onboarding's step rail and segments), with a person's click (90 ms between press and release) */
+	async 'film'(t) {
+		if (!t.args.film) { t.log('skipped: --set film=1 (record this test alone with --record)'); return; }
+		const looks = list(t.args.looks, ['friendly-light', 'basic-light']);
+		const parts = list(t.args.parts, ['tabs', 'rail', 'onb']);
+		if (t.args.reduce) await t.emulate({ reducedMotion: 'reduce' });
+		let f = await t.app.open({ onboarding: false, sandbox: t.app.sandboxed() });
+		for (const look of looks) {
+			if (parts.includes('tabs') || parts.includes('rail') || parts.includes('bar')) {
+				await t.app.look(look); await t.page.waitForTimeout(1500);
+			}
+			if (parts.includes('tabs')) {
+				for (const name of ['Projects', 'Usage', 'Home', 'Settings', 'Home']) {
+					const c = await center(f, 'nav.page-tabs .page-tab', name); if (!c) { t.log('no tab ' + name); continue; }
+					await t.page.mouse.move(c[0], c[1]); await t.page.waitForTimeout(250);
+					t.mark(`${look} tab ${name}`); await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up();
+					await t.page.waitForTimeout(1400);
+				}
+			}
+			if (parts.includes('bar')) {
+				for (const id of ['panel-search', 'panel-source', 'panel-files', 'panel-testing', 'panel-files']) {
+					const c = await f.evaluate((id) => { const e = document.querySelector('#activityBar .icon[data-target="' + id + '"]'); if (!e) return null; const r = e.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }, id);
+					if (!c) { t.log('no icon ' + id); continue; }
+					await t.page.mouse.move(c[0], c[1]); await t.page.waitForTimeout(250);
+					t.mark(`${look} bar ${id}`); await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up();
+					await t.page.waitForTimeout(1100);
+				}
+			}
+			if (parts.includes('rail')) {
+				const items = await f.evaluate(() => [...document.querySelectorAll('#sidePanelSlot .side-panel-view.active .pm-segtab .pm-segtab-item')].map((e) => { const r = e.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }));
+				for (const i of [2, 0, 1, 0]) {
+					const items2 = await f.evaluate(() => [...document.querySelectorAll('#sidePanelSlot .side-panel-view.active .pm-segtab .pm-segtab-item')].map((e) => { const r = e.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }));
+					const c = items2[i]; if (!c) continue;
+					await t.page.mouse.move(c[0], c[1]); await t.page.waitForTimeout(250);
+					t.mark(`${look} rail tab ${i}`); await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up();
+					await t.page.waitForTimeout(1100);
+				}
+			}
+		}
+		if (parts.includes('onb')) {
+			const g = await t.app.open({ onboarding: true, query: 'o55=fresh', sandbox: t.app.sandboxed() });
+			await g.waitForFunction(() => !!window.O55?.S?.open && !!document.querySelector('#pm-o55-onboarding .o55-raillist'), null, { timeout: 60000 });
+			for (const look of looks) {
+				const [fam, mode] = look.split('-');
+				await g.evaluate(([fm, m]) => window.O55.ui.applyLook(fm, m), [fam, mode]);
+				await g.waitForFunction((want) => (document.documentElement.getAttribute('data-theme') || '') === want, look, { timeout: 20000 });
+				await t.page.waitForTimeout(1800);
+				for (const scr of ['where', 'begin', 'where', 'welcome']) {
+					t.mark(`${look} onb ${scr}`);
+					await g.evaluate((s) => window.O55.ui.go(s), scr);
+					await t.page.waitForTimeout(1600);
+				}
+				// the device kind segment (SSH / SMB / NFS / Already connected): a choice that changes nothing else
+				await g.evaluate(() => window.O55.ui.go('nas-find')); await t.page.waitForTimeout(1800);
+				for (let k = 0; k < 3; k++) {
+					const c = await g.evaluate(() => { const b = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-seg button:not(.o55-on)'); if (!b) return null; const r = b.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; });
+					if (!c) { t.log('no seg'); break; }
+					await t.page.mouse.move(c[0], c[1]); await t.page.waitForTimeout(250);
+					t.mark(`${look} onb seg ${k}`); await t.page.mouse.down(); await t.page.waitForTimeout(90); await t.page.mouse.up(); await t.page.waitForTimeout(1800);
+				}
+			}
+		}
+		await t.check('film done', true);
 	},
 
 	async 'glass unchanged'(t) {
