@@ -13383,8 +13383,8 @@ canonical_text: >-
   command-row authority for names. Every wiring row (Wiring_Matrix.production.json entries catalog.browser_*)
   names BrowserActionRequestV2 and BrowserActionResultV2 (Plans/section15_browser_program_contracts.schema.json).
   The table states no command_kind and no disabled reasons for these rows; only cmd.browser.open_devtools has a
-  kind cell, navigation_wrapper, in the row its canonical id takes over (UI_Command_Catalog.md:15642, :19010).
-  CV-360's placement fields go only on the routes its open-routes table lists (UI_Command_Catalog.md:18298-18318):
+  kind cell, navigation_wrapper, in the row its canonical id takes over (UI_Command_Catalog.md:15658, :19026).
+  CV-360's placement fields go only on the routes its open-routes table lists (UI_Command_Catalog.md:18314-18334):
   open_workspace_preview and focus_browser_tab.
   BrowserActionRequestV2 requires a closed browser_action whose action_type enum names no share, revoke-share,
   takeover, agent-control, detach, DevTools, dock, promotion, session-recovery or session-tab reveal action. The
@@ -13475,7 +13475,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             Canon names target with no type (UI_Command_Catalog.md:825); the aliases row reads it as
-            "browser session target" (:18290), the launcher rows open "an address" through it, and
+            "browser session target" (:18306), the launcher rows open "an address" through it, and
             Commands_System.md:8925-8926 has Open port reuse it "with a server/environment-authoritative URL".
             JUDGMENT: url covers the address opens; alternatives not settled by canon are a union with the
             overlay's preview_subject_ref or Primitive:RouteTarget.
@@ -13490,7 +13490,7 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23626-23629) names this route: where is auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. Open-routes table UI_Command_Catalog.md:18314; DL-180 amendment :850"
+          source: "CV-360 (Contracts_V0.md:23626-23629) names this route: where is auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. Open-routes table UI_Command_Catalog.md:18330; DL-180 amendment :850"
         mode:
           type: enum
           values: [preview, keep]
@@ -13522,8 +13522,8 @@ command_payload_definitions:
           choice: navigation_wrapper
           gap_note: >-
             No catalog row states a command_kind; the aliases table records it a kept id, open route with
-            normalization.kind wrapper (UI_Command_Catalog.md:18290), and the open-routes table lists it as
-            an open route (:18314). navigation_wrapper is chosen from the closed set (Contracts_V0.md:1902-1905)
+            normalization.kind wrapper (UI_Command_Catalog.md:18306), and the open-routes table lists it as
+            an open route (:18330). navigation_wrapper is chosen from the closed set (Contracts_V0.md:1902-1905)
             because the row opens a route; Contracts_V0 maps no normalization value to a command_kind.
         - key: disabled_reason_codes
           choice: [unsupported]
@@ -13587,7 +13587,7 @@ command_payload_definitions:
         - key: omitted:where
           choice: omitted
           gap_note: >-
-            CV-360 (Contracts_V0.md:23626-23627) and its open-routes table (UI_Command_Catalog.md:18298-18318)
+            CV-360 (Contracts_V0.md:23626-23627) and its open-routes table (UI_Command_Catalog.md:18314-18334)
             do not list this route, the DL-180 amendment (:850) moves only open_workspace_preview onto CV-360,
             and the row opens a detached browser (:826), not a home-panel tab; so no CV-360 placement field is
             carried.
@@ -13616,26 +13616,26 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646, every open route UCC-200 lists carries the fields): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18314)"
+          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646, every open route UCC-200 lists carries the fields): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18330)"
         mode:
           type: enum
           values: [preview, keep]
           required: false
           default: none
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18314"
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18330"
         by:
           type: string
           required: false
           default: user
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18314"
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18330"
         background:
           type: boolean
           required: false
           default: false
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18314"
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18330"
       owner_request: Plans/section15_browser_program_contracts.schema.json#/$defs/BrowserActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -13648,7 +13648,7 @@ command_payload_definitions:
           choice: shell_view
           gap_note: >-
             No catalog row states a command_kind; the row is "layout/UI state only" (UI_Command_Catalog.md:827)
-            and the open-routes table calls it layout-only (:18314).
+            and the open-routes table calls it layout-only (:18330).
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -13658,7 +13658,7 @@ command_payload_definitions:
           gap_note: >-
             Canon conflict: CV-360's acceptance (Contracts_V0.md:23646) says every open route UCC-200 lists
             carries the four placement fields, and the open-routes table lists this route
-            (UI_Command_Catalog.md:18314), but the row and its wiring entry catalog.browser_focus_browser_tab
+            (UI_Command_Catalog.md:18330), but the row and its wiring entry catalog.browser_focus_browser_tab
             make it a reveal of the tab that hosts the session wherever it is, and CV-360 says a reveal never
             moves a tab, so placement changes nothing here. The definition follows CV-360's acceptance and the
             table, which name no exemption for reveal-only routes; the owner should say whether they are exempt.
@@ -13732,7 +13732,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             Catalog payload names mode? with no values (UI_Command_Catalog.md:829). The named request contract
-            BrowserDevToolsOpenRequest (UI_Command_Catalog.md:15642, :19010) is placed at
+            BrowserDevToolsOpenRequest (UI_Command_Catalog.md:15658, :19026) is placed at
             Plans/browser_capture_contracts.schema.json by Commands_System.md:6486, and that file does not exist
             in Plans, so the DevTools mode vocabulary is still open. JUDGMENT: string holds the value; an enum
             needs the owner to name the modes.
@@ -13743,13 +13743,13 @@ command_payload_definitions:
       error_codes: [invalid_args, invalid_route, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported, permission_required]
       aliases:
-        - {command_id: cmd.browser.devtools.open, kind: alias, source: "UCC-202 and the duplicate-ids table (UI_Command_Catalog.md:19010); UCC-063 stale_retired_dispositions"}
+        - {command_id: cmd.browser.devtools.open, kind: alias, source: "UCC-202 and the duplicate-ids table (UI_Command_Catalog.md:19026); UCC-063 stale_retired_dispositions"}
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported, permission_required]
           gap_note: >-
             The canonical id takes the preconditions browser_runtime_available && !protected_auth_browser &&
-            devtools_policy_allows (UI_Command_Catalog.md:15642, :19010) but no disabled reasons; unsupported
+            devtools_policy_allows (UI_Command_Catalog.md:15658, :19026) but no disabled reasons; unsupported
             stands for a missing browser runtime or the protected authentication browser, and
             permission_required for the DevTools policy.
         - key: owner_request
@@ -13757,7 +13757,7 @@ command_payload_definitions:
           gap_note: >-
             Canon conflict: the wiring rows catalog.browser_open_devtools and
             assistant.redesign.cmd.browser_devtools_open name BrowserActionRequestV2, while the catalog
-            (UI_Command_Catalog.md:15642, :19010) and Commands_System.md:6486 name BrowserDevToolsOpenRequest,
+            (UI_Command_Catalog.md:15658, :19026) and Commands_System.md:6486 name BrowserDevToolsOpenRequest,
             which has no schema in Plans. The definition takes the wiring row, the only one that resolves.
             The wired request also requires a closed browser_action
             (Plans/section15_browser_program_contracts.schema.json:5114, :5216), whose action_type enum (:377) has
@@ -13769,7 +13769,7 @@ command_payload_definitions:
         - key: owner_result
           choice: local:BrowserDevToolsOpenResultV1
           gap_note: >-
-            Canon conflict: the catalog (UI_Command_Catalog.md:15642, :19010) and Commands_System.md:6486
+            Canon conflict: the catalog (UI_Command_Catalog.md:15658, :19026) and Commands_System.md:6486
             name RouteResult, and both RouteResult schemas in Plans are fixed to other commands
             (Plans/assistant_chat_contracts.schema.json#/$defs/RouteResult to cmd.chat.goal.open_editor,
             Plans/collaborative_workflows_contracts.schema.json#/$defs/RouteResult to cmd.chat.crew_auto.open_config);
@@ -14545,14 +14545,14 @@ canonical_text: >-
   start mode and target, and the catalog item_type spellings and version format untyped; each is marked provenance gap and left open for the compile review rather than invented.
   Shared conventions of the definitions block: terminal row cites are the terminal command table
   (UI_Command_Catalog.md:880-888, whose payload column is history under DL-333 resolution 10) and the kept
-  terminal commands table (UCC-201, UI_Command_Catalog.md:18731-18743), which states each terminal
-  command_kind: open navigation_wrapper (:18735), show shell_view (:18736), focus shell_view (:18737), rerun
-  domain_action (:18739), restart_replace domain_action (:18740) and clear_scrollback domain_action (:18743).
+  terminal commands table (UCC-201, UI_Command_Catalog.md:18747-18759), which states each terminal
+  command_kind: open navigation_wrapper (:18751), show shell_view (:18752), focus shell_view (:18753), rerun
+  domain_action (:18755), restart_replace domain_action (:18756) and clear_scrollback domain_action (:18759).
   Every terminal wiring row names TerminalActionRequestV2 and TerminalActionResultV2
   (Plans/shared_runtime_command_contracts.schema.json); the dev and catalog wiring rows (catalog.dev_*,
   catalog.catalog_*) name no request_schema_ref or result_schema_ref. The dev and catalog tables
   (UI_Command_Catalog.md:930-935, :949-951) state no command_kind and no disabled reasons. CV-360's placement
-  fields go only on the routes its open-routes table lists (UI_Command_Catalog.md:18298-18318):
+  fields go only on the routes its open-routes table lists (UI_Command_Catalog.md:18314-18334):
   terminal.open, terminal.show, terminal.focus and the three dev.show_* routes.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible terminal, dev-session and catalog commands.
@@ -14621,13 +14621,13 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:880); kept-commands row 'Reveals the tab of the exact terminal_session_id' (UI_Command_Catalog.md:18735); overlay UCC-066..072 identity terminal_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md:880); kept-commands row 'Reveals the tab of the exact terminal_session_id' (UI_Command_Catalog.md:18751); overlay UCC-066..072 identity terminal_session_id?"
         where:
           type: string
           required: false
           default: auto
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23626-23629) names this route: where is auto, tab, panel, right, down or a panel id; default auto. The kept-commands row says it carries CV-360's placement fields (UI_Command_Catalog.md:18735); open-routes table :18315"
+          source: "CV-360 (Contracts_V0.md:23626-23629) names this route: where is auto, tab, panel, right, down or a panel id; default auto. The kept-commands row says it carries CV-360's placement fields (UI_Command_Catalog.md:18751); open-routes table :18331"
         mode:
           type: enum
           values: [preview, keep]
@@ -14646,7 +14646,7 @@ command_payload_definitions:
           required: false
           default: false
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23631): background default false; an agent's open lands as a background tab (UCC-066, UI_Command_Catalog.md:5114; :18735)"
+          source: "CV-360 (Contracts_V0.md:23631): background default false; an agent's open lands as a background tab (UCC-066, UI_Command_Catalog.md:5114; :18751)"
         origin_surface:
           type: string
           required: false
@@ -14681,7 +14681,7 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
-            Neither the terminal row (UI_Command_Catalog.md:880) nor the kept-commands row (:18735) states
+            Neither the terminal row (UI_Command_Catalog.md:880) nor the kept-commands row (:18751) states
             disabled reasons; unsupported stands for a host without a terminal runtime.
     - command_id: cmd.terminal.show
       ucc_units: [UCC-067, UCC-061, UCC-066, UCC-068, UCC-069]
@@ -14693,32 +14693,32 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:881); kept-commands row (UI_Command_Catalog.md:18736); overlay UCC-066..072 identity terminal_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md:881); kept-commands row (UI_Command_Catalog.md:18752); overlay UCC-066..072 identity terminal_session_id?"
         where:
           type: string
           required: false
           default: auto
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646, every open route UCC-200 lists carries the fields): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18315)"
+          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646, every open route UCC-200 lists carries the fields): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18331)"
         mode:
           type: enum
           values: [preview, keep]
           required: false
           default: none
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18315"
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18331"
         by:
           type: string
           required: false
           default: user
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18315"
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18331"
         background:
           type: boolean
           required: false
           default: false
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18315"
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18331"
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14730,15 +14730,15 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
-            Neither the terminal row (UI_Command_Catalog.md:881) nor the kept-commands row (:18736) states
+            Neither the terminal row (UI_Command_Catalog.md:881) nor the kept-commands row (:18752) states
             disabled reasons; unsupported stands for a host without a terminal runtime.
         - key: field:where
           choice: carry CV-360's where, mode, by and background
           gap_note: >-
             Canon conflict: CV-360's acceptance (Contracts_V0.md:23646) says every open route UCC-200 lists
             carries the four placement fields, and the open-routes table lists this route
-            (UI_Command_Catalog.md:18315), but the kept-commands row makes it a focus of the same live
-            session's tab that never collapses into open (:18736), and its wiring entry catalog.terminal_show
+            (UI_Command_Catalog.md:18331), but the kept-commands row makes it a focus of the same live
+            session's tab that never collapses into open (:18752), and its wiring entry catalog.terminal_show
             reveals the tab wherever it is; CV-360 says a reveal never moves a tab, so placement changes
             nothing here. The definition follows CV-360's acceptance and the table, which name no exemption
             for reveal-only routes; the owner should say whether they are exempt.
@@ -14777,7 +14777,7 @@ command_payload_definitions:
             [same_session, new_session]. What absence means is a canon conflict, left to the owner: UCC-067's
             acceptance (UI_Command_Catalog.md:5191) preserves terminal_session_id "only when same-session
             execution is explicitly requested", so absent would mean a new session, while row :882 ("new
-            terminal launch only for an explicit new-session request"), the kept-commands row (:18739,
+            terminal launch only for an explicit new-session request"), the kept-commands row (:18755,
             "same-session rerun is a new invocation in the bound session; a new session only on explicit
             request") and Commands_System.md:8928-8929 make a same-session rerun the default.
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
@@ -14791,7 +14791,7 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
-            Neither the terminal row (UI_Command_Catalog.md:882) nor the kept-commands row (:18739) states
+            Neither the terminal row (UI_Command_Catalog.md:882) nor the kept-commands row (:18755) states
             disabled reasons; unsupported stands for a host without a terminal runtime.
     - command_id: cmd.terminal.focus
       ucc_units: [UCC-067, UCC-068]
@@ -14803,38 +14803,38 @@ command_payload_definitions:
           required: false
           default: none
           provenance: canon
-          source: "catalog row payload terminal_session_id? (UI_Command_Catalog.md:884); kept-commands row (UI_Command_Catalog.md:18737); overlay UCC-066..072 identity terminal_session_id?"
+          source: "catalog row payload terminal_session_id? (UI_Command_Catalog.md:884); kept-commands row (UI_Command_Catalog.md:18753); overlay UCC-066..072 identity terminal_session_id?"
         dev_session_id:
           type: id
           required: false
           default: none
           provenance: canon
-          source: "catalog row payload dev_session_id? (UI_Command_Catalog.md:884, :18737); overlay UCC-066..072 identity dev_session_id?"
+          source: "catalog row payload dev_session_id? (UI_Command_Catalog.md:884, :18753); overlay UCC-066..072 identity dev_session_id?"
         where:
           type: string
           required: false
           default: auto
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646, every open route UCC-200 lists carries the fields): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18315)"
+          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646, every open route UCC-200 lists carries the fields): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18331)"
         mode:
           type: enum
           values: [preview, keep]
           required: false
           default: none
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18315"
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18331"
         by:
           type: string
           required: false
           default: user
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18315"
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18331"
         background:
           type: boolean
           required: false
           default: false
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18315"
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18331"
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14842,19 +14842,19 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, handler_unavailable, internal_error]
       disabled_reason_codes: [unsupported]
       aliases:
-        - {command_id: cmd.terminal.focus_session, kind: alias, source: "UCC-202 duplicate-ids table (UI_Command_Catalog.md:19012: cmd.terminal.focus is canonical, cmd.terminal.focus_session its alias); :8621; UCC-230 non_definition_tokens (DL-341)"}
+        - {command_id: cmd.terminal.focus_session, kind: alias, source: "UCC-202 duplicate-ids table (UI_Command_Catalog.md:19028: cmd.terminal.focus is canonical, cmd.terminal.focus_session its alias); :8621; UCC-230 non_definition_tokens (DL-341)"}
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
-            Neither the terminal row (UI_Command_Catalog.md:884) nor the kept-commands row (:18737) states
+            Neither the terminal row (UI_Command_Catalog.md:884) nor the kept-commands row (:18753) states
             disabled reasons; unsupported stands for a host without a terminal runtime.
         - key: field:where
           choice: carry CV-360's where, mode, by and background
           gap_note: >-
             Canon conflict: CV-360's acceptance (Contracts_V0.md:23646) says every open route UCC-200 lists
             carries the four placement fields, and the open-routes table lists this route
-            (UI_Command_Catalog.md:18315), but the kept-commands row (:18737) and its wiring entry
+            (UI_Command_Catalog.md:18331), but the kept-commands row (:18753) and its wiring entry
             catalog.terminal_focus make it a reveal of the session's tab, else the most recently focused
             terminal tab, wherever it is; CV-360 says a reveal never moves a tab, so placement changes nothing
             here. The definition follows CV-360's acceptance and the table, which name no exemption for
@@ -14864,7 +14864,7 @@ command_payload_definitions:
           gap_note: >-
             The terminal row's payload column (history, UI_Command_Catalog.md:884) still lists
             terminal_pane_id?, while the kept-commands row says "the terminal_pane_id? argument retires with
-            panes" (:18737, DL-181) and the SMPFS-329 negative constraint keeps it out. The row's
+            panes" (:18753, DL-181) and the SMPFS-329 negative constraint keeps it out. The row's
             "/last-relevant fallback mode" is the kept row's "else the most recently focused terminal tab", a
             behavior with no arg.
     - command_id: cmd.terminal.restart_replace
@@ -14877,7 +14877,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "catalog row payload (UI_Command_Catalog.md:888); kept-commands row (UI_Command_Catalog.md:18740); overlay UCC-066..072 identity terminal_session_id?"
+          source: "catalog row payload (UI_Command_Catalog.md:888); kept-commands row (UI_Command_Catalog.md:18756); overlay UCC-066..072 identity terminal_session_id?"
         policy:
           type: string
           required: false
@@ -14886,7 +14886,7 @@ command_payload_definitions:
           gap_note: >-
             Canon names a "/restart/replace policy" (UI_Command_Catalog.md:888) with no values; the
             kept-commands row fixes the behavior (a new session in the same tab, same folder and profile,
-            UI_Command_Catalog.md:18740) without a policy vocabulary. JUDGMENT: string holds the value
+            UI_Command_Catalog.md:18756) without a policy vocabulary. JUDGMENT: string holds the value
             pending an owner enum.
         command_ref:
           type: ref
@@ -14897,7 +14897,7 @@ command_payload_definitions:
             Canon names "command replay or shell profile hints" (UI_Command_Catalog.md:888) without a field
             shape. JUDGMENT: command_ref, type ref, optional, for the replay hint; the overlay's command_ref?
             identity is the candidate name. The hint is never replayed automatically: a restart records the
-            newly resolved environment without automatic command replay (SMPFS-164, :11667-11669).
+            newly resolved environment without automatic command replay (SMPFS-164, :11683-11685).
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14909,13 +14909,13 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
-            Neither the terminal row (UI_Command_Catalog.md:888) nor the kept-commands row (:18740) states
+            Neither the terminal row (UI_Command_Catalog.md:888) nor the kept-commands row (:18756) states
             disabled reasons; unsupported stands for a host without a terminal runtime.
         - key: omitted:profile_ref
           choice: omitted
           gap_note: >-
             The kept-commands row fixes Restart session as a new session in the same tab, same folder and
-            profile (UI_Command_Catalog.md:18740), with no branch that changes the profile; the older terminal
+            profile (UI_Command_Catalog.md:18756), with no branch that changes the profile; the older terminal
             row's "shell profile hints" (:888) sits in a payload column its lineage pointer calls history
             (:890). So the definition takes no profile arg. The owner request,
             Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2, requires
@@ -14931,7 +14931,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "kept-commands row (UI_Command_Catalog.md:18743); the terminal and dev rules 'cmd.terminal.clear_scrollback preserves runtime identity' (UI_Command_Catalog.md:960); UCC-072 'Terminal clear, close, and dev reveal commands preserve runtime identity and dev_session_id ownership' (UI_Command_Catalog.md:5486); overlay UCC-066..072 identity terminal_session_id?"
+          source: "kept-commands row (UI_Command_Catalog.md:18759); the terminal and dev rules 'cmd.terminal.clear_scrollback preserves runtime identity' (UI_Command_Catalog.md:960); UCC-072 'Terminal clear, close, and dev reveal commands preserve runtime identity and dev_session_id ownership' (UI_Command_Catalog.md:5486); overlay UCC-066..072 identity terminal_session_id?"
       owner_request: Plans/shared_runtime_command_contracts.schema.json#/$defs/TerminalActionRequestV2
       result:
         response: Plans/ui_command_response.schema.json
@@ -14943,7 +14943,7 @@ command_payload_definitions:
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
-            The kept-commands row (UI_Command_Catalog.md:18743) states no disabled reasons; unsupported stands
+            The kept-commands row (UI_Command_Catalog.md:18759) states no disabled reasons; unsupported stands
             for a host without a terminal runtime.
     - command_id: cmd.dev.start_session
       ucc_units: [UCC-070]
@@ -15051,7 +15051,7 @@ command_payload_definitions:
             The dev table states no command_kind; the row restarts a dev session and emits
             dev.session.restarting and dev.session.started (UI_Command_Catalog.md:932), a runtime mutation.
             It is distinct from the retired terminal spelling cmd.terminal.restart_session (UCC-202,
-            UI_Command_Catalog.md:19011).
+            UI_Command_Catalog.md:19027).
         - key: disabled_reason_codes
           choice: [unsupported]
           gap_note: >-
@@ -15073,26 +15073,26 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18317), and its wiring entry catalog.dev_show_output resolves it \"into the Output tool tab with CV-360's placement fields\""
+          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18333), and its wiring entry catalog.dev_show_output resolves it \"into the Output tool tab with CV-360's placement fields\""
         mode:
           type: enum
           values: [preview, keep]
           required: false
           default: none
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18317; wiring entry catalog.dev_show_output"
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18333; wiring entry catalog.dev_show_output"
         by:
           type: string
           required: false
           default: user
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18317; wiring entry catalog.dev_show_output"
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18333; wiring entry catalog.dev_show_output"
         background:
           type: boolean
           required: false
           default: false
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18317; wiring entry catalog.dev_show_output"
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18333; wiring entry catalog.dev_show_output"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -15106,13 +15106,13 @@ command_payload_definitions:
           gap_note: >-
             The dev table states no command_kind; the row is "layout/UI state only" (UI_Command_Catalog.md:933)
             and the open-routes table says it reveals or opens the output tool tab by its kind affinity
-            (:18317), an open route.
+            (:18333), an open route.
         - key: response_kind
           choice: owner_operation
           gap_note: >-
             The row is "layout/UI state only" (UI_Command_Catalog.md:933) and the wiring row
             catalog.dev_show_output names no result_schema_ref, but CV-360 (Contracts_V0.md:23631) says what
-            every open returns and the open-routes table lists this route (UI_Command_Catalog.md:18317); the
+            every open returns and the open-routes table lists this route (UI_Command_Catalog.md:18333); the
             definition carries that return as the owner result (local:DevToolTabOpenResultV1) rather than a
             local projection with no result.
         - key: owner_result
@@ -15141,26 +15141,26 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18317), and its wiring entry catalog.dev_show_problems resolves it \"into the Problems tool tab with CV-360's placement fields\""
+          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18333), and its wiring entry catalog.dev_show_problems resolves it \"into the Problems tool tab with CV-360's placement fields\""
         mode:
           type: enum
           values: [preview, keep]
           required: false
           default: none
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18317; wiring entry catalog.dev_show_problems"
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18333; wiring entry catalog.dev_show_problems"
         by:
           type: string
           required: false
           default: user
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18317; wiring entry catalog.dev_show_problems"
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18333; wiring entry catalog.dev_show_problems"
         background:
           type: boolean
           required: false
           default: false
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18317; wiring entry catalog.dev_show_problems"
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18333; wiring entry catalog.dev_show_problems"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -15174,13 +15174,13 @@ command_payload_definitions:
           gap_note: >-
             The dev table states no command_kind; the row is "layout/UI state only" (UI_Command_Catalog.md:934)
             and the open-routes table says it reveals or opens the problems tool tab by its kind affinity
-            (:18317), an open route.
+            (:18333), an open route.
         - key: response_kind
           choice: owner_operation
           gap_note: >-
             The row is "layout/UI state only" (UI_Command_Catalog.md:934) and the wiring row
             catalog.dev_show_problems names no result_schema_ref, but CV-360 (Contracts_V0.md:23631) says what
-            every open returns and the open-routes table lists this route (UI_Command_Catalog.md:18317); the
+            every open returns and the open-routes table lists this route (UI_Command_Catalog.md:18333); the
             definition carries that return as the owner result (local:DevToolTabOpenResultV1) rather than a
             local projection with no result.
         - key: owner_result
@@ -15209,26 +15209,26 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18317), and its wiring entry catalog.dev_show_ports resolves it \"into the Ports tool tab with CV-360's placement fields\""
+          source: "CV-360 (Contracts_V0.md:23628-23629; acceptance :23646): where is auto, tab, panel, right, down or a panel id; default auto. The open-routes table lists this route (UI_Command_Catalog.md:18333), and its wiring entry catalog.dev_show_ports resolves it \"into the Ports tool tab with CV-360's placement fields\""
         mode:
           type: enum
           values: [preview, keep]
           required: false
           default: none
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18317; wiring entry catalog.dev_show_ports"
+          source: "CV-360 (Contracts_V0.md:23629-23630): mode is preview or keep; no default stated. Route listed at UI_Command_Catalog.md:18333; wiring entry catalog.dev_show_ports"
         by:
           type: string
           required: false
           default: user
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18317; wiring entry catalog.dev_show_ports"
+          source: "CV-360 (Contracts_V0.md:23630): by is user or agent:<name>; default user. Route listed at UI_Command_Catalog.md:18333; wiring entry catalog.dev_show_ports"
         background:
           type: boolean
           required: false
           default: false
           provenance: canon
-          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18317; wiring entry catalog.dev_show_ports"
+          source: "CV-360 (Contracts_V0.md:23631): background default false. Route listed at UI_Command_Catalog.md:18333; wiring entry catalog.dev_show_ports"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -15242,13 +15242,13 @@ command_payload_definitions:
           gap_note: >-
             The dev table states no command_kind; the row is "layout/UI state only" (UI_Command_Catalog.md:935)
             and the open-routes table says it reveals or opens the ports tool tab by its kind affinity
-            (:18317), an open route.
+            (:18333), an open route.
         - key: response_kind
           choice: owner_operation
           gap_note: >-
             The row is "layout/UI state only" (UI_Command_Catalog.md:935) and the wiring row
             catalog.dev_show_ports names no result_schema_ref, but CV-360 (Contracts_V0.md:23631) says what
-            every open returns and the open-routes table lists this route (UI_Command_Catalog.md:18317); the
+            every open returns and the open-routes table lists this route (UI_Command_Catalog.md:18333); the
             definition carries that return as the owner result (local:DevToolTabOpenResultV1) rather than a
             local projection with no result.
         - key: owner_result

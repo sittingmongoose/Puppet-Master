@@ -10032,6 +10032,22 @@ command_payload_definition_map:
       unit: UCC-052
       field: compatibility_only_notes
       quote: Existing cmd.k8s.*, set_context, and set_namespace rows are compatibility aliases
+  - token: cmd.orchestrator.restore_safe_point_then_retry
+    disposition: compatibility_alias
+    targets:
+    - cmd.runtime.restore_safe_point_then_retry
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: '`normalization.kind = compatibility_alias`, `normalizes_to_contract = cmd.runtime.restore_safe_point_then_retry`,
+        `alias_of_command_id = cmd.orchestrator.safe_point_retry`'
+    note: 'Owned by UCC-111, outside UCC-049..UCC-105. The exact recovery command contracts table gives its immediate
+      alias_of_command_id as the wrapper cmd.orchestrator.safe_point_retry, which is itself a wrapper
+      (normalization.kind wrapper, alias_of_command_id null) and not an alias, and its normalizes_to_contract as
+      cmd.runtime.restore_safe_point_then_retry; the Orchestrator safe-point retry prose calls it a compatibility alias
+      for that same runtime command. It accepts the wrapper input, applies the wrapper''s identical
+      permission-validation and consumption transform, and dispatches the exact canonical payload to the runtime
+      command''s handler, with no handler, result, effect, admission or idempotency domain of its own (Executor_Protocol.md
+      Approved baseline-target retry and restore lifecycle). Recorded by DL-341 max_review_changes.'
   - token: cmd.panel_tab.close
     disposition: owned_outside_range
     evidence:

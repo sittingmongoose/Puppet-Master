@@ -3063,7 +3063,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-100 canonical_text \"current-project scope\"; OP-026 \"It should be locked to the current project.\"; row precondition project_selected (UI_Command_Catalog.md:21720); UCC-230 envelope common optional project_id (type id)"
+          source: "UCC-100 canonical_text \"current-project scope\"; OP-026 \"It should be locked to the current project.\"; row precondition project_selected (UI_Command_Catalog.md:21736); UCC-230 envelope common optional project_id (type id)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -3074,7 +3074,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [not_configured]
-          gap_note: "The catalog states the precondition project_selected (UI_Command_Catalog.md:21720) but no disabled code; not_configured is chosen for no current project. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
+          gap_note: "The catalog states the precondition project_selected (UI_Command_Catalog.md:21736) but no disabled code; not_configured is chosen for no current project. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
     - command_id: cmd.history.switch_subview
       ucc_units: [UCC-100]
       command_kind: shell_view
@@ -3095,7 +3095,7 @@ command_payload_definitions:
           gap_note: >-
             The values keep canon's spelling: OP-026 "It provides Documents and Runs subviews" and its
             preserved_exact_tokens Documents, Runs (Plans/Orchestrator_Page.md:1937-1938, :2056-2057); the row
-            "Switches History between its Documents and Runs subviews as view state" (UI_Command_Catalog.md:21721).
+            "Switches History between its Documents and Runs subviews as view state" (UI_Command_Catalog.md:21737).
             Canon names no arg; subview is named from the row text.
       owner_request: none
       result:
@@ -3107,7 +3107,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported]
-          gap_note: "The catalog states the precondition history_visible (UI_Command_Catalog.md:21721) but no disabled code; unsupported is chosen for the control offered off the History surface. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
+          gap_note: "The catalog states the precondition history_visible (UI_Command_Catalog.md:21737) but no disabled code; unsupported is chosen for the control offered off the History surface. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
     - command_id: cmd.history.set_include_archived
       ucc_units: [UCC-100]
       command_kind: shell_view
@@ -3125,7 +3125,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row states the toggle semantics ("Shows or hides archived rows inside All history", UI_Command_Catalog.md:21722)
+            The row states the toggle semantics ("Shows or hides archived rows inside All history", UI_Command_Catalog.md:21738)
             but names no arg. Chosen: a required boolean carrying the target state, named from the label "Include archived"
             (OP-026 preserved token Include archived).
       owner_request: none
@@ -3138,7 +3138,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported]
-          gap_note: "The catalog states the precondition history_visible && all_history_selected (UI_Command_Catalog.md:21722) but no disabled code; unsupported is chosen for the control offered outside All history. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
+          gap_note: "The catalog states the precondition history_visible && all_history_selected (UI_Command_Catalog.md:21738) but no disabled code; unsupported is chosen for the control offered outside All history. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
     - command_id: cmd.history.open_row
       ucc_units: [UCC-100]
       command_kind: navigation_wrapper
@@ -3155,7 +3155,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_row_selected, \"Opens the selected historical document or run by its stable identity\" (UI_Command_Catalog.md:21723)"
+          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_row_selected, \"Opens the selected historical document or run by its stable identity\" (UI_Command_Catalog.md:21739)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -3166,7 +3166,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported]
-          gap_note: "The catalog states the precondition history_row_selected (UI_Command_Catalog.md:21723) but no disabled code; the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
+          gap_note: "The catalog states the precondition history_row_selected (UI_Command_Catalog.md:21739) but no disabled code; the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
     - command_id: cmd.history.open_artifacts
       ucc_units: [UCC-100]
       command_kind: navigation_wrapper
@@ -3183,7 +3183,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_row_selected && row_artifacts_linked, \"Opens the artifacts linked to the selected row\" (UI_Command_Catalog.md:21724)"
+          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_row_selected && row_artifacts_linked, \"Opens the artifacts linked to the selected row\" (UI_Command_Catalog.md:21740)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -3194,7 +3194,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported]
-          gap_note: "The catalog states the precondition history_row_selected && row_artifacts_linked (UI_Command_Catalog.md:21724) but no disabled code; the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
+          gap_note: "The catalog states the precondition history_row_selected && row_artifacts_linked (UI_Command_Catalog.md:21740) but no disabled code; the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
     - command_id: cmd.history.open_evidence
       ucc_units: [UCC-100]
       command_kind: navigation_wrapper
@@ -3211,7 +3211,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_row_selected && row_evidence_linked, \"Opens the evidence linked to the selected row\" (UI_Command_Catalog.md:21725)"
+          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_row_selected && row_evidence_linked, \"Opens the evidence linked to the selected row\" (UI_Command_Catalog.md:21741)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -3222,7 +3222,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported]
-          gap_note: "The catalog states the precondition history_row_selected && row_evidence_linked (UI_Command_Catalog.md:21725) but no disabled code; the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
+          gap_note: "The catalog states the precondition history_row_selected && row_evidence_linked (UI_Command_Catalog.md:21741) but no disabled code; the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
     - command_id: cmd.history.compare_versions
       ucc_units: [UCC-100]
       command_kind: navigation_wrapper
@@ -3243,7 +3243,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row requires selected document versions (precondition history_document_versions_selected,
-            UI_Command_Catalog.md:21726) and OP-027 forbids comparing "by path or title alone when canonical
+            UI_Command_Catalog.md:21742) and OP-027 forbids comparing "by path or title alone when canonical
             document/package IDs exist", but no field name or count is stated. Chosen: a list of exactly two refs
             naming the selected versions by canonical id.
       owner_request: none
@@ -3256,7 +3256,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported, stale_projection]
-          gap_note: "The catalog states the precondition history_projection_current and \"blocked while the projection is stale\" (UI_Command_Catalog.md:21726) but no code list; stale_projection is that state. Compare is a view, not a mutation, so degraded is not added (Plans/Orchestrator_Page.md:196 disables mutation). The row's selection precondition history_document_versions_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject."
+          gap_note: "The catalog states the precondition history_projection_current and \"blocked while the projection is stale\" (UI_Command_Catalog.md:21742) but no code list; stale_projection is that state. Compare is a view, not a mutation, so degraded is not added (Plans/Orchestrator_Page.md:196 disables mutation). The row's selection precondition history_document_versions_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject."
     - command_id: cmd.history.duplicate_as_draft
       ucc_units: [UCC-100]
       command_kind: domain_action
@@ -3273,7 +3273,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_document_selected, \"Creates a new draft from the selected historical document\" (UI_Command_Catalog.md:21727)"
+          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_document_selected, \"Creates a new draft from the selected historical document\" (UI_Command_Catalog.md:21743)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -3284,7 +3284,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported, stale_projection, degraded]
-          gap_note: "The catalog states the precondition history_document_selected (UI_Command_Catalog.md:21727) but no disabled code. Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's selection precondition history_document_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject."
+          gap_note: "The catalog states the precondition history_document_selected (UI_Command_Catalog.md:21743) but no disabled code. Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's selection precondition history_document_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject."
     - command_id: cmd.history.reopen_in_wizard
       ucc_units: [UCC-100]
       command_kind: domain_action
@@ -3301,7 +3301,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_document_selected, \"Reopens the selected historical document in the Planning Wizard\" (UI_Command_Catalog.md:21728)"
+          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_document_selected, \"Reopens the selected historical document in the Planning Wizard\" (UI_Command_Catalog.md:21744)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -3312,7 +3312,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported, stale_projection, permission_required, degraded]
-          gap_note: "The catalog states history_projection_current && currentness_allows and \"after currentness and authority checks\" (UI_Command_Catalog.md:21728) but no disabled code; permission_required is the authority check. Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's selection precondition history_document_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. UCC-100's \"currentness/authority state\" (UI_Command_Catalog.md:7340-7342) is carried by these owner-side preconditions, not by args: the handler checks currentness and authority against the owner record before it acts, the projection shows stale_projection or permission_required while a check fails, and canon names no currentness or authority field, so no expected-currentness token is added."
+          gap_note: "The catalog states history_projection_current && currentness_allows and \"after currentness and authority checks\" (UI_Command_Catalog.md:21744) but no disabled code; permission_required is the authority check. Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's selection precondition history_document_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. UCC-100's \"currentness/authority state\" (UI_Command_Catalog.md:7340-7342) is carried by these owner-side preconditions, not by args: the handler checks currentness and authority against the owner record before it acts, the projection shows stale_projection or permission_required while a check fails, and canon names no currentness or authority field, so no expected-currentness token is added."
     - command_id: cmd.history.send_forward
       ucc_units: [UCC-100]
       command_kind: domain_action
@@ -3329,7 +3329,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_document_selected, \"Sends the selected historical document forward when currentness allows\" (UI_Command_Catalog.md:21729)"
+          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_document_selected, \"Sends the selected historical document forward when currentness allows\" (UI_Command_Catalog.md:21745)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -3340,7 +3340,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported, stale_projection, degraded]
-          gap_note: "The catalog states history_projection_current && currentness_allows (UI_Command_Catalog.md:21729) but no disabled code. Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's selection precondition history_document_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. UCC-100's \"currentness/authority state\" (UI_Command_Catalog.md:7340-7342) is carried by the owner-side precondition currentness_allows, not by an arg: the handler checks currentness against the owner record before it acts, the projection shows stale_projection while the check fails, the row names no authority check for send forward, and canon names no currentness or authority field, so no expected-currentness token is added."
+          gap_note: "The catalog states history_projection_current && currentness_allows (UI_Command_Catalog.md:21745) but no disabled code. Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's selection precondition history_document_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. UCC-100's \"currentness/authority state\" (UI_Command_Catalog.md:7340-7342) is carried by the owner-side precondition currentness_allows, not by an arg: the handler checks currentness against the owner record before it acts, the projection shows stale_projection while the check fails, the row names no authority check for send forward, and canon names no currentness or authority field, so no expected-currentness token is added."
     - command_id: cmd.history.export_selected
       ucc_units: [UCC-100]
       command_kind: domain_action
@@ -3357,7 +3357,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_row_selected, \"Exports the selected row\" (UI_Command_Catalog.md:21730)"
+          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_row_selected, \"Exports the selected row\" (UI_Command_Catalog.md:21746)"
         export_format:
           type: enum
           required: true
@@ -3365,7 +3365,7 @@ command_payload_definitions:
           values: [zip+manifest, JSON, rendered Markdown, rendered HTML, rendered PDF]
           provenance: gap
           gap_note: >-
-            The format set is canon ("zip with manifest, JSON, or rendered Markdown, HTML or PDF", UI_Command_Catalog.md:21730)
+            The format set is canon ("zip with manifest, JSON, or rendered Markdown, HTML or PDF", UI_Command_Catalog.md:21746)
             but canon names no arg. The values keep canon's spelling (DL-341): zip+manifest and JSON are OP-027
             preserved_exact_tokens, and rendered Markdown, rendered HTML and rendered PDF are OP-027 canonical_text
             ("zip/archive, JSON, rendered Markdown, rendered HTML, rendered PDF"). The arg is named export_format.
@@ -3375,7 +3375,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row requires "an explicit evidence/redaction profile" (UI_Command_Catalog.md:21730) and OP-027 preserves
+            The row requires "an explicit evidence/redaction profile" (UI_Command_Catalog.md:21746) and OP-027 preserves
             "explicit evidence/redaction profile" and "permissions/redaction profile details", but names no field or shape.
             Chosen: a required ref to a named evidence/redaction profile record the Permissions owner holds.
       owner_request: none
@@ -3388,7 +3388,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported, stale_projection, permission_required, degraded]
-          gap_note: "The catalog states history_row_selected && history_projection_current and an explicit evidence/redaction profile (UI_Command_Catalog.md:21730) but no disabled code; permission_required covers the authority-gated profile (OP-027 \"authority-gated actions\"). Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's selection precondition history_row_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject."
+          gap_note: "The catalog states history_row_selected && history_projection_current and an explicit evidence/redaction profile (UI_Command_Catalog.md:21746) but no disabled code; permission_required covers the authority-gated profile (OP-027 \"authority-gated actions\"). Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's selection precondition history_row_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject."
     - command_id: cmd.history.export_bundle
       ucc_units: [UCC-100]
       command_kind: domain_action
@@ -3409,7 +3409,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row's subject is plural (precondition history_rows_multi_selected, "Exports the multi-selected rows as one
-            bundle", UI_Command_Catalog.md:21731) but UCC-230's row group lists only the singular target_identity_ref.
+            bundle", UI_Command_Catalog.md:21747) but UCC-230's row group lists only the singular target_identity_ref.
             Chosen: a plural list<ref>, mirroring the envelope's receipt_refs plural.
         export_format:
           type: enum
@@ -3420,7 +3420,7 @@ command_payload_definitions:
           gap_note: >-
             OP-027 canonical_text gives the export family its formats ("zip/archive, JSON, rendered Markdown, rendered HTML,
             rendered PDF") but names no arg. Same export_format enum as export_selected, in canon's spelling. The row's
-            "as one bundle with its manifest" (UI_Command_Catalog.md:21731) does not say the bundle format is fixed.
+            "as one bundle with its manifest" (UI_Command_Catalog.md:21747) does not say the bundle format is fixed.
         evidence_redaction_profile:
           type: ref
           required: true
@@ -3439,7 +3439,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported, stale_projection, permission_required, degraded]
-          gap_note: "The catalog states history_rows_multi_selected && history_projection_current (UI_Command_Catalog.md:21731) but no disabled code; permission_required covers the authority-gated profile (OP-027). Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's selection precondition history_rows_multi_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject."
+          gap_note: "The catalog states history_rows_multi_selected && history_projection_current (UI_Command_Catalog.md:21747) but no disabled code; permission_required covers the authority-gated profile (OP-027). Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's selection precondition history_rows_multi_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject."
     - command_id: cmd.history.export_filtered_view
       ucc_units: [UCC-100]
       command_kind: domain_action
@@ -3456,7 +3456,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-096..UCC-100 optional identity history_query_ref (identity_typing _ref => ref), made mandatory by the row: \"Exports the whole filtered view with its active filter context and manifest\" (UI_Command_Catalog.md:21732) and OP-027 negative constraint \"Do not make whole filtered-view export omit the active filter context\""
+          source: "UCC-230 row-group UCC-096..UCC-100 optional identity history_query_ref (identity_typing _ref => ref), made mandatory by the row: \"Exports the whole filtered view with its active filter context and manifest\" (UI_Command_Catalog.md:21748) and OP-027 negative constraint \"Do not make whole filtered-view export omit the active filter context\""
         export_format:
           type: enum
           required: true
@@ -3484,7 +3484,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported, stale_projection, permission_required, degraded]
-          gap_note: "The catalog states history_visible && history_projection_current (UI_Command_Catalog.md:21732) but no disabled code; permission_required covers the authority-gated profile (OP-027). Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's surface precondition history_visible has no closed code either: as for switch_subview and rebuild_projection, unsupported is chosen for the control offered off the History surface."
+          gap_note: "The catalog states history_visible && history_projection_current (UI_Command_Catalog.md:21748) but no disabled code; permission_required covers the authority-gated profile (OP-027). Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's surface precondition history_visible has no closed code either: as for switch_subview and rebuild_projection, unsupported is chosen for the control offered off the History surface."
     - command_id: cmd.history.clone_as_new_run
       ucc_units: [UCC-100]
       command_kind: domain_action
@@ -3501,7 +3501,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_run_selected, \"Starts a new run cloned from the selected historical run under a new identity\" (UI_Command_Catalog.md:21733)"
+          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_run_selected, \"Starts a new run cloned from the selected historical run under a new identity\" (UI_Command_Catalog.md:21749)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -3512,7 +3512,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported, stale_projection, permission_required, degraded]
-          gap_note: "The catalog states history_run_selected && currentness_allows and \"after currentness and authority checks\" (UI_Command_Catalog.md:21733) but no disabled code; permission_required is the authority check. Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's selection precondition history_run_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. UCC-100's \"currentness/authority state\" (UI_Command_Catalog.md:7340-7342) is carried by these owner-side preconditions, not by args: the handler checks currentness and authority against the owner record before it acts, the projection shows stale_projection or permission_required while a check fails, and canon names no currentness or authority field, so no expected-currentness token is added."
+          gap_note: "The catalog states history_run_selected && currentness_allows and \"after currentness and authority checks\" (UI_Command_Catalog.md:21749) but no disabled code; permission_required is the authority check. Canon disables mutation under stale, degraded and unavailable projection state unless the owner surface revalidates directly first (Plans/Orchestrator_Page.md:196), and compare/export/reopen/send-forward stay blocked while the projection is stale until Rebuild succeeds (OP-027). The row's selection precondition history_run_selected has no closed code either: as for open_row, the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. UCC-100's \"currentness/authority state\" (UI_Command_Catalog.md:7340-7342) is carried by these owner-side preconditions, not by args: the handler checks currentness and authority against the owner record before it acts, the projection shows stale_projection or permission_required while a check fails, and canon names no currentness or authority field, so no expected-currentness token is added."
     - command_id: cmd.history.inspect_records
       ucc_units: [UCC-100]
       command_kind: navigation_wrapper
@@ -3529,7 +3529,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_row_selected, \"Opens the ledger and raw records behind the selected row\" (UI_Command_Catalog.md:21734)"
+          source: "UCC-230 row-group UCC-096..UCC-100 optional identity target_identity_ref (identity_typing _ref => ref), made mandatory by the row subject: precondition history_row_selected, \"Opens the ledger and raw records behind the selected row\" (UI_Command_Catalog.md:21750)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -3540,7 +3540,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported]
-          gap_note: "The catalog states the precondition history_row_selected (UI_Command_Catalog.md:21734) but no disabled code; the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
+          gap_note: "The catalog states the precondition history_row_selected (UI_Command_Catalog.md:21750) but no disabled code; the closed set has no code for an unmet selection precondition, so unsupported is chosen for the control offered without its subject. Canon keeps History open and usable under degraded projection health: the surface stays open with a fallback to record-backed History, Ledger and direct evidence inspectors (Plans/Orchestrator_Page.md:112), Ledger and direct record views are the trust anchor under degraded projection health (:134), and degraded mode falls back to record-backed views (:194); so degraded does not disable it."
     - command_id: cmd.history.rebuild_projection
       ucc_units: [UCC-100]
       command_kind: domain_action
@@ -3551,7 +3551,7 @@ command_payload_definitions:
           required: true
           default: none
           provenance: canon
-          source: "UCC-100 canonical_text \"current-project scope\"; OP-026 \"It should be locked to the current project.\"; row precondition history_visible (UI_Command_Catalog.md:21735); UCC-230 envelope common optional project_id (type id)"
+          source: "UCC-100 canonical_text \"current-project scope\"; OP-026 \"It should be locked to the current project.\"; row precondition history_visible (UI_Command_Catalog.md:21751); UCC-230 envelope common optional project_id (type id)"
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -3562,7 +3562,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [unsupported]
-          gap_note: "The catalog states the precondition history_visible (UI_Command_Catalog.md:21735) but no disabled code; unsupported is chosen for the control offered off the History surface. Rebuild is the refresh/recover action canon keeps available when trust drops (Plans/Orchestrator_Page.md:112), so neither degraded nor stale_projection disables it."
+          gap_note: "The catalog states the precondition history_visible (UI_Command_Catalog.md:21751) but no disabled code; unsupported is chosen for the control offered off the History surface. Rebuild is the refresh/recover action canon keeps available when trust drops (Plans/Orchestrator_Page.md:112), so neither degraded nor stale_projection disables it."
   results:
     HistoryDuplicateAsDraftResultV1:
       fields:

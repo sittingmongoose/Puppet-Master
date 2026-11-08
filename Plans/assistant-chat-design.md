@@ -29912,7 +29912,7 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18312), and its wiring row (catalog.chat_open_thread_context_details) carries CV-360's placement fields."
+          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto; an id that names no panel reads as auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18328), and its wiring row (catalog.chat_open_thread_context_details) carries CV-360's placement fields."
         mode:
           type: enum
           values: [preview, keep]
@@ -29962,7 +29962,7 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18312); a reveal of an open tab never moves it (CV-360)."
+          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18328); a reveal of an open tab never moves it (CV-360)."
         mode:
           type: enum
           values: [preview, keep]
@@ -30012,7 +30012,7 @@ command_payload_definitions:
           required: false
           default: auto
           provenance: canon
-          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18312), and its wiring row (catalog.chat_close_thread_context_details) carries CV-360's placement fields."
+          source: "Plans/Contracts_V0.md#CV-360 placement field where: auto, tab, panel, right, down or a panel id; default auto. The route is in UCC-200's table of routes that open or reveal a tab (UI_Command_Catalog.md:18328), and its wiring row (catalog.chat_close_thread_context_details) carries CV-360's placement fields."
         mode:
           type: enum
           values: [preview, keep]
@@ -31106,7 +31106,7 @@ command_payload_definitions:
           gap_note: >-
             The row allows five source classes - current-turn attachment, selected artifact,
             project file allowed by FileSafe, clipboard image, recent OS screenshot
-            (UI_Command_Catalog.md:21741) - but no canon names the field or fixes canonical tokens
+            (UI_Command_Catalog.md:21757) - but no canon names the field or fixes canonical tokens
             for the classes. Choice: source_class as an opaque token of 1..64 (bounds chosen here),
             one of those five classes; alternative: a closed enum once an owner fixes the spellings.
             A project-file source still carries FileSafe and artifact permissions (UCC-101 negative
@@ -31118,7 +31118,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row chooses "the image the bridge reads" and shows the selected source
-            (UI_Command_Catalog.md:21741), so a class alone cannot pick one attachment, artifact,
+            (UI_Command_Catalog.md:21757), so a class alone cannot pick one attachment, artifact,
             FileSafe project file or clipboard image. image_ref is the overlay identity for
             UCC-101..UCC-105 (UI_Command_Catalog.md:8860 overlay row, image_ref?), typed ref by UCC-230's
             identity rule, but canon does not say that select_source carries it or for which classes.
@@ -31138,7 +31138,7 @@ command_payload_definitions:
           gap_note: "The production wiring row catalog.chat_vision_bridge_select_source names no request_schema_ref, and no typed owner request exists for the vision bridge yet."
         - key: disabled_reason_codes
           choice: [not_configured]
-          gap_note: "The row's only precondition is vision_bridge_available (UI_Command_Catalog.md:21741) and canon names no disabled code; false is read as not_configured."
+          gap_note: "The row's only precondition is vision_bridge_available (UI_Command_Catalog.md:21757) and canon names no disabled code; false is read as not_configured."
     - command_id: cmd.chat.vision_bridge.pick_recent_screenshot
       ucc_units: [UCC-101]
       command_kind: domain_action
@@ -31154,13 +31154,13 @@ command_payload_definitions:
       judgments:
         - key: omitted:image_ref
           choice: omitted
-          gap_note: "The row opens the recent OS screenshot picker and uses the screenshot the user picks; an ambiguous recent screenshot is never chosen silently (UI_Command_Catalog.md:21742). The picker chooses, so no input names the image; the overlay identity image_ref? is left out."
+          gap_note: "The row opens the recent OS screenshot picker and uses the screenshot the user picks; an ambiguous recent screenshot is never chosen silently (UI_Command_Catalog.md:21758). The picker chooses, so no input names the image; the overlay identity image_ref? is left out."
         - key: owner_request
           choice: none
           gap_note: "The production wiring row catalog.chat_vision_bridge_pick_recent_screenshot names no request_schema_ref, and no typed owner request exists for the vision bridge yet."
         - key: disabled_reason_codes
           choice: [not_configured, permission_required]
-          gap_note: "Canon names no disabled code. vision_bridge_available false is read as not_configured and recent_screenshot_access_allowed false (UI_Command_Catalog.md:21742) as permission_required."
+          gap_note: "Canon names no disabled code. vision_bridge_available false is read as not_configured and recent_screenshot_access_allowed false (UI_Command_Catalog.md:21758) as permission_required."
     - command_id: cmd.chat.vision_bridge.inspect
       ucc_units: [UCC-101]
       command_kind: navigation_wrapper
@@ -31173,7 +31173,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The overlay lists image_ref? for UCC-101..UCC-105 and the row opens the description for
-            the bridge result with its source image or artifact link (UI_Command_Catalog.md:21743);
+            the bridge result with its source image or artifact link (UI_Command_Catalog.md:21759);
             precondition vision_bridge_result_present makes the source subject mandatory per UCC-230
             identity rule, but no canon names the bridge-result identity field. Choice: image_ref
             binds the inspected result to its source image or artifact.
@@ -31187,7 +31187,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "The row's only precondition is vision_bridge_result_present (UI_Command_Catalog.md:21743) and canon names no disabled code; false is read as a blocked state."
+          gap_note: "The row's only precondition is vision_bridge_result_present (UI_Command_Catalog.md:21759) and canon names no disabled code; false is read as a blocked state."
     - command_id: cmd.chat.vision_bridge.rerun
       ucc_units: [UCC-101]
       command_kind: domain_action
@@ -31199,7 +31199,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row reruns "on the same source" (UI_Command_Catalog.md:21744); precondition
+            The row reruns "on the same source" (UI_Command_Catalog.md:21760); precondition
             vision_bridge_result_present makes the source subject mandatory per UCC-230 identity
             rule, but no canon names the field. Choice: the overlay identity image_ref carries the
             same source.
@@ -31210,7 +31210,7 @@ command_payload_definitions:
           constraints: {min_length: 1, max_length: 4096}
           provenance: gap
           gap_note: >-
-            The row reruns "with the user's question" (UI_Command_Catalog.md:21744) but names no
+            The row reruns "with the user's question" (UI_Command_Catalog.md:21760) but names no
             field. Choice: question, matching the row's label 'Rerun With A Question'; the bounds
             1..4096 are chosen here, canon states none.
       owner_request: none
@@ -31226,7 +31226,7 @@ command_payload_definitions:
           gap_note: "The production wiring row catalog.chat_vision_bridge_rerun names no request_schema_ref, and no typed owner request exists for the vision bridge yet."
         - key: disabled_reason_codes
           choice: [blocked_state_required, permission_required]
-          gap_note: "Canon names no disabled code. vision_bridge_result_present false (UI_Command_Catalog.md:21744) is read as a blocked state and permission_allowed false as permission_required."
+          gap_note: "Canon names no disabled code. vision_bridge_result_present false (UI_Command_Catalog.md:21760) is read as a blocked state and permission_allowed false as permission_required."
     - command_id: cmd.chat.vision_bridge.copy_description
       ucc_units: [UCC-101]
       command_kind: shell_view
@@ -31239,7 +31239,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row copies the derived description of the present bridge result
-            (UI_Command_Catalog.md:21745); precondition vision_bridge_result_present makes the
+            (UI_Command_Catalog.md:21761); precondition vision_bridge_result_present makes the
             source subject mandatory per UCC-230 identity rule, but no canon names the field.
             Choice: the overlay identity image_ref binds the copied description to its source.
       owner_request: none
@@ -31252,7 +31252,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "The row's only precondition is vision_bridge_result_present (UI_Command_Catalog.md:21745) and canon names no disabled code; false is read as a blocked state."
+          gap_note: "The row's only precondition is vision_bridge_result_present (UI_Command_Catalog.md:21761) and canon names no disabled code; false is read as a blocked state."
     - command_id: cmd.chat.vision_bridge.attach_result
       ucc_units: [UCC-101]
       command_kind: domain_action
@@ -31264,7 +31264,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row attaches the bridge result of the present source (UI_Command_Catalog.md:21746);
+            The row attaches the bridge result of the present source (UI_Command_Catalog.md:21762);
             precondition vision_bridge_result_present makes the source subject mandatory per UCC-230
             identity rule, but no canon names the field. Choice: the overlay identity image_ref binds
             the attached result to its source.
@@ -31274,7 +31274,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row's target is "the current turn or run" (UI_Command_Catalog.md:21746) and names no
+            The row's target is "the current turn or run" (UI_Command_Catalog.md:21762) and names no
             target field. Choice: the UCC-230 envelope common optional thread_id names the thread whose
             current turn receives the result; canon does not say which target field the row uses.
         run_id:
@@ -31283,7 +31283,7 @@ command_payload_definitions:
           default: none
           provenance: gap
           gap_note: >-
-            The row's target may be "the current ... run" (UI_Command_Catalog.md:21746), and no target
+            The row's target may be "the current ... run" (UI_Command_Catalog.md:21762), and no target
             field is named. Choice: the UCC-230 envelope common optional run_id names the run target.
             Canon states no rule on whether exactly one of thread_id and run_id must be present.
       owner_request: none
@@ -31299,7 +31299,7 @@ command_payload_definitions:
           gap_note: "The production wiring row catalog.chat_vision_bridge_attach_result names no request_schema_ref, and no typed owner request exists for the vision bridge yet."
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "Canon names no disabled code. vision_bridge_result_present and attach_target_available false (UI_Command_Catalog.md:21746) are read as blocked states. The attachment stays labelled bridge-derived (ACD-425)."
+          gap_note: "Canon names no disabled code. vision_bridge_result_present and attach_target_available false (UI_Command_Catalog.md:21762) are read as blocked states. The attachment stays labelled bridge-derived (ACD-425)."
     - command_id: cmd.chat.vision_bridge.manage_permission
       ucc_units: [UCC-101]
       command_kind: navigation_wrapper
@@ -31312,7 +31312,7 @@ command_payload_definitions:
           provenance: gap
           gap_note: >-
             The row opens the remembered always-accept image permission in its Permissions owner
-            (PS-121, UI_Command_Catalog.md:21747) scoped by project, user/account identity, source
+            (PS-121, UI_Command_Catalog.md:21763) scoped by project, user/account identity, source
             class, destination provider/account, provider-family policy, tool id and
             sensitivity/redaction class (UCC-101 preserved tokens), but no canon names a payload
             field; the permission record is inspectable and revocable without passing an image.
@@ -31327,7 +31327,7 @@ command_payload_definitions:
       judgments:
         - key: disabled_reason_codes
           choice: [blocked_state_required]
-          gap_note: "The row's only precondition is remembered_vision_permission_present (UI_Command_Catalog.md:21747) and canon names no disabled code; false is read as a blocked state."
+          gap_note: "The row's only precondition is remembered_vision_permission_present (UI_Command_Catalog.md:21763) and canon names no disabled code; false is read as a blocked state."
   results:
     VisionBridgeSelectResultV1:
       fields:
