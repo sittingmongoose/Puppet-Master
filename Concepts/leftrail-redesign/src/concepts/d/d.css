@@ -963,6 +963,20 @@
   -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
 }
 [data-rail-skin="d"][data-theme^="glass"] #panel-source :is(.pm7-scm-git-footer, .d-jj-foot) { -webkit-backdrop-filter: none; backdrop-filter: none; }
+/* FO-86: a short panel keeps about three rows of the list beside the open card. The list's scroller has a floor of three
+   rows below the tab strip (its top sits under the strip by design, --pm6-shrun-banner-h, so the floor counts from the
+   strip's foot; Jujutsu's scroller starts below its strip, 73-jj), and the card's footer takes what is left, scrolling its
+   own content when that is less than the card (1280x500: the card's 300 px left the list a 56 px box, 14 px of it below
+   the strip, and the footer ran 80 px past the panel). A taller panel gives the list more than the floor and the footer
+   its whole card, so nothing changes there. */
+[data-rail-skin="d"] #panel-source { --d-list-floor: 132px; }
+[data-rail-skin="d"] #panel-source > .sh-scroll { min-height: calc(var(--pm6-shrun-banner-h, 42px) + var(--d-list-floor)) !important; }
+[data-rail-skin="d"] #panel-source :is(.pm7-scm-git-footer, .d-jj-foot) { flex: 0 1 auto !important; min-height: 0 !important; display: flex; flex-direction: column; }
+/* the card is what scrolls, not the footer: a footer that scrolls clips its own backdrop blur, which repainted the
+   footer of a tall panel 1-4 levels off in every look but Glass. A key's focus brings an action wholly into view with
+   the card's padding round it (without it the scroll stopped at a whole pixel and left a pixel or so of the action
+   under the card's edge). */
+[data-rail-skin="d"] #panel-source :is(.pm7-scm-git-footer, .d-jj-foot) > .pm7-post-card { flex: 0 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: auto; scroll-padding-block: 8px; }
 [data-rail-skin="d"] #panel-source :is(.pm7-scm-git-footer, .pm7-scm-jj-view) .pm7-post-card {
   padding: 7px 7px 8px !important; border-radius: var(--d-R) !important; box-shadow: none !important;
   border: 1px solid var(--d-line) !important; background: color-mix(in srgb, var(--surface-elevated) 70%, transparent) !important;
@@ -1179,7 +1193,9 @@
 [data-rail-skin="d"] #panel-source .pm7-scm-jj-view.d-jj > .d-hidden { display: none !important; }
 [data-rail-skin="d"] #panel-source .d-jj > .d-jj-strip { flex: none; }
 [data-rail-skin="d"] #panel-source .d-jj-scroll {
-  flex: 1 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; scrollbar-gutter: auto;
+  /* basis 0 and a floor of three rows (FO-86, 71-source): the list takes what the strip and the card leave, never less
+     than the floor, and the card's footer gives way below it (the same size as before wherever the floor is not met) */
+  flex: 1 1 0; min-height: var(--d-list-floor, 132px); overflow-x: hidden; overflow-y: auto; scrollbar-gutter: auto;
   padding: 0 var(--d-gx) 12px;
 }
 [data-rail-skin="d"] #panel-source .d-jj [hidden] { display: none !important; }
@@ -1189,7 +1205,7 @@
 [data-rail-skin="d"] #panel-source .d-jj-strip.d-jj-scrolled::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--d-line); pointer-events: none;
 }
-[data-rail-skin="d"] #panel-source .d-jj-foot { flex: none; }
+[data-rail-skin="d"] #panel-source .d-jj-foot { flex: 0 1 auto; }
 
 /* rows */
 [data-rail-skin="d"] #panel-source .d-jj .sh-chg-h.d-jr {

@@ -13,7 +13,9 @@
 §S .pm7-scm-jj-view.d-jj > .d-hidden { display: none !important; }
 §S .d-jj > .d-jj-strip { flex: none; }
 §S .d-jj-scroll {
-  flex: 1 1 auto; min-height: 0; overflow-x: hidden; overflow-y: auto; scrollbar-gutter: auto;
+  /* basis 0 and a floor of three rows (FO-86, 71-source): the list takes what the strip and the card leave, never less
+     than the floor, and the card's footer gives way below it (the same size as before wherever the floor is not met) */
+  flex: 1 1 0; min-height: var(--d-list-floor, 132px); overflow-x: hidden; overflow-y: auto; scrollbar-gutter: auto;
   padding: 0 var(--d-gx) 12px;
 }
 §S .d-jj [hidden] { display: none !important; }
@@ -23,7 +25,7 @@
 §S .d-jj-strip.d-jj-scrolled::after {
   content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--d-line); pointer-events: none;
 }
-§S .d-jj-foot { flex: none; }
+§S .d-jj-foot { flex: 0 1 auto; }
 
 /* rows */
 §S .d-jj .sh-chg-h.d-jr {
