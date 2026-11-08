@@ -245,7 +245,7 @@ def complete_boundary_flip(call, phase, row):
     (phase, row) is reported: a later row that independently watches the same source fact.
     Lane evidence about the complete checker path only; the tool's credit is per table.
     """
-    saved = [model._TABLE_ROWS[phase] for model in MODELS]
+    saved = [model.table_rows(phase) for model in MODELS]
     for model, entries in zip(MODELS, saved):
         model._TABLE_ROWS[phase] = [(n, (lambda value, context: None) if n == row else p, c) for n, p, c in entries]
     try:
