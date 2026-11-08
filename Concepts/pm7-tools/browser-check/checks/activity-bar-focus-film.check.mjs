@@ -271,11 +271,11 @@ async function arrivals(t) {
     const arrive = { bad: [], frames: 0, wrong: [] }, leave = { bad: [], frames: 0, wrong: [] };
     for (let i = 0; i < n; i++) {
       const how = i % 2 ? 'Enter' : 'Control+1';
-      let cap = await film(() => press(how));
+      let cap = await film(async () => { await t.mark(`${look}: arrival ${i + 1} (${how})`); await press(how); });
       let s = await state('files');
       if (!(s.files && s.active === 'files' && s.keyFocus)) arrive.wrong.push({ i, how, s });
       if (cap) { const r = await frameFaults(look, `arrival ${i + 1} (${how})`, 'files', cap); arrive.frames += r.seen; if (r.bad.length) arrive.bad.push({ i: i + 1, how, frames: r.bad.slice(0, 2) }); }
-      cap = await film(() => press('Control+2'));
+      cap = await film(async () => { await t.mark(`${look}: leaving ${i + 1} (Ctrl+2)`); await press('Control+2'); });
       s = await state('files');
       if (!(s.search && s.active === 'files' && s.keyFocus)) leave.wrong.push({ i, s });
       if (cap) { const r = await frameFaults(look, `leaving ${i + 1} (Ctrl+2)`, 'files', cap); leave.frames += r.seen; if (r.bad.length) leave.bad.push({ i: i + 1, frames: r.bad.slice(0, 2) }); }
@@ -322,6 +322,7 @@ async function pointerRoutes(t) {
   for (const look of looks) {
     await settle(f, look, t);
     await pinMotion(t, f);
+    t.log(`${look} boxes ${JSON.stringify({ files: await f.locator('#activityBar .icon[data-ab-id="files"] .symbol').boundingBox(), search: await f.locator('#activityBar .icon[data-ab-id="search"] .symbol').boundingBox() })}`);
     const routes = [
       { name: 'a quick click, the pointer left on Files', reps: n, load: 0, act: async () => { await t.page.mouse.move(...(await centre('files'))); await t.page.mouse.down(); await t.page.mouse.up(); }, end: 'files' },
       { name: 'a quick click, the pointer moved off at once', reps: n, load: 0, act: async () => { await t.page.mouse.move(...(await centre('files'))); await t.page.mouse.down(); await t.page.mouse.up(); await away(); }, end: 'files' },
@@ -339,7 +340,7 @@ async function pointerRoutes(t) {
         await ready(look);
         if (r.pre) await r.pre();
         if (r.load) { await f.evaluate(ms => { window.__fo96Stall.arm = ms; }, r.load); armed++; }
-        const cap = await film(r.act);
+        const cap = await film(async () => { await t.mark(`${look}: ${r.name} ${i + 1}`); await r.act(); });
         const s = await state('files');
         const ok = s.active === 'files' && s.keyFocus === true && (r.end === 'files' ? s.files : s.search);
         if (!ok) out.wrong.push({ i: i + 1, s });
