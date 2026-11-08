@@ -17,19 +17,13 @@ def FV01_integer_range(value, context):
     return 'full_value_unavailable' if value['reason'] == 'physical_integer_range' else None
 
 
-def FV02_other(value, context):
-    return 'full_value_unavailable' if value['reason'] is not None and value['reason'] != 'physical_integer_range' else None
-
-
 def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('FV01_integer_range', g.Invariant('/', 'every integer is inside the SP-1100 physical range'), 'full_value_unavailable', FV01_integer_range),
-        g.Guard('FV02_other', g.Invariant('/', 'the EVENT_VALUE profile and CV-339 edition have no other refusal'), 'full_value_unavailable', FV02_other),
     ])
 
     def check(value):
         table.require('FV01_integer_range', value, context)
-        table.require('FV02_other', value, context)
         return True
     return g.Case(table, check, context)

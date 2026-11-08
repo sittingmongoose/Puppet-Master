@@ -24,6 +24,14 @@ _FIELDS = {}
 RECORDER = None
 # Protocol step marker the suite builder appends between steps of a recorded trace.
 STEP = ('__step__', None, ())
+# Entailed rows in tables of their own, evaluated immediately after their phase
+# from the same observation, so the proved rows keep their tool credit.
+FOLLOWERS = {
+    'payload_jcs': ('payload_jcs_other',),
+    'descriptor_jcs': ('descriptor_jcs_other',),
+    'full_value_bytes': ('full_value_bytes_other',),
+    'app_capture_scm_absent': ('app_capture_scm_absent_id',),
+}
 
 
 def module(phase):
@@ -61,6 +69,8 @@ def refusals(phase, facts):
             found.append((name, code))
     if RECORDER is not None:
         RECORDER.append((phase, copy.deepcopy(observed), tuple(found)))
+    for follower in FOLLOWERS.get(phase, ()):
+        found += refusals(follower, facts)
     return found
 
 

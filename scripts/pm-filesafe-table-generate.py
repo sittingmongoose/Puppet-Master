@@ -49,6 +49,8 @@ SPEC = [
     P('payload_jcs', 'Payload owner: CV-1100 qualified RFC 8785 encoding of the inline semantic body', [
         R('PJ01_binary64', '/', 'the CV-1100 qualified RFC 8785 route preserves every integer through binary64', 'payload_unencodable', "value['binary64'] is True"),
         R('PJ02_decimal', '/', 'the emitted RFC 8785 decimal equals every original number', 'payload_unencodable', "value['decimal'] is True"),
+    ]),
+    P('payload_jcs_other', 'Payload owner: remaining CV-1100 qualified RFC 8785 refusals (behind the closed schema domains)', [
         R('PJ03_other', '/', 'the qualified RFC 8785 route has no other refusal (non-finite, key or string domain)', 'payload_unencodable', "value['other'] is True"),
     ]),
     P('payload_inline', 'Payload owner: SP-337 inline byte budget of the complete canonical JSON semantic body', [
@@ -250,6 +252,8 @@ SPEC = [
     P('descriptor_jcs', 'SP-337: CV-1100 qualified RFC 8785 encoding of the descriptor', [
         R('DJ01_binary64', '/', 'the CV-1100 qualified RFC 8785 route preserves every integer through binary64', 'payload_reference_shape', "value['binary64'] is True"),
         R('DJ02_decimal', '/', 'the emitted RFC 8785 decimal equals every original number', 'payload_reference_shape', "value['decimal'] is True"),
+    ]),
+    P('descriptor_jcs_other', 'SP-337: remaining CV-1100 qualified RFC 8785 descriptor refusals (behind the closed descriptor schema)', [
         R('DJ03_other', '/', 'the qualified RFC 8785 route has no other refusal (non-finite, key or string domain)', 'payload_reference_shape', "value['other'] is True"),
     ]),
     P('payload_ref_shape', 'SP-337: canonical descriptor text and empty inline body', [
@@ -391,6 +395,8 @@ SPEC = [
     ]),
     P('full_value_bytes', 'CV-339 full value: SP-1100 EVENT_VALUE physical bytes', [
         R('FV01_integer_range', '/', 'every integer is inside the SP-1100 physical range', 'full_value_unavailable', "value['reason'] == 'physical_integer_range'"),
+    ]),
+    P('full_value_bytes_other', 'CV-339 full value: remaining SP-1100 EVENT_VALUE refusals (behind the schema-admitted value domains)', [
         R('FV02_other', '/', 'the EVENT_VALUE profile and CV-339 edition have no other refusal', 'full_value_unavailable', "value['reason'] is not None and value['reason'] != 'physical_integer_range'"),
     ]),
     P('mat_semantic_digest', 'Materialization: first-receipt producer semantic digest', [
@@ -515,10 +521,12 @@ SPEC = [
         R('CO03_actor', '/safe_point_record/created_by_actor_ref', 'equals the request actor_ref', 'application_capture_origin', "value['created_by_actor_ref'] != value['request_actor_ref']"),
     ]),
     P('app_capture_scm_absent', 'Application original: a manifest without SCM gives no worktree result fields', [
-        R('CS02_no_worktree_id', '/payload/worktree_id', 'is absent', 'application_capture_scm', "value['worktree_id_present'] is not False"),
         R('CS03_no_worktree_path', '/payload/worktree_path', 'is absent', 'application_capture_scm', "value['worktree_path_present'] is not False"),
         R('CS04_no_branch', '/payload/branch_name', 'is absent', 'application_capture_scm', "value['branch_name_present'] is not False"),
         R('CS05_no_head', '/payload/HEAD_sha', 'is absent', 'application_capture_scm', "value['HEAD_sha_present'] is not False"),
+    ]),
+    P('app_capture_scm_absent_id', 'Application original: a manifest without SCM gives no worktree id (behind the payload worktree rows)', [
+        R('CS02_no_worktree_id', '/payload/worktree_id', 'is absent', 'application_capture_scm', "value['worktree_id_present'] is not False"),
     ]),
     P('app_capture_scm_present', 'Application original: a manifest with SCM gives equal worktree result fields', [
         R('CS06_worktree_id', '/scm/worktree_id', 'equals the result worktree_id', 'application_capture_scm', "value['scm_worktree_id'] != value['result_worktree_id']"),
