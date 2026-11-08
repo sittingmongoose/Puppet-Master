@@ -6,6 +6,9 @@
    panel. The More tray opens as PMR.menu (41-more.js). */
 
 function mountBar(barEl) {
+  /* FO-96 round 8: the key focus ring of the bar's tiles, one element above every layer of the page; CSS places it on the
+     focused tile and shows it (80-bar.src.css), so nothing here reads or times it */
+  if (!document.getElementById('d-abring')) document.body.appendChild(PMR.h('i.d-abring', { id: 'd-abring', 'aria-hidden': 'true' }));
   const tile = PMR.h('span.d-abind', { 'aria-hidden': 'true' });
   barEl.insertBefore(tile, barEl.firstChild);
   const chatTile = PMR.h('span.d-abind.d-abind-chat', { 'aria-hidden': 'true' });

@@ -87,31 +87,35 @@
    focused tile stands still, as a hovered one does (above): Glass presses a lit tile in by scale(.98), which smeared the
    ring across three pixel rows at half its ink. */
 §B .icon:focus-visible { outline: none; }
-§R:not([data-o55-nier-parts~="brackets"]):not(#pmfz) #activityBar .icon:focus-visible .symbol {
-  outline: 3px solid var(--accent-primary) !important; outline-offset: -3px !important;
-  box-shadow: inset 0 0 0 5px var(--surface) !important;
-  box-shadow: inset 0 0 0 5px rgb(from var(--surface) r g b / 1) !important;   /* opaque: Glass's surface is see-through */
-  transform: none !important;
+/* FO-96 round 8 (the redesign): the mark is one ring above every layer of the page, drawn by .d-abring (a body child,
+   40-bar.js) and placed on the focused tile by CSS anchor positioning: the tile takes the anchor name while it has a key
+   focus, so the ring is there in the frame the focus is, wherever the tile is laid out, and nowhere when no tile has a
+   key focus (its anchor functions then fall back to an empty box off the page). Above Liquid Glass's lenses, its hover
+   bead and the hover tags (z-index over the tags' 2147483000; the boot covers, from 2147483400, stay above it), so
+   neither a lens moving or resting on the tile, nor the bead, nor a fading tag can wash or hide it, and no script reads,
+   flags or times it: rounds 4 to 7 handed the mark between the tile and Glass's lens, and every round found a frame the
+   handover missed. The tile's own outline stays only where anchor positioning is missing. A pointer press on a
+   key-focused tile keeps :focus-visible (Chrome), so the ring stays through a click; a tile focused by the pointer has
+   no ring. */
+§R:not([data-o55-nier-parts~="brackets"]):not(#pmfz) #activityBar .icon:focus-visible .symbol { anchor-name: --d-abfocus; transform: none !important; }
+@supports not (anchor-name: --d-abfocus) {
+  §R:not([data-o55-nier-parts~="brackets"]):not(#pmfz) #activityBar .icon:focus-visible .symbol {
+    outline: 3px solid var(--accent-primary) !important; outline-offset: -3px !important;
+    box-shadow: inset 0 0 0 5px var(--surface) !important;
+    box-shadow: inset 0 0 0 5px rgb(from var(--surface) r g b / 1) !important;   /* opaque: Glass's surface is see-through */
+  }
 }
-/* Glass with Liquid Glass on: the open panel's icon lies under the moving lens (glass.js), which magnifies and refracts
-   what is beneath it and lays its glint over its top band, so the mark is drawn on the lens itself while it carries
-   the focus (glass.js puts data-lg-focus on the lens and on its icon). The icon's own mark, seen through the glass,
-   stands down, and the glint steps aside so the mark's top edge keeps its ink. */
-§R:not([data-o55-nier-parts~="brackets"])[data-lg="on"][data-theme^="glass"]:not(#pmfz) #lg-lenses .lg-lens[data-lg-for="rail-icons"][data-lg-focus] {
-  box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px var(--surface), var(--pm-switch-shadow, var(--lg-lens-drop)) !important;
-  box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px rgb(from var(--surface) r g b / 1), var(--pm-switch-shadow, var(--lg-lens-drop)) !important;
-}
-§R:not([data-o55-nier-parts~="brackets"])[data-lg="on"][data-theme^="glass"]:not(#pmfz) #lg-lenses .lg-lens[data-lg-for="rail-icons"][data-lg-focus]::after { opacity: 0 !important; }
-§R:not([data-o55-nier-parts~="brackets"]):not(#pmfz)[data-lg="on"][data-theme^="glass"] #activityBar .icon[data-lg-focus]:focus-visible .symbol { outline: none !important; box-shadow: none !important; }
-/* While the lens moves and does not carry the mark (it travels onto or off the key-focused icon, or fades in on it), its
-   refraction lies over the icon's own mark and washed it below 3:1 (sol-review-g8). For that motion glass.js shows a
-   cue on the icon's tile in the lenses' layer, above the lenses: this mark again, the same 3 px accent ring and opaque
-   ground band, unrefracted. It goes when the lens takes the mark or comes to rest. */
-.lg-rail-cue { display: none; }
-§R:not([data-o55-nier-parts~="brackets"])[data-lg="on"][data-theme^="glass"]:not(#pmfz) .lg-rail-cue[data-lg-on] {
-  display: block; position: absolute; z-index: 5; pointer-events: none; box-sizing: border-box;
-  box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px var(--surface);
-  box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px rgb(from var(--surface) r g b / 1);
+.d-abring { display: none; }
+@supports (anchor-name: --d-abfocus) {
+  §R:not([data-o55-nier-parts~="brackets"]) .d-abring {
+    display: block; position: fixed; z-index: 2147483100; pointer-events: none; margin: 0; padding: 0; border: 0; box-sizing: border-box;
+    position-anchor: --d-abfocus; top: anchor(top, -99px); left: anchor(left, -99px); width: anchor-size(width, 0px); height: anchor-size(height, 0px);
+    position-visibility: anchors-visible; border-radius: var(--d-Rbar);
+    box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px var(--surface);
+    box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px rgb(from var(--surface) r g b / 1);   /* opaque: Glass's surface is see-through */
+  }
+  /* the tile's own corner, which Liquid Glass sets on the symbol (glass.css, #activityBar .icon .symbol) */
+  §R[data-lg="on"][data-theme^="glass"]:not([data-o55-nier-parts~="brackets"]) .d-abring { border-radius: var(--pm-ctl-r); }
 }
 §R[data-o55-nier="on"] #activityBar > .activity-bar-toggle:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 

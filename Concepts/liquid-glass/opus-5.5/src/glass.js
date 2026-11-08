@@ -1445,103 +1445,14 @@
     var v = sp.querySelector(':scope > .side-panel-view.active');
     var icon = v && strip.querySelector('.icon[data-target="' + v.id + '"]');
     strip.querySelectorAll('.icon[data-lg-current]').forEach(function (i) { if (i !== icon) i.removeAttribute('data-lg-current'); });
-    if (icon && !icon.hasAttribute('data-lg-current')) { icon.setAttribute('data-lg-current', ''); queueRailFocus(); } return icon;
+    if (icon && !icon.hasAttribute('data-lg-current')) icon.setAttribute('data-lg-current', ''); return icon;
   }
-  /* FO-96 (F96-1): the open panel's icon lies under this lens, which magnifies and refracts what is beneath it, so a key
-     focus mark drawn on the icon could not be read there. While the icon has a key focus and the lens is painted at
-     rest on it, the lens carries the mark: data-lg-focus on the lens and on the icon (the rail skin, concept D
-     80-bar.src.css, draws it on the lens and stands the icon's own mark down). Otherwise neither carries the flag and
-     the icon shows its own mark. Kept in step whenever the rail's lens is synced (a panel opening, closing or changing
-     hides, shows or moves it: F96b-1; where it jumps or hides in one step, in that same sync, before the frame paints:
-     F96d-1), on focus moves and keys in the bar (a key turns :focus-visible on for a
-     mouse-focused icon with no focusin), and, while the lens travels to the focused icon or fades in on it, once more
-     when that motion ends, so the mark never sits on the item the focus has left (F96b-2). "Painted" is read from the
-     computed opacity, not from display: the lens is hidden by opacity.
-     While the lens moves and does not carry the mark (it travels onto or off the key-focused icon, fades in on it, or
-     passes over it), its refraction lies over the icon's own mark and washed it below 3:1 (2.2:1 at Search's bottom in
-     Glass Light, sol-review-g8). So for that motion the icon's own mark is drawn once more above the lenses, unrefracted:
-     the cue (the rail skin, 80-bar.src.css, draws it as the icon's mark). It goes in the sync that hands the mark to the
-     lens, or when the motion ends; it is placed only when it shows, and only for a key focus in the bar, so a pointer's
-     switch reads nothing more. The lens takes the mark only once it is painted in full: one still fading in (an arrival,
-     Reduced Motion's fade) drew a pale ring, near 2.3:1 just past half its opacity, so until its fade ends the cue holds
-     the mark.
-     Round 7 (opus-recheck-g8fix): the flags and the cue are decided where the lens's motion is decided. A travel starts
-     in Glass's strip sync, inside a frame callback, and that frame commits it to the compositor, which runs it whatever
-     the main thread does next; this read used to be queued for the frame after, so with the main thread held (a panel's
-     build, under a recorder on Nas1) the travel ran on the old state: no cue over the arriving lens (2.2-2.5:1), and a
-     lens leaving the focused icon still flagged, carrying the mark away while the icon had none. So a travel is read in
-     the task that starts it (syncStrips, after its batch), and the lens takes the mark only at rest, when no motion of
-     its own runs: then nothing a held main thread delays can leave a frame between the cue and the lens's mark. A lens
-     at rest on the focused icon that cannot take the mark (painted, but not lined up or not in full) keeps the cue. */
-  var railCueEl = null;
-  function railMotions(L) {
-    var out = [];
-    if (L.lens.getAnimations) L.lens.getAnimations().forEach(function (a) {
-      if (a === L.hopHide || (a.playState !== 'running' && a.playState !== 'pending') || !a.finished) return;
-      var end = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming().endTime : Infinity;
-      if (isFinite(end)) out.push(a);
-    });
-    return out;
-  }
-  function railCue(L, icon) {
-    if (!icon) { if (railCueEl && railCueEl.hasAttribute('data-lg-on')) railCueEl.removeAttribute('data-lg-on'); return; }
-    if (!railCueEl) railCueEl = el('i', { class: 'lg-rail-cue', 'aria-hidden': 'true' });
-    if (railCueEl.parentElement !== L.layer) L.layer.appendChild(railCueEl);
-    var sym = icon.querySelector('.symbol') || icon, b = sym.getBoundingClientRect(), lr = L.layer.getBoundingClientRect(), st = railCueEl.style;
-    st.left = (b.left - lr.left) + 'px'; st.top = (b.top - lr.top) + 'px'; st.width = b.width + 'px'; st.height = b.height + 'px';
-    st.borderRadius = getComputedStyle(sym).borderRadius;
-    if (!railCueEl.hasAttribute('data-lg-on')) railCueEl.setAttribute('data-lg-on', '');
-  }
-  var railFocusQ = 0, railAwaited = typeof WeakSet === 'function' ? new WeakSet() : null;
-  function railLensAt(lens, icon) {
-    var s = icon.querySelector('.symbol') || icon, a = lens.getBoundingClientRect(), b = s.getBoundingClientRect();
-    return Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 2 && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 2;
-  }
-  function syncRailFocus() {
-    railFocusQ = 0;
-    var bar = document.getElementById('activityBar');
-    if (!bar) return;
-    /* outside Glass the rail has no lens of its own (an adopting look keeps its lit icon), so no flag stays (F96c-1) */
-    var L = isGlass() && typeof lenses !== 'undefined' && lenses ? lenses.get(bar) : null, act = document.activeElement;
-    /* any rail lens still flagged counts, the live one or one left from an earlier look (outside Glass the rail has none) */
-    var flagged = bar.querySelector('.icon[data-lg-focus]') || document.querySelector('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]');
-    var cur = null, on = false, wait = false, kf = null, motions = null, seen = false;
-    if (act && act.matches && act.matches('#activityBar .icon')) {
-      try { kf = act.matches(':focus-visible') ? act : null; } catch (e) { kf = null; }
-      if (kf && act.matches('[data-lg-current]')) { var sp = document.getElementById('sidePanelSlot'); cur = sp && visible(sp) ? act : null; }
-    }
-    var cued = !!railCueEl && railCueEl.hasAttribute('data-lg-on');
-    if (!cur && !flagged && !cued && !(kf && L && L.anim)) return;
-    if (cur && L && L.lens && L.lens.isConnected && L.rect && !(typeof hiddenLenses !== 'undefined' && hiddenLenses.has(L))) {
-      var cs = getComputedStyle(L.lens);
-      if (cs.display !== 'none') {
-        motions = railMotions(L); seen = parseFloat(cs.opacity) > 0.02;
-        if (!motions.length && parseFloat(cs.opacity) > 0.98 && railLensAt(L.lens, cur)) on = true; else wait = true;
-      }
-    }
-    bar.querySelectorAll('.icon[data-lg-focus]').forEach(function (i) { if (!on || i !== cur) i.removeAttribute('data-lg-focus'); });
-    document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]').forEach(function (x) { if (!on || !L || x !== L.lens) x.removeAttribute('data-lg-focus'); });
-    if (on && L && L.lens) L.lens.setAttribute('data-lg-focus', '');
-    if (on && !cur.hasAttribute('data-lg-focus')) cur.setAttribute('data-lg-focus', '');
-    var lensUp = kf && !on && L && L.lens && L.lens.isConnected && L.rect && !L.under && L.lens.style.opacity !== '0';
-    if (lensUp && !motions) motions = railMotions(L);
-    railCue(L, lensUp && (motions.length || (kf === cur && wait && seen)) ? kf : null);
-    /* the lens is on its way, or fading in. No poll (F96c-3): look again when the lens's own motion ends (travel(), a
-       ride on its strip's entrance, an arrival or reduced-motion fade: every move of the lens that is not a jump is one
-       of its Web Animations), in that frame, before it paints; a cancelled one is looked at too. A lens at rest somewhere
-       else waits for a strip sync to move it, which reads this itself; an endless animation (a step look's hop hide,
-       never in Glass) is not waited on. */
-    if (motions && motions.length) motions.forEach(function (a) {
-      if (railAwaited && railAwaited.has(a)) return;
-      if (railAwaited) railAwaited.add(a);
-      a.finished.then(railFocusNow, railFocusNow);
-    });
-  }
-  function queueRailFocus() { if (!railFocusQ) railFocusQ = requestAnimationFrame(syncRailFocus); }
-  function railFocusNow() { if (railFocusQ) { cancelAnimationFrame(railFocusQ); railFocusQ = 0; } syncRailFocus(); }
-  document.addEventListener('focusin', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) railFocusNow(); }, true);
-  document.addEventListener('focusout', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) queueRailFocus(); }, true);
-  document.addEventListener('keydown', function (e) { if (e.target && e.target.closest && e.target.closest('#activityBar')) queueRailFocus(); }, true);
+  /* FO-96 (F96-1 round 8, the redesign): the key focus mark of a rail icon is not this lens's. The rail skin draws it as
+     one ring above every layer of the page (Glass's lenses and hover bead, the hover tags), placed on the focused tile
+     by CSS anchor positioning and shown by :focus-visible alone (concept D, 80-bar.src.css), so nothing here reads,
+     flags or times it, and the lens moves as it would with no focus at all. Rounds 4 to 7 handed the mark between the
+     icon and this lens; every round found another frame the handover missed (the lens carrying it away, a jump, the
+     travelling glass washing it, a held main thread, a pointer press), so the handover is gone. */
   /* Every lens lives in one layer above the strips and the title bar (#lg-lenses), not inside them: from outside it sees
      the sheet, the wallpaper and the label together, and no sheet can cover it. */
   /* one layer per host surface: the app shell, or a window that floats above it (onboarding's window, a dialog in
@@ -2122,7 +2033,7 @@
      its layer and its strip's mark move no strip. What the read could not know is read at the write, as before: a lens
      a write brings back from the park or the carry, a target the write's press logic changes, a layer not made yet whose
      own box the lens is placed in. */
-  var lensMounts = null, lensRides = null, railBatchRead = false;
+  var lensMounts = null, lensRides = null;
   function syncStrips(list) {
     if (!list.length) return;
     var reads = list.map(function (t) { return readStrip(t[0], t[1]); });
@@ -2130,10 +2041,9 @@
     try { list.forEach(function (t, i) { syncStrip(t[0], t[1], reads[i]); }); }
     finally { lensMounts = null; lensRides = null; }
     if (mounts.size) mountMeasured(mounts, false);
+    if (!rides.length) return;
     rides.forEach(function (r) { if (r.L.lens.isConnected) { r.specs = rideRead(r.L, r.target); r.left = r.arrive ? arrivalLeft(r.target) : 0; } });
     rides.forEach(function (r) { if (r.specs) { if (r.arrive) arriveIn(r.L, r.left); rideApply(r.L, r.specs); } });
-    /* the rail's lens travelled or first showed in this batch: its flags and cue are read now, in the task that moved it */
-    if (railBatchRead || rides.some(function (r) { return r.rail && r.specs; })) { railBatchRead = false; railFocusNow(); }
   }
   function readStrip(cfg, strip) {
     cvWait.delete(strip);
@@ -2198,12 +2108,6 @@
     });
   }
   function syncStripNow(cfg, strip, m) {
-    /* FO-96: the rail's lens may hide, show or move: re-read the focus flags. A move along a path is read next frame
-       (and timed by syncRailFocus); a jump or a one-step hide is read in this same call, before the frame paints, so the
-       lens never shows the mark on an icon the key focus is not on, nor leaves the focused icon unmarked (F96d-1:
-       Reduced Motion, Ctrl+2 with the focus on the open panel's icon, 1 or 2 frames with no mark). */
-    var rail = cfg.kind === 'lensIcon';
-    if (rail) queueRailFocus();
     if (!m && cvSkipped(strip)) { cvSkip(strip); return; }
     var L = lensFor(strip, cfg), P0 = L.pending;
     followStrip(strip, cfg);
@@ -2219,7 +2123,7 @@
     if (L.pending && !L.pending.el.isConnected) { pressMark(L.pending, false); L.pending = null; }
     if (P0 && P0 !== L.pending) pressMark(P0, false);
     var pre = m && m.target === target ? m : null;
-    if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { var shown = L.lens.style.opacity !== '0'; stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (shown) L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); if (rail && shown) railFocusNow(); return; }
+    if (!target || !(pre ? pre.shown : visible(target) && visible(strip))) { stopLensTravel(L); if (L.scrubCleanup) L.scrubCleanup(); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; awaitShow(L, cfg); return; }
     hiddenLenses.delete(L);
     if (L.scroller && L.scroller.isConnected) {
       var out;
@@ -2228,7 +2132,7 @@
         var sr = L.scroller.getBoundingClientRect(), tr = boxRect(cfg.box ? (cfg.box(target).getBoundingClientRect ? cfg.box(target) : target) : target);
         out = tr.left < sr.left - 1 || tr.left + tr.width > sr.right + 1 || tr.top < sr.top - 1 || tr.top + tr.height > sr.bottom + 1;
       }
-      if (out) { var was = L.lens.style.opacity !== '0'; stopLensTravel(L); if (was) L.lens.style.opacity = '0'; L.rect = null; if (rail && was) railFocusNow(); return; }
+      if (out) { stopLensTravel(L); if (L.lens.style.opacity !== '0') L.lens.style.opacity = '0'; L.rect = null; return; }
     }
     if (L.lens.style.opacity) L.lens.style.opacity = '';
     prewarmSoon(L, cfg, strip);
@@ -2236,7 +2140,7 @@
     if (!R) R = rectIn(strip, cfg.box ? cfg.box(target) : target, lensPad(strip, cfg));
     var A = L.rect;
     if (L.dragging) return;
-    if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); if (rail) railFocusNow(); return; }
+    if (L.snap) { L.snap = false; stopLensTravel(L); setLensBox(L, R); return; }
     var quiet = reduced();
     var still = A && (quiet ? A.x === R.x && A.y === R.y && A.w === R.w && A.h === R.h : Math.abs(A.x - R.x) < 0.5 && Math.abs(A.y - R.y) < 0.5 && Math.abs(A.w - R.w) < 0.5 && Math.abs(A.h - R.h) < 0.5);
     if ((quiet && !L.reducedAnim) || !switchOn()) stopLensTravel(L);
@@ -2253,18 +2157,10 @@
       /* a lens in the app-wide layer waits for its strip's entrance; one in its host's own layer (a page, a menu, a
          dialog) is part of that entrance already */
       if (!A && !quiet && switchOn()) {
-        if (lensRides) { stopRide(L); lensRides.push({ L: L, target: target, arrive: L.layer === layer, rail: rail }); }
+        if (lensRides) { stopRide(L); lensRides.push({ L: L, target: target, arrive: L.layer === layer }); }
         else { if (L.layer === layer) arrive(L, target); ride(L, target); }
         settleCheck(L);
-        if (rail && !lensRides) railFocusNow();
       }
-      /* a jump (Reduced Motion, or no switch motion) is read now. A first show in motion may fade in by an arrival or
-         ride, which a batched sync attaches later in this task: it is read once that is attached (here, or after the
-         batch's rides in syncStrips), not next frame. Read next frame, a lens shown at once at full opacity lay over the
-         key-focused icon's own mark, washing it, for the frames before the read handed it the mark (F96-1 round 6:
-         Enter opening Files in Glass Light, 2 or 3 frames at 4.7 and under on its sides while the panel's open held the
-         main thread). A fade in is read again at its end, with the cue holding the mark meanwhile. */
-      if (rail && (A || quiet || !switchOn())) railFocusNow();
       return;
     }
     /* the destination moved by a pixel or two (the chosen label turned bold): a move in flight carries on, re-based;
@@ -2281,9 +2177,6 @@
     var from = visualRect(L) || A, vertical = !!cfg.vertical || Math.abs(from.y - R.y) > Math.abs(from.x - R.x);
     if (switchMotion !== 'glide' && !isGlass()) { hop(L, from, R, strip, cfg, target, vertical); return; }
     travel(L, from, R, vertical, { labels: labelsOf(cfg, strip, vertical), mags: magsOf(cfg), vertical: vertical });
-    /* the rail's travel is read in the task that starts it, so its flags and cue go to the compositor with it (round 7):
-       after a batch's writes, or now */
-    if (rail) { if (lensRides) railBatchRead = true; else railFocusNow(); }
   }
   /* Retro's step and NieR's cut. A step is two hard jumps, 33 ms apart: to the tab half way (when there is one), then to
      its own; a tab next door is one jump, at once. Every frame of it runs on the compositor, so it keeps its time however
@@ -2778,7 +2671,7 @@
     sheets.forEach(unpin);   /* the scroll has settled: anchored frost again, at the very spot it is pinned */
     if (root.hasAttribute('data-lg-demo-host') && document.getElementById('lg-demo-btn')) demo();
     applyWall();
-    if (!isGlass()) { unmountAll(switchLook); if (!switchLook) { queueRailFocus(); return; } }
+    if (!isGlass()) { unmountAll(switchLook); if (!switchLook) return; }
     else { syncSurfaces(scopes, sheets); ensureFrost(); }
     var covered = pageCovered(), todo = [];
     STRIPS.forEach(function (cfg) {
@@ -2787,7 +2680,7 @@
       });
       strips.forEach(function (s) { if (s.matches(cfg.sel) && found.indexOf(s) < 0) found.push(s); });
       /* the activity bar's icon lens is Glass's own rail design; an adopting look keeps its own lit icon there */
-      if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); queueRailFocus(); return; }
+      if (cfg.kind === 'lensIcon' && !isGlass()) { found.forEach(function (s) { var L = lenses.get(s); if (L) { disposeLens(L); lenses.delete(s); } }); return; }
       found.forEach(function (s) {
         /* (a shown chip is put out whatever its box says: a look change clears every lens's box for the next sync to place
            it again, and a screen that left in that same sync kept its chip on screen at full opacity until the screen was
