@@ -188,9 +188,12 @@
       let s = p.shadow(36, 52);
       s += p.rect(x0, y0, W, H, 10, 'body', 'e') + p.rect(x0 + 8, y0 + 8, W - 16, H - 16, 6, 'panel', 'e');
       s += p.circle(x0 + 14, y0 + 6, 2.6, 'shade', 'e') + p.circle(-x0 - 14, y0 + 6, 2.6, 'shade', 'e');
-      /* QA-5: the words centred in the panel by their ink (at +1 they read 1.0 low of it, stage-symbol-centre) */
-      const cy = y0 + H / 2;
-      s += txt ? lines.map((l, i) => p.text(0, cy + (i - (lines.length - 1) / 2) * lh, l, size * k, 'ink')).join('') : `<g class="st-caret">${p.rect(-1.5, cy - 11, 3, 22, 1, 'ink')}</g>`;
+      /* QA-5: the words centred in the panel by their ink. This once sat at centre + 1, where the ink read
+         1.0 low in Basic and Glass (Inter's central baseline already centres its ink). Retro's and NieR's
+         faces centre their em box, whose middle stands off the ink's: at the panel's centre their ink read
+         0.75-1 low and 0.55 right (Retro), 1.5 low (NieR), stage-symbol-centre on 'Loom' at 20; carried back */
+      const cy = y0 + H / 2, SO = { retro: [-0.55, -0.85], nier: [0, -1.5] }[p.fam] || [0, 0];
+      s += txt ? lines.map((l, i) => p.text(SO[0], cy + SO[1] + (i - (lines.length - 1) / 2) * lh, l, size * k, 'ink')).join('') : `<g class="st-caret">${p.rect(-1.5, cy - 11, 3, 22, 1, 'ink')}</g>`;
       return { svg: s, ties: [[x0 + 14, y0], [-x0 - 14, y0]], foot: y0 + H };
     },
     vault(p) {
@@ -268,8 +271,10 @@
       if (lit && (p.fam === 'friendly' || p.fam === 'glass')) s += `<circle r="30" fill="${p.w.hues[hue]}" opacity=".22"/>`;
       s += p.circle(0, 0, 22, lit ? 'body' : 'panel', hue);
       if (lit) s += p.circle(0, 0, 13, 'accent', hue);
-      /* QA-5: the label centred in the orb by its ink (at y 1 it read 0.5 low in Basic and 0.77 in Glass) */
-      s += p.text(0, 0.4, label, 15, lit ? (p.fam === 'nier' ? 'light' : 'ink') : 'ink', lit ? '' : ' opacity=".55"');
+      /* QA-5: the label centred in the orb by its ink (at y 1 it read 0.5 low in Basic, 0.77 in Glass and
+         1.09 low, 0.43 left in NieR's face: the same em-box offset as the sign's, carried back per family) */
+      const OO = { nier: [0.4, -1.05] }[p.fam] || [0, 0];
+      s += p.text(OO[0], 0.4 + OO[1], label, 15, lit ? (p.fam === 'nier' ? 'light' : 'ink') : 'ink', lit ? '' : ' opacity=".55"');
       s += p.rect(-6, -30, 12, 8, 2, 'shade', hue);
       return { svg: s, ties: [[0, -30]], foot: 22 };
     },
