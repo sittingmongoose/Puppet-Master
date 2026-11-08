@@ -2643,6 +2643,16 @@
 }
 [data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"])[data-lg="on"][data-theme^="glass"]:not(#pmfz) #lg-lenses .lg-lens[data-lg-for="rail-icons"][data-lg-focus]::after { opacity: 0 !important; }
 [data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"]):not(#pmfz)[data-lg="on"][data-theme^="glass"] #activityBar .icon[data-lg-focus]:focus-visible .symbol { outline: none !important; box-shadow: none !important; }
+/* While the lens moves and does not carry the mark (it travels onto or off the key-focused icon, or fades in on it), its
+   refraction lies over the icon's own mark and washed it below 3:1 (sol-review-g8). For that motion glass.js shows a
+   cue on the icon's tile in the lenses' layer, above the lenses: this mark again, the same 3 px accent ring and opaque
+   ground band, unrefracted. It goes when the lens takes the mark or comes to rest. */
+.lg-rail-cue { display: none; }
+[data-rail-skin="d"]:not([data-o55-nier-parts~="brackets"])[data-lg="on"][data-theme^="glass"]:not(#pmfz) .lg-rail-cue[data-lg-on] {
+  display: block; position: absolute; z-index: 5; pointer-events: none; box-sizing: border-box;
+  box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px var(--surface);
+  box-shadow: inset 0 0 0 3px var(--accent-primary), inset 0 0 0 5px rgb(from var(--surface) r g b / 1);
+}
 [data-rail-skin="d"][data-o55-nier="on"] #activityBar > .activity-bar-toggle:hover { background: var(--o55-nier-ink) !important; color: var(--o55-nier-on-ink) !important; }
 
 /* drag to reorder or hide: the ghost is the icon's tile lifted off the bar; the drop line is the accent, square in Retro
