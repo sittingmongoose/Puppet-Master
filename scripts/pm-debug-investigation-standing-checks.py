@@ -25,6 +25,7 @@ INPUTS = (FIXTURE, CHECKER, 'Plans/debug_investigation_event_payloads.schema.jso
               'admission', 'envelope', 'family', 'instrumentation', 'instrumentation_detail',
               'instrumentation_detail_values_a', 'instrumentation_detail_values_b', 'instrumentation_detail_values_c', 'instrumentation_detail_values_d',
               'instrumentation_detail_required', 'instrumentation_joins', 'payload_values', 'instrumentation_source_values',
+              'instrumentation_handoff', 'instrumentation_retry',
               'instrumentation_source', 'lifecycle', 'payload', 'references', 'retry', 'target_payload')))
 
 

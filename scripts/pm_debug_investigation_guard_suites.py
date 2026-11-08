@@ -528,6 +528,58 @@ NON_GUARDS = {
         ('instrumentation_case', 'data_operation', 'records.get',
          'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
     ],
+    'instrumentation_handoff': [
+        ('instrumentation_handoff_case', 'return', 'return g.Case(table, check, context)',
+         'Return the fresh execution object built for this candidate; it decides no acceptance.'),
+        ('instrumentation_handoff_case', 'call_review', "case_value.get('payload')",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_handoff_case', 'call_review', "case_value.get('detail_records')",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_handoff_case', 'call_review', "payload.get('detail_ref')",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_handoff_case', 'call_review', 'records.get(ref)',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_handoff_case', 'data_operation', '(payload, records)',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_handoff_case', 'data_operation', "payload.get('detail_ref') if type(payload) is dict else None",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_handoff_case', 'data_operation', 'records.get(ref) if type(ref) is str and type(records) is dict else None',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_handoff_case', 'data_operation', 'type(ref) is str and type(records) is dict',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_handoff_case', 'data_operation', 'case_value.get',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.', 2),
+        ('instrumentation_handoff_case', 'data_operation', 'payload.get',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_handoff_case', 'data_operation', 'records.get',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+    ],
+    'instrumentation_retry': [
+        ('instrumentation_retry_case', 'return', 'return g.Case(table, check, context)',
+         'Return the fresh execution object built for this candidate; it decides no acceptance.'),
+        ('instrumentation_retry_case', 'call_review', "case_value.get('payload')",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_retry_case', 'call_review', "case_value.get('detail_records')",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_retry_case', 'call_review', "payload.get('detail_ref')",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_retry_case', 'call_review', 'records.get(ref)',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_retry_case', 'data_operation', '(payload, records)',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_retry_case', 'data_operation', "payload.get('detail_ref') if type(payload) is dict else None",
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_retry_case', 'data_operation', 'records.get(ref) if type(ref) is str and type(records) is dict else None',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_retry_case', 'data_operation', 'type(ref) is str and type(records) is dict',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_retry_case', 'data_operation', 'case_value.get',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.', 2),
+        ('instrumentation_retry_case', 'data_operation', 'payload.get',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+        ('instrumentation_retry_case', 'data_operation', 'records.get',
+         'Select the detail record payload.detail_ref names, only for a string ref into a dict of records; otherwise None, which the transition rows treat as out of their domain.'),
+    ],
     'retry': [
         ('retry_request_subject', 'return', 'return value',
          'Schema selector: read the subject the schema rows judge; a missing member yields None, which the subject type row refuses.'),
@@ -983,6 +1035,16 @@ def instrumentation_suite():
                          production.instrumentation.instrumentation_case)
 
 
+def instrumentation_handoff_suite():
+    return single_family('instrumentation_state_changed', 'instrumentation_handoff', 'instrumentation_handoff',
+                         production.instrumentation_handoff.instrumentation_handoff_case)
+
+
+def instrumentation_retry_suite():
+    return single_family('instrumentation_state_changed', 'instrumentation_retry', 'instrumentation_retry',
+                         production.instrumentation_retry.instrumentation_retry_case)
+
+
 def probe_suite(name, module, factory, probes, boundary, keys=()):
     controls, negatives = [], []
     for prefix, (cs, ns) in probes:
@@ -1022,4 +1084,5 @@ SUITES = ('envelope_suite', 'family_suite', 'payload_context_item_added_suite', 
           'payload_values_target_bound_suite', 'payload_values_state_changed_suite', 'instrumentation_source_values_suite', 'payload_target_bound_suite', 'payload_verification_recorded_suite',
           'payload_state_changed_suite', 'lifecycle_suite', 'instrumentation_source_suite', 'instrumentation_detail_suite', 'instrumentation_detail_required_suite',
           'instrumentation_detail_values_a_suite', 'instrumentation_detail_values_b_suite', 'instrumentation_detail_values_c_suite', 'instrumentation_detail_values_d_suite',
-          'instrumentation_joins_suite', 'instrumentation_suite', 'retry_request_suite', 'admission_suite', 'retained_suite', 'references_suite')
+          'instrumentation_joins_suite', 'instrumentation_suite',
+          'instrumentation_handoff_suite', 'instrumentation_retry_suite', 'retry_request_suite', 'admission_suite', 'retained_suite', 'references_suite')

@@ -28,6 +28,8 @@ import pm_debug_investigation_guards_instrumentation_detail_values_c as instrume
 import pm_debug_investigation_guards_instrumentation_detail_values_d as instrumentation_detail_values_d
 import pm_debug_investigation_guards_instrumentation_detail_required as instrumentation_detail_required
 import pm_debug_investigation_guards_instrumentation_joins as instrumentation_joins
+import pm_debug_investigation_guards_instrumentation_handoff as instrumentation_handoff
+import pm_debug_investigation_guards_instrumentation_retry as instrumentation_retry
 import pm_debug_investigation_guards_instrumentation_source as instrumentation_source
 import pm_debug_investigation_guards_instrumentation_source_values as instrumentation_source_values
 import pm_debug_investigation_guards_lifecycle as lifecycle
@@ -288,7 +290,9 @@ PHASE_MEMBERS = {
     'instrumentation_detail_values_c': ('detail_records', 'payload'),
     'instrumentation_detail_values_d': ('detail_records', 'payload'),
     'instrumentation_joins': ('detail_records', 'instrumentation_source', 'payload'),
-    'instrumentation': ('detail_records', 'instrumentation_source', 'payload')}
+    'instrumentation': ('detail_records', 'instrumentation_source', 'payload'),
+    'instrumentation_handoff': ('detail_records', 'payload'),
+    'instrumentation_retry': ('detail_records', 'payload')}
 # Value-part phases judge only some properties of one object; their proof input
 # keeps only those properties (and, for the detail parts, only payload.detail_ref
 # and the record it names).
@@ -349,7 +353,9 @@ def phases(case):
                      ('instrumentation_detail_values_b', instrumentation_detail_values_b.instrumentation_detail_values_b_case),
                      ('instrumentation_detail_values_c', instrumentation_detail_values_c.instrumentation_detail_values_c_case),
                      ('instrumentation_joins', instrumentation_joins.instrumentation_joins_case),
-                     ('instrumentation', instrumentation.instrumentation_case)]
+                     ('instrumentation', instrumentation.instrumentation_case),
+                     ('instrumentation_handoff', instrumentation_handoff.instrumentation_handoff_case),
+                     ('instrumentation_retry', instrumentation_retry.instrumentation_retry_case)]
     if event == LIFECYCLE_EVENT:
         sequence.append(('lifecycle', lifecycle.lifecycle_case))
     return sequence
