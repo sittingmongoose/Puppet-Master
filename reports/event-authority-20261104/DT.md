@@ -1,3 +1,171 @@
+# DT — Sweep part 2A: guard tables on the gated guard tool
+
+**Branch:** `plans/ea-w2-tools-gates-approvals-20261104`. Part 2A start `b8fea83b48`; gated tool merge `a4ede4d124` (tool `004bdedd63`, eleven files, unchanged). Implementation head `3f45efdb76` (checker, tables and standing-check script byte-identical to `05b1cc4034`; it only corrects exclusion-reason strings); delivery head in the external sweep `HEAD.txt`. No rebase onto main this round.
+
+**All 17 families keep their part-1 grades: 166 PASS / 21 PARTIAL / 17 ABSENT / 0 CONFLICT.** Part 2A closes part-1 Part 2 item 2 (shared guard tables and tool). `positive_negative_oracles` stays PARTIAL for every family: F16 and every number or timestamp item wait for NUMRULE (part 2B), JSON Schema keyword cuts are not ported to the tool (each schema occurrence is one verdict row), and the Sol/Astra review runs once after part 2B. Membership stays ABSENT; native execution is NOT_RUN; READY stays false. This section and `DT-self-grade.json` supersede every status below.
+
+## Sweep part 2A: findings and responses
+
+| Item | Disposition and change | Where | Verify |
+|---|---|---|---|
+| **Take the gated tool** | Merged `004bdedd63` with `--no-ff` as `a4ede4d124`: exactly the eleven tool files, no conflict, none edited. | `scripts/pm_guard_isolation*.py`, `scripts/guard-isolation/README.md`, `Plans/guard_isolation_traps.json`, GUARDTOOL reports | `git diff --stat a4ede4d124^1 a4ede4d124` lists 11 files; `git diff a4ede4d124 HEAD -- scripts/pm_guard_isolation.py` is empty. |
+| **Part 2 item 2 — guard tables** (fixed, `5ee6dc5127`) | Every product refusal of the DT checker is one named row of **70 phase tables (241 rows, at most seven each)**, generated from one row spec. The checker reaches a refusal only through `require`/`table_refusal`; derivation computes observations (canonical bytes, digests, recomputed identities and commitments, type names, presence, mismatch lists) and decides nothing. Or-chains are split into one row per predicate (for example the source stage/commitment chain, the scope/partition chain, the four identity copies, each recovery/checkpoint/history flag), and type rows are separate from value rows. Each boundary keeps its original order as a chain of phases: source (14 tables), identity, retry, recovery, checkpoint, historical reader, the seventeen owner transitions and their helpers (26), batch, codec, accounting, schema verdict, references and retention. `main` is split into `family_checks` and `shared_checks` with every assertion unchanged, plus one assertion that each factory requires its rows in table order. | `scripts/pm-dt-event-contracts.py:40` (`TABLE_PHASES`), `:85` (`table_refusal`), `:109` (`require`), `:121` (`table_order_errors`), `:534` (`transition_steps`), `:698` (`source_steps`), `:802` (`recovery_flow`), `:835` (`checkpoint_steps`), `:880` (`historical_read`); `scripts/pm-dt-table-generate.py` (row spec); generated `scripts/pm_dt_table_*.py` | `python3 scripts/pm-dt-table-generate.py scripts --check` (70 current, exit 0); full checker `pass`, 0 failures, including `shared: every table factory requires its rows in table order`. |
+| **Behaviour unchanged** (`5ee6dc5127`) | A call-by-call differential runs the part-1 checker (`b8fea83b48`) and this one side by side and logs every top-level model call's result (with the 339 new witness assertions switched off for that comparison, so both make the same calls). | `differential.py` and `differential.json` (evidence) | **11,207 calls each, 0 differences**, identical log SHA-256 `c49f4b4e5e9b…cc218be` (base 27,435 assertions, new 27,436 with the order check). The full checker with the new witnesses runs 27,775 assertions. |
+| **Retired machinery** (`05b1cc4034`) | Removed `scripts/pm-dt-guard-isolation.py` (AST rewrite, recompile, function replacement, local schema-removal matrix). The standing-check fault trials now swap named table rows to always-pass for the target family (`CUT_ROWS`) instead of rewriting checker source; their fixture, schema, subprocess and reader-wrapper faults are unchanged. Check 11 is the tool run. `pm-dt-number-type-sweep.py` stays as schema-keyword lane evidence and its docstring now says it earns no Method B credit. | `scripts/pm-dt-standing-checks.py:40` (`FAULT_ROWS`), `:54` (`cut_rows`); `scripts/pm-dt-event-contracts.py:61` (`CUT_ROWS`, set by no checker path) | Standing checks below. |
+| **Adapter and runner** (`05b1cc4034`) | Every witness call of the complete checker (the per-family checks, the shared blocks and the old AST proof's corpora, ported to `pm_dt_guard_cases.py`) runs once under the checker's observation recorder. A refused call gives the observation of the phase holding its **first** refusal as that row's negative, with that row's code; an accepted call gives controls. The uncapped lane matrix checks every distinct negative against every row of its table; the tool then runs once per table on up to five negatives per row (families round-robin) and four controls. | `scripts/pm_dt_guard_suites.py:164` (`collect`), `:243` (`classify`), `:271` (`lane_matrix`), `:294` (`select`); `scripts/pm-dt-guard-tables.py` | `python3 scripts/pm-dt-guard-tables.py --out <dir>` (one process, serial, MemoryGate 10/11 GB). |
+| **Two-defect negatives the lane matrix reported** (fixed, `05b1cc4034`; reasons `3f45efdb76`) | Two were fixture defects in the ported corpus and are fixed: `source_schema/unexpected` put the unknown property on both stages (now one witness per stage), and `checkpoint/token_binding/checkpoint_key` changed the key without its derived ref (now coherent). The other 205 distinct negatives are two rows by construction (a coherent forgery carried in several copies, a payload field read by both its copy row and its value row, or the retained reader's multi-fact live state); they stay refused in the full checker and are excluded from the table proof with the reason below, and single-row witnesses prove every row of each set. | `scripts/pm_dt_guard_cases.py:88`, `:173`; `scripts/pm_dt_guard_suites.py:42` (`EXCLUDED`) | Lane matrix: **0 problems** after the exclusions; tool: 0 masked. |
+| **Missing negatives for unproved rows** (fixed, `5ee6dc5127`) | The first collection left 25 rows with no single-row negative. New witnesses, each from a valid case with one change and refreshing only the commitments that observe it, assert their own row's code in the full checker: a current writer with `append_once`/`dedupe_by_event_id` (SV04), an inline body below int64 (SV05), an application capture of a project-only family (SV07), the unknown property on one stage (SV08, SV09), one captured or event identity copy (SV27–SV30), an application partition without its original (ID02), non-string retry keys (AM01), a non-object source row (CP26), a forged authenticated prepared original (HR09), non-UTF-8 source bytes (DS02), a too-young or dependent retained record (RT02, RT04), and the batch parent with no children, a child named twice, a child with the parent role and a child reusing the parent tool id (BJ02, BJ04, BJ06, BJ11). | `scripts/pm-dt-event-contracts.py:1457` (`table_witness_checks`) | Every table but two has every row witnessed; 339 new assertions pass. |
+| **Rows unprovable by construction** (kept) | SV12 and SV13 (stage order) are decided first by the source schema's stage clause; SV19 (project-only scope) is decided first by SV07 and SV17. No reachable input refuses at them, so each sits in a table of its own (`src_stage`, `src_project_only`) and the tool reports it unproved without withholding another row's credit. They stay as defence in depth; no rule was removed. | `scripts/pm_dt_table_src_stage.py`, `scripts/pm_dt_table_src_project_only.py` | Tool: those two tables `FAIL unproved_guards`, every other table `PASS`. |
+| **DL-430 FileSafe boundary on the tables** | Part 1's emission probe patched `denial_emission`, which the transition no longer calls. Its table-native replacement swaps only row DE1 (denial origin) to always-pass and runs the complete checker. | `emission-cut.py`, `emission-cut.json` (evidence) | `pass`: with DE1 cut, exactly the emission vectors whose origin is neither policy nor user flip (`filesafe_block_saves_only_dedicated_refusal`, `schema_refusal_is_not_policy_denial`: FileSafe and a schema refusal); the complete checker exits 1 with 6 failures, every one a tool.denied case of those origins (tool.denied: schema_refusal_is_not_policy_denial; tool.denied: filesafe_block_never_emits_tool_denied; tool.denied emission boundary: schema_refusal_is_not_policy_denial; tool.denied append boundary: schema_refusal_is_not_policy_denial; tool.denied emission boundary: filesafe_block_saves_only_dedicated_refusal; tool.denied append boundary: filesafe_block_saves_only_dedicated_refusal); restored, it exits 0 `pass`. |
+| **Standing checks 1–10 on row cuts** | Every trial whose mechanism the port changed (row cuts for checks 1, 2, 3, 4, 7, 10-withdrawn, 10-forged) and every unchanged trial, for `config.migrated`, which exercises the application-key cut of check 2. Each trial runs the complete checker over all seventeen families. | `standing.json` (evidence) | exit 0, `pass`: 1 pass, 2 pass, 3 pass, 4 pass, 5 pass, 6 pass, 7 pass, 8 pass, 9 pass, 10 pass; 18 complete-checker runs; reference controls all pass: True. |
+| **Part 2 item 1 — F16 / NUMRULE** | **Part 2B** (needs NUMRULE gates). Rerun as a diagnostic only: 51 accepted exact-integer digest exceptions remain across 17 families, with 17 safe-integer controls and 17 equal-float successes, unchanged from part 1 (diagnostic, not a pass). | Listed below | — |
+| **Number and timestamp items** | **Part 2B**, each listed with its exact location below. The timestamp review below is interim only. | Listed below | — |
+| **JSON Schema keyword cuts** | **Open, not ported.** Each schema occurrence is one verdict row (SV02, SV08, SV09, RC12, CP01, CP03, HR12, SC01); the tool's `SchemaCatalog` per-keyword port was not attempted, exactly as DO and DR. `pm-dt-number-type-sweep.py` remains keyword-level lane evidence without Method B credit. This keeps the oracle cells PARTIAL. | — | — |
+
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** zero new; no `Plans/*.md`, schema, fixture or registry file changed, so no shard or index regeneration was needed.
+
+## Guard-table result
+
+The gated tool ran once per phase table (70 runs) over **760 negatives and 175 controls** drawn from **99,300 witness calls** (67,011 refused). **238 of 241 rows are proved; 3 are unprovable by construction.** Credit is the tool's own `rows[].proved`; failed tables: only `src_stage` and `src_project_only` (`unproved_guards`). Each cut swaps one table row to always-pass; the tool runs every control and negative, checks the guard-call trace against the uncut baseline and runs a fresh restoration. "Own" negatives must be accepted after the cut ("flips"); every other negative must keep its exact refusal ("stays").
+
+| Checker | Tables | Rows | Proved | Unproved (reason) | Cut: own flips / own | Cut: stays | Unrelated changes | Masked | Tool negatives / controls | Lane single-row negatives (distinct) | Excluded two-row (distinct) |
+|---|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|---:|
+| source_valid (current writer and historical mode) | 14 | 35 | 32 | SV12_prepared_stage (source schema stage clause decides first (src_schema)); SV13_completed_stage (source schema stage clause decides first (src_schema)); SV19_project_only_scope (SV07 and SV17 decide first) | 119/119 | 279 | 0 | 0 | 119 / 42 | 672 | 31 |
+| identity recipe | 1 | 3 | 3 | none | 8/8 | 16 | 0 | 0 | 8 / 4 | 10 | 0 |
+| append_model (retry) | 2 | 3 | 3 | none | 15/15 | 10 | 0 | 0 | 15 / 5 | 384 | 0 |
+| recovery | 6 | 22 | 22 | none | 66/66 | 182 | 0 | 0 | 66 / 12 | 365 | 0 |
+| checkpoint_result | 9 | 37 | 37 | none | 103/103 | 343 | 0 | 0 | 103 / 22 | 496 | 2 |
+| historical_read | 3 | 12 | 12 | none | 32/32 | 102 | 0 | 0 | 32 / 6 | 173 | 0 |
+| owner transitions and helpers | 26 | 101 | 101 | none | 377/377 | 1274 | 0 | 0 | 377 / 70 | 1595 | 171 |
+| batch_join | 3 | 13 | 13 | none | 13/13 | 62 | 0 | 0 | 13 / 4 | 13 | 1 |
+| decode_source codec | 1 | 6 | 6 | none | 7/7 | 35 | 0 | 0 | 7 / 4 | 7 | 0 |
+| accounting_totals | 1 | 2 | 2 | none | 7/7 | 7 | 0 | 0 | 7 / 1 | 9 | 0 |
+| schema verdict, references, retention | 4 | 7 | 7 | none | 13/13 | 27 | 0 | 0 | 13 / 5 | 13 | 0 |
+| **Total** | 70 | 241 | 238 | 3 | 760/760 | 2337 | 0 | 0 | 760 / 175 | 3737 | 205 |
+
+Lane matrix (uncapped, every distinct negative against every row of its table): 3,737 distinct single-row negatives, 0 problems. Per family, rows refused by that family's own single-row negatives (shared source, recovery, checkpoint and history rows plus its own owner tables):
+
+| Family | Rows refused by this family's own single-row negatives | Of those, rows in its own owner, batch or accounting tables |
+|---|---:|---|
+| `approval.denied` | 114 | 5 |
+| `approval.granted` | 118 | 9 |
+| `approval.requested` | 116 | 7 |
+| `approval.timeout` | 115 | 6 |
+| `config.migrated` | 117 | 6 |
+| `gate.evaluation_started` | 120 | 9 |
+| `gate.failed` | 126 | 15 |
+| `gate.passed` | 126 | 15 |
+| `requirements.clarification_requested` | 111 | 3 |
+| `run.background_enqueued` | 114 | 2 |
+| `shared` | 5 | 0 |
+| `tool.denied` | 119 | 7 |
+| `tool.execution_completed` | 114 | 2 |
+| `tool.execution_started` | 116 | 4 |
+| `tool.invoked` | 132 | 19 |
+| `usage.event` | 130 | 19 |
+| `worktree.created` | 112 | 3 |
+| `worktree.deleted` | 120 | 11 |
+
+**Witnesses excluded from the table proof (still refused in the full checker).**
+
+| Phase | Rows refused together | Distinct negatives | Why two rows by construction (single-row witnesses prove each row) |
+|---|---|---:|---|
+| `src_schema` | `SV08_prepared_schema`, `SV09_completed_schema` | 3 | coherent by design: identifier_checks puts the trailing-LF original hash in both original stages so only schema grammar can refuse it; the table SV08/SV09 one-stage witnesses prove each row alone |
+| `src_identity` | `SV27_event_key`, `SV28_event_id`, `SV29_captured_key`, `SV30_captured_id` | 28 | coherent forged identity: standing check 2 and the app_key corpus put the forged key and its derived event id on the event and both captured stages, so every copy row refuses; the table SV27..SV30 witnesses change one copy each |
+| `cp_token` | `CP13_current_token`, `CP14_token_storage`, `CP15_checkpoint_storage`, `CP16_selection_storage`, `CP17_checkpoint_key` | 1 | standing check 7 (fixture-pinned oracle) changes a Storage identity copy without refreshing the current token; the corpus storage/* and coherent_foreign witnesses refresh it and prove CP14..CP16 alone |
+| `cp_token` | `CP13_current_token`, `CP16_selection_storage` | 1 | standing check 7 (fixture-pinned oracle) changes the selection Storage copy without refreshing the current token; storage/index_read_token/source_selection/storage_instance_id proves CP16 alone |
+| `tool_request` | `TJ3_node_omits_tool`, `TJ4_node_before_tool` | 10 | turning a tool request into a node request leaves both the payload and the blocked tool_use_id present; node_extra_tool and node_before_tool prove each row alone |
+| `tr_approval_requested` | `AR2_actions_present`, `AR3_actions_copy` | 1 | an emptied payload action list also differs from the blocked actions; the coherent empty-list witness proves AR2 alone |
+| `tr_approval_granted` | `AG1_requested`, `AG3_not_paused`, `AG4_not_revoked` | 1 | retained-reader live-state witness (historical_results live_transition_no_longer_valid): the later live state differs in several facts by design; it shows the live transition no longer holds, not one defect |
+| `tr_config_migrated` | `CM2_legacy_value`, `CM6_enum_mapping` | 33 | the payload legacy value is read by its copy row and by the mapping row; before-only legacy-value witnesses prove CM2 and payload enum_value witnesses prove CM6 |
+| `gate_score` | `GS3_dispatch_ref_copy`, `GS7_scored_ref` | 2 | an emptied payload dispatch ref also differs from the dispatch copy; missing_ref_coherent proves GS7 and payload changes to another nonempty ref prove GS3 |
+| `gate_score` | `GS4_dispatch_tuple_copy`, `GS6_scored_node` | 22 | a payload dispatch tuple naming another node also differs from the dispatch copy; payload node_id witnesses prove GS6 and payload tuple changes that keep its node prove GS4 |
+| `tr_gate_failed_b` | `GF6_evidence_present`, `GF7_evidence_copy` | 1 | an emptied payload evidence list also differs from the report evidence; coherent witnesses prove GF6 and one-sided ones GF7 |
+| `tr_gate_passed_b` | `GP7_evidence_present`, `GP8_evidence_copy` | 1 | an emptied payload evidence list also differs from the report evidence; coherent witnesses prove GP7 and one-sided ones GP8 |
+| `tr_requirements` | `RQ1_blocked`, `RQ2_questions`, `RQ3_copies` | 1 | retained-reader live-state witness (historical_results live_transition_no_longer_valid): the later live state differs in several facts by design; it shows the live transition no longer holds, not one defect |
+| `tr_requirements` | `RQ2_questions`, `RQ3_copies` | 1 | an emptied blocked question set also differs from the payload copy; the other witnesses prove each row alone |
+| `denial` | `DE2_decision`, `DE3_not_dispatched` | 1 | retained-reader live-state witness (historical_results live_transition_no_longer_valid): the later live state differs in several facts by design; it shows the live transition no longer holds, not one defect |
+| `tr_tool_denied` | `TD1_copies`, `TD3_headless` | 3 | the payload denial field is compared with its policy copy (TD1) and with its value rule; coherent witnesses prove TD3 and the altered_original_* witnesses prove TD1 |
+| `tr_tool_denied` | `TD1_copies`, `TD4_no_failure_class` | 2 | the payload denial field is compared with its policy copy (TD1) and with its value rule; coherent witnesses prove TD4 and the altered_original_* witnesses prove TD1 |
+| `tr_tool_denied` | `TD1_copies`, `TD2_not_executed` | 2 | the payload denial field is compared with its policy copy (TD1) and with its value rule; coherent witnesses prove TD2 and the altered_original_* witnesses prove TD1 |
+| `tr_tool_started` | `TS1_admitted`, `TS2_allowed` | 1 | retained-reader live-state witness (historical_results live_transition_no_longer_valid): the later live state differs in several facts by design; it shows the live transition no longer holds, not one defect |
+| `tr_tool_invoked` | `TI3_web_copies`, `TI6_copies` | 23 | payload meta is compared with the web request (TI3) and with its owner-result copy (TI6); web-request witnesses prove TI3 and owner-result witnesses prove TI6 |
+| `tr_tool_invoked` | `TI2_web_tool`, `TI3_web_copies`, `TI6_copies` | 55 | a payload meta tool_id is compared with the tool name (TI2), the web request (TI3) and the owner-result copy (TI6); tool_name, web-request and owner-result witnesses prove each row alone |
+| `tr_usage_a` | `UE2_adjusted_after_settled`, `UE5_adjusted_at` | 3 | moving a record to adjusted from an unsettled state also leaves it without adjusted_at_utc; the other witnesses prove each row alone |
+| `usage_values_a` | `UV2_cost_copies`, `UV3_unknown_cost` | 3 | changing only the payload cost status also breaks its cost-record copy; cost_minor_units witnesses (unknown_cost_fabricates_zero) prove UV3 and cost_status witnesses prove UV2 |
+| `usage_values_a` | `UV1_cost_amount_copy`, `UV3_unknown_cost` | 1 | changing only the cost-record amount also breaks its payload copy; flat_cost_disagrees proves UV1 and cost_minor_units witnesses prove UV3 |
+| `tr_worktree_deleted_b` | `WD8_no_blockers`, `WD9_no_active_locks` | 1 | the coherent corpus sets the same lock on the allocation and the payload; one-sided witnesses prove each row |
+| `tr_worktree_deleted_b` | `WD8_no_blockers`, `WD10_no_safe_points` | 1 | the coherent corpus sets the same safe point on the allocation and the payload; one-sided witnesses prove each row |
+| `tr_worktree_deleted_b` | `WD6_before_lock_checked`, `WD7_payload_lock_checked` | 2 | the coherent corpus clears file_lock_checked on both the allocation and the payload; one-sided witnesses prove each row |
+| `batch_parent` | `BJ03_child_ids`, `BJ04_unique_children` | 1 | missing_url_child drops a child, so the declared list differs and names more ids than children; the table BJ04 witness proves BJ04 alone |
+
+**Phase boundary.** Tables are extracted observation boundaries (tool boundary `synthetic`). The complete path is the full checker, which reaches every refusal through the same rows in the same order. No `NonGuard` other than the `return g.Case(table, check, context)` plumbing return was needed; every table module was prescanned from its text before use.
+
+**What Astra keeps finding, probed for part 2A.** (1) Forged inputs: every identity, commitment and digest is still recomputed from source in derivation and compared by a row (SV14, SV27–SV30, ID03, RC13–RC15, RC20–RC22, CP11, CP13, CP17–CP19, CP29, HR09–HR11); forged copies are the negatives. (2) Storage-assigned metadata: the retry digest still covers only the caller fields; recovery compares the frozen Storage event and receipt (RC15, RC21, RC22); standing check 6 passes. (3) Historical readers: SV03/SV04 apply only when `historical` is exactly False; every retained replay policy still returns `retained`, and withdrawn, forged and wrong-type originals return `unavailable` (HR01–HR12, standing check 10 and its four reader faults). (4) One field read two ways: every join that compared canonical bytes still does (`copy_mismatches`, `value_digest`, `canonical_text`), every scalar join keeps its original operator, and type rows read exact type names; no join changed operator. (5) Eager references: the whole-bundle preflight is unchanged and now refuses through RF01; standing check 9's reference controls are its witnesses. (6) Size: SV06 (inline 16 KiB), SV10/SV11 (1 MiB source stages) and DS01 (decode) are separate rows with their own negatives. (7) Custody: recovery and the historical reader still run the complete source chain and their original-custody rows on every path. (8) Masked negatives: the uncapped lane matrix finds 0 problems; the tool reports 0 masked and 0 unrelated changes on every proved row. (9) Grades: every oracle cell stays PARTIAL. (10, 10a, 12) are part 2B. (11) Types: type rows are separate from value rows (`*_type`, `nonbool_*`) and the round-6 wrong-type sweeps are their witnesses; the part-1 type sweep rerun at the implementation head runs 5236 flag cases with 0 wrong-type acceptances and 0 false body acceptances.
+
+**Behaviour changes, none weaker.** A value with no pm.dt.source.json.v1 encoding still raises in every byte join, as before (`value_digest`, `canonical_text`). `decode_source` now observes UTF-8, JSON syntax, duplicate keys and nonfinite constants separately instead of raising at the first; it still raises a `ValueError` (the row's `TableRefusal`) for exactly the inputs it refused before. An unknown family in `transition` is a harness `KeyError` instead of `False`; the contract list holds only the seventeen families, so no input reaches it. A non-table `ValueError` inside the identity recipe (an identity field with no encoding, which no schema-valid source carries) now propagates instead of reading as `identity_refused`. The differential shows no result change on any of the 11,207 base calls.
+
+**Timestamp fields — interim only.** My own review of the timestamp fields is interim only (pm7-build, 2026-11-05 16:50Z); it is not a certification. In the pinned environment (`jsonschema` 4.19.2, Python 3.14.4) `FormatChecker()` has no `date-time` checker, so the 172 `format: date-time` occurrences in `Plans/dt_event_contracts.schema.json` and the one in `Plans/event_record.schema.json` (line 212) accept any string (`not-a-date` conforms). `time_value` (`datetime.fromisoformat` after replacing `Z`) accepts lowercase `t`, a space separator, `+01:00` offsets, `24:00:00Z`, the basic form `20261104T000000Z` and nine fractional digits; it raises on a missing zone (`TypeError`), lowercase `z`, `23:59:60Z`, `2026-02-30` and a trailing LF, so AT2 and RT02 derivation stops with a harness error rather than a row refusal for those. Part 2A adds no date-time rule and changes no timestamp field.
+
+## Part 2B items
+
+- **F16 — shared number rule (CV-1100/1101, SP-1100/1101, shared helper).** `scripts/pm-dt-event-contracts.py:326` `producer_semantic_bytes` and the RFC 8785 call at `:332` (admitted u64 `producer_sequence_id` and approval `blocked_sequence` beyond the RFC 8785 integer domain; 51 accepted digest exceptions reproduce); `:247` `canonical` (pm.dt.source.json.v1 exact integers and plain decimals); `:407` `application_bytes` (CV-366 physical MessagePack, int64 floor, binary64); `:321` `unsigned_integer_valid` (JSON Schema integer domain includes `1.0`), used by WD3/WD4 (`:622`) and CP27 (`:856`); `:441` ID01 `blocked_valid` and `:448` the `blocked_sequence` identity spelling; witnesses `:1166` and `:1188` (u64 and 2^53 equal-form identity checks) and `:1117` `decimal_gate`.
+- **Number comparisons in rows.** `scripts/pm_dt_table_tr_worktree_deleted_a.py:33` (WD5 `elapsed < grace`), `scripts/pm_dt_table_cp_state.py:33` (CP37 `global_through < previous_examined`), `scripts/pm_dt_table_cp_coverage.py` (CP30 canonical cursor), `scripts/pm_dt_table_gate_score.py` (GS1/GS2 canonical score and threshold), `scripts/pm_dt_table_usage_values_a.py` (UV1 canonical cost); derivations `scripts/pm-dt-event-contracts.py:493` (gate score facts), `:511` (cost facts), `:682` `accounting_totals` (token arithmetic and AC02 field schemas, `:687`), `:708` (SV05/SV06 inline encoding size).
+- **Authenticated write-time recipe selection for retained history.** `scripts/pm-dt-event-contracts.py:880` `historical_read` and the `historical` source mode (SV03/SV04): retained records are read by today's codec; adopt the shared write-time recipe selection.
+- **Timestamps (interim review above).** `scripts/pm-dt-event-contracts.py:525` `time_value`, `:529` `time_micros` (AT2 at `:551`), `:1689` `retention_eligible` (RT02 age at `:1694`), `:745` (SV32 `occurred_at_utc` string join), `FormatChecker()` without a `date-time` checker at every validator; the fractional-zero timestamp extension used to size witnesses (`:974` `source_stage_boundary`, `:1543` `oversized_inline`, `:1554`); every `format: date-time` field of `Plans/dt_event_contracts.schema.json` and `Plans/event_record.schema.json:212`.
+- **JSON Schema keyword cuts** (not number-domain, but recorded here so the oracle cells' PARTIAL is complete): port the schema verdict rows to the tool's `SchemaCatalog` after part 2B.
+
+## Family grades before and after
+
+P=PASS, Q=PARTIAL, A=ABSENT. Before is the part-1 self-grade at `b8fea83b48`; after is the part-2A self-grade at implementation head `3f45efdb76`.
+
+| Family | Before → after |
+|---|---|
+| `approval.requested` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `approval.granted` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `approval.denied` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `approval.timeout` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `config.migrated` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `gate.evaluation_started` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `gate.failed` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `gate.passed` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `requirements.clarification_requested` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `run.background_enqueued` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `tool.denied` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `tool.execution_completed` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `tool.execution_started` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `tool.invoked` | 10P / 1Q / 1A → 10P / 1Q / 1A |
+| `usage.event` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `worktree.created` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `worktree.deleted` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+
+166 PASS / 21 PARTIAL / 17 ABSENT / 0 CONFLICT → the same totals. The second PARTIAL of requirements, usage and both worktree families is the inherited retention cell. Every one of the 425 evidence quotes was re-verified at its line at the implementation head (of the 408 part-1 quotes, 17 disposition quotes and 247 cell quotes are at the same line, 144 were relocated to the moved line, and 76 of those were rewritten because the quoted code moved into a table row or was removed; 17 new lane-matrix quotes were added); no owner unit changed.
+
+## Commands and evidence
+
+Heavy runs (full checker, differential, probes, guard-tool run, schema-leaf sweep, standing checks) ran one at a time in one long job with at least 10 GB available (the tool MemoryGate pauses below 10 and resumes at 11). PM7 work was not waited on or touched. Commits: `a4ede4d124` (tool merge), `5ee6dc5127` (guard tables, checker, new witnesses), `05b1cc4034` (suites, runner, standing-check row cuts, AST proof removed), `3f45efdb76` (exclusion reasons), then the report commit. The full checker, differential, probes, schema-leaf sweep, shard check and standing checks ran at `05b1cc4034`; `3f45efdb76` changes only the exclusion-reason strings in `pm_dt_guard_suites.py` (checker, tables and standing-check script byte-identical), and the guard-tool run is from `3f45efdb76`. Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DT/sweep-p2a/` (SHA-256 of every file in `SHA256SUMS`).
+
+| Command | Exit | Outcome |
+|---|---:|---|
+| `git merge --no-ff 004bdedd632d9463f3535190a6ed5772338cdce1` | 0 | clean; 11 tool files (`a4ede4d124`) |
+| `python3 scripts/pm-dt-table-generate.py scripts --check` | 0 | 70 DT table modules current |
+| `python3 scripts/pm-dt-event-contracts.py` (full checker) | 0 | `pass`, 27775 assertions (was 27,435), 0 failures, 17 families, 1:15.88, peak RSS 218 MB |
+| `differential.py` (part-1 checker vs this one, new witnesses off) | 0 | 11207 vs 11207 top-level model calls, 0 differences, log SHA-256 equal: True |
+| `emission-cut.py` (DE1 cut) | 0 | `pass` (above) |
+| `type-sweep.py` (part-1 probe) | 0 | 5236 flag cases, 0 wrong-type acceptances |
+| `large-retry.py` (F16 diagnostic) | 0 | 51 known digest exceptions (part 2B) |
+| `python3 scripts/pm-dt-guard-tables.py --out tool2` (at `3f45efdb76`) | 1 | 68 tables `PASS`, 2 `FAIL unproved_guards` (SV12, SV13, SV19); 238/241 rows proved; 0 masked; lane matrix 0 problems; 590.8 s |
+| `python3 scripts/pm-dt-number-type-sweep.py --family approval.requested` | 0 | `pass` (schema-keyword lane evidence, no Method B credit) |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | `pass`, 3284 shards over 99 documents |
+| `python3 scripts/pm-dt-standing-checks.py --family config.migrated` | 0 | `pass` (above) |
+| `pm-plan-index.py generate` / `validate` | not run | no `Plans/*.md` file changed in part 2A |
+
+**IDs:** no new IDs. Existing CV-600..616, SP-580..596 and ATS-290..298 retained. No pm-mail, subagent, admission, registry append, Decision Log change, governance artifact edit, landing lock or main push. The worktree is removed after publication.
+
+---
+
+Earlier-round material below is **superseded source lineage**, including its prior grades and its guard tables, which were produced by the retired AST method and confer no Method B credit.
+
 # DT — Sweep part 1: DL-430 and DL-436 applied; shared tools pending
 
 **Source head:** `8f7c9515f1d79f2ecd13c177bdeea5ec68bb1fa6`. **Branch:** `plans/ea-w2-tools-gates-approvals-20261104`. Rebased all 33 commits from `4b82bc8d3b105b78a09e4c311722ca27323cec39` onto pinned `origin/main` `e42ce235b4711325ced818c777f070c3ee0d7952`. Only generated shards/index conflicted; upstream generated files were retained during replay, then regenerated from final sources. No canonical source conflict was merged by hand.
