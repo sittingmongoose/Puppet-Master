@@ -50,12 +50,13 @@ def run(name, family=None):
             return original(value,source,row,key)
         m.checkpoint_joins=checkpoint
     elif name == 'N1_Astra10_numeric_encoding':
-        # Stale since a75181c58c (its end marker named the removed 2^53 cap):
-        # repaired to remove exactly the integral-float normalization block.
-        source=inspect.getsource(m.body_bytes)
-        start=source.index('        # SP-236 shortest numeric representation:')
-        end=source.index('        if isinstance(v, dict):', start)
-        exec(source[:start]+source[end:],m.__dict__)
+        # SP-1100 inverts the original N1 premise: current bytes must preserve
+        # the float type. Restore the old integral-float normalization for the
+        # current recipe; the type-preserving byte oracles must then fail.
+        original_bytes=m.body_bytes
+        def normalized(value, rule=m.CURRENT_RULE):
+            return m.retained_body_bytes(value, 'strict-v3') if rule == m.CURRENT_RULE else original_bytes(value, rule)
+        m.body_bytes=normalized
     elif name == 'Astra11_exact_types':
         cut(*[(phase, row) for phase in ['ty_a', 'ty_b'] for row, _, _ in m.table_rows(phase)])
     elif name == 'C4-B1_history_limit':
@@ -75,7 +76,9 @@ def run(name, family=None):
     try:
         with patch.object(Path,'read_text',read_input),contextlib.redirect_stdout(output):code=int(m.main())
         report=json.loads(output.getvalue())
-        families=sorted({failure.split(':',1)[0] for failure in report['failures']})
+        # Lane-wide 'shared:' assertions (table order, shared number corpus) may fail
+        # together with the families; the trial is judged on the family failures.
+        families=sorted({failure.split(':',1)[0] for failure in report['failures']}-{'shared'})
         expected=(['chat.thread_worktree_pre_merge_test_failed','chat.thread_worktree_pre_merge_test_passed']
                   if name=='C4-B3_terminal_source_identity' else sorted(r['event_type'] for r in json.loads((ROOT/'Plans/dch_event_contracts.json').read_text())['rows']))
         if family is not None:expected=[e for e in expected if e==family]

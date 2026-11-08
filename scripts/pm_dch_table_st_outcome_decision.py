@@ -10,11 +10,11 @@ order. FIELDS names every observation the rows read; the checker passes no other
 """
 import pm_guard_isolation as g
 
-FIELDS = ('elapsed_type', 'stopped_type', 'stopped', 'elapsed_ms')
+FIELDS = ('elapsed_refusal', 'stopped_type', 'stopped', 'elapsed_ms')
 
 
 def OC06_elapsed_type(value, context):
-    return 'stop_outcome_refused' if value['elapsed_type'] != 'int' else None
+    return 'stop_outcome_refused' if value['elapsed_refusal'] is not None else None
 
 
 def OC07_stopped_type(value, context):
@@ -22,17 +22,17 @@ def OC07_stopped_type(value, context):
 
 
 def OC08_cancel_window(value, context):
-    return 'stop_outcome_refused' if value['elapsed_type'] == 'int' and value['stopped'] is True and (value['elapsed_ms'] < 0 or value['elapsed_ms'] > 3000) else None
+    return 'stop_outcome_refused' if value['elapsed_refusal'] is None and value['stopped'] is True and (value['elapsed_ms'] < 0 or value['elapsed_ms'] > 3000) else None
 
 
 def OC09_timeout_deadline(value, context):
-    return 'stop_outcome_refused' if value['elapsed_type'] == 'int' and value['stopped'] is False and value['elapsed_ms'] != 3000 else None
+    return 'stop_outcome_refused' if value['elapsed_refusal'] is None and value['stopped'] is False and value['elapsed_ms'] != 3000 else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('OC06_elapsed_type', g.Invariant('/context/original_decision/elapsed_ms', 'is exactly an integer'), 'stop_outcome_refused', OC06_elapsed_type),
+        g.Guard('OC06_elapsed_type', g.Invariant('/context/original_decision/elapsed_ms', 'is a CV-1100 current integer'), 'stop_outcome_refused', OC06_elapsed_type),
         g.Guard('OC07_stopped_type', g.Invariant('/context/original_decision/all_targets_stopped', 'is exactly a bool'), 'stop_outcome_refused', OC07_stopped_type),
         g.Guard('OC08_cancel_window', g.Invariant('/context/original_decision/elapsed_ms', 'a cancellation is decided within 0..3000 ms'), 'stop_outcome_refused', OC08_cancel_window),
         g.Guard('OC09_timeout_deadline', g.Invariant('/context/original_decision/elapsed_ms', 'a timeout is decided at exactly 3000 ms'), 'stop_outcome_refused', OC09_timeout_deadline),

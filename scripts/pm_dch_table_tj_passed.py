@@ -10,7 +10,7 @@ order. FIELDS names every observation the rows read; the checker passes no other
 """
 import pm_guard_isolation as g
 
-FIELDS = ('kind', 'exit_code_type', 'exit_code')
+FIELDS = ('kind', 'exit_code_refusal', 'exit_code')
 
 
 def TJ06_passed_exit_kind(value, context):
@@ -18,18 +18,18 @@ def TJ06_passed_exit_kind(value, context):
 
 
 def TJ07_passed_exit_type(value, context):
-    return 'test_join_refused' if value['kind'] == 'exit' and value['exit_code_type'] != 'int' else None
+    return 'test_join_refused' if value['kind'] == 'exit' and value['exit_code_refusal'] is not None else None
 
 
 def TJ08_passed_exit_zero(value, context):
-    return 'test_join_refused' if value['kind'] == 'exit' and value['exit_code_type'] == 'int' and value['exit_code'] != 0 else None
+    return 'test_join_refused' if value['kind'] == 'exit' and value['exit_code_refusal'] is None and value['exit_code'] != 0 else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('TJ06_passed_exit_kind', g.Invariant('/source/outcome/kind', 'a passed test outcome is an exit'), 'test_join_refused', TJ06_passed_exit_kind),
-        g.Guard('TJ07_passed_exit_type', g.Invariant('/source/outcome/exit_code', 'a passed exit code is exactly an integer'), 'test_join_refused', TJ07_passed_exit_type),
+        g.Guard('TJ07_passed_exit_type', g.Invariant('/source/outcome/exit_code', 'a passed exit code is a CV-1100 current integer'), 'test_join_refused', TJ07_passed_exit_type),
         g.Guard('TJ08_passed_exit_zero', g.Invariant('/source/outcome/exit_code', 'a passed exit code is zero'), 'test_join_refused', TJ08_passed_exit_zero),
     ])
 

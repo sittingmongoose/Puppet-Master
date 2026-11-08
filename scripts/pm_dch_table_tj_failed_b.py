@@ -10,15 +10,15 @@ order. FIELDS names every observation the rows read; the checker passes no other
 """
 import pm_guard_isolation as g
 
-FIELDS = ('kind', 'exit_code_type', 'exit_code', 'payload_error_ref')
+FIELDS = ('kind', 'exit_code_refusal', 'exit_code', 'payload_error_ref')
 
 
 def TJ12_exit_type(value, context):
-    return 'test_join_refused' if value['kind'] == 'exit' and value['exit_code_type'] != 'int' else None
+    return 'test_join_refused' if value['kind'] == 'exit' and value['exit_code_refusal'] is not None else None
 
 
 def TJ13_exit_nonzero(value, context):
-    return 'test_join_refused' if value['kind'] == 'exit' and value['exit_code_type'] == 'int' and value['exit_code'] == 0 else None
+    return 'test_join_refused' if value['kind'] == 'exit' and value['exit_code_refusal'] is None and value['exit_code'] == 0 else None
 
 
 def TJ14_exit_no_error_ref(value, context):
@@ -40,7 +40,7 @@ def TJ17_process_error_ref(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('TJ12_exit_type', g.Invariant('/source/outcome/exit_code', 'a failed exit code is exactly an integer'), 'test_join_refused', TJ12_exit_type),
+        g.Guard('TJ12_exit_type', g.Invariant('/source/outcome/exit_code', 'a failed exit code is a CV-1100 current integer'), 'test_join_refused', TJ12_exit_type),
         g.Guard('TJ13_exit_nonzero', g.Invariant('/source/outcome/exit_code', 'a failed exit code is nonzero'), 'test_join_refused', TJ13_exit_nonzero),
         g.Guard('TJ14_exit_no_error_ref', g.Invariant('/payload/error_ref', 'a failed exit carries no error_ref'), 'test_join_refused', TJ14_exit_no_error_ref),
         g.Guard('TJ15_terminal_kind', g.Invariant('/source/outcome/kind', 'is exit, timeout or process_error'), 'test_join_refused', TJ15_terminal_kind),

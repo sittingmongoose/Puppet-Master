@@ -91,7 +91,7 @@ def _resolve_value(record, source=None, storage_instance=shared.STORAGE_INSTANCE
     error, raw = shared.encoded(body)
     require('st_ref_bytes', dict(body_encoding_error=error))
     digest = shared.blake3.blake3(raw).hexdigest()
-    require('st_pack_a', dict(byte_size_type=type_name(source.get('byte_size')), byte_size=source.get('byte_size'),
+    require('st_pack_a', dict(byte_size_refusal=shared.integer_refusal(source.get('byte_size')), byte_size=source.get('byte_size'),
                               raw_size=len(raw), reference=reference,
                               expected_reference=f'payload:v1:{digest}:{len(raw)}:application/msgpack',
                               key=source.get('key'), expected_key='payload:v1:' + digest,
@@ -144,7 +144,7 @@ def _outcome_valid(value, context, key):
     body = _request_valid(request, source, historical=True)
     observation = context['original_decision']
     elapsed, stopped = observation['elapsed_ms'], observation['all_targets_stopped']
-    require('st_outcome_decision', dict(elapsed_type=type_name(elapsed), stopped_type=type_name(stopped),
+    require('st_outcome_decision', dict(elapsed_refusal=shared.integer_refusal(elapsed), stopped_type=type_name(stopped),
                                         stopped=stopped, elapsed_ms=elapsed))
     decided = 'cancelled' if stopped else 'timeout'
     require('st_outcome_join', dict(value_store=value['storage_instance_id'], request_store=source['storage_instance_id'],
@@ -228,13 +228,13 @@ def _index_read_valid(record, context, token, source):
                                      source_dataset=source['dataset_name'], expected_dataset=expected_dataset))
     require('st_index_event', dict(row_event_type=row['event_type'],
                                    row_event_id=row['event_id'], record_event_id=record['event_id'],
-                                   row_sequence_type=type_name(row['sequence_id']), row_sequence_id=row['sequence_id'],
+                                   row_sequence_refusal=shared.uint64_refusal(row['sequence_id']), row_sequence_id=row['sequence_id'],
                                    record_sequence_id=record['sequence_id'],
                                    row_partition=row['scope_partition'], body_partition=body['scope']['scope_partition'],
                                    row_commitment=row['source_value_sha256'],
                                    context_commitment=context['source_value_sha256']))
     require('st_index_entailed', dict(record_event_type=record['event_type'],
-                                      row_sequence_type=type_name(row['sequence_id'])))
+                                      row_sequence_refusal=shared.uint64_refusal(row['sequence_id'])))
 
 
 index_read_valid = refused(_index_read_valid)

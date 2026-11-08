@@ -7,6 +7,7 @@ edition mutation commits to those exact bytes; a forged-source case does not.
 """
 import copy
 from dataclasses import dataclass
+from pm_event_numbers import Refusal, loads_current_json
 import hashlib
 import json
 from pathlib import Path
@@ -137,11 +138,13 @@ def cases(m, Case=Case):
                                 bad['event_record']['observed_at_utc'] = '2026-11-04T00:00:09Z'
                             else: bad['event_access'][field] = field in ['event_withdrawn', 'deleted']
                             add(label+'/'+field, 'checkpoint', value, bad, row, key, schema)
-            # Alternate integer spellings are either normalized by physical
-            # encoding or refused by the exact integer input boundary.
+            # SP-1100: the physical codec preserves the float type, width and
+            # sign, so 1.0 and 1e0 never share the bytes of 1. The exact integer
+            # input boundary refuses every non-integer spelling (numeric_history,
+            # payload_numeric_type), so no alternate spelling reaches a commitment.
             for raw in ['1', '1.0', '1e0', '-0', '0']:
                 number = json.loads(raw)
-                add(prefix+'numeric_bytes/'+raw, 'numeric_bytes', number, expected=True)
+                add(prefix+'numeric_bytes/'+raw, 'numeric_bytes', number, expected=type(number) is int)
                 record = copy.deepcopy(f['record']); record['sequence_id'] = number
                 witness = copy.deepcopy(f['historical_source'])
                 witness['source_value_sha256'] = commitment(m, record)
@@ -182,7 +185,7 @@ def cases(m, Case=Case):
             for field, number in f['valid'].items():
                 if type(number) is not int: continue
                 alternative = copy.deepcopy(f['valid']); alternative[field] = float(number)
-                add(prefix+'payload_numeric_bytes/'+field, 'equal_bytes', f['valid'], alternative, expected=True)
+                add(prefix+'payload_numeric_bytes/'+field, 'distinct_bytes_same_identity', f['valid'], alternative, expected=True)
                 add(prefix+'payload_numeric_type/'+field, 'types', alternative)
                 retry = copy.deepcopy(f['record']); retry['payload'] = alternative
                 add(prefix+'payload_numeric_retry/'+field, 'retry', f['record'], retry, True, expected='invalid_input_type')
@@ -244,12 +247,15 @@ def evaluate(m, c, envelope):
     if surface == 'retry': return m.retry_outcome(*a)
     if surface == 'archive': return validator(a[2]).is_valid(a[0]) and m.archive_joins(*a[:2])
     if surface == 'invalid_lexeme_refused':
-        try: json.loads(a[0])
-        except json.JSONDecodeError: return True
+        # CV-1100 current raw-input parser.
+        try: loads_current_json(a[0])
+        except Refusal: return True
         return False
     if surface == 'numeric_bytes': return m.body_bytes(a[0]) == m.body_bytes(int(a[0]))
-    if surface == 'equal_bytes':
-        return (m.body_bytes(a[0]) == m.body_bytes(a[1]) and m.payload_reference(a[0]) == m.payload_reference(a[1])
+    if surface == 'distinct_bytes_same_identity':
+        # SP-1100 type-preserving bytes: the float alternative has its own
+        # physical bytes and reference; the identity recipe reads no number.
+        return (m.body_bytes(a[0]) != m.body_bytes(a[1]) and m.payload_reference(a[0]) != m.payload_reference(a[1])
                 and m.identity('fixture',a[0]) == m.identity('fixture',a[1])
                 and m.idempotency_key('fixture',a[0]) == m.idempotency_key('fixture',a[1]))
     if surface == 'pointer_size': return len(m.body_bytes(a[0])) <= m.INLINE_LIMIT

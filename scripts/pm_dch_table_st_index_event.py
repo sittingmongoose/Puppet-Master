@@ -10,7 +10,7 @@ order. FIELDS names every observation the rows read; the checker passes no other
 """
 import pm_guard_isolation as g
 
-FIELDS = ('row_event_type', 'row_event_id', 'record_event_id', 'row_sequence_type', 'row_sequence_id', 'record_sequence_id', 'row_partition', 'body_partition', 'row_commitment', 'context_commitment')
+FIELDS = ('row_event_type', 'row_event_id', 'record_event_id', 'row_sequence_refusal', 'row_sequence_id', 'record_sequence_id', 'row_partition', 'body_partition', 'row_commitment', 'context_commitment')
 
 
 def IX21_row_event_type(value, context):
@@ -22,7 +22,7 @@ def IX23_row_event_id(value, context):
 
 
 def IX25_row_sequence(value, context):
-    return 'stop_index_refused' if value['row_sequence_type'] == 'int' and value['row_sequence_id'] != value['record_sequence_id'] else None
+    return 'stop_index_refused' if value['row_sequence_refusal'] is None and value['row_sequence_id'] != value['record_sequence_id'] else None
 
 
 def IX26_row_partition(value, context):

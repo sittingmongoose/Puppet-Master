@@ -61,9 +61,9 @@ phase('ty_a', 'input_types_valid: map keys, Storage descriptors and integer slot
     ('TY01_key_type', '/**', 'every map key is exactly a string', TYPE, "value['nonstring_keys'] != []"),
     ('TY02_store_descriptor', '/**/storage_instance_id', 'every Storage instance id satisfies the Storage descriptor', TYPE,
      "value['store_descriptors'] != []"),
-    ('TY03_integer_type', '/**/<integer slot>', 'every integer slot holds an exact integer (producer_sequence_id may be null)', TYPE,
+    ('TY03_integer_type', '/**/<integer slot>', 'every integer slot holds a CV-1100 current integer (producer_sequence_id may be null)', TYPE,
      "value['integer_types'] != []"),
-    ('TY04_uint64_range', '/**/<Storage uint64 slot>', 'every current Storage uint64 slot is within 0..2^64-1', TYPE,
+    ('TY04_uint64_range', '/**/<Storage uint64 slot>', 'every current Storage uint64 slot is an SP-1100 uint64 (0..2^64-1)', TYPE,
      "value['uint64_ranges'] != []"),
 ])
 phase('ty_b', 'input_types_valid: object, array and string slots and untyped leaves (strict recipes).', [
@@ -251,10 +251,10 @@ phase('tj_start', 'test_joins: retained start identity and copies (W.9.2/W.9.3).
 ])
 phase('tj_passed', 'test_joins: a passed terminal is an exact zero exit.', [
     ('TJ06_passed_exit_kind', '/source/outcome/kind', 'a passed test outcome is an exit', TEST, "value['kind'] != 'exit'"),
-    ('TJ07_passed_exit_type', '/source/outcome/exit_code', 'a passed exit code is exactly an integer', TEST,
-     "value['kind'] == 'exit' and value['exit_code_type'] != 'int'"),
+    ('TJ07_passed_exit_type', '/source/outcome/exit_code', 'a passed exit code is a CV-1100 current integer', TEST,
+     "value['kind'] == 'exit' and value['exit_code_refusal'] is not None"),
     ('TJ08_passed_exit_zero', '/source/outcome/exit_code', 'a passed exit code is zero', TEST,
-     "value['kind'] == 'exit' and value['exit_code_type'] == 'int' and value['exit_code'] != 0"),
+     "value['kind'] == 'exit' and value['exit_code_refusal'] is None and value['exit_code'] != 0"),
 ])
 phase('tj_failed_a', 'test_joins: failed terminal copies of the actual outcome.', [
     ('TJ09_outcome_kind_copy', '/payload/test_outcome', 'equals the actual outcome kind', TEST,
@@ -265,10 +265,10 @@ phase('tj_failed_a', 'test_joins: failed terminal copies of the actual outcome.'
      "value['payload_error_ref'] != value['outcome_error_ref']"),
 ])
 phase('tj_failed_b', 'test_joins: failed terminal outcome kinds (success is never a failure).', [
-    ('TJ12_exit_type', '/source/outcome/exit_code', 'a failed exit code is exactly an integer', TEST,
-     "value['kind'] == 'exit' and value['exit_code_type'] != 'int'"),
+    ('TJ12_exit_type', '/source/outcome/exit_code', 'a failed exit code is a CV-1100 current integer', TEST,
+     "value['kind'] == 'exit' and value['exit_code_refusal'] is not None"),
     ('TJ13_exit_nonzero', '/source/outcome/exit_code', 'a failed exit code is nonzero', TEST,
-     "value['kind'] == 'exit' and value['exit_code_type'] == 'int' and value['exit_code'] == 0"),
+     "value['kind'] == 'exit' and value['exit_code_refusal'] is None and value['exit_code'] == 0"),
     ('TJ14_exit_no_error_ref', '/payload/error_ref', 'a failed exit carries no error_ref', TEST,
      "value['kind'] == 'exit' and value['payload_error_ref'] is not None"),
     ('TJ15_terminal_kind', '/source/outcome/kind', 'is exit, timeout or process_error', TEST,
@@ -508,9 +508,9 @@ phase('st_ref_bytes', 'stop resolve_value: the pack body encodes.', [
     ('SV10_body_encodable', '/source/body', 'encodes', SBODY, "value['body_encoding_error'] is not None"),
 ])
 phase('st_pack_a', 'stop resolve_value: pack size, exact reference, key, media, Store and scope copy.', [
-    ('SV13_byte_size_type', '/source/byte_size', 'is exactly an integer', SBODY, "value['byte_size_type'] != 'int'"),
+    ('SV13_byte_size_type', '/source/byte_size', 'is a CV-1100 current integer', SBODY, "value['byte_size_refusal'] is not None"),
     ('SV14_byte_size', '/source/byte_size', 'equals the encoded body length', SBODY,
-     "value['byte_size_type'] == 'int' and value['byte_size'] != value['raw_size']"),
+     "value['byte_size_refusal'] is None and value['byte_size'] != value['raw_size']"),
     ('SV15_reference_exact', '/record/payload_ref', 'equals the reference recomputed from the body bytes', SBODY,
      "value['reference'] != value['expected_reference']"),
     ('SV16_pack_key', '/source/key', 'equals payload:v1: plus BLAKE3 of the body bytes', SBODY,
@@ -586,13 +586,14 @@ phase('st_outcome_schema', 'stop outcome_valid: closed outcome schema and first-
      "value['cancel_delivery_after_receipt'] is not True"),
 ])
 phase('st_outcome_decision', 'stop outcome_valid: original decision observation (three-second wait).', [
-    ('OC06_elapsed_type', '/context/original_decision/elapsed_ms', 'is exactly an integer', SOUT, "value['elapsed_type'] != 'int'"),
+    ('OC06_elapsed_type', '/context/original_decision/elapsed_ms', 'is a CV-1100 current integer', SOUT,
+     "value['elapsed_refusal'] is not None"),
     ('OC07_stopped_type', '/context/original_decision/all_targets_stopped', 'is exactly a bool', SOUT,
      "value['stopped_type'] != 'bool'"),
     ('OC08_cancel_window', '/context/original_decision/elapsed_ms', 'a cancellation is decided within 0..3000 ms', SOUT,
-     "value['elapsed_type'] == 'int' and value['stopped'] is True and (value['elapsed_ms'] < 0 or value['elapsed_ms'] > 3000)"),
+     "value['elapsed_refusal'] is None and value['stopped'] is True and (value['elapsed_ms'] < 0 or value['elapsed_ms'] > 3000)"),
     ('OC09_timeout_deadline', '/context/original_decision/elapsed_ms', 'a timeout is decided at exactly 3000 ms', SOUT,
-     "value['elapsed_type'] == 'int' and value['stopped'] is False and value['elapsed_ms'] != 3000"),
+     "value['elapsed_refusal'] is None and value['stopped'] is False and value['elapsed_ms'] != 3000"),
 ])
 phase('st_outcome_join', 'stop outcome_valid: saved result joins to the original request and decision.', [
     ('OC10_store', '/value/storage_instance_id', 'equals the request Store', SOUT, "value['value_store'] != value['request_store']"),
@@ -677,7 +678,7 @@ phase('st_index_event', 'stop index_read_valid: the index row names the retained
     ('IX23_row_event_id', '/source/index_row/event_id', 'equals the request event id', SIDX,
      "value['row_event_id'] != value['record_event_id']"),
     ('IX25_row_sequence', '/source/index_row/sequence_id', 'equals the request sequence', SIDX,
-     "value['row_sequence_type'] == 'int' and value['row_sequence_id'] != value['record_sequence_id']"),
+     "value['row_sequence_refusal'] is None and value['row_sequence_id'] != value['record_sequence_id']"),
     ('IX26_row_partition', '/source/index_row/scope_partition', 'equals the request body partition', SIDX,
      "value['row_partition'] != value['body_partition']"),
     ('IX27_row_commitment', '/source/index_row/source_value_sha256', 'equals the request source commitment', SIDX,
@@ -686,7 +687,8 @@ phase('st_index_event', 'stop index_read_valid: the index row names the retained
 phase('st_index_entailed', 'stop index_read_valid: request family (the request joins decide first, JN02) and index sequence type (the source type walk decides first, TY03); defence in depth.', [
     ('IX22_record_event_type', '/record/event_type', 'is chat.response_stop_requested', SIDX,
      "value['record_event_type'] != 'chat.response_stop_requested'"),
-    ('IX24_row_sequence_type', '/source/index_row/sequence_id', 'is exactly an integer', SIDX, "value['row_sequence_type'] != 'int'"),
+    ('IX24_row_sequence_type', '/source/index_row/sequence_id', 'is an SP-1100 Storage uint64', SIDX,
+     "value['row_sequence_refusal'] is not None"),
 ])
 phase('st_retirement', 'stop retirement_ready: SP-628 cutoff conditions.', [
     ('RR01_contract_specified', '/conditions/replacement_contract_specified', 'is exactly true', 'retirement_pending',

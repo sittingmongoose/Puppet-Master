@@ -86,8 +86,11 @@ def cases(m, Case=Case):
                     add(prefix+'envelope_integer/'+field+'/'+str(n), 'payload',
                         json.loads((ROOT/'Plans/event_record.schema.json').read_text()), record, expected=n<(1<<64) if field=='sequence_id' else True)
                     add(prefix+'writer_integer/'+field+'/'+str(n), 'acceptance_result', 'joins', (record,event), n<(1<<64) if field=='sequence_id' else True, expected=True)
+                    # CV-1100 producer JCS route: exact binary64 integers up to 2^53
+                    # qualify (2^53 included); larger producer integers are refused
+                    # jcs_binary64/jcs_decimal. Storage sequence_id is outside the projection.
                     add(prefix+'retry_integer/'+field+'/'+str(n), 'retry_result', record, record,
-                        'original_result' if n<(1<<64) and (field=='sequence_id' or n==MAX) else 'invalid_input_type', expected=True)
+                        'original_result' if n<(1<<64) and (field=='sequence_id' or n<=(1<<53)) else 'invalid_input_type', expected=True)
                     if n < 1<<64:
                         # This is a current-recipe write observation, not the independently
                         # receipted earlier original with the same semantic body.

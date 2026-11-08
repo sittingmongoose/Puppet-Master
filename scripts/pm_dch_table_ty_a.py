@@ -34,8 +34,8 @@ def case(value):
     table = g.GuardTable([
         g.Guard('TY01_key_type', g.Invariant('/**', 'every map key is exactly a string'), 'type_refused', TY01_key_type),
         g.Guard('TY02_store_descriptor', g.Invariant('/**/storage_instance_id', 'every Storage instance id satisfies the Storage descriptor'), 'type_refused', TY02_store_descriptor),
-        g.Guard('TY03_integer_type', g.Invariant('/**/<integer slot>', 'every integer slot holds an exact integer (producer_sequence_id may be null)'), 'type_refused', TY03_integer_type),
-        g.Guard('TY04_uint64_range', g.Invariant('/**/<Storage uint64 slot>', 'every current Storage uint64 slot is within 0..2^64-1'), 'type_refused', TY04_uint64_range),
+        g.Guard('TY03_integer_type', g.Invariant('/**/<integer slot>', 'every integer slot holds a CV-1100 current integer (producer_sequence_id may be null)'), 'type_refused', TY03_integer_type),
+        g.Guard('TY04_uint64_range', g.Invariant('/**/<Storage uint64 slot>', 'every current Storage uint64 slot is an SP-1100 uint64 (0..2^64-1)'), 'type_refused', TY04_uint64_range),
     ])
 
     def check(value):

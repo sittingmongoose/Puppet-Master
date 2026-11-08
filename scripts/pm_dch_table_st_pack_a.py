@@ -10,15 +10,15 @@ order. FIELDS names every observation the rows read; the checker passes no other
 """
 import pm_guard_isolation as g
 
-FIELDS = ('byte_size_type', 'byte_size', 'raw_size', 'reference', 'expected_reference', 'key', 'expected_key', 'media_type', 'pack_store', 'store', 'pack_scope', 'body_scope')
+FIELDS = ('byte_size_refusal', 'byte_size', 'raw_size', 'reference', 'expected_reference', 'key', 'expected_key', 'media_type', 'pack_store', 'store', 'pack_scope', 'body_scope')
 
 
 def SV13_byte_size_type(value, context):
-    return 'stop_value_unavailable' if value['byte_size_type'] != 'int' else None
+    return 'stop_value_unavailable' if value['byte_size_refusal'] is not None else None
 
 
 def SV14_byte_size(value, context):
-    return 'stop_value_unavailable' if value['byte_size_type'] == 'int' and value['byte_size'] != value['raw_size'] else None
+    return 'stop_value_unavailable' if value['byte_size_refusal'] is None and value['byte_size'] != value['raw_size'] else None
 
 
 def SV15_reference_exact(value, context):
@@ -44,7 +44,7 @@ def SV19_scope_copy(value, context):
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('SV13_byte_size_type', g.Invariant('/source/byte_size', 'is exactly an integer'), 'stop_value_unavailable', SV13_byte_size_type),
+        g.Guard('SV13_byte_size_type', g.Invariant('/source/byte_size', 'is a CV-1100 current integer'), 'stop_value_unavailable', SV13_byte_size_type),
         g.Guard('SV14_byte_size', g.Invariant('/source/byte_size', 'equals the encoded body length'), 'stop_value_unavailable', SV14_byte_size),
         g.Guard('SV15_reference_exact', g.Invariant('/record/payload_ref', 'equals the reference recomputed from the body bytes'), 'stop_value_unavailable', SV15_reference_exact),
         g.Guard('SV16_pack_key', g.Invariant('/source/key', 'equals payload:v1: plus BLAKE3 of the body bytes'), 'stop_value_unavailable', SV16_pack_key),

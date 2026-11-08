@@ -15,9 +15,12 @@ import sys
 from urllib.parse import unquote, urlparse
 import blake3
 import msgpack
-import rfc8785
 from jsonschema import Draft202012Validator
 from pm_dch_formats import FormatChecker, legacy_format_checker
+# CV-1100 / SP-1100 shared number recipes (gated number scope a16f67c1ef).
+# The date-time scope (pm_event_datetime, CV-1101) is deliberately not imported.
+from pm_event_numbers import (EVENT_VALUE, Refusal, current_integer, producer_semantic_digest, qualified_jcs,
+                              storage_uint64, storage_value_bytes)
 from jsonschema.exceptions import SchemaError
 from referencing import Registry, Resource
 from referencing.exceptions import NoSuchResource, Unresolvable
@@ -298,11 +301,27 @@ def _historical_read(record, row, witness, envelope, payload_validator):
 
 
 def body_bytes(value, rule=CURRENT_RULE):
-    """SP-236 shortest MessagePack, recursively sorted exact UTF-8 map keys."""
+    """Physical bytes of a value under its selected write recipe.
+
+    Current writes and current identity inputs (strict-v4) use SP-236 through
+    the shared SP-1100 codec (storage_value_bytes, EVENT_VALUE): shortest
+    MessagePack, sorted exact UTF-8 map keys, float type, minimal exact float
+    width and signed zero preserved (CV-1100/SP-1100). A retained original keeps
+    the encoder its recipe recorded (retained_body_bytes); its bytes are never
+    restamped.
+    """
+    if rule == CURRENT_RULE:
+        return storage_value_bytes(value, profile=EVENT_VALUE)
+    return retained_body_bytes(value, rule)
+
+
+def retained_body_bytes(value, rule):
+    """Frozen pre-SP-1100 DCH encoder of the retained recipes (raw-v1, normalized-v2, strict-v3)."""
     def ordered(v):
-        # SP-236 shortest numeric representation: integral finite floats and
-        # either signed zero have the same bytes as their integer value.
-        if type(v) is float and rule != 'raw-v1':
+        # The retained normalized-v2/strict-v3 recipes wrote integral finite
+        # floats and either signed zero with the bytes of their integer value;
+        # raw-v1 wrote them verbatim. Current writes no longer do (SP-1100).
+        if type(v) is float and RETAINED_RECIPES[rule]['normalize_integral_floats']:
             if not math.isfinite(v):
                 raise ValueError('non-finite number')
             if not v.is_integer():
@@ -338,6 +357,24 @@ TYPE_A = ('nonstring_keys', 'store_descriptors', 'integer_types', 'uint64_ranges
 TYPE_B = ('object_types', 'array_types', 'string_types', 'leaf_types')
 
 
+def integer_refusal(value, **bounds):
+    """CV-1100 current integer slot: the shared current_integer refusal reason, or None."""
+    try:
+        current_integer(value, **bounds)
+    except Refusal as refusal:
+        return refusal.reason
+    return None
+
+
+def uint64_refusal(value):
+    """SP-1100 Storage uint64 metadata: the shared storage_uint64 refusal reason, or None."""
+    try:
+        storage_uint64(value)
+    except Refusal as refusal:
+        return refusal.reason
+    return None
+
+
 def type_facts(value, rule):
     """Paths of every slot whose exact type (or Storage uint64 range) is wrong.
 
@@ -369,10 +406,10 @@ def type_facts(value, rule):
             if key == 'storage_instance_id' and not STORAGE_INSTANCE_VALIDATOR.is_valid(item):
                 facts['store_descriptors'].append(at(here))
                 continue
-            if key in INTEGER_SLOTS and not (type(item) is int or (key == 'producer_sequence_id' and item is None)):
+            if key in INTEGER_SLOTS and not (key == 'producer_sequence_id' and item is None) and integer_refusal(item):
                 facts['integer_types'].append(at(here))
                 continue
-            if rule == CURRENT_RULE and key in UINT64_SLOTS and not 0 <= item <= UINT64_MAX:
+            if rule == CURRENT_RULE and key in UINT64_SLOTS and uint64_refusal(item):
                 facts['uint64_ranges'].append(at(here))
                 continue
             if key in OBJECT_SLOTS and type(item) is not dict:
@@ -453,8 +490,9 @@ def _resolve_body(record, source, storage_instance, rule):
 
 def identity(event, payload, storage_instance=STORAGE_INSTANCE):
     parts = [event, '1.0.0', storage_instance, payload['scope'], payload['computer_id'], payload['thread_id'], payload['operation_id']]
-    # Fixture inputs have no floating point; this is the RFC8785 subset.
-    value = rfc8785.dumps(parts)
+    # CV-1100 qualified JCS. The identity parts are strings and the scope
+    # object (strings/null); DCH owners declare no type- or sign-sensitive path.
+    value = qualified_jcs(parts)
     return 'evt_dch_' + hashlib.sha256(value).hexdigest()
 
 
@@ -586,16 +624,17 @@ def _retry_outcome(original, retry, available, original_provenance):
     if not differences:
         try:
             equal = semantic_commitment(original) == semantic_commitment(retry)
-        except (rfc8785.CanonicalizationError, OverflowError) as exc:
-            # Defense in depth for the same numeric admission rule. An encoder
-            # refusal is structured; no rounding, string substitution or crash.
-            error = type(exc).__name__
+        except Refusal as refusal:
+            # CV-1100 route qualification: a projection with no exact JCS
+            # encoding is a structured refusal; no rounding, substitution or crash.
+            error = refusal.reason
     require('rt_semantic', dict(retained_differences=differences, commitment_error=error, commitments_equal=equal))
     return 'original_result'
 
 
 def semantic_commitment(r):
-    return hashlib.sha256(rfc8785.dumps({k: r[k] for k in SEMANTIC_FIELDS})).digest()
+    """CV-317 caller-semantic commitment: the shared producer projection digest (CV-1100)."""
+    return producer_semantic_digest(r)
 
 
 TEST_COMMON = ['operation_id', 'scope', 'computer_id', 'thread_id', 'worktree_id', 'command', 'strategy']
@@ -629,13 +668,13 @@ def _test_joins(payload, source, event):
                              outcome_copy_mismatches=[k for k in TEST_COMMON if outcome[k] != payload[k]],
                              payload_duration_ms=payload['duration_ms'], outcome_duration_ms=outcome['duration_ms']))
     if event.endswith('_passed'):
-        require('tj_passed', dict(kind=outcome['kind'], exit_code_type=type_name(outcome['exit_code']),
+        require('tj_passed', dict(kind=outcome['kind'], exit_code_refusal=integer_refusal(outcome['exit_code']),
                                   exit_code=outcome['exit_code']))
         return
     require('tj_failed_a', dict(payload_test_outcome=payload['test_outcome'], kind=outcome['kind'],
                                 payload_exit_code=payload['exit_code'], exit_code=outcome['exit_code'],
                                 payload_error_ref=payload['error_ref'], outcome_error_ref=outcome['error_ref']))
-    require('tj_failed_b', dict(kind=outcome['kind'], exit_code_type=type_name(outcome['exit_code']),
+    require('tj_failed_b', dict(kind=outcome['kind'], exit_code_refusal=integer_refusal(outcome['exit_code']),
                                 exit_code=outcome['exit_code'], payload_error_ref=payload['error_ref']))
 
 
@@ -1145,6 +1184,10 @@ def main():
     from pm_dch_round8_oracles import cases as round8_cases, evaluate as evaluate8
     for oracle in round8_cases(subject):
         check(evaluate8(subject, oracle, envelope) == oracle.expected, oracle.name.split('/')[0]+': '+oracle.name)
+    # Shared NUMRULE number corpus through DCH's own number boundaries (part 2B numbers).
+    from pm_dch_number_corpus import run as number_corpus
+    for case_id, ok, detail in number_corpus(subject):
+        check(ok, 'shared: number corpus ' + case_id + ' ' + detail)
     # Sweep part 2A single-row witnesses for guard-table rows no earlier negative reached first.
     from pm_dch_guard_witnesses import cases as table_cases, evaluate as evaluate_table
     for oracle in table_cases(subject):

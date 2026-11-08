@@ -10,7 +10,7 @@ order. FIELDS names every observation the rows read; the checker passes no other
 """
 import pm_guard_isolation as g
 
-FIELDS = ('record_event_type', 'row_sequence_type')
+FIELDS = ('record_event_type', 'row_sequence_refusal')
 
 
 def IX22_record_event_type(value, context):
@@ -18,14 +18,14 @@ def IX22_record_event_type(value, context):
 
 
 def IX24_row_sequence_type(value, context):
-    return 'stop_index_refused' if value['row_sequence_type'] != 'int' else None
+    return 'stop_index_refused' if value['row_sequence_refusal'] is not None else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
         g.Guard('IX22_record_event_type', g.Invariant('/record/event_type', 'is chat.response_stop_requested'), 'stop_index_refused', IX22_record_event_type),
-        g.Guard('IX24_row_sequence_type', g.Invariant('/source/index_row/sequence_id', 'is exactly an integer'), 'stop_index_refused', IX24_row_sequence_type),
+        g.Guard('IX24_row_sequence_type', g.Invariant('/source/index_row/sequence_id', 'is an SP-1100 Storage uint64'), 'stop_index_refused', IX24_row_sequence_type),
     ])
 
     def check(value):
