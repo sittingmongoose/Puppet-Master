@@ -30,11 +30,14 @@ if str(ROOT / 'scripts') not in sys.path:
     sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_dg6a_table_profile as _profile_table  # noqa: E402
 import pm_dg6a_table_writer_policy as _writer_table  # noqa: E402
+import pm_dg6a_table_cursor as _cursor_table  # noqa: E402
 
 _PROFILE_ROWS = [(name, guard.predicate) for name, guard in _profile_table.case(None).table.guards.items()]
 PROFILE_RECORDER = None
 _WRITER_ROWS = [(name, guard.predicate) for name, guard in _writer_table.case(None).table.guards.items()]
 WRITER_RECORDER = None
+_CURSOR_ROWS = [(name, guard.predicate) for name, guard in _cursor_table.case(None).table.guards.items()]
+CURSOR_RECORDER = None
 
 def load(path):
     return domain.loads((ROOT / path).read_text())
@@ -276,12 +279,54 @@ def append_context(fixture, event_type):
                 append_original=copy.deepcopy(fixture['history']['expected']['event']))
 
 
+def cursor_observation(after, frontier):
+    """The cursor table's FIELDS; comparisons run only on exact integers."""
+    after_is_int = type(after) is int
+    frontier_is_int = type(frontier) is int
+    return {
+        'after_is_int': after_is_int,
+        'frontier_is_int': frontier_is_int,
+        'after_nonnegative': bool(after_is_int and after >= 0),
+        'after_le_frontier': bool(after_is_int and frontier_is_int and after <= frontier),
+        'frontier_le_u64max': bool(frontier_is_int and frontier <= 18446744073709551615),
+    }
+
+
 def cursor_errors(after, frontier):
-    """Unsigned sequence cursors have one exact JSON type and the complete u64 domain."""
-    if not (type(after) is int and type(frontier) is int and
-            0 <= after <= frontier <= 18446744073709551615):
-        return ['invalid unsigned cursor/frontier']
-    return []
+    """Unsigned sequence cursors have one exact JSON type and the complete u64 domain.
+
+    Refuses only through scripts/pm_dg6a_table_cursor.py rows, in order.
+    """
+    observed = cursor_observation(after, frontier)
+    first = None
+    for name, predicate in _CURSOR_ROWS:
+        code = predicate(observed, None)
+        if code is not None:
+            first = (name, code)
+            break
+    if CURSOR_RECORDER is not None:
+        CURSOR_RECORDER.append((copy.deepcopy(observed), first))
+    return [first[1]] if first else []
+
+
+def cursor_cases():
+    """One-defect cursor controls, through the complete cursor_errors."""
+    uint64_max = 18446744073709551615
+    cases = (
+        ('zero', 0, 0, []),
+        ('within', 5, 10, []),
+        ('equal', 7, 7, []),
+        ('uint64_max', uint64_max, uint64_max, []),
+        ('after_string', '0', 10, ['invalid unsigned cursor/frontier']),
+        ('frontier_string', 0, '10', ['invalid unsigned cursor/frontier']),
+        ('after_negative', -1, 10, ['invalid unsigned cursor/frontier']),
+        ('after_beyond_frontier', 11, 10, ['invalid unsigned cursor/frontier']),
+        ('frontier_over_uint64', 0, uint64_max + 1, ['invalid unsigned cursor/frontier']),
+    )
+    for name, after, frontier, expected in cases:
+        actual = cursor_errors(after, frontier)
+        assert actual == expected, (name, actual)
+    return len(cases)
 
 def operation_size_cases(original, schema, cases):
     for case in cases:
@@ -1078,6 +1123,7 @@ def main():
         check_schema(row['value_schema'])
         count += profile_cases(values, fid, 'redb', 'settings_and_layout')
     count += writer_policy_cases()
+    count += cursor_cases()
     print(json.dumps({'status':'pass','cases':count,'families':1 if selected else 4,'admission':'ABSENT','native':'NOT_RUN','retention':'PENDING_RETENTION_DECISION'}))
 
 if __name__ == '__main__':

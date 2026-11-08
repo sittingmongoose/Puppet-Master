@@ -34,6 +34,7 @@ import pm_dg6a_table_current_header as current_table  # noqa: E402
 import pm_dg6a_table_current_context as context_table  # noqa: E402
 import pm_dg6a_table_profile as profile_table  # noqa: E402
 import pm_dg6a_table_writer_policy as writer_table  # noqa: E402
+import pm_dg6a_table_cursor as cursor_table  # noqa: E402
 
 RETURN_SOURCE = 'return g.Case(table, check, context)'
 
@@ -260,6 +261,24 @@ def collect_writer_policy():
     return controls, negatives, len(records)
 
 
+def collect_cursor():
+    """The checker's cursor_cases builder, as run by every alert suite."""
+    checker = load_checker('dg6a_alert_for_guard_tables_cursor', 'pm-alert-event-contracts-check.py')
+    collected = []
+    checker.CURSOR_RECORDER = collected
+    try:
+        count = checker.cursor_cases()
+    finally:
+        checker.CURSOR_RECORDER = None
+    assert len(collected) == count, (len(collected), count)
+    names = ('zero', 'within', 'equal', 'uint64_max', 'after_string', 'frontier_string',
+             'after_negative', 'after_beyond_frontier', 'frontier_over_uint64')
+    records = [('cursor/' + name, 'alert', observed, first, name)
+               for name, (observed, first) in zip(names, collected)]
+    controls, negatives = dedupe(records)
+    return controls, negatives, len(records)
+
+
 PHASES = {
     'decision_citation': (decision_table, 'scripts/pm_dg6a_table_decision_citation.py', collect_decision_citation),
     'storage_schema': (storage_table, 'scripts/pm_dg6a_table_storage_schema.py', collect_storage_schema),
@@ -267,6 +286,7 @@ PHASES = {
     'current_context': (context_table, 'scripts/pm_dg6a_table_current_context.py', collect_current_context),
     'profile': (profile_table, 'scripts/pm_dg6a_table_profile.py', collect_profile),
     'writer_policy': (writer_table, 'scripts/pm_dg6a_table_writer_policy.py', collect_writer_policy),
+    'cursor': (cursor_table, 'scripts/pm_dg6a_table_cursor.py', collect_cursor),
 }
 
 
