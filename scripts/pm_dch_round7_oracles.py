@@ -160,7 +160,7 @@ def evaluate(m,c,envelope):
     if c.surface=='retained_retry':return m.retry_outcome(c.args[0],c.args[1],True,c.args[2])=='original_result'
     if c.surface=='retained_retry_result':return m.retry_outcome(c.args[0],c.args[1],True,c.args[2])==c.args[3]
     if c.surface=='recipe_selector':return m.record_number_rule(*c.args) is not None
-    if c.surface=='references':return not m.schema_reference_errors(*c.args)
+    if c.surface=='references':return m.references_valid(*c.args)
     if c.surface=='retained_checkpoint':return m.checkpoint_joins(*c.args)
     if c.surface=='test':return Draft202012Validator(c.args[3],format_checker=FormatChecker()).is_valid(c.args[0]) and m.test_joins(*c.args[:3])
     return evaluate5(m,c,envelope)

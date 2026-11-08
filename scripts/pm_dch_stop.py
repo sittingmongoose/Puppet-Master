@@ -35,6 +35,30 @@ def outcome_key(value):
             + ':' + value['stop_request_event_id'])
 
 
+require = shared.require
+type_name = shared.type_name
+TableRefusal = shared.TableRefusal
+TOKEN_FIELDS = sorted(['storage_instance_id', 'checkpoint_key', 'checkpoint_ref', 'generation_id',
+                       'generation_anchor_sha256', 'frontier_revision', 'frontier_sha256',
+                       'index_dataset_name', 'source_selection'])
+RETIREMENT_CONDITIONS = ('replacement_contract_specified', 'replacement_storage_materialized',
+                         'native_restart_verified', 'native_recovery_verified',
+                         'queue_and_three_second_barriers_preserved')
+
+
+def refused(function):
+    """Boolean boundary over a chain of table phases (st_* and reused shared rows)."""
+    def boundary(*args, **kwargs):
+        try:
+            function(*args, **kwargs)
+        except TableRefusal:
+            return False
+        return True
+    boundary.__name__ = function.__name__.lstrip('_')
+    boundary.__doc__ = function.__doc__
+    return boundary
+
+
 def resolve_value(record, source=None, storage_instance=shared.STORAGE_INSTANCE):
     """SP-337 transport for these two closed values, using the existing codec.
 
@@ -42,166 +66,185 @@ def resolve_value(record, source=None, storage_instance=shared.STORAGE_INSTANCE)
     for an object. The new saved result owns a string enum at that name. Its
     own closed schema owns logical types; no older witness rule is weakened.
     """
-    if (type(record) is not dict or type(record.get('payload')) is not dict
-            or not shared.STORAGE_INSTANCE_VALIDATOR.is_valid(storage_instance)):
+    try:
+        return _resolve_value(record, source, storage_instance)
+    except TableRefusal:
         return None
+
+
+def _resolve_value(record, source=None, storage_instance=shared.STORAGE_INSTANCE):
+    is_record = type(record) is dict
+    require('st_value', dict(record_type=type_name(record),
+                             payload_type=type_name(record.get('payload')) if is_record else None,
+                             store_valid=shared.STORAGE_INSTANCE_VALIDATOR.is_valid(storage_instance)))
     reference = record.get('payload_ref')
     if reference is None:
         body = record['payload']
-        try:
-            return body if len(shared.body_bytes(body)) <= shared.INLINE_LIMIT else None
-        except (ValueError, OverflowError):
-            return None
-    if (type(reference) is not str or record['payload'] != {}
-            or type(source) is not dict or type(source.get('body')) is not dict):
-        return None
+        error, raw = shared.encoded(body)
+        require('st_inline', dict(encoding_error=error, size=len(raw) if raw is not None else None))
+        return body
+    source_is_dict = type(source) is dict
+    require('st_ref', dict(reference_type=type_name(reference), payload_empty=record['payload'] == {},
+                           source_type=type_name(source),
+                           body_type=type_name(source.get('body')) if source_is_dict else None))
     body = source['body']
-    try:
-        raw = shared.body_bytes(body)
-        if len(shared.body_bytes({'payload_ref': reference})) > shared.INLINE_LIMIT:
-            return None
-    except (ValueError, OverflowError):
-        return None
-    if (type(source.get('byte_size')) is not int or source['byte_size'] != len(raw)
-            or reference != shared.payload_reference(body)
-            or source.get('key') != 'payload:v1:' + shared.blake3.blake3(raw).hexdigest()
-            or source.get('media_type') != 'application/msgpack'
-            or source.get('storage_instance_id') != storage_instance
-            or any(source.get(k) != body.get(k) for k in ('scope', 'computer_id', 'thread_id'))
-            or not all(source.get(k) is True for k in (
-                'authorized', 'hold_access_allowed', 'bytes_durable', 'index_durable', 'readback_verified'))
-            or source.get('deleted') is not False):
-        return None
+    error, raw = shared.encoded(body)
+    require('st_ref_bytes', dict(body_encoding_error=error))
+    digest = shared.blake3.blake3(raw).hexdigest()
+    require('st_pack_a', dict(byte_size_type=type_name(source.get('byte_size')), byte_size=source.get('byte_size'),
+                              raw_size=len(raw), reference=reference,
+                              expected_reference=f'payload:v1:{digest}:{len(raw)}:application/msgpack',
+                              key=source.get('key'), expected_key='payload:v1:' + digest,
+                              media_type=source.get('media_type'), pack_store=source.get('storage_instance_id'),
+                              store=storage_instance, pack_scope=source.get('scope'), body_scope=body.get('scope')))
+    require('st_pack_b', dict(pack_computer_id=source.get('computer_id'), body_computer_id=body.get('computer_id'),
+                              pack_thread_id=source.get('thread_id'), body_thread_id=body.get('thread_id'),
+                              **{k: source.get(k) for k in ('authorized', 'hold_access_allowed', 'bytes_durable',
+                                                             'index_durable', 'readback_verified')}))
+    require('st_pack_c', dict(deleted=source.get('deleted')))
+    # Entailed by the exact reference above (at most 131 bytes); kept as defence in depth.
+    pointer_error, pointer_raw = shared.encoded({'payload_ref': reference})
+    require('st_pointer_bounds', dict(pointer_encoding_error=pointer_error,
+                                      pointer_size=len(pointer_raw) if pointer_raw is not None else None))
     return body
 
 
-def request_valid(record, context, historical=False):
+def _request_valid(record, context, historical=False):
     """Independently observed original Store/accepted intent, not caller authority."""
-    if type(historical) is not bool or not shared.input_types_valid(record):
-        return False
+    require('st_request_mode', dict(historical_type=type_name(historical)))
+    shared._input_types(record)
     store = context['storage_instance_id']
-    if not shared.STORAGE_INSTANCE_VALIDATOR.is_valid(store):
-        return False
-    body = resolve_value(record, context.get('payload_source'), store)
-    if body is None or not REQUEST.is_valid(body) or not ENVELOPE.is_valid(record):
-        return False
-    if not all(context[k] is True for k in ('retained', 'authorized', 'hold_access_allowed')):
-        return False
-    if context['deleted'] is not False or context['withdrawn'] is not False:
-        return False
-    if context['source_value_sha256'] != commitment(record):
-        return False
-    if not historical and not all(context[k] is True for k in ('writer_admitted', 'active_reply', 'dedupe_available')):
-        return False
-    if record['replay_policy'] not in ('dedupe_by_idempotency_key', 'projector_replay_only'):
-        return False
-    if not historical and record['replay_policy'] != 'dedupe_by_idempotency_key':
-        return False
+    require('st_request_store', dict(store_valid=shared.STORAGE_INSTANCE_VALIDATOR.is_valid(store)))
+    body = _resolve_value(record, context.get('payload_source'), store)
+    require('st_request_schema', dict(request_valid=REQUEST.is_valid(body), envelope_valid=ENVELOPE.is_valid(record)))
+    require('st_request_access', dict(retained=context['retained'], authorized=context['authorized'],
+                                      hold_access_allowed=context['hold_access_allowed'], deleted=context['deleted'],
+                                      withdrawn=context['withdrawn'], source_commitment=context['source_value_sha256'],
+                                      record_commitment=commitment(record)))
+    current = {k: (context[k] if not historical else None) for k in ('writer_admitted', 'active_reply', 'dedupe_available')}
+    require('st_request_writer', dict(historical=historical, replay_policy=record['replay_policy'], **current))
     # Compatibility only changes which read policy is permitted. It never
     # rewrites bytes or applies a current-writer predicate to the original.
     ordinary = {**record, 'replay_policy': 'dedupe_by_idempotency_key'}
-    return (shared.joins(ordinary, EVENT, context.get('payload_source'), store)
-            and all(body[k] == context['accepted'][k] for k in ACCEPTED_FIELDS))
+    shared._joins(ordinary, EVENT, context.get('payload_source'), store, shared.CURRENT_RULE)
+    require('st_request_accepted', dict(accepted_mismatches=[k for k in ACCEPTED_FIELDS if body[k] != context['accepted'][k]]))
+    return body
 
 
-def outcome_valid(value, context, key):
-    if not OUTCOME.is_valid(value):
-        return False
-    if not all(context[k] is True for k in (
-            'first_receipt_verified', 'original_intent_durable',
-            'original_deadline_preserved', 'cancel_delivery_after_receipt')):
-        return False
+request_valid = refused(_request_valid)
+
+
+def _outcome_valid(value, context, key):
+    require('st_outcome_schema', dict(outcome_valid=OUTCOME.is_valid(value),
+                                      **{k: context[k] for k in ('first_receipt_verified', 'original_intent_durable',
+                                                                 'original_deadline_preserved',
+                                                                 'cancel_delivery_after_receipt')}))
     request = context['request']
     source = context['request_context']
-    if not request_valid(request, source, historical=True):
-        return False
-    body = resolve_value(request, source.get('payload_source'), source['storage_instance_id'])
+    body = _request_valid(request, source, historical=True)
     observation = context['original_decision']
     elapsed, stopped = observation['elapsed_ms'], observation['all_targets_stopped']
-    if type(elapsed) is not int or type(stopped) is not bool:
-        return False
-    if stopped:
-        if not 0 <= elapsed <= 3000:
-            return False
-        decided = 'cancelled'
-    else:
-        if elapsed != 3000:
-            return False
-        decided = 'timeout'
-    return (value['storage_instance_id'] == source['storage_instance_id']
-            and value['stop_request_event_id'] == request['event_id']
-            and all(value[k] == body[k] for k in JOIN_FIELDS)
-            and value['outcome'] == decided
-            and value['outcome_at_utc'] == observation['outcome_at_utc']
-            and key == outcome_key(value))
+    require('st_outcome_decision', dict(elapsed_type=type_name(elapsed), stopped_type=type_name(stopped),
+                                        stopped=stopped, elapsed_ms=elapsed))
+    decided = 'cancelled' if stopped else 'timeout'
+    require('st_outcome_join', dict(value_store=value['storage_instance_id'], request_store=source['storage_instance_id'],
+                                    stop_request_event_id=value['stop_request_event_id'], request_event_id=request['event_id'],
+                                    join_mismatches=[k for k in JOIN_FIELDS if value[k] != body[k]],
+                                    outcome=value['outcome'], decided=decided, outcome_at_utc=value['outcome_at_utc'],
+                                    observed_outcome_at_utc=observation['outcome_at_utc'], key=key,
+                                    expected_key=outcome_key(value)))
+
+
+outcome_valid = refused(_outcome_valid)
 
 
 def save_outcome(value, context, key, original=None):
     """Whole-value absent CAS/repeated save model, not a physical redb writer."""
-    if not outcome_valid(value, context, key):
+    try:
+        _outcome_valid(value, context, key)
+    except TableRefusal:
         return 'invalid'
     if original is None:
-        return 'saved'
-    return 'original_result' if shared.body_bytes(original) == shared.body_bytes(value) else 'conflict'
+        require_save = dict(original_present=False, bytes_equal=None)
+    else:
+        require_save = dict(original_present=True, bytes_equal=shared.body_bytes(original) == shared.body_bytes(value))
+    try:
+        require('st_save', require_save)
+    except TableRefusal as refusal:
+        return refusal.code
+    return 'saved' if original is None else 'original_result'
 
 
-def read_outcome(value, context, key):
-    if value is None or not outcome_valid(value, context, key):
-        return False
-    return (context['result_committed'] is True
-            and context['readback_verified'] is True
-            and context['outcome_value_sha256'] == commitment(value))
+def _read_outcome(value, context, key):
+    require('st_read_present', dict(value_present=value is not None))
+    _outcome_valid(value, context, key)
+    require('st_read', dict(result_committed=context['result_committed'], readback_verified=context['readback_verified'],
+                            outcome_value_sha256=context['outcome_value_sha256'], value_commitment=commitment(value)))
 
 
-def queue_can_advance(value, context, key, user_action):
-    return (type(user_action) is bool and user_action
-            and read_outcome(value, context, key)
-            and context['current_send_authorized'] is True
-            and context['current_send_hold_clear'] is True)
+read_outcome = refused(_read_outcome)
 
 
-def index_read_valid(record, context, token, source):
+def _queue_can_advance(value, context, key, user_action):
+    require('st_queue_action', dict(user_action_type=type_name(user_action), user_action=user_action))
+    _read_outcome(value, context, key)
+    require('st_queue_send', dict(current_send_authorized=context['current_send_authorized'],
+                                  current_send_hold_clear=context['current_send_hold_clear']))
+
+
+queue_can_advance = refused(_queue_can_advance)
+
+
+def _index_read_valid(record, context, token, source):
     """Stop's passive SP-278 consumer joins; no domain cursor is invented."""
-    if not request_valid(record, context, historical=True):
-        return False
-    if not shared.input_types_valid(token) or not shared.input_types_valid(source):
-        return False
-    required = {'storage_instance_id', 'checkpoint_key', 'checkpoint_ref', 'generation_id',
-                'generation_anchor_sha256', 'frontier_revision', 'frontier_sha256',
-                'index_dataset_name', 'source_selection'}
-    if set(token) != required:
-        return False
+    _request_valid(record, context, historical=True)
+    shared._input_types(token)
+    shared._input_types(source)
     store = context['storage_instance_id']
     root = source['checkpoint']
+    token_fields = sorted(token)
+    node = root['generations'].get(token['generation_id']) if token_fields == TOKEN_FIELDS else None
+    require('st_index_token', dict(token_fields=token_fields, required_fields=TOKEN_FIELDS, node_present=node is not None))
     generation = token['generation_id']
-    node = root['generations'].get(generation)
-    if node is None:
-        return False
     key = 'event_record_index_checkpoint.v1:' + store
     row = source['index_row']
-    body = resolve_value(record, context.get('payload_source'), store)
-    return (token['storage_instance_id'] == source['storage_instance_id'] == root['storage_instance_id'] == store
-            and token['source_selection']['storage_instance_id'] == store
-            and token['checkpoint_key'] == source['checkpoint_key'] == key
-            and token['checkpoint_ref'] == row['checkpoint_ref'] == key + '#/generations/' + generation
-            and root['current_generation_id'] == generation and node['state'] == 'current'
-            and token['generation_anchor_sha256'] == node['anchor_sha256']
-            and token['frontier_revision'] == node['frontier_revision']
-            and token['frontier_sha256'] == node['frontier_sha256']
-            and token['source_selection'] == node['source_selection'] == source['current_source_selection']
-            and token['index_dataset_name'] == node['index_dataset_name'] == source['dataset_name']
-            == 'event_record_index.v2@' + generation
-            and row['event_type'] == record['event_type'] == EVENT
-            and row['event_id'] == record['event_id']
-            and type(row['sequence_id']) is int and row['sequence_id'] == record['sequence_id']
-            and row['scope_partition'] == body['scope']['scope_partition']
-            and row['source_value_sha256'] == context['source_value_sha256'])
+    body = _resolve_value(record, context.get('payload_source'), store)
+    expected_ref = key + '#/generations/' + generation
+    require('st_index_store', dict(token_store=token['storage_instance_id'], source_store=source['storage_instance_id'],
+                                   root_store=root['storage_instance_id'],
+                                   selection_store=token['source_selection']['storage_instance_id'], store=store))
+    require('st_index_key', dict(token_key=token['checkpoint_key'], source_key=source['checkpoint_key'], key=key,
+                                 token_ref=token['checkpoint_ref'], row_ref=row['checkpoint_ref'], expected_ref=expected_ref,
+                                 current_generation=root['current_generation_id'], generation=generation,
+                                 node_state=node['state']))
+    require('st_index_frontier', dict(token_anchor=token['generation_anchor_sha256'], node_anchor=node['anchor_sha256'],
+                                      token_frontier_revision=token['frontier_revision'],
+                                      node_frontier_revision=node['frontier_revision'],
+                                      token_frontier_sha256=token['frontier_sha256'], node_frontier_sha256=node['frontier_sha256'],
+                                      token_selection=token['source_selection'], node_selection=node['source_selection'],
+                                      current_selection=source['current_source_selection']))
+    expected_dataset = 'event_record_index.v2@' + generation
+    require('st_index_dataset', dict(token_dataset=token['index_dataset_name'], node_dataset=node['index_dataset_name'],
+                                     source_dataset=source['dataset_name'], expected_dataset=expected_dataset))
+    require('st_index_event', dict(row_event_type=row['event_type'],
+                                   row_event_id=row['event_id'], record_event_id=record['event_id'],
+                                   row_sequence_type=type_name(row['sequence_id']), row_sequence_id=row['sequence_id'],
+                                   record_sequence_id=record['sequence_id'],
+                                   row_partition=row['scope_partition'], body_partition=body['scope']['scope_partition'],
+                                   row_commitment=row['source_value_sha256'],
+                                   context_commitment=context['source_value_sha256']))
+    require('st_index_entailed', dict(record_event_type=record['event_type'],
+                                      row_sequence_type=type_name(row['sequence_id'])))
 
 
-def retirement_ready(conditions):
-    return all(conditions[k] is True for k in (
-        'replacement_contract_specified', 'replacement_storage_materialized',
-        'native_restart_verified', 'native_recovery_verified', 'queue_and_three_second_barriers_preserved'))
+index_read_valid = refused(_index_read_valid)
+
+
+def _retirement_ready(conditions):
+    require('st_retirement', {k: conditions[k] for k in RETIREMENT_CONDITIONS})
+
+
+retirement_ready = refused(_retirement_ready)
 
 
 def evaluate(case):
@@ -243,7 +286,7 @@ def main():
             failures.append(name)
     for path, schema in ((REQUEST_PATH, REQUEST_SCHEMA), (OUTCOME_PATH, OUTCOME_SCHEMA),
                          ('Plans/event_record.schema.json', ENVELOPE_SCHEMA)):
-        check(not shared.schema_reference_errors(schema, ROOT / path), 'schema closure: ' + path)
+        check(shared.references_valid(schema, ROOT / path), 'schema closure: ' + path)
     contract = json.loads((ROOT / 'Plans/dch_stop_contracts.json').read_text())
     check(contract['event_type'] == EVENT and contract['status'] == 'prepared_without_admission', 'exact prepared family')
     registry = json.loads((ROOT / 'Plans/event_family_registry.json').read_text())
@@ -280,10 +323,22 @@ def main():
         except Exception as exc:
             check(False, case['id'] + ': exception is failure: ' + repr(exc))
         counts[case['surface']] = counts.get(case['surface'], 0) + 1
+    # Sweep part 2A single-row witnesses for st_* guard-table rows no fixture case reached first.
+    from pm_dch_guard_witnesses import stop_cases
+    witnesses = stop_cases(fixture)
+    for case in witnesses:
+        check(case['id'] not in ids, case['id'] + ': unique case ID')
+        ids.add(case['id'])
+        try:
+            actual = evaluate(case)
+            check(type(actual) is type(case['expected']) and actual == case['expected'], case['id'] + ': ' + case['name'])
+        except Exception as exc:
+            check(False, case['id'] + ': exception is failure: ' + repr(exc))
+        counts[case['surface']] = counts.get(case['surface'], 0) + 1
     print(json.dumps({'status': 'pass' if not failures else 'fail', 'checks': checks,
-                      'cases': len(fixture['cases']), 'surfaces': counts, 'failures': failures,
+                      'cases': len(fixture['cases']), 'table_witnesses': len(witnesses), 'surfaces': counts, 'failures': failures,
                       'native_execution': 'NOT_RUN',
-                      'claim_boundary': 'Synthetic original source/Store/decision observations. No native durability, authenticated provenance, SP-278 completeness/CAS or check-11 isolation certification. Shared proof and number-domain adoption remain sweep items.'}, indent=2))
+                      'claim_boundary': 'Synthetic original source/Store/decision observations. No native durability, authenticated provenance or SP-278 completeness/CAS. Every Stop refusal is a named st_* table row (or a reused shared row); check 11 is the shared guard tool run over those tables (scripts/pm-dch-guard-tables.py).'}, indent=2))
     return 1 if failures else 0
 
 
