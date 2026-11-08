@@ -79,21 +79,54 @@ function mountBar(barEl) {
       tile.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 140, easing: 'steps(2, end)' });
       last = icon; return;
     }
-    const opts = {
+    let opts = {
       basic: { duration: 260, easing: 'cubic-bezier(.2, .8, .2, 1)' },
       friendly: { duration: 460, easing: 'cubic-bezier(.34, 1.5, .5, 1)' },
       glass: { duration: 520, easing: 'cubic-bezier(.2, 1.1, .3, 1)' },
       retro: { duration: 220, easing: 'steps(4, end)' },
     }[f] || { duration: 260, easing: 'ease-out' };
-    const frames = f === 'glass'
+    let frames = f === 'glass'
       ? [{ transform: from }, { transform: from.replace(/\)$/, ') scaleY(1.22)'), offset: .35 }, { transform: to }]
       : [{ transform: from }, { transform: to }];
+    /* stream F batch 9 (Jared 2026-11-08, F1 and B1): the tile is the look's switcher chip (its tokens), so it moves as the
+       chip does: Basic's block snaps in 110 ms; Friendly's sticker hops on a low arc toward the light (up and left), tilts
+       2 deg and lands with a squash (glass.js carry, the same keyframes) */
+    const m = /translate\(([-\d.]+)px,\s*([-\d.]+)px\)/.exec(from);
+    let path = null;
+    if (f === 'basic') { opts = { duration: 110, easing: 'cubic-bezier(.2, 0, 0, 1)' }; path = u => u; }
+    if (f === 'friendly' && m) {
+      const x0 = +m[1], y0 = +m[2], T = (x, y, a, sx, sy) => 'translate(' + x + 'px, ' + y + 'px) rotate(' + a + 'deg) scale(' + sx + ', ' + sy + ')';
+      frames = [{ transform: T(x0, y0, 0, 1, 1) }, { transform: T((x0 + r.x) / 2 - 2, (y0 + r.y) / 2 - 2, -2, 1, 1), offset: .45 }, { transform: T(r.x, r.y, 0, 1.06, .9), offset: .8 }, { transform: T(r.x, r.y, 0, 1, 1) }];
+      opts = { duration: 440, easing: 'cubic-bezier(.3, .7, .4, 1)' };
+      path = u => (u <= .45 ? .5 * u / .45 : u <= .8 ? .5 + .5 * (u - .45) / .35 : 1);
+    }
     tile.animate(frames, opts).id = 'd-glide';
+    if (path && m && last && last !== icon) inkHold(icon, +m[2], r, opts, path);
     if (icon !== last) {
       icon.classList.add('d-bump');
       setTimeout(() => icon.classList.remove('d-bump'), 520);
     }
     last = icon;
+  }
+  /* The lit icon's ink is the chip's (--pm-switch-mark-on: white on Basic Light's blue, dark on Friendly Dark's mint), not
+     the bar's, so the icon headed for keeps its unlit ink until the tile is half on it (the time from the tile's own path).
+     The icon left takes its unlit ink at once: held lit, a panel switch that holds the main thread right after the click
+     kept it in the chip's ink on the bare bar (dark on Friendly Dark's bar) for the length of the hold, where the unlit
+     ink on the leaving tile reads in every frame. */
+  const bez = (p1x, p1y, p2x, p2y) => x => {
+    let lo = 0, hi = 1, t = x;
+    const X = t => 3 * p1x * t * (1 - t) * (1 - t) + 3 * p2x * t * t * (1 - t) + t * t * t;
+    for (let i = 0; i < 24; i++) { const v = X(t); if (Math.abs(v - x) < 1e-5) break; if (v < x) lo = t; else hi = t; t = (lo + hi) / 2; }
+    return 3 * p1y * t * (1 - t) * (1 - t) + 3 * p2y * t * t * (1 - t) + t * t * t;
+  };
+  function inkHold(now, y0, r, opts, path) {
+    const e = /cubic-bezier\(([^)]+)\)/.exec(opts.easing), ease = e ? bez.apply(null, e[1].split(',').map(Number)) : (u => u);
+    const half = r.h / 2, at = k => y0 + (r.y - y0) * path(ease(k));
+    let tNew = 0;
+    for (let i = 0; i <= 60 && !tNew; i++) { const k = i / 60; if (Math.abs(at(k) - r.y) < half) tNew = k * opts.duration; }
+    const rest = barEl.querySelector(':scope > .icon[data-target]:not(.active):not(.pmh-on)');
+    const restInk = rest ? getComputedStyle(rest).color : '';
+    if (restInk && tNew > 0) now.animate([{ '--pm-switch-mark-on': restInk }, { '--pm-switch-mark-on': restInk }], { duration: tNew });
   }
   const mo = new MutationObserver(() => place(true));
   placeChat(false);

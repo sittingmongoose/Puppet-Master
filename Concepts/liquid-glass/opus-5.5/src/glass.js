@@ -1414,6 +1414,9 @@
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
     { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6, magRest: 1, magLift: 1, press: false,
       box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; },
+      /* a carried chip's inverted copy is of the step's word alone (its styles hang on the step's own state, which a copy
+         of the whole step does not keep) */
+      twin: function (i) { return i.querySelector('.o55-raillabel'); },
       /* centred in the window's header between the brand and the header's controls: their widths and the header's place it */
       follow: function (strip) { var head = strip.closest('.o55-head'); return head ? [strip, head].concat(Array.prototype.slice.call(head.children)) : [strip]; } },
     { sel: '#pm-o55-onboarding .o55-seg', items: 'button', many: true, kind: 'lens', active: '.o55-on', magRest: 1, mark: true,
@@ -2154,7 +2157,14 @@
        the chip takes the chosen tab's box in the same sync: a tab that grows when chosen (the left rail's segments show
        their label) kept the chip at its unchosen width for a lazy sync, its chosen words running off the chip onto bare
        ground ("Curren", 2026-10-28 review, astra R4) */
-    if (L.hopFrames && L.hopTarget === target) { hopSettle(L); if (L.hopFrames) return; }
+    if (L.hopFrames && L.hopTarget === target) {
+      /* a carried chip whose tab changed size or place under it while it travels (the rail's tabs show the chosen tab's
+         word and fold the others to icons when the app chooses): the block is made again for the new box with fresh
+         copies, on the same clock, so it lands on the tab as it is now with the words as they are now */
+      var K = L.carry, KA = K ? carryAge(K) : 0;
+      if (K && KA < K.dur && L.rect && Math.max(Math.abs(L.rect.x - R.x), Math.abs(L.rect.y - R.y), Math.abs(L.rect.w - R.w), Math.abs(L.rect.h - R.h)) > 0.5) { endHop(L); carry(L, K.A, R, strip, cfg, target, K.vertical, performance.now() - KA); return; }
+      hopSettle(L); if (L.hopFrames) return;
+    }
     if (still) return;
     if (!A || quiet || !switchOn()) {
       stopLensTravel(L);
@@ -2254,7 +2264,7 @@
     if (L.hopHide) { var hh = L.hopHide; L.hopHide = null; if (L.anim === hh) L.anim = null; hh.cancel(); }
     var over = L.strip && L.strip.__lgOver; if (over && !over.children.length) { over.remove(); L.strip.__lgOver = null; if (L.strip.__lgPosOver && !L.strip.__lgUnder) { L.strip.style.removeProperty('position'); } L.strip.__lgPosOver = false; }
     if (L.hopMarks) { L.hopMarks.forEach(function (v, el) { hopOwned.delete(el); if (el.getAttribute('data-lg-press') === v) el.removeAttribute('data-lg-press'); }); L.hopMarks.clear(); }
-    var P = L.hopPress; L.hopPress = null; L.hopTarget = null;
+    var P = L.hopPress; L.hopPress = null; L.hopTarget = null; L.carry = null;
     if (P && L.pending === P && P.el.isConnected && !hopOwned.has(P.el)) P.el.setAttribute('data-lg-press', 'on');
     ownRest(L);
   }
@@ -2265,7 +2275,8 @@
     var T = L.hopTarget; if (!T || !L.hopFrames) return;
     if (!T.isConnected) { endHop(L); return; }
     var cfg = L.cfg; if (!T.matches(cfg.active || '.active')) return;
-    var wait = L.hopEnd - performance.now();
+    /* (a carried block lands by its own clock, which a long task right after the press may have held back) */
+    var K = L.carry, wait = K ? K.dur - carryAge(K) : L.hopEnd - performance.now();
     if (wait > 0) { if (!L.hopT) L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, wait + 1); return; }
     endHop(L);
   }
@@ -2331,16 +2342,23 @@
     }
     return { x: A.x + (B.x - A.x) * s, y: A.y + (B.y - A.y) * s, w: A.w + (B.w - A.w) * s, h: A.h + (B.h - A.h) * s, lift: lift, sx: sx, sy: sy };
   }
+  /* how far a carried block is along its trip: from when its animation really started (its start time, set at the frame
+     that first drew it) to now, on the wall clock. A press the app answers with a long task before any frame leaves the
+     animation unstarted (no start time: it has not moved yet), and inside or right after a long task the animation's own
+     current time is the frame's from before it, so neither the wall clock from the press nor that current time is where
+     the block is drawn */
+  function carryAge(K) { var a = K.anim; return !a || a.startTime == null ? 0 : Math.max(0, performance.now() - a.startTime); }
   var CARRY_REACH = 8;   /* px past the trip's ends along the strip: a label the squashed or tilted chip can touch */
-  function carry(L, A, B, strip, cfg, target, vertical) {
+  function carry(L, A, B, strip, cfg, target, vertical, t0) {
     if (!L.under || reduced()) { setLensBox(L, B); return; }
+    var start = t0 || performance.now(), age = Math.max(0, performance.now() - start);
     var C = CARRY[switchMotion], ease = bezierEase(C.ease), dur = C.dur, hopping = switchMotion === 'hop';
     var now = strip.querySelector(cfg.items + (cfg.active || '.active')), weight = getComputedStyle(now || target).fontWeight;
     var stick = hopping ? getComputedStyle(strip).getPropertyValue('--pm-switch-stick').trim() : '';
     if (stick === 'transparent' || stick === 'none') stick = '';
     /* every label the chip can cross: along the strip, between the trip's two ends and a little past them */
     var lo = Math.min(vertical ? A.y : A.x, vertical ? B.y : B.x) - CARRY_REACH, hi = Math.max(vertical ? A.y + A.h : A.x + A.w, vertical ? B.y + B.h : B.x + B.w) + CARRY_REACH;
-    var crossed = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible).map(function (it) { return { it: it, r: rectIn(strip, it, 0) }; })
+    var crossed = Array.prototype.slice.call(strip.querySelectorAll(cfg.items)).filter(visible).map(function (it) { var w = (cfg.twin && cfg.twin(it)) || it; return { it: w, r: rectIn(strip, w, 0) }; })
       .filter(function (s) { var a = vertical ? s.r.y : s.r.x, b = a + (vertical ? s.r.h : s.r.w); return b > lo && a < hi; });
     var over = overLayer(strip), tag = cfg.tag, box = function (e) { var st = e.style; st.left = B.x + 'px'; st.top = B.y + 'px'; st.width = B.w + 'px'; st.height = B.h + 'px'; };
     var F = el('i', { class: 'lg-lens lg-hop lg-carry', 'aria-hidden': 'true' }), G = el('i', { class: 'lg-carry-twins', 'aria-hidden': 'true' }), S = null;
@@ -2366,18 +2384,20 @@
       if (t >= dur) break;
     }
     var timing = { duration: dur, easing: 'linear', fill: 'forwards' };
-    F.animate(fF, timing); G.animate(fG, timing); if (S) S.animate(fS, timing);
+    var lead = null;
+    [[F, fF], [G, fG], [S, fS]].forEach(function (x) { if (!x[0]) return; var a = x[0].animate(x[1], timing); if (age) a.currentTime = Math.min(dur, age); if (!lead) lead = a; });
     setLensBox(L, B);
     /* the chip under the labels stays hidden while the block is up (as for a step's blocks) */
     L.anim = L.hopHide = L.lens.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 600000 });
-    L.path = { t0: performance.now(), dur: dur, rects: rects };
+    L.path = { t0: start, dur: dur, rects: rects };
     if (!L.hopMarks) L.hopMarks = new Map();
-    L.hopFrames = S ? [S, F] : [F]; L.hopTarget = target; L.hopEnd = performance.now() + dur;
+    L.hopFrames = S ? [S, F] : [F]; L.hopTarget = target; L.hopEnd = start + dur;
+    L.carry = { A: A, t0: start, vertical: vertical, anim: lead, dur: dur };
     var Pp = L.pending && L.pending.el === target ? L.pending : null; if (Pp) L.hopPress = Pp;
     /* the labels underneath rest in their resting ink: the one headed for until the block lands on it, the one left at
        once (a press marks it so; a change the app made has already taken its chosen look away) */
     hopMark(L, target, 'off');
-    L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, dur + 1);
+    L.hopT = setTimeout(function () { L.hopT = 0; hopSettle(L); }, Math.max(0, dur - age) + 1);
     L.hopSafety = setTimeout(function () { L.hopSafety = 0; if (L.hopFrames) { endHop(L); queueSync(L.strip); } }, 3000);
   }
   /* the press: the lens leaves for the pressed item at once; the app's choice (or its absence) settles it. Only for

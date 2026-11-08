@@ -345,8 +345,15 @@ html:not([data-theme^="glass"]):not(#lgz) .pmw-strip[data-column] .pmw-tab[data-
    Onboarding's step rail: the chip is the current step's word with 3 px round it (F1 and B1 as drafted: the word on its
    sticker or block), not 6 px, which ran the chip down past the header's foot. */
 :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz) #pm-o55-onboarding .o55-raillist { --lg-lens-pad: 3px; }
+/* the current step's word is on the chip, in the chip's ink (white on Basic Light's blue, dark on Friendly Dark's peach),
+   as Retro's is (10-window.css) */
+html[data-lg="on"]:is([data-theme^="basic"], [data-theme^="friendly"]):not([data-o55-nier="on"]) #pm-o55-onboarding .o55-railitem[data-state="current"]:not([data-lg-press="off"]) .o55-raillabel { color: var(--pm-switch-ink-on); }
 /* (and 6 px more at each side: each step's word box is 6 px wider, given back by its margins, so nothing moves) */
 :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz) #pm-o55-onboarding .o55-raillist .o55-raillabel { padding-left: 6px; padding-right: 6px; margin-left: -6px; margin-right: -6px; }
+/* the Activity bar's tile is the chip too (FO-96's tile reads these tokens; 40-bar.js moves it as the chip moves): its
+   lit icon's ink is the chip's, so an icon's ink changes at once when the tile is half on or half off it (40-bar.js
+   inkHold), never fading across bare bar, as reverse video does (above) */
+:is(html[data-theme^="basic"], html[data-theme^="friendly"])[data-rail-skin="d"]:not([data-o55-nier="on"]):not(#lgz):not(#lgy) #activityBar .icon .symbol { transition-property: background-color, transform !important; }
 /* the keyboard's focus ring on a switcher's item: Friendly's brick (Light) or paper (Dark), Basic's text colour, so it reads
    beside the chip as well as on the bar */
 :is(html[data-theme^="basic"], html[data-theme^="friendly"]):not([data-o55-nier="on"]):not(#lgz):not(#lgy) :is(.title-bar .page-tabs .page-tab, #sidePanelSlot .pm-segtab-item, #pm-o55-onboarding .o55-seg button, #pmuRange > button, .orch-tabs .orch-tab):focus-visible { outline-color: var(--pm-switch-focus); }
