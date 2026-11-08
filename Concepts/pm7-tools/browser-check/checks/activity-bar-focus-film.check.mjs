@@ -2,9 +2,10 @@
 // Liquid Glass's lens carries it. Tab to Files (the open panel), Enter (at 1920 it closes the panel), Enter again (it
 // opens), a real click on the focused icon (it closes), Enter (it opens), Tab to Search, Enter (the panel changes to
 // Search). Each step is marked on the film, and three things are asserted after it (F96-1 round 6, astra-review-g8 A):
-// the key focus is on the step's icon (it is the active element and matches :focus-visible); that icon carries a mark,
-// its own (a 3 px accent outline on its tile) or the lens's (data-lg-focus on a lens painted at rest on it), never
-// neither; and the panels are as the step says (Files open or shut, Search open or not). A Tab that can't reach its icon
+// the key focus is on the step's icon (it is the active element and matches :focus-visible); that icon carries a mark:
+// the rail's focus ring (.d-abring, F96-1 round 8: one ring above every layer, on the focused tile's box), its own
+// 3 px accent outline (where anchor positioning is missing), or on builds before round 8 the lens's (data-lg-focus on a
+// lens painted at rest on it), never none; and the panels are as the step says (Files open or shut, Search open or not). A Tab that can't reach its icon
 // stops the test at once. No step here means to lose the key focus: a click on the key-focused icon keeps it, so a
 // press that drops it fails.
 // The mark is also judged on pixels in every compositor frame from each press to the settled state (sol-review-g8: the
@@ -95,12 +96,16 @@ function markState(k) {
   const keyFocus = a === el && el.matches(':focus-visible');
   const ink = cs.outlineColor.match(/[\d.]+/g) || [];
   const own = cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) >= 2 && (ink.length < 4 || parseFloat(ink[3]) > 0);
-  let onLens = false;
+  const b = sym.getBoundingClientRect();
+  let onLens = false, onRing = false;
   if (lens && lens.hasAttribute('data-lg-focus') && parseFloat(getComputedStyle(lens).opacity) > 0.5) {
-    const l = lens.getBoundingClientRect(), b = sym.getBoundingClientRect();
+    const l = lens.getBoundingClientRect();
     onLens = Math.abs((l.left + l.right) / 2 - (b.left + b.right) / 2) <= 3 && Math.abs((l.top + l.bottom) / 2 - (b.top + b.bottom) / 2) <= 3;
   }
-  return { active, keyFocus, own, onLens, iconFlag: el.hasAttribute('data-lg-focus'), lensFlag: !!lens && lens.hasAttribute('data-lg-focus'), files: isOpen('files'), search: isOpen('search') };
+  const ring = document.getElementById('d-abring');
+  if (ring) { const c = getComputedStyle(ring), r = ring.getBoundingClientRect();
+    onRing = c.display !== 'none' && c.visibility !== 'hidden' && parseFloat(c.opacity) > 0.5 && r.width > 4 && Math.abs(r.left - b.left) <= 1 && Math.abs(r.top - b.top) <= 1 && Math.abs(r.width - b.width) <= 1 && Math.abs(r.height - b.height) <= 1; }
+  return { active, keyFocus, own, onLens, onRing, iconFlag: el.hasAttribute('data-lg-focus'), lensFlag: !!lens && lens.hasAttribute('data-lg-focus'), files: isOpen('files'), search: isOpen('search') };
 }
 
 // The page, the key walk, the compositor frames and the pixel judge, shared by both tests.
@@ -125,7 +130,7 @@ async function rig(t) {
     const s = await state(k);
     t.log(`${look} ${label}: ${JSON.stringify(s)}`);
     await t.check(`${look} ${label}: the key focus is on ${k}`, s.active === k && s.keyFocus === true, JSON.stringify(s));
-    await t.check(`${look} ${label}: the key-focused ${k} carries a mark, its own or the lens's`, s.keyFocus === true && (s.own || s.onLens),
+    await t.check(`${look} ${label}: the key-focused ${k} carries a mark (the focus ring, its own or the lens's)`, s.keyFocus === true && (s.onRing || s.own || s.onLens),
       s.keyFocus ? JSON.stringify(s) : `no key focus on ${k} to carry a mark: ${JSON.stringify(s)}`);
     await t.check(`${look} ${label}: Files is ${want.files ? 'open' : 'shut'} and Search ${want.search ? 'open' : 'not open'}`, s.files === want.files && s.search === want.search,
       `files ${s.files}, search ${s.search}; wanted files ${want.files}, search ${want.search}`);
@@ -151,19 +156,27 @@ async function rig(t) {
     c.fillStyle = col; c.fillRect(0, 0, 1, 1); return Array.from(c.getImageData(0, 0, 1, 1).data); }, k);
   // every frame of a press, judged: the tile is still (a focused tile stands still), the lens's resting box is read after
   let crops = 0;   /* the first 24 failing frames of a test are cropped */
-  const frameFaults = async (look, label, k, cap) => {
+  // from: the control the key focus left, when a press moves it (Shift+Tab): the frames before the press shows, which
+  // still hold that control's whole ring and not yet this one's, are passed over, only while they lead (a ring that goes
+  // missing later still fails)
+  const frameFaults = async (look, label, k, cap, from = null) => {
     const tile = await boxOf(`#activityBar .icon[data-ab-id="${k}"] .symbol`), lens = await boxOf('#lg-lenses .lg-lens[data-lg-for="rail-icons"]'), ink = await inkOf(k);
+    const prev = from ? await boxOf(`#activityBar .icon[data-ab-id="${from}"] .symbol`) : null;
     const near = lens && tile && Math.abs(lens.x + lens.width / 2 - tile.x - tile.width / 2) <= 3 && Math.abs(lens.y + lens.height / 2 - tile.y - tile.height / 2) <= 3 ? lens : null;
-    const bad = [], seen = cap.got.length, rows = Math.ceil(Math.max(tile.y + tile.height, near ? near.y + near.height : 0)) + 32;
+    const bad = [], seen = cap.got.length, rows = Math.ceil(Math.max(tile.y + tile.height, near ? near.y + near.height : 0, prev ? prev.y + prev.height : 0)) + 32;
+    let lead = !!prev, passed = 0;
     for (const fr of cap.got) {
       const im = decodeTop(Buffer.from(fr.data, 'base64'), rows), sd = better(ringSides(im, tile, ink), near && ringSides(im, near, ink));
-      if (Object.values(sd).every(v => v.share >= 0.9)) continue;
+      const whole = Object.values(sd).every(v => v.share >= 0.9);
+      if (lead && !whole && Object.values(ringSides(im, prev, ink)).every(v => v.share >= 0.9)) { passed++; continue; }
+      lead = false;
+      if (whole) continue;
       const ms = Math.round(fr.wall - cap.at);
       bad.push({ ms, sides: Object.fromEntries(Object.entries(sd).map(([q, v]) => [q, `${v.share} ${v.median}`])) });
       if (bad.length <= 4 && crops++ < 24 && t.run?.dir) { const dir = join(t.run.dir, 'ring-frames'); mkdirSync(dir, { recursive: true }); cropPng(im, tile, join(dir, `${look}-${label.replace(/[^a-z0-9]+/gi, '-')}-${ms}ms.png`)); }
     }
-    t.log(`${look} ${label}: ${seen} frames on pixels, ink ${ink.slice(0, 3)}, ${bad.length} without the ring at 3:1 on every side${bad.length ? ' ' + JSON.stringify(bad.slice(0, 6)) : ''}`);
-    return { seen, bad };
+    t.log(`${look} ${label}: ${seen} frames on pixels${passed ? ` (${passed} leading frames still before the press)` : ''}, ink ${ink.slice(0, 3)}, ${bad.length} without the ring at 3:1 on every side${bad.length ? ' ' + JSON.stringify(bad.slice(0, 6)) : ''}`);
+    return { seen: seen - passed, bad };
   };
   const judge = async (look, label, k, cap) => {
     if (!cap) return;
@@ -179,6 +192,7 @@ const settle = async (f, look, t) => { await t.app.look(look); await f.waitForFu
 
 async function filmSteps(t) {
   const { f, kb, looks, state, reach, step, cdp } = await rig(t);
+  await pinMotion(t, f);
   for (const look of looks) {
     await settle(f, look, t);
     if (!(await state('files')).files) { await reach(look, 'files', 'to open Files first'); await kb.press('Enter'); await f.waitForTimeout(800); }
@@ -203,6 +217,30 @@ async function filmSteps(t) {
   await f.evaluate(() => document.getElementById('fo96-film-s')?.remove());
 }
 
+// Reduced Motion as asked (--set motion=reduce: the app's own setting and the media query), else pinned off, so a host
+// whose system asks for less motion does not quietly run every travel as Reduced Motion's fade (opus-recheck-f96g K2).
+const pinMotion = async (t, f) => {
+  const reduce = t.args.motion === 'reduce';
+  await t.page.emulateMedia({ reducedMotion: reduce ? 'reduce' : 'no-preference' });
+  await f.evaluate(on => { const r = document.documentElement; if (on) r.setAttribute('data-motion', 'reduced'); else if (r.getAttribute('data-motion') === 'reduced') r.removeAttribute('data-motion'); }, reduce);
+  return reduce ? 'Reduced Motion' : 'motion';
+};
+// The load (round 7, see below): armed for one key or pointer press, it finds the rail lens's motion in the frames after
+// and holds the main thread ms from the frame after the one that started it (or in a task after that frame's commit).
+const installStall = f => f.evaluate(() => {
+  if (window.__fo96Stall) return;
+  const S = window.__fo96Stall = { arm: 0, held: 0, late: 0 };
+  const go = () => { const ms = S.arm; if (!ms) return; S.arm = 0; let tries = 0;
+    const hold = () => { const t0 = performance.now(); while (performance.now() - t0 < ms) { /* held */ } S.held++; };
+    const look = () => {
+      const l = document.querySelector('.lg-lens[data-lg-for="rail-icons"]'), a = l && l.getAnimations().find(x => x.playState === 'running' || x.pending);
+      if (a) { if (!tries) setTimeout(hold, 0); else { S.late++; hold(); } return; }
+      if (++tries < 40) requestAnimationFrame(look);
+    };
+    requestAnimationFrame(look); };
+  window.addEventListener('keydown', go, true); window.addEventListener('pointerdown', go, true);
+});
+
 // F96-1 round 7 (opus-recheck-g8fix): the lens's arrivals on the key-focused Files under load. Under a 60 fps recorder
 // on Nas1 a travel onto Files washed its ring to 2.2-2.5:1 in about 1 of 25-30 arrivals, with no cue drawn: the frame
 // that starts a travel is committed to the compositor, which runs it, and anything the page decides about the mark
@@ -219,21 +257,14 @@ async function filmSteps(t) {
 async function arrivals(t) {
   const { f, kb, looks, state, reach, film, frameFaults } = await rig(t);
   const n = Math.max(1, Number(t.args.arrivals || 30)), stall = Math.max(0, Number(t.args.stall ?? 600));
-  await f.evaluate(() => {
-    if (window.__fo96Stall) return;
-    const S = window.__fo96Stall = { arm: 0, held: 0, late: 0 };
-    window.addEventListener('keydown', () => { const ms = S.arm; if (!ms) return; S.arm = 0; let tries = 0;
-      const hold = () => { const t0 = performance.now(); while (performance.now() - t0 < ms) { /* held */ } S.held++; };
-      const look = () => {
-        const l = document.querySelector('.lg-lens[data-lg-for="rail-icons"]'), a = l && l.getAnimations().find(x => x.playState === 'running' || x.pending);
-        if (a) { if (!tries) setTimeout(hold, 0); else { S.late++; hold(); } return; }
-        if (++tries < 40) requestAnimationFrame(look);
-      };
-      requestAnimationFrame(look); }, true);
-  });
-  const press = async key => { await f.evaluate(ms => { window.__fo96Stall.arm = ms; }, stall); await kb.press(key); };
+  const motion = await pinMotion(t, f);
+  await installStall(f);
+  let armed = 0;
+  const press = async key => { await f.evaluate(ms => { window.__fo96Stall.arm = ms; }, stall); if (stall) armed++; await kb.press(key); };
   for (const look of looks) {
     await settle(f, look, t);
+    await pinMotion(t, f);
+    armed = 0; const held0 = await f.evaluate(() => window.__fo96Stall.held);
     await reach(look, 'files', 'to keep the key focus on Files');
     if (!(await state('search')).search) { await kb.press('Control+2'); await f.waitForTimeout(1200); }
     await t.check(`${look}: Search is open, with the key focus on Files, before the arrivals`, await state('files').then(s => s.search && s.active === 'files' && s.keyFocus), JSON.stringify(await state('files')), { hard: true });
@@ -251,7 +282,9 @@ async function arrivals(t) {
       if (arrive.wrong.length + leave.wrong.length > 2) break;
     }
     const held = await f.evaluate(() => window.__fo96Stall);
-    t.log(`${look} arrivals under a ${stall} ms stall: ${n} arrivals, ${arrive.frames} frames, ${arrive.bad.length} with a frame below 3:1; leaving: ${leave.frames} frames, ${leave.bad.length}; stalls held ${held.held} (${held.late} at once, in the frame after the one that started the motion)`);
+    t.log(`${look} (${motion}) arrivals under a ${stall} ms stall: ${n} arrivals, ${arrive.frames} frames, ${arrive.bad.length} with a frame below 3:1; leaving: ${leave.frames} frames, ${leave.bad.length}; stalls held ${held.held - held0} of ${armed} armed (all so far: ${held.held}, ${held.late} at once)`);
+    // K1 (opus-recheck-f96g): every press was held, or the test ran unloaded
+    await t.check(`${look}: each of the ${armed} presses was held ${stall} ms under the stall`, held.held - held0 === armed, JSON.stringify({ armed, held: held.held - held0 }));
     await t.check(`${look}: each of ${n} arrivals on the key-focused Files (Ctrl+1, Enter) under a ${stall} ms main-thread stall ends with Files open and the key focus on it, and so does each Ctrl+2`,
       arrive.wrong.length === 0 && leave.wrong.length === 0, JSON.stringify({ arrive: arrive.wrong.slice(0, 3), leave: leave.wrong.slice(0, 3) }));
     await t.check(`${look}: in every frame of ${n} arrivals on the key-focused Files under a ${stall} ms main-thread stall, its ring on pixels at 3:1 on every side`,
@@ -263,4 +296,64 @@ async function arrivals(t) {
   await f.evaluate(() => document.getElementById('fo96-film-s')?.remove());
 }
 
-export const tests = { 'film steps': filmSteps, 'arrivals under a main-thread stall': arrivals };
+// F96-1 round 8 (opus-recheck-f96g F1, N1, N2): a pointer on the key-focused Files, with Search open. A press there keeps
+// :focus-visible (Chrome keeps it on an element that already has it; a press on an unfocused icon gives none), so the
+// ring is due in every frame: a quick click with the pointer left on Files (Glass's hover bead comes to rest over it,
+// N1), a quick click with the pointer moved off at once, a press held 900 ms (round 7 moved the lens there on the press
+// while the app makes Files current only on the release, F1), each also under the round 7 stall armed on the press; the
+// pointer resting on Files with no press (the bead over it); and Shift+Tab back to Files from Search after Search's
+// focus tag has shown (the tag fades out over Files, N2). Every compositor frame is judged as the film steps judge
+// theirs; each route must end with the key focus on Files and the panel it should have. --set clicks= reps (6).
+async function pointerRoutes(t) {
+  const { f, kb, looks, state, reach, film, frameFaults } = await rig(t);
+  const n = Math.max(1, Number(t.args.clicks || 6)), stall = Math.max(0, Number(t.args.stall ?? 600));
+  const motion = await pinMotion(t, f);
+  await installStall(f);
+  const away = () => t.page.mouse.move(1880, 1040);
+  const centre = async k => { const b = await f.locator(`#activityBar .icon[data-ab-id="${k}"] .symbol`).boundingBox(); return [b.x + b.width / 2, b.y + b.height / 2]; };
+  const ready = async look => {   // Search open, the key focus on Files, the pointer away
+    await away();
+    let s = await state('files');
+    if (!(s.active === 'files' && s.keyFocus)) await reach(look, 'files', 'to keep the key focus on Files');
+    if (!(await state('files')).search) { await kb.press('Control+2'); await f.waitForTimeout(1200); }
+    s = await state('files');
+    await t.check(`${look}: Search is open, with the key focus on Files, before a pointer route`, s.search && s.active === 'files' && s.keyFocus, JSON.stringify(s), { hard: true });
+  };
+  for (const look of looks) {
+    await settle(f, look, t);
+    await pinMotion(t, f);
+    const routes = [
+      { name: 'a quick click, the pointer left on Files', reps: n, load: 0, act: async () => { await t.page.mouse.move(...(await centre('files'))); await t.page.mouse.down(); await t.page.mouse.up(); }, end: 'files' },
+      { name: 'a quick click, the pointer moved off at once', reps: n, load: 0, act: async () => { await t.page.mouse.move(...(await centre('files'))); await t.page.mouse.down(); await t.page.mouse.up(); await away(); }, end: 'files' },
+      { name: 'a press held 900 ms', reps: Math.ceil(n / 2), load: 0, act: async () => { await t.page.mouse.move(...(await centre('files'))); await t.page.mouse.down(); await f.waitForTimeout(900); await t.page.mouse.up(); }, end: 'files' },
+      { name: `a quick click under a ${stall} ms stall, the pointer left on Files`, reps: n, load: stall, act: async () => { await t.page.mouse.move(...(await centre('files'))); await t.page.mouse.down(); await t.page.mouse.up(); }, end: 'files' },
+      { name: `a quick click under a ${stall} ms stall, the pointer moved off`, reps: n, load: stall, act: async () => { await t.page.mouse.move(...(await centre('files'))); await t.page.mouse.down(); await t.page.mouse.up(); await away(); }, end: 'files' },
+      { name: `a press held 900 ms under a ${stall} ms stall`, reps: Math.ceil(n / 2), load: stall, act: async () => { await t.page.mouse.move(...(await centre('files'))); await t.page.mouse.down(); await f.waitForTimeout(900); await t.page.mouse.up(); }, end: 'files' },
+      { name: 'the pointer resting on the key-focused Files', reps: Math.ceil(n / 2), load: 0, act: async () => { await t.page.mouse.move(...(await centre('files'))); await f.waitForTimeout(600); }, end: 'search' },
+      { name: 'Shift+Tab back to Files after Search\'s focus tag shows', reps: n, load: 0, from: 'search', pre: async () => { await kb.press('Tab'); await f.waitForTimeout(1200); }, act: () => kb.press('Shift+Tab'), end: 'search' },
+    ];
+    for (const r of routes) {
+      if (!stall && r.load) continue;
+      const out = { bad: [], frames: 0, wrong: [] }; let armed = 0; const held0 = await f.evaluate(() => window.__fo96Stall.held);
+      for (let i = 0; i < r.reps; i++) {
+        await ready(look);
+        if (r.pre) await r.pre();
+        if (r.load) { await f.evaluate(ms => { window.__fo96Stall.arm = ms; }, r.load); armed++; }
+        const cap = await film(r.act);
+        const s = await state('files');
+        const ok = s.active === 'files' && s.keyFocus === true && (r.end === 'files' ? s.files : s.search);
+        if (!ok) out.wrong.push({ i: i + 1, s });
+        if (cap) { const q = await frameFaults(look, `${r.name} ${i + 1}`, 'files', cap, r.from || null); out.frames += q.seen; if (q.bad.length) out.bad.push({ i: i + 1, frames: q.bad.slice(0, 2) }); }
+        await away(); await f.waitForTimeout(300);
+      }
+      const held = await f.evaluate(() => window.__fo96Stall.held) - held0;
+      t.log(`${look} (${motion}) ${r.name}: ${r.reps} presses, ${out.frames} frames, ${out.bad.length} with a frame below 3:1${r.load ? `; held ${held} of ${armed}` : ''}`);
+      await t.check(`${look} (${motion}): ${r.name}, ${r.reps} times: the key focus stays on Files with its ring on pixels at 3:1 on every side in every frame, and the panel is as it should be`,
+        out.wrong.length === 0 && out.bad.length === 0 && out.frames >= 3 * r.reps && (!r.load || held === armed), JSON.stringify({ frames: out.frames, failed: out.bad.length, first: out.bad.slice(0, 3), wrong: out.wrong.slice(0, 2), held: r.load ? `${held}/${armed}` : undefined }));
+    }
+    await away(); await kb.press('Control+1'); await f.waitForTimeout(1200);
+  }
+  await f.evaluate(() => document.getElementById('fo96-film-s')?.remove());
+}
+
+export const tests = { 'film steps': filmSteps, 'arrivals under a main-thread stall': arrivals, 'pointer routes': pointerRoutes };
