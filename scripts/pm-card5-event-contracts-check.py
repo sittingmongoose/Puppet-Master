@@ -33,6 +33,7 @@ if str(ROOT / 'scripts') not in sys.path:
 import pm_dg6a_table_decision_citation as _decision_table  # noqa: E402
 import pm_dg6a_table_storage_schema as _storage_table  # noqa: E402
 import pm_dg6a_table_current_header as _current_table  # noqa: E402
+import pm_dg6a_table_current_context as _context_table  # noqa: E402
 
 _DECISION_ROWS = [(name, guard.predicate) for name, guard in _decision_table.case(None).table.guards.items()]
 DECISION_RECORDER = None
@@ -40,6 +41,8 @@ _STORAGE_ROWS = [(name, guard.predicate) for name, guard in _storage_table.case(
 STORAGE_RECORDER = None
 _CURRENT_ROWS = [(name, guard.predicate) for name, guard in _current_table.case(None).table.guards.items()]
 CURRENT_RECORDER = None
+_CONTEXT_ROWS = [(name, guard.predicate) for name, guard in _context_table.case(None).table.guards.items()]
+CONTEXT_RECORDER = None
 
 
 def digest(value):
@@ -399,6 +402,28 @@ def current_header_observation(context, family):
     }
 
 
+def current_context_observation(operation, context):
+    """The current_context table's FIELDS, derived from (operation, context).
+
+    Context reads use .get so a missing key is the False fact; exactness is
+    the shared exact_value the pre-table loops used.
+    """
+    refs = context.get('commit_refs') if type(context.get('commit_refs')) is dict else {}
+    return {
+        'authority_verified_is_true': context.get('authority_verified') is True,
+        'permission_allowed_is_true': context.get('permission_allowed') is True,
+        'source_retained_is_true': context.get('source_retained') is True,
+        'owner_commit_verified_is_true': context.get('owner_commit_verified') is True,
+        'authenticated_action_exact': bool(exact(context.get('authenticated_action'), operation['original_command']['action'])),
+        'canonical_before_exact': bool(exact(context.get('canonical_before'), operation['before'])),
+        'committed_after_exact': bool(exact(context.get('committed_after'), operation['after'])),
+        'owner_commit_ref_exact': bool(exact(refs.get('owner_commit_ref'), operation['owner_commit_ref'])),
+        'result_ref_exact': bool(exact(refs.get('result_ref'), operation['result_ref'])),
+        'dispatch_receipt_ref_exact': bool(exact(refs.get('dispatch_receipt_ref'), operation['dispatch_receipt_ref'])),
+        'retry_body_exact': bool(exact(context.get('retry_body'), operation['original_command'])),
+    }
+
+
 def current_errors(operation, context, family, schema):
     # The opening chain refuses only through
     # scripts/pm_dg6a_table_current_header.py rows, in table order; neither
@@ -417,19 +442,18 @@ def current_errors(operation, context, family, schema):
     errors = failed(operation_guards(operation, family, schema))
     if errors:
         return errors
-    for key in ('authority_verified', 'permission_allowed', 'source_retained', 'owner_commit_verified'):
-        if context[key] is not True:
-            errors.append(key)
-    for key, value in [('authenticated_action', operation['original_command']['action']),
-                       ('canonical_before', operation['before']),
-                       ('committed_after', operation['after'])]:
-        if not exact(context[key], value):
-            errors.append(key)
-    for key in ('owner_commit_ref', 'result_ref', 'dispatch_receipt_ref'):
-        if not exact(context['commit_refs'][key], operation[key]):
-            errors.append('original_' + key)
-    if not exact(context['retry_body'], operation['original_command']):
-        errors.append('idempotency_conflict')
+    # The context flags and exact original joins refuse only through
+    # scripts/pm_dg6a_table_current_context.py rows; every refusing row's
+    # code is collected in table order, as the pre-table loops appended them.
+    observed = current_context_observation(operation, context)
+    refused = []
+    for name, predicate in _CONTEXT_ROWS:
+        code = predicate(observed, None)
+        if code is not None:
+            refused.append((name, code))
+    if CONTEXT_RECORDER is not None:
+        CONTEXT_RECORDER.append((copy.deepcopy(observed), refused))
+    errors += [code for _, code in refused]
     if operation['state'] != 'prepared':
         errors += shared.append_result_errors(operation, context['append_resolution'], context['append_original'], family['event_type'])
     return errors

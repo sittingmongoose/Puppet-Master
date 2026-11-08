@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Run the gated guard tool (Method B) over the DG6A guard-table phase suites.
 
-Sweep part 2A phases so far, both in pm-card5-event-contracts-check.py:
-`decision_citation` (pm_dg6a_table_decision_citation.py) and `storage_schema`
-(pm_dg6a_table_storage_schema.py, one suite row per registered surface row).
-Witnesses are collected by running the checker's own one-defect case builders
-(decision_citation_cases, storage_schema_cases) for all nine Card 5 families
-under its recorders: an accepted observation is a control, a refused one is
-a negative targeted at its first refusing row. This runner is unscanned
+Sweep part 2A phases so far, all in pm-card5-event-contracts-check.py:
+`decision_citation`, `storage_schema` (one suite row per registered surface
+row), `current_header` and `current_context` (the first and second chains of
+current_errors); table modules are pm_dg6a_table_<phase>.py. Witnesses are
+collected by running the checker's own one-defect cases for all nine Card 5
+families under its recorders: an accepted observation is a control, a
+refused one is a negative targeted at its first (for current_context: its
+only) refusing row. This runner is unscanned
 adapter code; the tool scans only the table module of the phase under test.
 Credit is copied from the tool's own report; this driver adds none.
 
@@ -30,6 +31,7 @@ import pm_guard_isolation as g  # noqa: E402
 import pm_dg6a_table_decision_citation as decision_table  # noqa: E402
 import pm_dg6a_table_storage_schema as storage_table  # noqa: E402
 import pm_dg6a_table_current_header as current_table  # noqa: E402
+import pm_dg6a_table_current_context as context_table  # noqa: E402
 
 RETURN_SOURCE = 'return g.Case(table, check, context)'
 
@@ -154,10 +156,67 @@ def collect_current_header():
     return controls, negatives, len(records)
 
 
+def collect_current_context():
+    """Fixture current-stage cases that reach the context phase, via current_errors.
+
+    Setup and patch application mirror collect_current_header; the recorder
+    is reset per case because only cases passing the header and the operation
+    guards reach this phase. A case refusing more than one context row would
+    fail the fixture-expectation assert first (every expected list is a
+    singleton or empty), so each reached case is a control or a one-row
+    negative.
+    """
+    checker = load_checker('dg6a_card5_for_guard_tables_context', 'pm-card5-event-contracts-check.py')
+    manifest = checker.load('Plans/card5_event_contracts/manifest.json')
+    registry = checker.load('Plans/storage_value_registry.json')
+    records = []
+    for family in manifest['families']:
+        fixture = checker.load(family['fixture'])
+        schemas = {k: checker.load(family[k]) for k in ('payload_schema', 'checkpoint_schema')}
+        if family['operation_schema']:
+            schemas['operation_schema'] = checker.load(family['operation_schema'])
+        for schema in schemas.values():
+            checker.shared.check_schema(schema)
+        for surface in ('operation', 'checkpoint'):
+            if family[surface + '_schema'] is not None:
+                row = next(r for r in registry['families'] if r['family_id'] == family['slug'] + '_' + surface)
+                schemas[surface + '_schema'] = row['value_schema']
+        for case in fixture['cases']:
+            if case['stage'] != 'current':
+                continue
+            value = copy.deepcopy(fixture['bases'][case['base']])
+            for patch in case['patches']:
+                if not patch['path']:
+                    value = copy.deepcopy(patch['value'])
+                    continue
+                target = value
+                for part in patch['path'][:-1]:
+                    target = target[part]
+                target[patch['path'][-1]] = copy.deepcopy(patch['value'])
+            collected = []
+            checker.CONTEXT_RECORDER = collected
+            try:
+                actual = checker.current_errors(value['operation'], value['context'], family,
+                                                  schemas.get('operation_schema'))
+            finally:
+                checker.CONTEXT_RECORDER = None
+            assert actual == case['expected'], (family['event_type'], case['name'], actual, case['expected'])
+            if not collected:
+                continue
+            assert len(collected) == 1, (family['event_type'], case['name'], collected)
+            observed, refused = collected[0]
+            assert len(refused) <= 1, (family['event_type'], case['name'], refused)
+            records.append((family['event_type'] + '/' + case['name'], family['event_type'],
+                            observed, refused[0] if refused else None, case['name']))
+    controls, negatives = dedupe(records)
+    return controls, negatives, len(records)
+
+
 PHASES = {
     'decision_citation': (decision_table, 'scripts/pm_dg6a_table_decision_citation.py', collect_decision_citation),
     'storage_schema': (storage_table, 'scripts/pm_dg6a_table_storage_schema.py', collect_storage_schema),
     'current_header': (current_table, 'scripts/pm_dg6a_table_current_header.py', collect_current_header),
+    'current_context': (context_table, 'scripts/pm_dg6a_table_current_context.py', collect_current_context),
 }
 
 
