@@ -1464,7 +1464,15 @@
      lens, or when the motion ends; it is placed only when it shows, and only for a key focus in the bar, so a pointer's
      switch reads nothing more. The lens takes the mark only once it is painted in full: one still fading in (an arrival,
      Reduced Motion's fade) drew a pale ring, near 2.3:1 just past half its opacity, so until its fade ends the cue holds
-     the mark. */
+     the mark.
+     Round 7 (opus-recheck-g8fix): the flags and the cue are decided where the lens's motion is decided. A travel starts
+     in Glass's strip sync, inside a frame callback, and that frame commits it to the compositor, which runs it whatever
+     the main thread does next; this read used to be queued for the frame after, so with the main thread held (a panel's
+     build, under a recorder on Nas1) the travel ran on the old state: no cue over the arriving lens (2.2-2.5:1), and a
+     lens leaving the focused icon still flagged, carrying the mark away while the icon had none. So a travel is read in
+     the task that starts it (syncStrips, after its batch), and the lens takes the mark only at rest, when no motion of
+     its own runs: then nothing a held main thread delays can leave a frame between the cue and the lens's mark. A lens
+     at rest on the focused icon that cannot take the mark (painted, but not lined up or not in full) keeps the cue. */
   var railCueEl = null;
   function railMotions(L) {
     var out = [];
@@ -1484,7 +1492,7 @@
     st.borderRadius = getComputedStyle(sym).borderRadius;
     if (!railCueEl.hasAttribute('data-lg-on')) railCueEl.setAttribute('data-lg-on', '');
   }
-  var railFocusQ = 0, railAwaited = typeof WeakSet === 'function' ? new WeakSet() : null, railDueAnim = null, railDueT = 0, railDueTries = 0;
+  var railFocusQ = 0, railAwaited = typeof WeakSet === 'function' ? new WeakSet() : null;
   function railLensAt(lens, icon) {
     var s = icon.querySelector('.symbol') || icon, a = lens.getBoundingClientRect(), b = s.getBoundingClientRect();
     return Math.abs((a.left + a.right) / 2 - (b.left + b.right) / 2) <= 2 && Math.abs((a.top + a.bottom) / 2 - (b.top + b.bottom) / 2) <= 2;
@@ -1497,7 +1505,7 @@
     var L = isGlass() && typeof lenses !== 'undefined' && lenses ? lenses.get(bar) : null, act = document.activeElement;
     /* any rail lens still flagged counts, the live one or one left from an earlier look (outside Glass the rail has none) */
     var flagged = bar.querySelector('.icon[data-lg-focus]') || document.querySelector('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]');
-    var cur = null, on = false, wait = false, kf = null;
+    var cur = null, on = false, wait = false, kf = null, motions = null, seen = false;
     if (act && act.matches && act.matches('#activityBar .icon')) {
       try { kf = act.matches(':focus-visible') ? act : null; } catch (e) { kf = null; }
       if (kf && act.matches('[data-lg-current]')) { var sp = document.getElementById('sidePanelSlot'); cur = sp && visible(sp) ? act : null; }
@@ -1506,33 +1514,24 @@
     if (!cur && !flagged && !cued && !(kf && L && L.anim)) return;
     if (cur && L && L.lens && L.lens.isConnected && L.rect && !(typeof hiddenLenses !== 'undefined' && hiddenLenses.has(L))) {
       var cs = getComputedStyle(L.lens);
-      if (cs.display !== 'none') { if (parseFloat(cs.opacity) > 0.98 && railLensAt(L.lens, cur)) on = true; else wait = true; }
+      if (cs.display !== 'none') {
+        motions = railMotions(L); seen = parseFloat(cs.opacity) > 0.02;
+        if (!motions.length && parseFloat(cs.opacity) > 0.98 && railLensAt(L.lens, cur)) on = true; else wait = true;
+      }
     }
     bar.querySelectorAll('.icon[data-lg-focus]').forEach(function (i) { if (!on || i !== cur) i.removeAttribute('data-lg-focus'); });
     document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]').forEach(function (x) { if (!on || !L || x !== L.lens) x.removeAttribute('data-lg-focus'); });
     if (on && L && L.lens) L.lens.setAttribute('data-lg-focus', '');
     if (on && !cur.hasAttribute('data-lg-focus')) cur.setAttribute('data-lg-focus', '');
-    var motions = kf && !on && L && L.lens && L.lens.isConnected && L.rect && !L.under && L.lens.style.opacity !== '0' ? railMotions(L) : null;
-    railCue(L, motions && motions.length ? kf : null);
-    /* the lens is on its way to the focused icon, or fading in on it. No poll (F96c-3). A travel() records its path
-       (L.path): one timer to the frame from which that path keeps the lens within the 2 px of the icon, as its spring's
-       last wobble takes another 60-100 ms to end; the frame's clock and the path's can be a frame apart, so a read there
-       that finds the lens still short looks again on each of at most three frames. Otherwise, and as the fallback, look
-       again when the lens's own motion ends (travel(), a ride on its strip's entrance, an arrival or reduced-motion fade:
-       every move of the lens that is not a jump is one of its Web Animations), in that frame, before it paints. A lens at
-       rest somewhere else waits for a strip sync to move it, and syncStripNow queues this itself; an endless animation (a
-       step look's hop hide, never in Glass) is not waited on, and the icon keeps its own mark meanwhile. */
-    var an = wait ? L.anim : null, T = an && L.path;
-    if (T && T.rects && T.rects.length && L.rect) {
-      if (an !== railDueAnim) {
-        var cx = L.rect.x + L.rect.w / 2, cy = L.rect.y + L.rect.h / 2, k = T.rects.length, q;
-        while (k > 0 && (q = T.rects[k - 1]) && Math.abs(q.x + q.w / 2 - cx) <= 1.5 && Math.abs(q.y + q.h / 2 - cy) <= 1.5) k--;
-        var due = k < T.rects.length ? T.rects[k].t : T.dur, ct = an.currentTime;
-        railDueAnim = an; railDueTries = 0; clearTimeout(railDueT);
-        railDueT = setTimeout(function () { railDueT = 0; queueRailFocus(); }, Math.max(0, due - (ct == null ? -17 : ct)));
-      } else if (!railDueT && railDueTries < 3) { railDueTries++; queueRailFocus(); }
-    }
-    if ((wait || (motions && motions.length)) && L.lens.getAnimations) (motions || railMotions(L)).forEach(function (a) {
+    var lensUp = kf && !on && L && L.lens && L.lens.isConnected && L.rect && !L.under && L.lens.style.opacity !== '0';
+    if (lensUp && !motions) motions = railMotions(L);
+    railCue(L, lensUp && (motions.length || (kf === cur && wait && seen)) ? kf : null);
+    /* the lens is on its way, or fading in. No poll (F96c-3): look again when the lens's own motion ends (travel(), a
+       ride on its strip's entrance, an arrival or reduced-motion fade: every move of the lens that is not a jump is one
+       of its Web Animations), in that frame, before it paints; a cancelled one is looked at too. A lens at rest somewhere
+       else waits for a strip sync to move it, which reads this itself; an endless animation (a step look's hop hide,
+       never in Glass) is not waited on. */
+    if (motions && motions.length) motions.forEach(function (a) {
       if (railAwaited && railAwaited.has(a)) return;
       if (railAwaited) railAwaited.add(a);
       a.finished.then(railFocusNow, railFocusNow);
@@ -2123,7 +2122,7 @@
      its layer and its strip's mark move no strip. What the read could not know is read at the write, as before: a lens
      a write brings back from the park or the carry, a target the write's press logic changes, a layer not made yet whose
      own box the lens is placed in. */
-  var lensMounts = null, lensRides = null;
+  var lensMounts = null, lensRides = null, railBatchRead = false;
   function syncStrips(list) {
     if (!list.length) return;
     var reads = list.map(function (t) { return readStrip(t[0], t[1]); });
@@ -2131,10 +2130,10 @@
     try { list.forEach(function (t, i) { syncStrip(t[0], t[1], reads[i]); }); }
     finally { lensMounts = null; lensRides = null; }
     if (mounts.size) mountMeasured(mounts, false);
-    if (!rides.length) return;
     rides.forEach(function (r) { if (r.L.lens.isConnected) { r.specs = rideRead(r.L, r.target); r.left = r.arrive ? arrivalLeft(r.target) : 0; } });
     rides.forEach(function (r) { if (r.specs) { if (r.arrive) arriveIn(r.L, r.left); rideApply(r.L, r.specs); } });
-    if (rides.some(function (r) { return r.rail && r.specs; })) railFocusNow();
+    /* the rail's lens travelled or first showed in this batch: its flags and cue are read now, in the task that moved it */
+    if (railBatchRead || rides.some(function (r) { return r.rail && r.specs; })) { railBatchRead = false; railFocusNow(); }
   }
   function readStrip(cfg, strip) {
     cvWait.delete(strip);
@@ -2282,6 +2281,9 @@
     var from = visualRect(L) || A, vertical = !!cfg.vertical || Math.abs(from.y - R.y) > Math.abs(from.x - R.x);
     if (switchMotion !== 'glide' && !isGlass()) { hop(L, from, R, strip, cfg, target, vertical); return; }
     travel(L, from, R, vertical, { labels: labelsOf(cfg, strip, vertical), mags: magsOf(cfg), vertical: vertical });
+    /* the rail's travel is read in the task that starts it, so its flags and cue go to the compositor with it (round 7):
+       after a batch's writes, or now */
+    if (rail) { if (lensRides) railBatchRead = true; else railFocusNow(); }
   }
   /* Retro's step and NieR's cut. A step is two hard jumps, 33 ms apart: to the tab half way (when there is one), then to
      its own; a tab next door is one jump, at once. Every frame of it runs on the compositor, so it keeps its time however
