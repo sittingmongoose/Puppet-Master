@@ -14,12 +14,23 @@ function mountBar(barEl) {
      bar's logo, names shown at 1280x500). It is clipped to the scroll box here, as the tile's own outline was, rather than
      hidden: a tile cut by a few pixels keeps its mark on what shows (CSS hides it, position-visibility, once the tile is
      wholly out). Read only while a tile of the bar has a key focus, when the bar scrolls or changes size or the focus moves
-     in it; for a pointer it is one selector match. */
+     in it; for a pointer it is one selector match. The clip is measured on the ring's own box, which CSS lays on the
+     tile's layout box: the tile's own transforms (Glass lifts an opened tile by 1.08 after the press) move neither the ring
+     nor the clip, where measured on the tile it went stale (round 10). The tile's size can still ease (Glass grows an
+     opened tile to 1.08, which the anchor follows): it is measured again when a transition or animation in the bar ends,
+     and when the focused tile's own running animations finish (no timer, nothing for a pointer). */
+  const waited = typeof WeakSet === 'function' ? new WeakSet() : null;
   const clipRing = () => {
     const a = document.activeElement, on = !!a && a !== barEl && barEl.contains(a) && a.matches('.icon:focus-visible');
     let v = '';
     if (on) {
-      const t = (a.querySelector('.symbol') || a).getBoundingClientRect(), b = barEl.getBoundingClientRect();
+      if (waited && a.getAnimations) a.getAnimations({ subtree: true }).forEach(x => {
+        if (waited.has(x) || x.playState === 'finished' || !x.finished) return;
+        const end = x.effect && x.effect.getComputedTiming ? x.effect.getComputedTiming().endTime : Infinity;
+        if (!isFinite(end)) return;
+        waited.add(x); x.finished.then(clipRing, clipRing);
+      });
+      const t = ring.getBoundingClientRect(), b = barEl.getBoundingClientRect();
       const top = b.top + barEl.clientTop, left = b.left + barEl.clientLeft, cut = [top - t.top, t.right - (left + barEl.clientWidth), t.bottom - (top + barEl.clientHeight), left - t.left].map(x => Math.max(0, x));
       if (cut.some(x => x > 0.5)) v = 'inset(' + cut.map(x => x.toFixed(1) + 'px').join(' ') + ')';
     }
@@ -28,6 +39,7 @@ function mountBar(barEl) {
   barEl.addEventListener('scroll', clipRing, { passive: true });
   barEl.addEventListener('focusin', clipRing);
   barEl.addEventListener('keydown', clipRing);   /* a key turns :focus-visible on for a pointer-focused tile */
+  barEl.addEventListener('transitionend', clipRing); barEl.addEventListener('animationend', clipRing);
   if (window.ResizeObserver) new ResizeObserver(clipRing).observe(barEl);
   const tile = PMR.h('span.d-abind', { 'aria-hidden': 'true' });
   barEl.insertBefore(tile, barEl.firstChild);
