@@ -12,7 +12,9 @@
 // Escape, and in Playwright's accessibility tree; at 1920 and 740 each icon's own menu (Shift+F10, the Menu key, a right
 // click) moves it up and down and hides it in More by keys, Alt+ArrowUp/Down move it, Ctrl+N follows the new order, the
 // focus stays on the icon (the next one after a hide), each change is announced, and More's menu puts it back; at 1920
-// also the shell's own menu with the rail skin unmounted. The bar's order is put back at the end.
+// also the shell's own menu with the rail skin unmounted. Round 4: a right click's menu finished by keys keeps the focus
+// on the bar (Escape: the icon; a move: the moved icon; a hide: the next icon), and a right click soon after a key's menu
+// opens its own. The bar's order is put back at the end.
 //   --set size=1280x500   --set looks=basic-dark,nier-light   --set crops=1   --set fo99=1 (Friendly Light held to 3:1)
 //   --set fo98=only (just section 5b)   --set fo98=off (without it)
 import { LOOKS } from '../browser-check.config.mjs';
@@ -241,7 +243,19 @@ function iconMenu() {
 async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   const settle = (n = 4) => frames(f, n);
   const reach = async (k) => { await sentinel('#activityBar'); for (let i = 0; i < 16; i++) { await kb.press('Tab'); if ((await key()).key === k) return true; } return false; };
-  const live = () => f.evaluate(() => (document.getElementById('pmw-live') || {}).textContent || '');
+  // what the live region said since the last drain(), every announcement in turn (round 4): reading only its last text
+  // let a demo's own announcement ("cargo test --workspace failed ...") that came after a move's hide the move's
+  await f.evaluate(() => {
+    if (window.__fo98said) return;
+    window.__fo98said = [];
+    const watch = (el) => new MutationObserver(() => { const tx = el.textContent || ''; if (tx) window.__fo98said.push(tx); }).observe(el, { childList: true, characterData: true, subtree: true });
+    const el = document.getElementById('pmw-live');
+    if (el) { watch(el); return; }
+    const mo = new MutationObserver(() => { const e = document.getElementById('pmw-live'); if (e) { mo.disconnect(); watch(e); if (e.textContent) window.__fo98said.push(e.textContent); } });
+    mo.observe(document.body, { childList: true });
+  });
+  const drain = () => f.evaluate(() => { (window.__fo98said || []).splice(0); });
+  const live = () => f.evaluate(() => (window.__fo98said || []).splice(0).join(' | '));
   const agree = async (label, extra) => {
     await settle(); await f.waitForTimeout(80);
     const s = await f.evaluate(openTruth);
@@ -331,11 +345,12 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   await t.check(`${at} FO-98 ${k}: Shift+F10 opens its menu (Move up, Move down, Hide in More) with the focus on its first row, and leaves the icon's aria-expanded alone`,
     reached && m.open && m.kind === 'skin' && m.role === 'menu' && /^Move up/.test(m.rows[0] || '') && /^Move down/.test(m.rows[1] || '') && /^Hide in More/.test(m.rows[2] || '') && /^Move up/.test(m.focusRow || '')
       && exp1.expanded === exp0.expanded && !exp1.menuMark, JSON.stringify({ reached, menu: m, before: exp0, open: exp1 }));
+  await drain();
   if (m.open) { await kb.press('Enter'); await menuGone(); await settle(); await f.waitForTimeout(120); }
   let order = await f.evaluate(barOrder), foc = await key(), said = await live();
   await t.check(`${at} FO-98 ${k}: Move up moves it one place up, keeps the focus on it and is announced`,
     order.indexOf(k) === i0 - 1 && order.filter(x => x !== k).join() === order0.filter(x => x !== k).join() && foc.key === k && /moved up/i.test(said), JSON.stringify({ order, focus: foc.key, said }));
-  await kb.press('Alt+ArrowDown'); await settle(); await f.waitForTimeout(120);
+  await drain(); await kb.press('Alt+ArrowDown'); await settle(); await f.waitForTimeout(120);
   order = await f.evaluate(barOrder); foc = await key(); said = await live();
   await t.check(`${at} FO-98 ${k}: Alt+ArrowDown moves it back down, the focus kept`, order.join() === order0.join() && foc.key === k && /moved down/i.test(said), JSON.stringify({ order, focus: foc.key, said }));
   // Ctrl+1..9 follow the order, as they always did
@@ -358,6 +373,7 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   t.log(`${at} FO-98: contextmenu events after the Menu key: ${JSON.stringify(ctxSeen)}`);
   await t.check(`${at} FO-98 ${k}: no contextmenu event from the Menu key reaches the page uncancelled`, ctxSeen.every((e) => e.prevented), JSON.stringify(ctxSeen));
   m = await f.evaluate(iconMenu);
+  await drain();
   if (m.open) { await kb.press('End'); await kb.press('Enter'); await menuGone(); await settle(); await f.waitForTimeout(120); }
   order = await f.evaluate(barOrder); foc = await key(); said = await live();
   const nextKey = visible0[visible0.indexOf(k) + 1] || visible0[visible0.indexOf(k) - 1];
@@ -384,6 +400,79 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
     await t.check(`${at} FO-98: a right click on Files opens its menu, and Files' aria-expanded is still its panel's`, m.open && m.rows.length === 3 && (fx.expanded === 'true') === !!fx.open && !fx.menuMark, JSON.stringify({ menu: m, files: fx }));
     await kb.press('Escape'); await menuGone(); await rest();
   }
+  // a right click's menu finished by keys (round 4, B): the focus follows the key that finished it, not the press that
+  // opened it. Escape gives it back to the icon, ArrowDown and Enter on Move up keep it on the moved icon, and End and
+  // Enter on Hide in More give it to the next icon, as the Menu key's menu does; before, all three left it on <body>
+  const rightMenu = async (ic) => {
+    const b = await f.locator(`#activityBar > .icon[data-ab-id="${ic}"]`).boundingBox();
+    if (!b) return false;
+    await t.page.mouse.click(off.x + b.x + b.width / 2, off.y + b.y + b.height / 2, { button: 'right' });
+    await menuUp();
+    return (await f.evaluate(iconMenu)).open;
+  };
+  const nextOf = (o, ic) => { const v = o.filter(x => x !== 'more'), i = v.indexOf(ic); return v[i + 1] || v[i - 1]; };
+  let opened = await rightMenu(k);
+  if (opened) { await kb.press('Escape'); await menuGone(); }
+  foc = await key();
+  await t.check(`${at} FO-98 ${k}: Escape on a right click's menu gives the focus back to the icon (round 4, B)`, opened && foc.key === k && !(await f.evaluate(iconMenu)).open, JSON.stringify({ opened, focus: foc.key }));
+  await rest();
+  opened = await rightMenu(k);
+  await drain();
+  if (opened) { await kb.press('ArrowDown'); await kb.press('Enter'); await menuGone(); await settle(); await f.waitForTimeout(120); }
+  order = await f.evaluate(barOrder); foc = await key(); said = await live();
+  await t.check(`${at} FO-98 ${k}: a right click's menu, ArrowDown and Enter on Move up move it up and keep the focus on it (round 4, B)`,
+    opened && order.indexOf(k) === i0 - 1 && foc.key === k && /moved up/i.test(said), JSON.stringify({ opened, order, focus: foc.key, said }));
+  if (order.indexOf(k) === i0 - 1 && (foc.key === k || await reach(k))) { await kb.press('Alt+ArrowDown'); await settle(); }   /* undo only a move that happened */
+  await rest();
+  const orderB = await f.evaluate(barOrder), nextB = nextOf(orderB, k);
+  opened = await rightMenu(k);
+  await drain();
+  if (opened) { await kb.press('End'); await kb.press('Enter'); await menuGone(); await settle(); await f.waitForTimeout(120); }
+  order = await f.evaluate(barOrder); foc = await key(); said = await live();
+  await t.check(`${at} FO-98 ${k}: a right click's menu, End and Enter on Hide in More hide it and give the focus to the next icon (round 4, B)`,
+    opened && orderB.join() === order0.join() && !order.includes(k) && foc.key === nextB && /hidden in More/i.test(said), JSON.stringify({ opened, before: orderB, order, focus: foc.key, want: nextB, said }));
+  if (!order.includes(k) && await reach('more')) {
+    await kb.press('ArrowDown');
+    await f.waitForFunction(() => { const mm = document.querySelector('.pmr-menu[data-pmr-menu="d-ab-more"]'); return !!mm && mm.contains(document.activeElement); }, null, { timeout: 2000 }).catch(() => {});
+    await kb.press('Enter'); await settle(); await f.waitForTimeout(300);
+  }
+  if (await reach(k)) for (let n = 0; n < order0.length && (await f.evaluate(barOrder)).indexOf(k) > i0; n++) { await kb.press('Alt+ArrowUp'); await settle(1); }
+  order = await f.evaluate(barOrder);
+  await t.check(`${at} FO-98 ${k}: back at its own place after the right click's hide`, order.join() === order0.join(), order.join());
+  // a right click soon after a key's menu (round 4, C): Shift+F10 on Files, Escape, then a right click on Search within
+  // a second of the key. Only the key's own contextmenu is swallowed, so Search's menu opens; before, every right click
+  // on the bar was dropped for a second after the key. The second is timed in the page; a run too slow to land inside
+  // it tries once more and then fails by name.
+  const searchMenu = () => {
+    const ms = [...document.querySelectorAll('.pmr-menu[data-pmr-menu="d-ab-icon"], .pm-ab-ctx')].filter(x => x.isConnected
+      && /^Search\b/.test(x.getAttribute('aria-label') || '') && x.getClientRects().length > 0 && getComputedStyle(x).display !== 'none' && getComputedStyle(x).visibility !== 'hidden');
+    return { open: ms.length > 0, label: ms.length ? ms[0].getAttribute('aria-label') : null, focusIn: ms.length > 0 && ms[0].contains(document.activeElement) };
+  };
+  let quick = null;
+  for (let n = 0; n < 2 && !(quick && quick.inWindow); n++) {
+    await rest();
+    const sb = await f.locator('#activityBar > .icon[data-ab-id="search"]').boundingBox();
+    if (!sb || !(await reach('files'))) break;
+    await f.evaluate(() => {
+      window.__fo98c = { key: 0, ctx: 0 };
+      if (window.__fo98cOn) return;
+      window.__fo98cOn = true;
+      window.addEventListener('keydown', (e) => { if (e.key === 'F10' && e.shiftKey) window.__fo98c.key = performance.now(); }, true);
+      window.addEventListener('contextmenu', (e) => { if (e.target && e.target.closest && e.target.closest('#activityBar')) window.__fo98c.ctx = performance.now(); }, true);
+    });
+    await kb.press('Shift+F10'); await menuUp();
+    const keyOpened = (await f.evaluate(iconMenu)).open;
+    await kb.press('Escape');
+    await t.page.mouse.click(off.x + sb.x + sb.width / 2, off.y + sb.y + sb.height / 2, { button: 'right' });
+    await f.waitForFunction(searchMenu, null, { timeout: 1500 }).catch(() => {});
+    const c = await f.evaluate(() => window.__fo98c), sm = await f.evaluate(searchMenu);
+    quick = { keyOpened, inWindow: c.key > 0 && c.ctx > c.key && c.ctx - c.key < 1000, ms: Math.round(c.ctx - c.key), search: sm, try: n + 1 };
+    t.log(`${at} FO-98: right click on Search after Shift+F10 and Escape on Files: ${JSON.stringify(quick)}`);
+    await kb.press('Escape'); await menuGone();
+  }
+  await t.check(`${at} FO-98: a right click on Search within a second of Shift+F10 and Escape on Files opens Search's menu (round 4, C)`,
+    !!quick && quick.keyOpened && quick.inWindow && quick.search.open, JSON.stringify(quick));
+  await rest();
   const first = (await f.evaluate(barOrder))[0];
   if (await reach(first)) { await kb.press('Shift+F10'); await menuUp(); }
   m = await f.evaluate(iconMenu);
@@ -429,6 +518,17 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   await kb.press('Alt+ArrowUp'); await settle();
   order = await f.evaluate(barOrder);
   await t.check(`${at} FO-98 ${k}, no rail skin: Alt+ArrowUp puts it back`, order.join() === order0.join(), order.join());
+  // the shell's own menu opened by a right click and finished by keys (round 4, B): the focus stays on the moved icon
+  opened = await rightMenu(k);
+  m = await f.evaluate(iconMenu);
+  if (opened && m.kind === 'shell') { await kb.press('ArrowDown'); await kb.press('Enter'); await menuGone(); await settle(); }
+  order = await f.evaluate(barOrder); foc = await key();
+  await t.check(`${at} FO-98 ${k}, no rail skin: a right click's menu, ArrowDown and Enter on Move down move it, the focus on it (round 4, B)`,
+    opened && m.kind === 'shell' && order.indexOf(k) === i0 + 1 && foc.key === k, JSON.stringify({ opened, kind: m.kind, order, focus: foc.key }));
+  if (order.indexOf(k) === i0 + 1 && (foc.key === k || await reach(k))) { await kb.press('Alt+ArrowUp'); await settle(); }   /* undo only a move that happened */
+  await rest();
+  order = await f.evaluate(barOrder);
+  await t.check(`${at} FO-98 ${k}, no rail skin: Alt+ArrowUp puts it back after the right click's move`, order.join() === order0.join(), order.join());
   if (await reach('search')) { await kb.press('Enter'); await agree('no rail skin, after Enter opens Search', s => s.search.expanded === 'true'); }
   if (await reach('files')) { await kb.press('Enter'); await agree('no rail skin, after Enter opens Files', s => s.files.expanded === 'true'); }
   await f.evaluate(() => PMR.host.setConcept('d', { force: true }));

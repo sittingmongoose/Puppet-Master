@@ -99,7 +99,9 @@ function lfMountMore() {
 
   /* FO-98: an icon's own menu as the chat-style PMR.menu: at the pointer for a right click; beside the icon for a key,
      the focus on its first row and back on the icon after Escape or a move (the shell gives it to the next icon after a
-     hide). A context menu (PMR.menu context): the icon's aria-expanded keeps saying whether its panel is open. */
+     hide). A context menu (PMR.menu context): the icon's aria-expanded keeps saying whether its panel is open. Round 4:
+     a right click's menu closed by a key gives the focus back to the icon too (returnTo), not to the point it hangs on;
+     the shell reads a pick's own input, so End and Enter on Hide in More give it to the next icon. */
   const ACT_ICON = { up: 'arrowUp', down: 'arrowDn', hide: 'eyeOff' };
   const AB = window.PM_ACTIVITY_BAR || (window.PM_ACTIVITY_BAR = {});
   const prevDraw = AB.drawMenu || null;
@@ -108,7 +110,7 @@ function lfMountMore() {
     PMR.menu.closeAll();
     const menu = { id: 'd-ab-icon', label: d.name + ' on the Activity bar', groups: [{ label: d.name,
       items: d.items.map(it => ({ label: it.label, icon: ACT_ICON[it.id] || null, key: it.key || null, disabled: it.disabled || null, _act: it.id })) }] };
-    const opts = { width: 220, context: true, onPick: it => { d.run(it._act); } };
+    const opts = { width: 220, context: true, returnTo: icon, onPick: it => { d.run(it._act); } };
     const el = d.keyboard ? PMR.menu.open(menu, icon, Object.assign({ side: true, keyboard: true }, opts))
       : PMR.menu.at(menu, d.x, d.y, Object.assign({ keyboard: false }, opts));
     /* the Menu key's own contextmenu comes on its keyup in Windows Chrome, to the row that now holds the focus: the menu

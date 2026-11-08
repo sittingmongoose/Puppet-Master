@@ -343,7 +343,8 @@
         { id: 'hide', label: 'Hide in More', key: null, disabled: null }
       ];
     }
-    /* focus: the action came from the keys (Alt+arrows, or a menu the keys opened), so the focus lands on the bar */
+    /* focus: the action came from the keys (Alt+arrows, a menu row picked by a key, or a menu the keys opened), so
+       the focus lands on the bar */
     function runAction(node, id, focus) {
       if (!node.isConnected || node.parentNode !== bar) return false;
       if (id === 'up' || id === 'down') return moveIcon(node, id === 'up' ? -1 : 1, focus);
@@ -400,10 +401,21 @@
       if (first) first.focus();
       setTimeout(function () { document.addEventListener('pointerdown', ctxOutside, true); }, 0);
     }
-    var keyMenuAt = -1e9;
+    /* FO-98 round 4. Which input a menu's action came from is read when the action runs, not taken from the input that
+       opened the menu: a right click's menu finished by End and Enter is a keyboard action, so a hide gives the focus
+       to the next icon and a move keeps it on the icon, never on the menu's anchor (B). A menu the keys opened still
+       lands the focus on the bar when a click finishes it, as before.
+       The key that opens an icon's menu may send a contextmenu of its own as well; that one is swallowed (the menu also
+       cancels one that reaches it), and no other. A real right click starts with a press, which ends the watch at once,
+       as the focus coming back to the bar does (the menu dismissed, or its action done); it ends after a second
+       anyway (C). */
+    var keyMenuAt = -1e9, lastInputKey = false;
+    document.addEventListener('keydown', function () { lastInputKey = true; }, true);
+    window.addEventListener('pointerdown', function () { lastInputKey = false; keyMenuAt = -1e9; }, true);
+    bar.addEventListener('focusin', function () { keyMenuAt = -1e9; });
     function openIconMenu(node, x, y, keyboard) {
       var d = { id: node.getAttribute('data-ab-id'), name: iconName(node), x: x, y: y, keyboard: !!keyboard, items: iconActions(node),
-        run: function (a) { return runAction(node, a, !!keyboard); } };
+        run: function (a) { return runAction(node, a, !!keyboard || lastInputKey); } };
       var draw = window.PM_ACTIVITY_BAR && window.PM_ACTIVITY_BAR.drawMenu;
       if (typeof draw === 'function') { try { if (draw(node, d)) return; } catch (err) {} }
       shellMenu(node, d);
@@ -414,8 +426,8 @@
       if (!icon || !icon.matches || !icon.matches('#activityBar > .icon[data-ab-id]') || icon === moreBtn) return;
       if ((e.key === 'F10' && e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) || e.key === 'ContextMenu') {
         e.preventDefault();
-        keyMenuAt = performance.now();
         openIconMenu(icon, null, null, true);
+        keyMenuAt = performance.now();   /* after the open: the focus has left the bar for the menu */
         return;
       }
       if (e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
@@ -427,7 +439,7 @@
       var icon = e.target && e.target.closest ? e.target.closest('#activityBar > .icon[data-ab-id]') : null;
       if (!icon || icon === moreBtn) return;
       e.preventDefault();
-      if (performance.now() - keyMenuAt < 1000) return;   /* the key that opened its menu also sent this */
+      if (performance.now() - keyMenuAt < 1000) { keyMenuAt = -1e9; return; }   /* the companion of the key that opened its menu */
       openIconMenu(icon, e.clientX, e.clientY, false);
     });
     window.PM_ACTIVITY_BAR = Object.assign(window.PM_ACTIVITY_BAR || {}, {

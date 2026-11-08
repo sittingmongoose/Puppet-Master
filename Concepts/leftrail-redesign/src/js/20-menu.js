@@ -6,7 +6,9 @@
 
    PMR.menu.open(menu, anchor, opts) / toggle / close / closeAll / isOpen / trigger(menu, opts)
    menu = Menu from DATA.md ({ id, label, value?, search?, multi?, groups: [{ label?, items: [MenuItem] }] }) or an item array.
-   opts = { menus (id -> Menu, for submenus), onPick(item), align: 'start'|'end', width, side, keyboard, context }
+   opts = { menus (id -> Menu, for submenus), onPick(item), align: 'start'|'end', width, side, keyboard, context, returnTo }
+   returnTo: where the focus goes back when the menu closes by a key, in place of its anchor (FO-98 round 4: a context
+   menu at a point is anchored to a 1px box that takes no focus, so its icon gives the focus a place to come back to).
    context: a context menu hung on a control whose own state is not a menu's (FO-98: an Activity bar icon, whose
    aria-expanded says whether its panel is open): the anchor gets no aria-expanded and no is-menu-open, and a press on
    it closes the menu like any press outside.
@@ -173,7 +175,8 @@ function closeEntry(entry, opts) {
   const el = entry.el;
   const done = () => { if (el.parentNode) el.parentNode.removeChild(el); };
   window.PM6_SPROUT.close(el, done, { instant: PMR.motion.reduced() });
-  if (opts.returnFocus && entry.anchor && entry.anchor.isConnected) entry.anchor.focus({ preventScroll: true });
+  const back = entry.opts.returnTo || entry.anchor;
+  if (opts.returnFocus && back && back.isConnected) back.focus({ preventScroll: true });
 }
 function closeAll(opts) { MENU_STACK.filter(e => !e.opts.parent).forEach(e => closeEntry(e, opts)); }
 
