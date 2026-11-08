@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """DCH final-round mutations through the complete, unfiltered checker.
 
-Only in-memory input substitutions and explicit defect restorations are used.
-No checkout, fixture or schema file is modified. Exceptions do not count as a
+Only in-memory input substitutions, named guard-table row cuts (CUT_ROWS) and
+explicit defect restorations are used. No checkout, fixture or schema file is
+modified. Exceptions do not count as a
 successful rejection. --workers controls ordinary test processes, not agents.
 """
 import argparse
@@ -18,6 +19,13 @@ import time
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def cut(m, *rows):
+    """Swap named guard-table rows to always-pass for this trial (lane-wide)."""
+    for phase, row in rows:
+        assert row in [name for name, _, _ in m.table_rows(phase)], (phase, row)
+    return frozenset(rows)
 
 
 def run(job, family_only=False):
@@ -43,15 +51,9 @@ def run(job, family_only=False):
         overrides[cp_path]=schema
         entry['value_schema']=copy.deepcopy(schema)
     elif name == '11_historical_edition_removed':
-        source=inspect.getsource(m.historical_read_valid)
-        old='or not payload_validator.is_valid(body)'
-        assert source.count(old)==1
-        exec(source.replace(old,''),m.__dict__)
+        m.CUT_ROWS = cut(m, ('hr_flags', 'HR03_payload_schema'))
     elif name == '11_terminal_started_join_removed':
-        source=inspect.getsource(m.test_joins)
-        old="or payload['started_event_id'] != started['event_id']"
-        assert source.count(old)==1
-        exec(source.replace(old,''),m.__dict__)
+        m.CUT_ROWS = cut(m, ('tj_start', 'TJ01_payload_started_id'))
     elif name == '1_replay_only':
         for f in cases:
             f['record']['replay_policy'] = 'projector_replay_only'
@@ -65,11 +67,7 @@ def run(job, family_only=False):
         f['record']['event_id'] = m.identity(family, f['valid'])
         f['record']['idempotency_key'] = m.idempotency_key(family, f['valid'])
     elif name == '4_inline_size_guard_removed':
-        def resolve(record, source=None, storage_instance=m.STORAGE_INSTANCE, rule=m.CURRENT_RULE):
-            if record['event_type'] == family and record['payload_ref'] is None:
-                return record['payload']
-            return original_resolve(record, source, storage_instance, rule)
-        m.resolve_body = resolve
+        m.CUT_ROWS = cut(m, ('rb_route', 'RB02_inline_limit'))
     elif name == '5_payload_identifier_lf':
         for f in cases:
             for p in [f['valid'], f['record']['payload']]:

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Restore DCH review defects only in memory; run the full ordinary checker.
 
+Guard defects are restored by swapping named guard-table rows to always-pass
+(CUT_ROWS); derivation defects by an exact in-memory source edit.
+
 Exceptions are failures of this campaign, never successful refusals. Each
 mutation applies lane-wide; no family or ordinary assertion is filtered out.
 """
@@ -25,14 +28,19 @@ def run(name, family=None):
     def replace(function, old, new):
         source = inspect.getsource(getattr(m,function)); assert source.count(old) == 1, (function,old)
         exec(source.replace(old,new),m.__dict__)
+    def cut(*rows):
+        for phase, row in rows:
+            assert row in [n for n, _, _ in m.table_rows(phase)], (phase, row)
+        m.CUT_ROWS = frozenset(rows)
     if name == 'C5-B1_default_instance':
-        replace('joins', 'identity(event, p, storage_instance)', 'identity(event, p)')
+        replace('_joins', 'identity(event, p, storage_instance)', 'identity(event, p)')
     elif name == 'C5-B2_oversized_checkpoint_inline':
-        replace('checkpoint_storage_valid', 'return len(body_bytes(value, rule)) <= INLINE_LIMIT', 'return True')
+        cut(('cs_inline', 'CS03_inline_limit'))
     elif name == 'C5-B2_checkpoint_reference_custody':
-        replace('checkpoint_storage_valid', "all(packed[k] is True for k in ['authorized', 'hold_access_allowed', 'bytes_durable', 'index_durable', 'readback_verified'])", 'True')
+        cut(*[('cs_pack_b', row) for row in ['CS16_pack_authorized', 'CS17_pack_hold_access', 'CS18_pack_bytes_durable',
+                                            'CS19_pack_index_durable', 'CS20_pack_readback']])
     elif name == 'C5-B3_C4-B2_original_edition':
-        replace('historical_read_valid', 'or not payload_validator.is_valid(body)', '')
+        cut(('hr_flags', 'HR03_payload_schema'))
     elif name in ['C5-B3_writer_policy_on_original', 'C5-B3_no_referenced_original']:
         original = m.checkpoint_joins
         def checkpoint(value,source,row,key):
@@ -42,12 +50,14 @@ def run(name, family=None):
             return original(value,source,row,key)
         m.checkpoint_joins=checkpoint
     elif name == 'N1_Astra10_numeric_encoding':
+        # Stale since a75181c58c (its end marker named the removed 2^53 cap):
+        # repaired to remove exactly the integral-float normalization block.
         source=inspect.getsource(m.body_bytes)
         start=source.index('        # SP-236 shortest numeric representation:')
-        end=source.index('        if rule == CURRENT_RULE and type(v) is int and abs(v) > SAFE_INTEGER_MAX:', start)
+        end=source.index('        if isinstance(v, dict):', start)
         exec(source[:start]+source[end:],m.__dict__)
     elif name == 'Astra11_exact_types':
-        m.input_types_valid=lambda value, *args: True
+        cut(*[(phase, row) for phase in ['ty_a', 'ty_b'] for row, _, _ in m.table_rows(phase)])
     elif name == 'C4-B1_history_limit':
         stored=json.loads((ROOT/'Plans/storage_value_registry.json').read_text())
         for c in json.loads((ROOT/'Plans/dch_checkpoint_fixtures.json').read_text()):
@@ -56,7 +66,7 @@ def run(name, family=None):
             next(e for e in stored['families'] if e['value_schema_id']==schema['$id'])['value_schema']=copy.deepcopy(schema)
         overrides['Plans/storage_value_registry.json']=stored
     elif name == 'C4-B3_terminal_source_identity':
-        replace('test_joins', "or payload['started_event_id'] != started['event_id']", '')
+        cut(('tj_start', 'TJ01_payload_started_id'))
     else: raise ValueError(name)
     text_inputs={str(ROOT/p):json.dumps(v) for p,v in overrides.items()}
     read=Path.read_text
