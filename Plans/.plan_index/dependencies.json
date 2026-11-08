@@ -4824,6 +4824,8 @@
     "WM-018",
     "WS-012",
     "DL-340",
+    "DL-470",
+    "PLS-027",
     "PSMERA-014",
     "DR-077",
     "SSYS-016",
@@ -30672,6 +30674,21 @@
     },
     {
       "edge_type": "depends_on",
+      "from": "DL-470",
+      "to": "PLS-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-470",
+      "to": "PLS-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "DL-470",
+      "to": "PLS-026"
+    },
+    {
+      "edge_type": "depends_on",
       "from": "DP-003",
       "to": "DP-002"
     },
@@ -54799,6 +54816,21 @@
       "edge_type": "depends_on",
       "from": "PLS-026",
       "to": "PLS-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-027",
+      "to": "PLS-012"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-027",
+      "to": "PLS-025"
+    },
+    {
+      "edge_type": "depends_on",
+      "from": "PLS-027",
+      "to": "PLS-026"
     },
     {
       "edge_type": "depends_on",
@@ -119211,7 +119243,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-08T14:10:11Z",
+  "generated_at_utc": "2026-11-08T23:30:03Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -155673,6 +155705,23 @@
         "heading_level": 3,
         "heading_line": 11276,
         "line": 11278,
+        "path": "Plans/Decision_Log.md"
+      },
+      "status": "accepted",
+      "unit_type": "decision"
+    },
+    {
+      "context_scope": "semantic_audit_closure",
+      "gui_related": false,
+      "owner_doc": "Plans/Decision_Log.md",
+      "plan_unit_id": "DL-470",
+      "reasoning_tier": "high",
+      "risk_class": "governance_integrity",
+      "source_location": {
+        "heading": "DL-470 - Append Audit-004's Correction And Check Its Repairs",
+        "heading_level": 3,
+        "heading_line": 29226,
+        "line": 29228,
         "path": "Plans/Decision_Log.md"
       },
       "status": "accepted",
@@ -209178,6 +209227,23 @@
       "unit_type": "requirement"
     },
     {
+      "context_scope": "semantic_audit_closure",
+      "gui_related": false,
+      "owner_doc": "Plans/Planning_Ledger_System.md",
+      "plan_unit_id": "PLS-027",
+      "reasoning_tier": "high",
+      "risk_class": "governance_integrity",
+      "source_location": {
+        "heading": "PLS-027 - Append-Only Audit Correction Records",
+        "heading_level": 3,
+        "heading_line": 1721,
+        "line": 1723,
+        "path": "Plans/Planning_Ledger_System.md"
+      },
+      "status": "accepted",
+      "unit_type": "requirement"
+    },
+    {
       "context_scope": "plugins_system_generated_tail_batch_211",
       "gui_related": false,
       "owner_doc": "Plans/Plugins_System.md",
@@ -247043,10 +247109,10 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 19127,
+    "depends_on_edge_count": 19133,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22337,
-    "node_count": 7519,
+    "edge_count": 22343,
+    "node_count": 7521,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0

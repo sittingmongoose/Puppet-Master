@@ -4,15 +4,15 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 19127,
+    "depends_on_edge_count": 19133,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22337,
-    "node_count": 7519,
+    "edge_count": 22343,
+    "node_count": 7521,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-08T14:10:12Z",
+  "generated_at_utc": "2026-11-08T23:30:04Z",
   "gui_related_units": {
     "count": 3837,
     "units": [
@@ -42231,10 +42231,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7519,
+  "plan_unit_count": 7521,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2836,
+      "high": 2838,
       "low": 9,
       "medium": 34,
       "standard": 4640
@@ -43789,7 +43789,7 @@
       "governance_boundary": 2,
       "governance_false_buildability": 1,
       "governance_gap_loss": 1,
-      "governance_integrity": 5,
+      "governance_integrity": 7,
       "governance_label_copy_drift": 1,
       "governance_role_conflation": 1,
       "governance_runtime_record_schema_gap": 1,
@@ -46385,7 +46385,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7300,
+      "accepted": 7302,
       "retired": 196,
       "superseded": 23
     },
@@ -46418,7 +46418,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 241,
+      "decision": 242,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -46455,7 +46455,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5622,
+      "requirement": 5623,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L29224
+Source lines: L26794-L29278
 
-Source SHA256: `735c90883175c4ca22608056d55f04e0f68a450dae4a09b8ef2b092041996c95`
+Source SHA256: `80975d33c2c483b72b984b471d074903221bcd3df8768605625caa648007b56e`
 
 ---
 
@@ -2438,4 +2438,58 @@ preserved_exact_tokens:
   - "state_changed"
 owner_hints:
   - Plans/UI_Command_Catalog.md
+```
+
+### DL-470 - Append Audit-004's Correction And Check Its Repairs
+
+```yaml
+plan_unit_id: DL-470
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  Jared answered stream C question 2 on 2026-11-08, through pm7-build: "Append a correction" and
+  "Also repair anything that needs to be repaired". PLS-027 implements the append-only correction for
+  audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity: preserve the June files, correct the original
+  PASS_WITH_WARNINGS to BLOCKED for its five actionable source rows, and identify the 16 matrix-covered rows
+  that never required repair. The 14 previously_closed atom-fidelity rows already reported no unclosed gap;
+  the invalid migration invocation was superseded within the audit; and the passing audit-closure check's
+  skipped-matrix warning was audit housekeeping. Registry row 280 remains the historical record of adding
+  the matrix, not evidence that its passing source result needed a canonical repair. No matrix or registry
+  row is removed or relabelled, no missing coverage is excused, and no evidence hash is restamped. Check the
+  five repairs and the whole closure chain against current text and repair bounded defects separately in the
+  same packet, listing every repair. Existing registry staleness still needs PLS-025 re-audit evidence; the
+  correction alone cannot clear it, reseal governance or authorize runtime/build work.
+gui_related: false
+gui_classification_reason: Records an audit-governance decision with no GUI change.
+split_recommended: false
+depends_on: [PLS-012, PLS-025, PLS-026]
+unblocks: []
+acceptance_criteria:
+- The hash-bound correction exposes historical and corrected status without editing the June report or matrix.
+- The 21 source rows, five repairs, terminal projections and registry chains are checked and every repair is listed.
+validation_surfaces:
+- python3 scripts/pm-audit-closure.py self-test
+- python3 scripts/pm-audit-closure.py validate
+risk_class: governance_integrity
+reasoning_tier: high
+context_scope: semantic_audit_closure
+implementation_surfaces:
+- Plans/Planning_Ledger_System.md
+- scripts/pm-audit-closure.py
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- 'Jared, 2026-11-08 about 22:45Z, via pm7-build (relay 1108225102-4e43): "Append a correction";
+  "Also repair anything that needs to be repaired" (stream C question 2).'
+- /mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q2-audit004/BRIEF.md
+preserved_exact_tokens:
+- DL-470
+- Append a correction
+- Also repair anything that needs to be repaired
+- BLOCKED
+owner_hints:
+- Plans/Planning_Ledger_System.md
 ```

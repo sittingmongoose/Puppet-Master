@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L1617-L1719
+Source lines: L1617-L1781
 
-Source SHA256: `75f07e9f0c48a78ea75291ebbb2e1beb47e2f04c263f9e2eb85fd0250790a840`
+Source SHA256: `147eb1bc79ef183592956804f65a2a446ae7fbb76f25171c1866afd442a99afc`
 
 ---
 
@@ -111,3 +111,65 @@ owner_hints:
 ```
 
 ContractRef: ContractName:Plans/Planning_Ledger_System.md#PLS-026, ContractName:Plans/Plan_Document_System.md#PDS-014, ContractName:Plans/Planning_Ledger_System.md#PLS-025, ContractName:Plans/Decision_Log.md#DL-334
+
+### PLS-027 - Append-Only Audit Correction Records
+
+```yaml
+plan_unit_id: PLS-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: >-
+  An audit may add one audit_correction-<YYYYMMDD>.json with schema_id
+  pm.audit_closure.audit_correction.v1 under DL-470. The receipt names its audit, date and Decision Log
+  reference, binds audit_report.json, repair_closure_matrix.jsonl and every standard source artifact by SHA-256,
+  and gives a reason for each correction. It may only correct the historical status to BLOCKED when the original
+  computed repair_required_count is positive, or identify matrix-covered source rows that never needed repair.
+  historical_status is null or contains from, to and reason; non_actionable_rows contains only source_artifact,
+  source_row and reason. v1 row addresses are physical JSONL line numbers or named validator_results.json
+  results and invalid_invocations. The validator requires the complete standard source selection, independently
+  computes actionability, rejects actionable, nonexistent, uncovered or duplicate listed rows, and applies nothing
+  on any invalid receipt. Unknown schemas or fields, mismatched or missing hashes, symlinked bound inputs or receipts, invalid dates,
+  other corrections and multiple correction files fail closed. Only the listed non-actionable over-coverage is
+  excused; missing coverage and every matrix, evidence, registry and legacy-format check keep their force.
+  Validation shows both the historical and corrected status. Corrected history participates in the effective
+  status projection while its recorded value remains visible. The receipt rewrites no historical file, source
+  classification, closure status, registry row or evidence hash and grants no semantic closure. Real repairs and
+  terminal projections are checked separately; registry supersession still requires PLS-025.
+gui_related: false
+gui_classification_reason: Audit correction receipts and validation have no GUI surface.
+depends_on: [PLS-012, PLS-025, PLS-026]
+unblocks: []
+acceptance_criteria:
+- self-test covers valid status and row corrections, unchanged historical bytes, each fail-closed rule, missing coverage,
+  unlisted over-coverage, partial source selection and historical versus effective status.
+- audit-20260619-004 preserves its June files and all 21 matrix rows, corrects its original status to BLOCKED,
+  identifies exactly 16 never-actionable rows and still requires the five actionable closures.
+validation_surfaces:
+- python3 scripts/pm-audit-closure.py self-test
+- python3 scripts/pm-audit-closure.py validate
+risk_class: governance_integrity
+reasoning_tier: high
+context_scope: semantic_audit_closure
+implementation_surfaces:
+- scripts/pm-audit-closure.py
+- Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity/audit_correction-20261108.json
+node_compile_hint:
+  mode: contract_specification
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/Decision_Log.md#DL-470
+preserved_exact_tokens:
+- pm.audit_closure.audit_correction.v1
+- audit_correction-<YYYYMMDD>.json
+- BLOCKED
+- non_actionable_rows
+negative_constraints:
+- No correction excuses missing coverage or supersedes a registry row.
+- No historical file or evidence hash is rewritten by a correction.
+owner_hints:
+- Plans/Planning_Ledger_System.md
+```
+
+ContractRef: ContractName:Plans/Planning_Ledger_System.md#PLS-027, ContractName:Plans/Decision_Log.md#DL-470
