@@ -1,8 +1,21 @@
-# DF — sweep part 1, 2026-11-05
+# DF — sweep parts 1, 2A and 2B numbers, 2026-11-08
 
-Implementation head: `ef27813b0cd3d851f586729eddf94aef434f2fdd` on `plans/ea-w2-filesafe-20261104`. Rebased the 21 lane commits from `a10cfa6d834fad8984285510dd8abd438b893ff6` onto fetched main `e42ce235b4711325ced818c777f070c3ee0d7952` before editing. The shared clone's origin/main may advance while other workers fetch; this report's base is pinned. Generated conflicts were deferred and regenerated, never hand-merged. All pre-existing main owner prose is preserved as an exact prefix of the three shared owner docs.
+Sweep part 1 below is the 2026-11-05 record at its implementation head
+`ef27813b0cd3d851f586729eddf94aef434f2fdd`, retained unchanged. Sweep part 2A
+(guard tables on the gated shared tool) and part 2B numbers (CV-1100, SP-1100,
+SP-1101 adoption) are implemented at head
+`9145fdd04758f72870d638c187b44fe5bba7f290` on `plans/ea-w2-filesafe-20261104`
+(part-1 head `f7b88ca1033707205109e58f965f61ddbf475271`); the re-grade and
+this report sit in the commit on top. See the sweep sections at the end.
 
-**NOT_READY — part 2 remains required.** R7-B1, R7-B2 and S6 are fixed; deck-2 items 2.a–2.e are applied exactly. This is preparation without admission: every membership cell is ABSENT and native execution is NOT_RUN. S1–S5 remain open. Deck 3 Card 7 remains with Jared; application-scope FileSafe security-event retention is unchanged.
+**NOT_READY_PART_2B_TIMESTAMPS_AND_REVIEW_PENDING.** S1–S6 are closed: both
+gated tools are adopted exactly, 356/405 guard rows are proved, and the shared
+number corpus passes through the complete checkers. What remains is part 2B
+timestamps (CV-1101; this lane's timestamp review is interim only) and the
+Sol/Astra part-2 review. Every membership cell remains ABSENT, native
+execution remains NOT_RUN, and deck 3 Card 7 remains with Jared.
+
+Part-1 implementation head: `ef27813b0cd3d851f586729eddf94aef434f2fdd`. Rebased the 21 lane commits from `a10cfa6d834fad8984285510dd8abd438b893ff6` onto fetched main `e42ce235b4711325ced818c777f070c3ee0d7952` before editing. The shared clone's origin/main may advance while other workers fetch; that report's base is pinned. Generated conflicts were deferred and regenerated, never hand-merged.
 
 ## Sweep part 1: findings and responses
 
@@ -115,3 +128,216 @@ All paths below are under `/mnt/Cursor/PuppetMaster-Evidence/event-authority-202
 | `memory-monitor.jsonl` | `61275bb95bcb0feb152a3c9298eaf462cf8b6bb13ebe50c1ba2372ecfae0b5b2` |
 
 The report, aggregate grade and nine per-family grades are copied into this sweep-p1 directory. The sparse detached worktree `/home/sittingmongoose/pm-worktrees/df-sweep1` is removed with literal-path `git worktree remove --force` after pushing the final report commit. No temporary server or browser was started.
+
+## Sweep part 2A — guard tables on the gated shared tool
+
+The gated tool is adopted exactly: merge `167253b8f36393be72361da9051f318b37db3e0d`
+(parents the part-1 head `f7b88ca1033707205109e58f965f61ddbf475271` and gated
+`004bdedd632d9463f3535190a6ed5772338cdce1` exactly). `git diff` from that merge
+to the implementation head over the tool's files is empty;
+`scripts/pm_guard_isolation.py` at the certified run has SHA-256
+`e8038992eabbe067c8bcba8d48824b97fbb6b5b7e69cbfe28a669f939a96c0b8`.
+
+Restructure commit `47402a02739257c960a66faf1b992648df44c459` rewrote every
+refusal of both checkers as a named row of a generated guard table
+(`scripts/pm-filesafe-table-generate.py`, registry `scripts/pm_filesafe_tables.py`
+with `table_order_errors()` keeping checker evaluation order and index order in
+agreement), added the observation recorder and suite builder
+(`scripts/pm_filesafe_guard_suites.py`), the runner
+(`scripts/pm-filesafe-guard-tables.py`) and the coherent one-defect witnesses
+(`Plans/filesafe_event_p2a_cases.json`, builder `scripts/pm-filesafe-p2a-cases.py`;
+1,081 cases at the final head). A three-point outcome differential over the
+4,629 pre-existing witnesses records: original checkers → 2A restructure = 191
+changes (129 duplicate-code collapses from per-phase distinct codes, 62 from the
+authenticated custody catalogue added with SP-1101); 2A → final (number pass,
+crash fixes, witness/adapter work and the follower splits below) =
+**4,629/4,629 identical, 0 changes**, reproduced at the final head.
+
+Two defects found while finishing this pass, both fixed in lane code only:
+(1) the suite adapter still passed the pre-number facts shape to
+`contract_payload_schema`, so every contract witness raised `KeyError:
+'slot_type'` in collection and recorded nothing (369 untracked); the adapter now
+uses `payload_validator` + `schema_facts` exactly as the contracts CLI does, and
+each family's first positive also runs through `materialization_raw_failures`,
+giving `current_raw_json` the passing control it lacked
+(`2466c6d0ddba732c140fb971fe2c8dd10a2f0001`). (2) Thirteen rows had no
+single-row negative although they can refuse first; coherent witnesses now
+prove them: IS01/IS02 (issued shape), AM04 (manifest SCM worktree),
+CS03–CS05 (SCM-absent worktree fields), AS01–AS03 (symlink/non-file payloads),
+BD03 (protocol read_body result), PJ03/FV02/DD04 (other-reason rows; below)
+(`58a4e44db11b85d9abd5ed1578617e893d8ff4a5`, `50f21167ef7cb2a0676310cea3320b69af73d31c`).
+Four entailed rows (PJ03 before it was witnessed, DJ03, FV02, CS02) first sat in
+mixed tables whose eight proved neighbours lost table-level credit; each
+entailed row now sits in its own follower phase evaluated immediately after its
+phase from the same observation (`pm_filesafe_tables.FOLLOWERS`), 204 tables /
+405 rows total (`4fdb836ec0c7e64b778a7bd2320b8f73a45456ef`). PJ03, FV02 and DD04
+were then themselves witnessed, so three of those follower tables also PASS.
+
+Final collection and tool run (collection 550 s, tool 936 s, serial): 5,716
+witnesses replayed (285 control / 3,709 negative / 1,722 model); 4,356 distinct
+control observations, 1,186 distinct negatives (4,693 aliases); lane matrix **0**
+problems in 204 suites; collection findings **7**, all two-row observations
+(SM03/SM04 one manifest-digest fact recorded in two fields, HJ01/HJ02 one
+hold-list equality in two copies ×5, OO01/OO02 one operation list) naming no
+target and earning no credit. The tool ran 174 tables: **174 PASS, 0 FAIL,
+356/405 rows proved, 23,356 evaluations** (1,186 negatives ×tables as collected,
+1,467 chosen controls, cap 40 per table), cuts **1,186 flips / 2,173 stays / 0
+unrelated / 0 masked**. The lane's complete-boundary flips (cut one row, re-run
+the whole witness): 1,664 accepted, 2,038 refused later by an independent row
+watching the same source fact. Runner exit 1 is the expected unproved/two-row
+signal; `bad` is 0.
+
+| Checker part | Tables run/passed | Rows | Proved | Negatives | Tool controls | Evaluations | Flips/stays/unrelated |
+|---|---:|---:|---:|---:|---:|---:|---|
+| Schema graph, payload contracts, identity | 20/20 of 24 | 55 | 43 | 86 | 177 | 1,973 | 86/123/0 |
+| Source graph, retention binding, census | 25/25 | 40 | 40 | 158 | 146 | 2,008 | 158/160/0 |
+| Materialization (SP-337, producer, full value) | 39/39 of 48 | 92 | 80 | 524 | 547 | 10,044 | 524/1,226/0 |
+| Application original (safe points) | 46/46 of 60 | 147 | 125 | 149 | 311 | 5,674 | 149/382/0 |
+| Issued and retained (SP-1101 dispatch) | 10/10 of 11 | 20 | 19 | 155 | 156 | 2,345 | 155/228/0 |
+| Protocol oracle | 34/34 of 36 | 51 | 49 | 114 | 130 | 1,312 | 114/54/0 |
+
+49 rows in 30 tables have no negative and earn no credit. Each sits in a table
+with no proved row; the reason (every input it would refuse is refused first, or
+the two sides are computed identically) is:
+
+| Rows | Why no input can refuse there first |
+|---|---|
+| CI02–CI04 (identity selfcheck) | Both event ids are recomputed by the same df-event-v2 call inside the checker; they can only be observed agreeing. |
+| MO03, BD02 (source/body commitment) | The selected-source commitment and the exact selected join are computed on the same value immediately before. |
+| MG01 (grant expiry) | PG01 refuses the same issued/expires window in payload semantics, evaluated first. |
+| OS01 (override scope kind) | The grant scope kind is derived from the same payload scope value it is compared to. |
+| SU01–SU02, SU06–SU11 (override subsets) | The requested-scope subset facts are decided by the override scope rows/semantics before the subset tables on every schema-admitted scope. |
+| ME01, MX02, MD01, MJ02 | Envelope/effect/policy and SCM joins (AD01/MA01, MX01, SM09) refuse the same joined values first. |
+| MK03–MK06, CS02 (worktree fields) | Payload worktree rows (PW01/PW02) and the owner joins refuse partial worktree presence first; with all fields present the sibling rows refuse the same observation together (CS02 probe: first refusal PW01). |
+| AB01, AB03, AF08 (application body/entry) | A schema keyword of the preceding closed root validation refuses the same values first. |
+| SP03/SP04, TR04/TR05 | The safe-point/transaction record schemas fix node/attempt to the result's null values; body schema precedes. |
+| OK02/OK03, OQ02–OQ03, OQ06–OQ07, OQ09–OQ10, OQ13, OQ17 | Operation-record presence and outcome-state combinations unreachable on any schema-admitted seed; the outcome/state rows that can occur are proved. |
+| JC03 (journal lease), MT11/IR08 (durability state), RB02 | Schema minimum/const keywords and the DL-401 retention decision binding precede in the root validations. |
+| DJ03 (descriptor JCS other) | The descriptor schema admits only a blake3-hex id, a const media type and one integer slot; no other JCS refusal domain remains. |
+| AJ01–AJ03 (manifest JCS) | Every manifest role is pinned to the RFC8785 body codec; a body that qualified RFC 8785 cannot encode is refused at `app_body_decode` before the manifest rows. |
+
+## Sweep part 2B numbers (CV-1100, SP-1100, SP-1101)
+
+The gated number scope is adopted exactly: merge
+`19ad339c368834a8b32d64da40f5c47b5d7bb00b` (parents the tool merge and gated
+`a16f67c1ef21796758f4209ff12c0f4d12b86ce9` exactly). `git diff` from that merge
+to the implementation head over `scripts/pm_event_numbers*.py`,
+`scripts/pm_event_datetime.py` and `Plans/event_number_recipe_corpus.json` is
+empty; the date-time code is adopted nowhere in this lane (no import in any lane
+file). Number adoption is at `ef2842284a04990ca02c58d2450e63857c86ffab` plus
+`0c1e8a873a842cf9425c771f95b99489728f5332`:
+
+- **Slots (CV-1100).** `SlotValidator` (`scripts/pm_filesafe_schema_graph.py`)
+  records every schema-declared integer from the actual composed instance while
+  the stock Draft 2020-12 checks run; `split_errors` admits each recorded slot
+  once through the shared `current_integer` with the schema's own min/max (range
+  stays with the schema), under `exact_integer_text` so schema-error rendering
+  cannot crash on long integers. JSON Schema `1.0`/`1e0`/`-0.0` at an integer
+  slot refuse; exact integers keep every prior byte. No blanket value walk and
+  no lane ceiling.
+- **Raw current ingress.** `materialization_raw_failures` parses raw candidate
+  text only through `loads_current_json` (CR01–CR03 `current_raw_json`): `-0`,
+  `01`, non-finite tokens and duplicate keys refuse before any commitment.
+- **Qualified RFC 8785.** Payload canonical bytes and identity
+  (`pm_filesafe_event_contracts.py:20-33`), the CV-317 producer digest and the
+  CV-339 full-value commitment (`producer_semantic_digest`,
+  `full_value_commitment`), descriptor and manifest JCS all route through the
+  shared qualified call, split into binary64/decimal/other guard facts.
+- **Physical profiles (SP-1100).** Full-value bytes use EVENT_VALUE, application
+  bodies APP_PHYSICAL (`storage_value_bytes`/`decode_storage_value`); schema
+  ranges are honoured as-is (EventRecord `sequence_id`/`producer_sequence_id`
+  are `minimum: 0` with no maximum; the physical range refuses through FV01).
+- **Retained dispatch (SP-1101).** `DFOriginalOwner` + `RetainedDispatcher`
+  resolve retained originals only from Storage's sealed custody catalogue
+  (`original_custody` in every authority bank: write-time edition, ordered
+  resource manifest, local source-commitment profile, application body codecs);
+  frozen verifiers recompute the local recipes, current guards never run on a
+  retained original, and forged/downgraded custody resolves to no verifier.
+- **Local recipes preserved.** df-event-v2 identity (four UTF-8 strings, no
+  numbers), Project canonical-MessagePack source commitment and CV-366
+  `accepted_source` are unchanged. The DIY scan's remaining hits are exactly
+  these recipes, hash-of-bytes observations, fixture/schema/report loading, the
+  recipe-pinned retained body decoder, and the interim date-time grammar.
+
+Verification: `pm_event_numbers.py --self-test --scope numbers` passes
+**580/580**. `scripts/pm-filesafe-number-corpus.py` (new) runs the 81
+number-scope corpus values through the complete checkers — raw, producer-complete,
+sequence-complete and payload-contract routes in all nine families, expectations
+composed from the shared helpers alone: **2,148 route runs, 518 accepted, 1,630
+refused, 0 disagreements, 0 untracked**. Three 4,400-digit integers run the same
+routes plus a coherent writer-epoch materialization. That probe found a real
+lane crash, now fixed (`ae6e4abee972fd45d477db8cbacbd845c6a6cfef`):
+**Location** `mat_source_commitment` (and the protocol read_body commitment and
+native Project record bytes). **Cause:** the Project canonical-MessagePack
+recipe raised `ValueError: integer outside MessagePack range` out of
+`materialization_failures` for a schema-admitted epoch beyond the MessagePack
+range, instead of refusing through its row. **Fix:** `source_commitment_or_none`
+yields None there, so MO03/BD02 and the project-original row refuse; encodable
+inputs are byte-identical (differential 4,629/4,629 above). PJ03, FV02 and DD04
+were likewise first listed as unreachable "other" rows and then witnessed: a
+lone-surrogate `command_preview` (payload JCS other, contracts boundary), a
+lone-surrogate `event_id` outside the CV-317 projection (EVENT_VALUE other,
+issued boundary), and a coherent 2^64 sequence in every retained copy
+(retained-dispatch other, via the SP-1101 owner's physical bytes).
+
+**Timestamp review (interim only).** This lane's own timestamp review is interim
+only. The DF date-time grammar (`pm_filesafe_schema_graph.py` `date_time` /
+`date_time_grammar` / `date_time_fields`, format fixtures) is unchanged part-1
+(S6) code. Part 2B timestamps must: replace it with CV-1101
+`datetime_validator`/`date_time` at every `format_checker` and schema
+`format: date-time` site; use `storage_utc_z` for Storage-assigned
+observed/persisted fields (the lane grammar admits numeric offsets there today);
+decide leap seconds (refused today, `60` not in `00..59`) and year zero (refused
+today by the `datetime` constructor) per CV-1101; and re-run the witness,
+differential, collection and tool certification for the affected tables.
+
+Owner text (`644142fe4b6b757ac07f6465f89a0ef2c90ace91`,
+`9145fdd04758f72870d638c187b44fe5bba7f290`): one sweep paragraph in each of
+CV-550..558 (CV-1100 slots, qualified JCS, SP-1100 profiles, SP-1101 dispatch
+and custody catalogue), SP-550..558 and ATS-275..279 (guard-table runner,
+witnesses, corpus; new commands in the five ATS validation surfaces). The nine
+round-6 "`-0` decodes once to integer zero" sentences and the nine ATS
+"`1`/`0`/`-0` controls" bullets are corrected to the CV-1100 raw refusal.
+Shards and plan index regenerated (derived changes confined to the three edited
+documents); shard `--check` passes; `pm-plan-index.py validate` failures (53)
+are byte-identical to the pre-edit lane head — fork drift against current
+`origin/main`, none in an edited document.
+
+## Sweep regrade
+
+Re-graded at the implementation head against the same rubric; **no cell
+changes** in any family (totals 85 PASS / 14 PARTIAL / 9 ABSENT before and
+after). C12 (`positive_negative_oracles`) stays PARTIAL in all nine: guard
+tables are now certified on the gated shared tool, but each schema occurrence
+remains one structural verdict row (individual JSON Schema keywords are not cut
+one by one) and the timestamp review is interim only. C7 stays PARTIAL for the
+five application-scope rule sets held with Jared; membership (C1) stays ABSENT.
+All 336 evidence quotes (309 carried, relocated to their lines at the
+implementation head; 27 new) verify exactly against the cited files
+(`file_sha256`/`excerpt_sha256` recomputed).
+
+| Family | PASS before → after | Distinct rows refused by own single-row negatives |
+|---|---:|---:|
+| filesafe.command_denied | 9 → 9 | 178 |
+| filesafe.destructive_override_denied | 9 → 9 | 61 |
+| filesafe.destructive_override_granted | 10 → 10 | 63 |
+| filesafe.destructive_override_requested | 9 → 9 | 71 |
+| filesafe.guard_init_failed | 9 → 9 | 57 |
+| filesafe.path_denied | 9 → 9 | 58 |
+| filesafe.policy_degraded | 10 → 10 | 54 |
+| safe_point.created | 10 → 10 | 147 |
+| safe_point.restored | 10 → 10 | 131 |
+
+## Final checks at the implementation head
+
+- `python3 scripts/pm_filesafe_event_contracts.py` — pass (94 positive / 360 negative / 18 identity).
+- `python3 scripts/pm_filesafe_event_authority.py` — pass (235 positive / 2,368 negative / 1,323 protocol steps).
+- `python3 scripts/pm-filesafe-table-generate.py --check` — 204 tables, 405 rows; stale 0, extra 0.
+- `python3 scripts/pm-filesafe-p2a-cases.py --check` — 1,081 cases kept, 0 rejected; stale: none.
+- `python3 scripts/pm_event_numbers.py --self-test --scope numbers` — pass, 580/580.
+- `python3 scripts/pm-filesafe-number-corpus.py` — pass, 2,148 route runs, 0 failures.
+- `python3 scripts/pm-filesafe-guard-tables.py --out DIR` — 174 PASS / 0 FAIL / 30 tables without negatives; 356/405 rows proved (exit 1: unproved rows and the 7 two-row observations).
+- Differential 2A → final over 4,629 witnesses — identical, 0 changes.
+- `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` — pass.
+- `python3 scripts/pm-plan-index.py validate` — 53 failures, byte-identical to the pre-edit lane head (fork drift; none new).
+- Python 3.14.4, msgpack 1.2.1, rfc8785 0.1.4, jsonschema 4.26.0. Native execution NOT_RUN throughout; no browsers used.
