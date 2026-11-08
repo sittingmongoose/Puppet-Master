@@ -510,7 +510,7 @@
       const v = this.vis; let bb = pr.bb;
       if (!v) return { dx: 0, dy: 0, f: 1, box: null };
       if (!bb || !bb[2]) { bb = pr.bb = this.boxOf(pr.el); if (!bb || !bb[2]) return { dx: 0, dy: 0, f: 1, box: null }; }
-      const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], destination ? 0 : pr.a));
+      const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], pr.a));
       let lo = Math.min(...cs.map((c) => c[0])), hi = Math.max(...cs.map((c) => c[0])), tp = Math.min(...cs.map((c) => c[1])), bt = Math.max(...cs.map((c) => c[1])), f = 1;
       const pad = 8, room = v.x1 - v.x0 - pad * 2, hx = hang[0], hy = hang[1];
       const rest = pr.state !== 'out' && pr.spec.stack == null;
@@ -519,7 +519,7 @@
            side of another prop every frame: Recovery Kit > backup list pinned the clipboard above the restore box
            for 120 ms, then switched below it in one frame (QA-7). The other props' destinations participate too, so
            their entry opacity or progress cannot change this prop's landing place halfway down. */
-        const tg = this.propTarget(pr), at = [tg.ax, this.L.anchorY + tg.len];
+        const tg = this.propTarget(pr), at = [tg.ax + Math.sin(pr.a) * tg.len, this.L.anchorY + Math.cos(pr.a) * tg.len];
         const fit = this.fit(pr, at, sc, tm, true); pr.restBox = fit.box;
         lo *= fit.f; hi *= fit.f; tp *= fit.f; bt *= fit.f;
         let dx = fit.dx, dy = fit.dy;

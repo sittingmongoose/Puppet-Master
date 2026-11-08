@@ -9,12 +9,15 @@ function motion(rows, kind = 'clipboard') {
     return p && p.op > .1 ? [{ ...p, ts:r.ts, dt:r.dt, render:r.stage.render, y:p.rect.y+p.rect.height/2, k:r.stage.map.k }] : [];
   });
   if (samples.length < 12) return { covered:false, samples:samples.length };
-  const first=samples[0], end=percentile(samples.slice(-12).map(p=>p.y),.5), span=end-first.y;
+  // Retro deliberately paints at 10/20 Hz. A position delta belongs to the time since its previous draw,
+  // rather than the last 120 Hz page callback that still saw the old draw.
+  const draws=samples.filter((p,i)=>i===0||p.render!==samples[i-1].render);
+  const first=draws[0], end=percentile(draws.slice(-12).map(p=>p.y),.5), span=end-first.y;
   const moving=samples.filter(p=>(p.y-first.y)/span>.15 && (p.y-first.y)/span<.85);
   let maxSpeed=0, maxJump=0, stall=0, maxStall=0;
-  for (let i=1;i<samples.length;i++) {
-    const a=samples[i-1],b=samples[i],dt=b.ts-a.ts,dy=b.y-a.y,progress=(a.y-first.y)/span;
-    if (dt<=0 || progress<.15 || progress>.85 || a.render===b.render) continue;
+  for (let i=1;i<draws.length;i++) {
+    const a=draws[i-1],b=draws[i],dt=b.ts-a.ts,dy=b.y-a.y,progress=(a.y-first.y)/span;
+    if (dt<=0 || progress<.15 || progress>.85) continue;
     maxSpeed=Math.max(maxSpeed,Math.abs(dy)/Math.abs(span)*1000/dt);
     maxJump=Math.max(maxJump,Math.abs(dy));
     if (Math.abs(dy)<Math.max(.3,Math.abs(span)*.002)) stall+=dt; else stall=0;
