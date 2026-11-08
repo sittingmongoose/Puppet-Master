@@ -3483,8 +3483,22 @@ def validate_audit_correction(
                         raise ValueError("JSONL row does not exist or is not a canonical positive line number")
                 elif artifact == "validator_results.json" and str(row).startswith(("results.", "invalid_invocations.")):
                     group, name = str(row).split(".", 1)
-                    if not any(isinstance(item, dict) and item.get("name") == name for item in source.get(group, [])):
+                    matches = [item for item in source.get(group, []) if isinstance(item, dict) and item.get("name") == name]
+                    if not matches:
                         raise ValueError("validator source row does not exist")
+                    if group == "invalid_invocations":
+                        # The actionability classifier reads only `results`, so an invalid invocation
+                        # that explicitly requires repair, or that had side effects, is checked here:
+                        # every record of that name, and a correction never exempts such a row.
+                        for item in matches:
+                            probe: list[str] = []
+                            explicit = explicit_repair_required(item, f"{label}:{row}", probe)
+                            side_effects = item.get("side_effect_count", 0)
+                            if probe:
+                                fail(f"source row {key}: {probe[0]}")
+                            elif explicit is True or (isinstance(side_effects, int) and side_effects > 0) \
+                                    or item.get("side_effects") or item.get("non_audit_side_effects"):
+                                fail(f"source row {key} is actionable; correction cannot excuse missing coverage")
                 else:
                     # v1 admits only physical JSONL rows and named validator-result rows.
                     raise ValueError("unsupported source-row address")
@@ -5867,11 +5881,33 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             ("duplicate_explicit_name", {"results": [{"name": "passing", "status": "pass"},
                                                      {"name": "passing", "repair_required": True, "finding_level": "warning"}]}),
             ("artifact_explicit", {"repair_required": True, "finding_level": "warning"}),
+            ("explicit_invalid_invocation", {"invalid_invocations": [
+                {"name": "superseded", "status": "invalid_invocation", "repair_required": True, "finding_level": "warning"}]}),
+            ("duplicate_explicit_invalid_invocation", {"invalid_invocations": [
+                {"name": "superseded", "status": "invalid_invocation"},
+                {"name": "superseded", "status": "invalid_invocation", "repair_required": True, "finding_level": "warning"}]}),
+            ("invalid_invocation_side_effect", {"invalid_invocations": [
+                {"name": "superseded", "status": "invalid_invocation", "side_effect_count": 1}]}),
         ):
             write_json(correction_dir / "validator_results.json", dict(validator_source, **update))
             result, errors = evaluate_receipt(json_correction())
             check(f"correction_{name}_is_actionable", result is None and any("is actionable" in e for e in errors), errors)
         write_json(correction_dir / "validator_results.json", validator_source)
+        # Integration (review r1 F1): a receipt that would exempt an explicitly repair-required
+        # invalid invocation is refused whole, and the historical errors stay.
+        explicit_invalid = dict(validator_source, invalid_invocations=[dict(
+            validator_source["invalid_invocations"][0], repair_required=True, finding_level="warning")])
+        write_json(correction_dir / "validator_results.json", explicit_invalid)
+        write_jsonl(correction_dir / "repair_closure_matrix.jsonl",
+                    matrices + [dict(matrices[1], source_artifact=a, source_row=r) for a, r in sorted(json_keys)])
+        write_json(correction_path, json_correction())
+        probe_report = validate_audit_dir(correction_dir, require_matrix=True, require_effective_status=False,
+                                          source_artifacts=None, registry_path=correction_registry)
+        check("correction_explicit_invalid_invocation_fails_atomically",
+              has(probe_report, "is actionable") and "audit_correction" not in probe_report
+              and has(probe_report, "status must be BLOCKED"), probe_report["errors"])
+        write_json(correction_dir / "validator_results.json", validator_source)
+        write_jsonl(correction_dir / "repair_closure_matrix.jsonl", matrices)
         for address in ("results.nonexistent", "warnings[0]"):
             data = json_correction()
             data["non_actionable_rows"][1]["source_row"] = address
