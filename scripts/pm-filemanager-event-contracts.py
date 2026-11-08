@@ -11,6 +11,8 @@ expected-outcome harness (main, check_negative_reason) are not product guards.
 """
 import copy
 import base64
+import functools
+from contextlib import contextmanager
 import hashlib
 import importlib
 import importlib.util
@@ -28,6 +30,9 @@ ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_BASE = "https://puppetmaster.local/schemas/"
 if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
+from pm_event_numbers import (  # noqa: E402  (NUMRULE number scope, gated at a16f67c1ef)
+    EVENT_VALUE, Refusal, current_integer, full_value_commitment as cv339_commitment, producer_semantic_digest,
+    qualified_jcs, storage_value_bytes)
 
 # --- Method B guard tables (sweep part 2A) ------------------------------------------------------------------
 TABLE_PREFIX = "pm_filemanager_table_"
@@ -91,6 +96,22 @@ def refuse(phase, facts, message=None, schema=None):
 
 def tname(value):
     return type(value).__name__
+
+
+@contextmanager
+def exact_integer_text():
+    """Render integers of any length exactly while a derivation formats them (restored afterwards).
+
+    CV-1100 allows integers beyond Python's default 4300-digit str() limit (no global cap). jsonschema
+    renders instances in error messages and the identity recipe writes the epoch in decimal; under the
+    default limit both raise ValueError for a valid long integer. No integer value is changed.
+    """
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        yield
+    finally:
+        sys.set_int_max_str_digits(previous)
 
 
 META_VALIDATOR = jsonschema.Draft202012Validator(
@@ -193,10 +214,11 @@ def schema_phase(path, fragment):
 def validate_shape(path, definition, value):
     fragment = definition if definition.startswith("#") else ("#/$defs/" + definition if definition else "")
     uri = SCHEMA_BASE + path + fragment
-    error = next(jsonschema.Draft202012Validator({"$ref": uri}, registry=SCHEMAS,
-                                                 format_checker=jsonschema.FormatChecker()).iter_errors(value), None)
-    refuse(schema_phase(path, fragment), {"schema_valid": error is None},
-           message=None if error is None else str(error),
+    with exact_integer_text():
+        error = next(jsonschema.Draft202012Validator({"$ref": uri}, registry=SCHEMAS,
+                                                     format_checker=jsonschema.FormatChecker()).iter_errors(value), None)
+        message = None if error is None else str(error)
+    refuse(schema_phase(path, fragment), {"schema_valid": error is None}, message=message,
            schema=None if error is None else {"validator": error.validator, "path": list(error.absolute_path)})
 
 
@@ -213,14 +235,25 @@ def same_value(left, right):
     return left == right
 
 
-# Reuse the repository's canonical MessagePack encoder for this suite's closed integer-only
-# fixture domain. Native arbitrary EventRecord encoding remains SP-026/SP-236's obligation.
+# SP-339 redb values (operation custody, family control) keep the repository's canonical MessagePack
+# encoder for this suite's closed integer/string fixture domain. EventRecord bodies use the shared
+# SP-1100/SP-236 EVENT_VALUE bytes (event_value_bytes). Native encoding remains SP-026/SP-236's obligation.
 _codec_spec = importlib.util.spec_from_file_location("pm_readiness_codec", ROOT / "scripts/pm-implementation-readiness.py")
 _codec = importlib.util.module_from_spec(_codec_spec)
 sys.modules[_codec_spec.name] = _codec
 _codec_spec.loader.exec_module(_codec)
 canonical_msgpack = _codec.canonical_messagepack_bytes
 INLINE_LIMIT = 16384
+
+
+def event_value_bytes(value):
+    """SP-1100 EVENT_VALUE canonical MessagePack of an EventRecord body (shared storage_value_bytes)."""
+    try:
+        raw, reason = storage_value_bytes(value, profile=EVENT_VALUE), None
+    except Refusal as refusal:
+        raw, reason = None, refusal.reason
+    refuse("event_value_encoding", {"physical_refusal": reason})
+    return raw
 
 
 def redb_bytes(value):
@@ -276,12 +309,12 @@ def event_body(event, payload_rows):
     inline = event["payload"]
     is_dict = type(inline) is dict
     refuse("event_inline_body", {"inline_type": tname(inline),
-                                 "inline_oversize": len(redb_bytes(inline)) > INLINE_LIMIT if is_dict else None})
+                                 "inline_oversize": len(event_value_bytes(inline)) > INLINE_LIMIT if is_dict else None})
     if event["payload_ref"] is None:
         return inline
     refuse("event_reference_inline", {"referenced_inline_empty": inline == {}})
-    value = resolve_payload(event["payload_ref"], payload_rows)
-    refuse("event_reference_size", {"referenced_above_limit": len(redb_bytes(value)) > INLINE_LIMIT})
+    value = resolve_payload(event["payload_ref"], payload_rows, event_value_bytes)
+    refuse("event_reference_size", {"referenced_above_limit": len(event_value_bytes(value)) > INLINE_LIMIT})
     return value
 
 
@@ -327,9 +360,9 @@ def synchronize_fixture(name, payload, trace, external_body=True, external_opera
     m["payload_rows"] = {}
     event["payload"] = copy.deepcopy(payload)
     event["payload_ref"] = None
-    if external_body and len(canonical_msgpack(payload)) > INLINE_LIMIT:
+    if external_body and fixture_event_size(payload) > INLINE_LIMIT:
         event["payload"] = {}
-        event["payload_ref"] = payload_reference(payload)
+        event["payload_ref"] = payload_reference(payload, fixture_event_bytes)
         m["payload_rows"][event["payload_ref"]] = copy.deepcopy(payload)
     trace["original_payload"] = copy.deepcopy(payload)
     trace["retry_identity"] = list(identity(name, payload, trace))
@@ -378,10 +411,29 @@ def fixture_copies(trace):
         storage_instance_id=logical(operation)["storage_instance_id"], payload_rows=model["payload_rows"]))
 
 
+def fixture_event_bytes(value):
+    """Fixture construction: SP-1100 EVENT_VALUE bytes of an event body (never a validator)."""
+    return storage_value_bytes(value, profile=EVENT_VALUE)
+
+
+def fixture_event_size(value):
+    """Fixture construction: EVENT_VALUE size; an unencodable body stays inline for the validator's row to refuse."""
+    try:
+        return len(fixture_event_bytes(value))
+    except Refusal:
+        return 0
+
+
 def fixture_producer_digest(event):
-    """Fixture construction: the stored producer semantic digest (sorted compact JSON surrogate)."""
-    return hashlib.sha256(json.dumps(semantic_body(event), sort_keys=True, separators=(",", ":"),
-                                     ensure_ascii=False).encode()).hexdigest()
+    """Fixture construction: the stored CV-317 producer digest (shared qualified JCS).
+
+    An event the CV-1100 qualification refuses has no digest; the fixture stores a fixed
+    placeholder so the validator's producer_jcs row (not this constructor) refuses it.
+    """
+    try:
+        return producer_semantic_digest(event)
+    except Refusal:
+        return "0" * 64
 
 
 def fixture_event(trace, event):
@@ -740,13 +792,20 @@ def boundary_case(row, case):
 
 
 def full_value_commitment(event):
+    """CV-339 original_event_value_commitment; sha256 is the shared CV-1100/SP-1100 EVENT_VALUE recipe.
+
+    An event outside the CV-339 edition or the EVENT_VALUE domain has no commitment (sha256 None),
+    so it can never equal a stored commitment.
+    """
     domain = "pm.storage.original_event_value_commitment.v1"
     codec = "pm.seglog_frame_v2.event_value.canonical_msgpack.v1"
-    preimage = [domain, "1.0.0", codec, event["schema_id"], event["schema_version"], event]
+    try:
+        sha = cv339_commitment(event)
+    except Refusal:
+        sha = None
     return {"schema_id": domain, "schema_version": "1.0.0", "codec": codec,
             "domain": domain, "event_schema_id": event["schema_id"],
-            "event_schema_version": event["schema_version"],
-            "sha256": hashlib.sha256(canonical_msgpack(preimage)).hexdigest()}
+            "event_schema_version": event["schema_version"], "sha256": sha}
 
 
 def operation_key(row):
@@ -766,12 +825,58 @@ def control_key(row):
 
 
 def integer_refusal(value, *, minimum=None, maximum=None):
-    """Exact-integer type and range reason for one integer input, or None (lane-local; CV-1100 is part 2B)."""
-    if type(value) is not int:
-        return "integer_type"
-    if (minimum is not None and value < minimum) or (maximum is not None and value > maximum):
-        return "integer_range"
+    """The shared CV-1100 current_integer refusal reason for one schema integer slot, or None."""
+    try:
+        current_integer(value, minimum=minimum, maximum=maximum)
+    except Refusal as refusal:
+        return refusal.reason
     return None
+
+
+@functools.lru_cache(maxsize=None)
+def payload_slots(event_type):
+    """Declared integer slots of the family payload schema (top-level properties, local $ref resolved)."""
+    schema = json.loads((ROOT / "Plans" / (PAYLOAD_DOCUMENT + event_type.replace(".", "_") + ".schema.json")).read_text())
+    slots = []
+    for key, node in schema["properties"].items():
+        if "$ref" in node and node["$ref"].startswith("#/$defs/"):
+            node = schema["$defs"][node["$ref"][len("#/$defs/"):]]
+        if node.get("type") == "integer":
+            slots.append(((key,), node.get("minimum"), node.get("maximum"), False))
+    return tuple(slots)
+
+
+# Companion schema integer slots (filemanager_operation_contracts.schema.json): operation_custody
+# recovery_epoch and revision, path_snapshot_entry.path_snapshot_revision in both snapshot lists,
+# family_control control_revision, last_admitted_sequence and nullable writer_cutoff_sequence (all minimum 0).
+OPERATION_SLOTS = ((("recovery_epoch",), 0, None, False), (("revision",), 0, None, False),
+                   (("accepted_path_snapshots", "*", "path_snapshot_revision"), 0, None, False),
+                   (("settlement", "path_snapshots", "*", "path_snapshot_revision"), 0, None, False))
+CONTROL_SLOTS = ((("control_revision",), 0, None, False), (("last_admitted_sequence",), 0, None, False),
+                 (("writer_cutoff_sequence",), 0, None, True))
+
+
+def slot_values(value, path, location=""):
+    if not path:
+        yield location, value
+        return
+    head, rest = path[0], path[1:]
+    if head == "*":
+        if type(value) is list:
+            for index, item in enumerate(value):
+                yield from slot_values(item, rest, location + "/" + str(index))
+    elif type(value) is dict and head in value:
+        yield from slot_values(value[head], rest, location + "/" + head)
+
+
+def admit_slots(slots, value, root):
+    """CV-1100: current_integer at every declared schema integer slot of a current write (never history)."""
+    for path, minimum, maximum, nullable in slots:
+        for location, slot in slot_values(value, path):
+            if nullable and slot is None:
+                continue
+            reason = integer_refusal(slot, minimum=minimum, maximum=maximum)
+            refuse("integer_slot", {"slot_refusal": reason}, message=f"{reason} at {root}{location}")
 
 
 def validate_path_coverage(paths, required_paths, label):
@@ -935,6 +1040,8 @@ def validate_operation_transition(before, after, proof=None, storage=None):
     for label, row in (("before", before), ("after", after)):
         resolved = resolve_value("operation_custody", storage.get(label, row), storage.get("payload_rows", {}))
         refuse("operation_resolution", {"resolution_equal": same_value(resolved, row)})
+    admit_slots(OPERATION_SLOTS, before, "/before")
+    admit_slots(OPERATION_SLOTS, after, "/after")
     validate_operation_edge(before, after)
     validate_operation_immutables(before, after)
     if after["phase"] == "no_event_settled":
@@ -973,6 +1080,8 @@ def validate_control_transition(before, after, issued_sequence, drain_keys, stor
     for label, row in (("before", before), ("after", after)):
         resolved = resolve_value("family_control", storage.get(label, row), storage.get("payload_rows", {}))
         refuse("control_resolution", {"resolution_equal": same_value(resolved, row)})
+    admit_slots(CONTROL_SLOTS, before, "/before")
+    admit_slots(CONTROL_SLOTS, after, "/after")
     refuse("control_cas", {"key_unchanged": control_key(before) == control_key(after),
                            "revision_next": after["control_revision"] == before["control_revision"] + 1})
     edge = before["state"], after["state"]
@@ -1064,8 +1173,12 @@ def validate_historical_operation(event_type, payload, trace, model, row,
         "event_id_equal": stored["event_id"] == event["event_id"], "scope_equal": stored["scope_partition"] == scope,
         "event_type_equal": stored["event_type"] == event_type,
         "idempotency_equal": stored["idempotency_key"] == event["idempotency_key"]})
-    digest = hashlib.sha256(json.dumps(semantic_body(event), sort_keys=True, separators=(",", ":"),
-                                       ensure_ascii=False).encode()).hexdigest()
+    # CV-317 producer projection under CV-1100 qualified JCS (shared producer_semantic_digest).
+    try:
+        digest, jcs_refusal = producer_semantic_digest(event), None
+    except Refusal as refusal:
+        digest, jcs_refusal = None, refusal.reason
+    refuse("producer_jcs", {"jcs_refusal": jcs_refusal})
     refuse("full_value_result", {
         "result_equal": same_value(result, {k: stored[k] for k in result}),
         "commitment_equal": result["original_event_value_commitment"] == full_value_commitment(event),
@@ -1115,18 +1228,31 @@ IDENTITY_SUBJECTS = {"created": "result_", "copied": "source_", "exported": "sou
 
 
 def identity(event_type, payload, context):
-    # These fixtures contain ASCII strings only; JSON compact encoding equals RFC8785 here.
-    # Production MUST use RFC8785, not this bounded oracle encoding, for arbitrary Unicode.
+    # F-150..F-161: T is RFC 8785 canonical JSON of a six-string array. The compact UTF-8 JSON preimage
+    # is kept exactly; IT05 requires it to equal the shared qualified RFC 8785 bytes (non-ASCII included).
     epoch = context["recovery_epoch"]
     refuse("identity_epoch", {"epoch_refusal": integer_refusal(epoch, minimum=0)})
     kind, action = event_type.split(".")
     subject = IDENTITY_SUBJECTS[action] + ("node_ref" if kind == "file" else "folder_ref")
-    fields = [context["storage_instance_id"], str(epoch),
+    with exact_integer_text():
+        epoch_text = str(epoch)
+    fields = [context["storage_instance_id"], epoch_text,
               payload["project_id"], event_type, payload["operation_id"], payload[subject]]
     types = [tname(v) for v in (fields[0], fields[2], fields[4], fields[5])]
+    compact, preimage_is_jcs = None, None
+    if types == ["str"] * 4:
+        try:
+            compact = json.dumps(fields, separators=(",", ":"), ensure_ascii=False).encode()
+        except UnicodeEncodeError:
+            compact = None
+        try:
+            jcs = qualified_jcs(fields)
+        except Refusal:
+            jcs = None
+        preimage_is_jcs = compact is not None and compact == jcs
     refuse("identity_tuple", {"storage_type": types[0], "project_type": types[1], "operation_type": types[2],
-                              "subject_type": types[3]})
-    digest = hashlib.sha256(json.dumps(fields, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
+                              "subject_type": types[3], "preimage_is_jcs": preimage_is_jcs})
+    digest = hashlib.sha256(compact).hexdigest()
     return "evt_" + event_type.replace(".", "_") + "_" + digest, event_type + ":" + digest
 
 
@@ -1145,6 +1271,8 @@ EXPECTED_SEMANTICS = {
 def validate_case(event_type, payload, trace, *, operation_candidate=None,
                   transition_before=None, historical=False):
     validate_shape(PAYLOAD_DOCUMENT + event_type.replace(".", "_") + ".schema.json", "", payload)
+    if historical is not True:
+        admit_slots(payload_slots(event_type), payload, "/payload")
     refuse("payload_scope", {"project_equal": payload["project_id"] == trace["project_id"]})
     validate_family_identity(event_type, payload)
     refuse("path_scope", {
@@ -1265,8 +1393,10 @@ def validate_owner_adoption(name, owner_unit, owner):
 
 
 def validate_registry_contracts(registry, registry_schema, schema):
-    error = next(jsonschema.Draft202012Validator(registry_schema).iter_errors(registry), None)
-    refuse("schema_storage_registry", {"schema_valid": error is None}, message=None if error is None else str(error),
+    with exact_integer_text():
+        error = next(jsonschema.Draft202012Validator(registry_schema).iter_errors(registry), None)
+        message = None if error is None else str(error)
+    refuse("schema_storage_registry", {"schema_valid": error is None}, message=message,
            schema=None if error is None else {"validator": error.validator, "path": list(error.absolute_path)})
     check_schema_document(schema)
     for family, definition in [("filemanager_operation_custody", "operation_custody"),

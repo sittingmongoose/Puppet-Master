@@ -96,6 +96,12 @@ phase('redb_value_encoding', 'SP-339 canonical MessagePack of a redb value (clos
     ('RV01_redb_encodable', '/<redb value>', 'is in the closed SP-339 canonical MessagePack domain (no float, int64/uint64 range)',
      'redb value encoding', not_true('encodable')),
 ])
+phase('event_value_encoding', 'SP-1100 EVENT_VALUE bytes of an EventRecord body (shared storage_value_bytes).', [
+    ('EV01_integer_range', '/payload/**', 'every integer is within -2^63..2^64-1', 'physical_integer_range',
+     "value['physical_refusal'] == 'physical_integer_range'"),
+    ('EV02_event_value_other', '/payload/**', 'has no other EVENT_VALUE refusal (Unicode scalar strings, supported types)',
+     'physical_value', "value['physical_refusal'] not in (None, 'physical_integer_range')"),
+])
 phase('payload_reference', 'SP-337 payload reference grammar (validate_payload_reference).', [
     ('PR01_reference_type', '/value_ref', 'is a string', 'invalid SP-337 reference', "value['reference_type'] != 'str'"),
     ('PR02_reference_grammar', '/value_ref', 'a string reference full-matches the v1 blake3/size/media grammar',
@@ -346,7 +352,7 @@ phase('control_edge', 'Control state edge and admission (validate_control_transi
     ('CT02_admission_unchanged', '/admission_revision', 'a set admission revision is unchanged', 'changed original admission',
      false('admission_unchanged')),
 ])
-phase('control_issued', 'Control issued-sequence boundary (validate_control_transition).', [
+phase('control_issued', 'Control issued-sequence boundary (validate_control_transition; CV-1100 current_integer).', [
     ('CI01_issued_type', '/issued_sequence', 'is an exact integer', 'control issued boundary',
      "value['issued_refusal'] == 'integer_type'"),
     ('CI02_issued_range', '/issued_sequence', 'is at least 0', 'control issued boundary',
@@ -450,6 +456,14 @@ phase('custody_identity', 'Original v2 custody identity (validate_historical_ope
     ('CU06_idempotency_key', '/custody_v2/idempotency_key', 'equals the original idempotency key',
      'original v2 custody identity', not_true('idempotency_equal')),
 ])
+phase('producer_jcs', 'CV-317/CV-1100 qualified JCS of the producer projection (shared producer_semantic_digest).', [
+    ('QJ01_jcs_binary64', '/<producer projection>/**', 'every integer has an exact finite binary64 value', 'jcs_binary64',
+     "value['jcs_refusal'] == 'jcs_binary64'"),
+    ('QJ02_jcs_decimal', '/<producer projection>/**', 'every emitted JCS decimal equals the original integer', 'jcs_decimal',
+     "value['jcs_refusal'] == 'jcs_decimal'"),
+    ('QJ03_jcs_other', '/<producer projection>', 'has no other qualified-JCS refusal (Unicode scalar strings, supported kinds)',
+     'producer_jcs', "value['jcs_refusal'] not in (None, 'jcs_binary64', 'jcs_decimal')"),
+])
 phase('full_value_result', 'Full-value result and commitments (validate_historical_operation).', [
     ('VR01_result_selected', '/custody_model/result', 'equals the selected custody row fields (typed)',
      'full-value result differs from selected original', not_true('result_equal')),
@@ -523,19 +537,21 @@ phase('backup_binding', 'Backup binding of the selected set (validate_historical
 ])
 
 # ===================================================================== family identity recipe (F-150..F-161)
-phase('identity_epoch', 'Identity recovery epoch (identity).', [
+phase('identity_epoch', 'Identity recovery epoch (identity; CV-1100 current_integer, minimum 0).', [
     ('IE01_epoch_type', '/recovery_epoch', 'is an exact integer', 'noncanonical recovery epoch',
      "value['epoch_refusal'] == 'integer_type'"),
     ('IE02_epoch_range', '/recovery_epoch', 'is at least 0', 'noncanonical recovery epoch',
      "value['epoch_refusal'] == 'integer_range'"),
 ])
-phase('identity_tuple', 'Identity tuple strings (identity).', [
+phase('identity_tuple', 'Identity tuple strings and RFC 8785 conformance (identity).', [
     ('IT01_storage_string', '/storage_instance_id', 'is a string', 'noncanonical identity tuple',
      "value['storage_type'] != 'str'"),
     ('IT02_project_string', '/project_id', 'is a string', 'noncanonical identity tuple', "value['project_type'] != 'str'"),
     ('IT03_operation_string', '/operation_id', 'is a string', 'noncanonical identity tuple', "value['operation_type'] != 'str'"),
     ('IT04_subject_string', '/<family subject ref>', 'is a string', 'noncanonical identity tuple',
      "value['subject_type'] != 'str'"),
+    ('IT05_rfc8785_preimage', '/<identity tuple>', 'the compact string-array preimage is the RFC 8785 (qualified JCS) bytes',
+     'identity preimage is not RFC 8785', false('preimage_is_jcs')),
 ])
 
 # ===================================================================== current boundary (validate_case)
@@ -572,7 +588,7 @@ phase('trace_reader', 'Reader and event revisions and reader authority (validate
     ('TR02_event_revision', '/event_revision', 'is 1.0.0', 'unsupported revision', not_true('event_revision_ok')),
     ('TR03_reader_enabled', '/reader_enabled', 'is exactly true', 'reader withdrawn', not_true('reader_true')),
 ])
-phase('trace_sequence', 'Event sequence within the writer cutoff (validate_case).', [
+phase('trace_sequence', 'Event sequence within the writer cutoff (validate_case; CV-1100 current_integer, minimum 0).', [
     ('TQ01_sequence_type', '/event_sequence', 'is an exact integer', 'past writer cutoff',
      "value['sequence_refusal'] == 'integer_type'"),
     ('TQ02_sequence_range', '/event_sequence', 'is at least 0', 'past writer cutoff',
@@ -594,6 +610,12 @@ phase('descendant_count', 'Folder descendant receipt (validate_case).', [
 phase('retry_identity', 'Retry preserves the original identity (validate_case).', [
     ('RI01_retry_list', '/retry_identity', 'is an exact list', 'retry identity changed', "value['retry_type'] != 'list'"),
     ('RI02_retry_equal', '/retry_identity', 'equals the recomputed identity', 'retry identity changed', false('retry_equal')),
+])
+phase('integer_slot', 'CV-1100 current_integer at each declared schema integer slot of a current write.', [
+    ('IS01_integer_type', '/{schema integer slot}', 'is an exact integer (never bool, float or decimal)', 'integer_type',
+     "value['slot_refusal'] == 'integer_type'"),
+    ('IS02_integer_range', '/{schema integer slot}', 'is within the schema minimum/maximum', 'integer_range',
+     "value['slot_refusal'] == 'integer_range'"),
 ])
 
 # ===================================================================== checker integrity (main)
