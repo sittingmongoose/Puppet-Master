@@ -17,7 +17,7 @@ base = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(base)
 read = base.read
 CURRENT, V1 = base.CURRENT, base.V1
-valid = lambda schema, value, recipe=CURRENT: not list(base.validator(schema, recipe).iter_errors(value))
+refused = base.refused
 legacy_evidence_ok = base.original_evidence_ok
 DECIDED_FAMILIES = {
     'browser.context_shared', 'browser.context_share_revoked',
@@ -27,96 +27,102 @@ DECIDED_FAMILIES = {
 }
 
 
+def valid(phase, schema, value, recipe=CURRENT):
+    """One schema occurrence through its two rows (stock verdict, then number rule)."""
+    return not base.schema_refused(phase, base.validator(schema, recipe), value)
+
+
 def context_ok(c, value, retained=False, recipe=CURRENT):
     schema = copy.deepcopy(read('Plans/ds15_deck2_context.schema.json')['$defs'][c['event_type']])
     if retained:
         schema['required'] = ['scope', 'owner_command_authorized']
-    return valid(schema, value, recipe)
-
-
-def grants(values):
-    # Exact types and closed entries are validated before this interpretation.
-    if len({g['thread_id'] for g in values}) != len(values):
-        return None
-    return {g['thread_id']: g['grant_ref'] for g in values}
+    phase = 'sch_d2_context_v1' if recipe == V1 else 'sch_d2_context_retained' if retained else 'sch_d2_context'
+    return valid(phase, schema, value, recipe)
 
 
 def transition_ok(c, p, t):
     n = c['event_type']
     if n.startswith('browser.context_'):
-        before, after = grants(t['before_grants']), grants(t['after_grants'])
-        if before is None or after is None or t['capture_created']:
+        # Exact types and closed entries are validated before this interpretation.
+        if refused('d2_grants', before_threads=[g['thread_id'] for g in t['before_grants']],
+                   after_threads=[g['thread_id'] for g in t['after_grants']]):
             return False
-        if t['browser_session_id'] != p['browser_session_id']:
-            return False
-        if n == 'browser.context_shared':
+        before = {g['thread_id']: g['grant_ref'] for g in t['before_grants']}
+        after = {g['thread_id']: g['grant_ref'] for g in t['after_grants']}
+        shared = n == 'browser.context_shared'
+        if shared:
             wanted = dict(before)
-            if p['thread_id'] in before and before[p['thread_id']] != p['grant_ref']:
-                return False
             wanted[p['thread_id']] = p['grant_ref']
-            return t['recipient_scope'] == p['scope'] and after == wanted
-        wanted = {} if p['thread_id'] is None else {k: v for k, v in before.items() if k != p['thread_id']}
-        return after == wanted
+        else:
+            wanted = {} if p['thread_id'] is None else {k: v for k, v in before.items() if k != p['thread_id']}
+        return not refused('d2_tr_browser', capture_created=t['capture_created'],
+                           transition_session_id=t['browser_session_id'], payload_session_id=p['browser_session_id'],
+                           family=n, existing_grant=before.get(p['thread_id']) if shared else None,
+                           payload_grant_ref=p['grant_ref'] if shared else None,
+                           recipient_scope=t['recipient_scope'] if shared else None,
+                           payload_scope=p['scope'] if shared else None, after_grants=after, wanted_grants=wanted)
     if n.startswith('catalog.'):
         action, phase = n.split('.')[1:]
         uses = t['uses']
-        allowed = read('Plans/ds15_deck2_contracts.json')
-        own = next(row for row in allowed if row['event_type'] == n)
-        if any(u not in own['listed_uses'].get(p['item_type'], []) for u in uses):
+        own = next(row for row in read('Plans/ds15_deck2_contracts.json') if row['event_type'] == n)
+        listed = own['listed_uses'].get(p['item_type'], [])
+        if refused('d2_tr_catalog_a', unlisted_uses=[u for u in uses if u not in listed],
+                   **{k: t[k] for k in ('owner_rules_satisfied', 'override_preserved', 'external_data_preserved',
+                                        'request_versions_preserved', 'renewed_approval_satisfied', 'credentials_current')}):
             return False
-        if not all(t[k] for k in ('owner_rules_satisfied', 'override_preserved',
-                                 'external_data_preserved', 'request_versions_preserved',
-                                 'renewed_approval_satisfied', 'credentials_current', 'recovery_ready')):
-            return False
-        if t['previous_version'] != p['previous_version']:
-            return False
-        if t['queued']:
+        if refused('d2_tr_catalog_b', recovery_ready=t['recovery_ready'], previous_version=t['previous_version'],
+                   payload_previous_version=p['previous_version'], queued=t['queued']):
             return False
         if action == 'update':
-            if not t['safe_boundary_confirmed'] or t['target_version'] != p['target_version']:
-                return False
-            return (t['stage'] == ('applying' if phase == 'started' else 'effective')
-                    and t['effective_version'] == p['effective_version']
-                    and p['effective_version'] == (p['previous_version'] if phase == 'started' else p['target_version'])
-                    and t['installed_available'])
-        return (not uses and not t['queued']
-                and t['stage'] == ('removing' if phase == 'started' else 'removed')
-                and t['installed_available'] is (phase == 'started'))
+            return not refused('d2_tr_update', safe_boundary_confirmed=t['safe_boundary_confirmed'],
+                               target_version=t['target_version'], payload_target_version=p['target_version'],
+                               stage=t['stage'], expected_stage='applying' if phase == 'started' else 'effective',
+                               effective_version=t['effective_version'], payload_effective_version=p['effective_version'],
+                               expected_effective_version=p['previous_version'] if phase == 'started' else p['target_version'],
+                               installed_available=t['installed_available'])
+        # A removal's queue was refused by TC10 above (not queued).
+        return not refused('d2_tr_remove', uses=uses, stage=t['stage'],
+                           expected_stage='removing' if phase == 'started' else 'removed',
+                           installed_available=t['installed_available'], expected_installed=phase == 'started')
     if n == 'tool.custom_headless.skipped':
-        return (not t['config_present'] and t['notice_before'] == 'unused'
-                and t['notice_after'] == 'issued'
-                and t['first_absent_check_id'] == p['doctor_invocation_id']
-                and t['eligibility_project_id'] == p['project_id']
-                and t['project_id_saved']
-                and (t['project_origin'] not in ('clone_new_id', 'import_new_id')
-                     or t['source_project_id'] is not None and t['source_project_id'] != p['project_id'])
-                and (t['project_origin'] != 'restore_same_id' or t['source_project_id'] == p['project_id']))
+        return not (refused('d2_tr_skipped', config_present=t['config_present'], notice_before=t['notice_before'],
+                            notice_after=t['notice_after'], first_absent_check_id=t['first_absent_check_id'],
+                            payload_doctor_invocation_id=p['doctor_invocation_id'],
+                            eligibility_project_id=t['eligibility_project_id'], payload_project_id=p['project_id'],
+                            project_id_saved=t['project_id_saved'])
+                    or refused('d2_tr_skipped_origin', project_origin=t['project_origin'],
+                               source_project_id=t['source_project_id'], payload_project_id=p['project_id']))
     raise AssertionError(n)
 
 
+def unsafe_refs(value):
+    """Payload strings (in maps and lists) that are absolute paths, token-shaped or forbidden refs."""
+    found = []
+    stack = [value]
+    while stack:
+        node = stack.pop()
+        if isinstance(node, str):
+            if (base._debug.ABSOLUTE_PATH_RE.search(node) or base._debug.TOKEN_SHAPED_RE.search(node)
+                    or base._debug.FORBIDDEN_REF_RE.search(node)):
+                found.append(node)
+        elif isinstance(node, dict):
+            stack.extend(node.values())
+        elif isinstance(node, list):
+            stack.extend(node)
+    return sorted(found)
+
+
 def payload_ok(c, p, x, payload_recipe=CURRENT, context_recipe=CURRENT):
-    if (payload_recipe == V1 and not base.v1_numbers_ok(p)) or (context_recipe == V1 and not base.v1_numbers_ok(x)):
-        return False
-    if not valid(read(c['payload_schema_ref']), p, payload_recipe) or not context_ok(c, x, recipe=context_recipe):
-        return False
-    if not x['owner_command_authorized'] or not x['outcome_committed']:
+    if not valid('sch_payload_v1' if payload_recipe == V1 else 'sch_payload', read(c['payload_schema_ref']), p,
+                 payload_recipe) or not context_ok(c, x, recipe=context_recipe):
         return False
     scope = p.get('scope', {'kind': 'project', 'project_id': p.get('project_id')})
-    if x['scope'] != scope or x['envelope_project_id'] != scope['project_id'] or x['envelope_run_id'] is not None:
-        return False
-    if n_is_browser(c) and x['session_security_class'] != 'ordinary':
-        return False
-    def safe_refs(value):
-        if isinstance(value, str):
-            return not (base._debug.ABSOLUTE_PATH_RE.search(value)
-                        or base._debug.TOKEN_SHAPED_RE.search(value)
-                        or base._debug.FORBIDDEN_REF_RE.search(value))
-        if isinstance(value, dict):
-            return all(safe_refs(v) for v in value.values())
-        if isinstance(value, list):
-            return all(safe_refs(v) for v in value)
-        return True
-    if not safe_refs(p):
+    browser = n_is_browser(c)
+    if refused('d2_pl_gate', owner_command_authorized=x['owner_command_authorized'],
+               outcome_committed=x['outcome_committed'], context_scope=x['scope'], payload_scope=scope,
+               envelope_project_id=x['envelope_project_id'], scope_project_id=scope['project_id'],
+               envelope_run_id=x['envelope_run_id'], browser_family=browser,
+               session_security_class=x['session_security_class'] if browser else None, unsafe_refs=unsafe_refs(p)):
         return False
     return transition_ok(c, p, x['transition'])
 
@@ -127,71 +133,82 @@ def n_is_browser(c):
 
 def owner_record(c, d):
     raw = d.get('owner_records', {}).get(d['payload']['outcome_ref'])
-    if type(raw) is not str:
-        return None
-    try:
-        record = base.parse_owner_json(raw)
-    except (ValueError, UnicodeError):
+    parse_refusal = record = None
+    if type(raw) is str:
+        try:
+            record = base.parse_owner_json(raw)
+        except (ValueError, UnicodeError) as exc:
+            parse_refusal = getattr(exc, 'reason', type(exc).__name__)
+    if refused('d2_or_bytes', raw_type=base.kind(raw), parse_refusal=parse_refusal):
         return None
     schema = read('Plans/ds15_deck2_sources.schema.json')['$defs'][c['event_type']]
-    return record if valid(schema, record) else None
+    return record if valid('sch_d2_source', schema, record) else None
 
 
 def envelope_ok(c, d, retry=True, historical=False, append=False):
     e, original, p = d['envelope'], d['original']['event'], d['payload']
     # A historical read sees the retained original itself (ds15-v1); the original is always retained.
     recipe = V1 if historical else CURRENT
-    if (recipe == V1 and not base.v1_numbers_ok((e, p))) or not base.v1_numbers_ok((original, d.get('original_context'))):
+    if not valid('sch_payload_v1' if historical else 'sch_payload', read(c['payload_schema_ref']), p, recipe):
         return False
-    if not valid(read(c['payload_schema_ref']), p, recipe) or not context_ok(c, d.get('original_context'), recipe=V1):
+    if not context_ok(c, d.get('original_context'), recipe=V1):
         return False
     scope = p.get('scope', {'kind': 'project', 'project_id': p.get('project_id')})
-    if (not valid(read('Plans/event_record.schema.json'), e, recipe)
-            or not valid(read('Plans/event_record.schema.json'), original, V1)
-            or e['event_type'] != c['event_type'] or original['event_type'] != c['event_type']
-            or e['payload_schema_id'] != read(c['payload_schema_ref'])['$id']
-            or (not historical and (e['replay_policy'] != 'dedupe_by_idempotency_key'
-                                    or original['replay_policy'] != 'dedupe_by_idempotency_key'))
-            or e['scope_kind'] != ('application' if scope['kind'] == 'app' else 'project')
-            or e['project_id'] != scope['project_id'] or not base.same(e['payload'], p)
-            or e['thread_id'] != p.get('thread_id') or e['run_id'] is not None
-            or d['context']['scope'] != scope
-            or d['scope_partition'] != base._codec.scope_partition(e['scope_kind'], e['project_id'])
-            or base.physical_size(p) is None or base.physical_size(p) > 16384):
+    event_schema = read('Plans/event_record.schema.json')
+    if (not valid('sch_envelope_v1' if historical else 'sch_envelope', event_schema, e, recipe)
+            or not valid('sch_original_event', event_schema, original, V1)):
+        return False
+    if refused('d2_env_a', event_type=e['event_type'], original_event_type=original['event_type'],
+               family_event_type=c['event_type'], payload_schema_id=e['payload_schema_id'],
+               family_payload_schema_id=read(c['payload_schema_ref'])['$id'], historical=historical,
+               envelope_policy=e['replay_policy'], original_policy=original['replay_policy']):
+        return False
+    if refused('d2_env_b', scope_kind=e['scope_kind'], expected_scope_kind='application' if scope['kind'] == 'app' else 'project',
+               project_id=e['project_id'], scope_project_id=scope['project_id'], envelope_payload=base.tx(e['payload']),
+               payload=base.tx(p), thread_id=e['thread_id'], payload_thread_id=p.get('thread_id'), run_id=e['run_id'],
+               context_scope=d['context']['scope'], payload_scope=scope):
+        return False
+    if refused('d2_env_storage', scope_partition=d['scope_partition'],
+               expected_partition=base.partition_of(e['scope_kind'], e['project_id']), payload_size=base.physical_size(p)):
         return False
     # CV-1100 producer route: a new append qualifies its full CV-317 projection before effects.
-    if append and not base.current_producer_qualified(e):
+    if append and refused('env_producer', producer_refusal=base.producer_refusal(e)):
         return False
-    if retry and (e['event_id'] != original['event_id'] or base.v1_producer_digest(e) is None
-                  or base.v1_producer_digest(e) != base.v1_producer_digest(original)):
+    if retry and refused('env_retry', event_id=e['event_id'], original_event_id=original['event_id'],
+                         candidate_digest=base.v1_producer_digest(e), original_digest=base.v1_producer_digest(original)):
         return False
     record = owner_record(c, d)
     if record is None:
         return False
-    if (not base.same(record['payload'], p) or record['storage_instance_id'] != d['storage_instance_id']
-            or record['scope'] != scope or record['transition'] != d['original_context']['transition']
-            or record['event_type'] != c['event_type'] or not record['committed']
-            or (not retry and record['transition'] != d['context']['transition'])):
-        return False
-    if 'operation_id' in p and record['original_operation_id'] != p['operation_id']:
+    if refused('d2_env_c', record_payload=base.tx(record['payload']), payload=base.tx(p),
+               record_storage_instance_id=record['storage_instance_id'], storage_instance_id=d['storage_instance_id'],
+               record_scope=record['scope'], payload_scope=scope, record_transition=record['transition'],
+               original_transition=d['original_context']['transition'], record_event_type=record['event_type'],
+               family_event_type=c['event_type'], record_committed=record['committed'], retry=retry,
+               current_transition=d['context']['transition'] if not retry else None):
         return False
     source = d.get('application_source')
-    if scope['kind'] == 'app':
-        expected = {'server_id': record['server_id'], 'original_operation_id': record['original_operation_id']}
-        if source != expected or d['original'].get('application_source') != expected:
-            return False
-    return e['idempotency_key'] == base.identity(c, p, source, recipe)
+    application = scope['kind'] == 'app'
+    expected = ({'server_id': record['server_id'], 'original_operation_id': record['original_operation_id']}
+                if application else None)
+    if refused('d2_env_d', has_operation='operation_id' in p, record_operation_id=record['original_operation_id'],
+               payload_operation_id=p.get('operation_id'), application=application,
+               source=source if application else None, expected_source=expected,
+               original_source=d['original'].get('application_source') if application else None):
+        return False
+    return not refused('env_identity', idempotency_key=e['idempotency_key'],
+                       expected_key=base.identity(c, p, source, recipe))
 
 
 def evidence_ok(op, d):
     # Keep the existing closed carrier and its operation-specific required set;
     # only the independently resolved source bank is added for these families.
-    if not isinstance(d, dict) or 'owner_records' not in d:
+    if refused('d2_ev_bank', bank_present=isinstance(d, dict) and 'owner_records' in d):
         return False
     candidate = {k: v for k, v in d.items() if k != 'owner_records'}
     if not legacy_evidence_ok(op, candidate):
         return False
-    return valid({'type': 'object', 'additionalProperties': {'type': 'string'}}, d['owner_records'])
+    return valid('sch_d2_owner_records', {'type': 'object', 'additionalProperties': {'type': 'string'}}, d['owner_records'])
 
 
 # The imported model is private to this process; the original checker and its
@@ -205,7 +222,8 @@ base.original_evidence_ok = evidence_ok
 
 def evaluate(c, op, d):
     if op == 'payload_schema':
-        return {'result': 'ACCEPT' if valid(read(c['payload_schema_ref']), d['payload']) else 'REFUSE', 'effects': 0}
+        return {'result': 'ACCEPT' if valid('sch_payload', read(c['payload_schema_ref']), d['payload']) else 'REFUSE',
+                'effects': 0}
     if op == 'index_boundary':
         return {'result': 'ACCEPT' if base.index_inputs_ok(d) else 'REFUSE', 'effects': 0}
     return base.evaluate(c, op, d)
@@ -217,21 +235,24 @@ def catalog_request(c, p, t):
     Existing stricter owner refusals take precedence. An uncovered state is
     left to its owner, never promoted to a new catalog-wide product rule.
     """
-    if not valid(read(c['payload_schema_ref']), p):
+    if not valid('sch_payload', read(c['payload_schema_ref']), p):
         return 'REFUSE'
     transition_schema = read('Plans/ds15_deck2_context.schema.json')['$defs'][c['event_type']]['properties']['transition']
-    if not valid(transition_schema, t) or not t['owner_rules_satisfied']:
+    if not valid('sch_d2_transition', transition_schema, t):
         return 'REFUSE'
     allowed = c['listed_uses'].get(p['item_type'], [])
-    if any(u not in allowed for u in t['uses']):
+    unlisted = any([u not in allowed for u in t['uses']])
+    remove = '.remove.' in c['event_type']
+    if refused('d2_request', owner_rules_satisfied=t['owner_rules_satisfied'], remove=remove,
+               listed_uses_present=not unlisted and bool(t['uses']), installed_available=t['installed_available'],
+               queued=t['queued'] if remove else None, effective_version=None if remove else t['effective_version'],
+               previous_version=None if remove else t['previous_version']):
+        return 'REFUSE'
+    if unlisted:
         return 'UNRESOLVED_OWNER_USE'
     if not t['uses']:
         return 'OWNER_RULE'
-    if '.remove.' in c['event_type']:
-        return ('REFUSE_KEEP_INSTALLED_NO_QUEUE' if t['installed_available'] and not t['queued']
-                else 'REFUSE')
-    return ('QUEUE_KEEP_VERIFIED_VERSION' if t['effective_version'] == t['previous_version']
-            and t['installed_available'] else 'REFUSE')
+    return 'REFUSE_KEEP_INSTALLED_NO_QUEUE' if remove else 'QUEUE_KEEP_VERIFIED_VERSION'
 
 
 def main():
@@ -294,10 +315,11 @@ def main():
             pass
         else:
             raise AssertionError((args.family, case['id'], 'unresolved schema reference accepted'))
+    assert not base.table_order_errors(), ('table require order', base.table_order_errors())
     print(json.dumps({'status': 'pass', 'event_type': args.family, 'cases': len(seen),
                       'negative_cases': negatives, 'policy_cases': policy_count,
                       'reference_closure_cases': len(f.get('schema_cases', [])), 'native_execution': 'NOT_RUN',
-                      'membership': 'ABSENT', 'shared_sweep_items': ['S-FMT1', 'S-N1', 'S-N2', 'shared-guard-tool']}))
+                      'membership': 'ABSENT', 'part_2b_items': ['S-FMT1', 'S-N2']}))
 
 
 if __name__ == '__main__':
