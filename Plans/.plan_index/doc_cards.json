@@ -1995,7 +1995,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7284,
+      "line_count": 7295,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 78,
       "plan_unit_ids": [
@@ -2148,7 +2148,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "21ba4c52cc0153b5587a7a18cdf9c154a85336c8f78b7ec01b2acb7c0b33ea24",
+      "sha256": "bd7f58d2e8698a24f91ea6067244e6d26213b86880fff02b35ef0068608fd7d5",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 77,
@@ -2271,6 +2271,8 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name",
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-filemanager-event-contracts.py",
+        "python3 scripts/pm-filemanager-guard-tables.py --out <dir>",
+        "python3 scripts/pm-filemanager-number-corpus.py",
         "python3 scripts/pm-forge-backup-acceptance-verify.py",
         "python3 scripts/pm-integration-packet-audit.py census",
         "python3 scripts/pm-new-contracts-verify.py",
@@ -4596,7 +4598,7 @@
         "scripts/pm_event_datetime.py",
         "scripts/pm_event_numbers.py"
       ],
-      "line_count": 24677,
+      "line_count": 24689,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 364,
       "plan_unit_ids": [
@@ -5327,7 +5329,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "0db4b2dc7f2c895ce30d1330ea35a930c3b802c2bdce1f1ff24069ec2e95404c",
+      "sha256": "e0f248f74e105595522730b47a60e933b640193703ede452d86f500841fa63ba",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 363,
@@ -21693,7 +21695,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-08T13:45:11Z",
+  "generated_at_utc": "2026-11-08T15:15:05Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

@@ -24647,6 +24647,18 @@ resolve_full_value.v1 request/result/v2 witness, not merely individually valid s
 and retry reject projector_replay_only with replay_only_not_appendable. CV-339 semantic retry equality
 excludes Storage-assigned sequence_id/observed_at_utc/persisted_at_utc; original-value recovery does not.
 
+Numbers follow CV-1100, SP-1100 and SP-1101 beside the existing CV-317, CV-339, SP-236, SP-286, SP-337 and
+SP-339 owners. Each family's identity T stays the RFC 8785 string array of its F unit, qualified by CV-1100:
+non-ASCII strings encode exactly and a lone surrogate refuses. The custody_v2 producer_semantic_digest is the
+CV-317 producer projection under CV-1100 qualified JCS, so an integer whose binary64 value or emitted JCS
+decimal differs from it (for example 2^53+1 or 2^60) refuses before any effect. Every declared integer slot of
+a current write is an exact integer within its schema range, and bool, float or decimal values refuse there:
+the payload path_snapshot_revision and descendant_count, operation recovery_epoch, revision and every
+path_snapshot_revision, and control control_revision, last_admitted_sequence and writer_cutoff_sequence.
+EventRecord bodies are measured and referenced with SP-1100 EVENT_VALUE (SP-236) bytes; operation and control
+redb values keep SP-339 canonical MessagePack. A retained original is read with the recipe recorded when it
+was written (SP-1101); current integer admission never narrows it.
+
 ```yaml
 plan_unit_id: CV-560
 unit_type: contract

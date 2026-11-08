@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-05T16:30:38Z",
+  "generated_at_utc": "2026-11-08T15:14:11Z",
   "index_path": "Plans/_shards/automated_testing_system/00-index.md",
-  "index_sha256": "6db3cc577dda9cb6306092229f77ba295d0ed39ec47d6783fb5ea76f9262d817",
+  "index_sha256": "dcb8d61a7daa78162cb9c9ff93b484553e593cb58606f24782de62210d10265a",
   "manifest_path": "Plans/_shards/automated_testing_system/manifest.json",
   "schema_id": "pm.plan_shards.manifest.v1",
   "shards": [
     {
       "heading": "Preamble",
       "path": "Plans/_shards/automated_testing_system/001-preamble.md",
-      "sha256": "ffac4107d1d424328d5a85ee114c557f0fc930864476d5ce237410c67be187b1",
+      "sha256": "25a4d5da5397ebcb3947dc1735e26a2108297bf904e933551140cfbf44b7f18d",
       "shard_id": "001",
       "source_line_end": 5,
       "source_line_start": 1,
@@ -17,7 +17,7 @@
     {
       "heading": "0. Scope",
       "path": "Plans/_shards/automated_testing_system/002-0.-scope.md",
-      "sha256": "74b975a943f009f56de712830565b2940fb7f2021b6ced993deb1e5184c1f036",
+      "sha256": "89a75a553324957679e486193c316d9ce50db47a85038e8c5fba25622794b33b",
       "shard_id": "002",
       "source_line_end": 11,
       "source_line_start": 7,
@@ -26,7 +26,7 @@
     {
       "heading": "1. Ownership And Consumers",
       "path": "Plans/_shards/automated_testing_system/003-1.-ownership-and-consumers.md",
-      "sha256": "64fd41ccbe09acb3ef311f217cc4b6ae90252405a6ce473cc8a2878ab0658e12",
+      "sha256": "2d86c768925884e872664623357ec1de6fa6d2b2d83ac4b96441fa5fcc1eb83b",
       "shard_id": "003",
       "source_line_end": 26,
       "source_line_start": 13,
@@ -35,7 +35,7 @@
     {
       "heading": "2. Canonical PlanUnits",
       "path": "Plans/_shards/automated_testing_system/004-2.-canonical-planunits.md",
-      "sha256": "055677bc0bfd448e30a04d1625aa9208e413ad532ceef0da5f12a9abf344a05e",
+      "sha256": "cdcb66bb1241d3338b2e1400d82a83361d07dfa17959f8a29e1ef77d4609929d",
       "shard_id": "004",
       "source_line_end": 92,
       "source_line_start": 28,
@@ -44,7 +44,7 @@
     {
       "heading": "GUI visible testing repair addendum (2026-07-02)",
       "path": "Plans/_shards/automated_testing_system/005-gui-visible-testing-repair-addendum-2026-07-02.md",
-      "sha256": "95e1d7e391dc2b5b3351cb567f95a692068a1716e4de02f4d90a736f5c4f53fe",
+      "sha256": "367953823168fc9d110c8c58d42e8ad6bd8a3ecbf6f615558cb089dc28591391",
       "shard_id": "005",
       "source_line_end": 109,
       "source_line_start": 94,
@@ -53,7 +53,7 @@
     {
       "heading": "GUI web development and smoke-test workflow addendum (2026-07-07)",
       "path": "Plans/_shards/automated_testing_system/006-gui-web-development-and-smoke-test-workflow-addendum-2026-07-07.md",
-      "sha256": "151095294488f6853bb2cff4d90b975e01bac69904314bbadf1abf7a2fd0d42c",
+      "sha256": "547a5552b9abfde7b44032181b7ca4db1b7e52e20d82fe2cb4bf635937c93f3a",
       "shard_id": "006",
       "source_line_end": 334,
       "source_line_start": 111,
@@ -62,7 +62,7 @@
     {
       "heading": "3. Contracts, Schemas, Events, Or Data Shapes",
       "path": "Plans/_shards/automated_testing_system/007-3.-contracts-schemas-events-or-data-shapes.md",
-      "sha256": "906a9f2c2c4bacdd6373159a0b993403b7cd9f81a2f626389352474b46a4058c",
+      "sha256": "82de05316572d8a5aaddb1ff75f3bf738ba2ecd5ce95f817e64204bc31f9e34e",
       "shard_id": "007",
       "source_line_end": 342,
       "source_line_start": 336,
@@ -71,7 +71,7 @@
     {
       "heading": "4. Integration Surfaces",
       "path": "Plans/_shards/automated_testing_system/008-4.-integration-surfaces.md",
-      "sha256": "7ec0426a098940da2f6d85b667989d3a5fd9e374cddff6bc4c458a7a7fe1f6eb",
+      "sha256": "28ff126a9123bc09ffa705e570e76260997ca7175c8ea911998dd8a734fde2aa",
       "shard_id": "008",
       "source_line_end": 351,
       "source_line_start": 344,
@@ -80,7 +80,7 @@
     {
       "heading": "5. Validation And Acceptance",
       "path": "Plans/_shards/automated_testing_system/009-5.-validation-and-acceptance.md",
-      "sha256": "3041ec41121f81c8e7b831fdd93baba7f3945b0217eb2b6c2e74756667ae2200",
+      "sha256": "224c4939540bc5798ce57edf5b62fb9acea479a063d0b9861950cd2ab5ccea56",
       "shard_id": "009",
       "source_line_end": 364,
       "source_line_start": 353,
@@ -89,7 +89,7 @@
     {
       "heading": "6. Plan-To-Node Readiness",
       "path": "Plans/_shards/automated_testing_system/010-6.-plan-to-node-readiness.md",
-      "sha256": "79c6b0b77a20df2e4b20874247ad82a50a4647f799fac54644cd95792215cb93",
+      "sha256": "4a477b21ef5912eb7c0e4b6035be25b7697e4354a808d08ad93775c53cbe9a38",
       "shard_id": "010",
       "source_line_end": 368,
       "source_line_start": 366,
@@ -98,7 +98,7 @@
     {
       "heading": "7. Deferred, Retired, Compatibility, And Non-Goals",
       "path": "Plans/_shards/automated_testing_system/011-7.-deferred-retired-compatibility-and-non-goals.md",
-      "sha256": "3176397119713a67bf432407c4e0aff71ccc20172fe30edfc69a246ad6d301a3",
+      "sha256": "c153a287bb83bec3f0b00b25b90b96980ae5d5180c7baee2ffa667c5dbed5a61",
       "shard_id": "011",
       "source_line_end": 379,
       "source_line_start": 370,
@@ -107,7 +107,7 @@
     {
       "heading": "8. Source Lineage And Governance",
       "path": "Plans/_shards/automated_testing_system/012-8.-source-lineage-and-governance.md",
-      "sha256": "548a66a11a244ba9186f2a1d3da1ed8cf42ab0519bb6eb48cbd05e1aa117fb52",
+      "sha256": "2a1cc2eb74f747fa44b0ef6c0fde7982c9476f9bb67463eb4a3ea0745298844f",
       "shard_id": "012",
       "source_line_end": 398,
       "source_line_start": 381,
@@ -116,7 +116,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard",
       "path": "Plans/_shards/automated_testing_system/013-ledger-compile-addendum-pldg-20260618-001-prd-planning-wizard.md",
-      "sha256": "8f3a2395b310891ce3b32be58f758d21600992a2599fe7c0f23f7ee010a7d6cd",
+      "sha256": "a90b3bd598b9f9e85ededc48febe4bb0c52df4a4326dacd4b88267054dcca97a",
       "shard_id": "013",
       "source_line_end": 816,
       "source_line_start": 401,
@@ -125,7 +125,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260622-001-fff",
       "path": "Plans/_shards/automated_testing_system/014-ledger-compile-addendum-pldg-20260622-001-fff.md",
-      "sha256": "fdcf98f5e374cab5602b44b4bc55944d1b1d84c46c85d4623faf4410a51cfa78",
+      "sha256": "2dfc4481d6f84e175c3c77ecf5c6a042adde58f4f89157bcdac7569c3eb32791",
       "shard_id": "014",
       "source_line_end": 890,
       "source_line_start": 818,
@@ -134,7 +134,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260626-001-feature-name",
       "path": "Plans/_shards/automated_testing_system/015-ledger-compile-addendum-pldg-20260626-001-feature-name.md",
-      "sha256": "d26d16f982f780a1a5c0a7bfa4b0271324374908690c300157a9acfbda5d4d47",
+      "sha256": "03ac14e96fb3fc2aae6320f16bde088176c6856175da85cdfa69fd24ada9e66a",
       "shard_id": "015",
       "source_line_end": 1241,
       "source_line_start": 893,
@@ -143,7 +143,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260627-001-feature-intake",
       "path": "Plans/_shards/automated_testing_system/016-ledger-compile-addendum-pldg-20260627-001-feature-intake.md",
-      "sha256": "277b08d8fd84ce1d05d2f5ec851573a0734589403a27686f165659d44b5b7339",
+      "sha256": "f289caeb86a197de33b56672e6cf36f4654a35237cf366455994c825411ee0da",
       "shard_id": "016",
       "source_line_end": 1550,
       "source_line_start": 1243,
@@ -152,7 +152,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260630-001-feature-intake",
       "path": "Plans/_shards/automated_testing_system/017-ledger-compile-addendum-pldg-20260630-001-feature-intake.md",
-      "sha256": "5340c4a29808e5f3a2e7cb01e7b28a780a143c5a11d97b3ff45dc467c73b0b81",
+      "sha256": "a4205b26bd947911b8e1b4510820f02c0a1fe950f867aff39d0081bf9d399e2a",
       "shard_id": "017",
       "source_line_end": 1639,
       "source_line_start": 1552,
@@ -161,7 +161,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260701-001-feature-intake",
       "path": "Plans/_shards/automated_testing_system/018-ledger-compile-addendum-pldg-20260701-001-feature-intake.md",
-      "sha256": "a463b2dd1a7523e6c89204689ab98f8dd49c82279e02802adde8303b089325a0",
+      "sha256": "e5a3027ca30a6e8c470654c354c6169e6f3dbb9a4e301a6b543efcf5dc4b669d",
       "shard_id": "018",
       "source_line_end": 2038,
       "source_line_start": 1641,
@@ -170,7 +170,7 @@
     {
       "heading": "Ledger Compile Addendum - pldg-20260703-001-feature-intake",
       "path": "Plans/_shards/automated_testing_system/019-ledger-compile-addendum-pldg-20260703-001-feature-intake.md",
-      "sha256": "d0553f646ec6373a2311376a89cc50c73b4cc5fc835f4102a825de55b1be8890",
+      "sha256": "7594eeccaa0aa3b25daf75be202cdb6770adfcf55a53a00021268e18c763e769",
       "shard_id": "019",
       "source_line_end": 2187,
       "source_line_start": 2040,
@@ -179,7 +179,7 @@
     {
       "heading": "Case L Durable-State Acceptance Fixture Contract - 2026-07-17",
       "path": "Plans/_shards/automated_testing_system/020-case-l-durable-state-acceptance-fixture-contract-2026-07-17.md",
-      "sha256": "7f54184a58c03385695e998065e89692adb1d00a6f7c91c231757e01077ab031",
+      "sha256": "ba634129326882a08b9b52bc461a68090b304b560811dc4425b14518f5e6befc",
       "shard_id": "020",
       "source_line_end": 2562,
       "source_line_start": 2189,
@@ -188,7 +188,7 @@
     {
       "heading": "FABLE Deferred Action Concrete Repair Addendum - 2026-07-08",
       "path": "Plans/_shards/automated_testing_system/021-fable-deferred-action-concrete-repair-addendum-2026-07-08.md",
-      "sha256": "e9bf78c1b24f8c7452c2b4fe6c8b558ea5111019dadcd311c636d6b4e0778002",
+      "sha256": "ef0a38c10d84a312cfafd831356568ada599e543fe1b4ccbe2d5ca825e959b5a",
       "shard_id": "021",
       "source_line_end": 2592,
       "source_line_start": 2564,
@@ -197,7 +197,7 @@
     {
       "heading": "FABLE Remaining Action Plan Repair Notes (2026-07-08)",
       "path": "Plans/_shards/automated_testing_system/022-fable-remaining-action-plan-repair-notes-2026-07-08.md",
-      "sha256": "28953f7ea09a0be283d6ac2106e0a8c6ad50bb426b2f8a9122918695f00a81c0",
+      "sha256": "c4c263abb4c238b236115625002a695a223e0b3ae413e1a154c63afd7721401b",
       "shard_id": "022",
       "source_line_end": 2601,
       "source_line_start": 2593,
@@ -206,7 +206,7 @@
     {
       "heading": "Known-37 owner-oracle materialization and execution-status ledger - 2026-07-18",
       "path": "Plans/_shards/automated_testing_system/023-known-37-owner-oracle-materialization-and-execution-status-ledge.md",
-      "sha256": "b73592c0dcee817cfd7cafa71571e67836157270e439ae063244b03f239ccf90",
+      "sha256": "859ef89b8a3e8e2e20a2066d92843c59d1d3702a38138dc430d9e783413051a3",
       "shard_id": "023",
       "source_line_end": 2874,
       "source_line_start": 2603,
@@ -215,7 +215,7 @@
     {
       "heading": "Cozy Shelves Panel Reconciliation Addendum - 2026-07-27",
       "path": "Plans/_shards/automated_testing_system/024-cozy-shelves-panel-reconciliation-addendum-2026-07-27.md",
-      "sha256": "dd7f89ca15ffafd3a1a10aa9a75cfe7baf89a24b5f403d52df362607ccd5c398",
+      "sha256": "57a5b3222381418250b8e82c706638273c75e8f873199159a714ebfe135ece52",
       "shard_id": "024",
       "source_line_end": 3191,
       "source_line_start": 2876,
@@ -224,7 +224,7 @@
     {
       "heading": "PMConcept7 Home Workspace test contract \u2014 2026-08-04",
       "path": "Plans/_shards/automated_testing_system/025-pmconcept7-home-workspace-test-contract-2026-08-04.md",
-      "sha256": "5d4f8d98c6543b71833a1eca27ddc9e6047b56ee2e0b2100c8306d4be16f699d",
+      "sha256": "fabe5e4a6a48575da8ab9054ed77a1d8ae69b972b459b6656a9bc3b8013b878b",
       "shard_id": "025",
       "source_line_end": 3305,
       "source_line_start": 3193,
@@ -233,7 +233,7 @@
     {
       "heading": "Runtime Integration Acceptance Matrices - 2026-08-13",
       "path": "Plans/_shards/automated_testing_system/026-runtime-integration-acceptance-matrices-2026-08-13.md",
-      "sha256": "d3de13e6482fabdc2a0afe862386514b2def50d477b79311858afa54cc2dc9ee",
+      "sha256": "0fd44314e65241557c73192888f483b276f56062886035dd3fca3c8ac1612db0",
       "shard_id": "026",
       "source_line_end": 3592,
       "source_line_start": 3307,
@@ -242,7 +242,7 @@
     {
       "heading": "PMConcept7 User-Polished Acceptance Addendum - 2026-08-27",
       "path": "Plans/_shards/automated_testing_system/027-pmconcept7-user-polished-acceptance-addendum-2026-08-27.md",
-      "sha256": "9c81fc1362aaae9d111325c4ec0c7fab0e9a2527a5ef2269f13b7d3a8a701a22",
+      "sha256": "c16c35dcde4c1f59c5d1a19ae9124cf1f642c5cb1ebc6ea03b364fb4818e3d81",
       "shard_id": "027",
       "source_line_end": 4273,
       "source_line_start": 3594,
@@ -251,7 +251,7 @@
     {
       "heading": "Additive Correction v4 \u2014 Correction Test Obligations (2026-09-03)",
       "path": "Plans/_shards/automated_testing_system/028-additive-correction-v4-correction-test-obligations-2026-09-03.md",
-      "sha256": "8d5307788a3882ad34f0781b48dce4ca870a6026a3ce9244a019541f51f5c132",
+      "sha256": "ab5eeb988cd2c016666f46aed435114e751b89b6bc1a800035754d10f43f4647",
       "shard_id": "028",
       "source_line_end": 4319,
       "source_line_start": 4275,
@@ -260,7 +260,7 @@
     {
       "heading": "Working Notebook Contract Validation Registration (2026-09-05)",
       "path": "Plans/_shards/automated_testing_system/029-working-notebook-contract-validation-registration-2026-09-05.md",
-      "sha256": "815549c957591ef671bdc79629fff6327806b7a0499a547c379771343ec3a5fa",
+      "sha256": "f2e67dbfbba4947a2459369ba5ef19d1160e24948d1c5d5c423166763c6aca85",
       "shard_id": "029",
       "source_line_end": 4381,
       "source_line_start": 4321,
@@ -269,7 +269,7 @@
     {
       "heading": "DL-035 terminal research acceptance obligations - 2026-09-09",
       "path": "Plans/_shards/automated_testing_system/030-dl-035-terminal-research-acceptance-obligations-2026-09-09.md",
-      "sha256": "ec4be0434f2bb31983f75233d4564fdc381c359204902b271321c63d28f233f4",
+      "sha256": "0e5fd0f055ab864c2701a3297c54af922b76ef7b962a67011bd2ac137c107b0a",
       "shard_id": "030",
       "source_line_end": 4513,
       "source_line_start": 4384,
@@ -278,7 +278,7 @@
     {
       "heading": "ATS-048 \u2014 Existing Session and Bundle Command Bindings",
       "path": "Plans/_shards/automated_testing_system/031-ats-048-existing-session-and-bundle-command-bindings.md",
-      "sha256": "c71fd31ef07d64bb11cfebba2dc9762eb31ef3f72e2483ac75fd5369d8a13d1c",
+      "sha256": "9436b8d2da34917cbc003c855443091cb9226170e3259206d7bc73b3781c1ee6",
       "shard_id": "031",
       "source_line_end": 4600,
       "source_line_start": 4515,
@@ -287,7 +287,7 @@
     {
       "heading": "External Packet Custody and Completion Integrity \u2014 2026-09-10",
       "path": "Plans/_shards/automated_testing_system/032-external-packet-custody-and-completion-integrity-2026-09-10.md",
-      "sha256": "492782b053ff21db29a8b3dca53c76bba170867f5a731ef71ea96fbde498033f",
+      "sha256": "89ca2256703de068dba4e7446bb1e9ba5259309520a036035d31e54aef92ae6e",
       "shard_id": "032",
       "source_line_end": 4632,
       "source_line_start": 4602,
@@ -296,7 +296,7 @@
     {
       "heading": "ATS-049 \u2014 Existing Session Event Obligations and Non-Admission",
       "path": "Plans/_shards/automated_testing_system/033-ats-049-existing-session-event-obligations-and-non-admission.md",
-      "sha256": "8d3eb7453ee6696c29d4e80cecb1686358d881e2d0402ab07a32082b8c73d6a7",
+      "sha256": "19337f79ac4f9e266e5a97e7159c2e765d2e093e3010babbaca06994fc10fcd9",
       "shard_id": "033",
       "source_line_end": 5055,
       "source_line_start": 4634,
@@ -305,7 +305,7 @@
     {
       "heading": "External Research Contract Validation Registration (2026-09-17)",
       "path": "Plans/_shards/automated_testing_system/034-external-research-contract-validation-registration-2026-09-17.md",
-      "sha256": "6c1f56cbf873a93b531ab954fa7732af35a6d0e83cd6b5f14267d0e1403bb68b",
+      "sha256": "5fdb9cadf8939c2b24fc73f91d457ac0fe17be8f2765f27ddc1821110eec7f96",
       "shard_id": "034",
       "source_line_end": 5126,
       "source_line_start": 5057,
@@ -314,7 +314,7 @@
     {
       "heading": "ATS-055 \u2014 Successful native source contract preservation and acceptance obligations (2026-09-20)",
       "path": "Plans/_shards/automated_testing_system/035-ats-055-successful-native-source-contract-preservation-and-accep.md",
-      "sha256": "7a39aa2a5893c5ff67f77d613035a02b0a84e7da962c3dd7287debf160585b1c",
+      "sha256": "4685997203a6f4010357e81924bb2cb888f5c89502d9fdeafdcf3fb874c17e6f",
       "shard_id": "035",
       "source_line_end": 5220,
       "source_line_start": 5129,
@@ -323,7 +323,7 @@
     {
       "heading": "ATS-056 \u2014 Certified producer source validation and native proof separation (2026-09-21)",
       "path": "Plans/_shards/automated_testing_system/036-ats-056-certified-producer-source-validation-and-native-proof-se.md",
-      "sha256": "e4e8f3134bad6188659e00fce7c0ea07fbd22344616adfd3a22c94e7b7d04c52",
+      "sha256": "d9690c1fa2ca74970367daef9f701438cbe3a18f58de6d5cdc26eeaeb8c2a15b",
       "shard_id": "036",
       "source_line_end": 5280,
       "source_line_start": 5223,
@@ -332,7 +332,7 @@
     {
       "heading": "ATS-057 \u2014 Twelve complete source-to-native acceptance facets with truthful NOT_RUN boundaries (2026-09-21)",
       "path": "Plans/_shards/automated_testing_system/037-ats-057-twelve-complete-source-to-native-acceptance-facets-with-.md",
-      "sha256": "1fffca2d185f15eaca229b3e2f0dffc38110d51871498568d20138dc72e8b537",
+      "sha256": "5aaf0cbce349b522f785cbc6a237b9651bf2ba2dbd2e0f5ad2147cc52db0866b",
       "shard_id": "037",
       "source_line_end": 5412,
       "source_line_start": 5283,
@@ -341,7 +341,7 @@
     {
       "heading": "ATS-058 \u2014 Coordination event oracles for the seven agent families (DL-045, 2026-09-25)",
       "path": "Plans/_shards/automated_testing_system/038-ats-058-coordination-event-oracles-for-the-seven-agent-families-.md",
-      "sha256": "8ee97009804734336fa937b37c8bc630da90f44771cf1b467a6a57e4329c916d",
+      "sha256": "a79d259f9b4c8e770a38c79db310ff5775f723adcb9d27ca5b913ef878162a1a",
       "shard_id": "038",
       "source_line_end": 5543,
       "source_line_start": 5415,
@@ -350,7 +350,7 @@
     {
       "heading": "Platform assurance and Apple-native proof \u2014 2026-09-27",
       "path": "Plans/_shards/automated_testing_system/039-platform-assurance-and-apple-native-proof-2026-09-27.md",
-      "sha256": "631717121e90ba707402355720d5f04c822f5587eb6c7a55536d6d62d71f459f",
+      "sha256": "f805225ed1ec8434777ef5c04954fc501a18d503e76bfe9a5aa343b92d6526bc",
       "shard_id": "039",
       "source_line_end": 5585,
       "source_line_start": 5545,
@@ -359,7 +359,7 @@
     {
       "heading": "Chat presentation acceptance checks \u2014 2026-09-27",
       "path": "Plans/_shards/automated_testing_system/040-chat-presentation-acceptance-checks-2026-09-27.md",
-      "sha256": "571505dbaf73110464676fb9b79974e592caae4e8e1ea5f4c0036ab94cf0c40d",
+      "sha256": "f1ca49712d4aca18574f895daceedcf4cbb3f45ccfdc5f292a238fe87e73f897",
       "shard_id": "040",
       "source_line_end": 5647,
       "source_line_start": 5587,
@@ -368,7 +368,7 @@
     {
       "heading": "Collaborative Workflows static contract family \u2014 2026-09-27",
       "path": "Plans/_shards/automated_testing_system/041-collaborative-workflows-static-contract-family-2026-09-27.md",
-      "sha256": "3fd3504dc14e09e3f0371e7d364568a4d11b5388289d518a16db6330d2835367",
+      "sha256": "f0f050122182c0a57221ab48b1c08bb47aadefc59362b4990cf23d371a6aef69",
       "shard_id": "041",
       "source_line_end": 5750,
       "source_line_start": 5649,
@@ -377,7 +377,7 @@
     {
       "heading": "Live helper text acceptance checks \u2014 2026-09-27",
       "path": "Plans/_shards/automated_testing_system/042-live-helper-text-acceptance-checks-2026-09-27.md",
-      "sha256": "ef3bf12c8807083fda249fa7df75010be77492f93a8553fb02411e71aca05c42",
+      "sha256": "9ef82c3d9c6dfe5d98889b780d9cdaa4d8a6038ecbbd4515d0343e0d3ba2814c",
       "shard_id": "042",
       "source_line_end": 5818,
       "source_line_start": 5752,
@@ -386,7 +386,7 @@
     {
       "heading": "Project-wide automation pause acceptance checks \u2014 2026-09-27",
       "path": "Plans/_shards/automated_testing_system/043-project-wide-automation-pause-acceptance-checks-2026-09-27.md",
-      "sha256": "cee2d40940ca2749e6bf76b0ad6356769270b514fadf9b759962a8f8266b5e40",
+      "sha256": "a468365f549f9dbf3f50550dd1e6dc9a60b1057d8e58173acb26dea889ea22ce",
       "shard_id": "043",
       "source_line_end": 5902,
       "source_line_start": 5820,
@@ -395,7 +395,7 @@
     {
       "heading": "ELI5 in chat acceptance checks \u2014 2026-09-27",
       "path": "Plans/_shards/automated_testing_system/044-eli5-in-chat-acceptance-checks-2026-09-27.md",
-      "sha256": "3c8973775c927869ceac2c992c601bc6b01d4f3098875a4ea3a78bb53a1dbdd4",
+      "sha256": "a5d6f3a66837d43742ca905b45a3e23bccab295f730cdd5965b8384061796b9d",
       "shard_id": "044",
       "source_line_end": 5967,
       "source_line_start": 5904,
@@ -404,7 +404,7 @@
     {
       "heading": "Wand module closure command checks \u2014 2026-09-27",
       "path": "Plans/_shards/automated_testing_system/045-wand-module-closure-command-checks-2026-09-27.md",
-      "sha256": "7ae4b444bcc5b159ed5ea03dede93427d4b5980f2dc9e460a713e0aebb758ab7",
+      "sha256": "3e400230a905d83443926e71f479232703647fa6b73e266a657478c7954a51c6",
       "shard_id": "045",
       "source_line_end": 6038,
       "source_line_start": 5969,
@@ -413,7 +413,7 @@
     {
       "heading": "GUI test-build observability \u2014 2026-10-02 (DL-139)",
       "path": "Plans/_shards/automated_testing_system/046-gui-test-build-observability-2026-10-02-dl-139.md",
-      "sha256": "ea4c2862cae46bb36037b3f564970cd9c9cedfc36658505ddb4c868068be99cb",
+      "sha256": "4e02e74d6392a9d439811a7e2b4d471a991845a3c850a6db5fd6f80e0ca098bb",
       "shard_id": "046",
       "source_line_end": 6095,
       "source_line_start": 6040,
@@ -422,7 +422,7 @@
     {
       "heading": "DL-180 to DL-185 \u2014 Home Panels And Terminal Tab Certification (2026-10-09)",
       "path": "Plans/_shards/automated_testing_system/047-dl-180-to-dl-185-home-panels-and-terminal-tab-certification-2026.md",
-      "sha256": "6e5192cee5737d3b30bf0c33ac2169f2f6c9d7dd769afd1a09ff1b3289866248",
+      "sha256": "24f8e3ba94cb6805ee7ae1efc0906cf7e1351d705afb2062e539527b0f986a75",
       "shard_id": "047",
       "source_line_end": 6592,
       "source_line_start": 6097,
@@ -431,7 +431,7 @@
     {
       "heading": "DL-218 Wonderer and grilling test obligations",
       "path": "Plans/_shards/automated_testing_system/048-dl-218-wonderer-and-grilling-test-obligations.md",
-      "sha256": "cf37597bce41953faa2756dcc840dbb2619d7a315407996bb4b8bda682abd457",
+      "sha256": "99de5fd8a5eba23469351d051e2be6f9f1045cb2e6d9bde7855c76685e480ab1",
       "shard_id": "048",
       "source_line_end": 6711,
       "source_line_start": 6594,
@@ -440,16 +440,16 @@
     {
       "heading": "DL-231 Chat Room automatic round test obligations",
       "path": "Plans/_shards/automated_testing_system/049-dl-231-chat-room-automatic-round-test-obligations.md",
-      "sha256": "40b42d42c987028b0fa34a420ce0d7b154880ac854685418abf8d6bd44ec010d",
+      "sha256": "5f80c10edfba03e504c7e63803d8035dbb586544d80d18d80b89e93cf5d2cb9e",
       "shard_id": "049",
-      "source_line_end": 7284,
+      "source_line_end": 7295,
       "source_line_start": 6713,
       "split_rule": "heading-##"
     }
   ],
   "source": {
-    "line_count": 7284,
+    "line_count": 7295,
     "path": "Plans/Automated_Testing_System.md",
-    "sha256": "21ba4c52cc0153b5587a7a18cdf9c154a85336c8f78b7ec01b2acb7c0b33ea24"
+    "sha256": "bd7f58d2e8698a24f91ea6067244e6d26213b86880fff02b35ef0068608fd7d5"
   }
 }

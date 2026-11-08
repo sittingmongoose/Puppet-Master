@@ -7254,6 +7254,15 @@ retry changes versus accepted Storage-metadata-only retry changes; and matching 
 transient SP-278 delivery identities. Failure-oracle verification injects a false success and requires
 the complete checker to fail. These remain static model checks, not native pack/CAS/filesystem proof.
 
+Every product refusal of the checker is one named row of a Method B guard table
+(scripts/pm_filemanager_table_*.py, written from one row spec by scripts/pm-filemanager-table-generate.py,
+whose --check fails on a stale, missing or extra table). python3 scripts/pm-filemanager-guard-tables.py
+--out <dir> replays every witness once and proves each table with the shared guard tool
+scripts/pm_guard_isolation.py: each row is cut alone, its own single-defect negatives must then accept and
+every other case must keep its exact refusal. Each schema occurrence is one verdict row. python3
+scripts/pm-filemanager-number-corpus.py runs the shared CV-1100/SP-1100 number corpus through the complete
+checker, and python3 scripts/pm_event_numbers.py --self-test --scope numbers must pass.
+
 ```yaml
 plan_unit_id: ATS-280
 unit_type: contract
@@ -7271,6 +7280,8 @@ acceptance_criteria:
   - No registry append, policy selection or native readiness claim.
 validation_surfaces:
   - python3 scripts/pm-filemanager-event-contracts.py
+  - python3 scripts/pm-filemanager-guard-tables.py --out <dir>
+  - python3 scripts/pm-filemanager-number-corpus.py
 risk_class: file_event_contract_routing
 reasoning_tier: high
 context_scope: filemanager_event_authority
