@@ -7,8 +7,8 @@
 // 24 levels from its card — changes too little against transparent to be found). Painted at a device scale of 1
 // (--set dpr=2 emulates 2, where Chrome snaps text to whole CSS pixels, not device pixels), in shots of the window
 // cut on whole pixels, each state with the layer's content, footer and header laid out 0, 1/8 ... 7/8 px further
-// down inside the raster they share (vertical only: a sideways margin overflows the scroller and its scrollbar
-// re-lays the column out mid-read; the ?'s sideways snap reads within 0.15 px at one position): a glyph's
+// down and right inside the raster they share (sideways by padding and the footer's right margin: a sideways
+// margin on the content overflows its scroller and its scrollbar re-lays the column out mid-read): a glyph's
 // baseline snaps to the pixel grid apart from its circle's
 // box, so one position alone reads a ? up to a pixel off, either way, by where it happens to sit; across the eight
 // the snapping averages out and what is left is where the ? stands. A read is believed only if it could be this
@@ -115,18 +115,26 @@ const PHASE = (p) => {
 	const L = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)');
 	if (!L) return;
 	const c = L.querySelector('.o55-scroll > .o55-content'), ft = L.querySelector(':scope > .o55-foot');
-	/* vertical phases only: a left margin on a full-width content overflows its scroller sideways, and the
-	   scrollbar coming and going re-lays the column out mid-read; the ?'s sideways snap reads within 0.15 px
-	   at one position in every look measured, where its vertical snap is the whole error */
+	/* sideways phases by padding, not margin: a left margin on a full-width content overflows its scroller
+	   sideways and the scrollbar coming and going re-lays the column out mid-read, where padding lays the same
+	   boxes p further right inside the layer they share. (Vertical-only phases read a constant dx up to 0.7 px
+	   on dots whose sideways fraction never changed: Ready's Enter dot, NieR Safe's backend dot.) The footer's
+	   dots ride with its right edge, so there the phase is its right margin. */
 	if (c) {
 		if (c.dataset.qa2m === undefined) c.dataset.qa2m = parseFloat(getComputedStyle(c).marginTop) || 0;
+		if (c.dataset.qa2p === undefined) c.dataset.qa2p = parseFloat(getComputedStyle(c).paddingLeft) || 0;
 		c.style.marginTop = (+c.dataset.qa2m + p) + 'px';
+		c.style.paddingLeft = (+c.dataset.qa2p + p) + 'px';
 	}
-	if (ft) { ft.style.position = 'relative'; ft.style.top = p + 'px'; }
+	if (ft) { ft.style.position = 'relative'; ft.style.top = p + 'px'; ft.style.marginRight = p + 'px'; }
 	/* the header too, for its Look menu's dots (its row is the window grid's first, so this lays the pane out
 	   p lower with it: the phases only need each dot at eight fractions of a pixel, not eight named ones) */
 	const hd = document.querySelector('#pm-o55-onboarding .o55-head');
-	if (hd) hd.style.marginTop = p + 'px';
+	if (hd) {
+		if (hd.dataset.qa2p === undefined) hd.dataset.qa2p = parseFloat(getComputedStyle(hd).paddingLeft) || 0;
+		hd.style.marginTop = p + 'px';
+		hd.style.paddingLeft = (+hd.dataset.qa2p + p) + 'px';
+	}
 };
 
 async function frameOffset(t) {
