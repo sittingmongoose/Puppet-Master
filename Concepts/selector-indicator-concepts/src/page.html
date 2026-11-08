@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selector Indicator Concepts</title>
+<meta name="description" content="Friendly and Basic concepts for the selected-state indicator (the page tabs, onboarding's current step and chosen option, the rail's tabs); Glass stays as it is.">
+<style>
+/*{{FONTS}}*/
+/*{{CSS}}*/
+</style>
+</head>
+<body>
+<a class="skip" href="#friendly">Skip to the concepts</a>
+<header class="pg-head">
+  <div class="pg-wrap">
+    <p class="pg-kicker">Puppet Master · stream F batch 9 · for Jared's pick</p>
+    <h1>Selector indicator concepts</h1>
+    <p class="pg-lede">Friendly and Basic draw their selected item with Glass's clear lens today, only re-tinted. That is why the
+      title bar's page tabs and onboarding's current step look the same in all three. Below are <strong>three Friendly
+      concepts</strong> and <strong>two Basic options</strong>, each shown in the real places with the product's own markup
+      and colours, in light and dark. <strong>Glass stays exactly as it is</strong>; it is shown as the reference.</p>
+  </div>
+  <div class="pg-bar" role="toolbar" aria-label="View options">
+    <div class="pg-wrap pg-bar-in">
+      <div class="seg" role="radiogroup" aria-label="Show">
+        <span class="seg-label" id="lbl-show">Show</span>
+        <button type="button" role="radio" aria-checked="true" data-show="both">Light and dark</button>
+        <button type="button" role="radio" aria-checked="false" data-show="light">Light</button>
+        <button type="button" role="radio" aria-checked="false" data-show="dark">Dark</button>
+      </div>
+      <div class="seg" role="radiogroup" aria-label="Contrast">
+        <span class="seg-label">Windows High Contrast</span>
+        <button type="button" role="radio" aria-checked="true" data-hc="off">Off</button>
+        <button type="button" role="radio" aria-checked="false" data-hc="on">Preview</button>
+      </div>
+      <div class="seg" role="radiogroup" aria-label="Motion">
+        <span class="seg-label">Motion</span>
+        <button type="button" role="radio" aria-checked="true" data-motion="full">On</button>
+        <button type="button" role="radio" aria-checked="false" data-motion="reduced">Reduced</button>
+      </div>
+      <nav class="pg-jump" aria-label="Sections">
+        <a href="#today">Today</a><a href="#friendly">Friendly</a><a href="#basic">Basic</a><a href="#contrast">Contrast</a><a href="#inventory">Where it is used</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="pg-wrap">
+  <p class="pg-hint">Click any tab, step or option to see the indicator move the way that concept moves. Arrow keys work in each strip, and Tab shows the keyboard focus ring.
+    <span class="hc-hint">High Contrast preview uses Windows 11's Desert (light) and Aquatic (dark) colours; with High Contrast really on in Windows, the page uses your system colours.</span></p>
+
+  <section id="today" class="pg-sec" aria-labelledby="h-today">
+    <h2 id="h-today">Today</h2>
+    <p class="sec-lede">Screenshots of the product as it is now (look-lane build <code>b3456fac54</code>, 2x). Same lens in all three looks: a soft rounded tinted chip with a hairline and a top catch light that glides with Glass's liquid stretch. In Friendly the chip's fill is about 1.03 to 1.06:1 against the bar, so selection reads almost only from the label's colour.</p>
+    <div class="today-grid" id="todayGrid"></div>
+  </section>
+
+  <section id="friendly" class="pg-sec" aria-labelledby="h-friendly">
+    <h2 id="h-friendly">Friendly: three concepts</h2>
+    <p class="sec-lede">Friendly is warm and playful: Poppins, a cream page with a dot field, a 2 px ink outline on the window and the cards, hard offset shadows like a sticker sheet, Pip's speech bubbles, mint in the shell and coral in onboarding. Each concept keeps those colours and changes what the selection <em>is</em>, and how it moves, so it can never be mistaken for Glass's lens.</p>
+    <div class="concepts" data-family="fr"></div>
+  </section>
+
+  <section id="basic" class="pg-sec" aria-labelledby="h-basic">
+    <h2 id="h-basic">Basic: two options</h2>
+    <p class="sec-lede">Basic is plain and utilitarian: Inter, flat grey surfaces, 4 px corners, one blue accent, no glow. Both options drop everything that made Basic look like Glass (the translucent tint, the hairline, the catch light, the soft shadow, the liquid glide).</p>
+    <div class="concepts" data-family="ba"></div>
+  </section>
+
+  <section id="contrast" class="pg-sec" aria-labelledby="h-contrast">
+    <h2 id="h-contrast">Contrast and High Contrast</h2>
+    <p class="sec-lede">Measured live in this page from the computed colours of the demos above (WCAG 2.2: 4.5:1 for text, 3:1 for the marks that show selected, hover and focus). Every concept also keeps the product's rule against side stripes, underlines and pill-shaped labels (DR-069): selection is always the item's own filled surface.</p>
+    <div id="contrastAll"></div>
+  </section>
+
+  <section id="inventory" class="pg-sec" aria-labelledby="h-inv">
+    <h2 id="h-inv">Where the indicator is used</h2>
+    <p class="sec-lede">One component draws every one of these: Liquid Glass's switcher. Each look turns it on and colours it with <code>--pm-switch-*</code> tokens; Glass sets none of them, so a change for Friendly or Basic cannot touch Glass.</p>
+    <div class="inv" id="inventoryTable"></div>
+  </section>
+</main>
+<footer class="pg-wrap pg-foot">Concept only: nothing in the product changes until Jared picks. Sources: <code>Concepts/selector-indicator-concepts/</code>.</footer>
+<script>
+//{{JS}}
+</script>
+</body>
+</html>
