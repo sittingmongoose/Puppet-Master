@@ -32,6 +32,7 @@ import pm_dg6a_table_decision_citation as decision_table  # noqa: E402
 import pm_dg6a_table_storage_schema as storage_table  # noqa: E402
 import pm_dg6a_table_current_header as current_table  # noqa: E402
 import pm_dg6a_table_current_context as context_table  # noqa: E402
+import pm_dg6a_table_profile as profile_table  # noqa: E402
 
 RETURN_SOURCE = 'return g.Case(table, check, context)'
 
@@ -212,11 +213,41 @@ def collect_current_context():
     return controls, negatives, len(records)
 
 
+def collect_profile():
+    """Every alert-main profile call site through profile_cases, complete checker."""
+    checker = load_checker('dg6a_alert_for_guard_tables_profile', 'pm-alert-event-contracts-check.py')
+    values = checker.load('Plans/storage_value_registry.json')
+    sites = []
+    for family in checker.load('Plans/alert_event_contracts/manifest.json')['families']:
+        for key in ('operation', 'checkpoint'):
+            row = next(x for x in values['families'] if x['family_id'] == family[key])
+            group = 'event_log' if key == 'checkpoint' else 'coordination_and_storage'
+            sites.append((family['event_type'], family[key], row['storage_kind'], group))
+    for fid in ('shared_alert_state', 'shared_alert_rule_state'):
+        sites.append((fid, fid, 'redb', 'settings_and_layout'))
+    records = []
+    for family, fid, kind, group in sites:
+        collected = []
+        checker.PROFILE_RECORDER = collected
+        try:
+            count = checker.profile_cases(values, fid, kind, group)
+        finally:
+            checker.PROFILE_RECORDER = None
+        assert len(collected) == count, (fid, len(collected), count)
+        for index, (site, observed, first) in enumerate(collected, 1):
+            assert site == (fid, kind, group), (site, fid, kind, group)
+            records.append((fid + '/record-' + str(index), family, observed, first,
+                            'profile_cases witness ' + fid + ' #' + str(index)))
+    controls, negatives = dedupe(records)
+    return controls, negatives, len(records)
+
+
 PHASES = {
     'decision_citation': (decision_table, 'scripts/pm_dg6a_table_decision_citation.py', collect_decision_citation),
     'storage_schema': (storage_table, 'scripts/pm_dg6a_table_storage_schema.py', collect_storage_schema),
     'current_header': (current_table, 'scripts/pm_dg6a_table_current_header.py', collect_current_header),
     'current_context': (context_table, 'scripts/pm_dg6a_table_current_context.py', collect_current_context),
+    'profile': (profile_table, 'scripts/pm_dg6a_table_profile.py', collect_profile),
 }
 
 

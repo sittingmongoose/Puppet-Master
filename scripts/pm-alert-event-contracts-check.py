@@ -23,6 +23,16 @@ domain = importlib.util.module_from_spec(_domain_spec)
 _domain_spec.loader.exec_module(domain)
 Draft202012Validator = domain.validator
 
+# Sweep part 2A guard tables (Method B, scripts/pm_guard_isolation.py). Table
+# modules are underscore modules imported normally; witness collection stays
+# in the unscanned runner (scripts/pm-dg6a-guard-tables.py).
+if str(ROOT / 'scripts') not in sys.path:
+    sys.path.insert(0, str(ROOT / 'scripts'))
+import pm_dg6a_table_profile as _profile_table  # noqa: E402
+
+_PROFILE_ROWS = [(name, guard.predicate) for name, guard in _profile_table.case(None).table.guards.items()]
+PROFILE_RECORDER = None
+
 def load(path):
     return domain.loads((ROOT / path).read_text())
 
@@ -322,19 +332,61 @@ def checkpoint_context_cases(value, schema, original_context, checker=checkpoint
         count += 1
     return count
 
-def profile_errors(registry, fid, kind, group):
+def profile_observation(registry, fid, kind, group):
+    """The profile table's FIELDS for one call, derived only.
+
+    Profile reads use .get on a dict-or-empty view so a missing key is the
+    False fact; the maximum keeps the pre-table default of 0 when absent.
+    """
     profile = registry['storage_profile']['family_profiles'].get(fid)
-    if not profile:
-        return ['missing profile']
+    present = bool(profile)
+    row = profile if type(profile) is dict else {}
     expected_file = 'derived' if kind == 'redb_checkpoint' else 'canonical'
-    if profile['redb_file'] != expected_file or profile['storage_group'] != group:
-        return ['wrong physical binding']
-    maximum = profile.get('max_value_bytes', 0)
-    if type(maximum) is not int:
-        return ['non-integer maximum']
-    if not 1 <= maximum <= 16384:
-        return ['missing/oversized maximum']
-    return []
+    maximum = row.get('max_value_bytes', 0)
+    return {
+        'profile_present': present,
+        'redb_file_matches': bool(present and row.get('redb_file') == expected_file),
+        'storage_group_matches': bool(present and row.get('storage_group') == group),
+        'maximum_is_int': type(maximum) is int,
+        'maximum_in_range': bool(type(maximum) is int and 1 <= maximum <= 16384),
+    }
+
+
+def profile_errors(registry, fid, kind, group):
+    """Refuses only through scripts/pm_dg6a_table_profile.py rows, in order."""
+    observed = profile_observation(registry, fid, kind, group)
+    first = None
+    for name, predicate in _PROFILE_ROWS:
+        code = predicate(observed, None)
+        if code is not None:
+            first = (name, code)
+            break
+    if PROFILE_RECORDER is not None:
+        PROFILE_RECORDER.append(((fid, kind, group), copy.deepcopy(observed), first))
+    return [first[1]] if first else []
+
+
+def profile_cases(registry, fid, kind, group):
+    """One-defect profile controls, through the complete profile_errors."""
+    assert not profile_errors(registry, fid, kind, group), fid
+    expected_file = 'derived' if kind == 'redb_checkpoint' else 'canonical'
+    other_file = 'canonical' if expected_file == 'derived' else 'derived'
+    cases = (
+        ('missing', 'missing profile', lambda profiles: profiles.pop(fid)),
+        ('wrong_file', 'wrong physical binding', lambda profiles: profiles[fid].update(redb_file=other_file)),
+        ('wrong_group', 'wrong physical binding', lambda profiles: profiles[fid].update(storage_group='foreign_group')),
+        ('maximum_string', 'non-integer maximum', lambda profiles: profiles[fid].update(max_value_bytes='16384')),
+        ('maximum_float', 'non-integer maximum', lambda profiles: profiles[fid].update(max_value_bytes=16384.0)),
+        ('maximum_missing', 'missing/oversized maximum', lambda profiles: profiles[fid].pop('max_value_bytes', None)),
+        ('maximum_zero', 'missing/oversized maximum', lambda profiles: profiles[fid].update(max_value_bytes=0)),
+        ('maximum_oversized', 'missing/oversized maximum', lambda profiles: profiles[fid].update(max_value_bytes=16385)),
+    )
+    for name, code, change in cases:
+        value = copy.deepcopy(registry)
+        change(value['storage_profile']['family_profiles'])
+        actual = profile_errors(value, fid, kind, group)
+        assert actual == [code], (fid, name, actual)
+    return 1 + len(cases)
 
 def writer_policy_errors(policy):
     if policy == 'projector_replay_only':
@@ -972,11 +1024,7 @@ def main():
             group = 'event_log' if key == 'checkpoint' else 'coordination_and_storage'
             row = next(x for x in values['families'] if x['family_id'] == family[key])
             check_schema(row['value_schema'])
-            assert not profile_errors(values, family[key], row['storage_kind'], group)
-            missing = copy.deepcopy(values)
-            del missing['storage_profile']['family_profiles'][family[key]]
-            assert profile_errors(missing, family[key], row['storage_kind'], group) == ['missing profile']
-            count += 2
+            count += profile_cases(values, family[key], row['storage_kind'], group)
         assert family['event_type'] not in admitted
         for key in ('operation', 'checkpoint'):
             row = next(x for x in load('Plans/storage_value_registry.json')['families'] if x['family_id'] == family[key])
@@ -989,11 +1037,7 @@ def main():
     for fid in ('shared_alert_state', 'shared_alert_rule_state'):
         row = next(row for row in values['families'] if row['family_id'] == fid)
         check_schema(row['value_schema'])
-        assert not profile_errors(values, fid, 'redb', 'settings_and_layout')
-        missing = copy.deepcopy(values)
-        del missing['storage_profile']['family_profiles'][fid]
-        assert profile_errors(missing, fid, 'redb', 'settings_and_layout')
-        count += 2
+        count += profile_cases(values, fid, 'redb', 'settings_and_layout')
     print(json.dumps({'status':'pass','cases':count,'families':1 if selected else 4,'admission':'ABSENT','native':'NOT_RUN','retention':'PENDING_RETENTION_DECISION'}))
 
 if __name__ == '__main__':
