@@ -18,6 +18,10 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 INVENTORY = "Plans/event_datetime_inventory.json"
 FIELDS = frozenset(("observed_at_utc", "persisted_at_utc"))
+# CV-1101 source fields the enforced validator composes, by inventory classification (fix round 18). Every EventRecord
+# node is an envelope whose occurred_at_utc takes the broad EventRecord profile, retained and copied history included,
+# whatever the original declares; the Storage fields take CV-253's profile through the node's own profile.
+SOURCE_FIELDS = {"EventRecord": ("occurred_at_utc",)}
 
 
 def digest(value):
@@ -865,6 +869,17 @@ class StorageSelection:
 
     def fields(self, schema):
         return self.admit(schema)
+
+    def classified(self, schema):
+        """(Storage fields, CV-1101 source fields) of one admitted fragment, by its node's classification.
+
+        Fix round 18: the source fields are keyed by the inventory
+        classification, never by a format annotation of the original.
+        """
+        storage = self.admit(schema)
+        if not storage:
+            return (), ()
+        return storage, SOURCE_FIELDS.get(self.nodes[id(schema)][1].get("classification"), ())
 
 
 def main():
