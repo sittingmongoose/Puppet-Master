@@ -26,12 +26,15 @@ sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_guard_isolation as g  # noqa: E402
 import pm_dch_events as dch  # noqa: E402
 import pm_dch_stop as stop  # noqa: E402
+import pm_dch_number_corpus as corpus  # noqa: E402
 
 ENTRIES = ('record_number_rule', 'input_types_valid', 'resolve_body', 'valid_scope_partition', 'joins', 'retry_outcome',
            'historical_read_valid', 'test_joins', 'checkpoint_joins', 'checkpoint_storage_valid', 'archive_joins',
            'references_valid', 'reference_closure_refusal')
 STOP_ENTRIES = ('resolve_value', 'request_valid', 'outcome_valid', 'save_outcome', 'read_outcome', 'queue_can_advance',
                 'index_read_valid', 'retirement_ready')
+# The shared number corpus reaches DCH rows through table_outcome (pm_dch_number_corpus.py).
+CORPUS_ENTRIES = ('table_outcome',)
 STOP_FAMILY = 'chat.response_stop_requested'
 RETURN_SOURCE = 'return g.Case(table, check, context)'
 # Witnesses kept in the full checker (still refused there) but not used as
@@ -104,7 +107,7 @@ class Collector:
 
     def install(self):
         self.saved = []
-        for module, names in ((dch, ENTRIES), (stop, STOP_ENTRIES)):
+        for module, names in ((dch, ENTRIES), (stop, STOP_ENTRIES), (corpus, CORPUS_ENTRIES)):
             for name in names:
                 original = getattr(module, name)
                 self.saved.append((module, name, original))
