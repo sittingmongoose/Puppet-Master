@@ -73,6 +73,7 @@ function installSampler() {
 			fr.vis = st.vis ? [R2(st.vis.x0), R2(st.vis.y0), R2(st.vis.x1), R2(st.vis.y1)] : null;
 			fr.keep = st.keepOff ? st.keepOff.map(R2) : null;
 			fr.rn = st.renderN || 0;
+			fr.mapK = st.map ? [R2(st.map.k), R2(st.map.ox), R2(st.map.oy)] : null;
 			fr.anchorY = st.L.anchorY;
 			fr.props = [];
 			st.props.forEach((pr, id) => {
@@ -133,14 +134,17 @@ export default async function (t) {
 		for (const e of eps) {
 			if (e.rows.length < 12) continue;
 			// deviation in whichever frame the place is anchored to: against the speech point when the bubble follows
-			// Pip, on the screen when an obstacle or the stage edge pins it while Pip sways (Retro's cramped banner)
-			const rels = e.rows.map((x) => x.fam === 'nier' || !x.bub.rel ? x.bub.boxRel : x.bub.rel);
-			const trs = e.rows.map((x) => x.bub.tr || x.bub.boxRel);
+			// Pip, on the screen when an obstacle or the stage edge pins it while Pip sways (Retro's cramped banner).
+			// Read in scene units, then scaled by the settled map: a stage that is still opening (the sandbox sheet)
+			// rescales every px offset while the bubble keeps the same scene place
+			const rels = e.rows.map((x) => { const r = x.fam === 'nier' || !x.bub.rel ? x.bub.boxRel : x.bub.rel; const k = x.mapK ? x.mapK[0] : 1; return r ? [r[0] / k, r[1] / k] : null; });
+			const trs = e.rows.map((x) => { const r = x.bub.tr; if (!r || !x.mapK) return x.bub.boxRel; return [(r[0] - x.mapK[1]) / x.mapK[0], (r[1] - x.mapK[2]) / x.mapK[0]]; });
 			if (rels.some((r) => !r)) continue;
 			lines++;
+			const kSet = median(e.rows.slice(-20).map((x) => x.mapK ? x.mapK[0] : 1));
 			const sx = median(rels.slice(-20).map((r) => r[0])), sy = median(rels.slice(-20).map((r) => r[1]));
 			const tx = median(trs.slice(-20).map((r) => r[0])), ty = median(trs.slice(-20).map((r) => r[1]));
-			const devs = rels.map((r, i) => Math.max(Math.min(Math.abs(r[0] - sx), Math.abs(trs[i][0] - tx)), Math.min(Math.abs(r[1] - sy), Math.abs(trs[i][1] - ty))));
+			const devs = rels.map((r, i) => Math.max(Math.min(Math.abs(r[0] - sx), Math.abs(trs[i][0] - tx)), Math.min(Math.abs(r[1] - sy), Math.abs(trs[i][1] - ty))) * kSet);
 			const worst = Math.max(...devs), wi = devs.indexOf(worst);
 			// NieR's box is painted-box judged: Pip hovers (a slow bob of the head), so its settling is read looser there
 			const tol = e.rows[0].fam === 'nier' ? 6 : 1;
