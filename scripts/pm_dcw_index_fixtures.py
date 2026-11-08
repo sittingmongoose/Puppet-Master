@@ -34,6 +34,17 @@ def capture(events, storage_instance_id, recovery_epoch=0):
                 segment_name=name, durable_end_offset=len(blob))], excluded_ranges=[], retired_inputs=[],
             survivor_prefix_sha256=m.index_prefix(frames)),
         frames=frames, segments=[segment], sequence_gaps=[], source_bytes_base64=base64.b64encode(blob).decode())
+    gaps = []
+    for left, right in zip(events, events[1:]):
+        if right['sequence_id'] > left['sequence_id'] + 1:
+            first, last = left['sequence_id'] + 1, right['sequence_id'] - 1
+            evidence = 'synthetic-lease-gap:' + str(first) + ':' + str(last)
+            gaps.append(dict(reason='allocator_lease_abandoned', first_sequence_id=first,
+                last_sequence_id=last, manifest_evidence_ref=evidence,
+                manifest_evidence_sha256=hashlib.sha256(evidence.encode()).hexdigest()))
+    source['sequence_gaps'] = gaps
+    source['manifest']['excluded_ranges'] = copy.deepcopy(gaps)
+    source['gap_evidence'] = {g['manifest_evidence_ref']: copy.deepcopy(g) for g in gaps}
     source['source_selection'] = m.index_selection(source, storage_instance_id)
     return source
 
@@ -47,7 +58,7 @@ def snapshot(events, storage_instance_id, recovery_epoch=0):
     anchor = dict(source_selection=copy.deepcopy(source['source_selection']),
         **{k: coverage[k] for k in ('first_retained_sequence_id', 'through_sequence_id', 'retained_event_count',
                                   'retained_event_prefix_sha256')},
-        sequence_gaps_sha256=m.index_binding([]), generation_seed_sha256=m.index_binding(dict(
+        sequence_gaps_sha256=m.index_binding(source['sequence_gaps']), generation_seed_sha256=m.index_binding(dict(
             fixture_only_seed='DCW-round8', source=source['source_selection'])))
     gid = m.index_generation(storage_instance_id, anchor)
     key = 'event_record_index_checkpoint.v1:' + storage_instance_id
@@ -74,6 +85,7 @@ def issue(scenario):
     originals = list(scenario['authority']['events'].values())
     scenario['index'], scenario['reader'] = snapshot(originals, scenario['authority']['storage_instance_id'],
                                                   scenario['authority']['recovery_epoch'])
+    m.install_fixture_originals(scenario)
 
 
 def rehash(index, reader):

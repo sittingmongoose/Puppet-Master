@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
-"""Exact-family standing checks 4, 10 and isolated guard-ablation witnesses (11)."""
-import ast
+"""Exact-family standing regressions. Check 11 is exclusively Method B; no old cut credit."""
 import copy
-import inspect
 import json
-from contextlib import contextmanager
 
-from referencing import Registry, Resource
 
 import pm_dcw_event_oracles as m
 from pm_bundle_revision_events import validate
@@ -18,26 +14,6 @@ def outcome(row, value, operation, validator=validate):
         return m.verify(row, copy.deepcopy(value), operation, validator)
     except m.Refusal as exc:
         return str(exc)
-
-
-@contextmanager
-def weakened(code=None, schema_guard=None):
-    require, load, resources, writer_policy = m.require, m.load, m.RESOURCES, m.writer_policy
-    try:
-        if code:
-            m.require = lambda condition, refusal: None if refusal == code else require(condition, refusal)
-        if code == 'replay_only_not_appendable':
-            m.writer_policy = lambda policy: None if policy == 'projector_replay_only' else writer_policy(policy)
-        if schema_guard:
-            changed = {str(p.relative_to(m.ROOT)): copy.deepcopy(load(str(p.relative_to(m.ROOT)))) for p in m.SCHEMAS}
-            for path, schema in changed.items():
-                schema_guard(path, schema)
-            m.load = lambda path: changed[path] if path in changed else load(path)
-            m.RESOURCES = Registry().with_resources((s['$id'], Resource.from_contents(s)) for s in changed.values())
-        yield
-    finally:
-        m.require, m.load, m.RESOURCES = require, load, resources
-        m.writer_policy = writer_policy
 
 
 def additional_checks(rows, results):
@@ -52,11 +28,8 @@ def additional_checks(rows, results):
 
     def isolated(row, check, name, value, operation, expected, code=None, schema_guard=None, validator=validate):
         record(row, check, name, value, operation, expected)
-        with weakened(code, schema_guard):
-            actual = outcome(row, value, operation, validator)
-        results.append(dict(family=row['event_type'], check=11, guards_check=check, case=name,
-                            expected='accept when only its guard is weakened', actual=actual,
-                            weakened_guard=code or name, passed=actual == 'accept'))
+        # Predicate cuts belong only to the gated Method B runner.
+
 
     def payload_definition(row, definition, edit):
         def guard(path, schema):
@@ -64,16 +37,7 @@ def additional_checks(rows, results):
                 edit(schema['$defs'][definition])
         return guard
 
-    # The legacy bundle validator repeats the identity guard. Remove only that
-    # assertion when demonstrating the exact-family idempotency-key rule.
-    tree = ast.parse(inspect.getsource(validate))
-    class RemoveIdentity(ast.NodeTransformer):
-        def visit_Assert(self, node):
-            return ast.copy_location(ast.Pass(), node) if isinstance(node.msg, ast.Constant) and node.msg.value == 'identity' else node
-    tree = ast.fix_missing_locations(RemoveIdentity().visit(tree))
-    namespace = dict(validate.__globals__)
-    exec(compile(tree, '<DCW identity guard ablation>', 'exec'), namespace)
-    legacy_without_identity = namespace['validate']
+    legacy_without_identity = validate  # Baseline only; no legacy AST cut.
 
     for row in rows:
         base = row['positive']
@@ -145,18 +109,6 @@ def additional_checks(rows, results):
         positive_case = dict(case); positive_case.pop('event_defect')
         valid_pack = scenario(row, positive_case)['authority']['event_payloads']
         record(row, 4, 'isolated_missing_pack', missing, 'retry', 'event_payload_missing')
-        original_body = m.event_body
-        def missing_guard_disabled(r, event, authority=None):
-            a = copy.deepcopy(authority)
-            a['event_payloads'] = dict(valid_pack, **a.get('event_payloads', {}))
-            return original_body(r, event, a)
-        try:
-            m.event_body = missing_guard_disabled
-            actual = outcome(row, missing, 'retry')
-        finally:
-            m.event_body = original_body
-        results.append(dict(family=row['event_type'], check=11, guards_check=4, case='isolated_missing_pack',
-                            weakened_guard='absent pack observation fallback', actual=actual, passed=actual == 'accept'))
 
         # 5: one exact-format original hash defect, with owner mirrors aligned.
         def loosen_hash_length(path, schema):
@@ -226,9 +178,3 @@ def additional_checks(rows, results):
             value['event'] = copy.deepcopy(next(s['prepared_event'] for s in value['source']['phases'] if s['event_type'] == row['event_type']))
             value['control']['admitted_families'] = [row['event_type']]
             record(row, 10, 'retained_from_later_resumed_source', value, 'read', 'accept')
-        # Complete-CLI result/ref guards have already been ablated in subprocesses.
-        for result in list(results):
-            if result['family'] == row['event_type'] and result['check'] in (8, 9):
-                results.append(dict(family=row['event_type'], check=11, guards_check=result['check'],
-                                    case=result['case'], weakened_guard='full CLI expectation/ref preflight',
-                                    guard_disabled_exit=result['guard_disabled_exit'], passed=result['passed']))

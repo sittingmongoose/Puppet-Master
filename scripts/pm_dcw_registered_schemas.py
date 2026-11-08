@@ -8,55 +8,41 @@ Merely finding a $defs member never makes it a supported historical reader.
 from functools import lru_cache
 import re
 from urllib.parse import unquote
-
 from jsonschema import Draft202012Validator
 from jsonschema.exceptions import SchemaError, ValidationError
 from referencing import Registry, Resource
 from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
-
 import pm_dcw_event_oracles as m
-
-
-HISTORICAL = {
-    name: dict(path='Plans/event_payload_' + name.replace('.', '_') + '.schema.json',
-               json_pointer='#/$defs/' + name.replace('.', '_') + '_1_0_0_compatibility_reader',
-               schema_id='https://puppetmaster.local/schemas/event_payloads/' + name.replace('.', '_') + '/1.0.0')
-    for name in ('platform.capability_evaluated', 'restore_point.corrupt', 'run.started',
-                 'safe_point.recovery_unavailable', 'storage.boot_recovery',
-                 'storage.integrity_detected', 'storage.recovery_applied')
-}
-
+HISTORICAL = {name: dict(path='Plans/event_payload_' + name.replace('.', '_') + '.schema.json', json_pointer='#/$defs/' + name.replace('.', '_') + '_1_0_0_compatibility_reader', schema_id='https://puppetmaster.local/schemas/event_payloads/' + name.replace('.', '_') + '/1.0.0') for name in ('platform.capability_evaluated', 'restore_point.corrupt', 'run.started', 'safe_point.recovery_unavailable', 'storage.boot_recovery', 'storage.integrity_detected', 'storage.recovery_applied')}
 
 def pointer(document, fragment):
-    m.require(isinstance(fragment, str) and (fragment == '#' or fragment.startswith('#/')),
-              'registered_schema_pointer')
+    m.guard_rows.enforce('R001', {'site': 'R001', 'code': 'registered_schema_pointer', 'v0': fragment})
+    m.guard_rows.enforce('R002', {'site': 'R002', 'code': 'registered_schema_pointer', 'v0': fragment, 'v1': fragment.startswith('#/')})
     try:
         value = document
         for token in unquote(fragment[2:]).split('/') if fragment != '#' else ():
-            # Reject malformed RFC6901 escapes instead of selecting a different key.
-            m.require(re.search(r'~(?![01])', token) is None, 'registered_schema_pointer')
+            m.guard_rows.enforce('R003', {'site': 'R003', 'code': 'registered_schema_pointer', 'v0': 'matched' if re.search('~(?![01])', token) is not None else None})
             token = token.replace('~1', '/').replace('~0', '~')
             if isinstance(value, list):
-                # RFC6901 array indices have no sign or leading zeroes.
-                if re.fullmatch(r'0|[1-9][0-9]*', token) is None:
+                if re.fullmatch('0|[1-9][0-9]*', token) is None:
                     raise ValueError('invalid array index')
                 value = value[int(token)]
             else:
                 value = value[token]
         return value
     except (KeyError, IndexError, TypeError, ValueError) as exc:
-        raise m.Refusal('registered_schema_pointer') from exc
-
+        m.guard_rows.enforce('RE001', {'site': 'RE001', 'code': 'registered_schema_pointer', 'v0': 'refused'})
+    else:
+        m.guard_rows.enforce('RE001', {'site': 'RE001', 'code': 'registered_schema_pointer', 'v0': None})
 
 def document_at(path):
-    # The path comes from the canonical owner registry, never from an event or
-    # caller. Load precisely that local document; reference retrieval is offline.
     try:
         return m.load(path)
     except (OSError, TypeError, ValueError) as exc:
-        raise m.Refusal('registered_schema_path') from exc
-
+        m.guard_rows.enforce('RE002', {'site': 'RE002', 'code': 'registered_schema_path', 'v0': 'refused'})
+    else:
+        m.guard_rows.enforce('RE002', {'site': 'RE002', 'code': 'registered_schema_path', 'v0': None})
 
 @lru_cache(maxsize=8)
 def catalog(loader):
@@ -73,7 +59,6 @@ def catalog(loader):
             resources.append((schema['$id'], Resource.from_contents(schema, default_specification=DRAFT202012)))
     return Registry().with_resources(resources).crawl()
 
-
 def reference_closure(document, registry):
     """Eagerly check every branch, including full external documents and cycles."""
     seen = set()
@@ -87,33 +72,28 @@ def reference_closure(document, registry):
             if '$ref' in value:
                 try:
                     target = resolver.lookup(value['$ref'])
-                    # An external reference pulls in the entire document, not
-                    # just the definition reached by the positive instance.
                     if not value['$ref'].startswith('#'):
                         root = resolver.lookup(value['$ref'].split('#', 1)[0])
                         Draft202012Validator.check_schema(root.contents)
                         visit(root.contents, root.resolver)
                     visit(target.contents, target.resolver)
                 except (Unresolvable, SchemaError) as exc:
-                    raise m.Refusal('registered_schema_ref') from exc
+                    m.guard_rows.enforce('RE003', {'site': 'RE003', 'code': 'registered_schema_ref', 'v0': 'refused'})
+                else:
+                    m.guard_rows.enforce('RE003', {'site': 'RE003', 'code': 'registered_schema_ref', 'v0': None})
             for child in value.values():
                 visit(child, resolver)
         else:
             for child in value:
                 visit(child, resolver)
-
     visit(document, registry.resolver(document['$id']))
 
-
 def validate_registered(owner, event):
-    m.require(owner is not None, 'index_source_dispatch')
-    # Scope/version editions are selected exactly, never by lexical version or
-    # a try-any-schema fallback. Historical originals retain their stored policy.
+    m.guard_rows.enforce('R004', {'site': 'R004', 'code': 'index_source_dispatch', 'v0': owner})
     editions = owner.get('payload_versions')
     if editions:
-        edition = next((v for v in editions if v['scope_kind'] == event['scope_kind'] and
-                        v['payload_schema_id'] == event['payload_schema_id']), None)
-        m.require(edition is not None, 'index_source_dispatch')
+        edition = next((v for v in editions if v['scope_kind'] == event['scope_kind'] and v['payload_schema_id'] == event['payload_schema_id']), None)
+        m.guard_rows.enforce('R005', {'site': 'R005', 'code': 'index_source_dispatch', 'v0': edition})
     else:
         edition = owner
     ref = edition.get('payload_schema_ref')
@@ -122,30 +102,26 @@ def validate_registered(owner, event):
     if historical and event['payload_schema_id'] == historical['schema_id']:
         ref = historical
         expected_id = historical['schema_id']
-    m.require(event['payload_schema_id'] == expected_id, 'index_source_dispatch')
+    m.guard_rows.enforce('R006', {'site': 'R006', 'code': 'index_source_dispatch', 'v0': event['payload_schema_id'], 'v1': expected_id})
     if ref is None:
         document = edition['payload_schema']
         schema = document
     else:
-        m.require(ref['schema_id'] == expected_id, 'registered_schema_id')
+        m.guard_rows.enforce('R007', {'site': 'R007', 'code': 'registered_schema_id', 'v0': ref['schema_id'], 'v1': expected_id})
         document = document_at(ref['path'])
         schema = pointer(document, ref['json_pointer'])
-    # Some registered non-root definitions (Goal application, Settings and chat
-    # approvals) carry their identity as a required payload schema_id constant.
-    # A present $id still must match; its mismatch cannot use the alternate form.
     identity = schema.get('$id', schema.get('properties', {}).get('schema_id', {}).get('const')) if isinstance(schema, dict) else None
-    m.require(identity == expected_id, 'registered_schema_identity')
+    m.guard_rows.enforce('R008', {'site': 'R008', 'code': 'registered_schema_identity', 'v0': identity, 'v1': expected_id})
     try:
         Draft202012Validator.check_schema(document)
-        registry = catalog(m.load).with_resource(document['$id'],
-            Resource.from_contents(document, default_specification=DRAFT202012)).crawl()
+        registry = catalog(m.load).with_resource(document['$id'], Resource.from_contents(document, default_specification=DRAFT202012)).crawl()
         reference_closure(document, registry)
-        # Resolve the original pointer in its document context, preserving local
-        # definitions and nested $id scopes rather than detaching its contents.
         target = document['$id'] + (ref['json_pointer'] if ref else '#')
-        Draft202012Validator({'$ref': target}, registry=registry,
-                            format_checker=m.FORMAT).validate(event['payload'])
+        Draft202012Validator({'$ref': target}, registry=registry, format_checker=m.FORMAT).validate(event['payload'])
     except ValidationError as exc:
-        raise m.Refusal('index_source_payload') from exc
+        m.guard_rows.enforce('RE004', {'site': 'RE004', 'code': 'index_source_payload', 'v0': 'refused'})
     except (Unresolvable, SchemaError) as exc:
-        raise m.Refusal('registered_schema_ref') from exc
+        m.guard_rows.enforce('RE005', {'site': 'RE005', 'code': 'registered_schema_ref', 'v0': 'refused'})
+    else:
+        m.guard_rows.enforce('RE004', {'site': 'RE004', 'code': 'index_source_payload', 'v0': None})
+        m.guard_rows.enforce('RE005', {'site': 'RE005', 'code': 'registered_schema_ref', 'v0': None})

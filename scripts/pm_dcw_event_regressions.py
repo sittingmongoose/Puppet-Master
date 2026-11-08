@@ -181,8 +181,10 @@ def audit(family=None):
         'cases': sum(r['family'] == row['event_type'] and r['check'] == check for r in results),
         'passed': all(r['passed'] for r in results if r['family'] == row['event_type'] and r['check'] == check)
     } for check in range(1, 12)} for row in rows}
+    for family_summary in summary.values():
+        family_summary['11'] = dict(cases=0, passed=None, status='SUPERSEDED_METHOD_B')
     return dict(status='PASS' if all(r['passed'] for r in results) else 'FAIL',
-                native='NOT_RUN', families=summary, cases=results)
+                native='NOT_RUN', guard_isolation='NOT_CREDITED_USE_METHOD_B', families=summary, cases=results)
 
 
 if __name__ == '__main__':

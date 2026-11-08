@@ -1,12 +1,13 @@
 {
   "schema_id": "pm.assurance.event_authority.step08_current_depth.v1",
-  "assessment_id": "EA-W2-DCW-SWEEP-P1-20261105",
-  "assessment_kind": "worker_self_grade_after_sweep_part1",
+  "assessment_id": "EA-W2-DCW-SWEEP-P2A-NUMBERS-20261108",
+  "assessment_kind": "worker_self_grade_after_guard_tables_and_number_adoption",
   "assessed_tree": {
     "branch": "plans/ea-w2-chain-wizard-20261104",
     "base": "d5ec2f70c0d69c469796eea9b9cfdae30f281f42",
-    "commit": "d9d930b925946c8c95726c6cb5b492507f11ec95",
-    "read_method": "Rebased on landed batch-1 canon. Eight full family CLIs, six standing and six registered-schema suites; focused F1/F2/F3 controls, not a complete guard inventory. Report-only commit follows the tested implementation. All 292 quotations re-located and checked."
+    "commit": "IMPLEMENTATION_COMMIT_PENDING",
+    "read_method": "Exact gated guard tool and number-only scope merged without rebase. Named assertion-phase rows are distinct from complete-boundary or schema-keyword proof. Timestamp review is interim only; native authority is NOT_RUN.",
+    "start_commit": "7847bbc409e875a9bfddb02309cb0638690f798b"
   },
   "rubric": {
     "rubric_md": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20260911/step-08-depth42-20260924/rubric.md",
@@ -46,8 +47,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-590",
-          "line_start": 24491,
-          "line_end": 24492,
+          "line_start": 24615,
+          "line_end": 24616,
           "quote": "bundle.revision_requested` has payload schema Plans/event_payloads/bundle_revision/revision_requested.schema.json,\n  schema_id pm.event_payload.bundle.revision_requested.v1, schema_vers"
         }
       ],
@@ -93,8 +94,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24491,
-              "line_end": 24492,
+              "line_start": 24615,
+              "line_end": 24616,
               "quote": "bundle.revision_requested` has payload schema Plans/event_payloads/bundle_revision/revision_requested.schema.json,\n  schema_id pm.event_payload.bundle.revision_requested.v1, schema_vers"
             }
           ],
@@ -113,44 +114,44 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24502,
-              "line_end": 24505,
+              "line_start": 24626,
+              "line_end": 24629,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_requested\",project_id,thr"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 29596,
-              "line_end": 29598,
+              "line_start": 29722,
+              "line_end": 29724,
               "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30050,
-              "line_end": 30051,
+              "line_start": 30176,
+              "line_end": 30177,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24529,
-              "line_end": 24529,
+              "line_start": 24653,
+              "line_end": 24653,
               "quote": "NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or s"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24529,
-              "line_end": 24529,
+              "line_start": 24653,
+              "line_end": 24653,
               "quote": "NEW SP-337 event-body binding for bundle.revision_requested under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 634,
-              "line_end": 638,
-              "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n        "
+              "line_start": 746,
+              "line_end": 751,
+              "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
           "prior": {
@@ -202,15 +203,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24505,
-              "line_end": 24506,
+              "line_start": 24629,
+              "line_end": 24630,
               "quote": "NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_requested\",project_id,thread_id,bundle_id,revision_id,phase_sequence]\n"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24499,
-              "line_end": 24500,
+              "line_start": 24623,
+              "line_end": 24624,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
@@ -229,15 +230,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24502,
-              "line_end": 24505,
+              "line_start": 24626,
+              "line_end": 24629,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_requested\",project_id,thr"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-590",
-              "line_start": 24519,
-              "line_end": 24521,
+              "line_start": 24643,
+              "line_end": 24645,
               "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w"
             }
           ],
@@ -256,8 +257,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 29631,
-              "line_end": 29632,
+              "line_start": 29757,
+              "line_end": 29758,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
@@ -276,8 +277,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30039,
-              "line_end": 30040,
+              "line_start": 30165,
+              "line_end": 30166,
               "quote": "mandatory coherent backup authority with original documents, annotations,\n  FileSafe results, immutable intent/results, seglog identity/dedupe and SP-286 custody. Restore admits one ver"
             },
             {
@@ -290,16 +291,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30050,
-              "line_end": 30051,
+              "line_start": 30176,
+              "line_end": 30177,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 394,
-              "line_end": 394,
-              "quote": "require(payload['durable'] is True and payload['index_durable'] is True, 'source_payload_not_durable')"
+              "line_start": 493,
+              "line_end": 493,
+              "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
           "prior": {
@@ -337,23 +338,23 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 29611,
-              "line_end": 29613,
+              "line_start": 29737,
+              "line_end": 29739,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 29613,
-              "line_end": 29614,
+              "line_start": 29739,
+              "line_end": 29740,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_requested",
-              "line_start": 874,
-              "line_end": 874,
-              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
+              "line_start": 948,
+              "line_end": 948,
+              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
           "prior": {
@@ -366,34 +367,34 @@
         "compatibility_withdrawal": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Withdrawal and authentic retained-source custody pass. B2 remains a sweep item: the local format rule accepts non-Z persisted offsets and rejects valid leap seconds on retained originals. Adopt shared CV-1101; no format repair is claimed here.",
+          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 29637,
-              "line_end": 29638,
+              "line_start": 29763,
+              "line_end": 29764,
               "quote": "Withdrawal first cuts off new writer admission for bundle.revision_requested; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_revis"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-575",
-              "line_start": 29639,
-              "line_end": 29641,
+              "line_start": 29765,
+              "line_end": 29767,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_requested",
-              "line_start": 471,
-              "line_end": 473,
-              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(sce"
+              "line_start": 576,
+              "line_end": 577,
+              "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-253",
-              "line_start": 15895,
-              "line_end": 15895,
+              "line_start": 16017,
+              "line_end": 16017,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             }
           ],
@@ -407,34 +408,34 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 1 repairs the cited F1 source-join corpus. Full family CLI and targeted controls pass. Complete predicate inventory/duplicate-site proof awaits the shared guard tool; CV-1101 and NUMRULE adoption also remain pending. PARTIAL is retained.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 383,
-              "line_end": 383,
-              "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
+              "line_start": 481,
+              "line_end": 481,
+              "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 580,
-              "line_end": 580,
-              "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
+              "line_start": 688,
+              "line_end": 688,
+              "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 450,
-              "line_end": 450,
+              "line_start": 560,
+              "line_end": 560,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 553,
-              "line_end": 553,
+              "line_start": 658,
+              "line_end": 658,
               "quote": "schema_references(schema)"
             },
             {
@@ -482,9 +483,9 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_requested",
-              "line_start": 874,
-              "line_end": 874,
-              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
+              "line_start": 948,
+              "line_end": 948,
+              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
           "prior": {
@@ -588,8 +589,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-591",
-          "line_start": 24568,
-          "line_end": 24569,
+          "line_start": 24692,
+          "line_end": 24693,
           "quote": "bundle.revision_started` has payload schema Plans/event_payloads/bundle_revision/revision_started.schema.json,\n  schema_id pm.event_payload.bundle.revision_started.v1, schema_version 1."
         }
       ],
@@ -635,8 +636,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24568,
-              "line_end": 24569,
+              "line_start": 24692,
+              "line_end": 24693,
               "quote": "bundle.revision_started` has payload schema Plans/event_payloads/bundle_revision/revision_started.schema.json,\n  schema_id pm.event_payload.bundle.revision_started.v1, schema_version 1."
             }
           ],
@@ -655,44 +656,44 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24579,
-              "line_end": 24582,
+              "line_start": 24703,
+              "line_end": 24706,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_started\",project_id,threa"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29695,
-              "line_end": 29697,
+              "line_start": 29821,
+              "line_end": 29823,
               "quote": "SP-286 and CV-339 including strict full-value v2 resolution,\n  SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract under DL-045:\n  produ"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30050,
-              "line_end": 30051,
+              "line_start": 30176,
+              "line_end": 30177,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24606,
-              "line_end": 24606,
+              "line_start": 24730,
+              "line_end": 24730,
               "quote": "NEW SP-337 event-body binding for bundle.revision_started under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or ser"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24606,
-              "line_end": 24606,
+              "line_start": 24730,
+              "line_end": 24730,
               "quote": "NEW SP-337 event-body binding for bundle.revision_started under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never J"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 634,
-              "line_end": 638,
-              "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n        "
+              "line_start": 746,
+              "line_end": 751,
+              "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
           "prior": {
@@ -744,15 +745,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24582,
-              "line_end": 24583,
+              "line_start": 24706,
+              "line_end": 24707,
               "quote": "NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_started\",project_id,thread_id,bundle_id,revision_id,phase_sequence]\n  "
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24576,
-              "line_end": 24577,
+              "line_start": 24623,
+              "line_end": 24624,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
@@ -771,15 +772,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24579,
-              "line_end": 24582,
+              "line_start": 24703,
+              "line_end": 24706,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_started\",project_id,threa"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-591",
-              "line_start": 24596,
-              "line_end": 24598,
+              "line_start": 24643,
+              "line_end": 24645,
               "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w"
             }
           ],
@@ -798,8 +799,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29729,
-              "line_end": 29730,
+              "line_start": 29757,
+              "line_end": 29758,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
@@ -818,8 +819,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30039,
-              "line_end": 30040,
+              "line_start": 30165,
+              "line_end": 30166,
               "quote": "mandatory coherent backup authority with original documents, annotations,\n  FileSafe results, immutable intent/results, seglog identity/dedupe and SP-286 custody. Restore admits one ver"
             },
             {
@@ -832,16 +833,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30050,
-              "line_end": 30051,
+              "line_start": 30176,
+              "line_end": 30177,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 394,
-              "line_end": 394,
-              "quote": "require(payload['durable'] is True and payload['index_durable'] is True, 'source_payload_not_durable')"
+              "line_start": 493,
+              "line_end": 493,
+              "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
           "prior": {
@@ -879,23 +880,23 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29709,
-              "line_end": 29711,
+              "line_start": 29737,
+              "line_end": 29739,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29711,
-              "line_end": 29712,
+              "line_start": 29739,
+              "line_end": 29740,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_started",
-              "line_start": 874,
-              "line_end": 874,
-              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
+              "line_start": 948,
+              "line_end": 948,
+              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
           "prior": {
@@ -908,34 +909,34 @@
         "compatibility_withdrawal": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Withdrawal and authentic retained-source custody pass. B2 remains a sweep item: the local format rule accepts non-Z persisted offsets and rejects valid leap seconds on retained originals. Adopt shared CV-1101; no format repair is claimed here.",
+          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29735,
-              "line_end": 29736,
+              "line_start": 29861,
+              "line_end": 29862,
               "quote": "Withdrawal first cuts off new writer admission for bundle.revision_started; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_revisio"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-576",
-              "line_start": 29737,
-              "line_end": 29739,
+              "line_start": 29765,
+              "line_end": 29767,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_started",
-              "line_start": 471,
-              "line_end": 473,
-              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(sce"
+              "line_start": 576,
+              "line_end": 577,
+              "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-253",
-              "line_start": 15895,
-              "line_end": 15895,
+              "line_start": 16017,
+              "line_end": 16017,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             }
           ],
@@ -949,34 +950,34 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 1 repairs the cited F1 source-join corpus. Full family CLI and targeted controls pass. Complete predicate inventory/duplicate-site proof awaits the shared guard tool; CV-1101 and NUMRULE adoption also remain pending. PARTIAL is retained.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 383,
-              "line_end": 383,
-              "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
+              "line_start": 481,
+              "line_end": 481,
+              "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 580,
-              "line_end": 580,
-              "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
+              "line_start": 688,
+              "line_end": 688,
+              "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 450,
-              "line_end": 450,
+              "line_start": 560,
+              "line_end": 560,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 553,
-              "line_end": 553,
+              "line_start": 658,
+              "line_end": 658,
               "quote": "schema_references(schema)"
             },
             {
@@ -1024,9 +1025,9 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_started",
-              "line_start": 874,
-              "line_end": 874,
-              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
+              "line_start": 948,
+              "line_end": 948,
+              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
           "prior": {
@@ -1130,8 +1131,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-592",
-          "line_start": 24645,
-          "line_end": 24646,
+          "line_start": 24769,
+          "line_end": 24770,
           "quote": "bundle.revision_completed` has payload schema Plans/event_payloads/bundle_revision/revision_completed.schema.json,\n  schema_id pm.event_payload.bundle.revision_completed.v1, schema_vers"
         }
       ],
@@ -1177,8 +1178,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24645,
-              "line_end": 24646,
+              "line_start": 24769,
+              "line_end": 24770,
               "quote": "bundle.revision_completed` has payload schema Plans/event_payloads/bundle_revision/revision_completed.schema.json,\n  schema_id pm.event_payload.bundle.revision_completed.v1, schema_vers"
             }
           ],
@@ -1197,44 +1198,44 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24656,
-              "line_end": 24659,
+              "line_start": 24780,
+              "line_end": 24783,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_completed\",project_id,thr"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29793,
-              "line_end": 29795,
+              "line_start": 29722,
+              "line_end": 29724,
               "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30050,
-              "line_end": 30051,
+              "line_start": 30176,
+              "line_end": 30177,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24683,
-              "line_end": 24683,
+              "line_start": 24807,
+              "line_end": 24807,
               "quote": "NEW SP-337 event-body binding for bundle.revision_completed under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or s"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24683,
-              "line_end": 24683,
+              "line_start": 24807,
+              "line_end": 24807,
               "quote": "NEW SP-337 event-body binding for bundle.revision_completed under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 634,
-              "line_end": 638,
-              "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n        "
+              "line_start": 746,
+              "line_end": 751,
+              "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
           "prior": {
@@ -1286,15 +1287,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24659,
-              "line_end": 24660,
+              "line_start": 24783,
+              "line_end": 24784,
               "quote": "NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_completed\",project_id,thread_id,bundle_id,revision_id,phase_sequence]\n"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24653,
-              "line_end": 24654,
+              "line_start": 24623,
+              "line_end": 24624,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
@@ -1313,15 +1314,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24656,
-              "line_end": 24659,
+              "line_start": 24780,
+              "line_end": 24783,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_completed\",project_id,thr"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-592",
-              "line_start": 24673,
-              "line_end": 24675,
+              "line_start": 24643,
+              "line_end": 24645,
               "quote": "replay_only_not_appendable;\n  compatibility history remains passive and cannot select the writer. EventRecord follows Contracts_V0.md#EventRecord\n  and Plans/event_record.schema.json, w"
             }
           ],
@@ -1340,8 +1341,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29828,
-              "line_end": 29829,
+              "line_start": 29757,
+              "line_end": 29758,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
@@ -1360,8 +1361,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30039,
-              "line_end": 30040,
+              "line_start": 30165,
+              "line_end": 30166,
               "quote": "mandatory coherent backup authority with original documents, annotations,\n  FileSafe results, immutable intent/results, seglog identity/dedupe and SP-286 custody. Restore admits one ver"
             },
             {
@@ -1374,16 +1375,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30050,
-              "line_end": 30051,
+              "line_start": 30176,
+              "line_end": 30177,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 394,
-              "line_end": 394,
-              "quote": "require(payload['durable'] is True and payload['index_durable'] is True, 'source_payload_not_durable')"
+              "line_start": 493,
+              "line_end": 493,
+              "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
           "prior": {
@@ -1421,23 +1422,23 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29808,
-              "line_end": 29810,
+              "line_start": 29737,
+              "line_end": 29739,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29810,
-              "line_end": 29811,
+              "line_start": 29739,
+              "line_end": 29740,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_completed",
-              "line_start": 874,
-              "line_end": 874,
-              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
+              "line_start": 948,
+              "line_end": 948,
+              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
           "prior": {
@@ -1450,34 +1451,34 @@
         "compatibility_withdrawal": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Withdrawal and authentic retained-source custody pass. B2 remains a sweep item: the local format rule accepts non-Z persisted offsets and rejects valid leap seconds on retained originals. Adopt shared CV-1101; no format repair is claimed here.",
+          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29834,
-              "line_end": 29835,
+              "line_start": 29960,
+              "line_end": 29961,
               "quote": "Withdrawal first cuts off new writer admission for bundle.revision_completed; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_revis"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-577",
-              "line_start": 29836,
-              "line_end": 29838,
+              "line_start": 29765,
+              "line_end": 29767,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_completed",
-              "line_start": 471,
-              "line_end": 473,
-              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(sce"
+              "line_start": 576,
+              "line_end": 577,
+              "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-253",
-              "line_start": 15895,
-              "line_end": 15895,
+              "line_start": 16017,
+              "line_end": 16017,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             }
           ],
@@ -1491,34 +1492,34 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 1 repairs the cited F1 source-join corpus. Full family CLI and targeted controls pass. Complete predicate inventory/duplicate-site proof awaits the shared guard tool; CV-1101 and NUMRULE adoption also remain pending. PARTIAL is retained.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 383,
-              "line_end": 383,
-              "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
+              "line_start": 481,
+              "line_end": 481,
+              "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 580,
-              "line_end": 580,
-              "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
+              "line_start": 688,
+              "line_end": 688,
+              "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 450,
-              "line_end": 450,
+              "line_start": 560,
+              "line_end": 560,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 553,
-              "line_end": 553,
+              "line_start": 658,
+              "line_end": 658,
               "quote": "schema_references(schema)"
             },
             {
@@ -1566,9 +1567,9 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_completed",
-              "line_start": 874,
-              "line_end": 874,
-              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
+              "line_start": 948,
+              "line_end": 948,
+              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
           "prior": {
@@ -1672,8 +1673,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-593",
-          "line_start": 24722,
-          "line_end": 24723,
+          "line_start": 24846,
+          "line_end": 24847,
           "quote": "bundle.revision_interrupted` has payload schema Plans/event_payloads/bundle_revision/revision_interrupted.schema.json,\n  schema_id pm.event_payload.bundle.revision_interrupted.v1, schem"
         }
       ],
@@ -1719,8 +1720,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24722,
-              "line_end": 24723,
+              "line_start": 24846,
+              "line_end": 24847,
               "quote": "bundle.revision_interrupted` has payload schema Plans/event_payloads/bundle_revision/revision_interrupted.schema.json,\n  schema_id pm.event_payload.bundle.revision_interrupted.v1, schem"
             }
           ],
@@ -1739,44 +1740,44 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24733,
-              "line_end": 24736,
+              "line_start": 24857,
+              "line_end": 24860,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_interrupted\",project_id,t"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29892,
-              "line_end": 29894,
+              "line_start": 29722,
+              "line_end": 29724,
               "quote": "SP-286 and CV-339 including strict full-value v2\n  resolution, SP-336/SP-347 durability classes, and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. NEW owner contract\n  under DL-045: produ"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30050,
-              "line_end": 30051,
+              "line_start": 30176,
+              "line_end": 30177,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24760,
-              "line_end": 24760,
+              "line_start": 24884,
+              "line_end": 24884,
               "quote": "NEW SP-337 event-body binding for bundle.revision_interrupted under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24760,
-              "line_end": 24760,
+              "line_start": 24884,
+              "line_end": 24884,
               "quote": "NEW SP-337 event-body binding for bundle.revision_interrupted under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, nev"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 634,
-              "line_end": 638,
-              "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n        "
+              "line_start": 746,
+              "line_end": 751,
+              "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
           "prior": {
@@ -1828,15 +1829,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24736,
-              "line_end": 24736,
+              "line_start": 24860,
+              "line_end": 24860,
               "quote": "NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_interrupted\",project_id,thread_id,bundle_id,revision_id,phase_sequence"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24730,
-              "line_end": 24731,
+              "line_start": 24623,
+              "line_end": 24624,
               "quote": "scope_kind=project, project_id and thread_id equal payload values, run_id/attempt_id are null; application or\n  focus fallback is refused. actor_ref names the authenticated review owner"
             }
           ],
@@ -1855,15 +1856,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24733,
-              "line_end": 24736,
+              "line_start": 24857,
+              "line_end": 24860,
               "quote": "replay_policy=dedupe_by_idempotency_key.\n\n\n  NEW technical identity contract under DL-045: identity bytes are UTF-8 of the compact JSON array [\"bundle.revision_interrupted\",project_id,t"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-593",
-              "line_start": 24751,
-              "line_end": 24752,
+              "line_start": 24875,
+              "line_end": 24876,
               "quote": "replay_only_not_appendable; compatibility history remains passive and cannot select the writer. EventRecord\n  follows Contracts_V0.md#EventRecord and Plans/event_record.schema.json, wit"
             }
           ],
@@ -1882,8 +1883,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29927,
-              "line_end": 29928,
+              "line_start": 29757,
+              "line_end": 29758,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION. Candidate classes are Case L-3 receipt/audit authority/source\n  lineage versus Chat content for this Deep Plan review history; no exact "
             }
           ],
@@ -1902,8 +1903,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30039,
-              "line_end": 30040,
+              "line_start": 30165,
+              "line_end": 30166,
               "quote": "mandatory coherent backup authority with original documents, annotations,\n  FileSafe results, immutable intent/results, seglog identity/dedupe and SP-286 custody. Restore admits one ver"
             },
             {
@@ -1916,16 +1917,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-579",
-              "line_start": 30050,
-              "line_end": 30051,
+              "line_start": 30176,
+              "line_end": 30177,
               "quote": "SP-340 places revision_run in the canonical redb file, runs_and_goals storage group with its existing 4 GiB advisory\n  canonical budget, and max_value_bytes=16384."
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 394,
-              "line_end": 394,
-              "quote": "require(payload['durable'] is True and payload['index_durable'] is True, 'source_payload_not_durable')"
+              "line_start": 493,
+              "line_end": 493,
+              "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
           "prior": {
@@ -1963,23 +1964,23 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29907,
-              "line_end": 29909,
+              "line_start": 29737,
+              "line_end": 29739,
               "quote": "SP-278 and reuses the existing\n  projector.storage.event_record_index@1.0.0 and reader.storage.event_record_index@1.0.0; their physical checkpoint\n  is event_record_index_checkpoint.v1:"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29909,
-              "line_end": 29910,
+              "line_start": 29739,
+              "line_end": 29740,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}, value pm.storage_value.event_record_index_checkpoint.v1@1.0.0,\n  and lookup rows are event_record_index.v2 in the current selecte"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_interrupted",
-              "line_start": 874,
-              "line_end": 874,
-              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
+              "line_start": 948,
+              "line_end": 948,
+              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
           "prior": {
@@ -1992,34 +1993,34 @@
         "compatibility_withdrawal": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Withdrawal and authentic retained-source custody pass. B2 remains a sweep item: the local format rule accepts non-Z persisted offsets and rejects valid leap seconds on retained originals. Adopt shared CV-1101; no format repair is claimed here.",
+          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29933,
-              "line_end": 29934,
+              "line_start": 30059,
+              "line_end": 30060,
               "quote": "Withdrawal first cuts off new writer admission for bundle.revision_interrupted; drain or fence its pending append\n  work under the original receipt gate, then withdraw reader.bundle_rev"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-578",
-              "line_start": 29935,
-              "line_end": 29937,
+              "line_start": 29765,
+              "line_end": 29767,
               "quote": "replacement reader must explicitly\n  support retained schemas and authenticate complete SP-278 rebuild/currentness before publication. Cutoff does\n  not delete original events or reset "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_interrupted",
-              "line_start": 471,
-              "line_end": 473,
-              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(sce"
+              "line_start": 576,
+              "line_end": 577,
+              "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-253",
-              "line_start": 15895,
-              "line_end": 15895,
+              "line_start": 16017,
+              "line_end": 16017,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             }
           ],
@@ -2033,34 +2034,34 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 1 repairs the cited F1 source-join corpus. Full family CLI and targeted controls pass. Complete predicate inventory/duplicate-site proof awaits the shared guard tool; CV-1101 and NUMRULE adoption also remain pending. PARTIAL is retained.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 383,
-              "line_end": 383,
-              "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
+              "line_start": 481,
+              "line_end": 481,
+              "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 580,
-              "line_end": 580,
-              "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
+              "line_start": 688,
+              "line_end": 688,
+              "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 450,
-              "line_end": 450,
+              "line_start": 560,
+              "line_end": 560,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 553,
-              "line_end": 553,
+              "line_start": 658,
+              "line_end": 658,
               "quote": "schema_references(schema)"
             },
             {
@@ -2108,9 +2109,9 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "bundle.revision_interrupted",
-              "line_start": 874,
-              "line_end": 874,
-              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
+              "line_start": 948,
+              "line_end": 948,
+              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
           "prior": {
@@ -2209,8 +2210,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 24948,
-              "line_end": 24948,
+              "line_start": 25072,
+              "line_end": 25072,
               "quote": "prepared without admission."
             },
             {
@@ -2236,8 +2237,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 24950,
-              "line_end": 24950,
+              "line_start": 25074,
+              "line_end": 25074,
               "quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,"
             }
           ],
@@ -2256,8 +2257,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 24978,
-              "line_end": 24978,
+              "line_start": 25102,
+              "line_end": 25102,
               "quote": "Producer emitter.wizard_blocked@1.0.0 is the responsible Planning Wizard component''s observer of its original"
             }
           ],
@@ -2276,8 +2277,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 24969,
-              "line_end": 24969,
+              "line_start": 25093,
+              "line_end": 25093,
               "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_blocked.schema.json are required-present, root additionalProperties=false,"
             },
             {
@@ -2303,8 +2304,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 24995,
-              "line_end": 24995,
+              "line_start": 24935,
+              "line_end": 24935,
               "quote": "NEW identity recipe"
             }
           ],
@@ -2323,8 +2324,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25003,
-              "line_end": 25003,
+              "line_start": 25127,
+              "line_end": 25127,
               "quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,"
             }
           ],
@@ -2343,15 +2344,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25085,
-              "line_end": 25085,
+              "line_start": 25209,
+              "line_end": 25209,
               "quote": "Retention is explicit: event retention_policy_ref=PENDING_RETENTION_DECISION. The original wizard_blocked_evidence"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25089,
-              "line_end": 25089,
+              "line_start": 25213,
+              "line_end": 25213,
               "quote": "Exact question: For wizard.blocked event history, which Case L-3 class/lifetime applies: planning/chat"
             }
           ],
@@ -2370,8 +2371,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25036,
-              "line_end": 25036,
+              "line_start": 25160,
+              "line_end": 25160,
               "quote": "NEW original custody source wizard_blocked_evidence is materialized in Plans/storage_value_registry.json under"
             }
           ],
@@ -2390,8 +2391,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25019,
-              "line_end": 25019,
+              "line_start": 25143,
+              "line_end": 25143,
               "quote": "The planning component''s immutable observation has kind blockage_recorded or repair_attempt_completed and subject_kind=planning_run."
             }
           ],
@@ -2410,8 +2411,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25071,
-              "line_end": 25071,
+              "line_start": 25195,
+              "line_end": 25195,
               "quote": "NEW passive operating consumer reader.wizard_blocked_history@1.0.0 selects only wizard.blocked at this exact supported"
             }
           ],
@@ -2425,13 +2426,13 @@
         "compatibility_withdrawal": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "CV-596 specifies retained-original dispatch, current-state independence, writer cutoff/drain, exact reader withdrawal and complete replacement rebuild; inherited B2 timestamp behavior awaits CV-1101.",
+          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25098,
-              "line_end": 25098,
+              "line_start": 25222,
+              "line_end": 25222,
               "quote": "Compatibility/withdrawal for wizard.blocked alone: dispatch only explicitly supported exact family/schema/version;"
             }
           ],
@@ -2445,20 +2446,20 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 1 repairs F2 dependent-copy/compound negatives and adds the F3 authenticated topic-subject witness. Full family CLI and targeted controls pass. Complete predicate inventory/duplicate-site proof awaits the shared guard tool; CV-1101 and NUMRULE adoption also remain pending. PARTIAL is retained.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-596",
-              "line_start": 25109,
-              "line_end": 25109,
+              "line_start": 25233,
+              "line_end": 25233,
               "quote": "Positive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json and scripts/pm_dcw_blockage_fixtures.py,"
             },
             {
               "path": "scripts/pm_dcw_blockage_events.py",
               "unit": "main",
-              "line_start": 315,
-              "line_end": 315,
+              "line_start": 296,
+              "line_end": 296,
               "quote": "guard_isolation='B3_SWEEP',"
             }
           ],
@@ -2481,8 +2482,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-596",
-          "line_start": 24948,
-          "line_end": 24948,
+          "line_start": 25072,
+          "line_end": 25072,
           "quote": "NEWLY AUTHORED OWNER CONTRACT for wizard.blocked under DL-045 and DL-431; prepared without admission."
         }
       ],
@@ -2534,8 +2535,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-595",
-          "line_start": 24866,
-          "line_end": 24873,
+          "line_start": 24990,
+          "line_end": 24997,
           "quote": "wizard.deferred_payload.loaded Payload And Identity\n\n```yaml\nplan_unit_id: CV-595\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Contracts_V0.md\ncanonical_text: 'wizard.deferr"
         }
       ],
@@ -2580,8 +2581,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24866,
-              "line_end": 24873,
+              "line_start": 24990,
+              "line_end": 24997,
               "quote": "wizard.deferred_payload.loaded Payload And Identity\n\n```yaml\nplan_unit_id: CV-595\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Contracts_V0.md\ncanonical_text: 'wizard.deferr"
             }
           ],
@@ -2600,50 +2601,50 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24909,
-              "line_end": 24909,
+              "line_start": 25033,
+              "line_end": 25033,
               "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30137,
-              "line_end": 30137,
+              "line_start": 30263,
+              "line_end": 30263,
               "quote": "Observe the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun intake child. The original successful open event and its exact first receip"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30116,
-              "line_end": 30116,
+              "line_start": 30242,
+              "line_end": 30242,
               "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384. The closed source schema "
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24909,
-              "line_end": 24909,
+              "line_start": 25033,
+              "line_end": 25033,
               "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24909,
-              "line_end": 24909,
+              "line_start": 25033,
+              "line_end": 25033,
               "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 634,
-              "line_end": 638,
-              "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n        "
+              "line_start": 746,
+              "line_end": 751,
+              "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 685,
-              "line_end": 685,
+              "line_start": 802,
+              "line_end": 802,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             }
           ],
@@ -2703,15 +2704,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24884,
-              "line_end": 24885,
+              "line_start": 25008,
+              "line_end": 25009,
               "quote": "NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON [\"wizard.deferred_payload.loaded\",project_id,planning_run_id,thread_id,request_id]\n  with en"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24876,
-              "line_end": 24877,
+              "line_start": 25000,
+              "line_end": 25001,
               "quote": "scope_kind=project; envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id\n  and requested/effective account refs are null because this obser"
             }
           ],
@@ -2730,15 +2731,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24909,
-              "line_end": 24909,
+              "line_start": 25033,
+              "line_end": 25033,
               "quote": "NEW SP-337 event-body binding for wizard.deferred_payload.loaded under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-595",
-              "line_start": 24891,
-              "line_end": 24893,
+              "line_start": 25015,
+              "line_end": 25017,
               "quote": "replay_only_not_appendable. Passive readers cannot emit. Observe\n  the existing successful acceptance/loading result of one PWIZ-001 canonical seed into the actual current PlanningRun\n "
             }
           ],
@@ -2757,8 +2758,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30122,
-              "line_end": 30122,
+              "line_start": 30248,
+              "line_end": 30248,
               "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody at one verified"
             }
           ],
@@ -2777,8 +2778,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30122,
-              "line_end": 30122,
+              "line_start": 30248,
+              "line_end": 30248,
               "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody at one verified"
             },
             {
@@ -2791,22 +2792,22 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30116,
-              "line_end": 30116,
+              "line_start": 30242,
+              "line_end": 30242,
               "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384. The closed source schema "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 394,
-              "line_end": 394,
-              "quote": "require(payload['durable'] is True and payload['index_durable'] is True, 'source_payload_not_durable')"
+              "line_start": 493,
+              "line_end": 493,
+              "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 685,
-              "line_end": 685,
+              "line_start": 802,
+              "line_end": 802,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             }
           ],
@@ -2845,23 +2846,23 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30141,
-              "line_end": 30141,
+              "line_start": 30267,
+              "line_end": 30267,
               "quote": "The independent passive consumer is `reader.wizard_deferred_payload_loaded_history@1.0.0`, selecting only this exact event/schema/version and authorized actual Project/PlanningRun/child/request. It ex"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30141,
-              "line_end": 30141,
+              "line_start": 30267,
+              "line_end": 30267,
               "quote": "The independent passive consumer is `reader.wizard_deferred_payload_loaded_history@1.0.0`, selecting only this exact event/schema/version and authorized actual Project/PlanningRun/child/request. It ex"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 874,
-              "line_end": 874,
-              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
+              "line_start": 948,
+              "line_end": 948,
+              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
           "prior": {
@@ -2874,34 +2875,34 @@
         "compatibility_withdrawal": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Withdrawal and authentic retained-source custody pass. B2 remains a sweep item: the local format rule accepts non-Z persisted offsets and rejects valid leap seconds on retained originals. Adopt shared CV-1101; no format repair is claimed here.",
+          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30143,
-              "line_end": 30143,
+              "line_start": 30269,
+              "line_end": 30269,
               "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_deferred_payload_loaded_"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Deferred Payload Loaded Original Custody",
-              "line_start": 30143,
-              "line_end": 30143,
+              "line_start": 30269,
+              "line_end": 30269,
               "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_deferred_payload_loaded_history@1.0.0` "
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 471,
-              "line_end": 473,
-              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(sce"
+              "line_start": 576,
+              "line_end": 577,
+              "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-253",
-              "line_start": 15895,
-              "line_end": 15895,
+              "line_start": 16017,
+              "line_end": 16017,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             }
           ],
@@ -2915,34 +2916,34 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 1 repairs the cited F1 source-join corpus. Full family CLI and targeted controls pass. Complete predicate inventory/duplicate-site proof awaits the shared guard tool; CV-1101 and NUMRULE adoption also remain pending. PARTIAL is retained.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 383,
-              "line_end": 383,
-              "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
+              "line_start": 481,
+              "line_end": 481,
+              "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 580,
-              "line_end": 580,
-              "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
+              "line_start": 688,
+              "line_end": 688,
+              "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 450,
-              "line_end": 450,
+              "line_start": 560,
+              "line_end": 560,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 553,
-              "line_end": 553,
+              "line_start": 658,
+              "line_end": 658,
               "quote": "schema_references(schema)"
             },
             {
@@ -2990,8 +2991,8 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "opened_source_custody",
-              "line_start": 685,
-              "line_end": 685,
+              "line_start": 802,
+              "line_end": 802,
               "quote": "verify(opened_row, predecessor, 'read', None)"
             },
             {
@@ -3004,9 +3005,9 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.deferred_payload.loaded",
-              "line_start": 874,
-              "line_end": 874,
-              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
+              "line_start": 948,
+              "line_end": 948,
+              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
           "prior": {
@@ -3111,8 +3112,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-594",
-          "line_start": 24793,
-          "line_end": 24800,
+          "line_start": 24917,
+          "line_end": 24924,
           "quote": "wizard.opened Payload And Identity\n\n```yaml\nplan_unit_id: CV-594\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Contracts_V0.md\ncanonical_text: 'wizard.opened has the closed p"
         }
       ],
@@ -3157,8 +3158,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24793,
-              "line_end": 24800,
+              "line_start": 24917,
+              "line_end": 24924,
               "quote": "wizard.opened Payload And Identity\n\n```yaml\nplan_unit_id: CV-594\nunit_type: requirement\nstatus: accepted\nowner_doc: Plans/Contracts_V0.md\ncanonical_text: 'wizard.opened has the closed p"
             }
           ],
@@ -3177,44 +3178,44 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24834,
-              "line_end": 24834,
+              "line_start": 24958,
+              "line_end": 24958,
               "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JS"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30120,
-              "line_end": 30120,
+              "line_start": 30246,
+              "line_end": 30246,
               "quote": "SP-286/CV-339 full-value v2 receipt resolution, SP-336/SP-347 durability and Case L-2/SP-026/SP-236 SeglogFrameV2 bytes. Order is exact-family admission/current owner guards, original s"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30116,
-              "line_end": 30116,
+              "line_start": 30242,
+              "line_end": 30242,
               "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24834,
-              "line_end": 24834,
+              "line_start": 24958,
+              "line_end": 24958,
               "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JS"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24834,
-              "line_end": 24834,
+              "line_start": 24958,
+              "line_end": 24958,
               "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON charac"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "canonical_json/exact_equal",
-              "line_start": 634,
-              "line_end": 638,
-              "quote": "def canonical_json(value, sort_keys=False):\n    def domain(item):\n        require(type(item) in (type(None), bool, int, str, list, dict), 'integer_json_domain')\n        if type(item) is dict:\n        "
+              "line_start": 746,
+              "line_end": 751,
+              "quote": "def canonical_json(value, sort_keys=False):\n\n    def domain(item):\n        guard_rows.enforce('O196', {'site': 'O196', 'code': 'integer_json_domain', 'v0': type(item).__name__, 'v1': type(None).__name__})\n        if type(item) is dict:\n            for key, child in item.items():"
             }
           ],
           "prior": {
@@ -3273,15 +3274,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24811,
-              "line_end": 24812,
+              "line_start": 24935,
+              "line_end": 24936,
               "quote": "NEW identity recipe for this exact family: digest is lowercase SHA-256 of UTF-8 compact JSON [\"wizard.opened\",project_id,planning_run_id,thread_id,request_id]\n  with ensure_ascii=false "
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24802,
-              "line_end": 24804,
+              "line_start": 24926,
+              "line_end": 24928,
               "quote": "scope_kind=project;\n  envelope project_id/thread_id equal the actual source child and payload; run_id/node_id/attempt_id and requested/effective\n  account refs are null because this obs"
             }
           ],
@@ -3300,15 +3301,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24834,
-              "line_end": 24834,
+              "line_start": 24958,
+              "line_end": 24958,
               "quote": "NEW SP-337 event-body binding for wizard.opened under DL-045: measure the complete logical body using the exact SP-026 canonical MessagePack bytes Storage stores, never JSON character or serialized JS"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-594",
-              "line_start": 24818,
-              "line_end": 24819,
+              "line_start": 24942,
+              "line_end": 24943,
               "quote": "replay_only_not_appendable. Passive readers cannot emit. Observe the existing successful open result for\n  the real Project and actual current PlanningRun intake child, after owner rout"
             }
           ],
@@ -3327,8 +3328,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30122,
-              "line_end": 30124,
+              "line_start": 30248,
+              "line_end": 30250,
               "quote": "retention_policy_ref=PENDING_RETENTION_DECISION, with Case L-3 receipt/audit/source-lineage versus planning/chat-content candidates.\n\nThe independent passive consumer is `reader.wizard_"
             }
           ],
@@ -3347,8 +3348,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30122,
-              "line_end": 30122,
+              "line_start": 30248,
+              "line_end": 30248,
               "quote": "Mandatory coherent backup includes this non-rebuildable source, original command/child/seed/context evidence, seglog permanent identities and SP-286 original full-value receipt custody "
             },
             {
@@ -3361,16 +3362,16 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30116,
-              "line_end": 30116,
+              "line_start": 30242,
+              "line_end": 30242,
               "quote": "For this exact source family, SP-340 binds the canonical redb file, runs_and_goals storage group and its existing 4 GiB advisory canonical budget, with max_value_bytes=16384."
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 394,
-              "line_end": 394,
-              "quote": "require(payload['durable'] is True and payload['index_durable'] is True, 'source_payload_not_durable')"
+              "line_start": 493,
+              "line_end": 493,
+              "quote": "guard_rows.enforce('O146', {'site': 'O146', 'code': 'source_payload_not_durable', 'v0': payload['durable']})"
             }
           ],
           "prior": {
@@ -3408,23 +3409,23 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30124,
-              "line_end": 30124,
+              "line_start": 30250,
+              "line_end": 30250,
               "quote": "SP-278, `projector.storage.event_record_index@1.0.0`, `reader.storage.event_record_index@1.0.0`, `event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_rec"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30124,
-              "line_end": 30124,
+              "line_start": 30250,
+              "line_end": 30250,
               "quote": "event_record_index_checkpoint.v1:{storage_instance_id}` and `pm.storage_value.event_record_index_checkpoint.v1@1.0.0`. The generic projector atomically commits index rows and its prior-"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.opened",
-              "line_start": 874,
-              "line_end": 874,
-              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
+              "line_start": 948,
+              "line_end": 948,
+              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
           "prior": {
@@ -3437,34 +3438,34 @@
         "compatibility_withdrawal": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Withdrawal and authentic retained-source custody pass. B2 remains a sweep item: the local format rule accepts non-Z persisted offsets and rejects valid leap seconds on retained originals. Adopt shared CV-1101; no format repair is claimed here.",
+          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30126,
-              "line_end": 30126,
+              "line_start": 30252,
+              "line_end": 30252,
               "quote": "Withdrawal cuts off this exact writer admission first, drains or fences pending original slots under their original receipt gates, then withdraws `reader.wizard_opened_history@1.0.0` fr"
             },
             {
               "path": "Plans/storage-plan.md",
               "unit": "Wizard Opened Original Custody",
-              "line_start": 30126,
-              "line_end": 30126,
+              "line_start": 30252,
+              "line_end": 30252,
               "quote": "replacement reader explicitly supports retained schemas and authenticates complete SP-278 coverage/current root/generation/frontier before publication; gaps, stale CAS/tokens, unsupport"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.opened",
-              "line_start": 471,
-              "line_end": 473,
-              "quote": "supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        require(exact_equal(supplied_original, original_event), 'original_full_value')\n        scenario=copy.deepcopy(sce"
+              "line_start": 576,
+              "line_end": 577,
+              "quote": "        supplied_original = dict(event, replay_policy=original_event['replay_policy'])\n        guard_rows.enforce('O185', {'site': 'O185', 'code': 'original_full_value', 'v0': typed_observation(supplied_original), 'v1': typed_observation(original_event)})"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-253",
-              "line_start": 15895,
-              "line_end": 15895,
+              "line_start": 16017,
+              "line_end": 16017,
               "quote": "persisted timestamps are UTC ISO-8601 values with Z"
             }
           ],
@@ -3478,34 +3479,34 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 1 repairs the cited F1 source-join corpus. Full family CLI and targeted controls pass. Complete predicate inventory/duplicate-site proof awaits the shared guard tool; CV-1101 and NUMRULE adoption also remain pending. PARTIAL is retained.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "source_storage",
-              "line_start": 383,
-              "line_end": 383,
-              "quote": "require(len(canonical_msgpack(stored)) <= profile['max_value_bytes'], 'refuse_oversized_source')"
+              "line_start": 481,
+              "line_end": 481,
+              "quote": "guard_rows.enforce('O140', {'site': 'O140', 'code': 'refuse_oversized_source', 'v0': canonical_msgpack(stored), 'v1': profile['max_value_bytes']})"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "full checker",
-              "line_start": 580,
-              "line_end": 580,
-              "quote": "assert outcome==case['expected'], (row['event_type'],case['case_id'],case['expected'],outcome)"
+              "line_start": 688,
+              "line_end": 688,
+              "quote": "assert outcome == case['expected'], (row['event_type'], case['case_id'], case['expected'], outcome)"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "verify",
-              "line_start": 450,
-              "line_end": 450,
+              "line_start": 560,
+              "line_end": 560,
               "quote": "writer_policy(scenario['retry_request']['replay_policy'])"
             },
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "run",
-              "line_start": 553,
-              "line_end": 553,
+              "line_start": 658,
+              "line_end": 658,
               "quote": "schema_references(schema)"
             },
             {
@@ -3553,9 +3554,9 @@
             {
               "path": "scripts/pm_dcw_event_oracles.py",
               "unit": "wizard.opened",
-              "line_start": 874,
-              "line_end": 874,
-              "quote": "    require(len(selected) == 1 and exact_equal(selected[0]['event'], event), 'index_event_join')"
+              "line_start": 948,
+              "line_end": 948,
+              "quote": "guard_rows.enforce('O232', {'site': 'O232', 'code': 'index_event_join', 'v0': selected})"
             }
           ],
           "prior": {
@@ -3654,8 +3655,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25167,
-              "line_end": 25167,
+              "line_start": 25072,
+              "line_end": 25072,
               "quote": "prepared without admission."
             },
             {
@@ -3681,8 +3682,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25169,
-              "line_end": 25169,
+              "line_start": 25074,
+              "line_end": 25074,
               "quote": "Semantic owner is current Plans/Planning_Wizard.md#PWIZ-002,"
             }
           ],
@@ -3701,8 +3702,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25196,
-              "line_end": 25196,
+              "line_start": 25323,
+              "line_end": 25323,
               "quote": "Producer emitter.wizard_unblocked@1.0.0 is the responsible Planning Wizard component''s observer of its original"
             }
           ],
@@ -3721,8 +3722,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25187,
-              "line_end": 25187,
+              "line_start": 25314,
+              "line_end": 25314,
               "quote": "All properties of Plans/event_payloads/planning_wizard/wizard_unblocked.schema.json are required-present, root"
             },
             {
@@ -3748,8 +3749,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25213,
-              "line_end": 25213,
+              "line_start": 24935,
+              "line_end": 24935,
               "quote": "NEW identity recipe"
             }
           ],
@@ -3768,8 +3769,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25221,
-              "line_end": 25221,
+              "line_start": 25127,
+              "line_end": 25127,
               "quote": "Retry compares exactly the producer-owned semantic fields enumerated by CV-339: event_type, scope_kind, project_id,"
             }
           ],
@@ -3788,15 +3789,15 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25304,
-              "line_end": 25304,
+              "line_start": 25431,
+              "line_end": 25431,
               "quote": "Retention is explicit: event retention_policy_ref=PENDING_RETENTION_DECISION. The original wizard_unblocked_evidence"
             },
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25308,
-              "line_end": 25308,
+              "line_start": 25435,
+              "line_end": 25435,
               "quote": "Exact question: For wizard.unblocked event history, which Case L-3 class/lifetime applies: planning/chat"
             }
           ],
@@ -3815,8 +3816,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25255,
-              "line_end": 25255,
+              "line_start": 25382,
+              "line_end": 25382,
               "quote": "NEW original custody source wizard_unblocked_evidence is materialized in Plans/storage_value_registry.json under"
             }
           ],
@@ -3835,8 +3836,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25237,
-              "line_end": 25237,
+              "line_start": 25364,
+              "line_end": 25364,
               "quote": "The planning component''s immutable conditions_cleared observation identifies the complete required conditions"
             }
           ],
@@ -3855,8 +3856,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25290,
-              "line_end": 25290,
+              "line_start": 25417,
+              "line_end": 25417,
               "quote": "NEW passive operating consumer reader.wizard_unblocked_history@1.0.0 selects only wizard.unblocked at this exact"
             }
           ],
@@ -3870,13 +3871,13 @@
         "compatibility_withdrawal": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "CV-597 specifies retained-original dispatch, current-state independence, writer cutoff/drain, exact reader withdrawal and complete replacement rebuild; inherited B2 timestamp behavior awaits CV-1101.",
+          "finding": "PARTIAL: current caller admission is separate from authenticated original-number dispatch and passive replay policy. Exact physical values and original custody remain checked. Timestamp profile/edition review is interim only, and native original authentication is NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25317,
-              "line_end": 25317,
+              "line_start": 25444,
+              "line_end": 25444,
               "quote": "Compatibility/withdrawal for wizard.unblocked alone: dispatch only explicitly supported exact family/schema/version;"
             }
           ],
@@ -3890,20 +3891,20 @@
         "positive_negative_oracles": {
           "status": "PARTIAL",
           "representation": "exact_normative_owner",
-          "finding": "Sweep part 1 repairs F2 dependent-copy/compound negatives and adds the F3 authenticated topic-subject witness. Full family CLI and targeted controls pass. Complete predicate inventory/duplicate-site proof awaits the shared guard tool; CV-1101 and NUMRULE adoption also remain pending. PARTIAL is retained.",
+          "finding": "PARTIAL: named Method B phase rows and complete-path regression witnesses are reported separately. Unproved rows and remaining complete-boundary refusals retain no isolation credit; aggregate schema-status rows do not prove individual schema keywords. Timestamp review is interim only; native campaigns remain NOT_RUN.",
           "evidence": [
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-597",
-              "line_start": 25328,
-              "line_end": 25328,
+              "line_start": 25233,
+              "line_end": 25233,
               "quote": "Positive/negative static oracles for this exact family are Plans/dcw_blockage_event_fixtures.json and scripts/pm_dcw_blockage_fixtures.py,"
             },
             {
               "path": "scripts/pm_dcw_blockage_events.py",
               "unit": "main",
-              "line_start": 315,
-              "line_end": 315,
+              "line_start": 296,
+              "line_end": 296,
               "quote": "guard_isolation='B3_SWEEP',"
             }
           ],
@@ -3926,8 +3927,8 @@
         {
           "path": "Plans/Contracts_V0.md",
           "unit": "CV-597",
-          "line_start": 25167,
-          "line_end": 25167,
+          "line_start": 25294,
+          "line_end": 25294,
           "quote": "NEWLY AUTHORED OWNER CONTRACT for wizard.unblocked under DL-045 and DL-432; prepared without admission."
         }
       ],

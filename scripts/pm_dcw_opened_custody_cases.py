@@ -20,10 +20,8 @@ def cases(row):
                       source_schema='Plans/dcw/wizard_open_evidence.schema.json',
                       schema='Plans/event_payloads/planning_wizard/wizard_opened.schema.json')
     path = opened_row['source_schema']
-    source_site = 'opened_source_custody:' + str(next(n.lineno for n in ast.walk(ast.parse(
-        (m.ROOT / 'scripts/pm_dcw_event_oracles.py').read_text())) if isinstance(n, ast.Call)
-        and isinstance(n.func, ast.Name) and n.func.id == 'require'
-        and isinstance(n.args[1], ast.Constant) and n.args[1].value == 'opened_source_missing'))
+    source_site = 'O197'  # Named Method B row; legacy line-number cuts are retired.
+
 
     def add(name, value, expected, guards=(), rules=(), defaults=(), reason='One predecessor custody invariant.'):
         for op in OPERATIONS:
@@ -73,7 +71,8 @@ def cases(row):
             guards = ['wizard_source:349']
             if type(value) is float:
                 guards.append('canonical_msgpack:codec_type:float')
-            add('prepared_sequence_' + name, s, 'schema', guards, rules,
+            add('prepared_sequence_' + name, s,
+                'latest_source_event' if field == 'sequence_id' and name in ('decimal', 'exponent') else 'schema', guards, rules,
                 reason='One prepared original sequence type/value: source schema, integer-only codec and exact prepared/original comparison are named duplicates. The codec mutant encodes actual float bytes; it does not repair the input.')
     for name, value in [('decimal', 1.0), ('exponent', float('1e0')), ('string', '1'), ('boolean', True),
                         ('null', None), ('array', []), ('object', {'value': 1})]:

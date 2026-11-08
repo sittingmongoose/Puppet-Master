@@ -44,7 +44,8 @@ def cases(row):
         value = copy.deepcopy(row['positive'])
         value['event']['replay_policy'] = 'projector_replay_only'
         value['event']['sequence_id'] = invalid
-        add('original_sequence_' + label, value, 'compatibility_read', 'schema', ['verify:472'],
+        add('original_sequence_' + label, value, 'compatibility_read',
+            'original_full_value' if label in ('decimal', 'exponent') else 'schema', ['verify:472'],
             schema_rules('Plans/event_record.schema.json', value['event']),
             'The integer schema and exact original-value comparison repeat the same type/authenticity invariant; only replay_policy is projected.')
 

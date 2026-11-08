@@ -45,34 +45,8 @@ def audit(family):
     for case in cases(row):
         record(case['case_id'], case['operation'], outcome(case['_value'], case['operation']), case['expected'])
 
-    # Diagnostic cuts rerun the new event-negative complement. In particular,
-    # the dispatch selector uses a shared refusal code; these observations are
-    # not a predicate-isolation proof. B3/shared-tool adoption owns that proof.
-    for cut in ('dispatch', 'version', 'additionalProperties', 'current_additionalProperties'):
-        require = m.require
-        if cut == 'dispatch':
-            m.require = lambda ok, code: None if code == 'index_source_dispatch' else require(ok, code)
-        elif cut == 'version':
-            document = copy.deepcopy(original_load(PATH)); document['properties']['schema_version'].pop('const')
-            m.load = lambda p: document if p == PATH else original_load(p)
-        elif cut == 'additionalProperties':
-            document = copy.deepcopy(original_load(PATH))
-            document['$defs']['run_started_1_0_0_compatibility_reader'].pop('additionalProperties')
-            m.load = lambda p: document if p == PATH else original_load(p)
-        else:
-            document = copy.deepcopy(original_load(PATH)); document.pop('additionalProperties')
-            m.load = lambda p: document if p == PATH else original_load(p)
-        try:
-            for case in cases(row):
-                own = ((cut == 'dispatch' and ('registered_schema_id_' in case['case_id'] or 'registered_unknown_version_id_' in case['case_id'])) or
-                       (cut == 'version' and 'registered_payload_version_' in case['case_id']) or
-                       (cut == 'additionalProperties' and 'registered_historical_payload_' in case['case_id']) or
-                       (cut == 'current_additionalProperties' and 'registered_payload_body_' in case['case_id']))
-                expected = 'accept' if own else case['expected']
-                record('predicate_cut_' + cut + '_' + case['case_id'], case['operation'],
-                       outcome(case['_value'], case['operation']), expected, predicate=cut)
-        finally:
-            m.require = require; m.load = original_load
+    # Generic dispatch/schema cuts are retired; only the gated Method B tool
+    # can grant row isolation credit. All uncut regressions remain below.
 
     value = mixed(row)
     document = original_load(PATH)

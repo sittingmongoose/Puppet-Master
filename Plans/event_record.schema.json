@@ -322,8 +322,7 @@
         },
         "sequence_id": {
           "type": "integer",
-          "minimum": 0,
-          "format": "pm-uint"
+          "minimum": 0
         },
         "producer_sequence_id": {
           "$ref": "#/$defs/nullable_non_negative_integer"
@@ -373,5 +372,5 @@
       }
     }
   },
-  "$comment": "DCW integer-only profile: pm-uint format validation is mandatory; integer domains refuse decimal/exponent floats and wrong types. JSON -0 is normalized to 0 before hashing; leading zeros are invalid JSON. Authenticate original values by exact types and canonical bytes."
+  "$comment": "CV-1100 governs current tokens and each declared integer slot. SP-1100 preserves physical types and the full owner uint64 domain. SP-1101 selects authenticated original resources/recipes; current numeric annotations never narrow a lawful frozen original. pm-uint enforces current/local integer slots where installed; raw -0 refuses. Timestamp review is separate."
 }
