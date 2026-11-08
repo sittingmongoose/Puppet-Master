@@ -93,6 +93,8 @@ def witnesses(root=dc.ROOT):
     yield ('integrity/baseline/table_order_errors', 'shared', [], (lambda: [e['check'] for e in dc.table_order_errors()]), 'integrity')
     for case in dc.integrity_cases(root):
         yield (case['case_id'], 'shared', [case['expected']], (lambda case=case: dc.evaluate_integrity(case, root)), 'integrity')
+    for case in dc.pm_collab_p2a_cases.integrity_controls(dc, root):
+        yield (case['case_id'], 'shared', [], (lambda case=case: dc.evaluate_integrity(case, root)), 'integrity')
 
 
 def outcome_matches(kind, expected, result):

@@ -2326,6 +2326,11 @@ def integrity_failures(root=ROOT):
         checks=evaluate_integrity(case,root)
         if set(checks)!={case["expected"]}:
             failures.append({"check":"integrity_oracle","case_id":case["case_id"],"expected":case["expected"],"found":checks})
+    # Valid counterparts that only a planted state reaches (sweep part 2A): each must report no failure.
+    for case in pm_collab_p2a_cases.integrity_controls(sys.modules[__name__], root):
+        checks=evaluate_integrity(case,root)
+        if checks:
+            failures.append({"check":"integrity_oracle","case_id":case["case_id"],"expected":[],"found":checks})
     return failures
 
 

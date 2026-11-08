@@ -284,3 +284,13 @@ def integrity_cases(dc, root):
     cases.append(dict(case_id="integrity:p2a:table_require_order", target="table_order_errors", expected="table_require_order",
                       texts={path: text.replace(a + b, b + a)}))
     return cases
+
+
+def integrity_controls(dc, root):
+    """Valid integrity inputs no baseline reaches: an admitted ledger row whose registry row equals its prepared row."""
+    ledger = copy.deepcopy(dc.load(dc.LEDGER_PATH, root))
+    registry = copy.deepcopy(dc.load(dc.REGISTRY_PATH, root))
+    ledger["rows"][0].update(admission_status="admitted_static_contract", authority_contract_ref="fixture:authority")
+    registry["families"].append(copy.deepcopy(ledger["rows"][0]["registry_row"]))
+    return [dict(case_id="integrity:p2a:control:admitted_row_equal", target="registry_membership_failures",
+                 overrides={dc.LEDGER_PATH: ledger, dc.REGISTRY_PATH: registry})]
