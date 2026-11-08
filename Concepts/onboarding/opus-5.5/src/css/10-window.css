@@ -711,6 +711,10 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55-pip] 
 .o55-opt-menu { display: flex; align-items: center; gap: 4px; }
 .o55-opt-menu > .o55-lookopt { flex: 1; min-width: 0; }
 .o55-lookmenu .o55-tipq { width: 18px; height: 18px; font-size: 10px; flex: none; }
+/* QA-2 in Retro's menu: its pixel face gives the cap trim above nothing to trim to (the span's box is unchanged
+   by it there, measured), and its ? stands a constant half pixel high in the 18 px square in both Retro looks;
+   set down by that much, in this menu only (Retro's pane dots centre by the trim as the other looks' do) */
+#pm-o55-onboarding[data-family="retro"] .o55-lookmenu .o55-tipq > span { translate: 0 0.05em; }
 /* FO-75: the row gap is 4px. Keep the 30px help target in its trailing padding,
    without letting its transparent hit layer cover the preceding option. */
 #pm-o55-onboarding .o55-lookmenu .o55-tipq::before { left: -4px; right: -8px; }

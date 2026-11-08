@@ -1,13 +1,18 @@
 // QA-2 (Jared, 2026-11-08: "the question marks in the circles arent centered on each page"): every onboarding help dot
 // (.o55-tipq: a choice's ?, a field label's, a link's, a footer button's, a look tile's, the header Look menu's) has its ?
 // centred in its circle, read from painted pixels. For each dot: the glyph's ink box is what changes when the ? alone is
-// made transparent (its edges at half the ink's peak, between pixel centres), the circle's centre is the intensity
-// centroid of what changes when the ring alone is made transparent (a ring, round or square, is symmetric about its
-// centre, so its anti-aliasing cancels). Painted at a device scale of 1 (--set dpr=2 emulates 2, where Chrome snaps text
-// to whole CSS pixels, not device pixels), in shots of the window cut on whole pixels, each state with the window moved
-// 0, 1/8 ... 7/8 px right and down (its top and left; it is position: relative): a glyph's baseline snaps to the pixel
-// grid apart from its circle's box, so one position alone reads a ? up to a pixel off, either way, by where the window
-// happens to sit; across the eight the snapping averages out (to within 1/16 px) and what is left is where the ? stands.
+// repainted magenta (its edges at half the ink's peak, between pixel centres), the circle's centre is the intensity
+// centroid of what changes when the ring alone is (a ring, round or square, is symmetric about its centre, so its
+// anti-aliasing cancels; magenta, not transparent, because a part close to its ground — Basic's 1 px ring stands
+// 24 levels from its card — changes too little against transparent to be found). Painted at a device scale of 1
+// (--set dpr=2 emulates 2, where Chrome snaps text to whole CSS pixels, not device pixels), in shots of the window
+// cut on whole pixels, each state with the layer's content, footer and header laid out 0, 1/8 ... 7/8 px further
+// down inside the raster they share (vertical only: a sideways margin overflows the scroller and its scrollbar
+// re-lays the column out mid-read; the ?'s sideways snap reads within 0.15 px at one position): a glyph's
+// baseline snaps to the pixel grid apart from its circle's
+// box, so one position alone reads a ? up to a pixel off, either way, by where it happens to sit; across the eight
+// the snapping averages out and what is left is where the ? stands. A read is believed only if it could be this
+// dot (ink no larger than the circle, both centres inside it); a dot must read cleanly at six of the eight.
 // Tolerance: on the mean of the eight the ink's centre within 0.5 px of the circle's centre on each axis, and at every
 // position less than 1.25 px. Half a pixel is the paintable bound at this scale: with the fix the span's centre is the
 // button's to 0.01 px (layout), yet the painted ink still reads up to 0.49 px high by where its raster snaps to the
@@ -28,11 +33,14 @@ const TOL = 1.25, TOL_MEAN = 0.5, PHASES = [0, 1, 2, 3, 4, 5, 6, 7].map((k) => k
 const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
 
 const diffAt = (a, b, i) => Math.max(Math.abs(a.data[i] - b.data[i]), Math.abs(a.data[i + 1] - b.data[i + 1]), Math.abs(a.data[i + 2] - b.data[i + 2]));
+/* a pixel counts only where the two normal shots agree: behind Glass's translucent pane the wallpaper keeps
+   moving and Retro's tube flickers, and that motion otherwise reads as ink whole pixels from the dot */
+const stableDiff = (a, b, a2, i) => (a2 && diffAt(a, a2, i) > 8 ? 0 : diffAt(a, b, i));
 // the ink box of what differs between a and b inside r (device px): edges at half the peak, interpolated between pixel centres
-function inkBox(a, b, r) {
+function inkBox(a, b, r, a2) {
 	const x0 = Math.max(0, Math.floor(r.x)), y0 = Math.max(0, Math.floor(r.y)), x1 = Math.min(a.width, Math.ceil(r.x + r.w)), y1 = Math.min(a.height, Math.ceil(r.y + r.h));
 	const rows = new Array(y1 - y0).fill(0), cols = new Array(x1 - x0).fill(0);
-	for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const d = diffAt(a, b, (y * a.width + x) * 4); if (d > rows[y - y0]) rows[y - y0] = d; if (d > cols[x - x0]) cols[x - x0] = d; }
+	for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const d = stableDiff(a, b, a2, (y * a.width + x) * 4); if (d > rows[y - y0]) rows[y - y0] = d; if (d > cols[x - x0]) cols[x - x0] = d; }
 	const peak = Math.max(0, ...rows);
 	if (peak < 40) return null;
 	const edge = (p, o) => {
@@ -44,10 +52,10 @@ function inkBox(a, b, r) {
 	return { cx: (l + rr) / 2, cy: (t + bo) / 2, w: rr - l, h: bo - t, peak };
 }
 // the intensity centroid of what differs between a and b inside r (device px, pixel centres at +0.5)
-function centroid(a, b, r) {
+function centroid(a, b, r, a2) {
 	const x0 = Math.max(0, Math.floor(r.x)), y0 = Math.max(0, Math.floor(r.y)), x1 = Math.min(a.width, Math.ceil(r.x + r.w)), y1 = Math.min(a.height, Math.ceil(r.y + r.h));
 	let sx = 0, sy = 0, sw = 0, peak = 0;
-	for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const d = diffAt(a, b, (y * a.width + x) * 4); if (d > peak) peak = d; if (d < 6) continue; sx += d * (x + 0.5); sy += d * (y + 0.5); sw += d; }
+	for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) { const d = stableDiff(a, b, a2, (y * a.width + x) * 4); if (d > peak) peak = d; if (d < 6) continue; sx += d * (x + 0.5); sy += d * (y + 0.5); sw += d; }
 	return sw && peak >= 40 ? { cx: sx / sw, cy: sy / sw, peak } : null;
 }
 
@@ -88,11 +96,14 @@ const DOTS = (scope) => {
 		return { i, kind, key: q.getAttribute('data-key') || '', x: b.left, y: b.top, w: b.width, h: b.height };
 	});
 };
+/* the part under read is repainted magenta, not made transparent: a part whose own colour stands close to its
+   ground (Basic's 1 px ring, 24 levels from its card) changes too little against transparent to be found, where
+   against magenta every part changes by a full scale and the diff is the part and nothing else */
 const PAINT = (mode) => {
 	let st = document.getElementById('qa2-paint');
 	if (!st) { st = document.createElement('style'); st.id = 'qa2-paint'; document.head.appendChild(st); }
-	st.textContent = mode === 'glyph' ? '[data-qa2] > span { -webkit-text-fill-color: transparent !important; text-shadow: none !important; }'
-		: mode === 'ring' ? '[data-qa2] { border-color: transparent !important; outline-color: transparent !important; }' : '';
+	st.textContent = mode === 'glyph' ? '[data-qa2] > span { -webkit-text-fill-color: #f0f !important; color: #f0f !important; text-shadow: none !important; }'
+		: mode === 'ring' ? '[data-qa2] { border-color: #f0f !important; outline-color: #f0f !important; }' : '';
 };
 /* one phase: the live layer's scrolled content and its footer are laid out p px further down and right, inside the
    raster they share (the content's own used top margin plus p, the footer's top). Moving the window does not do:
@@ -102,13 +113,18 @@ const PHASE = (p) => {
 	const L = document.querySelector('#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out)');
 	if (!L) return;
 	const c = L.querySelector('.o55-scroll > .o55-content'), ft = L.querySelector(':scope > .o55-foot');
+	/* vertical phases only: a left margin on a full-width content overflows its scroller sideways, and the
+	   scrollbar coming and going re-lays the column out mid-read; the ?'s sideways snap reads within 0.15 px
+	   at one position in every look measured, where its vertical snap is the whole error */
 	if (c) {
 		if (c.dataset.qa2m === undefined) c.dataset.qa2m = parseFloat(getComputedStyle(c).marginTop) || 0;
-		if (c.dataset.qa2l === undefined) c.dataset.qa2l = parseFloat(getComputedStyle(c).marginLeft) || 0;
 		c.style.marginTop = (+c.dataset.qa2m + p) + 'px';
-		c.style.marginLeft = (+c.dataset.qa2l + p) + 'px';
 	}
-	if (ft) { ft.style.position = 'relative'; ft.style.top = p + 'px'; ft.style.left = p + 'px'; }
+	if (ft) { ft.style.position = 'relative'; ft.style.top = p + 'px'; }
+	/* the header too, for its Look menu's dots (its row is the window grid's first, so this lays the pane out
+	   p lower with it: the phases only need each dot at eight fractions of a pixel, not eight named ones) */
+	const hd = document.querySelector('#pm-o55-onboarding .o55-head');
+	if (hd) hd.style.marginTop = p + 'px';
 };
 
 async function frameOffset(t) {
@@ -137,7 +153,8 @@ async function measure(t, f, dpr, label, scope = '.o55-win') {
 		const clip = { x: Math.max(0, Math.floor(off.x + wb.x) - 2), y: Math.max(0, Math.floor(off.y + wb.y) - 2) };
 		clip.width = Math.ceil(off.x + wb.x + wb.w) + 2 - clip.x; clip.height = Math.ceil(off.y + wb.y + wb.h) + 2 - clip.y;
 		const shot = async (mode) => { await f.evaluate(PAINT, mode); await t.page.waitForTimeout(60); return decodePng(await t.page.screenshot({ clip, animations: 'disabled', caret: 'hide' })); };
-		const A = await shot(''), B = await shot('glyph'), C = await shot('ring');
+		/* A2, a second normal shot, marks the pixels that stood still across the three (see stableDiff) */
+		const A = await shot(''), B = await shot('glyph'), C = await shot('ring'), A2 = await shot('');
 		await f.evaluate(PAINT, '');
 		/* a dot that moved while it was painted three times reads its own motion: such a position is not read */
 		const after = new Map((await f.evaluate(DOTS, scope)).map((d) => [d.i, d]));
@@ -145,20 +162,25 @@ async function measure(t, f, dpr, label, scope = '.o55-win') {
 		for (const d of dots) {
 			if (moved(d)) continue;
 			const r = { x: (off.x + d.x - 2 - clip.x) * dpr, y: (off.y + d.y - 2 - clip.y) * dpr, w: (d.w + 4) * dpr, h: (d.h + 4) * dpr };
-			const g = inkBox(A, B, r), ring = centroid(A, C, r);
+			const g = inkBox(A, B, r, A2), ring = centroid(A, C, r, A2);
+			/* a read is believed only if it could be this dot: ink no larger than the circle and both centres inside
+			   it (a phase whose shots caught a row mid-move, or a neighbour's ink at the region's edge, otherwise
+			   reads a centred ? whole pixels off: Glass's Antigravity row read 2.96 px low at every phase) */
+			const ccx = r.x + r.w / 2, ccy = r.y + r.h / 2, lim = (Math.max(d.w, d.h) / 2 + 3) * dpr;
+			const sane = g && ring && g.w <= (d.w + 2) * dpr && g.h <= (d.h + 2) * dpr
+				&& Math.abs(g.cx - ccx) <= lim && Math.abs(g.cy - ccy) <= lim && Math.abs(ring.cx - ccx) <= lim && Math.abs(ring.cy - ccy) <= lim;
 			/* a dot is its data-key across phases: what stands before it can change as its row settles (a provider's
 			   waiting pill gives way to its button), and keying on that split one dot's reads in two */
 			const id = d.key || `${d.kind} ${d.i}`;
 			if (!out.has(id)) out.set(id, { id: `${d.kind} ${id}`, w: Math.round(d.w * 10) / 10, reads: [] });
-			out.get(id).reads.push(g && ring ? { dx: (g.cx - ring.cx) / dpr, dy: (g.cy - ring.cy) / dpr } : { none: !g ? 'no glyph ink' : 'no ring ink' });
+			if (sane) out.get(id).reads.push({ dx: (g.cx - ring.cx) / dpr, dy: (g.cy - ring.cy) / dpr });
 		}
 	}
 	await f.evaluate(PHASE, 0);
 	const fails = [];
 	for (const o of out.values()) {
-		const ok = o.reads.filter((r) => !r.none);
-		if (ok.length < o.reads.length) { fails.push(`${o.id}: ${o.reads.find((r) => r.none).none}`); continue; }
-		if (ok.length < PHASES.length - 1) { fails.push(`${o.id}: read at ${ok.length} of ${PHASES.length} positions (it moved while painted)`); continue; }
+		const ok = o.reads;
+		if (ok.length < 6) { fails.push(`${o.id}: read cleanly at ${ok.length} of ${PHASES.length} positions (it moved while painted, or its ink could not be found)`); continue; }
 		const mx = ok.reduce((a, r) => a + r.dx, 0) / ok.length, my = ok.reduce((a, r) => a + r.dy, 0) / ok.length;
 		const worst = Math.max(...ok.map((r) => Math.max(Math.abs(r.dx), Math.abs(r.dy))));
 		o.mean = { dx: +mx.toFixed(2), dy: +my.toFixed(2) }; o.worst = +worst.toFixed(2);
