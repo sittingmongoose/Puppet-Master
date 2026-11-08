@@ -2005,7 +2005,7 @@
         "tests/test_pm_evidence_artifact_binding_modes.py",
         "tests/test_pm_working_notebook_contracts.py"
       ],
-      "line_count": 7359,
+      "line_count": 7362,
       "path": "Plans/Automated_Testing_System.md",
       "plan_unit_count": 79,
       "plan_unit_ids": [
@@ -2160,7 +2160,7 @@
         "wonderer_grilling_contract_coverage",
         "workflow_activation_original_source_or_lifetime_drift"
       ],
-      "sha256": "a36312a3a140ee158696c8421436510232ef073d73e6911a1a5c309c3527d997",
+      "sha256": "3fb84e00a7edf6e0f2a6338858e4e02a64697101fce6b248a0f5a9ddf4cde4cb",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 78,
@@ -2283,6 +2283,8 @@
         "python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake",
         "python3 scripts/pm-forge-backup-acceptance-verify.py",
         "python3 scripts/pm-integration-packet-audit.py census",
+        "python3 scripts/pm-memory-guard-tables.py --out <evidence-path>",
+        "python3 scripts/pm-memory-table-generate.py scripts --check",
         "python3 scripts/pm-new-contracts-verify.py",
         "python3 scripts/pm-onboarding-contracts.py --check",
         "python3 scripts/pm-plan-index.py validate",
@@ -21699,7 +21701,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-08T02:45:07Z",
+  "generated_at_utc": "2026-11-08T03:54:34Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {
