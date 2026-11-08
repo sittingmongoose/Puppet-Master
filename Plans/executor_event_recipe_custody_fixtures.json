@@ -2887,6 +2887,46 @@
       "recipe_version": "executor-json-integer-v0",
       "source_sha256": "527ff047cc8794acabf777b3a40ddfd65b6205404a1e73e0350c6dc880505788",
       "write_time_edition": "DX-before-format-calendar-fix8"
+    },
+    "df6936dc8b5f9a6f4a28bc951534d604a9ebcd531aa0ae543e6147d4738c4495": {
+      "recipe_version": "executor-jcs-binary64-v1",
+      "family": "attempt.completed",
+      "source_sha256": "df6936dc8b5f9a6f4a28bc951534d604a9ebcd531aa0ae543e6147d4738c4495",
+      "stored_identity": [
+        "executor:attempt.completed:v1:da3d791f2680dc59112adad05eb9adddacd3ad5b25770e2ae09ecd28c06ef30d",
+        "evt_executor_7829502c6a47a1746c05542669e1cdfbc0ab36d9a2f876057b02d7a83b57b80e"
+      ],
+      "write_time_edition": "DX-sweep-p2a"
+    },
+    "1721f88a6ec5353f6cbed1d2d99d51bb9b048165e40df7f3de6cecf2e82258d8": {
+      "recipe_version": "executor-v9",
+      "family": "attempt.completed",
+      "source_sha256": "1721f88a6ec5353f6cbed1d2d99d51bb9b048165e40df7f3de6cecf2e82258d8",
+      "stored_identity": [
+        "executor:attempt.completed:v1:da3d791f2680dc59112adad05eb9adddacd3ad5b25770e2ae09ecd28c06ef30d",
+        "evt_executor_7829502c6a47a1746c05542669e1cdfbc0ab36d9a2f876057b02d7a83b57b80e"
+      ],
+      "write_time_edition": "DX-sweep-p2a"
+    },
+    "27d533683850a09747d142699a2baed387ae3584cd4a4fa73ba76e485a06a86d": {
+      "recipe_version": "executor-jcs-binary64-v1",
+      "family": "attempt.completed",
+      "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "stored_identity": [
+        "executor:attempt.completed:v1:da3d791f2680dc59112adad05eb9adddacd3ad5b25770e2ae09ecd28c06ef30d",
+        "evt_executor_7829502c6a47a1746c05542669e1cdfbc0ab36d9a2f876057b02d7a83b57b80e"
+      ],
+      "write_time_edition": "DX-sweep-p2a"
+    },
+    "1b5d689f1774fd35c712acf13e557e2f20f239825db66fd33c49174fc0c0dd43": {
+      "recipe_version": "executor-json-integer-v0",
+      "family": "run.node_backoff_started",
+      "source_sha256": "1b5d689f1774fd35c712acf13e557e2f20f239825db66fd33c49174fc0c0dd43",
+      "stored_identity": [
+        "executor:run.node_backoff_started:v1:bd1e4c2a84b852ea1e956612d8d400bf4fe83eb43a43185ba5bd1e3de8d9dc07",
+        "evt_executor_ae36c9cd10d8a614425860f63c856427395a6c745ac009d5b465cdc8f8aa63e3"
+      ],
+      "write_time_edition": "DX-sweep-p2a"
     }
   }
 }

@@ -1,0 +1,2824 @@
+{
+  "schema_id": "pm.dx.sweep_p2a_witnesses.v1",
+  "authority": "Static single-defect witnesses for the DX guard tables; each names its valid seed and target row.",
+  "cases": [
+    {
+      "id": "AP02-append-once-policy",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "AP02_family_policy",
+      "defect": "current writer envelope replay_policy append_once (not the family dedupe policy)",
+      "changes": [
+        {
+          "path": "capture/envelope/replay_policy",
+          "value": "append_once"
+        }
+      ]
+    },
+    {
+      "id": "GR01-viewer-integer",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "GR01_subject_type",
+      "defect": "the reading viewer is the integer 7, not a string",
+      "changes": [
+        {
+          "path": "capture/viewer",
+          "value": 7
+        }
+      ]
+    },
+    {
+      "id": "GR02-viewer-empty",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "GR02_subject_nonempty",
+      "defect": "the reading viewer is the empty string",
+      "changes": [
+        {
+          "path": "capture/viewer",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "id": "EF01-effects-list",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "EF01_effects_object",
+      "defect": "committed post-state effects are a list, not an object",
+      "changes": [
+        {
+          "path": "capture/post_state/effects",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "EF04-effect-negative",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "EF04_observed_nonnegative",
+      "defect": "one committed effect count is -1",
+      "changes": [
+        {
+          "path": "capture/post_state/effects/worker_dispatches",
+          "value": -1
+        }
+      ]
+    },
+    {
+      "id": "EF07-effect-count",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "EF07_effects_equal",
+      "defect": "one committed effect count is 2 where the adapter commits 1",
+      "changes": [
+        {
+          "path": "capture/post_state/effects/terminal_publications",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "RV02-revision-negative",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "RV02_revision_nonnegative",
+      "defect": "the project record and its expected read both carry revision -1",
+      "changes": [
+        {
+          "path": "capture/records/project/revision",
+          "value": -1
+        },
+        {
+          "path": "capture/expected_revisions/project",
+          "value": -1
+        }
+      ]
+    },
+    {
+      "id": "GJ02-node-graph-revision-0",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "GJ02_node_revision_min",
+      "defect": "the node record names graph revision 0",
+      "changes": [
+        {
+          "path": "capture/records/node/body/workgraph_revision",
+          "value": 0
+        },
+        {
+          "path": "capture/records/node/sha256",
+          "value": "1559ff4dc6fbdeab2c4e27e970914fd7ede0037fef011f2508d992e7ce931e51"
+        }
+      ]
+    },
+    {
+      "id": "GJ04-run-graph-revision-0",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "GJ04_run_revision_min",
+      "defect": "the run record names graph revision 0",
+      "changes": [
+        {
+          "path": "capture/records/run/body/workgraph_revision",
+          "value": 0
+        },
+        {
+          "path": "capture/records/run/sha256",
+          "value": "ef79844aa9829de8b7302052598a581c50ea43bd97e4a0c24b7bd3a5a70b5875"
+        }
+      ]
+    },
+    {
+      "id": "NB03-restore-without-anchor",
+      "family": "node.blocked",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "NB03_restore_anchor",
+      "defect": "a restore-required block keeps its safe point but names no anchor_ref (every copy removed)",
+      "changes": [
+        {
+          "path": "payload/anchor_ref",
+          "delete": true
+        },
+        {
+          "path": "capture/envelope/payload/anchor_ref",
+          "delete": true
+        },
+        {
+          "path": "capture/records/operation/body/anchor_ref",
+          "delete": true
+        },
+        {
+          "path": "capture/records/operation/sha256",
+          "value": "b8bee0ce038f717436272f678a835e91f1510fa43d863d0141a4ce415ea6310a"
+        },
+        {
+          "path": "capture/dependencies/anchor_ref-001",
+          "delete": true
+        },
+        {
+          "path": "capture/dependency_refs/anchor_ref",
+          "delete": true
+        },
+        {
+          "path": "capture/transition/observed_payload/anchor_ref",
+          "delete": true
+        }
+      ]
+    },
+    {
+      "id": "RT02-failure-class",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "RT02_failure_class",
+      "defect": "the failure record alone names rate_limited",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/failure_class",
+          "value": "rate_limited"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "4a984034f56a31bf2644421a0c7b6786ecaf421f6d6b756d9948dca91e631d04"
+        }
+      ]
+    },
+    {
+      "id": "RT09-prior-attempt",
+      "family": "run.node_retry_scheduled",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "RT09_prior_attempt",
+      "defect": "the event and its retry record name another prior attempt than the failure and attempt records",
+      "changes": [
+        {
+          "path": "payload/prior_attempt_id",
+          "value": "other-attempt-001"
+        },
+        {
+          "path": "capture/envelope/payload/prior_attempt_id",
+          "value": "other-attempt-001"
+        },
+        {
+          "path": "capture/records/retry/body/prior_attempt_id",
+          "value": "other-attempt-001"
+        },
+        {
+          "path": "capture/records/retry/sha256",
+          "value": "fe2fd4b2ea156b05c5d26e22da9ffa05ebe5f3c3228898f152d5074810fb8f3f"
+        },
+        {
+          "path": "capture/transition/observed_payload/prior_attempt_id",
+          "value": "other-attempt-001"
+        }
+      ]
+    },
+    {
+      "id": "RT04-used-string",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "RT04_used_type",
+      "defect": "the retry counter is the string \"0\"",
+      "changes": [
+        {
+          "path": "capture/records/retry/body/used",
+          "value": "0"
+        },
+        {
+          "path": "capture/records/retry/sha256",
+          "value": "900142ffda277a7651829df651f040fcfadba398cac702d47d79aa4fc7028787"
+        }
+      ]
+    },
+    {
+      "id": "RT05-count-string",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "RT05_count_type",
+      "defect": "the failure retry_count_before is the string \"0\"",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/retry_count_before",
+          "value": "0"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "9b3b91dce742e09907a688ec3d254eb870729c99dea58e6b47df6710883cc29e"
+        }
+      ]
+    },
+    {
+      "id": "RF02-failure-storage-class",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "RF02_failure_storage_null",
+      "defect": "the provider_transient failure record alone names a Storage class",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/storage_io_class",
+          "value": "interrupted"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "0fbef92846cabd044fccda41efd8a4572cedd18b8162ed8ce018fccd4d663f16"
+        }
+      ]
+    },
+    {
+      "id": "RL02-limit-string",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "RL02_limit_type",
+      "defect": "the retry limit is the string \"3\"",
+      "changes": [
+        {
+          "path": "capture/records/retry/body/limit",
+          "value": "3"
+        },
+        {
+          "path": "capture/records/retry/sha256",
+          "value": "f614839a5dd809c89a97a34aae4646734a2dd12ec48ed58decc1fa470d6c4227"
+        }
+      ]
+    },
+    {
+      "id": "RK01-received-after-failure",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "RK01_received_failed",
+      "defect": "the response is recorded after the failure",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/response_received_at_utc",
+          "value": "2026-11-04T12:00:00.5Z"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "8b140d3c41dffc5077e128237bd91e4161a020d2bdcc7eed813db20d39c1aea0"
+        }
+      ]
+    },
+    {
+      "id": "RK03-scheduled-after-observation",
+      "family": "run.node_backoff_started",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "RK03_scheduled_observed",
+      "defect": "the retry is scheduled after the observation that reports it",
+      "changes": [
+        {
+          "path": "capture/records/retry/body/scheduled_at_utc",
+          "value": "2026-11-04T12:00:00.5Z"
+        },
+        {
+          "path": "capture/records/retry/sha256",
+          "value": "b9ad18e70fd3006cd44e8180a3f85e97d2b8257f29c30c7347cc6ddf8c7c3f85"
+        }
+      ]
+    },
+    {
+      "id": "RH01-header-integer",
+      "family": "run.node_retry_scheduled",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "rate-limit-original-Retry-After-delta-seconds"
+      },
+      "expected": "reject",
+      "row": "RH01_header_type",
+      "defect": "the original Retry-After header is the integer 30",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/retry_after_header",
+          "value": 30
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "76982c0a2cc0b0e3cee379a0a035342966bf3477a05811113d9d5e0d0f0d6517"
+        }
+      ]
+    },
+    {
+      "id": "RA03-refresh-before-failure",
+      "family": "run.node_retry_scheduled",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "classified-policy-auth_expired-retry-1"
+      },
+      "expected": "reject",
+      "row": "RA03_failed_refresh",
+      "defect": "the auth refresh completes before the failure",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/refresh/completed_at_utc",
+          "value": "2026-11-04T11:59:59Z"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "d6884761e4c355b45e430fe617c60856b350bf97ccb25ee26c136456d79f593b"
+        }
+      ]
+    },
+    {
+      "id": "RA05-rebuild-after-scheduling",
+      "family": "run.node_retry_scheduled",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "classified-policy-auth_expired-retry-1"
+      },
+      "expected": "reject",
+      "row": "RA05_rebuild_scheduled",
+      "defect": "the client is rebuilt after the retry is scheduled",
+      "changes": [
+        {
+          "path": "capture/records/failure/body/refresh/client_rebuilt_at_utc",
+          "value": "2026-11-04T12:00:02.5Z"
+        },
+        {
+          "path": "capture/records/failure/sha256",
+          "value": "1077434e71add81bde35430d3bdd70f0fe64537233d8afaef24ec86e54a59163"
+        }
+      ]
+    },
+    {
+      "id": "SH08-selected-lane",
+      "family": "scheduler.pass",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "SH08_lane",
+      "defect": "the selected node keeps its remediation score tuple but names lane normal (payload, operation and scheduler copies)",
+      "changes": [
+        {
+          "path": "payload/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "normal"
+            }
+          ]
+        },
+        {
+          "path": "capture/envelope/payload/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "normal"
+            }
+          ]
+        },
+        {
+          "path": "capture/records/operation/body/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "normal"
+            }
+          ]
+        },
+        {
+          "path": "capture/records/operation/sha256",
+          "value": "a406686dcb7bab14b45f7daf8e315106aa2d47366f6e551f678252f2d176ee0d"
+        },
+        {
+          "path": "capture/records/scheduler/body/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "normal"
+            }
+          ]
+        },
+        {
+          "path": "capture/records/scheduler/sha256",
+          "value": "120346cd123ea6d5ed7b6f1d2b4fd2c618c3f3dbc63c56038d5e3c0e61257613"
+        },
+        {
+          "path": "capture/transition/observed_payload/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 1,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SH03-duplicate-excluded",
+      "family": "scheduler.pass",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "SH03_unique_partition",
+      "defect": "one non-selected node is listed twice (payload and operation copies)",
+      "changes": [
+        {
+          "path": "payload/non_selected_nodes",
+          "value": [
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            },
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            }
+          ]
+        },
+        {
+          "path": "capture/envelope/payload/non_selected_nodes",
+          "value": [
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            },
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            }
+          ]
+        },
+        {
+          "path": "capture/records/operation/body/non_selected_nodes",
+          "value": [
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            },
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            }
+          ]
+        },
+        {
+          "path": "capture/records/operation/sha256",
+          "value": "8843d492941513bc75c4d1bade9fb2d33d480ef42e37d2c90af825cb4780fd4b"
+        },
+        {
+          "path": "capture/transition/observed_payload/non_selected_nodes",
+          "value": [
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            },
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "WK01-wakes-object",
+      "family": "scheduler.pass",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "WK01_wakes_list",
+      "defect": "the scheduler wake list is an object",
+      "changes": [
+        {
+          "path": "capture/records/scheduler/body/wakes",
+          "value": {}
+        },
+        {
+          "path": "capture/records/scheduler/sha256",
+          "value": "2ef07eca8fa326cf0542e4c9dcf8d67cef72d4ab4c5dceda7fd534b6794f8482"
+        }
+      ]
+    },
+    {
+      "id": "WK02-wake-string",
+      "family": "scheduler.pass",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "WK02_wake_objects",
+      "defect": "a scheduler wake is a string",
+      "changes": [
+        {
+          "path": "capture/records/scheduler/body/wakes",
+          "value": [
+            "wake-001"
+          ]
+        },
+        {
+          "path": "capture/records/scheduler/sha256",
+          "value": "ccbeef1314a0a93b4ed61b2588c98f1c44c583e89b6956a58c7473da8f12c1ee"
+        }
+      ]
+    },
+    {
+      "id": "WK04-no-wake",
+      "family": "scheduler.pass",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "WK04_wake_present",
+      "defect": "the scheduler pass records no wake (coalesced reasons and refs empty with it)",
+      "changes": [
+        {
+          "path": "payload/wake_event_refs",
+          "value": []
+        },
+        {
+          "path": "payload/coalesced_wake_reasons",
+          "value": []
+        },
+        {
+          "path": "capture/envelope/payload/wake_event_refs",
+          "value": []
+        },
+        {
+          "path": "capture/envelope/payload/coalesced_wake_reasons",
+          "value": []
+        },
+        {
+          "path": "capture/records/operation/body/coalesced_wake_reasons",
+          "value": []
+        },
+        {
+          "path": "capture/records/operation/body/wake_event_refs",
+          "value": []
+        },
+        {
+          "path": "capture/records/operation/sha256",
+          "value": "4e8a7363fd34a704e0d3557ffaea0953e89afe835b24afaa5d0110550b2bba56"
+        },
+        {
+          "path": "capture/records/scheduler/body/wakes",
+          "value": []
+        },
+        {
+          "path": "capture/records/scheduler/sha256",
+          "value": "db740e56aebe388c9e43e0bd126a722d000753627e759c63b4de5e63fdc37c16"
+        },
+        {
+          "path": "capture/transition/observed_payload/wake_event_refs",
+          "value": []
+        },
+        {
+          "path": "capture/transition/observed_payload/coalesced_wake_reasons",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "RM05-generation-string",
+      "family": "remediation.resolved",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "RM05_generation_type",
+      "defect": "the lineage generation is the string \"1\"",
+      "changes": [
+        {
+          "path": "capture/records/lineage/body/generation",
+          "value": "1"
+        },
+        {
+          "path": "capture/records/lineage/sha256",
+          "value": "7da1e2a86159a65be228731f1fec0c718dad4932f0969b9f3936cc53e75e73ca"
+        }
+      ]
+    },
+    {
+      "id": "PR02-ref-string",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "F6-large-referenced-source-positive"
+      },
+      "expected": "reject",
+      "row": "PR02_descriptor_object",
+      "defect": "the payload_ref is a string, not a resolved descriptor",
+      "changes": [
+        {
+          "path": "capture/envelope/payload_ref",
+          "value": "payload:5841bd3cbba3f383ed514a709e4d5aa6d2c4e599f80d9b1364ecb9932fe340c4"
+        }
+      ]
+    },
+    {
+      "id": "PR04-ref-size-string",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "F6-large-referenced-source-positive"
+      },
+      "expected": "reject",
+      "row": "PR04_size_type",
+      "defect": "the descriptor byte_size is a string",
+      "changes": [
+        {
+          "path": "capture/envelope/payload_ref/byte_size",
+          "value": "18000"
+        }
+      ]
+    },
+    {
+      "id": "PK01-pack-hex-invalid",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "F6-large-referenced-source-positive"
+      },
+      "expected": "reject",
+      "row": "PK01_hex_decodes",
+      "defect": "the pack bytes are not hex",
+      "changes": [
+        {
+          "path": "capture/payload_packs/5841bd3cbba3f383ed514a709e4d5aa6d2c4e599f80d9b1364ecb9932fe340c4/bytes_hex",
+          "value": "zz"
+        }
+      ]
+    },
+    {
+      "id": "PK04-pack-size-string",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "F6-large-referenced-source-positive"
+      },
+      "expected": "reject",
+      "row": "PK04_pack_size_type",
+      "defect": "the pack byte_size is a string",
+      "changes": [
+        {
+          "path": "capture/payload_packs/5841bd3cbba3f383ed514a709e4d5aa6d2c4e599f80d9b1364ecb9932fe340c4/byte_size",
+          "value": "18000"
+        }
+      ]
+    },
+    {
+      "id": "PK06-pack-other-length",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "F6-large-referenced-source-positive"
+      },
+      "expected": "reject",
+      "row": "PK06_pack_size_ref",
+      "defect": "the descriptor names a pack whose own bytes, BLAKE3 and size agree but are one byte longer than the logical body",
+      "changes": [
+        {
+          "path": "capture/envelope/payload_ref/blake3",
+          "value": "3bb700e18b1f80407c8ad7ee51ef239da568ac2dc4f72b6e5f65eceb3a21f31b"
+        },
+        {
+          "path": "capture/payload_packs/5841bd3cbba3f383ed514a709e4d5aa6d2c4e599f80d9b1364ecb9932fe340c4",
+          "delete": true
+        },
+        {
+          "path": "capture/payload_packs/3bb700e18b1f80407c8ad7ee51ef239da568ac2dc4f72b6e5f65eceb3a21f31b",
+          "value": {
+            "bytes_hex": "de0013aa617474656d70745f6964ae617474656d70745f69642d303031b16261636b6f66665f756e74696c5f757463b4323032362d31312d30345431323a30303a30305aae6576656e745f73657175656e636501ad6661696c7572655f636c617373b3766572696669636174696f6e5f6661696c6564a76e6f64655f6964ab6e6f64655f69642d303031aa70726f6a6563745f6964da442670726f6a6563742d7878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878bd72656d6564696174696f6e5f706172656e745f617474656d70745f6964d92172656d6564696174696f6e5f706172656e745f617474656d70745f69642d303031b372656d6564696174696f6e5f726f6f745f6964b772656d6564696174696f6e5f726f6f745f69642d303031b17265706c616e5f67656e65726174696f6e01ab72657472795f636f756e7401b472657669657765725f726573756c745f7265667391ac72657669657765722d303031a672756e5f6964aa72756e5f69642d303031b472756e74696d655f736e617073686f745f726566b872756e74696d655f736e617073686f745f7265662d303031ad736166655f706f696e745f6964b1736166655f706f696e745f69642d303031ae736368656d615f76657273696f6ea5312e302e30ae7465726d696e616c5f7374617465a66661696c6564a97468726561645f6964ad7468726561645f69642d303031a27473b4323032362d31312d30345431323a30303a30305ab8766572696669636174696f6e5f726573756c745f7265667391ac76657269666965722d30303100",
+            "byte_size": 18001,
+            "media_type": "application/msgpack",
+            "project_id": "project-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "storage_instance_id": "store-001",
+            "readers": [
+              "viewer-001"
+            ],
+            "deleted_at": null,
+            "durable": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "EF05-adapter-effect-string",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "EF05_expected_types",
+      "defect": "the adapter effect terminal_publications is the string \"1\" (contract copy only)",
+      "changes": [],
+      "contract_changes": [
+        {
+          "path": "semantic_adapter/effects/terminal_publications",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "id": "EF06-adapter-effect-negative",
+      "family": "attempt.completed",
+      "route": "capture",
+      "seed": {
+        "kind": "capture",
+        "name": "baseline"
+      },
+      "expected": "reject",
+      "row": "EF06_expected_nonnegative",
+      "defect": "the adapter effect worker_dispatches is -1 (contract copy only)",
+      "changes": [],
+      "contract_changes": [
+        {
+          "path": "semantic_adapter/effects/worker_dispatches",
+          "value": -1
+        }
+      ]
+    },
+    {
+      "id": "HI02-event-identity",
+      "family": "attempt.completed",
+      "route": "history",
+      "seed": {
+        "kind": "history",
+        "name": "S10-history-valid-after-live-transition"
+      },
+      "expected": "reject",
+      "row": "HI02_custody_identity",
+      "defect": "the retained read names event_sequence 2; the authenticated original identity is for 1",
+      "changes": [
+        {
+          "path": "payload/event_sequence",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "RB-control-new-original",
+      "family": "attempt.completed",
+      "route": "history",
+      "seed": {
+        "kind": "history",
+        "name": "S10-history-valid-after-live-transition"
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "a new current-recipe original (marked project record) with its own authenticated custody entry",
+      "changes": [
+        {
+          "path": "original/capture/records/project/body/p2a_marker",
+          "value": "rb-control"
+        },
+        {
+          "path": "original/capture/records/project/sha256",
+          "value": "e0e8a971303de66a80234703736faf63d8fa38d27a84c96ec522d469dd3ef5a2"
+        },
+        {
+          "path": "retained_source_sha256",
+          "value": "df6936dc8b5f9a6f4a28bc951534d604a9ebcd531aa0ae543e6147d4738c4495"
+        }
+      ]
+    },
+    {
+      "id": "RB01-unknown-edition",
+      "family": "attempt.completed",
+      "route": "history",
+      "seed": {
+        "kind": "history",
+        "name": "S10-history-valid-after-live-transition"
+      },
+      "expected": "reject",
+      "row": "RB01_edition_known",
+      "defect": "the custody entry of a new original names the unknown recipe executor-v9",
+      "changes": [
+        {
+          "path": "original/capture/records/project/body/p2a_marker",
+          "value": "rb01"
+        },
+        {
+          "path": "original/capture/records/project/sha256",
+          "value": "7f42b25e71600ed3f9e2b4b0f8976a389c75be09e16309f804527fa4bdab106a"
+        },
+        {
+          "path": "retained_source_sha256",
+          "value": "1721f88a6ec5353f6cbed1d2d99d51bb9b048165e40df7f3de6cecf2e82258d8"
+        }
+      ]
+    },
+    {
+      "id": "RB02-no-custody",
+      "family": "attempt.completed",
+      "route": "history",
+      "seed": {
+        "kind": "history",
+        "name": "S10-history-valid-after-live-transition"
+      },
+      "expected": "reject",
+      "row": "RB02_retained_entry",
+      "defect": "a new original that Storage custody never authenticated",
+      "changes": [
+        {
+          "path": "original/capture/records/project/body/p2a_marker",
+          "value": "rb02"
+        },
+        {
+          "path": "original/capture/records/project/sha256",
+          "value": "5916706e7b30933b31eb72f4a704ba6f503ce1dd9cc9bd6ed3a94313aecaa4f5"
+        },
+        {
+          "path": "retained_source_sha256",
+          "value": "1c72fd573d51a05145597dd492daf474a1b80cf6f2210dccdccae8445315e8a7"
+        }
+      ]
+    },
+    {
+      "id": "RB03-custody-source",
+      "family": "attempt.completed",
+      "route": "history",
+      "seed": {
+        "kind": "history",
+        "name": "S10-history-valid-after-live-transition"
+      },
+      "expected": "reject",
+      "row": "RB03_entry_source",
+      "defect": "the custody entry of a new original pins a different complete original",
+      "changes": [
+        {
+          "path": "original/capture/records/project/body/p2a_marker",
+          "value": "rb03"
+        },
+        {
+          "path": "original/capture/records/project/sha256",
+          "value": "f66a05bf3c60524b9dab3a27104ad8366c6bc2bab0d1b28b184b7ac10cd513cf"
+        },
+        {
+          "path": "retained_source_sha256",
+          "value": "27d533683850a09747d142699a2baed387ae3584cd4a4fa73ba76e485a06a86d"
+        }
+      ]
+    },
+    {
+      "id": "TS03-v0-impossible-date",
+      "family": "run.node_backoff_started",
+      "route": "history",
+      "seed": {
+        "kind": "history",
+        "name": "F15-retained-9007199254740991-dedupe_by_idempotency_key"
+      },
+      "expected": "reject",
+      "row": "TS03_parses",
+      "defect": "a retained v0 original whose failure clock is spelled validly but names 31 November",
+      "changes": [
+        {
+          "path": "original/capture/records/failure/body/failed_at_utc",
+          "value": "2026-11-31T12:00:00Z"
+        },
+        {
+          "path": "original/capture/records/failure/sha256",
+          "value": "ae3e2621cee63d059cd78f1f90520f2c782d506f708ac8c04fcb256c6fcaf0c0"
+        },
+        {
+          "path": "retained_source_sha256",
+          "value": "1b5d689f1774fd35c712acf13e557e2f20f239825db66fd33c49174fc0c0dd43"
+        }
+      ]
+    },
+    {
+      "id": "SX01-node-state",
+      "family": "node.completed",
+      "route": "shape",
+      "seed": {
+        "kind": "shape",
+        "name": "positive"
+      },
+      "expected": "reject",
+      "row": "SX01_node_completion",
+      "defect": "a done completion whose source node state is verify_pending",
+      "changes": [
+        {
+          "path": "context/source_facts/node_state",
+          "value": "verify_pending"
+        }
+      ]
+    },
+    {
+      "id": "SX11-control-restore-anchored",
+      "family": "node.blocked",
+      "route": "shape",
+      "seed": {
+        "kind": "shape",
+        "name": "positive"
+      },
+      "expected": "accept",
+      "row": null,
+      "defect": "a restore-required block naming its safe point (with its source binding) and anchor_ref",
+      "changes": [
+        {
+          "path": "payload/requires_safe_point_restore",
+          "value": true
+        },
+        {
+          "path": "payload/safe_point_id",
+          "value": "safe_point_id-001"
+        },
+        {
+          "path": "payload/anchor_ref",
+          "value": "anchor_ref-001"
+        },
+        {
+          "path": "context/source_bindings/safe_point_id",
+          "value": "safe_point_id-001"
+        },
+        {
+          "path": "context/envelope/payload/requires_safe_point_restore",
+          "value": true
+        },
+        {
+          "path": "context/envelope/payload/safe_point_id",
+          "value": "safe_point_id-001"
+        },
+        {
+          "path": "context/envelope/payload/anchor_ref",
+          "value": "anchor_ref-001"
+        }
+      ]
+    },
+    {
+      "id": "SX11-restore-without-anchor",
+      "family": "node.blocked",
+      "route": "shape",
+      "seed": {
+        "kind": "shape",
+        "name": "positive"
+      },
+      "expected": "reject",
+      "row": "SX11_restore_anchor",
+      "defect": "the anchored restore control without its anchor_ref",
+      "changes": [
+        {
+          "path": "payload/requires_safe_point_restore",
+          "value": true
+        },
+        {
+          "path": "payload/safe_point_id",
+          "value": "safe_point_id-001"
+        },
+        {
+          "path": "context/source_bindings/safe_point_id",
+          "value": "safe_point_id-001"
+        },
+        {
+          "path": "context/envelope/payload/requires_safe_point_restore",
+          "value": true
+        },
+        {
+          "path": "context/envelope/payload/safe_point_id",
+          "value": "safe_point_id-001"
+        }
+      ]
+    },
+    {
+      "id": "SY02-duplicate-excluded",
+      "family": "scheduler.pass",
+      "route": "shape",
+      "seed": {
+        "kind": "shape",
+        "name": "score-priority-valid-boundary-50"
+      },
+      "expected": "reject",
+      "row": "SY02_unique_partition",
+      "defect": "one non-selected node is listed twice",
+      "changes": [
+        {
+          "path": "payload/non_selected_nodes",
+          "value": [
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            },
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            }
+          ]
+        },
+        {
+          "path": "context/envelope/payload/non_selected_nodes",
+          "value": [
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            },
+            {
+              "node_id": "node-low",
+              "exclusion_reason_code": "capacity",
+              "ready_state": "ready"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SY07-selected-lane",
+      "family": "scheduler.pass",
+      "route": "shape",
+      "seed": {
+        "kind": "shape",
+        "name": "score-priority-valid-boundary-50"
+      },
+      "expected": "reject",
+      "row": "SY07_lane",
+      "defect": "the selected node keeps its remediation score tuple but names lane normal",
+      "changes": [
+        {
+          "path": "payload/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 50,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "normal"
+            }
+          ]
+        },
+        {
+          "path": "context/envelope/payload/selected_nodes",
+          "value": [
+            {
+              "node_id": "node-high",
+              "score_tuple": {
+                "scheduler_lane": "remediation",
+                "manual_priority": 50,
+                "transitive_unblock_count": 2,
+                "ready_since_utc": "2026-11-04T12:00:00Z",
+                "node_id": "node-high"
+              },
+              "lane": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FL01-part-integer",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "FL01-part-integer",
+          "helper": "fixture_literals",
+          "value": {
+            "parts": [
+              5
+            ]
+          }
+        }
+      },
+      "expected": "reject",
+      "row": "FL01_part_object",
+      "defect": "fixture repetition part [5]"
+    },
+    {
+      "id": "FL02-part-keys",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "FL02-part-keys",
+          "helper": "fixture_literals",
+          "value": {
+            "parts": [
+              {
+                "text": "a"
+              }
+            ]
+          }
+        }
+      },
+      "expected": "reject",
+      "row": "FL02_part_keys",
+      "defect": "fixture repetition part [{\"text\": \"a\"}]"
+    },
+    {
+      "id": "FL03-text-integer",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "FL03-text-integer",
+          "helper": "fixture_literals",
+          "value": {
+            "parts": [
+              {
+                "text": 1,
+                "repeat": 2
+              }
+            ]
+          }
+        }
+      },
+      "expected": "reject",
+      "row": "FL03_text_type",
+      "defect": "fixture repetition part [{\"text\": 1, \"repeat\": 2}]"
+    },
+    {
+      "id": "FL04-repeat-string",
+      "family": "attempt.completed",
+      "route": "helper",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "FL04-repeat-string",
+          "helper": "fixture_literals",
+          "value": {
+            "parts": [
+              {
+                "text": "a",
+                "repeat": "2"
+              }
+            ]
+          }
+        }
+      },
+      "expected": "reject",
+      "row": "FL04_repeat_type",
+      "defect": "fixture repetition part [{\"text\": \"a\", \"repeat\": \"2\"}]"
+    },
+    {
+      "id": "TO01-unknown-operation",
+      "family": "attempt.completed",
+      "route": "trace",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "TO01",
+          "operations": [
+            {
+              "op": "teleport"
+            }
+          ]
+        }
+      },
+      "expected": "reject",
+      "row": "TO01_known_operation",
+      "defect": "a trace operation the receipt model does not define"
+    },
+    {
+      "id": "TB01-rebuild-empty",
+      "family": "attempt.completed",
+      "route": "trace",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "TB01",
+          "operations": [
+            {
+              "op": "rebuild"
+            }
+          ]
+        }
+      },
+      "expected": "reject",
+      "row": "TB01_rows_present",
+      "defect": "a rebuild before any append has no first-receipt custody to rebuild from",
+      "expected_outputs": {
+        "outputs": [
+          "source_unavailable"
+        ],
+        "effects": 0
+      }
+    },
+    {
+      "id": "FR01-type-route",
+      "family": "attempt.completed",
+      "route": "type_route",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "FR01",
+          "route": "wire",
+          "seed": "baseline",
+          "changes": []
+        }
+      },
+      "expected": "reject",
+      "row": "FR01_type_route",
+      "defect": "a type case naming the unknown route wire"
+    },
+    {
+      "id": "FR02-numeric-boundary",
+      "family": "attempt.completed",
+      "route": "numeric",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "FR02",
+          "boundary": "wire",
+          "spelling": "1"
+        }
+      },
+      "expected": "reject",
+      "row": "FR02_numeric_boundary",
+      "defect": "a numeric case naming the unknown boundary wire"
+    },
+    {
+      "id": "ID01-enum-identity-field",
+      "family": "attempt.completed",
+      "route": "identity",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "terminal_state": "failed",
+            "retry_count": 1,
+            "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+            "verification_result_refs": [
+              "verifier-001"
+            ],
+            "reviewer_result_refs": [
+              "reviewer-001"
+            ],
+            "safe_point_id": "safe_point_id-001",
+            "remediation_root_id": "remediation_root_id-001",
+            "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+            "failure_class": "verification_failed",
+            "backoff_until_utc": "2026-11-04T12:00:00Z"
+          },
+          "storage_instance_id": "store-001"
+        }
+      },
+      "expected": "reject",
+      "row": "ID01_domain_declared",
+      "defect": "a contract copy whose identity fields add terminal_state, an enum with no declared type",
+      "contract_changes": [
+        {
+          "path": "identity_fields",
+          "value": [
+            "project_id",
+            "run_id",
+            "node_id",
+            "attempt_id",
+            "event_sequence",
+            "terminal_state"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "IR02-sequence-not-identity",
+      "family": "attempt.completed",
+      "route": "identity_replay",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "terminal_state": "failed",
+            "retry_count": 1,
+            "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+            "verification_result_refs": [
+              "verifier-001"
+            ],
+            "reviewer_result_refs": [
+              "reviewer-001"
+            ],
+            "safe_point_id": "safe_point_id-001",
+            "remediation_root_id": "remediation_root_id-001",
+            "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+            "failure_class": "verification_failed",
+            "backoff_until_utc": "2026-11-04T12:00:00Z"
+          }
+        }
+      },
+      "expected": "reject",
+      "row": "IR02_sequence_bearing",
+      "defect": "a contract copy whose identity fields omit event_sequence",
+      "contract_changes": [
+        {
+          "path": "identity_fields",
+          "value": [
+            "project_id",
+            "run_id",
+            "node_id",
+            "attempt_id"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "SR01-invalid-schema",
+      "family": "attempt.completed",
+      "route": "schema_document",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": 5
+          }
+        }
+      },
+      "expected": "reject",
+      "row": "SR01_meta_schema",
+      "defect": "a schema document whose type keyword is the integer 5"
+    },
+    {
+      "id": "IF01-closure-missing-family",
+      "family": "attempt.completed",
+      "route": "integrity_closure",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "fixture_families": [
+            "attempt.started",
+            "node.blocked",
+            "node.completed",
+            "node.started",
+            "node.unblocked",
+            "plan.decomposition_degraded",
+            "remediation.resolved",
+            "remediation.spawned",
+            "run.completed",
+            "run.graph_integrity_failed",
+            "run.node_backoff_expired",
+            "run.node_backoff_started",
+            "run.node_ready",
+            "run.node_retry_scheduled",
+            "scheduler.pass"
+          ],
+          "contract_families": [
+            "attempt.completed",
+            "attempt.started",
+            "node.blocked",
+            "node.completed",
+            "node.started",
+            "node.unblocked",
+            "plan.decomposition_degraded",
+            "remediation.resolved",
+            "remediation.spawned",
+            "run.completed",
+            "run.graph_integrity_failed",
+            "run.node_backoff_expired",
+            "run.node_backoff_started",
+            "run.node_ready",
+            "run.node_retry_scheduled",
+            "scheduler.pass"
+          ]
+        }
+      },
+      "expected": "reject",
+      "row": "IF01_family_closure",
+      "defect": "the fixture families omit one contract family"
+    },
+    {
+      "id": "IF02-type-two-changes",
+      "family": "attempt.completed",
+      "route": "integrity_type_case",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "F14-inline-sequence-string-false",
+          "route": "capture",
+          "seed": "baseline",
+          "changes": [
+            {
+              "path": "capture/envelope/payload/event_sequence",
+              "value": "false"
+            },
+            {
+              "path": "capture/envelope/payload/event_sequence",
+              "value": "false"
+            }
+          ],
+          "expected": "reject"
+        }
+      },
+      "expected": "reject",
+      "row": "IF02_single_change",
+      "defect": "a type case with two changes"
+    },
+    {
+      "id": "IF03-capture-seed-incoherent",
+      "family": "node.blocked",
+      "route": "integrity_capture_seed",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "F10-restore-required-without-anchors-coherently",
+          "expected": "reject",
+          "valid_seed": "authored coherent seed (seed_changes)",
+          "seed_changes": [],
+          "defect": "restore-required-without-anchors-coherently",
+          "defect_changes": [
+            {
+              "path": "payload/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/records/operation/body/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/operation/body/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "8d468f43278840f88ba17e415bb7e3b5051b9c4ae6476a0ea109b4970d0d3a44"
+            },
+            {
+              "path": "capture/dependencies/safe_point_id-001",
+              "delete": true
+            },
+            {
+              "path": "capture/dependencies/anchor_ref-001",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/anchor_ref",
+              "delete": true
+            }
+          ],
+          "changes": [
+            {
+              "path": "payload/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "payload/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/records/operation/body/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/records/operation/body/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "8d468f43278840f88ba17e415bb7e3b5051b9c4ae6476a0ea109b4970d0d3a44"
+            },
+            {
+              "path": "capture/dependencies/safe_point_id-001",
+              "delete": true
+            },
+            {
+              "path": "capture/dependencies/anchor_ref-001",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/dependency_refs/anchor_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/transition/observed_payload/anchor_ref",
+              "delete": true
+            }
+          ],
+          "expected_reason": "restore anchor"
+        }
+      },
+      "expected": "reject",
+      "row": "IF03_capture_seed",
+      "defect": "a coherent negative whose declared defect changes omit one of its changes"
+    },
+    {
+      "id": "IF04-disclosure-seed-incoherent",
+      "family": "attempt.completed",
+      "route": "integrity_disclosure_seed",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "original_changes": [
+            {
+              "path": "payload/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/scope/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/scope/scope_partition",
+              "value": {
+                "fixture_text_parts": [
+                  "project~cHJvamVjdC1",
+                  {
+                    "text": "4eHh",
+                    "repeat": 5812
+                  },
+                  "4eA"
+                ]
+              }
+            },
+            {
+              "path": "capture/envelope/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/envelope/payload/attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/backoff_until_utc",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/event_sequence",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/failure_class",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/node_id",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/project_id",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/remediation_parent_attempt_id",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/remediation_root_id",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/replan_generation",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/retry_count",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/reviewer_result_refs",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/run_id",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/runtime_snapshot_ref",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/safe_point_id",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/schema_version",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/terminal_state",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/thread_id",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/ts",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload/verification_result_refs",
+              "delete": true
+            },
+            {
+              "path": "capture/envelope/payload_ref",
+              "value": {
+                "blake3": "5841bd3cbba3f383ed514a709e4d5aa6d2c4e599f80d9b1364ecb9932fe340c4",
+                "byte_size": 18000,
+                "media_type": "application/msgpack"
+              }
+            },
+            {
+              "path": "capture/records/project/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/records/project/body/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/records/project/sha256",
+              "value": "2e8228e46b8906c00cea447d6e0ca34ea3e7021e8cd930372f0c340413e7f705"
+            },
+            {
+              "path": "capture/records/operation/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/records/run/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/records/node/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/records/attempt/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/records/execution/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/dependencies/runtime_snapshot_ref-001/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/dependencies/runtime_snapshot_ref-001/body/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/dependencies/runtime_snapshot_ref-001/sha256",
+              "value": "9f2f5885290529f56c00c04a28f5ee3c3e075b0365a4c8de513d69f342d56bed"
+            },
+            {
+              "path": "capture/dependencies/verifier-001/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/dependencies/reviewer-001/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/dependencies/safe_point_id-001/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/transition/observed_payload/project_id",
+              "value": {
+                "fixture_text_parts": [
+                  "project-",
+                  {
+                    "text": "x",
+                    "repeat": 17438
+                  }
+                ]
+              }
+            },
+            {
+              "path": "capture/payload_packs/5841bd3cbba3f383ed514a709e4d5aa6d2c4e599f80d9b1364ecb9932fe340c4",
+              "value": {
+                "bytes_hex": {
+                  "fixture_text_parts": [
+                    "de0013aa617474656d70745f6964ae617474656d70745f69642d303031b16261636b6f66665f756e74696c5f757463b4323032362d31312d30345431323a30303a30305aae6576656e745f73657175656e636501ad6661696c7572655f636c617373b3766572696669636174696f6e5f6661696c6564a76e6f64655f6964ab6e6f64655f69642d303031aa70726f6a6563745f6964da442670726f6a6563742d",
+                    {
+                      "text": "78",
+                      "repeat": 17438
+                    },
+                    "bd72656d6564696174696f6e5f706172656e745f617474656d70745f6964d92172656d6564696174696f6e5f706172656e745f617474656d70745f69642d303031b372656d6564696174696f6e5f726f6f745f6964b772656d6564696174696f6e5f726f6f745f69642d303031b17265706c616e5f67656e65726174696f6e01ab72657472795f636f756e7401b472657669657765725f726573756c745f7265667391ac72657669657765722d303031a672756e5f6964aa72756e5f69642d303031b472756e74696d655f736e617073686f745f726566b872756e74696d655f736e617073686f745f7265662d303031ad736166655f706f696e745f6964b1736166655f706f696e745f69642d303031ae736368656d615f76657273696f6ea5312e302e30ae7465726d696e616c5f7374617465a66661696c6564a97468726561645f6964ad7468726561645f69642d303031a27473b4323032362d31312d30345431323a30303a30305ab8766572696669636174696f6e5f726573756c745f7265667391ac76657269666965722d303031"
+                  ]
+                },
+                "byte_size": 18000,
+                "media_type": "application/msgpack",
+                "project_id": {
+                  "fixture_text_parts": [
+                    "project-",
+                    {
+                      "text": "x",
+                      "repeat": 17438
+                    }
+                  ]
+                },
+                "storage_instance_id": "store-001",
+                "readers": [
+                  "viewer-001"
+                ],
+                "deleted_at": null,
+                "durable": true
+              }
+            },
+            {
+              "path": "capture/envelope/replay_policy",
+              "value": "dedupe_by_idempotency_key"
+            }
+          ],
+          "event_changes": {
+            "schema_version": "1.0.0",
+            "project_id": {
+              "fixture_text_parts": [
+                "project-",
+                {
+                  "text": "x",
+                  "repeat": 17438
+                }
+              ]
+            },
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "terminal_state": "failed",
+            "retry_count": 1,
+            "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+            "verification_result_refs": [
+              "verifier-001"
+            ],
+            "reviewer_result_refs": [
+              "reviewer-001"
+            ],
+            "safe_point_id": "safe_point_id-001",
+            "remediation_root_id": "remediation_root_id-001",
+            "remediation_parent_attempt_id": "remediation_parent_attempt_id-001",
+            "failure_class": "verification_failed",
+            "backoff_until_utc": "2026-11-04T12:00:00Z"
+          },
+          "live_changes": [
+            {
+              "path": "capture/records/operation/body/observed_at_utc",
+              "value": "2026-11-04T14:00:00Z"
+            },
+            {
+              "path": "capture/records/operation/sha256",
+              "value": "c59fa7e9da2cba68cf25abde4aae214c1c342d77a48fea471692b4be32f3387e"
+            },
+            {
+              "path": "capture/records/attempt/body/state",
+              "value": "failed"
+            },
+            {
+              "path": "capture/records/attempt/sha256",
+              "value": "61073bde277c4b7e3ff74b4bdcf4a6605b4c6cf9b21d790a7a0bfd3e379076f6"
+            }
+          ],
+          "retained_source_sha256": "9b7cd8e1593c1609178ea1c2e97b89769a24b32911fd0102cf62a816b6020012",
+          "case": "F12-current-pack-current-reader-denied",
+          "disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "current-reader-002",
+            "event_readers": [
+              "viewer-001",
+              "current-reader-002"
+            ],
+            "project_id": {
+              "fixture_text_parts": [
+                "project-",
+                {
+                  "text": "x",
+                  "repeat": 17438
+                }
+              ]
+            },
+            "storage_instance_id": "store-001",
+            "payload_packs": {
+              "5841bd3cbba3f383ed514a709e4d5aa6d2c4e599f80d9b1364ecb9932fe340c4": {
+                "bytes_hex": {
+                  "fixture_text_parts": [
+                    "de0013aa617474656d70745f6964ae617474656d70745f69642d303031b16261636b6f66665f756e74696c5f757463b4323032362d31312d30345431323a30303a30305aae6576656e745f73657175656e636501ad6661696c7572655f636c617373b3766572696669636174696f6e5f6661696c6564a76e6f64655f6964ab6e6f64655f69642d303031aa70726f6a6563745f6964da442670726f6a6563742d",
+                    {
+                      "text": "78",
+                      "repeat": 17438
+                    },
+                    "bd72656d6564696174696f6e5f706172656e745f617474656d70745f6964d92172656d6564696174696f6e5f706172656e745f617474656d70745f69642d303031b372656d6564696174696f6e5f726f6f745f6964b772656d6564696174696f6e5f726f6f745f69642d303031b17265706c616e5f67656e65726174696f6e01ab72657472795f636f756e7401b472657669657765725f726573756c745f7265667391ac72657669657765722d303031a672756e5f6964aa72756e5f69642d303031b472756e74696d655f736e617073686f745f726566b872756e74696d655f736e617073686f745f7265662d303031ad736166655f706f696e745f6964b1736166655f706f696e745f69642d303031ae736368656d615f76657273696f6ea5312e302e30ae7465726d696e616c5f7374617465a66661696c6564a97468726561645f6964ad7468726561645f69642d303031a27473b4323032362d31312d30345431323a30303a30305ab8766572696669636174696f6e5f726573756c745f7265667391ac76657269666965722d303031"
+                  ]
+                },
+                "byte_size": 18000,
+                "media_type": "application/msgpack",
+                "project_id": {
+                  "fixture_text_parts": [
+                    "project-",
+                    {
+                      "text": "x",
+                      "repeat": 17438
+                    }
+                  ]
+                },
+                "storage_instance_id": "store-001",
+                "readers": [
+                  "viewer-001"
+                ],
+                "deleted_at": null,
+                "durable": true
+              }
+            },
+            "dependencies": {
+              "runtime_snapshot_ref-001": {
+                "project_id": {
+                  "fixture_text_parts": [
+                    "project-",
+                    {
+                      "text": "x",
+                      "repeat": 17438
+                    }
+                  ]
+                },
+                "storage_instance_id": "store-001",
+                "body": {
+                  "lane_id": "lane-001",
+                  "package_id": "package-001",
+                  "seam_id": "seam-001",
+                  "worktree_id": "worktree-001",
+                  "requested_account_id": "account-001",
+                  "effective_account_id": "account-001",
+                  "requested_account_binding": "required",
+                  "operational_identity": {
+                    "identity_id": "worker-001",
+                    "identity_kind": "assistant_agent"
+                  },
+                  "approval_scope_key": "scope-001",
+                  "permission_snapshot_id": "permission-001",
+                  "project_id": {
+                    "fixture_text_parts": [
+                      "project-",
+                      {
+                        "text": "x",
+                        "repeat": 17438
+                      }
+                    ]
+                  },
+                  "run_id": "run_id-001",
+                  "thread_id": "thread_id-001",
+                  "node_id": "node_id-001",
+                  "attempt_id": "attempt_id-001",
+                  "requested_model": "provider/model",
+                  "effective_model": "provider/model",
+                  "requested_persona": "worker",
+                  "effective_persona": "worker",
+                  "requested_platform": "provider",
+                  "effective_platform": "provider",
+                  "auth_resolution_ref": "auth-result-001",
+                  "models_resolution_ref": "models-result-001",
+                  "persona_resolution_ref": "persona-result-001",
+                  "multi_account_resolution_ref": "account-result-001"
+                },
+                "sha256": "9f2f5885290529f56c00c04a28f5ee3c3e075b0365a4c8de513d69f342d56bed",
+                "deleted_at": null,
+                "readers": [
+                  "current-reader-002",
+                  "viewer-001"
+                ]
+              },
+              "verifier-001": {
+                "project_id": {
+                  "fixture_text_parts": [
+                    "project-",
+                    {
+                      "text": "x",
+                      "repeat": 17438
+                    }
+                  ]
+                },
+                "storage_instance_id": "store-001",
+                "body": {
+                  "evidence_kind": "verification_result_refs",
+                  "source": "original-owner-result"
+                },
+                "sha256": "6f424478a6466bd7592a93a35609b61bd178c8120c2047ed914d1813ff78db57",
+                "deleted_at": null,
+                "readers": [
+                  "current-reader-002",
+                  "viewer-001"
+                ]
+              },
+              "reviewer-001": {
+                "project_id": {
+                  "fixture_text_parts": [
+                    "project-",
+                    {
+                      "text": "x",
+                      "repeat": 17438
+                    }
+                  ]
+                },
+                "storage_instance_id": "store-001",
+                "body": {
+                  "evidence_kind": "reviewer_result_refs",
+                  "source": "original-owner-result"
+                },
+                "sha256": "f81176e72fef1fcc3542a18eb8c1610d3e102705d9c8c8a45356cb995748b2b2",
+                "deleted_at": null,
+                "readers": [
+                  "current-reader-002",
+                  "viewer-001"
+                ]
+              },
+              "safe_point_id-001": {
+                "project_id": {
+                  "fixture_text_parts": [
+                    "project-",
+                    {
+                      "text": "x",
+                      "repeat": 17438
+                    }
+                  ]
+                },
+                "storage_instance_id": "store-001",
+                "body": {
+                  "evidence_kind": "safe_point_id",
+                  "source": "original-owner-result"
+                },
+                "sha256": "bf62114d4b29718bbc91af3271a37130f62d0904a2d8bc2c2c003bc6937c95ac",
+                "deleted_at": null,
+                "readers": [
+                  "current-reader-002",
+                  "viewer-001"
+                ]
+              }
+            }
+          },
+          "expected": "reject",
+          "seed_disclosure": {
+            "reader_active": true,
+            "source_available": true,
+            "event_deleted_at": null,
+            "viewer": "viewer-001",
+            "event_readers": [
+              "viewer-001",
+              "current-reader-002"
+            ],
+            "project_id": {
+              "fixture_text_parts": [
+                "project-",
+                {
+                  "text": "x",
+                  "repeat": 17438
+                }
+              ]
+            },
+            "storage_instance_id": "store-001",
+            "payload_packs": {
+              "5841bd3cbba3f383ed514a709e4d5aa6d2c4e599f80d9b1364ecb9932fe340c4": {
+                "bytes_hex": {
+                  "fixture_text_parts": [
+                    "de0013aa617474656d70745f6964ae617474656d70745f69642d303031b16261636b6f66665f756e74696c5f757463b4323032362d31312d30345431323a30303a30305aae6576656e745f73657175656e636501ad6661696c7572655f636c617373b3766572696669636174696f6e5f6661696c6564a76e6f64655f6964ab6e6f64655f69642d303031aa70726f6a6563745f6964da442670726f6a6563742d",
+                    {
+                      "text": "78",
+                      "repeat": 17438
+                    },
+                    "bd72656d6564696174696f6e5f706172656e745f617474656d70745f6964d92172656d6564696174696f6e5f706172656e745f617474656d70745f69642d303031b372656d6564696174696f6e5f726f6f745f6964b772656d6564696174696f6e5f726f6f745f69642d303031b17265706c616e5f67656e65726174696f6e01ab72657472795f636f756e7401b472657669657765725f726573756c745f7265667391ac72657669657765722d303031a672756e5f6964aa72756e5f69642d303031b472756e74696d655f736e617073686f745f726566b872756e74696d655f736e617073686f745f7265662d303031ad736166655f706f696e745f6964b1736166655f706f696e745f69642d303031ae736368656d615f76657273696f6ea5312e302e30ae7465726d696e616c5f7374617465a66661696c6564a97468726561645f6964ad7468726561645f69642d303031a27473b4323032362d31312d30345431323a30303a30305ab8766572696669636174696f6e5f726573756c745f7265667391ac76657269666965722d303031"
+                  ]
+                },
+                "byte_size": 18000,
+                "media_type": "application/msgpack",
+                "project_id": {
+                  "fixture_text_parts": [
+                    "project-",
+                    {
+                      "text": "x",
+                      "repeat": 17438
+                    }
+                  ]
+                },
+                "storage_instance_id": "store-001",
+                "readers": [
+                  "viewer-001"
+                ],
+                "deleted_at": null,
+                "durable": true
+              }
+            },
+            "dependencies": {
+              "runtime_snapshot_ref-001": {
+                "project_id": {
+                  "fixture_text_parts": [
+                    "project-",
+                    {
+                      "text": "x",
+                      "repeat": 17438
+                    }
+                  ]
+                },
+                "storage_instance_id": "store-001",
+                "body": {
+                  "lane_id": "lane-001",
+                  "package_id": "package-001",
+                  "seam_id": "seam-001",
+                  "worktree_id": "worktree-001",
+                  "requested_account_id": "account-001",
+                  "effective_account_id": "account-001",
+                  "requested_account_binding": "required",
+                  "operational_identity": {
+                    "identity_id": "worker-001",
+                    "identity_kind": "assistant_agent"
+                  },
+                  "approval_scope_key": "scope-001",
+                  "permission_snapshot_id": "permission-001",
+                  "project_id": {
+                    "fixture_text_parts": [
+                      "project-",
+                      {
+                        "text": "x",
+                        "repeat": 17438
+                      }
+                    ]
+                  },
+                  "run_id": "run_id-001",
+                  "thread_id": "thread_id-001",
+                  "node_id": "node_id-001",
+                  "attempt_id": "attempt_id-001",
+                  "requested_model": "provider/model",
+                  "effective_model": "provider/model",
+                  "requested_persona": "worker",
+                  "effective_persona": "worker",
+                  "requested_platform": "provider",
+                  "effective_platform": "provider",
+                  "auth_resolution_ref": "auth-result-001",
+                  "models_resolution_ref": "models-result-001",
+                  "persona_resolution_ref": "persona-result-001",
+                  "multi_account_resolution_ref": "account-result-001"
+                },
+                "sha256": "9f2f5885290529f56c00c04a28f5ee3c3e075b0365a4c8de513d69f342d56bed",
+                "deleted_at": null,
+                "readers": [
+                  "current-reader-002",
+                  "viewer-001"
+                ]
+              },
+              "verifier-001": {
+                "project_id": {
+                  "fixture_text_parts": [
+                    "project-",
+                    {
+                      "text": "x",
+                      "repeat": 17438
+                    }
+                  ]
+                },
+                "storage_instance_id": "store-001",
+                "body": {
+                  "evidence_kind": "verification_result_refs",
+                  "source": "original-owner-result"
+                },
+                "sha256": "6f424478a6466bd7592a93a35609b61bd178c8120c2047ed914d1813ff78db57",
+                "deleted_at": null,
+                "readers": [
+                  "current-reader-002",
+                  "viewer-001"
+                ]
+              },
+              "reviewer-001": {
+                "project_id": {
+                  "fixture_text_parts": [
+                    "project-",
+                    {
+                      "text": "x",
+                      "repeat": 17438
+                    }
+                  ]
+                },
+                "storage_instance_id": "store-001",
+                "body": {
+                  "evidence_kind": "reviewer_result_refs",
+                  "source": "original-owner-result"
+                },
+                "sha256": "f81176e72fef1fcc3542a18eb8c1610d3e102705d9c8c8a45356cb995748b2b2",
+                "deleted_at": null,
+                "readers": [
+                  "current-reader-002",
+                  "viewer-001"
+                ]
+              },
+              "safe_point_id-001": {
+                "project_id": {
+                  "fixture_text_parts": [
+                    "project-",
+                    {
+                      "text": "x",
+                      "repeat": 17438
+                    }
+                  ]
+                },
+                "storage_instance_id": "store-001",
+                "body": {
+                  "evidence_kind": "safe_point_id",
+                  "source": "original-owner-result"
+                },
+                "sha256": "bf62114d4b29718bbc91af3271a37130f62d0904a2d8bc2c2c003bc6937c95ac",
+                "deleted_at": null,
+                "readers": [
+                  "current-reader-002",
+                  "viewer-001"
+                ]
+              }
+            }
+          },
+          "disclosure_changes": [],
+          "reason": "payload pack disclosure custody"
+        }
+      },
+      "expected": "reject",
+      "row": "IF04_disclosure_seed",
+      "defect": "a disclosure negative whose declared changes omit one change"
+    },
+    {
+      "id": "IC08-shape-seed-incoherent",
+      "family": "attempt.completed",
+      "route": "integrity_shape_seed",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "event_type": "attempt.completed",
+          "case": "invalid_terminal_state",
+          "payload": {
+            "schema_version": "1.0.0",
+            "project_id": "project_id-001",
+            "event_sequence": 1,
+            "ts": "2026-11-04T12:00:00Z",
+            "run_id": "run_id-001",
+            "thread_id": "thread_id-001",
+            "node_id": "node_id-001",
+            "attempt_id": "attempt_id-001",
+            "replan_generation": 1,
+            "terminal_state": "unknown_enum",
+            "retry_count": 1,
+            "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+            "failure_class": "verification_failed"
+          },
+          "context": {
+            "admitted": true,
+            "current_project_id": "project_id-001",
+            "current_generation": 1,
+            "graph_locked": false,
+            "source_refs_valid": true,
+            "read_authorized": true,
+            "deletion_fenced": false,
+            "receipt_available": true,
+            "writer_withdrawn": false,
+            "predicate_valid": true,
+            "now_utc": "2026-11-04T12:00:00Z",
+            "backoff_until_utc": "2026-11-04T12:00:00Z",
+            "packaging_passed": true,
+            "expected_blocked_sequence": null,
+            "expected_attempt_id": "attempt_id-001",
+            "expected_parent_attempt_id": null,
+            "source_facts": {
+              "attempt_state": "active",
+              "work_reconciled": true
+            },
+            "source_bindings": {
+              "project_id": "project_id-001",
+              "run_id": "run_id-001",
+              "thread_id": "thread_id-001",
+              "node_id": "node_id-001",
+              "attempt_id": "attempt_id-001",
+              "replan_generation": 1,
+              "runtime_snapshot_ref": "runtime_snapshot_ref-001"
+            },
+            "envelope": {
+              "project_id": "project_id-001",
+              "run_id": "run_id-001",
+              "thread_id": "thread_id-001",
+              "attempt_id": "attempt_id-001",
+              "replay_policy": "dedupe_by_idempotency_key",
+              "payload": {
+                "schema_version": "1.0.0",
+                "project_id": "project_id-001",
+                "event_sequence": 1,
+                "ts": "2026-11-04T12:00:00Z",
+                "run_id": "run_id-001",
+                "thread_id": "thread_id-001",
+                "node_id": "node_id-001",
+                "attempt_id": "attempt_id-001",
+                "replan_generation": 1,
+                "terminal_state": "unknown_enum",
+                "retry_count": 1,
+                "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+                "failure_class": "verification_failed"
+              },
+              "payload_ref": null,
+              "storage_instance_id": "store-001"
+            },
+            "source_child_success": true,
+            "payload_packs": {},
+            "viewer": "viewer-001"
+          },
+          "expected": "reject",
+          "seed": {
+            "payload": {
+              "schema_version": "1.0.0",
+              "project_id": "project_id-001",
+              "event_sequence": 1,
+              "ts": "2026-11-04T12:00:00Z",
+              "run_id": "run_id-001",
+              "thread_id": "thread_id-001",
+              "node_id": "node_id-001",
+              "attempt_id": "attempt_id-001",
+              "replan_generation": 1,
+              "terminal_state": "failed",
+              "retry_count": 1,
+              "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+              "failure_class": "verification_failed"
+            },
+            "context": {
+              "admitted": true,
+              "current_project_id": "project_id-001",
+              "current_generation": 1,
+              "graph_locked": false,
+              "source_refs_valid": true,
+              "read_authorized": true,
+              "deletion_fenced": false,
+              "receipt_available": true,
+              "writer_withdrawn": false,
+              "predicate_valid": true,
+              "now_utc": "2026-11-04T12:00:00Z",
+              "backoff_until_utc": "2026-11-04T12:00:00Z",
+              "packaging_passed": true,
+              "expected_blocked_sequence": null,
+              "expected_attempt_id": "attempt_id-001",
+              "expected_parent_attempt_id": null,
+              "source_facts": {
+                "attempt_state": "active",
+                "work_reconciled": true
+              },
+              "source_bindings": {
+                "project_id": "project_id-001",
+                "run_id": "run_id-001",
+                "thread_id": "thread_id-001",
+                "node_id": "node_id-001",
+                "attempt_id": "attempt_id-001",
+                "replan_generation": 1,
+                "runtime_snapshot_ref": "runtime_snapshot_ref-001"
+              },
+              "envelope": {
+                "project_id": "project_id-001",
+                "run_id": "run_id-001",
+                "thread_id": "thread_id-001",
+                "attempt_id": "attempt_id-001",
+                "replay_policy": "dedupe_by_idempotency_key",
+                "payload": {
+                  "schema_version": "1.0.0",
+                  "project_id": "project_id-001",
+                  "event_sequence": 1,
+                  "ts": "2026-11-04T12:00:00Z",
+                  "run_id": "run_id-001",
+                  "thread_id": "thread_id-001",
+                  "node_id": "node_id-001",
+                  "attempt_id": "attempt_id-001",
+                  "replan_generation": 1,
+                  "terminal_state": "failed",
+                  "retry_count": 1,
+                  "runtime_snapshot_ref": "runtime_snapshot_ref-001",
+                  "failure_class": "verification_failed"
+                },
+                "payload_ref": null,
+                "storage_instance_id": "store-001"
+              },
+              "source_child_success": true,
+              "payload_packs": {},
+              "viewer": "viewer-001"
+            }
+          },
+          "defect_changes": []
+        }
+      },
+      "expected": "reject",
+      "row": "IC08_shape_seed",
+      "defect": "a shape negative whose declared defect changes are empty"
+    },
+    {
+      "id": "IF05-numeric-golden",
+      "family": "attempt.completed",
+      "route": "integrity_numeric",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "case": "F13-digest-9007199254740991",
+          "boundary": "digest",
+          "spelling": "9007199254740991",
+          "expected": "accept",
+          "expected_value": "0000000000000000000000000000000000000000000000000000000000000000"
+        }
+      },
+      "expected": "reject",
+      "row": "IF05_numeric_golden",
+      "defect": "a numeric golden digest that is not the recomputed digest"
+    },
+    {
+      "id": "IC01-fifteen-families",
+      "family": "attempt.completed",
+      "route": "integrity_contract_set",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "event_types": [
+            "attempt.started",
+            "node.blocked",
+            "node.completed",
+            "node.started",
+            "node.unblocked",
+            "plan.decomposition_degraded",
+            "remediation.resolved",
+            "remediation.spawned",
+            "run.completed",
+            "run.graph_integrity_failed",
+            "run.node_backoff_expired",
+            "run.node_backoff_started",
+            "run.node_ready",
+            "run.node_retry_scheduled",
+            "scheduler.pass"
+          ]
+        }
+      },
+      "expected": "reject",
+      "row": "IC01_family_count",
+      "defect": "fifteen contract families"
+    },
+    {
+      "id": "IC02-duplicate-family",
+      "family": "attempt.completed",
+      "route": "integrity_contract_set",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "event_types": [
+            "attempt.started",
+            "node.blocked",
+            "node.completed",
+            "node.started",
+            "node.unblocked",
+            "plan.decomposition_degraded",
+            "remediation.resolved",
+            "remediation.spawned",
+            "run.completed",
+            "run.graph_integrity_failed",
+            "run.node_backoff_expired",
+            "run.node_backoff_started",
+            "run.node_ready",
+            "run.node_retry_scheduled",
+            "scheduler.pass",
+            "attempt.started"
+          ]
+        }
+      },
+      "expected": "reject",
+      "row": "IC02_unique_families",
+      "defect": "sixteen contracts naming one family twice"
+    },
+    {
+      "id": "IC03-admitted-family",
+      "family": "attempt.completed",
+      "route": "contract_integrity",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "admitted": [
+            "attempt.completed"
+          ]
+        }
+      },
+      "expected": "reject",
+      "row": "IC03_unadmitted",
+      "defect": "the registry admits the drafted family"
+    },
+    {
+      "id": "IC05-open-schema",
+      "family": "attempt.completed",
+      "route": "contract_integrity",
+      "seed": {
+        "kind": "literal",
+        "value": {}
+      },
+      "expected": "reject",
+      "row": "IC05_closed_schema",
+      "defect": "a contract copy whose schema_ref names a schema without additionalProperties false",
+      "contract_changes": [
+        {
+          "path": "schema_ref",
+          "value": "Plans/executor_event_source_proofs.schema.json"
+        }
+      ]
+    },
+    {
+      "id": "IC06-no-accepted-shape",
+      "family": "attempt.completed",
+      "route": "contract_integrity",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "keep_expected": [
+            "reject"
+          ]
+        }
+      },
+      "expected": "reject",
+      "row": "IC06_accept_fixture",
+      "defect": "the family shape fixtures without their accepted cases"
+    },
+    {
+      "id": "IC07-no-rejected-shape",
+      "family": "attempt.completed",
+      "route": "contract_integrity",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "keep_expected": [
+            "accept"
+          ]
+        }
+      },
+      "expected": "reject",
+      "row": "IC07_reject_fixture",
+      "defect": "the family shape fixtures without their rejected cases"
+    },
+    {
+      "id": "IT01-swapped-requires",
+      "family": "attempt.completed",
+      "route": "integrity_table_order",
+      "seed": {
+        "kind": "literal",
+        "value": {
+          "phase": "transport_storage",
+          "swap": [
+            0,
+            1
+          ]
+        }
+      },
+      "expected": "reject",
+      "row": "IT01_require_order",
+      "defect": "a factory check() that requires its two rows in swapped order"
+    }
+  ]
+}
