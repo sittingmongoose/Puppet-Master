@@ -44,13 +44,16 @@
     /* the Recovery Kit: a folder with a band and a key's emblem, the one way back in */
     kit(p) {
       let s = p.rect(-36, -30, 72, 62, 6, 'body', 'c') + p.path('M-36 -18H36', 'line');
-      s += p.rect(-36, -30, 72, 12, 4, 'shade', 'c') + p.circle(0, 8, 11, 'panel', 'c') + p.circle(-3, 8, 4, 'accent', 'e') + p.rect(0, 6, 9, 4, 1.5, 'accent', 'e');
+      /* QA-5: the emblem centred in the folder's field under its band (-18..32, centre 7), its key centred in
+         the circle by its ink (bow and shaft together span -7..9 as drawn, 1 right of it) */
+      s += p.rect(-36, -30, 72, 12, 4, 'shade', 'c') + p.circle(0, 7, 11, 'panel', 'c') + p.circle(-4, 7, 4, 'accent', 'e') + p.rect(-1, 5, 9, 4, 1.5, 'accent', 'e');
       return { svg: s, ties: [[0, -30]], foot: 32 };
     },
     /* a lock, shut */
     lock(p) {
       let s = `<path d="M-14 -6V-16A14 14 0 0 1 14 -16V-6" ${p.fam === 'basic' ? `fill="none" stroke="${p.w.line}" stroke-width="5"` : `fill="none" stroke="${p.fam === 'glass' ? p.w.ink : p.fam === 'nier' ? p.w.ink : p.fam === 'retro' ? p.w.ink : p.w.ink}" stroke-width="${p.fam === 'nier' ? 3 : 6}" stroke-linecap="${p.fam === 'retro' || p.fam === 'nier' ? 'square' : 'round'}"`}/>`;
-      s += p.rect(-24, -8, 48, 40, 7, 'body', 'd') + p.circle(0, 8, 5, 'ink') + p.rect(-2, 10, 4, 10, 1.5, 'ink');
+      /* QA-5: the keyhole centred in the body (its ink spans y 3.5..20.5 about the body's 12; at 8/10 it stood 0.5 high) */
+      s += p.rect(-24, -8, 48, 40, 7, 'body', 'd') + p.circle(0, 8.5, 5, 'ink') + p.rect(-2, 10.5, 4, 10, 1.5, 'ink');
       return { svg: s, ties: [[0, -30]], foot: 32 };
     },
     /* a copy of a Project's settings: two sheets, sliders on the front one */

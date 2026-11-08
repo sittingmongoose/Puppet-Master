@@ -9,8 +9,10 @@
 // and 740; c-ready (Back, Enter Puppet Master and Take the Guided Tour, each with its ?: at 860 the two leave Back its
 // chevron alone, as the narrow window does at 740) and Where (Back and Continue); both surfaces. The log gives Back's
 // width and the window's layout.
-// --set forced=1 emulates forced colors (High Contrast): NieR's brackets are drawn with borders there (FO-96 round 10).
 //   --set size=740x900   --set look=nier-dark   --set screen=c-ready   --set selftest=noring (must fail)   --set forced=1
+//   --set forced=1 emulates forced colours (Windows High Contrast): NieR's brackets are drawn with borders there (FO-96
+//   round 10), and FO-117 runs the same cells there. On b3456fac54 Glass Dark's Back changed 0 pixels under forced
+//   colours: its mark was carried by what forced colours drops (see 10-window.css).
 
 const SIZES = [[1920, 1080], [860, 900], [740, 900]];
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
@@ -23,7 +25,9 @@ async function cell(t, surface, w, h) {
 	await t.viewport(w, h);
 	const f = await t.app.open({ onboarding: true, query: 'o55=fresh', sandbox: surface === 'sandbox' });
 	await f.waitForFunction(() => window.O55?.S?.open, null, { timeout: 30000 });
-	await t.emulate({ reducedMotion: 'no-preference', ...(t.args.forced ? { forcedColors: 'active' } : {}) });
+	/* FO-117: --set forced=1 runs the same cells under Windows High Contrast (forced colours), where a mark
+	   carried only by a shadow or a background is dropped by the platform and never paints */
+	await t.emulate(t.args.forced === '1' ? { reducedMotion: 'no-preference', forcedColors: 'active' } : { reducedMotion: 'no-preference', forcedColors: 'none' });
 	const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
 	/* the check's own test: --set selftest=noring takes every focus mark away (the reticle and any outline); it must fail */
 	if (t.args.selftest === 'noring') await f.evaluate(() => { const st = document.createElement('style'); st.textContent = '#o55np-reticle { display: none !important; } :focus-visible { outline: none !important; box-shadow: none !important; }'; document.head.appendChild(st); });
