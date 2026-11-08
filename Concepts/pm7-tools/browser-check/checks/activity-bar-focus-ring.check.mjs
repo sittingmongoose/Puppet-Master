@@ -1,8 +1,10 @@
 // FO-96 / F96-1 round 9 (opus-recheck-f96h): the rail's key focus ring (.d-abring, one element above every layer, placed
 // on the focused tile by CSS anchor positioning since round 8) where its box-shadow paint is not enough.
 //   forced colors: Windows High Contrast drops box-shadow, so round 8's ring was invisible there (Tab to Search changed
-//     0 to 2 pixels of the tile). With forced colors emulated, the tile must change on pixels between the focus off the
-//     bar and a Tab onto it (at least 100 pixels by more than 40 levels: a 3 px ring round a 30 px tile is about 330).
+//     0 to 2 pixels of the tile), and background images, so NieR's target brackets (gradient corners) were too (round 10,
+//     opus-recheck-f96i). With forced colors emulated, in all ten looks, the tile and 8 px round it (NieR's brackets sit
+//     outside the item) must change on pixels between the focus off the bar and a Tab onto it: at least 60 pixels by more
+//     than 40 levels (a 3 px ring round a 30 px tile is about 300; four 2 px corners about 140). Hover tags are hidden.
 //   scroll box: the ring lies outside the bar, so the bar's scroll box does not clip it. With the names shown at
 //     1280x500 the bar scrolls; a real wheel scrolls it until the key-focused Files is partly out of the scroll box, and
 //     the ring must be clipped there: its painted box (the box less its clip-path) inside the scroll box, and nothing
@@ -34,26 +36,27 @@ async function forcedColors(t) {
   const f = await t.app.open();
   await f.evaluate(() => { try { PMW.chatCol.show(); } catch (e) { /* none */ } });
   await t.page.mouse.move(1880, 1040);
-  const looks = t.args.looks ? String(t.args.looks).split(',') : ['glass-light', 'basic-dark', 'friendly-light'];
+  const looks = t.args.looks ? String(t.args.looks).split(',') : ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'retro-light', 'retro-dark', 'glass-light', 'glass-dark', 'nier-light', 'nier-dark'];
+  await f.evaluate(() => { const st = document.createElement('style'); st.id = 'fo96-ring-tags'; st.textContent = '#pm-hover-tag-root { visibility: hidden !important; }'; document.head.appendChild(st); });
   for (const look of looks) {
     await settle(t, f, look);
     await t.page.emulateMedia({ forcedColors: 'active' });
     await f.waitForTimeout(300);
     const active = await f.evaluate(() => matchMedia('(forced-colors: active)').matches);
     await sentinel(f); await f.waitForTimeout(300);
-    const box = await f.locator('#activityBar .icon[data-ab-id="search"] .symbol').boundingBox();
-    const off = await shot(t, box);
+    const box = await f.locator('#activityBar .icon[data-ab-id="search"] .symbol').boundingBox(), crop = { x: box.x - 8, y: box.y - 8, width: box.width + 16, height: box.height + 16 };
+    const off = await shot(t, crop);
     const reached = await tabTo(t, f, 'search');
-    await f.waitForTimeout(150);
+    await f.waitForTimeout(450);   /* NieR's reticle glides there in 150 ms */
     const box2 = await f.locator('#activityBar .icon[data-ab-id="search"] .symbol').boundingBox();
-    const on = await shot(t, box);
+    const on = await shot(t, crop);
     const n = changed(off, on), moved = Math.abs(box2.x - box.x) > 0.5 || Math.abs(box2.y - box.y) > 0.5;
-    t.log(`${look} forced colors ${active}: Tab onto Search changed ${n} pixels of its ${Math.round(box.width)}x${Math.round(box.height)} tile${moved ? ' (the tile moved)' : ''}`);
-    await t.check(`${look}: with forced colors, a Tab onto Search paints a visible focus ring (100 or more pixels of the tile change)`, active && reached && !moved && n >= 100, JSON.stringify({ active, reached, moved, changed: n }));
+    t.log(`${look} forced colors ${active}: Tab onto Search changed ${n} pixels of its ${Math.round(box.width)}x${Math.round(box.height)} tile and 8 px round it${moved ? ' (the tile moved)' : ''}`);
+    await t.check(`${look}: with forced colors, a Tab onto Search paints a visible focus mark (60 or more pixels of the tile and 8 px round it change)`, active && reached && !moved && n >= 60, JSON.stringify({ active, reached, moved, changed: n }));
     await t.page.emulateMedia({ forcedColors: 'none' });
     await sentinel(f);
   }
-  await f.evaluate(() => document.getElementById('fo96-ring-s')?.remove());
+  await f.evaluate(() => { document.getElementById('fo96-ring-s')?.remove(); document.getElementById('fo96-ring-tags')?.remove(); });
 }
 
 async function scrollBox(t) {
@@ -111,6 +114,30 @@ async function scrollBox(t) {
     }
     t.log(`${look} beyond the scroll box: ${JSON.stringify(beyond)}`);
     await t.check(`${look}: nothing of the ring is painted beyond the bar's scroll box (the strip of its box there does not change when it goes)`, !!beyond && beyond.scrollKept && beyond.changed <= 3, JSON.stringify(beyond));
+    // round 10 (opus-recheck-f96i): opening the partly cut, key-focused Files' panel (Ctrl+1, Enter, a click) lifts its
+    // tile after the press (Glass: 1.08); the clip, then measured on the tile, stayed stale. Search is opened first
+    // (Ctrl+2, the key focus kept on Files) and the cut checked again; after each opening, the same two checks.
+    if (/^glass-/.test(look) || t.args.openAll) for (const how of ['Control+1', 'Enter', 'click']) {
+      await t.page.keyboard.press('Control+2'); await f.waitForTimeout(900);
+      if (!(await geo()).keyFocus) { await tabTo(t, f, 'files'); await f.waitForTimeout(300); }
+      let q = await geo();
+      if (!(q.box.top - q.sym.top > 2)) { await f.evaluate(d => { document.getElementById('activityBar').scrollTop += d; }, q.sym.top - q.box.top + q.sym.height / 3); await f.waitForTimeout(400); q = await geo(); }
+      const c0 = q.box.top - q.sym.top;
+      if (how === 'click') { const b = await f.locator('#activityBar .icon[data-ab-id="files"] .symbol').boundingBox(); await t.page.mouse.click(b.x + b.width / 2, b.y + b.height * 0.75); await t.page.mouse.move(1240, 480); }
+      else await t.page.keyboard.press(how);
+      await f.waitForTimeout(1200);
+      q = await geo();
+      const opened = await f.evaluate(() => { const v = document.getElementById(document.querySelector('#activityBar .icon[data-ab-id="files"]').getAttribute('data-target')); return !!v && v.classList.contains('active'); });
+      // inside the scroll box, and cut exactly at its edge (a clip measured mid-change also hid ring that shows)
+      const ok = q.painted.top >= q.box.top - 0.5 && q.painted.bottom <= q.box.bottom + 0.5 && q.painted.left >= q.box.left - 0.5 && q.painted.right <= q.box.right + 0.5
+        && (q.ring.top >= q.box.top || Math.abs(q.painted.top - q.box.top) <= 0.5);
+      let px = null;
+      const top2 = Math.floor(q.ring.top), h2 = Math.floor(q.box.top) - top2 - 1;
+      if (h2 >= 2) { const r = { x: Math.floor(q.ring.left), y: top2, width: Math.ceil(q.ring.width), height: h2 }; const w = await shot(t, r); await sentinel(f); await f.waitForTimeout(400); const wo = await shot(t, r); px = changed(w, wo); }
+      t.log(`${look} opening Files by ${how} while cut ${c0.toFixed(1)} px: ${JSON.stringify({ opened, keyFocus: q.keyFocus, clip: q.clip, painted: q.painted, box: q.box, beyond: px })}`);
+      await t.check(`${look}: opening the partly cut, key-focused Files by ${how} leaves its ring clipped at the scroll box's edge`, opened && c0 > 2 && q.keyFocus && ok && (px === null || px <= 3), JSON.stringify({ opened, cut: c0, keyFocus: q.keyFocus, painted: q.painted, box: q.box, clip: q.clip, beyond: px }));
+      if (px !== null) { await tabTo(t, f, 'files'); await f.waitForTimeout(300); }
+    }
     await f.evaluate(() => { document.getElementById('fo96-ring-tags')?.remove(); document.getElementById('activityBar').scrollTop = 0; });
     if (!(await f.evaluate(() => document.getElementById('activityBar').classList.contains('collapsed')))) { await f.evaluate(() => document.getElementById('activityBarToggle').click()); await f.waitForTimeout(500); }
   }
