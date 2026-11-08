@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Run the gated guard tool (Method B) over the DG6A guard-table phase suites.
 
-Sweep part 2A, first slice: one phase, `decision_citation`
-(scripts/pm_dg6a_table_decision_citation.py, refused only through its rows by
-pm-card5-event-contracts-check.py::decision_citation_errors). Witnesses are
-collected by running the checker's own decision_citation_cases for all nine
-Card 5 families under its DECISION_RECORDER: an accepted observation is a
-control, a refused one is a negative targeted at its first refusing row.
-This runner is unscanned adapter code; the tool scans only the table module.
+Sweep part 2A phases so far, both in pm-card5-event-contracts-check.py:
+`decision_citation` (pm_dg6a_table_decision_citation.py) and `storage_schema`
+(pm_dg6a_table_storage_schema.py, one suite row per registered surface row).
+Witnesses are collected by running the checker's own one-defect case builders
+(decision_citation_cases, storage_schema_cases) for all nine Card 5 families
+under its recorders: an accepted observation is a control, a refused one is
+a negative targeted at its first refusing row. This runner is unscanned
+adapter code; the tool scans only the table module of the phase under test.
 Credit is copied from the tool's own report; this driver adds none.
 
-Usage: python3 scripts/pm-dg6a-guard-tables.py --out <dir> [--phase decision_citation]
+Usage: python3 scripts/pm-dg6a-guard-tables.py --out <dir> [--phase <phase>]...
+With no --phase, every phase runs serially in declaration order.
 """
 import argparse
 import hashlib
@@ -25,6 +27,7 @@ if str(ROOT / 'scripts') not in sys.path:
     sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_guard_isolation as g  # noqa: E402
 import pm_dg6a_table_decision_citation as decision_table  # noqa: E402
+import pm_dg6a_table_storage_schema as storage_table  # noqa: E402
 
 RETURN_SOURCE = 'return g.Case(table, check, context)'
 
@@ -36,38 +39,71 @@ def load_checker(name, filename):
     return module
 
 
+def dedupe(records):
+    """Records are (case_id, family, observed, first, defect); first is None or (row, code)."""
+    controls, negatives = {}, {}
+    for case_id, family, observed, first, defect in records:
+        key = json.dumps(observed, sort_keys=True)
+        if first is None:
+            slot = controls.setdefault(key, dict(id=case_id, value=observed, families=[]))
+        else:
+            slot = negatives.setdefault(key, dict(id=case_id, value=observed, target=first[0], code=first[1],
+                                                   families=[], defect=defect))
+            assert slot['target'] == first[0] and slot['code'] == first[1], (case_id, slot, first)
+        if family not in slot['families']:
+            slot['families'].append(family)
+    return list(controls.values()), list(negatives.values())
+
+
 def collect_decision_citation():
-    """(controls, negatives, collected_count) from the complete checker cases."""
     checker = load_checker('dg6a_card5_for_guard_tables', 'pm-card5-event-contracts-check.py')
     manifest = checker.load('Plans/card5_event_contracts/manifest.json')
     log = (ROOT / 'Plans/Decision_Log.md').read_text()
-    controls, negatives, seen = {}, {}, {}
-    collected = 0
+    records = []
     for family in manifest['families']:
-        records = []
-        checker.DECISION_RECORDER = records
+        collected = []
+        checker.DECISION_RECORDER = collected
         try:
             observations = checker.decision_citation_cases(manifest, family, log)
         finally:
             checker.DECISION_RECORDER = None
-        assert len(records) == len(observations), (family['event_type'], len(records), len(observations))
-        control_key = None
-        for observation, (observed, first) in zip(observations, records):
-            collected += 1
-            key = json.dumps(observed, sort_keys=True)
-            case_id = family['event_type'] + '/' + observation['name']
-            if first is None:
-                control_key = key
-                slot = controls.setdefault(key, dict(id=case_id, value=observed, families=[]))
-            else:
-                slot = negatives.setdefault(key, dict(id=case_id, value=observed, target=first[0], code=first[1],
-                                                      control_key=control_key, families=[],
-                                                      defect=observation['name']))
-                assert slot['target'] == first[0] and slot['code'] == first[1], (case_id, slot, first)
-            if family['event_type'] not in slot['families']:
-                slot['families'].append(family['event_type'])
-            seen.setdefault(key, []).append(case_id)
-    return list(controls.values()), list(negatives.values()), collected
+        assert len(collected) == len(observations), (family['event_type'], len(collected), len(observations))
+        for observation, (observed, first) in zip(observations, collected):
+            records.append((family['event_type'] + '/' + observation['name'], family['event_type'],
+                            observed, first, observation['name']))
+    controls, negatives = dedupe(records)
+    return controls, negatives, len(records)
+
+
+def collect_storage_schema():
+    checker = load_checker('dg6a_card5_for_guard_tables_storage', 'pm-card5-event-contracts-check.py')
+    manifest = checker.load('Plans/card5_event_contracts/manifest.json')
+    registry = checker.load('Plans/storage_value_registry.json')
+    records = []
+    for family in manifest['families']:
+        schemas = {k: checker.load(family[k]) for k in ('payload_schema', 'checkpoint_schema')}
+        if family['operation_schema']:
+            schemas['operation_schema'] = checker.load(family['operation_schema'])
+        collected = []
+        checker.STORAGE_RECORDER = collected
+        try:
+            assert not checker.storage_schema_errors(registry, family, schemas)
+            checker.storage_schema_cases(registry, family, schemas)
+        finally:
+            checker.STORAGE_RECORDER = None
+        counters = {}
+        for fid, observed, first in collected:
+            index = counters[fid] = counters.get(fid, 0) + 1
+            records.append((fid + '/record-' + str(index), family['event_type'], observed, first,
+                            'storage_schema_cases witness ' + fid + ' #' + str(index)))
+    controls, negatives = dedupe(records)
+    return controls, negatives, len(records)
+
+
+PHASES = {
+    'decision_citation': (decision_table, 'scripts/pm_dg6a_table_decision_citation.py', collect_decision_citation),
+    'storage_schema': (storage_table, 'scripts/pm_dg6a_table_storage_schema.py', collect_storage_schema),
+}
 
 
 def available_gib():
@@ -77,21 +113,14 @@ def available_gib():
     return 0.0
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('--phase', choices=['decision_citation'], default='decision_citation')
-    parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--max-rss', type=int, default=6144)
-    args = parser.parse_args()
-    args.out.mkdir(parents=True, exist_ok=True)
+def run_phase(phase, out, max_rss):
+    table, path, collect = PHASES[phase]
     started = time.monotonic()
-    controls, negatives, collected = collect_decision_citation()
-    control_ids = {json.dumps(c['value'], sort_keys=True): c['id'] for c in controls}
+    controls, negatives, collected = collect()
     gc = [g.Control(c['id'], c['value'], 'synthetic') for c in controls]
-    gn = [g.Negative(n['id'], n['value'], n['target'], n['code'], control_ids[n['control_key']],
+    gn = [g.Negative(n['id'], n['value'], n['target'], n['code'], gc[0].id,
                      'checker witness ' + n['id'] + ' (' + n['defect'] + ')') for n in negatives]
-    path = 'scripts/pm_dg6a_table_decision_citation.py'
-    suite = g.Suite('DG6A decision_citation', decision_table.case, gc, gn, (path,), ROOT,
+    suite = g.Suite('DG6A ' + phase, table.case, gc, gn, (path,), ROOT,
                     non_guards=[g.NonGuard(path, 'case', 'return', RETURN_SOURCE,
                                            'Construct the fresh execution Case; this return makes no acceptance or refusal decision.')])
     if available_gib() < 13.5:
@@ -99,23 +128,32 @@ def main():
     stops = [e for e in g.prescan_sources(ROOT / path) if e['kind'] in g.STATIC_STOP_KINDS]
     if stops:
         raise SystemExit('prescan stop kinds: ' + json.dumps(stops, indent=1, default=str))
-    gate = g.MemoryGate(args.max_rss, 10, 11, 30, 2700)
-    report = g.run(suite, memory=gate)
-    (args.out / 'decision_citation.json').write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
-    (args.out / 'decision_citation.md').write_text(g.markdown(report))
+    report = g.run(suite, memory=g.MemoryGate(max_rss, 10, 11, 30, 2700))
+    (out / (phase + '.json')).write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
+    (out / (phase + '.md')).write_text(g.markdown(report))
     rows = report.get('rows', [])
-    summary = dict(phase=args.phase, tool_status=report['status'], collected=collected,
-                   controls=len(gc), negatives=len(gn),
-                   control_families={c['id']: c['families'] for c in controls},
-                   negative_families={n['id']: n['families'] for n in negatives},
-                   proved=sorted(r['id'] for r in rows if r.get('proved')),
-                   unproved=sorted(report.get('unproved_guards', [])),
-                   failure_kinds=sorted({f['kind'] for f in report.get('failures', [])}),
-                   evaluations=report.get('evaluations'), seconds=round(time.monotonic() - started, 1),
-                   report_sha256=hashlib.sha256((args.out / 'decision_citation.json').read_bytes()).hexdigest())
-    (args.out / 'summary.json').write_text(json.dumps(summary, indent=1, sort_keys=True) + '\n')
-    print(json.dumps(summary, indent=1, sort_keys=True))
-    return 0 if report['status'] == 'PASS' else 1
+    return dict(phase=phase, tool_status=report['status'], collected=collected,
+                controls=len(gc), negatives=len(gn),
+                control_families={c['id']: c['families'] for c in controls},
+                negative_families={n['id']: n['families'] for n in negatives},
+                proved=sorted(r['id'] for r in rows if r.get('proved')),
+                unproved=sorted(report.get('unproved_guards', [])),
+                failure_kinds=sorted({f['kind'] for f in report.get('failures', [])}),
+                evaluations=report.get('evaluations'), seconds=round(time.monotonic() - started, 1),
+                report_sha256=hashlib.sha256((out / (phase + '.json')).read_bytes()).hexdigest())
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument('--phase', action='append', choices=list(PHASES), dest='phases')
+    parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--max-rss', type=int, default=6144)
+    args = parser.parse_args()
+    args.out.mkdir(parents=True, exist_ok=True)
+    summaries = {phase: run_phase(phase, args.out, args.max_rss) for phase in (args.phases or list(PHASES))}
+    (args.out / 'summary.json').write_text(json.dumps(summaries, indent=1, sort_keys=True) + '\n')
+    print(json.dumps(summaries, indent=1, sort_keys=True))
+    return 0 if all(s['tool_status'] == 'PASS' for s in summaries.values()) else 1
 
 
 if __name__ == '__main__':

@@ -31,9 +31,12 @@ load = shared.load
 if str(ROOT / 'scripts') not in sys.path:
     sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_dg6a_table_decision_citation as _decision_table  # noqa: E402
+import pm_dg6a_table_storage_schema as _storage_table  # noqa: E402
 
 _DECISION_ROWS = [(name, guard.predicate) for name, guard in _decision_table.case(None).table.guards.items()]
 DECISION_RECORDER = None
+_STORAGE_ROWS = [(name, guard.predicate) for name, guard in _storage_table.case(None).table.guards.items()]
+STORAGE_RECORDER = None
 
 
 def digest(value):
@@ -58,36 +61,60 @@ def schema_errors(value, schema):
     return list(shared.Draft202012Validator(schema).iter_errors(value))
 
 
+def storage_schema_observation(registry, family, schemas, surface):
+    """The storage_schema table's FIELDS for one surface row, derived only.
+
+    Metaschema validity, reference closure and content equality are computed
+    exactly as the pre-table guard computed them; the reference closure runs
+    only on a metaschema-valid stored schema, as before. When the row count
+    is not one there is no row to join, so every later fact is False and the
+    entailed SS02-SS06 rows stay silent under SS01.
+    """
+    key = surface + '_schema'
+    fid = family['slug'] + '_' + surface
+    rows = [row for row in registry['families'] if row['family_id'] == fid]
+    if len(rows) != 1:
+        return fid, {field: False for field in _storage_table.FIELDS}
+    row, companion = rows[0], schemas[key]
+    stored = row.get('value_schema')
+    try:
+        shared.Draft202012Validator.check_schema(stored)
+        valid = True
+    except SchemaError:
+        valid = False
+    return fid, {
+        'row_count_is_one': True,
+        'companion_ref_matches': row.get('value_schema_ref') == family[key],
+        'schema_id_matches': row.get('value_schema_id') == companion['$id'],
+        'stored_schema_valid': valid,
+        'stored_refs_resolve': bool(valid and not shared.schema_ref_errors(stored)),
+        'stored_equals_companion': bool(exact(stored, companion)),
+    }
+
+
 def storage_schema_errors(registry, family, schemas):
-    """Check the authoritative stored copies before using their validators."""
+    """Check the authoritative stored copies before using their validators.
+
+    Each surface row refuses only through
+    scripts/pm_dg6a_table_storage_schema.py rows, in table order; the first
+    refusing row's code plus ':' + family_id is appended, exactly as the
+    pre-table guard appended it before continuing to the next surface.
+    """
     errors = []
     for surface in ('operation', 'checkpoint'):
-        key = surface + '_schema'
-        if family[key] is None:
+        if family[surface + '_schema'] is None:
             continue  # The generic historical family declares no operation.
-        fid = family['slug'] + '_' + surface
-        rows = [row for row in registry['families'] if row['family_id'] == fid]
-        if len(rows) != 1:
-            errors.append('storage_row_count:' + fid)
-            continue
-        row, companion = rows[0], schemas[key]
-        if row.get('value_schema_ref') != family[key]:
-            errors.append('storage_companion_ref:' + fid)
-            continue
-        if row.get('value_schema_id') != companion['$id']:
-            errors.append('storage_schema_id:' + fid)
-            continue
-        stored = row.get('value_schema')
-        try:
-            shared.Draft202012Validator.check_schema(stored)
-        except SchemaError:
-            errors.append('storage_schema_invalid:' + fid)
-            continue
-        if shared.schema_ref_errors(stored):
-            errors.append('storage_schema_reference:' + fid)
-            continue
-        if not exact(stored, companion):
-            errors.append('storage_schema_drift:' + fid)
+        fid, observed = storage_schema_observation(registry, family, schemas, surface)
+        first = None
+        for name, predicate in _STORAGE_ROWS:
+            code = predicate(observed, None)
+            if code is not None:
+                first = (name, code)
+                break
+        if STORAGE_RECORDER is not None:
+            STORAGE_RECORDER.append((fid, copy.deepcopy(observed), first))
+        if first:
+            errors.append(first[1] + ':' + fid)
     return errors
 
 
