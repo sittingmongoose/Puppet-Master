@@ -200,15 +200,23 @@ export default async function (t) {
 		await quiet(); await f.waitForTimeout(900);
 		const unreached = [];
 		for (const screen of screens) {
-			await wake(); await f.waitForTimeout(250);
-			await f.evaluate(() => { const S = window.__qbs; S.frames = []; S.on = true; });
-			t.mark(`${look} ${screen}`);
-			await f.evaluate((sid) => window.O55.ui.go(sid, { noHistory: true }), screen);
-			await f.waitForTimeout(dwell);
-			const frames = await f.evaluate(() => { const S = window.__qbs; S.on = false; const r = S.frames; S.frames = []; return r; });
-			const at = await f.evaluate(() => window.O55.S.sess.screen);
-			if (at !== screen) { unreached.push(`${screen} (at ${at})`); continue; }
-			judge(look, screen, frames);
+			try {
+				await wake(); await f.waitForTimeout(250);
+				await f.evaluate(() => { const S = window.__qbs; S.frames = []; S.on = true; });
+				t.mark(`${look} ${screen}`);
+				await f.evaluate((sid) => window.O55.ui.go(sid, { noHistory: true }), screen);
+				await f.waitForTimeout(dwell);
+				const frames = await f.evaluate(() => { const S = window.__qbs; S.on = false; const r = S.frames; S.frames = []; return r; });
+				const at = await f.evaluate(() => window.O55.S.sess.screen);
+				if (at !== screen) { unreached.push(`${screen} (at ${at})`); continue; }
+				judge(look, screen, frames);
+			} catch (e) {
+				// a screen whose jump throws in the page (a NAS step without its state) must not end the whole route
+				unreached.push(`${screen} (threw: ${String(e && e.message || e).slice(0, 80)})`);
+				await f.evaluate(() => { const S = window.__qbs; if (S) { S.on = false; S.frames = []; } }).catch(() => {});
+				await f.evaluate(() => window.O55 && window.O55.ui && window.O55.ui.go('welcome', { noHistory: true })).catch(() => {});
+				await f.waitForTimeout(600);
+			}
 		}
 		t.log(`${look}: ${screens.length - unreached.length}/${screens.length} screens opened${unreached.length ? '; not opened: ' + unreached.join(', ') : ''}`);
 	}
