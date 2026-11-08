@@ -25,6 +25,7 @@ import pm_debug_investigation_guards_instrumentation_detail as instrumentation_d
 import pm_debug_investigation_guards_instrumentation_detail_values_a as instrumentation_detail_values_a
 import pm_debug_investigation_guards_instrumentation_detail_values_b as instrumentation_detail_values_b
 import pm_debug_investigation_guards_instrumentation_detail_values_c as instrumentation_detail_values_c
+import pm_debug_investigation_guards_instrumentation_detail_values_d as instrumentation_detail_values_d
 import pm_debug_investigation_guards_instrumentation_detail_required as instrumentation_detail_required
 import pm_debug_investigation_guards_instrumentation_joins as instrumentation_joins
 import pm_debug_investigation_guards_instrumentation_source as instrumentation_source
@@ -70,6 +71,7 @@ SCHEMA_CODES = {
     guards.DETAIL_VALUES_A_URI: 'invalid_detail',
     guards.DETAIL_VALUES_B_URI: 'invalid_detail',
     guards.DETAIL_VALUES_C_URI: 'invalid_detail',
+    guards.DETAIL_VALUES_D_URI: 'invalid_detail',
     guards.DETAIL_REQUIRED_URI: 'invalid_detail',
     guards.PAYLOAD_VALUES_URI: 'invalid_payload',
     guards.RETRY_URI: 'invalid_retry_request'}
@@ -82,6 +84,7 @@ SCHEMA_LABELS = {
     guards.DETAIL_VALUES_A_URI: 'instrumentation_change_detail',
     guards.DETAIL_VALUES_B_URI: 'instrumentation_change_detail',
     guards.DETAIL_VALUES_C_URI: 'instrumentation_change_detail',
+    guards.DETAIL_VALUES_D_URI: 'instrumentation_change_detail',
     guards.DETAIL_REQUIRED_URI: 'instrumentation_change_detail',
     guards.PAYLOAD_VALUES_URI: 'payload',
     guards.RETRY_URI: 'cleanup_retry_request'}
@@ -155,7 +158,8 @@ DOCUMENT_MODULES = ((lifecycle, ('lifecycle',)), (instrumentation_source, ('inst
                     (instrumentation_detail_required, ('instrumentation_detail_required',)),
                     (instrumentation_detail_values_a, ('instrumentation_detail_values_a',)),
                     (instrumentation_detail_values_b, ('instrumentation_detail_values_b',)),
-                    (instrumentation_detail_values_c, ('instrumentation_detail_values_c',)), (retry, ('retry_request',)),
+                    (instrumentation_detail_values_c, ('instrumentation_detail_values_c',)),
+                    (instrumentation_detail_values_d, ('instrumentation_detail_values_d',)), (retry, ('retry_request',)),
                     (payload, tuple('debug.investigation.' + name for name in FAMILIES if name != 'target_bound')),
                     (payload_values, tuple('debug.investigation.' + name for name in SPLIT_PAYLOADS)),
                     (target_payload, (TARGET_EVENT,)))
@@ -165,10 +169,10 @@ LOADED = {'keys': None}
 
 
 def detail_documents(detail):
-    """The detail definition in five exact parts: structure (every keyword but the
+    """The detail definition in six exact parts: structure (every keyword but the
     property constraints and the second half of the required list, with each
     property kept as an empty schema); the second half of the required list; and
-    the constraints of the first, second and third ten of its properties."""
+    the constraints of its properties 1-5, 11-20, 21-30 and 6-10."""
     keys = list(detail['properties'])
     required = list(detail['required'])
     half = len(required) // 2
@@ -176,10 +180,11 @@ def detail_documents(detail):
     structure['required'] = required[:half]
     structure['properties'] = {key: {} for key in keys}
     required_b = {'required': required[half:]}
-    groups = (keys[:10], keys[10:20], keys[20:])
+    groups = (keys[:5], keys[10:20], keys[20:], keys[5:10])
     parts = tuple({key: copy.deepcopy(detail['properties'][key]) for key in group} for group in groups)
+    merged = {key: value for part in parts for key, value in part.items()}
     recombined = dict(structure, required=structure['required'] + required_b['required'],
-                      properties={key: value for part in parts for key, value in part.items()})
+                      properties={key: merged[key] for key in keys if key in merged})
     if recombined != detail or list(recombined['properties']) != keys or sum(len(part) for part in parts) != len(keys):
         raise ValueError('detail schema parts do not recombine to the published definition')
 
@@ -189,7 +194,8 @@ def detail_documents(detail):
             'instrumentation_detail_required': {guards.DETAIL_REQUIRED_URI: wrapped(required_b)},
             'instrumentation_detail_values_a': {guards.DETAIL_VALUES_A_URI: wrapped({'properties': parts[0]})},
             'instrumentation_detail_values_b': {guards.DETAIL_VALUES_B_URI: wrapped({'properties': parts[1]})},
-            'instrumentation_detail_values_c': {guards.DETAIL_VALUES_C_URI: wrapped({'properties': parts[2]})}}
+            'instrumentation_detail_values_c': {guards.DETAIL_VALUES_C_URI: wrapped({'properties': parts[2]})},
+            'instrumentation_detail_values_d': {guards.DETAIL_VALUES_D_URI: wrapped({'properties': parts[3]})}}
 
 
 def load_documents(schema=None, only=None):
@@ -259,7 +265,7 @@ def row_label(row):
         return row
     pointer = row.split('#', 1)[1].rsplit('@', 1)[0]
     if uri in (guards.DETAIL_URI, guards.DETAIL_REQUIRED_URI, guards.DETAIL_VALUES_A_URI, guards.DETAIL_VALUES_B_URI,
-               guards.DETAIL_VALUES_C_URI):
+               guards.DETAIL_VALUES_C_URI, guards.DETAIL_VALUES_D_URI):
         pointer = pointer[len('/properties/detail'):]
     return SCHEMA_LABELS[uri] + '#' + pointer
 
@@ -280,13 +286,16 @@ PHASE_MEMBERS = {
     'instrumentation_detail_values_a': ('detail_records', 'payload'),
     'instrumentation_detail_values_b': ('detail_records', 'payload'),
     'instrumentation_detail_values_c': ('detail_records', 'payload'),
+    'instrumentation_detail_values_d': ('detail_records', 'payload'),
     'instrumentation_joins': ('detail_records', 'instrumentation_source', 'payload'),
     'instrumentation': ('detail_records', 'instrumentation_source', 'payload')}
 # Value-part phases judge only some properties of one object; their proof input
 # keeps only those properties (and, for the detail parts, only payload.detail_ref
 # and the record it names).
-VALUE_PARTS = {'payload_values': None, 'instrumentation_detail_values_a': 0,
-               'instrumentation_detail_values_b': 1, 'instrumentation_detail_values_c': 2}
+VALUE_PARTS = {'payload_values': None, 'instrumentation_detail_values_a': guards.DETAIL_VALUES_A_URI,
+               'instrumentation_detail_values_b': guards.DETAIL_VALUES_B_URI,
+               'instrumentation_detail_values_c': guards.DETAIL_VALUES_C_URI,
+               'instrumentation_detail_values_d': guards.DETAIL_VALUES_D_URI}
 # The envelope rows read only these payload members.
 ENVELOPE_PAYLOAD_KEYS = ('investigation_id', 'project_id', 'thread_id', 'run_id')
 
@@ -296,7 +305,7 @@ def part_keys(phase, case):
     if phase == 'payload_values':
         document = loaded.get(str(case.get('event_type')) + '#values')
         return None if document is None else list(document[guards.PAYLOAD_VALUES_URI]['properties'])
-    uri = (guards.DETAIL_VALUES_A_URI, guards.DETAIL_VALUES_B_URI, guards.DETAIL_VALUES_C_URI)[VALUE_PARTS[phase]]
+    uri = VALUE_PARTS[phase]
     return list(loaded[phase][uri]['properties']['detail']['properties'])
 
 
@@ -336,6 +345,7 @@ def phases(case):
                      ('instrumentation_detail', instrumentation_detail.instrumentation_detail_case),
                      ('instrumentation_detail_required', instrumentation_detail_required.instrumentation_detail_required_case),
                      ('instrumentation_detail_values_a', instrumentation_detail_values_a.instrumentation_detail_values_a_case),
+                     ('instrumentation_detail_values_d', instrumentation_detail_values_d.instrumentation_detail_values_d_case),
                      ('instrumentation_detail_values_b', instrumentation_detail_values_b.instrumentation_detail_values_b_case),
                      ('instrumentation_detail_values_c', instrumentation_detail_values_c.instrumentation_detail_values_c_case),
                      ('instrumentation_joins', instrumentation_joins.instrumentation_joins_case),
