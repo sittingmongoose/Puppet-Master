@@ -557,7 +557,9 @@ refresh the baseline to make a landing pass: that excuses exactly the failure it
 
 Working directory: `~/pm-worktrees/snapshot-$(date -u +%Y%m%d)`, a full worktree on the VM's local
 disk at the newly pushed `main`, never the shared checkout. The snapshot writes a new tracked run
-directory, which is why it cannot run where branches land.
+directory and removes snapshot runs older than the one it replaces, which is why it cannot run where
+branches land. The replaced run stays because the new run declares it and validation reads its
+summary. `git add Plans/.plan_migration` below stages both changes. Git history keeps the removed bytes.
 
     cd ~/pm-worktrees/snapshot-$(date -u +%Y%m%d)
     git fetch origin

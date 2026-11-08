@@ -12,6 +12,7 @@ import argparse
 import hashlib
 import json
 import re
+import shutil
 import sys
 import tempfile
 from collections import Counter
@@ -863,6 +864,12 @@ def current_snapshot_plan_units() -> tuple[dict[str, list[str]], list[dict[str, 
 # so the lineage survives however many older snapshots move out later.
 AGGREGATE_HISTORICAL_RUN_ID = "pds-20260611-002-atomize-planunits"
 
+# The repository keeps runs 001 and 002, the current run and the snapshot it declares it supersedes
+# (AGENTS.md, "Where things go"). A current snapshot is about 61 MB and every Plans landing makes one,
+# so snapshot-current removes older snapshots once the new run has passed validation. Validation still
+# reads the declared predecessor's summary, so that run stays. Git history keeps the removed bytes.
+CURRENT_SNAPSHOT_RUN_RE = re.compile(r"pds-[0-9]{8}-[0-9]{3}-current-planunit-snapshot")
+
 
 def snapshot_supersedes_run_ids(run_id: str, requested: list[str]) -> list[str]:
     """Return the requested predecessors plus run 002 when it is present and complete."""
@@ -1341,6 +1348,24 @@ def rollback_failed_current_snapshot_publication(
     return validation
 
 
+def remove_older_snapshot_runs(keep_run_ids: set[str]) -> tuple[list[str], list[dict[str, str]]]:
+    """Remove current-snapshot runs not in keep_run_ids; a failure is reported, never fatal."""
+    removed: list[str] = []
+    failures: list[dict[str, str]] = []
+    for run_dir in sorted(MIGRATIONS.iterdir()):
+        if run_dir.name in keep_run_ids or not run_dir.is_dir():
+            continue
+        if not CURRENT_SNAPSHOT_RUN_RE.fullmatch(run_dir.name):
+            continue
+        try:
+            shutil.rmtree(run_dir)
+        except OSError as exc:
+            failures.append({"run_id": run_dir.name, "error": str(exc)})
+        else:
+            removed.append(run_dir.name)
+    return removed, failures
+
+
 def cmd_snapshot_current(args: argparse.Namespace) -> dict[str, Any]:
     validate_snapshot_run_id(args.run_id)
     run_dir = MIGRATIONS / args.run_id
@@ -1470,6 +1495,9 @@ def cmd_snapshot_current(args: argparse.Namespace) -> dict[str, Any]:
             pointer_temp,
             validation,
         )
+    removed_run_ids, removal_failures = remove_older_snapshot_runs(
+        {args.run_id, *bundle["inventory"]["supersedes_run_ids"]}
+    )
     return {
         "schema_id": "pm.plan_migration.current_snapshot_report.v1",
         "run_id": args.run_id,
@@ -1480,6 +1508,8 @@ def cmd_snapshot_current(args: argparse.Namespace) -> dict[str, Any]:
             "current_run_pointer": rel(CURRENT_RUN_POINTER),
             "plans_manifest_sha256": bundle["inventory"]["plans_manifest_sha256"],
             "supersedes_run_ids": bundle["inventory"]["supersedes_run_ids"],
+            "removed_superseded_run_ids": removed_run_ids,
+            "superseded_run_removal_failures": removal_failures,
             "conversion_performed": False,
         },
     }
