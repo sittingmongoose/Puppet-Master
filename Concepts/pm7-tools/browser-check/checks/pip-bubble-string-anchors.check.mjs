@@ -68,6 +68,9 @@ function installSampler() {
 				rel: tr ? [R2(+tr[1] - sp[0]), R2(+tr[2] - sp[1])] : null,
 				boxRel: [R2(br.left - hr.left), R2(br.top - hr.top)] };
 			fr.visY0 = st.vis ? R2(st.vis.y0) : null;
+			fr.vis = st.vis ? [R2(st.vis.x0), R2(st.vis.y0), R2(st.vis.x1), R2(st.vis.y1)] : null;
+			fr.keep = st.keepOff ? st.keepOff.map(R2) : null;
+			fr.rn = st.renderN || 0;
 			fr.anchorY = st.L.anchorY;
 			fr.props = [];
 			st.props.forEach((pr, id) => {
@@ -112,6 +115,9 @@ export default async function (t) {
 	let scenes = 0, lines = 0, strings = 0, dests = 0;
 	const judge = (look, screen, frames) => {
 		const fr = frames.filter((x) => !x.none);
+		// a stepped stage (Retro) draws its props at its own rate: between draws the physics has moved on but the
+		// painted string is the last draw's, so strings are judged on frames the stage drew
+		fr.forEach((x, i) => { x.fresh = i === 0 || x.rn !== fr[i - 1].rn; });
 		if (fr.length < 20) return;
 		scenes++;
 		// ---- QA-4: per (scene segment, line, size) episode, first frame against settled, and no straying
@@ -139,15 +145,21 @@ export default async function (t) {
 			if (devs[0] > tol || worst > tol)
 				bad4.push(`${look} ${screen} '${e.rows[0].bub.text.slice(0, 32)}': first frame ${devs[0].toFixed(1)} px from settled, worst ${worst.toFixed(1)} px at +${e.rows[wi].t - e.rows[0].t} ms (${e.rows.length} frames; settled rel [${sx.toFixed(1)}, ${sy.toFixed(1)}] tr [${tx.toFixed(1)}, ${ty.toFixed(1)}], first rels ${rels.slice(0, 5).map((r) => `[${r[0].toFixed(1)}, ${r[1].toFixed(1)}]`).join(' ')})`);
 		}
-		// ---- QA-6 + QA-4b: per (segment, prop) by destination slot
+		// ---- QA-6 + QA-4b: per (scene segment, prop). A segment ends where restPose itself is allowed to refit
+		// (a new direct, a layout or visible-span change, a new keepOff); within one, anchor and destination are fixed
 		const byProp = new Map();
-		for (const x of fr) for (const p of x.props || []) {
-			const k = `${p.id}|${x.dn}`;
+		for (const x of fr) { if (!x.fresh) continue; for (const p of x.props || []) {
+			const k = `${p.id}|${x.dn}|${x.layout}|${x.vis ? x.vis.join(',') : ''}|${x.keep ? x.keep.join(',') : ''}`;
 			if (!byProp.has(k)) byProp.set(k, []);
 			byProp.get(k).push({ x, p });
-		}
+		} }
 		for (const [k, rows] of byProp) {
-			const vis = rows.filter(({ p }) => p.op > 0.02 && p.state !== 'out');
+			// the sampler is armed before the jump, so a segment opens with the held frames of the old scene (the
+			// stage is parked while the new screen comes in, still painted at the old destinations): a destination
+			// change inside that window is the scene change itself, judged from its first settled frame
+			let cut = 0;
+			for (let i = 1; i < Math.min(rows.length, 13); i++) if (JSON.stringify(rows[i].p.restBox) !== JSON.stringify(rows[i - 1].p.restBox)) cut = i;
+			const vis = rows.slice(cut).filter(({ p }) => p.op > 0.02 && p.state !== 'out');
 			if (vis.length < 12) continue;
 			const p0 = vis[0].p;
 			const hasHelper = vis.some(({ p }) => p.anch);

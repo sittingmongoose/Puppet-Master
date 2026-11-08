@@ -154,7 +154,7 @@ export default async function (t) {
 		if (st0.length) stale.push(`${tag}: ${st0.length} frame(s), first ${say(st0[0], () => true)}`);
 		if (r0.length) overRest.push(`${tag}: ${r0.length} frame(s), first ${say(r0[0], (p) => !p.out && p.settled)}`);
 		// QA-4 trade: per prop and line, an entry (first shown to first at rest) with the bubble still, and a leaving
-		// prop covered only while the bubble is still; still = its placement against the speech point within 0.5 px
+		// prop covered only while the bubble is still; still = its placement against the speech point within 1 px (the QA-4 tolerance)
 		let entries = 0, covered = 0;
 		const byProp = new Map();
 		sh.forEach((x, xi) => x.props.forEach((p) => { const k = `${p.id}|${x.screen}|${x.text}`; if (!byProp.has(k)) byProp.set(k, []); byProp.get(k).push({ x, xi, p }); }));
@@ -170,13 +170,13 @@ export default async function (t) {
 				if (seg[0].p.out) {
 					const cov = seg.filter(({ x, p }) => hit(x.b, p.b));
 					covered += cov.length;
-					if (cov.length && relSpan(seg) > 0.5) movedCover.push(`${tag}: bubble moved ${relSpan(seg).toFixed(1)} px while leaving ${seg[0].p.kind} passed behind it on ${seg[0].x.screen} (${cov.length} covered frame(s))`);
+					if (cov.length && relSpan(seg) > 1) movedCover.push(`${tag}: bubble moved ${relSpan(seg).toFixed(1)} px while leaving ${seg[0].p.kind} passed behind it on ${seg[0].x.screen} (${cov.length} covered frame(s))`);
 				} else {
 					const si = seg.findIndex(({ p }) => p.settled), entry = si < 0 ? seg : seg.slice(0, si + 1);
 					if (entry.length < 2) continue;
 					entries++;
 					covered += entry.filter(({ x, p }) => !p.settled && hit(x.b, p.b)).length;
-					if (relSpan(entry) > 0.5) movedCover.push(`${tag}: bubble moved ${relSpan(entry).toFixed(1)} px during ${seg[0].p.kind}'s entry on ${seg[0].x.screen} (${entry.length} frames)`);
+					if (relSpan(entry) > 1) movedCover.push(`${tag}: bubble moved ${relSpan(entry).toFixed(1)} px during ${seg[0].p.kind}'s entry on ${seg[0].x.screen} (${entry.length} frames)`);
 				}
 			}
 		}
