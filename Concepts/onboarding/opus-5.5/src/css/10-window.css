@@ -659,12 +659,18 @@ html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-talk .o55-talkglyph
 #pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railbar { display: none; }
 /* One string, like the concept (QA round 2, Q4: the bar above and the beads hanging on their own strings below it read
    as two bars). Each chapter's bead is threaded on the string Pip rides, its name under it; Pip stands in for the
-   current bead; the beads follow the string's sag (58-rig.js rail.tick). The names share one line, below Pip's feet. */
-#pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railitem { flex-direction: column; justify-content: flex-start; gap: 0; padding-top: calc(14px - var(--o55-node-w, 10px) / 2); }
+   current bead; the beads follow the string's sag (58-rig.js rail.tick). The names share one line, below Pip's feet.
+   QA-1 (Jared, 2026-11-08: "the section around the text cuts down into the other section"): the string runs at
+   --o55-rail-y, 10 px down (it was 14), so the names sit 35 to 50 px down the 58 px header and the look's chip round the
+   current one (Liquid Glass's lens, 6 px round the name; NieR's ink box, 30 to 51) ends inside the header, a pixel above
+   its bottom line, where at 14 it ran 2 px down into the window's body. Pip hangs from the string as before, so it keeps
+   its place against the name. 58-rig.js reads the same property for the string, the beads and Pip. */
+#pm-o55-onboarding .o55-rail[data-o55-pip] { --o55-rail-y: 10px; }
+#pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railitem { flex-direction: column; justify-content: flex-start; gap: 0; padding-top: calc(var(--o55-rail-y) - var(--o55-node-w, 10px) / 2); }
 .o55-rail[data-o55-pip] .o55-railstring { display: none; }
 .o55-rail[data-o55-pip] .o55-raillabel { margin-top: calc(25px - var(--o55-node-w, 10px) / 2); line-height: 1.2; }
 /* (NieR's chapter box goes behind the name, where the name now is) */
-html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railitem::after { top: 34px; height: 21px; }
+html[data-o55-nier-parts~="headers"] #pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railitem::after { top: calc(var(--o55-rail-y) + 20px); height: 21px; }
 /* (the current bead takes no width, so the look's chip behind the current chapter, Glass's lens included, wraps its
    name alone and never covers Pip; its centre, where Pip goes, stays the column's) */
 #pm-o55-onboarding .o55-rail[data-o55-pip] .o55-railitem[data-state="current"] .o55-railnode { visibility: hidden; width: 0; border-width: 0; }
