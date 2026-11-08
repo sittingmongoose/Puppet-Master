@@ -506,20 +506,36 @@
     /* how far a prop must move (dx, dy) or shrink (f) for its drawing, at its angle, to sit inside the pane's visible span
        (this.vis, from measure) with a margin, and off a speech box that cannot move out of its way (this.keepOff: NieR's
        fixed box, or a bubble that found no clear place); box is where it is then painted */
-    fit(pr, hang, sc, tm) {
+    fit(pr, hang, sc, tm, destination) {
       const v = this.vis; let bb = pr.bb;
       if (!v) return { dx: 0, dy: 0, f: 1, box: null };
       if (!bb || !bb[2]) { bb = pr.bb = this.boxOf(pr.el); if (!bb || !bb[2]) return { dx: 0, dy: 0, f: 1, box: null }; }
-      const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], pr.a));
+      const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], destination ? 0 : pr.a));
       let lo = Math.min(...cs.map((c) => c[0])), hi = Math.max(...cs.map((c) => c[0])), tp = Math.min(...cs.map((c) => c[1])), bt = Math.max(...cs.map((c) => c[1])), f = 1;
       const pad = 8, room = v.x1 - v.x0 - pad * 2, hx = hang[0], hy = hang[1];
+      const rest = pr.state !== 'out' && pr.spec.stack == null;
+      if (rest && !destination) {
+        /* Fit the destination, then lower the prop into it on its spring. Fitting the moving pose picked the nearest
+           side of another prop every frame: Recovery Kit > backup list pinned the clipboard above the restore box
+           for 120 ms, then switched below it in one frame (QA-7). The other props' destinations participate too, so
+           their entry opacity or progress cannot change this prop's landing place halfway down. */
+        const tg = this.propTarget(pr), at = [tg.ax, this.L.anchorY + tg.len];
+        const fit = this.fit(pr, at, sc, tm, true); pr.restBox = fit.box;
+        lo *= fit.f; hi *= fit.f; tp *= fit.f; bt *= fit.f;
+        let dx = fit.dx, dy = fit.dy;
+        // A swing still stays inside the pane; the incoming prop may pass its top edge on its strings.
+        if (hx + hi + dx > v.x1 - pad) dx = v.x1 - pad - (hx + hi);
+        if (hx + lo + dx < v.x0 + pad) dx = v.x0 + pad - (hx + lo);
+        if (hy + bt + dy > v.y1 - pad) dy = v.y1 - pad - (hy + bt);
+        return { dx, dy, f: fit.f, box: [hx + lo + dx, hy + tp + dy, hx + hi + dx, hy + bt + dy] };
+      }
       if (hi - lo > room && room > 0) { f = room / (hi - lo); lo *= f; hi *= f; tp *= f; bt *= f; }
       let dx = 0, dy = 0;
       if (hx + hi > v.x1 - pad) dx = v.x1 - pad - (hx + hi);
       if (hx + lo + dx < v.x0 + pad) dx = v.x0 + pad - (hx + lo);
       /* (up and down too, for a prop at rest: one coming in or going out passes the top edge on its strings, and Creating's
          blocks stand on the floor) */
-      const rest = pr.state !== 'out' && pr.spec.stack == null, dxEdge = dx;
+      const dxEdge = dx, visible = destination ? 1 : pr.op;
       /* the least move (inside the pane) that clears every box in obs, or drawn a little smaller only when no way does */
       const clear = (obs) => {
         const L0 = lo, H0 = hi, T0 = tp, B0 = bt, f0 = f; let g = 1;
@@ -547,14 +563,14 @@
       };
       if (rest) {
         if (hy + bt > v.y1 - pad) dy = v.y1 - pad - (hy + bt);
-        if (pr.op > .95 && hy + tp + dy < v.y0 + pad) dy = v.y0 + pad - (hy + tp);
+        if (visible > .95 && hy + tp + dy < v.y0 + pad) dy = v.y0 + pad - (hy + tp);
         /* off what it must not touch: a speech box that cannot move (keepOff) and the props already placed this frame
            (the name's sign and the service's mark at a short window); it moves the least way that clears them all,
            inside the pane, and is drawn a little smaller only when no way does */
-        const obs = []; if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
+        const obs = []; if (this.keepOff && visible > .05) obs.push(this.keepOff);
         /* (and off Pip's head where it hangs at rest: Retro's crop pushed a sign in from its cut side over Pip, FO-50) */
-        const pk = this.pipKeep; if (pk && pr.op > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
-        this.props.forEach((q) => { if (q !== pr && q.box && q.placedN === this.renderN && q.op > .05 && q.state !== 'out') obs.push([q.box[0] - 4, q.box[1] - 4, q.box[2] + 4, q.box[3] + 4]); });
+        const pk = this.pipKeep; if (pk && visible > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
+        this.props.forEach((q) => { const b = destination ? q.restBox || q.box : q.box; if (q !== pr && b && q.placedN === this.renderN && (destination || q.op > .05) && q.state !== 'out') obs.push([b[0] - 4, b[1] - 4, b[2] + 4, b[3] + 4]); });
         const g = clear(obs);
         pr.restOff = { dx: dx - dxEdge, dy, g };
       } else if (pr.state === 'out') {
