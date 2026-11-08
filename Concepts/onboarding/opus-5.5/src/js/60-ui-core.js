@@ -433,6 +433,11 @@
       de.getAttribute('data-o55-nier-parts'), de.getAttribute('style'), document.body ? document.body.style.zoom : '', document.fonts ? document.fonts.status : '',
       foot.childElementCount, foot.textContent].join('|');
   }
+  /* the footer's width as laid out, which no transform reaches: the first reading is taken before the first paint, under
+     the window's opening keyframe, and a rotated box's bounding width grows with its height (Friendly's entrance turns
+     the window 0.6 degrees, so the drawn footer, labels on two lines, read 0.1 px wider than its one-line width and
+     kept Back's word at 1092 until the next resize; opus-recheck-look8b Q4-2) */
+  const footW = (foot) => parseFloat(getComputedStyle(foot).width) || 0;
   function fitFoot(layer) {
     const foot = layer && layer.isConnected ? layer.querySelector(':scope > .o55-foot') : null;
     if (!foot) return;
@@ -440,16 +445,17 @@
     const key = footKey(foot);
     let need = footNeed.get(foot);
     if (!need || need.key !== key || need.room == null) {
-      const room = foot.getBoundingClientRect().width, was = foot.getAttribute('data-o55-fit');
+      const room = footW(foot), was = foot.getAttribute('data-o55-fit');
       foot.setAttribute('data-o55-fit', 'measure');
-      need = { key, w: foot.getBoundingClientRect().width, room };
+      need = { key, w: footW(foot), room };
       if (was === null) foot.removeAttribute('data-o55-fit'); else foot.setAttribute('data-o55-fit', was);
       footNeed.set(foot, need);
     }
-    /* exactly, in layout units (1/64 px): a footer even 1/64 px short of its one-line width shrinks its labels, which
-       wrap, so Back's word must go there (a half-pixel allowance kept it while both labels wrapped, and a pixel narrower
-       they went back to one line: Friendly Light 1092, NieR Dark 1086, Glass Light 1039; opus-recheck-look8 Q4-1) */
-    const fit = Math.round(need.w * 64) <= Math.round(need.room * 64) ? 'full' : 'chevron';
+    /* exactly: a footer even one layout unit (1/64 px) short of its one-line width shrinks its labels, which wrap, so
+       Back's word must go there (a half-pixel allowance kept it while both labels wrapped, and a pixel narrower they went
+       back to one line: Friendly Light 1092, NieR Dark 1086, Glass Light 1039; opus-recheck-look8 Q4-1). Both widths are
+       the same element's used width, so equal layouts read equal and a unit short reads less, at any page zoom. */
+    const fit = need.w <= need.room ? 'full' : 'chevron';
     if (foot.getAttribute('data-o55-fit') !== fit) foot.setAttribute('data-o55-fit', fit);
   }
   /* (the layer's width is the footer's; a size change re-reads the room, and the morph of a quiet redraw, which drops the
