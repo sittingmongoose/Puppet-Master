@@ -141,20 +141,12 @@ html[data-o55-nier-parts~="brackets"] .focus-ring { outline: 0 !important; box-s
 #o55np-reticle > i { position: absolute; left: 0; top: 0; width: 10px; height: 10px; display: block; will-change: transform;
   background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 2px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 2px 100% no-repeat;
   transition: transform 150ms cubic-bezier(.25, .9, .3, 1); }
-/* FO-117: forced colours (Windows High Contrast) strips background gradients, and the corners above are two
-   gradients — with the native outline suppressed in their favour (the bracketed :focus-visible rule above),
-   keyboard focus showed no mark at all in either NieR look. There the same corner is drawn as borders, which
-   the platform paints in its own colours; the flips that turn one corner into four turn borders as they did
-   the gradients. */
-@media (forced-colors: active) {
-  #o55np-reticle > i { background: none !important; border: 0 solid CanvasText; border-width: 2px 0 0 2px; box-sizing: border-box; }
-}
 html[data-motion="reduced"] #o55np-reticle > i, html[data-motion="reduced"] #o55np-reticle { transition: none; }
 /* forced colors (Windows High Contrast) drop background images, so the corners above, two gradient bars each, vanished
    there and NieR had no key focus mark at all (the brackets part takes every :focus-visible outline away; FO-96 round
    10, opus-recheck-f96i). There each corner's two arms are its top and left borders, which the platform paints in the
    user's own High Contrast colours like every other edge (box-sizing keeps the 10 px box, so each corner's transform
-   still places it). */
+   still places it). FO-117 (stream F batch 9) found the same gap and the fx brackets' one, in 05-nier-fx.css. */
 @media (forced-colors: active) {
   #o55np-reticle > i { background: none; box-sizing: border-box; border-top: 2px solid CanvasText; border-left: 2px solid CanvasText; }
 }
