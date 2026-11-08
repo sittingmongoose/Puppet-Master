@@ -21,7 +21,14 @@
 //     compositor frame (CDP screencast) read: the 8 rows just beyond the bar's scroll box, above and below it (the row next
 //     to it included), may not change against the same rows before the flick by more than 3 pixels in any frame. Basic
 //     Dark and Glass Light by default; e3ba1fee9c set the clip from a script on the bar's scroll, a frame or more behind.
-// All four tests on either surface (--set sandbox=1); --set looks= picks the looks.
+//   opening motion (round 11, sol-recheck-f96j): the clip must hold while a cut, key-focused tile grows or shrinks.
+//     Names shown at 1280x500, in Glass Light and Dark (Glass grows an opened tile to 1.08), Files cut by about a third at
+//     the scroll box's top: a refocus (focus() without a scroll) then Ctrl+2 (Files shuts), and Ctrl+1, Enter and a click
+//     (Files opens). The 8 rows above the scroll box are captured with the ring off first; then every compositor frame
+//     from before the input to 1.5 s after it, through the growth and its settle, may not change there by more than 3
+//     pixels. The lens layer and the hover tags are hidden for it, so only the ring can change those rows.
+//     e3ba1fee9c, whose clip was set by script, left the whole ring above the bar after the refocus and Ctrl+2.
+// All five tests on either surface (--set sandbox=1); --set looks= picks the looks.
 import { decodePng } from '../helpers/activity-cover-pixels.mjs';
 
 const settle = async (t, f, look) => {
@@ -246,4 +253,55 @@ async function wheelFlick(t) {
   await f.evaluate(() => { document.getElementById('fo96-ring-tags')?.remove(); document.getElementById('fo96-ring-s')?.remove(); });
 }
 
-export const tests = { 'forced colors': forcedColors, 'scroll box': scrollBox, 'pointer only': pointerOnly, 'wheel flick': wheelFlick };
+async function openingMotion(t) {
+  await t.viewport(1280, 500);
+  const f = await t.app.open();
+  await f.evaluate(() => { try { PMW.chatCol.show(); } catch (e) { /* none */ } });
+  await t.page.mouse.move(1240, 480);
+  const looks = t.args.looks ? String(t.args.looks).split(',') : ['glass-light', 'glass-dark'];
+  const cdp = await t.page.context().newCDPSession(t.page);
+  let frames = null;
+  cdp.on('Page.screencastFrame', e => { cdp.send('Page.screencastFrameAck', { sessionId: e.sessionId }).catch(() => {}); if (frames) frames.push({ wall: e.metadata.timestamp * 1000, data: e.data }); });
+  await f.evaluate(() => { const st = document.createElement('style'); st.id = 'fo96-ring-quiet'; st.textContent = '#pm-hover-tag-root, #lg-lenses { visibility: hidden !important; }'; document.head.appendChild(st); });
+  const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
+  const files = () => f.evaluate(() => { const bar = document.getElementById('activityBar'), b = bar.getBoundingClientRect(), s = document.querySelector('#activityBar .icon[data-ab-id="files"] .symbol').getBoundingClientRect(), i = document.querySelector('#activityBar .icon[data-ab-id="files"]'), v = document.getElementById(i.getAttribute('data-target'));
+    return { top: b.top + bar.clientTop, left: b.left + bar.clientLeft, width: bar.clientWidth, scrollTop: bar.scrollTop, symTop: s.top, symH: s.height, symX: s.left + s.width / 2, symBottom: s.bottom, open: !!v && v.classList.contains('active'), keyFocus: document.activeElement === i && i.matches(':focus-visible') }; });
+  for (const look of looks) {
+    await settle(t, f, look);
+    if (await f.evaluate(() => document.getElementById('activityBar').classList.contains('collapsed'))) { await f.evaluate(() => document.getElementById('activityBarToggle').click()); await f.waitForTimeout(700); }
+    await f.evaluate(() => { document.getElementById('activityBar').scrollTop = 0; });
+    const reached = await tabTo(t, f, 'files');
+    for (const route of ['refocus, then Control+2', 'Control+1', 'Enter', 'click']) {
+      await t.page.keyboard.press(route.endsWith('Control+2') ? 'Control+1' : 'Control+2'); await f.waitForTimeout(900);   /* the panel to start from */
+      await sentinel(f);                                                                                       /* the ring off */
+      let g = await files();
+      await f.evaluate(d => { document.getElementById('activityBar').scrollTop += d; }, g.symTop - g.top + g.symH / 3); await f.waitForTimeout(400);
+      g = await files();
+      const L = Math.floor(off.x + g.left), W = Math.ceil(g.width), T = Math.floor(off.y + g.top), strip = { y: T - 8, h: 8 };
+      const cut = im => { const d = []; for (let y = strip.y; y < strip.y + strip.h; y++) for (let x = L; x < L + W; x++) { const i = (y * im.width + x) * 4; d.push(im.data[i], im.data[i + 1], im.data[i + 2]); } return d; };
+      const diff = (a, b) => { let n = 0; for (let i = 0; i < a.length; i += 3) if (Math.max(Math.abs(a[i] - b[i]), Math.abs(a[i + 1] - b[i + 1]), Math.abs(a[i + 2] - b[i + 2])) > 40) n++; return n; };
+      const ref = cut(decodePng(await t.page.screenshot()));
+      await f.evaluate(() => document.querySelector('#activityBar .icon[data-ab-id="files"]').focus({ preventScroll: true }));   /* the refocus */
+      await f.waitForTimeout(250);
+      const before = await files(), wasCut = before.top - before.symTop;
+      frames = []; await cdp.send('Page.startScreencast', { format: 'png', everyNthFrame: 1 });
+      for (let i = 0; i < 25 && !frames.length; i++) await f.waitForTimeout(20);
+      if (route === 'click') { await t.page.mouse.click(off.x + before.symX, off.y + (before.top + before.symBottom) / 2); await t.page.mouse.move(1240, 480); }
+      else await t.page.keyboard.press(route.replace('refocus, then ', ''));
+      await f.waitForTimeout(1500);
+      await cdp.send('Page.stopScreencast').catch(() => {}); const got = frames.sort((p, q) => p.wall - q.wall); frames = null;
+      const bad = []; for (const fr of got) { const n = diff(cut(decodePng(Buffer.from(fr.data, 'base64'))), ref); if (n > 3) bad.push({ ms: Math.round(fr.wall - got[0].wall), changed: n }); }
+      const after = await files();
+      t.log(`${look} opening motion, ${route}: cut ${wasCut.toFixed(1)} px, key focus ${before.keyFocus}, Files ${before.open ? 'open' : 'shut'} -> ${after.open ? 'open' : 'shut'}, ${got.length} frames, ${bad.length} with ring above the box ${bad.length ? JSON.stringify(bad.slice(0, 6)) : ''}`);
+      await t.check(`${look}: ${route} on the cut, key-focused Files paints none of the ring above the bar's scroll box in any frame`,
+        reached && before.keyFocus && wasCut > 2 && wasCut < before.symH - 2 && got.length >= 5 && after.open === !route.endsWith('Control+2') && bad.length === 0,
+        JSON.stringify({ keyFocus: before.keyFocus, cut: wasCut, frames: got.length, opened: after.open, bad: bad.slice(0, 6) }));
+      await f.evaluate(() => { document.getElementById('activityBar').scrollTop = 0; });
+    }
+    if (!(await f.evaluate(() => document.getElementById('activityBar').classList.contains('collapsed')))) { await f.evaluate(() => document.getElementById('activityBarToggle').click()); await f.waitForTimeout(500); }
+  }
+  await cdp.detach().catch(() => {});
+  await f.evaluate(() => { document.getElementById('fo96-ring-quiet')?.remove(); document.getElementById('fo96-ring-s')?.remove(); });
+}
+
+export const tests = { 'forced colors': forcedColors, 'scroll box': scrollBox, 'pointer only': pointerOnly, 'wheel flick': wheelFlick, 'opening motion': openingMotion };
