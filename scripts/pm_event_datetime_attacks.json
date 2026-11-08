@@ -1,0 +1,3462 @@
+{
+ "schema_id": "pm.event_datetime_attack_corpus.v1",
+ "purpose": "Every single-map attack of the cycle-12, cycle-13 and cycle-14 replays (and the cycle-11/12 targeted single-map probes) as a date-time corpus case. Each rewrites the section15 result_schema_dependencies map (node) and adds defs, optionally with a coherent role record citing cited, and expects the outcome of the one-row gate: refused (a gate error), pass (no error) or accepted_as_role (no error, wildcard_non_timestamp_role). names lists every replay that ran the same input.",
+ "source": "/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/NUMRULE/fix15/ (cycle14-replay/attacks14.py, cycle14-replay/variants14.py, precheck-replay/attacks.py, cycle12-replay/adjacent_checks.py, cycle12-replay/targeted_checks.py)",
+ "attacks": [
+  {
+   "id": "c14_replay_c12_dependentSchemas",
+   "names": [
+    "cycle14:replay-c12/dependentSchemas",
+    "cycle13:c12/dependentSchemas",
+    "cycle12-adjacent:dependentSchemas"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "properties": {
+     "kind": {
+      "const": "timestamp"
+     }
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "dependentSchemas": {
+     "kind": {
+      "required": [
+       "other"
+      ]
+     }
+    }
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c12_dependentRequired",
+   "names": [
+    "cycle14:replay-c12/dependentRequired",
+    "cycle13:c12/dependentRequired",
+    "cycle12-adjacent:dependentRequired"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "properties": {
+     "kind": {
+      "const": "timestamp"
+     }
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "dependentRequired": {
+     "kind": [
+      "other"
+     ]
+    }
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c12_minProperties",
+   "names": [
+    "cycle14:replay-c12/minProperties",
+    "cycle13:c12/minProperties",
+    "cycle12-adjacent:minProperties"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "properties": {
+     "kind": {
+      "const": "timestamp"
+     }
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "minProperties": 2
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c12_unevaluatedProperties",
+   "names": [
+    "cycle14:replay-c12/unevaluatedProperties",
+    "cycle13:c12/unevaluatedProperties",
+    "cycle12-adjacent:unevaluatedProperties"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "properties": {
+     "kind": {
+      "const": "timestamp"
+     }
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "unevaluatedProperties": false
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c12_if_then_else",
+   "names": [
+    "cycle14:replay-c12/if_then_else",
+    "cycle13:c12/if_then_else",
+    "cycle12-adjacent:if_then_else"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "properties": {
+     "kind": {
+      "const": "timestamp"
+     }
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "if": {
+     "required": [
+      "kind"
+     ]
+    },
+    "then": {
+     "minProperties": 2
+    },
+    "else": {
+     "maxProperties": 0
+    }
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c12_allOf_siblings",
+   "names": [
+    "cycle14:replay-c12/allOf_siblings",
+    "cycle13:c12/allOf_siblings",
+    "cycle12-adjacent:allOf_siblings"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "properties": {
+     "kind": {
+      "const": "timestamp"
+     }
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "allOf": [
+     {
+      "required": [
+       "kind"
+      ]
+     }
+    ]
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c12_anyOf_siblings",
+   "names": [
+    "cycle14:replay-c12/anyOf_siblings",
+    "cycle13:c12/anyOf_siblings",
+    "cycle12-adjacent:anyOf_siblings"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "properties": {
+     "kind": {
+      "const": "timestamp"
+     }
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "anyOf": [
+     {
+      "required": [
+       "kind"
+      ]
+     },
+     {
+      "required": [
+       "other"
+      ]
+     }
+    ]
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c12_oneOf_siblings",
+   "names": [
+    "cycle14:replay-c12/oneOf_siblings",
+    "cycle13:c12/oneOf_siblings",
+    "cycle12-adjacent:oneOf_siblings"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "properties": {
+     "kind": {
+      "const": "timestamp"
+     }
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "oneOf": [
+     {
+      "required": [
+       "kind"
+      ]
+     },
+     {
+      "required": [
+       "other"
+      ]
+     }
+    ]
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c12_propertyNames",
+   "names": [
+    "cycle14:replay-c12/propertyNames",
+    "cycle13:c12/propertyNames",
+    "cycle12-adjacent:propertyNames"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "$ref": "#/$defs/SafeRef"
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c12_patternProperties_nonmatching",
+   "names": [
+    "cycle14:replay-c12/patternProperties_nonmatching",
+    "cycle13:c12/patternProperties_nonmatching",
+    "cycle12-adjacent:patternProperties_nonmatching"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "patternProperties": {
+     "^sibling$": {
+      "$ref": "#/$defs/SafeRef"
+     }
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c12_sibling_property",
+   "names": [
+    "cycle14:replay-c12/sibling_property",
+    "cycle13:c12/sibling_property",
+    "cycle12-adjacent:sibling_property"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "properties": {
+     "sibling": {
+      "$ref": "#/$defs/SafeRef"
+     }
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c12_unused_same_name",
+   "names": [
+    "cycle14:replay-c12/unused_same_name",
+    "cycle13:c12/unused_same_name",
+    "cycle12-adjacent:unused_same_name"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c12_irrelevant_if",
+   "names": [
+    "cycle14:replay-c12/irrelevant_if",
+    "cycle13:c12/irrelevant_if",
+    "cycle12-adjacent:irrelevant_if"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+      },
+      {
+       "if": {
+        "$ref": "#/$defs/SafeRef"
+       },
+       "then": {},
+       "else": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c12_vacuous_not",
+   "names": [
+    "cycle14:replay-c12/vacuous_not",
+    "cycle13:c12/vacuous_not",
+    "cycle12-adjacent:vacuous_not"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+      },
+      {
+       "not": {
+        "allOf": [
+         {
+          "$ref": "#/$defs/SafeRef"
+         },
+         false
+        ]
+       }
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_b7_guard_evading_irrelevant_if",
+   "names": [
+    "cycle14:replay-c13/b7_guard_evading_irrelevant_if",
+    "cycle13:b7-guard-evading/irrelevant_if"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "if": {
+        "$ref": "#/$defs/SafeRef"
+       },
+       "then": {},
+       "else": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_b7_guard_evading_vacuous_not",
+   "names": [
+    "cycle14:replay-c13/b7_guard_evading_vacuous_not",
+    "cycle13:b7-guard-evading/vacuous_not"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "not": {
+        "allOf": [
+         {
+          "$ref": "#/$defs/SafeRef"
+         },
+         false
+        ]
+       }
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_not_only_defs_cite_wrap",
+   "names": [
+    "cycle14:replay-c13/not_only_defs_cite_wrap",
+    "cycle13:not_only_defs/cite_wrap"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+      },
+      {
+       "not": {
+        "$ref": "#/$defs/Wrap"
+       }
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/Wrap",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    },
+    "Wrap": {
+     "description": "SafeRef wrapper.",
+     "allOf": [
+      {
+       "$ref": "#/$defs/SafeRef"
+      },
+      false
+     ]
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_not_only_defs_cite_saferef",
+   "names": [
+    "cycle14:replay-c13/not_only_defs_cite_saferef",
+    "cycle13:not_only_defs/cite_saferef"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+      },
+      {
+       "not": {
+        "$ref": "#/$defs/Wrap"
+       }
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    },
+    "Wrap": {
+     "description": "SafeRef wrapper.",
+     "allOf": [
+      {
+       "$ref": "#/$defs/SafeRef"
+      },
+      false
+     ]
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_not_only_defs_cite_wrap_guard_evading",
+   "names": [
+    "cycle14:replay-c13/not_only_defs_cite_wrap_guard_evading",
+    "cycle13:not_only_defs/cite_wrap_guard_evading"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "not": {
+        "$ref": "#/$defs/Wrap"
+       }
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/Wrap",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    },
+    "Wrap": {
+     "description": "SafeRef wrapper.",
+     "allOf": [
+      {
+       "$ref": "#/$defs/SafeRef"
+      },
+      false
+     ]
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_not_as_value_cite_wrap",
+   "names": [
+    "cycle14:replay-c13/not_as_value_cite_wrap",
+    "cycle13:not_only_defs/not_as_value_cite_wrap"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "not": {
+      "$ref": "#/$defs/Wrap"
+     }
+    }
+   },
+   "cited": "/$defs/Wrap",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    },
+    "Wrap": {
+     "description": "SafeRef wrapper.",
+     "allOf": [
+      {
+       "$ref": "#/$defs/SafeRef"
+      },
+      false
+     ]
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_allOf_if_then_self_condition",
+   "names": [
+    "cycle14:replay-c13/allOf_if_then_self_condition",
+    "cycle13:allOf_if_then/self_condition"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+      },
+      {
+       "if": {
+        "$ref": "#/$defs/SafeRef"
+       },
+       "then": {
+        "$ref": "#/$defs/SafeRef"
+       }
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_allOf_if_then_never_true_if",
+   "names": [
+    "cycle14:replay-c13/allOf_if_then_never_true_if",
+    "cycle13:allOf_if_then/never_true_if"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {
+        "$ref": "#/$defs/SafeRef"
+       }
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_allOf_if_then_never_true_if_guard_evading",
+   "names": [
+    "cycle14:replay-c13/allOf_if_then_never_true_if_guard_evading",
+    "cycle13:allOf_if_then/never_true_if_guard_evading"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {
+        "$ref": "#/$defs/SafeRef"
+       }
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_allOf_if_then_cite_conditional_node",
+   "names": [
+    "cycle14:replay-c13/allOf_if_then_cite_conditional_node",
+    "cycle13:allOf_if_then/cite_conditional_node"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {
+        "$ref": "#/$defs/SafeRef"
+       }
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/browser_program/properties/result_schema_dependencies/additionalProperties/allOf/1",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_allOf_if_then_then_via_defs",
+   "names": [
+    "cycle14:replay-c13/allOf_if_then_then_via_defs",
+    "cycle13:allOf_if_then/then_via_defs"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "$ref": "#/$defs/Cond"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/Cond",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    },
+    "Cond": {
+     "description": "SafeRef condition.",
+     "if": {
+      "const": "never"
+     },
+     "then": {
+      "$ref": "#/$defs/SafeRef"
+     }
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_oneOf_unsat_branch_only_unsat_carries",
+   "names": [
+    "cycle14:replay-c13/oneOf_unsat_branch_only_unsat_carries",
+    "cycle13:oneOf_unsat/branch_only_unsat_carries"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "oneOf": [
+      {
+       "type": "string",
+       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+      },
+      {
+       "allOf": [
+        {
+         "$ref": "#/$defs/SafeRef"
+        },
+        false
+       ]
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_oneOf_unsat_guard_evading",
+   "names": [
+    "cycle14:replay-c13/oneOf_unsat_guard_evading",
+    "cycle13:oneOf_unsat/branch_only_unsat_carries_guard_evading"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "oneOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "allOf": [
+        {
+         "$ref": "#/$defs/SafeRef"
+        },
+        false
+       ]
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_oneOf_unsat_false_branch",
+   "names": [
+    "cycle14:replay-c13/oneOf_unsat_false_branch",
+    "cycle13:oneOf_unsat/false_branch"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "oneOf": [
+      {
+       "allOf": [
+        {
+         "type": "string",
+         "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+        },
+        {
+         "$ref": "#/$defs/SafeRef"
+        }
+       ]
+      },
+      false
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_oneOf_unsat_not_branch",
+   "names": [
+    "cycle14:replay-c13/oneOf_unsat_not_branch",
+    "cycle13:oneOf_unsat/not_branch"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "oneOf": [
+      {
+       "allOf": [
+        {
+         "type": "string",
+         "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+        },
+        {
+         "$ref": "#/$defs/SafeRef"
+        }
+       ]
+      },
+      {
+       "not": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_oneOf_unsat_both_carry_language_empty",
+   "names": [
+    "cycle14:replay-c13/oneOf_unsat_both_carry_language_empty",
+    "cycle13:oneOf_unsat/both_carry_language_empty"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "oneOf": [
+      {
+       "allOf": [
+        {
+         "type": "string",
+         "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+        },
+        {
+         "$ref": "#/$defs/SafeRef"
+        }
+       ]
+      },
+      {
+       "allOf": [
+        {
+         "$ref": "#/$defs/SafeRef"
+        },
+        false
+       ]
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "SafeRef ^[a-z]+$ accepts control \"a\": does not decide",
+    "language = STAMP \u2229 SafeRef = empty; FIX14: SafeRef (^[a-z]+$) accepts the control \"a\", so it does not decide the string"
+   ]
+  },
+  {
+   "id": "c14_replay_c13_anyOf_true_branch",
+   "names": [
+    "cycle14:replay-c13/anyOf_true_branch",
+    "cycle13:anyOf/true_branch"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "allOf": [
+        {
+         "type": "string",
+         "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+        },
+        {
+         "$ref": "#/$defs/SafeRef"
+        }
+       ]
+      },
+      true
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_selector_patternProperties_shadows_additional",
+   "names": [
+    "cycle14:replay-c13/selector_patternProperties_shadows_additional",
+    "cycle13:selector/patternProperties_shadows_additional"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "$ref": "#/$defs/SafeRef"
+    },
+    "patternProperties": {
+     "^observed": {
+      "type": "string",
+      "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+     }
+    }
+   },
+   "cited": "/$defs/SafeRef",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_selector_allOf_child_additional_overrides_implicit",
+   "names": [
+    "cycle14:replay-c13/selector_allOf_child_additional_overrides_implicit",
+    "cycle13:selector/allOf_child_additional_overrides_implicit"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "allOf": [
+     {
+      "additionalProperties": {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      }
+     }
+    ]
+   },
+   "cited": "/$defs/browser_program/properties/result_schema_dependencies",
+   "defs": {},
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_selector_unevaluatedProperties_value",
+   "names": [
+    "cycle14:replay-c13/selector_unevaluatedProperties_value",
+    "cycle13:selector/unevaluatedProperties_value"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "unevaluatedProperties": {
+     "type": "string",
+     "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+    }
+   },
+   "cited": "/$defs/browser_program/properties/result_schema_dependencies",
+   "defs": {},
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_selector_map_not_implicit",
+   "names": [
+    "cycle14:replay-c13/selector_map_not_implicit",
+    "cycle13:selector/map_not_implicit"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "not": {
+     "additionalProperties": {
+      "$ref": "#/$defs/SafeRef"
+     }
+    }
+   },
+   "cited": "/$defs/browser_program/properties/result_schema_dependencies",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_value_contentSchema_unknown",
+   "names": [
+    "cycle14:replay-c13/value_contentSchema_unknown",
+    "cycle13:value/contentSchema_unknown"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "contentSchema": {
+        "$ref": "#/$defs/SafeRef"
+       }
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/browser_program/properties/result_schema_dependencies/additionalProperties/allOf/1",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_value_recursiveRef",
+   "names": [
+    "cycle14:replay-c13/value_recursiveRef",
+    "cycle13:value/recursiveRef"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "$recursiveRef": "#/$defs/SafeRef"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/browser_program/properties/result_schema_dependencies/additionalProperties/allOf/1",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_vacuous_doc_only_conjunct_bare_stamp",
+   "names": [
+    "cycle14:replay-c13/vacuous_doc_only_conjunct_bare_stamp",
+    "cycle13:vacuous/doc_only_conjunct_bare_stamp"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+      },
+      {
+       "$ref": "#/$defs/SafeDoc"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeDoc",
+   "defs": {
+    "SafeDoc": {
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_vacuous_doc_only_conjunct_stamp_a_N1_witness",
+   "names": [
+    "cycle14:replay-c13/vacuous_doc_only_conjunct_stamp_a (N1 witness)",
+    "cycle13:vacuous/doc_only_conjunct_stamp_a"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "$ref": "#/$defs/SafeDoc"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeDoc",
+   "defs": {
+    "SafeDoc": {
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "16-string guard evaded by accepting \"a\"; citation imposes no constraint"
+   ]
+  },
+  {
+   "id": "c14_replay_c13_vacuous_member_only_conjunct_stamp_a",
+   "names": [
+    "cycle14:replay-c13/vacuous_member_only_conjunct_stamp_a",
+    "cycle13:vacuous/member_only_conjunct_stamp_a"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "$ref": "#/$defs/SafeRefMap"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/SafeRefMap",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    },
+    "SafeRefMap": {
+     "description": "Map of SafeRef values.",
+     "additionalProperties": {
+      "$ref": "#/$defs/SafeRef"
+     }
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "object-only keyword in a cited def is vacuous for strings"
+   ]
+  },
+  {
+   "id": "c14_replay_c13_vacuous_dependentSchemas_node_stamp_a",
+   "names": [
+    "cycle14:replay-c13/vacuous_dependentSchemas_node_stamp_a",
+    "cycle13:vacuous/dependentSchemas_node_stamp_a"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "dependentSchemas": {
+        "x": {
+         "$ref": "#/$defs/SafeRef"
+        }
+       }
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/browser_program/properties/result_schema_dependencies/additionalProperties/allOf/1",
+   "defs": {
+    "SafeRef": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^[a-z]+$",
+     "description": "Named SafeRef reference values."
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "MEMBER_ONLY keyword at value scope; vacuous for strings"
+   ]
+  },
+  {
+   "id": "c14_replay_c13_vacuous_whole_value_cite_stamp_a",
+   "names": [
+    "cycle14:replay-c13/vacuous_whole_value_cite_stamp_a",
+    "cycle13:vacuous/whole_value_cite_stamp_a"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+    }
+   },
+   "cited": "/$defs/browser_program/properties/result_schema_dependencies/additionalProperties",
+   "defs": {},
+   "expect": "refused",
+   "notes": [
+    "citing the value schema itself; value is timestamp-or-\"a\""
+   ]
+  },
+  {
+   "id": "c14_replay_c13_vacuous_whole_value_cite_bare_stamp",
+   "names": [
+    "cycle14:replay-c13/vacuous_whole_value_cite_bare_stamp",
+    "cycle13:vacuous/whole_value_cite_bare_stamp"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    }
+   },
+   "cited": "/$defs/browser_program/properties/result_schema_dependencies/additionalProperties",
+   "defs": {},
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_control_direct_ref_generic",
+   "names": [
+    "cycle14:replay-c13/control_direct_ref_generic",
+    "cycle13:control/direct_ref"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "$ref": "#/$defs/Gen"
+    }
+   },
+   "cited": "/$defs/Gen",
+   "defs": {
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "Gen accepts every battery timestamp: no non-timestamp role",
+    "FIX14 N1: Gen accepts every battery timestamp, so it does not decide the string"
+   ]
+  },
+  {
+   "id": "c14_replay_c13_control_partial_union_refused",
+   "names": [
+    "cycle14:replay-c13/control_partial_union_refused",
+    "cycle13:control/partial_union_refused"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/Gen"
+      },
+      {
+       "type": "string"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/Gen",
+   "defs": {
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_replay_c13_control_no_record_ts_accepting",
+   "names": [
+    "cycle14:replay-c13/control_no_record_ts_accepting",
+    "cycle13:control/no_record_ts_accepting"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "$ref": "#/$defs/Gen"
+    }
+   },
+   "cited": null,
+   "defs": {
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "pass",
+   "notes": [
+    "no record: other_owner_observation",
+    "no record: timestamp-accepting value is other_owner_observation, the safe direction"
+   ]
+  },
+  {
+   "id": "c14_control_direct_ref_deciding",
+   "names": [
+    "cycle14:control/direct_ref_deciding"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "$ref": "#/$defs/Gen"
+    }
+   },
+   "cited": "/$defs/Gen",
+   "defs": {
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "pattern": "^ref:[a-z]+$",
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "accepted_as_role",
+   "notes": [
+    "automatic credit may also apply; outcome either pass or accepted_as_role"
+   ]
+  },
+  {
+   "id": "c14_control_allOf_ref_withheld_deciding",
+   "names": [
+    "cycle14:control/allOf_ref_withheld_deciding"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/Gen"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/Gen",
+   "defs": {
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "pattern": "^ref:[a-z]+$",
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "accepted_as_role"
+  },
+  {
+   "id": "c14_control_every_branch_union_withheld_deciding",
+   "names": [
+    "cycle14:control/every_branch_union_withheld_deciding"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "allOf": [
+        {
+         "$ref": "#/$defs/Gen"
+        },
+        {
+         "if": {
+          "const": "never"
+         },
+         "then": {}
+        }
+       ]
+      },
+      {
+       "$ref": "#/$defs/Gen"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/Gen",
+   "defs": {
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "pattern": "^ref:[a-z]+$",
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "accepted_as_role"
+  },
+  {
+   "id": "c14_format_ipv4_only",
+   "names": [
+    "cycle14:format/ipv4_only"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/F"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/F",
+   "defs": {
+    "F": {
+     "type": "string",
+     "format": "ipv4"
+    }
+   },
+   "expect": "accepted_as_role",
+   "notes": [
+    "refuses only through format; asserted by the shared format checker"
+   ]
+  },
+  {
+   "id": "c14_format_not_datetime_minlen31",
+   "names": [
+    "cycle14:format/not_datetime_minlen31"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/F"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/F",
+   "defs": {
+    "F": {
+     "type": "string",
+     "minLength": 31,
+     "not": {
+      "format": "date-time"
+     }
+    }
+   },
+   "expect": "accepted_as_role",
+   "notes": [
+    "annotation reading of format makes not{} refuse all: the safe direction"
+   ]
+  },
+  {
+   "id": "c14_format_datetime_maxlen19",
+   "names": [
+    "cycle14:format/datetime_maxlen19"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/F"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/F",
+   "defs": {
+    "F": {
+     "type": "string",
+     "format": "date-time",
+     "maxLength": 19
+    }
+   },
+   "expect": "accepted_as_role",
+   "notes": [
+    "empty language under assertion"
+   ]
+  },
+  {
+   "id": "c14_format_datetime_only_value_withheld",
+   "names": [
+    "cycle14:format/datetime_only_value_withheld"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/F"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/F",
+   "defs": {
+    "F": {
+     "type": "string",
+     "format": "date-time"
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "format date-time accepts every battery timestamp"
+   ]
+  },
+  {
+   "id": "c14_format_datetime_10digit_fraction",
+   "names": [
+    "cycle14:format/datetime_10digit_fraction"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/F"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/F",
+   "defs": {
+    "F": {
+     "type": "string",
+     "format": "date-time",
+     "pattern": "\\.[0-9]{10}"
+    }
+   },
+   "expect": "accepted_as_role",
+   "notes": [
+    "out-of-battery timestamp form: same boundary as automatic credit"
+   ]
+  },
+  {
+   "id": "c14_pattern_unanchored_absent_year_2027",
+   "names": [
+    "cycle14:pattern/unanchored_absent_year_2027"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/F"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/F",
+   "defs": {
+    "F": {
+     "type": "string",
+     "format": "date-time",
+     "pattern": "2027-"
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "battery has no 2027 sample"
+   ]
+  },
+  {
+   "id": "c14_pattern_unanchored_absent_year_2027_no_record",
+   "names": [
+    "cycle14:pattern/unanchored_absent_year_2027_no_record"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "type": "string",
+     "format": "date-time",
+     "pattern": "2027-"
+    }
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "refused",
+   "notes": [
+    "automatic credit, FIX11 rule 1 boundary"
+   ]
+  },
+  {
+   "id": "c14_pattern_unanchored_marker",
+   "names": [
+    "cycle14:pattern/unanchored_marker"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/F"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/F",
+   "defs": {
+    "F": {
+     "type": "string",
+     "pattern": "ref:"
+    }
+   },
+   "expect": "accepted_as_role",
+   "notes": [
+    "unanchored: accepts strings containing ref:, never a bare timestamp"
+   ]
+  },
+  {
+   "id": "c14_pattern_unanchored_timestamp_substring",
+   "names": [
+    "cycle14:pattern/unanchored_timestamp_substring"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/F"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/F",
+   "defs": {
+    "F": {
+     "type": "string",
+     "pattern": "T[0-9]{2}:"
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "unanchored timestamp fragment accepts battery samples"
+   ]
+  },
+  {
+   "id": "c14_pattern_lookahead_excludes_exact_battery",
+   "names": [
+    "cycle14:pattern/lookahead_excludes_exact_battery"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^(?!(?:2026\\-01\\-01T00:00:00Z|2026\\-01\\-01T00:00:00\\.1Z|2026\\-01\\-01T00:00:00\\.12Z|2026\\-01\\-01T00:00:00\\.123Z|2026\\-01\\-01T00:00:00\\.1234Z|2026\\-01\\-01T00:00:00\\.12345Z|2026\\-01\\-01T00:00:00\\.123456Z|2026\\-01\\-01T00:00:00\\.1234567Z|2026\\-01\\-01T00:00:00\\.12345678Z|2026\\-01\\-01T00:00:00\\.123456789Z|2026\\-01\\-01T00:00:00z|2026\\-01\\-01T00:00:00\\.1z|2026\\-01\\-01T00:00:00\\.12z|2026\\-01\\-01T00:00:00\\.123z|2026\\-01\\-01T00:00:00\\.1234z|2026\\-01\\-01T00:00:00\\.12345z|2026\\-01\\-01T00:00:00\\.123456z|2026\\-01\\-01T00:00:00\\.1234567z|2026\\-01\\-01T00:00:00\\.12345678z|2026\\-01\\-01T00:00:00\\.123456789z|2026\\-01\\-01T00:00:00\\+00:00|2026\\-01\\-01T00:00:00\\.1\\+00:00|2026\\-01\\-01T00:00:00\\.12\\+00:00|2026\\-01\\-01T00:00:00\\.123\\+00:00|2026\\-01\\-01T00:00:00\\.1234\\+00:00|2026\\-01\\-01T00:00:00\\.12345\\+00:00|2026\\-01\\-01T00:00:00\\.123456\\+00:00|2026\\-01\\-01T00:00:00\\.1234567\\+00:00|2026\\-01\\-01T00:00:00\\.12345678\\+00:00|2026\\-01\\-01T00:00:00\\.123456789\\+00:00|2026\\-01\\-01T00:00:00\\-00:00|2026\\-01\\-01T00:00:00\\.1\\-00:00|2026\\-01\\-01T00:00:00\\.12\\-00:00|2026\\-01\\-01T00:00:00\\.123\\-00:00|2026\\-01\\-01T00:00:00\\.1234\\-00:00|2026\\-01\\-01T00:00:00\\.12345\\-00:00|2026\\-01\\-01T00:00:00\\.123456\\-00:00|2026\\-01\\-01T00:00:00\\.1234567\\-00:00|2026\\-01\\-01T00:00:00\\.12345678\\-00:00|2026\\-01\\-01T00:00:00\\.123456789\\-00:00|2026\\-01\\-01T00:00:00\\+05:30|2026\\-01\\-01T00:00:00\\.1\\+05:30|2026\\-01\\-01T00:00:00\\.12\\+05:30|2026\\-01\\-01T00:00:00\\.123\\+05:30|2026\\-01\\-01T00:00:00\\.1234\\+05:30|2026\\-01\\-01T00:00:00\\.12345\\+05:30|2026\\-01\\-01T00:00:00\\.123456\\+05:30|2026\\-01\\-01T00:00:00\\.1234567\\+05:30|2026\\-01\\-01T00:00:00\\.12345678\\+05:30|2026\\-01\\-01T00:00:00\\.123456789\\+05:30|2026\\-01\\-01T00:00:00\\-07:45|2026\\-01\\-01T00:00:00\\.1\\-07:45|2026\\-01\\-01T00:00:00\\.12\\-07:45|2026\\-01\\-01T00:00:00\\.123\\-07:45|2026\\-01\\-01T00:00:00\\.1234\\-07:45|2026\\-01\\-01T00:00:00\\.12345\\-07:45|2026\\-01\\-01T00:00:00\\.123456\\-07:45|2026\\-01\\-01T00:00:00\\.1234567\\-07:45|2026\\-01\\-01T00:00:00\\.12345678\\-07:45|2026\\-01\\-01T00:00:00\\.123456789\\-07:45|2026\\-01\\-01T00:00:00\\+23:59|2026\\-01\\-01T00:00:00\\.1\\+23:59|2026\\-01\\-01T00:00:00\\.12\\+23:59|2026\\-01\\-01T00:00:00\\.123\\+23:59|2026\\-01\\-01T00:00:00\\.1234\\+23:59|2026\\-01\\-01T00:00:00\\.12345\\+23:59|2026\\-01\\-01T00:00:00\\.123456\\+23:59|2026\\-01\\-01T00:00:00\\.1234567\\+23:59|2026\\-01\\-01T00:00:00\\.12345678\\+23:59|2026\\-01\\-01T00:00:00\\.123456789\\+23:59|2026\\-01\\-01T00:00:00\\-23:59|2026\\-01\\-01T00:00:00\\.1\\-23:59|2026\\-01\\-01T00:00:00\\.12\\-23:59|2026\\-01\\-01T00:00:00\\.123\\-23:59|2026\\-01\\-01T00:00:00\\.1234\\-23:59|2026\\-01\\-01T00:00:00\\.12345\\-23:59|2026\\-01\\-01T00:00:00\\.123456\\-23:59|2026\\-01\\-01T00:00:00\\.1234567\\-23:59|2026\\-01\\-01T00:00:00\\.12345678\\-23:59|2026\\-01\\-01T00:00:00\\.123456789\\-23:59|2026\\-01\\-01t00:00:00Z|2026\\-01\\-01t00:00:00\\.1Z|2026\\-01\\-01t00:00:00\\.12Z|2026\\-01\\-01t00:00:00\\.123Z|2026\\-01\\-01t00:00:00\\.1234Z|2026\\-01\\-01t00:00:00\\.12345Z|2026\\-01\\-01t00:00:00\\.123456Z|2026\\-01\\-01t00:00:00\\.1234567Z|2026\\-01\\-01t00:00:00\\.12345678Z|2026\\-01\\-01t00:00:00\\.123456789Z|2026\\-01\\-01t00:00:00z|2026\\-01\\-01t00:00:00\\.1z|2026\\-01\\-01t00:00:00\\.12z|2026\\-01\\-01t00:00:00\\.123z|2026\\-01\\-01t00:00:00\\.1234z|2026\\-01\\-01t00:00:00\\.12345z|2026\\-01\\-01t00:00:00\\.123456z|2026\\-01\\-01t00:00:00\\.1234567z|2026\\-01\\-01t00:00:00\\.12345678z|2026\\-01\\-01t00:00:00\\.123456789z|2026\\-01\\-01t00:00:00\\+00:00|2026\\-01\\-01t00:00:00\\.1\\+00:00|2026\\-01\\-01t00:00:00\\.12\\+00:00|2026\\-01\\-01t00:00:00\\.123\\+00:00|2026\\-01\\-01t00:00:00\\.1234\\+00:00|2026\\-01\\-01t00:00:00\\.12345\\+00:00|2026\\-01\\-01t00:00:00\\.123456\\+00:00|2026\\-01\\-01t00:00:00\\.1234567\\+00:00|2026\\-01\\-01t00:00:00\\.12345678\\+00:00|2026\\-01\\-01t00:00:00\\.123456789\\+00:00|2026\\-01\\-01t00:00:00\\-00:00|2026\\-01\\-01t00:00:00\\.1\\-00:00|2026\\-01\\-01t00:00:00\\.12\\-00:00|2026\\-01\\-01t00:00:00\\.123\\-00:00|2026\\-01\\-01t00:00:00\\.1234\\-00:00|2026\\-01\\-01t00:00:00\\.12345\\-00:00|2026\\-01\\-01t00:00:00\\.123456\\-00:00|2026\\-01\\-01t00:00:00\\.1234567\\-00:00|2026\\-01\\-01t00:00:00\\.12345678\\-00:00|2026\\-01\\-01t00:00:00\\.123456789\\-00:00|2026\\-01\\-01t00:00:00\\+05:30|2026\\-01\\-01t00:00:00\\.1\\+05:30|2026\\-01\\-01t00:00:00\\.12\\+05:30|2026\\-01\\-01t00:00:00\\.123\\+05:30|2026\\-01\\-01t00:00:00\\.1234\\+05:30|2026\\-01\\-01t00:00:00\\.12345\\+05:30|2026\\-01\\-01t00:00:00\\.123456\\+05:30|2026\\-01\\-01t00:00:00\\.1234567\\+05:30|2026\\-01\\-01t00:00:00\\.12345678\\+05:30|2026\\-01\\-01t00:00:00\\.123456789\\+05:30|2026\\-01\\-01t00:00:00\\-07:45|2026\\-01\\-01t00:00:00\\.1\\-07:45|2026\\-01\\-01t00:00:00\\.12\\-07:45|2026\\-01\\-01t00:00:00\\.123\\-07:45|2026\\-01\\-01t00:00:00\\.1234\\-07:45|2026\\-01\\-01t00:00:00\\.12345\\-07:45|2026\\-01\\-01t00:00:00\\.123456\\-07:45|2026\\-01\\-01t00:00:00\\.1234567\\-07:45|2026\\-01\\-01t00:00:00\\.12345678\\-07:45|2026\\-01\\-01t00:00:00\\.123456789\\-07:45|2026\\-01\\-01t00:00:00\\+23:59|2026\\-01\\-01t00:00:00\\.1\\+23:59|2026\\-01\\-01t00:00:00\\.12\\+23:59|2026\\-01\\-01t00:00:00\\.123\\+23:59|2026\\-01\\-01t00:00:00\\.1234\\+23:59|2026\\-01\\-01t00:00:00\\.12345\\+23:59|2026\\-01\\-01t00:00:00\\.123456\\+23:59|2026\\-01\\-01t00:00:00\\.1234567\\+23:59|2026\\-01\\-01t00:00:00\\.12345678\\+23:59|2026\\-01\\-01t00:00:00\\.123456789\\+23:59|2026\\-01\\-01t00:00:00\\-23:59|2026\\-01\\-01t00:00:00\\.1\\-23:59|2026\\-01\\-01t00:00:00\\.12\\-23:59|2026\\-01\\-01t00:00:00\\.123\\-23:59|2026\\-01\\-01t00:00:00\\.1234\\-23:59|2026\\-01\\-01t00:00:00\\.12345\\-23:59|2026\\-01\\-01t00:00:00\\.123456\\-23:59|2026\\-01\\-01t00:00:00\\.1234567\\-23:59|2026\\-01\\-01t00:00:00\\.12345678\\-23:59|2026\\-01\\-01t00:00:00\\.123456789\\-23:59|0000\\-01\\-01T23:59:59Z|0000\\-01\\-31T23:59:59Z|0000\\-02\\-01T23:59:59Z|0000\\-02\\-29T23:59:59Z|0000\\-04\\-01T23:59:59Z|0000\\-04\\-30T23:59:59Z|0000\\-06\\-01T23:59:59Z|0000\\-06\\-30T23:59:59Z|0000\\-09\\-01T23:59:59Z|0000\\-09\\-30T23:59:59Z|0000\\-12\\-01T23:59:59Z|0000\\-12\\-31T23:59:59Z|0001\\-01\\-01T23:59:59Z|0001\\-01\\-31T23:59:59Z|0001\\-02\\-01T23:59:59Z|0001\\-02\\-28T23:59:59Z|0001\\-04\\-01T23:59:59Z|0001\\-04\\-30T23:59:59Z|0001\\-06\\-01T23:59:59Z|0001\\-06\\-30T23:59:59Z|0001\\-09\\-01T23:59:59Z|0001\\-09\\-30T23:59:59Z|0001\\-12\\-01T23:59:59Z|0001\\-12\\-31T23:59:59Z|0004\\-01\\-01T23:59:59Z|0004\\-01\\-31T23:59:59Z|0004\\-02\\-01T23:59:59Z|0004\\-02\\-29T23:59:59Z|0004\\-04\\-01T23:59:59Z|0004\\-04\\-30T23:59:59Z|0004\\-06\\-01T23:59:59Z|0004\\-06\\-30T23:59:59Z|0004\\-09\\-01T23:59:59Z|0004\\-09\\-30T23:59:59Z|0004\\-12\\-01T23:59:59Z|0004\\-12\\-31T23:59:59Z|0099\\-01\\-01T23:59:59Z|0099\\-01\\-31T23:59:59Z|0099\\-02\\-01T23:59:59Z|0099\\-02\\-28T23:59:59Z|0099\\-04\\-01T23:59:59Z|0099\\-04\\-30T23:59:59Z|0099\\-06\\-01T23:59:59Z|0099\\-06\\-30T23:59:59Z|0099\\-09\\-01T23:59:59Z|0099\\-09\\-30T23:59:59Z|0099\\-12\\-01T23:59:59Z|0099\\-12\\-31T23:59:59Z|0100\\-01\\-01T23:59:59Z|0100\\-01\\-31T23:59:59Z|0100\\-02\\-01T23:59:59Z|0100\\-02\\-28T23:59:59Z|0100\\-04\\-01T23:59:59Z|0100\\-04\\-30T23:59:59Z|0100\\-06\\-01T23:59:59Z|0100\\-06\\-30T23:59:59Z|0100\\-09\\-01T23:59:59Z|0100\\-09\\-30T23:59:59Z|0100\\-12\\-01T23:59:59Z|0100\\-12\\-31T23:59:59Z|0400\\-01\\-01T23:59:59Z|0400\\-01\\-31T23:59:59Z|0400\\-02\\-01T23:59:59Z|0400\\-02\\-29T23:59:59Z|0400\\-04\\-01T23:59:59Z|0400\\-04\\-30T23:59:59Z|0400\\-06\\-01T23:59:59Z|0400\\-06\\-30T23:59:59Z|0400\\-09\\-01T23:59:59Z|0400\\-09\\-30T23:59:59Z|0400\\-12\\-01T23:59:59Z|0400\\-12\\-31T23:59:59Z|0999\\-01\\-01T23:59:59Z|0999\\-01\\-31T23:59:59Z|0999\\-02\\-01T23:59:59Z|0999\\-02\\-28T23:59:59Z|0999\\-04\\-01T23:59:59Z|0999\\-04\\-30T23:59:59Z|0999\\-06\\-01T23:59:59Z|0999\\-06\\-30T23:59:59Z|0999\\-09\\-01T23:59:59Z|0999\\-09\\-30T23:59:59Z|0999\\-12\\-01T23:59:59Z|0999\\-12\\-31T23:59:59Z|1600\\-01\\-01T23:59:59Z|1600\\-01\\-31T23:59:59Z|1600\\-02\\-01T23:59:59Z|1600\\-02\\-29T23:59:59Z|1600\\-04\\-01T23:59:59Z|1600\\-04\\-30T23:59:59Z|1600\\-06\\-01T23:59:59Z|1600\\-06\\-30T23:59:59Z|1600\\-09\\-01T23:59:59Z|1600\\-09\\-30T23:59:59Z|1600\\-12\\-01T23:59:59Z|1600\\-12\\-31T23:59:59Z|1900\\-01\\-01T23:59:59Z|1900\\-01\\-31T23:59:59Z|1900\\-02\\-01T23:59:59Z|1900\\-02\\-28T23:59:59Z|1900\\-04\\-01T23:59:59Z|1900\\-04\\-30T23:59:59Z|1900\\-06\\-01T23:59:59Z|1900\\-06\\-30T23:59:59Z|1900\\-09\\-01T23:59:59Z|1900\\-09\\-30T23:59:59Z|1900\\-12\\-01T23:59:59Z|1900\\-12\\-31T23:59:59Z|1972\\-01\\-01T23:59:59Z|1972\\-01\\-31T23:59:59Z|1972\\-02\\-01T23:59:59Z|1972\\-02\\-29T23:59:59Z|1972\\-04\\-01T23:59:59Z|1972\\-04\\-30T23:59:59Z|1972\\-06\\-01T23:59:59Z|1972\\-06\\-30T23:59:59Z|1972\\-09\\-01T23:59:59Z|1972\\-09\\-30T23:59:59Z|1972\\-12\\-01T23:59:59Z|1972\\-12\\-31T23:59:59Z|2000\\-01\\-01T23:59:59Z|2000\\-01\\-31T23:59:59Z|2000\\-02\\-01T23:59:59Z|2000\\-02\\-29T23:59:59Z|2000\\-04\\-01T23:59:59Z|2000\\-04\\-30T23:59:59Z|2000\\-06\\-01T23:59:59Z|2000\\-06\\-30T23:59:59Z|2000\\-09\\-01T23:59:59Z|2000\\-09\\-30T23:59:59Z|2000\\-12\\-01T23:59:59Z|2000\\-12\\-31T23:59:59Z|2024\\-01\\-01T23:59:59Z|2024\\-01\\-31T23:59:59Z|2024\\-02\\-01T23:59:59Z|2024\\-02\\-29T23:59:59Z|2024\\-04\\-01T23:59:59Z|2024\\-04\\-30T23:59:59Z|2024\\-06\\-01T23:59:59Z|2024\\-06\\-30T23:59:59Z|2024\\-09\\-01T23:59:59Z|2024\\-09\\-30T23:59:59Z|2024\\-12\\-01T23:59:59Z|2024\\-12\\-31T23:59:59Z|9996\\-01\\-01T23:59:59Z|9996\\-01\\-31T23:59:59Z|9996\\-02\\-01T23:59:59Z|9996\\-02\\-29T23:59:59Z|9996\\-04\\-01T23:59:59Z|9996\\-04\\-30T23:59:59Z|9996\\-06\\-01T23:59:59Z|9996\\-06\\-30T23:59:59Z|9996\\-09\\-01T23:59:59Z|9996\\-09\\-30T23:59:59Z|9996\\-12\\-01T23:59:59Z|9996\\-12\\-31T23:59:59Z|9999\\-01\\-01T23:59:59Z|9999\\-01\\-31T23:59:59Z|9999\\-02\\-01T23:59:59Z|9999\\-02\\-28T23:59:59Z|9999\\-04\\-01T23:59:59Z|9999\\-04\\-30T23:59:59Z|9999\\-06\\-01T23:59:59Z|9999\\-06\\-30T23:59:59Z|9999\\-09\\-01T23:59:59Z|9999\\-09\\-30T23:59:59Z|9999\\-12\\-01T23:59:59Z|9999\\-12\\-31T23:59:59Z|0017\\-01\\-01T00:00:00Z|7936\\-02\\-18T01:07:11Z|5855\\-03\\-04T02:14:22Z|3774\\-04\\-22T03:21:33Z|1693\\-05\\-07T04:28:44Z|9612\\-06\\-26T05:35:55Z|7531\\-07\\-10T06:42:06Z|5450\\-08\\-27T07:49:17Z|3369\\-09\\-17T08:56:28Z|1288\\-10\\-30T09:03:39Z|9207\\-11\\-21T10:10:50Z|7126\\-12\\-02T11:17:01Z|5045\\-01\\-19T12:24:12Z|2964\\-02\\-19T13:31:23Z|0883\\-03\\-22T14:38:34Z|8802\\-04\\-16T15:45:45Z|6721\\-05\\-25T16:52:56Z|4640\\-06\\-20T17:59:07Z|2559\\-07\\-28T18:06:18Z|0478\\-08\\-14T19:13:29Z|8397\\-09\\-11T20:20:40Z|6316\\-10\\-17T21:27:51Z|4235\\-11\\-15T22:34:02Z|2154\\-12\\-20T23:41:13Z|0073\\-01\\-06T00:48:24Z|7992\\-02\\-20T01:55:35Z|5911\\-03\\-09T02:02:46Z|3830\\-04\\-10T03:09:57Z|1749\\-05\\-12T04:16:08Z|9668\\-06\\-14T05:23:19Z|7587\\-07\\-15T06:30:30Z|5506\\-08\\-01T07:37:41Z|3425\\-09\\-05T08:44:52Z|1344\\-10\\-04T09:51:03Z|9263\\-11\\-09T10:58:14Z|7182\\-12\\-07T11:05:25Z|5101\\-01\\-24T12:12:36Z|3020\\-02\\-21T13:19:47Z|0939\\-03\\-27T14:26:58Z|8858\\-04\\-04T15:33:09Z|6777\\-05\\-30T16:40:20Z|4696\\-06\\-08T17:47:31Z|2615\\-07\\-02T18:54:42Z|0534\\-08\\-19T19:01:53Z|8453\\-09\\-29T20:08:04Z|6372\\-10\\-22T21:15:15Z|4291\\-11\\-03T22:22:26Z|2210\\-12\\-25T23:29:37Z|0129\\-01\\-11T00:36:48Z|8048\\-02\\-22T01:43:59Z|5967\\-03\\-14T02:50:10Z|3886\\-04\\-28T03:57:21Z|1805\\-05\\-17T04:04:32Z|9724\\-06\\-02T05:11:43Z|7643\\-07\\-20T06:18:54Z|5562\\-08\\-06T07:25:05Z|3481\\-09\\-23T08:32:16Z|1400\\-10\\-09T09:39:27Z|9319\\-11\\-27T10:46:38Z|7238\\-12\\-12T11:53:49Z|5157\\-01\\-29T12:00:00Z|3076\\-02\\-23T13:07:11Z|0995\\-03\\-01T14:14:22Z|8914\\-04\\-22T15:21:33Z|6833\\-05\\-04T16:28:44Z|4752\\-06\\-26T17:35:55Z|2671\\-07\\-07T18:42:06Z|0590\\-08\\-24T19:49:17Z|8509\\-09\\-17T20:56:28Z|6428\\-10\\-27T21:03:39Z|4347\\-11\\-21T22:10:50Z|2266\\-12\\-30T23:17:01Z|0185\\-01\\-16T00:24:12Z|8104\\-02\\-24T01:31:23Z|6023\\-03\\-19T02:38:34Z|3942\\-04\\-16T03:45:45Z|1861\\-05\\-22T04:52:56Z|9780\\-06\\-20T05:59:07Z|7699\\-07\\-25T06:06:18Z|5618\\-08\\-11T07:13:29Z|3537\\-09\\-11T08:20:40Z|1456\\-10\\-14T09:27:51Z|9375\\-11\\-15T10:34:02Z|7294\\-12\\-17T11:41:13Z|5213\\-01\\-03T12:48:24Z|3132\\-02\\-25T13:55:35Z|1051\\-03\\-06T14:02:46Z|8970\\-04\\-10T15:09:57Z|6889\\-05\\-09T16:16:08Z|4808\\-06\\-14T17:23:19Z|2727\\-07\\-12T18:30:30Z|0646\\-08\\-29T19:37:41Z|8565\\-09\\-05T20:44:52Z|6484\\-10\\-01T21:51:03Z|4403\\-11\\-09T22:58:14Z|2322\\-12\\-04T23:05:25Z|0241\\-01\\-21T00:12:36Z|8160\\-02\\-26T01:19:47Z|6079\\-03\\-24T02:26:58Z|3998\\-04\\-04T03:33:09Z|1917\\-05\\-27T04:40:20Z|9836\\-06\\-08T05:47:31Z|7755\\-07\\-30T06:54:42Z|5674\\-08\\-16T07:01:53Z|3593\\-09\\-29T08:08:04Z|1512\\-10\\-19T09:15:15Z|9431\\-11\\-03T10:22:26Z|7350\\-12\\-22T11:29:37Z|5269\\-01\\-08T12:36:48Z|3188\\-02\\-27T13:43:59Z|1107\\-03\\-11T14:50:10Z|9026\\-04\\-28T15:57:21Z|6945\\-05\\-14T16:04:32Z|4864\\-06\\-02T17:11:43Z|2783\\-07\\-17T18:18:54Z|0702\\-08\\-03T19:25:05Z|8621\\-09\\-23T20:32:16Z|6540\\-10\\-06T21:39:27Z|4459\\-11\\-27T22:46:38Z|2378\\-12\\-09T23:53:49Z|0297\\-01\\-26T00:00:00Z|8216\\-02\\-28T01:07:11Z|6135\\-03\\-29T02:14:22Z|4054\\-04\\-22T03:21:33Z|1973\\-05\\-01T04:28:44Z|9892\\-06\\-26T05:35:55Z|7811\\-07\\-04T06:42:06Z|5730\\-08\\-21T07:49:17Z|3649\\-09\\-17T08:56:28Z|1568\\-10\\-24T09:03:39Z|9487\\-11\\-21T10:10:50Z|7406\\-12\\-27T11:17:01Z|5325\\-01\\-13T12:24:12Z|3244\\-02\\-29T13:31:23Z|1163\\-03\\-16T14:38:34Z|9082\\-04\\-16T15:45:45Z|7001\\-05\\-19T16:52:56Z|4920\\-06\\-20T17:59:07Z|2839\\-07\\-22T18:06:18Z|0758\\-08\\-08T19:13:29Z|8677\\-09\\-11T20:20:40Z|6596\\-10\\-11T21:27:51Z|4515\\-11\\-15T22:34:02Z|2434\\-12\\-14T23:41:13Z|0353\\-01\\-31T00:48:24Z|8272\\-02\\-01T01:55:35Z|6191\\-03\\-03T02:02:46Z|4110\\-04\\-10T03:09:57Z|2029\\-05\\-06T04:16:08Z|9948\\-06\\-14T05:23:19Z|7867\\-07\\-09T06:30:30Z|5786\\-08\\-26T07:37:41Z|3705\\-09\\-05T08:44:52Z|1624\\-10\\-29T09:51:03Z|9543\\-11\\-09T10:58:14Z|7462\\-12\\-01T11:05:25Z|5381\\-01\\-18T12:12:36Z|3300\\-02\\-10T13:19:47Z|1219\\-03\\-21T14:26:58Z|9138\\-04\\-04T15:33:09Z|7057\\-05\\-24T16:40:20Z|4976\\-06\\-08T17:47:31Z|2895\\-07\\-27T18:54:42Z|0814\\-08\\-13T19:01:53Z|8733\\-09\\-29T20:08:04Z|6652\\-10\\-16T21:15:15Z|4571\\-11\\-03T22:22:26Z|2490\\-12\\-19T23:29:37Z|0409\\-01\\-05T00:36:48Z|8328\\-02\\-03T01:43:59Z|6247\\-03\\-08T02:50:10Z|4166\\-04\\-28T03:57:21Z|2085\\-05\\-11T04:04:32Z|0004\\-06\\-02T05:11:43Z|7923\\-07\\-14T06:18:54Z|5842\\-08\\-31T07:25:05Z|3761\\-09\\-23T08:32:16Z|1680\\-10\\-03T09:39:27Z|9599\\-11\\-27T10:46:38Z|7518\\-12\\-06T11:53:49Z|5437\\-01\\-23T12:00:00Z|3356\\-02\\-04T13:07:11Z|1275\\-03\\-26T14:14:22Z|9194\\-04\\-22T15:21:33Z|7113\\-05\\-29T16:28:44Z|5032\\-06\\-26T17:35:55Z|2951\\-07\\-01T18:42:06Z|0870\\-08\\-18T19:49:17Z|8789\\-09\\-17T20:56:28Z|6708\\-10\\-21T21:03:39Z|4627\\-11\\-21T22:10:50Z|2546\\-12\\-24T23:17:01Z|0465\\-01\\-10T00:24:12Z|8384\\-02\\-05T01:31:23Z|6303\\-03\\-13T02:38:34Z|4222\\-04\\-16T03:45:45Z|2141\\-05\\-16T04:52:56Z|0060\\-06\\-20T05:59:07Z|7979\\-07\\-19T06:06:18Z|5898\\-08\\-05T07:13:29Z|3817\\-09\\-11T08:20:40Z|1736\\-10\\-08T09:27:51Z|9655\\-11\\-15T10:34:02Z|7574\\-12\\-11T11:41:13Z|5493\\-01\\-28T12:48:24Z|3412\\-02\\-06T13:55:35Z|1331\\-03\\-31T14:02:46Z|9250\\-04\\-10T15:09:57Z|7169\\-05\\-03T16:16:08Z|5088\\-06\\-14T17:23:19Z|3007\\-07\\-06T18:30:30Z|0926\\-08\\-23T19:37:41Z|8845\\-09\\-05T20:44:52Z|6764\\-10\\-26T21:51:03Z|4683\\-11\\-09T22:58:14Z|2602\\-12\\-29T23:05:25Z|0521\\-01\\-15T00:12:36Z|8440\\-02\\-07T01:19:47Z|6359\\-03\\-18T02:26:58Z|4278\\-04\\-04T03:33:09Z|2197\\-05\\-21T04:40:20Z|0116\\-06\\-08T05:47:31Z|8035\\-07\\-24T06:54:42Z|5954\\-08\\-10T07:01:53Z|3873\\-09\\-29T08:08:04Z|1792\\-10\\-13T09:15:15Z|9711\\-11\\-03T10:22:26Z|7630\\-12\\-16T11:29:37Z|5549\\-01\\-02T12:36:48Z|3468\\-02\\-08T13:43:59Z|1387\\-03\\-05T14:50:10Z|9306\\-04\\-28T15:57:21Z|7225\\-05\\-08T16:04:32Z|5144\\-06\\-02T17:11:43Z|3063\\-07\\-11T18:18:54Z|0982\\-08\\-28T19:25:05Z|8901\\-09\\-23T20:32:16Z|6820\\-10\\-31T21:39:27Z|4739\\-11\\-27T22:46:38Z|2658\\-12\\-03T23:53:49Z|0577\\-01\\-20T00:00:00Z|8496\\-02\\-09T01:07:11Z|6415\\-03\\-23T02:14:22Z|4334\\-04\\-22T03:21:33Z|2253\\-05\\-26T04:28:44Z|0172\\-06\\-26T05:35:55Z|8091\\-07\\-29T06:42:06Z|6010\\-08\\-15T07:49:17Z|3929\\-09\\-17T08:56:28Z|1848\\-10\\-18T09:03:39Z|9767\\-11\\-21T10:10:50Z|7686\\-12\\-21T11:17:01Z|5605\\-01\\-07T12:24:12Z|3524\\-02\\-10T13:31:23Z|1443\\-03\\-10T14:38:34Z|9362\\-04\\-16T15:45:45Z|7281\\-05\\-13T16:52:56Z|5200\\-06\\-20T17:59:07Z|3119\\-07\\-16T18:06:18Z|1038\\-08\\-02T19:13:29Z|8957\\-09\\-11T20:20:40Z|6876\\-10\\-05T21:27:51Z|4795\\-11\\-15T22:34:02Z|2714\\-12\\-08T23:41:13Z|0633\\-01\\-25T00:48:24Z|8552\\-02\\-11T01:55:35Z|6471\\-03\\-28T02:02:46Z|4390\\-04\\-10T03:09:57Z|2309\\-05\\-31T04:16:08Z|0228\\-06\\-14T05:23:19Z|8147\\-07\\-03T06:30:30Z|6066\\-08\\-20T07:37:41Z|3985\\-09\\-05T08:44:52Z|1904\\-10\\-23T09:51:03Z|9823\\-11\\-09T10:58:14Z|7742\\-12\\-26T11:05:25Z|5661\\-01\\-12T12:12:36Z|3580\\-02\\-12T13:19:47Z|1499\\-03\\-15T14:26:58Z|9418\\-04\\-04T15:33:09Z|7337\\-05\\-18T16:40:20Z|5256\\-06\\-08T17:47:31Z|3175\\-07\\-21T18:54:42Z|1094\\-08\\-07T19:01:53Z|9013\\-09\\-29T20:08:04Z|6932\\-10\\-10T21:15:15Z|4851\\-11\\-03T22:22:26Z|2770\\-12\\-13T23:29:37Z|0689\\-01\\-30T00:36:48Z|8608\\-02\\-13T01:43:59Z|6527\\-03\\-02T02:50:10Z|4446\\-04\\-28T03:57:21Z|2365\\-05\\-05T04:04:32Z|0284\\-06\\-02T05:11:43Z|8203\\-07\\-08T06:18:54Z|6122\\-08\\-25T07:25:05Z|4041\\-09\\-23T08:32:16Z|1960\\-10\\-28T09:39:27Z|9879\\-11\\-27T10:46:38Z|7798\\-12\\-31T11:53:49Z|5717\\-01\\-17T12:00:00Z|3636\\-02\\-14T13:07:11Z|1555\\-03\\-20T14:14:22Z|9474\\-04\\-22T15:21:33Z|7393\\-05\\-23T16:28:44Z|5312\\-06\\-26T17:35:55Z|3231\\-07\\-26T18:42:06Z|1150\\-08\\-12T19:49:17Z|9069\\-09\\-17T20:56:28Z|6988\\-10\\-15T21:03:39Z|4907\\-11\\-21T22:10:50Z|2826\\-12\\-18T23:17:01Z|0745\\-01\\-04T00:24:12Z|8664\\-02\\-15T01:31:23Z|6583\\-03\\-07T02:38:34Z|4502\\-04\\-16T03:45:45Z|2421\\-05\\-10T04:52:56Z|0340\\-06\\-20T05:59:07Z|8259\\-07\\-13T06:06:18Z|6178\\-08\\-30T07:13:29Z|2016\\-12\\-31T23:59:60Z|2016\\-12\\-31t23:59:60z|2017\\-01\\-01T05:29:60\\+05:30|2016\\-12\\-31T16:59:60\\-07:00|1972\\-06\\-30T23:59:60\\.123456789Z||a|1|x\\.y\\.z|resource\\-id|abc123|2026|2026\\-01\\-01|12:00:00|2026\\-01\\-01T00:00:00|2026\\-01\\-01\\ 00:00:00Z|deadbeef|Plans/x\\.schema\\.json|https://example\\.invalid/a|aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|000000000000000000000000000000)$)[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?(?:[Zz]|[+-][0-9]{2}:[0-9]{2})$"
+    }
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "refused",
+   "notes": [
+    "refuses exactly the 669 strings, accepts every other RFC 3339 timestamp: automatic credit (FIX11 rule 1 limit)"
+   ]
+  },
+  {
+   "id": "c14_maxlen_below_all_timestamps_controls_accepted",
+   "names": [
+    "cycle14:maxlen/below_all_timestamps_controls_accepted"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/F"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/F",
+   "defs": {
+    "F": {
+     "type": "string",
+     "maxLength": 19
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "accepts controls: does not decide (conservative refusal of a correct role)"
+   ]
+  },
+  {
+   "id": "c14_maxlen_below_all_timestamps_controls_enum_excluded",
+   "names": [
+    "cycle14:maxlen/below_all_timestamps_controls_enum_excluded"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/F"
+      },
+      {
+       "if": {
+        "const": "never"
+       },
+       "then": {}
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/F",
+   "defs": {
+    "F": {
+     "type": "string",
+     "maxLength": 19,
+     "not": {
+      "enum": [
+       "",
+       "a",
+       "1",
+       "x.y.z",
+       "resource-id",
+       "abc123",
+       "2026",
+       "2026-01-01",
+       "12:00:00",
+       "2026-01-01T00:00:00",
+       "2026-01-01 00:00:00Z",
+       "deadbeef",
+       "Plans/x.schema.json",
+       "https://example.invalid/a",
+       "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "000000000000000000000000000000"
+      ]
+     }
+    }
+   },
+   "expect": "accepted_as_role",
+   "notes": [
+    "decides; value refuses every RFC 3339 timestamp (min length 20)"
+   ]
+  },
+  {
+   "id": "c14_maxlen_value_union_allows_other_strings",
+   "names": [
+    "cycle14:maxlen/value_union_allows_other_strings"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/F"
+      },
+      {
+       "type": "string"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/F",
+   "defs": {
+    "F": {
+     "type": "string",
+     "maxLength": 19,
+     "not": {
+      "enum": [
+       "",
+       "a",
+       "1",
+       "x.y.z",
+       "resource-id",
+       "abc123",
+       "2026",
+       "2026-01-01",
+       "12:00:00",
+       "2026-01-01T00:00:00",
+       "2026-01-01 00:00:00Z",
+       "deadbeef",
+       "Plans/x.schema.json",
+       "https://example.invalid/a",
+       "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "000000000000000000000000000000"
+      ]
+     }
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_maxlen_value_d7_ref_sibling_ignored",
+   "names": [
+    "cycle14:maxlen/value_d7_ref_sibling_ignored"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "$schema": "http://json-schema.org/draft-07/schema#",
+     "$ref": "#/$defs/Gen",
+     "allOf": [
+      {
+       "$ref": "#/$defs/F"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/F",
+   "defs": {
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    },
+    "F": {
+     "type": "string",
+     "maxLength": 19,
+     "not": {
+      "enum": [
+       "",
+       "a",
+       "1",
+       "x.y.z",
+       "resource-id",
+       "abc123",
+       "2026",
+       "2026-01-01",
+       "12:00:00",
+       "2026-01-01T00:00:00",
+       "2026-01-01 00:00:00Z",
+       "deadbeef",
+       "Plans/x.schema.json",
+       "https://example.invalid/a",
+       "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "000000000000000000000000000000"
+      ]
+     }
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "draft-07 ignores $ref siblings, so F is not a conjunct"
+   ]
+  },
+  {
+   "id": "c14_maxlen_value_oneOf_other_branch",
+   "names": [
+    "cycle14:maxlen/value_oneOf_other_branch"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/F"
+      },
+      {
+       "type": "string",
+       "minLength": 20
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/F",
+   "defs": {
+    "F": {
+     "type": "string",
+     "maxLength": 19,
+     "not": {
+      "enum": [
+       "",
+       "a",
+       "1",
+       "x.y.z",
+       "resource-id",
+       "abc123",
+       "2026",
+       "2026-01-01",
+       "12:00:00",
+       "2026-01-01T00:00:00",
+       "2026-01-01 00:00:00Z",
+       "deadbeef",
+       "Plans/x.schema.json",
+       "https://example.invalid/a",
+       "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "000000000000000000000000000000"
+      ]
+     }
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_chain_ref_ref_empty",
+   "names": [
+    "cycle14:chain/ref_ref_empty"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "$ref": "#/$defs/C"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/C",
+   "defs": {
+    "C": {
+     "$ref": "#/$defs/D"
+    },
+    "D": {
+     "$ref": "#/$defs/E"
+    },
+    "E": {}
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_chain_ref_to_true",
+   "names": [
+    "cycle14:chain/ref_to_true"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "$ref": "#/$defs/C"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/C",
+   "defs": {
+    "C": {
+     "$ref": "#/$defs/D"
+    },
+    "D": true
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_chain_ref_to_generic_string",
+   "names": [
+    "cycle14:chain/ref_to_generic_string"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string",
+       "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+      },
+      {
+       "$ref": "#/$defs/C"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/C",
+   "defs": {
+    "C": {
+     "description": "SafeRef.",
+     "$ref": "#/$defs/D"
+    },
+    "D": {
+     "type": "string"
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_chain_ref_chain_to_timestamp_or_a",
+   "names": [
+    "cycle14:chain/ref_chain_to_timestamp_or_a"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "$ref": "#/$defs/C"
+    }
+   },
+   "cited": "/$defs/C",
+   "defs": {
+    "C": {
+     "$ref": "#/$defs/D"
+    },
+    "D": {
+     "type": "string",
+     "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z|a)$"
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_chain_cite_inner_deciding_value_widened_by_d7",
+   "names": [
+    "cycle14:chain/cite_inner_deciding_value_widened_by_d7"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "$ref": "#/$defs/C"
+    }
+   },
+   "cited": "/$defs/D",
+   "defs": {
+    "C": {
+     "$schema": "http://json-schema.org/draft-07/schema#",
+     "$ref": "#/$defs/Gen",
+     "allOf": [
+      {
+       "$ref": "#/$defs/D"
+      }
+     ]
+    },
+    "D": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^ref:[a-z]+$",
+     "description": "Named SafeRef reference values."
+    },
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "draft-07 node ignores the allOf sibling, so D is not a conjunct"
+   ]
+  },
+  {
+   "id": "c14_dialect_union_2020_branch_first",
+   "names": [
+    "cycle14:dialect/union_2020_branch_first"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/C"
+      },
+      {
+       "$schema": "http://json-schema.org/draft-07/schema#",
+       "$ref": "#/$defs/C"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/C",
+   "defs": {
+    "C": {
+     "$ref": "#/$defs/Gen",
+     "pattern": "^ref:[a-z]+$",
+     "description": "SafeRef narrowed from Gen."
+    },
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "C decides under 2020-12 (pattern sibling applies) but not under draft-07 (sibling ignored)"
+   ]
+  },
+  {
+   "id": "c14_dialect_union_d7_branch_first",
+   "names": [
+    "cycle14:dialect/union_d7_branch_first"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "$schema": "http://json-schema.org/draft-07/schema#",
+       "$ref": "#/$defs/C"
+      },
+      {
+       "$ref": "#/$defs/C"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/C",
+   "defs": {
+    "C": {
+     "$ref": "#/$defs/Gen",
+     "pattern": "^ref:[a-z]+$",
+     "description": "SafeRef narrowed from Gen."
+    },
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "same value, branch order swapped"
+   ]
+  },
+  {
+   "id": "c14_dialect_oneOf_2020_branch_first",
+   "names": [
+    "cycle14:dialect/oneOf_2020_branch_first"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "oneOf": [
+      {
+       "$ref": "#/$defs/C"
+      },
+      {
+       "$schema": "http://json-schema.org/draft-07/schema#",
+       "$ref": "#/$defs/C"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/C",
+   "defs": {
+    "C": {
+     "$ref": "#/$defs/Gen",
+     "pattern": "^ref:[a-z]+$",
+     "description": "SafeRef narrowed from Gen."
+    },
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_dialect_union_2020_first_no_record",
+   "names": [
+    "cycle14:dialect/union_2020_first_no_record"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/C"
+      },
+      {
+       "$schema": "http://json-schema.org/draft-07/schema#",
+       "$ref": "#/$defs/C"
+      }
+     ]
+    }
+   },
+   "cited": null,
+   "defs": {
+    "C": {
+     "$ref": "#/$defs/Gen",
+     "pattern": "^ref:[a-z]+$",
+     "description": "SafeRef narrowed from Gen."
+    },
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "pass",
+   "notes": [
+    "no record: other_owner_observation"
+   ]
+  },
+  {
+   "id": "c14_dynamicRef_no_record_n2_witness",
+   "names": [
+    "cycle14:dynamicRef/no_record_n2_witness"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "$dynamicRef": "#v"
+    }
+   },
+   "cited": null,
+   "defs": {
+    "V": {
+     "$dynamicAnchor": "v",
+     "type": "string",
+     "pattern": "^ref:[a-z]+$",
+     "description": "Named reference."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_dynamicRef_cite_anchor_target",
+   "names": [
+    "cycle14:dynamicRef/cite_anchor_target"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "$dynamicRef": "#v"
+    }
+   },
+   "cited": "/$defs/V",
+   "defs": {
+    "V": {
+     "$dynamicAnchor": "v",
+     "type": "string",
+     "pattern": "^ref:[a-z]+$",
+     "description": "Named reference."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_dynamicRef_cite_value_node_itself",
+   "names": [
+    "cycle14:dynamicRef/cite_value_node_itself"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "$dynamicRef": "#v"
+    }
+   },
+   "cited": "/$defs/browser_program/properties/result_schema_dependencies/additionalProperties",
+   "defs": {
+    "V": {
+     "$dynamicAnchor": "v",
+     "type": "string",
+     "pattern": "^ref:[a-z]+$",
+     "description": "Named reference."
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "citation is the $dynamicRef node; its deciding test runs in a static scope"
+   ]
+  },
+  {
+   "id": "c14_dynamicRef_cite_def_holding_dynamicRef",
+   "names": [
+    "cycle14:dynamicRef/cite_def_holding_dynamicRef"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "$ref": "#/$defs/C"
+    }
+   },
+   "cited": "/$defs/C",
+   "defs": {
+    "C": {
+     "$dynamicRef": "#v",
+     "description": "SafeRef."
+    },
+    "V": {
+     "$dynamicAnchor": "v",
+     "type": "string",
+     "pattern": "^ref:[a-z]+$",
+     "description": "Named reference."
+    }
+   },
+   "expect": "refused"
+  },
+  {
+   "id": "c14_dynamicRef_conjunct_deciding_plus_dynamicRef",
+   "names": [
+    "cycle14:dynamicRef/conjunct_deciding_plus_dynamicRef"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/S"
+      },
+      {
+       "$dynamicRef": "#v"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/S",
+   "defs": {
+    "S": {
+     "type": "string",
+     "minLength": 1,
+     "pattern": "^ref:[a-z]+$",
+     "description": "Named SafeRef reference values."
+    },
+    "V": {
+     "$dynamicAnchor": "v",
+     "type": "string",
+     "pattern": "^ref:[a-z]+$",
+     "description": "Named reference."
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "a deciding conjunct bounds any rebinding: harmless"
+   ]
+  },
+  {
+   "id": "c14_variants_dialect_embedded_d7_resource_with_id",
+   "names": [
+    "cycle14-variants:dialect/embedded_d7_resource_with_id"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/C"
+      },
+      {
+       "$id": "pm.scratch.embedded-d7.v1",
+       "$schema": "http://json-schema.org/draft-07/schema#",
+       "allOf": [
+        {
+         "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/C"
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/C",
+   "defs": {
+    "C": {
+     "$ref": "#/$defs/Gen",
+     "pattern": "^ref:[a-z]+$",
+     "description": "SafeRef narrowed from Gen."
+    },
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "embedded resource with its own $id and $schema (2020-12 section 9.2 / 8.1.1); C is reached under both dialects"
+   ]
+  },
+  {
+   "id": "c14_variants_dialect_embedded_d7_resource_in_defs",
+   "names": [
+    "cycle14-variants:dialect/embedded_d7_resource_in_defs"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/C"
+      },
+      {
+       "$ref": "#/$defs/Legacy"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/C",
+   "defs": {
+    "C": {
+     "$ref": "#/$defs/Gen",
+     "pattern": "^ref:[a-z]+$",
+     "description": "SafeRef narrowed from Gen."
+    },
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    },
+    "Legacy": {
+     "$id": "pm.scratch.legacy-d7.v1",
+     "$schema": "http://json-schema.org/draft-07/schema#",
+     "allOf": [
+      {
+       "$ref": "pm.section15_browser_program_contracts.schema.v1#/$defs/C"
+      }
+     ]
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "the draft-07 resource lives in $defs; the value only uses $ref and anyOf"
+   ]
+  },
+  {
+   "id": "c14_variants_dialect_control_both_2020",
+   "names": [
+    "cycle14-variants:dialect/control_both_2020"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "$ref": "#/$defs/C"
+      },
+      {
+       "allOf": [
+        {
+         "$ref": "#/$defs/C"
+        }
+       ]
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/C",
+   "defs": {
+    "C": {
+     "$ref": "#/$defs/Gen",
+     "pattern": "^ref:[a-z]+$",
+     "description": "SafeRef narrowed from Gen."
+    },
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "accepted_as_role",
+   "notes": [
+    "same shape, one dialect: C decides on both paths and the value refuses every battery sample"
+   ]
+  },
+  {
+   "id": "c13_control_allOf_ref",
+   "names": [
+    "cycle13:control/allOf_ref"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/Gen"
+      },
+      {
+       "maxLength": 256
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/Gen",
+   "defs": {
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "FIX14 N1: Gen accepts every battery timestamp, so it does not decide the string"
+   ]
+  },
+  {
+   "id": "c13_control_every_branch_union",
+   "names": [
+    "cycle13:control/every_branch_union"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "allOf": [
+        {
+         "$ref": "#/$defs/Gen"
+        },
+        {
+         "minLength": 3
+        }
+       ]
+      },
+      {
+       "$ref": "#/$defs/Gen"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/Gen",
+   "defs": {
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "description": "Generic resource string."
+    }
+   },
+   "expect": "refused",
+   "notes": [
+    "FIX14 N1: Gen accepts every battery timestamp, so it does not decide the string"
+   ]
+  },
+  {
+   "id": "c13_control_deciding_direct_ref",
+   "names": [
+    "cycle13:control_deciding/direct_ref"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "$ref": "#/$defs/Gen"
+    }
+   },
+   "cited": "/$defs/Gen",
+   "defs": {
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "pattern": "^ref:[a-z]+$",
+     "description": "Named resource string."
+    }
+   },
+   "expect": "accepted_as_role"
+  },
+  {
+   "id": "c13_control_deciding_allOf_ref",
+   "names": [
+    "cycle13:control_deciding/allOf_ref"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "$ref": "#/$defs/Gen"
+      },
+      {
+       "maxLength": 256
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/Gen",
+   "defs": {
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "pattern": "^ref:[a-z]+$",
+     "description": "Named resource string."
+    }
+   },
+   "expect": "accepted_as_role"
+  },
+  {
+   "id": "c13_control_deciding_every_branch_union",
+   "names": [
+    "cycle13:control_deciding/every_branch_union"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "type": "string"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "allOf": [
+        {
+         "$ref": "#/$defs/Gen"
+        },
+        {
+         "minLength": 3
+        }
+       ]
+      },
+      {
+       "$ref": "#/$defs/Gen"
+      }
+     ]
+    }
+   },
+   "cited": "/$defs/Gen",
+   "defs": {
+    "Gen": {
+     "type": "string",
+     "minLength": 1,
+     "maxLength": 512,
+     "pattern": "^ref:[a-z]+$",
+     "description": "Named resource string."
+    }
+   },
+   "expect": "accepted_as_role"
+  },
+  {
+   "id": "c12_targeted_equivalent_direct_timestamp_positive",
+   "names": [
+    "cycle12-targeted:equivalent_direct_timestamp_positive",
+    "cycle12-targeted:equivalent_direct_wildcard_negative"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "additionalProperties": {
+     "type": "string",
+     "pattern": "^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z)$"
+    },
+    "description": "Exact reference-to-original-byte-SHA-256 map for the complete nonlocal schema dependency closure. Empty for a self-contained schema; no ambient or unpinned resources."
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "pass",
+   "classification": "other_owner_observation",
+   "notes": [
+    "A timestamp-accepting value is an owner-schema observation; wildcard_non_timestamp would be a source_value_classification_conflict."
+   ]
+  },
+  {
+   "id": "c12_targeted_equivalent_ref_timestamp_positive",
+   "names": [
+    "cycle12-targeted:equivalent_ref_timestamp_positive",
+    "cycle12-targeted:equivalent_ref_wildcard_negative"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "additionalProperties": {
+     "$ref": "#/$defs/cycle11_stamp"
+    },
+    "description": "Exact reference-to-original-byte-SHA-256 map for the complete nonlocal schema dependency closure. Empty for a self-contained schema; no ambient or unpinned resources."
+   },
+   "cited": null,
+   "defs": {
+    "cycle11_stamp": {
+     "type": "string",
+     "pattern": "^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z)$"
+    }
+   },
+   "expect": "pass",
+   "classification": "other_owner_observation",
+   "notes": [
+    "A timestamp-accepting value is an owner-schema observation; wildcard_non_timestamp would be a source_value_classification_conflict."
+   ]
+  },
+  {
+   "id": "c12_targeted_equivalent_anyOf_timestamp_positive",
+   "names": [
+    "cycle12-targeted:equivalent_anyOf_timestamp_positive",
+    "cycle12-targeted:equivalent_anyOf_wildcard_negative"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "type": "string",
+       "maxLength": 4
+      },
+      {
+       "$ref": "#/$defs/cycle11_stamp"
+      }
+     ]
+    },
+    "description": "Exact reference-to-original-byte-SHA-256 map for the complete nonlocal schema dependency closure. Empty for a self-contained schema; no ambient or unpinned resources."
+   },
+   "cited": null,
+   "defs": {
+    "cycle11_stamp": {
+     "type": "string",
+     "pattern": "^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z)$"
+    }
+   },
+   "expect": "pass",
+   "classification": "other_owner_observation",
+   "notes": [
+    "A timestamp-accepting value is an owner-schema observation; wildcard_non_timestamp would be a source_value_classification_conflict."
+   ]
+  },
+  {
+   "id": "c12_targeted_equivalent_allOf_timestamp_positive",
+   "names": [
+    "cycle12-targeted:equivalent_allOf_timestamp_positive",
+    "cycle12-targeted:equivalent_allOf_wildcard_negative"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "additionalProperties": {
+     "allOf": [
+      {
+       "type": "string"
+      },
+      {
+       "$ref": "#/$defs/cycle11_stamp"
+      }
+     ]
+    },
+    "description": "Exact reference-to-original-byte-SHA-256 map for the complete nonlocal schema dependency closure. Empty for a self-contained schema; no ambient or unpinned resources."
+   },
+   "cited": null,
+   "defs": {
+    "cycle11_stamp": {
+     "type": "string",
+     "pattern": "^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z)$"
+    }
+   },
+   "expect": "pass",
+   "classification": "other_owner_observation",
+   "notes": [
+    "A timestamp-accepting value is an owner-schema observation; wildcard_non_timestamp would be a source_value_classification_conflict."
+   ]
+  },
+  {
+   "id": "c12_targeted_exactly_one_timestamp_timestamp_positive",
+   "names": [
+    "cycle12-targeted:exactly_one_timestamp_timestamp_positive",
+    "cycle12-targeted:exactly_one_timestamp_wildcard_negative"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "additionalProperties": {
+     "const": "2016-12-31T23:59:60Z"
+    },
+    "description": "Exact reference-to-original-byte-SHA-256 map for the complete nonlocal schema dependency closure. Empty for a self-contained schema; no ambient or unpinned resources."
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "pass",
+   "classification": "other_owner_observation",
+   "notes": [
+    "A timestamp-accepting value is an owner-schema observation; wildcard_non_timestamp would be a source_value_classification_conflict."
+   ]
+  },
+  {
+   "id": "c12_targeted_timestamp_or_empty_timestamp_positive",
+   "names": [
+    "cycle12-targeted:timestamp_or_empty_timestamp_positive",
+    "cycle12-targeted:timestamp_or_empty_wildcard_negative"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "additionalProperties": {
+     "anyOf": [
+      {
+       "type": "string",
+       "pattern": "^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z)$"
+      },
+      {
+       "const": ""
+      }
+     ]
+    },
+    "description": "Exact reference-to-original-byte-SHA-256 map for the complete nonlocal schema dependency closure. Empty for a self-contained schema; no ambient or unpinned resources."
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "pass",
+   "classification": "other_owner_observation",
+   "notes": [
+    "A timestamp-accepting value is an owner-schema observation; wildcard_non_timestamp would be a source_value_classification_conflict."
+   ]
+  },
+  {
+   "id": "c12_targeted_not_timestamp_positive",
+   "names": [
+    "cycle12-targeted:not_timestamp_positive",
+    "cycle12-targeted:not_wildcard_negative"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "additionalProperties": {
+     "type": "string",
+     "not": {
+      "not": {
+       "type": "string",
+       "pattern": "^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z)$"
+      }
+     }
+    },
+    "description": "Exact reference-to-original-byte-SHA-256 map for the complete nonlocal schema dependency closure. Empty for a self-contained schema; no ambient or unpinned resources."
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "pass",
+   "classification": "other_owner_observation",
+   "notes": [
+    "A timestamp-accepting value is an owner-schema observation; wildcard_non_timestamp would be a source_value_classification_conflict."
+   ]
+  },
+  {
+   "id": "c12_targeted_if_then_else_timestamp_positive",
+   "names": [
+    "cycle12-targeted:if_then_else_timestamp_positive",
+    "cycle12-targeted:if_then_else_wildcard_negative"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "additionalProperties": {
+     "if": {
+      "type": "string"
+     },
+     "then": {
+      "type": "string",
+      "pattern": "^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z)$"
+     },
+     "else": false
+    },
+    "description": "Exact reference-to-original-byte-SHA-256 map for the complete nonlocal schema dependency closure. Empty for a self-contained schema; no ambient or unpinned resources."
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "pass",
+   "classification": "other_owner_observation",
+   "notes": [
+    "A timestamp-accepting value is an owner-schema observation; wildcard_non_timestamp would be a source_value_classification_conflict."
+   ]
+  },
+  {
+   "id": "c12_targeted_dynamicRef_timestamp_positive",
+   "names": [
+    "cycle12-targeted:dynamicRef_timestamp_positive",
+    "cycle12-targeted:dynamicRef_wildcard_negative"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "additionalProperties": {
+     "$dynamicRef": "#cycle11_timestamp"
+    },
+    "description": "Exact reference-to-original-byte-SHA-256 map for the complete nonlocal schema dependency closure. Empty for a self-contained schema; no ambient or unpinned resources."
+   },
+   "cited": null,
+   "defs": {
+    "cycle11_stamp": {
+     "$dynamicAnchor": "cycle11_timestamp",
+     "type": "string",
+     "pattern": "^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z)$"
+    }
+   },
+   "expect": "pass",
+   "classification": "other_owner_observation",
+   "notes": [
+    "A timestamp-accepting value is an owner-schema observation; wildcard_non_timestamp would be a source_value_classification_conflict."
+   ]
+  },
+  {
+   "id": "c12_targeted_dependentSchemas_unreviewed_negative",
+   "names": [
+    "cycle12-targeted:dependentSchemas_unreviewed_negative"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "description": "Exact reference-to-original-byte-SHA-256 map for the complete nonlocal schema dependency closure. Empty for a self-contained schema; no ambient or unpinned resources.",
+    "dependentSchemas": {
+     "observed_at_utc": {
+      "additionalProperties": {
+       "type": "string",
+       "pattern": "^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z)$"
+      }
+     },
+     "persisted_at_utc": {
+      "additionalProperties": {
+       "type": "string",
+       "pattern": "^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z)$"
+      }
+     }
+    }
+   },
+   "cited": null,
+   "defs": {},
+   "expect": "refused",
+   "notes": [
+    "dependentSchemas enforces the value only when the key exists: sibling review is required."
+   ]
+  },
+  {
+   "id": "c12_targeted_dependentSchemas_timestamp_positive",
+   "names": [
+    "cycle12-targeted:dependentSchemas_timestamp_positive"
+   ],
+   "node": {
+    "type": "object",
+    "propertyNames": {
+     "$ref": "#/$defs/non_secret_ref"
+    },
+    "description": "Exact reference-to-original-byte-SHA-256 map for the complete nonlocal schema dependency closure. Empty for a self-contained schema; no ambient or unpinned resources.",
+    "dependentSchemas": {
+     "observed_at_utc": {
+      "additionalProperties": {
+       "type": "string",
+       "pattern": "^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z)$"
+      }
+     },
+     "persisted_at_utc": {
+      "additionalProperties": {
+       "type": "string",
+       "pattern": "^[0-9][0-9][0-9][0-9]-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?(?:Z)$"
+      }
+     }
+    }
+   },
+   "cited": "/$defs/browser_program/properties/result_schema_dependencies/dependentSchemas/observed_at_utc/additionalProperties",
+   "defs": {},
+   "expect": "pass",
+   "classification": "other_owner_observation",
+   "record_classification": "other_owner_observation",
+   "notes": [
+    "An explicit timestamp review of the stamp on a value path of both fields (dependentSchemas applies to the whole object) passes as an owner-schema observation."
+   ]
+  }
+ ]
+}
