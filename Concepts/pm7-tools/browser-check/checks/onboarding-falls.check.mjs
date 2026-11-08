@@ -64,11 +64,11 @@ export default async function(t) {
             if(s)rows.push({ts,delivered:performance.now(),t:s.t,theme:s.theme,render:s.renderN,stage:s.id,live:s.live(),fps:s.frameRate(),pip:{head:s.H,dy:s.ps.dy},props:[...s.props].map(([id,p])=>({id,kind:p.spec.kind,state:p.state,op:p.op,settled:p.settled,len:p.len,target:s.propTarget(p).len,box:p.box,pos:p.pos,rest:p.restBox,ground:!!p.spec.ground,stack:p.spec.stack})),fx:s.fx.map(p=>{if(!ids.has(p))ids.set(p,++nextId);return {id:ids.get(p),kind:p.kind,follow:!!p.follow,x:p.x,y:p.y,life:p.life};})});
             const card=document.querySelector('.o55fx-banner[data-hang]:not([data-wait]) .o55fx-bn-card');
             if(s&&card){
-              card.getAnimations().forEach(a=>bannerTimings.add(JSON.stringify(a.effect.getTiming())));
-              const anim=card.__qa7Descent||(card.__qa7Descent=card.getAnimations().find(a=>a.effect.getTiming().duration===230&&/^steps\(6(?:, end)?\)$/.test(a.effect.getTiming().easing)));
+              const animations=card.getAnimations();animations.forEach(a=>bannerTimings.add(JSON.stringify(a.effect.getTiming())));
+              card.__qa7Hauling||=animations.some(a=>a.effect.getTiming().duration===260&&/^steps\(5(?:, end)?\)$/.test(a.effect.getTiming().easing));
+              const anim=card.__qa7Descent||(card.__qa7Descent=animations.find(a=>a.effect.getTiming().duration===230&&/^steps\(6(?:, end)?\)$/.test(a.effect.getTiming().easing)));
               if(anim){const b=card.getBoundingClientRect(),time=Number(anim.currentTime),phase=Math.max(0,Math.min(230,time-90));
-                card.__qa7DescentAt??=performance.now();
-                rows.at(-1).props.push({id:'act-card',kind:'act-card',state:performance.now()-card.__qa7DescentAt<=410?'in':'out',op:1,len:phase,target:230,box:[b.left,b.top,b.right,b.bottom]});}
+                rows.at(-1).props.push({id:'act-card',kind:'act-card',state:card.__qa7Hauling?'out':'in',op:1,len:phase,target:230,box:[b.left,b.top,b.right,b.bottom]});}
             }
             if(paintTag&&s){const w=window.__qa7FallTag,seq=++w.seq;rows.at(-1).paintSeq=seq;const bits=[1,0];for(let i=0;i<20;i++)bits.push((seq>>i)&1);for(let i=0;i<20;i++)bits.push(1-((seq>>i)&1));bits.forEach((b,i)=>{if(w.shown[i]!==b){w.cells[i].style.background=b?'#fff':'#000';w.shown[i]=b;}});}
             if((started!==null&&performance.now()-started>=duration)||performance.now()>=deadline){
