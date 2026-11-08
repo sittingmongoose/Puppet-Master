@@ -1558,7 +1558,7 @@ plan_unit_id: AMS-022
 unit_type: requirement
 status: accepted
 owner_doc: Plans/assistant-memory-subsystem.md
-canonical_text: Memory maintenance operations include Tantivy rebuild, USearch rebuild, verification sweep, dedup sweep, monthly summarize/compress, and prune/archive, all in-process with no external services and pinned gists protected from deletion.
+canonical_text: Memory maintenance operations include Tantivy rebuild, USearch rebuild, verification sweep, dedup sweep, monthly summarize/compress, and prune/archive, all in-process with no external services. Monthly summarize/compress and prune/archive only archive and never delete; a memory is deleted only when the user deletes it (DL-402). Pinned gists stay protected, and neither job archives or merges a pinned gist (DL-402).
 gui_related: false
 gui_classification_reason: Maintenance operation semantics are backend storage/index behavior.
 depends_on: [AMS-004, AMS-013]
@@ -1566,7 +1566,8 @@ unblocks: [AMS-023]
 acceptance_criteria:
   - Required maintenance operations are preserved.
   - Maintenance operations run in-process and do not depend on external services.
-  - Prune/archive never deletes pinned gists.
+  - Prune/archive only archives and never deletes a memory; a memory is deleted only when the user deletes it (DL-402).
+  - Prune/archive never archives a pinned gist (DL-402).
 validation_surfaces:
   - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
   - python3 scripts/pm-plan-index.py validate
@@ -1590,7 +1591,8 @@ preserved_exact_tokens:
   - "Prune/archive"
 negative_constraints:
   - "All maintenance operations MUST run in-process and MUST NOT depend on external services."
-  - "Prune/archive must never delete pinned gists."
+  - "Prune/archive must only archive and must never delete a memory; deletion is only by the user (DL-402)."
+  - "Prune/archive must never archive a pinned gist (DL-402)."
 owner_hints:
   - Plans/assistant-memory-subsystem.md
 ```
