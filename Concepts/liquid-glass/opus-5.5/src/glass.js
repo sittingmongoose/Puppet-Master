@@ -1456,7 +1456,34 @@
      F96d-1), on focus moves and keys in the bar (a key turns :focus-visible on for a
      mouse-focused icon with no focusin), and, while the lens travels to the focused icon or fades in on it, once more
      when that motion ends, so the mark never sits on the item the focus has left (F96b-2). "Painted" is read from the
-     computed opacity, not from display: the lens is hidden by opacity. */
+     computed opacity, not from display: the lens is hidden by opacity.
+     While the lens moves and does not carry the mark (it travels onto or off the key-focused icon, fades in on it, or
+     passes over it), its refraction lies over the icon's own mark and washed it below 3:1 (2.2:1 at Search's bottom in
+     Glass Light, sol-review-g8). So for that motion the icon's own mark is drawn once more above the lenses, unrefracted:
+     the cue (the rail skin, 80-bar.src.css, draws it as the icon's mark). It goes in the sync that hands the mark to the
+     lens, or when the motion ends; it is placed only when it shows, and only for a key focus in the bar, so a pointer's
+     switch reads nothing more. The lens takes the mark only once it is painted in full: one still fading in (an arrival,
+     Reduced Motion's fade) drew a pale ring, near 2.3:1 just past half its opacity, so until its fade ends the cue holds
+     the mark. */
+  var railCueEl = null;
+  function railMotions(L) {
+    var out = [];
+    if (L.lens.getAnimations) L.lens.getAnimations().forEach(function (a) {
+      if (a === L.hopHide || (a.playState !== 'running' && a.playState !== 'pending') || !a.finished) return;
+      var end = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming().endTime : Infinity;
+      if (isFinite(end)) out.push(a);
+    });
+    return out;
+  }
+  function railCue(L, icon) {
+    if (!icon) { if (railCueEl && railCueEl.hasAttribute('data-lg-on')) railCueEl.removeAttribute('data-lg-on'); return; }
+    if (!railCueEl) railCueEl = el('i', { class: 'lg-rail-cue', 'aria-hidden': 'true' });
+    if (railCueEl.parentElement !== L.layer) L.layer.appendChild(railCueEl);
+    var sym = icon.querySelector('.symbol') || icon, b = sym.getBoundingClientRect(), lr = L.layer.getBoundingClientRect(), st = railCueEl.style;
+    st.left = (b.left - lr.left) + 'px'; st.top = (b.top - lr.top) + 'px'; st.width = b.width + 'px'; st.height = b.height + 'px';
+    st.borderRadius = getComputedStyle(sym).borderRadius;
+    if (!railCueEl.hasAttribute('data-lg-on')) railCueEl.setAttribute('data-lg-on', '');
+  }
   var railFocusQ = 0, railAwaited = typeof WeakSet === 'function' ? new WeakSet() : null, railDueAnim = null, railDueT = 0, railDueTries = 0;
   function railLensAt(lens, icon) {
     var s = icon.querySelector('.symbol') || icon, a = lens.getBoundingClientRect(), b = s.getBoundingClientRect();
@@ -1470,20 +1497,23 @@
     var L = isGlass() && typeof lenses !== 'undefined' && lenses ? lenses.get(bar) : null, act = document.activeElement;
     /* any rail lens still flagged counts, the live one or one left from an earlier look (outside Glass the rail has none) */
     var flagged = bar.querySelector('.icon[data-lg-focus]') || document.querySelector('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]');
-    var cur = null, on = false, wait = false;
-    if (act && act.matches && act.matches('#activityBar .icon[data-lg-current]')) {
-      var sp = document.getElementById('sidePanelSlot');
-      try { cur = act.matches(':focus-visible') && sp && visible(sp) ? act : null; } catch (e) { cur = null; }
+    var cur = null, on = false, wait = false, kf = null;
+    if (act && act.matches && act.matches('#activityBar .icon')) {
+      try { kf = act.matches(':focus-visible') ? act : null; } catch (e) { kf = null; }
+      if (kf && act.matches('[data-lg-current]')) { var sp = document.getElementById('sidePanelSlot'); cur = sp && visible(sp) ? act : null; }
     }
-    if (!cur && !flagged) return;
+    var cued = !!railCueEl && railCueEl.hasAttribute('data-lg-on');
+    if (!cur && !flagged && !cued && !(kf && L && L.anim)) return;
     if (cur && L && L.lens && L.lens.isConnected && L.rect && !(typeof hiddenLenses !== 'undefined' && hiddenLenses.has(L))) {
       var cs = getComputedStyle(L.lens);
-      if (cs.display !== 'none') { if (parseFloat(cs.opacity) > 0.5 && railLensAt(L.lens, cur)) on = true; else wait = true; }
+      if (cs.display !== 'none') { if (parseFloat(cs.opacity) > 0.98 && railLensAt(L.lens, cur)) on = true; else wait = true; }
     }
     bar.querySelectorAll('.icon[data-lg-focus]').forEach(function (i) { if (!on || i !== cur) i.removeAttribute('data-lg-focus'); });
     document.querySelectorAll('.lg-lens[data-lg-for="rail-icons"][data-lg-focus]').forEach(function (x) { if (!on || !L || x !== L.lens) x.removeAttribute('data-lg-focus'); });
     if (on && L && L.lens) L.lens.setAttribute('data-lg-focus', '');
     if (on && !cur.hasAttribute('data-lg-focus')) cur.setAttribute('data-lg-focus', '');
+    var motions = kf && !on && L && L.lens && L.lens.isConnected && L.rect && !L.under && L.lens.style.opacity !== '0' ? railMotions(L) : null;
+    railCue(L, motions && motions.length ? kf : null);
     /* the lens is on its way to the focused icon, or fading in on it. No poll (F96c-3). A travel() records its path
        (L.path): one timer to the frame from which that path keeps the lens within the 2 px of the icon, as its spring's
        last wobble takes another 60-100 ms to end; the frame's clock and the path's can be a frame apart, so a read there
@@ -1502,10 +1532,8 @@
         railDueT = setTimeout(function () { railDueT = 0; queueRailFocus(); }, Math.max(0, due - (ct == null ? -17 : ct)));
       } else if (!railDueT && railDueTries < 3) { railDueTries++; queueRailFocus(); }
     }
-    if (wait && L.lens.getAnimations) L.lens.getAnimations().forEach(function (a) {
-      if (a.playState === 'finished' || (railAwaited && railAwaited.has(a))) return;
-      var end = a.effect && a.effect.getComputedTiming ? a.effect.getComputedTiming().endTime : Infinity;
-      if (!isFinite(end) || !a.finished) return;
+    if ((wait || (motions && motions.length)) && L.lens.getAnimations) (motions || railMotions(L)).forEach(function (a) {
+      if (railAwaited && railAwaited.has(a)) return;
       if (railAwaited) railAwaited.add(a);
       a.finished.then(railFocusNow, railFocusNow);
     });
@@ -2106,6 +2134,7 @@
     if (!rides.length) return;
     rides.forEach(function (r) { if (r.L.lens.isConnected) { r.specs = rideRead(r.L, r.target); r.left = r.arrive ? arrivalLeft(r.target) : 0; } });
     rides.forEach(function (r) { if (r.specs) { if (r.arrive) arriveIn(r.L, r.left); rideApply(r.L, r.specs); } });
+    if (rides.some(function (r) { return r.rail && r.specs; })) railFocusNow();
   }
   function readStrip(cfg, strip) {
     cvWait.delete(strip);
@@ -2225,12 +2254,17 @@
       /* a lens in the app-wide layer waits for its strip's entrance; one in its host's own layer (a page, a menu, a
          dialog) is part of that entrance already */
       if (!A && !quiet && switchOn()) {
-        if (lensRides) { stopRide(L); lensRides.push({ L: L, target: target, arrive: L.layer === layer }); }
+        if (lensRides) { stopRide(L); lensRides.push({ L: L, target: target, arrive: L.layer === layer, rail: rail }); }
         else { if (L.layer === layer) arrive(L, target); ride(L, target); }
         settleCheck(L);
+        if (rail && !lensRides) railFocusNow();
       }
-      /* a jump (Reduced Motion, or no switch motion) is read now; a first show in motion fades in by an arrival or ride
-         that a batched sync may attach later in this task, and is read as before, next frame and at its end */
+      /* a jump (Reduced Motion, or no switch motion) is read now. A first show in motion may fade in by an arrival or
+         ride, which a batched sync attaches later in this task: it is read once that is attached (here, or after the
+         batch's rides in syncStrips), not next frame. Read next frame, a lens shown at once at full opacity lay over the
+         key-focused icon's own mark, washing it, for the frames before the read handed it the mark (F96-1 round 6:
+         Enter opening Files in Glass Light, 2 or 3 frames at 4.7 and under on its sides while the panel's open held the
+         main thread). A fade in is read again at its end, with the cue holding the mark meanwhile. */
       if (rail && (A || quiet || !switchOn())) railFocusNow();
       return;
     }
