@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8827-L10820
+Source lines: L8827-L10842
 
-Source SHA256: `8523e81cb63e0c29221b466f9a166aa34a28eab85125b76507283c1943810e79`
+Source SHA256: `c4b3d3c6fe4f3dfa169b498f7d98f0cbe5de95057424ad835055a045300aa72d`
 
 ---
 
@@ -1463,6 +1463,28 @@ command_payload_definition_map:
       field: canonical_text
       quote: Existing cmd.thread.request/spawn Send uses current local previews and receiver authority
     note: Owned by UCC-145 and UCC-216.
+  - token: cmd.worktree.provision
+    disposition: compatibility_alias
+    targets:
+    - cmd.git.worktree.create
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: '| `cmd.worktree.provision` / `cmd.worktree.release` | alias intents -> `cmd.git.worktree.create` / `cmd.git.worktree.release`; no new rows |'
+    note: 'Commands_System.md''s candidate census calls it a compatibility spelling, not registered, of
+      cmd.git.worktree.create, one of the seven compatibility intents of CS-066 and UCC-145; DRY_Rules.md and
+      Shared_Integration_Runtime.md normalize it to cmd.git.worktree.create, with only the existing thread wrapper
+      for a thread-scoped caller. Recorded by DL-341 max_review_changes.'
+  - token: cmd.worktree.release
+    disposition: compatibility_alias
+    targets:
+    - cmd.git.worktree.release
+    evidence:
+      doc: Plans/UI_Command_Catalog.md
+      quote: '| `cmd.worktree.provision` / `cmd.worktree.release` | alias intents -> `cmd.git.worktree.create` / `cmd.git.worktree.release`; no new rows |'
+    note: 'Commands_System.md''s candidate census calls it a compatibility spelling, not registered, of
+      cmd.git.worktree.release, one of the seven compatibility intents of CS-066 and UCC-145; DRY_Rules.md and
+      Shared_Integration_Runtime.md normalize it to cmd.git.worktree.release. Recorded by DL-341
+      max_review_changes.'
   - token: compose.run_scenario
     disposition: compatibility_alias
     targets:
