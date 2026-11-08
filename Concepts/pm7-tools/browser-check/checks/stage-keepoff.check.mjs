@@ -1,7 +1,10 @@
 // Pip's stage keeps its props off the speech box, and its effects inside the pane, in every frame of a transition (stream F
 // lane stage, 2026-11-04; FO-34, FO-35, FO-39 and the NieR Creating 740 carry). A sampler reads, on each animation frame,
 // every prop that shows (opacity over .05), the speech box (the bubble, or NieR's fixed box with its PIP tab) and Basic's
-// confirmation ring, and fails on:
+// confirmation ring. QA-4 trade: entering props may pass behind a settled bubble (lead ruling 18:40Z): a prop coming in or
+// leaving may be under the box only while the bubble does not move (its placement, read per frame as in pip-bubble-clear,
+// within 1 px) and only until it rests or is gone; a resting prop under the box always fails, and during any entry the
+// bubble must not move, covered or not. It fails on:
 //  - NieR Light and Dark at 740x768 (the banner: NieR's box at the top over the props' column): a prop under the box or
 //    its PIP tab while Safe's Add one is hovered and left, Add one is pressed and Back is pressed, Safe with an online copy
 //    settles (the cloud), and Creating lowers its blocks (each went down behind the tab and the box), with three blocks
@@ -29,12 +32,33 @@ const want = (t, g) => !t.args.only || t.args.only.split(',').includes(g);
 // rig's render included) and the frame's layout, just before paint: a ResizeObserver on a 1 px element whose width an
 // animation frame toggles (a plain animation-frame read can see a state the rig rewrites before the frame is painted)
 function sampler() {
-	window.__sk = { frames: 0, hits: [], rings: 0, ringOut: [], leaving: 0, blocks: 0 };
+	const S0 = window.__sk = { frames: 0, hits: [], rings: 0, ringOut: [], leaving: 0, blocks: 0, covered: 0, eps: new Map() };
 	const R = (e) => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom]; };
 	const meet = (a, b) => a[0] < b[2] - 0.5 && a[2] > b[0] + 0.5 && a[1] < b[3] - 0.5 && a[3] > b[1] + 0.5;
+	// QA-4 trade: entering props may pass behind a settled bubble (lead ruling 18:40Z). The bubble's placement at the
+	// moment it was made, as pip-bubble-clear reads it, so stillness can be judged per entry
+	const wrap = () => {
+		const st2 = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+		if (!st2 || st2.__skWrapped) return;
+		const place = st2.placeBubble;
+		st2.placeBubble = function (H, ang) { const r = place.call(this, H, ang); try { const s2 = this.toScreen(this.headXf(this.layoutName === 'portrait' ? [44, 30] : [58, 44], H, ang, 1, 1)), m = /^(-?[\d.]+)px (-?[\d.]+)px$/.exec(this.bubble.style.translate || ''); this.__relAtPlace = m ? [Math.round((+m[1] - s2[0]) * 100) / 100, Math.round((+m[2] - s2[1]) * 100) / 100] : null; } catch (e) { this.__relAtPlace = null; } return r; };
+		st2.__skWrapped = true;
+	};
+	wrap();
+	const span1 = (vs, i) => vs.length ? Math.max(...vs.map((v) => v[i])) - Math.min(...vs.map((v) => v[i])) : 0;
+	const stillSpan = (ep) => Math.max(Math.min(span1(ep.rels, 0), span1(ep.trs, 0)), Math.min(span1(ep.rels, 1), span1(ep.trs, 1)));
+	const finishEp = (ep) => {
+		if (ep.rels.length < 2 || stillSpan(ep) <= 1) return;
+		if (ep.out) { if (ep.covered) S0.hits.push(`${ep.screen}: bubble moved ${stillSpan(ep).toFixed(1)} px while leaving ${ep.kind} passed behind it (${ep.covered} covered frame(s))`); }
+		else S0.hits.push(`${ep.screen}: bubble moved ${stillSpan(ep).toFixed(1)} px during ${ep.kind}'s entry (${ep.rels.length} frames${ep.covered ? `, ${ep.covered} covered` : ''})`);
+	};
+	S0.finish = () => { for (const ep of S0.eps.values()) finishEp(ep); S0.eps.clear(); };
+	S0.finishOne = (key) => { const ep = S0.eps.get(key); if (ep) { finishEp(ep); S0.eps.delete(key); } };
 	const tick = () => {
 		if (!window.__sk) return;
+		wrap();
 		const st = document.querySelector('#pm-o55-onboarding .pst'), svg = st && st.querySelector('svg'), b = st && st.querySelector('.pst-bubble');
+		const st2 = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
 		if (st && svg && b && window.__sk) {
 			const S = window.__sk; S.frames++;
 			const boxes = [];
@@ -43,12 +67,29 @@ function sampler() {
 				const tab = b.querySelector(':scope > .pst-bn'); if (tab && tab.getBoundingClientRect().width) boxes.push(['PIP tab', R(tab)]);
 			}
 			const screen = window.O55 && window.O55.S.sess.screen;
-			st.querySelectorAll('.pst-prop').forEach((p) => {
-				const op = +p.getAttribute('opacity'); if (!(op > 0.05)) return;
-				const pr = R(p); if (pr[2] - pr[0] < 1) return;
-				if (p.dataset.kind === 'block') S.blocks++;
-				boxes.forEach(([n, bx]) => { if (meet(pr, bx)) S.hits.push(`${screen}: ${p.dataset.kind} (opacity ${op.toFixed(2)}) under the ${n} at ${pr.map(Math.round)} vs ${bx.map(Math.round)}`); });
+			const nier = st2 && st2.famName === 'nier';
+			const m2 = /^(-?[\d.]+)px (-?[\d.]+)px$/.exec(b.style.translate || '');
+			const relNow = nier ? R(b).slice(0, 2) : (st2 && st2.__relAtPlace) || null;
+			const trNow = nier ? R(b).slice(0, 2) : m2 ? [+m2[1], +m2[2]] : null;
+			const seen = new Set();
+			if (st2 && st2.props) st2.props.forEach((pr, id) => {
+				if (!pr.el || !pr.el.isConnected || !(pr.op > 0.05)) return;
+				const pb = R(pr.el); if (pb[2] - pb[0] < 1) return;
+				const kind = (pr.spec && pr.spec.kind) || pr.el.dataset.kind;
+				if (kind === 'block') S.blocks++;
+				const out = pr.state === 'out', key = `${id}|${out ? 'out' : 'in'}`;
+				seen.add(key);
+				let ep = S.eps.get(key);
+				if (!ep) { ep = { kind, out, screen, covered: 0, settledSeen: false, rels: [], trs: [] }; S.eps.set(key, ep); }
+				if (relNow) ep.rels.push(relNow); if (trNow) ep.trs.push(trNow);
+				const hitNow = boxes.length && boxes.some(([, bx]) => meet(pb, bx));
+				if (!out && pr.settled) {
+					ep.settledSeen = true;
+					if (hitNow) boxes.forEach(([n, bx]) => { if (meet(pb, bx)) S.hits.push(`${screen}: ${kind} (opacity ${pr.op.toFixed(2)}) under the ${n} at ${pb.map(Math.round)} vs ${bx.map(Math.round)}`); });
+					S.finishOne(key);
+				} else if (hitNow) { ep.covered++; S.covered++; }
 			});
+			for (const k of [...S.eps.keys()]) if (!seen.has(k)) S.finishOne(k);
 			// leaving props: the rig marks none, so count props whose opacity falls
 			st.querySelectorAll('.pst-prop').forEach((p) => { const op = +p.getAttribute('opacity'), was = +(p.dataset.skOp || 0); if (op < was - 0.01 && op > 0.05) S.leaving++; p.dataset.skOp = String(op); });
 			// Basic's ring (an unfilled r 11 circle in a particle) and its badge, against the stage's visible box
@@ -103,7 +144,7 @@ async function nameIt(t, f) {
 }
 // what the sampler saw; and a clean store for the next case's fresh load (a normal page keeps the session in localStorage:
 // Safe's online copy, set below, left the next case's Review unable to create)
-const result = async (t, f) => { const S = await f.evaluate(() => { const S = window.__sk; window.__sk = null; return S; }); await t.app.resetLayout(t); return S; };
+const result = async (t, f) => { const S = await f.evaluate(() => { const S = window.__sk; window.__sk = null; S.finish(); return { frames: S.frames, hits: S.hits, rings: S.rings, ringOut: S.ringOut, leaving: S.leaving, blocks: S.blocks, covered: S.covered }; }); await t.app.resetLayout(t); return S; };
 
 async function nier(t, mode) {
 	for (const look of ['nier-light', 'nier-dark']) {
@@ -117,13 +158,13 @@ async function nier(t, mode) {
 		await f.evaluate(() => { const d = window.O55.S.sess.drafts.main; d.online_mode = 'new'; d.forge = 'github'; window.O55.ui.go('safe', { noHistory: true }); });
 		await f.waitForTimeout(3500);
 		let S = await result(t, f);
-		await t.check(`${tag}: Safe's Add one, Back and the settled cloud: no prop under the box or the PIP tab`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Safe's Add one, Back and the settled cloud: no prop under the box or the PIP tab`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed): ${S.hits.slice(0, 3).join(' ; ')}`);
 		f = await openAt(t, mode, look, [740, 768], 'name');
 		await nameIt(t, f);
 		const reached = (await next(t, f, 'review')) && (await next(t, f, 'creating'));
 		await f.waitForTimeout(8000);
 		S = await result(t, f);
-		await t.check(`${tag}: Creating lowers its blocks clear of the box and the PIP tab`, reached && S.blocks > 0 && S.hits.length === 0, `${reached ? 'creating' : 'did not reach Creating'}, ${S.frames} frames, ${S.blocks} block samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Creating lowers its blocks clear of the box and the PIP tab`, reached && S.blocks > 0 && S.hits.length === 0, `${reached ? 'creating' : 'did not reach Creating'}, ${S.frames} frames, ${S.blocks} block samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed): ${S.hits.slice(0, 3).join(' ; ')}`);
 		// Creating with four blocks: an online copy, signed in by the concept's stand-in owner (no real account), the whole
 		// route sampled, then the settled stack measured (the onb lane's carried 'box over the top block by 5-7 px')
 		f = await openAt(t, mode, look, [740, 768], 'name');
@@ -141,7 +182,7 @@ async function nier(t, mode) {
 			return { n: blocks.length, top, bottom, left: Math.min(box.left, tb.left) };
 		});
 		S = await result(t, f);
-		await t.check(`${tag}: Creating with an online copy (four blocks) lowers them clear of the box and the PIP tab`, ok4 && set.n >= 4 && S.hits.length === 0, `${ok4 ? 'creating' : 'the online-copy route did not reach Creating'}, ${set.n} blocks, ${S.frames} frames, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Creating with an online copy (four blocks) lowers them clear of the box and the PIP tab`, ok4 && set.n >= 4 && S.hits.length === 0, `${ok4 ? 'creating' : 'the online-copy route did not reach Creating'}, ${set.n} blocks, ${S.frames} frames, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed): ${S.hits.slice(0, 3).join(' ; ')}`);
 		await t.check(`${tag}: the settled four-block stack stands below the box and its tab`, set.n >= 4 && set.top >= set.bottom - 0.5, `top block at ${set.top == null ? '-' : Math.round(set.top)} px, box and tab end at ${Math.round(set.bottom)} px`);
 	}
 }
@@ -155,7 +196,7 @@ async function leave(t, mode) {
 		await point(t, f, mode, 'online'); await point(t, f, mode, 'back');
 		await next(t, f, 'review'); await f.waitForTimeout(1500);
 		const S = await result(t, f);
-		await t.check(`${tag}: Name > Safe > Add one > Back > Review: no prop under the bubble`, ok && S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${ok ? '' : 'did not reach Safe; '}${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Name > Safe > Add one > Back > Review: no prop under the bubble`, ok && S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${ok ? '' : 'did not reach Safe; '}${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed): ${S.hits.slice(0, 3).join(' ; ')}`);
 	}
 }
 
@@ -167,7 +208,7 @@ async function begin(t, mode) {
 		await point(t, f, mode, 'pick', 'new'); await point(t, f, mode, 'pick', 'existing'); await point(t, f, mode, 'pick', 'new');
 		await t.page.mouse.move(4, 4, { steps: 3 }); await f.waitForTimeout(1500);
 		const S = await result(t, f);
-		await t.check(`${tag}: Begins as, folder <> New: no prop under the bubble`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps: ${S.hits.slice(0, 3).join(' ; ')}`);
+		await t.check(`${tag}: Begins as, folder <> New: no prop under the bubble`, S.frames > 200 && S.leaving > 0 && S.hits.length === 0, `${S.frames} frames, ${S.leaving} leaving samples, ${S.hits.length} overlaps (${S.covered} frames of props passing behind a still bubble, allowed): ${S.hits.slice(0, 3).join(' ; ')}`);
 	}
 }
 
