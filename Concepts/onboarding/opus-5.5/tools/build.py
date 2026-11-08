@@ -436,15 +436,20 @@ def pip_fault_problems() -> list[str]:
 FORCED_COLORS_BLOCK = re.compile(r'@media\s*\(\s*forced-colors\s*:\s*active\s*\)\s*\{')
 
 
+CSS_COMMENT_OR_STRING = re.compile(r'/\*.*?\*/|"(?:[^"\\\n]|\\.)*"|\'(?:[^\'\\\n]|\\.)*\'', re.S)
+
+
 def outside_forced_colors(text: str) -> str:
-    """The CSS text with the inside of every `@media (forced-colors: active) { ... }` block blanked, newlines kept."""
+    """The CSS text with the inside of every `@media (forced-colors: active) { ... }` block blanked, newlines kept.
+    Blocks are found and their braces counted with comments and strings masked, so a brace inside either is not one."""
+    masked = CSS_COMMENT_OR_STRING.sub(lambda m: re.sub(r'[^\n]', ' ', m.group(0)), text)
     out, i = [], 0
-    for m in FORCED_COLORS_BLOCK.finditer(text):
+    for m in FORCED_COLORS_BLOCK.finditer(masked):
         if m.start() < i:
             continue
         depth, j = 1, m.end()
-        while j < len(text) and depth:
-            depth += {'{': 1, '}': -1}.get(text[j], 0)
+        while j < len(masked) and depth:
+            depth += {'{': 1, '}': -1}.get(masked[j], 0)
             j += 1
         out += [text[i:m.start()], re.sub(r'[^\n]', ' ', text[m.start():j])]
         i = j
