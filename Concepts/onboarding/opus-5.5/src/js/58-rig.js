@@ -495,9 +495,20 @@
       // once a block is set down its strings are unhooked: they go slack, lift away and fade
       const off = pr.spec.ground && pr.landed ? clamp((this.t - pr.landT) / .55, 0, 1) : 0;
       const strOp = off ? Math.max(0, 1 - ease(off)) * pr.op : pr.op;
+      /* each string hangs from the anchor of the prop's rest pose (restPose: its destination's ax, scale and dy), the
+         same point on its first frame, through its swing and at rest, and is drawn straight from its tie through that
+         anchor and on above it. Drawn instead from a point 200 above the anchor at this frame's fit offset, the line
+         turned about that far point while the prop swung about the anchor, so where a string met the pane's top slid
+         across it as it swung and whenever fit's offset changed (QA-6: up to 25 units at the top edge) */
+      const rp = this.restPose(pr);
       pr.ties.forEach((t, i) => {
         const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1] - ease(off) * 70];
-        const top = [pr.ax + (pr.dx || 0) + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200];
+        /* the anchor stands over the pivot the prop swings from (pr.ax, with the destination's fit offset): a prop
+           kept from the last screen travels to its new slot on that pivot's spring, and its strings travel with it
+           instead of jumping to the new slot's anchor in one frame (r-pick to r-preview's restore) */
+        const anch = [pr.ax + (rp.ax - tg.ax) + (t[0] - tieMid[0]) * rp.sc, Lay.anchorY + rp.dy];
+        const av = [anch[0] - end[0], anch[1] - end[1]], al = Math.hypot(av[0], av[1]);
+        const top = al > 1 ? [anch[0] + av[0] / al * 200, anch[1] + av[1] / al * 200] : [anch[0], anch[1] - 200];
         pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
         pr.strs[i].setAttribute('opacity', R(strOp));
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
@@ -813,6 +824,10 @@
     /* ------------------------------------------------------ direction */
     // spec: { chapter, props:[{id,kind,slot|at|stack,params,preview,scale,ground}], pip:{mood,look,at,pose,work,power,tilt}, say, target, label, cmd }
     direct(spec) {
+      /* a new screen starts with no claimed bubble place, before its props are placed: destinations are fitted
+         around keepOff (restPose's cache key), so a claim left from the last screen — or made only after the props
+         were placed — refitted them mid-scene and the bubble then settled against the shifted boxes (QA-4) */
+      if (spec.screen != null && spec.screen !== this.lastScreen && this.famName !== 'nier') { this.bubbleClaim = null; this.bubbleKeepOff = null; this.keepOff = null; }
       this.spec = spec; this.dirty = true; this.kick();
       if (spec.chapter && spec.chapter !== this.chapter) this.setChapter(spec.chapter);
       const ids = new Set();
@@ -908,6 +923,12 @@
     sayNow(text, mood, owner) {
       const b = this.bubble, S = snd();
       if (this.typeT) this.typeT.cancel();
+      /* a new line takes its own place from its first frame: a place stepped aside to for the last line was kept into
+         this one for up to 2.5 s (bubbleRel), so a line could open where the old one had stood and only then settle
+         (QA-4: r-source opened 44-68 px from where it settles). A claimed place is the screen's, cleared in direct()
+         before a new screen's props are placed, so destinations never refit around a changed claim mid-scene
+         (r-pick to r-preview's restore jumped as the clearance changed) */
+      if (text !== this.saying) { this.bubbleRel = null; this.bubbleRelT = 0; }
       this.saying = text; this.sayOwner = text ? owner || null : null;
       if (!text) { b.classList.remove('on', 'typing'); if (S && S.hush) S.hush(); return; }
       if (!b.classList.contains('on')) { b.classList.remove('on'); void b.offsetWidth; b.classList.add('on'); }
@@ -1337,18 +1358,53 @@
          clear, so new words never send it across Pip; if nowhere is clear it still keeps off the face, and the props
          make way for it (keepOff). Its tail still points at Pip. */
       const gap = 6, obs = [], hx0 = head[0], hy0 = head[1];
-      const fc = [[12, 32], [52, 32], [12, 58], [52, 58]].map((q) => this.toScreen(this.headXf(q, H, ang, 1, 1)));
+      /* the face through the head's whole turn (its rest tilt either way by a swing's reach), each turn read from
+         the speech point at that same turn: at this frame's turn alone, a swing or a wiggle raised a corner of the
+         box into the bubble's margin and the bubble stepped up a few px mid-line, then dropped back when the
+         step-aside was let go (QA-4) */
+      const tiltT = this.ps ? this.ps.tiltT || 0 : 0, spQ = tall ? [44, 30] : [58, 44];
+      const fc = [tiltT - .15, tiltT + .15].flatMap((a2) => {
+        const s2 = this.toScreen(this.headXf(spQ, H, a2, 1, 1)), dx = sp[0] - s2[0], dy = sp[1] - s2[1];
+        return [[12, 32], [52, 32], [12, 58], [52, 58]].map((q) => { const c = this.toScreen(this.headXf(q, H, a2, 1, 1)); return [c[0] + dx, c[1] + dy]; });
+      });
       const face = [Math.min(...fc.map((c) => c[0])) - gap, Math.min(...fc.map((c) => c[1])) - gap, Math.max(...fc.map((c) => c[0])) + gap, Math.max(...fc.map((c) => c[1])) + gap];
       /* (its tail too: about 12 px below the bubble when it points down, left of it when it points left) */
       if (tall) face[1] -= 12; else face[2] += 12;
-      /* (a leaving prop too, while it shows: the bubble with the next screen's words moved onto a prop still fading out,
-         FO-34, Basic Light A3) */
-      this.props.forEach((pr) => { if (pr.box && pr.op > .05) { const a = this.toScreen([pr.box[0], pr.box[1]]), c = this.toScreen([pr.box[2], pr.box[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
+      /* (the bubble no longer steps aside for a leaving prop (FO-34's words-over-a-fading-prop is kept off by
+         holdUnder and band() below, which cap its lift at the bubble's own lower edge) */
+      /* (at the box each prop will REST in (restPose's restBox), read for every prop that is staying, from its first
+         frame: at the box it falls through, the bubble stepped up or aside while a prop was lowered past it and
+         dropped back seconds later once the prop had settled and the step-aside was let go, and a prop not yet faded
+         in was no obstacle at all on the bubble's first frames (QA-4). A leaving prop is no obstacle: holdUnder
+         already caps its lift at the bubble's lower edge and fades it there, and counting its rising box made the
+         bubble step aside for a prop that was already keeping under it) */
+      this.props.forEach((pr) => { if (pr.state === 'out') return; const rb = this.restPose(pr).box || pr.box; if (rb) { const a = this.toScreen([rb[0], rb[1]]), c = this.toScreen([rb[2], rb[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
       const v = this.vis, vs = v ? [this.toScreen([v.x0, v.y0]), this.toScreen([v.x1, v.y1])] : null;
       const X0 = Math.max(pad, vs ? vs[0][0] + pad : pad), X1 = Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Y0 = Math.max(top, vs ? vs[0][1] + 4 : top), Y1 = Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by);
       /* (and Pip's control bar: where a prop beside Pip took the usual place, the bubble went up over the sticks Pip hangs
          from, Retro Dark's Look 'Soft and cosy. I like it.', FO-59) */
-      const bar = this.barBox(gap); if (bar) obs.push(bar);
+      /* (through the bar's whole swing from the speech point, as the face above: the head hangs from the hand on a
+         pendulum and the hand sways about its spot, so at this frame's pose alone the bar's edge reached the
+         bubble's usual place part-way into a line and the bubble stepped aside (QA-4, Friendly Dark Begin at 740:
+         8.1 px during the page's entry). The bar is read at the hand's spot, at each end of the swing, widened
+         by the sway and the rock) */
+      let bar = null;
+      {
+        const ps2 = this.ps;
+        if (ps2) {
+          const cx = ps2.C.x, cy = ps2.C.y;
+          ps2.C.x = ps2.Ct.x; ps2.C.y = ps2.Ct.y;
+          const bar0 = this.barBox(gap);
+          ps2.C.x = cx; ps2.C.y = cy;
+          if (bar0) {
+            const boxes = [bar0];
+            [-.15, .15].forEach((th2) => { const s2 = this.toScreen(this.headXf(spQ, this.headAt(ps2.Ct.x, ps2.Ct.y, th2, ps2.dy || 0), th2 * .9 + tiltT, 1, 1)), dx = sp[0] - s2[0], dy = sp[1] - s2[1]; boxes.push([bar0[0] + dx, bar0[1] + dy, bar0[2] + dx, bar0[3] + dy]); });
+            bar = [Math.min(...boxes.map((b) => b[0])), Math.min(...boxes.map((b) => b[1])), Math.max(...boxes.map((b) => b[2])), Math.max(...boxes.map((b) => b[3]))];
+            const sw = (this.fam.sway || 0) * (this.map ? this.map.k : 1), rk = (bar[2] - bar[0]) * Math.sin(this.rockMax == null ? .12 : this.rockMax) / 2;
+            bar[0] -= sw; bar[2] += sw; bar[1] -= rk; bar[3] += rk; obs.push(bar);
+          }
+        }
+      }
       const fx = (face[0] + face[2]) / 2, sideOf = (cx) => (cx + bw / 2 < fx ? 'L' : 'R');
       const over = (cx, cy, o) => cx < o[2] && cx + bw > o[0] && cy < o[3] && cy + bh > o[1];
       const fits = (cx, cy) => cx >= X0 - .5 && cx <= X1 + .5 && cy >= Y0 - .5 && cy <= Y1 + .5;
@@ -1356,7 +1412,9 @@
       /* (a place on Pip's other side counts as far: new words never send the bubble across Pip, it goes above instead) */
       const cost = ([cx, cy]) => Math.hypot(cx - x, cy - y) + (this.bubbleSide && sideOf(cx) !== this.bubbleSide && !(cy + bh <= face[1]) ? 400 : 0);
       const near = (list) => list.filter(([cx, cy]) => clear(cx, cy)).sort((p, q) => cost(p) - cost(q))[0];
-      const prev = this.bubbleRel ? [hx0 + this.bubbleRel[0], hy0 + this.bubbleRel[1]] : null;
+      /* (kept from the speech point (sp), as the usual place is: kept from the head's centre instead, a kept place
+         wandered against the usual one as the head turned, up to 5 px in a wiggle (QA-4)) */
+      const prev = this.bubbleRel ? [sp[0] + this.bubbleRel[0], sp[1] + this.bubbleRel[1]] : null;
       let at = null;
       if (prev && clear(prev[0], prev[1]) && this.t - (this.bubbleRelT || 0) < 2.5) at = prev; /* (the side it moved to, while it stays clear) */
       else if (clear(x, y) && !(this.bubbleSide && sideOf(x) !== this.bubbleSide && y + bh > face[1])) at = [x, y];
@@ -1382,7 +1440,7 @@
       /* (a new claim moves the props off it in this same frame, before it is painted: on a stepped stage the props learnt of
          it a step later and sat under it for a tenth of a second) */
       if (this.bubbleKeepOff && !claimed) { this.keepOff = this.bubbleKeepOff; this.renderN = (this.renderN || 0) + 1; this.props.forEach((pr) => this.placeProp(pr)); }
-      if (at[0] !== x || at[1] !== y) { if (!this.bubbleRel || at !== prev) this.bubbleRelT = this.t; this.bubbleRel = [at[0] - hx0, at[1] - hy0]; } else this.bubbleRel = null;
+      if (at[0] !== x || at[1] !== y) { if (!this.bubbleRel || at !== prev) this.bubbleRelT = this.t; this.bubbleRel = [at[0] - sp[0], at[1] - sp[1]]; } else this.bubbleRel = null;
       [x, y] = at;
       this.bubbleSide = talking ? sideOf(x) : null;
       /* where it is, with its tail, for the props that leave under it (holdUnder) */
