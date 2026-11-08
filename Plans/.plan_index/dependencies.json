@@ -118714,7 +118714,7 @@
       "to": "PWIZ-035"
     }
   ],
-  "generated_at_utc": "2026-11-08T01:17:14Z",
+  "generated_at_utc": "2026-11-08T02:28:20Z",
   "nodes": [
     {
       "context_scope": "residual_plan_standardization",
@@ -132837,7 +132837,7 @@
         "heading": "ATS-250 — Executor family oracles: attempt.completed, attempt.started",
         "heading_level": 2,
         "heading_line": 7239,
-        "line": 7249,
+        "line": 7253,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -132853,8 +132853,8 @@
       "source_location": {
         "heading": "ATS-251 — Executor family oracles: node.blocked, node.completed",
         "heading_level": 2,
-        "heading_line": 7282,
-        "line": 7292,
+        "heading_line": 7286,
+        "line": 7300,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -132870,8 +132870,8 @@
       "source_location": {
         "heading": "ATS-252 — Executor family oracles: node.started, node.unblocked",
         "heading_level": 2,
-        "heading_line": 7325,
-        "line": 7335,
+        "heading_line": 7333,
+        "line": 7347,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -132887,8 +132887,8 @@
       "source_location": {
         "heading": "ATS-253 — Executor family oracles: plan.decomposition_degraded, remediation.resolved",
         "heading_level": 2,
-        "heading_line": 7368,
-        "line": 7378,
+        "heading_line": 7380,
+        "line": 7394,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -132904,8 +132904,8 @@
       "source_location": {
         "heading": "ATS-254 — Executor family oracles: remediation.spawned, run.completed",
         "heading_level": 2,
-        "heading_line": 7412,
-        "line": 7422,
+        "heading_line": 7428,
+        "line": 7442,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -132921,8 +132921,8 @@
       "source_location": {
         "heading": "ATS-255 — Executor family oracles: run.graph_integrity_failed, run.node_backoff_expired",
         "heading_level": 2,
-        "heading_line": 7455,
-        "line": 7465,
+        "heading_line": 7475,
+        "line": 7489,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -132938,8 +132938,8 @@
       "source_location": {
         "heading": "ATS-256 — Executor family oracles: run.node_backoff_started, run.node_ready",
         "heading_level": 2,
-        "heading_line": 7499,
-        "line": 7509,
+        "heading_line": 7523,
+        "line": 7537,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
@@ -132955,8 +132955,8 @@
       "source_location": {
         "heading": "ATS-257 — Executor family oracles: run.node_retry_scheduled, scheduler.pass",
         "heading_level": 2,
-        "heading_line": 7542,
-        "line": 7552,
+        "heading_line": 7570,
+        "line": 7584,
         "path": "Plans/Automated_Testing_System.md"
       },
       "status": "accepted",
