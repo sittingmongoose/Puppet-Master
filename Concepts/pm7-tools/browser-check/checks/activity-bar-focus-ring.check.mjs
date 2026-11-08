@@ -9,7 +9,12 @@
 //     painted beyond it (the strip of the ring's box outside the scroll box is captured with the ring and again with the
 //     focus moved off without a scroll, and may not change). The hover tags are hidden for that capture: a key focus
 //     opens one, and its coming or going is not the ring's.
-// Both tests on either surface (--set sandbox=1); --set looks= picks the looks.
+//   pointer only (opus-recheck-f96h K-h1): a pointer focuses an icon without :focus-visible, so the ring must not show.
+//     With no key focus anywhere, a real click on an unfocused icon, then pointer-only use (a click on another icon, the
+//     pointer resting on a third), read in every frame after layout: the ring may not be drawn in any (its box laid out
+//     on screen). The clicked tile is then captured focused by the pointer and again with the focus taken off by script
+//     (nothing else changes), and may not change: a ring gated on :focus instead of :focus-visible fails both.
+// All three tests on either surface (--set sandbox=1); --set looks= picks the looks.
 import { decodePng } from '../helpers/activity-cover-pixels.mjs';
 
 const settle = async (t, f, look) => {
@@ -112,4 +117,50 @@ async function scrollBox(t) {
   await f.evaluate(() => document.getElementById('fo96-ring-s')?.remove());
 }
 
-export const tests = { 'forced colors': forcedColors, 'scroll box': scrollBox };
+async function pointerOnly(t) {
+  await t.viewport(1920, 1080);
+  const f = await t.app.open();
+  await f.evaluate(() => { try { PMW.chatCol.show(); } catch (e) { /* none */ } });
+  await t.page.mouse.move(1880, 1040);
+  const looks = t.args.looks ? String(t.args.looks).split(',') : ['glass-light', 'basic-dark'];
+  const centre = async k => { const b = await f.locator(`#activityBar .icon[data-ab-id="${k}"] .symbol`).boundingBox(); return [b.x + b.width / 2, b.y + b.height / 2]; };
+  // every frame after layout (a ResizeObserver on a probe resized each frame), started before the input is sent
+  const startRead = () => f.evaluate(() => {
+    const P = window.__fo96p = { frames: 0, drawn: 0, at: [], done: false, stop: false }, t0 = performance.now(), probe = document.createElement('div');
+    Object.assign(probe.style, { position: 'fixed', left: '0', top: '0', width: '1px', height: '1px', opacity: '0', pointerEvents: 'none' });
+    document.body.appendChild(probe);
+    const ro = new ResizeObserver(() => { P.frames++;
+      const g = document.getElementById('d-abring'); if (!g) return; const c = getComputedStyle(g), r = g.getBoundingClientRect();
+      if (c.display !== 'none' && c.visibility !== 'hidden' && r.width > 4 && r.height > 4 && r.right > 0 && r.bottom > 0) { P.drawn++; if (P.at.length < 6) P.at.push(Math.round(performance.now() - t0)); } });
+    ro.observe(probe);
+    let flip = false;
+    const step = () => { flip = !flip; probe.style.width = flip ? '2px' : '1px'; if (!P.stop) requestAnimationFrame(step); else { ro.disconnect(); probe.remove(); P.done = true; } };
+    requestAnimationFrame(step);
+  });
+  const stopRead = async () => { await f.evaluate(() => { window.__fo96p.stop = true; }); await f.waitForFunction(() => window.__fo96p.done, null, { timeout: 5000 }).catch(() => {}); return f.evaluate(() => { const P = window.__fo96p; return { frames: P.frames, drawn: P.drawn, at: P.at }; }); };
+  for (const look of looks) {
+    await settle(t, f, look);
+    await f.evaluate(() => { document.activeElement?.blur?.(); });
+    await t.page.mouse.move(1880, 1040); await f.waitForTimeout(300);
+    await startRead();
+    await t.page.mouse.click(...(await centre('search'))); await f.waitForTimeout(500);
+    const after = await f.evaluate(() => ({ active: document.activeElement?.getAttribute('data-ab-id') || document.activeElement?.tagName, fv: !!document.activeElement?.matches?.(':focus-visible') }));
+    await t.page.mouse.click(...(await centre('files'))); await f.waitForTimeout(500);
+    await t.page.mouse.move(...(await centre('source'))); await f.waitForTimeout(600);
+    await t.page.mouse.click(...(await centre('search'))); await f.waitForTimeout(500);
+    await t.page.mouse.move(1880, 1040); await f.waitForTimeout(500);
+    const read = await stopRead();
+    t.log(`${look} pointer only: after the first click ${JSON.stringify(after)}, ${JSON.stringify(read)}`);
+    await t.check(`${look}: a real click on an unfocused icon, then pointer-only use, draws the focus ring in no frame (and the clicked icon has no :focus-visible)`, after.active === 'search' && !after.fv && read.frames > 30 && read.drawn === 0, JSON.stringify({ after, read }));
+    // the clicked tile focused by the pointer, then with the focus taken off by script: nothing else changes
+    const box = await f.locator('#activityBar .icon[data-ab-id="search"] .symbol').boundingBox(), r = { x: box.x - 2, y: box.y - 2, width: box.width + 4, height: box.height + 4 };
+    const focused = await f.evaluate(() => document.activeElement?.getAttribute('data-ab-id'));
+    const a = await shot(t, r);
+    await f.evaluate(() => document.activeElement?.blur?.()); await f.waitForTimeout(300);
+    const b = await shot(t, r), n = changed(a, b);
+    t.log(`${look} pointer only: Search focused by the pointer (${focused}) against no focus: ${n} pixels change`);
+    await t.check(`${look}: an icon focused by the pointer looks as it does with no focus (no ring: 3 or fewer pixels change)`, focused === 'search' && n <= 3, JSON.stringify({ focused, changed: n }));
+  }
+}
+
+export const tests = { 'forced colors': forcedColors, 'scroll box': scrollBox, 'pointer only': pointerOnly };

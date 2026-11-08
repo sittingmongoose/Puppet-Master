@@ -315,9 +315,14 @@ async function pointerRoutes(t) {
   // that press the page's animations run at --set slowTag= (0.1) of their speed, through the DevTools Animation domain,
   // so the fade lasts ten times as long; the ring itself has no animation and is not slowed.
   const slowTag = Number(t.args.slowTag ?? 0.1);
-  const pace = async rate => { if (!cdp || !(slowTag > 0 && slowTag < 1)) return;
-    await cdp.send('Animation.enable').catch(() => {}); await cdp.send('Animation.setPlaybackRate', { playbackRate: rate }).catch(() => {});
-    if (rate === 1) await cdp.send('Animation.disable').catch(() => {}); };   /* enabled only while slowed: its events are not wanted */
+  // the sandbox's app frame is an out-of-process iframe, which the page's session does not reach (opus-recheck-f96h K-h2):
+  // it gets a session of its own
+  const fcdp = f !== t.page.mainFrame() ? await t.page.context().newCDPSession(f).catch(() => null) : null;
+  if (f !== t.page.mainFrame()) t.log(`the app frame ${fcdp ? 'has its own CDP session (out of process)' : 'shares the page\'s session'} for the tag's slow-down`);
+  const pace = async rate => { if (!(slowTag > 0 && slowTag < 1)) return;
+    for (const c of [cdp, fcdp]) { if (!c) continue;
+      await c.send('Animation.enable').catch(() => {}); await c.send('Animation.setPlaybackRate', { playbackRate: rate }).catch(() => {});
+      if (rate === 1) await c.send('Animation.disable').catch(() => {}); } };   /* enabled only while slowed: its events are not wanted */
   const n = Math.max(1, Number(t.args.clicks || 6)), stall = Math.max(0, Number(t.args.stall ?? 600));
   const motion = await pinMotion(t, f);
   await installStall(f);
@@ -368,6 +373,7 @@ async function pointerRoutes(t) {
     }
     await away(); await kb.press('Control+1'); await f.waitForTimeout(1200);
   }
+  if (fcdp) await fcdp.detach().catch(() => {});
   await f.evaluate(() => document.getElementById('fo96-film-s')?.remove());
 }
 
