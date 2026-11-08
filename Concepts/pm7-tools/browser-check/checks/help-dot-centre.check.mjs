@@ -13,11 +13,13 @@
 // box, so one position alone reads a ? up to a pixel off, either way, by where it happens to sit; across the eight
 // the snapping averages out and what is left is where the ? stands. A read is believed only if it could be this
 // dot (ink no larger than the circle, both centres inside it); a dot must read cleanly at six of the eight.
-// Tolerance: on the mean of the eight the ink's centre within 0.5 px of the circle's centre on each axis, and at every
-// position less than 1.25 px. Half a pixel is the paintable bound at this scale: with the fix the span's centre is the
-// button's to 0.01 px (layout), yet the painted ink still reads up to 0.49 px high by where its raster snaps to the
-// device grid (the ?'s hinted top rounds a full device pixel past its cap), and one position in eight can snap a
-// whole pixel (1.03 px read on a centred dot). On b3456fac54 the 19 px dots (a link's, a field label's, a footer button's) read 1.3 to 1.5 px
+// Tolerance: on the mean of the eight the ink's centre within 0.55 px of the circle's centre on each axis, and at
+// every position less than 1.25 px: half a device pixel, the paintable bound at this scale (with the fix the span's
+// centre is the button's to 0.01 px in layout, yet the painted ink still reads up to 0.52 px off by where its
+// raster snaps to the device grid — Retro's pixel face in its Look menu has exactly two paintable states, -0.52
+// and +0.48, a quarter-pixel set-down snapping back to the first), plus the ring centroid's own measured bias
+// (a constant dx 0.07 on every Retro menu dot). One position in eight can snap a whole pixel (1.03 px read on a
+// centred dot). On b3456fac54 the 19 px dots (a link's, a field label's, a footer button's) read 1.3 to 1.5 px
 // high in Basic, Friendly and Glass, and the 22 px choice dots 0.4 to 0.6 px high in Friendly and Glass: the ? was
 // centred as a line of its font, where ascent and descent put it, not by its ink (10-window.css trims it to cap height and
 // baseline). Ten looks, the screens below (--set screens=a,b or screens=all for every screen), the header Look menu
@@ -29,7 +31,7 @@ const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`$
 // one screen per kind of dot: Where (choice cards, the restore link), Look (segments, look tiles, NieR's tile), Begin
 // (a tray's choice), Name (field labels), AI (provider rows), Safe, Ready (footer buttons with a ?, field labels)
 const SCREENS = ['where', 'look', 'begin', 'name', 'ai', 'safe', 'ready'];
-const TOL = 1.25, TOL_MEAN = 0.5, PHASES = [0, 1, 2, 3, 4, 5, 6, 7].map((k) => k / 8);
+const TOL = 1.25, TOL_MEAN = 0.55, PHASES = [0, 1, 2, 3, 4, 5, 6, 7].map((k) => k / 8);
 const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
 
 const diffAt = (a, b, i) => Math.max(Math.abs(a.data[i] - b.data[i]), Math.abs(a.data[i + 1] - b.data[i + 1]), Math.abs(a.data[i + 2] - b.data[i + 2]));
