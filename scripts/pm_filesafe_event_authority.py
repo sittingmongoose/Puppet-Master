@@ -3,6 +3,13 @@
 
 Synthetic owner banks model independent original custody. They are not native
 acceptance evidence. Real registry admission remains absent, native NOT_RUN.
+
+Sweep part 2A: every product refusal is one named row of a Method B guard table
+(pm_filesafe_tables, scripts/pm_filesafe_table_<phase>.py). Each function below
+derives the observation of the phase it is about to evaluate and refuses only
+through the rows; a reused boundary (selected source, payload resolution,
+payload semantics, issued custody, survivor coverage) keeps its caller's
+legacy refusal code.
 """
 from __future__ import annotations
 import copy
@@ -20,6 +27,7 @@ from referencing.jsonschema import DRAFT202012
 import pm_filesafe_event_contracts as payload_owner
 import pm_filesafe_schema_graph as schema_graph
 import pm_filesafe_retention as retention_owner
+import pm_filesafe_tables as tables
 from pm_projects_refresh_contracts import semantic_hash
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -82,6 +90,20 @@ def exact_value_equal(left, right):
     return type(left) in (str, int, bool, type(None)) and left == right
 
 
+def schema_errors(validator, instance):
+    """Observation: the number of errors the selected schema reports."""
+    return sum(1 for _ in validator.iter_errors(instance))
+
+
+def float_count(value):
+    """Observation: the number of float values anywhere in a JSON value."""
+    if isinstance(value, dict):
+        return sum(float_count(v) for v in value.values())
+    if isinstance(value, list):
+        return sum(float_count(v) for v in value)
+    return 1 if type(value) is float else 0
+
+
 def selected_source_failures(family, source, bank):
     """Verify selected original custody before joining it to the caller's view.
 
@@ -90,18 +112,20 @@ def selected_source_failures(family, source, bank):
     to a retained original, coerce its primitives or restamp its commitment.
     """
     selected = bank['sources'].get(source['source_ref'])
-    if selected is None:
-        return ['selected_source_missing']
-    if list(context(family)[1]('source').iter_errors(selected)):
-        return ['selected_source_schema']
+    refused = tables.codes('selected_source_present', {'present': selected is not None})
+    if refused:
+        return refused
+    refused = tables.codes('selected_source_schema', {'errors': schema_errors(context(family)[1]('source'), selected)})
+    if refused:
+        return refused
     try:
-        if source_commitment(selected) != selected['accepted_source_sha256']:
-            return ['selected_source_commitment']
+        computed = source_commitment(selected)
     except (KeyError, ValueError, TypeError, OverflowError):
-        return ['selected_source_commitment']
-    if not exact_value_equal(selected, source):
-        return ['selected_source_join']
-    return []
+        computed = None
+    refused = tables.codes('selected_source_commitment', {'computed': computed, 'recorded': selected['accepted_source_sha256']})
+    if refused:
+        return refused
+    return tables.codes('selected_source_join', {'exact_equal': exact_value_equal(selected, source)})
 
 @lru_cache(maxsize=None)
 def context(family):
@@ -112,36 +136,46 @@ def context(family):
         return Draft202012Validator({'$ref':schema['$id']+'#/$defs/'+root},registry=registry,format_checker=schema_graph.format_checker())
     return graph,validator
 
-def graph_failures(family):
-    graph,validator=context(family)
+def graph_failures(family, graph=None):
+    graph_ctx,validator=context(family)
+    graph = graph_ctx if graph is None else graph
     failures=[]
-    if graph['event_type'] != family: failures.append('graph_family')
     value={k:v for k,v in graph.items() if k!='graph_sha256'}
-    if semantic_hash('source_graph',value) != graph['graph_sha256']: failures.append('graph_hash')
-    if tuple(s['role'] for s in graph['ordered_stages']) != STAGES: failures.append('stage_order')
-    if any(type(s['ordinal']) is not int for s in graph['ordered_stages']) or [s['ordinal'] for s in graph['ordered_stages']] != list(range(len(STAGES))): failures.append('stage_ordinals')
-    if len(graph['methods']) != 2: failures.append('method_count')
+    failures += tables.codes('graph_identity', {
+        'event_type': graph['event_type'], 'family': family,
+        'graph_sha256': graph['graph_sha256'], 'computed_sha256': semantic_hash('source_graph',value)})
+    stages = graph['ordered_stages']
+    failures += tables.codes('graph_stages', {
+        'roles': [s['role'] for s in stages], 'ordinal_types': [type(s['ordinal']).__name__ for s in stages],
+        'ordinals': [s['ordinal'] for s in stages]})
+    failures += tables.codes('graph_method_count', {'method_count': len(graph['methods'])})
     for kind,method in zip(('project','application'),graph['methods']):
         expected=f'owner.filesafe.{family.replace(".","_")}.original_source.{kind}@1.0.0'
-        if method['interface_id'] != expected or method['component'] != graph['producer']: failures.append('method_binding')
-        if method['adoption_disposition'] != 'specified_unimplemented': failures.append('native_adoption_overclaim')
+        failures += tables.codes('graph_method', {
+            'interface_id': method['interface_id'], 'expected_interface': expected,
+            'component': method['component'], 'producer': graph['producer'],
+            'adoption': method['adoption_disposition']})
         for key in ('input_root_ref','output_root_ref'):
             path,fragment=method[key].split('#')
             node=load(path)
             for part in fragment.strip('/').split('/'): node=node[part]
-            Draft202012Validator.check_schema(node)
+            if schema_graph.schema_document_refused(node): failures.append('method_root_schema')
     for row in graph['resources']+graph['preserved_project_resources']:
-        if hashlib.sha256((ROOT/row['path']).read_bytes()).hexdigest() != row['sha256']: failures.append('resource_hash:'+row['path'])
+        if tables.refused('graph_resource_hash', {
+                'computed_sha256': hashlib.sha256((ROOT/row['path']).read_bytes()).hexdigest(),
+                'recorded_sha256': row['sha256']}):
+            failures.append('resource_hash:'+row['path'])
     for row in graph['resources']:
-        doc=load(row['path']);Draft202012Validator.check_schema(doc)
-        if doc.get('$id',row['uri']) != row['uri']: failures.append('resource_uri')
+        doc=load(row['path'])
+        if schema_graph.schema_document_refused(doc): failures.append('resource_schema:'+row['path'])
+        failures += tables.codes('graph_resource_uri', {'document_id': doc.get('$id',row['uri']), 'uri': row['uri']})
     _,docs,registry=schema_graph.context(family)
     failures.extend(schema_graph.reference_failures(graph,docs,registry))
     failures.extend(schema_graph.negative_case_failures(family,graph,docs))
     failures.extend(retention_binding_failures(family,graph['retention_policy_ref']))
     failures.extend(retention_owner.binding_failures(family,graph))
     failures.extend(retention_owner.check(family))
-    if graph['native_admission'] != 'unavailable_until_complete_owner_adoption': failures.append('admission_overclaim')
+    failures += tables.codes('graph_admission', {'native_admission': graph['native_admission']})
     return failures
 
 def retention_binding_failures(family, policy):
@@ -151,10 +185,12 @@ def retention_binding_failures(family, policy):
         'safe_point.created': 'RP-RUNTIME-365D',
         'safe_point.restored': 'RP-RUNTIME-365D',
     }.get(family, 'PENDING_RETENTION_DECISION')
-    return ['retention_changed'] if policy != expected_retention else []
+    return tables.codes('retention_assignment', {'policy': policy, 'expected': expected_retention})
 
-def real_admission(family):
-    return 'missing_event_registration' if not any(r['event_type']==family for r in load('Plans/event_family_registry.json')['families']) else 'registered_requires_independent_depth'
+def real_admission(family, registry=None):
+    registry = load('Plans/event_family_registry.json') if registry is None else registry
+    matches = len([r for r in registry['families'] if r['event_type']==family])
+    return 'registered_requires_independent_depth' if tables.refused('membership', {'registered_matches': matches}) else 'missing_event_registration'
 
 def instant(value):
     return datetime.fromisoformat(value.upper().replace('Z','+00:00'))
@@ -207,42 +243,66 @@ def event_payload(family, event, bank):
     Physical pack durability remains native NOT_RUN.
     """
     inline = event['payload']
-    if len(payload_owner.payload_bytes(inline)) > payload_owner.INLINE_PAYLOAD_LIMIT:
-        return None, ['inline_payload_too_large']
+    refused = tables.codes('payload_inline_size', {'inline_bytes': len(payload_owner.payload_bytes(inline))})
+    if refused:
+        return None, refused
     ref = event['payload_ref']
     if ref is None:
         return inline, []
     try:
-        descriptor = json.loads(ref)
-        _, validator = context(family)
-        if not integer_numbers(descriptor) or list(validator('payload_reference').iter_errors(descriptor)):
-            return None, ['payload_reference_schema']
-        if payload_owner.payload_bytes(descriptor).decode('utf-8') != ref or inline != {}:
-            return None, ['payload_reference_shape']
-        payload_id = descriptor['payload_id']
-        raw = bytes.fromhex(bank['payloads'][payload_id])
-        if (len(raw) != descriptor['byte_size']
-            or 'blake3:' + blake3.blake3(raw).hexdigest() != payload_id
-            or payload_id not in bank['durable_payload_ids']):
-            return None, ['payload_reference_custody']
-        # Strict canonical decoding also rejects duplicate keys and trailing bytes.
-        value = decode_original(raw.hex(), 'RFC8785')
-        return value, []
-    except (KeyError, ValueError, TypeError, UnicodeError):
-        return None, ['payload_reference_unavailable']
+        descriptor, parse_error = json.loads(ref), None
+    except (ValueError, TypeError, UnicodeError) as error:
+        descriptor, parse_error = None, type(error).__name__
+    refused = tables.codes('payload_ref_parse', {'parse_error': parse_error})
+    if refused:
+        return None, refused
+    _, validator = context(family)
+    refused = tables.codes('payload_ref_descriptor', {
+        'float_count': float_count(descriptor), 'errors': schema_errors(validator('payload_reference'), descriptor)})
+    if refused:
+        return None, refused
+    refused = tables.codes('payload_ref_shape', {
+        'canonical_text': payload_owner.payload_bytes(descriptor).decode('utf-8'), 'ref': ref, 'inline': inline})
+    if refused:
+        return None, refused
+    payload_id = descriptor['payload_id']
+    stored = bank['payloads'].get(payload_id) if isinstance(bank.get('payloads'), dict) else None
+    try:
+        raw, hex_valid = bytes.fromhex(stored), True
+    except (TypeError, ValueError):
+        raw, hex_valid = None, False
+    refused = tables.codes('payload_ref_store', {
+        'stored': isinstance(bank.get('payloads'), dict) and payload_id in bank['payloads'], 'hex_valid': hex_valid})
+    if refused:
+        return None, refused
+    refused = tables.codes('payload_ref_custody', {
+        'raw_length': len(raw), 'byte_size': descriptor['byte_size'],
+        'computed_id': 'blake3:' + blake3.blake3(raw).hexdigest(), 'payload_id': payload_id,
+        'durable_ids': list(bank['durable_payload_ids'])})
+    if refused:
+        return None, refused
+    # Strict canonical decoding also rejects duplicate keys and trailing bytes.
+    try:
+        value, decode_error = decode_original(raw.hex(), 'RFC8785'), None
+    except (KeyError, ValueError, TypeError, UnicodeError) as error:
+        value, decode_error = None, type(error).__name__
+    refused = tables.codes('payload_ref_decode', {'decode_error': decode_error})
+    if refused:
+        return None, refused
+    return value, []
 
 
 def application_original_failures(family, candidate, bank):
     graph,validator=context(family);source=candidate['source'];req=source['original_request']
     records=source['application_records'];p=source['original_result'];failures=[]
-    def require(ok,code):
-        if not ok:failures.append('application_'+code)
     members={v['role']:v for v in source['body_members']}
     decoded={}
     schema=load(f'Plans/filesafe_event_sources/{family.replace(".","_")}.schema.json')
     for role,fragment in graph['application_body_roots'].items():
         member=members.get(role)
-        if member is None:failures.append('application_body_role');continue
+        if tables.refused('app_body_role', {'member_present': member is not None}):
+            failures.append('application_body_role');continue
+        decode_error=None
         try:
             value=decode_original(bank['bodies'][member['ref']],graph['application_body_codecs'][role])
             selected=Draft202012Validator({'$ref':schema['$id']+fragment},
@@ -252,239 +312,355 @@ def application_original_failures(family, candidate, bank):
                 expected={k:v for k,v in req.items() if k not in ('original_input_ref','original_input_sha256')}
                 checked={**value,'original_input_ref':req['original_input_ref'],'original_input_sha256':req['original_input_sha256']}
             else:expected=records[role];checked=value
-            require(not list(selected.iter_errors(checked)),'body_schema:'+role)
-            require(value==expected,'body_value:'+role);decoded[role]=value
-        except (KeyError,ValueError,TypeError,UnicodeError,struct.error):
-            failures.append('application_body_decode:'+role)
+            errors=schema_errors(selected,checked);value_equal=value==expected
+        except (KeyError,ValueError,TypeError,UnicodeError,struct.error) as error:
+            decode_error=type(error).__name__
+        if tables.refused('app_body_decode', {'decode_error': decode_error}):
+            failures.append('application_body_decode:'+role);continue
+        failures += [code+':'+role for code in tables.codes('app_body_check', {'errors': errors, 'value_equal': value_equal})]
+        decoded[role]=value
     if len(decoded)!=len(graph['application_body_roots']):return failures
     def digest(value):return hashlib.sha256(storage_owner().jcs_bytes(value)).hexdigest()
+    utf8=lambda x:x.encode('utf-8')
     manifests=[records[k] for k in records if 'manifest' in k and records[k] is not None]
     inventory=records['snapshot_blobs'];blobs=inventory['blobs']
-    require(len({v['payload_id'] for v in blobs})==len(blobs),'blob_inventory_unique')
+    failures += tables.codes('app_inventory', {
+        'payload_ids': [v['payload_id'] for v in blobs], 'distinct_count': len({v['payload_id'] for v in blobs})})
     for record in records.values():
         if record is not None:
-            require(record['scope']==req['scope'] and record['execution_context']==req['execution_context'],'record_context')
+            failures += tables.codes('app_record_context', {
+                'record_scope': record['scope'], 'request_scope': req['scope'],
+                'record_context': record['execution_context'], 'request_context': req['execution_context']})
+    ctx=req['execution_context']
     for manifest in manifests:
         entries=manifest['entries'];paths=[e['identity']['canonical_absolute_path'] for e in entries]
-        require(paths==sorted(set(paths),key=lambda x:x.encode('utf-8')),'manifest_path_order')
-        require(manifest['entry_count']==len(entries),'manifest_entry_count')
-        require(manifest['total_bytes']==sum(e['length'] for e in entries if e['present']),'manifest_total_bytes')
         scm=manifest['scm']
-        if scm is not None:
-            require(scm['worktree_path']==req['execution_context']['working_directory']
-                and scm['index_state_sha256']==digest(scm['index_entries']),'manifest_scm')
+        failures += tables.codes('app_manifest', {
+            'paths': paths, 'sorted_unique_paths': sorted(set(paths),key=utf8),
+            'entry_count': manifest['entry_count'], 'entries_length': len(entries),
+            'total_bytes': manifest['total_bytes'], 'present_length_sum': sum(e['length'] for e in entries if e['present']),
+            'scm_present': scm is not None, 'scm_worktree_path': None if scm is None else scm['worktree_path'],
+            'working_directory': ctx['working_directory'],
+            'index_state_sha256': None if scm is None else scm['index_state_sha256'],
+            'computed_index_sha256': None if scm is None else digest(scm['index_entries'])})
         for entry in entries:
-            identity=entry['identity'];ctx=req['execution_context'];path=identity['canonical_absolute_path']
-            require(all(identity[k]==ctx[k] for k in ('root_id','root_generation','host_id','environment_id')),'entry_context')
+            identity=entry['identity'];path=identity['canonical_absolute_path']
+            failures += tables.codes('app_entry_context', {
+                **{k: identity[k] for k in ('root_id','root_generation','host_id','environment_id')},
+                **{'ctx_'+k: ctx[k] for k in ('root_id','root_generation','host_id','environment_id')}})
             # Synthetic lexical boundary. Native realpath/reparse/CAS checks stay NOT_RUN.
-            root=ctx['working_directory'].rstrip('/\\')
-            require(path.startswith(root+'/') and '..' not in path.split('/') and '/.git/' not in path,'entry_root')
-            require(not entry['ignored'] or entry['authorized_write_set'],'ignored_scope')
+            failures += tables.codes('app_entry_path', {
+                'path': path, 'root': ctx['working_directory'].rstrip('/\\'),
+                'ignored': entry['ignored'], 'authorized_write_set': entry['authorized_write_set']})
             if entry['present'] and entry['kind']=='file':
                 matches=[v for v in blobs if v['payload_id']==entry['payload_id']]
-                require(len(matches)==1,'manifest_blob_inventory')
+                failures += tables.codes('app_entry_blob_match', {'match_count': len(matches)})
                 if matches:
                     blob=matches[0];raw=bank['bodies'].get(blob['ref'])
                     try:body=bytes.fromhex(raw)
                     except (TypeError,ValueError):body=None
-                    require(body is not None and len(body)==blob['length']==entry['length']
-                        and hashlib.sha256(body).hexdigest()==blob['sha256']==entry['blob_sha256'],'blob_value')
-                    require(body is not None and 'blake3:' + blake3.blake3(body).hexdigest()==blob['payload_id']==entry['payload_id'],'blob_address')
-                    require(bank.get('payloads',{}).get(blob['payload_id'])==raw,'payload_store_selection')
-            elif entry['kind']=='symlink' and entry['present']:
-                require(entry['symlink_target_hex'] is not None and entry['payload_id'] is None,'symlink_value')
-            else:require(entry['payload_id'] is None,'nonfile_payload')
+                    refused=tables.codes('app_entry_blob_bytes', {'body_valid': body is not None})
+                    failures += refused
+                    if not refused:
+                        failures += tables.codes('app_entry_blob_value', {
+                            'body_length': len(body), 'blob_length': blob['length'], 'entry_length': entry['length'],
+                            'body_sha256': hashlib.sha256(body).hexdigest(), 'blob_sha256': blob['sha256'],
+                            'entry_sha256': entry['blob_sha256']})
+                        failures += tables.codes('app_entry_blob_address', {
+                            'body_address': 'blake3:' + blake3.blake3(body).hexdigest(),
+                            'blob_payload_id': blob['payload_id'], 'entry_payload_id': entry['payload_id']})
+                    failures += tables.codes('app_entry_blob_store', {
+                        'store_raw': bank.get('payloads',{}).get(blob['payload_id']), 'raw': raw})
+            else:
+                failures += tables.codes('app_entry_symlink', {
+                    'present_symlink': entry['kind']=='symlink' and bool(entry['present']),
+                    'symlink_target_present': entry['symlink_target_hex'] is not None,
+                    'payload_id_present': entry['payload_id'] is not None})
     referenced={e['payload_id'] for mf in manifests for e in mf['entries'] if e['payload_id'] is not None}
-    require(referenced=={b['payload_id'] for b in blobs},'complete_blob_inventory')
+    failures += tables.codes('app_blob_inventory_complete', {
+        'referenced': sorted(referenced), 'inventory': sorted({b['payload_id'] for b in blobs})})
     sp=records['safe_point_record'];mf=records['snapshot_manifest'];mh=digest(mf)
-    require(sp['safe_point_id']==p['safe_point_id'] and sp['run_id']==p['run_id']
-        and sp['node_id'] is None and sp['attempt_id'] is None
-        and sp['worktree_path']==req['execution_context']['working_directory'],'safe_point_subject')
-    require(sp['snapshot_manifest_ref']==members['snapshot_manifest']['ref']
-        and sp['snapshot_manifest_sha256']==mh==sp['content_state_sha256']
-        and sp['entry_count']==mf['entry_count'] and sp['total_bytes']==mf['total_bytes']
-        and sp['snapshot_format_version']==mf['snapshot_format_version']
-        and sp['content_scope_version']==mf['content_scope_version'] and sp['scm']==mf['scm'],'safe_point_manifest')
+    failures += tables.codes('app_safe_point_subject', {
+        'record_safe_point_id': sp['safe_point_id'], 'result_safe_point_id': p['safe_point_id'],
+        'record_run_id': sp['run_id'], 'result_run_id': p['run_id'],
+        'record_node_id': sp['node_id'], 'record_attempt_id': sp['attempt_id'],
+        'record_worktree_path': sp['worktree_path'], 'working_directory': ctx['working_directory']})
+    failures += tables.codes('app_safe_point_manifest_a', {
+        'manifest_ref': sp['snapshot_manifest_ref'], 'member_ref': members['snapshot_manifest']['ref'],
+        'manifest_sha256': sp['snapshot_manifest_sha256'], 'computed_manifest_sha256': mh,
+        'content_state_sha256': sp['content_state_sha256'],
+        'record_entry_count': sp['entry_count'], 'manifest_entry_count': mf['entry_count']})
+    failures += tables.codes('app_safe_point_manifest_b', {
+        'record_total_bytes': sp['total_bytes'], 'manifest_total_bytes': mf['total_bytes'],
+        'record_format_version': sp['snapshot_format_version'], 'manifest_format_version': mf['snapshot_format_version'],
+        'record_scope_version': sp['content_scope_version'], 'manifest_scope_version': mf['content_scope_version'],
+        'record_scm': sp['scm'], 'manifest_scm': mf['scm']})
     if family=='safe_point.created':
-        require(all(sp[k]==p[k] for k in ('baseline_ref','replan_generation','snapshot_format_version','content_scope_version','snapshot_manifest_ref','snapshot_manifest_sha256','content_state_sha256','capture_status')),'capture_result')
-        require(sp['capture_operation_id']==req['operation_id'] and sp['created_at_utc']==p['ts'] and sp['created_by_actor_ref']==req['actor_ref'],'capture_origin')
+        result_keys_a=('baseline_ref','replan_generation','snapshot_format_version','content_scope_version')
+        result_keys_b=('snapshot_manifest_ref','snapshot_manifest_sha256','content_state_sha256','capture_status')
+        failures += tables.codes('app_capture_result_a', {**{'record_'+k: sp[k] for k in result_keys_a}, **{'result_'+k: p[k] for k in result_keys_a}})
+        failures += tables.codes('app_capture_result_b', {**{'record_'+k: sp[k] for k in result_keys_b}, **{'result_'+k: p[k] for k in result_keys_b}})
+        failures += tables.codes('app_capture_origin', {
+            'capture_operation_id': sp['capture_operation_id'], 'request_operation_id': req['operation_id'],
+            'created_at_utc': sp['created_at_utc'], 'result_ts': p['ts'],
+            'created_by_actor_ref': sp['created_by_actor_ref'], 'request_actor_ref': req['actor_ref']})
         fields=('worktree_id','worktree_path','branch_name','HEAD_sha')
-        require((mf['scm'] is None and not any(k in p for k in fields)) or
-            (mf['scm'] is not None and all(mf['scm'][k]==p.get(k) for k in fields)),'capture_scm')
+        if mf['scm'] is None:
+            failures += tables.codes('app_capture_scm_absent', {k+'_present': k in p for k in fields})
+        else:
+            failures += tables.codes('app_capture_scm_present', {**{'scm_'+k: mf['scm'][k] for k in fields}, **{'result_'+k: p.get(k) for k in fields}})
     else:
         tx=records['restore_transaction'];eq=records['equality_result'];pre=records['pre_restore_manifest'];post=records['post_restore_manifest']
         preh=digest(pre);posth=digest(post) if post is not None else None
         # A pre-append source may not yet have the result-event pointer. Once
         # populated it names this exact original event, never another result.
-        require(tx['result_event_ref'] in (None,candidate['event']['event_id']),'result_event_join')
-        require(all(tx.get(k)==p.get(k) for k in ('safe_point_id','restore_transaction_id','run_id','node_id','attempt_id','restore_outcome','target_state_sha256','pre_restore_state_sha256','post_restore_state_sha256','conflict_reason_code','recovered_after_restart')),'transaction_result')
-        require(tx['canonical_safe_point_key']=='application@1:'+req['scope']['server_id'].encode().hex()+':'+p['safe_point_id'].encode().hex(),'safe_point_key')
-        require(tx['target_manifest_ref']==members['snapshot_manifest']['ref'] and tx['pre_restore_manifest_ref']==members['pre_restore_manifest']['ref']
-            and tx['target_manifest_sha256']==tx['target_state_sha256']==mh
-            and tx['pre_restore_manifest_sha256']==tx['pre_restore_state_sha256']==preh
-            and tx['post_restore_state_sha256']==posth,'transaction_manifest')
-        require(eq['restore_transaction_id']==tx['restore_transaction_id'] and eq['safe_point_id']==tx['safe_point_id']
-            and eq['target_manifest_sha256']==mh and eq['pre_restore_manifest_sha256']==preh
-            and eq['post_restore_manifest_sha256']==posth,'equality_subject')
-        require(eq['scm_equal_target']==(post is not None and post['scm']==mf['scm'])
-            and eq['scm_equal_pre_restore']==(post is not None and post['scm']==pre['scm']),'equality_scm')
-        require(set(sp['hold_refs']).issubset(tx['hold_refs']) and eq['hold_refs']==tx['hold_refs']
-            and eq['fence_active']==tx['fence_active'] and eq['path_mutation_count']==tx['path_mutation_count'],'hold_join')
+        failures += tables.codes('app_result_event', {'result_event_ref': tx['result_event_ref'], 'event_id': candidate['event']['event_id']})
+        keys_a=('safe_point_id','restore_transaction_id','run_id','node_id','attempt_id','restore_outcome')
+        keys_b=('target_state_sha256','pre_restore_state_sha256','post_restore_state_sha256','conflict_reason_code','recovered_after_restart')
+        failures += tables.codes('app_transaction_result_a', {**{'tx_'+k: tx.get(k) for k in keys_a}, **{'result_'+k: p.get(k) for k in keys_a}})
+        failures += tables.codes('app_transaction_result_b', {**{'tx_'+k: tx.get(k) for k in keys_b}, **{'result_'+k: p.get(k) for k in keys_b}})
+        failures += tables.codes('app_safe_point_key', {
+            'key': tx['canonical_safe_point_key'],
+            'expected_key': 'application@1:'+req['scope']['server_id'].encode().hex()+':'+p['safe_point_id'].encode().hex()})
+        failures += tables.codes('app_transaction_manifest', {
+            'target_manifest_ref': tx['target_manifest_ref'], 'target_member_ref': members['snapshot_manifest']['ref'],
+            'pre_manifest_ref': tx['pre_restore_manifest_ref'], 'pre_member_ref': members['pre_restore_manifest']['ref'],
+            'target_manifest_sha256': tx['target_manifest_sha256'], 'target_state_sha256': tx['target_state_sha256'],
+            'computed_target_sha256': mh, 'pre_manifest_sha256': tx['pre_restore_manifest_sha256'],
+            'pre_state_sha256': tx['pre_restore_state_sha256'], 'computed_pre_sha256': preh,
+            'post_state_sha256': tx['post_restore_state_sha256'], 'computed_post_sha256': posth})
+        failures += tables.codes('app_equality_subject', {
+            'eq_transaction_id': eq['restore_transaction_id'], 'tx_transaction_id': tx['restore_transaction_id'],
+            'eq_safe_point_id': eq['safe_point_id'], 'tx_safe_point_id': tx['safe_point_id'],
+            'eq_target_sha256': eq['target_manifest_sha256'], 'computed_target_sha256': mh,
+            'eq_pre_sha256': eq['pre_restore_manifest_sha256'], 'computed_pre_sha256': preh,
+            'eq_post_sha256': eq['post_restore_manifest_sha256'], 'computed_post_sha256': posth})
+        failures += tables.codes('app_equality_scm', {
+            'scm_equal_target': eq['scm_equal_target'], 'scm_equal_pre_restore': eq['scm_equal_pre_restore'],
+            'post_present': post is not None, 'post_scm': None if post is None else post['scm'],
+            'target_scm': mf['scm'], 'pre_scm': pre['scm']})
+        failures += tables.codes('app_hold_join', {
+            'sp_hold_refs': sp['hold_refs'], 'tx_hold_refs': tx['hold_refs'], 'eq_hold_refs': eq['hold_refs'],
+            'eq_fence_active': eq['fence_active'], 'tx_fence_active': tx['fence_active'],
+            'eq_path_mutation_count': eq['path_mutation_count'], 'tx_path_mutation_count': tx['path_mutation_count']})
         ops=tx['operations'];op_paths=[o['identity']['canonical_absolute_path'] for o in ops]
-        require(len({o['operation_id'] for o in ops})==len(ops) and len(set(op_paths))==len(op_paths)
-            and op_paths==sorted(op_paths,key=lambda x:x.encode('utf-8')),'operation_order')
+        failures += tables.codes('app_operation_order', {
+            'operation_ids': [o['operation_id'] for o in ops], 'distinct_operation_ids': len({o['operation_id'] for o in ops}),
+            'paths': op_paths, 'distinct_paths': len(set(op_paths)), 'sorted_paths': sorted(op_paths,key=utf8)})
         before={e['identity']['canonical_absolute_path']:e for e in pre['entries']};target={e['identity']['canonical_absolute_path']:e for e in mf['entries']}
-        require({k for k in before.keys()|target.keys() if before.get(k)!=target.get(k)}.issubset(op_paths),'operation_coverage')
+        changed=sorted({k for k in before.keys()|target.keys() if before.get(k)!=target.get(k)})
+        failures += tables.codes('app_operation_coverage', {'changed_paths': changed, 'operation_paths': op_paths})
+        content=('kind','payload_id','blob_sha256','length','symlink_target_hex','gitlink_oid')
         for op in ops:
             path=op['identity']['canonical_absolute_path'];b=before.get(path);t=target.get(path)
             b=b if b and b['present'] else None
             t=t if t and t['present'] else None
-            require((b or t) is not None and op['identity']==(t or b)['identity']
-                and op['expected_before_sha256']==(b['blob_sha256'] if b else None)
-                and op['target_sha256']==(t['blob_sha256'] if t else None)
-                and op['expected_before_type']==(b['kind'] if b else None)
-                and op['target_type']==(t['kind'] if t else None),'operation_subject')
+            refused=tables.codes('app_operation_present', {'subject_present': (b or t) is not None})
+            failures += refused
+            if not refused:
+                failures += tables.codes('app_operation_subject', {
+                    'identity': op['identity'], 'subject_identity': (t or b)['identity'],
+                    'expected_before_sha256': op['expected_before_sha256'], 'before_sha256': b['blob_sha256'] if b else None,
+                    'target_sha256': op['target_sha256'], 'target_blob_sha256': t['blob_sha256'] if t else None,
+                    'expected_before_type': op['expected_before_type'], 'before_kind': b['kind'] if b else None,
+                    'target_type': op['target_type'], 'target_kind': t['kind'] if t else None})
             kind=op['operation_kind']
-            require({'create':b is None and t is not None,
-                'replace':b is not None and t is not None,
-                'delete':b is not None and t is None,
-                'metadata':b is not None and t is not None and all(b[k]==t[k] for k in
-                    ('kind','payload_id','blob_sha256','length','symlink_target_hex','gitlink_oid'))
-                }.get(kind,False),'operation_kind')
-            require((kind not in ('create','replace') or bool(op['stage_ref']))
-                and (kind!='create' or op['tombstone_ref'] is None)
-                and (kind!='delete' or (op['stage_ref'] is None and bool(op['tombstone_ref']))),'operation_staging')
-        require(tx['operation_cursor']<=len(ops) and tx['path_mutation_count']<=len(ops)
-            and bool(tx['mutation_lease_ref']) and tx['updated_at_utc']==p['ts']
-            and (tx['restart_count']>0)==p['recovered_after_restart'],'journal_cursor_lease')
-        outcome=p['restore_outcome'];phase=tx['phase'];count=tx['path_mutation_count']
-        valid={
-            'restored_clean':phase=='committed' and posth==mh and eq['scm_equal_target'] and tx['operation_cursor']==len(ops),
-            'restore_failed':phase=='rolled_back' and posth==preh and eq['scm_equal_pre_restore'],
-            'restore_skipped':phase=='committed' and mh==preh==posth and count==0,
-            'restore_refused':phase=='rolled_back' and posth==preh and count==0,
-            'restore_recovery_required':phase=='recovery_required' and tx['fence_active'] and bool(tx['hold_refs']) and posth not in (mh,preh),
+            failures += tables.codes('app_operation_kind', {
+                'kind': kind, 'before_present': b is not None, 'target_present': t is not None,
+                'before_content': None if b is None else {k: b[k] for k in content},
+                'target_content': None if t is None else {k: t[k] for k in content}})
+            failures += tables.codes('app_operation_staging', {
+                'kind': kind, 'stage_ref': op['stage_ref'], 'tombstone_ref': op['tombstone_ref']})
+        failures += tables.codes('app_journal', {
+            'operation_cursor': tx['operation_cursor'], 'operation_count': len(ops),
+            'path_mutation_count': tx['path_mutation_count'], 'mutation_lease_ref': tx['mutation_lease_ref'],
+            'updated_at_utc': tx['updated_at_utc'], 'result_ts': p['ts'],
+            'restart_count': tx['restart_count'], 'recovered_after_restart': p['recovered_after_restart']})
+        outcome=p['restore_outcome'];count=tx['path_mutation_count']
+        # The closed Result schema admits exactly these five outcomes.
+        equality={
+            'restored_clean': ('app_outcome_clean', {'phase': tx['phase'], 'post_sha256': posth, 'target_sha256': mh,
+                               'scm_equal_target': eq['scm_equal_target'], 'operation_cursor': tx['operation_cursor'], 'operation_count': len(ops)}),
+            'restore_failed': ('app_outcome_failed', {'phase': tx['phase'], 'post_sha256': posth, 'pre_sha256': preh,
+                               'scm_equal_pre_restore': eq['scm_equal_pre_restore']}),
+            'restore_skipped': ('app_outcome_skipped', {'phase': tx['phase'], 'target_sha256': mh, 'pre_sha256': preh,
+                                'post_sha256': posth, 'path_mutation_count': count}),
+            'restore_refused': ('app_outcome_refused', {'phase': tx['phase'], 'post_sha256': posth, 'pre_sha256': preh,
+                                'path_mutation_count': count}),
+            'restore_recovery_required': ('app_outcome_recovery', {'phase': tx['phase'], 'fence_active': tx['fence_active'],
+                                          'hold_refs': tx['hold_refs'], 'post_sha256': posth, 'target_sha256': mh, 'pre_sha256': preh}),
         }
-        require(valid.get(outcome,False),'outcome_equality')
-        require(tx['fence_active']==(outcome=='restore_recovery_required'),'outcome_fence')
+        phase,facts=equality[outcome]
+        failures += tables.codes(phase, facts)
+        failures += tables.codes('app_outcome_fence', {'fence_active': tx['fence_active'], 'outcome': outcome})
         if outcome in ('restored_clean','restore_failed'):
             state='applied' if outcome=='restored_clean' else 'rolled_back'
-            require(all(o['state']==state for o in ops) and tx['operation_cursor']==len(ops),'outcome_operations')
+            failures += tables.codes('app_outcome_operations', {
+                'states': [o['state'] for o in ops], 'expected_state': state,
+                'operation_cursor': tx['operation_cursor'], 'operation_count': len(ops)})
         if outcome in ('restore_skipped','restore_refused'):
-            require(tx['operation_cursor']==0 and all(o['state']=='pending' for o in ops),'no_mutation_operations')
+            failures += tables.codes('app_no_mutation', {'operation_cursor': tx['operation_cursor'], 'states': [o['state'] for o in ops]})
     return failures
 
 def materialization_failures(family, candidate, bank):
     graph,validator=context(family)
-    if list(validator('materialization').iter_errors(candidate)): return ['materialization_schema']
+    refused = tables.codes('mat_schema', {'errors': schema_errors(validator('materialization'), candidate)})
+    if refused: return refused
     source,event,custody=(candidate[k] for k in ('source','event','custody'))
-    if not integer_numbers(candidate) or type(bank['writer_epoch']) is not int: return ['numeric_representation']
-    if event['replay_policy']=='projector_replay_only':return ['replay_only_not_appendable']
+    refused = tables.codes('mat_numbers', {'float_count': float_count(candidate), 'bank_epoch_type': type(bank['writer_epoch']).__name__})
+    if refused: return refused
+    refused = tables.codes('mat_replay', {'replay_policy': event['replay_policy']})
+    if refused: return refused
     p, payload_errors = event_payload(family, event, bank)
     if payload_errors: return payload_errors
     req=source['original_request'];scope=req['scope'];ctx=req['execution_context']
-    if list(validator('Result').iter_errors(p)): return ['payload_schema']
+    refused = tables.codes('mat_payload_schema', {'errors': schema_errors(validator('Result'), p)})
+    if refused: return refused
     failures=[]
-    def require(condition,code):
-        if not condition: failures.append(code)
     # Independently selected immutable source, not self-authentication by its hash.
-    require(not selected_source_failures(family,source,bank),'original_source_not_selected')
-    require(source['storage_instance_id']==bank['storage_instance_id'] and source['writer_epoch']==bank['writer_epoch'],'original_owner_epoch')
-    require(source_commitment(source)==source['accepted_source_sha256'],'source_commitment')
-    require(source['original_result']==p,'original_result_join')
-    require(event['event_type']==family,'family_join')
+    if selected_source_failures(family,source,bank): failures.append('original_source_not_selected')
+    failures += tables.codes('mat_source_owner', {
+        'source_storage': source['storage_instance_id'], 'bank_storage': bank['storage_instance_id'],
+        'source_epoch': source['writer_epoch'], 'bank_epoch': bank['writer_epoch'],
+        'result_equal': source['original_result']==p})
+    failures += tables.codes('mat_source_commitment', {
+        'computed_commitment': source_commitment(source), 'recorded_commitment': source['accepted_source_sha256']})
     slug=family.replace('.','_')
-    require(event['payload_schema_id']==load(f'Plans/event_payloads/{slug}_v2.schema.json')['$id'],'payload_selector')
-    require(payload_owner.semantic(p, inline=event['payload_ref'] is None),'payload_semantics')
-    require(req['scope']==p['scope'] and req['execution_context']==p['execution_context'] and req['operation_id']==p['operation_id'],'request_context_join')
+    failures += tables.codes('mat_selectors', {
+        'event_type': event['event_type'], 'family': family, 'payload_schema_id': event['payload_schema_id'],
+        'expected_schema_id': load(f'Plans/event_payloads/{slug}_v2.schema.json')['$id']})
+    if not payload_owner.semantic(p, inline=event['payload_ref'] is None): failures.append('payload_semantics')
+    failures += tables.codes('mat_request_context', {
+        'request_scope': req['scope'], 'payload_scope': p['scope'],
+        'request_context': req['execution_context'], 'payload_context': p['execution_context'],
+        'request_operation': req['operation_id'], 'payload_operation': p['operation_id']})
     for k in graph['request_payload_joins']:
-        require(req.get(k)==p.get(k),'request_subject_join:'+k)
-    require(event['scope_kind']==scope['scope_kind'] and event['project_id']==scope['project_id'],'envelope_scope')
-    for key in ('thread_id','run_id'):
-        require(event[key]==ctx[key],'envelope_'+key)
-    for key in ('node_id','attempt_id'):
-        require(event[key]==p.get(key),'envelope_'+key)
-    require(event['actor_ref']==req['actor_ref'],'envelope_actor')
-    require(event['occurred_at_utc']==p['ts'],'envelope_original_timestamp')
-    require(event['correlation_id']==req['operation_id'],'envelope_operation')
-    require(event['redaction_profile']=='no_secrets' and event['replay_policy']=='dedupe_by_idempotency_key','envelope_read_policy')
+        if tables.refused('mat_request_subject', {'request_value': req.get(k), 'payload_value': p.get(k)}):
+            failures.append('request_subject_join:'+k)
+    failures += tables.codes('mat_envelope_subject', {
+        'event_scope_kind': event['scope_kind'], 'scope_kind': scope['scope_kind'],
+        'event_project_id': event['project_id'], 'scope_project_id': scope['project_id'],
+        'event_thread_id': event['thread_id'], 'ctx_thread_id': ctx['thread_id'],
+        'event_run_id': event['run_id'], 'ctx_run_id': ctx['run_id'],
+        'event_node_id': event['node_id'], 'payload_node_id': p.get('node_id'),
+        'event_attempt_id': event['attempt_id'], 'payload_attempt_id': p.get('attempt_id'),
+        'event_actor': event['actor_ref'], 'request_actor': req['actor_ref']})
     key,eid=payload_owner.identity(family,p)
-    require((event['idempotency_key'],event['event_id'])==(key,eid),'envelope_identity')
+    failures += tables.codes('mat_envelope_meta', {
+        'occurred_at_utc': event['occurred_at_utc'], 'payload_ts': p['ts'],
+        'correlation_id': event['correlation_id'], 'request_operation': req['operation_id'],
+        'redaction_profile': event['redaction_profile'], 'replay_policy': event['replay_policy'],
+        'idempotency_key': event['idempotency_key'], 'computed_key': key,
+        'event_id': event['event_id'], 'computed_event_id': eid})
     members=source['body_members']
     roles=graph.get('application_required_body_roles',graph['required_body_roles']) if scope['scope_kind']=='application' else graph['required_body_roles']
-    require(sorted(m['role'] for m in members)==sorted(roles),'body_role_set')
+    failures += tables.codes('mat_body_roles', {'roles': sorted(m['role'] for m in members), 'required': sorted(roles)})
     for member in members+[{'ref':req['original_input_ref'],'sha256':req['original_input_sha256']}]:
         raw=bank['bodies'].get(member['ref'])
-        require(isinstance(raw,str) and hashlib.sha256(bytes.fromhex(raw)).hexdigest()==member['sha256'],'original_body_missing_or_changed')
+        failures += tables.codes('mat_body_member', {
+            'raw_type': type(raw).__name__, 'recorded_sha256': member['sha256'],
+            'computed_sha256': hashlib.sha256(bytes.fromhex(raw)).hexdigest() if isinstance(raw,str) else None})
     if family in ('filesafe.destructive_override_granted','filesafe.destructive_override_requested','safe_point.created','safe_point.restored'):
-        require(all(ctx[k] for k in ('thread_id','run_id','root_id','root_generation','working_directory')),'effect_context_required')
+        failures += tables.codes('mat_effect_context', {k: ctx[k] for k in ('thread_id','run_id','root_id','root_generation','working_directory')})
     if scope['scope_kind']=='application' and family.startswith('safe_point.'):
-        require(p['node_id'] is None and p['attempt_id'] is None,'application_orchestrator_ids')
+        failures += tables.codes('mat_application_ids', {'node_id': p['node_id'], 'attempt_id': p['attempt_id']})
         failures.extend(application_original_failures(family,candidate,bank))
     if family=='filesafe.destructive_override_granted':
         granted=p['authorized_scope'];requested=req['requested_scope']
-        require(payload_owner.override_scope_semantic(requested,p) and payload_owner.override_subset(granted,requested),'grant_subset')
-        require(instant(p['issued_at']) < instant(p['expires_at']) <= instant(req['maximum_expires_at']),'grant_expiry')
-        require(instant(p['ts']) <= instant(p['expires_at']),'grant_expired_at_issue')
+        if not (payload_owner.override_scope_semantic(requested,p) and payload_owner.override_subset(granted,requested)):
+            failures.append('grant_subset')
+        failures += tables.codes('mat_grant_window', {
+            'issued_us': payload_owner.instant_us(p['issued_at']), 'expires_us': payload_owner.instant_us(p['expires_at']),
+            'maximum_us': payload_owner.instant_us(req['maximum_expires_at']), 'ts_us': payload_owner.instant_us(p['ts'])})
     if 'native_project_record' in source:
         original=source['native_project_record']
-        require(original['project_id']==scope['project_id'],'original_project_scope')
-        for key in graph['original_project_joins']:
-            expected=scope['project_id'] if key=='project_id' else p.get(key)
-            require(original.get(key)==expected,'original_project_subject:'+key)
         role=next(m for m in members if m['role']==graph['original_project_body_role'])
         raw=bank['bodies'].get(role['ref'])
-        require(isinstance(raw,str) and bytes.fromhex(raw)==storage_owner().canonical_messagepack_bytes(original),'original_project_body_value')
+        failures += tables.codes('mat_project_original', {
+            'original_project_id': original['project_id'], 'scope_project_id': scope['project_id'],
+            'raw_type': type(raw).__name__,
+            'body_equal': isinstance(raw,str) and bytes.fromhex(raw)==storage_owner().canonical_messagepack_bytes(original)})
+        for key in graph['original_project_joins']:
+            expected=scope['project_id'] if key=='project_id' else p.get(key)
+            if tables.refused('mat_project_subject', {'original_value': original.get(key), 'expected_value': expected}):
+                failures.append('original_project_subject:'+key)
         if family=='safe_point.created':
-            require(original['created_at_utc']==p['ts'] and original['created_by_actor_ref']==req['actor_ref'],'original_capture_actor_time')
+            failures += tables.codes('mat_capture_origin', {
+                'created_at': original['created_at_utc'], 'payload_ts': p['ts'],
+                'created_by': original['created_by_actor_ref'], 'request_actor': req['actor_ref']})
     if family=='safe_point.created':
         fields=('worktree_id','worktree_path','branch_name','HEAD_sha')
-        require(not any(k in p for k in fields) or all(p.get(k) for k in fields),'partial_worktree')
+        failures += tables.codes('mat_capture_worktree', {'any_present': any(k in p for k in fields), **{k: p.get(k) for k in fields}})
         # Independent manifest metadata in the synthetic owner bank, not event declarations.
-        require(bank['manifests'].get(source['source_ref'])=={k:p.get(k) for k in fields+('snapshot_manifest_ref','snapshot_manifest_sha256','content_state_sha256')},'manifest_identity')
-    if family=='filesafe.policy_degraded':require(p['authoritative_enforcement_intact'] is True,'enforcement_not_intact')
-    require(custody['storage_instance_id']==source['storage_instance_id'],'receipt_storage')
-    for k in ('event_id','event_type','idempotency_key'):
-        require(custody[k]==event[k],'receipt_'+k)
-    require(custody['scope_partition']==scope['scope_partition'],'receipt_partition')
-    require(custody['producer_semantic_digest']==storage_owner().event_producer_semantic_digest(event),'receipt_semantic_digest')
-    require(custody['original_event_value_commitment']['sha256']==full_commitment(event),'receipt_full_value')
+        failures += tables.codes('mat_manifest_identity', {
+            'bank_manifest': bank['manifests'].get(source['source_ref']),
+            'payload_manifest': {k:p.get(k) for k in fields+('snapshot_manifest_ref','snapshot_manifest_sha256','content_state_sha256')}})
+    if family=='filesafe.policy_degraded':
+        failures += tables.codes('mat_policy_degraded', {'intact': p['authoritative_enforcement_intact']})
+    failures += tables.codes('mat_receipt_ids', {
+        'custody_storage': custody['storage_instance_id'], 'source_storage': source['storage_instance_id'],
+        'custody_event_id': custody['event_id'], 'event_id': event['event_id'],
+        'custody_event_type': custody['event_type'], 'event_type': event['event_type'],
+        'custody_key': custody['idempotency_key'], 'idempotency_key': event['idempotency_key'],
+        'custody_partition': custody['scope_partition'], 'scope_partition': scope['scope_partition']})
     receipt=custody['first_append_receipt']
-    require(receipt['event_id']==event['event_id'] and receipt['sequence_id']==event['sequence_id'],'receipt_sequence')
-    require(receipt['durability_class']=='barrier' and receipt['durability_state']=='synced','receipt_durability')
-    require(bank['issued'].get(event['event_id'])=={'event':event,'custody':custody},'original_issued_custody')
+    failures += tables.codes('mat_receipt_values', {
+        'custody_digest': custody['producer_semantic_digest'],
+        'computed_digest': storage_owner().event_producer_semantic_digest(event),
+        'custody_commitment': custody['original_event_value_commitment']['sha256'],
+        'computed_commitment': full_commitment(event),
+        'receipt_event_id': receipt['event_id'], 'event_id': event['event_id'],
+        'receipt_sequence_id': receipt['sequence_id'], 'sequence_id': event['sequence_id'],
+        'durability_class': receipt['durability_class'], 'durability_state': receipt['durability_state'],
+        'issued_equal': bank['issued'].get(event['event_id'])=={'event':event,'custody':custody}})
     return failures
 
 def issued_failures(family, value, expected, bank):
     """Resolve complete issued authority without reopening disposed domain controls."""
-    if not isinstance(value, dict) or set(value) != {'event', 'custody'}:
-        return ['issued_custody_missing']
+    refused = tables.codes('issued_shape', {
+        'value_type': type(value).__name__, 'keys': sorted(value) if isinstance(value, dict) else None})
+    if refused: return refused
     _, validator = context(family)
-    if value != expected:
-        return ['issued_original_changed']
-    if not integer_numbers(value): return ['issued_numeric_representation']
+    refused = tables.codes('issued_original', {'equal': value == expected})
+    if refused: return refused
+    refused = tables.codes('issued_numbers', {'float_count': float_count(value)})
+    if refused: return refused
     event, custody = value['event'], value['custody']
     schema = load(f'Plans/filesafe_event_sources/{family.replace(".","_")}.schema.json')
     # Validate the two exact imported roots, without requiring an original command/grant.
     for key in ('event', 'custody'):
         selected = Draft202012Validator(schema['$defs']['materialization']['properties'][key],
             registry=validator('materialization')._registry, format_checker=schema_graph.format_checker())
-        if list(selected.iter_errors(value[key])): return ['issued_schema']
+        refused = tables.codes('issued_schema', {'errors': schema_errors(selected, value[key])})
+        if refused: return refused
     payload, payload_errors = event_payload(family, event, bank)
     if payload_errors: return payload_errors
     _, selected = context(family)
-    if list(selected('Result').iter_errors(payload)) or not payload_owner.semantic(payload, inline=event['payload_ref'] is None):
+    refused = tables.codes('issued_payload_schema', {'errors': schema_errors(selected('Result'), payload)})
+    if refused: return refused
+    if not payload_owner.semantic(payload, inline=event['payload_ref'] is None):
         return ['issued_payload']
-    if (custody['event_id'] != event['event_id'] or custody['event_type'] != family
-        or custody['idempotency_key'] != event['idempotency_key']
-        or custody['producer_semantic_digest'] != storage_owner().event_producer_semantic_digest(event)
-        or custody['original_event_value_commitment']['sha256'] != full_commitment(event)
-        or custody['first_append_receipt']['event_id'] != event['event_id']
-        or custody['first_append_receipt']['sequence_id'] != event['sequence_id']
-        or custody['first_append_receipt']['durability_state'] != 'synced'
-        or custody['first_append_receipt']['durability_class'] != 'barrier'):
-        return ['issued_full_value_receipt']
-    return []
+    refused = tables.codes('issued_receipt_ids', {
+        'custody_event_id': custody['event_id'], 'event_id': event['event_id'],
+        'custody_event_type': custody['event_type'], 'family': family,
+        'custody_key': custody['idempotency_key'], 'idempotency_key': event['idempotency_key']})
+    if refused: return refused[:1]
+    receipt = custody['first_append_receipt']
+    return tables.codes('issued_receipt_values', {
+        'custody_digest': custody['producer_semantic_digest'],
+        'computed_digest': storage_owner().event_producer_semantic_digest(event),
+        'custody_commitment': custody['original_event_value_commitment']['sha256'],
+        'computed_commitment': full_commitment(event),
+        'receipt_event_id': receipt['event_id'], 'event_id': event['event_id'],
+        'receipt_sequence_id': receipt['sequence_id'], 'sequence_id': event['sequence_id'],
+        'durability_state': receipt['durability_state'], 'durability_class': receipt['durability_class']})[:1]
+
+
+def generation_refused(bank_value, oracle_value):
+    """Reused reader-generation compare-and-set boundary (exact integers, then equality)."""
+    return tables.refused('proto_reader_generation', {
+        'bank_type': type(bank_value).__name__, 'oracle_type': type(oracle_value).__name__,
+        'bank_generation': bank_value, 'oracle_generation': oracle_value})
 
 
 class ProtocolOracle:
@@ -504,49 +680,69 @@ class ProtocolOracle:
         original=self.durable['original'] or self.original
         value=self.bank['issued'].get(original['event']['event_id'])
         expected={k:original[k] for k in ('event','custody')}
-        return None if (self.bank['storage_instance_id']!=original['custody']['storage_instance_id']
-            or issued_failures(self.family,value,expected,self.bank)) else value
+        if tables.refused('proto_resolve_storage', {
+                'bank_storage': self.bank['storage_instance_id'], 'custody_storage': original['custody']['storage_instance_id']}):
+            return None
+        return None if issued_failures(self.family,value,expected,self.bank) else value
     def coverage_valid(self):
-        return (type(self.bank['source_generation']) is int and type(self.source_generation) is int and self.bank['source_generation']==self.source_generation
-            and set(self.bank['issued'])==set(self.boundary)
-            and all(not issued_failures(self.family,self.bank['issued'].get(k),v,self.bank)
-                    for k,v in self.boundary.items()))
+        if tables.refused('proto_coverage_generation', {
+                'bank_type': type(self.bank['source_generation']).__name__, 'oracle_type': type(self.source_generation).__name__,
+                'bank_generation': self.bank['source_generation'], 'oracle_generation': self.source_generation}):
+            return False
+        if tables.refused('proto_coverage_keys', {'issued_keys': sorted(self.bank['issued']), 'boundary_keys': sorted(self.boundary)}):
+            return False
+        unverified=len([k for k,v in self.boundary.items() if issued_failures(self.family,self.bank['issued'].get(k),v,self.bank)])
+        return not tables.refused('proto_coverage_verified', {'unverified_count': unverified})
     def step(self,action,candidate=None):
         c=candidate or self.original
         # Eligibility is independent of the producer semantic digest. Keep its
         # Storage-owned field selection and retained-issued lookup unchanged.
-        if action in ('owner_commit','prepare','append','receipt','retry') and c['event']['replay_policy']=='projector_replay_only':
-            return 'replay_only_not_appendable'
-        if self.crashed and action not in ('crash','recover'):
-            return 'recovery_required'
+        if action in ('owner_commit','prepare','append','receipt','retry'):
+            refused=tables.first('proto_replay', {'replay_policy': c['event']['replay_policy']})
+            if refused: return refused
+        if action not in ('crash','recover'):
+            refused=tables.first('proto_crashed', {'crashed': self.crashed})
+            if refused: return refused
         if action=='owner_commit':
-            if self.writer_fenced:return 'writer_fenced'
-            if materialization_failures(self.family,c,self.bank):return 'source_unavailable'
-            if self.phase!='empty':return 'already_committed'
+            refused=tables.first('proto_commit_fence', {'writer_fenced': self.writer_fenced})
+            if refused: return refused
+            refused=tables.first('proto_commit_source', {'failure_count': len(materialization_failures(self.family,c,self.bank))})
+            if refused: return refused
+            refused=tables.first('proto_commit_phase', {'phase': self.phase})
+            if refused: return refused
             self.phase='owner_committed';self.original_owner_actions+=1
             self.durable.update(phase=self.phase,original=copy.deepcopy(c),pending=True)
             return self.phase
         if action=='prepare':
-            if self.phase!='owner_committed':return 'body_commit_required'
-            if self.durable['recovery_refused']:return 'recovery_fenced'
-            if event_payload(self.family,self.durable['original']['event'],self.bank)[1]:return 'payload_unavailable'
+            refused=tables.first('proto_prepare_gate', {'phase': self.phase, 'recovery_refused': self.durable['recovery_refused']})
+            if refused: return refused
+            refused=tables.first('proto_prepare_payload', {'payload_error_count': len(event_payload(self.family,self.durable['original']['event'],self.bank)[1])})
+            if refused: return refused
             self.prepared=copy.deepcopy(self.durable['original']['event']);self.phase='prepared'
             self.durable['phase']=self.phase;return self.phase
         if action=='append':
-            if self.phase!='prepared':return 'prepared_event_required'
-            if self.durable['recovery_refused']:return 'recovery_fenced'
-            if event_payload(self.family,self.prepared,self.bank)[1]:return 'payload_unavailable'
+            refused=tables.first('proto_append_gate', {'phase': self.phase, 'recovery_refused': self.durable['recovery_refused']})
+            if refused: return refused
+            refused=tables.first('proto_append_payload', {'payload_error_count': len(event_payload(self.family,self.prepared,self.bank)[1])})
+            if refused: return refused
             self.issued=copy.deepcopy(self.prepared);self.phase='appended'
             self.durable['phase']=self.phase;return self.phase
         if action=='receipt':
-            if self.phase!='appended':return 'append_required'
-            if self.durable['recovery_refused'] or materialization_failures(self.family,c,self.bank) or self.resolve_issued() is None:return 'receipt_unavailable'
+            refused=tables.first('proto_receipt_phase', {'phase': self.phase})
+            if refused: return refused
+            refused=tables.first('proto_receipt_recovery', {'recovery_refused': self.durable['recovery_refused']})
+            if refused: return refused
+            refused=tables.first('proto_receipt_source', {'failure_count': len(materialization_failures(self.family,c,self.bank))})
+            if refused: return refused
+            refused=tables.first('proto_receipt_issued', {'issued_resolved': self.resolve_issued() is not None})
+            if refused: return refused
             self.receipt=copy.deepcopy(self.resolve_issued()['custody']);self.phase='receipted'
             self.durable['phase']=self.phase;return self.phase
         if action=='terminal':
-            if self.durable['recovery_refused']:return 'recovery_fenced'
-            if self.receipt is None:return 'first_receipt_required'
-            if self.resolve_issued() is None:return 'recovery_fenced'
+            refused=tables.first('proto_terminal_gate', {'recovery_refused': self.durable['recovery_refused'], 'receipt_present': self.receipt is not None})
+            if refused: return refused
+            refused=tables.first('proto_terminal_issued', {'issued_resolved': self.resolve_issued() is not None})
+            if refused: return refused
             self.phase='terminal';self.durable.update(phase=self.phase,pending=False)
             return 'original_terminal'
         if action=='crash':
@@ -557,67 +753,83 @@ class ProtocolOracle:
             self.crashed=False;phase=self.durable['phase']
             original=self.durable['original'] or self.original
             issued=self.resolve_issued()
-            failures=(issued is None if phase in ('receipted','terminal')
-                      else bool(materialization_failures(self.family,original,self.bank)))
-            if failures:
+            if phase in ('receipted','terminal'):
+                refused=tables.first('proto_recover_issued', {'issued_resolved': issued is not None})
+            else:
+                refused=tables.first('proto_recover_source', {'failure_count': len(materialization_failures(self.family,original,self.bank))})
+            if refused:
                 self.durable['recovery_refused']=True
-                return 'recovery_fenced'
+                return refused
             self.durable['recovery_refused']=False;self.phase=phase
             if phase in ('prepared','appended','receipted','terminal'):self.prepared=copy.deepcopy(original['event'])
             if phase in ('appended','receipted','terminal'):self.issued=copy.deepcopy(issued['event'])
             if phase in ('receipted','terminal'):self.receipt=copy.deepcopy(issued['custody'])
             return self.phase
         if action=='retry':
-            if self.durable['recovery_refused']:return 'dedupe_unavailable'
-            if self.durable['phase'] not in ('appended','receipted','terminal'):return 'original_pending'
+            refused=tables.first('proto_retry_gate', {'recovery_refused': self.durable['recovery_refused'], 'durable_phase': self.durable['phase']})
+            if refused: return refused
             original=self.durable['original']['event']
-            if storage_owner().event_producer_semantic_digest(c['event']) != storage_owner().event_producer_semantic_digest(original):return 'semantic_conflict'
+            refused=tables.first('proto_retry_semantic', {
+                'retry_digest': storage_owner().event_producer_semantic_digest(c['event']),
+                'original_digest': storage_owner().event_producer_semantic_digest(original)})
+            if refused: return refused
             value=self.resolve_issued()
-            if value is None:return 'dedupe_unavailable'
-            if self.receipt is None:return 'resolve_original_first_receipt'
+            refused=tables.first('proto_retry_result', {'issued_resolved': value is not None, 'receipt_present': self.receipt is not None})
+            if refused: return refused
             return copy.deepcopy(value)
         if action=='withdraw_writer':self.writer_fenced=True;return 'writer_fenced'
         if action=='withdraw_reader':
-            if not self.writer_fenced:return 'writer_cutoff_required'
-            if self.durable['pending']:return 'pending_reconciliation_required'
+            refused=tables.first('proto_withdraw_reader', {'writer_fenced': self.writer_fenced, 'pending': self.durable['pending']})
+            if refused: return refused
             self.reader_fenced=True;return 'reader_fenced'
         if action=='rebuild':
-            if not self.reader_fenced:return 'reader_fence_required'
+            refused=tables.first('proto_rebuild_gate', {'reader_fenced': self.reader_fenced})
+            if refused: return refused
             self.rebuilt=None
-            if self.durable['pending'] or not self.coverage_valid():return 'survivor_verification_failed'
+            refused=tables.first('proto_rebuild_pending', {'pending': self.durable['pending']})
+            if refused: return refused
+            if not self.coverage_valid():return 'survivor_verification_failed'
             self.rebuilt=copy.deepcopy(self.bank['issued']);return 'retained_survivors_verified'
         if action=='publish_reader':
-            if (not self.reader_fenced or self.rebuilt is None
-                or self.rebuilt != self.bank['issued'] or not self.coverage_valid()
-                or type(self.bank['reader_generation']) is not int or type(self.reader_generation) is not int or self.bank['reader_generation']!=self.reader_generation):return 'verified_rebuild_required'
+            if (tables.refused('proto_publish_gate', {
+                    'reader_fenced': self.reader_fenced, 'rebuilt_present': self.rebuilt is not None,
+                    'rebuilt_equal': self.rebuilt == self.bank['issued']})
+                or not self.coverage_valid()
+                or generation_refused(self.bank['reader_generation'], self.reader_generation)):
+                return 'verified_rebuild_required'
             self.bank['reader_generation']+=1;self.reader_generation+=1
             self.reader_fenced=False;return 'reader_generation_published'
         if action in ('read','read_body'):
-            if self.reader_fenced:return 'reader_unavailable'
+            refused=tables.first('proto_read_fence', {'reader_fenced': self.reader_fenced})
+            if refused: return refused
             # Historical authority is the independently retained issued value and
             # unchanged first receipt, not the current writer's epoch/controls.
             eid=c['event']['event_id'];expected=self.boundary.get(eid)
             value=self.bank['issued'].get(eid)
-            if (expected is None or self.bank['retained_boundary'].get(eid)!=expected
-                or {k:c[k] for k in ('event','custody')}!=expected
-                or self.bank['storage_instance_id']!=expected['custody']['storage_instance_id']
-                or type(self.bank['reader_generation']) is not int or type(self.reader_generation) is not int or self.bank['reader_generation']!=self.reader_generation
+            if (tables.refused('proto_read_boundary', {'boundary_present': expected is not None})
+                or tables.refused('proto_read_custody', {
+                    'bank_boundary_equal': self.bank['retained_boundary'].get(eid)==expected,
+                    'candidate_equal': {k:c[k] for k in ('event','custody')}==expected,
+                    'bank_storage': self.bank['storage_instance_id'], 'custody_storage': expected['custody']['storage_instance_id']})
+                or generation_refused(self.bank['reader_generation'], self.reader_generation)
                 or issued_failures(self.family,value,expected,self.bank)):
                 return 'read_unavailable'
             if action=='read_body':
                 # A separate body-dependent request retains the original owner's
                 # availability fence. An event-row read never recreates a body.
                 source=c['source'];request=source['original_request']
-                if (list(context(self.family)[1]('source').iter_errors(source)) or selected_source_failures(self.family,source,self.bank)
-                    or source_commitment(source)!=source['accepted_source_sha256']
-                    or source['original_result']!=event_payload(self.family,c['event'],self.bank)[0]):
+                if (tables.refused('proto_body_schema', {'errors': schema_errors(context(self.family)[1]('source'), source)})
+                    or selected_source_failures(self.family,source,self.bank)
+                    or tables.refused('proto_body_commitment', {'computed': source_commitment(source), 'recorded': source['accepted_source_sha256']})
+                    or tables.refused('proto_body_result', {'result_equal': source['original_result']==event_payload(self.family,c['event'],self.bank)[0]})):
                     return 'read_unavailable'
                 members=source['body_members']+[{'ref':request['original_input_ref'],
                                                 'sha256':request['original_input_sha256']}]
                 for member in members:
                     raw=self.bank['bodies'].get(member['ref'])
-                    if (not isinstance(raw,str)
-                        or hashlib.sha256(bytes.fromhex(raw)).hexdigest()!=member['sha256']):
+                    if tables.refused('proto_body_member', {
+                            'raw_type': type(raw).__name__, 'recorded_sha256': member['sha256'],
+                            'computed_sha256': hashlib.sha256(bytes.fromhex(raw)).hexdigest() if isinstance(raw,str) else None}):
                         return 'read_unavailable'
                 if self.family.startswith('safe_point.') and request['scope']['scope_kind']=='application' and application_original_failures(self.family,c,self.bank):
                     return 'read_unavailable'
@@ -631,9 +843,12 @@ def mutate(document,path,value,remove=False):
     if remove:del node[key]
     else:node[key]=copy.deepcopy(value)
 
-def check(families=FAMILIES):
-    pack=load('Plans/filesafe_event_authority_fixtures.json');failures=schema_graph.format_case_failures();counts={}
-    if tuple(r['event_type'] for r in pack['families'])!=FAMILIES:failures.append('fixture_family_census')
+def check(families=FAMILIES, pack=None):
+    pack=load('Plans/filesafe_event_authority_fixtures.json') if pack is None else pack
+    failures=schema_graph.format_case_failures();counts={}
+    order=tables.table_order_errors()
+    if order:failures.append('shared:table_require_order:'+','.join(order))
+    failures += tables.codes('fixture_census', {'families': [r['event_type'] for r in pack['families']]})
     for row in pack['families']:
         if row['event_type'] not in families: continue
         family=row['event_type'];counts[family]={'positive':0,'negative':0,'protocol':0}
@@ -679,13 +894,11 @@ def check(families=FAMILIES):
                 if result!=expected:failures.append(case['id']+':'+step['action']+':'+str(result))
             if oracle.domain_effects!=0 or oracle.original_owner_actions>1:failures.append(case['id']+':replayed_effect')
             counts[family]['protocol']+=1
+    import pm_filesafe_p2a_cases as p2a
+    if families:
+        failures.extend(p2a.case_failures(set(families) | {'shared'}, boundary=(
+            'materialization', 'issued', 'protocol', 'graph', 'retention_binding', 'retention_check', 'membership', 'census')))
     return {'status':'fail' if failures else 'pass','families':counts,'failures':failures,'native_execution':'NOT_RUN','membership':'ABSENT','authority':'synthetic contract cases only'}
-
-def integer_numbers(value):
-    """Current admission uses integer numbers; retained source recipes stay unchanged."""
-    return (all(integer_numbers(v) for v in value.values()) if isinstance(value, dict) else
-            all(integer_numbers(v) for v in value) if isinstance(value, list) else
-            type(value) is not float)
 
 
 if __name__=='__main__':

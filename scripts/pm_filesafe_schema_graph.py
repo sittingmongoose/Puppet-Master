@@ -14,6 +14,8 @@ from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
 from jsonschema import Draft202012Validator, FormatChecker
 
+import pm_filesafe_tables as tables
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -23,6 +25,8 @@ def date_time(value):
     Keep fractional precision and offset spellings intact. Calendar validation
     uses integral fields only; no timestamp is normalized or reserialized.
     Like the existing datetime consumers, seconds are 00..59 (no leap second).
+    Interim lane format (CV-1101 adoption is part 2B); refusals come only from
+    the date_time_grammar and date_time_fields guard tables.
     """
     if not isinstance(value, str):
         return True  # JSON Schema's type keyword owns non-string inputs.
@@ -30,14 +34,18 @@ def date_time(value):
         r'([0-9]{4})-([0-9]{2})-([0-9]{2})[Tt]'
         r'([0-9]{2}):([0-9]{2}):([0-9]{2})(?:\.[0-9]+)?'
         r'(?:[Zz]|([+-])([0-9]{2}):([0-9]{2}))', value)
-    if match is None:
+    if tables.refused('date_time_grammar', {'match': match is not None}):
         return False
     year, month, day, hour, minute, second = map(int, match.groups()[:6])
     try:
         datetime(year, month, day, hour, minute, second)
+        calendar_valid = True
     except ValueError:
-        return False
-    return (match[7] is None or (int(match[8]) <= 23 and int(match[9]) <= 59))
+        calendar_valid = False
+    facts = {'calendar_valid': calendar_valid,
+             'offset_hour': None if match[7] is None else int(match[8]),
+             'offset_minute': None if match[7] is None else int(match[9])}
+    return not tables.refused('date_time_fields', facts)
 
 
 def format_checker():
@@ -105,7 +113,19 @@ def reference_failures(graph, documents, registry=None):
 
     for row in graph['resources']:
         walk(documents[row['path']], registry.resolver(row['uri']), row['path'])
-    return failures
+    # The observation is the complete unresolved list; SR01 decides the refusal.
+    return failures if tables.refused('schema_references', {'unresolved': failures}) else []
+
+
+def meta_schema_errors(schema):
+    """Count Draft 2020-12 meta-schema errors of one schema document or root."""
+    meta = Draft202012Validator(Draft202012Validator.META_SCHEMA,
+                                format_checker=Draft202012Validator.FORMAT_CHECKER)
+    return sum(1 for _ in meta.iter_errors(schema))
+
+
+def schema_document_refused(schema):
+    return tables.refused('schema_meta', {'meta_errors': meta_schema_errors(schema)})
 
 
 def negative_case_failures(family, graph, documents):
