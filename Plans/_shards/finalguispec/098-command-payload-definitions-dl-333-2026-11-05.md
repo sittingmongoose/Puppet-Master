@@ -2,9 +2,9 @@
 
 Source: `Plans/FinalGUISpec.md`
 
-Source lines: L50376-L52089
+Source lines: L50376-L52066
 
-Source SHA256: `46df49ef6c324705784d12a79e19dfb8a9ac14238f27bc942c73f47fdc8e0152`
+Source SHA256: `bacf65aad626a58bba6cb8616a340c44cc4490ec177cbb061ac5923e0afc8035`
 
 ---
 
@@ -600,8 +600,7 @@ canonical_text: >-
   NotificationDestinationProfileV1 (DL-471), and the block does not restate them. Update's optional profile
   is a whole-profile replacement, never a field merge, validated against the stored immutable provider;
   absence leaves that profile unchanged. The provider cannot change through update: use a separately
-  created destination and explicit routing changes. Both choices are gaps Q-F2 and Q-F3 pending Jared,
-  not owner-approved semantics. notification_destination_id and
+  created destination and explicit routing changes. Both choices are decided by DL-471 Q-F2 and Q-F3. notification_destination_id and
   sound_asset_id are the UCC-101..UCC-105 row-group optional identity fields, made required where the
   command's subject is one destination or asset. No wiring row of these commands (Wiring_Matrix.production.json
   entries catalog.notifications_* and catalog.sound_*) names a request_schema_ref or result_schema_ref, so
@@ -614,7 +613,7 @@ acceptance_criteria:
   - Every command UCC-230 routes to F3-717 has exactly one definition in the block below.
   - Every field has a vocabulary type, required, default and provenance; every gap field says what was missing.
   - error_codes and disabled_reason_codes stay inside the overlay's closed sets.
-  - Destination create/update accept CV-298 fields typed by CV-369/NotificationDestinationProfileV1 without exposing raw URLs or tokens; update replaces the complete supplied profile against the stored immutable provider (gaps Q-F2/Q-F3); test-send stays separate from local preview and never mutates alert state (UCC-103).
+  - Destination create/update accept CV-298 fields typed by CV-369/NotificationDestinationProfileV1 without exposing raw URLs or tokens; update replaces the complete supplied profile against the stored immutable provider (decided by DL-471 Q-F2/Q-F3); test-send stays separate from local preview and never mutates alert state (UCC-103).
   - No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
 validation_surfaces:
   - python3 scripts/pm-command-payload-defs-check.py
@@ -671,18 +670,7 @@ command_payload_definitions:
             all six providers, with the generic text bound; alternative: required for Slack only and optional
             elsewhere.
         profile:
-          type: contract
-          ref: Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1
-          required: true
-          default: none
-          provenance: gap
-          gap_note: >-
-            UCC-103 says "Destination create/update payloads carry provider-specific profile fields from
-            CV-298 ... while storing only credential refs for secrets", and CV-298 lists each provider's
-            profile fields (Contracts_V0.md:19259-19265). No canon names the arg that carries them or says
-            whether they nest under one arg. Q-F1. JUDGMENT: one arg named profile, typed by CV-369's
-            NotificationDestinationProfileV1 and matching the selected provider; alternative: the provider's
-            fields flattened into args. CV-298 alone is a field inventory, not a typed schema.
+          {type: contract, ref: Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-F1 decided by the owner: one arg named profile, typed by CV-369''s NotificationDestinationProfileV1 and matching the selected provider.'}
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -713,18 +701,7 @@ command_payload_definitions:
           provenance: canon
           source: "UCC-230 row-group UCC-101..UCC-105 optional identity notification_destination_id?, made mandatory by the command subject (one destination); type id per identity_typing"
         profile:
-          type: contract
-          ref: Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1
-          required: false
-          default: none
-          provenance: gap
-          gap_note: >-
-            UCC-103 routes create and update through the same CV-298 profile fields, but names no arg for them
-            (see cmd.notifications.destination.create.profile), and partial versus full replacement semantics
-            are stated nowhere. Q-F1/Q-F2/Q-F3. JUDGMENT: optional CV-369/NotificationDestinationProfileV1;
-            absent leaves the stored profile unchanged, present replaces it completely after validation
-            against the stored immutable provider. provider is not an update arg and cannot change on this
-            route. Alternatives: field merge, or allow provider migration with a complete replacement.
+          {type: contract, ref: Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1, required: false, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-F1, Q-F2, Q-F3 decided by the owner: optional CV-369/NotificationDestinationProfileV1; absent leaves the stored profile unchanged, present replaces it completely after validation against the stored immutable provider. provider is not an update arg and cannot change on this route.'}
         display_name:
           type: string
           required: false

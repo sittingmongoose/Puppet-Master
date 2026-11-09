@@ -10742,8 +10742,11 @@ canonical_text: >-
   dispatch uses only cmd.run_debug.*, which is not defined here.
   Amended 2026-11-09 (DL-471): cmd.debug.record_verification and cmd.debug.run_cleanup extend this
   block through the explicit UCC-142 external routes. CS-065 and section 7.4 retain verification/evidence,
-  two-step cleanup confirmation and preservation holds; the proposed payload/result encodings and the
-  two owner-state-to-closed-code mappings remain the named Q-DB1 through Q-DB4 gaps.
+  two-step cleanup confirmation and preservation holds; the payload/result encodings and
+  the two owner-state-to-closed-code mappings are decided by DL-471 Q-DB1, Q-DB2, Q-DB3 and Q-DB4.
+  Plans/Decision_Log.md#DL-471, Q-DB3 decided by the owner: [cmd.debug.record_verification], disabled_reason_codes = ["blocked_state_required", "stale_projection"]. map phase_not_reached to blocked_state_required under DL-333 resolution 6, retaining the exact owner state as detail.
+  Plans/Decision_Log.md#DL-471, Q-DB3 decided by the owner: [cmd.debug.run_cleanup], disabled_reason_codes = ["blocked_state_required", "stale_projection"]. both map to blocked_state_required under DL-333 resolution 6 and keep exact owner details.
+  Plans/Decision_Log.md#DL-471, Q-DB2 decided by the owner: [cmd.debug.run_cleanup], omitted:preservation_policy = "omitted". the owner reloads current holds and the exact cleanup manifest, never takes a caller override, and revalidates target identity/evidence under assistant-chat-design section 1.0B.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible Debug Mode investigation commands (Assistant Chat, editor, evidence panel).
 depends_on: [UCC-230, UCC-077, CS-009, CS-042, DL-333, DL-341]
@@ -10785,10 +10788,10 @@ command_payload_definitions:
       args:
         thread_id: {type: id, required: true, default: none, provenance: canon, source: "CS-042 assistant-thread investigation family; UCC-230 debug row-group identity thread_id, always"}
         investigation_id: {type: id, required: true, default: none, provenance: canon, source: "Contracts_V0 section 3.5 debug.investigation.verification_recorded names investigation_id; UCC-230 identity_aliases maps debug_session_id to investigation_id"}
-        verification_state: {type: enum, values: [resolved, still_failing], required: true, default: none, provenance: gap, gap_note: "Q-DB1. CS-065 requires recording resolved or still-failing outcome; the canonical Investigation Context names verification_state but gives no outcome enum here. JUDGMENT: required resolved/still_failing; alternative: record only verification_strength plus evidence and derive the state."}
-        verification_strength: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: "Q-DB1. Contracts_V0 section 3.5 verification_recorded names verification_strength without this command's type/tokens. JUDGMENT: required bounded non-secret owner strength string; alternative: a closed owner strength enum."}
-        verification_summary: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 1024}, provenance: gap, gap_note: "Q-DB1. Contracts_V0 section 3.5 requires a bounded verification_summary but gives no command bound. JUDGMENT: 1..1024 characters, redacted; alternative: a summary-record ref."}
-        artifact_refs: {type: list, required: true, default: none, item: {type: ref}, constraints: {min_items: 1, max_items: 32, unique_items: true}, provenance: gap, gap_note: "Q-DB1. The verification_recorded event names optional artifact_refs; CS-065 says outcome with evidence refs without a command shape. JUDGMENT: require one to thirty-two unique evidence artifact refs at command admission; alternative: allow a verified-empty evidence receipt or an optional list."}
+        verification_state: {type: enum, values: [resolved, still_failing], required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-DB1 decided by the owner: required resolved/still_failing.'}
+        verification_strength: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-DB1 decided by the owner: required bounded non-secret owner strength string.'}
+        verification_summary: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 1024}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-DB1 decided by the owner: 1..1024 characters, redacted.'}
+        artifact_refs: {type: list, required: true, default: none, item: {type: ref}, constraints: {min_items: 1, max_items: 32, unique_items: true}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-DB1 decided by the owner: require one to thirty-two unique evidence artifact refs at command admission.'}
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -10798,8 +10801,6 @@ command_payload_definitions:
       owner_state_codes:
         - {owner_state: phase_not_reached, code: blocked_state_required}
       aliases: []
-      judgments:
-        - {key: disabled_reason_codes, choice: [blocked_state_required, stale_projection], gap_note: "Q-DB3. UCC-142 registers phase_not_reached and stale_projection, but the first is outside the overlay's closed set. JUDGMENT: map phase_not_reached to blocked_state_required under DL-333 resolution 6, retaining the exact owner state as detail; alternative: not_configured."}
     - command_id: cmd.debug.run_cleanup
       ucc_units: [UCC-142]
       command_kind: domain_action
@@ -10818,9 +10819,6 @@ command_payload_definitions:
         - {owner_state: phase_not_reached, code: blocked_state_required}
         - {owner_state: preservation_hold_active, code: blocked_state_required}
       aliases: []
-      judgments:
-        - {key: disabled_reason_codes, choice: [blocked_state_required, stale_projection], gap_note: "Q-DB3. UCC-142 names phase_not_reached and preservation_hold_active outside the overlay's closed set. JUDGMENT: both map to blocked_state_required under DL-333 resolution 6 and keep exact owner details; alternative: not_configured for either state."}
-        - {key: omitted:preservation_policy, choice: omitted, gap_note: "Q-DB2. CS-065 says honor explicit preservation/hold rules, but names no caller override. JUDGMENT: the owner reloads current holds and the exact cleanup manifest, never takes a caller override, and revalidates target identity/evidence under assistant-chat-design section 1.0B; alternative: carry an explicit immutable cleanup-plan ref."}
     - command_id: cmd.debug.start
       ucc_units: [UCC-077]
       command_kind: domain_action
@@ -11234,10 +11232,10 @@ command_payload_definitions:
   results:
     DebugVerificationResultV1:
       fields:
-        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "Q-DB4. The wiring row requires an effect receipt; no typed result exists. JUDGMENT: required receipt ref to the recorded exact investigation/outcome/evidence, carried only after the owner write succeeds; alternative: structured outcome fields inline."}
+        receipt_ref: {type: ref, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-DB4 decided by the owner: required receipt ref to the recorded exact investigation/outcome/evidence, carried only after the owner write succeeds.'}
     DebugCleanupResultV1:
       fields:
-        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "Q-DB4. No typed cleanup result exists. JUDGMENT: required receipt ref to the verified cleanup outcome or preserved residue, never implying resolved from dispatch alone; alternative: inline cleanup manifest/outcome fields."}
+        receipt_ref: {type: ref, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-DB4 decided by the owner: required receipt ref to the verified cleanup outcome or preserved residue, never implying resolved from dispatch alone.'}
     DebugInvestigationStartResultV1:
       fields:
         investigation_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the started investigation; canon names investigation_id in debug.investigation.started (Contracts_V0.md:1532) and the investigation header (assistant-chat-design.md:1319), typed id by the UCC-230 alias for debug_session_id (DL-341), but no result contract carries it"}

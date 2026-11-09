@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L8827-L10943
+Source lines: L8827-L10949
 
-Source SHA256: `7955fc2002d936d8076c7f8f0553a95d26b927b19032ac7d4a0f63648395aad4`
+Source SHA256: `b68fc14855401306dedae3e4a97e0eea83c2568489ea9afdb639835a621dce05`
 
 ---
 
@@ -107,8 +107,9 @@ canonical_text: >-
   command ids, each with catalog_unit, owner_unit, the inherited row_group and a registration evidence line.
   Exactly one definition is required in that owner unit, under every ordinary field, identity, envelope,
   provenance, kind, result and closed-code rule. No namespace or other out-of-range token is admitted by
-  that list. unresolved_tokens records standing questions, each with evidence, a question_id, judgment and
-  alternative; those tokens have no definition or alias/retirement disposition pending the owner answer.
+  that list. unresolved_tokens can record standing questions with evidence, a question_id, judgment and
+  alternative. The two packet standings are decided by DL-471 Q-ID1/Q-ID2 and now appear in
+  non_definition_tokens; unresolved_tokens is empty.
   A Markdown contract ref is typed only as Plans/<Doc>.md#<UNIT-ID>/<ContractName>, naming a contract in
   a pm.typed_contracts.v1 block directly after that schema_contract unit's fence in the same owner doc.
   A bare Plans/<Doc>.md#<UNIT-ID> is an error. The block has only typed_contracts at top level and no
@@ -367,7 +368,7 @@ command_payload_definition_map:
         evidence:
           doc: Plans/GitHub_Integration.md
           quote: '`cmd.git.worktree.repair`'
-        note: "DL-471 Q-ID7b: conservatively mutation-capable pending the exact repair operation; alternative is a read-only preview or recover alias."
+        note: "Decided by DL-471 Q-ID7b: conservatively mutation-capable; handler_unavailable without mutation until the exact owner repair operation is defined."
       not_mutating:
       - command_id: cmd.git.worktree.request_prune
         evidence:
@@ -1010,18 +1011,23 @@ command_payload_definition_map:
     owner_unit: CS-125
     row_group: UCC-077..UCC-083
     evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14055, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
-  unresolved_tokens:
-  - token: cmd.docker.remove
-    question_id: Q-ID1
-    judgment: "Propose compatibility_alias of cmd.docker.container.delete; do not apply the alias until Jared chooses."
-    alternative: "Retire the spelling without a dispatch alias; the old live row remains as canon lineage."
-    evidence: {doc: Plans/Decision_Log.md, unit: DL-341, field: open_owner_questions, quote: "Canon names no target for this row, so UCC-230 gives it no disposition and no definition records it as an alias."}
-  - token: cmd.git.worktree
-    question_id: Q-ID2
-    judgment: "Propose a family token that cannot dispatch independently; its lone production wiring row does not specify an operation."
-    alternative: "Register a concrete topology-opening command with its own payload, or retire the bare wiring spelling."
-    evidence: {doc: Plans/Wiring_Matrix.production.json, quote: '"ui_command_id": "cmd.git.worktree"'}
+  unresolved_tokens: []
   non_definition_tokens:
+  - token: cmd.docker.remove
+    disposition: compatibility_alias
+    targets: [cmd.docker.container.delete]
+    evidence:
+      doc: Plans/Decision_Log.md
+      unit: DL-471
+      field: canonical_text
+      quote: "DL-471 Q-ID1 decides cmd.docker.remove is a compatibility_alias of cmd.docker.container.delete."
+  - token: cmd.git.worktree
+    disposition: family_alias
+    evidence:
+      doc: Plans/Decision_Log.md
+      unit: DL-471
+      field: canonical_text
+      quote: "DL-471 Q-ID2 decides cmd.git.worktree is a non-dispatch family token."
   - token: cmd.browser.*
     disposition: family_alias
     evidence:
@@ -1625,11 +1631,11 @@ command_payload_definition_map:
   - owner_state: phase_not_reached
     maps_to: blocked_state_required
     sources:
-    - "Plans/Commands_System.md CS-065 and Plans/UI_Command_Catalog.md UCC-142 name phase_not_reached outside the closed overlay set. DL-471 Q-DB3: implementer's JUDGMENT under DL-333 resolution 6; alternative not_configured, pending Jared."
+    - "Plans/Commands_System.md CS-065 and Plans/UI_Command_Catalog.md UCC-142 name phase_not_reached outside the closed overlay set. Decided by DL-471 Q-DB3: blocked_state_required under DL-333 resolution 6; retain the exact owner state as display detail."
   - owner_state: preservation_hold_active
     maps_to: blocked_state_required
     sources:
-    - "Plans/Commands_System.md CS-065 and Plans/UI_Command_Catalog.md UCC-142 name preservation_hold_active outside the closed overlay set. DL-471 Q-DB3: implementer's JUDGMENT under DL-333 resolution 6; alternative not_configured, pending Jared."
+    - "Plans/Commands_System.md CS-065 and Plans/UI_Command_Catalog.md UCC-142 name preservation_hold_active outside the closed overlay set. Decided by DL-471 Q-DB3: blocked_state_required under DL-333 resolution 6; retain the exact owner state as display detail."
   - owner_state: access_url_unresolved
     maps_to: not_configured
     sources:

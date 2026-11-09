@@ -2,9 +2,9 @@
 
 Source: `Plans/UI_Command_Catalog.md`
 
-Source lines: L21866-L21913
+Source lines: L21872-L21918
 
-Source SHA256: `7955fc2002d936d8076c7f8f0553a95d26b927b19032ac7d4a0f63648395aad4`
+Source SHA256: `b68fc14855401306dedae3e4a97e0eea83c2568489ea9afdb639835a621dce05`
 
 ---
 
@@ -25,12 +25,11 @@ canonical_text: >-
   by Plans/GitHub_Integration.md Worktree Topology Commands. This unit makes those existing registrations
   addressable for UCC-230's closed outside_range_commands list without adding args to catalog rows.
   CRAU-115 defines the two Docker payloads and W-095 the two worktree payloads. The bare Bake operation's
-  exact relation to bake.run, stats' view/result behavior, topology's distinct view and repair's exact
-  operation remain the explicit DL-471 gaps Q-ID3/Q-ID4/Q-ID6/Q-ID7a/Q-ID7b. Repair has no admitted
+    relation to bake.run, stats' view/result behavior, topology's distinct view and repair's admission and
+  unavailable-until-defined policy are decided by DL-471 Q-ID3/Q-ID4/Q-ID6/Q-ID7a/Q-ID7b. Repair has no admitted
   mutation algorithm yet and returns handler_unavailable without mutation until its owner defines one.
-  No new production wiring row or API behavior is certified by registration. cmd.docker.remove and bare
-  cmd.git.worktree remain standing questions Q-ID1/Q-ID2; this unit does not register them or silently
-  give them an alias target. UCC-132 already registers merge and UCC-142 the two debug phase commands.
+  No new production wiring row or API behavior is certified by registration. DL-471 Q-ID1 decides cmd.docker.remove is a compatibility_alias of cmd.docker.container.delete.
+  DL-471 Q-ID2 decides cmd.git.worktree is a non-dispatch family token. UCC-230 records both dispositions. UCC-132 already registers merge and UCC-142 the two debug phase commands.
 gui_related: false
 gui_classification_reason: Makes existing command registrations addressable; owner docs retain behavior.
 depends_on: [DL-471, CRAU-011, UCC-049, UCC-054, UCC-132, UCC-142]

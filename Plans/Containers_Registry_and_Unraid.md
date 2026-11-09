@@ -6987,7 +6987,7 @@ owner_doc: Plans/Containers_Registry_and_Unraid.md
 canonical_text: >-
   Amended 2026-11-09 (DL-471): cmd.docker.bake and cmd.docker.container.stats are explicitly routed
   through UCC-231 and UCC-230's closed external list. The bare Bake payload reuses the existing Bake-run
-  shape and result, with semantics pending Q-ID3; stats' view-only projection choice remains Q-ID4.
+  shape and result, with semantics decided by DL-471 Q-ID3; stats' view-only projection is decided by DL-471 Q-ID4.
   Typed payload definitions (DL-333) for the forty-five Docker Manager, registry and Kubernetes
   commands that UI_Command_Catalog UCC-049 through UCC-053 register and UCC-230 routes to this
   unit, including cmd.orchestrator.push_image, whose Docker publication contract is CRAU's: the
@@ -7007,6 +7007,12 @@ canonical_text: >-
   for the route/open and view-state commands that have no owner result, since Contracts_V0's
   UICommandResponse determines response_kind by the actual owner contract. Compose scenario args take
   CRAU-096's scenario schema field names.
+  Plans/Decision_Log.md#DL-471, Q-ID3 decided by the owner: [cmd.docker.bake], command_kind = "domain_action". the existing Bake-run operation, with the same target inference and readiness fences.
+  Plans/Decision_Log.md#DL-471, Q-ID3 decided by the owner: [cmd.docker.bake], disabled_reason_codes = ["not_configured", "unreachable", "degraded", "partial_capability", "stale_projection"]. reuse bake.run's set and CRAU-095 state mappings.
+  Plans/Decision_Log.md#DL-471, Q-ID3 decided by the owner: [cmd.docker.bake], owner_result = "local:DockerBuildRunResultV1". reuse the existing Bake-run result rather than invent a second payload shape.
+  Plans/Decision_Log.md#DL-471, Q-ID4 decided by the owner: [cmd.docker.container.stats], command_kind = "shell_view". show the selected container's owner projection with its live/cached freshness markers.
+  Plans/Decision_Log.md#DL-471, Q-ID4 decided by the owner: [cmd.docker.container.stats], response_kind = "local_projection". the stats view consumes the existing projection and dispatch receipt, with no new owner result.
+  Plans/Decision_Log.md#DL-471, Q-ID4 decided by the owner: [cmd.docker.container.stats], disabled_reason_codes = ["not_configured", "stale_projection"]. not_configured for unavailable Docker and stale_projection for a stale subject identity; cached metrics remain viewable with freshness markers.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible Docker Manager, registry and Kubernetes commands.
 depends_on: [UCC-230, UCC-049, UCC-050, UCC-051, UCC-052, UCC-053, UCC-105, UCC-137, CRAU-007, CRAU-011, CRAU-012, CRAU-013, CRAU-014, CRAU-017, CRAU-031, CRAU-044, CRAU-095, CRAU-096, CRAU-098, CRAU-099, CV-304, CV-333, UCC-217, DL-333, DL-341]
@@ -7307,8 +7313,8 @@ command_payload_definitions:
       response_kind: owner_operation
       args:
         capability_snapshot_ref: {type: ref, required: true, default: none, provenance: canon, source: "UCC-230 Docker identity: capability_snapshot_ref for mutating or capability-gated actions"}
-        bake_target: {type: string, required: false, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: "Q-ID3. CRAU-011 exposes the bare Bake id without an independent payload. JUDGMENT: use bake.run's optional selected-target override; absence uses the persisted target. Alternative: make the bare id only an alias of bake.run or a view opener."}
-        platforms: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}}, constraints: {unique_items: true}, provenance: gap, gap_note: "Q-ID3. JUDGMENT: the same optional platform override as bake.run, with no implied override when absent; alternative: accept no overrides on the bare id."}
+        bake_target: {type: string, required: false, default: none, constraints: {min_length: 1, max_length: 256}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID3 decided by the owner: use bake.run''s optional selected-target override; absence uses the persisted target.'}
+        platforms: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}}, constraints: {unique_items: true}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID3 decided by the owner: the same optional platform override as bake.run, with no implied override when absent.'}
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -7319,10 +7325,6 @@ command_payload_definitions:
         - {owner_state: bake_unavailable, code: partial_capability}
         - {owner_state: buildx_unavailable, code: partial_capability}
       aliases: []
-      judgments:
-        - {key: command_kind, choice: domain_action, gap_note: "Q-ID3. CRAU-011 exposes cmd.docker.bake and the wiring row names handlers::docker::bake; neither fixes its kind. JUDGMENT: the existing Bake-run operation, with the same target inference and readiness fences; alternative: alias bake.run or open Build / Bake."}
-        - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, partial_capability, stale_projection], gap_note: "Q-ID3. No bare-id disabled metadata exists. JUDGMENT: reuse bake.run's set and CRAU-095 state mappings; alternative: a view-only availability set if the owner selects a view opener."}
-        - {key: owner_result, choice: local:DockerBuildRunResultV1, gap_note: "Q-ID3. No bare-id result schema exists. JUDGMENT: reuse the existing Bake-run result rather than invent a second payload shape; alternative: no owner result for a view opener."}
     - command_id: cmd.docker.container.stats
       ucc_units: [UCC-231]
       command_kind: shell_view
@@ -7336,10 +7338,6 @@ command_payload_definitions:
       error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [not_configured, stale_projection]
       aliases: []
-      judgments:
-        - {key: command_kind, choice: shell_view, gap_note: "Q-ID4. The View Stats row gives no command_kind. JUDGMENT: show the selected container's owner projection with its live/cached freshness markers; alternative: domain_action returning a metrics record."}
-        - {key: response_kind, choice: local_projection, gap_note: "Q-ID4. JUDGMENT: the stats view consumes the existing projection and dispatch receipt, with no new owner result; alternative: a typed owner metrics result."}
-        - {key: disabled_reason_codes, choice: [not_configured, stale_projection], gap_note: "Q-ID4. The row supplies no disabled metadata. JUDGMENT: not_configured for unavailable Docker and stale_projection for a stale subject identity; cached metrics remain viewable with freshness markers. Alternative: unreachable for missing live telemetry."}
     - command_id: cmd.docker.bake.run
       ucc_units: [UCC-049]
       command_kind: domain_action
@@ -7462,7 +7460,10 @@ command_payload_definitions:
         owner_result: local:DockerContainerLifecycleResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required, stale_projection, permission_required]
-      aliases: []
+      aliases:
+        - command_id: cmd.docker.remove
+          kind: compatibility_alias
+          source: "Plans/Decision_Log.md#DL-471 Q-ID1 decided cmd.docker.remove is a compatibility_alias of cmd.docker.container.delete."
     - command_id: cmd.docker.container.inspect
       ucc_units: [UCC-049]
       command_kind: navigation_wrapper
