@@ -31,7 +31,7 @@ for(const [look,width,height] of CASES) tests[`${look} ${width}x${height}`]=asyn
   const control=panel.locator(`:scope > .pm-segtab > button[role="tab"][data-tab="${tab}"]`);
   await control.click();
   await f.waitForFunction(()=>!document.querySelector('#panel-files .lg-carry'),null,{timeout:5000});
-  await f.waitForFunction(tab=>{const p=document.getElementById('panel-files'),pane=p.querySelector(`:scope > .sh-scroll > [data-pane="${tab}"]`);return !!pane?.checkVisibility()&&p.querySelector(`:scope > .pm-segtab > button[data-tab="${tab}"]`)?.classList.contains('active');},tab,{timeout:5000});
+  await f.waitForFunction(tab=>{const p=document.getElementById('panel-files'),pane=p.querySelector(`:scope > .sh-scroll > [data-pane="${tab}"]`);return !!pane?.checkVisibility()&&[...p.querySelectorAll(':scope > .sh-scroll > [data-pane]')].every(e=>e===pane||!e.checkVisibility())&&p.querySelector(`:scope > .pm-segtab > button[data-tab="${tab}"]`)?.classList.contains('active');},tab,{timeout:5000});
   const route=await panel.evaluate((p,tab)=>{const panes=[...p.querySelectorAll(':scope > .sh-scroll > [data-pane]')],shown=panes.filter(e=>e.checkVisibility()).map(e=>e.dataset.pane),pane=panes.find(e=>e.dataset.pane===tab);return {shown,rows:[...pane.querySelectorAll('[tabindex],button,[role="treeitem"]')].filter(e=>e.checkVisibility()&&e.getBoundingClientRect().width>0).length};},tab);
   await t.check(`real ${tab} tab selects its populated pane and hides the others`,route.shown.length===1&&route.shown[0]===tab&&route.rows>0,JSON.stringify(route),{hard:true});
  }
