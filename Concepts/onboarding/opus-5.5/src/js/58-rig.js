@@ -1399,14 +1399,29 @@
       const sp = this.toScreen(this.headXf(tall ? [44, 30] : [58, 44], H, ang, 1, 1));
       const bw = this.bubble.offsetWidth || 160, bh = this.bubble.offsetHeight || 34, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
       const pad = this.tube ? 14 : 8, top = this.tube ? (tall ? 44 : 34) : 8, foot = this.tube === 'teletype' ? (tall ? 70 : 48) : this.tube ? (tall ? 44 : 34) : 8;
-      let x = clamp(sp[0] + (tall ? -bw * .3 : 6), pad, bx - bw - pad), y = clamp(tall ? sp[1] - bh - 22 : sp[1] - bh / 2, top, by - bh - foot);
       /* the bubble covers no prop and never Pip's face (FO26: the name's sign on Name; RDA-01: Pip's eyes on Review). Where
          its usual place is taken it moves to the nearest clear place inside the pane, and keeps that side while it stays
          clear, so new words never send it across Pip; if nowhere is clear it still keeps off the face, and the props
          make way for it (keepOff). Its tail still points at Pip. */
       const gap = 6, obs = [], hx0 = head[0], hy0 = head[1];
       const motion = this.speechMotion(tall ? [44, 30] : [58, 44]);
-      const projected = o => [sp[0] + o[0] - motion.hi[0], sp[1] + o[1] - motion.hi[1], sp[0] + o[2] - motion.lo[0], sp[1] + o[3] - motion.lo[1]];
+      const v = this.vis, vs = v ? [this.toScreen([v.x0, v.y0]), this.toScreen([v.x1, v.y1])] : null;
+      const bounds = [Math.max(pad, vs ? vs[0][0] + pad : pad), Math.max(top, vs ? vs[0][1] + 4 : top), Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by)];
+      /* Bounds belong to the same frame as the obstacles. A screen-fixed edge otherwise rejects a kept place as
+         the head moves (nas-signin: x=7.28 against an 8px edge, then a 211px jump). Where the whole head travel
+         cannot fit on an axis, pin that axis to the scene instead and reserve the head's whole face there. */
+      const follows = [bounds[2] - bounds[0] >= motion.hi[0] - motion.lo[0], bounds[3] - bounds[1] >= motion.hi[1] - motion.lo[1]];
+      const origin = sp.map((p, i) => follows[i] ? p : (motion.lo[i] + motion.hi[i]) / 2);
+      const frameKey = `${this.layoutName}:${follows.join(',')}`;
+      if (this.bubbleFrame !== frameKey) {
+        const hadBand = this.bubbleKeepOff;
+        this.bubbleFrame = frameKey; this.bubbleRel = null; this.bubbleClaim = null; this.bubbleKeepOff = null;
+        if (hadBand) { this.keepOff = null; this.renderN = (this.renderN || 0) + 1; this.props.forEach((pr) => this.placeProp(pr)); }
+      }
+      const X0 = follows[0] ? sp[0] + bounds[0] - motion.lo[0] : bounds[0], X1 = follows[0] ? sp[0] + bounds[2] - motion.hi[0] : bounds[2];
+      const Y0 = follows[1] ? sp[1] + bounds[1] - motion.lo[1] : bounds[1], Y1 = follows[1] ? sp[1] + bounds[3] - motion.hi[1] : bounds[3];
+      let x = clamp(origin[0] + (tall ? -bw * .3 : 6), X0, X1), y = clamp(tall ? origin[1] - bh - 22 : origin[1] - bh / 2, Y0, Y1);
+      const projected = o => [follows[0] ? sp[0] + o[0] - motion.hi[0] : o[0], follows[1] ? sp[1] + o[1] - motion.hi[1] : o[1], follows[0] ? sp[0] + o[2] - motion.lo[0] : o[2], follows[1] ? sp[1] + o[3] - motion.lo[1] : o[3]];
       /* the face through the head's whole turn (its rest tilt either way by a swing's reach), each turn read from
          the speech point at that same turn: at this frame's turn alone, a swing or a wiggle raised a corner of the
          box into the bubble's margin and the bubble stepped up a few px mid-line, then dropped back when the
@@ -1419,6 +1434,7 @@
       const face = [Math.min(...fc.map((c) => c[0])) - gap, Math.min(...fc.map((c) => c[1])) - gap, Math.max(...fc.map((c) => c[0])) + gap, Math.max(...fc.map((c) => c[1])) + gap];
       /* (its tail too: about 12 px below the bubble when it points down, left of it when it points left) */
       if (tall) face[1] -= 12; else face[2] += 12;
+      for (let i = 0; i < 2; i++) if (!follows[i]) { face[i] += motion.lo[i] - sp[i]; face[i + 2] += motion.hi[i] - sp[i]; }
       /* (the bubble no longer steps aside for a leaving prop (FO-34's words-over-a-fading-prop is kept off by
          holdUnder and band() below, which cap its lift at the bubble's own lower edge) */
       /* (at the box each prop will REST in (restPose's restBox), read for every prop that is staying, from its first
@@ -1428,8 +1444,6 @@
          already caps its lift at the bubble's lower edge and fades it there, and counting its rising box made the
          bubble step aside for a prop that was already keeping under it) */
       this.props.forEach((pr) => { if (pr.state === 'out') return; const pose = this.restPose(pr), rb = pose.speechBox || pose.box || pr.box; if (rb) { const a = this.toScreen([rb[0], rb[1]]), c = this.toScreen([rb[2], rb[3]]); obs.push(projected([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap])); } });
-      const v = this.vis, vs = v ? [this.toScreen([v.x0, v.y0]), this.toScreen([v.x1, v.y1])] : null;
-      const X0 = Math.max(pad, vs ? vs[0][0] + pad : pad), X1 = Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Y0 = Math.max(top, vs ? vs[0][1] + 4 : top), Y1 = Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by);
       /* (and Pip's control bar: where a prop beside Pip took the usual place, the bubble went up over the sticks Pip hangs
          from, Retro Dark's Look 'Soft and cosy. I like it.', FO-59) */
       /* The control's entire rock is projected through the same head motion as the props. Reading its current
@@ -1442,35 +1456,48 @@
       /* (a place on Pip's other side counts as far: new words never send the bubble across Pip, it goes above instead) */
       const cost = ([cx, cy]) => Math.hypot(cx - x, cy - y) + (this.bubbleSide && sideOf(cx) !== this.bubbleSide && !(cy + bh <= face[1]) ? 400 : 0);
       const near = (list) => list.filter(([cx, cy]) => clear(cx, cy)).sort((p, q) => cost(p) - cost(q))[0];
-      /* (kept from the speech point (sp), as the usual place is: kept from the head's centre instead, a kept place
-         wandered against the usual one as the head turned, up to 5 px in a wiggle (QA-4)) */
-      const prev = this.bubbleRel ? [sp[0] + this.bubbleRel[0], sp[1] + this.bubbleRel[1]] : null;
+      const candidates = (obstacles) => {
+        const list = [];
+        obstacles.forEach((o) => list.push([o[0] - bw, y], [o[2], y], [x, o[1] - bh], [x, o[3]], [o[0] - bw, o[1] - bh], [o[2], o[1] - bh], [o[0] - bw, o[3]], [o[2], o[3]]));
+        list.push([X0, Y0], [X1, Y0], [X0, Y1], [X1, Y1]);
+        return list.map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]);
+      };
+      /* Kept from the same origin as the usual place: the speech point on an axis with room to follow it, the
+         fixed scene on a cramped axis. A different origin for the kept place made it wander during a wiggle. */
+      const prev = this.bubbleRel ? [origin[0] + this.bubbleRel[0], origin[1] + this.bubbleRel[1]] : null;
       let at = null;
       if (prev && clear(prev[0], prev[1]) && this.t - (this.bubbleRelT || 0) < 2.5) at = prev; /* (the side it moved to, while it stays clear) */
       else if (clear(x, y) && !(this.bubbleSide && sideOf(x) !== this.bubbleSide && y + bh > face[1])) at = [x, y];
       else {
-        const cand = [];
-        [face].concat(obs).forEach((o) => { cand.push([o[0] - bw, y], [o[2], y], [x, o[1] - bh], [x, o[3]], [o[0] - bw, o[1] - bh], [o[2], o[1] - bh], [o[0] - bw, o[3]], [o[2], o[3]]); });
-        cand.push([X0, Y0], [X1, Y0], [X0, Y1], [X1, Y1]);
-        at = near(cand.map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]));
+        at = near(candidates([face].concat(obs)));
       }
       const talking = this.bubble.classList.contains('on') && !!(this.bubble.textContent || '').trim();
-      const claimed = this.bubbleClaim && talking && at && Math.abs(at[0] - this.bubbleClaim[0]) < 10 && Math.abs(at[1] - this.bubbleClaim[1]) < 10;
+      const claimNear = p => p && this.bubbleClaim && Math.abs(p[0] - origin[0] - this.bubbleClaim[0]) < 10 && Math.abs(p[1] - origin[1] - this.bubbleClaim[1]) < 10;
+      const claimed = talking && claimNear(at), priorBand = this.bubbleKeepOff;
       if (!claimed) this.bubbleKeepOff = null;
       if (!at) {
         /* nowhere clear: off Pip's face at least, nearest its usual place; the props keep off it next frame */
-        const cand = [[x, y], [x, face[1] - bh], [x, face[3]], [face[0] - bw, y], [face[2], y], [X0, Y0], [X1, Y0]].map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]).filter(([cx, cy]) => !over(cx, cy, face) && !(bar && over(cx, cy, bar)));
-        at = cand.sort((p, q) => Math.hypot(p[0] - x, p[1] - y) - Math.hypot(q[0] - x, q[1] - y))[0] || [x, y];
-        this.bubbleClaim = talking ? at.slice() : null;
+        const cand = [[x, y]].concat(candidates([face].concat(bar ? [bar] : []))).filter(([cx, cy]) => fits(cx, cy) && !over(cx, cy, face) && !(bar && over(cx, cy, bar)));
+        at = cand.sort((p, q) => cost(p) - cost(q))[0] || [x, y];
+        this.bubbleClaim = talking ? [at[0] - origin[0], at[1] - origin[1]] : null;
       }
       /* (the place it claimed is kept while it stays there and talks: the props stay off it, instead of coming back under it
          as soon as their moving away has made its usual place clear, and going again the next frame) */
-      if ((!claimed && this.bubbleClaim && at && !(Math.abs(at[0] - this.bubbleClaim[0]) < 10 && Math.abs(at[1] - this.bubbleClaim[1]) < 10)) || !talking) this.bubbleClaim = null;
-      if (this.bubbleClaim) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(at[0] - gap, at[1] - gap), a1 = u(at[0] + bw + gap, at[1] + bh + gap); this.bubbleKeepOff = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleKeepOff = null;
+      if ((!claimed && this.bubbleClaim && at && !claimNear(at)) || !talking) this.bubbleClaim = null;
+      /* A claim reserves the bubble through the SAME motion used to test obstacles. Reserving only this frame's
+         box made it fail its own next clearance test (Ready: 16px oscillation). This does not force a placement:
+         the normal candidate search above still decides whether the place is clear. Round the reservation out
+         to the renderer's .01-unit grid so subpixel cancellation cannot churn restPose's geometry cache. */
+      if (this.bubbleClaim) {
+        const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k];
+        const lo = at.map((p, i) => follows[i] ? motion.lo[i] + p - sp[i] : p), hi = at.map((p, i) => follows[i] ? motion.hi[i] + p - sp[i] : p);
+        const a0 = u(lo[0] - gap, lo[1] - gap), a1 = u(hi[0] + bw + gap, hi[1] + bh + gap);
+        this.bubbleKeepOff = a0.map(p => Math.floor((p + 1e-8) * 100) / 100).concat(a1.map(p => Math.ceil((p - 1e-8) * 100) / 100));
+      } else this.bubbleKeepOff = null;
       /* (a new claim moves the props off it in this same frame, before it is painted: on a stepped stage the props learnt of
          it a step later and sat under it for a tenth of a second) */
-      if (this.bubbleKeepOff && !claimed) { this.keepOff = this.bubbleKeepOff; this.renderN = (this.renderN || 0) + 1; this.props.forEach((pr) => this.placeProp(pr)); }
-      if (at[0] !== x || at[1] !== y) { if (!this.bubbleRel || at !== prev) this.bubbleRelT = this.t; this.bubbleRel = [at[0] - sp[0], at[1] - sp[1]]; } else this.bubbleRel = null;
+      if (this.bubbleKeepOff && JSON.stringify(this.bubbleKeepOff) !== JSON.stringify(priorBand)) { this.keepOff = this.bubbleKeepOff; this.renderN = (this.renderN || 0) + 1; this.props.forEach((pr) => this.placeProp(pr)); }
+      if (at[0] !== x || at[1] !== y) { if (!this.bubbleRel || at !== prev) this.bubbleRelT = this.t; this.bubbleRel = [at[0] - origin[0], at[1] - origin[1]]; } else this.bubbleRel = null;
       [x, y] = at;
       this.bubbleSide = talking ? sideOf(x) : null;
       /* where it is, with its tail, for the props that leave under it (holdUnder) */
