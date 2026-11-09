@@ -682,7 +682,7 @@ async function awakeMotion(t, mode) {
 			const f = await frameFor(t, mode);
 			await t.emulate({ reducedMotion: 'no-preference' });
 			await stageLook(t, f, look);
-			for (const scr of t.args.screens ? String(t.args.screens).split(',') : MOTION_SCREENS) {
+			for (const scr of (t.args.motionScreens || t.args.screens) ? String(t.args.motionScreens || t.args.screens).split(',') : MOTION_SCREENS) {
 				await f.evaluate((x) => window.O55.ui.open({ fresh: true, screen: x }), scr);
 				const ok = await f.waitForFunction(() => !!O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), null, { timeout: 15000 }).then(() => true, () => false);
 				const tag = `${mode} ${look} ${scr} ${w}x${h} awake`;
