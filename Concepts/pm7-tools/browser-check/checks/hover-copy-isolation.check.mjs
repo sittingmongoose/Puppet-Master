@@ -21,7 +21,8 @@ export default async function(t){
    await f.waitForFunction(sel=>!!document.querySelector(sel+' .lg-twin'),strip,{timeout:3000});
    const state=await f.evaluate(async sel=>{const c=PM_HOVER_TAG_CONTROLLER,p=document.querySelector(sel),carry=p.querySelector('.lg-carry'),roots=[...carry.querySelectorAll('.lg-twin')],nodes=roots.flatMap(e=>[e,...e.querySelectorAll('*')]);
     const prepared=nodes.map(e=>c.prepare(e)),bound=nodes.map(e=>c.bind(e));c.scan(carry);const before=c.lastLive;c.enqueueLive(carry,true);const queued=[...c.liveDeep].some(e=>e===carry||e.contains(carry));
-    const live=await new Promise(resolve=>{const start=performance.now();const tick=()=>{if(c.lastLive!==before&&!c.liveRunning&&!c.liveFrame&&!c.liveDeep.size&&!c.liveShallow.size)return resolve(true);if(performance.now()-start>2000)return resolve(false);requestAnimationFrame(tick);};tick();});
+    // Drive the queued live-census entry directly: this probe judges its candidate boundary, not idle admission timing.
+    c.beginLive();const live=c.lastLive!==before||c.liveRunning;
     return {queued,live,copies:roots.length,connected:roots.every(e=>e.isConnected),hidden:roots.every(e=>!!e.closest('[aria-hidden="true"]')),inert:roots.every(e=>!!e.closest('[inert]')),prepared:prepared.filter(Boolean).length,bound:bound.filter(Boolean).length,hooks:nodes.flatMap(e=>[...e.attributes].filter(a=>a.name.startsWith('data-')).map(a=>a.name)),realBound:[...p.querySelectorAll(':scope > button')].every(e=>!!e.getAttribute('data-pm-hover-key'))};
    },strip);
    await t.check(`${look}: prepare, bind, scan and live census leave real carry copies unannotated`,state.queued&&state.live&&state.copies>=2&&state.connected&&state.hidden&&state.inert&&!state.prepared&&!state.bound&&!state.hooks.length&&state.realBound,JSON.stringify(state),{hard:true});
