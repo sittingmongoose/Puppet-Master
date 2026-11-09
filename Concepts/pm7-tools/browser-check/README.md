@@ -239,3 +239,14 @@ Round 2 film correlation tools require native 1920×1080, 60 fps GPU films and e
 - `python3 tools/stage-bubble-film-reader.py <film.mp4> <run>/probe-ready.json --out <pixels.json>` reads Basic Light Ready's white bubble top/bottom against each tagged frame's DOM box, within1px. This confirms the placement sampler reads painted frames; it does not measure horizontal edges or other looks. `--allow-untagged` retains a trajectory with `ok:null`, never a PASS.
 - `python3 tools/stage-string-film-reader.py --film <film.mp4> --frames <run>/anchors-frames.jsonl.gz --screen safe --props vault --start <mark-seconds> --seconds 5 --out <pixels.json>` reads Basic Light solid string crossings on three native rows against exact tagged SVG geometry, within1px. Select isolated solid props (for example vault, sign, restore); dashed gaps and overlapping ropes require a different pixel predicate or native review. A failed or ambiguous sample remains failed.
 - `python3 tools/stage-typewriter-film-reader.py <film.mp4> <run>/typewriter-layout.json --out <pixels.json>` confirms Retro Dark's isolated “No AI yet? That's fine.” horizontal borders against exact paint tags, within1px, on both surfaces. `--text` selects another supported isolated line. A rope on the “Which folder?” border makes that case ambiguous to this predicate; it is rejected as unsupported and requires native review. The full prefix/real-typer kit check still judges all four lines. Pixel correlation is separate from line stability: the old film can match its probe while showing the old width pulse.
+
+`diagnostics/retro-crop-ink.check.mjs` is the scoped K18 diagnostic for Retro Light,
+normal surface, `s-confirm`, 1280×500. It runs the original every-screen assertions
+at the pinned natural idle-swing phase. Only crop containment uses conservative
+bounds of drawn SVG shapes; its original 1 px bound remains. Independent fixtures
+reject a real 1.1 px clip and stroke-only clipping, accept a 0.9 px clip, and show
+why a rotated circle's empty bounding-box corners are not painted clipping.
+Run with `--set sandbox=0 --set looks=retro-light --set screens=s-confirm --set sizes=1280x500`
+and the usual private `--set page=`; record on a GPU host for native confirmation.
+This diagnostic does not change the ordinary `retro-stage-fit` measurement or
+certify another cell. K18 scope and evidence are recorded in the lane report.
