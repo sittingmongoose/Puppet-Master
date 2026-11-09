@@ -46,6 +46,8 @@ export default async function(t) {
           return as.map(a => ({ state: a.playState, at: a.currentTime, duration: a.effect.getTiming().duration }));
         }, fraction);
         await f.waitForTimeout(50);
+        const hooks = await carry.evaluate(e => [...e.querySelectorAll('.lg-twin')].flatMap(c => [c, ...c.querySelectorAll('*')].flatMap(n => [...n.attributes].filter(a => a.name.startsWith('data-')).map(a => a.name))));
+        await t.check(`${look} forced ${scheme} at ${fraction}: copies stay free of data hooks`, hooks.length === 0, JSON.stringify(hooks), { hard: true });
         const ink = await paintedText(carry, { coverage: 180, onBackground: media.canvas });
         t.log(`${look} forced ${scheme} at ${fraction}: ${JSON.stringify({ timing, ink })}`);
         await t.check(`${look} forced ${scheme} at ${fraction}: carried words paint at 4.5:1`, timing.length >= 2 && ink.count >= 8 && ink.minimum >= 4.5, JSON.stringify({ timing, ink }));

@@ -28,7 +28,8 @@
   function hash(value){var h=2166136261;for(var i=0;i<value.length;i++){h^=value.charCodeAt(i);h=Math.imul(h,16777619);}return (h>>>0).toString(36);}
   function attr(el,name){return clean(el&&el.getAttribute&&el.getAttribute(name));}
   function setAttrIfChanged(el,name,value){value=String(value);if(el.getAttribute(name)!==value)el.setAttribute(name,value);}
-  function inOwner(el){return !!(el&&el.closest&&el.closest('#'+ROOT_ID));}
+  /* Inert selector copies are paint, never hover targets. Keep both the census and live binding off their subtree. */
+  function inOwner(el){return !!(el&&el.closest&&el.closest('#'+ROOT_ID+',.lg-twin'));}
   function activeOverlay(){var tour=document.getElementById('pm-o55-tour'),onboarding=document.getElementById('pm-o55-onboarding');if(tour&&attr(tour,'data-open')==='true')return tour;if(onboarding&&attr(onboarding,'data-open')==='true')return onboarding;return null;}
   function isProductOverlayRoot(el){return !!(el&&el.nodeType===1&&(el.id==='pm-o55-tour'||el.id==='pm-o55-onboarding'));}
   function overlayTransitionRoot(record){
@@ -369,6 +370,7 @@
     return {el:el,facts:facts,info:descriptor(el,facts)};
   };
   HoverTagController.prototype.bind=function(el,prepared){
+    if(!el||inOwner(el))return null;
     prepared=prepared&&prepared.el===el?prepared:this.preparedByElement.get(el)||this.prepare(el);if(!prepared)return null;
     var facts=prepared.facts,info=prepared.info;
     var currentKey=attr(el,'data-pm-hover-key'),currentId=currentKey&&descriptionId(currentKey),currentDesc=currentId&&document.getElementById(currentId);
