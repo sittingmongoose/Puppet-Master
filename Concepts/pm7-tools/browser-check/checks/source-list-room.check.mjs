@@ -83,7 +83,7 @@ async function cell(t, surface, w, h, fixture = null) {
 			const b = e.getBoundingClientRect(), x = b.left + b.width / 2, y = b.top + b.height / 2, h = document.elementFromPoint(x, y);
 			const describe = (n) => n ? { tag: n.tagName, id: n.id, cls: String(n.className?.baseVal ?? n.className), label: (n.getAttribute('aria-label') || n.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80) } : null;
 			const card = h?.closest('#rsStage > .pmn-toast:not(.pmn-entering):not(.pmn-leaving)');
-			return { ok: !!h && (h === e || e.contains(h)), x, y, want: describe(e), hit: describe(h), source: !!e.closest('#panel-source'), notice: card && card.querySelector('button.pmn-x') ? { id: card.getAttribute('data-pmn-id'), source: card.getAttribute('data-src'), level: card.getAttribute('data-level') } : null };
+			return { ok: !!h && (h === e || e.contains(h)), hasBox: b.width > 0 && b.height > 0, x, y, box: { left: b.left, top: b.top, width: b.width, height: b.height }, want: describe(e), hit: describe(h), source: !!e.closest('#panel-source'), notice: card && card.querySelector('button.pmn-x') ? { id: card.getAttribute('data-pmn-id'), source: card.getAttribute('data-src'), level: card.getAttribute('data-level') } : null };
 		});
 		await loc.scrollIntoViewIfNeeded();
 		let state = await inspect();
@@ -99,7 +99,7 @@ async function cell(t, surface, w, h, fixture = null) {
 			await settle(); await loc.scrollIntoViewIfNeeded(); state = await inspect();
 		}
 		pressDetail = { ...state, dismissed };
-		if (!state.ok) return false;
+		if (!state.ok || !state.hasBox) return false;
 		// The hit-test and click share one frame-local point; the old separate bounding-box read could drift.
 		const o = await off(); await t.page.mouse.click(o.x + state.x, o.y + state.y);
 		return true;
