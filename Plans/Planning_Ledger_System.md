@@ -1731,20 +1731,20 @@ canonical_text: >-
   reference, binds audit_report.json, repair_closure_matrix.jsonl and every standard source artifact by SHA-256,
   and gives a reason for each correction. It may only correct the historical status to BLOCKED when the original
   computed repair_required_count is positive, or identify matrix-covered source rows that never needed repair.
-  historical_status is null or contains from, to and reason; non_actionable_rows contains only source_artifact,
-  source_row and reason. v1 row addresses are physical JSONL line numbers or named validator_results.json
-  results and invalid_invocations. The validator requires the complete standard source selection, independently
-  computes actionability, rejects actionable, nonexistent, uncovered or duplicate listed rows, and applies nothing
-  on any invalid receipt. Named validator rows require the whole validator_results.json file and every record
-  to prove a clean pass on closed lists of known fields and clean value shapes; any unknown field refuses the
-  whole correction. A supplied file status must be pass; summary failure and mutation counts must be integer zero
-  (never booleans), other summary counts non-negative integers, and finding children non-actionable with valid
-  repair fields, no error-level finding or side effect. No truthy side_effects or non_audit_side_effects,
-  nonzero or non-integer side_effect_count, required repair or malformed repair fields are allowed. Every matching
-  results record must have status pass, or omit status with integer exit_code zero. Finding flags cannot excuse failures or mutations. An invalid_invocations record must have
-  status invalid_invocation and explicitly name its clean passing rerun through superseded_by in the form
-  <result name> with <added arguments>; the rerun command must equal the original command plus those arguments.
-  Unknown schemas or fields, mismatched or missing hashes, symlinked bound inputs or receipts, invalid dates,
+  historical_status is null or contains from, to and reason; a row-only correction leaves the report's status
+  field exactly as recorded, including an omitted field. In non_actionable_rows, atom-matrix and other non-validator
+  JSONL rows carry only source_artifact, source_row and reason and keep the automatic non-actionability and matrix-coverage check.
+  For validator_results.json results.<name> and invalid_invocations.<name>, "never needed a fix" is an owner
+  judgment, per record, named in the cited accepted Decision Log unit's owner_named_rows list and pinned in both
+  that list and the receipt by record_sha256. The receipt's validator-row pins must equal the decision's list for
+  that audit exactly. Each pin is the SHA-256 of canonical JSON encoded as UTF-8:
+  json.dumps(record, sort_keys=True, separators=(",", ":"), ensure_ascii=False), with no trailing newline;
+  duplicate JSON keys and non-finite numbers are refused. A named record must exist exactly once; duplicate names
+  are refused as ambiguous. The code checks the pin, matrix coverage and its own classifier; it does not prove
+  cleanliness from free-form fields or snapshots. The validator requires the complete standard source selection,
+  independently computes actionability, rejects actionable, nonexistent, uncovered or duplicate listed rows, and
+  applies nothing on any invalid receipt. v1 JSONL addresses are canonical positive physical line numbers.
+  Unknown receipt schemas or fields, mismatched or missing hashes, symlinked bound inputs or receipts, invalid dates,
   other corrections and multiple correction files fail closed. Only the listed non-actionable over-coverage is
   excused; missing coverage and every matrix, evidence, registry and legacy-format check keep their force.
   Validation shows both the historical and corrected status. Corrected history participates in the effective
@@ -1759,7 +1759,7 @@ acceptance_criteria:
 - self-test covers valid status and row corrections, unchanged historical bytes, each fail-closed rule, missing coverage,
   unlisted over-coverage, partial source selection and historical versus effective status.
 - audit-20260619-004 preserves its June files and all 21 matrix rows, corrects its original status to BLOCKED,
-  identifies exactly 16 never-actionable rows and still requires the five actionable closures.
+  identifies exactly 16 owner-judged rows that never needed a fix and still requires the five actionable closures.
 validation_surfaces:
 - python3 scripts/pm-audit-closure.py self-test
 - python3 scripts/pm-audit-closure.py validate

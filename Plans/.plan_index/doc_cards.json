@@ -5911,7 +5911,7 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 29278,
+      "line_count": 29345,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 335,
       "plan_unit_ids": [
@@ -6437,7 +6437,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "80975d33c2c483b72b984b471d074903221bcd3df8768605625caa648007b56e",
+      "sha256": "555d227dcdfdb0743789d2cb1b544cc707d2b86b4b0444205df3b6333d676034",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 335
@@ -14760,7 +14760,7 @@
         "source_loss",
         "vague_compile_output"
       ],
-      "sha256": "d4acb783778655f5d892991e4a76793ac3a8249dfaf033c09e7e4d1ae1a3731e",
+      "sha256": "51012604eecbd4d25e8696b81d79da4b5f8618aa8c5d05a9c6e88e8f9a21093a",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 27
@@ -21738,7 +21738,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-09T04:07:30Z",
+  "generated_at_utc": "2026-11-09T05:08:36Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

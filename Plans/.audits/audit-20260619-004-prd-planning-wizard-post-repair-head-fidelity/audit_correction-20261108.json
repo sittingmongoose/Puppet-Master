@@ -90,11 +90,13 @@
     },
     {
       "reason": "Superseded invalid invocation: missing --run-dir caused returncode 2 with no side effects; the corrected pm_plan_migration_validate invocation passed in the same audit. No unresolved repository repair was needed.",
+      "record_sha256": "88a0f3c54d5e3e0c59f6a10ba8644228f275087db986bb1de26b20edcce1f10d",
       "source_artifact": "validator_results.json",
       "source_row": "invalid_invocations.pm_plan_migration_validate"
     },
     {
       "reason": "The source result is status pass, returncode 0, no side effects. Its only warning says the absent matrix made completeness checking skip; adding the matrix resolved audit housekeeping. Registry row 280 remains that historical closure, without turning a passing source result into an actionable canonical defect.",
+      "record_sha256": "5ff3757ec7b5b357950eff8afd0c6e6efef5cdbeb7bddea66404b0d5f91142f7",
       "source_artifact": "validator_results.json",
       "source_row": "results.pm_audit_closure_validate_audit_004"
     }

@@ -2940,7 +2940,7 @@ def actionable_warning_rows(
 
 
 def validator_has_side_effects(record: dict[str, Any]) -> bool:
-    """Only an absent count or a JSON integer zero proves no counted mutation."""
+    """Classify direct mutation fields; a present count must be a JSON integer zero."""
     count = record.get("side_effect_count", 0)
     return bool(record.get("non_audit_side_effects")) or bool(record.get("side_effects")) \
         or type(count) is not int or count != 0
@@ -2952,178 +2952,7 @@ def validator_result_passed(record: dict[str, Any]) -> bool:
     )
 
 
-# Closed clean-evidence vocabulary, inventoried from Plans/.audits/*/validator_results.json.
-# Historical capture/report containers without a clean interpretation admit only emptiness;
-# their nonempty payloads cannot prove a clean file. These rules authorize corrections only,
-# never reinterpret historical validator outcomes or the June compatibility vocabulary.
 VALIDATOR_FINDING_CHILDREN = ("findings", "warnings", "semantic_risks")
-VALIDATOR_CLEAN_SUMMARY_FIELDS = {
-    **dict.fromkeys(("fail", "failed", "fail_count", "core_failures", "governance_failures",
-                     "governance_expected_failures", "governance_unexpected_failures",
-                     "mutated_worktree_count", "mutated_outside_audit_dir_count", "side_effects",
-                     "side_effect_count", "side_effects_reverted", "side_effect_revert_count"), "zero"),
-    **dict.fromkeys(("pass", "passed", "pass_count", "total", "total_checks", "command_count",
-                     "governance_passes", "invalid_invocation_count", "invalid_invocation_environment"), "count"),
-    "status": "pass",
-    "git_status_before_each": "clean_status",
-    "git_status_after_each": "clean_status",
-    "final_git_status": "snapshot",
-}
-VALIDATOR_CLEAN_COMMON_FIELDS = {
-    **dict.fromkeys((*AUDIT_REF_FIELDS, "schema_id", "created_at_utc", "generated_at_utc",
-                     "started_at_utc", "finished_at_utc", "updated_at_utc"), "text"),
-    "repair_required": "false",
-    "finding_level": "non_error_level",
-    "status": "pass",
-    "side_effect_count": "zero",
-    "side_effects": "no_effects",
-    "non_audit_side_effects": "no_effects",
-    "summary": "summary",
-}
-VALIDATOR_CLEAN_FILE_FIELDS = {
-    **VALIDATOR_CLEAN_COMMON_FIELDS,
-    **dict.fromkeys(("schema", "current_ref", "ran_at_utc", "captured_at_utc", "generated_utc",
-                     "finalization_checks_generated_at_utc", "clean_worktree_path", "workdir",
-                     "pyyaml_target", "pyyaml_source", "pyyaml_path", "audited_range", "range",
-                     "note", "pair_label", "pythonpath", "logdir", "side_effect_policy", "packet_id", "work_item_id",
-                     "subject_fingerprint", "evidence_boundary", "subject"), "text"),
-    **dict.fromkeys(("mutability_notes", "environment_notes", "notes", "registry_hashes"), "texts"),
-    **dict.fromkeys(("overall_status", "suite_status", "core_status", "governance_status",
-                     "finalization_status"), "pass"),
-    **dict.fromkeys(("all_passed", "all_runs_passed", "passing_core_governance", "worktree_restored_to_clean",
-                     "registry_hash_stable_across_pair", "git_status_stable_across_pair"), "true"),
-    **dict.fromkeys(("mutated_worktree", "validators_mutated_worktree", "status_changed_by_validators",
-                     "mutated_validation", "any_mutation_detected", "mutation_detected",
-                     "forbidden_state_mutation_detected"), "false"),
-    **dict.fromkeys(("failed", "fail_count", "mutations_detected", "finalization_side_effect_count",
-                     "validator_fail_count", "validator_side_effect_count", "repair_required_count",
-                     "validator_failure_count", "timeout_count", "superseded_environment_failure_count"), "zero"),
-    **dict.fromkeys(("passed", "pass_count", "result_count", "commands_run", "final_status_count",
-                     "initial_status_count", "status_before_count", "status_after_count",
-                     "validator_pass_count"), "count"),
-    **dict.fromkeys(("status_before", "status_after", "status_before_short", "status_after_short",
-                     "git_status_before", "git_status_after", "git_status_before_validators",
-                     "git_status_after_validators", "status_before_validators", "status_after_validators",
-                     "initial_git_status", "final_git_status", "initial_git_status_short",
-                     "final_git_status_short", "git_status_before_suite", "git_status_after_suite",
-                     "initial_git_status_before_audit_dir", "initial_non_audit_status", "final_non_audit_status",
-                     "final_non_audit_git_status", "started_with_git_status", "git_status_final",
-                     "non_audit_status_after"), "snapshot"),
-    **dict.fromkeys(("non_audit_mutations", "side_effects_reverted", "non_audit_side_effects_reverted",
-                     "failed_results", "blockers", "blocking_failures", "transient_failures_repaired",
-                     "new_status_entries_from_bundle", "resolved_status_entries_from_bundle",
-                     "validator_removed_status_lines", "runs", "gates"), "empty_list"),
-    **dict.fromkeys(("suite_hash_changes", "static_mutability_evidence", "mutation_summary",
-                     "post_artifact_git_diff_check", "forbidden_artifact_scan", "semantic_audit_summary",
-                     "pyyaml_dependency", "mutation_check", "mutations_disclosure"), "empty_object"),
-    "validator_side_effects": "false_or_empty_list",
-    "baseline_comparison": "empty_object_or_text",
-    "currentness_problem": "empty_text",
-    **dict.fromkeys(("results", "commands", "validators", "standard_sequence",
-                     "clean_state_rerun_after_restoring_validator_mutation", "finalization_checks"), "results"),
-    **dict.fromkeys(VALIDATOR_FINDING_CHILDREN, "findings"),
-    "invalid_invocations": "invalid_invocations",
-    "environment": "environment",
-    "duration_seconds": "duration",
-    "status_counts": "status_counts",
-}
-VALIDATOR_CLEAN_RECORD_FIELDS = {
-    **VALIDATOR_CLEAN_COMMON_FIELDS,
-    **dict.fromkeys(("name", "check_id", "cmd", "command", "category", "superseded_by", "ended_at_utc",
-                     "stdout", "stderr", "stdout_tail", "stderr_tail", "stdout_excerpt", "stderr_excerpt",
-                     "output_tail", "stdout_log", "stderr_log", "stdout_sha256", "stderr_sha256",
-                     "finding_family", "finding_key", "reported_by", "failure_scope", "notes"), "text"),
-    **dict.fromkeys(("source_atom_ids", "plan_unit_ids", "owner_docs", "detail_keys", "exact_tokens"), "texts"),
-    **dict.fromkeys(("exit_code", "returncode"), "integer"),
-    **dict.fromkeys(("duration_seconds", "duration_ms", "elapsed_seconds"), "duration"),
-    **dict.fromkeys(("status_before_count", "status_after_count"), "count"),
-    **dict.fromkeys(("mutation_detected", "mutated", "git_status_changed", "non_audit_side_effect_detected",
-                     "mutated_status", "timed_out", "mutated_worktree", "mutated_outside_audit_dir"), "false"),
-    **dict.fromkeys(("git_status_before", "git_status_after", "git_status_final", "non_audit_status_before",
-                     "non_audit_status_after", "status_before", "status_after", "git_status_after_revert",
-                     "outside_audit_status_before", "outside_audit_status_after", "before_status_non_audit",
-                     "after_status_non_audit", "final_status_non_audit", "git_status_after_side_effect_revert"), "snapshot"),
-    **dict.fromkeys(("reverted_side_effect_paths", "tracked_diff_before", "tracked_diff_after",
-                     "tracked_side_effects", "git_status_added", "git_status_removed", "reverted_paths",
-                     "side_effects_reverted", "resolved_status_entries", "restore_failed", "restored_side_effects",
-                     "side_effect_revert_actions", "side_effects_outside_audit_dir"), "empty_list"),
-    **dict.fromkeys(("changed_hashes", "side_effect_diff", "parsed_stdout", "details"), "empty_object"),
-    **dict.fromkeys(("side_effect", "validator_side_effects"), "false"),
-    "side_effects_detected": "false_or_empty_list",
-    **dict.fromkeys(("env_overrides", "extra_env", "environment"), "environment"),
-    "result": "pass",
-    "classification": "terminal_classification",
-    "rerun_after_final_artifact_update": "true",
-    "warnings": "record_warnings",
-}
-
-
-def validator_clean_value(value: Any, rule: str, label: str) -> bool:
-    if rule == "text":
-        return isinstance(value, str)
-    if rule == "texts":
-        return isinstance(value, list) and all(isinstance(item, str) for item in value)
-    if rule == "integer":
-        return type(value) is int
-    if rule in {"zero", "count"}:
-        return type(value) is int and (value == 0 if rule == "zero" else value >= 0)
-    if rule == "duration":
-        import math  # noqa: PLC0415
-        return type(value) in {int, float} and math.isfinite(value) and value >= 0
-    if rule == "false":
-        return value is False
-    if rule == "true":
-        return value is True
-    if rule == "pass":
-        return value == "pass"
-    if rule == "non_error_level":
-        return isinstance(value, str) and value in FINDING_LEVELS - {"error", "blocker"}
-    if rule == "terminal_classification":
-        return isinstance(value, str) and value in TERMINAL_CLASSIFICATIONS
-    if rule == "no_effects":
-        return not value  # Preserve the direct side-effect fields' existing rule.
-    if rule == "empty_list":
-        return type(value) is list and not value
-    if rule == "empty_object":
-        return type(value) is dict and not value
-    if rule == "false_or_empty_list":
-        return value is False or type(value) is list and not value
-    if rule == "empty_text":
-        return value == ""
-    if rule == "empty_object_or_text":
-        return value == "" or type(value) is dict and not value
-    if rule == "clean_status":
-        return value == "clean"
-    if rule == "snapshot":
-        return isinstance(value, str) or isinstance(value, list) and all(isinstance(item, str) for item in value)
-    if rule == "environment":
-        return isinstance(value, dict) and set(value) <= {"PYTHONPATH", "note"} \
-            and all(isinstance(item, str) for item in value.values())
-    if rule == "status_counts":
-        return isinstance(value, dict) and set(value) <= {"pass"} \
-            and all(type(item) is int and item >= 0 for item in value.values())
-    if rule == "summary":
-        return validator_clean_fields(value, VALIDATOR_CLEAN_SUMMARY_FIELDS, label)
-    if rule in {"findings", "record_warnings"}:
-        if not isinstance(value, list):
-            return False
-        # Historical result warnings also carry plain informational strings.
-        if rule == "record_warnings" and all(isinstance(item, str) for item in value):
-            return True
-        if not all(isinstance(item, dict) and validator_clean_record(item, label) for item in value):
-            return False
-        errors: list[str] = []
-        return not actionable_validator_finding_rows({"findings": value}, label, errors) and not errors
-    if rule == "results":
-        return isinstance(value, list) and all(
-            isinstance(item, dict) and validator_clean_record(item, label) and validator_result_passed(item)
-            for item in value)
-    return False  # No default interpretation for an unrecognized policy.
-
-
-def validator_clean_fields(record: Any, fields: dict[str, str], label: str) -> bool:
-    return isinstance(record, dict) and set(record) <= fields.keys() and all(
-        validator_clean_value(value, fields[key], f"{label}.{key}") for key, value in record.items())
 
 
 def actionable_validator_finding_rows(
@@ -3139,54 +2968,6 @@ def actionable_validator_finding_rows(
                                           or validator_has_side_effects(item)) and key not in rows:
                 rows.append(key)
     return rows
-
-
-def validator_clean_record(record: dict[str, Any], label: str, *, invalid_invocation: bool = False) -> bool:
-    fields = dict(VALIDATOR_CLEAN_RECORD_FIELDS)
-    if invalid_invocation:
-        fields.pop("status")  # Its exact invalid_invocation status is checked with the rerun link.
-        record = {key: value for key, value in record.items() if key != "status"}
-    errors: list[str] = []
-    explicit = explicit_repair_required(record, label, errors)
-    return validator_clean_fields(record, fields, label) and not errors \
-        and explicit is not True and not validator_has_side_effects(record)
-
-
-def validator_clean_file(source: Any, label: str) -> bool:
-    """A whole-file proof, independent of which named rows a correction wants to exempt."""
-    if not isinstance(source, dict) or set(source) - VALIDATOR_CLEAN_FILE_FIELDS.keys():
-        return False
-    fields = {key: rule for key, rule in VALIDATOR_CLEAN_FILE_FIELDS.items() if key != "invalid_invocations"}
-    if not validator_clean_fields({key: value for key, value in source.items() if key in fields}, fields, label):
-        return False
-    errors: list[str] = []
-    if explicit_repair_required(source, label, errors) is True or errors or validator_has_side_effects(source):
-        return False
-    invocations = source.get("invalid_invocations", [])
-    return isinstance(invocations, list) and all(
-        isinstance(item, dict) and validator_clean_record(item, label, invalid_invocation=True)
-        and validator_superseded_invocation(item, source.get("results", [])) for item in invocations)
-
-
-def validator_superseded_invocation(record: dict[str, Any], results: list[Any]) -> bool:
-    """Resolve audit-004's explicit '<result name> with <added arguments>' link.
-
-    The named result's command must be the original invocation plus those arguments;
-    sharing a name alone is never supersession evidence. All records of the target name
-    must be clean passes.
-    """
-    link, command = record.get("superseded_by"), record.get("cmd")
-    if record.get("status") != "invalid_invocation" or not isinstance(link, str) \
-            or not isinstance(command, str) or not command.strip():
-        return False
-    name, separator, arguments = link.partition(" with ")
-    if not separator or not name or not arguments.strip():
-        return False
-    matches = [item for item in results if isinstance(item, dict) and item.get("name") == name]
-    return bool(matches) and all(
-        item.get("cmd") == f"{command} {arguments}" and validator_result_passed(item)
-        and validator_clean_record(item, f"results.{name}") for item in matches
-    )
 
 
 def actionable_json_rows(
@@ -3230,20 +3011,25 @@ def actionable_json_rows(
         for field in ("non_audit_side_effects", "side_effects", "side_effect_count"):
             if field in data and validator_has_side_effects({field: data[field]}):
                 rows.append(field)
-        for result in data.get("results", []):
-            name = str(result.get("name", "unnamed"))
-            _note_classification(result, f"results.{name}", inferred_out, explicit_out)
-            explicit = explicit_repair_required(result, f"{rel(path)}:results.{name}", errors)
-            if explicit is True:
-                rows.append(f"results.{name}")
-                continue
-            status = result.get("status")
-            passed = validator_result_passed(result) or (
-                compat_words and status == "expected_fail"
-                and result.get("command") in LEGACY_COMPAT_EXPECTED_FAIL_COMMANDS
-            )
-            if not passed or validator_has_side_effects(result):
-                rows.append(f"results.{name}")
+        for group in ("results", "invalid_invocations"):
+            for result in data.get(group, []):
+                name = str(result.get("name", "unnamed"))
+                key = f"{group}.{name}"
+                _note_classification(result, key, inferred_out, explicit_out)
+                explicit = explicit_repair_required(result, f"{rel(path)}:{key}", errors)
+                if explicit is True or result.get("finding_level") in ("error", "blocker") \
+                        or validator_has_side_effects(result):
+                    rows.append(key)
+                    continue
+                # An invalid invocation is historical context; whether it never needed a
+                # repair is an owner judgment, rather than a passing-rerun proof here.
+                if group == "results":
+                    passed = validator_result_passed(result) or (
+                        compat_words and result.get("status") == "expected_fail"
+                        and result.get("command") in LEGACY_COMPAT_EXPECTED_FAIL_COMMANDS
+                    )
+                    if not passed:
+                        rows.append(key)
     return rows
 
 
@@ -3611,6 +3397,43 @@ def apply_legacy_format_rule(audit_dir: Path, report: dict[str, Any], context: d
 AUDIT_CORRECTION_SCHEMA = "pm.audit_closure.audit_correction.v1"
 
 
+def validator_record_sha256(record: dict[str, Any]) -> str:
+    """Pin one JSON record using the shared canonical JSON form, encoded as UTF-8."""
+    return sha256_text(canonical_json(record))
+
+
+def audit_correction_owner_pins(decision_ref: str, audit_id: str) -> dict[tuple[str, str], str]:
+    """Read the cited accepted decision's exact validator-record authorizations."""
+    path, unit_id = decision_ref.split("#", 1)
+    canonical, _ = AnchorResolver().content(f"{path}#unit={unit_id}")
+    decision = strict_json_loads(canonical)
+    if decision.get("unit_type") != "decision" or decision.get("status") != "accepted":
+        raise ValueError("decision_ref must resolve to one accepted decision")
+    rows = decision.get("owner_named_rows", [])
+    if not isinstance(rows, list):
+        raise ValueError("decision owner_named_rows must be a list")
+    pins: dict[tuple[str, str], str] = {}
+    seen: set[tuple[str, str, str]] = set()
+    fields = {"audit_id", "source_artifact", "source_row", "record_sha256"}
+    for row in rows:
+        if not isinstance(row, dict) or set(row) != fields:
+            raise ValueError(f"decision owner_named_rows fields must be exactly {sorted(fields)}")
+        if not isinstance(row["audit_id"], str) or not row["audit_id"].strip() \
+                or row["source_artifact"] != "validator_results.json" \
+                or not isinstance(row["source_row"], str) \
+                or not re.fullmatch(r"(?:results|invalid_invocations)\..+", row["source_row"]) \
+                or not isinstance(row["record_sha256"], str) \
+                or not re.fullmatch(r"[0-9a-f]{64}", row["record_sha256"]):
+            raise ValueError("decision owner_named_rows must name validator rows with exact SHA-256 pins")
+        key = (row["audit_id"], row["source_artifact"], row["source_row"])
+        if key in seen:
+            raise ValueError(f"decision owner_named_rows duplicates {key}")
+        seen.add(key)
+        if row["audit_id"] == audit_id:
+            pins[key[1:]] = row["record_sha256"]
+    return pins
+
+
 def validate_audit_correction(
     audit_dir: Path,
     audit_report: dict[str, Any] | None,
@@ -3701,12 +3524,16 @@ def validate_audit_correction(
 
     entries = data["non_actionable_rows"]
     accepted: set[tuple[str, str]] = set()
+    validator_pins: dict[tuple[str, str], str] = {}
     if not isinstance(entries, list):
         fail("non_actionable_rows must be a list")
     else:
         for index, entry in enumerate(entries):
-            if not isinstance(entry, dict) or set(entry) != {"source_artifact", "source_row", "reason"}:
-                fail(f"non_actionable_rows[{index}] fields must be exactly source_artifact, source_row, reason")
+            fields = {"source_artifact", "source_row", "reason"}
+            if isinstance(entry, dict) and entry.get("source_artifact") == "validator_results.json":
+                fields.add("record_sha256")
+            if not isinstance(entry, dict) or set(entry) != fields:
+                fail(f"non_actionable_rows[{index}] fields must be exactly {sorted(fields)}")
                 continue
             artifact, row = entry["source_artifact"], entry["source_row"]
             if not isinstance(artifact, str) or artifact not in sources or isinstance(row, bool) \
@@ -3717,6 +3544,12 @@ def validate_audit_correction(
             if key in accepted:
                 fail(f"duplicates source row {key}")
             accepted.add(key)
+            if artifact == "validator_results.json":
+                digest = entry["record_sha256"]
+                if not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
+                    fail(f"source row {key} record_sha256 must be an exact SHA-256")
+                else:
+                    validator_pins[key] = digest
             if not isinstance(entry["reason"], str) or not entry["reason"].strip():
                 fail(f"source row {key} reason must be non-empty")
             if key in actionable_rows or (artifact, "$") in actionable_rows:
@@ -3725,7 +3558,7 @@ def validate_audit_correction(
                 fail(f"source row {key} is not covered by the matrix")
             # A fabricated matrix key is not a source row, even if inference did not list it.
             try:
-                source = json.loads((audit_dir / artifact).read_text(encoding="utf-8")) if artifact.endswith(".json") else None
+                source = strict_json_loads((audit_dir / artifact).read_text(encoding="utf-8")) if artifact.endswith(".json") else None
                 if artifact.endswith(".jsonl"):
                     lines = _lines((audit_dir / artifact).read_text(encoding="utf-8"))
                     if not str(row).isdigit() or str(row) != str(int(row)) or not 0 < int(row) <= len(lines)                             or not lines[int(row) - 1].strip():
@@ -3735,20 +3568,22 @@ def validate_audit_correction(
                     matches = [item for item in source.get(group, []) if isinstance(item, dict) and item.get("name") == name]
                     if not matches:
                         raise ValueError("validator source row does not exist")
-                    # Positive evidence is required at both levels, regardless of finding flags.
-                    # A single unclean duplicate or an unproven rerun refuses the whole receipt.
-                    if not validator_clean_file(source, label):
-                        raise ValueError("file is actionable or has malformed repair/mutation evidence")
-                    for item in matches:
-                        passed = validator_result_passed(item) if group == "results" else \
-                            validator_superseded_invocation(item, source.get("results", []))
-                        if not validator_clean_record(item, f"{label}:{row}", invalid_invocation=group == "invalid_invocations") or not passed:
-                            raise ValueError("is actionable or lacks clean passing/supersession evidence")
+                    if len(matches) != 1:
+                        raise ValueError("validator source row name is ambiguous; expected exactly one record")
+                    if validator_record_sha256(matches[0]) != entry["record_sha256"]:
+                        raise ValueError("record_sha256 does not match the canonical JSON record")
                 else:
                     # v1 admits only physical JSONL rows and named validator-result rows.
                     raise ValueError("unsupported source-row address")
             except (OSError, ValueError, TypeError, AttributeError) as exc:
                 fail(f"source row {key}: {exc}")
+    if isinstance(data["decision_ref"], str) and re.fullmatch(r"Plans/Decision_Log\.md#DL-[0-9]{3,}", data["decision_ref"]):
+        try:
+            owner_pins = audit_correction_owner_pins(data["decision_ref"], audit_dir.name)
+            if validator_pins != owner_pins:
+                fail("validator-row pins must equal decision owner_named_rows for this audit exactly")
+        except (OSError, ValueError, TypeError) as exc:
+            fail(f"decision owner_named_rows cannot authorize validator rows: {exc}")
     if status is None and not accepted:
         fail("must correct a status or at least one existing non-actionable matrix row")
     if len(errors) != start:
@@ -5944,6 +5779,17 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         finally:
             LEGACY_INVENTORY_SHA256 = saved_pin
             _LEGACY_INVENTORY_CACHE.clear()
+        def write_owner_decision(data: dict[str, Any], *, root: Path = tmp,
+                                 rows: list[dict[str, Any]] | None = None) -> None:
+            if rows is None:
+                rows = [dict(audit_id=data["audit_id"], **{field: entry[field] for field in (
+                    "source_artifact", "source_row", "record_sha256")})
+                    for entry in data["non_actionable_rows"] if entry["source_artifact"] == "validator_results.json"]
+            unit = dict(plan_unit_id="DL-470", unit_type="decision", status="accepted", owner_named_rows=rows)
+            (root / "Plans/Decision_Log.md").write_text(
+                "```yaml\n" + _yaml_module().safe_dump(unit, sort_keys=False) + "```\n", encoding="utf-8")
+
+        write_owner_decision(dict(audit_id="fixture", non_actionable_rows=[]))
         # PLS-027 / DL-470: corrections are atomic, hash-bound explanations, never coverage.
         correction_dir = tmp / "Plans/.audits/audit-correction-fixture"
         correction_dir.mkdir()
@@ -6106,8 +5952,13 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         def json_correction() -> dict[str, Any]:
             data = correction_fixture()
             data["bound_sha256"]["validator_results.json"] = sha256_file(correction_dir / "validator_results.json")
-            data["non_actionable_rows"].extend({"source_artifact": a, "source_row": r, "reason": "Passed or superseded."}
-                                                for a, r in sorted(json_keys))
+            source = optional_json_object(correction_dir / "validator_results.json")
+            for artifact, row in sorted(json_keys):
+                group, name = row.split(".", 1)
+                record = next(item for item in source[group] if item["name"] == name)
+                data["non_actionable_rows"].append(dict(source_artifact=artifact, source_row=row,
+                    reason="The owner judged this record never needed a fix.", record_sha256=validator_record_sha256(record)))
+            write_owner_decision(data)
             return data
 
         def evaluate_receipt(data: dict[str, Any], covered: set[tuple[str, str]] = all_covered) -> tuple[Any, list[str]]:
@@ -6120,6 +5971,110 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                                                classified, covered, all_sources, errors)
             return result, errors
 
+        # Owner authorization and exact record identity replace the former clean-file proof.
+        data = json_correction()
+        result, errors = evaluate_receipt(data)
+        check("correction_owner_named_pinned_json_rows_pass", result is not None and not errors, errors)
+        for name, mutate, expected in (
+            ("missing_record_sha256", lambda d: d["non_actionable_rows"][1].pop("record_sha256"), "record_sha256"),
+            ("wrong_record_sha256", lambda d: d["non_actionable_rows"][1].update(record_sha256="0" * 64), "record_sha256 does not match"),
+            ("malformed_record_sha256", lambda d: d["non_actionable_rows"][1].update(record_sha256=True), "record_sha256 must"),
+            ("unknown_validator_row_field", lambda d: d["non_actionable_rows"][1].update(extra=True), "fields must be exactly"),
+            ("atom_record_sha256", lambda d: d["non_actionable_rows"][0].update(record_sha256="0" * 64), "fields must be exactly"),
+        ):
+            data = json_correction()
+            mutate(data)
+            result, errors = evaluate_receipt(data)
+            check(f"correction_{name}_refused", result is None and any(expected in e for e in errors), errors)
+        for name, mutate in (
+            ("unnamed_validator_row", lambda rows: rows.clear()),
+            ("decision_lacks_row", lambda rows: rows.pop()),
+            ("decision_wrong_hash", lambda rows: rows[0].update(record_sha256="f" * 64)),
+            ("decision_wrong_audit", lambda rows: rows[0].update(audit_id="other-audit")),
+            ("decision_duplicate_row", lambda rows: rows.append(dict(rows[0]))),
+            ("decision_unknown_field", lambda rows: rows[0].update(reason="not in pin schema")),
+        ):
+            data = json_correction()
+            rows = [dict(audit_id=data["audit_id"], **{f: entry[f] for f in (
+                "source_artifact", "source_row", "record_sha256")}) for entry in data["non_actionable_rows"][1:]]
+            mutate(rows)
+            write_owner_decision(data, rows=rows)
+            result, errors = evaluate_receipt(data)
+            check(f"correction_{name}_refused", result is None and any("owner_named_rows" in e for e in errors), errors)
+        data = json_correction()
+        data["non_actionable_rows"] = data["non_actionable_rows"][:1]
+        result, errors = evaluate_receipt(data)
+        check("correction_all_validator_pins_omitted_refused", result is None
+              and any("owner_named_rows" in e for e in errors), errors)
+        data = json_correction()
+        data["non_actionable_rows"].pop()
+        result, errors = evaluate_receipt(data)
+        check("correction_subset_of_owner_pins_refused", result is None
+              and any("owner_named_rows" in e for e in errors), errors)
+        data = json_correction()
+        decision_path = tmp / "Plans/Decision_Log.md"
+        decision_raw = decision_path.read_text()
+        for name, replacement in (
+            ("missing_unit", decision_raw.replace("DL-470", "DL-471")),
+            ("unaccepted_unit", decision_raw.replace("status: accepted", "status: pending")),
+            ("duplicate_unit", decision_raw + decision_raw),
+            ("duplicate_yaml_key", decision_raw.replace("plan_unit_id: DL-470", "plan_unit_id: DL-470\nplan_unit_id: DL-470")),
+        ):
+            decision_path.write_text(replacement)
+            result, errors = evaluate_receipt(data)
+            check(f"correction_decision_{name}_refused", result is None
+                  and any("decision owner_named_rows" in e for e in errors), errors)
+        decision_path.write_text(decision_raw)
+        result, errors = evaluate_receipt(json_correction(), all_covered - {("validator_results.json", "results.passing")})
+        check("correction_pinned_validator_still_requires_coverage", result is None
+              and any("not covered by the matrix" in e for e in errors), errors)
+        # These legacy-shaped receipts were false accepts at 3a1775369a. Refuse
+        # missing pins for either group, including an otherwise-passing duplicate.
+        for name, duplicate_group in (("unpinned_result", None), ("unpinned_invalid_invocation", None),
+                                      ("unpinned_ambiguous_duplicate_result", "results")):
+            source = dict(validator_source)
+            if duplicate_group is not None:
+                source[duplicate_group] = [dict(validator_source[duplicate_group][0]) for _ in range(2)]
+            write_json(correction_dir / "validator_results.json", source)
+            data = json_correction()
+            target = "invalid_invocations" if name == "unpinned_invalid_invocation" else "results"
+            entry = next(row for row in data["non_actionable_rows"]
+                         if str(row["source_row"]).startswith(target + "."))
+            entry.pop("record_sha256")
+            result, errors = evaluate_receipt(data)
+            check(f"correction_{name}_refused", result is None
+                  and any("record_sha256" in e for e in errors), errors)
+        write_json(correction_dir / "validator_results.json", validator_source)
+        # Canonical pins ignore whitespace/key order and preserve Unicode exactly.
+        unicode_record = dict(validator_source["results"][0], notes="owner says café / 日本語")
+        reordered = dict(reversed(list(unicode_record.items())))
+        check("validator_record_pin_canonical_utf8", validator_record_sha256(unicode_record) == validator_record_sha256(reordered)
+              == hashlib.sha256(json.dumps(unicode_record, sort_keys=True, separators=(",", ":"),
+                  ensure_ascii=False).encode("utf-8")).hexdigest())
+        for group, record in (("results", validator_source["results"][0]),
+                              ("invalid_invocations", validator_source["invalid_invocations"][0])):
+            duplicate_source = dict(validator_source, **{group: [record, dict(record)]})
+            write_json(correction_dir / "validator_results.json", duplicate_source)
+            result, errors = evaluate_receipt(json_correction())
+            check(f"correction_ambiguous_{group}_pin_refused", result is None
+                  and any("name is ambiguous" in e for e in errors), errors)
+        write_json(correction_dir / "validator_results.json", validator_source)
+        # Reading the real receipt also checks all 16 rows and the unchanged June sources.
+        real_dir = saved_root / "Plans/.audits/audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity"
+        ROOT = saved_root
+        try:
+            real_sources = [name for name in DEFAULT_AUDIT_SOURCE_ARTIFACTS if (real_dir / name).exists()]
+            real_errors: list[str] = []
+            real_actionable = {(artifact, row) for artifact in real_sources for row in actionable_artifact_rows(
+                real_dir / artifact, artifact, real_errors, compat_words=True)}
+            real_covered = {source_row_key(row["source_artifact"], row["source_row"]) for row in read_jsonl(
+                real_dir / "repair_closure_matrix.jsonl", real_errors, required=True)}
+            real_result = validate_audit_correction(real_dir, optional_json_object(real_dir / "audit_report.json"),
+                real_actionable, real_covered, real_sources, real_errors)
+            check("correction_real_audit004_receipt_passes", real_result is not None and not real_errors
+                  and len(real_result["non_actionable_rows"]) == 16, real_errors)
+        finally:
+            ROOT = tmp
         result, errors = evaluate_receipt(json_correction())
         check("correction_named_json_rows_pass", result is not None and not errors, errors)
         for name, update in (
@@ -6215,8 +6170,7 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         check("correction_symlink_bound_source_fails", result is None and any("without symlinks" in e for e in errors), errors)
         bound.unlink()
         moved_bound.rename(bound)
-        # Full CLI regressions: a valid registry and effective projection must not let a
-        # hash-bound receipt turn failed or malformed validator evidence into a pass.
+        # Full CLI regressions use a valid registry and current effective projection.
         cli_root = tmp / "correction-cli"
         cli_script = cli_root / "scripts/pm-audit-closure.py"
         cli_script.parent.mkdir(parents=True)
@@ -6227,16 +6181,15 @@ def cmd_self_test(args: argparse.Namespace) -> int:
         family_types: dict[str, str] = {}
         for typ, family in CURRENT_SCOPE_ROW_TYPE_FAMILIES.items():
             family_types.setdefault(family, typ)
+        r4_finding = dict(_self_test_registry_row(), repair_required=True, finding_level="error")
+        invalid = {"status": "invalid_invocation", "cmd": "validator",
+                   "superseded_by": "rerun with --run-dir fixture"}
+        rerun = {"name": "rerun", "status": "pass", "cmd": "validator --run-dir fixture"}
         cli_cases = [
-            ("failed_invocation", "invalid_invocations", {"status": "fail", "returncode": 1}, {}, [], False),
             ("failed_explicit_false", "results", {"status": "fail", "returncode": 1,
-                                                   "repair_required": False, "finding_level": "info"}, {}, [], False),
+                "repair_required": False, "finding_level": "info"}, {}, [], False),
             ("artifact_mutation", "results", {"status": "pass"}, {"repair_required": False,
                 "finding_level": "info", "non_audit_side_effects": ["Plans/Fixture.md"]}, [], False),
-            ("float_count", "results", {"status": "pass", "side_effect_count": 1.0}, {}, [], False),
-            ("string_count", "results", {"status": "pass", "side_effect_count": "1"}, {}, [], False),
-            ("negative_count", "results", {"status": "pass", "side_effect_count": -1}, {}, [], False),
-            ("bool_count", "results", {"status": "pass", "side_effect_count": False}, {}, [], False),
             ("missing_status", "results", {}, {}, [], False),
             ("blocked_status", "results", {"status": "blocked"}, {}, [], False),
             ("unknown_status", "results", {"status": "unknown"}, {}, [], False),
@@ -6245,83 +6198,34 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             ("zero_count", "results", {"status": "pass", "side_effect_count": 0}, {}, [], True),
             ("absent_count", "results", {"status": "pass"}, {}, [], True),
             ("exit_zero", "results", {"exit_code": 0}, {}, [], True),
-            ("positive_count", "results", {"status": "pass", "side_effect_count": 1}, {}, [], False),
-        ]
-        invalid = {"status": "invalid_invocation", "cmd": "validator",
-                   "superseded_by": "rerun with --run-dir fixture"}
-        rerun = {"name": "rerun", "status": "pass", "cmd": "validator --run-dir fixture"}
-        cli_cases.extend([
-            ("invalid_without_rerun", "invalid_invocations", invalid, {}, [], False),
+            ("bool_exit_code", "results", {"exit_code": False}, {}, [], False),
+            ("float_exit_code", "results", {"exit_code": 0.0}, {}, [], False),
+            ("invalid_without_rerun_owner_judgment", "invalid_invocations", invalid, {}, [], True),
             ("invalid_with_rerun", "invalid_invocations", invalid, {}, [rerun], True),
-            ("invalid_without_link", "invalid_invocations", {"status": "invalid_invocation", "cmd": "validator"},
-             {}, [dict(rerun, name="subject")], False),
-            ("invalid_wrong_command", "invalid_invocations", invalid, {}, [dict(rerun, cmd="other")], False),
-            ("invalid_failed_rerun", "invalid_invocations", invalid, {}, [dict(rerun, status="fail")], False),
-            ("invalid_dirty_rerun", "invalid_invocations", invalid, {}, [dict(rerun, side_effects=["Plans/Fixture.md"])], False),
-            ("invalid_duplicate_rerun", "invalid_invocations", invalid, {}, [rerun, dict(rerun, status="fail")], False),
-        ])
+            ("invalid_without_link_owner_judgment", "invalid_invocations", {"status": "invalid_invocation", "cmd": "validator"},
+                {}, [], True),
+            ("owner_judged_freeform_fields", "results", {"status": "pass", "notes": "Owner assessed the run.",
+                "unmodeled_record_context": {"text": "not classified by the validator"}},
+                {"unmodeled_file_context": {"text": "not a cleanliness proof"}}, [], True),
+            ("duplicate_same_result", "results", {"status": "pass"}, {},
+                [{"name": "subject", "status": "pass"}], False),
+            ("duplicate_failed_result", "results", {"status": "pass"}, {},
+                [{"name": "subject", "status": "fail"}], False),
+            ("r4_actionable_findings", "results", {"status": "pass"}, {"findings": [r4_finding]}, [], False),
+        ]
+        cli_cases.extend((name, "results", {"status": "pass"}, {}, [], False) for name in (
+            "missing_record_sha256", "wrong_record_sha256", "unnamed_validator_row", "decision_lacks_row",
+            "decision_wrong_hash", "extra_owner_row"))
         for field, value in (("side_effect_count", 1.0), ("side_effect_count", "1"), ("side_effect_count", -1),
-                             ("side_effect_count", False), ("side_effects", ["Plans/Fixture.md"]),
-                             ("repair_required", True)):
+                             ("side_effect_count", False), ("side_effect_count", 1),
+                             ("side_effects", ["Plans/Fixture.md"]), ("repair_required", True)):
             extra = {field: value}
             if field == "repair_required":
                 extra["finding_level"] = "warning"
+            for group in ("results", "invalid_invocations"):
+                cli_cases.append((f"record_{group}_{field}_{value!r}", group,
+                    dict(status="pass" if group == "results" else "invalid_invocation", **extra), {}, [], False))
             cli_cases.append((f"file_{field}_{value!r}", "results", {"status": "pass"}, extra, [], False))
-        cli_cases.extend([
-            ("file_zero_count", "results", {"status": "pass"}, {"side_effect_count": 0}, [], True),
-            ("duplicate_failed_result", "results", {"status": "pass"}, {},
-             [{"name": "subject", "status": "fail"}], False),
-            ("bool_exit_code", "results", {"exit_code": False}, {}, [], False),
-            ("float_exit_code", "results", {"exit_code": 0.0}, {}, [], False),
-        ])
-        # r4 regressions exercise the actual CLI, with a valid registry, current scope
-        # coverage, real file hashes and a row-only receipt. Retaining these tests while
-        # reverting the clean-file implementation must expose the former false passes.
-        r4_finding = dict(_self_test_registry_row(), repair_required=True, finding_level="error")
-        cli_cases.extend([
-            ("r4_summary_side_effect_count", "results", {"status": "pass"}, {"summary": {"side_effect_count": 1}}, [], False),
-            ("r4_file_status_fail", "results", {"status": "pass"}, {"status": "fail"}, [], False),
-            ("r4_summary_fail", "results", {"status": "pass"}, {"summary": {"fail": 1}}, [], False),
-            ("r4_actionable_findings", "results", {"status": "pass"}, {"findings": [r4_finding]}, [], False),
-            ("r4_unknown_top_key", "results", {"status": "pass"}, {"unmodeled_mutation": 1}, [], False),
-            ("r4_unknown_summary_key", "results", {"status": "pass"}, {"summary": {"unmodeled_count": 1}}, [], False),
-            ("r4_bool_summary_failure_count", "results", {"status": "pass"}, {"summary": {"fail": False}}, [], False),
-            ("r4_float_summary_failure_count", "results", {"status": "pass"}, {"summary": {"fail": 0.0}}, [], False),
-            ("r4_bool_summary_pass_count", "results", {"status": "pass"}, {"summary": {"pass": True}}, [], False),
-            ("r4_float_summary_pass_count", "results", {"status": "pass"}, {"summary": {"pass": 1.0}}, [], False),
-            ("r4_negative_summary_pass_count", "results", {"status": "pass"}, {"summary": {"pass": -1}}, [], False),
-            ("r4_unknown_record_key", "results", {"status": "pass", "unmodeled_mutation": 1}, {}, [], False),
-            ("r4_unknown_finding_key", "results", {"status": "pass"},
-                {"findings": [{"repair_required": False, "finding_level": "info", "unmodeled_mutation": 1}]}, [], False),
-            ("r4_summary_wrong_shape", "results", {"status": "pass"}, {"summary": []}, [], False),
-            ("r4_summary_status_fail", "results", {"status": "pass"}, {"summary": {"status": "fail"}}, [], False),
-        ])
-
-        def clean_sample(rule: str) -> Any:
-            if rule == "summary":
-                return {key: clean_sample(policy) for key, policy in VALIDATOR_CLEAN_SUMMARY_FIELDS.items()}
-            return {"text": "fixture", "texts": [], "integer": 0, "count": 1, "zero": 0,
-                    "duration": 0.0, "false": False, "true": True, "pass": "pass", "non_error_level": "info",
-                    "terminal_classification": "exact_present", "no_effects": [], "empty_list": [],
-                    "empty_object": {}, "false_or_empty_list": [], "empty_text": "", "empty_object_or_text": {},
-                    "snapshot": [], "clean_status": "clean", "environment": {"PYTHONPATH": "fixture"},
-                    "status_counts": {"pass": 1}, "findings": [], "record_warnings": [],
-                    "results": [], "invalid_invocations": []}[rule]
-
-        every_file_key = {key: clean_sample(policy) for key, policy in VALIDATOR_CLEAN_FILE_FIELDS.items()
-                          if key not in AUDIT_REF_FIELDS}
-        every_file_key["results"] = [{"name": "subject", "status": "pass"}]
-        every_record_key = {key: clean_sample(policy) for key, policy in VALIDATOR_CLEAN_RECORD_FIELDS.items()
-                            if key not in {*AUDIT_REF_FIELDS, "name"}}
-        cli_cases.extend([
-            ("r4_every_allowed_file_key", "results", {"status": "pass"}, every_file_key, [], True),
-            ("r4_every_allowed_record_key", "results", every_record_key, {}, [], True),
-            ("r4_audit004_shape", "invalid_invocations", dict(invalid, returncode=2, stdout="", stderr="usage",
-                side_effects=[], env_overrides={"PYTHONPATH": "fixture"}, git_status_before=[], git_status_after=[]),
-                {"created_at_utc": "2026-06-19T04:50:00Z", "summary": {"fail": 0, "invalid_invocation_count": 1,
-                    "pass": 13, "side_effect_count": 0}}, [dict(rerun, returncode=0, side_effects=[], stdout="", stderr="",
-                    git_status_before=[], git_status_after=[], rerun_after_final_artifact_update=True)], True),
-        ])
         # Finding children use the same classifier with and without a correction. A false
         # artifact flag never hides a child; error levels and mutation evidence remain binding.
         for field in VALIDATOR_FINDING_CHILDREN:
@@ -6337,14 +6241,6 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                 child_rows = actionable_json_rows(probe, "validator_results.json", child_errors)
                 check(f"validator_child_{field}_{suffix}_classified", child_rows == [f"{field}[0]"] and not child_errors,
                       {"rows": child_rows, "errors": child_errors})
-            for suffix, child in (
-                ("clean", {"repair_required": False, "finding_level": "info"}),
-                ("malformed_repair", {"repair_required": "false", "finding_level": "info"}),
-                ("malformed_level", {"repair_required": False, "finding_level": []}),
-                ("malformed_side_effect", {"repair_required": False, "finding_level": "info", "side_effect_count": False}),
-            ):
-                check(f"validator_child_{field}_{suffix}_clean_proof",
-                      validator_clean_file({field: [child]}, "fixture") == (suffix == "clean"))
         for case_index, (name, group, item, extra, reruns, accepted) in enumerate(cli_cases):
             d = cli_root / "Plans/.audits" / f"case-{case_index}"
             d.mkdir()
@@ -6369,7 +6265,23 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                 bound_sha256={f: sha256_file(d / f) for f in (
                     "audit_report.json", "repair_closure_matrix.jsonl", "validator_results.json")},
                 non_actionable_rows=[dict(source_artifact="validator_results.json", source_row=address,
-                                         reason="The recorded validator evidence is clean.")])
+                                         reason="The owner judged this record never needed a fix.",
+                                         record_sha256=validator_record_sha256(dict(name="subject", **item)))])
+            write_owner_decision(receipt, root=cli_root)
+            if name == "missing_record_sha256":
+                receipt["non_actionable_rows"][0].pop("record_sha256")
+            elif name == "wrong_record_sha256":
+                receipt["non_actionable_rows"][0]["record_sha256"] = "0" * 64
+            elif name in ("unnamed_validator_row", "decision_lacks_row"):
+                write_owner_decision(receipt, root=cli_root, rows=[])
+            elif name == "decision_wrong_hash":
+                owner_row = dict(audit_id=d.name, **{f: receipt["non_actionable_rows"][0][f] for f in (
+                    "source_artifact", "source_row", "record_sha256")})
+                write_owner_decision(receipt, root=cli_root, rows=[dict(owner_row, record_sha256="f" * 64)])
+            elif name == "extra_owner_row":
+                owner_row = dict(audit_id=d.name, **{f: receipt["non_actionable_rows"][0][f] for f in (
+                    "source_artifact", "source_row", "record_sha256")})
+                write_owner_decision(receipt, root=cli_root, rows=[owner_row, dict(owner_row, source_row="results.other")])
             # Projection generation and both CLI calls use the same isolated repository.
             ROOT = cli_root
             try:
@@ -6394,6 +6306,12 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             if accepted:
                 okay = okay and after_code == 0 and after["status"] == "pass" and not after["errors"] \
                     and "audit_correction" in after_audit
+            elif name in {"artifact_mutation", "r4_actionable_findings"} or name.startswith("file_side_effect"):
+                # A different actionable file row still needs closure. Accepting the
+                # owner's named record does not excuse that row's missing coverage.
+                okay = okay and after_code == 1 and after["status"] == "fail" \
+                    and "audit_correction" in after_audit and bool(after_audit["missing_coverage"]) \
+                    and all(row["source_row"] != address for row in after_audit["missing_coverage"])
             else:
                 okay = okay and after_code == 1 and after["status"] == "fail" \
                     and "audit_correction" not in after_audit and any("audit correction" in e for e in after["errors"])

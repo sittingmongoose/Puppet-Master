@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L29278
+Source lines: L26794-L29345
 
-Source SHA256: `80975d33c2c483b72b984b471d074903221bcd3df8768605625caa648007b56e`
+Source SHA256: `555d227dcdfdb0743789d2cb1b544cc707d2b86b4b0444205df3b6333d676034`
 
 ---
 
@@ -2452,14 +2452,79 @@ canonical_text: >-
   "Also repair anything that needs to be repaired". PLS-027 implements the append-only correction for
   audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity: preserve the June files, correct the original
   PASS_WITH_WARNINGS to BLOCKED for its five actionable source rows, and identify the 16 matrix-covered rows
-  that never required repair. The 14 previously_closed atom-fidelity rows already reported no unclosed gap;
-  the invalid migration invocation was superseded within the audit; and the passing audit-closure check's
-  skipped-matrix warning was audit housekeeping. Registry row 280 remains the historical record of adding
-  the matrix, not evidence that its passing source result needed a canonical repair. No matrix or registry
-  row is removed or relabelled, no missing coverage is excused, and no evidence hash is restamped. Check the
-  five repairs and the whole closure chain against current text and repair bounded defects separately in the
-  same packet, listing every repair. Existing registry staleness still needs PLS-025 re-audit evidence; the
-  correction alone cannot clear it, reseal governance or authorize runtime/build work.
+  that never required repair. On 2026-11-09 about 04:35Z, Jared answered exactly "Owner-named rows only (Recommended)"
+  through pm7-build (pm-mail relay 1109044810-9b5f). These 16 exemptions are the owner's judgment on the record,
+  individually named below in owner_judged_rows. The 14 previously_closed atom-fidelity rows already reported no
+  unclosed gap; the invalid migration invocation was superseded within the audit; and the passing audit-closure
+  check's skipped-matrix warning was audit housekeeping. For each validator-results record, whether it "never
+  needed a fix" is the owner's per-record judgment; owner_named_rows names the exact two records and their
+  canonical JSON SHA-256 pins. The validator checks those pins, exact list equality for the audit, matrix coverage
+  and its classifier; it does not prove cleanliness from free-form evidence. Registry row 280 remains the
+  historical record of adding the matrix, not evidence that its passing source result needed a canonical repair.
+  No matrix or registry row is removed or relabelled, no missing coverage is excused, and no evidence hash is
+  restamped. Check the five repairs and the whole closure chain against current text and repair bounded defects
+  separately in the same packet, listing every repair. Existing registry staleness still needs PLS-025 re-audit
+  evidence; the correction alone cannot clear it, reseal governance or authorize runtime/build work.
+owner_judged_rows:
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 2
+  reason: "Rename Chain Wizard and Plan Wizard to Planning Wizard: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 8
+  reason: "Planning Wizard uses one typed thread family: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 83
+  reason: "Discover project-local test capabilities before WorkNode binding: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 84
+  reason: "Research current testing methods online: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 85
+  reason: "Record online testing research provenance: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 101
+  reason: "Use exact final action label Approve And Build: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 102
+  reason: "Approval freezes an immutable Approved Plan Pack: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 103
+  reason: "Approved plans and indexes are downstream authority: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 104
+  reason: "Approval transaction is atomic and outbox-backed: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 105
+  reason: "PlanApproved is idempotent: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 106
+  reason: "Automatically launch Plan Compile after approval: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 107
+  reason: "Navigate immediately to Orchestrator Plan Compile: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 109
+  reason: "Preserve design-only v1 and add runtime-capable v2: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: atom_fidelity_matrix.jsonl
+  source_row: 110
+  reason: "Runtime contract carries explicit launch and adapter policy: status compiled_to_plan, classification previously_closed, no missing exact tokens or negative constraints; source notes say closed/revalidated without reopening."
+- source_artifact: validator_results.json
+  source_row: invalid_invocations.pm_plan_migration_validate
+  reason: "Superseded invalid invocation: missing --run-dir caused returncode 2 with no side effects; the corrected pm_plan_migration_validate invocation passed in the same audit."
+  record_sha256: 88a0f3c54d5e3e0c59f6a10ba8644228f275087db986bb1de26b20edcce1f10d
+- source_artifact: validator_results.json
+  source_row: results.pm_audit_closure_validate_audit_004
+  reason: "The source result is status pass, returncode 0, no side effects."
+  record_sha256: 5ff3757ec7b5b357950eff8afd0c6e6efef5cdbeb7bddea66404b0d5f91142f7
+owner_named_rows:
+- audit_id: audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity
+  source_artifact: validator_results.json
+  source_row: invalid_invocations.pm_plan_migration_validate
+  record_sha256: 88a0f3c54d5e3e0c59f6a10ba8644228f275087db986bb1de26b20edcce1f10d
+- audit_id: audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity
+  source_artifact: validator_results.json
+  source_row: results.pm_audit_closure_validate_audit_004
+  record_sha256: 5ff3757ec7b5b357950eff8afd0c6e6efef5cdbeb7bddea66404b0d5f91142f7
 gui_related: false
 gui_classification_reason: Records an audit-governance decision with no GUI change.
 split_recommended: false
@@ -2482,10 +2547,12 @@ node_compile_hint:
   create_worknodes: false
   create_nodeseeds: false
 source_lineage:
+- 'Jared, 2026-11-09 about 04:35Z, via pm7-build (pm-mail relay 1109044810-9b5f): "Owner-named rows only (Recommended)".'
 - 'Jared, 2026-11-08 about 22:45Z, via pm7-build (relay 1108225102-4e43): "Append a correction";
   "Also repair anything that needs to be repaired" (stream C question 2).'
 - /mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q2-audit004/BRIEF.md
 preserved_exact_tokens:
+- Owner-named rows only (Recommended)
 - DL-470
 - Append a correction
 - Also repair anything that needs to be repaired
