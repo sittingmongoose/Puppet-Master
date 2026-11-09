@@ -112,6 +112,8 @@ async function run(t, mode) {
 				const shot = async (m) => { await f.evaluate(PAINT5, m); await t.page.waitForTimeout(50); return decodePng(await t.page.screenshot({ clip, animations: 'disabled', caret: 'hide' })); };
 				const A = await shot(''), B = await shot('g'), C = c.frame.point ? null : await shot('f');
 				await f.evaluate(PAINT5, '');
+				if (t.args.crops && c.prop === 'restore' && c.frame.point) await t.crop(`restore-visible-face-${look}-${mode}`,
+					{ x: off.x + built.x + 156, y: off.y + built.y + 160, width: 168, height: 168 }, 'Restore emblem centred in the visible face below its lid, native 2 px per prop unit');
 				const g = inkBox(A, B);
 				const fc = c.frame.point ? { cx: (120 + c.frame.point[0]) * SCALE, cy: (120 + c.frame.point[1]) * SCALE } : inkBox(A, C);
 				if (!g || !fc) { fails.push(`${c.id}: ${!g ? 'no symbol ink' : 'no frame ink'}`); continue; }
@@ -121,7 +123,7 @@ async function run(t, mode) {
 			}
 			await f.evaluate(UNBUILD);
 			t.log(`${look}: ${log.join('; ')}`);
-			t.check(`${look}: every framed stage symbol centred (${CASES.length} cases, ${TOL} units)`, !fails.length, fails.slice(0, 8).join(' | '));
+			await t.check(`${look}: every framed stage symbol centred (${CASES.length} cases, ${TOL} units)`, !fails.length, fails.slice(0, 8).join(' | '));
 		});
 	}
 }
