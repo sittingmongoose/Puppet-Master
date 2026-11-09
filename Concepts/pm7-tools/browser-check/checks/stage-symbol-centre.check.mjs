@@ -52,7 +52,9 @@ const CASES = [
 	{ id: 'orb: label in its circle', prop: 'orb', params: { lit: true, label: 'Cl', hue: 'e' }, frame: { r: 22 }, glyph: { tag: 'text' } },
 	{ id: 'qr: finder in its corner', prop: 'qr', frame: { idx: [1] }, glyph: { idx: [2, 3] } },
 	{ id: 'key: hole in its bow', prop: 'key', frame: { point: [-20, 0] }, glyph: { idx: [1] } },
-	{ id: 'globe: meridians in its circle', prop: 'globe', frame: { idx: [0] }, glyph: { idx: [1] } }
+	{ id: 'globe: meridians in its circle', prop: 'globe', frame: { idx: [0] }, glyph: { idx: [1] } },
+	/* the card's face below its header bar, x -40..40, y -20..34 (sol-review-b9a): the branch graph's line, curve and three commits */
+	{ id: 'forge: graph in its card', prop: 'forge', frame: { point: [0, 7] }, glyph: { idx: [4, 5, 6, 7, 8] } }
 ];
 
 /* build one prop in the harness and mark its frame (qa5-f) and symbol (qa5-g); returns the harness's rect */
