@@ -96,6 +96,10 @@
 /* a note needs the room above Pip on a small stage: the bubble steps aside while it is open */
 #pm-o55-onboarding .pst-bubble.pst-hush { opacity: 0; transition: opacity .25s; }
 #pm-o55-onboarding .pst-bt-off { visibility: hidden; }
+/* VT323's fi/ff/fl ligatures occupy one cell instead of two. Typing splits the line into shown/hidden spans;
+   crossing that pair otherwise widens it by one cell for a frame and moves the speech anchor (QA-4).
+   Keep character cells identical before, during and after typing, including the note's same text renderer. */
+#pm-o55-onboarding .pst[data-tube="phosphor"] :is(.pst-bubble, .pst-tip) { font-variant-ligatures: none; }
 @keyframes pstBubble { from { opacity: 0; scale: .6; } to { opacity: 1; scale: 1; } }
 /* The tail comes out of the bubble (Jared, QA round 2, Q10): one triangle in the bubble's fill that starts on the
    bubble's own edge and covers its line where the tail joins, and behind it one triangle a line wider in the bubble's

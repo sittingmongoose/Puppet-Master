@@ -96,7 +96,7 @@ function judge(frames) {
 async function run(t, route, defaultLooks, defaultSizes) {
  // A previous exported test can leave the recording on its opaque wrapper.
  // Establish a fresh app frame before asking the recording to size it.
- if(t.recording) await t.goto('about:blank');
+ if(t.recording) { await t.viewport(); await t.goto('about:blank'); }
  const sizes=String(t.args.sizes||defaultSizes).split(',').map(s=>s.split('x').map(Number));
  const looks=String(t.args.looks||defaultLooks).split(','), out=[];
  for(const mode of t.app.surfaces()) for(const look of looks) for(const size of sizes) {
