@@ -14,8 +14,8 @@ const luma = (a, p) => .2126 * a.data[p * 4] + .7152 * a.data[p * 4 + 1] + .0722
 
 // A plain patch inside a real surface, with room for an 11..19 px annulus clear of text, art and box edges.
 // A second point, on the SAME box but far from the patch, preserves its ordinary hover state in the reference frame.
-async function ground(f, selectors) {
- return f.evaluate(selectors => {
+async function ground(f, selectors, plainRoot = false) {
+ return f.evaluate(({selectors,plainRoot}) => {
   for (const sel of selectors) for (const [index,e] of [...document.querySelectorAll(sel)].entries()) {
    const b = e.getBoundingClientRect();
    if (b.width < 190 || b.height < 65 || b.left < 0 || b.top < 0 || b.bottom > innerHeight || b.right > innerWidth) continue;
@@ -26,8 +26,20 @@ async function ground(f, selectors) {
     obstacles.push(...[...r.getClientRects()].filter(r => r.width && r.height));
    }
    for (const n of e.querySelectorAll('svg,canvas,img,input,textarea,button,[role="button"]')) obstacles.push(n.getBoundingClientRect());
+   const groundCache=new WeakMap();
+   const isGround = hit => {
+    if(!hit||!e.contains(hit))return false;
+    if(groundCache.has(hit))return groundCache.get(hit);
+    let clear=true;
+    for(let n=hit;n&&n!==e;n=n.parentElement){
+     const c=getComputedStyle(n);
+     if(n.matches('svg,canvas,img,input,textarea,button,a,[role="button"],[data-action],[data-hover-tip],.orbit-stage,.turn-stage,.pmx-plate,[class*="orbit-"]')||c.backgroundImage!=='none'||c.backgroundColor!=='rgba(0, 0, 0, 0)'||c.boxShadow!=='none'){clear=false;break;}
+    }
+    groundCache.set(hit,clear);return clear;
+   };
    const clear = (x, y) => {
     const hit = document.elementFromPoint(x, y);
+    if(plainRoot && ![[0,0],[-22,0],[22,0],[0,-22],[0,22],[-22,-22],[22,-22],[-22,22],[22,22]].every(([dx,dy])=>isGround(document.elementFromPoint(x+dx,y+dy))))return false;
     return hit && e.contains(hit) && !obstacles.some(r => r.width && r.height && x > r.left - 24 && x < r.right + 24 && y > r.top - 24 && y < r.bottom + 24);
    };
    const ys=[b.top+b.height/2];for(let y=b.top+45;y<b.bottom-40;y+=12)ys.push(y);
@@ -37,18 +49,18 @@ async function ground(f, selectors) {
     for (const fx of [b.left + 30, b.right - 30]) {
      const fy = Math.min(b.bottom - 25, Math.max(b.top + 25, y));
      const hit = document.elementFromPoint(fx, fy);
-     if (Math.hypot(fx - x, fy - y) < 140 || !hit || !e.contains(hit)) continue;
+     if (Math.hypot(fx - x, fy - y) < 140 || !hit || !e.contains(hit) || (plainRoot && !isGround(hit))) continue;
      return { index, x: Math.round(x), y: Math.round(y), far: [fx, fy], selector: sel,
       box: { x:b.x,y:b.y,width:b.width,height:b.height }, kind: e.getAttribute('data-pmh-kind') };
     }
    }
   }
   return null;
- }, selectors);
+ }, {selectors,plainRoot});
 }
 
-async function circle(t, f, place, selectors, attempt = 0) {
- const g = await ground(f, selectors);
+async function circle(t, f, place, selectors, attempt = 0, plainRoot = false) {
+ const g = await ground(f, selectors, plainRoot);
  await t.check(`${place}: real plain ground found`, !!g, JSON.stringify(g), { hard: true });
  const target = f.locator(g.selector).nth(g.index);
  // Locator boxes include the sandbox frame's offset. Browser evaluation coordinates are local to the app.
@@ -69,7 +81,7 @@ async function circle(t, f, place, selectors, attempt = 0) {
  t.log(`${place}: annulus ${JSON.stringify(m)}`);
  // A material bake/entry may finish during the sample. Re-find plain ground and wait for stable paint, bounded.
  // A stable frame that contains glow is never retried: it fails the paint assertion immediately.
- if(stable<total*.95&&attempt<2){await pause(f,500);return circle(t,f,place,selectors,attempt+1);}
+ if(stable<total*.95&&attempt<2){await pause(f,500);return circle(t,f,place,selectors,attempt+1,plainRoot);}
  await t.check(`${place}: resting-pointer ring is clear of motion`,stable>=total*.95,JSON.stringify(m));
  await t.check(`${place}: no glow paint around resting pointer`,stable>0&&changed/stable<.02&&sum/stable<.6,JSON.stringify(m));
  const layers={overlays:await f.locator('#lg-shine,#pm8-spot,#pm8-spotlight').count(),reader:await target.evaluate(e=>{
@@ -136,14 +148,14 @@ export default async function(t){
  const standalone=t.args.standalone==='1';
  for(const look of list(t.args.looks,LOOKS)){
   const f=standalone?await (async()=>{const u=t.args.page; if(t.app.sandboxed())await t.openInSandbox(u);else await t.goto(u);await t.until('standalone ready',()=>!!window.__PM56_BOOT_OK);return t.root;})():await t.app.open();
-  if(standalone){await f.evaluate(k=>PM56_DEMO.setTheme(k),look);await pause(f,1800);}
+  if(standalone){await f.evaluate(k=>PM56_DEMO.setTheme(k),look);await pause(f,1800);const applied=await f.evaluate(()=>({theme:PM56_DEMO.getState().theme,body:document.body.dataset.theme,nier:!!window.PM_NIER?.on()}));await t.check(`${look}: standalone look applied`,applied.theme===look&&applied.body===(look.startsWith('nier-')?'basic-'+look.split('-')[1]:look)&&applied.nier===look.startsWith('nier-'),JSON.stringify(applied),{hard:true});}
   else {await t.app.look(look);await pause(f,1000);}
   await f.evaluate(()=>window.PM56_DEMO?.completeWorking());await pause(f,600);
   const places=list(t.args.places,standalone?['chat']:['shell','usage','chat','settings','onboarding']);
   for(const place of places)await t.step(`${look} ${place}`,async()=>{
    if(place==='shell'){await f.locator('#tab-projects').click();await pause(f,1200);await circle(t,f,place,['#panel-projects .pm6-proj-card']);await edge(t,f,look,'#panel-projects .pm6-proj-card','Project');}
    if(place==='usage'){await f.locator('#tab-usage').click();await pause(f,1400);await circle(t,f,place,['#panel-usage .pmu-card:not([data-head="band"])']);await edge(t,f,look);}
-   if(place==='chat')await circle(t,f,place,['#pmRoot .transcript','.transcript']);
+   if(place==='chat')await circle(t,f,place,['#pmRoot .transcript','.transcript'],0,standalone);
    if(place==='settings'){await f.locator('#tab-settings').click();await pause(f,1800);await t.app.look(look);await circle(t,f,place,['#pm-settings-root .main-scroll','#pm-settings-root main','#pm-settings-root .settings-main','#pm-settings-root']);}
    if(place==='onboarding'){await f.evaluate(()=>O55.studio.onboarding.screen('where','fresh'));await f.waitForFunction(()=>{const r=document.getElementById('pm-o55-onboarding');return r&&!r.hasAttribute('data-o55nw-cold')&&!r.hasAttribute('data-o55nw-go')&&!r.classList.contains('o55-opening')&&!r.querySelector('.o55-pane > .o55-layer.o55-out,.o55-pane > .o55-layer.o55-entering')&&!O55.S.vt;},null,{timeout:30000});await pause(f,300);await circle(t,f,place,['#pm-o55-onboarding .o55-card:not(.o55-card-parent)']);}
   });
