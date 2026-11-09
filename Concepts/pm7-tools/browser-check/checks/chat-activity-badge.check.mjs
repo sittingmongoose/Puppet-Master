@@ -101,17 +101,34 @@ async function ink(t, f, tag) {
   const loc = f.locator(selector);
   if (!await loc.count()) return; // inspect has already failed the missing host on the baseline.
   // Compare actual ink with that same paused frame with only its svg hidden: tile/background cannot pass for ink.
-  await f.evaluate(sel => { const e=document.querySelector(sel); window.__fo120.paused=e.closest('.orbit-stage').getAnimations({subtree:true}).filter(a=>a.playState==='running'); window.__fo120.paused.forEach(a=>a.pause()); }, selector);
+  await loc.scrollIntoViewIfNeeded();
+  await f.evaluate(async sel => {
+    const stage=document.querySelector(sel).closest('.orbit-stage');
+    await Promise.all(stage.getAnimations({subtree:true}).filter(a=>a.effect&&Number.isFinite(a.effect.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));
+    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+    window.__fo120.paused=document.querySelector(sel).closest('.orbit-stage').getAnimations({subtree:true}).filter(a=>a.playState==='running');
+    window.__fo120.paused.forEach(a=>a.pause());
+  }, selector);
   const painted=()=>f.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   await painted();
-  const on = await t.pixels(loc);
+  const box=await loc.boundingBox(),viewportWidth=await t.window.evaluate(()=>innerWidth);
+  // Full native captures avoid a clipped compositor read during an opaque frame's just-settled layout.
+  // Both crops use the same window rectangle; no extra scroll or layout measurement happens inside capture.
+  const read=async()=>{
+    const img=await t.pixels(),scale=img.width/viewportWidth,x=Math.floor(box.x*scale),y=Math.floor(box.y*scale);
+    const width=Math.ceil((box.x+box.width)*scale)-x,height=Math.ceil((box.y+box.height)*scale)-y,data=new Uint8Array(width*height*4);
+    for(let row=0;row<height;row++)data.set(img.data.subarray(((y+row)*img.width+x)*4,((y+row)*img.width+x+width)*4),row*width*4);
+    return {width,height,data};
+  };
+  const on = await read();
   // A live app patch may replace an SVG or reconcile its inline style during a capture. A head stylesheet keeps
   // the mask on the same subject through that patch; opacity also hides descendants with explicit visibility.
   await f.evaluate(sel=>{const style=document.createElement('style');style.id='fo120-ink-mask';style.textContent=sel+' svg { opacity: 0 !important; }';document.head.append(style);},selector);
   await painted();
   const maskedBefore=await loc.locator('svg').evaluate(e=>getComputedStyle(e).opacity);
-  const off = await t.pixels(loc);
+  const off = await read();
   const maskedAfter=await loc.locator('svg').evaluate(e=>getComputedStyle(e).opacity);
+  const afterBox=await loc.boundingBox();
   await f.evaluate(()=>document.getElementById('fo120-ink-mask')?.remove());
   await painted();
   await f.evaluate(() => { window.__fo120.paused.forEach(a=>a.play()); });
@@ -122,6 +139,7 @@ async function ink(t, f, tag) {
     for(const [name,img] of [['on',on],['off',off]])writeFileSync(join(t.run.dir,stem+'-'+name+'.png'),encodePng(img));
     t.log('paired ink failure pixels: '+stem+'-on.png and '+stem+'-off.png');
   }
+  await t.check(tag + ': capture rectangle stayed fixed',!!afterBox&&['x','y','width','height'].every(k=>Math.abs(box[k]-afterBox[k])<.1),JSON.stringify({box,afterBox}));
   await t.check(tag + ': glyph mask held through the off capture',maskedBefore==='0'&&maskedAfter==='0',JSON.stringify({maskedBefore,maskedAfter}));
   await t.check(tag + ': outer symbol paints ink', on.width===off.width && on.height===off.height && changed>=3, JSON.stringify({changed,width:on.width,height:on.height}));
 }
