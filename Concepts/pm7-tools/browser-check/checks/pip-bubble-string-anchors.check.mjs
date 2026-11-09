@@ -20,8 +20,8 @@
 //         through SVG matrices), within the renderer's .01-grid precision. A visible top crossing must be explained
 //         by those two points, with their rounding uncertainty propagated. Retro's intentional 10/20 Hz draws are
 //         not treated as 60 Hz jumps; a line wholly above the pane has no visible top crossing yet.
-//   QA-4b: no prop's destination (restBox) changes within a scene (a destination that refits mid-scene is the jump
-//         a retained prop made when bubble clearance changed).
+//   QA-4b: no prop's destination (restBox) changes within a scene's full speech state. Queued new words may
+//         release the previous line's clearance; QA-6 still judges the suspension continuously across that change.
 // Route: every onboarding screen (ui.go, a real pointer arrival first so Pip wakes and talks), dwelt on while its
 // props enter, swing and settle. `--set looks=a,b`, `--set screens=a,b`, `--set size=740x900`, `--set motion=reduce`,
 // `--set frames=1 --set counter=1` retains per-frame geometry and encoded film tags; `--set secs=` dwell seconds (default 4), `--set sandbox=1` for T3's sandbox. Headless or --record (the film judged
@@ -162,11 +162,19 @@ export function judgeStringFrames(fr, look, screen) {
 			const hasHelper = vis.some(({ p }) => p.anch);
 			if (!hasHelper) noHelper.push(`${look} ${screen} ${p0.id} (${p0.kind}): no rest destination on the page (judged against its settled string line)`);
 			else dests++;
-			const rb = vis.map(({ p }) => p.restBox).filter(Boolean);
-			if (rb.length) {
+			// A queued sentence can begin without another direct(). Its new occupancy is a legitimate destination
+			// input (SOL-QA4-K14), whereas changing clearance during the SAME full line is the original regression.
+			// Split only this destination guard. The string law below retains every row across all sentence changes.
+			const speechBoxes = []; let speech, boxes;
+			for (const {x, p} of vis) {
+				const next = x.bub && x.bub.shown ? x.bub.text : '';
+				if (!boxes || next !== speech) { speech = next; boxes = []; speechBoxes.push(boxes); }
+				if (p.restBox) boxes.push(p.restBox);
+			}
+			for (const rb of speechBoxes) { if (rb.length) {
 				const span = [0, 1, 2, 3].map((i) => Math.max(...rb.map((b) => b[i])) - Math.min(...rb.map((b) => b[i])));
 				if (Math.max(...span) > 1) badDest.push(`${look} ${screen} ${p0.id} (${p0.kind}): destination moved within the scene by [${span.map((s) => s.toFixed(1)).join(', ')}] units`);
-			}
+			} }
 			for (let si = 0; si < (p0.offs || []).length; si++) {
 				const data = vis.filter(({ p }) => p.lines && p.lines[si] && (hasHelper ? p.anch && p.anch[si] : true));
 				if (!data.length) continue;
