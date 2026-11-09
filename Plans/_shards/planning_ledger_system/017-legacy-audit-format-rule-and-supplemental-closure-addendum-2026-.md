@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L1617-L1781
+Source lines: L1617-L1787
 
-Source SHA256: `147eb1bc79ef183592956804f65a2a446ae7fbb76f25171c1866afd442a99afc`
+Source SHA256: `5b6438eca621a5440638761ef001fa8d8ce9a0f2252bbc3a000bdd746162cda3`
 
 ---
 
@@ -129,7 +129,13 @@ canonical_text: >-
   source_row and reason. v1 row addresses are physical JSONL line numbers or named validator_results.json
   results and invalid_invocations. The validator requires the complete standard source selection, independently
   computes actionability, rejects actionable, nonexistent, uncovered or duplicate listed rows, and applies nothing
-  on any invalid receipt. Unknown schemas or fields, mismatched or missing hashes, symlinked bound inputs or receipts, invalid dates,
+  on any invalid receipt. Named validator rows require clean file and record evidence: no truthy side_effects or
+  non_audit_side_effects, side_effect_count absent or an integer zero (never a boolean), and no required repair
+  or malformed repair fields. Every matching results record must have status pass, or omit status with integer
+  exit_code zero. Finding flags cannot excuse failures or mutations. An invalid_invocations record must have
+  status invalid_invocation and explicitly name its clean passing rerun through superseded_by in the form
+  <result name> with <added arguments>; the rerun command must equal the original command plus those arguments.
+  Unknown schemas or fields, mismatched or missing hashes, symlinked bound inputs or receipts, invalid dates,
   other corrections and multiple correction files fail closed. Only the listed non-actionable over-coverage is
   excused; missing coverage and every matrix, evidence, registry and legacy-format check keep their force.
   Validation shows both the historical and corrected status. Corrected history participates in the effective
