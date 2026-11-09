@@ -2,16 +2,20 @@
 export default async function(t){
  await t.viewport(1280,900);await t.emulate({reducedMotion:'no-preference'});
  for(const look of ['friendly-light','friendly-dark','basic-light','basic-dark']){
-  const f=await t.app.open({onboarding:true,query:'o55=fresh'});await t.app.look(look);
-  await f.waitForFunction(()=>window.O55?.S?.open&&!!window.PM_HOVER_TAG_CONTROLLER);
-  await f.evaluate(()=>O55.ui.go('nas-find',{noHistory:true}));
-  const strip='#pm-o55-onboarding .o55-pane > .o55-layer:not(.o55-out) .o55-seg';
+  const f=await t.app.open();await t.app.look(look);
+  await f.waitForFunction(()=>!!window.PM_HOVER_TAG_CONTROLLER);
+  const panel=f.locator('#panel-files');if(!await panel.isVisible())await f.locator('#activityBar .icon[data-target="panel-files"]').click();
+  await panel.waitFor({state:'visible'});
+  const strip='#panel-files > .pm-segtab';
+  const first=f.locator(strip+' > button[data-tab="explorer"]');
+  if(!await first.evaluate(e=>e.classList.contains('active')))await first.click();
+  await f.waitForFunction(()=>!document.querySelector('#panel-files .lg-carry'),null,{timeout:5000});
   await f.locator(strip+' button').first().waitFor({state:'visible'});
   const real=await f.evaluate(sel=>{const c=PM_HOVER_TAG_CONTROLLER,p=document.querySelector(sel),buttons=[...p.querySelectorAll('button')];c.scan(p);return buttons.map(e=>({prepared:!!c.prepare(e),bound:!!c.bind(e),key:e.getAttribute('data-pm-hover-key'),kind:e.getAttribute('data-pm-hover-kind')}));},strip);
   await t.check(`${look}: real selector controls keep their hover bindings`,real.length>=2&&real.every(e=>e.prepared&&e.bound&&!!e.key&&!!e.kind),JSON.stringify(real),{hard:true});
   await f.waitForFunction(()=>{const c=PM_HOVER_TAG_CONTROLLER;return c.scanComplete&&!c.pageSettling&&!c.overlaySettling;},null,{timeout:15000});
   await f.evaluate(()=>PM_HOVER_TAG_CONTROLLER.whenIdle());
-  const choice=f.locator(strip+' button').filter({hasText:'SMB'}).first();await choice.hover();const b=await choice.boundingBox();
+  const choice=f.locator(strip+' > button[data-tab="changed"]');await choice.hover();const b=await choice.boundingBox();
   await t.page.mouse.move(b.x+b.width/2,b.y+b.height/2);await t.page.mouse.down();
   try{
    await f.waitForFunction(sel=>!!document.querySelector(sel+' .lg-twin'),strip,{timeout:3000});
