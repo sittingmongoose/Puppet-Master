@@ -20,6 +20,7 @@
   const O55 = window.O55, PIP = O55.pipStage, H = PIP.h, PW = O55.pipWorlds;
   const { R, clamp, ease, rot, el, div, T } = H;
   const now = H.now;
+  const STACK_OFFSETS = [-3, 4, -2, 3, 0, -3];
   const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   const KIT = () => H.kit();
   const TH = () => KIT().THEMES;
@@ -813,8 +814,8 @@
       const Lay = this.L, [x, base, step] = Lay.stack, v = this.vis;
       if (!v) return { x, base, step, f: 1 };
       const pad = 8, half = 34 * Lay.propScale, o = this.keepOff;
-      // The owner already declares the final phase count on the first block. Reserve that whole stack now.
-      let n = 0; this.props.forEach((p) => { if (p.spec.stack != null && p.state !== 'out') n = Math.max(n, p.spec.stack + 1, p.spec.params && p.spec.params.count || 0); });
+      // Reserve the owner's full phase plan, including the interval before its first block exists.
+      let n = this.spec.stackCount || 0; this.props.forEach((p) => { if (p.spec.stack != null && p.state !== 'out') n = Math.max(n, p.spec.stack + 1, p.spec.params && p.spec.params.count || 0); });
       const need = Math.max(1, n) * step + 22 * Lay.propScale;
       const floor = Math.min(base, v.y1 - pad), ceiling = v.y0 + pad;
       let column = x, bottom = floor, top = ceiling;
@@ -830,7 +831,8 @@
       }
       const room = bottom - top;
       const f = need > room && room > 0 ? Math.max(.45, room / need) : 1;
-      return { x: column, base: bottom, step: step * f, f };
+      return { x: column, base: bottom, step: step * f, f,
+        box: n ? [column - half, bottom - (n - 1) * step * f - 44 * Lay.propScale * f, column + half, bottom] : null };
     }
     boxOf(g) { try { const b = g.getBBox(); return [b.x, b.y, b.width, b.height]; } catch (e) { return null; } }
     boxInScene(el, gap) {
@@ -867,7 +869,7 @@
     slotXY(spec) {
       if (spec.at) return spec.at;
       const Lay = this.L;
-      if (spec.stack != null) { const sf = this.stackFit(); return [sf.x + [-3, 4, -2, 3, 0, -3][spec.stack % 6] * Lay.propScale, sf.base - spec.stack * sf.step - 22 * Lay.propScale * sf.f]; }
+      if (spec.stack != null) { const sf = this.stackFit(); return [sf.x + STACK_OFFSETS[spec.stack % STACK_OFFSETS.length] * Lay.propScale, sf.base - spec.stack * sf.step - 22 * Lay.propScale * sf.f]; }
       return Lay.slots[spec.slot] || Lay.slots.side;
     }
     propTarget(pr) {
@@ -1489,6 +1491,10 @@
          already caps its lift at the bubble's lower edge and fades it there, and counting its rising box made the
          bubble step aside for a prop that was already keeping under it) */
       this.props.forEach((pr) => { if (pr.state === 'out') return; const pose = this.restPose(pr), rb = pose.speechBox || pose.box || pr.box; if (rb) { const a = this.toScreen([rb[0], rb[1]]), c = this.toScreen([rb[2], rb[3]]); obs.push(projected([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap])); } });
+      /* Future phase blocks occupy the same planned column as the first one. Reserve it before any block
+         enters: discovering a later row during a held sentence moved short-layout speech by21px. */
+      const stackBox = this.stackFit().box;
+      if (stackBox) { const a = this.toScreen([stackBox[0], stackBox[1]]), c = this.toScreen([stackBox[2], stackBox[3]]); obs.push(projected([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap])); }
       /* (and Pip's control bar: where a prop beside Pip took the usual place, the bubble went up over the sticks Pip hangs
          from, Retro Dark's Look 'Soft and cosy. I like it.', FO-59) */
       /* The control's entire rock is projected through the same head motion as the props. Reading its current

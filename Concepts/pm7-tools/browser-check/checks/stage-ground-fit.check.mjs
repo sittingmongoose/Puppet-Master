@@ -17,6 +17,12 @@ export default async function(t) {
   await f.evaluate(([a,b])=>O55.ui.applyLook(a,b),look.split('-'));
   await f.waitForFunction(l=>document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage?.theme===l&&!O55.S.vt&&!document.documentElement.hasAttribute('data-o55-vt'),look);
   await f.evaluate(()=>document.fonts.ready);await f.waitForTimeout(1200);
+  if(t.args.entry!=='sleep') {
+   const r=await f.evaluate(()=>{const r=O55.S.root.querySelector('.o55-stage').getBoundingClientRect();return{x:r.left+r.width*.3,y:r.top+r.height*.5};});
+   const fe=await f.frameElement().catch(()=>null),off=fe&&await fe.boundingBox()||{x:0,y:0};
+   await t.page.mouse.move(off.x+r.x,off.y+r.y);await t.page.mouse.move(off.x+r.x+40,off.y+r.y+2,{steps:8});
+   await f.waitForFunction(()=>!O55.S.root.querySelector('.o55-stage').__pipStage.sleepZ);
+  }
   await f.evaluate(installSampler,!!t.args.counter);
   await f.evaluate(()=>{
    window.__ground=[];const dot=document.createElement('i');dot.style.cssText='position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none;contain:strict';document.body.append(dot);
