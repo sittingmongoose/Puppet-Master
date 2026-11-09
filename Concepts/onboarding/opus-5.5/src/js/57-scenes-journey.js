@@ -62,12 +62,14 @@
       [[-22, -18, 0.6], [-22, -2, 0.3], [-22, 14, 0.8]].forEach(([x, y, k]) => { s += p.line(x, y, x + 32, y) + p.circle(x + 32 * k, y, 4.5, 'accent', 'e'); });
       return { svg: s, ties: [[-6, -32]], foot: 38 };
     },
-    /* an online service (GitHub, GitLab and the rest): a card with a branch graph, three commits and a merge */
+    /* an online service (GitHub, GitLab and the rest): a card with a branch graph, three commits and a merge.
+       QA-5 (sol-review-b9a): the graph is centred in the card's face below its header bar (x -40..40, y -20..34,
+       centre (0, 7)); its ink spans x -21..21 (drawn 2 units further left, it read 2 units left of centre) */
     forge(p) {
       let s = p.rect(-40, -34, 80, 68, 8, 'body', 'd') + p.rect(-40, -34, 80, 14, 6, 'shade', 'd');
       s += p.circle(-30, -27, 2.6, 'light') + p.circle(-22, -27, 2.6, 'light');
-      s += p.line(-18, -8, -18, 22) + `<path d="M-18 -2C2 -2 2 8 14 8" ${p.fam === 'basic' ? `fill="none" stroke="${p.w.line}" stroke-width="2"` : `fill="none" stroke="${p.w.ink}" stroke-width="2.4" stroke-linecap="round"`}/>`;
-      s += p.circle(-18, -8, 5, 'accent', 'b') + p.circle(-18, 22, 5, 'accent', 'b') + p.circle(14, 8, 5, 'accent', 'c');
+      s += p.line(-16, -8, -16, 22) + `<path d="M-16 -2C4 -2 4 8 16 8" ${p.fam === 'basic' ? `fill="none" stroke="${p.w.line}" stroke-width="2"` : `fill="none" stroke="${p.w.ink}" stroke-width="2.4" stroke-linecap="round"`}/>`;
+      s += p.circle(-16, -8, 5, 'accent', 'b') + p.circle(-16, 22, 5, 'accent', 'b') + p.circle(16, 8, 5, 'accent', 'c');
       return { svg: s, ties: [[0, -34]], foot: 34 };
     },
     /* free models: a tag with a hole, three small orbs on it, and a spark */
