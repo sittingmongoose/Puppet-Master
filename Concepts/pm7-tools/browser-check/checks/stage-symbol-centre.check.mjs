@@ -37,7 +37,9 @@ function inkBox(a, b) {
    every world), by index, by a circle's radius, by "the rest after the frame", or against a named point */
 const CASES = [
 	{ id: 'restore: rewind in its circle', prop: 'restore', frame: { r: 15 }, glyph: 'after' },
-	{ id: 'restore: circle in its box', prop: 'restore', frame: { point: [0, 11] }, glyph: { r: 15 } },
+	/* the box's visible face below its lid, -10..38 (the body is -16..38, the lid covers it to -10): centre 14, as the kit's
+	   emblem field below its band (sol-review-b9a, lead ruling 1109041410-795a) */
+	{ id: 'restore: circle in its box', prop: 'restore', frame: { point: [0, 14] }, glyph: { r: 15 } },
 	{ id: 'vault: dial in its ring', prop: 'vault', frame: { r: 18 }, glyph: 'after-norect' },
 	...['folder', 'history', 'cloud', 'check', 'globe', 'dot', 'nas', 'restore', 'stack'].map((icon) => ({ id: `block ${icon}: in its block`, prop: 'block', params: { icon, hue: 'a' }, frame: { idx: [0] }, glyph: 'rest' })),
 	{ id: 'kit: key in its circle', prop: 'kit', frame: { r: 11 }, glyph: 'after' },
