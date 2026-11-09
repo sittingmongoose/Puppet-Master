@@ -811,14 +811,27 @@
        at a narrow window; NieR's box sits over the column): its blocks were cut at the bottom, or under NieR's words */
     stackFit() {
       const Lay = this.L, [x, base, step] = Lay.stack, v = this.vis;
-      if (!v) return { base, step, f: 1 };
+      if (!v) return { x, base, step, f: 1 };
       const pad = 8, half = 34 * Lay.propScale, o = this.keepOff;
-      let bottom = Math.min(base, v.y1 - pad), top = v.y0 + pad;
-      if (o && o[0] < x + half && o[2] > x - half) { if ((o[1] + o[3]) / 2 > (top + bottom) / 2) bottom = Math.min(bottom, o[1] - 4); else top = Math.max(top, o[3] + 4); }
       let n = 0; this.props.forEach((p) => { if (p.spec.stack != null && p.state !== 'out') n = Math.max(n, p.spec.stack + 1); });
-      const need = Math.max(1, n) * step + 22 * Lay.propScale, room = bottom - top;
+      const need = Math.max(1, n) * step + 22 * Lay.propScale;
+      const floor = Math.min(base, v.y1 - pad), ceiling = v.y0 + pad;
+      let column = x, bottom = floor, top = ceiling;
+      if (o && o[0] < x + half && o[2] > x - half) {
+        if ((o[1] + o[3]) / 2 > (top + bottom) / 2) bottom = Math.min(bottom, o[1] - 4); else top = Math.max(top, o[3] + 4);
+        /* A full speech reservation can leave less height than even the minimum-size stack needs (Retro Dark
+           Creating740:27 units for a51-unit stack). Move its column beside the reservation when there is room,
+           clear of Pip's entire entry column, rather than clipping blocks above the pane or shrinking their art. */
+        if (bottom - top < need * .45) {
+          const head = this.pipHead(0, null, true);
+          const columns = [o[0] - half - pad, o[2] + half + pad].filter(cx => cx - half >= v.x0 + pad && cx + half <= v.x1 - pad
+            && (!head || cx + half + 4 <= head[0] || cx - half - 4 >= head[2])).sort((a, b) => Math.abs(a - x) - Math.abs(b - x));
+          if (columns.length) { column = columns[0]; bottom = floor; top = ceiling; }
+        }
+      }
+      const room = bottom - top;
       const f = need > room && room > 0 ? Math.max(.45, room / need) : 1;
-      return { base: bottom, step: step * f, f };
+      return { x: column, base: bottom, step: step * f, f };
     }
     boxOf(g) { try { const b = g.getBBox(); return [b.x, b.y, b.width, b.height]; } catch (e) { return null; } }
     boxInScene(el, gap) {
@@ -855,7 +868,7 @@
     slotXY(spec) {
       if (spec.at) return spec.at;
       const Lay = this.L;
-      if (spec.stack != null) { const [x] = Lay.stack, sf = this.stackFit(); return [x + [-3, 4, -2, 3, 0, -3][spec.stack % 6] * Lay.propScale, sf.base - spec.stack * sf.step - 22 * Lay.propScale * sf.f]; }
+      if (spec.stack != null) { const sf = this.stackFit(); return [sf.x + [-3, 4, -2, 3, 0, -3][spec.stack % 6] * Lay.propScale, sf.base - spec.stack * sf.step - 22 * Lay.propScale * sf.f]; }
       return Lay.slots[spec.slot] || Lay.slots.side;
     }
     propTarget(pr) {
