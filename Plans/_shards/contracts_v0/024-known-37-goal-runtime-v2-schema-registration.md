@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L3688-L17653
 
-Source SHA256: `0a3e0bf0b32bc41c17138244a37a26b68f04df953ce71ea50d6ed22bd884b443`
+Source SHA256: `0eb9a063040630bd50ca8155073047eef8e554d81b8b6c2eac39daa2f002b6d3`
 
 ---
 
@@ -4482,7 +4482,7 @@ preserved_exact_tokens:
   - "`phase_plan_ref`"
   - "`staged_bundle_ref`"
   - "`requirements_quality_report_ref`"
-  - "ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
+  - "ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/assistant-chat-design.md#26. Auditor Invariant Loop Specification And Model/Provider Settings (Invariant Sweep)"
 negative_constraints:
   - "Pass reports must stay upstream artifacts rather than masquerading as runtime attempts."
   - "validation_pass_report must not become an active fixed-pass scheduler or model-setting contract."

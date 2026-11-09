@@ -4,7 +4,7 @@ Source: `Plans/Crosswalk.md`
 
 Source lines: L386-L459
 
-Source SHA256: `25f675b7dad895fdd9f75c13c1b5f6dcd76d07b2f2217f8069c20106c00f1918`
+Source SHA256: `d39403d44affc507c0ed760e2c477b88a599603ac0dd00224472a485690e521c`
 
 ---
 
@@ -48,7 +48,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/cha
 ---
 
 ### 3.15 TargetedRevisionPass
-**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; UI placement in `Plans/FinalGUISpec.md`; prompt and persistence details in `Plans/Prompt_Pipeline.md` and `Plans/storage-plan.md`.
+**Owner:** Workflow semantics in `Plans/PRD_Builder.md#PRDB-014` and `Plans/interview-subagent-integration.md`; UI placement in `Plans/FinalGUISpec.md`; prompt and persistence details in `Plans/Prompt_Pipeline.md` and `Plans/storage-plan.md`.
 
 Rules:
 - `Resubmit with Annotations` triggers a targeted revision pass scoped to documents with open durable annotations, or a user-selected subset.
@@ -56,7 +56,7 @@ Rules:
 - Targeted revision may apply requested edits and/or answer question/comment annotations.
 - For each input annotation, the runtime records `addressed | still_open | cannot_apply`, `addressed_explanation`, and `updated_anchor?`.
 
-ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md
+ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/storage-plan.md
 
 - Targeted revision MUST NOT trigger Multi-Pass Review.
 - Conflicting or stale mutating annotations are excluded from automatic revision until resolved.
@@ -81,4 +81,4 @@ Rules:
 - Final review runs once by default; rerun explicit only.
 - Final gate is a single decision: `Accept | Reject | Edit`.
 
-ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/storage-plan.md
+ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/storage-plan.md

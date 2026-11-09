@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3617-L22624
+Source lines: L3807-L22965
 
-Source SHA256: `9ad6408e1f1e3d8b7974eeb78305d334a89bbfd79e795b335774104eba7e130d`
+Source SHA256: `69e4ade06eb440b1ab6f595705e816ff21a3ddbba5f2134e40d85638e0519d57`
 
 ---
 
@@ -12681,51 +12681,202 @@ owner_hints:
   - Plans/Contracts_V0.md
 ```
 
-### ACD-269 - Validation Section Reference Boundary
+### ACD-269 - Auditor Invariant Loop And Settings Ownership
 
 ```yaml
 plan_unit_id: ACD-269
 unit_type: constraint
 status: accepted
 owner_doc: Plans/assistant-chat-design.md
-canonical_text: >-
-  Section 26 consumes `Plans/chain-wizard-flexibility.md §12`,
-  `Plans/Project_Output_Artifacts.md §10.2`, `Plans/Decision_Policy.md §2`,
-  `Plans/DRY_Rules.md`, `Plans/Contracts_V0.md`, and Section 1.1 chat
-  controls without re-owning those contracts.
-gui_related: false
-gui_classification_reason: Reference ownership and contract boundary are documentation/governance behavior.
-depends_on: [ACD-253]
+canonical_text: Section 26 owns the mandatory Auditor invariant loop specified in §26.10–§26.14 and its model/provider
+  settings. The initial Auditor audit cycle validates and completes the provisional artifact pack, may mirror legacy
+  Pass 1 / validation_pass_report fields for document_creation compatibility, and writes a read-only requirements_quality_report
+  without authoring requirements or contract fragments. Bounded Auditor repair compares project artifacts against
+  contracts and canon, applies resolvable fixes, applies auto_fixable requirement-quality fixes, updates reports,
+  and records unresolved findings without treating legacy Pass 2 as an active process stage. The Auditor certification
+  gate enforces DRY/SSOT, plan graph, wiring, evidence, and deterministic decision invariants while never modifying
+  requirements.md, plan.md, or user-intent-derived content; legacy Pass 3 fields are compatibility aliases only.
+  The sweep runs deterministically and headlessly, uses one Auditor validation loop provider/model setting for all
+  Auditor cycle reports, emits enough reports to prove audit/repair/re-audit/certification or block, and treats
+  legacy pass reports as compatibility rows only. Auditor loop blocks route to user-visible clarification or resolution
+  surfaces using distinct needs_user_clarification and unresolved_findings artifacts while preserving corrected-but-blocked
+  artifacts for resume. Auditor cycle reports carry lineage fields and skipped-verdict support, legacy validation_pass_report
+  mirrors may expose the same data only with compatibility_only true and cycle_report_ref, and effective runtime
+  identity survives validation into launch handoff. Section 26 consumes Plans/Project_Output_Artifacts.md §10.2,
+  Plans/Decision_Policy.md §2 and DP-066, Plans/DRY_Rules.md, Plans/Contracts_V0.md, and Section 1.1 chat controls
+  without re-owning those contracts.
+gui_related: true
+gui_classification_reason: Owns loop failure routing to clarification and review/resolution UI as well as backend
+  validation.
+depends_on:
+- ACD-253
 unblocks: []
 acceptance_criteria:
-  - Section 26 references preserve the linked owner documents.
-  - Assistant chat does not re-own the validation workflow, output artifact, decision policy, DRY, or provider/model capability contracts.
+- Section 26 owns the loop; output artifact, decision policy, DRY, and provider/model capability contracts remain
+  with their linked owners.
+- Initial Auditor audit validates and completes the provisional artifact pack produced by Contract Unification.
+- Initial Auditor audit may materialize missing derived artifacts or deterministic projections.
+- Initial Auditor audit is not the first author of requirements or contract fragments.
+- Legacy Pass 1 validation_pass_report fields may be mirrored with pass_number 1 and pass_name document_creation
+  only when compatibility_only is true and cycle_report_ref points to the canonical Auditor cycle report.
+- Initial Auditor audit writes requirements_quality_report at .puppet-master/project/traceability/requirements_quality_report.json.
+- requirements_quality_report is read-only for requirements intent and classifies auto_fixable true/false without
+  editing requirements.
+- Bounded Auditor repair compares requirements, contract pack, plan_graph nodes, and acceptance_manifest against
+  canonical references.
+- For each gap or contradiction, bounded Auditor repair records findings and applies fixes where possible.
+- Bounded Auditor repair records diff_pointer information for applied fixes.
+- Bounded Auditor repair records unresolved_findings when no fix is possible.
+- Bounded Auditor repair applies auto-fixes from requirements_quality_report where auto_fixable == true.
+- Bounded Auditor repair updates requirements_quality_report in place with final post-fix state.
+- Bounded Auditor repair does not escalate directly; it updates the quality report artifact for certification/block
+  semantics.
+- Auditor certification focuses on canonical system integrity before certifying or blocking.
+- Auditor certification enforces DRY/SSOT compliance.
+- Auditor certification enforces plan graph integrity.
+- Auditor certification enforces wiring matrix consistency when the user project has a GUI.
+- Auditor certification enforces evidence/invariants alignment.
+- Auditor certification enforces deterministic decisions/autonomy compliance.
+- Auditor certification never modifies requirements.md, plan.md, or user-intent-derived artifacts.
+- Auditor loop cycles run deterministically without human intervention.
+- Each cycle runs headless with no GUI and no approval gate inside the loop.
+- Auditor validation loop provider and model are configurable through app settings.
+- Defaults are deterministic and safe when not explicitly configured.
+- Each Auditor cycle report includes provider and model matching the resolved Auditor validation loop provider/model
+  from sweep start.
+- The loop emits enough reports to prove audit, bounded repair, re-audit, and certified or critical-block terminal
+  state.
+- Legacy validation_pass_report rows and pass_verdict skipped values may be emitted only as compatibility mirrors
+  with compatibility_only true and cycle_report_ref.
+- Initial Auditor audit failure without allowed deterministic repair halts and surfaces failure to the user.
+- If bounded Auditor repair produces non-empty needs_user_clarification, wizard transitions to clarification/resume
+  path.
+- Auditor certification is blocked when clarification or authority boundaries block progress.
+- Corrected-but-blocked artifact set is preserved for resume.
+- unresolved_findings is distinct from needs_user_clarification.
+- needs_user_clarification drives interview UI.
+- unresolved_findings drives review/resolution UI.
+- Auditor cycle reports include workflow_run_id.
+- Auditor cycle reports include phase_plan_ref.
+- Auditor cycle reports include staged_bundle_ref.
+- Auditor cycle reports include requirements_quality_report_ref.
+- Auditor cycle reports include run_id.
+- Auditor validation cycles emit lineage-rich cycle reports explaining what was evaluated and what execution was
+  seeded.
+- Legacy validation_pass_report mirrors carry compatibility_only true and cycle_report_ref.
+- pass_verdict supports skipped.
+- Effective runtime identity survives validation into launch handoff.
 validation_surfaces:
-  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
-  - python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
 risk_class: owner_boundary
 reasoning_tier: high
 context_scope: validation_references
 implementation_surfaces:
-  - Plans/assistant-chat-design.md
-  - Plans/chain-wizard-flexibility.md
-  - Plans/Project_Output_Artifacts.md
-  - Plans/Decision_Policy.md
-  - Plans/DRY_Rules.md
-  - Plans/Contracts_V0.md
+- Plans/assistant-chat-design.md
+- Plans/Project_Output_Artifacts.md
+- Plans/Decision_Policy.md
+- Plans/DRY_Rules.md
+- Plans/Contracts_V0.md
 node_compile_hint:
-  mode: validation_section_reference_boundary
+  mode: auditor_invariant_loop_and_settings
   create_worknodes: false
 source_lineage:
-  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0123
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0123
+- Plans/chain-wizard-flexibility.md#CWF-082 (retired source; generic loop moved per DL-472)
+- Plans/chain-wizard-flexibility.md#CWF-083 (retired source; generic loop moved per DL-472)
+- Plans/chain-wizard-flexibility.md#CWF-084 (retired source; generic loop moved per DL-472)
+- Plans/chain-wizard-flexibility.md#CWF-085 (retired source; generic loop moved per DL-472)
+- Plans/chain-wizard-flexibility.md#CWF-086 (retired source; generic loop moved per DL-472)
+- Plans/chain-wizard-flexibility.md#CWF-087 (retired source; generic loop moved per DL-472)
+- Plans/chain-wizard-flexibility.md §12 (retired source; moved per DL-472)
 preserved_exact_tokens:
-  - "ContractName:Plans/chain-wizard-flexibility.md§12"
-  - "ContractName:Plans/Project_Output_Artifacts.md"
-  - "PolicyRule:Decision_Policy.md§2"
-negative_constraints: []
+- ContractName:Plans/assistant-chat-design.md§26
+- ContractName:Plans/Project_Output_Artifacts.md
+- PolicyRule:Decision_Policy.md§2
+- Plans/Planning_Wizard.md#PWIZ-038
+- Plans/Crosswalk.md §3.16
+- validation_pass_report
+- pass_number
+- 'compatibility_only: true'
+- cycle_report_ref
+- .puppet-master/project/
+- Plans/Project_Output_Artifacts.md §2
+- 'artifact_type: validation_pass_report'
+- 'pass_number: 1'
+- 'pass_name: "document_creation"'
+- pass_verdict
+- '"pass"'
+- '"fail"'
+- '"skipped"'
+- verdict_reason
+- changes_applied_summary
+- diff_pointers
+- requirements_quality_report
+- pm.requirements_quality_report.schema.v1
+- .puppet-master/project/traceability/requirements_quality_report.json
+- Plans/Decision_Policy.md#DP-066
+- 'auto_fixable: true/false'
+- requirements.md
+- ProjectContract:*
+- Plans/Contracts_V0.md
+- contracts/index.json
+- Plans/Architecture_Invariants.md
+- plan_graph/
+- Plans/DRY_Rules.md
+- acceptance_manifest.json
+- Plans/Project_Output_Artifacts.md
+- Plans/Decision_Policy.md
+- findings[]
+- diff_pointer
+- unresolved_findings[]
+- auto_fixable == true
+- auto_fixes_applied[]
+- 'pass_number: 2'
+- 'pass_name: "canonical_alignment"'
+- '{ issue_id, criterion, fix_applied, diff_pointer }'
+- plan.md
+- platform_specs
+- node_id
+- index.json
+- execution_ordering
+- ui/wiring_matrix.json
+- ui/ui_command_catalog.json
+- UICommandID
+- ui_command_catalog.json
+- evidence_required.path
+- check_id
+- auto_decisions.jsonl
+- Plans/auto_decisions.schema.json
+- 'pass_3_violation:'
+- 'pass_number: 3'
+- 'pass_name: "canonical_systems"'
+- Plans/assistant-chat-design.md §26
+- Plans/Models_System.md
+- provider
+- model
+- Plans/Project_Output_Artifacts.md §10.2
+- needs_user_clarification[]
+- '{ question_id, question_text, context, priority, category }'
+- '{ finding_id, finding_type, description, severity, suggested_resolution?, blocking: bool }'
+- needs_user_clarification
+- unresolved_findings
+- Plans/UI_Wiring_Rules.md
+- Plans/Wiring_Matrix.schema.json
+- skipped
+negative_constraints:
+- Pass 1 is a compatibility alias only.
+- Initial Auditor audit does not edit requirements.
+- Initial Auditor audit is not the first author of requirements or contract fragments.
+- Pass 2 is a compatibility alias only.
+- Bounded Auditor repair does not escalate directly.
+- Pass 3 is a compatibility alias only.
+- Auditor certification MUST NOT modify requirements.md, plan.md, or any artifact whose content is driven by user
+  intent or product scope.
+- No GUI is required and no user approval gate exists between passes.
+- Do not expose fixed Pass 1 / Pass 2 / Pass 3 model settings.
 owner_hints:
-  - Plans/assistant-chat-design.md
-  - Plans/chain-wizard-flexibility.md
+- Plans/assistant-chat-design.md
 ```
 
 ### ACD-270 - Persona Control Scope

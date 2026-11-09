@@ -423,7 +423,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/cha
 ---
 
 ### 3.15 TargetedRevisionPass
-**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; UI placement in `Plans/FinalGUISpec.md`; prompt and persistence details in `Plans/Prompt_Pipeline.md` and `Plans/storage-plan.md`.
+**Owner:** Workflow semantics in `Plans/PRD_Builder.md#PRDB-014` and `Plans/interview-subagent-integration.md`; UI placement in `Plans/FinalGUISpec.md`; prompt and persistence details in `Plans/Prompt_Pipeline.md` and `Plans/storage-plan.md`.
 
 Rules:
 - `Resubmit with Annotations` triggers a targeted revision pass scoped to documents with open durable annotations, or a user-selected subset.
@@ -431,7 +431,7 @@ Rules:
 - Targeted revision may apply requested edits and/or answer question/comment annotations.
 - For each input annotation, the runtime records `addressed | still_open | cannot_apply`, `addressed_explanation`, and `updated_anchor?`.
 
-ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md
+ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/storage-plan.md
 
 - Targeted revision MUST NOT trigger Multi-Pass Review.
 - Conflicting or stale mutating annotations are excluded from automatic revision until resolved.
@@ -456,7 +456,7 @@ Rules:
 - Final review runs once by default; rerun explicit only.
 - Final gate is a single decision: `Accept | Reject | Edit`.
 
-ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/storage-plan.md
+ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/storage-plan.md
 
 ## Recovery Terminology Canonical Alignment (2026-03-08)
 
@@ -2358,7 +2358,7 @@ reasoning_tier: high
 context_scope: targeted_revision_pass_boundary
 implementation_surfaces:
   - Plans/Crosswalk.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
   - Plans/FinalGUISpec.md
   - Plans/Prompt_Pipeline.md
@@ -2383,7 +2383,7 @@ negative_constraints:
   - "V1 is note-based embedded-document review upgraded into structured annotations; direct `patch-apply` behavior is out of scope."
 owner_hints:
   - Plans/Crosswalk.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
   - Plans/Prompt_Pipeline.md
   - Plans/storage-plan.md

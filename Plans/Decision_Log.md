@@ -29222,3 +29222,88 @@ preserved_exact_tokens:
 owner_hints:
   - Plans/UI_Command_Catalog.md
 ```
+
+### DL-472 - Auditor Loop And TargetedRevisionPass Live Owners (As-Is Move)
+
+```yaml
+plan_unit_id: DL-472
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: 'DL-472 records Jared''s owner decision of 2026-11-08, relayed by pm7-build 1108230613-1863: "The
+  generic Auditor invariant loop moves into Plans/assistant-chat-design.md §26, which is retitled to cover the loop''s
+  specification as well as its settings. TargetedRevisionPass moves into Plans/PRD_Builder.md, next to PRDB-007
+  ("PRD Builder doc (Recommended)"). Plans/Planning_Wizard.md references it rather than restating it. Both move
+  as-is. References are redirected, and one Decision Log entry records the move. No redesign: do not change what
+  the rules say, only where they live."
+
+
+  CWF §12.1–§12.5, including its report-lineage tail, moves into assistant-chat-design §26.10–§26.14, retaining
+  §26.1–§26.9 numbers. ACD-269 owns the generic loop and carries the machine-form rules and acceptance criteria
+  from retired CWF-082–CWF-087, without activating legacy pass aliases. CWF-117''s mixed Builder per-stage filtering
+  remains retired source; ACD §26.7 and ACD-268 retain live provider capability filtering. CWF §5.5.2 and the targeted-revision
+  bundle state and doc-level state portion of §5.5.0 move into PRD_Builder PRDB-014 immediately after PRDB-007.
+  Planning_Wizard PWIZ-007''s targeted-revision use points to PRDB-014 rather than repeating the contract.
+
+
+  Redirected references: ACD §26.1, §26.9 and its ContractRef, ACD-269 canonical text, acceptance criteria, implementation
+  surfaces, owner hints and preserved ContractName token now name ACD §26 for loop ownership. ACD §26.5 and §26.9
+  OpenCode settings citations now name Provider_OpenCode §10.1. The moved loop''s Requirements Completion Contract
+  and escalation citations name Decision_Policy DP-066 and Planning_Wizard PWIZ-038; its optional final-review citation
+  names Crosswalk §3.16, and its retired workflow ContractRef names Planning_Wizard PWIZ-038. Project_Output_Artifacts
+  §9 item 8 (Auditor reports), its requirements-quality ContractRef and the POA-029 exact-token mirror, and Contracts_V0''s
+  requirements-quality event ContractRef and CV-099 exact-token mirror name ACD §26. Crosswalk §3.15 owner and ContractRef,
+  §3.16''s TargetedRevisionPass ContractRef, and C-035 implementation surfaces and owner hints name PRD_Builder
+  PRDB-014 (document-level surfaces name PRD_Builder). Planning_Wizard references PRDB-014 at its targeted-revision
+  use.
+
+
+  No rule changed; redesign is out of scope. Changes to moved prose are section numbers and cross-references only,
+  with one bracketed editor''s note retaining the historical Contract Unification sentence/reference because PWIZ-038
+  owns the lifecycle rather than the detailed retired pass. CWF §12 and §5.5.2 retain their old text and gain live-owner
+  pointers. Historical changelog and source_lineage references, including DL-330''s earlier scope boundary, remain
+  history. This record does not reseal governance, regenerate shards/indexes, or redesign the loop, revision semantics,
+  wizard lifecycle, settings or provider capability contracts.'
+gui_related: false
+gui_classification_reason: Records owner relocation only; moved GUI behavior is owned by the named workflow units.
+depends_on:
+- ACD-269
+- PRDB-014
+unblocks: []
+acceptance_criteria:
+- Auditor loop specification and settings have a live home in ACD §26, owned by ACD-269.
+- TargetedRevisionPass has a live home in PRDB-014; Planning Wizard and Crosswalk consume it.
+- Moved rules retain wording except section numbers, cross-references and the documented editor note; no redesign.
+- Historical CWF text and legacy pass aliases remain retired source.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-command-payload-defs-check.py --json
+risk_class: owner_routing_to_retired_document
+reasoning_tier: high
+context_scope: closure_owner_answers_20261109
+implementation_surfaces:
+- Plans/chain-wizard-flexibility.md
+- Plans/assistant-chat-design.md
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- Plans/Crosswalk.md
+- Plans/Contracts_V0.md
+- Plans/Project_Output_Artifacts.md
+- Plans/Decision_Log.md
+node_compile_hint:
+  mode: owner_decision_record
+  create_worknodes: false
+source_lineage:
+- Jared owner decision, 2026-11-08, relayed by pm7-build 1108230613-1863; quoted in the Q1 implementation brief
+- /mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q1-auditor-home/BRIEF.md
+preserved_exact_tokens:
+- DL-472
+- TargetedRevisionPass
+- ACD-269
+- PRDB-014
+negative_constraints:
+- No rule changed; redesign is out of scope.
+owner_hints:
+- Plans/assistant-chat-design.md
+- Plans/PRD_Builder.md
+```

@@ -1360,7 +1360,7 @@ Rules:
 - `package_id` is the canonical package identity field; `work_package_id` is accepted only as a compatibility alias and normalizes before persistence.
 Requirements-quality workflow state uses stable persisted event shapes anchored to the canonical Auditor cycle report plus legacy **validation pass report** compatibility artifact and launch handoff lineage.
 
-ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)
+ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/assistant-chat-design.md#26. Auditor Invariant Loop Specification And Model/Provider Settings (Invariant Sweep)
 
 **Authoritative shared payload fields**
 
@@ -8159,7 +8159,7 @@ preserved_exact_tokens:
   - "`phase_plan_ref`"
   - "`staged_bundle_ref`"
   - "`requirements_quality_report_ref`"
-  - "ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)"
+  - "ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/assistant-chat-design.md#26. Auditor Invariant Loop Specification And Model/Provider Settings (Invariant Sweep)"
 negative_constraints:
   - "Pass reports must stay upstream artifacts rather than masquerading as runtime attempts."
   - "validation_pass_report must not become an active fixed-pass scheduler or model-setting contract."

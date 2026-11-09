@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L25784-L25848
+Source lines: L26125-L26189
 
-Source SHA256: `9ad6408e1f1e3d8b7974eeb78305d334a89bbfd79e795b335774104eba7e130d`
+Source SHA256: `69e4ade06eb440b1ab6f595705e816ff21a3ddbba5f2134e40d85638e0519d57`
 
 ---
 
