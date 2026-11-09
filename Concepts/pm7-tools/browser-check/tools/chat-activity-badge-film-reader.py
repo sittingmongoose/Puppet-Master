@@ -60,7 +60,16 @@ def main():
         raise ValueError(f'expected native 60-fps video, got {fps}')
     if summary.get('stopped') or not summary.get('ok'):
         raise ValueError('recording run did not finish successfully')
-    marks = {m['label']: m.get('video', m.get('videoAt')) for m in summary.get('marks', [])}
+    if not summary.get('calibration', {}).get('calibrated'):
+        raise ValueError('video marks were not calibrated to a sync flash')
+    recording = summary.get('recording') or {}
+    encoder = recording.get('encoder') or ''
+    if not any(name in encoder.lower() for name in ('vaapi', 'nvenc', 'qsv', 'amf')):
+        raise ValueError(f'expected a Windows/Nas1 GPU encoder, got {encoder!r}')
+    if summary.get('dpr') != 1:
+        raise ValueError('native capture boxes require the film protocol DPR of 1')
+    marks = {m['label']: m['at'] for m in summary.get('marks', [])
+             if not any(m.get(k) for k in ('beforeStart', 'pastEnd', 'afterStop'))}
     rows = []
     for p in sorted(run.glob('fo120-motion-*.json')):
         rows.extend(json.loads(p.read_text()))
@@ -86,7 +95,8 @@ def main():
         results.append(result)
         print(f"{'PASS' if ok else 'FAIL'} {tag}: {len(frames)} native frames, max {maximum} changed pixels ({expected})")
     report = dict(video=str(video), video_sha256=digest(video), run=str(run), fps=fps,
-        stream=stream, rows=results, ok=all(r['ok'] for r in results),
+        stream=stream, encoder=encoder, calibration=summary['calibration'],
+        rows=results, ok=all(r['ok'] for r in results),
         limitation='Native steady-interval pixel evidence. Entry/draw-on and clearance also require the retained film/entry frames.')
     out.write_text(json.dumps(report, indent=2)+'\n')
     return 0 if report['ok'] else 1
