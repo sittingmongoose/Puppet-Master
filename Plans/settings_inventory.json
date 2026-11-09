@@ -39578,7 +39578,7 @@
     {
       "id": "code.execution.auto-weights",
       "label": "Auto weights",
-      "desc": "Advanced weight sliders for free CPU, free memory, free disk, GPU headroom, queued work, has the files already and file-route speed. Must-haves stay gates; weights never grant authority.",
+      "desc": "Advanced weight sliders for free CPU, free memory, free disk, GPU headroom, queued work, has the files already and file-route speed. Auto always checks the requirements first.",
       "type": "keyvalue",
       "default": {
         "free_cpu": 1,
@@ -39618,7 +39618,7 @@
     {
       "id": "code.execution.computer-level",
       "label": "How often to use this Computer",
-      "desc": "Preference for this execution Host. Auto omits Only when I choose it; an authorized explicit choice may use it.",
+      "desc": "How often Auto uses this Computer. Only when I choose it keeps it out of Auto; you or an allowed agent can choose it for a task.",
       "type": "select",
       "default": "normal",
       "scope": [
@@ -39734,7 +39734,7 @@
     {
       "id": "code.execution.allowed-computers",
       "label": "Allowed Computers",
-      "desc": "Person-edited stable execution Host bindings for this Project. Empty until registration records its reviewed allowed set. A build may use later person-allowed Computers; Auto and agents never widen the set. New Computer or device identity still asks, even in YOLO.",
+      "desc": "Computers you have allowed for this Project. A build may also use Computers you allow later. Only you can change this list. Adding a new Computer or device still asks, even in YOLO.",
       "type": "list",
       "default": [],
       "scope": [
@@ -39766,7 +39766,7 @@
     {
       "id": "code.execution.default-computer",
       "label": "Default Computer",
-      "desc": "Stable execution_host_id chosen during Project registration from its person-allowed Computers. Auto uses it on equal ranks; Chosen uses it as the person's pin. Null means registration is incomplete; no executable Project work dispatches.",
+      "desc": "Choose a Computer from this Project's allowed list during setup. Auto uses it when Computers rank equally; Chosen Computer keeps new work there.",
       "type": "select",
       "default": null,
       "scope": [
