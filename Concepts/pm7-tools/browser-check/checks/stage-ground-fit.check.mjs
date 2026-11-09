@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
-import { installSampler } from './pip-bubble-string-anchors.check.mjs';
+import { installSampler, judgeStringFrames } from './pip-bubble-string-anchors.check.mjs';
 
 const LOOKS=['basic','friendly','retro','glass','nier'].flatMap(f=>[`${f}-light`,`${f}-dark`]);
 const median=a=>[...a].sort((x,y)=>x-y)[Math.floor(a.length/2)];
@@ -63,6 +63,11 @@ export default async function(t) {
   for(const r of capture.ground) if(r.screen==='creating') for(const p of r.props) if(p.op>.02&&!p.landed){if(!entries.has(p.id))entries.set(p.id,[]);entries.get(p.id).push(p);}
   const travel=[...entries].map(([id,ps])=>({id,frames:ps.length,actual:Math.max(...ps.map(p=>p.ax))-Math.min(...ps.map(p=>p.ax)),target:Math.max(...ps.map(p=>p.target.ax))-Math.min(...ps.map(p=>p.target.ax))}));
   await t.check(`${label}: each entering block keeps its top suspension column`,(t.args.motion==='reduce'||travel.length>0)&&travel.every(r=>r.actual<=.05&&r.target<=.05),JSON.stringify(travel));
+  const strings=judgeStringFrames(capture.frames.filter(r=>!r.none&&r.screen==='creating'),look,'creating');
+  const instant=t.args.motion==='reduce'&&capture.frames.some(r=>r.props?.some(p=>p.grounded))&&capture.frames.every(r=>(r.props||[]).every(p=>p.op<=.02||p.state==='out'||p.grounded));
+  await t.check(`${label}: hanging-string coverage or instantaneous ground placement`,strings.strings>0||instant,`${strings.strings} hanging string segments; instantaneous ground=${instant}`,{hard:true});
+  await t.check(`${label}: every hanging string obeys its suspension and painted attachment`,strings.bad6.length===0,strings.bad6.join('\n'));
+
   const groups=[];let group;
   for(const r of capture.frames){const key=r.screen==='creating'&&r.bub?.shown?r.bub.text:null;if(!key){group=null;continue;}if(!group||group.key!==key){group={key,rows:[]};groups.push(group);}group.rows.push(r);}
   let first=0,worstBubble=0;

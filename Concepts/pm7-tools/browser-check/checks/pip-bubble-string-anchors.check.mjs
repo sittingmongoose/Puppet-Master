@@ -27,6 +27,8 @@
 // `--set frames=1 --set counter=1` retains per-frame geometry and encoded film tags; `--set secs=` dwell seconds (default 4), `--set sandbox=1` for T3's sandbox. Headless or --record (the film judged
 // by the same sampler; string-top motion on film must read as the swing's own). All ten looks and every screen is
 // about an hour; the defaults below keep the committed-page run to the full route.
+// Creating retains its completed owner transaction across this walk's later look changes. stage-ground-fit starts
+// a fresh transaction for EACH look/surface and applies the same exported string-law judge to every entry frame.
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
@@ -136,63 +138,8 @@ const median = (xs) => { const s = [...xs].sort((a, b) => a - b); return s.lengt
 const lineDist = (ln, p) => { const L = Math.hypot(ln[2] - ln[0], ln[3] - ln[1]) || 1; return Math.abs((ln[2] - ln[0]) * (ln[1] - p[1]) - (ln[0] - p[0]) * (ln[3] - ln[1])) / L; };
 const crossAt = (ln, y) => (ln[3] === ln[1] ? ln[0] : ln[0] + (ln[2] - ln[0]) * (y - ln[1]) / (ln[3] - ln[1]));
 
-export default async function (t) {
-	const size = /^(\d+)x(\d+)$/.exec(String(t.args.size || ''));
-	if (size) await t.viewport(+size[1], +size[2]);
-	const dwell = Math.max(1200, (+(t.args.secs || 4)) * 1000);
-	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
-	const screens = t.args.screens ? String(t.args.screens).split(',') : SCREENS;
-	const f = await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
-	await f.waitForFunction(() => { const h = document.querySelector('#pm-o55-onboarding .o55-stage'); return !!(h && h.__pipStage && h.__pipStage.gHead); }, null, { timeout: 60000 });
-	await t.emulate({ reducedMotion: t.args.motion === 'reduce' ? 'reduce' : 'no-preference' });
-	await f.evaluate(installSampler, !!t.args.counter);
-	await f.evaluate(v=>{window.__qbsDiagnostics=v;},!!t.args.diagnostics);
-	const quiet = () => f.waitForFunction(() => !window.O55.S.vt && !(window.O55.nierLook && window.O55.nierLook.busy && window.O55.nierLook.busy()) && !(window.PM_THEME_TRANSITION && window.PM_THEME_TRANSITION.busy && window.PM_THEME_TRANSITION.busy()), null, { timeout: 30000 }).catch(() => {});
-	const wake = async () => {
-		await t.page.mouse.move(400, 350);
-		await t.page.mouse.move(1000, 550, { steps: 16 });
-		await f.waitForFunction(() => !document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.sleepZ, null, { timeout: 6000 }).catch(() => {});
-	};
-	await f.waitForTimeout(1100); await wake(); await f.waitForTimeout(1200);
-
-	const bad4 = [], bad6 = [], badDest = [], noHelper = [], diagnostics = [], notOpened = [];
-	let scenes = 0, lines = 0, strings = 0, dests = 0;
-	const judge = (look, screen, frames) => {
-		const fr = frames.filter((x) => !x.none);
-		// Snapshot the suspension at placeProp's draw, then read its painted line/tie on EVERY frame. Retro's
-		// physics may advance after an earlier synchronous draw in the same frame; a changed renderN alone
-		// cannot establish that current physics and the visible pose are from the same instant.
-		if (fr.length < 20) return;
-		scenes++;
-		// ---- QA-4: one full line on its screen/layout, including director updates while it stays visible.
-		let cur = null; const eps = [];
-		for (const x of fr) {
-			const b = x.bub, key = b && b.shown ? [x.screen, x.layout, b.text].join('|') : null;
-			if (cur && cur.key === key) cur.rows.push(x);
-			else { if (cur) eps.push(cur); cur = key ? { key, rows: [x] } : null; }
-		}
-		if (cur) eps.push(cur);
-		for (const e of eps) {
-			// deviation in whichever frame the place is anchored to: against the speech point when the bubble follows
-			// Pip, on the screen when an obstacle or the stage edge pins it while Pip sways (Retro's cramped banner).
-			// Read in scene units, then scaled by the settled map: a stage that is still opening (the sandbox sheet)
-			// rescales every px offset while the bubble keeps the same scene place
-			const rels = e.rows.map((x) => { const r = x.fam === 'nier' ? x.bub.fixed : !x.bub.rel ? x.bub.boxRel : x.bub.rel; const k = x.fam === 'nier' ? 1 : x.mapK ? x.mapK[0] : 1; return r ? [r[0] / k, r[1] / k] : null; });
-			const trs = e.rows.map((x) => { if(x.fam === 'nier') return x.bub.fixed; const r = x.bub.tr; if (!r || !x.mapK) return x.bub.boxRel; return [(r[0] - x.mapK[1]) / x.mapK[0], (r[1] - x.mapK[2]) / x.mapK[0]]; });
-			if (rels.some((r) => !r)) continue;
-			lines++;
-			const kSet = e.rows[0].fam === 'nier' ? 1 : median(e.rows.slice(-20).map((x) => x.mapK ? x.mapK[0] : 1));
-			const sx = median(rels.slice(-20).map((r) => r[0])), sy = median(rels.slice(-20).map((r) => r[1]));
-			const tx = median(trs.slice(-20).map((r) => r[0])), ty = median(trs.slice(-20).map((r) => r[1]));
-			const devs = rels.map((r, i) => Math.max(Math.min(Math.abs(r[0] - sx), Math.abs(trs[i][0] - tx)), Math.min(Math.abs(r[1] - sy), Math.abs(trs[i][1] - ty))) * kSet);
-			const worst = Math.max(...devs), wi = devs.indexOf(worst);
-			// NieR's fixed box is measured against the stage, so Pip's independent hover cannot inflate its bound.
-			const tol = 1;
-			if (devs[0] > tol || worst > tol) {
-				if(t.args.diagnostics) diagnostics.push({look,screen,first:devs[0],worst,frames:e.rows});
-				bad4.push(`${look} ${screen} '${e.rows[0].bub.text.slice(0, 32)}': first frame ${devs[0].toFixed(1)} px from settled, worst ${worst.toFixed(1)} px at +${e.rows[wi].t - e.rows[0].t} ms (${e.rows.length} frames; settled rel [${sx.toFixed(1)}, ${sy.toFixed(1)}] tr [${tx.toFixed(1)}, ${ty.toFixed(1)}], first rels ${rels.slice(0, 5).map((r) => `[${r[0].toFixed(1)}, ${r[1].toFixed(1)}]`).join(' ')})`);
-			}
-		}
+export function judgeStringFrames(fr, look, screen) {
+ const bad6=[],badDest=[],noHelper=[];let strings=0,dests=0;
 		// ---- QA-6 + QA-4b: per (scene segment, prop). A segment ends where restPose itself is allowed to refit
 		// (a new direct, a layout or visible-span change); a changing speech clearance is not a new scene
 		const byProp = new Map();
@@ -253,6 +200,68 @@ export default async function (t) {
 					bad6.push(`${look} ${screen} ${p0.id} (${p0.kind}) string ${si}: anchor error ${worstD.toFixed(3)} u, offset/height span ${offSpan.toFixed(3)}/${hSpan.toFixed(3)} u (each <=.05); painted-tie error ${worstTie.toFixed(2)}x and unexplained top ${worstTop.toFixed(2)}x their render-precision bounds; ${visible.length} visible crossings, span ${Number.isFinite(cSpan)?cSpan.toFixed(1):'none'} u, missing geometry ${missing}`);
 			}
 		}
+ return {bad6,badDest,noHelper,strings,dests};
+}
+
+export default async function (t) {
+	const size = /^(\d+)x(\d+)$/.exec(String(t.args.size || ''));
+	if (size) await t.viewport(+size[1], +size[2]);
+	const dwell = Math.max(1200, (+(t.args.secs || 4)) * 1000);
+	const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
+	const screens = t.args.screens ? String(t.args.screens).split(',') : SCREENS;
+	const f = await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
+	await f.waitForFunction(() => { const h = document.querySelector('#pm-o55-onboarding .o55-stage'); return !!(h && h.__pipStage && h.__pipStage.gHead); }, null, { timeout: 60000 });
+	await t.emulate({ reducedMotion: t.args.motion === 'reduce' ? 'reduce' : 'no-preference' });
+	await f.evaluate(installSampler, !!t.args.counter);
+	await f.evaluate(v=>{window.__qbsDiagnostics=v;},!!t.args.diagnostics);
+	const quiet = () => f.waitForFunction(() => !window.O55.S.vt && !(window.O55.nierLook && window.O55.nierLook.busy && window.O55.nierLook.busy()) && !(window.PM_THEME_TRANSITION && window.PM_THEME_TRANSITION.busy && window.PM_THEME_TRANSITION.busy()), null, { timeout: 30000 }).catch(() => {});
+	const wake = async () => {
+		await t.page.mouse.move(400, 350);
+		await t.page.mouse.move(1000, 550, { steps: 16 });
+		await f.waitForFunction(() => !document.querySelector('#pm-o55-onboarding .o55-stage').__pipStage.sleepZ, null, { timeout: 6000 }).catch(() => {});
+	};
+	await f.waitForTimeout(1100); await wake(); await f.waitForTimeout(1200);
+
+	const bad4 = [], bad6 = [], badDest = [], noHelper = [], diagnostics = [], notOpened = [];
+	let scenes = 0, lines = 0, strings = 0, dests = 0;
+	const judge = (look, screen, frames) => {
+		const fr = frames.filter((x) => !x.none);
+		// Snapshot the suspension at placeProp's draw, then read its painted line/tie on EVERY frame. Retro's
+		// physics may advance after an earlier synchronous draw in the same frame; a changed renderN alone
+		// cannot establish that current physics and the visible pose are from the same instant.
+		if (fr.length < 20) return;
+		scenes++;
+		// ---- QA-4: one full line on its screen/layout, including director updates while it stays visible.
+		let cur = null; const eps = [];
+		for (const x of fr) {
+			const b = x.bub, key = b && b.shown ? [x.screen, x.layout, b.text].join('|') : null;
+			if (cur && cur.key === key) cur.rows.push(x);
+			else { if (cur) eps.push(cur); cur = key ? { key, rows: [x] } : null; }
+		}
+		if (cur) eps.push(cur);
+		for (const e of eps) {
+			// deviation in whichever frame the place is anchored to: against the speech point when the bubble follows
+			// Pip, on the screen when an obstacle or the stage edge pins it while Pip sways (Retro's cramped banner).
+			// Read in scene units, then scaled by the settled map: a stage that is still opening (the sandbox sheet)
+			// rescales every px offset while the bubble keeps the same scene place
+			const rels = e.rows.map((x) => { const r = x.fam === 'nier' ? x.bub.fixed : !x.bub.rel ? x.bub.boxRel : x.bub.rel; const k = x.fam === 'nier' ? 1 : x.mapK ? x.mapK[0] : 1; return r ? [r[0] / k, r[1] / k] : null; });
+			const trs = e.rows.map((x) => { if(x.fam === 'nier') return x.bub.fixed; const r = x.bub.tr; if (!r || !x.mapK) return x.bub.boxRel; return [(r[0] - x.mapK[1]) / x.mapK[0], (r[1] - x.mapK[2]) / x.mapK[0]]; });
+			if (rels.some((r) => !r)) continue;
+			lines++;
+			const kSet = e.rows[0].fam === 'nier' ? 1 : median(e.rows.slice(-20).map((x) => x.mapK ? x.mapK[0] : 1));
+			const sx = median(rels.slice(-20).map((r) => r[0])), sy = median(rels.slice(-20).map((r) => r[1]));
+			const tx = median(trs.slice(-20).map((r) => r[0])), ty = median(trs.slice(-20).map((r) => r[1]));
+			const devs = rels.map((r, i) => Math.max(Math.min(Math.abs(r[0] - sx), Math.abs(trs[i][0] - tx)), Math.min(Math.abs(r[1] - sy), Math.abs(trs[i][1] - ty))) * kSet);
+			const worst = Math.max(...devs), wi = devs.indexOf(worst);
+			// NieR's fixed box is measured against the stage, so Pip's independent hover cannot inflate its bound.
+			const tol = 1;
+			if (devs[0] > tol || worst > tol) {
+				if(t.args.diagnostics) diagnostics.push({look,screen,first:devs[0],worst,frames:e.rows});
+				bad4.push(`${look} ${screen} '${e.rows[0].bub.text.slice(0, 32)}': first frame ${devs[0].toFixed(1)} px from settled, worst ${worst.toFixed(1)} px at +${e.rows[wi].t - e.rows[0].t} ms (${e.rows.length} frames; settled rel [${sx.toFixed(1)}, ${sy.toFixed(1)}] tr [${tx.toFixed(1)}, ${ty.toFixed(1)}], first rels ${rels.slice(0, 5).map((r) => `[${r[0].toFixed(1)}, ${r[1].toFixed(1)}]`).join(' ')})`);
+			}
+		}
+		const sj = judgeStringFrames(fr, look, screen);
+		bad6.push(...sj.bad6);badDest.push(...sj.badDest);noHelper.push(...sj.noHelper);strings+=sj.strings;dests+=sj.dests;
 	};
 
 	for (const look of looks) {
