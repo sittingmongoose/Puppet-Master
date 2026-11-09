@@ -29244,6 +29244,7 @@ canonical_text: >-
   DL-471 Q-ID2 decides cmd.git.worktree is a non-dispatch family token.
   Both are recorded in UCC-230 non_definition_tokens, with no independent definition.
   Amended after review: selectors must be supplied and non-null; evidence line hints are checked.
+  Amended after review (2026-11-09 13:25Z): reject direct external unions in owner_request/owner_result and scope line hints to the cited unit/field, excluding the map itself; Jared: "Narrow fix, quick check, land (Recommended)".
   Amended after review: merge keeps the complete expected_lease and adds observed topology_generation
   and source_location_id fences, required when leased. Q-ID5e: Jared, 2026-11-09 about 04:12Z, relayed by
   pm7-build (pm-mail 1109042811-84aa), chose "Two separate fields (Recommended)": the two fences are sibling

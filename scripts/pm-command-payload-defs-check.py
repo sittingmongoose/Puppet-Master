@@ -1150,7 +1150,7 @@ def route_for(ctx: Context, cmd: str) -> str | None:
 # ---- field specs
 
 
-def resolve_ref(ctx: Context, ref: Any, results: dict[str, Any]) -> bool:
+def resolve_ref(ctx: Context, ref: Any, results: dict[str, Any], *, owner_boundary: bool = False) -> bool:
     if not isinstance(ref, str):
         return False
     if ref in PRIMITIVE_REFS:
@@ -1164,7 +1164,9 @@ def resolve_ref(ctx: Context, ref: Any, results: dict[str, Any]) -> bool:
         return isinstance(document, dict) and isinstance(document.get("$defs"), dict) and json_ref.group(2) in document["$defs"]
     doc_ref = TYPED_REF_RE.fullmatch(ref)
     if doc_ref:
-        return ref in ctx.typed_contracts
+        contract = ctx.typed_contracts.get(ref)
+        # Scalar owner carriers cannot declare the source required by an external union.
+        return contract is not None and not (owner_boundary and contract.get("discriminator_source") == "external")
     return False
 
 
@@ -1992,13 +1994,13 @@ def check_definition(ctx: Context, block: Block, owner_unit: str, definition: An
         else:
             if response_kind == "local_projection":
                 rep.add("C10", "local_projection_with_owner_result", detail=str(owner_result), **where)
-            if not resolve_ref(ctx, owner_result, results):
+            if not resolve_ref(ctx, owner_result, results, owner_boundary=True):
                 rep.add("C10", "owner_result_unresolved", detail=str(owner_result), **where)
 
     # owner_request resolves (C05) and agrees with wiring (C13 warning).
     owner_request = definition.get("owner_request")
     if owner_request != "none":
-        if not resolve_ref(ctx, owner_request, results):
+        if not resolve_ref(ctx, owner_request, results, owner_boundary=True):
             rep.add("C05", "owner_request_unresolved", detail=str(owner_request), **where)
         wired = ctx.wiring_requests.get(cmd, set())
         if wired and owner_request not in wired:
@@ -2334,6 +2336,35 @@ def internal_detail(check: str, exc: BaseException) -> str:
 
 def check_evidence_lines(ctx: Context, value: Any = None, doc: str = CATALOG) -> None:
     """Check all evidence records with line hints, including nested definition records."""
+    outside_map = value is None
+    spans: dict[tuple[str, str, str], list[tuple[int, int]]] = {}
+
+    def source_spans(evidence: dict[str, Any], text: str) -> list[tuple[int, int]]:
+        target = str(evidence["doc"])
+        uid = str(evidence.get("unit", ""))
+        field = str(evidence.get("field", "canonical_text"))
+        key = (target, uid, field)
+        if key not in spans:
+            allowed = [(0, len(text))]
+            if uid:
+                allowed = []
+                unit = ctx.corpus.units(target).get(uid)
+                if unit:
+                    match = PLAN_UNIT_FENCE_PATTERN.match(text, unit.start)
+                    root = yaml.compose(match.group(1), Loader=yaml.SafeLoader) if match else None
+                    if isinstance(root, yaml.MappingNode):
+                        for name, node in root.value:
+                            if name.value == field:
+                                allowed.append((match.start(1) + node.start_mark.index,
+                                                match.start(1) + node.end_mark.index))
+            map_unit = ctx.catalog_units.get(MAP_UNIT)
+            if outside_map and target == CATALOG and map_unit:
+                allowed = [(left, right) for start, end in allowed
+                           for left, right in ((start, min(end, map_unit.start)),
+                                               (max(start, map_unit.end), end)) if left < right]
+            spans[key] = allowed
+        return spans[key]
+
     def walk(value: Any, doc: str) -> None:
         if isinstance(value, list):
             for child in value:
@@ -2345,7 +2376,10 @@ def check_evidence_lines(ctx: Context, value: Any = None, doc: str = CATALOG) ->
                 valid = isinstance(line, int) and not isinstance(line, bool) and line > 0
                 words = str(value["quote"]).split()
                 matches = re.finditer(r"\s+".join(re.escape(word) for word in words), text or "") if words else []
-                if not valid or not any(line_of(text or "", match.start()) == line for match in matches):
+                allowed = source_spans(value, text or "")
+                if not valid or not any(line_of(text or "", match.start()) == line
+                                        and any(start <= match.start() and match.end() <= end for start, end in allowed)
+                                        for match in matches):
                     ctx.report.add("C05", "evidence_line_mismatch", path=doc,
                                    detail=f"{value['doc']}:{line}: {value['quote']}")
             for child in value.values():
@@ -4198,6 +4232,23 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
     def _(fx: Fixture) -> None:
         typed(fx)
 
+    for carrier in ("owner_request", "owner_result"):
+        @case(f"fail ASTRA: external union as {carrier}", 1, {"C05" if carrier == "owner_request" else "C10"},
+              kinds={f"{carrier}_unresolved"})
+        def _(fx: Fixture, carrier=carrier) -> None:
+            typed(fx)
+            definition = _defs(fx, "cmd.docker.image.tag")
+            target = definition if carrier == "owner_request" else definition["result"]
+            target[carrier] = "Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1"
+            definition["judgments"] = [entry for entry in definition["judgments"] if entry["key"] != carrier]
+
+    @case("pass ASTRA: in-record union as owner_result", 0, set())
+    def _(fx: Fixture) -> None:
+        body = internal_typed(fx)
+        replace_typed(fx, body)
+        _defs(fx, "cmd.docker.image.tag")["result"]["owner_result"] = (
+            "Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1")
+
     @case("fail Q5b: bare unit reference is not a typed contract", 1, {"C05"}, kinds={"contract_ref_unresolved"})
     def _(fx: Fixture) -> None:
         _defs(fx, "cmd.docker.image.tag")["args"]["profile"] = {
@@ -4319,6 +4370,29 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
             evidence.pop("unit", None)
             evidence.pop("field", None)
             evidence["line"] = 2 if correct else 3
+
+    for location in ("correct", "map", "other_unit", "other_field", "doc_map"):
+        @case(f"{'pass' if location == 'correct' else 'fail'} ASTRA: evidence hint {location}",
+              0 if location == "correct" else 1, set() if location == "correct" else {"C05"},
+              kinds=set() if location == "correct" else {"evidence_line_mismatch"})
+        def _(fx: Fixture, location=location) -> None:
+            external(fx)
+            evidence = fx.map["outside_range_commands"][0]["evidence"]
+            quote = evidence["quote"]
+            fx.doc_suffix[CATALOG] += fence({"plan_unit_id": "UCC-232", "canonical_text": quote})
+            # Also duplicate the quote in a different field of the correctly named unit.
+            fx.doc_suffix[CATALOG] = fx.doc_suffix[CATALOG].replace(
+                "preserved_exact_tokens:", f"other_field: {quote}\npreserved_exact_tokens:", 1)
+            if location == "doc_map":
+                evidence = fx.map["non_definition_tokens"][0]["evidence"]
+                quote = evidence["quote"]
+                evidence.pop("unit")
+                evidence.pop("field")
+            evidence["line"] = 1
+            text = fx.files()[CATALOG]
+            occurrences = list(re.finditer(re.escape(quote), text))
+            selected = {"map": 0, "doc_map": 0, "correct": 1, "other_field": 2, "other_unit": 3}[location]
+            evidence["line"] = line_of(text, occurrences[selected].start())
 
     @case("fail MAX1: deleted in-record discriminator", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
     def _(fx: Fixture) -> None:
