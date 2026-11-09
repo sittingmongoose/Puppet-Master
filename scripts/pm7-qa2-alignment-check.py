@@ -55,7 +55,9 @@ def check():
     require(len(read("glyph_catalog.json")["status_marks"]) == 22, "QA2 invented a status key")
     # 1300 plus the 32 DL-333 resolution 9b History, Vision bridge and Teacher rows (2026-11-05),
     # less catalog.chat_worktree_bind_existing: DL-335 retires that command because UCC-058 forbids exposing it.
-    require(len(read("Wiring_Matrix.production.json")["entries"]) == 1331, "QA2/DL-270 plus refresh plus DL-333 less DL-335 production wiring union differs")
+    # Q5c / DL-471 Q-ID6/Q-ID7b (2026-11-09): +2 production-intent rows (1331 -> 1333), the existing-topology
+    # shell_view catalog.git_worktree_open_topology and catalog.git_worktree_repair, unavailable until defined.
+    require(len(read("Wiring_Matrix.production.json")["entries"]) == 1333, "QA2/DL-270 plus refresh plus DL-333 less DL-335 plus DL-471 production wiring union differs")
     actor = read("glyph_catalog.json")["qa2_actor_presentation"]
     require(actor["you"]["silhouette"] == "person_alone" and not actor["you"]["marionette_cross"]
             and not actor["you"]["puppet_strings"] and actor["wand"]["glyph_id"] == "wand",
