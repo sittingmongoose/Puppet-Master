@@ -19,11 +19,11 @@ export default async function (t) {
   const applied=await f.waitForFunction(l=>document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage?.theme===l&&!O55.S.vt&&!document.documentElement.hasAttribute('data-o55-vt')&&!(O55.nierLook?.busy?.()),look,{timeout:30000}).then(()=>true,()=>false);
   await t.check(`${mode} ${look}: onboarding look applied`,applied,'stage theme or look cover did not settle',{hard:true});
   const input = f.locator('#pm-o55-onboarding .o55-layer:not(.o55-out) [data-o55-bind="name"]').first();
-  await input.click(); await input.fill('Book club website');
-  await t.page.mouse.move(4,4);
-  await f.waitForTimeout(3500);
+  await input.click();
+  if(t.args.typing) await f.waitForTimeout(4500);
+  else { await input.fill('Book club website'); await t.page.mouse.move(4,4); await f.waitForTimeout(3500); }
   t.mark(`${mode} ${look} ${size.join('x')} resting art scale`);
-  const rows = await f.evaluate(() => new Promise(resolve => {
+  const reading = f.evaluate(() => new Promise(resolve => {
    const rows=[], start=performance.now();
    function read() {
     const st=document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
@@ -36,21 +36,26 @@ export default async function (t) {
      const r=p.el.getBoundingClientRect(), text=p.el.querySelector('text');
      const font=text ? parseFloat(getComputedStyle(text).fontSize)*Math.hypot(text.getScreenCTM().a,text.getScreenCTM().b) : null;
      const bbl=st.bubble, br=bbl.getBoundingClientRect(), hr=st.gHead.getBoundingClientRect(), side=bbl.dataset.side;
-     const arrow=st.famName!=='nier'&&st.layoutName==='portrait'&&bbl.classList.contains('on')&&+getComputedStyle(bbl).opacity>.5;
+     const arrow=st.famName!=='nier'&&bbl.classList.contains('on')&&+getComputedStyle(bbl).opacity>.5;
      const tail=getComputedStyle(bbl,'::after'), polygon=/^polygon\((.*)\)$/.exec(tail.clipPath);
-     const ys=polygon?polygon[1].split(',').map(v=>parseFloat(v.trim().split(/\s+/)[1])):[];
+     const pts=polygon?polygon[1].split(',').map(v=>v.trim().split(/\s+/).map(parseFloat)):[],ys=pts.map(p=>p[1]),xs=pts.map(p=>p[0]);
      const direction=ys.length===3&&ys[0]===ys[1]?Math.sign(ys[2]-ys[0]):0;
-     const distance=v=>v.endsWith('%')?parseFloat(v)*bbl.clientHeight/100:parseFloat(v);
+     const horizontal=xs.length===3&&xs[0]===xs[1]?Math.sign(xs[2]-xs[0]):0;
+     const distance=(v,n=bbl.clientHeight)=>v.endsWith('%')?parseFloat(v)*n/100:parseFloat(v);
      const painted=tail.content!=='none'&&tail.display!=='none'&&parseFloat(tail.width)>0&&parseFloat(tail.height)>0;
-     const away=arrow&&(!painted||(br.top>=hr.bottom-1&&(direction!==-1||!(distance(tail.bottom)>=bbl.clientHeight-2)))||(br.bottom<=hr.top+1&&(direction!==1||!(distance(tail.top)>=bbl.clientHeight-2))));
+     const cx=(hr.left+hr.right)/2,cy=(hr.top+hr.bottom)/2;
+     const toward=(direction===-1&&cy<br.top+2&&distance(tail.bottom)>=bbl.clientHeight-2)||(direction===1&&cy>br.bottom-2&&distance(tail.top)>=bbl.clientHeight-2)||(horizontal===-1&&cx<br.left+2&&distance(tail.right,bbl.clientWidth)>=bbl.clientWidth-2)||(horizontal===1&&cx>br.right-2&&distance(tail.left,bbl.clientWidth)>=bbl.clientWidth-2);
+     const away=arrow&&(!painted||!toward);
      rows.push({theme:st.theme,id,kind:p.spec.kind,scale,nominal,ratio:scale/nominal,rounding:.005/nominal+1e-6,
       box:[r.left,r.top,r.width,r.height],restBox:p.restBox,head:st.pipHead(0,null,true),captionFontPixels:font,
-      arrow,tailAway:away,tailSide:side,tailPaint:{direction,top:tail.top,bottom:tail.bottom,clip:tail.clipPath},bubbleBox:[br.left,br.top,br.right,br.bottom],headBox:[hr.left,hr.top,hr.right,hr.bottom]});
+      arrow,tailAway:away,tailSide:side,tailPaint:{direction,horizontal,top:tail.top,bottom:tail.bottom,clip:tail.clipPath},bubbleBox:[br.left,br.top,br.right,br.bottom],headBox:[hr.left,hr.top,hr.right,hr.bottom]});
     }
     if(performance.now()-start<2000) requestAnimationFrame(read); else resolve(rows);
    }
    requestAnimationFrame(read);
   }));
+  if(t.args.typing) { await t.page.keyboard.press('Control+A'); await t.page.keyboard.type('Book club',{delay:25}); await t.page.mouse.move(4,4); }
+  const rows=await reading;
   const tag=`${mode} ${look} ${size.join('x')}`, signs=rows.filter(r=>r.kind==='sign');
   await t.check(`${tag}: positive resting sign coverage`, signs.length>=30, `${signs.length} resting sign samples`);
   const bad=rows.filter(r=>r.ratio+r.rounding<.66);

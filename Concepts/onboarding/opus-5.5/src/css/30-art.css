@@ -115,6 +115,9 @@
 #pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="up"]::before { left: var(--tx, 30px); bottom: 100%; width: calc(14px + 2.64 * var(--bw, 0px)); height: calc(8px + 2.54 * var(--bw, 0px)); margin-bottom: calc(-1 * var(--bw, 0px)); translate: -50% 0; clip-path: polygon(0 100%, 100% 100%, 50% 0); }
 #pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="left"]::after { top: var(--ty, 16px); right: 100%; height: 14px; width: calc(8px + var(--bw, 0px)); margin-right: calc(-1 * var(--bw, 0px)); translate: 0 -50%; clip-path: polygon(100% 0, 100% 100%, 0 50%); }
 #pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="left"]::before { top: var(--ty, 16px); right: 100%; height: calc(14px + 2.64 * var(--bw, 0px)); width: calc(8px + 2.54 * var(--bw, 0px)); margin-right: calc(-1 * var(--bw, 0px)); translate: 0 -50%; clip-path: polygon(100% 0, 100% 100%, 0 50%); }
+#pm-o55-onboarding .pst-bubble[data-side="right"] { transform-origin: 100% 100%; }
+#pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="right"]::after { top: var(--ty, 16px); left: 100%; height: 14px; width: calc(8px + var(--bw, 0px)); margin-left: calc(-1 * var(--bw, 0px)); translate: 0 -50%; clip-path: polygon(0 0, 0 100%, 100% 50%); }
+#pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="right"]::before { top: var(--ty, 16px); left: 100%; height: calc(14px + 2.64 * var(--bw, 0px)); width: calc(8px + 2.54 * var(--bw, 0px)); margin-left: calc(-1 * var(--bw, 0px)); translate: 0 -50%; clip-path: polygon(0 0, 0 100%, 100% 50%); }
 #pm-o55-onboarding .pst:not([data-layout="portrait"]) .pst-bubble { font-size: 12px; padding: 6px 10px; max-width: min(56%, 230px); }
 #pm-o55-onboarding .pst[data-layout="compact"] .pst-ntop, #pm-o55-onboarding .pst[data-layout="compact"] .pst-term-top span:last-child { display: none; }
 #pm-o55-onboarding .pst[data-layout="compact"] .pst-nlab { gap: 10px; padding: 3px 6px; }

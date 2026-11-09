@@ -40,6 +40,20 @@ function sampler(options) {
 	S0.trace=options?.trace?[]:null;S0.meta={mode:options?.mode,size:[innerWidth,innerHeight],start:performance.now(),timeOrigin:performance.timeOrigin};
 	const R = (e) => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom]; };
 	const meet = (a, b) => a[0] < b[2] - 0.5 && a[2] > b[0] + 0.5 && a[1] < b[3] - 0.5 && a[3] > b[1] + 0.5;
+	// A new size must fit the prop's swept space, not just its upright box at this instant. Rotate the model
+	// independently through the declared small swing and map it through the actual painted SVG viewport.
+	const swept = (p, st) => {
+		const rp=p.restFit, bb=p.spaceBB||p.bb, m=p.el.parentNode.getScreenCTM(), sr=st.screen.getBoundingClientRect();
+		if(!rp||!bb||!m) { const b=p.restBox;if(!b)return null;const a=st.toScreen(b.slice(0,2)),z=st.toScreen(b.slice(2));return[a[0]-6,a[1]-6,z[0]+6,z[1]+6]; }
+		const tg=st.propTarget(p), mid=p.ties.reduce((s,t)=>s+t[0],0)/p.ties.length;
+		const angles=p.spec.ground||st.still()?[0]:Array.from({length:33},(_,i)=>-.15+.3*i/32), points=[];
+		for(const a of angles) for(const x of [bb[0],bb[0]+bb[2]]) for(const y of [bb[1],bb[1]+bb[3]]) {
+			const c=Math.cos(a),n=Math.sin(a),u=(x-mid)*rp.sc,v=(y-tg.tieY)*rp.sc;
+			const X=rp.ax+n*tg.len+u*c-v*n,Y=st.L.anchorY+rp.dy+c*tg.len+u*n+v*c;
+			points.push([m.a*X+m.c*Y+m.e-sr.left,m.b*X+m.d*Y+m.f-sr.top]);
+		}
+		return[Math.min(...points.map(p=>p[0]))-6,Math.min(...points.map(p=>p[1]))-6,Math.max(...points.map(p=>p[0]))+6,Math.max(...points.map(p=>p[1]))+6];
+	};
 	// QA-4 trade: entering props may pass behind a settled bubble (lead ruling 18:40Z). The bubble's placement at the
 	// moment it was made, as pip-bubble-clear reads it, so stillness can be judged per entry
 	const wrap = () => {
@@ -84,16 +98,17 @@ function sampler(options) {
 				const text = (b.textContent || '').trim(), tall = st2.layoutName === 'portrait', bw = b.offsetWidth, bh = b.offsetHeight;
 				const sp = st2.toScreen(st2.headXf(tall ? [44, 30] : [58, 44], st2.H, st2.ang, 1, 1));
 				const side=b.dataset.side;
-				const anchor = tall ? [relNow[0] + bw * .3, relNow[1] + (side==='up'?0:bh)] : [relNow[0], relNow[1] + bh / 2];
+				const pin=(s,w,h)=>s==='up'?[w*.3,0]:s==='down'?[w*.3,h]:s==='right'?[w,h/2]:[0,h/2];
+				const offset=pin(side||(tall?'down':'left'),bw,bh),anchor=[relNow[0]+offset[0],relNow[1]+offset[1]];
 				const prev = S.lastScreen === screen ? S.anchors.get(screen) : null;
 				const entering = [...st2.props.values()].some(p => p.state !== 'out' && !p.settled && p.op > .05);
 				if (entering && prev && prev.text !== text) {
-					const x = sp[0] + prev.anchor[0] - (tall ? bw * .3 : 0), y = sp[1] + prev.anchor[1] - (tall ? (prev.side==='up'?0:bh) : bh / 2);
+					const offset=pin(prev.side||(tall?'down':'left'),bw,bh),x=sp[0]+prev.anchor[0]-offset[0],y=sp[1]+prev.anchor[1]-offset[1];
 					const v = st2.vis, lo = v && st2.toScreen([v.x0,v.y0]), hi = v && st2.toScreen([v.x1,v.y1]);
 					const pad = st2.tube ? 14 : 8, top = st2.tube ? (tall ? 44 : 34) : 8;
 					const foot = st2.tube === 'teletype' ? (tall ? 70 : 48) : st2.tube ? (tall ? 44 : 34) : 8;
 					const candidate = [x,y,x+bw,y+bh];
-					const obs = [...st2.props.values()].filter(p => p.state !== 'out' && p.restBox).map(p => { const a=st2.toScreen(p.restBox.slice(0,2)), z=st2.toScreen(p.restBox.slice(2)); return [a[0]-6,a[1]-6,z[0]+6,z[1]+6]; });
+					const obs = [...st2.props.values()].filter(p => p.state !== 'out' && p.restBox).map(p=>swept(p,st2)).filter(Boolean);
 					const bar = st2.barBox(6); if(bar) obs.push(bar);
 					const canFit = lo && x >= Math.max(pad,lo[0]+pad)-.5 && x+bw <= Math.min(st2.box.width-pad,hi[0]-pad)+.5 && y >= Math.max(top,lo[1]+4)-.5 && y+bh <= Math.min(st2.box.height-foot,hi[1]-4)+.5 && !obs.some(o=>meet(candidate,o));
 					const drift = Math.max(...anchor.map((v,i)=>Math.abs(v-prev.anchor[i])));

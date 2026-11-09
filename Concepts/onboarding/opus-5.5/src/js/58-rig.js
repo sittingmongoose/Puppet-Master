@@ -1532,9 +1532,10 @@
       if (at[0] !== x || at[1] !== y) { if (!this.bubbleRel || at !== prev) this.bubbleRelT = this.t; this.bubbleRel = [at[0] - origin[0], at[1] - origin[1]]; } else this.bubbleRel = null;
       [x, y] = at;
       this.bubbleSide = talking ? sideOf(x) : null;
-      const tail = tall ? (y > head[1] ? 'up' : 'down') : 'left';
+      const dx = Math.max(x - head[0], head[0] - x - bw, 0), dy = Math.max(y - head[1], head[1] - y - bh, 0);
+      const tail = dx > dy ? (head[0] < x ? 'left' : 'right') : (head[1] < y ? 'up' : 'down');
       /* where it is, with its tail, for the props that leave under it (holdUnder) */
-      if (talking) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(x - gap - (tall ? 0 : 10), y - gap - (tail === 'up' ? 10 : 0)), a1 = u(x + bw + gap, y + bh + gap + (tail === 'down' ? 10 : 0)); this.bubbleBox = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleBox = null;
+      if (talking) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(x - gap - (tail === 'left' ? 10 : 0), y - gap - (tail === 'up' ? 10 : 0)), a1 = u(x + bw + gap + (tail === 'right' ? 10 : 0), y + bh + gap + (tail === 'down' ? 10 : 0)); this.bubbleBox = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleBox = null;
       /* (its place as `translate`: its pop's `scale` (30-art.css pstBubble) then grows it from its tail where it stands; a
          `transform` here was scaled with it, so the bubble flew in from the stage's corner, over Pip, FO-44) */
       this.bubble.style.translate = `${R(x)}px ${R(y)}px`;
