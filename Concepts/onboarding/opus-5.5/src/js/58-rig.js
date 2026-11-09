@@ -595,8 +595,8 @@
             c = best(xs.flatMap((ax) => ys.map((ay) => [ax, ay])));
           }
           if (c) { dx += c[0]; dy += c[1]; break; }
-          if (g <= (destination ? .35 : .66)) break;
-          g *= .9; f = f0 * g; lo = L0 * g; hi = H0 * g; tp = T0 * g; bt = B0 * g;
+          if (g <= .66) break;
+          g = destination ? Math.max(.66, g * .9) : g * .9; f = f0 * g; lo = L0 * g; hi = H0 * g; tp = T0 * g; bt = B0 * g;
         }
         return g;
       };
@@ -614,12 +614,11 @@
         /* (and off Pip's head where it hangs at rest: Retro's crop pushed a sign in from its cut side over Pip, FO-50) */
         const pk = destination ? this.pipHead(0, null, true) : this.pipKeep;
         if (pk && visible > .05) {
-          /* A hanging prop passes every height on its way in. A destination just below the head let it fall through
-             Pip; one only four units beside it swung back into the head. Fit that whole vertical path beside Pip,
-             including the prop's own swing, before the first frame. The same fixed fit then serves the spring and
-             the strings throughout entry, rather than dodging the head with a new offset on each moving frame. */
+          /* A prop lowered from above must stop above the swept head, or pass beside it. Extending this
+             obstacle below the head tests that whole entry path; extending it ABOVE the head too wrongly
+             removed valid above-head destinations and shrank the 860 Retro sign to an unreadable size. */
           const reach = destination ? this.speechSway(pr, sc, tm, this.propTarget(pr).len) : [0, 0];
-          obs.push(destination ? [pk[0] - 4 - reach[0], v.y0 - this.L.h, pk[2] + 4 + reach[0], v.y1 + this.L.h]
+          obs.push(destination ? [pk[0] - 4 - reach[0], pk[1] - 4 - reach[1], pk[2] + 4 + reach[0], v.y1 + this.L.h]
             : [pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
         }
         let before = true;
@@ -773,6 +772,13 @@
          it: a prop lowered in, or swinging back, beside a swinging Pip keeps off its head, as off the resting one) */
       const A = still || resting ? 0 : swing != null ? swing : this.swingAmp(ps.th, ps.thv, F.w, F.damp);
       if (A > .002) [-1, -.5, .5, 1].forEach((q) => { b = join(b, box(ps.Ct.x, ps.Ct.y, ps.tiltT + A * q * .9, A * q)); });
+      /* Reserve the same small head motions as speechMotion from the canonical pose. This is a fixed
+         swept band, independent of the head's current angle or wake progress, so prop destinations stay fixed. */
+      if (resting && !still) {
+        const tilt = pip.tilt != null ? pip.tilt : asleep ? -.2 : 0;
+        for (const th of [-.15, 0, .15]) for (const turn of [-.2, 0, .2]) for (const dy of F.noHop ? [0] : [-12, 0, 2])
+          b = join(b, box(at[0], at[1] + dy, tilt + th * .9 + turn, th));
+      }
       const sw = still ? 0 : F.sway * (asleep ? .2 : 1), bob = still || !F.bob ? 0 : F.bob * .6;
       b = [b[0] - sw, b[1] - bob, b[2] + sw, b[3] + bob];
       /* (and the head where it is drawn now, turned, stretched and lifted as render() draws it: with no room to swing Pip
