@@ -86,7 +86,7 @@ async function inspect(t, f, tag, expected) {
     const parts = [...(glyph?.querySelectorAll('.nx-p') || [])];
     return { core: !!core, inner: core?.querySelectorAll('.orbit-core-icon, .nx-st, svg.nx').length,
       pip: !!face?.querySelector('.pmx-pip-mk'), centered: face && Math.abs((box(face).x + box(face).width / 2) - (box(core).x + box(core).width / 2)) < 1,
-      nodes: nodes.length, symbols: nodes.filter(n => n.querySelector('.orbit-node-symbol svg')).length,
+      nodes: nodes.length, symbols: nodes.filter(n => n.querySelectorAll('.orbit-node-symbol svg').length === 1).length,
       chosen: !!glyph, status: glyph?.querySelector('.nx-st')?.className || '', glyph: glyph?.querySelector('svg')?.dataset.nx,
       parts: parts.map(p => ({ name:getComputedStyle(p).animationName, duration:getComputedStyle(p).animationDuration })),
       box: glyph && box(glyph), node: chosen && box(chosen), label: core && box(core.querySelector('strong')),
@@ -150,7 +150,7 @@ async function motion(t,page,surface) {
       const r=await inspect(t,f,tag);observations.push({tag,fixture,...r});
       await t.check(tag+': full inner moving anatomy retained',r.parts.length>0 && r.parts.some(p=>p.name!=='none'),JSON.stringify(r.parts));
       const loc=f.locator(SYMBOL+'.is-live').first();
-      if(await loc.count()) await t.moving(loc,{ms:2400});
+      if(await loc.count()) await t.moving(loc,tag+': outer glyph changes on compositor frames',{ms:2400});
       await t.mark(tag+' ends');
     }
     for(const s of ['complete','waiting','failed','paused','cancelled']) {
@@ -160,8 +160,8 @@ async function motion(t,page,surface) {
       await f.waitForTimeout(s==='complete'?1000:2800);
       await ink(t,f,tag);await t.mark(tag+' ends');
     }
-    for(const dense of [18,24]) {await t.mark(`${name} density ${dense}`);await state(f,'working',6,dense);await f.waitForTimeout(1000);await inspect(t,f,`${name} density ${dense}`);await t.moving(f.locator(SYMBOL+'.is-live').first(),{ms:2400});}
-    await t.emulate({reducedMotion:'reduce'});await state(f,'working');await f.waitForTimeout(1000);await t.still(f.locator(STAGE+' .orbit-dial'),{ms:1200});await t.emulate({reducedMotion:'no-preference'});
+    for(const dense of [18,24]) {await t.mark(`${name} density ${dense}`);await state(f,'working',6,dense);await f.waitForTimeout(1000);await inspect(t,f,`${name} density ${dense}`);await t.moving(f.locator(SYMBOL+'.is-live').first(),`${name} density ${dense}: outer glyph moves`,{ms:2400});}
+    await t.emulate({reducedMotion:'reduce'});await state(f,'working');await f.waitForTimeout(1000);await t.still(f.locator(STAGE+' .orbit-dial'),name+': Reduced Motion dial stays still',{ms:1200});await t.emulate({reducedMotion:'no-preference'});
   }
   writeFileSync(join(t.run.dir,`fo120-motion-${page}-${surface}.json`),JSON.stringify(observations,null,2));
 }
@@ -170,6 +170,7 @@ async function compare(t) {
   for(const [caption,src] of [['Before',t.args.base],['After',t.args.page]]) {
     const f=await open(t,'home','normal',String(src));await look(t,f,'basic-dark');
     await t.emulate({reducedMotion:'no-preference'});
+    await f.evaluate(()=>{document.documentElement.dataset.motion='full';document.body.classList.remove('pm56-reduced');});
     for(const s of ['working','complete','waiting']) {
       await t.mark(caption+' '+s);await state(f,s);await f.waitForTimeout(3200);
       await t.crop(caption+'-'+s,f.locator(STAGE+' .orbit-dial'),caption+': '+s+' Pip, ring symbol, label clearance');
