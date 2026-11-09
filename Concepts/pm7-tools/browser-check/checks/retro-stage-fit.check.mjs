@@ -650,7 +650,7 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 					out.at = { prop: `${p.spec.kind}:${p.spec.slot || ''}`, t: Math.round(performance.now() - t0), tilt: Math.round(ps.tilt * 100) / 100, th: Math.round(ps.th * 100) / 100, dy: Math.round(ps.dy), state: p.state, opacity: +p.el.getAttribute('opacity'), propA: Math.round(p.a * 100) / 100,
 						restBox:p.restBox||null,paintBox:p.box||null,keepHead:s2.pipKeep||null,
 						restHead:s2.pipHead?s2.pipHead(0,null,true):null,
-						headRect:[hb.x,hb.y,hb.width,hb.height],propRect:[q.x,q.y,q.width,q.height] };
+						headRect:[hb.left,hb.top,hb.right-hb.left,hb.bottom-hb.top],propRect:[q.left,q.top,q.right-q.left,q.bottom-q.top] };
 				}
 			}
 		} catch (e) { out.geometryError = `${e.message} at frame ${out.n}`; break; }

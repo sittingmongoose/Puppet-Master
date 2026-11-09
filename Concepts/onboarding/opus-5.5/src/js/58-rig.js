@@ -578,7 +578,7 @@
       /* the least move (inside the pane) that clears every box in obs, or drawn a little smaller only when no way does */
       const clear = (obs) => {
         const L0 = lo, H0 = hi, T0 = tp, B0 = bt, f0 = f; let g = 1;
-        for (let it = 0; it < 6 && obs.length; it++) {
+        for (let it = 0; it < (destination ? 12 : 6) && obs.length; it++) {
           const X0 = hx + lo + dx, X1 = hx + hi + dx, Y0 = hy + tp + dy, Y1 = hy + bt + dy;
           const hit = (ax, ay) => obs.find((o) => X0 + ax < o[2] && X1 + ax > o[0] && Y0 + ay < o[3] && Y1 + ay > o[1]);
           const o = hit(0, 0); if (!o) break;
@@ -595,7 +595,7 @@
             c = best(xs.flatMap((ax) => ys.map((ay) => [ax, ay])));
           }
           if (c) { dx += c[0]; dy += c[1]; break; }
-          if (g <= .66) break;
+          if (g <= (destination ? .35 : .66)) break;
           g *= .9; f = f0 * g; lo = L0 * g; hi = H0 * g; tp = T0 * g; bt = B0 * g;
         }
         return g;
@@ -612,7 +612,16 @@
           obs.push([o[0] - reach[0], o[1] - reach[1], o[2] + reach[0], o[3] + reach[1]]);
         }
         /* (and off Pip's head where it hangs at rest: Retro's crop pushed a sign in from its cut side over Pip, FO-50) */
-        const pk = destination ? this.pipHead(0, null, true) : this.pipKeep; if (pk && visible > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
+        const pk = destination ? this.pipHead(0, null, true) : this.pipKeep;
+        if (pk && visible > .05) {
+          /* A hanging prop passes every height on its way in. A destination just below the head let it fall through
+             Pip; one only four units beside it swung back into the head. Fit that whole vertical path beside Pip,
+             including the prop's own swing, before the first frame. The same fixed fit then serves the spring and
+             the strings throughout entry, rather than dodging the head with a new offset on each moving frame. */
+          const reach = destination ? this.speechSway(pr, sc, tm, this.propTarget(pr).len) : [0, 0];
+          obs.push(destination ? [pk[0] - 4 - reach[0], v.y0 - this.L.h, pk[2] + 4 + reach[0], v.y1 + this.L.h]
+            : [pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
+        }
         let before = true;
         this.props.forEach((q) => {
           if (q === pr) { before = false; return; }
