@@ -24,7 +24,7 @@
 //         a retained prop made when bubble clearance changed).
 // Route: every onboarding screen (ui.go, a real pointer arrival first so Pip wakes and talks), dwelt on while its
 // props enter, swing and settle. `--set looks=a,b`, `--set screens=a,b`, `--set size=740x900`, `--set motion=reduce`,
-// `--set secs=` dwell seconds (default 4), `--set sandbox=1` for T3's sandbox. Headless or --record (the film judged
+// `--set frames=1 --set counter=1` retains per-frame geometry and encoded film tags; `--set secs=` dwell seconds (default 4), `--set sandbox=1` for T3's sandbox. Headless or --record (the film judged
 // by the same sampler; string-top motion on film must read as the swing's own). All ten looks and every screen is
 // about an hour; the defaults below keep the committed-page run to the full route.
 import fs from 'node:fs';
@@ -34,9 +34,16 @@ import zlib from 'node:zlib';
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 const SCREENS = ['welcome', 'look', 'begin', 'where', 'away', 'name', 'safe', 'protect', 'online-service', 'online-signin', 'online-details', 'ai', 'ai-none', 'ai-all', 'review', 'creating', 'c-review', 'c-ready', 'free', 'like', 'ready', 'ex-folder', 'ex-repos', 's-kind', 's-wait', 's-confirm', 's-ready', 'away-setup', 'c-route', 'c-pair', 'nas-find', 'nas-identity', 'nas-pmpair', 'nas-key', 'nas-install', 'nas-smb', 'nas-nfs', 'nas-mounted', 'nas-folder', 'nas-signin', 'r-source', 'r-pick', 'r-preview', 'r-unlock', 'r-done'];
 
-function installSampler() {
+function installSampler(counter) {
 	if (window.__qbs) return;
-	const S = window.__qbs = { on: false, frames: [], directN: 0 };
+	const S = window.__qbs = { on: false, frames: [], directN: 0, seq: 0 };
+	let cells = null;
+	if (counter) {
+		const tag = document.createElement('div'); tag.style.cssText = 'position:fixed;left:0;top:0;width:168px;height:8px;contain:strict;z-index:2147483647;pointer-events:none';
+		cells = Array.from({length:42}, (_,i) => { const e=document.createElement('i'); e.style.cssText=`position:absolute;left:${i*4}px;top:0;width:4px;height:8px;background:#808080`; tag.appendChild(e); return e; });
+		document.documentElement.appendChild(tag);
+	}
+	S.cells = cells;
 	const d = document.createElement('div');
 	d.setAttribute('aria-hidden', 'true');
 	d.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;pointer-events:none;opacity:0;contain:strict';
@@ -66,6 +73,7 @@ function installSampler() {
 			const tall = st.layoutName === 'portrait';
 			const sp = st.toScreen(st.headXf(tall ? [44, 30] : [58, 44], st.H, st.ang, 1, 1));
 			const sr = st.screen.getBoundingClientRect(), br = b.getBoundingClientRect(), hr = st.gHead.getBoundingClientRect();
+			fr.stageRect = [sr.left,sr.top,sr.width,sr.height];
 			fr.screen = window.O55.S.sess && window.O55.S.sess.screen;
 			fr.layout = st.layoutName; fr.fam = st.famName;
 			fr.bub = { shown: +cs.opacity > 0.05 && cs.visibility !== 'hidden' && b.classList.contains('on') && /\S/.test(b.textContent || '') ? 1 : 0,
@@ -95,6 +103,12 @@ function installSampler() {
 					a: R2(pr.a * 57.3), offs, anch, restBox: pr.restBox ? pr.restBox.map(R2) : null, lines });
 			});
 		} else fr.none = 1;
+		if (cells) {
+			fr.paintSeq = ++S.seq; const bits = [1,0];
+			for(let i=0;i<20;i++) bits.push((S.seq>>i)&1);
+			for(let i=0;i<20;i++) bits.push(1-((S.seq>>i)&1));
+			bits.forEach((v,i)=>{cells[i].style.background=v?'#fff':'#000';});
+		}
 		S.frames.push(fr);
 	}).observe(d);
 }
@@ -111,7 +125,7 @@ export default async function (t) {
 	const f = await t.app.open({ onboarding: true, query: 'o55=screen=welcome' });
 	await f.waitForFunction(() => { const h = document.querySelector('#pm-o55-onboarding .o55-stage'); return !!(h && h.__pipStage && h.__pipStage.gHead); }, null, { timeout: 60000 });
 	await t.emulate({ reducedMotion: t.args.motion === 'reduce' ? 'reduce' : 'no-preference' });
-	await f.evaluate(installSampler);
+	await f.evaluate(installSampler, !!t.args.counter);
 	await f.evaluate(v=>{window.__qbsDiagnostics=v;},!!t.args.diagnostics);
 	const quiet = () => f.waitForFunction(() => !window.O55.S.vt && !(window.O55.nierLook && window.O55.nierLook.busy && window.O55.nierLook.busy()) && !(window.PM_THEME_TRANSITION && window.PM_THEME_TRANSITION.busy && window.PM_THEME_TRANSITION.busy()), null, { timeout: 30000 }).catch(() => {});
 	const wake = async () => {
@@ -139,7 +153,6 @@ export default async function (t) {
 		}
 		if (cur) eps.push(cur);
 		for (const e of eps) {
-			if (e.rows.length < 12) continue;
 			// deviation in whichever frame the place is anchored to: against the speech point when the bubble follows
 			// Pip, on the screen when an obstacle or the stage edge pins it while Pip sways (Retro's cramped banner).
 			// Read in scene units, then scaled by the settled map: a stage that is still opening (the sandbox sheet)
@@ -161,22 +174,19 @@ export default async function (t) {
 			}
 		}
 		// ---- QA-6 + QA-4b: per (scene segment, prop). A segment ends where restPose itself is allowed to refit
-		// (a new direct, a layout or visible-span change, a new keepOff); within one, anchor and destination are fixed
+		// (a new direct, a layout or visible-span change); a changing speech clearance is not a new scene
 		const byProp = new Map();
 		for (const x of fr) { if (!x.fresh) continue; for (const p of x.props || []) {
-			const k = `${p.id}|${x.dn}|${x.layout}|${x.vis ? x.vis.join(',') : ''}|${x.keep ? x.keep.join(',') : ''}`;
+			const k = `${p.id}|${x.dn}|${x.layout}|${x.vis ? x.vis.join(',') : ''}`;
 			if (!byProp.has(k)) byProp.set(k, []);
 			byProp.get(k).push({ x, p });
 		} }
 		for (const [k, rows] of byProp) {
-			// the sampler is armed before the jump, so a segment opens with the held frames of the old scene (the
-			// stage is parked while the new screen comes in, still painted at the old destinations): a destination
-			// change inside that window is the scene change itself, judged from its first settled frame
-			let cut = 0;
-			for (let i = 1; i < Math.min(rows.length, 13); i++) if (JSON.stringify(rows[i].p.restBox) !== JSON.stringify(rows[i - 1].p.restBox)) cut = i;
+			// Direct/layout/span revisions delimit scenes. Every visible hanging frame is retained, including the
+			// first: neither a preliminary destination nor changing speech clearance may move its suspension later.
 			// a grounded prop's strings unhook and lift away by design; they are not judged as hanging strings
-			const vis = rows.slice(cut).filter(({ p }) => p.op > 0.02 && p.state !== 'out' && !p.grounded);
-			if (vis.length < 12) continue;
+			const vis = rows.filter(({ p }) => p.op > 0.02 && p.state !== 'out' && !p.grounded);
+			if (!vis.length) continue;
 			const p0 = vis[0].p;
 			const hasHelper = vis.some(({ p }) => p.anch);
 			if (!hasHelper) noHelper.push(`${look} ${screen} ${p0.id} (${p0.kind}): no rest destination on the page (judged against its settled string line)`);
@@ -188,7 +198,7 @@ export default async function (t) {
 			}
 			for (let si = 0; si < (p0.offs || []).length; si++) {
 				const data = vis.filter(({ p }) => p.lines && p.lines[si] && (hasHelper ? p.anch && p.anch[si] : true));
-				if (data.length < 12) continue;
+				if (!data.length) continue;
 				strings++;
 				// with no restPose on the page (a build before the helper), the anchor a string must keep is read from
 				// where its settled line crosses the anchor height: the same distances then judge it by measurement
@@ -222,7 +232,8 @@ export default async function (t) {
 				t.mark(`${look} ${screen}`);
 				await f.evaluate((sid) => { const O=window.O55, d=O.screens.defs[sid]; if(d && d.seed) d.seed(O.S); O.ui.go(sid, { noHistory: true }); }, screen);
 				await f.waitForTimeout(dwell);
-				const frames = await f.evaluate(() => { const S = window.__qbs; S.on = false; const r = S.frames; S.frames = []; return r; });
+				const frames = await f.evaluate(() => { const S = window.__qbs; S.on = false; S.cells?.forEach(e=>{e.style.background='#808080';}); const r = S.frames; S.frames = []; return r; });
+				if(t.args.frames) fs.appendFileSync(path.join(t.run.dir, 'anchors-frames.jsonl.gz'), zlib.gzipSync(JSON.stringify({look,screen,frames})+'\n'));
 				const at = await f.evaluate(() => window.O55.S.sess.screen);
 				if (at !== screen) { unreached.push(`${screen} (at ${at})`); continue; }
 				judge(look, screen, frames);

@@ -82,7 +82,6 @@ function judge(frames) {
   current.rows.push(x);
  }
  for(const e of episodes) {
-  if(e.rows.length<12) continue;
   const r=e.rows.map(x=>x.fam==='nier'?x.bub.box.slice(0,2):x.relPlace);
   const tr=e.rows.map(x=>x.fam==='nier'?x.bub.box.slice(0,2):x.bub.tr.split(' ').map(parseFloat));
   if(r.some(x=>!x)) {bad.push('missing placement');continue;}
