@@ -497,9 +497,6 @@
 }
 .orbit-node-symbol > .nx-st { width: 100%; height: 100%; display: grid; place-items: center; }
 .orbit-node-symbol svg { width: 100%; height: 100%; --nx-u: 1.7143; --nx-stroke-base: 2.3; }
-/* Quiet status ink is defined for rows. A live tile is a dark disc (inverted in NieR), so its own foreground
-   must carry the paused/skipped mark too. Forced colours below retains the system ButtonText override. */
-.orbit-node.live .orbit-node-symbol svg.nx-t-paused { --nx-ink: currentColor; }
 @keyframes orbit-symbol-in {
   from { opacity: .35; transform: scale(.78); }
   to   { opacity: 1;   transform: scale(1); }

@@ -12,6 +12,8 @@ import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs
 const CARD = '.working-card[data-card="primary"]';
 const STAGE = CARD + ' .orbit-stage';
 const SYMBOL = STAGE + ' .orbit-node-symbol';
+const STATES = ['working','complete','waiting','failed','failed-running','paused','cancelled'];
+const statusFor = s => s==='complete'?'complete':s==='waiting'?'waiting':null;
 const list = (s, fallback) => s ? String(s).split(',') : fallback;
 const url = p => (/^[a-z][a-z0-9+.-]*:/i.test(p) ? p : pathToFileURL(p).href) + '?o55=off&fo120=' + Date.now();
 
@@ -47,7 +49,7 @@ async function state(f, name, index = 6, dense = 0) {
   return f.evaluate(([name, index, dense]) => {
     const c = PM56_EXT.ctx(), base = window.__fo120.savedSteps;
     // Dedicated cloned real inputs avoid mutating the shared data's other consumers or cached timelines.
-    const steps = base.map((s, i) => ({ ...s, uid: 'fo120:' + i, startAt: i * 2, dur: 2, rows: [] }));
+    let steps = base.map((s, i) => ({ ...s, uid: 'fo120:' + i, startAt: i * 2, dur: 2, rows: [] }));
     if (dense) {
       while (steps.length < dense) { const i = steps.length; steps.push({ ...steps[i % base.length], uid: 'fo120:' + i, startAt: i * 2 }); }
       index = dense - 1;
@@ -59,13 +61,13 @@ async function state(f, name, index = 6, dense = 0) {
       steps[6]={...steps[6],...base.find(s=>s.id===raw.ref),...raw,uid:'fo120:6',startAt:12,rows:raw.rows||[]};
     }
     let clock = index * 2 + .4;
-    if (name === 'waiting' || name === 'failed') {
-      const raw = c.D.workRuns.liveB.steps.find(s => s.status === name);
-      steps[index] = { ...steps[index], ...base.find(s => s.id === raw.ref), ...raw, uid: 'fo120:' + index,
-        startAt: index * 2, statusAt: 0, rows: raw.rows || [] };
+    if (name === 'waiting' || name.startsWith('failed')) {
+      steps=c.D.workRuns.liveB.steps.map((s,i)=>({...base.find(b=>b.id===s.ref),...s,uid:'liveB:'+i,rows:s.rows||[]}));
+      index=steps.findIndex(s=>s.status===(name==='waiting'?'waiting':'failed'));
+      const step=steps[index];clock=step.startAt+(name==='waiting'?step.statusAt:step.dur+.1);
     }
     if (name === 'cancelled') steps[index].status = 'cancelled', steps[index].statusAt = 0;
-    const rec = { step: index, clock, running: name === 'working', started: true, completed: name === 'complete',
+    const rec = { step: index, clock, running: name === 'working'||name==='failed-running', started: true, completed: name === 'complete',
       elapsed: 12, openPhase: index, expanded: false, ownerProjection: true, steps };
     c.state.work = rec;
     c.renderApp();
@@ -74,7 +76,8 @@ async function state(f, name, index = 6, dense = 0) {
     const node = card?.querySelector('.orbit-node.live') || card?.querySelector('.orbit-node.focus');
     window.__fo120.nodeKey = node?.getAttribute('data-k');
     return { nodes: card?.querySelectorAll('.orbit-node').length || 0, key: window.__fo120.nodeKey,
-      kind: steps[index].kind, icon: steps[index].icon };
+      kind: steps[index].kind, icon: steps[index].icon,
+      expectedGlyph:c.icon(steps[index].icon,22).match(/data-nx="([^"]+)"/)?.[1] };
   }, [name, index, dense]);
 }
 
@@ -89,7 +92,7 @@ async function inspect(t, f, tag, expected) {
     return { core: !!core, inner: core?.querySelectorAll('.orbit-core-icon, .nx-st, svg.nx').length,
       pip: !!face?.querySelector('.pmx-pip-mk'), centered: face && Math.abs((box(face).x + box(face).width / 2) - (box(core).x + box(core).width / 2)) < 1,
       nodes: nodes.length, symbols: nodes.filter(n => n.querySelectorAll('.orbit-node-symbol svg').length === 1).length,
-      chosen: !!glyph, status: glyph?.querySelector('.nx-st')?.className || '', glyph: glyph?.querySelector('svg')?.dataset.nx,
+      chosen: !!glyph, status: glyph?.querySelector('.nx-st')?.className || '', glyph: (glyph?.querySelector('svg')||chosen?.querySelector(':scope > svg'))?.dataset.nx,
       parts: parts.map(p => ({ name:getComputedStyle(p).animationName, duration:getComputedStyle(p).animationDuration })),
       history: nodes.filter(n=>n.classList.contains('done')&&n.classList.contains('failed')).map(n=>({
         glyph:n.querySelector('.orbit-node-symbol svg, :scope > svg')?.dataset.nx,
@@ -102,7 +105,8 @@ async function inspect(t, f, tag, expected) {
   await t.check(tag + ': Pip alone, centred; no inner glyph', r.core && r.pip && r.inner === 0 && r.centered, JSON.stringify(r));
   await t.check(tag + ': every outer node has one painted-symbol host', r.nodes > 0 && r.symbols === r.nodes && r.chosen, JSON.stringify(r));
   if (expected) await t.check(tag + ': outer status ' + expected, r.status.includes('nx-st-' + expected), r.status);
-  if(expected==='complete')await t.check(tag+': failed history retains its static work glyph',r.history.length===1&&r.history[0].glyph==='terminal'&&r.history[0].loops.length===0,JSON.stringify(r.history));
+  if(expected==='complete')await t.check(tag+': completed fixture includes its failed history',r.history.length===1,JSON.stringify(r.history));
+  if(r.history.length)await t.check(tag+': failed history retains its static work glyph',r.history.every(h=>h.glyph==='terminal'&&h.loops.length===0),JSON.stringify(r.history));
   return r;
 }
 
@@ -177,10 +181,11 @@ async function structure(t, page, surface) {
     for(const motion of ['full','media','attribute','body']) {
       await t.emulate({reducedMotion:motion==='media'?'reduce':'no-preference',forcedColors:'none'});
       await f.evaluate(m=>{document.documentElement.dataset.motion=m==='attribute'?'reduced':'full';document.body.classList.toggle('pm56-reduced',m==='body');},motion);
-      for(const s of ['working','complete','waiting','failed','paused','cancelled']) {
+      for(const s of STATES) {
         const tag=`${page} ${surface} ${name} ${motion} ${s}`;
-        await state(f,s);if(motion!=='full')await reducedEntry(t,f,tag);await settled(f);
-        const r=await inspect(t,f,tag,['complete','waiting','failed'].includes(s)?s:s==='cancelled'?'skipped':null);
+        const fixture=await state(f,s);if(motion!=='full')await reducedEntry(t,f,tag);await settled(f);
+        const r=await inspect(t,f,tag,statusFor(s));
+        if(!statusFor(s))await t.check(tag+': original work glyph stays on the outer node',r.glyph===fixture.expectedGlyph,JSON.stringify({expected:fixture.expectedGlyph,actual:r.glyph}));
         if(motion!=='full') await t.check(tag+': no running animation',r.animations.every(a=>a.state!=='running'),JSON.stringify(r.animations));
         await ink(t,f,tag);
       }
@@ -188,9 +193,11 @@ async function structure(t, page, surface) {
     await t.emulate({reducedMotion:'reduce',forcedColors:'active'});
     await f.evaluate(()=>{document.documentElement.dataset.motion='full';document.body.classList.remove('pm56-reduced');});
     await t.check(name+': forced colours active',await f.evaluate(()=>matchMedia('(forced-colors: active)').matches));
-    for(const s of ['working','complete','waiting','failed','paused','cancelled']) {
-      const tag=`${name} forced ${s}`;await state(f,s);await reducedEntry(t,f,tag);await settled(f);
-      await inspect(t,f,tag,['complete','waiting','failed'].includes(s)?s:s==='cancelled'?'skipped':null);await ink(t,f,tag);
+    for(const s of STATES) {
+      const tag=`${name} forced ${s}`,fixture=await state(f,s);await reducedEntry(t,f,tag);await settled(f);
+      const r=await inspect(t,f,tag,statusFor(s));
+      if(!statusFor(s))await t.check(tag+': original work glyph stays on the outer node',r.glyph===fixture.expectedGlyph,JSON.stringify({expected:fixture.expectedGlyph,actual:r.glyph}));
+      await ink(t,f,tag);
     }
   }
   await t.emulate({reducedMotion:'no-preference',forcedColors:'none'});
@@ -230,13 +237,14 @@ async function motion(t,page,surface) {
     if(s==='complete'){await state(f,'working',await f.evaluate(()=>window.__fo120.savedSteps.length-1));await settled(f);}
     await t.mark(tag+' begins');const fixture=await state(f,s,index,dense);
     if(reduced)await reducedEntry(t,f,tag);await settled(f);
-    const r=await inspect(t,f,tag,['complete','waiting','failed'].includes(s)?s:s==='cancelled'?'skipped':null);
+    const r=await inspect(t,f,tag,statusFor(s));
     const loc=f.locator(STAGE+' .orbit-node[data-k="'+await f.evaluate(()=>window.__fo120.nodeKey)+'"] .orbit-node-symbol');
     const node=loc.locator('..');
     await f.waitForFunction(key=>{const n=document.querySelector('.working-card[data-card="primary"] .orbit-node[data-k="'+key+'"]');if(!n)return false;const r=n.getBoundingClientRect();return n.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));},await f.evaluate(()=>window.__fo120.nodeKey));
     await t.visible(node,tag+': outer tile is on screen and uncovered');
-    const row={tag,fixture,...r,captureBox:await loc.boundingBox(),nativeExpectation:!reduced&&['working','waiting','failed'].includes(s)?'motion':'still'};
-    if(s==='working'&&!reduced)await t.check(tag+': full inner moving anatomy retained',r.parts.length>0&&r.parts.some(p=>p.name!=='none'),JSON.stringify(r.parts));
+    const row={tag,fixture,...r,captureBox:await loc.boundingBox(),nativeExpectation:!reduced&&['working','waiting','failed-running'].includes(s)?'motion':'still'};
+    if(!statusFor(s))await t.check(tag+': original work glyph stays on the outer node',r.glyph===fixture.expectedGlyph,JSON.stringify({expected:fixture.expectedGlyph,actual:r.glyph}));
+    if((s==='working'||s==='failed-running')&&!reduced)await t.check(tag+': full inner moving anatomy retained',r.parts.length>0&&r.parts.some(p=>p.name!=='none'),JSON.stringify(r.parts));
     await watchClearance(f,true);
     await t.mark(tag+' steady');
     // The mandatory reader judges every native GPU-video frame after the run. Keep screenshot polling out of the
@@ -257,10 +265,10 @@ async function motion(t,page,surface) {
       await interval(`${page} ${surface} ${name} working ${extra.icon}`,'working');
       await f.evaluate(()=>{window.__fo120.savedSteps[6]=window.__fo120.restore;});
     }
-    for(const s of ['complete','waiting','failed','paused','cancelled'])await interval(`${page} ${surface} ${name} ${s}`,s);
+    for(const s of STATES.filter(s=>s!=='working'))await interval(`${page} ${surface} ${name} ${s}`,s);
     for(const dense of [18,24])await interval(`${page} ${surface} ${name} density ${dense}`,'working',6,dense);
     await t.emulate({reducedMotion:'reduce'});
-    for(const s of ['working','complete','waiting','failed','paused','cancelled'])await interval(`${page} ${surface} ${name} reduced ${s}`,s,6,0,true);
+    for(const s of STATES)await interval(`${page} ${surface} ${name} reduced ${s}`,s,6,0,true);
     await t.emulate({reducedMotion:'no-preference'});
   }
   writeFileSync(join(t.run.dir,`fo120-motion-${page}-${surface}.json`),JSON.stringify(observations,null,2));

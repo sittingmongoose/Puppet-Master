@@ -4,8 +4,8 @@
 Usage: python3 chat-activity-badge-film-reader.py VIDEO RUN OUT.json
 The motion check supplies global capture boxes and calibrated steady/end marks.
 No resizing, frame-rate conversion or re-encoding. ffmpeg only decodes/crops.
-Working/waiting/failed must change actual symbol pixels; Reduced Motion must
-stay still. Complete's entry is retained for visual draw-on review separately.
+Working/waiting/failed-running must change actual symbol pixels; held failure,
+paused/cancelled and Reduced Motion must stay still after entry. Complete's entry is retained for visual draw-on review separately.
 Stopping bar: reproduced real false passes/product bugs stop; other tool issues
 are recorded on TOOL-ISSUES.md. No motion verdict without a finished GPU run,
 calibrated marks, 60-fps video and at least 30 decoded frames per interval.
