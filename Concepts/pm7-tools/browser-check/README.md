@@ -255,3 +255,9 @@ helper and assertions for `--set screens=safe` at that same look, size and surfa
 Both diagnostics preserve a settled initial state while choosing the phase and
 issue one idle kick; their recorded initial velocity is checked so an earlier
 random idle cannot turn the fixture into two stacked kicks.
+
+`diagnostics/keepoff-fit-proof.check.mjs` preserves the ordinary keep-off assertions
+and adds native frame tags plus read-only traces of the proposed previous anchor,
+its motion envelope, and the placement owner's obstacle boxes. Use `--set sandbox=0
+--set only=begin --set beginLooks=glass-dark --set beginSizes=1920x1080 --set frames=1`
+with a private page and a GPU recording. It is a diagnostic, not a passing gate.
