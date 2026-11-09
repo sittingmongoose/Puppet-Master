@@ -28,9 +28,9 @@ const PARTS = {
 const ROWS = '[data-collapse], .pm6-tb-menu-trigger, .sh-row, .sh-head';
 const paneOf = (P, k) => P.pane.replace('%', k);
 
-async function cell(t, surface, w, h) {
+async function cell(t, surface, w, h, fixture = null) {
 	if (!t.app.surfaces().includes(surface)) { t.log(`skipped: the sandbox switch leaves out the ${surface} surface`); return; }
-	const looks = list(t.args.looks, LOOKS), engines = list(t.args.engines, ['git', 'jj']), tall = h >= 700, tag = `${surface} ${w}x${h}`;
+	const looks = fixture ? ['friendly-dark'] : list(t.args.looks, LOOKS), engines = fixture ? ['git', 'jj'] : list(t.args.engines, ['git', 'jj']), tall = h >= 700, tag = `${surface} ${w}x${h}`;
 	await t.viewport(w, h);
 	const f = await t.app.open({ sandbox: surface === 'sandbox' });
 	const icon = f.locator('#activityBar .icon[data-target="panel-source"]');
@@ -50,25 +50,59 @@ async function cell(t, surface, w, h) {
 		}
 		return false;
 	});
-	const open = async (engine) => {
+	let pressDetail = null;
+	const ensureSource = async () => {
 		for (let n = 0; n < 3 && !await shown(); n++) { await press(icon); await f.waitForFunction(() => document.querySelector('#sidePanelSlot > .side-panel-view.active')?.id === 'panel-source', null, { timeout: 2000 }).catch(() => {}); }
+		return shown();
+	};
+	const open = async (engine) => {
+		await ensureSource();
 		const sw = f.locator(`#panel-source [data-pm7-scm-engine="${engine}"]`);
 		if (await sw.getAttribute('aria-pressed') !== 'true') {
+			if ((fixture || t.args.seedUsageAlert) && engine === 'jj') {
+				// A real Usage owner event, with matching quota state. No clock, TTL or animation override.
+				// seedUsageAlert reproduces the original natural79.99-to80 clock route; whole regression cases
+				// deliver that same production event directly, independently of unrelated background ticking.
+				await f.evaluate((natural) => { const s = PM_DEMO.state, q = s.usage.quotas[0]; q.pct = natural ? 79.99 : 80; s.usage.alert80Fired = !natural; if (!natural) PM_DEMO.emit('usage.alert', { kind: 'threshold', quota: q.id, pct: q.pct }); }, !!t.args.seedUsageAlert);
+				await f.waitForFunction(() => { const e = document.querySelector('#panel-source [data-pm7-scm-engine="jj"]'), r = e.getBoundingClientRect(), h = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2); return !!h?.closest('#rsStage > .pmn-toast[data-src="usage"]'); }, null, { timeout: 5000 });
+				await t.check('the real Usage attention notice covers JJ before the regression press', true);
+			}
 			await t.page.mouse.move(2, 2);
-			await t.check(`the ${engine} switch is on top where it is pressed`, await press(sw), '', { hard: true });
+			await t.check(`the ${engine} switch is on top where it is pressed`, await press(sw), JSON.stringify(pressDetail), { hard: true });
+			if ((fixture || t.args.seedUsageAlert) && engine === 'jj') await t.check('the covering Usage notice was filed through its own dismiss control', pressDetail.dismissed.some((n) => n.source === 'usage'), JSON.stringify(pressDetail), { hard: true });
 			await f.waitForFunction((e) => document.getElementById('panel-source').getAttribute('data-scm-engine') === e, engine, { timeout: 5000 });
 		}
 		await settle();
 	};
 	const off = async () => { const fe = f === t.page.mainFrame() ? null : await f.frameElement(); return fe ? await fe.boundingBox() : { x: 0, y: 0 }; };
-	// a real press at a control's centre, once it is on top there: NieR's parts keep its buttons moving, so Playwright's
-	// click, which waits for a still box, never comes (the engine switch, the tabs)
+	// F3-447 permits a settled staged notice to cover controls. File it through its real dismiss button; never
+	// click through a failed ownership test. Unknown covers still fail. A narrow Source panel may fold on the
+	// outside dismiss press, so restore it and finish its existing entrance before measuring the intended control.
 	const press = async (loc) => {
+		const inspect = () => loc.evaluate((e) => {
+			const b = e.getBoundingClientRect(), x = b.left + b.width / 2, y = b.top + b.height / 2, h = document.elementFromPoint(x, y);
+			const describe = (n) => n ? { tag: n.tagName, id: n.id, cls: String(n.className?.baseVal ?? n.className), label: (n.getAttribute('aria-label') || n.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80) } : null;
+			const card = h?.closest('#rsStage > .pmn-toast:not(.pmn-entering):not(.pmn-leaving)');
+			return { ok: !!h && (h === e || e.contains(h)), x, y, want: describe(e), hit: describe(h), source: !!e.closest('#panel-source'), notice: card && card.querySelector('button.pmn-x') ? { id: card.getAttribute('data-pmn-id'), source: card.getAttribute('data-src'), level: card.getAttribute('data-level') } : null };
+		});
 		await loc.scrollIntoViewIfNeeded();
-		const ok = await loc.evaluate((e) => { const b = e.getBoundingClientRect(), h = document.elementFromPoint(b.left + b.width / 2, b.top + b.height / 2); return !!h && (h === e || e.contains(h)); });
-		const bb = await loc.boundingBox();
-		if (bb) await t.page.mouse.click(bb.x + bb.width / 2, bb.y + bb.height / 2);
-		return ok && !!bb;
+		let state = await inspect();
+		const dismissed = [];
+		// The notification owner stages at most five cards (F3-447); each recovery makes one real dismissal.
+		for (let n = 0; !state.ok && state.notice && n < 5; n++) {
+			const notice = state.notice, sourceTarget = state.source;
+			t.log('Source press: dismiss covering staged notice ' + JSON.stringify(state));
+			await f.locator(`#rsStage > .pmn-toast[data-pmn-id="${notice.id}"] button.pmn-x`).click();
+			await f.waitForFunction((id) => { const c = document.querySelector(`#rsStage > .pmn-toast[data-pmn-id="${id}"]`); return !c || c.classList.contains('pmn-leaving'); }, notice.id, { timeout: 3000 });
+			dismissed.push(notice);
+			if (sourceTarget && !await shown() && !await ensureSource()) { pressDetail = { ...state, dismissed, reason: 'Source did not reopen after notice dismissal' }; return false; }
+			await settle(); await loc.scrollIntoViewIfNeeded(); state = await inspect();
+		}
+		pressDetail = { ...state, dismissed };
+		if (!state.ok) return false;
+		// The hit-test and click share one frame-local point; the old separate bounding-box read could drift.
+		const o = await off(); await t.page.mouse.click(o.x + state.x, o.y + state.y);
+		return true;
 	};
 	for (const look of looks) {
 		await t.app.look(look);
@@ -188,3 +222,10 @@ for (const surface of ['normal', 'sandbox']) for (const [w, h] of SIZES) {
 		return cell(t, surface, w, h);
 	};
 }
+
+// Keep the real, naturally observed cover state in whole runs, independently of ambient demo timing.
+for (const surface of ['normal', 'sandbox']) tests[`Source list room ${surface} 740x768 with Usage notice`] = async (t) => {
+	if (t.args.size && !list(t.args.size, []).includes('740x768')) { t.log('skipped: --set size leaves out the Usage regression size'); return; }
+	if (t.args.looks && !list(t.args.looks, []).includes('friendly-dark')) { t.log('skipped: --set looks leaves out the Usage regression look'); return; }
+	return cell(t, surface, 740, 768, 'usage');
+};
