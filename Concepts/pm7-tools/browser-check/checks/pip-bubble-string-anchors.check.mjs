@@ -57,6 +57,15 @@ function installSampler(counter) {
 		if (!st || st.__qbsWrapped) return;
 		const direct = st.direct;
 		st.direct = function (...a) { S.directN++; return direct.apply(this, a); };
+		const prop = st.placeProp;
+		st.placeProp = function(pr) {
+			const result=prop.call(this,pr), rp=pr.restFit, tg=this.propTarget(pr);
+			const mid=pr.ties.reduce((s,t)=>s+t[0],0)/pr.ties.length;
+			pr.__qbsPaint={ax:pr.ax,a:pr.a,grounded:!!(pr.spec.ground&&pr.landed),
+				anch:rp?pr.ties.map(t=>[R2(pr.ax+rp.ax-tg.ax+(t[0]-mid)*rp.sc),R2(this.L.anchorY+rp.dy)]):null,
+				restBox:pr.restBox?pr.restBox.map(R2):null};
+			return result;
+		};
 		const place = st.placeBubble;
 		st.placeBubble = function (H, ang) { const r = place.call(this, H, ang); try { const s2 = this.toScreen(this.headXf(this.layoutName === 'portrait' ? [44, 30] : [58, 44], H, ang, 1, 1)), m = /^(-?[\d.]+)px (-?[\d.]+)px$/.exec(this.bubble.style.translate || ''); this.__relAtPlace = m ? [Math.round((+m[1] - s2[0]) * 100) / 100, Math.round((+m[2] - s2[1]) * 100) / 100] : null; } catch (e) { this.__relAtPlace = null; } return r; };
 		st.__qbsWrapped = true;
@@ -74,6 +83,8 @@ function installSampler(counter) {
 			const sp = st.toScreen(st.headXf(tall ? [44, 30] : [58, 44], st.H, st.ang, 1, 1));
 			const sr = st.screen.getBoundingClientRect(), br = b.getBoundingClientRect(), hr = st.gHead.getBoundingClientRect();
 			fr.stageRect = [sr.left,sr.top,sr.width,sr.height];
+			const sm = st.svg?.getScreenCTM();
+			fr.svgCTM = sm ? [sm.a,sm.b,sm.c,sm.d,sm.e,sm.f] : null;
 			fr.screen = window.O55.S.sess && window.O55.S.sess.screen;
 			fr.layout = st.layoutName; fr.fam = st.famName;
 			fr.bub = { shown: +cs.opacity > 0.05 && cs.visibility !== 'hidden' && b.classList.contains('on') && /\S/.test(b.textContent || '') ? 1 : 0,
@@ -98,7 +109,8 @@ function installSampler(counter) {
 				const offs = pr.ties.map((t2) => R2(t2[0] - tieMidX));
 				// the anchor each string must hang from, from the destination the stage itself keeps (restPose): over the
 				// pivot at the destination's fit offset; absent on a page built before the helper, which fails by name
-				const anch = rp ? offs.map((o) => [R2(pr.ax + (rp.ax - tg.ax) + o * rp.sc), R2(st.L.anchorY + rp.dy)]) : null;
+				const painted = pr.__qbsPaint;
+				const anch = painted ? painted.anch : rp ? offs.map((o) => [R2(pr.ax + (rp.ax - tg.ax) + o * rp.sc), R2(st.L.anchorY + rp.dy)]) : null;
 				// Read the painted prop's attachment points independently of the string path. Parent-relative CTMs
 				// cancel the SVG viewport transform; neither transform list nor product state is changed by this read.
 				let ends = null;
@@ -107,8 +119,8 @@ function installSampler(counter) {
 					ends = pr.ties.map(t => [R2(local.a*t[0]+local.c*t[1]+local.e), R2(local.b*t[0]+local.d*t[1]+local.f)]);
 				} catch (e) { /* missing geometry fails below */ }
 				const tieTol = pr.ties.map(t => .03 + .006*Math.hypot(t[0]-tieMidX,t[1]-tg.tieY));
-				fr.props.push({ id, kind: pr.spec && pr.spec.kind, state: pr.state, grounded: pr.spec.ground && pr.landed ? 1 : 0, op: R2(pr.op), ax: R2(pr.ax), tgAx: R2(tg.ax),
-					a: R2(pr.a * 57.3), offs, anch, ends, tieTol, restBox: pr.restBox ? pr.restBox.map(R2) : null, lines });
+				fr.props.push({ id, kind: pr.spec && pr.spec.kind, state: pr.state, grounded: painted ? +painted.grounded : pr.spec.ground && pr.landed ? 1 : 0, op: +(pr.el.getAttribute('opacity')||0), ax: R2(painted?painted.ax:pr.ax), tgAx: R2(tg.ax),
+					a: R2((painted?painted.a:pr.a)*57.3), dashed: !!pr.spec.preview, offs, anch, ends, tieTol, painted:!!painted, restBox: painted?painted.restBox:pr.restBox?pr.restBox.map(R2):null, lines });
 			});
 		} else fr.none = 1;
 		if (cells) {
@@ -147,15 +159,15 @@ export default async function (t) {
 	let scenes = 0, lines = 0, strings = 0, dests = 0;
 	const judge = (look, screen, frames) => {
 		const fr = frames.filter((x) => !x.none);
-		// a stepped stage (Retro) draws its props at its own rate: between draws the physics has moved on but the
-		// painted string is the last draw's, so strings are judged on frames the stage drew
-		fr.forEach((x, i) => { x.fresh = i === 0 || x.rn !== fr[i - 1].rn; });
+		// Snapshot the suspension at placeProp's draw, then read its painted line/tie on EVERY frame. Retro's
+		// physics may advance after an earlier synchronous draw in the same frame; a changed renderN alone
+		// cannot establish that current physics and the visible pose are from the same instant.
 		if (fr.length < 20) return;
 		scenes++;
 		// ---- QA-4: per (scene segment, line, size) episode, first frame against settled, and no straying
 		let cur = null; const eps = [];
 		for (const x of fr) {
-			const b = x.bub, key = b && b.shown ? [x.dn, x.layout, b.text, b.ow, b.oh].join('|') : null;
+			const b = x.bub, key = b && b.shown ? [x.dn, x.layout, b.text].join('|') : null;
 			if (cur && cur.key === key) cur.rows.push(x);
 			else { if (cur) eps.push(cur); cur = key ? { key, rows: [x] } : null; }
 		}
@@ -184,7 +196,7 @@ export default async function (t) {
 		// ---- QA-6 + QA-4b: per (scene segment, prop). A segment ends where restPose itself is allowed to refit
 		// (a new direct, a layout or visible-span change); a changing speech clearance is not a new scene
 		const byProp = new Map();
-		for (const x of fr) { if (!x.fresh) continue; for (const p of x.props || []) {
+		for (const x of fr) { for (const p of x.props || []) {
 			const k = `${p.id}|${x.dn}|${x.layout}|${x.vis ? x.vis.join(',') : ''}`;
 			if (!byProp.has(k)) byProp.set(k, []);
 			byProp.get(k).push({ x, p });
@@ -222,6 +234,7 @@ export default async function (t) {
 				// as a 16 ms jump. A line ending above the pane has no painted crossing of its visible top yet.
 				let missing = false, worstTie = 0, worstTop = 0;
 				for (const {x,p} of data) {
+					if (hasHelper && !p.painted) missing=true;
 					const end=p.ends?.[si], tolerance=p.tieTol?.[si];
 					if (!end || tolerance == null) { missing=true; continue; }
 					worstTie=Math.max(worstTie,lineDist(p.lines[si],end)/tolerance);

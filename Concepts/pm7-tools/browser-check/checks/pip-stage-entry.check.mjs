@@ -76,7 +76,7 @@ function judge(frames) {
  const bad=[], episodes=[]; let current;
  for(const x of frames) {
   if(x.none) continue;
-  const b=x.bub, key=b.on && b.op>.05 && b.text ? [x.screen,b.text,b.ow,b.oh].join('|') : null;
+  const b=x.bub, key=b.on && b.op>.05 && b.text ? [x.screen,b.text].join('|') : null;
   if(!key) {current=null;continue;}
   if(!current || current.key!==key) {current={key,rows:[]};episodes.push(current);}
   current.rows.push(x);
@@ -94,6 +94,9 @@ function judge(frames) {
  return bad;
 }
 async function run(t, route, defaultLooks, defaultSizes) {
+ // A previous exported test can leave the recording on its opaque wrapper.
+ // Establish a fresh app frame before asking the recording to size it.
+ if(t.recording) await t.goto('about:blank');
  const sizes=String(t.args.sizes||defaultSizes).split(',').map(s=>s.split('x').map(Number));
  const looks=String(t.args.looks||defaultLooks).split(','), out=[];
  for(const mode of t.app.surfaces()) for(const look of looks) for(const size of sizes) {

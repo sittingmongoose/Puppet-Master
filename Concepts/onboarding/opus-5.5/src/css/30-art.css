@@ -212,7 +212,9 @@
 #pm-o55-onboarding .pst[data-tube="teletype"] .pst-bubble { --pst-font: 'IBM Plex Mono', ui-monospace, monospace; --bb: #f4ecdd; --bl: #231e19; --bw: 2px; font-weight: 600; font-size: 11.5px; letter-spacing: .02em; text-transform: uppercase; color: #231e19; background: #f4ecdd; border: 2px solid #231e19; border-radius: 0; box-shadow: 3px 3px 0 #231e19; }
 #pm-o55-onboarding .pst[data-tube] .pst-bubble.on { animation: pstBox .3s steps(4, end); }
 @keyframes pstBox { from { clip-path: inset(0 100% 100% 0); } to { clip-path: inset(0 -20px -20px 0); } }
-#pm-o55-onboarding .pst[data-tube] .pst-bubble.typing .pst-bt-on::after { content: ''; display: inline-block; width: .5em; height: .8em; margin: 0 -.5em 0 0; background: currentColor; vertical-align: -.05em; }
+/* Cursor ink must not introduce an atomic inline break inside the typed/hidden word. Negative margin gave it
+   zero net width but still changed wrapping (Ready: the same full line alternated between two and three lines). */
+#pm-o55-onboarding .pst[data-tube] .pst-bubble.typing .pst-bt-on::after { content: ''; position: absolute; display: inline-block; width: .5em; height: .8em; margin: 0; background: currentColor; vertical-align: -.05em; }
 /* ------------------------------------------------- NieR: the unit HUD */
 #pm-o55-onboarding .pst-hudhtml { position: absolute; inset: 0; }
 #pm-o55-onboarding .pst-nhud { position: absolute; inset: 10px; font: 500 10px/1 'PM NieR Sans', 'Inter', system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; }
@@ -304,7 +306,7 @@
 /* paper changes in steps: its notes and lines appear the way the rest of it moves */
 #pm-o55-onboarding .pst[data-tube="teletype"] :is(.pst-tip, #pm-o55-onboarding .pst-bubble) { transition-timing-function: steps(3, end); }
 #pm-o55-onboarding .pst[data-tube] .pst-tip .pst-tip-k::before { display: none; }
-#pm-o55-onboarding .pst[data-tube] .pst-tip.typing .pst-bt-on::after { content: ''; display: inline-block; width: .5em; height: .8em; margin: 0 -.5em 0 0; background: currentColor; vertical-align: -.05em; }
+#pm-o55-onboarding .pst[data-tube] .pst-tip.typing .pst-bt-on::after { content: ''; position: absolute; display: inline-block; width: .5em; height: .8em; margin: 0; background: currentColor; vertical-align: -.05em; }
 /* NieR: a TIPS box at the top right, opened like its menus */
 #pm-o55-onboarding .pst-ntip { position: absolute; right: 2px; top: 26px; width: 47%; display: grid; border: 1px solid currentColor; background: color-mix(in srgb, var(--np) 88%, transparent); opacity: 0; visibility: hidden; transition: opacity .25s, visibility 0s .25s; text-transform: none; letter-spacing: .03em; pointer-events: none; }
 #pm-o55-onboarding .pst-ntip.on { opacity: 1; visibility: visible; transition: opacity .25s; pointer-events: auto; animation: pstNtip .45s steps(6, end); }
