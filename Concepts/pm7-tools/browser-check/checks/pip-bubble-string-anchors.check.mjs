@@ -15,11 +15,11 @@
 //   QA-4: per line, the bubble's placement relative to Pip's head (its style.translate against the head point it is
 //         placed from) on its FIRST shown frame is within 1 px of where it settles, and never strays more than 1 px
 //         from there while the line is up. NieR's box is CSS-fixed; its painted box against the unscaled stage is judged at the same 1 px bound.
-//   QA-6: per string, the line passes within 1.5 scene units of its rest anchor (over the pivot the prop swings
-//         from, at the destination's fit offset) in every frame; that anchor's offset from the pivot and its height
-//         never change within a scene; and where the string meets the visible top moves no more than the swing
-//         itself explains (the span a pendulum about that anchor sweeps there, plus 5 units), with no single-frame
-//         jump over 3 units while the prop is not travelling to a new slot. Natural sway stays; fit-driven tops fail.
+//   QA-6: each drawn string passes within .05 scene units of its rest suspension; the suspension's offset/height
+//         stay within .05 units per scene. Its other end lies on the painted prop's attachment (read independently
+//         through SVG matrices), within the renderer's .01-grid precision. A visible top crossing must be explained
+//         by those two points, with their rounding uncertainty propagated. Retro's intentional 10/20 Hz draws are
+//         not treated as 60 Hz jumps; a line wholly above the pane has no visible top crossing yet.
 //   QA-4b: no prop's destination (restBox) changes within a scene (a destination that refits mid-scene is the jump
 //         a retained prop made when bubble clearance changed).
 // Route: every onboarding screen (ui.go, a real pointer arrival first so Pip wakes and talks), dwelt on while its
@@ -99,8 +99,16 @@ function installSampler(counter) {
 				// the anchor each string must hang from, from the destination the stage itself keeps (restPose): over the
 				// pivot at the destination's fit offset; absent on a page built before the helper, which fails by name
 				const anch = rp ? offs.map((o) => [R2(pr.ax + (rp.ax - tg.ax) + o * rp.sc), R2(st.L.anchorY + rp.dy)]) : null;
+				// Read the painted prop's attachment points independently of the string path. Parent-relative CTMs
+				// cancel the SVG viewport transform; neither transform list nor product state is changed by this read.
+				let ends = null;
+				try {
+					const local = pr.el.parentNode.getCTM().inverse().multiply(pr.el.getCTM());
+					ends = pr.ties.map(t => [R2(local.a*t[0]+local.c*t[1]+local.e), R2(local.b*t[0]+local.d*t[1]+local.f)]);
+				} catch (e) { /* missing geometry fails below */ }
+				const tieTol = pr.ties.map(t => .03 + .006*Math.hypot(t[0]-tieMidX,t[1]-tg.tieY));
 				fr.props.push({ id, kind: pr.spec && pr.spec.kind, state: pr.state, grounded: pr.spec.ground && pr.landed ? 1 : 0, op: R2(pr.op), ax: R2(pr.ax), tgAx: R2(tg.ax),
-					a: R2(pr.a * 57.3), offs, anch, restBox: pr.restBox ? pr.restBox.map(R2) : null, lines });
+					a: R2(pr.a * 57.3), offs, anch, ends, tieTol, restBox: pr.restBox ? pr.restBox.map(R2) : null, lines });
 			});
 		} else fr.none = 1;
 		if (cells) {
@@ -206,16 +214,30 @@ export default async function (t) {
 				const dists = data.map(({ p }) => lineDist(p.lines[si], anchorOf(p)));
 				const offSpan = hasHelper ? Math.max(...data.map(({ p }) => p.anch[si][0] - p.ax)) - Math.min(...data.map(({ p }) => p.anch[si][0] - p.ax)) : 0;
 				const hSpan = hasHelper ? Math.max(...data.map(({ p }) => p.anch[si][1])) - Math.min(...data.map(({ p }) => p.anch[si][1])) : 0;
-				const axSpan = Math.max(...data.map(({ p }) => p.ax)) - Math.min(...data.map(({ p }) => p.ax));
-				const crosses = data.map(({ x, p }) => crossAt(p.lines[si], x.visY0 == null ? x.anchorY : x.visY0));
+				const visible = data.filter(({x,p}) => { const l=p.lines[si], y=x.visY0 == null ? x.anchorY : x.visY0; return Math.min(l[1],l[3]) <= y && Math.max(l[1],l[3]) >= y; });
+				const crosses = visible.map(({ x, p }) => crossAt(p.lines[si], x.visY0 == null ? x.anchorY : x.visY0));
 				const cSpan = Math.max(...crosses) - Math.min(...crosses);
-				const maxSin = Math.sin(Math.max(...data.map(({ p }) => Math.abs(p.a))) * Math.PI / 180);
-				const reach = Math.abs((data[0].x.visY0 == null ? data[0].x.anchorY : data[0].x.visY0) - anchorOf(data[0].p)[1]);
-				const bound = reach * maxSin + 5 + axSpan;
-				const jumps = crosses.slice(1).map((c, i) => Math.abs(c - crosses[i]));
+				// A rope's top follows the line through its fixed suspension and its painted attachment. Check that
+				// relation, rather than guessing a span from one side's sin(angle), or treating Retro's 100 ms draw
+				// as a 16 ms jump. A line ending above the pane has no painted crossing of its visible top yet.
+				let missing = false, worstTie = 0, worstTop = 0;
+				for (const {x,p} of data) {
+					const end=p.ends?.[si], tolerance=p.tieTol?.[si];
+					if (!end || tolerance == null) { missing=true; continue; }
+					worstTie=Math.max(worstTie,lineDist(p.lines[si],end)/tolerance);
+				}
+				for (const {x,p} of visible) {
+					const end=p.ends?.[si]; if(!end) continue;
+					const a=anchorOf(p), y=x.visY0 == null ? x.anchorY : x.visY0;
+					const expected=crossAt([a[0],a[1],end[0],end[1]],y);
+					// Prop transforms render on a .01 grid; propagate their bounded rounding at the attachment
+					// to the top. This matters for a rope initially almost zero length. Anchor error stays .05u.
+					const tolerance=(p.tieTol[si]+.05)*(1+Math.abs(y-a[1])/Math.max(.01,Math.abs(end[1]-a[1])));
+					worstTop=Math.max(worstTop,Math.abs(crossAt(p.lines[si],y)-expected)/tolerance);
+				}
 				const worstD = Math.max(...dists);
-				if (worstD > 1.5 || offSpan > 1 || hSpan > 1 || cSpan > bound || (axSpan <= 1 && Math.max(...jumps, 0) > 3))
-					bad6.push(`${look} ${screen} ${p0.id} (${p0.kind}) string ${si}: worst distance to its anchor ${worstD.toFixed(2)} u, anchor offset span ${offSpan.toFixed(2)} u, anchor height span ${hSpan.toFixed(2)} u, top-crossing span ${cSpan.toFixed(1)} u (swing explains ${bound.toFixed(1)}), worst 1-frame top jump ${Math.max(...jumps, 0).toFixed(1)} u over ${data.length} frames`);
+				if (missing || worstD > .05 || offSpan > .05 || hSpan > .05 || worstTie > 1 || worstTop > 1)
+					bad6.push(`${look} ${screen} ${p0.id} (${p0.kind}) string ${si}: anchor error ${worstD.toFixed(3)} u, offset/height span ${offSpan.toFixed(3)}/${hSpan.toFixed(3)} u (each <=.05); painted-tie error ${worstTie.toFixed(2)}x and unexplained top ${worstTop.toFixed(2)}x their render-precision bounds; ${visible.length} visible crossings, span ${Number.isFinite(cSpan)?cSpan.toFixed(1):'none'} u, missing geometry ${missing}`);
 			}
 		}
 	};
