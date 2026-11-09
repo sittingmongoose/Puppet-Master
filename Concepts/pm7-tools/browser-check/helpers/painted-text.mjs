@@ -22,7 +22,7 @@ export async function paintedText(el,{coverage=250}={}){
   const a=[...ink.data.slice(i,i+3)],b=[...ground.data.slice(i,i+3)];
   stems.push({contrast:contrast(a,b),ink:a,ground:b,x,y});
  }
- return {count:stems.length,paintedCount:stems.filter(s=>s.contrast>=1.5).length,minimum:Math.min(...stems.map(s=>s.contrast)),brightest:[...stems].sort((a,b)=>luminance(b.ground)-luminance(a.ground))[0]};
+ return {count:stems.length,paintedCount:stems.filter(s=>s.contrast>=1.5).length,minimum:Math.min(...stems.map(s=>s.contrast)),lowest:[...stems].sort((a,b)=>a.contrast-b.contrast).slice(0,4),brightest:[...stems].sort((a,b)=>luminance(b.ground)-luminance(a.ground))[0]};
 }
 
 // Floating prose can move by a fraction of a pixel. A fixed screen crop avoids

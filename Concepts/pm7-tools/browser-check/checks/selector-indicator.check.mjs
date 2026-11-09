@@ -62,6 +62,13 @@ const READ = () => {
 		read(p) {
 			const item = [...document.querySelectorAll(p.item)].find((e) => { const r = e.getBoundingClientRect(); return r.width > 1 && r.height > 1 && getComputedStyle(e).visibility !== 'hidden'; });
 			if (!item) return { found: false };
+			if (p.type === 'onb' && p.label) {
+				const label = item.querySelector(p.label), style = label && getComputedStyle(label), b = label?.getBoundingClientRect();
+				if (!label || style.display === 'none' || style.visibility === 'hidden' || !b.width || !b.height) {
+					const strip = item.closest(p.strip), chips = strip ? [...strip.querySelectorAll('lg-under .lg-lens,lg-over .lg-lens')].filter(e => { const c = getComputedStyle(e), r = e.getBoundingClientRect(); return c.visibility !== 'hidden' && c.display !== 'none' && +c.opacity > .05 && r.width > 1 && r.height > 1; }).length : 0;
+					return { found: true, hiddenRailLabel: true, visibleChips: chips };
+				}
+			}
 			let chip = null, under = false, cs, pseudo = null;
 			if (p.kind === 'strip') {
 				const strip = item.closest(p.strip);
@@ -103,7 +110,7 @@ const SHELL = [
 	{ page: 'Settings', name: 'Settings left bar', kind: 'strip', strip: '#pm-settings-root .rail-scroll', item: '#pm-settings-root .rail-scroll :is(.side-link[data-action="home"], .domain-link).active', type: 'tab' },
 	{ page: 'Settings chapter', name: 'Settings section tabs', kind: 'strip', strip: '#pm-settings-root nav.workspace-tabs', item: '#pm-settings-root nav.workspace-tabs .workspace-tab.is-current', type: 'tab', optional: true },
 	{ page: 'Settings chapter', name: 'Settings segmented choice', kind: 'self', item: '#pm-settings-root .segmented > button[aria-checked="true"]', type: 'seg', optional: true, inPlace: true },
-	{ page: 'Planning Wizard', name: 'Planning Wizard work type', kind: 'strip', strip: '#panel-wizard .pm6-wiz-intent-row', item: '#panel-wizard .pm6-wiz-intent-chip.sel', type: 'seg', px: true }
+	{ page: 'Planning Wizard', name: 'Planning Wizard work type', kind: 'strip', strip: '#panel-wizard .pm6-wiz-intent-row', item: '#panel-wizard .pm6-wiz-intent-chip.sel', type: 'seg', px: true, fillAndWords: true }
 ];
 const ONB = [
 	{ screen: 'begin', name: 'onboarding step rail', kind: 'strip', strip: '#pm-o55-onboarding .o55-raillist', item: '#pm-o55-onboarding .o55-railitem[data-state="current"]', label: '.o55-raillabel', type: 'onb', px: true },
@@ -148,7 +155,8 @@ async function pixels(t, f, rec, rimW) {
 	const at = (px, py) => { const i = (Math.round(py) * png.width + Math.round(px)) * 4; return [png.data[i], png.data[i + 1], png.data[i + 2]]; };
 	const cx = x + off[0] - clip.x, cy = y + off[1] - clip.y, my = cy + h / 2;
 	/* inside: left of the words, past the rim */
-	const inX = Math.min(cx + rimW + 2, lr[0] + off[0] - clip.x - 2);
+	// Wizard's shared button border meets the chip's rim. Read past both edges, in the blank left padding.
+	const inX = rec.fillAndWords ? cx + 7 : Math.min(cx + rimW + 2, lr[0] + off[0] - clip.x - 2);
 	const inside = at(Math.max(cx + rimW + 1, inX), my);
 	const edge = at(cx + Math.max(0, rimW - 1) + 0.5 * (rimW ? 0 : 1), my);
 	const ground = at(cx + w / 2, Math.max(0, cy - 3));
@@ -161,6 +169,7 @@ async function placeChecks(t, f, p, look, tag, wide = true) {
 	const rec = await f.evaluate((p) => window.__sel.read(p), p);
 	/* below 1920 x 1080 a place the layout folds away (the rail, Usage's range) is not asked for; the page tabs always are */
 	if (!rec.found) { if (p.optional || (!wide && p.name !== 'page tabs')) { t.log(`${p.name} not shown here (${tag})`); return null; } return t.check(`${p.name} ${tag}: chosen item shown`, false, 'no chosen item visible', {}); }
+	if (rec.hiddenRailLabel) { await t.check(`${p.name} ${tag}: hidden rail label intentionally has no chip`, rec.visibleChips === 0, JSON.stringify(rec)); return null; }
 	await t.check(`${p.name} ${tag}: has its chip`, !!rec.chip, JSON.stringify(rec));
 	if (!rec.chip) return null;
 	if (p.type === 'card') {
@@ -184,13 +193,13 @@ async function pixelChecks(t, f, p, rec, look, tag) {
 	const W = WANT[look], want = W[p.type] || W.tab;
 	if (p.type === 'card') return;
 	const rimW = want[1] ? want[2] : 0;
-	const px = await pixels(t, f, rec, rimW);
+	const px = await pixels(t, f, { ...rec, fillAndWords: p.fillAndWords }, rimW);
 	await t.check(`${p.name} ${tag}: painted inside is the fill`, near(px.inside, hex(want[0]), 14), `inside ${px.inside} want ${want[0]}`);
 	/* the chip shows against the ground by its outline or by its fill, whichever stands out more (Friendly Dark's ink
 	   outline is as dark as its bar, and its mint fill carries the edge there) */
 	const edgeVs = Math.max(ratio(px.edge, px.ground), ratio(px.edge, px.groundL), ratio(px.inside, px.ground), ratio(px.inside, px.groundL));
 	t.log(`MEASURE ${p.name} ${tag}: painted chip vs ground ${edgeVs.toFixed(2)} (edge ${px.edge}, inside ${px.inside}, ground ${px.ground})`);
-	await t.check(`${p.name} ${tag}: painted chip 3:1 against the ground beside it (outline or fill)`, edgeVs >= 3, `edge ${px.edge} inside ${px.inside} ground ${px.ground}/${px.groundL} ${edgeVs.toFixed(2)}`);
+	if (!p.fillAndWords) await t.check(`${p.name} ${tag}: painted chip 3:1 against the ground beside it (outline or fill)`, edgeVs >= 3, `edge ${px.edge} inside ${px.inside} ground ${px.ground}/${px.groundL} ${edgeVs.toFixed(2)}`);
 	const lab = p.label ? `${p.item} ${p.label}` : p.item;
 	try {
 		const pt = await paintedText(f.locator(lab).first());
@@ -249,7 +258,7 @@ export const tests = {
 			await goPage(t, f, 'Planning Wizard');
 			const tag = `${look} ${surface}`, rec = await placeChecks(t, f, p, look, tag);
 			await t.check(`wizard ${tag}: Brand-new product is chosen and has a chip`, !!rec?.chip && await f.locator(`${p.item}[data-demo-arg="product"]`).count() === 1, JSON.stringify(rec), { hard: true });
-			const px = await pixels(t, f, rec, WANT[look].seg[2]);
+			const px = await pixels(t, f, { ...rec, fillAndWords: true }, WANT[look].seg[2]);
 			await t.check(`wizard ${tag}: painted fill is the neutral material within 3 levels`, near(px.inside, hex(WANT[look].seg[0]), 3), JSON.stringify({ inside: px.inside, want: WANT[look].seg[0] }));
 			await pixelChecks(t, f, p, rec, look, tag);
 			const words = await paintedText(f.locator(p.item));

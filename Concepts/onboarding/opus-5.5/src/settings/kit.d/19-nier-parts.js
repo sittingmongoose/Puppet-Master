@@ -305,12 +305,16 @@
     const r = t.getBoundingClientRect(), z = zoom();
     retWatch(t);
     const clip = retClip(t, z);
-    if (r.width < 2 || r.height < 2) { retOff(); return; }
+    ret.style.clipPath = clip;
+    /* A menu can focus its first row while its opening box is still zero. Keep the target observed so its first real
+       layout places the mark; clearing retT here lost the More tray's key focus until a different row was focused. */
+    const empty = r.width < 2 || r.height < 2;
+    ret.toggleAttribute('data-empty', empty);
+    if (empty) { ret.removeAttribute('data-on'); return; }
     if (retScroll) { ret.style.clipPath = clip; return; }
     const l = r.left - RET_GAP, tp = r.top - RET_GAP, rt = r.right + RET_GAP - RET_S, b = r.bottom + RET_GAP - RET_S;
     const pos = [[l, tp, 1, 1], [rt, tp, -1, 1], [l, b, 1, -1], [rt, b, -1, -1]];
     const wasOn = ret.hasAttribute('data-on'), c = ret.children;
-    ret.style.clipPath = clip;
     ret.removeAttribute('data-scroll');
     if (!wasOn) { ret.setAttribute('data-jump', ''); frames(2).then(() => { if (ret) ret.removeAttribute('data-jump'); }); }
     pos.forEach(([x, y, sx, sy], i) => { c[i].style.transform = `translate(${Math.round(x / z)}px, ${Math.round(y / z)}px) scale(${sx}, ${sy})`; });

@@ -2,6 +2,7 @@
 import { decodePng } from '../helpers/activity-cover-pixels.mjs';
 const pause = f => f.waitForTimeout(700);
 const files = '#activityBar [data-ab-id="files"]';
+async function quiet(f) { await f.evaluate(() => { const s = document.createElement('style'); s.textContent = '#pm-hover-tag-root,#o55np-cursor {visibility:hidden !important}'; document.head.append(s); }); }
 
 async function focus(t, f, sel) {
   // One trusted key establishes keyboard modality; preventScroll preserves the deliberately cut target.
@@ -16,7 +17,7 @@ async function pixels(t, f, scroller, target, label) {
     const ret = document.getElementById('o55np-reticle');
     return { box: { left: b.left + s.clientLeft, top: b.top + s.clientTop, right: b.left + s.clientLeft + s.clientWidth, bottom: b.top + s.clientTop + s.clientHeight },
       item: { left: r.left, top: r.top, right: r.right, bottom: r.bottom },
-      focused: e === document.activeElement && e.matches(':focus-visible'), on: ret?.hasAttribute('data-on'), scroll: s.scrollTop, max: s.scrollHeight - s.clientHeight };
+      focused: e === document.activeElement && e.matches(':focus-visible'), on: ret?.hasAttribute('data-on'), clip: ret?.style.clipPath, scroll: s.scrollTop, max: s.scrollHeight - s.clientHeight };
   }, [scroller, target]);
   const fe = f === t.page.mainFrame() ? null : await f.frameElement(), off = fe ? await fe.boundingBox() : { x: 0, y: 0 };
   for (const rect of [g.box, g.item]) for (const k of Object.keys(rect)) rect[k] += /left|right/.test(k) ? off.x : off.y;
@@ -50,13 +51,14 @@ export const tests = {
   async 'Activity layout'(t) {
     for (const look of ['nier-light', 'nier-dark']) {
       await t.viewport(1280, 500); const f = await t.app.open(); await t.app.look(look);
+      await quiet(f);
       await f.waitForFunction(() => !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.()); await pause(f);
       if (await f.locator('#activityBar').evaluate(e => e.classList.contains('collapsed'))) await f.locator('#activityBarToggle').evaluate(e => e.click());
       await pause(f);
       await t.check(`${look}: names shown`, !await f.locator('#activityBar').evaluate(e => e.classList.contains('collapsed')), '', { hard: true });
       await f.locator('#activityBar').evaluate(e => { e.scrollTop = 0; });
       await focus(t, f, files); await cut(t, f, '#activityBar', files);
-      await f.locator('#activityBarToggle').focus(); await focus(t, f, files);
+      await f.locator('#activityBarToggle').evaluate(e => e.focus({ preventScroll: true })); await focus(t, f, files);
       await pixels(t, f, '#activityBar', files, `${look}: focus onto already-cut Files`);
       // Invoke the actual toggle without moving the key focus off the icon, as an external names change does.
       await f.locator('#activityBarToggle').evaluate(e => e.click());
@@ -70,6 +72,7 @@ export const tests = {
   async 'Files and More scrollers'(t) {
     for (const look of ['nier-light', 'nier-dark']) {
       await t.viewport(1280, 500); const f = await t.app.open(); await t.app.look(look);
+      await quiet(f);
       await f.waitForFunction(() => !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.()); await pause(f);
       await f.locator(files).click(); await pause(f);
       const chosen = await f.evaluate(() => {
@@ -83,7 +86,9 @@ export const tests = {
       await t.check(`${look}: Files has a real scrollable focus target`, chosen, '', { hard: true });
       const s = '[data-fo96-scroller="files"]', e = '[data-fo96-target="files"]';
       await focus(t, f, e); await cut(t, f, s, e);
+      await t.viewport(1920, 500); await pause(f); await focus(t, f, e);
       const handle = await f.locator('#leftPanelResizer').boundingBox();
+      await t.check(`${look}: docked rail has its resize handle`, !!handle, '', { hard: true });
       await t.page.mouse.move(handle.x + handle.width / 2, handle.y + handle.height / 2); await t.page.mouse.down();
       try { await t.page.mouse.move(handle.x + 120, handle.y + handle.height / 2, { steps: 20 }); } finally { await t.page.mouse.up(); }
       await focus(t, f, e); await pixels(t, f, s, e, `${look}: resized Files rail`);
@@ -92,8 +97,9 @@ export const tests = {
       for (const id of ids) {
         await f.locator(`#activityBar > .icon[data-ab-id="${id}"]`).focus();
         await t.page.keyboard.press('Shift+F10');
-        await f.locator('.pmr-menu[data-pmr-menu="d-ab-icon"]').waitFor({ state: 'visible' });
+        await f.locator('.pmr-menu[data-pmr-menu="d-ab-icon"]:not(.is-closing)').waitFor({ state: 'visible' });
         await t.page.keyboard.press('End'); await t.page.keyboard.press('Enter');
+        await f.locator('.pmr-menu[data-pmr-menu="d-ab-icon"]').waitFor({ state: 'detached' });
       }
       await t.viewport(1280, 300); await focus(t, f, '#abMoreBtn'); await t.page.keyboard.press('ArrowDown');
       const menu = '.pmr-menu[data-pmr-menu="d-ab-more"]';
