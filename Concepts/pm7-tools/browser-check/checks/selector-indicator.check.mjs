@@ -21,6 +21,9 @@
 //   step rail, the segments and the chosen option are pixel-identical between main and this build (Reduce Motion, both
 //   surfaces), less the GPU's own noise: the same page loaded twice differs by up to 1 level on Glass Light's frosted
 //   ground, so a pixel counts as changed past 2 levels. --set glassCrops=<dir> writes each pair (main, build).
+//   The step rail's crop is logged, not judged: QA-1 round 2 changed Glass's rail lens on purpose (3 px above and below
+//   the word instead of 6, so it clears Pip's feet; pm-fo-lead's ruling 1109004538-40f3 accepts it for the onboarding
+//   step rail only). The other five Glass places stay strict.
 // - film (--set film=1, alone, with --record; --set parts=tabs,bar,rail,onb, looks=): every move above, marked, with a
 //   person's click, for frame-by-frame review of the hop, the squash and the snap.
 //   --set looks=friendly-light,...   --set sizes=1920x1080,1024x768,740x900,390x844   --set base=<page>
@@ -535,6 +538,8 @@ export const tests = {
 					/* the same page twice differs by up to one level on Glass Light's frosted ground (main against main,
 					   e154b6459f: 60,844 pixels of the step rail by 1), so a pixel is changed when it differs by more than 2 */
 					let changed = 0; if (diff > 0) for (let i = 0; i < A.data.length; i += 4) if (Math.max(Math.abs(A.data[i] - B.data[i]), Math.abs(A.data[i + 1] - B.data[i + 1]), Math.abs(A.data[i + 2] - B.data[i + 2])) > 2) changed++;
+					/* (QA-1 round 2: the step rail's lens changed on purpose, accepted for the step rail only; see the header) */
+					if (n === 'step rail') { t.log(`glass unchanged step rail ${look} ${surface}: not judged (QA-1 round 2 changed the rail lens on purpose): ${A.width}x${A.height} vs ${B.width}x${B.height}, ${changed} pixels by more than 2`); continue; }
 					await t.check(`glass unchanged ${n} ${look} ${surface}: pixel for pixel (GPU noise of 2 levels aside)`, diff >= 0 && changed === 0, `${A.width}x${A.height} vs ${B.width}x${B.height}, ${diff} pixels differ (max ${maxd}), ${changed} by more than 2`);
 				}
 			}

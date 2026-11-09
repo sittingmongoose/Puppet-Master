@@ -186,7 +186,9 @@ async function rest(t, mode) {
 	await t.check(`${mode}: every cell measured, at rest (${out.cells} cells)`, out.cells > 0 && !out.bad.length && !out.unsettled.length, first(out.bad.concat(out.unsettled)));
 	await t.check(`${mode}: the current step's section paints inside the header (${out.cells} cells)`, out.cells > 0 && !out.outside.length, first(out.outside));
 	await t.check(`${mode}: the current step's section never paints over Pip (${out.cells} cells)`, out.cells > 0 && !out.over.length, first(out.over));
-	await t.check(`${mode}: the section is drawn wherever the current word shows (${out.labelled} cells)`, out.labelled > 0 && !out.undrawn.length, first(out.undrawn));
+	/* (a run whose widths show no word, --set widths=740, has nothing to judge here: it says so rather than failing) */
+	if (!out.labelled && out.unlabelled && !out.bad.length) t.log(`${mode}: no cell showed the current word (--set widths=${widths.join(',')}), so whether the section is drawn there is not judged`);
+	else await t.check(`${mode}: the section is drawn wherever the current word shows (${out.labelled} cells)`, out.labelled > 0 && !out.undrawn.length, first(out.undrawn));
 	await t.viewport(1920, 1080);
 	await t.app.resetLayout();
 }
