@@ -360,8 +360,7 @@
 }
 /* 14px in a 22-28px node: 2.3 user units on a 0 0 24 24 viewBox paints
    2.3 * 14/24 = 1.342px. The stock take drew icon(...,13) at 1.8 -> 0.975px.
-   `>` so the corner flag's own svg is not resized by the density tiers. */
-.orbit-node > svg { width: 14px; height: 14px; --nx-stroke-base: 2.3; }
+   The symbol host keeps the corner flag outside the density-tier sizing. */
 /* (the done look is set in the Chat WOW M4 block below, which wins) */
 /* The live subject is a DARK DISC with a lit glyph (plan §4, Jared): an opaque
    puck (--nx-disc, PART 3) rimmed in the phase hue, the glyph in the phase hue
@@ -490,27 +489,25 @@
      can never paint outside the disc, which is the property that matters. */
   white-space: normal; overflow-wrap: anywhere;
 }
-.orbit-core-icon {
-  display: grid; place-items: center;
-  color: var(--pm-step, var(--accent));
-  /* pm-disc-in blurs 2px on this box; orbit-core-in is blur-free AND starts at
-     opacity .35 rather than 0. The contact sheet showed the stock keyframe
-     leaving the core completely blank for ~60ms in the middle of the ring's
-     rotation, which reads as a glitch rather than as a handover. */
-  animation: orbit-core-in var(--pm-t-icon) var(--pm-ease-pop) both;
+/* FO-120: the glyph's entrance and full moving anatomy belong to the ring. The parent node keeps its
+   positioning/rotation, pulse and failure shake. The 14/11/9px ink box leaves travel room inside each tile. */
+.orbit-node-symbol {
+  display: grid; place-items: center; width: 14px; height: 14px;
+  animation: orbit-symbol-in var(--pm-t-icon) var(--pm-ease-pop) both;
 }
-@keyframes orbit-core-in {
+.orbit-node-symbol > .nx-st { width: 100%; height: 100%; display: grid; place-items: center; }
+.orbit-node-symbol svg { width: 100%; height: 100%; --nx-u: 1.7143; --nx-stroke-base: 2.3; }
+@keyframes orbit-symbol-in {
   from { opacity: .35; transform: scale(.78); }
   to   { opacity: 1;   transform: scale(1); }
 }
+@media (forced-colors: active) {
+  .orbit-node-symbol svg { --nx-ink: ButtonText !important; --nx-hi-a: 0; }
+}
 .orbit-core.done { border-color: var(--positive); }
-.orbit-core.done .orbit-core-icon { color: var(--positive); }
 @container orbitdial (max-width: 190px) {
   .orbit-core strong { font-size: 10px; }
   .orbit-core { padding: 3px; }
-}
-@container orbitdial (max-width: 150px) {
-  .orbit-core-icon svg { width: 18px; height: 18px; }
 }
 
 /* ---- detail panel ---------------------------------------------------- */
@@ -639,12 +636,14 @@
 .orbit-stage[data-orbit-tier] { --orbit-dial-w: clamp(150px, 52cqi, 232px); }
 .orbit-stage[data-orbit-tier] .orbit-dial { --orbit-node-sz: clamp(15px, 9.5cqi, 21px); }
 .orbit-stage[data-orbit-tier] .orbit-node { border-radius: 7px; }
-.orbit-stage[data-orbit-tier] .orbit-node > svg { width: 11px; height: 11px; --nx-stroke-base: 2.9; }
+.orbit-stage[data-orbit-tier] .orbit-node-symbol { width: 11px; height: 11px; }
+.orbit-stage[data-orbit-tier] .orbit-node-symbol svg { --nx-stroke-base: 2.9; }
 .orbit-stage[data-orbit-tier] .orbit-node.live .orbit-node-pip { inset: -4px; border-radius: 10px; }
 .orbit-stage[data-orbit-tier="xl"] { --orbit-dial-w: clamp(160px, 56cqi, 248px); }
 .orbit-stage[data-orbit-tier="xl"] .orbit-dial { --orbit-node-sz: clamp(13px, 8cqi, 17px); }
 .orbit-stage[data-orbit-tier="xl"] .orbit-node { border-radius: 6px; }
-.orbit-stage[data-orbit-tier="xl"] .orbit-node > svg { width: 9px; height: 9px; --nx-stroke-base: 3.4; }
+.orbit-stage[data-orbit-tier="xl"] .orbit-node-symbol { width: 9px; height: 9px; }
+.orbit-stage[data-orbit-tier="xl"] .orbit-node-symbol svg { --nx-stroke-base: 3.4; }
 
 /* ---- compact strip (a superseded card) -------------------------------
    The density of the shared chrome's shut state: one row of subject discs
@@ -761,7 +760,7 @@
     transition-duration: 1ms !important;
   }
   .orbit-node-pip, .orbit-track, .orbit-strip-item, .orbit-strip-item::before { animation: none !important; }
-  .orbit-sat, .orbit-core-icon, .orbit-node, .orbit-dial { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+  .orbit-sat, .orbit-node-symbol, .orbit-node, .orbit-dial { animation-duration: 1ms !important; animation-delay: 0ms !important; }
 }
 .orbit-caption-label { color: var(--text); font-weight: 640; }
 
@@ -880,7 +879,6 @@ button.wa-row {
 }
 @keyframes orbit-more-in { from { transform: scale(.4); opacity: 0; } to { transform: none; opacity: 1; } }
 .orbit-core.waiting { border-color: var(--warning); box-shadow: 0 0 40px color-mix(in srgb, var(--warning) 20%, transparent); }
-.orbit-core.waiting .orbit-core-icon { color: var(--warning); }
 /* cluster panel: one line per member, then its rows */
 .orbit-member { display: block; margin: 8px 0 2px; font-size: 11px; color: var(--muted); }
 .orbit-member:first-child { margin-top: 0; }
@@ -959,33 +957,28 @@ html:not([data-o55-nier="on"]) body[data-theme="retro-light"] .orbit-core { --po
    hue (its ink is the node's `color`); a done one carries a faint done halo; a
    flagged one is lit in its tone. The corner flag's glyph is plain ink on its
    chip. */
-.orbit-node > svg { --nx-hi-a: 0; }
-.orbit-node.done > svg { --nx-hi-a: var(--nx-h-quiet-i); }
-.orbit-node.live > svg { --nx-hi-a: var(--nx-h-working-i); }
-.orbit-node.waiting > svg { --nx-hi-a: var(--nx-h-attention-i); }
-.orbit-node.failed > svg { --nx-hi-a: var(--nx-h-blocked-i); }
+.orbit-node-symbol svg { --nx-hi-a: 0; }
+.orbit-node.done .orbit-node-symbol svg { --nx-hi-a: var(--nx-h-quiet-i); }
+.orbit-node.live .orbit-node-symbol svg { --nx-hi-a: var(--nx-h-working-i); }
+.orbit-node.waiting .orbit-node-symbol svg { --nx-hi-a: var(--nx-h-attention-i); }
+.orbit-node.failed .orbit-node-symbol svg { --nx-hi-a: var(--nx-h-blocked-i); }
 .orbit-node-flag > svg { --nx-hi-a: 0; }
-.orbit-core-icon > svg { --nx-hi-a: var(--nx-h-working-i); }
+.orbit-node-symbol.is-live > svg { --nx-hi-a: var(--nx-h-working-i); }
 
 /* The act: the bar's working loop (each part's own literal keyframes, --kl,
    transform and opacity only so they composite, at 2200 ms with the stagger
    scaled; the negative delay starts the act on the first frame, so it plays at
    every handover: the node and the core glyph are keyed by subject). Only a
    glyph drawn with moving parts can match, see the header. */
-.orbit-node.live > svg .nx-p,
-.orbit-core-icon.is-live > svg .nx-p,
+.orbit-node-symbol.is-live > svg .nx-p,
 .wa-chrome .wa-disc.current > svg .nx-p,
 .pm-rail-item.orbit-strip-item.current > svg .nx-p {
   animation: var(--kl) 2200ms var(--nx-le) infinite;
   animation-delay: calc(var(--ad, 0) * 2.2ms - 2200ms);
 }
-/* The density tiers paint the node glyph at 11 and 9 px, under the 12 px
-   gate: its parts hold still there, and their halo copies convert at the
-   rendered size. The narrow core paints its glyph at 18 px. */
-.orbit-stage[data-orbit-tier] .orbit-node > svg { --nx-u: 2.1818; }
-.orbit-stage[data-orbit-tier="xl"] .orbit-node > svg { --nx-u: 2.6667; }
-.orbit-stage[data-orbit-tier] .orbit-node > svg .nx-p { animation: none; }
-@container orbitdial (max-width: 150px) { .orbit-core-icon svg { --nx-u: 1.3333; } }
+/* Full moving anatomy in every density tier; convert the halo at the rendered size. */
+.orbit-stage[data-orbit-tier] .orbit-node-symbol svg { --nx-u: 2.1818; }
+.orbit-stage[data-orbit-tier="xl"] .orbit-node-symbol svg { --nx-u: 2.6667; }
 
 /* The shared trail (every take with the phase chrome): the current disc is
    the dark disc, done discs are lit green on their plain ring. (The strip's
@@ -1028,7 +1021,7 @@ body.pm56-reduced .orbit-strip-item::before { animation: none !important; }
    entrance in 1ms, PART 2's travel in 1ms (the
    420 ms collapse orbit-verify caught), the pulse pip, the dashed track's spin and the strip's loops stopped, the
    entrances in 1ms, the failed node, the more chip and the narration still, and PART 3's strip ring stopped. The
-   end state is unchanged. The live glyph loops (.orbit-node.live > svg .nx-p) are svg.nx parts: neon-icons.css
+   end state is unchanged. The live glyph loops (.orbit-node.live .orbit-node-symbol svg .nx-p) are svg.nx parts: neon-icons.css
    section 10 stops them on all three routes. */
 body.pm56-reduced .orbit-stage, body.pm56-reduced .orbit-layout, body.pm56-reduced .orbit-dial, body.pm56-reduced .orbit-core, body.pm56-reduced .orbit-node, body.pm56-reduced .orbit-panel, body.pm56-reduced .orbit-panel-in, body.pm56-reduced .orbit-agent, body.pm56-reduced .orbit-sat, body.pm56-reduced .orbit-close, body.pm56-reduced .orbit-strip-item,
 html[data-motion="reduced"] .orbit-stage, html[data-motion="reduced"] .orbit-layout, html[data-motion="reduced"] .orbit-dial, html[data-motion="reduced"] .orbit-core, html[data-motion="reduced"] .orbit-node, html[data-motion="reduced"] .orbit-panel, html[data-motion="reduced"] .orbit-panel-in, html[data-motion="reduced"] .orbit-agent, html[data-motion="reduced"] .orbit-sat, html[data-motion="reduced"] .orbit-close, html[data-motion="reduced"] .orbit-strip-item {
@@ -1036,9 +1029,16 @@ html[data-motion="reduced"] .orbit-stage, html[data-motion="reduced"] .orbit-lay
 }
 body.pm56-reduced .orbit-node-pip, body.pm56-reduced .orbit-track, body.pm56-reduced .orbit-strip-item, body.pm56-reduced .orbit-strip-item::before,
 html[data-motion="reduced"] .orbit-node-pip, html[data-motion="reduced"] .orbit-track, html[data-motion="reduced"] .orbit-strip-item, html[data-motion="reduced"] .orbit-strip-item::before { animation: none !important; }
-body.pm56-reduced .orbit-sat, body.pm56-reduced .orbit-core-icon, body.pm56-reduced .orbit-node, body.pm56-reduced .orbit-dial,
-html[data-motion="reduced"] .orbit-sat, html[data-motion="reduced"] .orbit-core-icon, html[data-motion="reduced"] .orbit-node, html[data-motion="reduced"] .orbit-dial { animation-duration: 1ms !important; animation-delay: 0ms !important; }
+body.pm56-reduced .orbit-sat, body.pm56-reduced .orbit-node-symbol, body.pm56-reduced .orbit-node, body.pm56-reduced .orbit-dial,
+html[data-motion="reduced"] .orbit-sat, html[data-motion="reduced"] .orbit-node-symbol, html[data-motion="reduced"] .orbit-node, html[data-motion="reduced"] .orbit-dial { animation-duration: 1ms !important; animation-delay: 0ms !important; }
 body.pm56-reduced .orbit-node.failed, body.pm56-reduced .orbit-core-more, body.pm56-reduced .orbit-narration,
 html[data-motion="reduced"] .orbit-node.failed, html[data-motion="reduced"] .orbit-core-more, html[data-motion="reduced"] .orbit-narration { animation: none; }
 body.pm56-reduced .pm-rail-item.enter, html[data-motion="reduced"] .pm-rail-item.enter { animation-duration: 1ms; }
 body.pm56-reduced .wa-track, html[data-motion="reduced"] .wa-track { scroll-behavior: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-node-symbol { animation: none !important; transition: none !important; }
+}
+body.pm56-reduced .orbit-node-symbol, html[data-motion="reduced"] .orbit-node-symbol {
+  animation: none !important; transition: none !important;
+}
