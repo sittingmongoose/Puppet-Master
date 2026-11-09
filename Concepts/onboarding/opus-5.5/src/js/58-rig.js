@@ -518,8 +518,9 @@
        Speech must clear that room, not just the upright box (the 740 Retro vault reached 7 px into the bubble).
        This reservation is independent of the current angle, so neither destination nor bubble refits during entry. */
     speechSway(pr, sc, tm, len) {
-      if (this.still() || !H.part('sway-and-physics') || pr.spec.ground || !pr.bb) return [0, 0];
-      const [x, y, w, h] = pr.bb, pts = [[x, y], [x + w, y], [x, y + h], [x + w, y + h]];
+      const bb = pr.spaceBB || pr.bb;
+      if (this.still() || !H.part('sway-and-physics') || pr.spec.ground || !bb) return [0, 0];
+      const [x, y, w, h] = bb, pts = [[x, y], [x + w, y], [x, y + h], [x + w, y + h]];
       const base = pts.map(([x, y]) => [(x - tm[0]) * sc, (y - tm[1]) * sc]);
       const swept = [-.15, 0, .15].flatMap((a) => base.map((p) => { const q = rot(p, a); return [q[0] + Math.sin(a) * len, q[1] + (Math.cos(a) - 1) * len]; }));
       const span = (ps, axis) => [Math.min(...ps.map((p) => p[axis])),Math.max(...ps.map((p) => p[axis]))];
@@ -535,19 +536,30 @@
       for (const [id, q] of this.props) { if (q.state !== 'out') preceding.push([id, q.spec]); if (q === pr) break; }
       const key = JSON.stringify([this.theme, this.layoutName, this.vis, this.lastScreen, this.spec.pip,
         this.reduced, !!O55.motion.lowResource, H.part('sway-and-physics'),
-        this.keepOff, this.pipAt, this.pipOff, this.pipBB, pr.bb, preceding]);
+        this.keepOff, this.pipAt, this.pipOff, this.pipBB, pr.bb, pr.spaceBB, preceding]);
       if (pr.restFit && pr.restFit.key === key) return pr.restFit;
-      const fit = this.fit(pr, [tg.ax, this.L.anchorY + tg.len], tg.sc, tm, true);
-      pr.restBox = fit.box;
+      const fit = this.fit(pr, [tg.ax, this.L.anchorY + tg.len], tg.sc, tm, true, pr.spaceBB);
+      const sc = tg.sc * fit.f, spaceBox = fit.box, bb = pr.bb;
+      const actual = pr.spaceBB && bb ? [tg.ax + fit.dx + (bb[0] - tm[0]) * sc, this.L.anchorY + tg.len + fit.dy + (bb[1] - tm[1]) * sc,
+        tg.ax + fit.dx + (bb[0] + bb[2] - tm[0]) * sc, this.L.anchorY + tg.len + fit.dy + (bb[1] + bb[3] - tm[1]) * sc] : fit.box;
+      pr.restBox = actual;
+      if (pr.spaceBB && bb) {
+        // Preserve this exact fit on exit too: the capacity frame can reach the pane before the smaller drawing does.
+        const room = this.vis.x1 - this.vis.x0 - 16, base = room > 0 ? Math.min(1, room / (bb[2] * tg.sc)) : 1;
+        const lo = tg.ax + (bb[0] - tm[0]) * tg.sc * base, hi = tg.ax + (bb[0] + bb[2] - tm[0]) * tg.sc * base;
+        let edge = hi > this.vis.x1 - 8 ? this.vis.x1 - 8 - hi : 0;
+        if (lo + edge < this.vis.x0 + 8) edge = this.vis.x0 + 8 - lo;
+        pr.restOff = {dx: fit.dx - edge, dy: fit.dy, g: fit.f / base};
+      }
       const reach = this.speechSway(pr, tg.sc * fit.f, tm, tg.len), b = fit.box;
       const speechBox = b && [b[0] - reach[0], b[1] - reach[1], b[2] + reach[0], b[3] + reach[1]];
-      return (pr.restFit = Object.assign({ key, speechBox, ax: tg.ax + fit.dx, sc: tg.sc * fit.f }, fit));
+      return (pr.restFit = Object.assign({ key, speechBox, spaceBox, ax: tg.ax + fit.dx, sc }, fit, {box: actual}));
     }
     /* how far a prop must move (dx, dy) or shrink (f) for its drawing, at its angle, to sit inside the pane's visible span
        (this.vis, from measure) with a margin, and off a speech box that cannot move out of its way (this.keepOff: NieR's
        fixed box, or a bubble that found no clear place); box is where it is then painted */
-    fit(pr, hang, sc, tm, destination) {
-      const v = this.vis; let bb = pr.bb;
+    fit(pr, hang, sc, tm, destination, shape) {
+      const v = this.vis; let bb = shape || pr.bb;
       if (!v) return { dx: 0, dy: 0, f: 1, box: null };
       if (!bb || !bb[2]) { bb = pr.bb = this.boxOf(pr.el); if (!bb || !bb[2]) return { dx: 0, dy: 0, f: 1, box: null }; }
       const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], destination ? 0 : pr.a));
@@ -625,7 +637,7 @@
         this.props.forEach((q) => {
           if (q === pr) { before = false; return; }
           if (q.state === 'out' || (destination ? !before : q.placedN !== this.renderN || q.op <= .05)) return;
-          const b = destination ? this.restPose(q).box : q.box;
+          const pose = destination ? this.restPose(q) : null, b = pose ? pose.spaceBox || pose.box : q.box;
           if (b) obs.push([b[0] - 4, b[1] - 4, b[2] + 4, b[3] + 4]);
         });
         const g = clear(obs);
@@ -828,6 +840,10 @@
       const d = PW.PROPS[pr.spec.kind](this.pen, pr.spec.params || {});
       pr.el.innerHTML = d.svg;
       pr.ties = d.ties; pr.foot = d.foot; pr.bb = this.boxOf(pr.el);
+      if (d.reserve && pr.bb) {
+        const a = d.reserve, b = pr.bb, x = Math.min(a[0], b[0]), y = Math.min(a[1], b[1]);
+        pr.spaceBB = [x, y, Math.max(a[0] + a[2], b[0] + b[2]) - x, Math.max(a[1] + a[3], b[1] + b[3]) - y];
+      } else pr.spaceBB = null;
       const n = d.ties.length;
       while (pr.strs.length < n) pr.strs.push(el('path', { class: 'pst-pstrl', fill: 'none', opacity: '0' }, this.gPropStr));
       while (pr.strs.length > n) pr.strs.pop().remove();
@@ -1465,7 +1481,8 @@
          rock or the current hop made an ostensibly conservative obstacle change while the line was already up. */
       const bar = motion.bar && projected(motion.bar); if (bar) obs.push(bar);
       const fx = (face[0] + face[2]) / 2, sideOf = (cx) => (cx + bw / 2 < fx ? 'L' : 'R');
-      const over = (cx, cy, o) => cx < o[2] && cx + bw > o[0] && cy < o[3] && cy + bh > o[1];
+      // A translated exact contact can differ by ~1e-13px; it is not a new overlap on the renderer's .01px grid.
+      const over = (cx, cy, o) => cx < o[2] - 1e-7 && cx + bw > o[0] + 1e-7 && cy < o[3] - 1e-7 && cy + bh > o[1] + 1e-7;
       const fits = (cx, cy) => cx >= X0 - .5 && cx <= X1 + .5 && cy >= Y0 - .5 && cy <= Y1 + .5;
       const clear = (cx, cy) => fits(cx, cy) && !over(cx, cy, face) && !obs.some((o) => over(cx, cy, o));
       /* (a place on Pip's other side counts as far: new words never send the bubble across Pip, it goes above instead) */

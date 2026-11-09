@@ -194,7 +194,9 @@
          0.75-1 low and 0.55 right (Retro), 1.5 low (NieR), stage-symbol-centre on 'Loom' at 20; carried back */
       const cy = y0 + H / 2, SO = { retro: [-0.55, -0.85], nier: [0, -1.5] }[p.fam] || [0, 0];
       s += txt ? lines.map((l, i) => p.text(SO[0], cy + SO[1] + (i - (lines.length - 1) / 2) * lh, l, size * k, 'ink')).join('') : `<g class="st-caret">${p.rect(-1.5, cy - 11, 3, 22, 1, 'ink')}</g>`;
-      return { svg: s, ties: [[x0 + 14, y0], [-x0 - 14, y0]], foot: y0 + H };
+      // Layout reserves the bounded frame before its live label grows; the drawing still sizes itself to its words.
+      return { svg: s, ties: [[x0 + 14, y0], [-x0 - 14, y0]], foot: y0 + H,
+        reserve: [-MAXW / 2, y0, MAXW, Math.max(58, Math.ceil(3 * 13 * k * 1.18 + 26))] };
     },
     vault(p) {
       let s = p.shadow(44, 40);

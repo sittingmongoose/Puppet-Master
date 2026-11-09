@@ -37,7 +37,7 @@ const want = (t, g) => !t.args.only || t.args.only.split(',').includes(g);
 // animation frame toggles (a plain animation-frame read can see a state the rig rewrites before the frame is painted)
 function sampler(options) {
 	const S0 = window.__sk = { frames: 0, hits: [], rings: 0, ringOut: [], leaving: 0, blocks: 0, covered: 0, eps: new Map(), anchors: new Map(), lines: new Map() };
-	S0.trace=options?.trace?[]:null;S0.meta={mode:options?.mode,size:[innerWidth,innerHeight]};
+	S0.trace=options?.trace?[]:null;S0.meta={mode:options?.mode,size:[innerWidth,innerHeight],start:performance.now(),timeOrigin:performance.timeOrigin};
 	const R = (e) => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom]; };
 	const meet = (a, b) => a[0] < b[2] - 0.5 && a[2] > b[0] + 0.5 && a[1] < b[3] - 0.5 && a[3] > b[1] + 0.5;
 	// QA-4 trade: entering props may pass behind a settled bubble (lead ruling 18:40Z). The bubble's placement at the
@@ -77,7 +77,7 @@ function sampler(options) {
 			const relNow = nier ? R(b).slice(0, 2) : (st2 && st2.__relAtPlace) || null;
 			const trNow = nier ? R(b).slice(0, 2) : m2 ? [+m2[1], +m2[2]] : null;
 			if(S.trace&&st2) S.trace.push({t:performance.now(),screen,text:(b.textContent||'').trim(),size:[b.offsetWidth,b.offsetHeight],side:b.dataset.side,rel:relNow,at:trNow,
-				name:document.querySelector('#pm-o55-onboarding [data-o55-bind="name"]')?.value,theme:st2.theme,claim:st2.bubbleClaim,kept:st2.bubbleRel,keepOff:st2.keepOff,map:st2.map,
+				name:document.querySelector('#pm-o55-onboarding [data-o55-bind="name"]')?.value,theme:st2.theme,claim:st2.bubbleClaim,kept:st2.bubbleRel,keepOff:st2.keepOff,map:st2.map,decision:st2.__bubbleDecision,history:st2.__bubbleHistory?.slice(),
 				props:[...st2.props].map(([id,p])=>({id,bb:p.bb,spec:p.spec,restBox:p.restBox,fit:p.restFit&&{dx:p.restFit.dx,dy:p.restFit.dy,f:p.restFit.f},ax:p.ax,len:p.len,a:p.a,settled:p.settled}))});
 			const seen = new Set();
 			if (!nier && st2 && relNow && trNow && boxes.length && st2.H) {
@@ -97,6 +97,11 @@ function sampler(options) {
 					const bar = st2.barBox(6); if(bar) obs.push(bar);
 					const canFit = lo && x >= Math.max(pad,lo[0]+pad)-.5 && x+bw <= Math.min(st2.box.width-pad,hi[0]-pad)+.5 && y >= Math.max(top,lo[1]+4)-.5 && y+bh <= Math.min(st2.box.height-foot,hi[1]-4)+.5 && !obs.some(o=>meet(candidate,o));
 					const drift = Math.max(...anchor.map((v,i)=>Math.abs(v-prev.anchor[i])));
+					if(S.trace) {
+						const d=st2.__bubbleDecision, meet=(a,o)=>a[0]<o[2]-1e-7&&a[2]>o[0]+1e-7&&a[1]<o[3]-1e-7&&a[3]>o[1]+1e-7;
+						const sr=R(st2.screen),hr=R(st2.gHead),head=[hr[0]-sr[0],hr[1]-sr[1],hr[2]-sr[0],hr[3]-sr[1]];
+						S.trace[S.trace.length-1].swap={old:prev,next:{text,anchor,side},candidate,canFit,drift,rawObs:obs,head,headHit:meet(candidate,head),model:d&&{face:meet(candidate,d.face),hits:d.obs.filter(o=>meet(candidate,o)),bounds:d.bounds}};
+					}
 					if(canFit && drift > 1) S.hits.push(`${screen}: new line moved its bottom/tail anchor ${drift.toFixed(2)} px during entry although its new size fits`);
 				}
 				S.anchors.set(screen,{text,anchor,side}); S.lastScreen = screen;
@@ -152,6 +157,7 @@ async function openAt(t, mode, look, [w, h], screen) {
 	const [fam, scheme] = look.split('-');
 	await f.evaluate(([a, b]) => window.O55.ui.applyLook(a, b), [fam, scheme]);
 	await f.waitForTimeout(4500);
+	t.mark(`${mode} ${look} ${w}x${h} ${screen}`);
 	await f.evaluate(sampler,{trace:!!t.args.frames,mode});
 	return f;
 }
@@ -234,7 +240,7 @@ async function leave(t, mode) {
 }
 
 async function begin(t, mode) {
-	for (const look of ['glass-dark', 'basic-light']) for (const size of [[1920, 1080], [1390, 900]]) {
+	for (const look of t.args.beginLooks ? String(t.args.beginLooks).split(',') : ['glass-dark', 'basic-light']) for (const size of t.args.beginSizes ? String(t.args.beginSizes).split(',').map(v=>v.split('x').map(Number)) : [[1920, 1080], [1390, 900]]) {
 		const tag = `${look} ${size.join('x')} ${mode}`;
 		const f = await openAt(t, mode, look, size, 'begin');
 		await point(t, f, mode, 'pick', 'existing'); await point(t, f, mode, 'sub', 'folder');
