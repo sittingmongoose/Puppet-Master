@@ -257,7 +257,7 @@
     return '<span class="orbit-core-face' + (dots ? ' is-live' : '') + '" data-k="coreface" data-pip="1" data-work-running="' + (running ? '1' : '0') + '">' + pip + '</span>';
   }
   function nodeSymbol(c, it, rec, w) {
-    var status = it.status === 'cancelled' ? 'paused' : it.status;
+    var status = it.status;
     if (rec.completed && it.hasFocus) status = 'complete';
     var acts = it.live && w.running && !status;
     /* Keep the old centre glyph's complete anatomy (22), including the parts the small-size gate removed.

@@ -7,6 +7,7 @@ import { LOOKS } from '../browser-check.config.mjs';
 import { pathToFileURL } from 'node:url';
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 
 const CARD = '.working-card[data-card="primary"]';
 const STAGE = CARD + ' .orbit-stage';
@@ -101,13 +102,22 @@ async function ink(t, f, tag) {
   if (!await loc.count()) return; // inspect has already failed the missing host on the baseline.
   // Compare actual ink with that same paused frame with only its svg hidden: tile/background cannot pass for ink.
   await f.evaluate(sel => { const e=document.querySelector(sel); window.__fo120.paused=e.closest('.orbit-stage').getAnimations({subtree:true}).filter(a=>a.playState==='running'); window.__fo120.paused.forEach(a=>a.pause()); }, selector);
+  const painted=()=>f.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  await painted();
   const on = await t.pixels(loc);
   await loc.locator('svg').evaluate(e => { e.style.visibility='hidden'; });
+  await painted();
   const off = await t.pixels(loc);
   await loc.locator('svg').evaluate(e => { e.style.removeProperty('visibility'); });
+  await painted();
   await f.evaluate(() => { window.__fo120.paused.forEach(a=>a.play()); });
   let changed=0;
   for(let i=0;i<on.data.length;i+=4) if(Math.max(...[0,1,2].map(k=>Math.abs(on.data[i+k]-off.data[i+k])))>24) changed++;
+  if(changed<3){
+    const stem=tag.replace(/[^a-z0-9-]+/gi,'-');
+    for(const [name,img] of [['on',on],['off',off]])writeFileSync(join(t.run.dir,stem+'-'+name+'.png'),encodePng(img));
+    t.log('paired ink failure pixels: '+stem+'-on.png and '+stem+'-off.png');
+  }
   await t.check(tag + ': outer symbol paints ink', on.width===off.width && on.height===off.height && changed>=3, JSON.stringify({changed,width:on.width,height:on.height}));
 }
 
@@ -120,7 +130,7 @@ async function structure(t, page, surface) {
       await f.evaluate(m=>{document.documentElement.dataset.motion=m==='attribute'?'reduced':'full';document.body.classList.toggle('pm56-reduced',m==='body');},motion);
       for(const s of ['working','complete','waiting','failed','paused','cancelled']) {
         await state(f,s); await f.waitForTimeout(800);
-        const tag=`${page} ${surface} ${name} ${motion} ${s}`, r=await inspect(t,f,tag,['complete','waiting','failed'].includes(s)?s:s==='cancelled'?'paused':null);
+        const tag=`${page} ${surface} ${name} ${motion} ${s}`, r=await inspect(t,f,tag,['complete','waiting','failed'].includes(s)?s:s==='cancelled'?'skipped':null);
         if(motion!=='full') await t.check(tag+': no running animation',r.animations.every(a=>a.state!=='running'),JSON.stringify(r.animations));
         await ink(t,f,tag);
       }
@@ -133,31 +143,63 @@ async function structure(t, page, surface) {
   await t.emulate({reducedMotion:'no-preference',forcedColors:'none'});
 }
 
+// Geometry supports the native film review; it is not a substitute for painted-frame motion evidence.
+async function watchClearance(f, start) {
+  return f.evaluate(([sel,start])=>{
+    if(!start){const w=window.__fo120.clearance;if(w)w.active=false;return w;}
+    const w=window.__fo120.clearance={active:true,frames:0,minEdge:1e6,labelOverlap:0,bad:[]};
+    const sample=()=>{
+      if(!w.active)return;
+      const e=document.querySelector(sel), n=e?.closest('.orbit-node'), label=document.querySelector('.working-card[data-card="primary"] .orbit-core strong');
+      if(n&&label){
+        const nr=n.getBoundingClientRect(),lr=label.getBoundingClientRect();w.frames++;
+        for(const tube of e.querySelectorAll('.nx-c')){
+          const r=tube.getBoundingClientRect();if(!r.width&&!r.height)continue;
+          const edge=Math.min(r.left-nr.left,nr.right-r.right,r.top-nr.top,nr.bottom-r.bottom);
+          w.minEdge=Math.min(w.minEdge,edge);
+          if(r.left<lr.right&&r.right>lr.left&&r.top<lr.bottom&&r.bottom>lr.top)w.labelOverlap++;
+          if(edge<0&&w.bad.length<5)w.bad.push({edge,part:tube.getAttribute('class')});
+        }
+      }
+      requestAnimationFrame(sample);
+    };requestAnimationFrame(sample);return null;
+  },[STAGE+' .orbit-node[data-k="'+await f.evaluate(()=>window.__fo120.nodeKey)+'"] .orbit-node-symbol',start]);
+}
+
 async function motion(t,page,surface) {
   const f=await open(t,page,surface), observations=[];
   await t.emulate({reducedMotion:'no-preference',forcedColors:'none'});
   await f.evaluate(()=>{document.documentElement.dataset.motion='full';document.body.classList.remove('pm56-reduced');});
+  const interval=async(tag,s,index=6,dense=0,reduced=false)=>{
+    await t.mark(tag+' begins');const fixture=await state(f,s,index,dense);await f.waitForTimeout(900);
+    const r=await inspect(t,f,tag,['complete','waiting','failed'].includes(s)?s:s==='cancelled'?'skipped':null);
+    const loc=f.locator(STAGE+' .orbit-node[data-k="'+await f.evaluate(()=>window.__fo120.nodeKey)+'"] .orbit-node-symbol');
+    const row={tag,fixture,...r,captureBox:await loc.boundingBox(),nativeExpectation:!reduced&&['working','waiting','failed'].includes(s)?'motion':'still'};
+    if(s==='working'&&!reduced)await t.check(tag+': full inner moving anatomy retained',r.parts.length>0&&r.parts.some(p=>p.name!=='none'),JSON.stringify(r.parts));
+    await watchClearance(f,true);
+    await t.mark(tag+' steady');
+    if(row.nativeExpectation==='motion')await t.moving(loc,tag+': outer glyph changes on compositor frames',{ms:s==='working'?2400:2800,count:13});
+    else await t.still(loc,tag+': outer glyph stays still after entry',{ms:1200,count:7});
+    row.clearance=await watchClearance(f,false);
+    await t.check(tag+': moving tubes stay inside the outer tile and clear of the label',row.clearance.frames>10&&row.clearance.minEdge>=0&&row.clearance.labelOverlap===0,JSON.stringify(row.clearance));
+    await t.mark(tag+' ends');observations.push(row);
+  };
   for(const name of list(t.args.looks,LOOKS)) {
     await look(t,f,name);
     const count=await f.evaluate(()=>window.__fo120.savedSteps.length);
-    for(const i of list(t.args.kinds,Array.from({length:count},(_,i)=>i)).map(Number)) {
-      const tag=`${page} ${surface} ${name} working ${i}`;
-      await t.mark(tag+' begins');const fixture=await state(f,'working',i);await f.waitForTimeout(900);
-      const r=await inspect(t,f,tag);observations.push({tag,fixture,...r});
-      await t.check(tag+': full inner moving anatomy retained',r.parts.length>0 && r.parts.some(p=>p.name!=='none'),JSON.stringify(r.parts));
-      const loc=f.locator(SYMBOL+'.is-live').first();
-      if(await loc.count()) await t.moving(loc,tag+': outer glyph changes on compositor frames',{ms:2400});
-      await t.mark(tag+' ends');
+    for(const i of list(t.args.kinds,Array.from({length:count},(_,i)=>i)).map(Number))await interval(`${page} ${surface} ${name} working ${i}`,'working',i);
+    // Real scripted-only subjects (MCP, skills) also used to put their glyph beside Pip.
+    const extras=await f.evaluate(()=>{const c=PM56_EXT.ctx(),known=new Set(window.__fo120.savedSteps.map(s=>s.icon));return [...new Map(Object.values(c.D.workRuns).flatMap(r=>r.steps).filter(s=>s.icon&&!known.has(s.icon)).map(s=>[s.icon,s])).values()];});
+    for(const extra of extras){
+      await f.evaluate(extra=>{const a=window.__fo120.savedSteps;window.__fo120.restore=a[6];a[6]={...a[6],...extra};},extra);
+      await interval(`${page} ${surface} ${name} working ${extra.icon}`,'working');
+      await f.evaluate(()=>{window.__fo120.savedSteps[6]=window.__fo120.restore;});
     }
-    for(const s of ['complete','waiting','failed','paused','cancelled']) {
-      const tag=`${page} ${surface} ${name} ${s}`;
-      await t.mark(tag+' begins');await state(f,s);
-      const r=await inspect(t,f,tag);observations.push({tag,...r});
-      await f.waitForTimeout(s==='complete'?1000:2800);
-      await ink(t,f,tag);await t.mark(tag+' ends');
-    }
-    for(const dense of [18,24]) {await t.mark(`${name} density ${dense}`);await state(f,'working',6,dense);await f.waitForTimeout(1000);await inspect(t,f,`${name} density ${dense}`);await t.moving(f.locator(SYMBOL+'.is-live').first(),`${name} density ${dense}: outer glyph moves`,{ms:2400});}
-    await t.emulate({reducedMotion:'reduce'});await state(f,'working');await f.waitForTimeout(1000);await t.still(f.locator(STAGE+' .orbit-dial'),name+': Reduced Motion dial stays still',{ms:1200});await t.emulate({reducedMotion:'no-preference'});
+    for(const s of ['complete','waiting','failed','paused','cancelled'])await interval(`${page} ${surface} ${name} ${s}`,s);
+    for(const dense of [18,24])await interval(`${page} ${surface} ${name} density ${dense}`,'working',6,dense);
+    await t.emulate({reducedMotion:'reduce'});
+    for(const s of ['working','complete','waiting','failed','paused','cancelled'])await interval(`${page} ${surface} ${name} reduced ${s}`,s,6,0,true);
+    await t.emulate({reducedMotion:'no-preference'});
   }
   writeFileSync(join(t.run.dir,`fo120-motion-${page}-${surface}.json`),JSON.stringify(observations,null,2));
 }
