@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L8827-L10949
 
-Source SHA256: `b68fc14855401306dedae3e4a97e0eea83c2568489ea9afdb639835a621dce05`
+Source SHA256: `915b3862a1365a5393a8c8f5ce5d86de46f1f1c64f58086dbac1992bb6cd2b73`
 
 ---
 
@@ -980,37 +980,37 @@ command_payload_definition_map:
     catalog_unit: UCC-231
     owner_unit: CRAU-115
     row_group: UCC-049..UCC-053
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21876, quote: "cmd.docker.bake is the live bare Bake command exposed by CRAU-011"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21882, quote: "cmd.docker.bake is the live bare Bake command exposed by CRAU-011"}
   - command_id: cmd.docker.container.stats
     catalog_unit: UCC-231
     owner_unit: CRAU-115
     row_group: UCC-049..UCC-053
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21877, quote: "cmd.docker.container.stats shows live or cached container stats with freshness markers"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21883, quote: "cmd.docker.container.stats shows live or cached container stats with freshness markers"}
   - command_id: cmd.git.worktree.merge
     catalog_unit: UCC-132
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-132, field: canonical_text, line: 13071, quote: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-132, field: canonical_text, line: 13077, quote: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"}
   - command_id: cmd.git.worktree.open_topology
     catalog_unit: UCC-231
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21879, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21885, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
   - command_id: cmd.git.worktree.repair
     catalog_unit: UCC-231
     owner_unit: W-095
     row_group: UCC-054..UCC-055
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21879, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-231, field: canonical_text, line: 21885, quote: "cmd.git.worktree.open_topology and cmd.git.worktree.repair are the live project-scope ids listed"}
   - command_id: cmd.debug.record_verification
     catalog_unit: UCC-142
     owner_unit: CS-125
     row_group: UCC-077..UCC-083
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14055, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14061, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
   - command_id: cmd.debug.run_cleanup
     catalog_unit: UCC-142
     owner_unit: CS-125
     row_group: UCC-077..UCC-083
-    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14055, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
+    evidence: {doc: Plans/UI_Command_Catalog.md, unit: UCC-142, field: canonical_text, line: 14061, quote: "cmd.debug.record_verification and cmd.debug.run_cleanup are registered with the"}
   unresolved_tokens: []
   non_definition_tokens:
   - token: cmd.docker.remove

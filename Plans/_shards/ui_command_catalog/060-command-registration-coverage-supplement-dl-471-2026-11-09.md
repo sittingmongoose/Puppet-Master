@@ -4,7 +4,7 @@ Source: `Plans/UI_Command_Catalog.md`
 
 Source lines: L21872-L21918
 
-Source SHA256: `b68fc14855401306dedae3e4a97e0eea83c2568489ea9afdb639835a621dce05`
+Source SHA256: `915b3862a1365a5393a8c8f5ce5d86de46f1f1c64f58086dbac1992bb6cd2b73`
 
 ---
 
@@ -37,7 +37,7 @@ unblocks: [CRAU-115, W-095]
 acceptance_criteria:
   - Only the four preserved existing commands are registered by this coverage supplement.
   - UCC-230 routes them explicitly and requires exactly one owner definition under all ordinary rules.
-  - Standing and semantics gaps remain recorded for Jared; no implicit command or wiring scope expansion occurs.
+  - DL-471 records the owner-decided standings and semantics, including Repair staying unavailable until its operation is defined; no implicit command or wiring scope expansion occurs.
   - No WorkNodes, NodeSeeds, executable queues, final node manifests or production build tasks are created.
 validation_surfaces:
   - python3 scripts/pm-command-payload-defs-check.py --json
