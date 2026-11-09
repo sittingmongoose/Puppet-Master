@@ -1119,8 +1119,8 @@
     headCentre() { const ps = this.ps, H = this.H || this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy); return this.headXf([32, 45], H, this.ang || 0, 1, 1); }
     /* Pip's control bar (the two sticks and the screw eyes under them) as a box in the bubble's pixels, from the kit's own
        geometry and the pose this frame draws it in (ctlXf: the transform render() writes), widened by gap (FO-59) */
-    barBox(gap) {
-      const ps = this.ps; if (!ps || this.famName === 'nier') return null;
+    barBox(gap, pose) {
+      const ps = pose || this.ps; if (!ps || this.famName === 'nier') return null;
       const K = KIT().kit, g = K.GEO.full, st = K.sticks(g), r = g.w / 2, ring = (g.ring || 0) + (g.ringW || 0);
       /* in the kit's units: the sticks' ends with their round caps, and the screw eyes hanging under them */
       const q = st.s1.concat(st.s2).map(([x, y]) => [x - r, y - r, x + r, y + r]).concat((this.barPts || []).map(([x, y]) => [x - ring, y - ring, x + ring, y + ring]));
@@ -1370,6 +1370,29 @@
       if (!this.reduced && this.t - (this.swT || 0) > .07) { this.swT = this.t; this.loopSnd('swing', clamp((Math.abs(ps.thv) - .25) / 1.6, 0, 1)); }
       this.loopSnd('snore', this.sleepZ ? 1 : 0);
     }
+    /* Speech follows the head. Reserve obstacles in that same frame through the head's whole small motion,
+       rather than keeping a pixel edge as a head-relative offset: a wiggle then dragged that offset away from
+       the prop, and its 2.5-second expiry moved the bubble back (QA-4, 4.6–5.7 px residuals). This envelope uses
+       the scene's target pose, not this frame's sway, tilt, hop or bar rock, so it is the same on first paint. */
+    speechMotion(point) {
+      const ps = this.ps, L = this.L, F = this.fam;
+      const key = JSON.stringify([this.theme, this.map, this.vis, this.pipBB, L.s, L.rope, ps.Ct, ps.tiltT, this.rockMax, this.work, this.still()]);
+      if (this.speechEnvelope && this.speechEnvelope.key === key) return this.speechEnvelope;
+      const still = this.still(), ths = still ? [0] : [-.15, 0, .15], turns = still ? [0] : [-.2, 0, .2];
+      const hops = still || F.noHop ? [0] : [-12, 0, 2], points = [];
+      for (const th of ths) for (const turn of turns) for (const dy of hops) {
+        const a = ps.tiltT + th * .9 + turn, h = this.headAt(ps.Ct.x, ps.Ct.y, th, dy), reach = this.pipReach(a);
+        h[1] = Math.min(h[1], L.ground - 2 - 28 * L.s, reach && this.vis ? this.vis.y1 - reach[3] : Infinity);
+        points.push(this.toScreen(this.headXf(point, h, a, 1, 1)));
+      }
+      const sway = still ? 0 : F.sway * this.map.k;
+      const lo = [Math.min(...points.map(p => p[0])) - sway, Math.min(...points.map(p => p[1]))];
+      const hi = [Math.max(...points.map(p => p[0])) + sway, Math.max(...points.map(p => p[1]))];
+      const rock = still || !this.work ? 0 : this.rockMax == null ? .12 : this.rockMax;
+      const bars = [-rock, 0, rock].map(phi => this.barBox(6, { C: ps.Ct, phi })).filter(Boolean);
+      const bar = bars.length ? [Math.min(...bars.map(b => b[0])) - sway, Math.min(...bars.map(b => b[1])), Math.max(...bars.map(b => b[2])) + sway, Math.max(...bars.map(b => b[3]))] : null;
+      return (this.speechEnvelope = { key, lo, hi, bar });
+    }
     placeBubble(H, ang) {
       const tall = this.layoutName === 'portrait';
       const head = this.toScreen(this.headXf([32, 34], H, ang, 1, 1));
@@ -1382,12 +1405,14 @@
          clear, so new words never send it across Pip; if nowhere is clear it still keeps off the face, and the props
          make way for it (keepOff). Its tail still points at Pip. */
       const gap = 6, obs = [], hx0 = head[0], hy0 = head[1];
+      const motion = this.speechMotion(tall ? [44, 30] : [58, 44]);
+      const projected = o => [sp[0] + o[0] - motion.hi[0], sp[1] + o[1] - motion.hi[1], sp[0] + o[2] - motion.lo[0], sp[1] + o[3] - motion.lo[1]];
       /* the face through the head's whole turn (its rest tilt either way by a swing's reach), each turn read from
          the speech point at that same turn: at this frame's turn alone, a swing or a wiggle raised a corner of the
          box into the bubble's margin and the bubble stepped up a few px mid-line, then dropped back when the
          step-aside was let go (QA-4) */
       const tiltT = this.ps ? this.ps.tiltT || 0 : 0, spQ = tall ? [44, 30] : [58, 44];
-      const fc = [tiltT - .15, tiltT + .15].flatMap((a2) => {
+      const fc = [tiltT - .2, tiltT, tiltT + .2].flatMap((a2) => {
         const s2 = this.toScreen(this.headXf(spQ, H, a2, 1, 1)), dx = sp[0] - s2[0], dy = sp[1] - s2[1];
         return [[12, 32], [52, 32], [12, 58], [52, 58]].map((q) => { const c = this.toScreen(this.headXf(q, H, a2, 1, 1)); return [c[0] + dx, c[1] + dy]; });
       });
@@ -1402,33 +1427,14 @@
          in was no obstacle at all on the bubble's first frames (QA-4). A leaving prop is no obstacle: holdUnder
          already caps its lift at the bubble's lower edge and fades it there, and counting its rising box made the
          bubble step aside for a prop that was already keeping under it) */
-      this.props.forEach((pr) => { if (pr.state === 'out') return; const pose = this.restPose(pr), rb = pose.speechBox || pose.box || pr.box; if (rb) { const a = this.toScreen([rb[0], rb[1]]), c = this.toScreen([rb[2], rb[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
+      this.props.forEach((pr) => { if (pr.state === 'out') return; const pose = this.restPose(pr), rb = pose.speechBox || pose.box || pr.box; if (rb) { const a = this.toScreen([rb[0], rb[1]]), c = this.toScreen([rb[2], rb[3]]); obs.push(projected([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap])); } });
       const v = this.vis, vs = v ? [this.toScreen([v.x0, v.y0]), this.toScreen([v.x1, v.y1])] : null;
       const X0 = Math.max(pad, vs ? vs[0][0] + pad : pad), X1 = Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Y0 = Math.max(top, vs ? vs[0][1] + 4 : top), Y1 = Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by);
       /* (and Pip's control bar: where a prop beside Pip took the usual place, the bubble went up over the sticks Pip hangs
          from, Retro Dark's Look 'Soft and cosy. I like it.', FO-59) */
-      /* (through the bar's whole swing from the speech point, as the face above: the head hangs from the hand on a
-         pendulum and the hand sways about its spot, so at this frame's pose alone the bar's edge reached the
-         bubble's usual place part-way into a line and the bubble stepped aside (QA-4, Friendly Dark Begin at 740:
-         8.1 px during the page's entry). The bar is read at the hand's spot, at each end of the swing, widened
-         by the sway and the rock) */
-      let bar = null;
-      {
-        const ps2 = this.ps;
-        if (ps2) {
-          const cx = ps2.C.x, cy = ps2.C.y;
-          ps2.C.x = ps2.Ct.x; ps2.C.y = ps2.Ct.y;
-          const bar0 = this.barBox(gap);
-          ps2.C.x = cx; ps2.C.y = cy;
-          if (bar0) {
-            const boxes = [bar0];
-            [-.15, .15].forEach((th2) => { const s2 = this.toScreen(this.headXf(spQ, this.headAt(ps2.Ct.x, ps2.Ct.y, th2, ps2.dy || 0), th2 * .9 + tiltT, 1, 1)), dx = sp[0] - s2[0], dy = sp[1] - s2[1]; boxes.push([bar0[0] + dx, bar0[1] + dy, bar0[2] + dx, bar0[3] + dy]); });
-            bar = [Math.min(...boxes.map((b) => b[0])), Math.min(...boxes.map((b) => b[1])), Math.max(...boxes.map((b) => b[2])), Math.max(...boxes.map((b) => b[3]))];
-            const sw = (this.fam.sway || 0) * (this.map ? this.map.k : 1), rk = (bar[2] - bar[0]) * Math.sin(this.rockMax == null ? .12 : this.rockMax) / 2;
-            bar[0] -= sw; bar[2] += sw; bar[1] -= rk; bar[3] += rk; obs.push(bar);
-          }
-        }
-      }
+      /* The control's entire rock is projected through the same head motion as the props. Reading its current
+         rock or the current hop made an ostensibly conservative obstacle change while the line was already up. */
+      const bar = motion.bar && projected(motion.bar); if (bar) obs.push(bar);
       const fx = (face[0] + face[2]) / 2, sideOf = (cx) => (cx + bw / 2 < fx ? 'L' : 'R');
       const over = (cx, cy, o) => cx < o[2] && cx + bw > o[0] && cy < o[3] && cy + bh > o[1];
       const fits = (cx, cy) => cx >= X0 - .5 && cx <= X1 + .5 && cy >= Y0 - .5 && cy <= Y1 + .5;
