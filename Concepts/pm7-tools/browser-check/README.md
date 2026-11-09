@@ -261,3 +261,5 @@ and adds native frame tags plus read-only traces of the proposed previous anchor
 its motion envelope, and the placement owner's obstacle boxes. Use `--set sandbox=0
 --set only=begin --set beginLooks=glass-dark --set beginSizes=1920x1080 --set frames=1`
 with a private page and a GPU recording; repeat with `--set sandbox=1` for the opaque surface. It retains the ordinary assertions and traces their full-motion eligibility decision. Its tags correlate native frames; the whole `stage-keepoff` run remains required.
+
+`diagnostics/retro-crop-ink-nas-folder.check.mjs` applies the same exact-cell K18 method to normal Retro Dark `nas-folder`, 1280×500. Current and pre-K19 V21 raw probes reproduce the rotated-group crop failure while native head outlines remain whole; the declared guard retains all13 original assertions, five fixtures and the1px bound. b345/412 refuse this particular idle swing and their fixture errors remain noncoverage. This diagnostic does not waive other crop cells.
