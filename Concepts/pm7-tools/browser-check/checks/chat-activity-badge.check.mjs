@@ -53,6 +53,11 @@ async function state(f, name, index = 6, dense = 0) {
       index = dense - 1;
     }
     if (name === 'complete') index = steps.length - 1;
+    if (name === 'complete') {
+      // A real failed migration followed by successful later work: completed history keeps its work glyph still.
+      const raw=c.D.workRuns.liveB.steps.find(s=>s.status==='failed');
+      steps[6]={...steps[6],...base.find(s=>s.id===raw.ref),...raw,uid:'fo120:6',startAt:12,rows:raw.rows||[]};
+    }
     let clock = index * 2 + .4;
     if (name === 'waiting' || name === 'failed') {
       const raw = c.D.workRuns.liveB.steps.find(s => s.status === name);
@@ -86,6 +91,10 @@ async function inspect(t, f, tag, expected) {
       nodes: nodes.length, symbols: nodes.filter(n => n.querySelectorAll('.orbit-node-symbol svg').length === 1).length,
       chosen: !!glyph, status: glyph?.querySelector('.nx-st')?.className || '', glyph: glyph?.querySelector('svg')?.dataset.nx,
       parts: parts.map(p => ({ name:getComputedStyle(p).animationName, duration:getComputedStyle(p).animationDuration })),
+      history: nodes.filter(n=>n.classList.contains('done')&&n.classList.contains('failed')).map(n=>({
+        glyph:n.querySelector('.orbit-node-symbol svg, :scope > svg')?.dataset.nx,
+        loops:n.getAnimations({subtree:true}).filter(a=>a.playState==='running'&&a.effect.getComputedTiming().iterations===Infinity).map(a=>a.animationName),
+      })),
       box: glyph && box(glyph), node: chosen && box(chosen), label: core && box(core.querySelector('strong')),
       animations: s ? s.getAnimations({subtree:true}).map(a => ({name:a.animationName, state:a.playState,
         target:a.effect.target?.classList?.value || ''})) : [] };
@@ -93,6 +102,7 @@ async function inspect(t, f, tag, expected) {
   await t.check(tag + ': Pip alone, centred; no inner glyph', r.core && r.pip && r.inner === 0 && r.centered, JSON.stringify(r));
   await t.check(tag + ': every outer node has one painted-symbol host', r.nodes > 0 && r.symbols === r.nodes && r.chosen, JSON.stringify(r));
   if (expected) await t.check(tag + ': outer status ' + expected, r.status.includes('nx-st-' + expected), r.status);
+  if(expected==='complete')await t.check(tag+': failed history retains its static work glyph',r.history.length===1&&r.history[0].glyph==='terminal'&&r.history[0].loops.length===0,JSON.stringify(r.history));
   return r;
 }
 
@@ -161,7 +171,7 @@ async function structure(t, page, surface) {
     await t.emulate({reducedMotion:'reduce',forcedColors:'active'});
     await f.evaluate(()=>{document.documentElement.dataset.motion='full';document.body.classList.remove('pm56-reduced');});
     await t.check(name+': forced colours active',await f.evaluate(()=>matchMedia('(forced-colors: active)').matches));
-    for(const s of ['working','complete','waiting','failed','paused','cancelled']) {await state(f,s);await inspect(t,f,`${name} forced ${s}`);await ink(t,f,`${name} forced ${s}`);}
+    for(const s of ['working','complete','waiting','failed','paused','cancelled']) {await state(f,s);await inspect(t,f,`${name} forced ${s}`,['complete','waiting','failed'].includes(s)?s:s==='cancelled'?'skipped':null);await ink(t,f,`${name} forced ${s}`);}
   }
   await t.emulate({reducedMotion:'no-preference',forcedColors:'none'});
 }

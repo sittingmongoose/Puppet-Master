@@ -257,7 +257,9 @@
     return '<span class="orbit-core-face' + (dots ? ' is-live' : '') + '" data-k="coreface" data-pip="1" data-work-running="' + (running ? '1' : '0') + '">' + pip + '</span>';
   }
   function nodeSymbol(c, it, rec, w) {
-    var status = it.status;
+    /* Past subjects keep the ring's original static work glyph and corner flag. Only the live subject takes the
+       former centre status mark; a completed run puts its draw-on on the final focused node. */
+    var status = it.live ? it.status : null;
     if (rec.completed && it.hasFocus) status = 'complete';
     var acts = it.live && w.running && !status;
     /* Keep the old centre glyph's complete anatomy (22), including the parts the small-size gate removed.
