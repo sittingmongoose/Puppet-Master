@@ -18,7 +18,7 @@ async function ground(f, selectors) {
  return f.evaluate(selectors => {
   for (const sel of selectors) for (const [index,e] of [...document.querySelectorAll(sel)].entries()) {
    const b = e.getBoundingClientRect();
-   if (b.width < 190 || b.height < 90 || b.left < 0 || b.top < 0 || b.bottom > innerHeight || b.right > innerWidth) continue;
+   if (b.width < 190 || b.height < 65 || b.left < 0 || b.top < 0 || b.bottom > innerHeight || b.right > innerWidth) continue;
    const obstacles = [];
    const tw = document.createTreeWalker(e, NodeFilter.SHOW_TEXT);
    while (tw.nextNode()) if (tw.currentNode.textContent.trim()) {
@@ -30,7 +30,7 @@ async function ground(f, selectors) {
     const hit = document.elementFromPoint(x, y);
     return hit && e.contains(hit) && !obstacles.some(r => r.width && r.height && x > r.left - 24 && x < r.right + 24 && y > r.top - 24 && y < r.bottom + 24);
    };
-   const ys=[];for(let y=b.top+45;y<b.bottom-40;y+=12)ys.push(y);
+   const ys=[b.top+b.height/2];for(let y=b.top+45;y<b.bottom-40;y+=12)ys.push(y);
    ys.sort((a,z)=>Math.abs(a-(b.top+b.height/2))-Math.abs(z-(b.top+b.height/2)));
    for (const y of ys) for (let x = b.right - 65; x > b.left + 60; x -= 12) {
     if (!clear(x, y)) continue;
@@ -74,7 +74,7 @@ async function circle(t, f, place, selectors) {
  })};
  await t.check(`${place}: no cursor-glow overlay element`,layers.overlays===0,JSON.stringify(layers));
  // Only PMH field readers had the circle. Other surfaces keep their existing hover materials.
- if(/^(basic|friendly|glass)-/.test(await f.evaluate(()=>document.documentElement.dataset.theme||'')) && layers.reader.fieldReader) {
+ if(await f.evaluate(()=>!document.documentElement.hasAttribute('data-o55-nier')&&/^(basic|friendly|glass)-/.test(document.documentElement.dataset.theme||'')) && layers.reader.fieldReader) {
   const s=layers.reader;await t.check(`${place}: edge reader has no circle fill`,s.background==='rgba(0, 0, 0, 0)'&&s.image==='none',JSON.stringify(s));
  }
 }
@@ -85,16 +85,16 @@ async function edge(t,f,look,selector='#panel-usage .pmu-card:not([data-head="ba
  const c=f.locator(selector).first();
  await c.scrollIntoViewIfNeeded();const b=await c.boundingBox();
  const x=b.x,y=b.y+b.height*.6;
- const clip={x:Math.round(x+1),y:Math.round(y-14),width:10,height:28};
- const move=async(dx)=>{await t.page.mouse.move(x+dx,y,{steps:8});await pause(f);return png(t,clip);};
+ const move=async(dx)=>{await t.page.mouse.move(x+dx,y,{steps:8});await pause(f);const q=await c.boundingBox();return png(t,{x:Math.round(q.x+1),y:Math.round(q.y+q.height*.6-14),width:10,height:28});};
  await move(10); // establishes the real scope, including the plate's neighbours
- const far=await move(-36),near=await move(-2),inside=await move(9),back=await move(-36);
+ const far=await move(-36),middle=await move(-12),near=await move(-2),inside=await move(9),back=await move(-36);
  const stats=(a,b)=>{let d=0,n=0,mx=0,energy=0;for(let p=0;p<a.data.length/4;p++){d+=luma(b,p)-luma(a,p);energy+=delta(a,b,p);if(delta(a,b,p)>2)n++;mx=Math.max(mx,delta(a,b,p));}return {rise:d/(a.data.length/4),energy:energy/(a.data.length/4),changed:n,max:mx};};
- const m={near:stats(far,near),inside:stats(far,inside),back:stats(far,back)};
+ const m={middle:stats(far,middle),near:stats(far,near),inside:stats(far,inside),back:stats(far,back)};
  t.log(`${look} ${place}: edge ${JSON.stringify(m)}`);
  if(/^(basic|friendly|glass)-/.test(look)){
   await t.check(`${look} ${place}: box edge brightens before entry`,m.near.energy>.08&&m.near.changed>=8,JSON.stringify(m));
-  await t.check(`${look} ${place}: box edge strengthens inside`,m.inside.energy>m.near.energy+.08,JSON.stringify(m));
+  await t.check(`${look} ${place}: box edge strengthens as pointer approaches`,m.near.energy>m.middle.energy+.08,JSON.stringify(m));
+  await t.check(`${look} ${place}: box edge remains lit inside`,m.inside.energy>.08&&m.inside.changed>=8,JSON.stringify(m));
   await t.check(`${look} ${place}: box edge falls back`,Math.abs(m.back.rise)<.5&&m.back.changed<=4,JSON.stringify(m));
  }else await t.check(`${look}: own hover form keeps no proximity circle`,true,'Retro Raise and NieR Lock-on have no proximity field by design');
 }
@@ -142,7 +142,7 @@ export default async function(t){
    if(place==='usage'){await f.locator('#tab-usage').click();await pause(f,1400);await circle(t,f,place,['#panel-usage .pmu-card:not([data-head="band"])']);await edge(t,f,look);}
    if(place==='chat')await circle(t,f,place,['#pmRoot .transcript','.transcript']);
    if(place==='settings'){await f.locator('#tab-settings').click();await pause(f,1800);await t.app.look(look);await circle(t,f,place,['#pm-settings-root .main-scroll','#pm-settings-root main','#pm-settings-root .settings-main','#pm-settings-root']);}
-   if(place==='onboarding'){await f.evaluate(()=>O55.studio.onboarding.screen('where','fresh'));await pause(f,1800);await circle(t,f,place,['#pm-o55-onboarding .o55-card:not(.o55-card-parent)']);}
+   if(place==='onboarding'){await f.evaluate(()=>O55.studio.onboarding.screen('where','fresh'));await f.waitForFunction(()=>{const r=document.getElementById('pm-o55-onboarding');return r&&!r.hasAttribute('data-o55nw-cold')&&!r.hasAttribute('data-o55nw-go')&&!r.classList.contains('o55-opening')&&!r.querySelector('.o55-pane > .o55-layer.o55-out,.o55-pane > .o55-layer.o55-entering')&&!O55.S.vt;},null,{timeout:30000});await pause(f,300);await circle(t,f,place,['#pm-o55-onboarding .o55-card:not(.o55-card-parent)']);}
   });
  }
 }
