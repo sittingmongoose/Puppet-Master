@@ -2,9 +2,9 @@
 
 Source: `Plans/orchestrator-subagent-integration.md`
 
-Source lines: L31765-L31898
+Source lines: L31765-L31897
 
-Source SHA256: `efa0d584b565514addf6b0c0c42d53bf36adf36ce886cfdafbae81600129d900`
+Source SHA256: `410585f7494171b7a082f4305c1ee2a997406c2b381728716841c5f58fa09c24`
 
 ---
 
@@ -77,17 +77,19 @@ plan_unit_id: OSI-434
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
+canonical_text: |-
   Orchestrator admits sustainable capacity below hard concurrency ceilings, holds provider permits only around requests, reserves interactive control plus parent synthesis/testing/verification/repair, and runs required specialists in waves rather than dropping them. It consumes typed leases, compact OperationalAwarenessService projections, and ObservableWork without creating parallel owners or exposing raw registries to prompts.
+
+  For each independently dispatchable task, WorkNode and child the existing scheduler consumes SIR-056 placement, using Auto by default for new Project work and host-local governor admission. Snapshot requested/effective placement and the current policy/allowed-set evidence, but do not freeze future human additions for a whole build. Tasks add OS/GPU/memory/disk and work-family minimums, never priority. Preserve bound branch/worktree/scratch chains and hysteresis for related follow-ups. Freeze each actual attempt's exact Computer/Environment/source/owner epoch before effects. On Computer loss, started work waits/resumes there; only checkpointed, reconciled, fenced later attempts can move. Unstarted independent Auto work may be reevaluated. Existing retry execution-policy/model fallback and worker identity remain distinct from Computer placement; neither is permission to migrate running work.
 gui_related: true
 gui_classification_reason: Queue, wave, wait, degraded, and progress truth are projected to user-visible orchestration surfaces.
 depends_on: [OSI-418, OSI-424, RM-051]
 unblocks: []
 acceptance_criteria:
-  - Parent/child provider-permit deadlock, saturation, and physical-parent budget fixtures preserve reserve capacity.
-  - Required specialists delayed by pressure run in later bounded waves and remain visible.
-  - Stale leases are rejected locally and every wait has truthful ObservableWork reason/state.
-  - BSD/conditional-rule silence or failure cannot satisfy required roles or block primary work.
+- Parent/child provider-permit deadlock, saturation, and physical-parent budget fixtures preserve reserve capacity.
+- Required specialists delayed by pressure run in later bounded waves and remain visible.
+- Stale leases are rejected locally and every wait has truthful ObservableWork reason/state.
+- BSD/conditional-rule silence or failure cannot satisfy required roles or block primary work.
 validation_surfaces: [python3 scripts/pm-plan-index.py validate, future sustainable-wave and lease fixtures]
 risk_class: orchestration_capacity_and_projection_drift
 reasoning_tier: high
@@ -95,10 +97,11 @@ context_scope: sustainable_orchestration_capacity
 implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Run_Modes.md, Plans/Shared_Integration_Runtime.md]
 node_compile_hint: {mode: sustainable_orchestration_policy, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/09_TEST_MIGRATION_AND_ACCEPTANCE_MATRIX.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md
-  - PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/05_BSD_TIME_TRAVEL_GOAL_AND_OPERATIONAL_AWARENESS.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/09_TEST_MIGRATION_AND_ACCEPTANCE_MATRIX.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/02_FULL_THREAD_CURRENT_DECISION_REGISTER.md
+- PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/reference/T3_OMP_COMPLETE_SOURCE_REVIEW.md
 preserved_exact_tokens: [sustainable concurrency, required specialists run in waves, ObservableWork, AuthBrowserSession]
 negative_constraints: [Do not treat configured caps as guaranteed capacity., Do not drop required work under pressure., Do not create a second resource governor or progress owner.]
 owner_hints: [Plans/orchestrator-subagent-integration.md, Plans/Run_Modes.md, Plans/Shared_Integration_Runtime.md]
@@ -111,22 +114,17 @@ plan_unit_id: OSI-435
 unit_type: requirement
 status: accepted
 owner_doc: Plans/orchestrator-subagent-integration.md
-canonical_text: >-
-  Any admitted agent may request another thread or bounded child through the same durable thread.request,
-  thread.spawn, and thread.await contracts, subject to its authority ceiling, exact parent lineage,
-  policy, resource admission, and stable idempotency; the request survives restart and client loss,
-  preserves per-thread order, and yields a typed accepted, rejected, cancelled, expired, failed, or
-  reconciled result without granting the requester scheduler or cross-project authority. OSI-439 defines
-  genuine app/cross-Project request forms and receiving-mode admission; this does not grant the sender
-  mutation, scheduler, receiver-mode, approval or build-grant authority. Regular unseen Ask me/Off,
-  explicit person-approved sends, saved ceilings, expiry and three-round-trip stop remain exact.
+canonical_text: |-
+  Any admitted agent may request another thread or bounded child through the same durable thread.request, thread.spawn, and thread.await contracts, subject to its authority ceiling, exact parent lineage, policy, resource admission, and stable idempotency; the request survives restart and client loss, preserves per-thread order, and yields a typed accepted, rejected, cancelled, expired, failed, or reconciled result without granting the requester scheduler or cross-project authority. OSI-439 defines genuine app/cross-Project request forms and receiving-mode admission; this does not grant the sender mutation, scheduler, receiver-mode, approval or build-grant authority. Regular unseen Ask me/Off, explicit person-approved sends, saved ceilings, expiry and three-round-trip stop remain exact.
+
+  An admitted agent may request Auto or pin that one task/WorkNode/child to a current allowed Computer through the same SIR-056 owner path. A person's pin wins unless the person explicitly delegates choice; parent/receiver/Managed/task ceilings still apply. Requests carry actor/scope/reason and current policy identity, never modify Project/Everywhere defaults or add a Computer/device identity, even in YOLO. A blocked pin has an explicit reason, no silent fallback. Source/worktree preparation and actual-worker sign-ins must verify before child attachment; request acceptance alone is not dispatch or a frozen owner.
 gui_related: false
 depends_on: [OSI-433, SIR-005, SIR-006]
 unblocks: []
 acceptance_criteria:
-  - AGT-009 allows an agent request but not direct unmanaged process/thread creation.
-  - AGT-010 search, read, request, spawn, and await retain distinct operations and permission checks.
-  - AGT-011 persists request identity, parent/target refs, payload digest, result/evidence, and recovery disposition without duplicate child work.
+- AGT-009 allows an agent request but not direct unmanaged process/thread creation.
+- AGT-010 search, read, request, spawn, and await retain distinct operations and permission checks.
+- AGT-011 persists request identity, parent/target refs, payload digest, result/evidence, and recovery disposition without duplicate child work.
 validation_surfaces: [thread operation contract fixtures, restart and duplicate-request fixtures]
 risk_class: agent_thread_authority_or_durability_drift
 reasoning_tier: high
@@ -134,11 +132,12 @@ context_scope: agent_requested_thread_operations
 implementation_surfaces: [Plans/orchestrator-subagent-integration.md, Plans/Shared_Integration_Runtime.md]
 node_compile_hint: {mode: agent_thread_operation_contract, create_worknodes: false, create_nodeseeds: false}
 source_lineage:
-  - "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-009"
-  - "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-010"
-  - "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-011"
-  - "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
-  - "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
-  - "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
+- "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-009"
+- "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-010"
+- "PM_Remaining_Runtime_Integration_Final_CORRECTED_2026-08-13/ACCOUNTABILITY_MATRIX.json#AGT-011"
+- "projects-refresh-20261030/pass2/PLANS-EDIT-PLAN.md#lane-c"
+- "projects-refresh-20261030/pass2/NOPROJECT-PROPOSAL.md#approved-2026-11-03"
+- "Jared, 2026-11-03: Plan mode and scheduled tasks are also available in no project. It's only planning wizard/prd builder/orchestrator that isn't."
 negative_constraints: [Do not let an agent bypass Orchestrator admission., Do not widen cross-project authority., Do not duplicate child effects on retry.]
 ```

@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L29606
+Source lines: L26794-L29651
 
-Source SHA256: `e5672b6ff50e8a865b498558df91e27315b6ba2b9a48e63cfce3e2086293d658`
+Source SHA256: `4158de76cefb0b0e91ff5931bae97f0171bfd78cfd25fad36f109c8f310ebb44`
 
 ---
 
@@ -2820,4 +2820,49 @@ preserved_exact_tokens:
 - BLOCKED
 owner_hints:
 - Plans/Planning_Ledger_System.md
+```
+
+
+### DL-473 - Auto Placement And Person-Allowed Project Computers
+
+```yaml
+plan_unit_id: DL-473
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: |-
+  Jared's decisions, verbatim (2026-11-09):
+  - Who wins: "Person's pin wins".
+  - A build's computers: "Any allowed computer. It should work similar to the way T3 does it where we have a number of parameters to give certain devices priority. Like ram, cpu or storage. We would need to talk through that priority system."
+  - Offline mid-task: "Wait, then safe retry".
+  - No-project chats: "Keep the computer you're on".
+  - Controls: "Presets + Advanced (Recommended)".
+  - Measures in Balanced: "Free CPU and memory (Recommended), Free disk space, Queued work (Recommended)".
+  - A computer in use: "Yes, count it as Less often (Recommended)".
+  - Levels: "As proposed (Recommended)".
+
+  Each Project has a default Computer and new Project work defaults to Auto. SIR-056 owns the single placement policy: must-haves gate before ranking; levels Prefer/Normal/Less often/Only when I choose it; Balanced default, Fastest and Keep my computer free presets; Everywhere weights and optional Project preset override. Tasks add only minimums, never priority. Keyboard activity or battery power demotes to Less often by default, with an off setting. Has the files already was not chosen for Balanced; it exists only as an Advanced slider with default 0. Tie-break is Project default Computer then stable execution_host_id order, unchanged by rename. Why this computer accompanies Auto → <Computer> or Chosen: <Computer> with chooser and requested/effective differences.
+
+  A person's pin binds agents unless the person lets them choose. Agents may pin one task or choose Auto only within allowed Computers; they never change Project/Everywhere defaults. PS-147/148 grants authorize the Project's current person-allowed Computers, including a Computer the person allows later, while each dispatch freezes one exact selection and rechecks authority. A new Computer/device identity still asks even in YOLO. Started work waits/resumes on its Computer; only a safe checkpoint, reconciliation and old-owner fencing permit retry elsewhere. Unstarted independent work may use Auto elsewhere. Home Server remains the records home and never automatically fails over. SRV-017 and general.interaction.no-project-default-computer remain unchanged.
+
+  The must-haves are answering/trusted identity, Project allowance, files or permission to fetch, actual-worker sign-ins/tools, task minimums and not drained. Absolute memory/disk floors in GB, running-task reservations and leased browsers/recordings/phones/exclusive GPU slots remain governor gates. Quota belongs to an account, not a Computer. Related chains, fair caps, measured file latency/health, timing-sensitive versus heavy work, OS-correct memory and durable-runner/restart risk feed existing admission and truthful explanation; none widens authority. Precise scoring calibration and governed grant/context/typed-command successors remain implementation prerequisites, not fabricated native support. Prose precedes inventory/schema/fixture companions; no governance reseal is authorized.
+gui_related: true
+gui_classification_reason: Defines visible placement choices, controls and explanations.
+depends_on: [SRV-006, SIR-056, PS-147, PS-148, SSYS-059, PJCT-012]
+unblocks: []
+acceptance_criteria:
+- "Accepted Jared quotes remain verbatim and each owner preserves the human pin, allowed-set and no-project boundaries."
+- "Owner prose and companion records do not claim native placement, grant migration or governance readiness."
+validation_surfaces: [future placement gate/ranking/pin/recovery fixtures, scripts/pm-plan-index.py]
+risk_class: placement_authority_and_duplicate_effects
+reasoning_tier: high
+context_scope: project_work_placement
+implementation_surfaces: [Plans/Decision_Log.md]
+node_compile_hint: {mode: owner_contract_only, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+- "share/puppet-master/2026-11-09-settings-feedback/BRIEF-plans-where-work-runs.md; Jared 2026-11-09"
+preserved_exact_tokens: ["Person's pin wins", "Wait, then safe retry", "Keep the computer you're on", "Presets + Advanced (Recommended)", "Why this computer"]
+negative_constraints:
+- No placement widens authority or changes the Project Home Server.
+- No native readiness or governance seal is inferred from accepted prose.
 ```

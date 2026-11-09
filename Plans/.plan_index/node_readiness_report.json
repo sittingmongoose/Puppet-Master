@@ -4,17 +4,17 @@
     "build_order_available": true,
     "build_order_blocked_node_count": 0,
     "cycle_blocker_count": 0,
-    "depends_on_edge_count": 19154,
+    "depends_on_edge_count": 19165,
     "downstream_blocked_node_count": 0,
-    "edge_count": 22367,
-    "node_count": 7526,
+    "edge_count": 22378,
+    "node_count": 7528,
     "true_cycle_component_count": 0,
     "unblocks_edge_count": 3213,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-09T17:50:57Z",
+  "generated_at_utc": "2026-11-09T20:52:19Z",
   "gui_related_units": {
-    "count": 3839,
+    "count": 3841,
     "units": [
       {
         "owner_doc": "Plans/00-plans-index.md",
@@ -12755,6 +12755,17 @@
         }
       },
       {
+        "owner_doc": "Plans/Decision_Log.md",
+        "plan_unit_id": "DL-473",
+        "source_location": {
+          "heading": "DL-473 - Auto Placement And Person-Allowed Project Computers",
+          "heading_level": 3,
+          "heading_line": 29609,
+          "line": 29611,
+          "path": "Plans/Decision_Log.md"
+        }
+      },
+      {
         "owner_doc": "Plans/Decision_Policy.md",
         "plan_unit_id": "DP-006",
         "source_location": {
@@ -13596,8 +13607,8 @@
         "source_location": {
           "heading": "EP-101 - Automated Test Binding Intake",
           "heading_level": 3,
-          "heading_line": 6264,
-          "line": 6266,
+          "heading_line": 6258,
+          "line": 6260,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -13607,8 +13618,8 @@
         "source_location": {
           "heading": "EP-110 - P0-STREAM-HISTORY-COALESCER",
           "heading_level": 3,
-          "heading_line": 6897,
-          "line": 6899,
+          "heading_line": 6891,
+          "line": 6893,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -13618,8 +13629,8 @@
         "source_location": {
           "heading": "EP-111 - P0-WEBSOCKET-TRANSPORT-POLICY",
           "heading_level": 3,
-          "heading_line": 6969,
-          "line": 6971,
+          "heading_line": 6963,
+          "line": 6965,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -13629,8 +13640,8 @@
         "source_location": {
           "heading": "EP-112 - P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS",
           "heading_level": 3,
-          "heading_line": 7042,
-          "line": 7044,
+          "heading_line": 7036,
+          "line": 7038,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -13640,8 +13651,8 @@
         "source_location": {
           "heading": "EP-129 - Collaboration Helper Message In Progress",
           "heading_level": 3,
-          "heading_line": 8872,
-          "line": 8874,
+          "heading_line": 8866,
+          "line": 8868,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -13651,8 +13662,8 @@
         "source_location": {
           "heading": "EP-236 - Runtime Recovery Command Payload Definitions (UCC-089..UCC-095)",
           "heading_level": 3,
-          "heading_line": 9147,
-          "line": 9149,
+          "heading_line": 9141,
+          "line": 9143,
           "path": "Plans/Executor_Protocol.md"
         }
       },
@@ -21571,8 +21582,8 @@
         "source_location": {
           "heading": "F3-665 - Quit While Work Runs",
           "heading_level": 3,
-          "heading_line": 49682,
-          "line": 49684,
+          "heading_line": 49685,
+          "line": 49687,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21582,8 +21593,8 @@
         "source_location": {
           "heading": "F3-666 - The Record Inspector",
           "heading_level": 3,
-          "heading_line": 49741,
-          "line": 49743,
+          "heading_line": 49744,
+          "line": 49746,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21593,8 +21604,8 @@
         "source_location": {
           "heading": "F3-667 - Chat Opens From Render Pages And Loads Older",
           "heading_level": 3,
-          "heading_line": 49798,
-          "line": 49800,
+          "heading_line": 49801,
+          "line": 49803,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21604,8 +21615,8 @@
         "source_location": {
           "heading": "F3-668 - Split Projects Library And Project Details",
           "heading_level": 3,
-          "heading_line": 49854,
-          "line": 49856,
+          "heading_line": 49857,
+          "line": 49859,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21615,8 +21626,8 @@
         "source_location": {
           "heading": "F3-669 - One New Project Guided Surface",
           "heading_level": 3,
-          "heading_line": 49916,
-          "line": 49918,
+          "heading_line": 49923,
+          "line": 49925,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21626,8 +21637,8 @@
         "source_location": {
           "heading": "F3-670 - Settings Levels Rows Details And Managers",
           "heading_level": 3,
-          "heading_line": 49998,
-          "line": 50000,
+          "heading_line": 50005,
+          "line": 50007,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21637,8 +21648,8 @@
         "source_location": {
           "heading": "F3-671 - No Project Chat Coverage Conversion And Undo",
           "heading_level": 3,
-          "heading_line": 50081,
-          "line": 50083,
+          "heading_line": 50088,
+          "line": 50090,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21648,8 +21659,8 @@
         "source_location": {
           "heading": "F3-672 - Application Goal Crew Activity And Shared Work",
           "heading_level": 3,
-          "heading_line": 50177,
-          "line": 50179,
+          "heading_line": 50184,
+          "line": 50186,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21659,8 +21670,8 @@
         "source_location": {
           "heading": "F3-673 - Build Grant Review Targets Stop And Undo",
           "heading_level": 3,
-          "heading_line": 50244,
-          "line": 50246,
+          "heading_line": 50251,
+          "line": 50253,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21670,8 +21681,8 @@
         "source_location": {
           "heading": "F3-674 - App Plan Deep Plan Scheduled Tasks And Pause",
           "heading_level": 3,
-          "heading_line": 50308,
-          "line": 50310,
+          "heading_line": 50315,
+          "line": 50317,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21681,8 +21692,8 @@
         "source_location": {
           "heading": "F3-716 - Search Command Payload Definitions",
           "heading_level": 3,
-          "heading_line": 50378,
-          "line": 50380,
+          "heading_line": 50385,
+          "line": 50387,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21692,8 +21703,8 @@
         "source_location": {
           "heading": "F3-717 - Notifications And Sounds Command Payload Definitions",
           "heading_level": 3,
-          "heading_line": 50944,
-          "line": 50946,
+          "heading_line": 50951,
+          "line": 50953,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -21703,8 +21714,8 @@
         "source_location": {
           "heading": "F3-718 - Teacher Guided GUI Command Payload Definitions",
           "heading_level": 3,
-          "heading_line": 51638,
-          "line": 51640,
+          "heading_line": 51645,
+          "line": 51647,
           "path": "Plans/FinalGUISpec.md"
         }
       },
@@ -28864,8 +28875,8 @@
         "source_location": {
           "heading": "Working Notebook Scopes Addendum (2026-09-05)",
           "heading_level": 2,
-          "heading_line": 31900,
-          "line": 31936,
+          "heading_line": 31899,
+          "line": 31935,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -28875,8 +28886,8 @@
         "source_location": {
           "heading": "OSI-439 - Application Thread Requests And Receiver Authority",
           "heading_level": 3,
-          "heading_line": 31966,
-          "line": 31968,
+          "heading_line": 31965,
+          "line": 31967,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -28886,8 +28897,8 @@
         "source_location": {
           "heading": "OSI-440 - Application Crew Coordination And Root Identity",
           "heading_level": 3,
-          "heading_line": 32035,
-          "line": 32037,
+          "heading_line": 32034,
+          "line": 32036,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -28897,8 +28908,8 @@
         "source_location": {
           "heading": "OSI-441 - Project Build Grant Consumption And Child Ceiling",
           "heading_level": 3,
-          "heading_line": 32106,
-          "line": 32108,
+          "heading_line": 32105,
+          "line": 32107,
           "path": "Plans/orchestrator-subagent-integration.md"
         }
       },
@@ -33099,8 +33110,8 @@
         "source_location": {
           "heading": "SIR-027 - Installation Ownership Extension Commands",
           "heading_level": 3,
-          "heading_line": 1520,
-          "line": 1522,
+          "heading_line": 1516,
+          "line": 1518,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -33110,8 +33121,8 @@
         "source_location": {
           "heading": "SIR-028 - Local Action And Compatibility Normalization Boundary",
           "heading_level": 3,
-          "heading_line": 1549,
-          "line": 1551,
+          "heading_line": 1545,
+          "line": 1547,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -33121,8 +33132,8 @@
         "source_location": {
           "heading": "SIR-029 - Shared Connection Sole Future Handlers",
           "heading_level": 3,
-          "heading_line": 1582,
-          "line": 1584,
+          "heading_line": 1578,
+          "line": 1580,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -33132,8 +33143,8 @@
         "source_location": {
           "heading": "SIR-030 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 1624,
-          "line": 1626,
+          "heading_line": 1620,
+          "line": 1622,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -33143,8 +33154,8 @@
         "source_location": {
           "heading": "SIR-031 - DRY Expansion Compatibility And Local-Action Materialization",
           "heading_level": 3,
-          "heading_line": 1675,
-          "line": 1677,
+          "heading_line": 1671,
+          "line": 1673,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -33154,8 +33165,8 @@
         "source_location": {
           "heading": "SIR-032 - Post-Integration Shared Consumer Boundary",
           "heading_level": 3,
-          "heading_line": 1784,
-          "line": 1786,
+          "heading_line": 1780,
+          "line": 1782,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -33165,8 +33176,8 @@
         "source_location": {
           "heading": "SIR-034 - Backup Shared Primitives And Common External-Effect Envelope",
           "heading_level": 3,
-          "heading_line": 1889,
-          "line": 1891,
+          "heading_line": 1885,
+          "line": 1887,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -33176,8 +33187,8 @@
         "source_location": {
           "heading": "SIR-035 - ConnectionDraft Lifecycle And ACT-148..153 Reconciliation",
           "heading_level": 3,
-          "heading_line": 1956,
-          "line": 1958,
+          "heading_line": 1952,
+          "line": 1954,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -33187,8 +33198,8 @@
         "source_location": {
           "heading": "SIR-040 - Staged Native Startup And Selected-Surface Hydration",
           "heading_level": 3,
-          "heading_line": 2199,
-          "line": 2201,
+          "heading_line": 2195,
+          "line": 2197,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -33198,8 +33209,19 @@
         "source_location": {
           "heading": "SIR-041 - Hot Warm Cold Residency And Bounded Representations",
           "heading_level": 3,
-          "heading_line": 2230,
-          "line": 2232,
+          "heading_line": 2226,
+          "line": 2228,
+          "path": "Plans/Shared_Integration_Runtime.md"
+        }
+      },
+      {
+        "owner_doc": "Plans/Shared_Integration_Runtime.md",
+        "plan_unit_id": "SIR-056",
+        "source_location": {
+          "heading": "SIR-056 - Where Work Runs: Auto, Pins And Safe Reassignment",
+          "heading_level": 3,
+          "heading_line": 3293,
+          "line": 3295,
           "path": "Plans/Shared_Integration_Runtime.md"
         }
       },
@@ -35838,8 +35860,8 @@
         "source_location": {
           "heading": "SRV-007 - Durable Commands, Currentness, And Bounded Client Projection",
           "heading_level": 3,
-          "heading_line": 411,
-          "line": 413,
+          "heading_line": 407,
+          "line": 409,
           "path": "Plans/Server_System.md"
         }
       },
@@ -35849,8 +35871,8 @@
         "source_location": {
           "heading": "SRV-008 - Canonical Server Commands And UI Projections",
           "heading_level": 3,
-          "heading_line": 470,
-          "line": 472,
+          "heading_line": 466,
+          "line": 468,
           "path": "Plans/Server_System.md"
         }
       },
@@ -35860,8 +35882,8 @@
         "source_location": {
           "heading": "SRV-009 - Catalog Migration And Crash-Safe Convergence",
           "heading_level": 3,
-          "heading_line": 520,
-          "line": 522,
+          "heading_line": 516,
+          "line": 518,
           "path": "Plans/Server_System.md"
         }
       },
@@ -35871,8 +35893,8 @@
         "source_location": {
           "heading": "SRV-010 - Server Acceptance And Proof Boundary",
           "heading_level": 3,
-          "heading_line": 556,
-          "line": 558,
+          "heading_line": 552,
+          "line": 554,
           "path": "Plans/Server_System.md"
         }
       },
@@ -35882,8 +35904,8 @@
         "source_location": {
           "heading": "SRV-011 - Trusted Client Management Command Closure",
           "heading_level": 3,
-          "heading_line": 1170,
-          "line": 1172,
+          "heading_line": 1166,
+          "line": 1168,
           "path": "Plans/Server_System.md"
         }
       },
@@ -35893,8 +35915,8 @@
         "source_location": {
           "heading": "SRV-012 - Central Sole Future Handler Bindings",
           "heading_level": 3,
-          "heading_line": 1242,
-          "line": 1244,
+          "heading_line": 1238,
+          "line": 1240,
           "path": "Plans/Server_System.md"
         }
       },
@@ -35904,8 +35926,8 @@
         "source_location": {
           "heading": "SRV-013 - Backup continuity and remote-endpoint provenance",
           "heading_level": 3,
-          "heading_line": 1297,
-          "line": 1299,
+          "heading_line": 1293,
+          "line": 1295,
           "path": "Plans/Server_System.md"
         }
       },
@@ -35915,8 +35937,8 @@
         "source_location": {
           "heading": "SRV-016 - Settings Home And Least-Privilege Same-Owner Following",
           "heading_level": 3,
-          "heading_line": 594,
-          "line": 596,
+          "heading_line": 590,
+          "line": 592,
           "path": "Plans/Server_System.md"
         }
       },
@@ -35926,8 +35948,8 @@
         "source_location": {
           "heading": "SRV-017 - Application Work Custody And Named Computer",
           "heading_level": 3,
-          "heading_line": 735,
-          "line": 737,
+          "heading_line": 731,
+          "line": 733,
           "path": "Plans/Server_System.md"
         }
       },
@@ -35937,8 +35959,8 @@
         "source_location": {
           "heading": "SRV-018 - Protected SSH Host Trust And Public-Key Installation",
           "heading_level": 3,
-          "heading_line": 838,
-          "line": 840,
+          "heading_line": 834,
+          "line": 836,
           "path": "Plans/Server_System.md"
         }
       },
@@ -36355,8 +36377,8 @@
         "source_location": {
           "heading": "SSYS-026 - Provider, backup, and connector owner projections",
           "heading_level": 3,
-          "heading_line": 2504,
-          "line": 2506,
+          "heading_line": 2454,
+          "line": 2456,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36366,8 +36388,8 @@
         "source_location": {
           "heading": "SSYS-027 - Assistant Redesign Settings Managers And Ownership Split",
           "heading_level": 3,
-          "heading_line": 2760,
-          "line": 2762,
+          "heading_line": 2710,
+          "line": 2712,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36377,8 +36399,8 @@
         "source_location": {
           "heading": "SSYS-028 - Assistant Redesign Setting Registration And Packet Spelling Reconciliation",
           "heading_level": 3,
-          "heading_line": 2808,
-          "line": 2810,
+          "heading_line": 2758,
+          "line": 2760,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36388,8 +36410,8 @@
         "source_location": {
           "heading": "Working Notebook Settings Addendum (2026-09-05)",
           "heading_level": 2,
-          "heading_line": 2946,
-          "line": 2950,
+          "heading_line": 2896,
+          "line": 2900,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36399,8 +36421,8 @@
         "source_location": {
           "heading": "22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)",
           "heading_level": 3,
-          "heading_line": 3038,
-          "line": 3116,
+          "heading_line": 2988,
+          "line": 3066,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36410,8 +36432,8 @@
         "source_location": {
           "heading": "22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)",
           "heading_level": 3,
-          "heading_line": 3038,
-          "line": 3163,
+          "heading_line": 2988,
+          "line": 3113,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36421,8 +36443,8 @@
         "source_location": {
           "heading": "22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)",
           "heading_level": 3,
-          "heading_line": 3038,
-          "line": 3208,
+          "heading_line": 2988,
+          "line": 3158,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36432,8 +36454,8 @@
         "source_location": {
           "heading": "22. Settings Manager Layout Principles Across All 38 Managers (APR-062, APR-064, APR-065)",
           "heading_level": 3,
-          "heading_line": 3038,
-          "line": 3260,
+          "heading_line": 2988,
+          "line": 3210,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36443,8 +36465,8 @@
         "source_location": {
           "heading": "SSYS-034 - Terminal Capability Remote Setup And Launch Provenance Projection",
           "heading_level": 3,
-          "heading_line": 3340,
-          "line": 3342,
+          "heading_line": 3290,
+          "line": 3292,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36454,8 +36476,8 @@
         "source_location": {
           "heading": "SSYS-034 - Terminal Capability Remote Setup And Launch Provenance Projection",
           "heading_level": 3,
-          "heading_line": 3340,
-          "line": 3427,
+          "heading_line": 3290,
+          "line": 3377,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36465,8 +36487,8 @@
         "source_location": {
           "heading": "SSYS-036 - Settings Transfer To An Uncreated Project Draft",
           "heading_level": 3,
-          "heading_line": 3490,
-          "line": 3492,
+          "heading_line": 3440,
+          "line": 3442,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36476,8 +36498,8 @@
         "source_location": {
           "heading": "SSYS-037 - External Research Limit Values",
           "heading_level": 3,
-          "heading_line": 3568,
-          "line": 3572,
+          "heading_line": 3518,
+          "line": 3522,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36487,8 +36509,8 @@
         "source_location": {
           "heading": "SSYS-038 - Commands Manager Layout And Palette Preferences",
           "heading_level": 3,
-          "heading_line": 3630,
-          "line": 3632,
+          "heading_line": 3580,
+          "line": 3582,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36498,8 +36520,8 @@
         "source_location": {
           "heading": "SSYS-039 - Chat Sound On By Default And Queue As The Busy Send Default",
           "heading_level": 3,
-          "heading_line": 3678,
-          "line": 3680,
+          "heading_line": 3628,
+          "line": 3630,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36509,8 +36531,8 @@
         "source_location": {
           "heading": "10. Guided set-ups, profiles, keys and transfer (2026-09-28)",
           "heading_level": 3,
-          "heading_line": 3895,
-          "line": 3944,
+          "heading_line": 3845,
+          "line": 3894,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36520,8 +36542,8 @@
         "source_location": {
           "heading": "10. Guided set-ups, profiles, keys and transfer (2026-09-28)",
           "heading_level": 3,
-          "heading_line": 3895,
-          "line": 4014,
+          "heading_line": 3845,
+          "line": 3964,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36531,8 +36553,8 @@
         "source_location": {
           "heading": "10. Guided set-ups, profiles, keys and transfer (2026-09-28)",
           "heading_level": 3,
-          "heading_line": 3895,
-          "line": 4072,
+          "heading_line": 3845,
+          "line": 4022,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36542,8 +36564,8 @@
         "source_location": {
           "heading": "SSYS-043 - NieR Theme Family, Adjust Parts, Background And Load Migration",
           "heading_level": 3,
-          "heading_line": 4170,
-          "line": 4172,
+          "heading_line": 4120,
+          "line": 4122,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36553,8 +36575,8 @@
         "source_location": {
           "heading": "SSYS-044 - Settings Controls Hosted Outside Settings",
           "heading_level": 3,
-          "heading_line": 4300,
-          "line": 4302,
+          "heading_line": 4250,
+          "line": 4252,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36564,8 +36586,8 @@
         "source_location": {
           "heading": "SSYS-050 - Panels, Tabs, Editor And Chat Column Rows, And The Rows The Redesign Retires",
           "heading_level": 3,
-          "heading_line": 4598,
-          "line": 4600,
+          "heading_line": 4548,
+          "line": 4550,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36575,8 +36597,8 @@
         "source_location": {
           "heading": "SSYS-051 - Terminal Look Rows On The One Appearance Model",
           "heading_level": 3,
-          "heading_line": 4779,
-          "line": 4781,
+          "heading_line": 4729,
+          "line": 4731,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36586,8 +36608,8 @@
         "source_location": {
           "heading": "SSYS-052 - Editor Look Rows And Shared Customize Entry",
           "heading_level": 3,
-          "heading_line": 5000,
-          "line": 5002,
+          "heading_line": 4950,
+          "line": 4952,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36597,8 +36619,8 @@
         "source_location": {
           "heading": "SSYS-053 - Settings Preserves The Reader And Opens Chapters At The Top",
           "heading_level": 3,
-          "heading_line": 5081,
-          "line": 5083,
+          "heading_line": 5031,
+          "line": 5033,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36608,8 +36630,8 @@
         "source_location": {
           "heading": "SSYS-054 - Wallpaper Setting And Replacement Of Old Glass Backgrounds",
           "heading_level": 3,
-          "heading_line": 5184,
-          "line": 5186,
+          "heading_line": 5134,
+          "line": 5136,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36619,8 +36641,8 @@
         "source_location": {
           "heading": "SSYS-055 - Chat Preferences In The Hosted Surface",
           "heading_level": 3,
-          "heading_line": 5277,
-          "line": 5279,
+          "heading_line": 5227,
+          "line": 5229,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36630,8 +36652,8 @@
         "source_location": {
           "heading": "SSYS-056 - Pip Parts And One Editor",
           "heading_level": 3,
-          "heading_line": 5403,
-          "line": 5405,
+          "heading_line": 5353,
+          "line": 5355,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36641,8 +36663,8 @@
         "source_location": {
           "heading": "SSYS-057 - Status Bar Numbers Or Words",
           "heading_level": 3,
-          "heading_line": 5526,
-          "line": 5528,
+          "heading_line": 5476,
+          "line": 5478,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36652,8 +36674,8 @@
         "source_location": {
           "heading": "SSYS-058 - Storage Health, Free Up Space And Backup Status In Settings",
           "heading_level": 3,
-          "heading_line": 5594,
-          "line": 5596,
+          "heading_line": 5544,
+          "line": 5546,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36674,8 +36696,8 @@
         "source_location": {
           "heading": "SSYS-060 - Single Writers, Following Copies, Join And History",
           "heading_level": 3,
-          "heading_line": 1697,
-          "line": 1699,
+          "heading_line": 1647,
+          "line": 1649,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36685,8 +36707,8 @@
         "source_location": {
           "heading": "SSYS-061 - Manager Home, Reach, Project Switches And Whole Versions",
           "heading_level": 3,
-          "heading_line": 1810,
-          "line": 1812,
+          "heading_line": 1760,
+          "line": 1762,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36696,8 +36718,8 @@
         "source_location": {
           "heading": "SSYS-062 - Detached Layered Copy And Destination Account Readiness",
           "heading_level": 3,
-          "heading_line": 1896,
-          "line": 1898,
+          "heading_line": 1846,
+          "line": 1848,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36707,8 +36729,8 @@
         "source_location": {
           "heading": "SSYS-063 - Changed, Origin Details, Targeted Edits And Undo",
           "heading_level": 3,
-          "heading_line": 2012,
-          "line": 2014,
+          "heading_line": 1962,
+          "line": 1964,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36718,8 +36740,8 @@
         "source_location": {
           "heading": "SSYS-065 - Agent Targets, Limited Devices, Onboarding And Updated Defaults",
           "heading_level": 3,
-          "heading_line": 2205,
-          "line": 2207,
+          "heading_line": 2155,
+          "line": 2157,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -36729,8 +36751,8 @@
         "source_location": {
           "heading": "SSYS-076 - Settings Route Command Payload Definitions",
           "heading_level": 3,
-          "heading_line": 5656,
-          "line": 5658,
+          "heading_line": 5606,
+          "line": 5608,
           "path": "Plans/Settings_System.md"
         }
       },
@@ -42253,10 +42275,10 @@
   "no_final_node_queues_created": true,
   "no_worknodes_created": true,
   "nodeseed_candidates_created": false,
-  "plan_unit_count": 7526,
+  "plan_unit_count": 7528,
   "risk_and_reasoning_summary": {
     "reasoning_tier_counts": {
-      "high": 2843,
+      "high": 2845,
       "low": 9,
       "medium": 34,
       "standard": 4640
@@ -44689,6 +44711,7 @@
       "phase_inspector_completion_gate": 1,
       "picker_selection_requested_override": 1,
       "pipeline_mutation_or_progress_misrepresentation": 1,
+      "placement_authority_and_duplicate_effects": 2,
       "plan_card_layout_drift": 3,
       "plan_compile_execution_scope_blur": 1,
       "plan_crew_alignment": 1,
@@ -46411,7 +46434,7 @@
     "source_preserving_unit_count": 0,
     "source_preserving_units": [],
     "status_counts": {
-      "accepted": 7307,
+      "accepted": 7309,
       "retired": 196,
       "superseded": 23
     },
@@ -46444,7 +46467,7 @@
       "contract": 5,
       "contract_requirement": 3,
       "data_contract": 8,
-      "decision": 244,
+      "decision": 245,
       "decision_record": 24,
       "deferred_enhancement": 8,
       "delta_contract": 1,
@@ -46481,7 +46504,7 @@
       "recovery_requirement": 4,
       "reference": 5,
       "reference_formula": 1,
-      "requirement": 5624,
+      "requirement": 5625,
       "retirement_record": 3,
       "risk": 2,
       "runtime_contract": 22,
@@ -46590,7 +46613,7 @@
       {
         "actual": "e28b0932c2d8936cabe844b9a025a7e0e9ab81eaa6cb4990ed97d38baccb17c8",
         "error": "pnc019_source_hash_stale",
-        "expected": "0b05561f1eb83bf6b273023ae1ca8d3237cbaa391f7182dcb36ea7e21539ad2a",
+        "expected": "8c2019ea0a0c658e9129cd91e0f5da6fb4b2c44ac43518735a72ac1a1008e7c5",
         "source_path": "Plans/Executor_Protocol.md"
       },
       {
@@ -46620,7 +46643,7 @@
       {
         "actual": null,
         "error": "pnc019_source_hash_stale",
-        "expected": "46e75f100641b783c7eef86d4ad754b118f794fcb5c2a73d042fb27320404eb8",
+        "expected": "3a6a2cf0eedd00503cc4cd5139e545973cf477bf2eae7bd2c1a9ae583e150b68",
         "source_path": "Plans/Wiring_Matrix.production.json"
       },
       {
@@ -46648,214 +46671,12 @@
         "source_path": "scripts/pm_pnc019_currentness.py"
       },
       {
-        "actual": null,
-        "error": "pnc019_source_hash_stale",
-        "expected": "aa8aaa943e27ffc9be79cc62049dbc4bc36ccd2b3955891b8ecfa9b1b5f6230d",
+        "error": "pnc019_source_hash_path_missing",
         "source_path": "Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json"
       },
       {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/00-plans-index.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Commands_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Containers_Registry_and_Unraid.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Contracts_V0.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Crosswalk.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/DRY_Rules.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Decision_Log.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Decision_Policy.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Executor_Protocol.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/FinalGUISpec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Goal_Runtime_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Media_Generation_and_Capabilities.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Orchestrator_Page.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/PRD_Builder.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Plan_Document_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Plan_To_Node_Compilation.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Planning_Ledger_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Planning_Wizard.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Progression_Gates.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Project_Output_Artifacts.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Run_Modes.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Runtime_Artifacts_Panel.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Section15_MVP_Promoted_Features_Spec.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Settings_System.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/UI_Command_Catalog.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.production.exclusions.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/Wiring_Matrix.production.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/WorktreeGitImprovement.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/assistant-chat-design.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/assistant-memory-subsystem.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/chain-wizard-flexibility.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/interview-subagent-integration.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/current.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/current.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/ledgers/v2/pldg-20260630-001-feature-intake/state/handoff.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/orchestrator-subagent-integration.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/pm7_canon.fixtures.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/prd_planning_runtime_contracts.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/prd_planning_runtime_contracts.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/product_onboarding_contract_fixtures.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/product_onboarding_contracts.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/projects_refresh_command_bindings.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/settings_inventory.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/settings_inventory.schema.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/sharding_config.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage-plan.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/storage_value_registry.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/touch_closure.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/touch_closure_action_sources.json"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/usage-feature.md"
+        "detail": "[Errno 2] No such file or directory: 'Plans/.audits/event-authority-2026-08-13-currentness/VALIDATOR_RECEIPT.json'",
+        "error": "event_authority_currentness_audit_unavailable"
       },
       {
         "bulk_registration_allowed": false,
