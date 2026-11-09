@@ -4,7 +4,8 @@
 // confirmation ring. QA-4 trade: entering props may pass behind a settled bubble (lead ruling 18:40Z): a prop coming in or
 // leaving may be under the box only while the bubble does not move (its placement, read per frame as in pip-bubble-clear,
 // within 1 px) and only until it rests or is gone; a resting prop under the box always fails, and during any entry the
-// bubble must not move, covered or not. It fails on:
+// bubble must not move within each line, covered or not. A new line may grow around the same bottom/tail anchor;
+// if its new size cannot fit at that anchor it must take its new placement on its first frame. It fails on:
 //  - NieR Light and Dark at 740x768 (the banner: NieR's box at the top over the props' column): a prop under the box or
 //    its PIP tab while Safe's Add one is hovered and left, Add one is pressed and Back is pressed, Safe with an online copy
 //    settles (the cloud), and Creating lowers its blocks (each went down behind the tab and the box), with three blocks
@@ -32,7 +33,7 @@ const want = (t, g) => !t.args.only || t.args.only.split(',').includes(g);
 // rig's render included) and the frame's layout, just before paint: a ResizeObserver on a 1 px element whose width an
 // animation frame toggles (a plain animation-frame read can see a state the rig rewrites before the frame is painted)
 function sampler() {
-	const S0 = window.__sk = { frames: 0, hits: [], rings: 0, ringOut: [], leaving: 0, blocks: 0, covered: 0, eps: new Map() };
+	const S0 = window.__sk = { frames: 0, hits: [], rings: 0, ringOut: [], leaving: 0, blocks: 0, covered: 0, eps: new Map(), anchors: new Map(), lines: new Map() };
 	const R = (e) => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom]; };
 	const meet = (a, b) => a[0] < b[2] - 0.5 && a[2] > b[0] + 0.5 && a[1] < b[3] - 0.5 && a[3] > b[1] + 0.5;
 	// QA-4 trade: entering props may pass behind a settled bubble (lead ruling 18:40Z). The bubble's placement at the
@@ -52,7 +53,7 @@ function sampler() {
 		if (ep.out) { if (ep.covered) S0.hits.push(`${ep.screen}: bubble moved ${stillSpan(ep).toFixed(1)} px while leaving ${ep.kind} passed behind it (${ep.covered} covered frame(s))`); }
 		else S0.hits.push(`${ep.screen}: bubble moved ${stillSpan(ep).toFixed(1)} px during ${ep.kind}'s entry (${ep.rels.length} frames${ep.covered ? `, ${ep.covered} covered` : ''})`);
 	};
-	S0.finish = () => { for (const ep of S0.eps.values()) finishEp(ep); S0.eps.clear(); };
+	S0.finish = () => { for (const ep of S0.eps.values()) finishEp(ep); S0.eps.clear(); for (const ep of S0.lines.values()) if (ep.rels.length > 1 && stillSpan(ep) > 1) S0.hits.push(`${ep.screen}: line '${ep.text.slice(0, 32)}' first placement strayed ${stillSpan(ep).toFixed(2)} px`); };
 	S0.finishOne = (key) => { const ep = S0.eps.get(key); if (ep) { finishEp(ep); S0.eps.delete(key); } };
 	const tick = () => {
 		if (!window.__sk) return;
@@ -72,12 +73,36 @@ function sampler() {
 			const relNow = nier ? R(b).slice(0, 2) : (st2 && st2.__relAtPlace) || null;
 			const trNow = nier ? R(b).slice(0, 2) : m2 ? [+m2[1], +m2[2]] : null;
 			const seen = new Set();
+			if (!nier && st2 && relNow && trNow && boxes.length && st2.H) {
+				const text = (b.textContent || '').trim(), tall = st2.layoutName === 'portrait', bw = b.offsetWidth, bh = b.offsetHeight;
+				const sp = st2.toScreen(st2.headXf(tall ? [44, 30] : [58, 44], st2.H, st2.ang, 1, 1));
+				const anchor = tall ? [relNow[0] + bw * .3, relNow[1] + bh] : [relNow[0], relNow[1] + bh / 2];
+				const prev = S.lastScreen === screen ? S.anchors.get(screen) : null;
+				const entering = [...st2.props.values()].some(p => p.state !== 'out' && !p.settled && p.op > .05);
+				if (entering && prev && prev.text !== text) {
+					const x = sp[0] + prev.anchor[0] - (tall ? bw * .3 : 0), y = sp[1] + prev.anchor[1] - (tall ? bh : bh / 2);
+					const v = st2.vis, lo = v && st2.toScreen([v.x0,v.y0]), hi = v && st2.toScreen([v.x1,v.y1]);
+					const pad = st2.tube ? 14 : 8, top = st2.tube ? (tall ? 44 : 34) : 8;
+					const foot = st2.tube === 'teletype' ? (tall ? 70 : 48) : st2.tube ? (tall ? 44 : 34) : 8;
+					const candidate = [x,y,x+bw,y+bh];
+					const obs = [...st2.props.values()].filter(p => p.state !== 'out' && p.restBox).map(p => { const a=st2.toScreen(p.restBox.slice(0,2)), z=st2.toScreen(p.restBox.slice(2)); return [a[0]-6,a[1]-6,z[0]+6,z[1]+6]; });
+					const bar = st2.barBox(6); if(bar) obs.push(bar);
+					const canFit = lo && x >= Math.max(pad,lo[0]+pad)-.5 && x+bw <= Math.min(st2.box.width-pad,hi[0]-pad)+.5 && y >= Math.max(top,lo[1]+4)-.5 && y+bh <= Math.min(st2.box.height-foot,hi[1]-4)+.5 && !obs.some(o=>meet(candidate,o));
+					const drift = Math.max(...anchor.map((v,i)=>Math.abs(v-prev.anchor[i])));
+					if(canFit && drift > 1) S.hits.push(`${screen}: new line moved its bottom/tail anchor ${drift.toFixed(2)} px during entry although its new size fits`);
+				}
+				S.anchors.set(screen,{text,anchor}); S.lastScreen = screen;
+				const lk = `${screen}|${text}|${bw}|${bh}`;
+				if(S.lineKey !== lk) { S.lineKey=lk; S.lineN=(S.lineN||0)+1; S.lines.set(S.lineN,{screen,text,rels:[],trs:[]}); }
+				const line=S.lines.get(S.lineN);line.rels.push(relNow);line.trs.push(trNow);
+			}
 			if (st2 && st2.props) st2.props.forEach((pr, id) => {
 				if (!pr.el || !pr.el.isConnected || !(pr.op > 0.05)) return;
 				const pb = R(pr.el); if (pb[2] - pb[0] < 1) return;
 				const kind = (pr.spec && pr.spec.kind) || pr.el.dataset.kind;
 				if (kind === 'block') S.blocks++;
-				const out = pr.state === 'out', key = `${id}|${out ? 'out' : 'in'}`;
+				const text = (b.textContent || '').trim();
+				const out = pr.state === 'out', key = `${id}|${screen}|${text}|${out ? 'out' : 'in'}`;
 				seen.add(key);
 				let ep = S.eps.get(key);
 				if (!ep) { ep = { kind, out, screen, covered: 0, settledSeen: false, rels: [], trs: [] }; S.eps.set(key, ep); }
