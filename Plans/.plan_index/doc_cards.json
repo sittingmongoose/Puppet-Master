@@ -1498,7 +1498,7 @@
         "worktree_storage",
         "wrong_chat_owner_or_unproved_dispatch"
       ],
-      "sha256": "69e4ade06eb440b1ab6f595705e816ff21a3ddbba5f2134e40d85638e0519d57",
+      "sha256": "fc541856ac1e58fdca30bafaf804ba4990b4b2a6af6bc74c770e2ba3f62d93d4",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 496,
@@ -5330,7 +5330,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "0eb9a063040630bd50ca8155073047eef8e554d81b8b6c2eac39daa2f002b6d3",
+      "sha256": "fe7a639f1b25a209da1399a912146cf23d316ada8b75e15aa6433df957b0738f",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 360,
@@ -5913,7 +5913,7 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 29309,
+      "line_count": 29311,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 335,
       "plan_unit_ids": [
@@ -6439,7 +6439,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "bf6df6ba16a4435212187306c009ea6539e4925b44d957405d3886afa8584ec0",
+      "sha256": "428d65ed14f7fbc11e1e6e90f347c6c5b619fb4f7e71cbb7a981012a88c14899",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 335
@@ -21742,7 +21742,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-09T02:09:18Z",
+  "generated_at_utc": "2026-11-09T02:21:06Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

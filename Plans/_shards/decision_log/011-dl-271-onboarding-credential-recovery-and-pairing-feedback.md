@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L29309
+Source lines: L26794-L29311
 
-Source SHA256: `bf6df6ba16a4435212187306c009ea6539e4925b44d957405d3886afa8584ec0`
+Source SHA256: `428d65ed14f7fbc11e1e6e90f347c6c5b619fb4f7e71cbb7a981012a88c14899`
 
 ---
 
@@ -2472,7 +2472,9 @@ canonical_text: 'DL-472 records Jared''s owner decision of 2026-11-08, relayed b
   requirements-quality event ContractRef and CV-099 exact-token mirror name ACD §26. Crosswalk §3.15 owner and ContractRef,
   §3.16''s TargetedRevisionPass ContractRef, and C-035 implementation surfaces and owner hints name PRD_Builder
   PRDB-014 (document-level surfaces name PRD_Builder). Planning_Wizard references PRDB-014 at its targeted-revision
-  use.
+  use. ACD §8.7''s targeted-revision ContractRef, ACD-049''s implementation surfaces and owner hints, and the
+  Contracts_V0 runtime event catalog''s targeted-revision owner sentence name PRD_Builder PRDB-014 in place of the
+  retired document.
 
 
   No rule changed; redesign is out of scope. Changes to moved prose are section numbers and cross-references only,

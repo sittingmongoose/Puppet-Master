@@ -4,7 +4,7 @@ Source: `Plans/assistant-chat-design.md`
 
 Source lines: L3807-L22965
 
-Source SHA256: `69e4ade06eb440b1ab6f595705e816ff21a3ddbba5f2134e40d85638e0519d57`
+Source SHA256: `fc541856ac1e58fdca30bafaf804ba4990b4b2a6af6bc74c770e2ba3f62d93d4`
 
 ---
 
@@ -2373,7 +2373,7 @@ reasoning_tier: high
 context_scope: deep_plan_review
 implementation_surfaces:
   - Plans/assistant-chat-design.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
 node_compile_hint:
   mode: targeted_revision_lifecycle
@@ -2389,7 +2389,7 @@ negative_constraints:
   - "targeted revision MUST NOT auto-run Multi-Pass Review"
 owner_hints:
   - Plans/assistant-chat-design.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
 ```
 
 ### ACD-050 - Annotation Reanchor And Recovery

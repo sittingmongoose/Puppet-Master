@@ -878,7 +878,7 @@ Deep Plan targeted revision rules:
 - conflicting or stale mutating annotations are excluded from automatic revision until the user resolves them
 - requested/effective revision capability remains visible when a requested structured-revision path degrades to validated local output or `chat_handoff_only`
 
-ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md
+ContractRef: ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md
 
 Deep Plan annotation-handling rules:
 - preserve the annotation lifecycle `open -> addressed -> resolved`
@@ -6169,7 +6169,7 @@ reasoning_tier: high
 context_scope: deep_plan_review
 implementation_surfaces:
   - Plans/assistant-chat-design.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
 node_compile_hint:
   mode: targeted_revision_lifecycle
@@ -6185,7 +6185,7 @@ negative_constraints:
   - "targeted revision MUST NOT auto-run Multi-Pass Review"
 owner_hints:
   - Plans/assistant-chat-design.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
 ```
 
 ### ACD-050 - Annotation Reanchor And Recovery

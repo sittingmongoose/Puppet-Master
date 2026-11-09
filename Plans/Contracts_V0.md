@@ -964,7 +964,7 @@ Every persisted event family has exactly one registered scope_policy: applicatio
 
 Gate event payloads reference the `Plans/Executor_Protocol.md` dispatch score tuple when they expose `score?` or `score_threshold?`; `Plans/Progression_Gates.md` remains the semantic owner for gate evaluation rules.
 
-Payload detail remains with the producer docs for these registered families: `Plans/LSPSupport.md` owns LSP lifecycle states, `Plans/newtools.md` and `Plans/orchestrator-subagent-integration.md` own platform capability evaluation, `Plans/assistant-memory-subsystem.md` owns memory gist verification and indexing, and `Plans/chain-wizard-flexibility.md` plus `Plans/assistant-chat-design.md` own annotation, selection, and targeted revision behavior.
+Payload detail remains with the producer docs for these registered families: `Plans/LSPSupport.md` owns LSP lifecycle states, `Plans/newtools.md` and `Plans/orchestrator-subagent-integration.md` own platform capability evaluation, `Plans/assistant-memory-subsystem.md` owns memory gist verification and indexing, and `Plans/PRD_Builder.md#PRDB-014` plus `Plans/assistant-chat-design.md` own annotation, selection, and targeted revision behavior.
 
 
 ### 1.1 Assistant worktree seglog events
