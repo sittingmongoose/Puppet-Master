@@ -106,6 +106,22 @@ async function inspect(t, f, tag, expected) {
   return r;
 }
 
+async function settled(f) {
+  await f.evaluate(async sel=>{
+    const stage=document.querySelector(sel);
+    if(!stage)throw new Error('activity badge missing while waiting for its entry');
+    await Promise.all(stage.getAnimations({subtree:true}).filter(a=>a.effect&&Number.isFinite(a.effect.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));
+    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  },STAGE);
+}
+
+async function reducedEntry(t,f,tag) {
+  const moving=await f.evaluate(sel=>[...document.querySelectorAll(sel+' .orbit-node-symbol')].flatMap(e=>e.getAnimations({subtree:true})
+    .filter(a=>a.playState!=='finished'&&a.effect&&Number(a.effect.getComputedTiming().duration)>1)
+    .map(a=>({name:a.animationName,duration:a.effect.getComputedTiming().duration,state:a.playState}))),STAGE);
+  await t.check(tag+': reduced outer symbols have no motion at entry',moving.length===0,JSON.stringify(moving));
+}
+
 async function ink(t, f, tag) {
   const selector = STAGE + ' .orbit-node[data-k="' + await f.evaluate(() => window.__fo120.nodeKey) + '"] .orbit-node-symbol';
   const loc = f.locator(selector);
@@ -162,8 +178,9 @@ async function structure(t, page, surface) {
       await t.emulate({reducedMotion:motion==='media'?'reduce':'no-preference',forcedColors:'none'});
       await f.evaluate(m=>{document.documentElement.dataset.motion=m==='attribute'?'reduced':'full';document.body.classList.toggle('pm56-reduced',m==='body');},motion);
       for(const s of ['working','complete','waiting','failed','paused','cancelled']) {
-        await state(f,s); await f.waitForTimeout(800);
-        const tag=`${page} ${surface} ${name} ${motion} ${s}`, r=await inspect(t,f,tag,['complete','waiting','failed'].includes(s)?s:s==='cancelled'?'skipped':null);
+        const tag=`${page} ${surface} ${name} ${motion} ${s}`;
+        await state(f,s);if(motion!=='full')await reducedEntry(t,f,tag);await settled(f);
+        const r=await inspect(t,f,tag,['complete','waiting','failed'].includes(s)?s:s==='cancelled'?'skipped':null);
         if(motion!=='full') await t.check(tag+': no running animation',r.animations.every(a=>a.state!=='running'),JSON.stringify(r.animations));
         await ink(t,f,tag);
       }
@@ -171,7 +188,10 @@ async function structure(t, page, surface) {
     await t.emulate({reducedMotion:'reduce',forcedColors:'active'});
     await f.evaluate(()=>{document.documentElement.dataset.motion='full';document.body.classList.remove('pm56-reduced');});
     await t.check(name+': forced colours active',await f.evaluate(()=>matchMedia('(forced-colors: active)').matches));
-    for(const s of ['working','complete','waiting','failed','paused','cancelled']) {await state(f,s);await inspect(t,f,`${name} forced ${s}`,['complete','waiting','failed'].includes(s)?s:s==='cancelled'?'skipped':null);await ink(t,f,`${name} forced ${s}`);}
+    for(const s of ['working','complete','waiting','failed','paused','cancelled']) {
+      const tag=`${name} forced ${s}`;await state(f,s);await reducedEntry(t,f,tag);await settled(f);
+      await inspect(t,f,tag,['complete','waiting','failed'].includes(s)?s:s==='cancelled'?'skipped':null);await ink(t,f,tag);
+    }
   }
   await t.emulate({reducedMotion:'no-preference',forcedColors:'none'});
 }
@@ -180,12 +200,15 @@ async function structure(t, page, surface) {
 async function watchClearance(f, start) {
   return f.evaluate(([sel,start])=>{
     if(!start){const w=window.__fo120.clearance;if(w)w.active=false;return w;}
-    const w=window.__fo120.clearance={active:true,frames:0,minEdge:1e6,labelOverlap:0,bad:[]};
+    const wanted=document.querySelector(sel)?.querySelector('svg')?.dataset.nx;
+    const w=window.__fo120.clearance={active:true,totalFrames:0,frames:0,missingFrames:0,changedGlyphFrames:0,minEdge:1e6,labelOverlap:0,bad:[]};
     const sample=()=>{
       if(!w.active)return;
+      w.totalFrames++;
       const e=document.querySelector(sel), n=e?.closest('.orbit-node'), label=document.querySelector('.working-card[data-card="primary"] .orbit-core strong');
       if(n&&label){
         const nr=n.getBoundingClientRect(),lr=label.getBoundingClientRect();w.frames++;
+        if(e.querySelector('svg')?.dataset.nx!==wanted)w.changedGlyphFrames++;
         for(const tube of e.querySelectorAll('.nx-c')){
           const r=tube.getBoundingClientRect();if(!r.width&&!r.height)continue;
           const edge=Math.min(r.left-nr.left,nr.right-r.right,r.top-nr.top,nr.bottom-r.bottom);
@@ -193,7 +216,7 @@ async function watchClearance(f, start) {
           if(r.left<lr.right&&r.right>lr.left&&r.top<lr.bottom&&r.bottom>lr.top)w.labelOverlap++;
           if(edge<0&&w.bad.length<5)w.bad.push({edge,part:tube.getAttribute('class')});
         }
-      }
+      }else w.missingFrames++;
       requestAnimationFrame(sample);
     };requestAnimationFrame(sample);return null;
   },[STAGE+' .orbit-node[data-k="'+await f.evaluate(()=>window.__fo120.nodeKey)+'"] .orbit-node-symbol',start]);
@@ -204,17 +227,23 @@ async function motion(t,page,surface) {
   await t.emulate({reducedMotion:'no-preference',forcedColors:'none'});
   await f.evaluate(()=>{document.documentElement.dataset.motion='full';document.body.classList.remove('pm56-reduced');});
   const interval=async(tag,s,index=6,dense=0,reduced=false)=>{
-    await t.mark(tag+' begins');const fixture=await state(f,s,index,dense);await f.waitForTimeout(900);
+    if(s==='complete'){await state(f,'working',await f.evaluate(()=>window.__fo120.savedSteps.length-1));await settled(f);}
+    await t.mark(tag+' begins');const fixture=await state(f,s,index,dense);
+    if(reduced)await reducedEntry(t,f,tag);await settled(f);
     const r=await inspect(t,f,tag,['complete','waiting','failed'].includes(s)?s:s==='cancelled'?'skipped':null);
     const loc=f.locator(STAGE+' .orbit-node[data-k="'+await f.evaluate(()=>window.__fo120.nodeKey)+'"] .orbit-node-symbol');
+    const node=loc.locator('..');
+    await f.waitForFunction(key=>{const n=document.querySelector('.working-card[data-card="primary"] .orbit-node[data-k="'+key+'"]');if(!n)return false;const r=n.getBoundingClientRect();return n.contains(document.elementFromPoint(r.x+r.width/2,r.y+r.height/2));},await f.evaluate(()=>window.__fo120.nodeKey));
+    await t.visible(node,tag+': outer tile is on screen and uncovered');
     const row={tag,fixture,...r,captureBox:await loc.boundingBox(),nativeExpectation:!reduced&&['working','waiting','failed'].includes(s)?'motion':'still'};
     if(s==='working'&&!reduced)await t.check(tag+': full inner moving anatomy retained',r.parts.length>0&&r.parts.some(p=>p.name!=='none'),JSON.stringify(r.parts));
     await watchClearance(f,true);
     await t.mark(tag+' steady');
-    if(row.nativeExpectation==='motion')await t.moving(loc,tag+': outer glyph changes on compositor frames',{ms:s==='working'?2400:2800,count:13});
-    else await t.still(loc,tag+': outer glyph stays still after entry',{ms:1200,count:7});
+    // The mandatory reader judges every native GPU-video frame after the run. Keep screenshot polling out of the
+    // film: it would add capture load and sample only a fraction of the encoded frames.
+    await f.waitForTimeout(row.nativeExpectation==='motion'?(s==='working'?2400:2800):1200);
     row.clearance=await watchClearance(f,false);
-    await t.check(tag+': moving tubes stay inside the outer tile and clear of the label',row.clearance.frames>10&&row.clearance.minEdge>=0&&row.clearance.labelOverlap===0,JSON.stringify(row.clearance));
+    await t.check(tag+': moving tubes stay inside the outer tile and clear of the label',row.clearance.frames>10&&row.clearance.missingFrames===0&&row.clearance.changedGlyphFrames===0&&row.clearance.minEdge>=0&&row.clearance.labelOverlap===0,JSON.stringify(row.clearance));
     await t.mark(tag+' ends');observations.push(row);
   };
   for(const name of list(t.args.looks,LOOKS)) {
@@ -243,7 +272,9 @@ async function compare(t) {
     await t.emulate({reducedMotion:'no-preference'});
     await f.evaluate(()=>{document.documentElement.dataset.motion='full';document.body.classList.remove('pm56-reduced');});
     for(const s of ['working','complete','waiting']) {
-      await t.mark(caption+' '+s);await state(f,s);await f.waitForTimeout(3200);
+      await t.mark(caption+' '+s);await state(f,s,s==='working'?12:6);
+      await f.evaluate(label=>{let el=document.getElementById('fo120-film-caption');if(!el){el=document.createElement('div');el.id='fo120-film-caption';Object.assign(el.style,{position:'fixed',left:'20px',top:'72px',zIndex:'2147483646',padding:'8px 12px',background:'#111',color:'#fff',font:'700 16px system-ui',borderRadius:'6px',pointerEvents:'none'});document.body.append(el);}el.textContent=label;},caption+' · '+s);
+      await f.waitForTimeout(3200);
       await t.crop(caption+'-'+s,f.locator(STAGE+' .orbit-dial'),caption+': '+s+' Pip, ring symbol, label clearance');
     }
   }
