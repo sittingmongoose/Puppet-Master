@@ -29222,3 +29222,126 @@ preserved_exact_tokens:
 owner_hints:
   - Plans/UI_Command_Catalog.md
 ```
+
+### DL-471 - Unrouted Command Coverage And Typed Notification Provider Profiles
+
+```yaml
+plan_unit_id: DL-471
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-471 implements the Q5b follow-up authorized by DL-341 resolution 5 and Jared's 2026-11-08 stream C
+  question 3 answer, quoted verbatim in owner_decisions. Nine ids were examined, including the subsequently
+  identified cmd.docker.container.stats. Seven live commands receive typed definitions in their existing
+  command_contract owners: cmd.docker.bake and cmd.docker.container.stats in CRAU-115;
+  cmd.git.worktree.merge, cmd.git.worktree.open_topology and cmd.git.worktree.repair in W-095;
+  cmd.debug.record_verification and cmd.debug.run_cleanup in CS-125. UCC-132 and UCC-142 already register
+  merge and the debug phase commands; UCC-231 makes the other four existing owner/catalog registrations
+  addressable. UCC-230's outside_range_commands is a closed concrete list with registration evidence,
+  explicit owner unit and inherited row group. Every listed id receives all ordinary definition checks,
+  including exactly-one coverage. No unlisted out-of-range id enters scope. cmd.docker.remove remains
+  question Q-ID1 because its live row, legacy-normalization rule and DL-341 open question do not choose
+  between an alias and retirement. Bare cmd.git.worktree remains Q-ID2 because its production wiring
+  names a handler but canon specifies no operation or dispatch standing. They remain unresolved_tokens,
+  with no definition or claimed alias/retirement disposition, until Jared chooses. Existing canon is kept.
+  CV-369 adds pm.typed_contracts.v1 with all thirty-five CV-298 provider fields and the six provider
+  branches, using UCC-230 field/type/default/provenance rules and reference-only secrets. The generic
+  webhook predicate is closed to default 2xx plus zero to five atoms from CV-298's six named kinds.
+  Both F3-717 profile args now name CV-369/NotificationDestinationProfileV1. Markdown contract refs
+  require Plans/<Doc>.md#<UNIT-ID>/<ContractName> that resolves to a named typed_contracts definition;
+  a bare unit ref is an error. The checker validates block placement/format, fields, defaults,
+  provenance and closed discriminator branches, not merely the existence of a PlanUnit. JSON and
+  Primitive refs retain their existing forms. Current owner units are reused; CV-369 is a schema
+  owner, not a new command owner. The two debug states phase_not_reached and preservation_hold_active
+  map to blocked_state_required as an implementer's judgment under DL-333 resolution 6, with their
+  exact owner words retained as detail. Every chosen gap is labelled JUDGMENT with its alternative.
+  This record does not answer those gaps or assert CV-298 owner approval: Jared is that owner.
+  Whole-profile replacement and immutable provider on update are recommendations Q-F2/Q-F3, not
+  Jared's answers. Repair's undefined operation remains unavailable without mutation. No new wiring,
+  handler, provider API claim, readiness acceptance or governance reseal is certified by this packet.
+owner_decisions:
+  - 'DL-341 resolution 5, pm7-build, 2026-11-07T14:03Z, verbatim: "(5) Out of this branch, but not dropped: Jared wants everything finalized, so the eight unrouted ids become a follow-up packet (Q5b) in your queue, done before the final reseal."'
+  - 'Jared, 2026-11-08, stream C question 3 (row 607), verbatim: "Define them now (Recommended)".'
+  - 'Chosen option, verbatim: "Stream C writes typed profile schemas for the six providers. Choices that canon leaves open are marked as gaps, as the Q5 definitions do, and secrets stay reference-only. C binds F3-717 to them, and a checker rule stops a bare reference from counting as a typed schema. A CV-298 owner approves."'
+command_outcomes:
+  - command_id: cmd.docker.bake
+    standing: live
+    canon: 'CRAU-011: "expose cmd.docker.build.*, cmd.docker.bake, cmd.docker.bake.*, and preview commands"; UCC reserved namespace and catalog.docker_bake production wiring.'
+    outcome: CRAU-115 definition; UCC-231 registration coverage; Q-ID3 keeps exact execution semantics open.
+  - command_id: cmd.docker.remove
+    standing: question
+    canon: 'Catalog section 2.5A: "Removes a stopped container"; later boundary: "Legacy Docker rows normalize into canonical" families and "MUST NOT introduce new payload shapes"; DL-341: "Canon names no target for this row".'
+    outcome: "Q-ID1. JUDGMENT: propose compatibility_alias to cmd.docker.container.delete; alternative: retirement. Neither disposition is applied pending Jared."
+  - command_id: cmd.docker.container.stats
+    standing: live
+    canon: 'Catalog section 2.5A: "Shows live or cached container stats with freshness markers".'
+    outcome: CRAU-115 definition and UCC-231 registration coverage; Q-ID4 records the view/result judgment.
+  - command_id: cmd.git.worktree.merge
+    standing: live
+    canon: 'UCC-132: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"; W-081: "only after exact-result approval, fresh target observation, permission admission, and FileSafe protection".'
+    outcome: W-095 definition, retaining real Project scope, exact-result approval and independent Permissions/FileSafe fences.
+  - command_id: cmd.debug.record_verification
+    standing: live
+    canon: 'CS-065: "records the verification outcome that lets an investigation leave attention_required"; UCC-142 registers the row.'
+    outcome: CS-125 definition; verification outcome/evidence shape choices remain Q-DB1/Q-DB4.
+  - command_id: cmd.debug.run_cleanup
+    standing: live
+    canon: 'CS-065: "mutation-capable and dispatches only behind confirmation class two_step"; UCC-142 registers the row.'
+    outcome: CS-125 definition; confirmation and current holds remain mandatory; Q-DB2/Q-DB3/Q-DB4 retain gaps.
+  - command_id: cmd.git.worktree.open_topology
+    standing: live
+    canon: 'GitHub_Integration Worktree Topology Commands: "Command IDs: `cmd.git.worktree.open_topology`".'
+    outcome: W-095 definition and UCC-231 registration coverage; Q-ID6 retains the independent-view versus list-alias choice.
+  - command_id: cmd.git.worktree.repair
+    standing: live
+    canon: 'GitHub_Integration Worktree Topology Commands includes "`cmd.git.worktree.repair`" and names destructive confirmation fields.'
+    outcome: W-095 definition and UCC-231 registration coverage; Q-ID7a/Q-ID7b retain the exact operation and admission choices; no mutation until admitted.
+  - command_id: cmd.git.worktree
+    standing: question
+    canon: 'Wiring_Matrix.production.json catalog.git_worktree: "ui_command_id": "cmd.git.worktree", "handler_location": "handlers::git::worktree"; no concrete operation or catalog registration precedes this packet.'
+    outcome: "Q-ID2. JUDGMENT: propose a non-dispatch family token; alternatives: a concrete topology opener, or retirement. No disposition is applied pending Jared."
+open_gap_groups:
+  - "Q-ID1/Q-ID2: the two unresolved dispatch standings; both need Jared before final closure."
+  - "Q-ID3/Q-ID4: bare Bake relation/overrides/result and stats kind/result/availability."
+  - "Q-ID5a/Q-ID5b/Q-ID5c/Q-ID5d: merge lifecycle encoding, exact-result/baseline/approval/target/protection carriers, lease shape and request/result schema."
+  - "Q-ID6/Q-ID7a/Q-ID7b: topology versus list, repair subject/confirmation shape and its still-undefined operation/result/disabled behavior."
+  - "Q-DB1/Q-DB2/Q-DB3/Q-DB4: verification record/evidence bounds, current owner-held cleanup plan, closed-state mappings and result receipts."
+  - "Q-C1: four providers' rate-limit policy refs versus inline or derived policies."
+  - "Q-S1/Q-S2/Q-S3/Q-S4: Slack credential presence, channel reference, formatting and mention policy."
+  - "Q-D1/Q-D2/Q-D3/Q-D4: Discord credential presence, sensitive thread reference, compound username/avatar policy and allowed_mentions list."
+  - "Q-G1/Q-G2/Q-G3/Q-G4/Q-G5/Q-G6/Q-G7/Q-G8/Q-G9: webhook credential presence, method, header refs, template, timeout units/bounds/default, predicate carrier, composition/default, six atom operand shapes and literal references."
+  - "Q-N1/Q-N2/Q-N3/Q-N4/Q-N5: ntfy sensitive server/topic refs, optional authentication, priority, tag bounds and click policy."
+  - "Q-P1/Q-P2/Q-P3/Q-P4/Q-P5: Pushover credential presence, sensitive device reference, priority, sound token and compound retry/expire naming/units/bounds/admission."
+  - "Q-T1/Q-T2/Q-T3/Q-T4: Telegram credential/chat refs, sensitive thread ref, formatting/escaping and disable_notification default."
+  - "Q-F1/Q-F2/Q-F3: nested profile carrier, complete replacement versus merge, and immutable provider versus provider migration."
+gui_related: false
+gui_classification_reason: Records routing, type definitions and unresolved owner choices; no new GUI behavior.
+depends_on: [DL-333, DL-341, CV-298, UCC-132, UCC-142]
+unblocks: []
+acceptance_criteria:
+  - All nine ids have a source-backed standing or explicit unresolved question; no alias/retirement is invented.
+  - The closed external list routes exactly seven live definitions and retains all existing checker rules.
+  - All six provider profiles are typed, all secrets are refs, both F3-717 profile refs are named and bare unit refs fail.
+  - Every unresolved choice remains a gap with an alternative and a plain question for Jared; no owner approval is implied.
+  - The checker and self-tests pass, including positive/negative cases and reverted-copy proofs for new rules.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, runtime handlers or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-command-payload-defs-check.py --json
+  - python3 scripts/pm-command-payload-defs-check.py --self-test
+  - python3 scripts/pm-plan-index.py validate
+risk_class: unrouted_commands_and_untyped_notification_profiles
+reasoning_tier: high
+context_scope: q5b_command_and_profile_closure
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md, Plans/Containers_Registry_and_Unraid.md, Plans/WorktreeGitImprovement.md, Plans/Commands_System.md, scripts/pm-command-payload-defs-check.py]
+node_compile_hint: {mode: owner_decision_record, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5b/BRIEF.md"
+  - "DL-341 resolution 5, pm7-build, 2026-11-07T14:03Z."
+  - "Jared, 2026-11-08, stream C question 3 (row 607): Define them now (Recommended)."
+preserved_exact_tokens: [DL-471, pm.command_payload_definitions.v1, pm.typed_contracts.v1, outside_range_commands, unresolved_tokens, cmd.docker.bake, cmd.docker.remove, cmd.docker.container.stats, cmd.git.worktree.merge, cmd.debug.record_verification, cmd.debug.run_cleanup, cmd.git.worktree.open_topology, cmd.git.worktree.repair, cmd.git.worktree, NotificationDestinationProfileV1]
+negative_constraints:
+  - Do not silently resolve a standing conflict, call a bare ref a typed schema, or present recommendations as owner answers.
+  - Do not rename or delete existing command canon, expand closed error sets, or expose raw secrets.
+owner_hints: [Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md]
+```

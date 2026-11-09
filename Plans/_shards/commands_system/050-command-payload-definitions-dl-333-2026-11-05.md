@@ -2,9 +2,9 @@
 
 Source: `Plans/Commands_System.md`
 
-Source lines: L10726-L11222
+Source lines: L10726-L11275
 
-Source SHA256: `98bc7a093040c8a090b2bd3e7b6d50dbe2b79bf2f2549dad84517eb45928891e`
+Source SHA256: `d16865499b0dd534f5c1f5d56279e8c53fc728c0191bbebd36c2a82d0f89d6d0`
 
 ---
 
@@ -25,6 +25,10 @@ canonical_text: >-
   aliases; the strict schema overlay keeps the common envelope and the closed code sets. The
   CS-009 boundary stands: cmd.debug.* remains the assistant-investigation family and classical DAP
   dispatch uses only cmd.run_debug.*, which is not defined here.
+  Amended 2026-11-09 (DL-471): cmd.debug.record_verification and cmd.debug.run_cleanup extend this
+  block through the explicit UCC-142 external routes. CS-065 and section 7.4 retain verification/evidence,
+  two-step cleanup confirmation and preservation holds; the proposed payload/result encodings and the
+  two owner-state-to-closed-code mappings remain the named Q-DB1 through Q-DB4 gaps.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible Debug Mode investigation commands (Assistant Chat, editor, evidence panel).
 depends_on: [UCC-230, UCC-077, CS-009, CS-042, DL-333, DL-341]
@@ -45,7 +49,7 @@ node_compile_hint: {mode: command_payload_definitions, create_worknodes: false, 
 source_lineage:
   - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to Q5"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
-preserved_exact_tokens: [cmd.debug.start, cmd.debug.stop, cmd.debug.pause, cmd.debug.resume, cmd.debug.add_breakpoint, cmd.debug.remove_breakpoint, cmd.debug.clear_breakpoints, cmd.debug.view_evidence, cmd.debug.step, cmd.debug.collect_snapshot]
+preserved_exact_tokens: [cmd.debug.start, cmd.debug.stop, cmd.debug.pause, cmd.debug.resume, cmd.debug.add_breakpoint, cmd.debug.remove_breakpoint, cmd.debug.clear_breakpoints, cmd.debug.view_evidence, cmd.debug.step, cmd.debug.collect_snapshot, cmd.debug.record_verification, cmd.debug.run_cleanup]
 negative_constraints:
   - Do not add payload fields to UI_Command_Catalog command rows.
   - Do not define a payload for an alias, retired, non-alias or source-lineage token; the grouped token cmd.debug.* is a family alias and never dispatches.
@@ -59,6 +63,49 @@ command_payload_definitions:
   owner_unit: CS-125
   overlay: Plans/UI_Command_Catalog.md#UCC-230
   definitions:
+    - command_id: cmd.debug.record_verification
+      ucc_units: [UCC-142]
+      command_kind: domain_action
+      response_kind: owner_operation
+      args:
+        thread_id: {type: id, required: true, default: none, provenance: canon, source: "CS-042 assistant-thread investigation family; UCC-230 debug row-group identity thread_id, always"}
+        investigation_id: {type: id, required: true, default: none, provenance: canon, source: "Contracts_V0 section 3.5 debug.investigation.verification_recorded names investigation_id; UCC-230 identity_aliases maps debug_session_id to investigation_id"}
+        verification_state: {type: enum, values: [resolved, still_failing], required: true, default: none, provenance: gap, gap_note: "Q-DB1. CS-065 requires recording resolved or still-failing outcome; the canonical Investigation Context names verification_state but gives no outcome enum here. JUDGMENT: required resolved/still_failing; alternative: record only verification_strength plus evidence and derive the state."}
+        verification_strength: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 256}, provenance: gap, gap_note: "Q-DB1. Contracts_V0 section 3.5 verification_recorded names verification_strength without this command's type/tokens. JUDGMENT: required bounded non-secret owner strength string; alternative: a closed owner strength enum."}
+        verification_summary: {type: string, required: true, default: none, constraints: {min_length: 1, max_length: 1024}, provenance: gap, gap_note: "Q-DB1. Contracts_V0 section 3.5 requires a bounded verification_summary but gives no command bound. JUDGMENT: 1..1024 characters, redacted; alternative: a summary-record ref."}
+        artifact_refs: {type: list, required: true, default: none, item: {type: ref}, constraints: {min_items: 1, max_items: 32, unique_items: true}, provenance: gap, gap_note: "Q-DB1. The verification_recorded event names optional artifact_refs; CS-065 says outcome with evidence refs without a command shape. JUDGMENT: require one to thirty-two unique evidence artifact refs at command admission; alternative: allow a verified-empty evidence receipt or an optional list."}
+      owner_request: none
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DebugVerificationResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: phase_not_reached, code: blocked_state_required}
+      aliases: []
+      judgments:
+        - {key: disabled_reason_codes, choice: [blocked_state_required, stale_projection], gap_note: "Q-DB3. UCC-142 registers phase_not_reached and stale_projection, but the first is outside the overlay's closed set. JUDGMENT: map phase_not_reached to blocked_state_required under DL-333 resolution 6, retaining the exact owner state as detail; alternative: not_configured."}
+    - command_id: cmd.debug.run_cleanup
+      ucc_units: [UCC-142]
+      command_kind: domain_action
+      response_kind: owner_operation
+      args:
+        thread_id: {type: id, required: true, default: none, provenance: canon, source: "CS-042 assistant-thread investigation family; UCC-230 debug row-group identity thread_id, always"}
+        investigation_id: {type: id, required: true, default: none, provenance: canon, source: "CS-065 cleanup acts on the current investigation; UCC-230 identity_aliases types investigation_id as the debug-session identity"}
+        confirmation_ref: {type: ref, required: true, default: none, provenance: canon, source: "CS-065 and UCC-142 require two_step confirmation for run_cleanup; UCC-230 types common confirmation_ref as ref"}
+      owner_request: none
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DebugCleanupResultV1
+      error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [blocked_state_required, stale_projection]
+      owner_state_codes:
+        - {owner_state: phase_not_reached, code: blocked_state_required}
+        - {owner_state: preservation_hold_active, code: blocked_state_required}
+      aliases: []
+      judgments:
+        - {key: disabled_reason_codes, choice: [blocked_state_required, stale_projection], gap_note: "Q-DB3. UCC-142 names phase_not_reached and preservation_hold_active outside the overlay's closed set. JUDGMENT: both map to blocked_state_required under DL-333 resolution 6 and keep exact owner details; alternative: not_configured for either state."}
+        - {key: omitted:preservation_policy, choice: omitted, gap_note: "Q-DB2. CS-065 says honor explicit preservation/hold rules, but names no caller override. JUDGMENT: the owner reloads current holds and the exact cleanup manifest, never takes a caller override, and revalidates target identity/evidence under assistant-chat-design section 1.0B; alternative: carry an explicit immutable cleanup-plan ref."}
     - command_id: cmd.debug.start
       ucc_units: [UCC-077]
       command_kind: domain_action
@@ -470,6 +517,12 @@ command_payload_definitions:
             (Commands_System.md:703); stale_projection is the 2.0B clause.
       aliases: []
   results:
+    DebugVerificationResultV1:
+      fields:
+        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "Q-DB4. The wiring row requires an effect receipt; no typed result exists. JUDGMENT: required receipt ref to the recorded exact investigation/outcome/evidence, carried only after the owner write succeeds; alternative: structured outcome fields inline."}
+    DebugCleanupResultV1:
+      fields:
+        receipt_ref: {type: ref, required: true, default: none, provenance: gap, gap_note: "Q-DB4. No typed cleanup result exists. JUDGMENT: required receipt ref to the verified cleanup outcome or preserved residue, never implying resolved from dispatch alone; alternative: inline cleanup manifest/outcome fields."}
     DebugInvestigationStartResultV1:
       fields:
         investigation_id: {type: id, required: true, default: none, provenance: gap, gap_note: "the started investigation; canon names investigation_id in debug.investigation.started (Contracts_V0.md:1532) and the investigation header (assistant-chat-design.md:1319), typed id by the UCC-230 alias for debug_session_id (DL-341), but no result contract carries it"}
