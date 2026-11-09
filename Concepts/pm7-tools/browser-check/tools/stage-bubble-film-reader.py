@@ -5,7 +5,7 @@ With pip-stage-entry --set counter=1, compare the raster fill edge with the exac
 frame's DOM box (1 px raster tolerance). Without tags, retain pixel trajectories only;
 there is no fabricated per-frame DOM correlation. Other looks need their own pixel reader.
 """
-import argparse, json, pathlib, subprocess
+import argparse, json, math, pathlib, subprocess
 from fractions import Fraction
 from PIL import Image, ImageChops, ImageDraw
 
@@ -23,8 +23,17 @@ episodes = [e for e in episodes if e['look'] == 'basic-light' and e['size'] == [
 if not episodes:
     raise SystemExit('This reader requires Basic Light at native 1920x1080')
 rows = {r['paintSeq']: (e, r) for e in episodes for r in e['frames'] if r.get('paintSeq')}
-# Decode only the tag and the region containing this route's bubble. No rescaling.
-filters = '[0:v]split=2[t][b];[t]crop=168:8:0:0,pad=350:8:0:0[tag];[b]crop=350:180:500:440[box];[tag][box]vstack'
+# The fitter may place this route above or below Pip. Select its native search window from
+# the tagged DOM boxes; pixels still locate the independent connected white fill within it.
+boxes = [[r['stageRect'][0]+r['bub']['box'][0],r['stageRect'][1]+r['bub']['box'][1],r['bub']['box'][2],r['bub']['box'][3]]
+         for _,r in rows.values() if r.get('screen') == 'c-ready']
+if not boxes: raise SystemExit('No tagged Ready boxes')
+left=max(0,min(1570,math.floor(min(b[0] for b in boxes))-30))
+top=max(0,min(900,math.floor(min(b[1] for b in boxes))-40))
+if any(b[0]<left or b[1]<top or b[0]+b[2]>left+350 or b[1]+b[3]>top+180 for b in boxes):
+    raise SystemExit('Ready boxes exceed one native350x180 search window; reader needs multiple regions')
+# Decode only the tag and search window. No rescaling or rate conversion.
+filters = f'[0:v]split=2[t][b];[t]crop=168:8:0:0,pad=350:8:0:0[tag];[b]crop=350:180:{left}:{top}[box];[tag][box]vstack'
 cmd = ['ffmpeg','-hide_banner','-loglevel','error','-i',a.film,'-filter_complex',filters,'-pix_fmt','rgb24','-f','rawvideo','-']
 proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 size = 350 * 188 * 3
@@ -72,7 +81,7 @@ while True:
         if bb and 175 <= bb[2]-bb[0] <= 245:
             # Near-white excludes the antialiased edge pixel. Use the centre of
             # its one-cell boundary interval, plus the 1px Basic border.
-            native = [500+bb[0]-1.5,440+min(ys)-1.5,500+bb[2]+1.5,440+max(ys)+2.5]
+            native = [left+bb[0]-1.5,top+min(ys)-1.5,left+bb[2]+1.5,top+max(ys)+2.5]
     data = dict(frame=index,seconds=round(index/fps,4),seq=seq,native=native)
     if seq in rows:
         ep, row = rows[seq]
@@ -93,7 +102,7 @@ errors=[r for r in matched if r.get('error',float('inf')) > 1]
 coverage=[dict(mode=e['mode'],label=e['label'],frames=sum(r.get('mode')==e['mode'] and r.get('label')==e['label'] for r in matched)) for e in episodes]
 covered=all(e['frames'] >= 30 for e in coverage)
 result=dict(status='tagged_comparison' if matched else 'trajectory_only', ok=covered and not errors if matched else None,
-            filmFrames=index,fps=fps,taggedReadyFrames=len(matched),badRasterFrames=len(errors),
+            filmFrames=index,fps=fps,roi=[left,top,350,180],taggedReadyFrames=len(matched),badRasterFrames=len(errors),
             coverage=coverage,
             maxRasterError=max((r['error'] for r in matched if 'error' in r),default=None),
             firstBad=errors[:8],frames=frames)
