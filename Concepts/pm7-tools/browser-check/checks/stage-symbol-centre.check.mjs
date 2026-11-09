@@ -81,7 +81,7 @@ const BUILD = (spec) => {
 	fEls.forEach((e) => e.classList.add('qa5-f'));
 	gEls.forEach((e) => e.classList.add('qa5-g'));
 	const b = host.getBoundingClientRect();
-	return { x: b.left, y: b.top, w: b.width, h: b.height, nf: fEls.length, ng: gEls.length };
+	return { x: b.left, y: b.top, w: b.width, h: b.height, nf: fEls.length, ng: gEls.length, glyphTags: gEls.map(e => e.tagName.toLowerCase()) };
 };
 const PAINT5 = (mode) => {
 	let st = document.getElementById('qa5-paint');
@@ -110,12 +110,13 @@ async function run(t, mode) {
 			for (const c of CASES) {
 				const built = await f.evaluate(BUILD, { look, prop: c.prop, params: c.params || null, frame: c.frame, glyph: c.glyph });
 				if (!built.ng || (!built.nf && !c.frame.point)) { fails.push(`${c.id}: frame or symbol not found (f=${built.nf} g=${built.ng})`); continue; }
+				if (c.prop === 'forge' && built.glyphTags.join(',') !== 'line,path,circle,circle,circle') { fails.push(`${c.id}: expected the branch line, merge curve and three commits, got ${built.glyphTags}`); continue; }
 				const clip = { x: Math.round(off.x + built.x), y: Math.round(off.y + built.y), width: 480, height: 480 };
 				const shot = async (m) => { await f.evaluate(PAINT5, m); await t.page.waitForTimeout(50); return decodePng(await t.page.screenshot({ clip, animations: 'disabled', caret: 'hide' })); };
 				const A = await shot(''), B = await shot('g'), C = c.frame.point ? null : await shot('f');
 				await f.evaluate(PAINT5, '');
-				if (t.args.crops && c.prop === 'restore' && c.frame.point) await t.crop(`restore-visible-face-${look}-${mode}`,
-					{ x: off.x + built.x + 156, y: off.y + built.y + 160, width: 168, height: 168 }, 'Restore emblem centred in the visible face below its lid, native 2 px per prop unit');
+				if (t.args.crops && ['restore', 'forge'].includes(c.prop) && c.frame.point) await t.crop(`${c.prop}-visible-face-${look}-${mode}`,
+					{ x: off.x + built.x + 156, y: off.y + built.y + 160, width: 168, height: 168 }, `${c.prop} emblem centred in its visible field, native 2 px per prop unit`);
 				const g = inkBox(A, B);
 				const fc = c.frame.point ? { cx: (120 + c.frame.point[0]) * SCALE, cy: (120 + c.frame.point[1]) * SCALE } : inkBox(A, C);
 				if (!g || !fc) { fails.push(`${c.id}: ${!g ? 'no symbol ink' : 'no frame ink'}`); continue; }
