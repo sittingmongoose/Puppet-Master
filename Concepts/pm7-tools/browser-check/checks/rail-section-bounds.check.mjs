@@ -16,7 +16,8 @@
 // The walk: with motion on, at 740 and 1390, Pip walks Where -> Welcome -> Where in each look, and every frame the
 // section's boxes (lenses, hop and carry frames, NieR's walk block and ink box) are read: none may reach past the header.
 // On 714f6a006a and on main 78a1fd64cd the narrow layout's chip was the whole rail item plus the look's pad, 63 to 69 px
-// tall in the 58 px header, in all ten looks and every chapter (Glass's lens lying over Pip). --set looks=a,b,
+// tall in the 58 px header, in all ten looks and every chapter (Glass's lens lying over Pip), and Glass's lens lay over
+// Pip's feet at every wide width. --set film=1 --grep film --record <mp4>: the narrow walk for frame review. --set looks=a,b,
 // --set widths=740,1390, --set screens=where, --set walk=0 skips the walk; the switch picks one surface. About 12 min.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/rail-section-bounds.check.mjs --set page=<build>
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
@@ -246,9 +247,35 @@ async function walk(t, mode) {
 	await t.app.resetLayout();
 }
 
+/* --set film=1 (alone, with --record): the narrow walk forward and back, Welcome to Ready and back, at 740 x 900 with motion
+   on, each move marked, in --set looks= (default Basic, Friendly, Glass and NieR, light and dark), for frame review */
+async function film(t) {
+	if (!t.args.film) { t.log('skipped: --set film=1 (record this test alone with --record)'); return; }
+	await t.emulate({ reducedMotion: 'no-preference' });
+	await t.viewport(+(t.args.w || 740), 900);
+	const f = await t.app.open({ onboarding: true, query: 'o55=screen=welcome', sandbox: t.app.sandboxed() });
+	await f.waitForFunction(() => !!document.querySelector('#pm-o55-onboarding .o55-win .o55-raillist'), null, { timeout: 60000 });
+	await t.page.mouse.move(2, 2);
+	const route = ['welcome', 'where', 'name', 'ai', 'ready', 'ai', 'name', 'where', 'welcome'];
+	for (const look of list(t.args.looks, ['basic-light', 'basic-dark', 'friendly-light', 'friendly-dark', 'glass-light', 'glass-dark', 'nier-light', 'nier-dark'])) {
+		const [fam, lmode] = look.split('-');
+		await f.evaluate(() => window.O55.ui.go('welcome', { noHistory: true }));
+		await f.evaluate(([fm, m]) => window.O55.ui.applyLook(fm, m), [fam, lmode]);
+		await f.waitForFunction(lookSettled, [fam, lmode], { timeout: 30000 }).catch(() => t.log(`${look}: the look did not settle`));
+		await f.waitForTimeout(2500);
+		for (let i = 1; i < route.length; i++) {
+			t.mark(`${look} ${route[i - 1]}->${route[i]}`);
+			await f.evaluate((s) => window.O55.ui.go(s), route[i]);
+			await f.waitForTimeout(1700);
+		}
+	}
+	await t.check('film walked', true);
+}
+
 export const tests = {
 	'current section at rest, every chapter, width and look (normal page)': on('normal', rest),
 	'current section at rest, every chapter, width and look (T3 sandbox)': on('sandbox', rest),
 	'current section while Pip walks (normal page)': on('normal', walk),
-	'current section while Pip walks (T3 sandbox)': on('sandbox', walk)
+	'current section while Pip walks (T3 sandbox)': on('sandbox', walk),
+	'film': film
 };
