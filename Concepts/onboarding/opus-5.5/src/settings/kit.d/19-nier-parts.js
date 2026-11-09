@@ -272,7 +272,7 @@
 
   /* ---------- target brackets --------------------------------------------------------------------------------------- */
   let ret = null, retT = null, retLock = 0, retScroll = 0;
-  let retWatchT = null, retResize = null;
+  let retWatchT = null, retResize = null, retState = null;
   const RET_GAP = 3, RET_S = 10;
   /* The reticle lives above the page, outside its target's overflow ancestors. Clip that one paint layer to their
      client boxes, on both axes, intersected with the viewport. The clip also contains the corners' arrival/glide;
@@ -292,9 +292,17 @@
   function retWatch(t) {
     if (retWatchT === t) return;
     if (retResize) retResize.disconnect();
+    if (retState) retState.disconnect();
     if (retScroll) window.clearTimeout(retScroll); retScroll = 0;
     retWatchT = t;
-    if (!t || typeof ResizeObserver !== 'function') return;
+    if (!t) return;
+    /* A lit Activity row is filled with the ordinary bracket ink. Follow its selected state with the palette's
+       inverse ink, including Enter closing/reopening its panel. This observer watches that one control only. */
+    if (t.matches('#activityBar .icon')) {
+      if (!retState) retState = new MutationObserver(() => { if (retT && !retScroll) retPlace(retT); });
+      retState.observe(t, { attributes: true, attributeFilter: ['class'] });
+    }
+    if (typeof ResizeObserver !== 'function') return;
     if (!retResize) retResize = new ResizeObserver(() => { if (retT && !retScroll) retPlace(retT); });
     /* The focused target and its ancestor chain only: a names toggle, rail resize or panel layout can change either
        the target's box or its clipping box. ResizeObserver delivers after layout, before that geometry is painted. */
@@ -311,6 +319,7 @@
     retWatch(t);
     const clip = retClip(t, z);
     ret.style.clipPath = clip.path;
+    ret.style.setProperty('--o55np-reticle-ink', t.matches('#activityBar .icon.active') ? 'var(--o55-nier-on-ink)' : 'var(--o55-nier-ink)');
     /* A menu can focus its first row while its opening box is still zero. Keep the target observed so its first real
        layout places the mark; clearing retT here lost the More tray's key focus until a different row was focused. */
     const empty = r.width < 2 || r.height < 2;

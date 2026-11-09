@@ -604,7 +604,8 @@ async function fo98(t, f, { at, kb, key, sentinel, rest, full, off }) {
   await agree('the rail skin mounted again');
 }
 
-const SIZES = [[1920, 1100], [1390, 860], [1280, 500], [1024, 768], [740, 900]];
+// The narrow names-shown cells catch corner/name geometry first; the full five-size matrix is unchanged.
+const SIZES = [[1024, 768], [740, 900], [1280, 500], [1390, 860], [1920, 1100]];
 
 async function run(t, w, h) {
   const full = w === 1920;

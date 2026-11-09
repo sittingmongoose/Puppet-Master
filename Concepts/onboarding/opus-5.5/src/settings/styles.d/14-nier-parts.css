@@ -141,7 +141,7 @@ html[data-o55-nier-parts~="brackets"] .focus-ring { outline: 0 !important; box-s
 #o55np-reticle:is([data-scroll], [data-empty]) { visibility: hidden; }
 #o55np-reticle[data-jump] > i { transition: none; }
 #o55np-reticle > i { position: absolute; left: 0; top: 0; width: 10px; height: 10px; display: block; will-change: transform;
-  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 2px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 2px 100% no-repeat;
+  background: linear-gradient(var(--o55np-reticle-ink, var(--o55-nier-ink)), var(--o55np-reticle-ink, var(--o55-nier-ink))) 0 0 / 100% 2px no-repeat, linear-gradient(var(--o55np-reticle-ink, var(--o55-nier-ink)), var(--o55np-reticle-ink, var(--o55-nier-ink))) 0 0 / 2px 100% no-repeat;
   transition: transform 150ms cubic-bezier(.25, .9, .3, 1); }
 html[data-motion="reduced"] #o55np-reticle > i, html[data-motion="reduced"] #o55np-reticle { transition: none; }
 /* forced colors (Windows High Contrast) drop background images, so the corners above, two gradient bars each, vanished
@@ -224,7 +224,7 @@ html[data-motion="reduced"][data-o55-nier-parts~="diamonds"] .pml-ld[data-pml-ru
 #o55np-reboot .o55np-edge:is([data-e="t"], [data-e="b"]) { width: 100%; height: 1px; }
 #o55np-reboot .o55np-edge:is([data-e="l"], [data-e="r"]) { width: 1px; height: 100%; }
 #o55np-reboot .o55np-br { position: absolute; left: 0; top: 0; width: 12px; height: 12px; opacity: 0; will-change: transform;
-  background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 2px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 2px 100% no-repeat; }
+  background: linear-gradient(var(--o55np-reticle-ink, var(--o55-nier-ink)), var(--o55np-reticle-ink, var(--o55-nier-ink))) 0 0 / 100% 2px no-repeat, linear-gradient(var(--o55np-reticle-ink, var(--o55-nier-ink)), var(--o55np-reticle-ink, var(--o55-nier-ink))) 0 0 / 2px 100% no-repeat; }
 /* the check list */
 /* the list sits on its own panel of the ground (a hairline frame on the grid), so the masks that hide the
    untyped words match what is under them exactly */
