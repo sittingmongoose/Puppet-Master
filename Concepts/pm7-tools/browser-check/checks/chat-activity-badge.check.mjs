@@ -105,10 +105,14 @@ async function ink(t, f, tag) {
   const painted=()=>f.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
   await painted();
   const on = await t.pixels(loc);
-  await loc.locator('svg').evaluate(e => { e.style.visibility='hidden'; });
+  // A live app patch may replace an SVG or reconcile its inline style during a capture. A head stylesheet keeps
+  // the mask on the same subject through that patch; opacity also hides descendants with explicit visibility.
+  await f.evaluate(sel=>{const style=document.createElement('style');style.id='fo120-ink-mask';style.textContent=sel+' svg { opacity: 0 !important; }';document.head.append(style);},selector);
   await painted();
+  const maskedBefore=await loc.locator('svg').evaluate(e=>getComputedStyle(e).opacity);
   const off = await t.pixels(loc);
-  await loc.locator('svg').evaluate(e => { e.style.removeProperty('visibility'); });
+  const maskedAfter=await loc.locator('svg').evaluate(e=>getComputedStyle(e).opacity);
+  await f.evaluate(()=>document.getElementById('fo120-ink-mask')?.remove());
   await painted();
   await f.evaluate(() => { window.__fo120.paused.forEach(a=>a.play()); });
   let changed=0;
@@ -118,6 +122,7 @@ async function ink(t, f, tag) {
     for(const [name,img] of [['on',on],['off',off]])writeFileSync(join(t.run.dir,stem+'-'+name+'.png'),encodePng(img));
     t.log('paired ink failure pixels: '+stem+'-on.png and '+stem+'-off.png');
   }
+  await t.check(tag + ': glyph mask held through the off capture',maskedBefore==='0'&&maskedAfter==='0',JSON.stringify({maskedBefore,maskedAfter}));
   await t.check(tag + ': outer symbol paints ink', on.width===off.width && on.height===off.height && changed>=3, JSON.stringify({changed,width:on.width,height:on.height}));
 }
 
