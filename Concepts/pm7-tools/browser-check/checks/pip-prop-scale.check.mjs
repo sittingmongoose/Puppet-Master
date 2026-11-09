@@ -35,8 +35,17 @@ export default async function (t) {
      const scale=Math.hypot(m.a,m.b), nominal=Math.min(tg.sc,(st.vis.x1-st.vis.x0-16)/b.width);
      const r=p.el.getBoundingClientRect(), text=p.el.querySelector('text');
      const font=text ? parseFloat(getComputedStyle(text).fontSize)*Math.hypot(text.getScreenCTM().a,text.getScreenCTM().b) : null;
+     const bbl=st.bubble, br=bbl.getBoundingClientRect(), hr=st.gHead.getBoundingClientRect(), side=bbl.dataset.side;
+     const arrow=st.famName!=='nier'&&st.layoutName==='portrait'&&bbl.classList.contains('on')&&+getComputedStyle(bbl).opacity>.5;
+     const tail=getComputedStyle(bbl,'::after'), polygon=/^polygon\((.*)\)$/.exec(tail.clipPath);
+     const ys=polygon?polygon[1].split(',').map(v=>parseFloat(v.trim().split(/\s+/)[1])):[];
+     const direction=ys.length===3&&ys[0]===ys[1]?Math.sign(ys[2]-ys[0]):0;
+     const distance=v=>v.endsWith('%')?parseFloat(v)*bbl.clientHeight/100:parseFloat(v);
+     const painted=tail.content!=='none'&&tail.display!=='none'&&parseFloat(tail.width)>0&&parseFloat(tail.height)>0;
+     const away=arrow&&(!painted||(br.top>=hr.bottom-1&&(direction!==-1||!(distance(tail.bottom)>=bbl.clientHeight-2)))||(br.bottom<=hr.top+1&&(direction!==1||!(distance(tail.top)>=bbl.clientHeight-2))));
      rows.push({theme:st.theme,id,kind:p.spec.kind,scale,nominal,ratio:scale/nominal,rounding:.005/nominal+1e-6,
-      box:[r.left,r.top,r.width,r.height],restBox:p.restBox,head:st.pipHead(0,null,true),captionFontPixels:font});
+      box:[r.left,r.top,r.width,r.height],restBox:p.restBox,head:st.pipHead(0,null,true),captionFontPixels:font,
+      arrow,tailAway:away,tailSide:side,tailPaint:{direction,top:tail.top,bottom:tail.bottom,clip:tail.clipPath},bubbleBox:[br.left,br.top,br.right,br.bottom],headBox:[hr.left,hr.top,hr.right,hr.bottom]});
     }
     if(performance.now()-start<2000) requestAnimationFrame(read); else resolve(rows);
    }
@@ -47,6 +56,9 @@ export default async function (t) {
   const bad=rows.filter(r=>r.ratio+r.rounding<.66);
   await t.check(`${tag}: painted resting art keeps at least .66 of its pane-fitted nominal scale`, rows.length>0&&!bad.length,
    `${bad.length}/${rows.length} undersized; ${JSON.stringify((bad[0]||signs[0]||{}))}`);
+  const arrows=rows.filter(r=>r.arrow), away=arrows.filter(r=>r.tailAway);
+  await t.check(`${tag}: the speech tail faces Pip`, !away.length&&(look.startsWith('nier-')||arrows.length>=30),
+   `${away.length}/${arrows.length} tails face away; ${JSON.stringify(away[0]||arrows[0]||{})}`);
   cells.push({mode,look,size,rows});fs.writeFileSync(path.join(t.run.dir,'prop-scale.json'),JSON.stringify(cells));
   await t.app.resetLayout(t);
  }

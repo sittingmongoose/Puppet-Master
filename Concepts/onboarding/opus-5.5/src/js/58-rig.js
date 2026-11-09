@@ -1515,12 +1515,13 @@
       if (at[0] !== x || at[1] !== y) { if (!this.bubbleRel || at !== prev) this.bubbleRelT = this.t; this.bubbleRel = [at[0] - origin[0], at[1] - origin[1]]; } else this.bubbleRel = null;
       [x, y] = at;
       this.bubbleSide = talking ? sideOf(x) : null;
+      const tail = tall ? (y > head[1] ? 'up' : 'down') : 'left';
       /* where it is, with its tail, for the props that leave under it (holdUnder) */
-      if (talking) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(x - gap - (tall ? 0 : 10), y - gap), a1 = u(x + bw + gap, y + bh + gap + (tall ? 10 : 0)); this.bubbleBox = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleBox = null;
+      if (talking) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(x - gap - (tall ? 0 : 10), y - gap - (tail === 'up' ? 10 : 0)), a1 = u(x + bw + gap, y + bh + gap + (tail === 'down' ? 10 : 0)); this.bubbleBox = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleBox = null;
       /* (its place as `translate`: its pop's `scale` (30-art.css pstBubble) then grows it from its tail where it stands; a
          `transform` here was scaled with it, so the bubble flew in from the stage's corner, over Pip, FO-44) */
       this.bubble.style.translate = `${R(x)}px ${R(y)}px`;
-      this.bubble.dataset.side = tall ? 'down' : 'left';
+      this.bubble.dataset.side = tail;
       this.bubble.style.setProperty('--tx', R(clamp(head[0] - x, 16, bw - 16)) + 'px');
       this.bubble.style.setProperty('--ty', R(clamp(head[1] - y, 12, bh - 12)) + 'px');
     }

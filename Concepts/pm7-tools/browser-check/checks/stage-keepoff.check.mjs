@@ -25,6 +25,9 @@
 // --set only=nier|leave|begin|ring runs one group. About 6 minutes per surface.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/stage-keepoff.check.mjs --set page=<build>
 
+import fs from 'node:fs';
+import path from 'node:path';
+import zlib from 'node:zlib';
 const LAYER = '#pm-o55-onboarding .o55-layer:not(.o55-out)';
 const on = (mode, fn) => (t) => (t.app.surfaces().includes(mode) ? fn(t, mode) : t.check(`not run: --set sandbox picks the other surface than ${mode}`, true));
 const want = (t, g) => !t.args.only || t.args.only.split(',').includes(g);
@@ -32,8 +35,9 @@ const want = (t, g) => !t.args.only || t.args.only.split(',').includes(g);
 // the per-frame sampler, in the app's frame. It reads at the end of each frame, after every animation-frame callback (the
 // rig's render included) and the frame's layout, just before paint: a ResizeObserver on a 1 px element whose width an
 // animation frame toggles (a plain animation-frame read can see a state the rig rewrites before the frame is painted)
-function sampler() {
+function sampler(options) {
 	const S0 = window.__sk = { frames: 0, hits: [], rings: 0, ringOut: [], leaving: 0, blocks: 0, covered: 0, eps: new Map(), anchors: new Map(), lines: new Map() };
+	S0.trace=options?.trace?[]:null;S0.meta={mode:options?.mode,size:[innerWidth,innerHeight]};
 	const R = (e) => { const r = e.getBoundingClientRect(); return [r.left, r.top, r.right, r.bottom]; };
 	const meet = (a, b) => a[0] < b[2] - 0.5 && a[2] > b[0] + 0.5 && a[1] < b[3] - 0.5 && a[3] > b[1] + 0.5;
 	// QA-4 trade: entering props may pass behind a settled bubble (lead ruling 18:40Z). The bubble's placement at the
@@ -72,15 +76,19 @@ function sampler() {
 			const m2 = /^(-?[\d.]+)px (-?[\d.]+)px$/.exec(b.style.translate || '');
 			const relNow = nier ? R(b).slice(0, 2) : (st2 && st2.__relAtPlace) || null;
 			const trNow = nier ? R(b).slice(0, 2) : m2 ? [+m2[1], +m2[2]] : null;
+			if(S.trace&&st2) S.trace.push({t:performance.now(),screen,text:(b.textContent||'').trim(),size:[b.offsetWidth,b.offsetHeight],side:b.dataset.side,rel:relNow,at:trNow,
+				name:document.querySelector('#pm-o55-onboarding [data-o55-bind="name"]')?.value,theme:st2.theme,claim:st2.bubbleClaim,kept:st2.bubbleRel,keepOff:st2.keepOff,map:st2.map,
+				props:[...st2.props].map(([id,p])=>({id,bb:p.bb,spec:p.spec,restBox:p.restBox,fit:p.restFit&&{dx:p.restFit.dx,dy:p.restFit.dy,f:p.restFit.f},ax:p.ax,len:p.len,a:p.a,settled:p.settled}))});
 			const seen = new Set();
 			if (!nier && st2 && relNow && trNow && boxes.length && st2.H) {
 				const text = (b.textContent || '').trim(), tall = st2.layoutName === 'portrait', bw = b.offsetWidth, bh = b.offsetHeight;
 				const sp = st2.toScreen(st2.headXf(tall ? [44, 30] : [58, 44], st2.H, st2.ang, 1, 1));
-				const anchor = tall ? [relNow[0] + bw * .3, relNow[1] + bh] : [relNow[0], relNow[1] + bh / 2];
+				const side=b.dataset.side;
+				const anchor = tall ? [relNow[0] + bw * .3, relNow[1] + (side==='up'?0:bh)] : [relNow[0], relNow[1] + bh / 2];
 				const prev = S.lastScreen === screen ? S.anchors.get(screen) : null;
 				const entering = [...st2.props.values()].some(p => p.state !== 'out' && !p.settled && p.op > .05);
 				if (entering && prev && prev.text !== text) {
-					const x = sp[0] + prev.anchor[0] - (tall ? bw * .3 : 0), y = sp[1] + prev.anchor[1] - (tall ? bh : bh / 2);
+					const x = sp[0] + prev.anchor[0] - (tall ? bw * .3 : 0), y = sp[1] + prev.anchor[1] - (tall ? (prev.side==='up'?0:bh) : bh / 2);
 					const v = st2.vis, lo = v && st2.toScreen([v.x0,v.y0]), hi = v && st2.toScreen([v.x1,v.y1]);
 					const pad = st2.tube ? 14 : 8, top = st2.tube ? (tall ? 44 : 34) : 8;
 					const foot = st2.tube === 'teletype' ? (tall ? 70 : 48) : st2.tube ? (tall ? 44 : 34) : 8;
@@ -91,7 +99,7 @@ function sampler() {
 					const drift = Math.max(...anchor.map((v,i)=>Math.abs(v-prev.anchor[i])));
 					if(canFit && drift > 1) S.hits.push(`${screen}: new line moved its bottom/tail anchor ${drift.toFixed(2)} px during entry although its new size fits`);
 				}
-				S.anchors.set(screen,{text,anchor}); S.lastScreen = screen;
+				S.anchors.set(screen,{text,anchor,side}); S.lastScreen = screen;
 				const lk = `${screen}|${text}|${bw}|${bh}`;
 				if(S.lineKey !== lk) { S.lineKey=lk; S.lineN=(S.lineN||0)+1; S.lines.set(S.lineN,{screen,text,rels:[],trs:[]}); }
 				const line=S.lines.get(S.lineN);line.rels.push(relNow);line.trs.push(trNow);
@@ -144,7 +152,7 @@ async function openAt(t, mode, look, [w, h], screen) {
 	const [fam, scheme] = look.split('-');
 	await f.evaluate(([a, b]) => window.O55.ui.applyLook(a, b), [fam, scheme]);
 	await f.waitForTimeout(4500);
-	await f.evaluate(sampler);
+	await f.evaluate(sampler,{trace:!!t.args.frames,mode});
 	return f;
 }
 // a control of the current screen, by its action, through the real pointer (the sandbox fills the window)
@@ -169,7 +177,7 @@ async function nameIt(t, f) {
 }
 // what the sampler saw; and a clean store for the next case's fresh load (a normal page keeps the session in localStorage:
 // Safe's online copy, set below, left the next case's Review unable to create)
-const result = async (t, f) => { const S = await f.evaluate(() => { const S = window.__sk; window.__sk = null; S.finish(); return { frames: S.frames, hits: S.hits, rings: S.rings, ringOut: S.ringOut, leaving: S.leaving, blocks: S.blocks, covered: S.covered }; }); await t.app.resetLayout(t); return S; };
+const result = async (t, f) => { const S = await f.evaluate(() => { const S = window.__sk; window.__sk = null; S.finish(); return { frames: S.frames, hits: S.hits, rings: S.rings, ringOut: S.ringOut, leaving: S.leaving, blocks: S.blocks, covered: S.covered,meta:S.meta,trace:S.trace }; }); if(S.trace)fs.appendFileSync(path.join(t.run.dir,'keepoff-trace.jsonl.gz'),zlib.gzipSync(JSON.stringify(S)+'\n')); await t.app.resetLayout(t); return S; };
 
 async function nier(t, mode) {
 	for (const look of ['nier-light', 'nier-dark']) {
@@ -213,7 +221,7 @@ async function nier(t, mode) {
 }
 
 async function leave(t, mode) {
-	for (const look of t.args.leaveLooks ? String(t.args.leaveLooks).split(',') : ['glass-dark', 'basic-light', 'friendly-light', 'retro-light', 'retro-dark']) for (const size of [[1920, 1080], [1390, 900], [860, 768], [740, 768]]) {
+	for (const look of t.args.leaveLooks ? String(t.args.leaveLooks).split(',') : ['glass-dark', 'basic-light', 'friendly-light', 'retro-light', 'retro-dark']) for (const size of t.args.leaveSizes ? String(t.args.leaveSizes).split(',').map(v=>v.split('x').map(Number)) : [[1920, 1080], [1390, 900], [860, 768], [740, 768]]) {
 		const tag = `${look} ${size.join('x')} ${mode}`;
 		const f = await openAt(t, mode, look, size, 'name');
 		await nameIt(t, f);
