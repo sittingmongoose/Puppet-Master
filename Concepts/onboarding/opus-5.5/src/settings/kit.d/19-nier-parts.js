@@ -299,10 +299,15 @@
     /* The focused target and its ancestor chain only: a names toggle, rail resize or panel layout can change either
        the target's box or its clipping box. ResizeObserver delivers after layout, before that geometry is painted. */
     for (let e = t; e; e = e.parentElement) retResize.observe(e);
+    const tile = t.matches('#activityBar .icon') && t.querySelector(':scope > .symbol');
+    if (tile) retResize.observe(tile);
   }
   function retPlace(t) {
     if (!ret || !t || !t.isConnected || coverUp) { retOff(); return; }
-    const r = t.getBoundingClientRect(), z = zoom();
+    /* Activity names are separate from the icon tile: the four corners frame the same .symbol as the other looks'
+       focus rings. Keep the focused control as the scroll/resize owner; every other target keeps its own box. */
+    const mark = t.matches('#activityBar .icon') ? t.querySelector(':scope > .symbol') || t : t;
+    const r = mark.getBoundingClientRect(), z = zoom();
     retWatch(t);
     const clip = retClip(t, z);
     ret.style.clipPath = clip.path;
