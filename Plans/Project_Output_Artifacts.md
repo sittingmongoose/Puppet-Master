@@ -607,7 +607,7 @@ Rules:
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
 
-ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/assistant-chat-design.md#26. Auditor Invariant Loop Specification And Model/Provider Settings (Invariant Sweep)
+ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/assistant-chat-design.md#26. Auditor Audit-To-Repair Loop Model/Provider Settings (Invariant Sweep) And Loop Specification
 
 Required canonical fields:
 - auditor_cycle_report
@@ -2294,7 +2294,7 @@ negative_constraints:
 preserved_contractrefs:
   - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
   - "ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md"
-  - "ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/assistant-chat-design.md#26. Auditor Invariant Loop Specification And Model/Provider Settings (Invariant Sweep)"
+  - "ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/assistant-chat-design.md#26. Auditor Audit-To-Repair Loop Model/Provider Settings (Invariant Sweep) And Loop Specification"
 owner_hints:
   - "Plans/Project_Output_Artifacts.md"
 ```

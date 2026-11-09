@@ -2360,7 +2360,7 @@ Historical note:
 - compact-now behavior remains valid when backed by canonical compaction commands
 - the detached usage pop-out is no longer canonical
 - any old command IDs or persistence keys that exist only for the pop-out model are superseded by the canonical thread-scoped Context Detail Pane/editor-tab model and its stable command IDs
-## 26. Auditor Invariant Loop Specification And Model/Provider Settings (Invariant Sweep)
+## 26. Auditor Audit-To-Repair Loop Model/Provider Settings (Invariant Sweep) And Loop Specification
 
 > **Addendum — 2026-02-25**
 > **Repair — 2026-06-18:** fixed Pass 1 / Pass 2 / Pass 3 provider-model selectors and active process stages are retired. Pass names remain compatibility aliases only; model selection is one Auditor audit-to-repair loop.
