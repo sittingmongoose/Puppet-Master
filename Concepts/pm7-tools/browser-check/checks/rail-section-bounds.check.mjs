@@ -4,7 +4,8 @@
 // all ten looks, on both surfaces. The section is every chip the looks draw for the current step: the switcher's chip in
 // the window's own lens layer (Glass's lens) or in the strip's under-layer (Friendly's sticker, Basic's block, Retro's
 // and NieR's chips), a hop or carried frame of one, NieR's ink box (the current item's ::after) and NieR's walk block.
-// In each cell, with Reduced Motion and the header at rest, a band 16 px above and below the header is captured with
+// In each cell, with Reduced Motion and the header at rest, a band over the rail's columns (24 px wider each side), from
+// 16 px above the header to 16 px below it, is captured with
 // the section shown, with it hidden, with Pip hidden, and shown again (the two shown captures must match: a cell that
 // moves under the capture is retried and then fails as unsettled). What the section paints is what changes when it is
 // hidden (any channel by more than 24 levels); what Pip paints is what changes when he is hidden, less a 1 px edge:
@@ -62,6 +63,7 @@ function cellGeo(band) {
 	const label = cur && cur.querySelector('.o55-raillabel');
 	const lb = label && label.getBoundingClientRect();
 	const pip = head.querySelector('.o55-railpip'), pb = pip && pip.getBoundingClientRect();
+	const rail = head.querySelector('.o55-rail'), rb = (rail || head).getBoundingClientRect();
 	document.querySelectorAll('[data-qa1rb-sec]').forEach((e) => e.removeAttribute('data-qa1rb-sec'));
 	const sec = [...root.querySelectorAll('.lg-lens, .lg-hop')].filter((e) => {
 		const b = e.getBoundingClientRect();
@@ -72,6 +74,10 @@ function cellGeo(band) {
 	return {
 		layout: root.getAttribute('data-o55-layout'), chapter: cur && cur.getAttribute('data-chapter'),
 		head: { left: hb.left, top: hb.top, right: hb.right, bottom: hb.bottom },
+		/* the rail's columns, 24 px wider each side: every chip wraps an item of the strip (pad 6 at most) and Pip rides the
+		   rail, so the section is judged there; the header's other columns hold the brand, the controls and, above the
+		   window's top edge, the app behind it (a shell mark changing there failed a cell as unsettled, 2.0.47 run) */
+		cols: { left: Math.max(hb.left, rb.left - 24), right: Math.min(hb.right, rb.right + 24) },
 		labelled: !!(lb && lb.width > 1 && lb.height > 1 && getComputedStyle(label).visibility !== 'hidden'),
 		pip: pb && pb.width > 0 ? { left: pb.left, top: pb.top, right: pb.right, bottom: pb.bottom } : null,
 		boxes: sec.map((e) => { const b = e.getBoundingClientRect(); return `${e.closest('.lg-lenses-under') ? 'under' : 'lens'} ${r1(b.top)}..${r1(b.bottom)}`; })
@@ -96,8 +102,8 @@ async function cell(t, f, off, tag, out) {
 	for (let attempt = 0; attempt < 4; attempt++) {
 		const g = await f.evaluate(cellGeo, BAND);
 		if (!g) { out.bad.push(`${tag}: no header`); return; }
-		const x0 = Math.floor(off.x + g.head.left), y0 = Math.floor(off.y + g.head.top) - BAND;
-		const region = { x: x0, y: y0, width: Math.ceil(off.x + g.head.right) - x0, height: Math.ceil(off.y + g.head.bottom) - Math.floor(off.y + g.head.top) + 2 * BAND };
+		const x0 = Math.floor(off.x + g.cols.left), y0 = Math.floor(off.y + g.head.top) - BAND;
+		const region = { x: x0, y: y0, width: Math.ceil(off.x + g.cols.right) - x0, height: Math.ceil(off.y + g.head.bottom) - Math.floor(off.y + g.head.top) + 2 * BAND };
 		const hide = async (what) => { await f.evaluate((w) => document.documentElement.setAttribute('data-qa1rb-hide', w), what); await painted(f); };
 		await painted(f);
 		const A = await t.pixels(region);
