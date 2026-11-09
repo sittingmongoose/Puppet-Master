@@ -14,7 +14,7 @@
 // its rest anchor. This check, per frame read at its end (ResizeObserver, the pip-bubble-clear sampler):
 //   QA-4: per line, the bubble's placement relative to Pip's head (its style.translate against the head point it is
 //         placed from) on its FIRST shown frame is within 1 px of where it settles, and never strays more than 1 px
-//         from there while the line is up. NieR's box is CSS-fixed; its painted box against the head is judged.
+//         from there while the line is up. NieR's box is CSS-fixed; its painted box against the unscaled stage is judged at the same 1 px bound.
 //   QA-6: per string, the line passes within 1.5 scene units of its rest anchor (over the pivot the prop swings
 //         from, at the destination's fit offset) in every frame; that anchor's offset from the pivot and its height
 //         never change within a scene; and where the string meets the visible top moves no more than the swing
@@ -27,6 +27,10 @@
 // `--set secs=` dwell seconds (default 4), `--set sandbox=1` for T3's sandbox. Headless or --record (the film judged
 // by the same sampler; string-top motion on film must read as the swing's own). All ten looks and every screen is
 // about an hour; the defaults below keep the committed-page run to the full route.
+import fs from 'node:fs';
+import path from 'node:path';
+import zlib from 'node:zlib';
+
 const LOOKS = ['basic', 'friendly', 'retro', 'glass', 'nier'].flatMap((f) => [`${f}-light`, `${f}-dark`]);
 const SCREENS = ['welcome', 'look', 'begin', 'where', 'away', 'name', 'safe', 'protect', 'online-service', 'online-signin', 'online-details', 'ai', 'ai-none', 'ai-all', 'review', 'creating', 'c-review', 'c-ready', 'free', 'like', 'ready', 'ex-folder', 'ex-repos', 's-kind', 's-wait', 's-confirm', 's-ready', 'away-setup', 'c-route', 'c-pair', 'nas-find', 'nas-identity', 'nas-pmpair', 'nas-key', 'nas-install', 'nas-smb', 'nas-nfs', 'nas-mounted', 'nas-folder', 'nas-signin', 'r-source', 'r-pick', 'r-preview', 'r-unlock', 'r-done'];
 
@@ -68,13 +72,15 @@ function installSampler() {
 				text: (b.textContent || '').trim(), ow: b.offsetWidth, oh: b.offsetHeight,
 				tr: tr ? [R2(+tr[1]), R2(+tr[2])] : null,
 				rel: st.__relAtPlace || (tr ? [R2(+tr[1] - sp[0]), R2(+tr[2] - sp[1])] : null),
-				boxRel: [R2(br.left - hr.left), R2(br.top - hr.top)] };
+				boxRel: [R2(br.left - hr.left), R2(br.top - hr.top)],
+				fixed: [R2((br.left-sr.left)/(sr.width/(st.screen.offsetWidth||sr.width))), R2((br.top-sr.top)/(sr.width/(st.screen.offsetWidth||sr.width)))] };
 			fr.visY0 = st.vis ? R2(st.vis.y0) : null;
 			fr.vis = st.vis ? [R2(st.vis.x0), R2(st.vis.y0), R2(st.vis.x1), R2(st.vis.y1)] : null;
 			fr.keep = st.keepOff ? st.keepOff.map(R2) : null;
 			fr.rn = st.renderN || 0;
-			fr.mapK = st.map ? [R2(st.map.k), R2(st.map.ox), R2(st.map.oy)] : null;
+			fr.mapK = st.map ? [st.map.k, st.map.ox, st.map.oy] : null;
 			fr.anchorY = st.L.anchorY;
+			if(window.__qbsDiagnostics) fr.pip = {C:{...st.ps.C},Ct:{...st.ps.Ct},th:st.ps.th,tilt:st.ps.tilt,tiltT:st.ps.tiltT,dy:st.ps.dy,phi:st.ps.phi,rel:st.bubbleRel,claim:st.bubbleClaim};
 			fr.props = [];
 			st.props.forEach((pr, id) => {
 				if (!pr.el || !pr.el.isConnected || !pr.ties || !pr.ties.length) return;
@@ -85,7 +91,7 @@ function installSampler() {
 				// the anchor each string must hang from, from the destination the stage itself keeps (restPose): over the
 				// pivot at the destination's fit offset; absent on a page built before the helper, which fails by name
 				const anch = rp ? offs.map((o) => [R2(pr.ax + (rp.ax - tg.ax) + o * rp.sc), R2(st.L.anchorY + rp.dy)]) : null;
-				fr.props.push({ id, kind: pr.spec && pr.spec.kind, state: pr.state, grounded: pr.grounded ? 1 : 0, op: R2(pr.op), ax: R2(pr.ax), tgAx: R2(tg.ax),
+				fr.props.push({ id, kind: pr.spec && pr.spec.kind, state: pr.state, grounded: pr.spec.ground && pr.landed ? 1 : 0, op: R2(pr.op), ax: R2(pr.ax), tgAx: R2(tg.ax),
 					a: R2(pr.a * 57.3), offs, anch, restBox: pr.restBox ? pr.restBox.map(R2) : null, lines });
 			});
 		} else fr.none = 1;
@@ -106,6 +112,7 @@ export default async function (t) {
 	await f.waitForFunction(() => { const h = document.querySelector('#pm-o55-onboarding .o55-stage'); return !!(h && h.__pipStage && h.__pipStage.gHead); }, null, { timeout: 60000 });
 	await t.emulate({ reducedMotion: t.args.motion === 'reduce' ? 'reduce' : 'no-preference' });
 	await f.evaluate(installSampler);
+	await f.evaluate(v=>{window.__qbsDiagnostics=v;},!!t.args.diagnostics);
 	const quiet = () => f.waitForFunction(() => !window.O55.S.vt && !(window.O55.nierLook && window.O55.nierLook.busy && window.O55.nierLook.busy()) && !(window.PM_THEME_TRANSITION && window.PM_THEME_TRANSITION.busy && window.PM_THEME_TRANSITION.busy()), null, { timeout: 30000 }).catch(() => {});
 	const wake = async () => {
 		await t.page.mouse.move(400, 350);
@@ -114,7 +121,7 @@ export default async function (t) {
 	};
 	await f.waitForTimeout(1100); await wake(); await f.waitForTimeout(1200);
 
-	const bad4 = [], bad6 = [], badDest = [], noHelper = [];
+	const bad4 = [], bad6 = [], badDest = [], noHelper = [], diagnostics = [], notOpened = [];
 	let scenes = 0, lines = 0, strings = 0, dests = 0;
 	const judge = (look, screen, frames) => {
 		const fr = frames.filter((x) => !x.none);
@@ -137,19 +144,21 @@ export default async function (t) {
 			// Pip, on the screen when an obstacle or the stage edge pins it while Pip sways (Retro's cramped banner).
 			// Read in scene units, then scaled by the settled map: a stage that is still opening (the sandbox sheet)
 			// rescales every px offset while the bubble keeps the same scene place
-			const rels = e.rows.map((x) => { const r = x.fam === 'nier' || !x.bub.rel ? x.bub.boxRel : x.bub.rel; const k = x.mapK ? x.mapK[0] : 1; return r ? [r[0] / k, r[1] / k] : null; });
-			const trs = e.rows.map((x) => { const r = x.bub.tr; if (!r || !x.mapK) return x.bub.boxRel; return [(r[0] - x.mapK[1]) / x.mapK[0], (r[1] - x.mapK[2]) / x.mapK[0]]; });
+			const rels = e.rows.map((x) => { const r = x.fam === 'nier' ? x.bub.fixed : !x.bub.rel ? x.bub.boxRel : x.bub.rel; const k = x.fam === 'nier' ? 1 : x.mapK ? x.mapK[0] : 1; return r ? [r[0] / k, r[1] / k] : null; });
+			const trs = e.rows.map((x) => { if(x.fam === 'nier') return x.bub.fixed; const r = x.bub.tr; if (!r || !x.mapK) return x.bub.boxRel; return [(r[0] - x.mapK[1]) / x.mapK[0], (r[1] - x.mapK[2]) / x.mapK[0]]; });
 			if (rels.some((r) => !r)) continue;
 			lines++;
-			const kSet = median(e.rows.slice(-20).map((x) => x.mapK ? x.mapK[0] : 1));
+			const kSet = e.rows[0].fam === 'nier' ? 1 : median(e.rows.slice(-20).map((x) => x.mapK ? x.mapK[0] : 1));
 			const sx = median(rels.slice(-20).map((r) => r[0])), sy = median(rels.slice(-20).map((r) => r[1]));
 			const tx = median(trs.slice(-20).map((r) => r[0])), ty = median(trs.slice(-20).map((r) => r[1]));
 			const devs = rels.map((r, i) => Math.max(Math.min(Math.abs(r[0] - sx), Math.abs(trs[i][0] - tx)), Math.min(Math.abs(r[1] - sy), Math.abs(trs[i][1] - ty))) * kSet);
 			const worst = Math.max(...devs), wi = devs.indexOf(worst);
-			// NieR's box is painted-box judged: Pip hovers (a slow bob of the head), so its settling is read looser there
-			const tol = e.rows[0].fam === 'nier' ? 6 : 1;
-			if (devs[0] > tol || worst > tol)
+			// NieR's fixed box is measured against the stage, so Pip's independent hover cannot inflate its bound.
+			const tol = 1;
+			if (devs[0] > tol || worst > tol) {
+				if(t.args.diagnostics) diagnostics.push({look,screen,first:devs[0],worst,frames:e.rows});
 				bad4.push(`${look} ${screen} '${e.rows[0].bub.text.slice(0, 32)}': first frame ${devs[0].toFixed(1)} px from settled, worst ${worst.toFixed(1)} px at +${e.rows[wi].t - e.rows[0].t} ms (${e.rows.length} frames; settled rel [${sx.toFixed(1)}, ${sy.toFixed(1)}] tr [${tx.toFixed(1)}, ${ty.toFixed(1)}], first rels ${rels.slice(0, 5).map((r) => `[${r[0].toFixed(1)}, ${r[1].toFixed(1)}]`).join(' ')})`);
+			}
 		}
 		// ---- QA-6 + QA-4b: per (scene segment, prop). A segment ends where restPose itself is allowed to refit
 		// (a new direct, a layout or visible-span change, a new keepOff); within one, anchor and destination are fixed
@@ -211,7 +220,7 @@ export default async function (t) {
 				await wake(); await f.waitForTimeout(250);
 				await f.evaluate(() => { const S = window.__qbs; S.frames = []; S.on = true; });
 				t.mark(`${look} ${screen}`);
-				await f.evaluate((sid) => window.O55.ui.go(sid, { noHistory: true }), screen);
+				await f.evaluate((sid) => { const O=window.O55, d=O.screens.defs[sid]; if(d && d.seed) d.seed(O.S); O.ui.go(sid, { noHistory: true }); }, screen);
 				await f.waitForTimeout(dwell);
 				const frames = await f.evaluate(() => { const S = window.__qbs; S.on = false; const r = S.frames; S.frames = []; return r; });
 				const at = await f.evaluate(() => window.O55.S.sess.screen);
@@ -225,9 +234,12 @@ export default async function (t) {
 				await f.waitForTimeout(600);
 			}
 		}
+		notOpened.push(...unreached.map(s=>`${look}: ${s}`));
 		t.log(`${look}: ${screens.length - unreached.length}/${screens.length} screens opened${unreached.length ? '; not opened: ' + unreached.join(', ') : ''}`);
 	}
 	if (noHelper.length) t.log(`no restPose destination: ${noHelper.slice(0, 6).join('; ')}${noHelper.length > 6 ? ` (+${noHelper.length - 6} more)` : ''}`);
+	await t.check('every requested screen opened with its owner fixture',notOpened.length===0,notOpened.join('; '));
+	if(t.args.diagnostics) fs.writeFileSync(path.join(t.run.dir,'anchors-diagnostics.json.gz'),zlib.gzipSync(JSON.stringify(diagnostics)));
 	await t.check(`QA-4: each line's bubble sits on its first shown frame within 1 px of where it settles and never strays further (${scenes} scenes, ${lines} lines)`, scenes > 0 && lines > 0 && bad4.length === 0, `${bad4.length} line(s): ` + bad4.slice(0, 8).join('; ') + (bad4.length > 8 ? ` (+${bad4.length - 8} more)` : ''));
 	await t.check(`QA-6: every string hangs from its rest anchor, its top moving only as the swing explains (${strings} strings)`, strings > 0 && bad6.length === 0, bad6.slice(0, 8).join('; ') + (bad6.length > 8 ? ` (+${bad6.length - 8} more)` : ''));
 	await t.check(`QA-4b: no prop's destination refits within a scene (${dests} destinations${noHelper.length ? '; a page with no rest destination has none to judge, QA-6 above is its measure' : ''})`, badDest.length === 0, badDest.slice(0, 8).join('; ') + (badDest.length > 8 ? ` (+${badDest.length - 8} more)` : ''));
