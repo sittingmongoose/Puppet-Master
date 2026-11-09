@@ -250,3 +250,8 @@ Run with `--set sandbox=0 --set looks=retro-light --set screens=s-confirm --set 
 and the usual private `--set page=`; record on a GPU host for native confirmation.
 This diagnostic does not change the ordinary `retro-stage-fit` measurement or
 certify another cell. K18 scope and evidence are recorded in the lane report.
+The separately scoped `diagnostics/retro-crop-ink-safe.check.mjs` uses the same
+helper and assertions for `--set screens=safe` at that same look, size and surface.
+Both diagnostics preserve a settled initial state while choosing the phase and
+issue one idle kick; their recorded initial velocity is checked so an earlier
+random idle cannot turn the fixture into two stacked kicks.
