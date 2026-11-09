@@ -1412,7 +1412,7 @@
          cannot fit on an axis, pin that axis to the scene instead and reserve the head's whole face there. */
       const follows = [bounds[2] - bounds[0] >= motion.hi[0] - motion.lo[0], bounds[3] - bounds[1] >= motion.hi[1] - motion.lo[1]];
       const origin = sp.map((p, i) => follows[i] ? p : (motion.lo[i] + motion.hi[i]) / 2);
-      const frameKey = `${this.layoutName}:${follows.join(',')}`;
+      const frameKey = JSON.stringify([motion.key, this.spec.props, bw, bh, follows]);
       if (this.bubbleFrame !== frameKey) {
         const hadBand = this.bubbleKeepOff;
         this.bubbleFrame = frameKey; this.bubbleRel = null; this.bubbleClaim = null; this.bubbleKeepOff = null;
