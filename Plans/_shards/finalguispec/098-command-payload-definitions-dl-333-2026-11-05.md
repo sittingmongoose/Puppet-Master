@@ -4,7 +4,7 @@ Source: `Plans/FinalGUISpec.md`
 
 Source lines: L50376-L52066
 
-Source SHA256: `bacf65aad626a58bba6cb8616a340c44cc4490ec177cbb061ac5923e0afc8035`
+Source SHA256: `05719e033f2c8ffc8f17626be96e51efb5f5612251334efd4fa52402516410b3`
 
 ---
 
@@ -670,7 +670,7 @@ command_payload_definitions:
             all six providers, with the generic text bound; alternative: required for Slack only and optional
             elsewhere.
         profile:
-          {type: contract, ref: Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-F1 decided by the owner: one arg named profile, typed by CV-369''s NotificationDestinationProfileV1 and matching the selected provider.'}
+          {type: contract, ref: Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1, discriminator_source: {arg: provider}, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-F1 decided by the owner: one arg named profile, typed by CV-369''s NotificationDestinationProfileV1 and matching the selected provider.'}
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json
@@ -701,7 +701,7 @@ command_payload_definitions:
           provenance: canon
           source: "UCC-230 row-group UCC-101..UCC-105 optional identity notification_destination_id?, made mandatory by the command subject (one destination); type id per identity_typing"
         profile:
-          {type: contract, ref: Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1, required: false, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-F1, Q-F2, Q-F3 decided by the owner: optional CV-369/NotificationDestinationProfileV1; absent leaves the stored profile unchanged, present replaces it completely after validation against the stored immutable provider. provider is not an update arg and cannot change on this route.'}
+          {type: contract, ref: Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1, discriminator_source: {owner: stored_destination.provider}, required: false, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-F1, Q-F2, Q-F3 decided by the owner: optional CV-369/NotificationDestinationProfileV1; absent leaves the stored profile unchanged, present replaces it completely after validation against the stored immutable provider. provider is not an update arg and cannot change on this route.'}
         display_name:
           type: string
           required: false

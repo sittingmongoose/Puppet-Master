@@ -2,9 +2,9 @@
 
 Source: `Plans/Contracts_V0.md`
 
-Source lines: L24490-L24642
+Source lines: L24490-L24647
 
-Source SHA256: `4af4bee2524963ef113b14d9c9e43db01172a02bce1088c7fcb380feeee6f342`
+Source SHA256: `c91a0bfd214577d5bc61ba883d6108fcd01787ec8a65fbe33c91cd17eb57fd01`
 
 ---
 
@@ -22,7 +22,10 @@ canonical_text: >-
   NotificationDestinationProfileV1 selects SlackDestinationProfileV1, DiscordDestinationProfileV1,
   GenericWebhookDestinationProfileV1, NtfyDestinationProfileV1, PushoverDestinationProfileV1 or
   TelegramDestinationProfileV1 using the enclosing command's provider, or the stored destination's
-  immutable provider on update. Its branch keys are exactly F3-717's provider enum. Each record is closed:
+  immutable provider on update. NotificationDestinationProfileV1 declares discriminator_source: external;
+  every use site names its arg or owner source. WebhookPredicateAtomV1 declares discriminator_source:
+  in_record; each branch carries a required matching kind const. NotificationDestinationProfileV1's branch
+  keys are exactly F3-717's provider enum. Each record is closed:
   undeclared fields are refused. Every credential, token, key, webhook URL, URL credential and sensitive
   destination locator travels only as secret_ref, never its raw value. Ref resolution and display obey
   PS-124 and SP-222; a reference is not authority to disclose it. static_header_refs contains only
@@ -125,6 +128,7 @@ typed_contracts:
         rate_limit_profile: {type: ref, required: true, default: none, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-C1 decided by the owner: require a non-secret policy-record ref.'}
     NotificationDestinationProfileV1:
       discriminator: provider
+      discriminator_source: external
       branches: {slack: SlackDestinationProfileV1, discord: DiscordDestinationProfileV1, generic_webhook: GenericWebhookDestinationProfileV1, ntfy: NtfyDestinationProfileV1, pushover: PushoverDestinationProfileV1, telegram: TelegramDestinationProfileV1}
     GenericWebhookSuccessPredicateV1:
       fields:
@@ -133,6 +137,7 @@ typed_contracts:
         atoms: {type: list, required: false, default: [], item: {type: contract, ref: Plans/Contracts_V0.md#CV-369/WebhookPredicateAtomV1}, constraints: {max_items: 5}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-G7 decided by the owner: optional flat atoms list, empty by default.'}
     WebhookPredicateAtomV1:
       discriminator: kind
+      discriminator_source: in_record
       branches: {status_class_is: WebhookStatusClassAtomV1, status_code_equals: WebhookStatusCodeAtomV1, header_exists: WebhookHeaderExistsAtomV1, header_equals_literal: WebhookHeaderEqualsAtomV1, json_pointer_exists: WebhookJsonPointerExistsAtomV1, json_pointer_equals_literal: WebhookJsonPointerEqualsAtomV1}
     WebhookStatusClassAtomV1:
       fields:

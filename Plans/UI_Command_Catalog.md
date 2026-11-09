@@ -8931,9 +8931,16 @@ canonical_text: >-
   A bare Plans/<Doc>.md#<UNIT-ID> is an error. The block has only typed_contracts at top level and no
   plan_unit_id key; its body has exactly format, owner_unit, vocabulary (this unit), and contracts. Each
   named contract is a nonempty fields record checked by this vocabulary's field/default/provenance rules,
-  or a closed discriminator/branches union of named fields records in that same block. Branch keys are
-  exact selector values; when carried inside a branch the discriminator is a required matching const,
-  otherwise the enclosing owner supplies it (create's provider or update's immutable stored provider).
+  or a closed union with exactly discriminator, discriminator_source and branches, naming fields records
+  in that same block. discriminator_source is required: in_record requires every branch to carry the
+  named selector as a required const equal to its branch key; external requires every contract use site
+  (including list items) to declare discriminator_source: {arg: <selector>} or
+  discriminator_source: {owner: <record>.<selector>}. arg names an existing sibling selector enum;
+  owner names the owner-held record and selector (create uses {arg: provider}, update uses
+  {owner: stored_destination.provider}). Owner selection is revalidated against that immutable stored
+  record. Source maps have exactly one key and nonempty identifier/path values ending in the selector;
+  arg must match the discriminator name. Source maps on other types or in_record uses are refused.
+  Branch keys are exact selector values.
   An enclosing enum selector must equal the union's branch keys. Named refs, including forward refs,
   resolve against the actual typed blocks, never merely a PlanUnit id. YAML merges, comments, duplicate
   keys, unknown block/contract keys, misplaced blocks and review/evidence references are refused as for

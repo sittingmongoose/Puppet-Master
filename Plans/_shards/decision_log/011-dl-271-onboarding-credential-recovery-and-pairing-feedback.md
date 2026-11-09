@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L29381
+Source lines: L26794-L29385
 
-Source SHA256: `ae7fbf0b05de6cfffe1182a5474d18a535bf77595d845eb12804ff9af42f2332`
+Source SHA256: `b12f81b2f4f2b849c213264aff17f6c3d9c46825a23a849817ad5037beb942e1`
 
 ---
 
@@ -2460,6 +2460,10 @@ canonical_text: >-
   including exactly-one coverage. DL-471 Q-ID1 decides cmd.docker.remove is a compatibility_alias of cmd.docker.container.delete.
   DL-471 Q-ID2 decides cmd.git.worktree is a non-dispatch family token.
   Both are recorded in UCC-230 non_definition_tokens, with no independent definition.
+  Amended after review: merge keeps the complete expected_lease and adds observed topology_generation
+  and source_location_id fences, required when leased; sibling placement is a documented gap for Jared.
+  Amended after review: unions declare in_record or external discriminator supply; required matching
+  branch consts and explicit external use-site sources are checked, including discriminator deletion.
   CV-369 adds pm.typed_contracts.v1 with all thirty-five CV-298 provider fields and the six provider
   branches, using UCC-230 field/type/default/provenance rules and reference-only secrets. The generic
   webhook predicate is closed to default 2xx plus zero to five atoms from CV-298's six named kinds.

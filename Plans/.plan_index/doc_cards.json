@@ -4605,7 +4605,7 @@
         "scripts/pm-new-contracts-verify.py",
         "scripts/pm-plans-verify.py"
       ],
-      "line_count": 24642,
+      "line_count": 24647,
       "path": "Plans/Contracts_V0.md",
       "plan_unit_count": 362,
       "plan_unit_ids": [
@@ -5332,7 +5332,7 @@
         "worktree_lane_context_loss",
         "worktree_lifecycle_record_loss"
       ],
-      "sha256": "4af4bee2524963ef113b14d9c9e43db01172a02bce1088c7fcb380feeee6f342",
+      "sha256": "c91a0bfd214577d5bc61ba883d6108fcd01787ec8a65fbe33c91cd17eb57fd01",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 361,
@@ -5915,7 +5915,7 @@
         "scripts/pm_wiring_inventory.py",
         "tests/test_pm_wiring_vocabulary.py"
       ],
-      "line_count": 29381,
+      "line_count": 29385,
       "path": "Plans/Decision_Log.md",
       "plan_unit_count": 335,
       "plan_unit_ids": [
@@ -6442,7 +6442,7 @@
         "workflow_verification_exception_route_drift",
         "working_activity_behaviour_drift"
       ],
-      "sha256": "ae7fbf0b05de6cfffe1182a5474d18a535bf77595d845eb12804ff9af42f2332",
+      "sha256": "b12f81b2f4f2b849c213264aff17f6c3d9c46825a23a849817ad5037beb942e1",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 335
@@ -8903,7 +8903,7 @@
         "wand_sheet_presentation_drift",
         "web_client_stack_or_parity_drift"
       ],
-      "sha256": "bacf65aad626a58bba6cb8616a340c44cc4490ec177cbb061ac5923e0afc8035",
+      "sha256": "05719e033f2c8ffc8f17626be96e51efb5f5612251334efd4fa52402516410b3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 656,
@@ -20250,7 +20250,7 @@
         "scripts/pm-command-payload-defs-check.py",
         "scripts/pm-prd-planning-runtime-validate.py"
       ],
-      "line_count": 21918,
+      "line_count": 21925,
       "path": "Plans/UI_Command_Catalog.md",
       "plan_unit_count": 199,
       "plan_unit_ids": [
@@ -20537,7 +20537,7 @@
         "wand_module_surface_drift",
         "wrong_git_target_or_phantom_handler"
       ],
-      "sha256": "915b3862a1365a5393a8c8f5ce5d86de46f1f1c64f58086dbac1992bb6cd2b73",
+      "sha256": "0ec6a6d55443c27a3159cecbf0fa51ab923e7b5249dfb2b4f5c7573f22f1a0a3",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 197,
@@ -21595,7 +21595,7 @@
         "future Source Control worktree manager",
         "future worktree lock manager"
       ],
-      "line_count": 7699,
+      "line_count": 7730,
       "path": "Plans/WorktreeGitImprovement.md",
       "plan_unit_count": 85,
       "plan_unit_ids": [
@@ -21709,7 +21709,7 @@
         "worktree_panel_filter_drift",
         "worktree_row_presentation_drift"
       ],
-      "sha256": "35bfd6e5a8b4ab247ddf6c5ef9ec9f12e9acda1c82a10f8cde0c759029403303",
+      "sha256": "f26f335085539b1872c019e601669fafeeb3b5499643c63d2fe758fed9d9d490",
       "source_preserving_unit_ids": [],
       "status_counts": {
         "accepted": 85
@@ -21744,7 +21744,7 @@
       ]
     }
   ],
-  "generated_at_utc": "2026-11-09T02:30:21Z",
+  "generated_at_utc": "2026-11-09T04:09:51Z",
   "schema_id": "pm.plan_index.doc_cards.v1",
   "source_scope": "top-level live Plans/*.md; excludes ledgers, generated shards, evidence, and pipeline artifacts",
   "summary": {

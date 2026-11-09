@@ -113,8 +113,8 @@ RUNTIME_GROUP = "UCC-089..UCC-095"
 ROUTE_ARGS = ("route_target", "OpenSubject")
 
 FIELD_KEYS = {"type", "required", "default", "values", "value", "item", "fields", "ref", "constraints",
-              "required_when", "forbidden_when", "provenance", "source", "gap_note", "nullable"}
-ITEM_KEYS = {"type", "values", "value", "item", "fields", "ref", "constraints"}
+              "required_when", "forbidden_when", "provenance", "source", "gap_note", "nullable", "discriminator_source"}
+ITEM_KEYS = {"type", "values", "value", "item", "fields", "ref", "constraints", "discriminator_source"}
 DEFINITION_KEYS = {"command_id", "ucc_units", "command_kind", "response_kind", "args", "owner_request", "result",
                    "error_codes", "disabled_reason_codes", "aliases", "identity_exemptions", "narrowing_gap_note",
                    "judgments", "owner_state_codes"}
@@ -1402,6 +1402,24 @@ def check_type_spec(ctx: Context, spec: Any, where: dict[str, str], name: str, r
         if not resolve_ref(ctx, spec.get("ref"), results):
             finding = "named_contract_not_found" if isinstance(spec.get("ref"), str) and TYPED_REF_RE.fullmatch(spec["ref"]) else "contract_ref_unresolved"
             rep.add("C05", finding, field=name, detail=str(spec.get("ref")), **where)
+    contract = ctx.typed_contracts.get(spec.get("ref")) if isinstance(spec.get("ref"), str) else None
+    external = kind == "contract" and isinstance(contract, dict) and contract.get("discriminator_source") == "external"
+    supply = spec.get("discriminator_source")
+    if external:
+        selector = contract.get("discriminator")
+        valid = isinstance(supply, dict) and len(supply) == 1
+        if valid and "arg" in supply:
+            valid = isinstance(supply["arg"], str) and supply["arg"] == selector and supply["arg"] in siblings
+        elif valid and "owner" in supply:
+            value = supply["owner"]
+            valid = (isinstance(value, str) and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+", value)
+                     is not None and value.rsplit(".", 1)[-1] == selector)
+        else:
+            valid = False
+        if not valid:
+            rep.add("C05", "external_discriminator_source_missing_or_invalid", field=name, **where)
+    elif "discriminator_source" in spec:
+        rep.add("C05", "unexpected_discriminator_source", field=name, **where)
     constraints = spec.get("constraints")
     if constraints is not None:
         if not isinstance(constraints, dict):
@@ -2107,8 +2125,8 @@ def check_typed_blocks(ctx: Context) -> None:
     """Discover all named contracts first, then validate them, including forward references.
 
     A bare unit id is never a type. Discriminated contracts are closed unions of named records
-    in the same unit. A branch may carry the discriminator as a required const; otherwise its
-    selector is supplied by the enclosing owner (for example a destination's stored provider).
+    in the same unit. Supply is explicitly in_record (required branch const) or external
+    (every use site names its arg or owner-held selector).
     """
     pending: list[tuple[Block, dict[str, Any], dict[str, Any]]] = []
     seen: set[tuple[str, str]] = set()
@@ -2158,9 +2176,10 @@ def check_typed_blocks(ctx: Context) -> None:
                 continue
             if set(contract) == {"fields"} and isinstance(contract["fields"], dict) and contract["fields"]:
                 check_fields(ctx, contract["fields"], where, {})
-            elif set(contract) == {"discriminator", "branches"}:
+            elif set(contract) == {"discriminator", "discriminator_source", "branches"}:
                 selector, branches = contract["discriminator"], contract["branches"]
-                if (not isinstance(selector, str) or not IDENTIFIER_RE.fullmatch(selector)
+                if (contract["discriminator_source"] not in ("in_record", "external")
+                        or not isinstance(selector, str) or not IDENTIFIER_RE.fullmatch(selector)
                         or not isinstance(branches, dict) or not branches):
                     ctx.report.add("C05", "typed_discriminator_malformed", **where)
                     continue
@@ -2172,7 +2191,7 @@ def check_typed_blocks(ctx: Context) -> None:
                         ctx.report.add("C05", "typed_discriminator_branch_unresolved", field=str(value), **where)
                         continue
                     discriminator = branch["fields"].get(selector)
-                    if discriminator is not None and (not isinstance(discriminator, dict)
+                    if (contract["discriminator_source"] == "in_record" or discriminator is not None) and (not isinstance(discriminator, dict)
                             or discriminator.get("type") != "const" or discriminator.get("value") != value
                             or discriminator.get("required") is not True):
                         ctx.report.add("C05", "typed_discriminator_branch_value_mismatch", field=str(value), **where)
@@ -4100,13 +4119,14 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
                 "contracts": {
                     "SlackDestinationProfileV1": {"fields": {
                         "credential_ref": {"type": "secret_ref", "required": True, "default": "none", **canon()}}},
-                    "NotificationDestinationProfileV1": {"discriminator": "provider",
+                    "NotificationDestinationProfileV1": {"discriminator": "provider", "discriminator_source": "external",
                         "branches": {"slack": "SlackDestinationProfileV1"}}}}
         fx.doc_suffix["Plans/Contracts_V0.md"] = fence({"plan_unit_id": "CV-369", "unit_type": "schema_contract",
             "owner_doc": "Plans/Contracts_V0.md"}) + fence({TYPED_ROOT_KEY: body})
         _defs(fx, "cmd.docker.image.tag")["args"].update({
             "provider": {"type": "enum", "values": ["slack"], "required": True, "default": "none", **canon()},
             "profile": {"type": "contract", "ref": "Plans/Contracts_V0.md#CV-369/NotificationDestinationProfileV1",
+                        "discriminator_source": {"arg": "provider"},
                         "required": True, "default": "none", **canon()}})
         return body
 
@@ -4150,6 +4170,8 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
     @case("pass Q5b: internal discriminator uses required const values", 0, set())
     def _(fx: Fixture) -> None:
         body = typed(fx)
+        body["contracts"]["NotificationDestinationProfileV1"]["discriminator_source"] = "in_record"
+        _defs(fx, "cmd.docker.image.tag")["args"]["profile"].pop("discriminator_source")
         body["contracts"]["SlackDestinationProfileV1"]["fields"]["provider"] = {
             "type": "const", "value": "slack", "required": True, "default": "none", **canon()}
         replace_typed(fx, body)
@@ -4157,9 +4179,54 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
     @case("fail Q5b: internal discriminator const mismatch", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
     def _(fx: Fixture) -> None:
         body = typed(fx)
+        body["contracts"]["NotificationDestinationProfileV1"]["discriminator_source"] = "in_record"
+        _defs(fx, "cmd.docker.image.tag")["args"]["profile"].pop("discriminator_source")
         body["contracts"]["SlackDestinationProfileV1"]["fields"]["provider"] = {
             "type": "const", "value": "discord", "required": True, "default": "none", **canon()}
         replace_typed(fx, body)
+
+    def internal_typed(fx: Fixture) -> dict[str, Any]:
+        body = typed(fx)
+        body["contracts"]["NotificationDestinationProfileV1"]["discriminator_source"] = "in_record"
+        _defs(fx, "cmd.docker.image.tag")["args"]["profile"].pop("discriminator_source")
+        body["contracts"]["SlackDestinationProfileV1"]["fields"]["provider"] = {
+            "type": "const", "value": "slack", "required": True, "default": "none", **canon()}
+        return body
+
+    @case("fail MAX1: deleted in-record discriminator", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
+    def _(fx: Fixture) -> None:
+        body = internal_typed(fx)
+        del body["contracts"]["SlackDestinationProfileV1"]["fields"]["provider"]
+        replace_typed(fx, body)
+
+    @case("fail MAX1: optional in-record discriminator", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
+    def _(fx: Fixture) -> None:
+        body = internal_typed(fx)
+        body["contracts"]["SlackDestinationProfileV1"]["fields"]["provider"]["required"] = False
+        replace_typed(fx, body)
+
+    @case("fail MAX1: missing union supply declaration", 1, {"C05"}, kinds={"typed_contract_shape"})
+    def _(fx: Fixture) -> None:
+        body = typed(fx)
+        del body["contracts"]["NotificationDestinationProfileV1"]["discriminator_source"]
+        replace_typed(fx, body)
+
+    @case("fail MAX1: missing external use-site source", 1, {"C05"}, kinds={"external_discriminator_source_missing_or_invalid"})
+    def _(fx: Fixture) -> None:
+        typed(fx)
+        _defs(fx, "cmd.docker.image.tag")["args"]["profile"].pop("discriminator_source")
+
+    @case("fail MAX1: external source names absent arg", 1, {"C05"}, kinds={"external_discriminator_source_missing_or_invalid"})
+    def _(fx: Fixture) -> None:
+        typed(fx)
+        del _defs(fx, "cmd.docker.image.tag")["args"]["provider"]
+
+    @case("pass MAX1: external owner selector", 0, set())
+    def _(fx: Fixture) -> None:
+        typed(fx)
+        args = _defs(fx, "cmd.docker.image.tag")["args"]
+        del args["provider"]
+        args["profile"]["discriminator_source"] = {"owner": "stored_destination.provider"}
 
     @case("fail Q5b: typed block format and owner placement", 1, {"C03", "C14"},
           kinds={"typed_block_format", "typed_block_owner_or_placement"})
