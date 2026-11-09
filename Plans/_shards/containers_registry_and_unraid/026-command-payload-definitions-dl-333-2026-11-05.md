@@ -2,9 +2,9 @@
 
 Source: `Plans/Containers_Registry_and_Unraid.md`
 
-Source lines: L6978-L9830
+Source lines: L6978-L9873
 
-Source SHA256: `6de92dc70d8f93f1723b7e7542dde01a5993ce64bdaf94e1aca2e49067d69a38`
+Source SHA256: `0263a7722ce9525e6a26baffc162d7c688500c9b9ff96672e28d7b2cb83a4663`
 
 ---
 
@@ -18,6 +18,9 @@ unit_type: command_contract
 status: accepted
 owner_doc: Plans/Containers_Registry_and_Unraid.md
 canonical_text: >-
+  Amended 2026-11-09 (DL-471): cmd.docker.bake and cmd.docker.container.stats are explicitly routed
+  through UCC-231 and UCC-230's closed external list. The bare Bake payload reuses the existing Bake-run
+  shape and result, with semantics decided by DL-471 Q-ID3; stats' view-only projection is decided by DL-471 Q-ID4.
   Typed payload definitions (DL-333) for the forty-five Docker Manager, registry and Kubernetes
   commands that UI_Command_Catalog UCC-049 through UCC-053 register and UCC-230 routes to this
   unit, including cmd.orchestrator.push_image, whose Docker publication contract is CRAU's: the
@@ -37,6 +40,12 @@ canonical_text: >-
   for the route/open and view-state commands that have no owner result, since Contracts_V0's
   UICommandResponse determines response_kind by the actual owner contract. Compose scenario args take
   CRAU-096's scenario schema field names.
+  Plans/Decision_Log.md#DL-471, Q-ID3 decided by the owner: [cmd.docker.bake], command_kind = "domain_action". the existing Bake-run operation, with the same target inference and readiness fences.
+  Plans/Decision_Log.md#DL-471, Q-ID3 decided by the owner: [cmd.docker.bake], disabled_reason_codes = ["not_configured", "unreachable", "degraded", "partial_capability", "stale_projection"]. reuse bake.run's set and CRAU-095 state mappings.
+  Plans/Decision_Log.md#DL-471, Q-ID3 decided by the owner: [cmd.docker.bake], owner_result = "local:DockerBuildRunResultV1". reuse the existing Bake-run result rather than invent a second payload shape.
+  Plans/Decision_Log.md#DL-471, Q-ID4 decided by the owner: [cmd.docker.container.stats], command_kind = "shell_view". show the selected container's owner projection with its live/cached freshness markers.
+  Plans/Decision_Log.md#DL-471, Q-ID4 decided by the owner: [cmd.docker.container.stats], response_kind = "local_projection". the stats view consumes the existing projection and dispatch receipt, with no new owner result.
+  Plans/Decision_Log.md#DL-471, Q-ID4 decided by the owner: [cmd.docker.container.stats], disabled_reason_codes = ["not_configured", "stale_projection"]. not_configured for unavailable Docker and stale_projection for a stale subject identity; cached metrics remain viewable with freshness markers.
 gui_related: true
 gui_classification_reason: Defines the arguments of user-visible Docker Manager, registry and Kubernetes commands.
 depends_on: [UCC-230, UCC-049, UCC-050, UCC-051, UCC-052, UCC-053, UCC-105, UCC-137, CRAU-007, CRAU-011, CRAU-012, CRAU-013, CRAU-014, CRAU-017, CRAU-031, CRAU-044, CRAU-095, CRAU-096, CRAU-098, CRAU-099, CV-304, CV-333, UCC-217, DL-333, DL-341]
@@ -58,7 +67,7 @@ node_compile_hint: {mode: command_payload_definitions, create_worknodes: false, 
 source_lineage:
   - "T3 thread 1338d738-7bb4-47b2-852e-38a876cb8521, 2026-11-05T02:48:03Z: Jared's answer \"approve all\" to Q5"
   - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5/inventory.jsonl"
-preserved_exact_tokens: [cmd.docker.build.image, cmd.docker.build.compose, cmd.docker.build.bake, cmd.docker.build.run, cmd.docker.build.select_target, cmd.docker.bake.preview, cmd.docker.bake.run, cmd.docker.container.stop, cmd.docker.container.restart, cmd.docker.container.delete, cmd.docker.container.inspect, cmd.docker.container.view_logs, cmd.docker.container.attach_shell, cmd.docker.context.select, cmd.docker.image.tag, cmd.docker.image.inspect, cmd.docker.image.delete, cmd.docker.image.push, cmd.docker.open_dockerfile, cmd.docker.compose.up_subset, cmd.docker.compose.down_subset, cmd.docker.compose.scenario.save, cmd.docker.compose.scenario.run, cmd.docker.compose.scenario.edit, cmd.docker.compose.scenario.delete, cmd.docker.show, cmd.docker.switch_subview, cmd.docker.create_repository, cmd.docker.create_repository.confirm, cmd.docker.create_repository.cancel, cmd.docker.registry.promote, cmd.docker.registry.tag_push, cmd.docker.drift.compare, cmd.docker.cleanup.scan, cmd.docker.cleanup.prune, cmd.orchestrator.push_image, cmd.docker.k8s.apply, cmd.docker.k8s.diff, cmd.docker.k8s.logs, cmd.docker.k8s.exec, cmd.docker.k8s.port_forward, cmd.docker.k8s.select_context, cmd.docker.k8s.select_namespace, cmd.docker.k8s.helm_preview, cmd.docker.k8s.helm_install]
+preserved_exact_tokens: [cmd.docker.build.image, cmd.docker.build.compose, cmd.docker.build.bake, cmd.docker.build.run, cmd.docker.build.select_target, cmd.docker.bake.preview, cmd.docker.bake.run, cmd.docker.container.stop, cmd.docker.container.restart, cmd.docker.container.delete, cmd.docker.container.inspect, cmd.docker.container.view_logs, cmd.docker.container.attach_shell, cmd.docker.context.select, cmd.docker.image.tag, cmd.docker.image.inspect, cmd.docker.image.delete, cmd.docker.image.push, cmd.docker.open_dockerfile, cmd.docker.compose.up_subset, cmd.docker.compose.down_subset, cmd.docker.compose.scenario.save, cmd.docker.compose.scenario.run, cmd.docker.compose.scenario.edit, cmd.docker.compose.scenario.delete, cmd.docker.show, cmd.docker.switch_subview, cmd.docker.create_repository, cmd.docker.create_repository.confirm, cmd.docker.create_repository.cancel, cmd.docker.registry.promote, cmd.docker.registry.tag_push, cmd.docker.drift.compare, cmd.docker.cleanup.scan, cmd.docker.cleanup.prune, cmd.orchestrator.push_image, cmd.docker.k8s.apply, cmd.docker.k8s.diff, cmd.docker.k8s.logs, cmd.docker.k8s.exec, cmd.docker.k8s.port_forward, cmd.docker.k8s.select_context, cmd.docker.k8s.select_namespace, cmd.docker.k8s.helm_preview, cmd.docker.k8s.helm_install, cmd.docker.bake, cmd.docker.container.stats]
 negative_constraints:
   - Do not add payload fields to UI_Command_Catalog command rows.
   - Do not define a payload for an alias, retired, non-alias or source-lineage token.
@@ -331,6 +340,37 @@ command_payload_definitions:
       judgments:
         - {key: command_kind, choice: domain_action, gap_note: "Canon states no command_kind for this row: the 2.5A bake.preview row gives only label, description and availability, and no Cozy lifecycle table lists it. It resolves the Bake graph through the Docker engine and returns a typed preview, not a route, so domain_action; navigation_wrapper would fit only if the preview were a view of already-resolved state."}
         - {key: disabled_reason_codes, choice: [not_configured, unreachable, degraded, partial_capability, stale_projection], gap_note: "No row states a subset for the docker_available && bake_file_resolved gate; drawn from the shared Docker/Kubernetes disabled-state taxonomy (UI_Command_Catalog.md 2.5B taxonomy paragraph: Unsupported, Not configured, Unauthorized, Unreachable, Degraded, Partial capability) plus the 2.0B projection-freshness clause. Previewing resolves the Bake graph and needs the runtime's Bake capability, which section 2C says disables Bake only when missing, so CRAU-095's bake_unavailable shows as partial_capability through UCC-230 owner_state_code_map, recorded in owner_state_codes. buildx_unavailable is not listed: a preview builds no image, and CRAU-032's buildx availability preflight runs before a build."}
+    - command_id: cmd.docker.bake
+      ucc_units: [UCC-231]
+      command_kind: domain_action
+      response_kind: owner_operation
+      args:
+        capability_snapshot_ref: {type: ref, required: true, default: none, provenance: canon, source: "UCC-230 Docker identity: capability_snapshot_ref for mutating or capability-gated actions"}
+        bake_target: {type: string, required: false, default: none, constraints: {min_length: 1, max_length: 256}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID3 decided by the owner: use bake.run''s optional selected-target override; absence uses the persisted target.'}
+        platforms: {type: list, required: false, default: none, item: {type: string, constraints: {min_length: 1, max_length: 256}}, constraints: {unique_items: true}, provenance: canon, source: 'Plans/Decision_Log.md#DL-471, Q-ID3 decided by the owner: the same optional platform override as bake.run, with no implied override when absent.'}
+      owner_request: none
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: local:DockerBuildRunResultV1
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, unreachable, degraded, partial_capability, stale_projection]
+      owner_state_codes:
+        - {owner_state: bake_unavailable, code: partial_capability}
+        - {owner_state: buildx_unavailable, code: partial_capability}
+      aliases: []
+    - command_id: cmd.docker.container.stats
+      ucc_units: [UCC-231]
+      command_kind: shell_view
+      response_kind: local_projection
+      args:
+        container_ref: {type: ref, required: true, default: none, provenance: canon, source: "UI_Command_Catalog section 2.5A: cmd.docker.container.stats shows live or cached stats for container_selected; UCC-230 types the container_ref identity as ref"}
+      owner_request: none
+      result:
+        response: Plans/ui_command_response.schema.json
+        owner_result: none
+      error_codes: [invalid_args, permission_denied, stale_projection, handler_unavailable, internal_error]
+      disabled_reason_codes: [not_configured, stale_projection]
+      aliases: []
     - command_id: cmd.docker.bake.run
       ucc_units: [UCC-049]
       command_kind: domain_action
@@ -453,7 +493,10 @@ command_payload_definitions:
         owner_result: local:DockerContainerLifecycleResultV1
       error_codes: [invalid_args, permission_denied, blocked_state_required, stale_projection, handler_unavailable, internal_error]
       disabled_reason_codes: [blocked_state_required, stale_projection, permission_required]
-      aliases: []
+      aliases:
+        - command_id: cmd.docker.remove
+          kind: compatibility_alias
+          source: "Plans/Decision_Log.md#DL-471 Q-ID1 decided cmd.docker.remove is a compatibility_alias of cmd.docker.container.delete."
     - command_id: cmd.docker.container.inspect
       ucc_units: [UCC-049]
       command_kind: navigation_wrapper

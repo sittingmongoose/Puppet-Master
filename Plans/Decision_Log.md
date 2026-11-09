@@ -29223,6 +29223,172 @@ owner_hints:
   - Plans/UI_Command_Catalog.md
 ```
 
+### DL-471 - Unrouted Command Coverage And Typed Notification Provider Profiles
+
+```yaml
+plan_unit_id: DL-471
+unit_type: decision
+status: accepted
+owner_doc: Plans/Decision_Log.md
+canonical_text: >-
+  DL-471 implements the Q5b follow-up authorized by DL-341 resolution 5 and Jared's 2026-11-08 stream C
+  question 3 answer, quoted verbatim in owner_decisions. Nine ids were examined, including the subsequently
+  identified cmd.docker.container.stats. Seven live commands receive typed definitions in their existing
+  command_contract owners: cmd.docker.bake and cmd.docker.container.stats in CRAU-115;
+  cmd.git.worktree.merge, cmd.git.worktree.open_topology and cmd.git.worktree.repair in W-095;
+  cmd.debug.record_verification and cmd.debug.run_cleanup in CS-125. UCC-132 and UCC-142 already register
+  merge and the debug phase commands; UCC-231 makes the other four existing owner/catalog registrations
+  addressable. UCC-230's outside_range_commands is a closed concrete list with registration evidence,
+  explicit owner unit and inherited row group. Every listed id receives all ordinary definition checks,
+  including exactly-one coverage. DL-471 Q-ID1 decides cmd.docker.remove is a compatibility_alias of cmd.docker.container.delete.
+  DL-471 Q-ID2 decides cmd.git.worktree is a non-dispatch family token.
+  Both are recorded in UCC-230 non_definition_tokens, with no independent definition.
+  Amended after review: selectors must be supplied and non-null; evidence line hints are checked.
+  Amended after review (2026-11-09 13:25Z): reject direct external unions in owner_request/owner_result and scope line hints to the cited unit/field, excluding the map itself; Jared: "Narrow fix, quick check, land (Recommended)".
+  Amended after review: merge keeps the complete expected_lease and adds observed topology_generation
+  and source_location_id fences, required when leased. Q-ID5e: Jared, 2026-11-09 about 04:12Z, relayed by
+  pm7-build (pm-mail 1109042811-84aa), chose "Two separate fields (Recommended)": the two fences are sibling
+  arguments beside expected_lease, with W-095's exact fence names and the approved lease untouched.
+  Amended after review: unions declare in_record or external discriminator supply; required matching
+  branch consts and explicit external use-site sources are checked, including discriminator deletion.
+  CV-369 adds pm.typed_contracts.v1 with all thirty-five CV-298 provider fields and the six provider
+  branches, using UCC-230 field/type/default/provenance rules and reference-only secrets. The generic
+  webhook predicate is closed to default 2xx plus zero to five atoms from CV-298's six named kinds.
+  Both F3-717 profile args now name CV-369/NotificationDestinationProfileV1. Markdown contract refs
+  require Plans/<Doc>.md#<UNIT-ID>/<ContractName> that resolves to a named typed_contracts definition;
+  a bare unit ref is an error. The checker validates block placement/format, fields, defaults,
+  provenance and closed discriminator branches, not merely the existence of a PlanUnit. JSON and
+  Primitive refs retain their existing forms. Current owner units are reused; CV-369 is a schema
+  owner, not a new command owner. The two debug states phase_not_reached and preservation_hold_active
+  map to blocked_state_required, decided by DL-471 Q-DB3, with exact owner words retained as detail.
+  Jared's 2026-11-09 answer approves all 46 recommended choices, recorded below as decided by the owner.
+  Whole-profile replacement and immutable provider on update are decided by DL-471 Q-F2/Q-F3.
+  Repair's undefined operation remains unavailable without mutation, decided by DL-471 Q-ID7b. No new wiring,
+  handler, provider API claim, readiness acceptance or governance reseal is certified by this packet.
+owner_decisions:
+  - 'Jared, 2026-11-09 about 02:05Z, relayed by pm7-build in pm-mail 1109020252-acf7, verbatim: "Approve all 46 (Recommended)". Question packet: /mnt/Cursor/share/puppet-master/2026-11-04-program/streams/C-Q5B-QUESTIONS.md; SHA-256 5d7b3869093d4daed0c8088812ad4475c183fe5d5a552689ed61cb28de3bac30.'
+  - 'DL-341 resolution 5, pm7-build, 2026-11-07T14:03Z, verbatim: "(5) Out of this branch, but not dropped: Jared wants everything finalized, so the eight unrouted ids become a follow-up packet (Q5b) in your queue, done before the final reseal."'
+  - 'Jared, 2026-11-08, stream C question 3 (row 607), verbatim: "Define them now (Recommended)".'
+  - 'Chosen option, verbatim: "Stream C writes typed profile schemas for the six providers. Choices that canon leaves open are marked as gaps, as the Q5 definitions do, and secrets stay reference-only. C binds F3-717 to them, and a checker rule stops a bare reference from counting as a typed schema. A CV-298 owner approves."'
+command_outcomes:
+  - command_id: cmd.docker.bake
+    standing: live
+    canon: 'CRAU-011: "expose cmd.docker.build.*, cmd.docker.bake, cmd.docker.bake.*, and preview commands"; UCC reserved namespace and catalog.docker_bake production wiring.'
+    outcome: CRAU-115 definition; UCC-231 registration coverage; DL-471 Q-ID3 decides the existing Bake-run operation, shape, result and readiness checks.
+  - command_id: cmd.docker.remove
+    standing: compatibility_alias
+    canon: 'Catalog section 2.5A: "Removes a stopped container"; later boundary: "Legacy Docker rows normalize into canonical" families and "MUST NOT introduce new payload shapes"; DL-341: "Canon names no target for this row".'
+    outcome: "Decided by DL-471 Q-ID1: compatibility_alias to cmd.docker.container.delete."
+  - command_id: cmd.docker.container.stats
+    standing: live
+    canon: 'Catalog section 2.5A: "Shows live or cached container stats with freshness markers".'
+    outcome: CRAU-115 definition and UCC-231 registration coverage; DL-471 Q-ID4 decides the existing live/cached projection and freshness markers.
+  - command_id: cmd.git.worktree.merge
+    standing: live
+    canon: 'UCC-132: "cmd.git.worktree.merge mints the project-scope worktree merge the UCC-054 family lacked"; W-081: "only after exact-result approval, fresh target observation, permission admission, and FileSafe protection".'
+    outcome: W-095 definition, retaining real Project scope, exact-result approval and independent Permissions/FileSafe fences.
+  - command_id: cmd.debug.record_verification
+    standing: live
+    canon: 'CS-065: "records the verification outcome that lets an investigation leave attention_required"; UCC-142 registers the row.'
+    outcome: CS-125 definition; verification outcome/evidence shape and result receipts are decided by DL-471 Q-DB1/Q-DB4.
+  - command_id: cmd.debug.run_cleanup
+    standing: live
+    canon: 'CS-065: "mutation-capable and dispatches only behind confirmation class two_step"; UCC-142 registers the row.'
+    outcome: CS-125 definition; confirmation and current holds remain mandatory; current owner-held state, disabled mappings and result receipts are decided by DL-471 Q-DB2/Q-DB3/Q-DB4.
+  - command_id: cmd.git.worktree.open_topology
+    standing: live
+    canon: 'GitHub_Integration Worktree Topology Commands: "Command IDs: `cmd.git.worktree.open_topology`".'
+    outcome: W-095 definition and UCC-231 registration coverage; DL-471 Q-ID6 decides the existing topology projection.
+  - command_id: cmd.git.worktree.repair
+    standing: live
+    canon: 'GitHub_Integration Worktree Topology Commands includes "`cmd.git.worktree.repair`" and names destructive confirmation fields.'
+    outcome: W-095 definition and UCC-231 registration coverage; DL-471 Q-ID7a/Q-ID7b decide selected-worktree admission and unavailability without mutation until the exact operation is defined.
+  - command_id: cmd.git.worktree
+    standing: family_alias
+    canon: 'Wiring_Matrix.production.json catalog.git_worktree: "ui_command_id": "cmd.git.worktree", "handler_location": "handlers::git::worktree"; no concrete operation or catalog registration precedes this packet.'
+    outcome: "Decided by DL-471 Q-ID2: non-dispatch family token."
+decided_by_owner:
+  - "Decided by DL-471 Q-ID1: compatibility_alias of cmd.docker.container.delete."
+  - "Decided by DL-471 Q-ID2: a non-dispatch family token, with the concrete commands handling actions."
+  - "Decided by DL-471 Q-ID3: the shared Bake-run operation and shape used in the draft, with no independently invented payload."
+  - "Decided by DL-471 Q-ID4: the existing projection, keeping cached metrics visible with freshness markers."
+  - "Decided by DL-471 Q-ID5a: the bounded owner string until the owner defines a shared enum."
+  - "Decided by DL-471 Q-ID5b: refs, all revalidated against the exact target and generation before mutation."
+  - "Decided by DL-471 Q-ID5c: the complete typed observed lease, mandatory whenever the selected worktree has a lease and compared to current owner fences."
+  - 'Decided by DL-471 Q-ID5e: the observed topology_generation and source_location_id fences are sibling arguments beside expected_lease (Jared, 2026-11-09, "Two separate fields (Recommended)").'
+  - "Decided by DL-471 Q-ID5d: direct typed args plus the custody-preserving receipt ref for this packet."
+  - "Decided by DL-471 Q-ID6: the existing topology projection, as the draft defines it."
+  - "Decided by DL-471 Q-ID7a: the draft's exact selected-worktree shape, with `target_worktree_id == worktree_id` and detached targets refused until represented explicitly."
+  - "Decided by DL-471 Q-ID7b: keeping it unavailable without mutation until the exact repair operation is defined. The current command list alone does not specify an algorithm."
+  - "Decided by DL-471 Q-DB1: the explicit bounded record in the draft."
+  - "Decided by DL-471 Q-DB2: current owner-held state, with no caller hold override."
+  - "Decided by DL-471 Q-DB3: `blocked_state_required` for both, retaining the exact owner state as display detail."
+  - "Decided by DL-471 Q-DB4: receipt refs, with no successful result fabricated from dispatch alone."
+  - "Decided by DL-471 Q-S1/Q-D1/Q-G1/Q-P1/Q-T1: required credential refs, as the draft types them."
+  - "Decided by DL-471 Q-C1: the required policy-record ref."
+  - "Decided by DL-471 Q-D2/Q-T2: sensitive refs, preserving their exact CV-298 field names."
+  - "Decided by DL-471 Q-S2: optional sensitive ref."
+  - "Decided by DL-471 Q-S3: the explicit enum with plain default."
+  - "Decided by DL-471 Q-S4: the draft enum, keeping broad mentions disabled."
+  - "Decided by DL-471 Q-D3: the single compound policy for this packet, with no raw avatar URL."
+  - "Decided by DL-471 Q-D4: the bounded ref list, admitting no broad-mention token."
+  - "Decided by DL-471 Q-G2: the three-value draft enum."
+  - "Decided by DL-471 Q-G3: the bounded empty-by-default list."
+  - "Decided by DL-471 Q-G4: a required validated non-secret template ref."
+  - "Decided by DL-471 Q-G5: the draft milliseconds shape."
+  - "Decided by DL-471 Q-G6: optional, preserving the existing default."
+  - "Decided by DL-471 Q-G7: the flat all/any draft, with the default 2xx test retained."
+  - "Decided by DL-471 Q-G8: the typed `kind` union and the exact bounds written in CV-369."
+  - "Decided by DL-471 Q-G9: literal refs, excluding raw secrets and arbitrary bodies."
+  - "Decided by DL-471 Q-N1: sensitive refs, with no raw server URL or topic."
+  - "Decided by DL-471 Q-N2: optional credentials with explicit owner admission; destination enablement and live-send authority still apply."
+  - "Decided by DL-471 Q-N3: the optional bounded integer."
+  - "Decided by DL-471 Q-N4: the bounded list."
+  - "Decided by DL-471 Q-N5: the draft enum, with no raw click URL."
+  - "Decided by DL-471 Q-P2: a sensitive ref."
+  - "Decided by DL-471 Q-P3: the draft bounded integer, subject to owner/provider validation."
+  - "Decided by DL-471 Q-P4: the bounded selector for this packet, without certifying provider support."
+  - "Decided by DL-471 Q-P5: the explicit draft object, with the cross-field rules enforced by the owner."
+  - "Decided by DL-471 Q-T1: a required sensitive ref. Bot credential completeness and optional thread custody are decided in items 16 and 18."
+  - "Decided by DL-471 Q-T3: the draft enum with plain default; those decided tokens are not claimed as existing canon API facts."
+  - "Decided by DL-471 Q-T4: false, as typed in the draft."
+  - "Decided by DL-471 Q-F1: the nested named contract."
+  - "Decided by DL-471 Q-F2: whole-profile replacement; omitted profile leaves it unchanged."
+  - "Decided by DL-471 Q-F3: immutable provider."
+remaining_open_gaps:
+  - None from the 46 owner questions. Other inherited field/type and definition choices in the owner units remain outside this answer.
+  - Repair's exact mutation algorithm remains undefined by the decided unavailable-until-defined policy; this is not an open gap.
+gui_related: false
+gui_classification_reason: Records routing, type definitions and decided owner choices; no new GUI behavior.
+depends_on: [DL-333, DL-341, CV-298, UCC-132, UCC-142]
+unblocks: []
+acceptance_criteria:
+  - All nine ids have a source-backed standing; DL-471 decides the two prior standing questions.
+  - The closed external list routes exactly seven live definitions and retains all existing checker rules.
+  - All six provider profiles are typed, all secrets are refs, both F3-717 profile refs are named and bare unit refs fail.
+  - All 46 recommendations are decided by the owner; unrelated inherited gaps remain explicit and Repair stays unavailable until defined.
+  - The checker and self-tests pass, including positive/negative cases and reverted-copy proofs for new rules.
+  - No WorkNodes, NodeSeeds, executable queues, final node manifests, runtime handlers or production build tasks are created.
+validation_surfaces:
+  - python3 scripts/pm-command-payload-defs-check.py --json
+  - python3 scripts/pm-command-payload-defs-check.py --self-test
+  - python3 scripts/pm-plan-index.py validate
+risk_class: unrouted_commands_and_untyped_notification_profiles
+reasoning_tier: high
+context_scope: q5b_command_and_profile_closure
+implementation_surfaces: [Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md, Plans/Containers_Registry_and_Unraid.md, Plans/WorktreeGitImprovement.md, Plans/Commands_System.md, scripts/pm-command-payload-defs-check.py]
+node_compile_hint: {mode: owner_decision_record, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/owner-answers/q5b/BRIEF.md"
+  - "DL-341 resolution 5, pm7-build, 2026-11-07T14:03Z."
+  - "Jared, 2026-11-08, stream C question 3 (row 607): Define them now (Recommended)."
+preserved_exact_tokens: [DL-471, pm.command_payload_definitions.v1, pm.typed_contracts.v1, outside_range_commands, unresolved_tokens, cmd.docker.bake, cmd.docker.remove, cmd.docker.container.stats, cmd.git.worktree.merge, cmd.debug.record_verification, cmd.debug.run_cleanup, cmd.git.worktree.open_topology, cmd.git.worktree.repair, cmd.git.worktree, NotificationDestinationProfileV1]
+negative_constraints:
+  - Do not silently resolve a standing conflict, call a bare ref a typed schema, or present recommendations as owner answers.
+  - Do not rename or delete existing command canon, expand closed error sets, or expose raw secrets.
+owner_hints: [Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md]
+```
+
 ### DL-472 - Auditor Loop And TargetedRevisionPass Live Owners (As-Is Move)
 
 ```yaml
