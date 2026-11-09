@@ -514,6 +514,17 @@
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
       });
     }
+    /* Room swept by a resting prop's small swing, including the pendulum's travel as well as the rotated drawing.
+       Speech must clear that room, not just the upright box (the 740 Retro vault reached 7 px into the bubble).
+       This reservation is independent of the current angle, so neither destination nor bubble refits during entry. */
+    speechSway(pr, sc, tm, len) {
+      if (this.still() || !H.part('sway-and-physics') || pr.spec.ground || !pr.bb) return [0, 0];
+      const [x, y, w, h] = pr.bb, pts = [[x, y], [x + w, y], [x, y + h], [x + w, y + h]];
+      const base = pts.map(([x, y]) => [(x - tm[0]) * sc, (y - tm[1]) * sc]);
+      const swept = [-.15, 0, .15].flatMap((a) => base.map((p) => { const q = rot(p, a); return [q[0] + Math.sin(a) * len, q[1] + (Math.cos(a) - 1) * len]; }));
+      const span = (ps, axis) => [Math.min(...ps.map((p) => p[axis])),Math.max(...ps.map((p) => p[axis]))];
+      return [0, 1].map((i) => { const b = span(base, i), q = span(swept, i); return Math.max(b[0] - q[0], q[1] - b[1]); });
+    }
     /* The shared destination used by the drop, the bubble's occupancy and the strings' suspension. It exists before
        the first visible frame, independent of entry opacity, spring progress and swing. A scene/layout change refits
        it; an outgoing prop keeps the place it left. Only preceding props participate, so the order has no cycle. */
@@ -528,7 +539,9 @@
       if (pr.restFit && pr.restFit.key === key) return pr.restFit;
       const fit = this.fit(pr, [tg.ax, this.L.anchorY + tg.len], tg.sc, tm, true);
       pr.restBox = fit.box;
-      return (pr.restFit = Object.assign({ key, ax: tg.ax + fit.dx, sc: tg.sc * fit.f }, fit));
+      const reach = this.speechSway(pr, tg.sc * fit.f, tm, tg.len), b = fit.box;
+      const speechBox = b && [b[0] - reach[0], b[1] - reach[1], b[2] + reach[0], b[3] + reach[1]];
+      return (pr.restFit = Object.assign({ key, speechBox, ax: tg.ax + fit.dx, sc: tg.sc * fit.f }, fit));
     }
     /* how far a prop must move (dx, dy) or shrink (f) for its drawing, at its angle, to sit inside the pane's visible span
        (this.vis, from measure) with a margin, and off a speech box that cannot move out of its way (this.keepOff: NieR's
@@ -593,7 +606,11 @@
         /* off what it must not touch: a speech box that cannot move (keepOff) and the props already placed this frame
            (the name's sign and the service's mark at a short window); it moves the least way that clears them all,
            inside the pane, and is drawn a little smaller only when no way does */
-        const obs = []; if (this.keepOff && visible > .05) obs.push(this.keepOff);
+        const obs = [];
+        if (this.keepOff && visible > .05) {
+          const o = this.keepOff, reach = destination ? this.speechSway(pr, sc, tm, this.propTarget(pr).len) : [0, 0];
+          obs.push([o[0] - reach[0], o[1] - reach[1], o[2] + reach[0], o[3] + reach[1]]);
+        }
         /* (and off Pip's head where it hangs at rest: Retro's crop pushed a sign in from its cut side over Pip, FO-50) */
         const pk = destination ? this.pipHead(0, null, true) : this.pipKeep; if (pk && visible > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
         let before = true;
@@ -827,7 +844,7 @@
       /* a new screen starts with no claimed bubble place, before its props are placed: destinations are fitted
          around keepOff (restPose's cache key), so a claim left from the last screen — or made only after the props
          were placed — refitted them mid-scene and the bubble then settled against the shifted boxes (QA-4) */
-      if (spec.screen != null && spec.screen !== this.lastScreen && this.famName !== 'nier') { this.bubbleClaim = null; this.bubbleKeepOff = null; this.keepOff = null; }
+      if (spec.screen != null && spec.screen !== this.lastScreen && this.famName !== 'nier') { this.bubbleClaim = null; this.bubbleKeepOff = null; this.keepOff = null; this.bubbleRel = null; this.bubbleRelT = 0; }
       this.spec = spec; this.dirty = true; this.kick();
       if (spec.chapter && spec.chapter !== this.chapter) this.setChapter(spec.chapter);
       const ids = new Set();
@@ -836,10 +853,13 @@
         const pr = this.props.get(ps.id);
         if (!pr || pr.state === 'out') { if (pr) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(ps.id); } this.addProp(ps); }
         else {
-          const moved = JSON.stringify(this.slotXY(ps)) !== JSON.stringify(this.slotXY(pr.spec));
+          const wasTarget = this.propTarget(pr);
           const wasPreview = pr.spec.preview;
           pr.spec = ps; this.drawProp(pr);
-          if (moved || (wasPreview && !ps.preview)) pr.av += (Math.random() > .5 ? 1 : -1) * this.fam.kick;
+          const target = this.propTarget(pr), moved = wasTarget.ax !== target.ax || wasTarget.len !== target.len || wasTarget.sc !== target.sc;
+          /* A retained prop travelling back from a hover preview has a new arrival to make. Keeping its old
+             settled flag called it at rest while both springs were still carrying it through the speech band. */
+          if (moved || (wasPreview && !ps.preview)) { pr.settled = false; pr.av += (Math.random() > .5 ? 1 : -1) * this.fam.kick; }
           if (wasPreview && !ps.preview) { pr.settled = false; this.sfx('lower', { x: pr.ax, len: clamp(pr.len, 0, 400) }); }
         }
       });
@@ -874,6 +894,10 @@
       this.hudTarget(spec.target, spec.label);
       if (this.tube) this.cmd(spec.cmd || null);
       if (this.famName === 'nier' && this.hudEl && spec.label) this.decode(spec.label);
+      /* All targets and outgoing states now belong to this scene. addProp fitted while the old cast still stood;
+         a same-size new line did not wake the bubble's size observer, so a held scene painted that preliminary fit
+         for two frames (c-ready: 4.8 px). Draw the finalized scene now, without advancing its held springs. */
+      this.render();
     }
     setChapter(ch) {
       const prev = this.chapter;
@@ -1212,7 +1236,7 @@
           const sA = 260 * ((pr.spec.scale || 1) - pr.scale) - 16 * pr.sv; pr.sv += sA * dt; pr.scale += pr.sv * dt;
           pr.op += (tg.op - pr.op) * Math.min(1, dt * 8);
         }
-        if (!pr.settled && pr.state !== 'out' && Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30) this.settle(pr);
+        if (!pr.settled && pr.state !== 'out' && Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30 && Math.abs(pr.ax - tg.ax) < 2.5 && Math.abs(pr.axv) < 30) this.settle(pr);
         if (pr.spec.ground && !pr.landed && (red || (Math.abs(pr.len - tg.len) < 1.6 && Math.abs(pr.lenv) < 22))) { pr.landed = true; pr.landT = this.t; this.touchdown(pr); if (this.onLanded) this.onLanded(pr); }
         if (pr.state === 'out' && (pr.len < 0 || pr.held) && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(id); }
       });
@@ -1378,7 +1402,7 @@
          in was no obstacle at all on the bubble's first frames (QA-4). A leaving prop is no obstacle: holdUnder
          already caps its lift at the bubble's lower edge and fades it there, and counting its rising box made the
          bubble step aside for a prop that was already keeping under it) */
-      this.props.forEach((pr) => { if (pr.state === 'out') return; const rb = this.restPose(pr).box || pr.box; if (rb) { const a = this.toScreen([rb[0], rb[1]]), c = this.toScreen([rb[2], rb[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
+      this.props.forEach((pr) => { if (pr.state === 'out') return; const pose = this.restPose(pr), rb = pose.speechBox || pose.box || pr.box; if (rb) { const a = this.toScreen([rb[0], rb[1]]), c = this.toScreen([rb[2], rb[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
       const v = this.vis, vs = v ? [this.toScreen([v.x0, v.y0]), this.toScreen([v.x1, v.y1])] : null;
       const X0 = Math.max(pad, vs ? vs[0][0] + pad : pad), X1 = Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Y0 = Math.max(top, vs ? vs[0][1] + 4 : top), Y1 = Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by);
       /* (and Pip's control bar: where a prop beside Pip took the usual place, the bubble went up over the sticks Pip hangs
