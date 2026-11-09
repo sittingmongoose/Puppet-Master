@@ -33,7 +33,10 @@ top=max(0,min(900,math.floor(min(b[1] for b in boxes))-40))
 if any(b[0]<left or b[1]<top or b[0]+b[2]>left+350 or b[1]+b[3]>top+180 for b in boxes):
     raise SystemExit('Ready boxes exceed one native350x180 search window; reader needs multiple regions')
 # Decode only the tag and search window. No rescaling or rate conversion.
-filters = f'[0:v]split=2[t][b];[t]crop=168:8:0:0,pad=350:8:0:0[tag];[b]crop=350:180:{left}:{top}[box];[tag][box]vstack'
+# YUV420 defaults round odd crop origins down to the chroma grid. Keep the
+# requested native origin: adding an odd top back to a rounded crop added 1px
+# to every measured edge (K17, Ready ROI y451).
+filters = f'[0:v]split=2[t][b];[t]crop=168:8:0:0,pad=350:8:0:0[tag];[b]crop=350:180:{left}:{top}:exact=1[box];[tag][box]vstack'
 cmd = ['ffmpeg','-hide_banner','-loglevel','error','-i',a.film,'-filter_complex',filters,'-pix_fmt','rgb24','-f','rawvideo','-']
 proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
 size = 350 * 188 * 3
