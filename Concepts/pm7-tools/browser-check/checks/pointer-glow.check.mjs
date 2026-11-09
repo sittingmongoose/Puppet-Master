@@ -47,7 +47,7 @@ async function ground(f, selectors) {
  }, selectors);
 }
 
-async function circle(t, f, place, selectors) {
+async function circle(t, f, place, selectors, attempt = 0) {
  const g = await ground(f, selectors);
  await t.check(`${place}: real plain ground found`, !!g, JSON.stringify(g), { hard: true });
  const target = f.locator(g.selector).nth(g.index);
@@ -65,8 +65,11 @@ async function circle(t, f, place, selectors) {
   const p=y*44+x;if(delta(a,quiet,p)>1||delta(a,back,p)>2)continue;
   stable++;const d=delta(quiet,near,p);sum+=d;mx=Math.max(mx,d);if(d>2)changed++;
  }
- const m={...g,total,stable,changed,share:changed/Math.max(1,stable),mean:sum/Math.max(1,stable),max:mx};
+ const m={...g,attempt,total,stable,changed,share:changed/Math.max(1,stable),mean:sum/Math.max(1,stable),max:mx};
  t.log(`${place}: annulus ${JSON.stringify(m)}`);
+ // A material bake/entry may finish during the sample. Re-find plain ground and wait for stable paint, bounded.
+ // A stable frame that contains glow is never retried: it fails the paint assertion immediately.
+ if(stable<total*.95&&attempt<2){await pause(f,500);return circle(t,f,place,selectors,attempt+1);}
  await t.check(`${place}: resting-pointer ring is clear of motion`,stable>=total*.95,JSON.stringify(m));
  await t.check(`${place}: no glow paint around resting pointer`,stable>0&&changed/stable<.02&&sum/stable<.6,JSON.stringify(m));
  const layers={overlays:await f.locator('#lg-shine,#pm8-spot,#pm8-spotlight').count(),reader:await target.evaluate(e=>{
