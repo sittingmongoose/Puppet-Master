@@ -596,8 +596,8 @@ export default async function (t) {
           // The region must be the one this control actually folds. Walking arbitrarily up from a nested
           // Technical details head used to call its whole footer the region, then fold the target's card.
           const regionOf = e => {
-            const region = e.closest('[data-acc], .pm7-post-card');
-            const card = e.closest('.pm7-post-card, .d-jj-foot');
+            const card = e.closest('.pm7-post-card');
+            const region = e.matches('.d-fold') && card ? (card.closest('.d-jj-foot, .pm7-scm-git-footer') || card) : e.closest('[data-acc]');
             return region && cover && region.contains(cover) && !region.contains(covered) && !card?.contains(covered) ? region : null;
           };
           return [...p.querySelectorAll('[aria-expanded="true"]')].filter(e => e.checkVisibility() && !/^(tab|treeitem|row|option|gridcell|listitem)$/.test(e.getAttribute('role') || '') && !e.hasAttribute('aria-haspopup') && !scs.some(sc => sc.contains(e)))
@@ -612,7 +612,8 @@ export default async function (t) {
           // never reach or press that stale child, and never fold an ancestor of the original target.
           const ctl = panel.locator(`[data-shelf-fold="${fo.i}"]`);
           const eligible = () => ctl.evaluate((e, covered) => {
-            const region = e.closest('[data-acc], .pm7-post-card'), card = e.closest('.pm7-post-card, .d-jj-foot');
+            const card = e.closest('.pm7-post-card');
+            const region = e.matches('.d-fold') && card ? (card.closest('.d-jj-foot, .pm7-scm-git-footer') || card) : e.closest('[data-acc]');
             return e.isConnected && e.checkVisibility() && e.getAttribute('aria-expanded') === 'true' &&
               !!region && !region.contains(covered) && !card?.contains(covered);
           }, covered).catch(() => false);
