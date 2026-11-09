@@ -9,7 +9,8 @@ export default async function(t){
   await f.locator(strip+' button').first().waitFor({state:'visible'});
   const real=await f.evaluate(sel=>{const c=PM_HOVER_TAG_CONTROLLER,p=document.querySelector(sel),buttons=[...p.querySelectorAll('button')];c.scan(p);return buttons.map(e=>({prepared:!!c.prepare(e),bound:!!c.bind(e),key:e.getAttribute('data-pm-hover-key'),kind:e.getAttribute('data-pm-hover-kind')}));},strip);
   await t.check(`${look}: real selector controls keep their hover bindings`,real.length>=2&&real.every(e=>e.prepared&&e.bound&&!!e.key&&!!e.kind),JSON.stringify(real),{hard:true});
-  const choice=f.locator(strip+' button').filter({hasText:'SMB'}).first(),b=await choice.boundingBox();
+  await f.evaluate(()=>PM_HOVER_TAG_CONTROLLER.whenIdle());
+  const choice=f.locator(strip+' button').filter({hasText:'SMB'}).first();await choice.hover();const b=await choice.boundingBox();
   await t.page.mouse.move(b.x+b.width/2,b.y+b.height/2);await t.page.mouse.down();
   try{
    await f.waitForFunction(sel=>!!document.querySelector(sel+' .lg-twin'),strip,{timeout:3000});
