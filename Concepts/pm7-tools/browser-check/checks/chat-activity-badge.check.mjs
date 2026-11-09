@@ -51,6 +51,7 @@ async function state(f, name, index = 6, dense = 0) {
       while (steps.length < dense) { const i = steps.length; steps.push({ ...steps[i % base.length], uid: 'fo120:' + i, startAt: i * 2 }); }
       index = dense - 1;
     }
+    if (name === 'complete') index = steps.length - 1;
     let clock = index * 2 + .4;
     if (name === 'waiting' || name === 'failed') {
       const raw = c.D.workRuns.liveB.steps.find(s => s.status === name);
