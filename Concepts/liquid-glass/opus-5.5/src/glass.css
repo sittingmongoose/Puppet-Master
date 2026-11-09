@@ -853,6 +853,13 @@ html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-seg { 
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-seg button { background: transparent !important; box-shadow: none !important; border: 0 !important; border-radius: 8px !important; color: var(--text-secondary) !important; position: relative; z-index: 1; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-seg button.o55-on { color: var(--text-primary) !important; font-weight: 650; }
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-railitem[data-state="current"] .o55-raillabel { color: var(--text-primary) !important; font-weight: 650; }
+/* QA-1 round 2: the rail's lens is the current word with 3 px above and below it, as Friendly's and Basic's chips are
+   (60-switcher-looks.css), and still 6 px at each side (the word's box is 3 px wider each side, given back by its
+   margins, so nothing moves). With 6 px all round its top edge lay over Pip's feet: he hangs from the string with his
+   figure ending 31 px down the header and the word starting at 35, and the lens painted from 28 (rail-section-bounds,
+   Glass Dark, every width, 31 px of his figure under the lens) */
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-raillist { --lg-lens-pad: 3px; }
+html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-raillist .o55-raillabel { padding-left: 3px; padding-right: 3px; margin-left: -3px; margin-right: -3px; }
 /* switches: the same curved glass switch as the app */
 html[data-lg="on"][data-theme^="glass"]:not(#lgz) #pm-o55-onboarding .o55-switch {
   width: 38px !important; height: 22px !important; border-radius: 11px !important; background: var(--lg-switch-off) !important;

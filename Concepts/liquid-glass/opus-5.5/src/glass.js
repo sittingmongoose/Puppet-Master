@@ -1412,8 +1412,14 @@
     { sel: '#activityBar', items: '.icon[data-target]', vertical: true, kind: 'lensIcon', pick: railIcon, tag: 'rail-icons',
       box: function (i) { return i.querySelector('.symbol') || i; }, label: function (i) { return i.querySelector('.symbol'); } },
     /* press: false - a progress rail, not a choice: its steps have no click, so the lens moves only when the step does */
+    /* QA-1 round 2: the chip wraps what marks the current step, its word and its bead where they are drawn (railMark). In
+       the narrow window the words fold away and Pip stands in for the current bead (10-window.css), so the step has no
+       box of its own there: the strip then has no chosen item and draws no chip. (box() fell back to the whole item,
+       the header's full height, and with the look's pad the chip ran 3 to 6 px past the header's top and foot in all ten
+       looks, Glass's lens lying over Pip; Pip and the beads either side of him mark the step.) */
     { sel: '#pm-o55-onboarding .o55-raillist', items: '.o55-railitem', kind: 'lens', active: '[data-state="current"]', pad: 6, magRest: 1, magLift: 1, press: false,
-      box: function (i) { var u = unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); return u || i; },
+      pick: function (strip) { var i = strip.querySelector('.o55-railitem[data-state="current"]'); return i && railMark(i) ? i : null; },
+      box: function (i) { return railMark(i) || i; },
       /* a carried chip's inverted copy is of the step's word alone (its styles hang on the step's own state, which a copy
          of the whole step does not keep) */
       twin: function (i) { return i.querySelector('.o55-raillabel'); },
@@ -1449,6 +1455,8 @@
        labels), which scrolls with it and stays under the bars; it wears the material the chosen segment wore in place */
     { sel: '#pm-settings-root .segmented', items: ':scope > button', many: true, kind: 'lens', active: ':is([aria-checked="true"], [aria-pressed="true"])', pad: 0, magRest: 1, mark: true, under: true },
   ];
+  /* the onboarding step rail's mark of a step: its bead and its word, those of them that are drawn; null when neither is */
+  function railMark(i) { return unionRect([i.querySelector('.o55-railnode'), i.querySelector('.o55-raillabel')]); }
   function railIcon(strip) {
     var sp = document.getElementById('sidePanelSlot'); if (!sp || !visible(sp)) return null;
     var v = sp.querySelector(':scope > .side-panel-view.active');
