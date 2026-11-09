@@ -2260,6 +2260,12 @@
       TWIN_KID.forEach(function (p) { kid.push(p + ':' + ks.getPropertyValue(p)); });
       dst[i].style.cssText += ';' + kid.join(';');
     }
+    /* ...and none of the item's data-* attributes. A copy is inert scenery with its look inlined above; its hooks
+       (data-shelf-tab, data-press-test and the rest) made a query for the real control find two while a chip moved, the
+       copy first (batch 9a integration: button-press-edges at Pick a look's help dot, followup-routes at Files' shelf tabs) */
+    [c].concat(Array.prototype.slice.call(c.querySelectorAll('*'))).forEach(function (n) {
+      Array.prototype.slice.call(n.attributes).forEach(function (at) { if (at.name.lastIndexOf('data-', 0) === 0) n.removeAttribute(at.name); });
+    });
     c.setAttribute('class', 'lg-twin'); c.setAttribute('aria-hidden', 'true'); c.setAttribute('inert', '');
     c.style.cssText = css.join(';') + ';font-weight:' + weight + ';position:absolute;margin:0;left:' + box.x + 'px;top:' + box.y + 'px;width:' + box.w + 'px;height:' + box.h + 'px';
     return c;
