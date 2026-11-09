@@ -287,7 +287,7 @@
       if (cy) { const y = b.top + e.clientTop * sy; top = Math.max(top, y); bottom = Math.min(bottom, y + e.clientHeight * sy); }
     }
     right = Math.max(left, right); bottom = Math.max(top, bottom);
-    return `polygon(${left / z}px ${top / z}px, ${right / z}px ${top / z}px, ${right / z}px ${bottom / z}px, ${left / z}px ${bottom / z}px)`;
+    return { left, right, path: `polygon(${left / z}px ${top / z}px, ${right / z}px ${top / z}px, ${right / z}px ${bottom / z}px, ${left / z}px ${bottom / z}px)` };
   }
   function retWatch(t) {
     if (retWatchT === t) return;
@@ -305,14 +305,18 @@
     const r = t.getBoundingClientRect(), z = zoom();
     retWatch(t);
     const clip = retClip(t, z);
-    ret.style.clipPath = clip;
+    ret.style.clipPath = clip.path;
     /* A menu can focus its first row while its opening box is still zero. Keep the target observed so its first real
        layout places the mark; clearing retT here lost the More tray's key focus until a different row was focused. */
     const empty = r.width < 2 || r.height < 2;
     ret.toggleAttribute('data-empty', empty);
     if (empty) { ret.removeAttribute('data-on'); return; }
-    if (retScroll) { ret.style.clipPath = clip; return; }
-    const l = r.left - RET_GAP, tp = r.top - RET_GAP, rt = r.right + RET_GAP - RET_S, b = r.bottom + RET_GAP - RET_S;
+    if (retScroll) return;
+    /* A full-width row can meet both client edges. Keep both arms of its corners inside those edges instead of
+       clipping away the vertical arms (especially the forced-colour borders). A horizontally cut target still clips. */
+    const fitsX = r.left >= clip.left - 0.5 && r.right <= clip.right + 0.5;
+    const l = fitsX ? Math.max(r.left - RET_GAP, clip.left) : r.left - RET_GAP;
+    const tp = r.top - RET_GAP, rt = (fitsX ? Math.min(r.right + RET_GAP, clip.right) : r.right + RET_GAP) - RET_S, b = r.bottom + RET_GAP - RET_S;
     const pos = [[l, tp, 1, 1], [rt, tp, -1, 1], [l, b, 1, -1], [rt, b, -1, -1]];
     const wasOn = ret.hasAttribute('data-on'), c = ret.children;
     ret.removeAttribute('data-scroll');
