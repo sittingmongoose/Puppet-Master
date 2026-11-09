@@ -71,7 +71,9 @@ export const tests = {
   },
   async 'Files and More scrollers'(t) {
     for (const look of ['nier-light', 'nier-dark']) {
-      await t.viewport(1280, 500); const f = await t.app.open(); await t.app.look(look);
+      // Hiding icons is a persisted real preference on the normal surface. Each look gets its own profile state.
+      await t.newContext({ viewport: { width: 1280, height: 500 } });
+      const f = await t.app.open(); await t.app.look(look);
       await quiet(f);
       await f.waitForFunction(() => !window.PM_THEME_TRANSITION?.busy?.() && !window.PM_LOOK_COVERED?.()); await pause(f);
       await f.locator(files).click(); await pause(f);
