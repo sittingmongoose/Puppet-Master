@@ -1419,7 +1419,7 @@
        the scene's target pose, not this frame's sway, tilt, hop or bar rock, so it is the same on first paint. */
     speechMotion(point) {
       const ps = this.ps, L = this.L, F = this.fam;
-      const key = JSON.stringify([this.theme, this.map, this.vis, this.pipBB, L.s, L.rope, ps.Ct, ps.tiltT, this.rockMax, this.work, this.still()]);
+      const key = JSON.stringify([this.theme, this.map, this.vis, this.pipBB, L.s, L.rope, ps.Ct, ps.tiltT, this.rockMax, this.still()]);
       if (this.speechEnvelope && this.speechEnvelope.key === key) return this.speechEnvelope;
       const still = this.still(), ths = still ? [0] : [-.15, 0, .15], turns = still ? [0] : [-.2, 0, .2];
       const hops = still || F.noHop ? [0] : [-12, 0, 2], points = [];
@@ -1431,7 +1431,9 @@
       const sway = still ? 0 : F.sway * this.map.k;
       const lo = [Math.min(...points.map(p => p[0])) - sway, Math.min(...points.map(p => p[1]))];
       const hi = [Math.max(...points.map(p => p[0])) + sway, Math.max(...points.map(p => p[1]))];
-      const rock = still || !this.work ? 0 : this.rockMax == null ? .12 : this.rockMax;
+      // A line can outlive the work it reports. Reserve the bar's full allowed rock throughout that line;
+      // switching to its upright box at work's end re-picked Retro Light Creating's held line by1.4px.
+      const rock = still ? 0 : this.rockMax == null ? .12 : this.rockMax;
       const bars = [-rock, 0, rock].map(phi => this.barBox(6, { C: ps.Ct, phi })).filter(Boolean);
       const bar = bars.length ? [Math.min(...bars.map(b => b[0])) - sway, Math.min(...bars.map(b => b[1])), Math.max(...bars.map(b => b[2])) + sway, Math.max(...bars.map(b => b[3]))] : null;
       return (this.speechEnvelope = { key, lo, hi, bar });

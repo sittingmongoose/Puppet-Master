@@ -27,9 +27,9 @@ export default async function(t) {
     for(let e=st.screen.parentElement;e;e=e.parentElement){const cs=getComputedStyle(e),r=rect(e);if(/hidden|clip|auto|scroll/.test(cs.overflowX)){crop[0]=Math.max(crop[0],r[0]);crop[2]=Math.min(crop[2],r[2]);}if(/hidden|clip|auto|scroll/.test(cs.overflowY)){crop[1]=Math.max(crop[1],r[1]);crop[3]=Math.min(crop[3],r[3]);}}
     const props=[...st.props.values()].filter(p=>p.spec.stack!=null&&p.state!=='out').map(p=>{
      const tg=st.propTarget(p),m=p.el.parentNode.getCTM().inverse().multiply(p.el.getCTM());
-     return{id:p.id||p.spec.id,stack:p.spec.stack,box:rect(p.el),landed:!!p.landed,settled:!!p.settled,op:p.op,ax:p.ax,len:p.len,target:tg,scale:Math.hypot(m.a,m.b),assigned:(p.spec.scale||1)*st.L.propScale,bb:p.bb};
+     return{id:p.id||p.spec.id,stack:p.spec.stack,box:rect(p.el),landed:!!p.landed,settled:!!p.settled,op:p.op,ax:p.ax,len:p.len,target:tg,scale:Math.hypot(m.a,m.b),scaleY:Math.hypot(m.c,m.d),assigned:(p.spec.scale||1)*st.L.propScale,bb:p.bb};
     });
-    __ground.push({seq:__qbs.seq,t:performance.now(),screen:O55.S.sess.screen,crop,props,theme:st.theme,plan:st.stackFit(),layout:st.layoutName,vis:st.vis,keepOff:st.keepOff,stack:st.L.stack,map:st.map});
+    __ground.push({seq:__qbs.seq,t:performance.now(),screen:O55.S.sess.screen,crop,props,theme:st.theme,plan:st.stackFit(),layout:st.layoutName,vis:st.vis,keepOff:st.keepOff,stack:st.L.stack,map:st.map,work:st.work,speechFrame:st.bubbleFrame,speechMotion:st.speechEnvelope});
    }).observe(dot);
    let w=1;const tick=()=>{if(__qbs.on){w=w===1?2:1;dot.style.width=w+'px';}requestAnimationFrame(tick);};requestAnimationFrame(tick);
    __qbs.frames=[];__qbs.seq=0;__qbs.on=true;
@@ -47,7 +47,12 @@ export default async function(t) {
   const worst=Math.max(0,...rests.map(({p,crop:c})=>Math.max(c[0]-p.box[0],c[1]-p.box[1],p.box[2]-c[2],p.box[3]-c[3])));
   await t.check(`${label}: positive resting stack coverage`,rests.length>=30,`${rests.length} samples`,{hard:true});
   await t.check(`${label}: every resting block stays inside the painted crop`,worst<=1,`${worst.toFixed(3)}px outside; ${JSON.stringify(rests.find(({p,crop:c})=>Math.max(c[0]-p.box[0],c[1]-p.box[1],p.box[2]-c[2],p.box[3]-c[3])>1)||rests.at(-1))}`);
-  await t.check(`${label}: ground art keeps its existing .45 scale floor`,rests.every(({p})=>p.scale/p.assigned+.005/p.assigned+1e-6>=.45),JSON.stringify(rests.at(-1)));
+  // The landing squash is intentionally nonuniform. Judge base art scale on actual uniform SVG matrices,
+  // retaining every landing frame in the independent crop check above.
+  const uniform=rests.filter(({p})=>Math.abs(p.scale-p.scaleY)<.001),ids=[...new Set(rests.map(({p})=>p.id))];
+  await t.check(`${label}: positive uniform art coverage`,ids.length>0&&ids.every(id=>uniform.filter(({p})=>p.id===id).length>=30),`${uniform.length} uniform samples for ${ids.length} blocks`,{hard:true});
+  const small=uniform.filter(({p})=>p.scale/p.assigned+.005/p.assigned+1e-6<.45);
+  await t.check(`${label}: ground art keeps its existing .45 scale floor`,small.length===0,JSON.stringify(small[0]||uniform.at(-1)));
   const entries=new Map();
   for(const r of capture.ground) if(r.screen==='creating') for(const p of r.props) if(p.op>.02&&!p.landed){if(!entries.has(p.id))entries.set(p.id,[]);entries.get(p.id).push(p);}
   const travel=[...entries].map(([id,ps])=>({id,frames:ps.length,actual:Math.max(...ps.map(p=>p.ax))-Math.min(...ps.map(p=>p.ax)),target:Math.max(...ps.map(p=>p.target.ax))-Math.min(...ps.map(p=>p.target.ax))}));

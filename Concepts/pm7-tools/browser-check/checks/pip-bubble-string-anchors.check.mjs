@@ -164,10 +164,10 @@ export default async function (t) {
 		// cannot establish that current physics and the visible pose are from the same instant.
 		if (fr.length < 20) return;
 		scenes++;
-		// ---- QA-4: per (scene segment, line, size) episode, first frame against settled, and no straying
+		// ---- QA-4: one full line on its screen/layout, including director updates while it stays visible.
 		let cur = null; const eps = [];
 		for (const x of fr) {
-			const b = x.bub, key = b && b.shown ? [x.dn, x.layout, b.text].join('|') : null;
+			const b = x.bub, key = b && b.shown ? [x.screen, x.layout, b.text].join('|') : null;
 			if (cur && cur.key === key) cur.rows.push(x);
 			else { if (cur) eps.push(cur); cur = key ? { key, rows: [x] } : null; }
 		}
