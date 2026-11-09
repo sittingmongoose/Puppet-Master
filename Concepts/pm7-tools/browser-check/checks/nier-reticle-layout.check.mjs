@@ -85,7 +85,12 @@ export const tests = {
       });
       await t.check(`${look}: Files has a real scrollable focus target`, chosen, '', { hard: true });
       const s = '[data-fo96-scroller="files"]', e = '[data-fo96-target="files"]';
-      await focus(t, f, e); await cut(t, f, s, e);
+      await f.locator(e).evaluate(e => { const b = document.createElement('button'); b.id = 'fo96-tree-sentinel';
+        b.style.cssText = 'position:fixed;width:1px;height:1px;opacity:0'; e.before(b); b.focus({ preventScroll:true }); });
+      await t.page.keyboard.press('Tab');
+      await t.check(`${look}: real Tab reaches the Files row`, await f.locator(e).evaluate(e => e === document.activeElement), '', { hard: true });
+      if (await f.locator(e).evaluate(e => e.matches('[data-kind="folder"]:not([aria-expanded])'))) await t.page.keyboard.press('ArrowRight');
+      await cut(t, f, s, e);
       await t.viewport(1920, 500); await pause(f); await focus(t, f, e);
       const handle = await f.locator('#leftPanelResizer').boundingBox();
       await t.check(`${look}: docked rail has its resize handle`, !!handle, '', { hard: true });
