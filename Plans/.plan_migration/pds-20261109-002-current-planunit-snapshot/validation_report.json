@@ -1,22 +1,22 @@
 {
   "checks": {
-    "anchor_alias_rows": 14161,
+    "anchor_alias_rows": 14178,
     "batch_report_doc_entries": 96,
     "batch_report_rows": 10,
-    "coverage_rows": 14161,
+    "coverage_rows": 14178,
     "coverage_status_counts": {
-      "already_standardized_existing_planunits": 14161
+      "already_standardized_existing_planunits": 14178
     },
     "doc_count": 96,
-    "live_plan_unit_count": 7519,
+    "live_plan_unit_count": 7526,
     "source_preserving_unit_count": 0,
     "source_preserving_unit_ids": [],
-    "span_count": 14161,
-    "unique_live_plan_unit_count": 7519
+    "span_count": 14178,
+    "unique_live_plan_unit_count": 7526
   },
   "failures": [],
-  "generated_at_utc": "2026-11-08T18:54:25Z",
-  "run_id": "pds-20261108-001-current-planunit-snapshot",
+  "generated_at_utc": "2026-11-09T18:34:58Z",
+  "run_id": "pds-20261109-002-current-planunit-snapshot",
   "schema_id": "pm.plan_migration.validation_report.v1",
   "status": "pass",
   "warnings": []
