@@ -34,15 +34,10 @@ async function open(t, page, surface, override) {
 
 async function look(t, f, name) {
   if (await f.evaluate(() => !!window.PM_THEME)) await t.app.look(name);
-  else await f.evaluate(name => {
-    const nier = name.startsWith('nier-');
-    document.documentElement.dataset.o55Nier = nier ? 'on' : 'off';
-    document.documentElement.dataset.o55NierParts = nier ? 'icons diamonds square cursor' : '';
-    PM56_DEMO.setTheme(nier ? name.replace('nier-', 'basic-') : name);
-  }, name);
-  const result = await f.evaluate(() => ({ theme: document.documentElement.dataset.theme || document.body.dataset.theme,
+  else await f.evaluate(name => PM56_DEMO.setTheme(name), name);
+  const result = await f.evaluate(() => ({ theme: document.body.dataset.theme || document.documentElement.dataset.theme,
     nier: document.documentElement.dataset.o55Nier === 'on' }));
-  await t.check('look ' + name, result.nier === name.startsWith('nier-') && result.theme?.endsWith(name.split('-')[1]), JSON.stringify(result));
+  await t.check('look ' + name, result.nier === name.startsWith('nier-') && result.theme === (name.startsWith('nier-') ? name.replace('nier-', 'basic-') : name), JSON.stringify(result));
 }
 
 // Use the normal app render path. Hold its demo clock, leaving CSS/GPU animations running. liveB supplies the
