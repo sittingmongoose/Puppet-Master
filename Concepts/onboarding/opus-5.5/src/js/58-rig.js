@@ -813,21 +813,20 @@
       const Lay = this.L, [x, base, step] = Lay.stack, v = this.vis;
       if (!v) return { x, base, step, f: 1 };
       const pad = 8, half = 34 * Lay.propScale, o = this.keepOff;
-      let n = 0; this.props.forEach((p) => { if (p.spec.stack != null && p.state !== 'out') n = Math.max(n, p.spec.stack + 1); });
+      // The owner already declares the final phase count on the first block. Reserve that whole stack now.
+      let n = 0; this.props.forEach((p) => { if (p.spec.stack != null && p.state !== 'out') n = Math.max(n, p.spec.stack + 1, p.spec.params && p.spec.params.count || 0); });
       const need = Math.max(1, n) * step + 22 * Lay.propScale;
       const floor = Math.min(base, v.y1 - pad), ceiling = v.y0 + pad;
       let column = x, bottom = floor, top = ceiling;
-      if (o && o[0] < x + half && o[2] > x - half) {
+      /* A banner has a separate right-hand column for the stack. Pick it from the fixed crop and head before
+         the first block enters: moving it in response to each speech claim made its string tops travel71 units.
+         NieR's fixed dialogue owns that column, so its stack keeps the existing vertical clearance there. */
+      if (this.layoutName !== 'portrait' && this.famName !== 'nier') {
+        const side = v.x1 - half - pad, head = this.pipHead(0, null, true);
+        if (side - half >= v.x0 + pad && (!head || side - half - 4 >= head[2])) column = side;
+      }
+      if (o && o[0] < column + half && o[2] > column - half) {
         if ((o[1] + o[3]) / 2 > (top + bottom) / 2) bottom = Math.min(bottom, o[1] - 4); else top = Math.max(top, o[3] + 4);
-        /* A full speech reservation can leave less height than even the minimum-size stack needs (Retro Dark
-           Creating740:27 units for a51-unit stack). Move its column beside the reservation when there is room,
-           clear of Pip's entire entry column, rather than clipping blocks above the pane or shrinking their art. */
-        if (bottom - top < need * .45) {
-          const head = this.pipHead(0, null, true);
-          const columns = [o[0] - half - pad, o[2] + half + pad].filter(cx => cx - half >= v.x0 + pad && cx + half <= v.x1 - pad
-            && (!head || cx + half + 4 <= head[0] || cx - half - 4 >= head[2])).sort((a, b) => Math.abs(a - x) - Math.abs(b - x));
-          if (columns.length) { column = columns[0]; bottom = floor; top = ceiling; }
-        }
       }
       const room = bottom - top;
       const f = need > room && room > 0 ? Math.max(.45, room / need) : 1;

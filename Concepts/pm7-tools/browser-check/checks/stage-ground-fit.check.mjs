@@ -48,6 +48,10 @@ export default async function(t) {
   await t.check(`${label}: positive resting stack coverage`,rests.length>=30,`${rests.length} samples`,{hard:true});
   await t.check(`${label}: every resting block stays inside the painted crop`,worst<=1,`${worst.toFixed(3)}px outside; ${JSON.stringify(rests.find(({p,crop:c})=>Math.max(c[0]-p.box[0],c[1]-p.box[1],p.box[2]-c[2],p.box[3]-c[3])>1)||rests.at(-1))}`);
   await t.check(`${label}: ground art keeps its existing .45 scale floor`,rests.every(({p})=>p.scale/p.assigned+.005/p.assigned+1e-6>=.45),JSON.stringify(rests.at(-1)));
+  const entries=new Map();
+  for(const r of capture.ground) if(r.screen==='creating') for(const p of r.props) if(p.op>.02&&!p.landed){if(!entries.has(p.id))entries.set(p.id,[]);entries.get(p.id).push(p);}
+  const travel=[...entries].map(([id,ps])=>({id,frames:ps.length,actual:Math.max(...ps.map(p=>p.ax))-Math.min(...ps.map(p=>p.ax)),target:Math.max(...ps.map(p=>p.target.ax))-Math.min(...ps.map(p=>p.target.ax))}));
+  await t.check(`${label}: each entering block keeps its top suspension column`,(t.args.motion==='reduce'||travel.length>0)&&travel.every(r=>r.actual<=.05&&r.target<=.05),JSON.stringify(travel));
   const groups=[];let group;
   for(const r of capture.frames){const key=r.screen==='creating'&&r.bub?.shown?r.bub.text:null;if(!key){group=null;continue;}if(!group||group.key!==key){group={key,rows:[]};groups.push(group);}group.rows.push(r);}
   let first=0,worstBubble=0;
