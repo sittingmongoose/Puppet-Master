@@ -2,9 +2,9 @@
 
 Source: `Plans/Decision_Log.md`
 
-Source lines: L26794-L29385
+Source lines: L26794-L29389
 
-Source SHA256: `b12f81b2f4f2b849c213264aff17f6c3d9c46825a23a849817ad5037beb942e1`
+Source SHA256: `3852fce8c578fbf7f5dffb048c1cd6b1b352cb1a84869096918f8fb4cb0ed89c`
 
 ---
 
@@ -2460,8 +2460,11 @@ canonical_text: >-
   including exactly-one coverage. DL-471 Q-ID1 decides cmd.docker.remove is a compatibility_alias of cmd.docker.container.delete.
   DL-471 Q-ID2 decides cmd.git.worktree is a non-dispatch family token.
   Both are recorded in UCC-230 non_definition_tokens, with no independent definition.
+  Amended after review: selectors must be supplied and non-null; evidence line hints are checked.
   Amended after review: merge keeps the complete expected_lease and adds observed topology_generation
-  and source_location_id fences, required when leased; sibling placement is a documented gap for Jared.
+  and source_location_id fences, required when leased. Q-ID5e: Jared, 2026-11-09 about 04:12Z, relayed by
+  pm7-build (pm-mail 1109042811-84aa), chose "Two separate fields (Recommended)": the two fences are sibling
+  arguments beside expected_lease, with W-095's exact fence names and the approved lease untouched.
   Amended after review: unions declare in_record or external discriminator supply; required matching
   branch consts and explicit external use-site sources are checked, including discriminator deletion.
   CV-369 adds pm.typed_contracts.v1 with all thirty-five CV-298 provider fields and the six provider
@@ -2528,6 +2531,7 @@ decided_by_owner:
   - "Decided by DL-471 Q-ID5a: the bounded owner string until the owner defines a shared enum."
   - "Decided by DL-471 Q-ID5b: refs, all revalidated against the exact target and generation before mutation."
   - "Decided by DL-471 Q-ID5c: the complete typed observed lease, mandatory whenever the selected worktree has a lease and compared to current owner fences."
+  - 'Decided by DL-471 Q-ID5e: the observed topology_generation and source_location_id fences are sibling arguments beside expected_lease (Jared, 2026-11-09, "Two separate fields (Recommended)").'
   - "Decided by DL-471 Q-ID5d: direct typed args plus the custody-preserving receipt ref for this packet."
   - "Decided by DL-471 Q-ID6: the existing topology projection, as the draft defines it."
   - "Decided by DL-471 Q-ID7a: the draft's exact selected-worktree shape, with `target_worktree_id == worktree_id` and detached targets refused until represented explicitly."

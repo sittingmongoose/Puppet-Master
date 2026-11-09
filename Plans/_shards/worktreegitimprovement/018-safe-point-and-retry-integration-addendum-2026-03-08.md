@@ -4,7 +4,7 @@ Source: `Plans/WorktreeGitImprovement.md`
 
 Source lines: L750-L773
 
-Source SHA256: `f26f335085539b1872c019e601669fafeeb3b5499643c63d2fe758fed9d9d490`
+Source SHA256: `b65da80fa9e1ab91fac385dad2e2b8aa4ff0ba744b1a9ce5489c6cdb1436aa1b`
 
 ---
 

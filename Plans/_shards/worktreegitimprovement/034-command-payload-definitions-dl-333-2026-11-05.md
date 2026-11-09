@@ -2,9 +2,9 @@
 
 Source: `Plans/WorktreeGitImprovement.md`
 
-Source lines: L5790-L7730
+Source lines: L5790-L7727
 
-Source SHA256: `f26f335085539b1872c019e601669fafeeb3b5499643c63d2fe758fed9d9d490`
+Source SHA256: `b65da80fa9e1ab91fac385dad2e2b8aa4ff0ba744b1a9ce5489c6cdb1436aa1b`
 
 ---
 
@@ -98,32 +98,29 @@ command_payload_definitions:
           required: false
           default: none
           constraints: {minimum: 0}
-          provenance: gap
-          gap_note: >-
+          provenance: canon
+          source: >-
             W-082 requires comparison of the caller's observed topology generation whenever the selected
-            worktree has a lease. W-095's lease-fence carrier note explains that runtime_resource_lease
-            and the UICommand envelope cannot carry it. Name/type follow W-095's topology_generation
-            fence and Plans/shared_runtime_command_contracts.schema.json#/$defs/command_request_envelope.
-            JUDGMENT: a sibling arg beside the complete expected_lease; alternative: a nested observation
-            object containing both extension fences. Owner requires this arg whenever the selected worktree
-            has a lease, independently of caller omission of expected_lease; absent or unequal observed/current
-            fences refuse merge without mutation. Carrier placement remains a question for Jared.
+            worktree has a lease; the name and type follow W-095's topology_generation fence and
+            Plans/shared_runtime_command_contracts.schema.json#/$defs/command_request_envelope. Placement is
+            decided by DL-471 Q-ID5e (Jared, 2026-11-09, "Two separate fields (Recommended)"): a sibling arg
+            beside the complete expected_lease. The owner requires it whenever the selected worktree has a
+            lease, independently of caller omission of expected_lease; absent or unequal observed/current
+            fences refuse merge without mutation.
         source_location_id:
           type: id
           required: false
           default: none
-          provenance: gap
-          gap_note: >-
-            W-082 requires comparison of the caller's observed Source Location whenever the selected
-            worktree has a lease. W-095's lease-fence carrier note explains that runtime_resource_lease
-            and the UICommand envelope cannot carry it. Name/type follow W-095's source_location_id
-            fence and the UCC-230 id rule.
-            JUDGMENT: a sibling arg beside the complete expected_lease; alternative: a nested observation
-            object containing both extension fences. Owner requires this arg whenever the selected worktree
-            has a lease, independently of caller omission of expected_lease; absent or unequal observed/current
-            fences refuse merge without mutation. Compare the full lease's lease_id, holder_identity_ref,
-            generation and epoch plus these two observed extension fences against the same current owner
-            observation before mutation. Carrier placement remains a question for Jared.
+          provenance: canon
+          source: >-
+            W-082 requires comparison of the caller's observed Source Location whenever the selected worktree
+            has a lease; the name and type follow W-095's source_location_id fence and the UCC-230 id rule.
+            Placement is decided by DL-471 Q-ID5e (Jared, 2026-11-09, "Two separate fields (Recommended)"): a
+            sibling arg beside the complete expected_lease. The owner requires it whenever the selected
+            worktree has a lease, independently of caller omission of expected_lease; absent or unequal
+            observed/current fences refuse merge without mutation. Compare the full lease's lease_id,
+            holder_identity_ref, generation and epoch plus these two observed extension fences against the
+            same current owner observation before mutation.
       owner_request: none
       result:
         response: Plans/ui_command_response.schema.json

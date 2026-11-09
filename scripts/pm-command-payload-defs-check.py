@@ -1364,7 +1364,38 @@ def literal_ok(spec: dict[str, Any], value: Any, inherited: dict[str, Any] | Non
     return False
 
 
-def check_type_spec(ctx: Context, spec: Any, where: dict[str, str], name: str, results: dict[str, Any], *, item: bool, siblings: set[str]) -> None:
+def selector_supplied(selector: Any, profile: dict[str, Any], fields: dict[str, Any]) -> bool:
+    """Prove non-null supply: required, checked literal default, or covering condition."""
+    if not isinstance(selector, dict) or selector.get("nullable") is True:
+        return False
+    if selector.get("required") is True:
+        return True
+    default = selector.get("default", "none")
+    if default != "none" and default is not None and literal_ok(selector, default):
+        return True
+    condition = selector.get("required_when")
+    if (not isinstance(condition, dict) or set(condition) != {"field", "in"}
+            or not isinstance(condition["field"], str) or not isinstance(condition["in"], list) or not condition["in"]):
+        return False
+    controller = fields.get(condition["field"])
+    if not isinstance(controller, dict):
+        return False
+    values = controller.get("values") if controller.get("type") == "enum" else [controller.get("value")] if controller.get("type") == "const" else None
+    if not isinstance(values, list) or not values or not all(any(json_equal(v, c) for c in values) for v in condition["in"]):
+        return False
+    # required_when alone does not forbid the profile in other cases. Only an explicit
+    # forbidden_when can remove controller values from its possible presence domain.
+    if controller.get("required") is not True or controller.get("nullable") is True:
+        return False
+    forbidden = profile.get("forbidden_when")
+    if (isinstance(forbidden, dict) and set(forbidden) == {"field", "in"}
+            and forbidden["field"] == condition["field"] and isinstance(forbidden["in"], list)):
+        values = [v for v in values if not any(json_equal(v, f) for f in forbidden["in"])]
+    return all(any(json_equal(v, c) for c in condition["in"]) for v in values)
+
+
+def check_type_spec(ctx: Context, spec: Any, where: dict[str, str], name: str, results: dict[str, Any], *, item: bool, siblings: set[str],
+                    scope_fields: dict[str, Any], presence_spec: dict[str, Any] | None = None) -> None:
     rep = ctx.report
     if not isinstance(spec, dict):
         rep.add("C05", "field_spec_not_mapping", field=name, **where)
@@ -1391,7 +1422,8 @@ def check_type_spec(ctx: Context, spec: Any, where: dict[str, str], name: str, r
         if "item" not in spec:
             rep.add("C05", "list_without_item", field=name, **where)
         else:
-            check_type_spec(ctx, spec["item"], where, f"{name}[]", results, item=True, siblings=set())
+            check_type_spec(ctx, spec["item"], where, f"{name}[]", results, item=True, siblings=siblings,
+                            scope_fields=scope_fields, presence_spec=presence_spec or spec)
     elif kind == "object":
         fields = spec.get("fields")
         if not isinstance(fields, dict) or not fields:
@@ -1405,11 +1437,23 @@ def check_type_spec(ctx: Context, spec: Any, where: dict[str, str], name: str, r
     contract = ctx.typed_contracts.get(spec.get("ref")) if isinstance(spec.get("ref"), str) else None
     external = kind == "contract" and isinstance(contract, dict) and contract.get("discriminator_source") == "external"
     supply = spec.get("discriminator_source")
+    if kind == "contract" and isinstance(contract, dict) and not external:
+        selector_spec = scope_fields.get(contract.get("discriminator"))
+        if selector_spec is not None and (not isinstance(selector_spec, dict) or selector_spec.get("type") != "enum"
+                or set(as_list(selector_spec.get("values"))) != set(contract.get("branches", {}))):
+            rep.add("C05", "contract_discriminator_values_mismatch", field=name, **where)
     if external:
         selector = contract.get("discriminator")
         valid = isinstance(supply, dict) and len(supply) == 1
         if valid and "arg" in supply:
             valid = isinstance(supply["arg"], str) and supply["arg"] == selector and supply["arg"] in siblings
+            if valid:
+                selector_spec = scope_fields[supply["arg"]]
+                if (not isinstance(selector_spec, dict) or selector_spec.get("type") != "enum"
+                        or set(as_list(selector_spec.get("values"))) != set(contract.get("branches", {}))):
+                    rep.add("C05", "contract_discriminator_values_mismatch", field=name, **where)
+                if not selector_supplied(selector_spec, presence_spec or spec, scope_fields):
+                    rep.add("C05", "external_discriminator_not_guaranteed", field=name, **where)
         elif valid and "owner" in supply:
             value = supply["owner"]
             valid = (isinstance(value, str) and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*(?:\.[A-Za-z_][A-Za-z0-9_]*)+", value)
@@ -1456,16 +1500,9 @@ def check_fields(ctx: Context, fields: dict[str, Any], where: dict[str, str], re
     for raw_name in sorted(fields, key=str):
         name = f"{prefix}{raw_name}"
         spec = fields[raw_name]
-        check_type_spec(ctx, spec, where, name, results, item=False, siblings=siblings)
+        check_type_spec(ctx, spec, where, name, results, item=False, siblings=siblings, scope_fields=fields)
         if not isinstance(spec, dict):
             continue
-        contract = ctx.typed_contracts.get(spec.get("ref")) if isinstance(spec.get("ref"), str) else None
-        if (isinstance(contract, dict) and isinstance(contract.get("discriminator"), str)
-                and isinstance(contract.get("branches"), dict)):
-            selector = fields.get(contract["discriminator"])
-            if selector is not None and (not isinstance(selector, dict) or selector.get("type") != "enum"
-                                         or set(as_list(selector.get("values"))) != set(contract.get("branches", {}))):
-                rep.add("C05", "contract_discriminator_values_mismatch", field=name, **where)
         # A restated common optional field keeps the constraints UCC-230 gives it and may only
         # narrow them (DESIGN 4.3): a local bound looser than the inherited one is itself a finding.
         inherited = ctx.common_optional.get(str(raw_name)) if inherited_common and not prefix else None
@@ -2134,6 +2171,7 @@ def check_typed_blocks(ctx: Context) -> None:
         text = ctx.corpus.text(doc) or ""
         for block in find_blocks(text, doc, TYPED_ROOT_KEY):
             base = {"path": doc, "unit": ""}
+            check_evidence_lines(ctx, block.data, doc)
             if block.error:
                 ctx.report.add("C14", "typed_block_yaml_error", detail=block.error, **base)
                 continue
@@ -2193,7 +2231,7 @@ def check_typed_blocks(ctx: Context) -> None:
                     discriminator = branch["fields"].get(selector)
                     if (contract["discriminator_source"] == "in_record" or discriminator is not None) and (not isinstance(discriminator, dict)
                             or discriminator.get("type") != "const" or discriminator.get("value") != value
-                            or discriminator.get("required") is not True):
+                            or discriminator.get("required") is not True or discriminator.get("nullable") is True):
                         ctx.report.add("C05", "typed_discriminator_branch_value_mismatch", field=str(value), **where)
             else:
                 ctx.report.add("C05", "typed_contract_shape", **where)
@@ -2211,6 +2249,7 @@ def check_blocks(ctx: Context) -> dict[str, list[tuple[str, str]]]:
         # YAML of every fence (Sol r5).
         for block in find_blocks(text, doc):
             base = {"path": doc}
+            check_evidence_lines(ctx, block.data, doc)
             if block.error is not None:
                 rep.add("C14", "block_yaml_error", detail=f"line {block.line}: {block.error}", **base)
                 continue
@@ -2293,10 +2332,31 @@ def internal_detail(check: str, exc: BaseException) -> str:
     return f"{check}: {type(exc).__name__}: {' '.join(str(exc).split())}"
 
 
+def check_evidence_lines(ctx: Context, value: Any = None, doc: str = CATALOG) -> None:
+    """Check all evidence records with line hints, including nested definition records."""
+    def walk(value: Any, doc: str) -> None:
+        if isinstance(value, list):
+            for child in value:
+                walk(child, doc)
+        elif isinstance(value, dict):
+            if "line" in value and "doc" in value and "quote" in value:
+                text = ctx.corpus.text(str(value["doc"]))
+                line = value["line"]
+                valid = isinstance(line, int) and not isinstance(line, bool) and line > 0
+                words = str(value["quote"]).split()
+                matches = re.finditer(r"\s+".join(re.escape(word) for word in words), text or "") if words else []
+                if not valid or not any(line_of(text or "", match.start()) == line for match in matches):
+                    ctx.report.add("C05", "evidence_line_mismatch", path=doc,
+                                   detail=f"{value['doc']}:{line}: {value['quote']}")
+            for child in value.values():
+                walk(child, doc)
+    walk(ctx.map if value is None else value, doc)
+
+
 def run_check(corpus: Corpus) -> dict[str, Any]:
     report = Report()
     ctx = load_context(corpus, report)
-    for phase in (check_map, compute_expected):
+    for phase in (check_evidence_lines, check_map, compute_expected):
         try:
             phase(ctx)
         except ParseError:
@@ -4192,6 +4252,73 @@ def build_cases() -> tuple[list[tuple[str, Callable[[Fixture], None], int, set[s
         body["contracts"]["SlackDestinationProfileV1"]["fields"]["provider"] = {
             "type": "const", "value": "slack", "required": True, "default": "none", **canon()}
         return body
+
+    @case("fail R2: nullable in-record const", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
+    def _(fx: Fixture) -> None:
+        body = internal_typed(fx)
+        body["contracts"]["SlackDestinationProfileV1"]["fields"]["provider"]["nullable"] = True
+        replace_typed(fx, body)
+
+    for mode in ("nullable", "optional", "omitted"):
+        @case(f"fail R2: {mode} external selector", 1, {"C05"},
+              kinds={"external_discriminator_source_missing_or_invalid"} if mode == "omitted" else {"external_discriminator_not_guaranteed"})
+        def _(fx: Fixture, mode=mode) -> None:
+            typed(fx)
+            args = _defs(fx, "cmd.docker.image.tag")["args"]
+            if mode == "omitted":
+                del args["provider"]
+            elif mode == "optional":
+                args["provider"]["required"] = False
+            else:
+                args["provider"]["nullable"] = True
+
+    for location in ("nested", "list", "nested_list"):
+        for supplied in (True, False):
+            @case(f"{'pass' if supplied else 'fail'} R2: {location} selector supply {supplied}",
+                  0 if supplied else 1, set() if supplied else {"C05"},
+                  kinds=set() if supplied else {"external_discriminator_not_guaranteed"})
+            def _(fx: Fixture, location=location, supplied=supplied) -> None:
+                typed(fx)
+                args = _defs(fx, "cmd.docker.image.tag")["args"]
+                provider, profile = args.pop("provider"), args.pop("profile")
+                provider["required"] = supplied
+                if "list" in location:
+                    item = {k: v for k, v in profile.items() if k not in ("required", "default", "provenance", "source")}
+                    profile = {"type": "list", "item": item, "required": True, "default": "none", **canon()}
+                if "nested" in location:
+                    args["bundle"] = {"type": "object", "fields": {"provider": provider, "profile": profile},
+                                      "required": True, "default": "none", **canon()}
+                else:
+                    args.update(provider=provider, profile=profile)
+
+    @case("pass R2: external selector checked default", 0, set())
+    def _(fx: Fixture) -> None:
+        typed(fx)
+        _defs(fx, "cmd.docker.image.tag")["args"]["provider"].update(required=False, default="slack")
+
+    for covered in (True, False):
+        @case(f"{'pass' if covered else 'fail'} R2: conditional selector coverage {covered}",
+              0 if covered else 1, set() if covered else {"C05"},
+              kinds=set() if covered else {"external_discriminator_not_guaranteed"})
+        def _(fx: Fixture, covered=covered) -> None:
+            typed(fx)
+            args = _defs(fx, "cmd.docker.image.tag")["args"]
+            args["mode"] = {"type": "enum", "values": ["a", "b"], "required": True, "default": "none", **canon()}
+            args["provider"].update(required=False, required_when={"field": "mode", "in": ["a"]})
+            args["profile"].update(required=False, required_when={"field": "mode", "in": ["a"]},
+                                   forbidden_when={"field": "mode", "in": ["b"]} if covered else {"field": "mode", "in": ["a"]})
+
+    for correct in (True, False):
+        @case(f"{'pass' if correct else 'fail'} R2: evidence line {correct}",
+              0 if correct else 1, set() if correct else {"C05"},
+              kinds=set() if correct else {"evidence_line_mismatch"})
+        def _(fx: Fixture, correct=correct) -> None:
+            evidence = fx.map["non_definition_tokens"][0]["evidence"]
+            fx.doc_suffix["Plans/LineHint.md"] = evidence["quote"] + "\n"
+            evidence["doc"] = "Plans/LineHint.md"
+            evidence.pop("unit", None)
+            evidence.pop("field", None)
+            evidence["line"] = 2 if correct else 3
 
     @case("fail MAX1: deleted in-record discriminator", 1, {"C05"}, kinds={"typed_discriminator_branch_value_mismatch"})
     def _(fx: Fixture) -> None:
