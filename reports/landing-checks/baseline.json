@@ -817,17 +817,6 @@
    "subcheck": "spec_lock"
   },
   {
-   "check": "audit-governance",
-   "count": 2,
-   "error": "catalog_command_missing_production_wiring",
-   "fingerprints": [
-    "10561d80c47f",
-    "2acea306f895"
-   ],
-   "path": "Plans/Wiring_Matrix.production.json",
-   "subcheck": "wiring_matrix"
-  },
-  {
    "check": "run-gates",
    "count": 50,
    "error": "audit_closure_validator_error",
@@ -1080,17 +1069,6 @@
    ],
    "path": "Plans/.evidence/pm7-usage-recovery-plan-sharding-2026-08-29/evidence.json",
    "subcheck": "validate_plan_graph"
-  },
-  {
-   "check": "run-gates",
-   "count": 2,
-   "error": "catalog_command_missing_production_wiring",
-   "fingerprints": [
-    "10561d80c47f",
-    "2acea306f895"
-   ],
-   "path": "Plans/Wiring_Matrix.production.json",
-   "subcheck": "validate_wiring_matrix"
   },
   {
    "check": "run-gates",
@@ -1435,7 +1413,7 @@
  ],
  "checks": {
   "audit-governance": {
-   "failure_total": 4608,
+   "failure_total": 4606,
    "status": "fail",
    "subchecks": {
     "audit_closure": {
@@ -1459,10 +1437,6 @@
     "spec_lock": {
      "reported": 34,
      "sampled": 34
-    },
-    "wiring_matrix": {
-     "reported": 2,
-     "sampled": 2
     }
    }
   },
@@ -1477,7 +1451,7 @@
    }
   },
   "run-gates": {
-   "failure_total": 4608,
+   "failure_total": 4606,
    "status": "fail",
    "subchecks": {
     "validate_audit_closure": {
@@ -1499,10 +1473,6 @@
      "reported": 2146,
      "sampled": 50
     },
-    "validate_wiring_matrix": {
-     "reported": 2,
-     "sampled": 2
-    },
     "verify_spec_lock": {
      "reported": 34,
      "sampled": 34
@@ -1510,7 +1480,7 @@
    }
   }
  },
- "commit": "eab7ce338149b0b6b494beae133a2dc1d5d6f8b9",
+ "commit": "c7482161cf252b4e0b95cb4bc4d407090a014ef9",
  "export_buckets": [
   {
    "check": "audit-governance",
@@ -1763,8 +1733,8 @@
   },
   "schema_id": "pm.landing_check.readiness_audit_inputs.v1"
  },
- "recorded_at_utc": "2026-11-09T19:00:25Z",
- "run_dir": "Plans/.plan_migration/pds-20261109-002-current-planunit-snapshot",
+ "recorded_at_utc": "2026-11-09T21:16:03Z",
+ "run_dir": "Plans/.plan_migration/pds-20261109-003-current-planunit-snapshot",
  "schema_id": "pm.landing_check.baseline.v1",
  "untracked_inputs": [
   "tests/agent_packet_restrictions"
