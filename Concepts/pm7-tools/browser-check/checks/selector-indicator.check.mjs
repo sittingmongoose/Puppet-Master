@@ -139,7 +139,10 @@ async function goPage(t, f, name) {
 	await f.evaluate((n) => { const e = [...document.querySelectorAll('nav.page-tabs .page-tab')].find((x) => x.textContent.trim().startsWith(n)); if (e) e.click(); }, name);
 	await t.page.waitForTimeout(1800);
 	if (name === 'Planning Wizard') {
-		await f.locator('#panel-wizard .pm6-wiz-intent-chip[data-demo-arg="product"]').click();
+		// Usage/Orchestrator can leave the demo's run at Final review. Use its real replay control to expose the choice.
+		const choice = f.locator('#panel-wizard .pm6-wiz-intent-chip[data-demo-arg="product"]');
+		if (!await choice.isVisible()) await f.locator('#panel-wizard [data-demo-action="wizard.replay"]').click();
+		await choice.click();
 		await t.page.mouse.move(1900, 1000);
 		await t.page.waitForTimeout(700);
 	}

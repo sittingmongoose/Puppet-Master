@@ -110,7 +110,7 @@ async function run(t, mode) {
 			for (const c of CASES) {
 				const built = await f.evaluate(BUILD, { look, prop: c.prop, params: c.params || null, frame: c.frame, glyph: c.glyph });
 				if (!built.ng || (!built.nf && !c.frame.point)) { fails.push(`${c.id}: frame or symbol not found (f=${built.nf} g=${built.ng})`); continue; }
-				if (c.prop === 'forge' && built.glyphTags.join(',') !== 'line,path,circle,circle,circle') { fails.push(`${c.id}: expected the branch line, merge curve and three commits, got ${built.glyphTags}`); continue; }
+				if (c.prop === 'forge' && built.glyphTags.join(',') !== 'path,path,circle,circle,circle') { fails.push(`${c.id}: expected the branch path, merge curve and three commits, got ${built.glyphTags}`); continue; }
 				const clip = { x: Math.round(off.x + built.x), y: Math.round(off.y + built.y), width: 480, height: 480 };
 				const shot = async (m) => { await f.evaluate(PAINT5, m); await t.page.waitForTimeout(50); return decodePng(await t.page.screenshot({ clip, animations: 'disabled', caret: 'hide' })); };
 				const A = await shot(''), B = await shot('g'), C = c.frame.point ? null : await shot('f');
