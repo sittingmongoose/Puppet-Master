@@ -100,7 +100,7 @@ async function inspect(t, f, tag, expected) {
       })),
       box: glyph && box(glyph), node: chosen && box(chosen), label: core && box(core.querySelector('strong')),
       animations: s ? s.getAnimations({subtree:true}).map(a => ({name:a.animationName, state:a.playState,
-        target:a.effect.target?.classList?.value || ''})) : [] };
+        target:a.effect.target?.classList?.value || '', type:a.constructor.name, property:a.transitionProperty, timing:a.effect.getComputedTiming()})) : [] };
   }, STAGE);
   await t.check(tag + ': Pip alone, centred; no inner glyph', r.core && r.pip && r.inner === 0 && r.centered, JSON.stringify(r));
   await t.check(tag + ': every outer node has one painted-symbol host', r.nodes > 0 && r.symbols === r.nodes && r.chosen, JSON.stringify(r));
@@ -111,11 +111,18 @@ async function inspect(t, f, tag, expected) {
 }
 
 async function settled(f) {
+  // Render/host mirroring can queue another finite transition after the first batch finishes. Require three
+  // quiet compositor frames, rather than assuming one snapshot contains every transition of this render.
   await f.evaluate(async sel=>{
-    const stage=document.querySelector(sel);
-    if(!stage)throw new Error('activity badge missing while waiting for its entry');
-    await Promise.all(stage.getAnimations({subtree:true}).filter(a=>a.effect&&Number.isFinite(a.effect.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));
-    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+    const deadline=performance.now()+10000;let quiet=0;
+    while(performance.now()<deadline){
+      await new Promise(resolve=>requestAnimationFrame(resolve));
+      const stage=document.querySelector(sel);
+      if(!stage)throw new Error('activity badge missing while waiting for its entry');
+      const pending=stage.getAnimations({subtree:true}).filter(a=>a.playState!=='finished'&&a.effect&&Number.isFinite(a.effect.getComputedTiming().endTime));
+      if(!pending.length){if(++quiet===3)return;}else quiet=0;
+    }
+    throw new Error('activity badge finite transitions did not settle within 10 seconds');
   },STAGE);
 }
 
@@ -132,10 +139,8 @@ async function ink(t, f, tag) {
   if (!await loc.count()) return; // inspect has already failed the missing host on the baseline.
   // Compare actual ink with that same paused frame with only its svg hidden: tile/background cannot pass for ink.
   await loc.scrollIntoViewIfNeeded();
-  await f.evaluate(async sel => {
-    const stage=document.querySelector(sel).closest('.orbit-stage');
-    await Promise.all(stage.getAnimations({subtree:true}).filter(a=>a.effect&&Number.isFinite(a.effect.getComputedTiming().endTime)).map(a=>a.finished.catch(()=>{})));
-    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  await settled(f);
+  await f.evaluate(sel => {
     window.__fo120.paused=document.querySelector(sel).closest('.orbit-stage').getAnimations({subtree:true}).filter(a=>a.playState==='running');
     window.__fo120.paused.forEach(a=>a.pause());
   }, selector);
