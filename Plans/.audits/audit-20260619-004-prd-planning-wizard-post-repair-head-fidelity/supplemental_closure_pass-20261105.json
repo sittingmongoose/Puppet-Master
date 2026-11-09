@@ -30,6 +30,39 @@
     "path": "repair_closure_matrix.jsonl"
   },
   "pass_id": "audit-20260619-004-prd-planning-wizard-post-repair-head-fidelity-supplemental-20261105",
-  "reviews": "pending: Sol 6.1 max, then Astra max, blind (stream C review rule)",
+  "reviews": {
+    "decision_ref": "Plans/Decision_Log.md#DL-470",
+    "evidence": [
+      {
+        "assessment": "Supplemental closure assessment: audit-004 line 21 is an exact append, its hashes match, current row checks and registry identity/linkage hold, and the PNC-014 repair is supported. The overall FAIL concerns separate validator defects, not the supplemental repair.",
+        "model": "Sol 6.1 max",
+        "overall_verdict": "FAIL",
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/reviews/validator/V2-sol-r1.md",
+        "reviewed_commit": "6fac1ed357082c5a0fe3e490043ed6392ee215f6",
+        "sha256": "4f033cd99f26555826748cf2c3c7e60a6200bcf89d3b6483876633c37552501f"
+      },
+      {
+        "assessment": "Supplemental closure assessment: audit-004 line 21 preserves the original rows, matches its hashes/current fields/registry identity and closes source row 31. It retains the two historical audit errors corrected separately by DL-470.",
+        "model": "Astra max",
+        "overall_verdict": "PASS WITH NOTES",
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/reviews/validator/V2-astra-r1.md",
+        "reviewed_commit": "a1c5f707860175160bc2b379f45f93b21a0430d8",
+        "sha256": "aafd937848f71e9288ec09938950309f94c1f8d2c3d85536a3239a3b1630e405"
+      },
+      {
+        "assessment": "Narrow final validator recheck closes the symlink boundary findings and confirms unchanged directory and registry behavior; it is not a new review of this correction.",
+        "model": "Astra max",
+        "overall_verdict": "PASS",
+        "path": "/mnt/Cursor/PuppetMaster-Evidence/closure-reaudit-20261104/reviews/validator/V2-astra-r2.md",
+        "reviewed_commit": "c4fb7e7dc724385161a80703dd2ccb55fcffe9af",
+        "sha256": "8ea46416ab009a822c21e09253cd3836b8b4765f5148a222af9933dd6d1747cb"
+      }
+    ],
+    "original_recorded_state": "pending: Sol 6.1 max, then Astra max, blind (stream C review rule)",
+    "prior_record_sha256": "1be54ad9a8e0c1b4ab7218fb260b68d79f34fbc44d192f65a36a2c707023bed5",
+    "recorded_at_utc": "2026-11-08T23:25:11Z",
+    "recorded_by": "closure-q2-audit004",
+    "scope": "Existing blind reviews of the 2026-11-05 supplemental row; no review of the 2026-11-08 correction is claimed."
+  },
   "schema_id": "pm.audit_supplemental_closure_pass.v1"
 }
