@@ -2,9 +2,9 @@
 
 Source: `Plans/Planning_Ledger_System.md`
 
-Source lines: L1617-L1790
+Source lines: L1617-L1791
 
-Source SHA256: `51012604eecbd4d25e8696b81d79da4b5f8618aa8c5d05a9c6e88e8f9a21093a`
+Source SHA256: `b11c900e665baa56ec201528b5d624d2a1c767f933a466d7ef39126fea3fac1a`
 
 ---
 
@@ -141,6 +141,7 @@ canonical_text: >-
   Unknown receipt schemas or fields, mismatched or missing hashes, symlinked bound inputs or receipts, invalid dates,
   other corrections and multiple correction files fail closed. Only the listed non-actionable over-coverage is
   excused; missing coverage and every matrix, evidence, registry and legacy-format check keep their force.
+  The presence of a correction file removes PLS-026's legacy over-coverage demotion for that audit.
   Validation shows both the historical and corrected status. Corrected history participates in the effective
   status projection while its recorded value remains visible. The receipt rewrites no historical file, source
   classification, closure status, registry row or evidence hash and grants no semantic closure. Real repairs and

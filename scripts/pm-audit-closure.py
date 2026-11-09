@@ -3292,7 +3292,8 @@ def classify_legacy_format_errors(
     symbolic link (`symlinked_inputs`, which keeps every error), whether a companion file was
     requested as a source artifact (`reserved_source_inputs`, which also keeps every error), and whether every
     non-actionable row a historical closure covers was judged by the compatibility inference
-    (`extra_coverage_all_inferred`)."""
+    (`extra_coverage_all_inferred`). A correction file disables over-coverage demotion,
+    even when that correction is invalid."""
     meta = list(getattr(errors, "meta", None) or [])
     if len(meta) != len(errors) or context.get("symlinked_inputs") or context.get("reserved_source_inputs") \
             or reserved_source_names(audit_dir, context.get("source_artifacts")):
@@ -3361,7 +3362,8 @@ def classify_legacy_format_errors(
                 if name == report_name and name in frozen and info.get("status_stated") is False:
                     kind = "report_field_predates_schema"
             elif k == "over_coverage":
-                if name == matrix_name and name in frozen and context.get("extra_coverage_all_inferred"):
+                if name == matrix_name and name in frozen and context.get("extra_coverage_all_inferred") \
+                        and not any(audit_dir.glob("audit_correction-*.json")):
                     kind = "inferred_actionability_over_coverage"
         if kind is None:
             kept.append(message)
@@ -3577,6 +3579,10 @@ def validate_audit_correction(
                     raise ValueError("unsupported source-row address")
             except (OSError, ValueError, TypeError, AttributeError) as exc:
                 fail(f"source row {key}: {exc}")
+    required_validator_rows = {key for key in covered - actionable_rows if key[0] == "validator_results.json"}
+    if set(validator_pins) != required_validator_rows:
+        fail("every over-covered validator_results.json row must carry record_sha256 in the receipt "
+             "and be authorized by decision owner_named_rows")
     if isinstance(data["decision_ref"], str) and re.fullmatch(r"Plans/Decision_Log\.md#DL-[0-9]{3,}", data["decision_ref"]):
         try:
             owner_pins = audit_correction_owner_pins(data["decision_ref"], audit_dir.name)
@@ -6073,6 +6079,83 @@ def cmd_self_test(args: argparse.Namespace) -> int:
                 real_actionable, real_covered, real_sources, real_errors)
             check("correction_real_audit004_receipt_passes", real_result is not None and not real_errors
                   and len(real_result["non_actionable_rows"]) == 16, real_errors)
+            # Run the final legacy classifier on frozen audit-004, not just the receipt helper.
+            # Only scratch copies of the receipt and decision change; all bound bytes stay real.
+            real_root = tmp / "real-audit004"
+            copied_dir = real_root / real_dir.relative_to(saved_root)
+            shutil.copytree(real_dir, copied_dir)
+
+            def copy_real_file(path: Path) -> None:
+                target = real_root / path.relative_to(saved_root)
+                if not target.exists():
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(path, target)
+
+            for name in (LEGACY_INVENTORY, "Plans/Decision_Log.md", "Plans/.audits/_semantic_closure_registry.jsonl"):
+                copy_real_file(saved_root / name)
+            for row in read_jsonl(real_dir / "repair_closure_matrix.jsonl", [], required=True):
+                for ref in row["closure_evidence"]:
+                    evidence = evidence_path_from_ref(ref)
+                    if evidence is not None:
+                        copy_real_file(evidence)
+            ROOT = real_root
+            copied_receipt = copied_dir / "audit_correction-20261108.json"
+            copied_decision = real_root / "Plans/Decision_Log.md"
+            original_decision = copied_decision.read_bytes()
+            real_data = optional_json_object(copied_receipt)
+
+            def run_real_correction(data: dict[str, Any], *, match_owner_rows: bool = False) -> dict[str, Any]:
+                write_json(copied_receipt, data)
+                copied_decision.write_bytes(original_decision)
+                if match_owner_rows:
+                    write_owner_decision(data, root=real_root)
+                return validate_audit_dir(copied_dir, require_matrix=True, require_effective_status=True,
+                    source_artifacts=None, registry_path=real_root / "Plans/.audits/_semantic_closure_registry.jsonl")
+
+            report = run_real_correction(real_data)
+            check("correction_real_audit004_full_validation_passes", not report["errors"]
+                  and legacy_audit_state(copied_dir) is not None and not report["extra_coverage"], report["errors"])
+            for name, decision_ref, keep, match_owner in (
+                # Exact Sol max 2 reproduction: no validator pins, existing accepted DL-334.
+                ("reviewer_dl334_omitted_validator_rows", "Plans/Decision_Log.md#DL-334", 0, False),
+                ("decision_without_owner_named_rows", "Plans/Decision_Log.md#DL-334", 2, False),
+                ("empty_owner_list_and_omitted_validator_rows", "Plans/Decision_Log.md#DL-470", 0, True),
+                ("one_validator_row_and_matching_owner_list", "Plans/Decision_Log.md#DL-470", 1, True),
+                ("one_validator_row", "Plans/Decision_Log.md#DL-470", 1, False),
+            ):
+                data = json.loads(json.dumps(real_data))
+                data["decision_ref"] = decision_ref
+                validator_rows = [r for r in data["non_actionable_rows"] if r["source_artifact"] == "validator_results.json"]
+                data["non_actionable_rows"] = [r for r in data["non_actionable_rows"]
+                    if r["source_artifact"] != "validator_results.json"] + validator_rows[:keep]
+                report = run_real_correction(data, match_owner_rows=match_owner)
+                check(f"correction_real_audit004_{name}_refused", bool(report["errors"])
+                      and "audit_correction" not in report and has(report, "owner_named_rows")
+                      and has(report, "non-actionable source rows")
+                      and not report["legacy_format_rule"]["demoted_by_kind"].get("inferred_actionability_over_coverage"),
+                      report["errors"])
+            # A valid receipt must not legacy-demote any leftover row, including non-validator rows.
+            data = json.loads(json.dumps(real_data))
+            omitted_row = data["non_actionable_rows"].pop(0)
+            report = run_real_correction(data)
+            check("correction_real_audit004_unlisted_atom_over_coverage_is_error", "audit_correction" in report
+                  and has(report, "non-actionable source rows")
+                  and report["extra_coverage"] == [{"source_artifact": omitted_row["source_artifact"],
+                                                     "source_row": str(omitted_row["source_row"])}]
+                  and not report["legacy_format_rule"]["demoted_by_kind"].get("inferred_actionability_over_coverage"),
+                  report["errors"])
+            data = dict(real_data, unknown_field=True)
+            report = run_real_correction(data)
+            check("correction_real_audit004_invalid_receipt_keeps_over_coverage", "audit_correction" not in report
+                  and has(report, "fields must be exactly") and has(report, "non-actionable source rows")
+                  and not report["legacy_format_rule"]["demoted_by_kind"].get("inferred_actionability_over_coverage"),
+                  report["errors"])
+            copied_receipt.unlink()
+            report = validate_audit_dir(copied_dir, require_matrix=True, require_effective_status=False,
+                source_artifacts=None, registry_path=real_root / "Plans/.audits/_semantic_closure_registry.jsonl")
+            check("correction_real_audit004_without_receipt_keeps_legacy_demotion",
+                  report["legacy_format_rule"]["demoted_by_kind"].get("inferred_actionability_over_coverage") == 1
+                  and len(report["extra_coverage"]) == 16 and not has(report, "non-actionable source rows"), report["errors"])
         finally:
             ROOT = tmp
         result, errors = evaluate_receipt(json_correction())
