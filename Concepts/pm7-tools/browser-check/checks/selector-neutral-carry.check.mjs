@@ -34,6 +34,8 @@ export default async function(t) {
     try {
       const carry = f.locator(`${strip} > lg-over .lg-carry`);
       await carry.waitFor({ state: 'visible' });
+      const copies = await carry.evaluate(e => { const roots = [...e.querySelectorAll('.lg-twin')]; return { count: roots.length, hooks: roots.flatMap(c => [c, ...c.querySelectorAll('*')].flatMap(n => [...n.attributes].filter(a => a.name.startsWith('data-')).map(a => a.name))) }; });
+      await t.check(`${look} forced ${scheme}: nonempty visual copies have no data hooks`, copies.count > 0 && copies.hooks.length === 0, JSON.stringify(copies), { hard: true });
       const media = await f.evaluate(() => { const p = document.createElement('i'); p.style.cssText = 'color:Canvas;forced-color-adjust:none'; document.body.append(p);
         const canvas = getComputedStyle(p).color.match(/[\d.]+/g).slice(0,3).map(Number); p.remove();
         return { canvas, forced: matchMedia('(forced-colors: active)').matches, scheme: matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light' }; });

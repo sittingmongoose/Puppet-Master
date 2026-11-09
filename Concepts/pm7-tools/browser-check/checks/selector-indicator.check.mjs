@@ -353,6 +353,7 @@ export const tests = {
 						out.tilt = kf.some((k) => /rotate\((-?[\d.]+)deg\)/.test(k.transform) && Math.abs(parseFloat(/rotate\((-?[\d.]+)deg\)/.exec(k.transform)[1])) > 1.5);
 						out.squash = kf.some((k) => { const m = /scale\(([\d.]+),\s*([\d.]+)\)/.exec(k.transform); return m && +m[1] > +m[2] + 0.1; });
 						out.twins = G ? G.children.length : 0;
+						out.copyData = [...F.querySelectorAll('.lg-twin')].flatMap(c => [c, ...c.querySelectorAll('*')].flatMap(n => [...n.attributes].filter(a => a.name.startsWith('data-')).map(a => a.name)));
 						/* the copies stay on their tabs: the copy layer's transform is the block's inverse at every frame */
 						const fa = a, ga = G.getAnimations()[0], bad = [];
 						for (const tt of [0.2, 0.45, 0.7, 0.9]) {
@@ -376,6 +377,7 @@ export const tests = {
 				if (res.block) {
 					await t.check(`motion ${tag}: ${hop ? 'hop 440 ms with a tilt and a squash' : 'snap 110 ms, no tilt or squash'}`, hop ? res.dur === 440 && res.tilt && res.squash : res.dur === 110 && !res.tilt && !res.squash, JSON.stringify(res));
 					await t.check(`motion ${tag}: inverted words copied into the block`, res.twins >= 2, `twins ${res.twins}`);
+					await t.check(`motion ${tag}: visual copies carry no data hooks`, res.copyData.length === 0, JSON.stringify(res.copyData));
 					await t.check(`motion ${tag}: the copies stay on their tabs (copy layer is the block's inverse)`, res.bad.length === 0, JSON.stringify(res.bad));
 				}
 				await t.check(`motion ${tag}: the chip lands on the chosen tab and the block goes`, res.landed && res.chosen, JSON.stringify(res));
