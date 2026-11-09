@@ -27,6 +27,10 @@
 // `--set frames=1 --set counter=1` retains per-frame geometry and encoded film tags; `--set secs=` dwell seconds (default 4), `--set sandbox=1` for T3's sandbox. Headless or --record (the film judged
 // by the same sampler; string-top motion on film must read as the swing's own). All ten looks and every screen is
 // about an hour; the defaults below keep the committed-page run to the full route.
+// Hover regression: --set screens=begin,s-kind,r-source keeps the real pointer over the choices as they open.
+// A preview changes the cast while the question is still being read. V19 moved that same line103–191px;
+// preserving its occupied room without validating retained destinations (V20) moved string anchors53–169u.
+// The ordinary full-line, suspension and destination assertions below reject both, without new tolerances.
 // Creating retains its completed owner transaction across this walk's later look changes. stage-ground-fit starts
 // a fresh transaction for EACH look/surface and applies the same exported string-law judge to every entry frame.
 import fs from 'node:fs';

@@ -539,7 +539,9 @@
         this.reduced, !!O55.motion.lowResource, H.part('sway-and-physics'),
         this.keepOff, this.pipAt, this.pipOff, this.pipBB, pr.bb, pr.spaceBB, preceding]);
       if (pr.restFit && pr.restFit.key === key) return pr.restFit;
-      const fit = this.fit(pr, [tg.ax, this.L.anchorY + tg.len], tg.sc, tm, true, pr.spaceBB);
+      const geometry = JSON.stringify([this.theme, this.layoutName, this.vis, this.lastScreen, pr.bb, pr.spaceBB, tg.ax, tg.len, tg.sc, tm]);
+      const kept = pr.restFit && pr.restFit.geometry === geometry ? pr.restFit : null;
+      const fit = this.fit(pr, [tg.ax, this.L.anchorY + tg.len], tg.sc, tm, true, pr.spaceBB, kept);
       const sc = tg.sc * fit.f, spaceBox = fit.box, bb = pr.bb;
       const actual = pr.spaceBB && bb ? [tg.ax + fit.dx + (bb[0] - tm[0]) * sc, this.L.anchorY + tg.len + fit.dy + (bb[1] - tm[1]) * sc,
         tg.ax + fit.dx + (bb[0] + bb[2] - tm[0]) * sc, this.L.anchorY + tg.len + fit.dy + (bb[1] + bb[3] - tm[1]) * sc] : fit.box;
@@ -554,12 +556,12 @@
       }
       const reach = this.speechSway(pr, tg.sc * fit.f, tm, tg.len), b = fit.box;
       const speechBox = b && [b[0] - reach[0], b[1] - reach[1], b[2] + reach[0], b[3] + reach[1]];
-      return (pr.restFit = Object.assign({ key, speechBox, spaceBox, ax: tg.ax + fit.dx, sc }, fit, {box: actual}));
+      return (pr.restFit = Object.assign({ key, geometry, speechBox, spaceBox, ax: tg.ax + fit.dx, sc }, fit, {box: actual}));
     }
     /* how far a prop must move (dx, dy) or shrink (f) for its drawing, at its angle, to sit inside the pane's visible span
        (this.vis, from measure) with a margin, and off a speech box that cannot move out of its way (this.keepOff: NieR's
        fixed box, or a bubble that found no clear place); box is where it is then painted */
-    fit(pr, hang, sc, tm, destination, shape) {
+    fit(pr, hang, sc, tm, destination, shape, kept) {
       const v = this.vis; let bb = shape || pr.bb;
       if (!v) return { dx: 0, dy: 0, f: 1, box: null };
       if (!bb || !bb[2]) { bb = pr.bb = this.boxOf(pr.el); if (!bb || !bb[2]) return { dx: 0, dy: 0, f: 1, box: null }; }
@@ -641,6 +643,18 @@
           const pose = destination ? this.restPose(q) : null, b = pose ? pose.spaceBox || pose.box : q.box;
           if (b) obs.push([b[0] - 4, b[1] - 4, b[2] + 4, b[3] + 4]);
         });
+        /* Releasing a speech obstacle must not teleport a prop back to its default slot. Its old destination is
+           reusable only for identical art/target geometry, inside today's crop and clear of EVERY current obstacle.
+           A changed shape, slot, layout or colliding obstacle still takes the ordinary fit below. */
+        if (destination && kept) {
+          const b = [hx + Math.min(...cs.map(c => c[0])) * kept.f + kept.dx, hy + Math.min(...cs.map(c => c[1])) * kept.f + kept.dy,
+            hx + Math.max(...cs.map(c => c[0])) * kept.f + kept.dx, hy + Math.max(...cs.map(c => c[1])) * kept.f + kept.dy];
+          if (b[0] >= v.x0 + pad - .5 && b[2] <= v.x1 - pad + .5 && b[1] >= v.y0 + pad - .5 && b[3] <= v.y1 - pad + .5
+            && !obs.some(o => b[0] < o[2] - 1e-7 && b[2] > o[0] + 1e-7 && b[1] < o[3] - 1e-7 && b[3] > o[1] + 1e-7)) {
+            pr.restOff = {dx: kept.dx - dxEdge, dy: kept.dy, g: kept.f / f};
+            return {dx: kept.dx, dy: kept.dy, f: kept.f, box: b};
+          }
+        }
         const g = clear(obs);
         pr.restOff = { dx: dx - dxEdge, dy, g };
       } else if (pr.state === 'out') {
@@ -889,7 +903,18 @@
       /* a new screen starts with no claimed bubble place, before its props are placed: destinations are fitted
          around keepOff (restPose's cache key), so a claim left from the last screen — or made only after the props
          were placed — refitted them mid-scene and the bubble then settled against the shifted boxes (QA-4) */
-      if (spec.screen != null && spec.screen !== this.lastScreen && this.famName !== 'nier') { this.bubbleClaim = null; this.bubbleKeepOff = null; this.keepOff = null; this.bubbleRel = null; this.bubbleRelT = 0; }
+      if (this.famName !== 'nier') {
+        if (spec.screen != null && spec.screen !== this.lastScreen) {
+          this.bubbleClaim = null; this.bubbleKeepOff = null; this.keepOff = null; this.bubbleRel = null; this.bubbleRelT = 0; this.speechRoom = null;
+        } else if (this.speechRoom && this.speechRoom.line === this.saying && this.bubble.classList.contains('on') && !this.bubble.classList.contains('pst-hush')
+          && JSON.stringify(spec.props || []) !== JSON.stringify(this.spec.props || [])) {
+          /* A hover can change its picture while the current question is still being read. The incoming cast
+             fits around that line's occupied room, just as it fits around Pip. placeBubble re-derives and
+             validates this room against the current geometry; a new line or layout discards it below. */
+          this.bubbleRel = this.speechRoom.rel.slice(); this.bubbleClaim = this.speechRoom.rel.slice();
+          this.bubbleKeepOff = this.speechRoom.box.slice(); this.keepOff = this.bubbleKeepOff;
+        }
+      }
       this.spec = spec; this.dirty = true; this.kick();
       if (spec.chapter && spec.chapter !== this.chapter) this.setChapter(spec.chapter);
       const ids = new Set();
@@ -1459,7 +1484,7 @@
          cannot fit on an axis, pin that axis to the scene instead and reserve the head's whole face there. */
       const follows = [bounds[2] - bounds[0] >= motion.hi[0] - motion.lo[0], bounds[3] - bounds[1] >= motion.hi[1] - motion.lo[1]];
       const origin = sp.map((p, i) => follows[i] ? p : (motion.lo[i] + motion.hi[i]) / 2);
-      const frameKey = JSON.stringify([motion.key, this.spec.props, bw, bh, follows]);
+      const frameKey = JSON.stringify([this.lastScreen, this.saying, motion.key, bw, bh, follows]);
       if (this.bubbleFrame !== frameKey) {
         const hadBand = this.bubbleKeepOff;
         this.bubbleFrame = frameKey; this.bubbleRel = null; this.bubbleClaim = null; this.bubbleKeepOff = null;
@@ -1518,7 +1543,7 @@
          fixed scene on a cramped axis. A different origin for the kept place made it wander during a wiggle. */
       const prev = this.bubbleRel ? [origin[0] + this.bubbleRel[0], origin[1] + this.bubbleRel[1]] : null;
       let at = null;
-      if (prev && clear(prev[0], prev[1]) && this.t - (this.bubbleRelT || 0) < 2.5) at = prev; /* (the side it moved to, while it stays clear) */
+      if (prev && clear(prev[0], prev[1])) at = prev; /* the current line owns its place while the geometry stays clear */
       else if (clear(x, y) && !(this.bubbleSide && sideOf(x) !== this.bubbleSide && y + bh > face[1])) at = [x, y];
       else {
         at = near(candidates([face].concat(obs)));
@@ -1540,12 +1565,15 @@
          box made it fail its own next clearance test (Ready: 16px oscillation). This does not force a placement:
          the normal candidate search above still decides whether the place is clear. Round the reservation out
          to the renderer's .01-unit grid so subpixel cancellation cannot churn restPose's geometry cache. */
-      if (this.bubbleClaim) {
+      let room = null;
+      if (talking) {
         const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k];
         const lo = at.map((p, i) => follows[i] ? motion.lo[i] + p - sp[i] : p), hi = at.map((p, i) => follows[i] ? motion.hi[i] + p - sp[i] : p);
         const a0 = u(lo[0] - gap, lo[1] - gap), a1 = u(hi[0] + bw + gap, hi[1] + bh + gap);
-        this.bubbleKeepOff = a0.map(p => Math.floor((p + 1e-8) * 100) / 100).concat(a1.map(p => Math.ceil((p - 1e-8) * 100) / 100));
-      } else this.bubbleKeepOff = null;
+        room = a0.map(p => Math.floor((p + 1e-8) * 100) / 100).concat(a1.map(p => Math.ceil((p - 1e-8) * 100) / 100));
+      }
+      this.speechRoom = room ? { line: this.saying, rel: [at[0] - origin[0], at[1] - origin[1]], box: room } : null;
+      this.bubbleKeepOff = this.bubbleClaim ? room : null;
       /* (a new claim moves the props off it in this same frame, before it is painted: on a stepped stage the props learnt of
          it a step later and sat under it for a tenth of a second) */
       if (this.bubbleKeepOff && JSON.stringify(this.bubbleKeepOff) !== JSON.stringify(priorBand)) { this.keepOff = this.bubbleKeepOff; this.renderN = (this.renderN || 0) + 1; this.props.forEach((pr) => this.placeProp(pr)); }
