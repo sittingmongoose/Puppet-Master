@@ -51,7 +51,7 @@ def check():
     require(len(bindings) == build["counts"]["pm7_bindings"], "Product control census differs")
     require(sum(bool(row.get("concept_sources")) for row in bindings) == 63,
             "QA2 family-source anchors differ")
-    require(len(read("settings_inventory.json")["settings"]) == 1017, "QA2 plus reviewed refresh Settings census differs")
+    require(len(read("settings_inventory.json")["settings"]) == 1024, "QA2 plus reviewed refresh and placement Settings census differs")
     require(len(read("glyph_catalog.json")["status_marks"]) == 22, "QA2 invented a status key")
     # 1300 plus the 32 DL-333 resolution 9b History, Vision bridge and Teacher rows (2026-11-05),
     # less catalog.chat_worktree_bind_existing: DL-335 retires that command because UCC-058 forbids exposing it.
