@@ -29257,7 +29257,15 @@ canonical_text: 'DL-472 records Jared''s owner decision of 2026-11-08, relayed b
   PRDB-014 (document-level surfaces name PRD_Builder). Planning_Wizard references PRDB-014 at its targeted-revision
   use. ACD §8.7''s targeted-revision ContractRef, ACD-049''s implementation surfaces and owner hints, and the
   Contracts_V0 runtime event catalog''s targeted-revision owner sentence name PRD_Builder PRDB-014 in place of the
-  retired document.
+  retired document. The reference sweep also redirects assistant-chat-design ACD-253 implementation surfaces and
+  owner hints, ACD-254 and ACD-264 implementation surfaces, and Contracts_V0 CV-099 implementation surfaces to
+  assistant-chat-design (removing duplicate document-level entries). Crosswalk §3.14 owner and ContractRef and C-034
+  canonical text, implementation surfaces and owner hints name PRD_Builder PRDB-014 for annotations (document-level
+  surfaces name PRD_Builder). Crosswalk §3.13B''s shared ContractRef, §3.16 owner and C-036 implementation surfaces
+  and owner hints retain the retired reference for the unmoved navigation/final-review material and add PRD_Builder
+  PRDB-014 for the annotation portion (document-level surfaces name PRD_Builder). FinalGUISpec''s Assistant Planning
+  UX addendum §2 Deep Plan ContractRef names PRD_Builder PRDB-014. Plans/Decision_Log.md DL-472 records these
+  redirected references.
 
 
   No rule changed; redesign is out of scope. Changes to moved prose are section numbers and cross-references only,

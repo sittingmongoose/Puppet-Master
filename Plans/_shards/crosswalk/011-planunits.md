@@ -2,9 +2,9 @@
 
 Source: `Plans/Crosswalk.md`
 
-Source lines: L568-L3236
+Source lines: L568-L3238
 
-Source SHA256: `d39403d44affc507c0ed760e2c477b88a599603ac0dd00224472a485690e521c`
+Source SHA256: `a2f410e0730caa718b4834830bbfada7b565b067a5207e049348df4d07d5bf9e`
 
 ---
 
@@ -1719,7 +1719,7 @@ status: accepted
 owner_doc: Plans/Crosswalk.md
 canonical_text: >-
   DocumentInlineNotes routes durable document annotation behavior across
-  FinalGUISpec, storage-plan, chain-wizard-flexibility,
+  FinalGUISpec, storage-plan, PRD_Builder,
   interview-subagent-integration, and assistant-chat-design; user-facing
   Annotations preserve note_record.v1 continuity, operation shapes, lifecycle,
   anchoring selectors, deterministic re-anchoring, coexistence/conflict rules,
@@ -1743,7 +1743,7 @@ implementation_surfaces:
   - Plans/Crosswalk.md
   - Plans/FinalGUISpec.md
   - Plans/storage-plan.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
   - Plans/assistant-chat-design.md
 node_compile_hint:
@@ -1765,7 +1765,7 @@ owner_hints:
   - Plans/Crosswalk.md
   - Plans/FinalGUISpec.md
   - Plans/storage-plan.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
   - Plans/assistant-chat-design.md
 ```
@@ -1864,6 +1864,7 @@ context_scope: final_review_gate_boundary
 implementation_surfaces:
   - Plans/Crosswalk.md
   - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
   - Plans/storage-plan.md
 node_compile_hint:
@@ -1881,6 +1882,7 @@ negative_constraints:
 owner_hints:
   - Plans/Crosswalk.md
   - Plans/chain-wizard-flexibility.md
+  - Plans/PRD_Builder.md
   - Plans/interview-subagent-integration.md
   - Plans/storage-plan.md
 ```

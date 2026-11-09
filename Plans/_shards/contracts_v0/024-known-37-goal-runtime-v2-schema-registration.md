@@ -4,7 +4,7 @@ Source: `Plans/Contracts_V0.md`
 
 Source lines: L3688-L17653
 
-Source SHA256: `fe7a639f1b25a209da1399a912146cf23d316ada8b75e15aa6433df957b0738f`
+Source SHA256: `2a44fdc22a07d9a5a3ebe548107a17dff8ce727b0008230206e30ff1a3468a43`
 
 ---
 
@@ -4465,7 +4465,7 @@ context_scope: auditor_cycle_report_event_payload
 implementation_surfaces:
   - Plans/Contracts_V0.md
   - Plans/Project_Output_Artifacts.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/assistant-chat-design.md
 node_compile_hint:
   mode: validation_pass_event_contract
   create_worknodes: false

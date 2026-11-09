@@ -8142,7 +8142,7 @@ context_scope: auditor_cycle_report_event_payload
 implementation_surfaces:
   - Plans/Contracts_V0.md
   - Plans/Project_Output_Artifacts.md
-  - Plans/chain-wizard-flexibility.md
+  - Plans/assistant-chat-design.md
 node_compile_hint:
   mode: validation_pass_event_contract
   create_worknodes: false

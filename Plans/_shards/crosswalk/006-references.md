@@ -4,7 +4,7 @@ Source: `Plans/Crosswalk.md`
 
 Source lines: L386-L459
 
-Source SHA256: `d39403d44affc507c0ed760e2c477b88a599603ac0dd00224472a485690e521c`
+Source SHA256: `a2f410e0730caa718b4834830bbfada7b565b067a5207e049348df4d07d5bf9e`
 
 ---
 
@@ -24,7 +24,7 @@ Source SHA256: `d39403d44affc507c0ed760e2c477b88a599603ac0dd00224472a485690e521c
 
 
 ### 3.14 DocumentInlineNotes
-**Owner:** GUI contract in `Plans/FinalGUISpec.md`; persistence contract in `Plans/storage-plan.md`; workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; chat-handoff rules in `Plans/assistant-chat-design.md`.
+**Owner:** GUI contract in `Plans/FinalGUISpec.md`; persistence contract in `Plans/storage-plan.md`; workflow semantics in `Plans/PRD_Builder.md#PRDB-014` and `Plans/interview-subagent-integration.md`; chat-handoff rules in `Plans/assistant-chat-design.md`.
 
 Rules:
 - This primitive now covers durable document annotations on the legacy `note_record.v1` substrate.
@@ -43,7 +43,7 @@ ContractRef: Primitive:DocumentInlineNotes, ContractName:Plans/FinalGUISpec.md, 
 - `Send selection to chat` is a thread-scoped chip/handoff path; it must not be collapsed into the durable `/annotation` lifecycle, and it does not create patch-apply semantics.
 - Supported `source_surface` values include `assistant_deep_plan`, `interview_doc_pane`, and `document_viewer`; unsupported or `/no-source-map` surfaces are `send-to-chat-only` unless they define stable semantic anchor IDs.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/interview-subagent-integration.md
 
 ---
 
@@ -72,7 +72,7 @@ ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:
 ---
 
 ### 3.16 FinalReviewGate
-**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; artifact taxonomy and restore semantics in `Plans/storage-plan.md`.
+**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md`, `Plans/PRD_Builder.md#PRDB-014`, and `Plans/interview-subagent-integration.md`; artifact taxonomy and restore semantics in `Plans/storage-plan.md`.
 
 Rules:
 - Multi-Pass Review is final-review only: enabled only when all bundle docs are Approved/Done and no durable annotations remain open.

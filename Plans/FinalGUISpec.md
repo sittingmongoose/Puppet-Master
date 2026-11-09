@@ -4573,7 +4573,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 - document review, annotations, and targeted revision remain available
 - Deep Plan remains more intensive than Plan at the same PT
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Crosswalk.md
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/PRD_Builder.md#PRDB-014, ContractName:Plans/Crosswalk.md
 
 **Shared TODO tracker rules:**
 - the sticky plan panel is the authoritative TODO tracker

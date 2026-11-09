@@ -2,9 +2,9 @@
 
 Source: `Plans/assistant-chat-design.md`
 
-Source lines: L3807-L22965
+Source lines: L3807-L22961
 
-Source SHA256: `fc541856ac1e58fdca30bafaf804ba4990b4b2a6af6bc74c770e2ba3f62d93d4`
+Source SHA256: `78ad80d0b99e82f473e6c996a3667bdaad7a1b15b97b715d48fcf7d4328b4c07`
 
 ---
 
@@ -12007,7 +12007,6 @@ reasoning_tier: high
 context_scope: gui
 implementation_surfaces:
   - Plans/assistant-chat-design.md
-  - Plans/chain-wizard-flexibility.md
 node_compile_hint:
   mode: validation_settings_context
   create_worknodes: false
@@ -12021,7 +12020,6 @@ negative_constraints:
   - "Do not expose per-pass provider/model settings."
 owner_hints:
   - Plans/assistant-chat-design.md
-  - Plans/chain-wizard-flexibility.md
 ```
 
 ### ACD-254 - Validation Settings Location
@@ -12049,7 +12047,6 @@ context_scope: gui
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
-  - Plans/chain-wizard-flexibility.md
 node_compile_hint:
   mode: auditor_validation_settings_location
   create_worknodes: false
@@ -12496,7 +12493,6 @@ reasoning_tier: high
 context_scope: validation_settings
 implementation_surfaces:
   - Plans/assistant-chat-design.md
-  - Plans/chain-wizard-flexibility.md
 node_compile_hint:
   mode: validation_next_sweep_application
   create_worknodes: false

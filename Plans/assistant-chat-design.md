@@ -15803,7 +15803,6 @@ reasoning_tier: high
 context_scope: gui
 implementation_surfaces:
   - Plans/assistant-chat-design.md
-  - Plans/chain-wizard-flexibility.md
 node_compile_hint:
   mode: validation_settings_context
   create_worknodes: false
@@ -15817,7 +15816,6 @@ negative_constraints:
   - "Do not expose per-pass provider/model settings."
 owner_hints:
   - Plans/assistant-chat-design.md
-  - Plans/chain-wizard-flexibility.md
 ```
 
 ### ACD-254 - Validation Settings Location
@@ -15845,7 +15843,6 @@ context_scope: gui
 implementation_surfaces:
   - Plans/assistant-chat-design.md
   - Plans/FinalGUISpec.md
-  - Plans/chain-wizard-flexibility.md
 node_compile_hint:
   mode: auditor_validation_settings_location
   create_worknodes: false
@@ -16292,7 +16289,6 @@ reasoning_tier: high
 context_scope: validation_settings
 implementation_surfaces:
   - Plans/assistant-chat-design.md
-  - Plans/chain-wizard-flexibility.md
 node_compile_hint:
   mode: validation_next_sweep_application
   create_worknodes: false
