@@ -54,6 +54,20 @@ function sampler(options) {
 		}
 		return[Math.min(...points.map(p=>p[0]))-6,Math.min(...points.map(p=>p[1]))-6,Math.max(...points.map(p=>p[0]))+6,Math.max(...points.map(p=>p[1]))+6];
 	};
+	// Independently sample the complete declared head motion. A box clear at the current pose can cross a prop
+	// as Pip sways; that old anchor is then ineligible, even on the new line's first frame (K19).
+	const headMotion = (st, tall) => {
+		const pts=[], still=st.still(), L=st.L, ps=st.ps;
+		for(const th of still?[0]:[-.15,0,.15]) for(const turn of still?[0]:[-.2,0,.2]) for(const dy of still||st.fam.noHop?[0]:[-12,0,2]) {
+			const a=ps.tiltT+th*.9+turn,h=st.headAt(ps.Ct.x,ps.Ct.y,th,dy),reach=st.pipReach(a);
+			h[1]=Math.min(h[1],L.ground-2-28*L.s,reach&&st.vis?st.vis.y1-reach[3]:Infinity);
+			pts.push(st.toScreen(st.headXf(tall?[44,30]:[58,44],h,a,1,1)));
+		}
+		const sway=still?0:st.fam.sway*st.map.k,rock=still?0:st.rockMax==null?.12:st.rockMax;
+		const bars=[-rock,0,rock].map(phi=>st.barBox(6,{C:ps.Ct,phi})).filter(Boolean);
+		return {lo:[Math.min(...pts.map(p=>p[0]))-sway,Math.min(...pts.map(p=>p[1]))],hi:[Math.max(...pts.map(p=>p[0]))+sway,Math.max(...pts.map(p=>p[1]))],
+			bar:bars.length?[Math.min(...bars.map(b=>b[0]))-sway,Math.min(...bars.map(b=>b[1])),Math.max(...bars.map(b=>b[2]))+sway,Math.max(...bars.map(b=>b[3]))]:null};
+	};
 	// QA-4 trade: entering props may pass behind a settled bubble (lead ruling 18:40Z). The bubble's placement at the
 	// moment it was made, as pip-bubble-clear reads it, so stillness can be judged per entry
 	const wrap = () => {
@@ -97,25 +111,35 @@ function sampler(options) {
 			if (!nier && st2 && relNow && trNow && boxes.length && st2.H) {
 				const text = (b.textContent || '').trim(), tall = st2.layoutName === 'portrait', bw = b.offsetWidth, bh = b.offsetHeight;
 				const sp = st2.toScreen(st2.headXf(tall ? [44, 30] : [58, 44], st2.H, st2.ang, 1, 1));
+				const motion=headMotion(st2,tall),v=st2.vis,lo=v&&st2.toScreen([v.x0,v.y0]),hi=v&&st2.toScreen([v.x1,v.y1]);
+				const pad=st2.tube?14:8,top=st2.tube?(tall?44:34):8,foot=st2.tube==='teletype'?(tall?70:48):st2.tube?(tall?44:34):8;
+				const bounds=[Math.max(pad,lo?lo[0]+pad:pad),Math.max(top,lo?lo[1]+4:top),Math.min(st2.box.width-bw-pad,hi?hi[0]-bw-pad:st2.box.width),Math.min(st2.box.height-bh-foot,hi?hi[1]-bh-4:st2.box.height)];
+				const follows=[0,1].map(i=>bounds[i+2]-bounds[i]>=motion.hi[i]-motion.lo[i]),origin=sp.map((p,i)=>follows[i]?p:(motion.lo[i]+motion.hi[i])/2);
+				const exactRel=st2.speechRoom?.line===st2.saying?st2.speechRoom.rel:st2.bubbleRel||trNow.map((p,i)=>p-origin[i]);
 				const side=b.dataset.side;
 				const pin=(s,w,h)=>s==='up'?[w*.3,0]:s==='down'?[w*.3,h]:s==='right'?[w,h/2]:[0,h/2];
-				const offset=pin(side||(tall?'down':'left'),bw,bh),anchor=[relNow[0]+offset[0],relNow[1]+offset[1]];
+				const offset=pin(side||(tall?'down':'left'),bw,bh),anchor=exactRel.map((p,i)=>p+offset[i]);
 				const prev = S.lastScreen === screen ? S.anchors.get(screen) : null;
 				const entering = [...st2.props.values()].some(p => p.state !== 'out' && !p.settled && p.op > .05);
 				if (entering && prev && prev.text !== text) {
-					const offset=pin(prev.side||(tall?'down':'left'),bw,bh),x=sp[0]+prev.anchor[0]-offset[0],y=sp[1]+prev.anchor[1]-offset[1];
-					const v = st2.vis, lo = v && st2.toScreen([v.x0,v.y0]), hi = v && st2.toScreen([v.x1,v.y1]);
-					const pad = st2.tube ? 14 : 8, top = st2.tube ? (tall ? 44 : 34) : 8;
-					const foot = st2.tube === 'teletype' ? (tall ? 70 : 48) : st2.tube ? (tall ? 44 : 34) : 8;
+					const offset=pin(prev.side||(tall?'down':'left'),bw,bh),x=origin[0]+prev.anchor[0]-offset[0],y=origin[1]+prev.anchor[1]-offset[1];
 					const candidate = [x,y,x+bw,y+bh];
 					const obs = [...st2.props.values()].filter(p => p.state !== 'out' && p.restBox).map(p=>swept(p,st2)).filter(Boolean);
-					const bar = st2.barBox(6); if(bar) obs.push(bar);
-					const canFit = lo && x >= Math.max(pad,lo[0]+pad)-.5 && x+bw <= Math.min(st2.box.width-pad,hi[0]-pad)+.5 && y >= Math.max(top,lo[1]+4)-.5 && y+bh <= Math.min(st2.box.height-foot,hi[1]-4)+.5 && !obs.some(o=>meet(candidate,o));
+					// Include the owner's more conservative reservation as well as the independent 33-angle art sweep.
+					for(const p of st2.props.values()) if(p.state!=='out'&&p.restFit) {const rb=p.restFit.speechBox||p.restFit.box;if(rb){const a=st2.toScreen(rb.slice(0,2)),z=st2.toScreen(rb.slice(2));obs.push([a[0]-6,a[1]-6,z[0]+6,z[1]+6]);}}
+					const stack=st2.stackFit().box;if(stack){const a=st2.toScreen(stack.slice(0,2)),z=st2.toScreen(stack.slice(2));obs.push([a[0]-6,a[1]-6,z[0]+6,z[1]+6]);}
+					if(motion.bar)obs.push(motion.bar);
+					const sweptCandidate=candidate.map((p,i)=>follows[i%2]?p+(i<2?motion.lo[i]:motion.hi[i-2])-sp[i%2]:p);
+					const fc=[st2.ps.tiltT-.2,st2.ps.tiltT,st2.ps.tiltT+.2].flatMap(a=>{const q=st2.toScreen(st2.headXf(tall?[44,30]:[58,44],st2.H,a,1,1));return[[12,32],[52,32],[12,58],[52,58]].map(p=>{const v=st2.toScreen(st2.headXf(p,st2.H,a,1,1));return v.map((v,i)=>v+sp[i]-q[i]);});});
+					const face=[Math.min(...fc.map(p=>p[0]))-6,Math.min(...fc.map(p=>p[1]))-6,Math.max(...fc.map(p=>p[0]))+6,Math.max(...fc.map(p=>p[1]))+6];if(tall)face[1]-=12;else face[2]+=12;
+					for(let i=0;i<2;i++)if(!follows[i]){face[i]+=motion.lo[i]-sp[i];face[i+2]+=motion.hi[i]-sp[i];}
+					const intersects=(a,o)=>a[0]<o[2]-1e-7&&a[2]>o[0]+1e-7&&a[1]<o[3]-1e-7&&a[3]>o[1]+1e-7;
+					const canFit=lo&&sweptCandidate[0]>=bounds[0]-.5&&sweptCandidate[1]>=bounds[1]-.5&&sweptCandidate[2]<=bounds[2]+bw+.5&&sweptCandidate[3]<=bounds[3]+bh+.5&&!intersects(candidate,face)&&!obs.some(o=>intersects(sweptCandidate,o));
 					const drift = Math.max(...anchor.map((v,i)=>Math.abs(v-prev.anchor[i])));
 					if(S.trace) {
 						const d=st2.__bubbleDecision, meet=(a,o)=>a[0]<o[2]-1e-7&&a[2]>o[0]+1e-7&&a[1]<o[3]-1e-7&&a[3]>o[1]+1e-7;
 						const sr=R(st2.screen),hr=R(st2.gHead),head=[hr[0]-sr[0],hr[1]-sr[1],hr[2]-sr[0],hr[3]-sr[1]];
-						S.trace[S.trace.length-1].swap={old:prev,next:{text,anchor,side},candidate,canFit,drift,rawObs:obs,head,headHit:meet(candidate,head),model:d&&{face:meet(candidate,d.face),hits:d.obs.filter(o=>meet(candidate,o)),bounds:d.bounds}};
+						S.trace[S.trace.length-1].swap={old:prev,next:{text,anchor,side},candidate,sweptCandidate,motion,follows,face,canFit,drift,rawObs:obs,head,headHit:meet(candidate,head),model:d&&{face:meet(candidate,d.face),hits:d.obs.filter(o=>meet(candidate,o)),bounds:d.bounds}};
 					}
 					if(canFit && drift > 1) S.hits.push(`${screen}: new line moved its bottom/tail anchor ${drift.toFixed(2)} px during entry although its new size fits`);
 				}

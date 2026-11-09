@@ -905,7 +905,7 @@
          were placed — refitted them mid-scene and the bubble then settled against the shifted boxes (QA-4) */
       if (this.famName !== 'nier') {
         if (spec.screen != null && spec.screen !== this.lastScreen) {
-          this.bubbleClaim = null; this.bubbleKeepOff = null; this.keepOff = null; this.bubbleRel = null; this.bubbleRelT = 0; this.speechRoom = null;
+          this.bubbleClaim = null; this.bubbleKeepOff = null; this.keepOff = null; this.bubbleRel = null; this.bubbleRelT = 0; this.speechRoom = null; this.bubbleAnchor = null;
         } else if (this.speechRoom && this.speechRoom.line === this.saying && this.bubble.classList.contains('on') && !this.bubble.classList.contains('pst-hush')
           && JSON.stringify(spec.props || []) !== JSON.stringify(this.spec.props || [])) {
           /* A hover can change its picture while the current question is still being read. The incoming cast
@@ -1017,11 +1017,8 @@
     sayNow(text, mood, owner) {
       const b = this.bubble, S = snd();
       if (this.typeT) this.typeT.cancel();
-      /* a new line takes its own place from its first frame: a place stepped aside to for the last line was kept into
-         this one for up to 2.5 s (bubbleRel), so a line could open where the old one had stood and only then settle
-         (QA-4: r-source opened 44-68 px from where it settles). A claimed place is the screen's, cleared in direct()
-         before a new screen's props are placed, so destinations never refit around a changed claim mid-scene
-         (r-pick to r-preview's restore jumped as the clearance changed) */
+      /* New words get a fresh clearance decision before paint. bubbleAnchor is only a candidate for that decision:
+         it preserves a valid tail/bottom across a size change, never the old line's claim or its timed step-aside. */
       if (text !== this.saying) { this.bubbleRel = null; this.bubbleRelT = 0; }
       this.saying = text; this.sayOwner = text ? owner || null : null;
       if (!text) { b.classList.remove('on', 'typing'); if (S && S.hush) S.hush(); return; }
@@ -1484,6 +1481,7 @@
          cannot fit on an axis, pin that axis to the scene instead and reserve the head's whole face there. */
       const follows = [bounds[2] - bounds[0] >= motion.hi[0] - motion.lo[0], bounds[3] - bounds[1] >= motion.hi[1] - motion.lo[1]];
       const origin = sp.map((p, i) => follows[i] ? p : (motion.lo[i] + motion.hi[i]) / 2);
+      const anchorKey = JSON.stringify([this.lastScreen, motion.key, follows]);
       const frameKey = JSON.stringify([this.lastScreen, this.saying, motion.key, bw, bh, follows]);
       if (this.bubbleFrame !== frameKey) {
         const hadBand = this.bubbleKeepOff;
@@ -1542,8 +1540,15 @@
       /* Kept from the same origin as the usual place: the speech point on an axis with room to follow it, the
          fixed scene on a cramped axis. A different origin for the kept place made it wander during a wiggle. */
       const prev = this.bubbleRel ? [origin[0] + this.bubbleRel[0], origin[1] + this.bubbleRel[1]] : null;
+      /* A shorter new line can still fit at the old tail while the usual place is on Pip's other side. Try that
+         full-precision candidate before searching again; the same face, full-motion, prop and bounds checks apply. */
+      const prior = this.bubbleAnchor, pin = (side, w, h) => side === 'up' ? [w * .3, 0] : side === 'down' ? [w * .3, h] : side === 'right' ? [w, h / 2] : [0, h / 2];
+      const oldPin = prior && pin(prior.side, prior.w, prior.h), newPin = prior && pin(prior.side, bw, bh);
+      const priorAt = prior && prior.key === anchorKey && prior.line !== this.saying
+        ? origin.map((p, i) => p + prior.rel[i] + oldPin[i] - newPin[i]) : null;
       let at = null;
       if (prev && clear(prev[0], prev[1])) at = prev; /* the current line owns its place while the geometry stays clear */
+      else if (priorAt && clear(priorAt[0], priorAt[1])) at = priorAt;
       else if (clear(x, y) && !(this.bubbleSide && sideOf(x) !== this.bubbleSide && y + bh > face[1])) at = [x, y];
       else {
         at = near(candidates([face].concat(obs)));
@@ -1582,6 +1587,7 @@
       this.bubbleSide = talking ? sideOf(x) : null;
       const dx = Math.max(x - head[0], head[0] - x - bw, 0), dy = Math.max(y - head[1], head[1] - y - bh, 0);
       const tail = dx > dy ? (head[0] < x ? 'left' : 'right') : (head[1] < y ? 'up' : 'down');
+      this.bubbleAnchor = talking ? { key: anchorKey, line: this.saying, rel: [x - origin[0], y - origin[1]], w: bw, h: bh, side: tail } : null;
       /* where it is, with its tail, for the props that leave under it (holdUnder) */
       if (talking) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(x - gap - (tail === 'left' ? 10 : 0), y - gap - (tail === 'up' ? 10 : 0)), a1 = u(x + bw + gap + (tail === 'right' ? 10 : 0), y + bh + gap + (tail === 'down' ? 10 : 0)); this.bubbleBox = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleBox = null;
       /* (its place as `translate`: its pop's `scale` (30-art.css pstBubble) then grows it from its tail where it stands; a
