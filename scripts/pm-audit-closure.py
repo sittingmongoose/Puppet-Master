@@ -2952,10 +2952,220 @@ def validator_result_passed(record: dict[str, Any]) -> bool:
     )
 
 
-def validator_clean_record(record: dict[str, Any], label: str) -> bool:
+# Closed clean-evidence vocabulary, inventoried from Plans/.audits/*/validator_results.json.
+# Historical capture/report containers without a clean interpretation admit only emptiness;
+# their nonempty payloads cannot prove a clean file. These rules authorize corrections only,
+# never reinterpret historical validator outcomes or the June compatibility vocabulary.
+VALIDATOR_FINDING_CHILDREN = ("findings", "warnings", "semantic_risks")
+VALIDATOR_CLEAN_SUMMARY_FIELDS = {
+    **dict.fromkeys(("fail", "failed", "fail_count", "core_failures", "governance_failures",
+                     "governance_expected_failures", "governance_unexpected_failures",
+                     "mutated_worktree_count", "mutated_outside_audit_dir_count", "side_effects",
+                     "side_effect_count", "side_effects_reverted", "side_effect_revert_count"), "zero"),
+    **dict.fromkeys(("pass", "passed", "pass_count", "total", "total_checks", "command_count",
+                     "governance_passes", "invalid_invocation_count", "invalid_invocation_environment"), "count"),
+    "status": "pass",
+    "git_status_before_each": "clean_status",
+    "git_status_after_each": "clean_status",
+    "final_git_status": "snapshot",
+}
+VALIDATOR_CLEAN_COMMON_FIELDS = {
+    **dict.fromkeys((*AUDIT_REF_FIELDS, "schema_id", "created_at_utc", "generated_at_utc",
+                     "started_at_utc", "finished_at_utc", "updated_at_utc"), "text"),
+    "repair_required": "false",
+    "finding_level": "non_error_level",
+    "status": "pass",
+    "side_effect_count": "zero",
+    "side_effects": "no_effects",
+    "non_audit_side_effects": "no_effects",
+    "summary": "summary",
+}
+VALIDATOR_CLEAN_FILE_FIELDS = {
+    **VALIDATOR_CLEAN_COMMON_FIELDS,
+    **dict.fromkeys(("schema", "current_ref", "ran_at_utc", "captured_at_utc", "generated_utc",
+                     "finalization_checks_generated_at_utc", "clean_worktree_path", "workdir",
+                     "pyyaml_target", "pyyaml_source", "pyyaml_path", "audited_range", "range",
+                     "note", "pair_label", "pythonpath", "logdir", "side_effect_policy", "packet_id", "work_item_id",
+                     "subject_fingerprint", "evidence_boundary", "subject"), "text"),
+    **dict.fromkeys(("mutability_notes", "environment_notes", "notes", "registry_hashes"), "texts"),
+    **dict.fromkeys(("overall_status", "suite_status", "core_status", "governance_status",
+                     "finalization_status"), "pass"),
+    **dict.fromkeys(("all_passed", "all_runs_passed", "passing_core_governance", "worktree_restored_to_clean",
+                     "registry_hash_stable_across_pair", "git_status_stable_across_pair"), "true"),
+    **dict.fromkeys(("mutated_worktree", "validators_mutated_worktree", "status_changed_by_validators",
+                     "mutated_validation", "any_mutation_detected", "mutation_detected",
+                     "forbidden_state_mutation_detected"), "false"),
+    **dict.fromkeys(("failed", "fail_count", "mutations_detected", "finalization_side_effect_count",
+                     "validator_fail_count", "validator_side_effect_count", "repair_required_count",
+                     "validator_failure_count", "timeout_count", "superseded_environment_failure_count"), "zero"),
+    **dict.fromkeys(("passed", "pass_count", "result_count", "commands_run", "final_status_count",
+                     "initial_status_count", "status_before_count", "status_after_count",
+                     "validator_pass_count"), "count"),
+    **dict.fromkeys(("status_before", "status_after", "status_before_short", "status_after_short",
+                     "git_status_before", "git_status_after", "git_status_before_validators",
+                     "git_status_after_validators", "status_before_validators", "status_after_validators",
+                     "initial_git_status", "final_git_status", "initial_git_status_short",
+                     "final_git_status_short", "git_status_before_suite", "git_status_after_suite",
+                     "initial_git_status_before_audit_dir", "initial_non_audit_status", "final_non_audit_status",
+                     "final_non_audit_git_status", "started_with_git_status", "git_status_final",
+                     "non_audit_status_after"), "snapshot"),
+    **dict.fromkeys(("non_audit_mutations", "side_effects_reverted", "non_audit_side_effects_reverted",
+                     "failed_results", "blockers", "blocking_failures", "transient_failures_repaired",
+                     "new_status_entries_from_bundle", "resolved_status_entries_from_bundle",
+                     "validator_removed_status_lines", "runs", "gates"), "empty_list"),
+    **dict.fromkeys(("suite_hash_changes", "static_mutability_evidence", "mutation_summary",
+                     "post_artifact_git_diff_check", "forbidden_artifact_scan", "semantic_audit_summary",
+                     "pyyaml_dependency", "mutation_check", "mutations_disclosure"), "empty_object"),
+    "validator_side_effects": "false_or_empty_list",
+    "baseline_comparison": "empty_object_or_text",
+    "currentness_problem": "empty_text",
+    **dict.fromkeys(("results", "commands", "validators", "standard_sequence",
+                     "clean_state_rerun_after_restoring_validator_mutation", "finalization_checks"), "results"),
+    **dict.fromkeys(VALIDATOR_FINDING_CHILDREN, "findings"),
+    "invalid_invocations": "invalid_invocations",
+    "environment": "environment",
+    "duration_seconds": "duration",
+    "status_counts": "status_counts",
+}
+VALIDATOR_CLEAN_RECORD_FIELDS = {
+    **VALIDATOR_CLEAN_COMMON_FIELDS,
+    **dict.fromkeys(("name", "check_id", "cmd", "command", "category", "superseded_by", "ended_at_utc",
+                     "stdout", "stderr", "stdout_tail", "stderr_tail", "stdout_excerpt", "stderr_excerpt",
+                     "output_tail", "stdout_log", "stderr_log", "stdout_sha256", "stderr_sha256",
+                     "finding_family", "finding_key", "reported_by", "failure_scope", "notes"), "text"),
+    **dict.fromkeys(("source_atom_ids", "plan_unit_ids", "owner_docs", "detail_keys", "exact_tokens"), "texts"),
+    **dict.fromkeys(("exit_code", "returncode"), "integer"),
+    **dict.fromkeys(("duration_seconds", "duration_ms", "elapsed_seconds"), "duration"),
+    **dict.fromkeys(("status_before_count", "status_after_count"), "count"),
+    **dict.fromkeys(("mutation_detected", "mutated", "git_status_changed", "non_audit_side_effect_detected",
+                     "mutated_status", "timed_out", "mutated_worktree", "mutated_outside_audit_dir"), "false"),
+    **dict.fromkeys(("git_status_before", "git_status_after", "git_status_final", "non_audit_status_before",
+                     "non_audit_status_after", "status_before", "status_after", "git_status_after_revert",
+                     "outside_audit_status_before", "outside_audit_status_after", "before_status_non_audit",
+                     "after_status_non_audit", "final_status_non_audit", "git_status_after_side_effect_revert"), "snapshot"),
+    **dict.fromkeys(("reverted_side_effect_paths", "tracked_diff_before", "tracked_diff_after",
+                     "tracked_side_effects", "git_status_added", "git_status_removed", "reverted_paths",
+                     "side_effects_reverted", "resolved_status_entries", "restore_failed", "restored_side_effects",
+                     "side_effect_revert_actions", "side_effects_outside_audit_dir"), "empty_list"),
+    **dict.fromkeys(("changed_hashes", "side_effect_diff", "parsed_stdout", "details"), "empty_object"),
+    **dict.fromkeys(("side_effect", "validator_side_effects"), "false"),
+    "side_effects_detected": "false_or_empty_list",
+    **dict.fromkeys(("env_overrides", "extra_env", "environment"), "environment"),
+    "result": "pass",
+    "classification": "terminal_classification",
+    "rerun_after_final_artifact_update": "true",
+    "warnings": "record_warnings",
+}
+
+
+def validator_clean_value(value: Any, rule: str, label: str) -> bool:
+    if rule == "text":
+        return isinstance(value, str)
+    if rule == "texts":
+        return isinstance(value, list) and all(isinstance(item, str) for item in value)
+    if rule == "integer":
+        return type(value) is int
+    if rule in {"zero", "count"}:
+        return type(value) is int and (value == 0 if rule == "zero" else value >= 0)
+    if rule == "duration":
+        import math  # noqa: PLC0415
+        return type(value) in {int, float} and math.isfinite(value) and value >= 0
+    if rule == "false":
+        return value is False
+    if rule == "true":
+        return value is True
+    if rule == "pass":
+        return value == "pass"
+    if rule == "non_error_level":
+        return isinstance(value, str) and value in FINDING_LEVELS - {"error", "blocker"}
+    if rule == "terminal_classification":
+        return isinstance(value, str) and value in TERMINAL_CLASSIFICATIONS
+    if rule == "no_effects":
+        return not value  # Preserve the direct side-effect fields' existing rule.
+    if rule == "empty_list":
+        return type(value) is list and not value
+    if rule == "empty_object":
+        return type(value) is dict and not value
+    if rule == "false_or_empty_list":
+        return value is False or type(value) is list and not value
+    if rule == "empty_text":
+        return value == ""
+    if rule == "empty_object_or_text":
+        return value == "" or type(value) is dict and not value
+    if rule == "clean_status":
+        return value == "clean"
+    if rule == "snapshot":
+        return isinstance(value, str) or isinstance(value, list) and all(isinstance(item, str) for item in value)
+    if rule == "environment":
+        return isinstance(value, dict) and set(value) <= {"PYTHONPATH", "note"} \
+            and all(isinstance(item, str) for item in value.values())
+    if rule == "status_counts":
+        return isinstance(value, dict) and set(value) <= {"pass"} \
+            and all(type(item) is int and item >= 0 for item in value.values())
+    if rule == "summary":
+        return validator_clean_fields(value, VALIDATOR_CLEAN_SUMMARY_FIELDS, label)
+    if rule in {"findings", "record_warnings"}:
+        if not isinstance(value, list):
+            return False
+        # Historical result warnings also carry plain informational strings.
+        if rule == "record_warnings" and all(isinstance(item, str) for item in value):
+            return True
+        if not all(isinstance(item, dict) and validator_clean_record(item, label) for item in value):
+            return False
+        errors: list[str] = []
+        return not actionable_validator_finding_rows({"findings": value}, label, errors) and not errors
+    if rule == "results":
+        return isinstance(value, list) and all(
+            isinstance(item, dict) and validator_clean_record(item, label) and validator_result_passed(item)
+            for item in value)
+    return False  # No default interpretation for an unrecognized policy.
+
+
+def validator_clean_fields(record: Any, fields: dict[str, str], label: str) -> bool:
+    return isinstance(record, dict) and set(record) <= fields.keys() and all(
+        validator_clean_value(value, fields[key], f"{label}.{key}") for key, value in record.items())
+
+
+def actionable_validator_finding_rows(
+    data: dict[str, Any], artifact: str, errors: list[str], inferred_out: set[str] | None = None,
+    explicit_out: set[str] | None = None, compat_words: bool = False,
+) -> list[str]:
+    """Use ordinary finding classification, retaining error levels and mutations even with false flags."""
+    rows = actionable_warning_rows(data, artifact, errors, inferred_out, explicit_out, compat_words)
+    for field in VALIDATOR_FINDING_CHILDREN:
+        for index, item in enumerate(data.get(field, []) if isinstance(data.get(field), list) else []):
+            key = f"{field}[{index}]"
+            if isinstance(item, dict) and (item.get("finding_level") in ("error", "blocker")
+                                          or validator_has_side_effects(item)) and key not in rows:
+                rows.append(key)
+    return rows
+
+
+def validator_clean_record(record: dict[str, Any], label: str, *, invalid_invocation: bool = False) -> bool:
+    fields = dict(VALIDATOR_CLEAN_RECORD_FIELDS)
+    if invalid_invocation:
+        fields.pop("status")  # Its exact invalid_invocation status is checked with the rerun link.
+        record = {key: value for key, value in record.items() if key != "status"}
     errors: list[str] = []
     explicit = explicit_repair_required(record, label, errors)
-    return not errors and explicit is not True and not validator_has_side_effects(record)
+    return validator_clean_fields(record, fields, label) and not errors \
+        and explicit is not True and not validator_has_side_effects(record)
+
+
+def validator_clean_file(source: Any, label: str) -> bool:
+    """A whole-file proof, independent of which named rows a correction wants to exempt."""
+    if not isinstance(source, dict) or set(source) - VALIDATOR_CLEAN_FILE_FIELDS.keys():
+        return False
+    fields = {key: rule for key, rule in VALIDATOR_CLEAN_FILE_FIELDS.items() if key != "invalid_invocations"}
+    if not validator_clean_fields({key: value for key, value in source.items() if key in fields}, fields, label):
+        return False
+    errors: list[str] = []
+    if explicit_repair_required(source, label, errors) is True or errors or validator_has_side_effects(source):
+        return False
+    invocations = source.get("invalid_invocations", [])
+    return isinstance(invocations, list) and all(
+        isinstance(item, dict) and validator_clean_record(item, label, invalid_invocation=True)
+        and validator_superseded_invocation(item, source.get("results", [])) for item in invocations)
 
 
 def validator_superseded_invocation(record: dict[str, Any], results: list[Any]) -> bool:
@@ -3016,6 +3226,7 @@ def actionable_json_rows(
         if questions:
             rows.append("sealed_ledger_open_item_policy.open_questions")
     elif artifact == "validator_results.json":
+        rows.extend(actionable_validator_finding_rows(data, artifact, errors, inferred_out, explicit_out, compat_words))
         for field in ("non_audit_side_effects", "side_effects", "side_effect_count"):
             if field in data and validator_has_side_effects({field: data[field]}):
                 rows.append(field)
@@ -3526,12 +3737,12 @@ def validate_audit_correction(
                         raise ValueError("validator source row does not exist")
                     # Positive evidence is required at both levels, regardless of finding flags.
                     # A single unclean duplicate or an unproven rerun refuses the whole receipt.
-                    if not validator_clean_record(source, label):
+                    if not validator_clean_file(source, label):
                         raise ValueError("file is actionable or has malformed repair/mutation evidence")
                     for item in matches:
                         passed = validator_result_passed(item) if group == "results" else \
                             validator_superseded_invocation(item, source.get("results", []))
-                        if not validator_clean_record(item, f"{label}:{row}") or not passed:
+                        if not validator_clean_record(item, f"{label}:{row}", invalid_invocation=group == "invalid_invocations") or not passed:
                             raise ValueError("is actionable or lacks clean passing/supersession evidence")
                 else:
                     # v1 admits only physical JSONL rows and named validator-result rows.
@@ -6063,12 +6274,83 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             ("bool_exit_code", "results", {"exit_code": False}, {}, [], False),
             ("float_exit_code", "results", {"exit_code": 0.0}, {}, [], False),
         ])
+        # r4 regressions exercise the actual CLI, with a valid registry, current scope
+        # coverage, real file hashes and a row-only receipt. Retaining these tests while
+        # reverting the clean-file implementation must expose the former false passes.
+        r4_finding = dict(_self_test_registry_row(), repair_required=True, finding_level="error")
+        cli_cases.extend([
+            ("r4_summary_side_effect_count", "results", {"status": "pass"}, {"summary": {"side_effect_count": 1}}, [], False),
+            ("r4_file_status_fail", "results", {"status": "pass"}, {"status": "fail"}, [], False),
+            ("r4_summary_fail", "results", {"status": "pass"}, {"summary": {"fail": 1}}, [], False),
+            ("r4_actionable_findings", "results", {"status": "pass"}, {"findings": [r4_finding]}, [], False),
+            ("r4_unknown_top_key", "results", {"status": "pass"}, {"unmodeled_mutation": 1}, [], False),
+            ("r4_unknown_summary_key", "results", {"status": "pass"}, {"summary": {"unmodeled_count": 1}}, [], False),
+            ("r4_bool_summary_failure_count", "results", {"status": "pass"}, {"summary": {"fail": False}}, [], False),
+            ("r4_float_summary_failure_count", "results", {"status": "pass"}, {"summary": {"fail": 0.0}}, [], False),
+            ("r4_bool_summary_pass_count", "results", {"status": "pass"}, {"summary": {"pass": True}}, [], False),
+            ("r4_float_summary_pass_count", "results", {"status": "pass"}, {"summary": {"pass": 1.0}}, [], False),
+            ("r4_negative_summary_pass_count", "results", {"status": "pass"}, {"summary": {"pass": -1}}, [], False),
+            ("r4_unknown_record_key", "results", {"status": "pass", "unmodeled_mutation": 1}, {}, [], False),
+            ("r4_unknown_finding_key", "results", {"status": "pass"},
+                {"findings": [{"repair_required": False, "finding_level": "info", "unmodeled_mutation": 1}]}, [], False),
+            ("r4_summary_wrong_shape", "results", {"status": "pass"}, {"summary": []}, [], False),
+            ("r4_summary_status_fail", "results", {"status": "pass"}, {"summary": {"status": "fail"}}, [], False),
+        ])
+
+        def clean_sample(rule: str) -> Any:
+            if rule == "summary":
+                return {key: clean_sample(policy) for key, policy in VALIDATOR_CLEAN_SUMMARY_FIELDS.items()}
+            return {"text": "fixture", "texts": [], "integer": 0, "count": 1, "zero": 0,
+                    "duration": 0.0, "false": False, "true": True, "pass": "pass", "non_error_level": "info",
+                    "terminal_classification": "exact_present", "no_effects": [], "empty_list": [],
+                    "empty_object": {}, "false_or_empty_list": [], "empty_text": "", "empty_object_or_text": {},
+                    "snapshot": [], "clean_status": "clean", "environment": {"PYTHONPATH": "fixture"},
+                    "status_counts": {"pass": 1}, "findings": [], "record_warnings": [],
+                    "results": [], "invalid_invocations": []}[rule]
+
+        every_file_key = {key: clean_sample(policy) for key, policy in VALIDATOR_CLEAN_FILE_FIELDS.items()
+                          if key not in AUDIT_REF_FIELDS}
+        every_file_key["results"] = [{"name": "subject", "status": "pass"}]
+        every_record_key = {key: clean_sample(policy) for key, policy in VALIDATOR_CLEAN_RECORD_FIELDS.items()
+                            if key not in {*AUDIT_REF_FIELDS, "name"}}
+        cli_cases.extend([
+            ("r4_every_allowed_file_key", "results", {"status": "pass"}, every_file_key, [], True),
+            ("r4_every_allowed_record_key", "results", every_record_key, {}, [], True),
+            ("r4_audit004_shape", "invalid_invocations", dict(invalid, returncode=2, stdout="", stderr="usage",
+                side_effects=[], env_overrides={"PYTHONPATH": "fixture"}, git_status_before=[], git_status_after=[]),
+                {"created_at_utc": "2026-06-19T04:50:00Z", "summary": {"fail": 0, "invalid_invocation_count": 1,
+                    "pass": 13, "side_effect_count": 0}}, [dict(rerun, returncode=0, side_effects=[], stdout="", stderr="",
+                    git_status_before=[], git_status_after=[], rerun_after_final_artifact_update=True)], True),
+        ])
+        # Finding children use the same classifier with and without a correction. A false
+        # artifact flag never hides a child; error levels and mutation evidence remain binding.
+        for field in VALIDATOR_FINDING_CHILDREN:
+            for suffix, child in (
+                ("explicit", r4_finding),
+                ("error_level", dict(r4_finding, repair_required=False)),
+                ("side_effect", dict(r4_finding, repair_required=False, finding_level="info", side_effect_count=1)),
+                ("inferred", {"classification": "missing_or_drift"}),
+            ):
+                probe = tmp / "validator-child.json"
+                write_json(probe, {"repair_required": False, "finding_level": "info", field: [child]})
+                child_errors: list[str] = []
+                child_rows = actionable_json_rows(probe, "validator_results.json", child_errors)
+                check(f"validator_child_{field}_{suffix}_classified", child_rows == [f"{field}[0]"] and not child_errors,
+                      {"rows": child_rows, "errors": child_errors})
+            for suffix, child in (
+                ("clean", {"repair_required": False, "finding_level": "info"}),
+                ("malformed_repair", {"repair_required": "false", "finding_level": "info"}),
+                ("malformed_level", {"repair_required": False, "finding_level": []}),
+                ("malformed_side_effect", {"repair_required": False, "finding_level": "info", "side_effect_count": False}),
+            ):
+                check(f"validator_child_{field}_{suffix}_clean_proof",
+                      validator_clean_file({field: [child]}, "fixture") == (suffix == "clean"))
         for case_index, (name, group, item, extra, reruns, accepted) in enumerate(cli_cases):
             d = cli_root / "Plans/.audits" / f"case-{case_index}"
             d.mkdir()
             refs = {field: "fixture-ref" for field in AUDIT_REF_FIELDS}
             refs.update(audit_id=d.name, ledger_id="fixture-ledger")
-            write_json(d / "audit_report.json", dict(refs, status="PASS", repair_required_count=0))
+            write_json(d / "audit_report.json", dict(refs, status="PASS_WITH_WARNINGS", repair_required_count=0))
             source = dict(refs, results=list(reruns), invalid_invocations=[])
             source[group].append(dict(name="subject", **item))
             source.update(extra)
@@ -6115,6 +6397,10 @@ def cmd_self_test(args: argparse.Namespace) -> int:
             else:
                 okay = okay and after_code == 1 and after["status"] == "fail" \
                     and "audit_correction" not in after_audit and any("audit correction" in e for e in after["errors"])
+            if name == "r4_actionable_findings":
+                check("validator_findings_need_closure_without_correction",
+                      {"source_artifact": "validator_results.json", "source_row": "findings[0]"}
+                      in before["audit_dirs"][0]["missing_coverage"], before["audit_dirs"][0])
             check(f"correction_cli_{name}", okay, {"before_exit": before_code, "after_exit": after_code,
                                                   "registry_errors": after["registry"]["errors"], "errors": after["errors"]})
         # A row-only correction on a frozen June audit must preserve omitted status.

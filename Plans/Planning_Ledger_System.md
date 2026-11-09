@@ -1735,10 +1735,13 @@ canonical_text: >-
   source_row and reason. v1 row addresses are physical JSONL line numbers or named validator_results.json
   results and invalid_invocations. The validator requires the complete standard source selection, independently
   computes actionability, rejects actionable, nonexistent, uncovered or duplicate listed rows, and applies nothing
-  on any invalid receipt. Named validator rows require clean file and record evidence: no truthy side_effects or
-  non_audit_side_effects, side_effect_count absent or an integer zero (never a boolean), and no required repair
-  or malformed repair fields. Every matching results record must have status pass, or omit status with integer
-  exit_code zero. Finding flags cannot excuse failures or mutations. An invalid_invocations record must have
+  on any invalid receipt. Named validator rows require the whole validator_results.json file and every record
+  to prove a clean pass on closed lists of known fields and clean value shapes; any unknown field refuses the
+  whole correction. A supplied file status must be pass; summary failure and mutation counts must be integer zero
+  (never booleans), other summary counts non-negative integers, and finding children non-actionable with valid
+  repair fields, no error-level finding or side effect. No truthy side_effects or non_audit_side_effects,
+  nonzero or non-integer side_effect_count, required repair or malformed repair fields are allowed. Every matching
+  results record must have status pass, or omit status with integer exit_code zero. Finding flags cannot excuse failures or mutations. An invalid_invocations record must have
   status invalid_invocation and explicitly name its clean passing rerun through superseded_by in the form
   <result name> with <added arguments>; the rerun command must equal the original command plus those arguments.
   Unknown schemas or fields, mismatched or missing hashes, symlinked bound inputs or receipts, invalid dates,
