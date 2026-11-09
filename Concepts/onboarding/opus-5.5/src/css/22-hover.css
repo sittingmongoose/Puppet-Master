@@ -93,8 +93,7 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmh-mag: 3; --pmh-mag-k: .02; --pmh-stiff: 240; --pmh-damp: 30;
   --pmh-bleed: 10; --pmh-edge: .4; --pmh-ramp: 16; --pmh-out-ms: 220;
   --pmh-glow: 1; --pmh-glow-reach: 28; --pmh-frame: 0;
-  --pmh-light-r: 150px; --pmh-light-a: .07;
-  --pmh-glow-blur: 12px; --pmh-glow-alpha: .12; --pmh-glow-in-ms: 160ms; --pmh-glow-out-ms: 240ms;
+  --pmh-glow-in-ms: 160ms; --pmh-glow-out-ms: 240ms;
 }
 /* Basic, Friendly and Glass: the FAMILY LOOK section below. */
 /* Retro and NieR: their own forms, the RETRO and NIER sections at the end of this file. */
@@ -106,8 +105,8 @@ html[data-pmh-soft] #pmh-glow { display: none; }
 /* ===== FAMILY LOOK: Basic, Friendly, Glass (final, 2026-10-10) =====
    Usage's plate merged with PM8's field, both smaller and calmer. A hovered card, tile or row:
      1. leans toward the pointer on the engine's `translate` spring, 2-2.5 px at an edge (icons never move);
-     2. takes ONE light, its own ::after UNDER the content (z-index -1 in the host's isolated stacking context): a faint
-        surface sheen and a hairline catch along the border, both pre-painted and revealed by a single soft radial mask
+     2. takes ONE light, its own ::after UNDER the content (z-index -1 in the host's isolated stacking context): a hairline
+        catch and soft inset band along the border, pre-painted and revealed by a single soft radial mask
         centred on the pointer (--pmh-x/-y, registered and non-inherited). Its opacity is the field intensity --pmh-i, so
         a neighbour inside the bleed catches the same light on its near edge, continuously;
      3. gets the plate: a short elevation shadow plus half of PM8's emitted bloom, pre-painted on #pmh-glow at the box's
@@ -117,15 +116,13 @@ html[data-pmh-soft] #pmh-glow { display: none; }
 
 /* --- engine tokens (read through the probe) and paint tokens --- */
 /* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0595.css */
-/* Basic: crisp. Critically damped and quick; a cool hairline over a short inner band; a small faint sheen; a tight
-   plate. */
+/* Basic: crisp. Critically damped and quick; a cool hairline over a short inner band; a tight plate. */
 :root[data-theme="basic-dark"]:not([data-o55-nier]) {
   --pmh-mag: 2; --pmh-mag-k: .025; --pmh-stiff: 320; --pmh-damp: 36;
   --pmh-bleed: 14; --pmh-ramp: 14; --pmh-out-ms: 220; --pmh-glow-reach: 28;
   --pmf-r: 90px; --pmf-band: 6px;
   --pmf-rim: color-mix(in srgb, color-mix(in srgb, rgb(var(--accent-primary-rgb)) 70%, #fff) 80%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 40%, transparent);
-  --pmf-sheen: rgb(255 255 255 / .042);
   --pmf-in: 90ms; --pmf-out: 220ms;
   --pmf-plate: 0 6px 14px -6px rgba(0, 0, 0, .5);
   --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .2);
@@ -137,19 +134,17 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmf-r: 90px; --pmf-band: 6px;
   --pmf-rim: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 80%, transparent);
   --pmf-rim2: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 26%, transparent);
-  --pmf-sheen: color-mix(in srgb, rgb(var(--accent-primary-rgb)) 4.5%, transparent);
   --pmf-in: 90ms; --pmf-out: 220ms;
   --pmf-plate: 0 6px 14px -6px rgba(16, 24, 40, .2);
   --pmf-bloom: 0 0 10px rgba(var(--accent-primary-rgb), .12);
   --pmh-glow-in-ms: 140ms; --pmh-glow-out-ms: 240ms;
 }
 /* Friendly: soft and warm. A little more travel on a softer, slightly underdamped spring; no hard line, a wide warm
-   band in the area's own cozy accent (rule below); a warm sheen; a soft, deep plate with a warm bloom; slower. */
+   band in the area's own cozy accent (rule below); a soft, deep plate with a warm bloom; slower. */
 :root[data-theme="friendly-dark"]:not([data-o55-nier]) {
   --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
   --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
   --pmf-r: 100px; --pmf-band: 16px;
-  --pmf-sheen: rgb(255 228 206 / .06);
   --pmf-in: 130ms; --pmf-out: 320ms;
   --pmf-plate: 0 10px 22px -10px rgba(10, 6, 18, .55);
   --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 55%, #ffc9b0) 18%, transparent);
@@ -159,15 +154,14 @@ html[data-pmh-soft] #pmh-glow { display: none; }
   --pmh-mag: 2.5; --pmh-mag-k: .03; --pmh-stiff: 170; --pmh-damp: 22;
   --pmh-bleed: 18; --pmh-ramp: 18; --pmh-out-ms: 320; --pmh-glow-reach: 36;
   --pmf-r: 100px; --pmf-band: 16px;
-  --pmf-sheen: color-mix(in srgb, #f07a55 6.5%, transparent);
   --pmf-in: 130ms; --pmf-out: 320ms;
   --pmf-plate: 0 10px 22px -10px rgba(122, 109, 140, .32);
   --pmf-bloom: 0 0 14px color-mix(in srgb, color-mix(in srgb, var(--accent-primary) 50%, #f07a55) 11%, transparent);
   --pmh-glow-in-ms: 200ms; --pmh-glow-out-ms: 340ms;
 }
 /* Glass: depth and light. A slow drift; a bright specular hairline (white into the accent in the dark, the accent in
-   the light) with a medium roll-off; the strongest sheen, light through glass (accent-tinted in the light look, where
-   white on white would not show); the deepest plate. */
+   the light) with a medium roll-off; the deepest plate. FO-121 removes the surface circle in every family;
+   the edge catch keeps its existing colour, band, falloff and timing. */
 /* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0596.css */
 /* @pm7-lg-slot onboarding/opus-5.5/src/css/22-hover/G0597.css */
 /* kinds: tiles lean and glow less, rows take the light and a token of the magnet but no plate, icons nothing (they keep
