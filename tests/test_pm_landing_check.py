@@ -19,6 +19,7 @@ import tempfile
 import textwrap
 import time
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECKOUT = Path("/home/someone/pm-worktrees/example-20260917")
@@ -481,6 +482,105 @@ class RenamedShardStaleness(unittest.TestCase):
         self.assertTrue(self.context.existed_at_base(self.OLD))
         self.assertFalse(self.context.existed_at_base(self.NEW))
         self.assertFalse(M.RenameContext(self.root, "no-such-revision", []).existed_at_base(self.OLD))
+
+    def assert_printed_and_exported(self, failure, context, stale):
+        """Both aggregates must make the same decision before and after complete-export replacement."""
+        failures = [failure] + [{"path": "Plans/Other.md", "error": "artifact_hash_stale", "artifact": f"shard-{n}"}
+                                for n in range(101)]
+        printed, counts, argv = [], {}, {}
+        for check, subcheck, cap in (("run-gates", "validate_evidence", 50), ("audit-governance", "evidence", 100)):
+            report = {"failures": [{"check": subcheck, "failures": failures[:cap]}],
+                      subcheck: {"failures": len(failures)}}
+            items, counted = M.extract(check, report, self.root, context)
+            printed.extend(items)
+            counts[check] = counted
+            argv[check, subcheck] = ["validate-evidence"]
+        result = {"report": {"failures": failures}, "elapsed_seconds": 0, "timed_out": False}
+        with patch.object(M, "run_export", return_value=result):
+            exported, decisions = M.key_from_exports(self.root, counts, {}, set(), argv, 600,
+                                                      items=printed, context=context)
+        self.assertEqual([row["case"] for row in decisions], ["keyed", "keyed"])
+        for check, subcheck in argv:
+            before = next(row for row in printed if (row["check"], row["subcheck"]) == (check, subcheck))
+            after = exported[check, subcheck][0]
+            for route, row in (("printed", before), ("exported", after)):
+                with self.subTest(check=check, route=route):
+                    self.assertEqual(row["stale"], stale)
+                    bucket = M.bucket_of(row)
+                    growth = M.grown_buckets({bucket: 2}, {bucket: 1}, {bucket: int(row["stale"])})
+                    self.assertEqual(len(M.blocking_items([], growth, [])), 0 if stale else 1)
+            self.assertEqual(before["key"], after["key"])
+
+    def test_complete_exports_keep_the_same_rename_context_as_printed_rows(self):
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, True)
+
+    def test_export_and_printed_paths_refuse_an_old_target_absent_at_base(self):
+        self.assert_printed_and_exported(self.ref("Plans/_shards/prd_planning_runtime_contracts/002-lines-1-99999.md"),
+                                         self.context, False)
+
+    def test_export_and_printed_paths_refuse_evidence_edited_in_commits(self):
+        self.assertTrue(self.context.left_alone(self.EVIDENCE))
+        (self.root / self.EVIDENCE).write_text('{"edited": true}\n')
+        self._git("add", "--", self.EVIDENCE)
+        self._commit("edit evidence after context creation")
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+        self.assertEqual(self.context.why[self.EVIDENCE], "the branch's commits changed it")
+
+    def test_export_and_printed_paths_recheck_evidence_after_a_working_tree_edit(self):
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, True)
+        (self.root / self.EVIDENCE).write_text('{"edited": true}\n')
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+        self.assertIn("working-tree changes", self.context.why[self.EVIDENCE])
+
+    def test_export_and_printed_paths_recheck_evidence_after_a_staged_edit(self):
+        self.assertTrue(self.context.left_alone(self.EVIDENCE))
+        original = (self.root / self.EVIDENCE).read_bytes()
+        (self.root / self.EVIDENCE).write_bytes(original + b"\n")
+        self._git("add", "--", self.EVIDENCE)
+        (self.root / self.EVIDENCE).write_bytes(original)
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+
+    def test_a_committed_evidence_rename_refuses_both_paths_with_rename_detection_configured(self):
+        self.assertTrue(self.context.left_alone(self.EVIDENCE))
+        self._git("config", "diff.renames", "true")
+        self._git("mv", self.EVIDENCE, self.EVIDENCE + ".moved")
+        self._commit("rename evidence")
+        self.assertIn(self.EVIDENCE, M.branch_paths(self.root, "base"))
+        with patch.object(self.context, "_git", wraps=self.context._git) as calls:
+            self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+        diffs = [call.args for call in calls.call_args_list if call.args[0] == "diff"]
+        self.assertTrue(diffs)
+        self.assertTrue(all("--no-renames" in args and "--no-ext-diff" in args for args in diffs))
+        self.assertEqual(self.context.why[self.EVIDENCE], "the branch's commits changed it")
+
+    def test_evidence_symlink_refuses_both_paths_with_the_explicit_diagnostic(self):
+        self.assertTrue(self.context.left_alone(self.EVIDENCE))
+        target = self.root / "Plans/elsewhere.json"
+        target.write_bytes((self.root / self.EVIDENCE).read_bytes())
+        (self.root / self.EVIDENCE).unlink()
+        (self.root / self.EVIDENCE).symlink_to(target)
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+        self.assertEqual(self.context.why[self.EVIDENCE], "evidence is or sits under a symbolic link")
+
+    def test_evidence_parent_symlink_refuses_both_paths_with_the_explicit_diagnostic(self):
+        self.assertTrue(self.context.left_alone(self.EVIDENCE))
+        parent = (self.root / self.EVIDENCE).parent
+        target = parent.with_name("moved-evidence")
+        parent.rename(target)
+        parent.symlink_to(target, target_is_directory=True)
+        self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+        self.assertEqual(self.context.why[self.EVIDENCE], "evidence is or sits under a symbolic link")
+
+    def test_export_recording_without_context_never_excuses_a_rename(self):
+        self.assert_printed_and_exported(self.ref(self.OLD), None, False)
+
+    def test_a_failed_current_commit_lookup_refuses_both_paths(self):
+        git = self.context._git
+        def fail_diff(*args):
+            return subprocess.CompletedProcess(args, 1, b"", b"failed") if args[0] == "diff" else git(*args)
+        with patch.object(self.context, "_git", side_effect=fail_diff):
+            self.assert_printed_and_exported(self.ref(self.OLD), self.context, False)
+        self.assertEqual(self.context.why[self.EVIDENCE], "git diff failed")
 
 
 class BaselineDiff(unittest.TestCase):
@@ -2288,6 +2388,56 @@ class ExportKeyedSubchecks(LandingRun):
         code, out = self.run_main("--record-baseline", "--baseline", "baseline.json")
         self.assertEqual(code, 0, out + self.stderr)
         return out, json.loads((self.repo / "baseline.json").read_text(encoding="utf-8"))
+
+    def test_q5_export_replacement_keeps_rename_staleness_and_the_preexisting_missing_ref(self):
+        """Exercise main's context handoff and row replacement, with both renamed rows past both print caps."""
+        evidence = RenamedShardStaleness.EVIDENCE
+        pairs = ((RenamedShardStaleness.OLD, RenamedShardStaleness.NEW),
+                 (RenamedShardStaleness.OLD_SCHEMA, RenamedShardStaleness.NEW_SCHEMA))
+        source = self.repo / evidence
+        source.parent.mkdir(parents=True)
+        source.write_text("{}\n")
+        paths = [evidence]
+        for old, new in pairs:
+            target = self.repo / old
+            target.parent.mkdir(parents=True)
+            target.write_text("shard\n")
+            manifest = target.parent / "manifest.json"
+            manifest.write_text(json.dumps({"shards": [{"shard_id": target.name.split("-")[0], "path": old}]}))
+            paths.extend([old, str(manifest.relative_to(self.repo))])
+        self.git("add", "--", *paths)
+        self.git("commit", "-qm", "Q5 base evidence and shards")
+        self.base = self.git("rev-parse", "HEAD").strip()
+        padding = [{"path": evidence, "error": "artifact_hash_stale", "artifact": f"Plans/owner-{n}.md"}
+                   for n in range(101)]
+        unrelated = {"path": evidence, "error": "missing_ref",
+                     "artifact_ref": "Plans/_shards/storage_value_registry/631-lines-125818-125835.md"}
+        baseline_rows = padding + [unrelated]
+        self.stub(gates={"validate_evidence": baseline_rows}, audit={"evidence": baseline_rows})
+        self.exports["validate-evidence"] = baseline_rows
+        self.record()
+        for old, new in pairs:
+            self.git("mv", old, new)
+            manifest = (self.repo / new).parent / "manifest.json"
+            manifest.write_text(json.dumps({"shards": [{"shard_id": Path(new).name.split("-")[0], "path": new}]}))
+            self.git("add", "--", str(manifest.relative_to(self.repo)))
+        self.git("commit", "-qm", "Q5 regenerate line-range shards")
+        rows = baseline_rows + [{"path": evidence, "error": "missing_ref", "artifact_ref": old} for old, new in pairs]
+        self.stub(gates={"validate_evidence": rows}, audit={"evidence": rows})
+        self.exports["validate-evidence"] = rows
+        code, out = self.compare("--json")
+        report = json.loads(out)
+        self.assertEqual(code, 1, out + self.stderr)
+        self.assertEqual(report["blocking"], 0)
+        self.assertEqual(len(report["exports"]["subchecks"]), 2)
+        self.assertTrue(all(row["case"] == "keyed" for row in report["exports"]["subchecks"]))
+        grown = [row for row in report["grown_buckets"] if "|missing_ref|" in row["bucket"]]
+        self.assertEqual(len(grown), 2)
+        self.assertTrue(all((row["baseline_count"], row["count"], row["renamed_shard_refs"], row["stale"]) ==
+                            (1, 3, 2, True) for row in grown))
+        renamed = [row for row in report["new"] if row["error"] == "missing_ref"]
+        self.assertEqual(len(renamed), 4)
+        self.assertTrue(all(row["stale"] for row in renamed))
 
     def test_the_reviewers_export_is_keyed_and_exits_one(self):
         """132 artifact_hash_stale rows on the two edited documents and their shards, and main's one

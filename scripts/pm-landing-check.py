@@ -531,12 +531,12 @@ SHARDS_PREFIX = "Plans/_shards/"
 class RenameContext:
     """What the renamed-shard rule needs from git (T53): the base revision, whose files a renamed target
     must have existed in, and the paths the branch itself changed (`git diff --name-only <base>..HEAD`),
-    which the referring evidence file must not be among. Lookups are cached; a git failure answers no."""
+    which the referring evidence file must not be among. Only base-file lookups are cached; evidence
+    cleanliness is checked against the current commits and working tree each time. A git failure answers no."""
 
     def __init__(self, root: Path, base: str, touched):
         self.root, self.base, self.touched = root, base, frozenset(touched)
         self._at_base: dict[str, bool] = {}
-        self._left: dict[str, bool] = {}
         # T88: why an evidence file is not left alone, by path (reported, so the landing agent can tell whose work it is)
         self.why: dict[str, str] = {}
 
@@ -554,11 +554,12 @@ class RenameContext:
         if path in self.touched:
             self.why.setdefault(path, "the branch's commits changed it")
             return False
-        if path not in self._left:
-            self._left[path], reason = self._alone(path)
-            if reason:
-                self.why[path] = reason
-        return self._left[path]
+        alone, reason = self._alone(path)
+        if reason:
+            self.why[path] = reason
+        else:
+            self.why.pop(path, None)
+        return alone
 
     def _alone(self, path: str) -> tuple[bool, str]:
         """T88 (TOOLBATCH4 pre-check findings 6 and 7): read only, with no optional lock (`git status` refreshed and
@@ -569,6 +570,13 @@ class RenameContext:
         parts = path.split("/")
         if any((self.root / "/".join(parts[:i])).is_symlink() for i in range(1, len(parts) + 1)):
             return False, "evidence is or sits under a symbolic link"
+        # The context can outlive a later commit as well as a working-tree edit. Recheck the path,
+        # with rename detection off so a renamed evidence file's old path cannot disappear.
+        changed = self._git("diff", "--no-renames", "--no-ext-diff", "--name-only", "-z", f"{self.base}..HEAD", "--", path)
+        if changed.returncode != 0:
+            return False, "git diff failed"
+        if changed.stdout:
+            return False, "the branch's commits changed it"
         status = self._git("status", "--porcelain=v1", "-z", "--untracked-files=all", "--ignored=matching", "--", path)
         if status.returncode != 0:
             return False, "git status failed"
@@ -1593,6 +1601,7 @@ def key_from_exports(
     timeout_seconds: int,
     keep_dir: Path | None = None,
     items: list[dict[str, Any]] | tuple[dict[str, Any], ...] = (),
+    context: RenameContext | None = None,
 ) -> tuple[dict[tuple[str, str], list[dict[str, Any]]], list[dict[str, Any]]]:
     """The exports brief: key each subcheck that prints only a sample from its complete export.
 
@@ -1668,7 +1677,7 @@ def key_from_exports(
                                  f"{row['reported']}")
             else:
                 key = (row["check"], row["subcheck"])
-                rows_now = [normalize(row["check"], row["subcheck"], failure, root) for failure in failures]
+                rows_now = [normalize(row["check"], row["subcheck"], failure, root, context) for failure in failures]
                 printed = Counter(item["key"] for item in items if (item["check"], item["subcheck"]) == key)
                 printed.subtract(Counter(item["key"] for item in rows_now))
                 unmatched = sum(count for count in printed.values() if count > 0)
@@ -1917,7 +1926,7 @@ def check_main(args: argparse.Namespace, root: Path, audit_source: Path) -> int:
             argv_map = f"{type(exc).__name__}: {exc}"
     exported, export_rows = key_from_exports(
         root, counts, None if args.record_baseline else (baseline.get("checks") or {}), timed_out, argv_map,
-        args.subcheck_timeout_seconds, keep_dir, items)
+        args.subcheck_timeout_seconds, keep_dir, items, context=rename_context)
     require_same_readiness_audit_inputs(audit_inputs, readiness_audit_inputs(root),
                                       "changed during the exports")
 

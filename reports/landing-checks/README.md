@@ -678,3 +678,43 @@ Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOO
 **Tests:** 181/181 (`tests-fix.txt`). The fix's tests against `e7b77247a7`'s script: 6 failures, exactly the six new tests (`tests-on-base-e7b77247a7.txt`). **Soundness:** nothing widens: the branch's path list can only grow, and the excuse can only be lost in more cases.
 
 Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/TOOLS-BATCH5/landing/` (`SHA256SUMS`).
+
+## Fix round 1 after the gates (Jared, 2026-11-09)
+
+Jared chose **"Small fix, recheck + Sol max (Recommended)"** after the Sol max and Astra max gates at
+`a960ec98df105054cd45c1bfd478998382e7852f`. This round implements the small fix; the one Sol 6.1 high
+recheck and one Sol max gate remain the lead's next steps. No Astra recheck is requested.
+
+| Where | Cause and fix |
+|---|---|
+| `scripts/pm-landing-check.py:1595`, `:1680`, `:1929` | Complete-export normalization dropped `RenameContext`, then replaced the correctly classified aggregate rows. `key_from_exports` now accepts the same context, passes it to every exported row's `normalize`, and receives it from `check_main`. Baseline recording retains `context=None`. |
+| `scripts/pm-landing-check.py:548`, `:575` | A cached clean result survived a later evidence edit. `left_alone` now checks evidence afresh on every application, including the current committed diff with `--no-renames --no-ext-diff`, status, index flags and bytes against HEAD. It also clears an obsolete refusal diagnostic when the file is clean again. Only old-target existence at the base remains cached. |
+| `tests/test_pm_landing_check.py:486`, `:2392` | Eleven new tests compare the printed and complete-export paths for both aggregates, independently witness the explicit file/ancestor symlink diagnostic, and exercise `main`'s export replacement with both renamed rows beyond both print caps. |
+
+| Test | Result |
+|---|---|
+| **Real Q5 export, before → after**, Sol input `4db776c0896c0b17196c3f1a3fe501571501aa42` / base `dd6580cd11debab88d65f7b65e2abf0cf27b3b72` (1,904 rows), and Astra input `90ef72139473f316428cbc2a651e49a47de6ddee` / base `ae06ffd113334ce64d76a75af0c19abec6463869` (1,822 rows) | **PASS**, both aggregates. The real missing-ref bucket remains **1 → 3**. Before: exported stale flags `[false, false, false]`, one blocker, focused exit **2**. After: `[true, true, false]`, zero blockers, focused exit **1**, matching direct/printed normalization. The unrelated storage-registry reference remains non-stale. |
+| **Fresh production exports** on both full real Q5 trees | **PASS**. Unmodified `run_export` reruns the real `validate-evidence`; totals match the reviewers' captures, every printed row matches, both aggregates key the complete exports, and the missing-ref decision remains exit **1** with zero blockers. |
+| **Old target absent at the base**, with unchanged real evidence and existing replacements | **PASS**, printed and export paths, both aggregates and both Q5 trees: renamed references remain non-stale and bucket growth blocks. |
+| **Evidence changed in commits**, including a new commit after the first clean check | **PASS**, printed and export paths. Both real Q5 probes and the regression refuse the excuse with `the branch's commits changed it`. |
+| **Rename detection must not hide an old evidence path** | **PASS**, scratch regression with `diff.renames=true` and a committed evidence rename. `branch_paths` still names the old path; the fresh evidence diff explicitly uses `--no-renames --no-ext-diff`; both printed and export paths block. The existing committed-rename regression also passes. |
+| **Cached-result reproduction**, working-tree and staged edits after the first clean check | **PASS**, both real Q5 trees and both paths. Reusing the same context refuses the excuse after an edit, including a staged change with original bytes restored on disk. |
+| **Evidence symlink and symlinked ancestor**, after the first clean check | **PASS**, both real Q5 trees and both paths. Separate regression tests require the exact explicit-symlink refusal diagnostic, witnessing the predicate identified by Astra P3 even though Git also refuses those inputs. |
+| **No context during baseline recording; current commit lookup fails** | **PASS**, regression coverage on both paths. No rename excuse is granted. |
+| **Complete landing-check suite** | **192/192 PASS**, exit **0**: the original 181 plus 11 new tests. The runner redirects only the default readiness audit source to an absent local path so the suite never selects the shared checkout. |
+| **Diff whitespace check** | **PASS**, `git diff --check`. |
+
+**Policy remains exactly bounded.** A missing reference must still come from unchanged, plain sealed
+evidence, name a line-range shard that existed at the base and is now absent, and have an existing
+replacement with the same document and ordinal in the current manifest. Committed paths are read with
+rename detection off; evidence changes, hidden index flags, symlinks, Git failures, absent replacements
+and missing context still refuse the excuse. Bucket growth beyond the recognized renames still blocks.
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/LANDING-T32/fix1/`, bound by
+`SHA256SUMS`. `real-results.json` SHA-256
+`a3e5cc6041c3691043a942f1578965d08dc24cf476e2f7bb53ff93403dc0002b`;
+`suite-result.json` SHA-256 `cd19de77990347c4b431e85116e86edf8939ace75c8910569bec4a62906edafe`.
+These are production export/normalization/bucket replays, not a complete top-level repository-wide landing
+run. No baseline or audit input was refreshed. Heavy runs were sequential, started above 13.5 GiB
+available, and stayed above 10 GiB (minimum observed 13.78 GiB). No shared-checkout access, landing lock,
+main push, landing, pm-mail, subagent or browser was used.
