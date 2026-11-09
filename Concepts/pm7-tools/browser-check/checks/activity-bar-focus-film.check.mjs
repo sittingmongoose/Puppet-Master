@@ -17,6 +17,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { inflateSync } from 'node:zlib';
 import { encodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
+import { nierReticleEscape } from '../helpers/nier-reticle-escape.mjs';
 const LOOKS_FILM = ['glass-dark', 'glass-light'];
 
 // The ring on pixels, with no picture of the tile without it to compare against (the lens moves): across each side, 6 px
@@ -377,4 +378,4 @@ async function pointerRoutes(t) {
   await f.evaluate(() => document.getElementById('fo96-film-s')?.remove());
 }
 
-export const tests = { 'film steps': filmSteps, 'arrivals under a main-thread stall': arrivals, 'pointer routes': pointerRoutes };
+export const tests = { 'film steps': filmSteps, 'arrivals under a main-thread stall': arrivals, 'pointer routes': pointerRoutes, 'NieR no escape': nierReticleEscape };

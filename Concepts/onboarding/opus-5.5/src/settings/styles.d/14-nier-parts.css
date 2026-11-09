@@ -137,6 +137,8 @@ html[data-o55-nier-parts~="brackets"] :focus-visible { outline: 0 !important; bo
 html[data-o55-nier-parts~="brackets"] .focus-ring { outline: 0 !important; box-shadow: none !important; }
 #o55np-reticle { position: fixed; left: 0; top: 0; width: 0; height: 0; z-index: 2147483001; pointer-events: none; opacity: 0; transition: opacity 110ms linear; }
 #o55np-reticle[data-on] { opacity: 1; }
+/* A scroll steps aside immediately, including the opacity fade's old corners. The client-box clip stays in force. */
+#o55np-reticle[data-scroll] { visibility: hidden; }
 #o55np-reticle[data-jump] > i { transition: none; }
 #o55np-reticle > i { position: absolute; left: 0; top: 0; width: 10px; height: 10px; display: block; will-change: transform;
   background: linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 100% 2px no-repeat, linear-gradient(var(--o55-nier-ink), var(--o55-nier-ink)) 0 0 / 2px 100% no-repeat;

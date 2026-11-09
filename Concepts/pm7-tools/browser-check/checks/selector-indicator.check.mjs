@@ -103,7 +103,7 @@ const SHELL = [
 	{ page: 'Settings', name: 'Settings left bar', kind: 'strip', strip: '#pm-settings-root .rail-scroll', item: '#pm-settings-root .rail-scroll :is(.side-link[data-action="home"], .domain-link).active', type: 'tab' },
 	{ page: 'Settings chapter', name: 'Settings section tabs', kind: 'strip', strip: '#pm-settings-root nav.workspace-tabs', item: '#pm-settings-root nav.workspace-tabs .workspace-tab.is-current', type: 'tab', optional: true },
 	{ page: 'Settings chapter', name: 'Settings segmented choice', kind: 'self', item: '#pm-settings-root .segmented > button[aria-checked="true"]', type: 'seg', optional: true, inPlace: true },
-	{ page: 'Planning Wizard', name: 'Planning Wizard work type', kind: 'strip', strip: '#panel-wizard .pm6-wiz-intent-row', item: '#panel-wizard .pm6-wiz-intent-chip.sel', type: 'seg', optional: true }
+	{ page: 'Planning Wizard', name: 'Planning Wizard work type', kind: 'strip', strip: '#panel-wizard .pm6-wiz-intent-row', item: '#panel-wizard .pm6-wiz-intent-chip.sel', type: 'seg', px: true }
 ];
 const ONB = [
 	{ screen: 'begin', name: 'onboarding step rail', kind: 'strip', strip: '#pm-o55-onboarding .o55-raillist', item: '#pm-o55-onboarding .o55-railitem[data-state="current"]', label: '.o55-raillabel', type: 'onb', px: true },
@@ -131,6 +131,11 @@ async function goPage(t, f, name) {
 	}
 	await f.evaluate((n) => { const e = [...document.querySelectorAll('nav.page-tabs .page-tab')].find((x) => x.textContent.trim().startsWith(n)); if (e) e.click(); }, name);
 	await t.page.waitForTimeout(1800);
+	if (name === 'Planning Wizard') {
+		await f.locator('#panel-wizard .pm6-wiz-intent-chip[data-demo-arg="product"]').click();
+		await t.page.mouse.move(1900, 1000);
+		await t.page.waitForTimeout(700);
+	}
 }
 
 /* painted pixels round a chip: its inside (a pixel of fill clear of the words and the rim), its edge (the rim's pixel, or
@@ -234,6 +239,48 @@ async function openApp(t, surface, onboarding, query) {
 }
 
 export const tests = {
+	async 'wizard work type'(t) {
+		await t.viewport(1920, 1080);
+		await t.emulate({ reducedMotion: 'reduce' });
+		const p = SHELL.find(p => p.page === 'Planning Wizard');
+		for (const surface of t.app.surfaces()) for (const look of LOOKS) {
+			const f = await openApp(t, surface, false, '');
+			await t.app.look(look);
+			await goPage(t, f, 'Planning Wizard');
+			const tag = `${look} ${surface}`, rec = await placeChecks(t, f, p, look, tag);
+			await t.check(`wizard ${tag}: Brand-new product is chosen and has a chip`, !!rec?.chip && await f.locator(`${p.item}[data-demo-arg="product"]`).count() === 1, JSON.stringify(rec), { hard: true });
+			const px = await pixels(t, f, rec, WANT[look].seg[2]);
+			await t.check(`wizard ${tag}: painted fill is the neutral material within 3 levels`, near(px.inside, hex(WANT[look].seg[0]), 3), JSON.stringify({ inside: px.inside, want: WANT[look].seg[0] }));
+			await pixelChecks(t, f, p, rec, look, tag);
+			const words = await paintedText(f.locator(p.item));
+			await t.check(`wizard ${tag}: chosen words have painted stems at 4.5:1`, words.count > 0 && words.minimum >= 4.5, JSON.stringify(words));
+			await t.crop(`wizard-${look}-${surface}`, f.locator(p.strip), 'Neutral work-type chip and its chosen words');
+		}
+	},
+	async 'wizard other looks unchanged'(t) {
+		if (!t.args.base) { t.log('requires --set base=<batch9a build> for paired wizard crops'); return; }
+		await t.viewport(1920, 1080); await t.emulate({ reducedMotion: 'reduce' });
+		const base = /^[a-z][a-z0-9+.-]+:/i.test(t.args.base) ? t.args.base : pathToFileURL(path.resolve(t.args.base)).href;
+		for (const surface of t.app.surfaces()) for (const look of ['retro-light', 'retro-dark', 'nier-light', 'nier-dark', 'glass-light', 'glass-dark']) {
+			const images = [];
+			for (const which of ['base', 'build']) {
+				let f;
+				if (which === 'build') f = await openApp(t, surface, false, '');
+				else {
+					const u = `${base}?o55=off&cb=${Date.now()}`;
+					if (surface === 'sandbox') await t.openInSandbox(u); else await t.goto(u);
+					await t.until('base wizard page ready', () => document.documentElement.getAttribute('data-pmr-ready') === '1' && !!window.PM_THEME, null, { timeout: 60000, hard: true });
+					f = t.root === t.page ? t.page.mainFrame() : t.root;
+				}
+				await t.app.look(look); await goPage(t, f, 'Planning Wizard'); await f.waitForTimeout(1600);
+				images.push(decodePng(await f.locator('#panel-wizard .pm6-wiz-intent-row').screenshot()));
+			}
+			const [a, b] = images, sameSize = a.width === b.width && a.height === b.height;
+			let changed = 0;
+			if (sameSize) for (let i = 0; i < a.data.length; i += 4) if ([0, 1, 2].some(k => Math.abs(a.data[i + k] - b.data[i + k]) > 2)) changed++;
+			await t.check(`wizard ${look} ${surface}: unchanged native row paint against batch9a`, sameSize && changed === 0, JSON.stringify({ size: [a.width, a.height, b.width, b.height], changed }));
+		}
+	},
 	async 'places'(t) {
 		for (const surface of t.app.surfaces()) {
 			for (const size of list(t.args.sizes, ['1920x1080'])) {

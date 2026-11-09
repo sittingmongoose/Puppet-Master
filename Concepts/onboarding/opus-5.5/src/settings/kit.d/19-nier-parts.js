@@ -272,14 +272,46 @@
 
   /* ---------- target brackets --------------------------------------------------------------------------------------- */
   let ret = null, retT = null, retLock = 0, retScroll = 0;
+  let retWatchT = null, retResize = null;
   const RET_GAP = 3, RET_S = 10;
+  /* The reticle lives above the page, outside its target's overflow ancestors. Clip that one paint layer to their
+     client boxes, on both axes, intersected with the viewport. The clip also contains the corners' arrival/glide;
+     scrolling keeps this layer hidden until the existing scroll hold ends. Never chase compositor scroll with rAF. */
+  function retClip(t, z) {
+    let left = 0, top = 0, right = window.innerWidth, bottom = window.innerHeight;
+    for (let e = t.parentElement; e && e !== document.body && e !== html; e = e.parentElement) {
+      const cs = getComputedStyle(e), cx = /^(auto|scroll|hidden|clip)$/.test(cs.overflowX), cy = /^(auto|scroll|hidden|clip)$/.test(cs.overflowY);
+      if (!cx && !cy) continue;
+      const b = e.getBoundingClientRect(), sx = e.offsetWidth ? b.width / e.offsetWidth : z, sy = e.offsetHeight ? b.height / e.offsetHeight : z;
+      if (cx) { const x = b.left + e.clientLeft * sx; left = Math.max(left, x); right = Math.min(right, x + e.clientWidth * sx); }
+      if (cy) { const y = b.top + e.clientTop * sy; top = Math.max(top, y); bottom = Math.min(bottom, y + e.clientHeight * sy); }
+    }
+    right = Math.max(left, right); bottom = Math.max(top, bottom);
+    return `polygon(${left / z}px ${top / z}px, ${right / z}px ${top / z}px, ${right / z}px ${bottom / z}px, ${left / z}px ${bottom / z}px)`;
+  }
+  function retWatch(t) {
+    if (retWatchT === t) return;
+    if (retResize) retResize.disconnect();
+    if (retScroll) window.clearTimeout(retScroll); retScroll = 0;
+    retWatchT = t;
+    if (!t || typeof ResizeObserver !== 'function') return;
+    if (!retResize) retResize = new ResizeObserver(() => { if (retT && !retScroll) retPlace(retT); });
+    /* The focused target and its ancestor chain only: a names toggle, rail resize or panel layout can change either
+       the target's box or its clipping box. ResizeObserver delivers after layout, before that geometry is painted. */
+    for (let e = t; e; e = e.parentElement) retResize.observe(e);
+  }
   function retPlace(t) {
     if (!ret || !t || !t.isConnected || coverUp) { retOff(); return; }
     const r = t.getBoundingClientRect(), z = zoom();
-    if (r.width < 2 || r.height < 2 || r.bottom < 0 || r.top > window.innerHeight) { retOff(); return; }
+    retWatch(t);
+    const clip = retClip(t, z);
+    if (r.width < 2 || r.height < 2) { retOff(); return; }
+    if (retScroll) { ret.style.clipPath = clip; return; }
     const l = r.left - RET_GAP, tp = r.top - RET_GAP, rt = r.right + RET_GAP - RET_S, b = r.bottom + RET_GAP - RET_S;
     const pos = [[l, tp, 1, 1], [rt, tp, -1, 1], [l, b, 1, -1], [rt, b, -1, -1]];
     const wasOn = ret.hasAttribute('data-on'), c = ret.children;
+    ret.style.clipPath = clip;
+    ret.removeAttribute('data-scroll');
     if (!wasOn) { ret.setAttribute('data-jump', ''); frames(2).then(() => { if (ret) ret.removeAttribute('data-jump'); }); }
     pos.forEach(([x, y, sx, sy], i) => { c[i].style.transform = `translate(${Math.round(x / z)}px, ${Math.round(y / z)}px) scale(${sx}, ${sy})`; });
     if (!wasOn) {
@@ -287,7 +319,7 @@
       if (!still()) pos.forEach(([, , sx, sy], i) => c[i].animate([{ translate: `${-sx * 9}px ${-sy * 9}px`, opacity: 0 }, { translate: '0px 0px', opacity: 1 }], { duration: 210, easing: 'steps(3, end)' }));
     }
   }
-  function retOff() { retT = null; if (ret && ret.hasAttribute('data-on')) ret.removeAttribute('data-on'); }
+  function retOff() { retT = null; retWatch(null); if (ret && ret.hasAttribute('data-on')) ret.removeAttribute('data-on'); }
   /* a heading the onboarding window focuses itself (tabindex -1, so the next Tab starts there) is not a target: the
      window brackets its own chosen card, and a reticle round a full-width heading framed the column, not the words */
   const retSkip = t => t.getAttribute('tabindex') === '-1' && !!t.closest('#pm-o55-onboarding');
@@ -343,7 +375,7 @@
       document.removeEventListener('focusout', retBlur, true);
       document.removeEventListener('click', retChoose, true);
       document.removeEventListener('keydown', retKey, true);
-      if (retLock) window.clearTimeout(retLock); retLock = 0; retT = null;
+      if (retLock) window.clearTimeout(retLock); retLock = 0; retT = null; retWatch(null);
       if (ret) ret.remove(); ret = null;
     }
   };
@@ -358,6 +390,7 @@
     if (cur && moves(curT)) curOff();
     if (ret && retT && moves(retT)) {
       const t = retT; if (ret.hasAttribute('data-on')) ret.removeAttribute('data-on');
+      ret.setAttribute('data-scroll', '');
       if (retScroll) window.clearTimeout(retScroll);
       retScroll = window.setTimeout(() => { retScroll = 0; if (retT === t && t.isConnected) { retT = t; retPlace(t); } }, 160);
     }
