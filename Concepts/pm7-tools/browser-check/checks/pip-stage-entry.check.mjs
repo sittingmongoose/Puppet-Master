@@ -20,6 +20,20 @@ function install(counter) {
 	const tick = () => { if (S.on) { w = w === 1 ? 2 : 1; d.style.width = w + 'px'; } requestAnimationFrame(tick); };
 	requestAnimationFrame(tick);
 	const R2 = (n) => Math.round(n * 100) / 100;
+	// settled latches an arrival; the spring keeps moving afterwards. Observe
+	// the actual callback, including arrivals between a frame's three substeps.
+	const arrivals = new WeakMap();
+	const arrival = (st, pr, kind) => {
+		const target = st.propTarget(pr);
+		arrivals.set(pr, { kind, at: st.t, ax: pr.ax, len: pr.len, target: { ax: target.ax, len: target.len } });
+	};
+	const initial = document.querySelector('#pm-o55-onboarding .o55-stage')?.__pipStage;
+	if (initial) {
+		const proto = Object.getPrototypeOf(initial), settle = proto.settle, add = proto.addProp;
+		proto.settle = function(pr) { const result = settle.call(this, pr); arrival(this, pr, 'settle'); return result; };
+		proto.addProp = function(...args) { const pr = add.apply(this, args); if (pr?.settled) arrival(this, pr, 'instant'); return pr; };
+		initial.props.forEach(pr => { if (pr.settled) arrival(initial, pr, 'baseline'); });
+	}
 	new ResizeObserver(() => {
 		if (!S.on) return;
 		const host = document.querySelector('#pm-o55-onboarding .o55-stage');
@@ -59,7 +73,7 @@ function install(counter) {
 				if (!pr.el || !pr.el.isConnected) return;
 				const tops = pr.strs.map((s) => { const dd = s.getAttribute('d') || ''; const m = /^M(-?[\d.]+) (-?[\d.]+)L(-?[\d.]+) (-?[\d.]+)/.exec(dd); return m ? [+m[1], +m[2], +m[3], +m[4]] : dd; });
 				const rp = pr.restFit || null;
-				fr.props.push({ id, kind: pr.spec && pr.spec.kind, state: pr.state, settled: pr.settled ? 1 : 0, op: R2(pr.op), ax: R2(pr.ax), dx: R2(pr.dx || 0), a: R2(pr.a * 57.3), len: R2(pr.len), painted: rel(pr.el), bb: pr.bb, av: pr.av, axv: pr.axv, lenv: pr.lenv, target: st.propTarget(pr), box: pr.box ? pr.box.map(R2) : null, restBox: pr.restBox ? pr.restBox.map(R2) : null, rp: rp ? { ax: R2(rp.ax), dx: R2(rp.dx), dy: R2(rp.dy), sc: R2(rp.sc), key: rp.key } : null, tops });
+				fr.props.push({ id, kind: pr.spec && pr.spec.kind, state: pr.state, settled: pr.settled ? 1 : 0, arrival: arrivals.get(pr) || null, op: R2(pr.op), ax: R2(pr.ax), dx: R2(pr.dx || 0), a: R2(pr.a * 57.3), len: R2(pr.len), painted: rel(pr.el), bb: pr.bb, av: pr.av, axv: pr.axv, lenv: pr.lenv, target: st.propTarget(pr), box: pr.box ? pr.box.map(R2) : null, restBox: pr.restBox ? pr.restBox.map(R2) : null, rp: rp ? { ax: R2(rp.ax), dx: R2(rp.dx), dy: R2(rp.dy), sc: R2(rp.sc), key: rp.key } : null, tops });
 			});
 		} else fr.none = 1;
 		if(cells) {fr.paintSeq=++S.seq;const bits=[1,0];for(let i=0;i<20;i++)bits.push((S.seq>>i)&1);for(let i=0;i<20;i++)bits.push(1-((S.seq>>i)&1));bits.forEach((v,i)=>{if(shown[i]!==v){cells[i].style.background=v?'#fff':'#000';shown[i]=v;}});}
@@ -72,6 +86,24 @@ function install(counter) {
 const L = '#pm-o55-onboarding .o55-layer:not(.o55-out)';
 const median = a => [...a].sort((x,y)=>x-y)[Math.floor(a.length/2)];
 const hit = (a,b) => a[0] < b[0]+b[2]-.5 && a[0]+a[2] > b[0]+.5 && a[1] < b[1]+b[3]-.5 && a[1]+a[3] > b[1]+.5;
+export function judgeRest(frames) {
+ const wrong=[], covered=[]; let rests=0;
+ for(const x of frames) for(const p of x.props||[]) {
+  if(p.state==='out'||!p.settled) continue;
+  const a=p.arrival, at=`${x.screen} ${p.kind}`;
+  if(!a) wrong.push(`${at}: missing arrival witness`);
+  else {
+   // The original2.51-unit bound belongs to the arrival, not every later
+   // oscillation. Destination identity is checked on EVERY settled frame.
+   if(Math.max(Math.abs(a.ax-a.target.ax),Math.abs(a.len-a.target.len))>2.51) wrong.push(`${at}: arrived while travelling`);
+   if(Math.max(Math.abs(a.target.ax-p.target.ax),Math.abs(a.target.len-p.target.len))>1e-7) wrong.push(`${at}: arrival belongs to a previous target`);
+  }
+  if(p.op<.95) continue;
+  if(hit(p.painted,x.bub.box)) covered.push(`${at} angle${p.a}: box${p.painted} vs speech${x.bub.box}`);
+  rests++;
+ }
+ return { wrong, covered, rests };
+}
 function judge(frames) {
  const bad=[], episodes=[]; let current;
  for(const x of frames) {
@@ -114,13 +146,7 @@ async function run(t, route, defaultLooks, defaultSizes) {
    await t.check(`${tag}: target sampled`,at===target&&frames.length>40,`${at}, ${frames.length} frames`);
    const bad=judge(frames);await t.check(`${tag}: first placement and each line remain within 1px`,bad.length===0,bad.slice(0,6).join('; '));
    if(route==='rest') {
-    const wrong=[], covered=[];let rests=0;
-    for(const x of frames) for(const p of x.props||[]) {
-     if(p.state==='out'||p.op<.95||!p.settled) continue;
-     if(Math.max(Math.abs(p.ax-p.target.ax),Math.abs(p.len-p.target.len))>2.51) wrong.push(`${x.screen} ${p.kind} arrived while travelling: ax${p.ax}/${p.target.ax}, len${p.len}/${p.target.len}`);
-     if(hit(p.painted,x.bub.box)) covered.push(`${x.screen} ${p.kind} angle${p.a}: box${p.painted} vs speech${x.bub.box}`);
-     rests++;
-    }
+    const {wrong, covered, rests}=judgeRest(frames);
     await t.check(`${tag}: arrival belongs to the current target and resting paint clears speech`,rests>0&&!wrong.length&&!covered.length,`${rests} resting samples, ${wrong.length} stale arrivals, ${covered.length} overlaps; ${wrong[0]||covered[0]||''}`);
    }
   };
@@ -145,6 +171,15 @@ async function run(t, route, defaultLooks, defaultSizes) {
 }
 const on=(route,looks,sizes)=>(t)=>!t.args.route||t.args.route===route?run(t,route,looks,sizes):t.check('not selected by --set route',true);
 export const tests={
+ 'Arrival event witness guards':async(t)=>{
+  const arrival={kind:'settle',at:1,ax:420,len:144.7,target:{ax:420,len:142.4}};
+  const frame=(a,target=142.4)=>({screen:'safe',bub:{box:[0,0,20,20]},props:[{id:'vault',kind:'vault',state:'in',settled:1,op:1,ax:420,len:144.97,target:{ax:420,len:target},arrival:a,painted:[50,50,20,20]}]});
+  const natural=judgeRest([frame(arrival)]);
+  await t.check('arrival witness accepts the recorded later2.57-unit spring peak',natural.rests===1&&!natural.wrong.length&&!natural.covered.length);
+  await t.check('arrival witness rejects a previous destination',judgeRest([frame(arrival,122.4)]).wrong.length>0);
+  await t.check('arrival witness rejects an arrival outside the original2.51-unit bound',judgeRest([frame({...arrival,len:146})]).wrong.length>0);
+  await t.check('arrival witness fails closed without an observed arrival',judgeRest([frame(null)]).wrong.length>0);
+ },
  'Review line changes':on('review','glass-dark','1920x1080,1390x900,860x768'),
  'Safe preview returns and sway clearance':on('rest','nier-light,nier-dark,retro-light','740x768'),
  'Same-size line on held c-ready':on('ready','basic-light','1920x1080')
