@@ -240,17 +240,45 @@ function sproutCorner(el, anchor) {
 }
 function sproutOpen(el, anchor) { window.PM6_SPROUT.open(el, null, null, { origin: sproutCorner(el, anchor) }); }
 function sproutClose(el, done) { window.PM6_SPROUT.close(el, done); }
-function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
+function popoutFrame() {
   const vw = window.innerWidth, vh = window.innerHeight;
+  let top = 8, bottom = vh - 8;
+  /* The global status bar is position:fixed at z-index above every popout, 25px along the bottom. A box pinned to
+     the viewport's edge draws under that bar, so its last rows cannot be hit (FO-123, the short preview pane). */
+  const bar = document.querySelector('.pm7-statusbar');
+  if (bar) {
+    const b = bar.getBoundingClientRect();
+    if (b.height > 0 && b.bottom > vh - 2 && b.top < vh) bottom = Math.min(bottom, Math.round(b.top) - 8);
+  }
+  return { vw, vh, top, bottom };
+}
+function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
+  const { vw, vh, top: frameTop, bottom: frameBottom } = popoutFrame();
   const r = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : { left: vw - 240, right: vw - 16, top: 16, bottom: 16, width: 224 };
-  pop.style.display = 'block'; pop.style.top = ''; pop.style.bottom = ''; pop.style.maxHeight = '';
+  pop.style.display = 'block'; pop.style.top = ''; pop.style.bottom = ''; pop.style.height = '';
+  /* The stylesheet caps every popout at min(420px, 70vh). Measuring under that cap reports the clamped box, so a
+     menu that fits the screen was then given that clamped height back and its last rows stayed cut (FO-123). */
+  pop.style.maxHeight = 'none';
   const w = Math.min(vw - 16, Math.max(width || 0, align === 'right' ? 210 : r.width, 200));
   pop.style.width = w + 'px';
   const ph = pop.offsetHeight;
   let left = align === 'right' ? r.right - w : r.left; left = Math.max(8, Math.min(vw - w - 8, left));
-  const below = vh - r.bottom - 8, above = r.top - 8;
+  const below = frameBottom - r.bottom, above = r.top - frameTop;
   const placeBelow = below >= Math.min(ph, 240) || below >= above;
-  if (placeBelow) { pop.style.top = Math.round(r.bottom + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, below - 6)) + 'px'; }
+  const fitsBelow = placeBelow && below - 6 >= ph, fitsAbove = !placeBelow && above - 6 >= ph;
+  if (fitsBelow) { pop.style.top = Math.round(r.bottom + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, below - 6)) + 'px'; }
+  else if (fitsAbove) { pop.style.bottom = Math.round(vh - r.top + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, above - 6)) + 'px'; }
+  /* FO-123 (Jared 2026-11-09 #5, "adding accounts has the drop down cut off"): a short viewport with the trigger near
+     its edge leaves neither side room for the whole box, and clamping the height to the room beside the trigger cut
+     the last rows off a box that fits the screen. When the content fits the open area above the status bar, the box
+     takes that room against the open area's edge, covering the trigger if it must, instead of cutting its rows;
+     a box too tall for the screen at all still scrolls inside the clamp below. */
+  else if (ph <= frameBottom - frameTop) {
+    if (below >= above) pop.style.bottom = Math.round(vh - frameBottom) + 'px';
+    else pop.style.top = frameTop + 'px';
+    pop.style.maxHeight = ph + 'px';
+  }
+  else if (placeBelow) { pop.style.top = Math.round(r.bottom + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, below - 6)) + 'px'; }
   else { pop.style.bottom = Math.round(vh - r.top + 6) + 'px'; pop.style.maxHeight = Math.max(120, Math.min(420, above - 6)) + 'px'; }
   pop.style.left = Math.round(left) + 'px';
   pop.dataset.sprout = (placeBelow ? 't' : 'b') + (align === 'right' ? 'r' : 'l');
