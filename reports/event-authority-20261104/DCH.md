@@ -1,4 +1,162 @@
-# DCH — Sweep part 2A (guard tables) and part 2B numbers
+# DCH — Sweep part 2B (CV-1101 date-time, SP-1101 retained dispatch)
+
+**Branch:** `plans/ea-w2-chat-20261104`. Start: the part 2A head `c760032a85`. Gated NUMRULE merge `1879aa0daa` (`58c2816ff3` exactly, `--no-ff`; clean, no conflicts; it adds only the seven date-time files, because the number-scope files at `58c2816ff3` are byte-identical to the `a16f67c1ef` already merged in part 2A; no NUMRULE file is edited). Implementation commits `aaa5dc7389` (EventRecord envelope bytes), `dae68b9880` (checker and fixtures), `560db38533` (owner text, shards, index), `882ef7ae25` (selector robustness found by a standing trial); the report commit is in the external `HEAD.txt`. No rebase.
+
+**All 18 graded families keep 9 PASS / 2 PARTIAL / 1 ABSENT.** Every DCH timestamp field now validates through the shared CV-1101 check, and SP-1101 retained dispatch (S4) is composed through the shared `RetainedDispatcher`. My timestamp review is no longer interim: the table under "Timestamp fields" names the shared check that covers each field. `positive_negative_oracles` stays PARTIAL, and timestamps are no longer one of its reasons. It stays PARTIAL because JSON Schema keyword cuts are not ported, because the shared date-time inventory gate fails closed on this lane's tree until integration classifies DCH's resources (TOOL-ISSUES T150), and because the Sol/Astra review runs over batch 2. Membership stays ABSENT. Native execution is NOT_RUN. **Readiness: NOT_READY** (prepared for batch-2 review; READY stays false). This section and `DCH-self-grade.json` supersede every status below.
+
+## Sweep part 2B: findings and responses
+
+| Item | Disposition and change | Where | Verify |
+|---|---|---|---|
+| **Merge the gated NUMRULE head** | `git merge --no-ff 58c2816ff33365384d4039553f5efdb5370930e6` → `1879aa0daa`: clean. It brings `scripts/pm_event_datetime*.py`, `pm_event_datetime_mutations.json`, `pm_event_datetime_node_controls.json` and the NUMRULE report. | merge commit | `git log --format=%P -1 1879aa0daa`; `git diff --stat 1879aa0daa^1 1879aa0daa` lists 7 files. |
+| **EventRecord envelope bytes** (fixed, `aaa5dc7389`) | DCH's family-conditioned `sequence_id` maximum (uint64 max for the 17 families) is removed from the generic `Plans/event_record.schema.json`, as NUMRULE-ADOPTION's DCH section requires ("Remove family-conditioned maximum from generic event_record.schema.json"). The file is again byte-identical to the gated head, so the CV-1101 inventory pin admits it at runtime and the gate no longer reports it changed (before: 3 `inventory_node_changed` rows at the merge). Storage's uint64 range stays enforced by TY04 (shared `storage_uint64`) on every writer path. | `Plans/event_record.schema.json`; `Plans/_shards/event_record.schema/` | `git diff 58c2816ff3 HEAD -- Plans/event_record.schema.json` is empty; round-6 `writer_integer/sequence_id/18446744073709551616` still refuses. |
+| **Timestamps: shared CV-1101 check** (fixed, `dae68b9880`) | `scripts/pm_dch_formats.py` no longer has a date-time grammar. `validator(schema)` is the shared `pm_event_datetime.datetime_validator` over the complete outer schema, composed with DCH's own HTTPS URI rule. The shared checker is read-only, so the URI rule is a second validator at the same boundary. Every DCH construction site uses it: 17 in `pm_dch_events.py`, the 3 module validators in `pm_dch_stop.py`, and the round-5/6/7/8 oracles and the witness module. A module-load check refuses an environment whose shared checker would add a generic `uri` check. Validators are cached by canonical schema content, and each keeps its own copy of its schema. | `scripts/pm_dch_formats.py:101` (`validator`), `:142` (`retained_validator`), `:127` (`frozen_extends`), `:169` (`refused_by_predicate`), `:31` (environment check); `scripts/pm_dch_events.py:383` (`stored_validator`); `scripts/pm_dch_stop.py:18` | `grep -n "FormatChecker\|utc_datetime\|legacy_format" scripts/pm_dch_*.py` finds nothing; `python3 -B scripts/pm_dch_events.py --family <f>` ×17 and `pm_dch_stop.py` pass. |
+| **Per-field battery** (fixed, `dae68b9880`) | `DATES` (24 values; entries 0–14 keep their earlier order and case names; 15–23 are new) carries an independent, hand-written expectation for each profile. The `source` profile is EventRecord `occurred_at_utc`. The `utc_z` profile covers Storage `observed_at_utc`/`persisted_at_utc` and the DCH-owned `ts`/`retired_at_utc`. It runs at every field of both editions of all 17 families and in both checkpoint definitions. | `scripts/pm_dch_round7_oracles.py:20` | full checkers. |
+| **The shared predicate runs through the validator** (new witnesses, `dae68b9880`) | CV-1101 requires negatives that show the installed predicate refusing through the validator. Each witness passes only when the cause of a validation error (searched through `oneOf`/`anyOf` contexts) is the shared `Refusal` with the named reason: `occurred_at_utc` `24:00:00` → `date_time_hour`; `observed_at_utc` trailing LF → `date_time_syntax`; `persisted_at_utc` `00:00:60Z` → `date_time_leap_second`; `ts` `2026-02-29` → `date_time_day`; checkpoint `retired_at_utc` `00:60:00` → `date_time_minute`; Stop `ts` and `outcome_at_utc` → `date_time_hour`, `date_time_leap_second`, `date_time_syntax`. A refusal by a pattern never counts. | `scripts/pm_dch_round7_oracles.py:209`; `scripts/pm_dch_guard_witnesses.py` (`stop_cases`, `cv1101/*`); `scripts/pm_dch_stop.py:256` | 4 × 34 + 17 ordinary and 6 Stop witnesses pass. |
+| **Lane-local leaks** | DCH's own interim review recorded no accepting leak: its local grammar was stricter than CV-1101. The leaks other lanes recorded still refuse here, now through the shared check: `24:00:00Z` (battery entry 5; `date_time_hour`), a trailing LF (entry 9; `date_time_syntax`), an illegitimate second 60 (entries 7 and 17), offset hour 24 (entry 16) and a space separator (entry 15). They refuse at every field of every family. | `DATES` | full checkers. |
+| **Widening, stated plainly** | CV-1101 makes some forms owner-valid that DCH's local grammar refused. At every field: year 0000, a legitimate leap second and lowercase `t`. At `occurred_at_utc` only: lowercase `z`, `+00:00`, `-00:00` and nonzero offsets. This follows CV-1101 ("Lowercase t/z and nonzero offsets remain owner-valid for occurred_at_utc and broad family ts fields"; stricter local profiles are selectable "only where their existing field owners require them"; "not a new local regex"). The DCH-owned fields keep their own terminal uppercase-`Z` schema pattern, so `ts`, `retired_at_utc` and `outcome_at_utc` still refuse offsets and lowercase `z`. The DCH join `occurred_at_utc == ts` therefore still pins a DCH event's `occurred_at_utc` to a terminal `Z`. No Jared choice is involved: the adoption guide's authority boundary assigns the grammar to CV-1101/CV-253. | — | battery entries 4, 10, 11, 18–23. |
+| **S4 — SP-1101 retained dispatch** (fixed, `dae68b9880`) | Each retained history read and each retained checkpoint read now runs in this order: `rn_recipe` makes one selection from the sealed write custody; then the shared `RetainedDispatcher` resolves it once through `DchOriginalOwner`, with no caller override and no current-then-legacy probing; then the installed frozen verifier of that exact `RecipeTuple` runs the complete original checks. The tuple pins the recipe's recorded original schema hashes; for strict-v4 it pins the current files. New rows: **RN05** refuses an original of a valid Store outside the sealed custody as `original_unavailable`; **RN06** refuses a receipt naming a recipe with no installed frozen verifier as `recipe_unsupported`. Neither falls back. The custody catalogue now lists its custody Stores (`…0001`, `…0002`) and 34 sealed `raw-v0` (unsupported) receipts. In this static model the binding equality is structural, because owner and reader read the same original; native custody is NOT_RUN. **Residual:** within a custody Store, an original without a legacy receipt still selects the catalogue's declared current writer (strict-v4), never a weaker recipe. Per-original strict-v4 receipts are not modelled, because they would re-key every history negative to sealed receipted originals. This is stated as an open item, not as closed. | `scripts/pm_dch_events.py:257` (`_record_number_rule`), `:299` (`_recipe_tuple`), `:323` (`original_binding`), `:349` (`DchOriginalOwner`), `:369` (`resolve_original`), `:403` (`_historical_read`), `:817` (`_checkpoint_joins`), `:897` (`checkpoint_storage_valid`); `scripts/pm-dch-table-generate.py:60`; `scripts/pm_dch_guard_witnesses.py:83`, `:87`; `Plans/dch_write_recipe_receipts.json` | Witnesses `RN05_custody_store`, `RN06_recipe_installed` (34 each); guard tool rows RN05/RN06 proved. |
+| **S4 — retained date-time profile** (fixed, `dae68b9880`) | The frozen verifier applies the shared date-time predicate, and CV-253 on the Storage fields, to the recipe's pinned original resources: "a skipped format check never authenticates invalid history" (CV-1101, SP-1101). The recipes' skipped URI check is preserved; URI is a DCH-owned rule outside CV-1101. raw-v1 and normalized-v2 envelopes are byte-identical to the inventoried EventRecord resource and admit directly. DCH's strict-v3 envelope is not inventoried. The runtime refuses it (`datetime_resource_fingerprint_unclassified`), so `retained_validator` composes the shared validator of the inventoried current envelope with the frozen resource under its recorded checker, and only when `frozen_extends` holds: the frozen schema is exactly the current one plus timestamp-free `allOf` entries (strict-v3 adds one 2^53-maximum conditional). Otherwise it refuses. All 105 frozen resources match their recorded source commits by bytes and content (`frozen-resource-audit.json`). | `scripts/pm_dch_formats.py:127`, `:142` | T150 records the inventory gap. |
+| **S4 — retained fixtures** (fixed, `dae68b9880`) | The four strict-v3 `date` originals (`.Z`, `24:00:00Z`, month 13, `/` separators; 136 events) and the 17 strict-v3 checkpoints with `retired_at_utc` `2026/11/04T00:00:00Z` are owner-invalid under CV-1101 and now refuse. New retained positives with sealed receipts, appended only (no existing entry changed): 68 owner-valid strict-v3 originals (`strict-v3/date-valid/leap-second`, `/lower-t`, with a legitimate leap second, lowercase `t` and a 12-digit fraction) and 17 strict-v3 checkpoints with `retired_at_utc` `2016-12-31T23:59:60Z`. The single-defect access, forged-byte and retry negatives are now derived from owner-valid originals only. | `Plans/dch_retained_history_fixtures.json`; `Plans/dch_write_recipe_receipts.json`; `scripts/pm_dch_round7_oracles.py:50` (`OWNER_INVALID_ORIGINALS`) | builder `build_p2b_fixtures.py` in evidence (SHA256SUMS). |
+| **Stop surfaces** (`dae68b9880`, `560db38533`) | Stop `ts` and `outcome_at_utc` validate through the shared check with their terminal-`Z` owner pattern. New witnesses accept `2016-12-31T23:59:60Z`, `2026-11-05t00:00:00Z` and year 0000. The Stop contract has one current edition, so SP-1101 dispatch selects no earlier recipe for it; this is stated in CV-647 and ATS-306. | `scripts/pm_dch_guard_witnesses.py`; `Plans/Contracts_V0.md` CV-647 | `pm_dch_stop.py` pass (4,612 assertions). |
+| **Owner text** (fixed, `560db38533`) | CV-630–646 and SP-610–626: the DCH-local grammar paragraph is replaced by the shared CV-1101 check. The retained-original paragraph now states the RetainedDispatcher composition, the unavailable/unsupported refusals without fallback, and that a skipped format check never authenticates invalid history. Strict-v3 is described as "its original checker skipped date-time and URI formats". The sentence "Retained-recipe dispatch (SP-1101) and CV-1101 date-time profiles remain subject to the shared number-rule sweep" is replaced. CV-647, ATS-305 (a new "Sweep part 2B" paragraph), ATS-306 and the two Stop schema descriptions are aligned. All 37 edited YAML blocks parse. | `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Automated_Testing_System.md` | Shards and index regenerated: canonical text of exactly these 37 units changed; no unit was added or removed. |
+| **Standing trials** (`dae68b9880`) | Two new trials. `CV1101_shared_predicate_removed` replaces the shared validator with a stock one that skips date-time and drops the CV-253 composition. `SP1101_retained_format_skipped` makes the frozen verifier keep the recipes' skipped format check. Both must make the complete checker fail. | `scripts/pm_dch_round5_regressions.py:80`, `:89` | `standing-p2b.json`: 17 of 17 caught. |
+| **Selector robustness** (found by the standing trial `Astra11_exact_types`, fixed `882ef7ae25`) | With every type row cut, a string Store outside the custody that is not a valid Storage descriptor got no recipe from `_record_number_rule`. The dispatcher binding then raised `Refusal('original_binding')` instead of the checker failing; the trial runner counts an exception as a failure of the trial. Such a value is not a Store: TY02 refuses it in the next phase, and it now gets a provisional current rule that only parameterizes that type walk (the part 2A behaviour). The binding projection never raises. With the checker intact, no verdict changes; every run in this report is at the fixed head. | `scripts/pm_dch_events.py:268` | `standing-p2b.json`: the trial is caught (exit 1, family failures, no exception). |
+| **Watch item: producer integer 2^53** | Still holds after the merge: `retry_outcome` with `producer_sequence_id` exactly 2^53 returns `original_result` in all 34 family-editions, while 2^53+1 and uint64 max return `invalid_input_type`. The round-6 `retry_integer` cases assert it in every full checker. | `scripts/pm_dch_round6_oracles.py` (`retry_integer`) | `watch-2pow53.json`: 34/34/34. |
+
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** none new. CV-630–647, SP-610–626 and ATS-305/306 change in place. Fixture case IDs `DCH9-W025`… are appended witness IDs, not PlanUnit IDs.
+
+## Timestamp fields and the shared check that covers each
+
+| Field | Owner | Shared check and profile | Where validated |
+|---|---|---|---|
+| `occurred_at_utc` (EventRecord, current and retained) | EventRecord / CV-317 | `datetime_validator`, CV-1101 `event_record` profile (inventory-composed source field) | every envelope validator in `pm_dch_events.py`, `pm_dch_stop.py` `ENVELOPE`, retained `stored_validator` |
+| `observed_at_utc`, `persisted_at_utc` (current and retained) | Storage / CV-253 | `datetime_validator`, `storage_utc_z` composed on the inventory-classified envelope node | same |
+| family payload `ts` (17 families, both editions) | DCH payload contracts CV-630–646 | registered CV-1101 predicate and the unchanged owner-schema `Z$(?![\s\S])` pattern | payload validators, retained payload editions |
+| checkpoint `history[].retired_at_utc` (17 checkpoint schemas and their registry copies) | DCH checkpoint contracts SP-610–626 | same as `ts` | `cp_schema` (CP01), checkpoint definitions |
+| Stop request `ts`, Stop outcome `outcome_at_utc` | CV-647 / SP-627 | same as `ts` | `pm_dch_stop.py` `REQUEST`, `OUTCOME` |
+| Storage `uuid` contexts (not timestamps) | Storage descriptor | stock `uuid` format inside the shared checker | `STORAGE_INSTANCE_VALIDATOR` |
+
+## Fixture expectations that changed
+
+Counted from the complete case lists of both trees (`case-diff.json`: 30,062 cases at `1879aa0daa`, 32,232 now).
+
+| Cases | Count | Before → now | Refusing row / reason |
+|---|---:|---|---|
+| `round7/date/payload/4`, `envelope/observed_at_utc/4`, `envelope/persisted_at_utc/4`, `checkpoint/round7/date/{selected,registered}/4` (year 0000) | 34 + 34 + 34 + 34 | refused → accepted | CV-1101 handles RFC 3339 year 0000; DCH's old 0001–9999 bound was lane-local |
+| `round7/date/envelope/occurred_at_utc/{4,10,11}` | 102 | refused → accepted | EventRecord profile admits lowercase `t`/`z` and offsets at `occurred_at_utc` |
+| `round6/envelope_integer/sequence_id/{2^64, 2^100}` (generic envelope schema alone) | 68 | refused → accepted | the conditional maximum is gone; uint64 still refused at TY04 (`writer_integer` cases unchanged) |
+| `round7/retained/strict-v3/date/*/positive` | 136 | accepted → refused | hr_flags HR02+HR03 (malformed in both fields; the existing by-construction exclusion) |
+| `round7/retained/strict-v3/date/*/checkpoint_positive` | 136 | accepted → refused | the checkpoint's source-event history read, HR02+HR03 |
+| `round7/retained/strict-v3/date/*/retry_current_semantic_conflict` | 136 | `conflict` → `invalid_input_type` | the saved original refuses before comparison |
+| `round7/start/strict-v3/date/*/positive` (terminal tests) | 16 | accepted → refused | retained start, HR02+HR03 |
+| `checkpoint/round7/retained/strict-v3/positive` | 17 | accepted → refused | cp_schema CP01 (frozen checkpoint schema under CV-1101) |
+| access/forged-byte negatives derived from the four owner-invalid originals | 816 removed | — | they would carry two defects; the same negatives remain on every owner-valid original |
+| `round7/current_history_format/ts/4` | 34 removed | — | year 0000 is valid, so it is no longer a negative |
+
+3,020 cases were added: battery entries 15–23 at every field, the 68 owner-valid strict-v3 originals with their retry, recipe, access, forged and checkpoint cases, the strict-v3 checkpoint positives, the predicate witnesses, and the RN05/RN06 and Stop witnesses.
+
+## Guard-table result (gated tool `004bdedd63`, rerun at `882ef7ae25`)
+
+The adoption changes guarded predicates: two `rn_recipe` rows are new, and the schema-verdict rows now read the shared validator. So the tool was rerun on every phase table: 78 runs over 746 negatives and 170 controls drawn from 35,733 witness calls. **271 of 282 rows are proved; 11 are unprovable by construction** (the same entailed defence-in-depth rows as in part 2A, each in a table of its own). Credit is the tool's own `rows[].proved`. Masked: 0. Unrelated changes: 0. Lane matrix problems: 0. Collection findings: 0. Failed tables: `sc_project_bytes`, `cp_family_entailed`, `cs_pointer_bounds`, `st_pointer_bounds`, `st_index_entailed` (`unproved_guards` only).
+
+| Checker | Tables | Rows | Proved | Unproved | Cut: own flips / own | Cut: stays | Unrelated | Masked | Negatives / controls |
+|---|---:|---:|---:|---|---:|---:|---:|---:|---:|
+| record_number_rule (recipe selector) | 1 | 6 | 6 | none | 17/17 | 85 | 0 | 0 | 17 / 4 |
+| input_types_valid (exact types, CV-1100/SP-1100 slots) | 2 | 8 | 8 | none | 17/17 | 51 | 0 | 0 | 17 / 2 |
+| resolve_body (SP-337 body route) | 3 | 18 | 18 | none | 74/74 | 420 | 0 | 0 | 74 / 9 |
+| valid_scope_partition (CV-365) | 4 | 14 | 13 | SC13_decoded_bytes | 13/13 | 48 | 0 | 0 | 13 / 4 |
+| joins (current append) | 3 | 13 | 13 | none | 41/41 | 190 | 0 | 0 | 41 / 8 |
+| retry_outcome (CV-366 retry) | 7 | 14 | 14 | none | 31/31 | 42 | 0 | 0 | 31 / 11 |
+| historical_read_valid (retained reader) | 3 | 10 | 10 | none | 38/38 | 172 | 0 | 0 | 38 / 6 |
+| test_joins (terminal test outcomes) | 4 | 17 | 17 | none | 28/28 | 106 | 0 | 0 | 28 / 13 |
+| checkpoint_joins (SP-278) | 11 | 41 | 37 | CP29_value_event_type, CP30_event_event_type, CP32_consumer, CP33_projector | 70/70 | 272 | 0 | 0 | 70 / 30 |
+| checkpoint_storage_valid (SP-337 checkpoint bytes) | 6 | 21 | 19 | CS04_pointer_encodable, CS05_pointer_size | 95/95 | 400 | 0 | 0 | 95 / 20 |
+| archive_joins (DL-287 manual archive) | 3 | 20 | 20 | none | 39/39 | 225 | 0 | 0 | 39 / 4 |
+| schema reference closure (standing check 9) | 1 | 1 | 1 | none | 1/1 | 0 | 0 | 0 | 1 / 1 |
+| Stop resolve_value (SP-337) | 8 | 27 | 25 | SV11_pointer_encodable, SV12_pointer_size | 59/59 | 267 | 0 | 0 | 59 / 16 |
+| Stop request_valid | 6 | 16 | 16 | none | 56/56 | 220 | 0 | 0 | 56 / 11 |
+| Stop outcome / save / read / queue barrier | 8 | 24 | 24 | none | 91/91 | 317 | 0 | 0 | 91 / 17 |
+| Stop index_read_valid (SP-278 passive read) | 7 | 27 | 25 | IX22_record_event_type, IX24_row_sequence_type | 51/51 | 194 | 0 | 0 | 51 / 13 |
+| Stop retirement_ready (SP-628) | 1 | 5 | 5 | none | 25/25 | 100 | 0 | 0 | 25 / 1 |
+
+Every reachable row keeps a single-defect witness. RN05 and RN06 are each proved by their own witnesses. The by-construction exclusions are unchanged except that the existing `(hr_flags, HR02+HR03)` exclusion now also names the owner-invalid retained originals, which carry their timestamp in both fields.
+
+## Self-tests and the inventory gate
+
+| Command | Exit | Credited result |
+|---|---:|---|
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `"status": "pass"`, 580/580 number-scope cases, 0 failures |
+| `python3 scripts/pm_event_numbers.py --self-test` (scope all, the date-time suite) on the lane tree | 1 | `"status": "fail"`, `case_execution: NOT_RUN_ADMISSION_REFUSED`: the inventory gate refuses before any case runs |
+| `python3 scripts/pm_event_datetime_inventory.py` on the lane tree (final head) | 1 | `"status": "fail"`, 337 failures, 239 nodes, 6 unclassified nodes |
+| `python3 scripts/pm_event_datetime_inventory.py` on the pristine gated tree `58c2816ff3` | 0 | `"status": "pass"`, 233 nodes, 0 failures (baseline) |
+| `python3 scripts/pm_event_datetime.py --self-test` (the command the brief names) | 0 | **not credited**: the module has no entry point and runs nothing (T151) |
+
+Inventory failures on the lane tree by source (`inventory-attribution.json`; the ignored currentness copy was absent for this run):
+
+| Source | Failures |
+|---|---:|
+| derived | 166 |
+| dch_lane | 159 |
+| main_base | 12 |
+
+`dch_lane` rows are DCH's own resources and owner text: the frozen EventRecord copies in `Plans/dch_retained_recipes.json` (6 unclassified schema nodes), the DCH fixture files, and DCH unit fences in Contracts/storage-plan and their shards. `derived` rows are regenerated index and migration outputs whose exclusion pins went stale. `main_base` rows come from files where the lane's main base differs from NUMRULE's. None is a false pass, because the gate fails closed. The inventory is NUMRULE's file, so it was not edited. Classifying the lane resources is an integration item (T150). Runtime admission does not depend on the scan, and it admits every DCH validator except the strict-v3 frozen envelope, which `retained_validator` composes as described above.
+
+## Family grades before and after
+
+P=PASS, Q=PARTIAL, A=ABSENT. Before is the part-2A self-grade at `9cd65b3cda`; after is this self-grade at `882ef7ae25`.
+
+| Family | Before → after | Complete assertions (part 2A → now) |
+|---|---|---:|
+| `bundle.selection_forward_blocked` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,593 → 2,719 |
+| `bundle.selection_sent_to_chat` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,627 → 2,753 |
+| `chat.message` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,609 → 2,735 |
+| `chat.thread_archived` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,737 → 2,863 |
+| `chat.thread_created` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,587 → 2,713 |
+| `chat.thread_deleted` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,587 → 2,713 |
+| `chat.thread_worktree_bound` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,585 → 2,711 |
+| `chat.thread_worktree_create_failed` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,581 → 2,707 |
+| `chat.thread_worktree_merge_failed` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,589 → 2,715 |
+| `chat.thread_worktree_merged` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,593 → 2,719 |
+| `chat.thread_worktree_pr_created` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,787 → 2,913 |
+| `chat.thread_worktree_pr_failed` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,585 → 2,711 |
+| `chat.thread_worktree_pre_merge_test_failed` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,961 → 3,095 |
+| `chat.thread_worktree_pre_merge_test_passed` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,901 → 3,035 |
+| `chat.thread_worktree_pre_merge_test_started` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,585 → 2,711 |
+| `chat.thread_worktree_renamed` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,583 → 2,709 |
+| `chat.thread_worktree_unbound` | 9P / 2Q / 1A → 9P / 2Q / 1A | 2,581 → 2,707 |
+| `chat.response_stop_requested` | 9P / 2Q / 1A → 9P / 2Q / 1A | 4,588 → 4,612 |
+
+162 PASS / 36 PARTIAL / 18 ABSENT / 0 CONFLICT, unchanged. `positive_negative_oracles` stays PARTIAL for the three reasons above; timestamps are no longer among them. `compatibility_withdrawal` stays PASS and its finding now cites the SP-1101 composition and the CV-1101 frozen predicate. The retention cell stays PARTIAL, as inherited. Every evidence quote was re-verified at its line: 797 at their line, 35 relocated to their moved line, 0 missing; the new quotes cite the replaced sentences' successors.
+
+## What Astra keeps finding, probed (part 2B deltas)
+
+Class 3 (historical readers): owner-valid retained history stays readable, including the new strict-v3 leap-second and lowercase-`t` originals. Owner-invalid history refuses. Forged recipe claims refuse at RN04, an unknown Store at RN05 and an unsupported recipe at RN06. Class 4 (one field read two ways): timestamps are compared only as exact strings, never parsed. Class 7 (custody): the dispatcher's verifier runs the complete original chain. Class 12 (formats skipped): every validator installs the shared predicate explicitly; the predicate witnesses and the trial `CV1101_shared_predicate_removed` show this. Class 10a: the retained profile is selected by the sealed custody, never by request data, and the forged-recipe negatives remain. The other classes are unchanged from part 2A.
+
+## Commands and evidence
+
+Heavy runs went one at a time, each started with at least 13.5 GB available. The tool's MemoryGate pauses below 10 GB and resumes at 11 GB. No browser was used. PM7 work was not touched.
+
+| Command | Exit | Outcome |
+|---|---:|---|
+| `git merge --no-ff 58c2816ff3…` | 0 | clean (`1879aa0daa`) |
+| `python3 scripts/pm-dch-table-generate.py scripts --check` | 0 | 78 modules current (282 rows) |
+| `python3 -B scripts/pm_dch_events.py --family <f>` ×17 | 0 ×17 | `pass`, 47,229 assertions, 0 failures |
+| `python3 -B scripts/pm_dch_stop.py` | 0 | `pass`, 4,612 assertions |
+| `pm-dch-guard-tables.py --out tool` (long-job) | 1 | 271/282 proved; failed tables only `unproved_guards`; 2304.9 s |
+| `standing_trials.py` (17 trials) | 0 | 17/17 caught |
+| `differential2.py` (base `1879aa0daa` vs `882ef7ae25`; envelope validator normalized) | 0 | 38,441 distinct calls with identical results; 441 changed, exactly the owner-invalid retained originals (historical_read_valid true→false 136, retry_outcome conflict→invalid_input_type 136, checkpoint_joins true→false 153 = 136 + 17, test_joins true→false 16); old-only 921 = the 850 removed history calls (816 derived negatives, 34 year-0000 history) with their 34 body_bytes and 34 record_number_rule calls, plus 3 reference-closure calls over the envelope that re-key because its bytes changed (no errors in either tree); new-only 1,886 are the new cases' calls (2 of them the re-keyed closure calls) |
+| `python3 scripts/pm-shard-plans.py --generate` / `--check` | 0 | pass; only the four edited documents' outputs changed |
+| `python3 scripts/pm-plan-index.py generate` (currentness edition SHA-256-matched first) | 0 | pass; 37 units' canonical text changed |
+| `python3 scripts/pm-plan-index.py validate` (origin/main `47d9dc7655`) | 1 | top-level `fail`, 60 failures (39 plan_unit_removed_without_ledger_decision, 21 plan_unit_removal_ledger_invalid), all units or ledgers that main added after the lane's base d5ec2f70c0; none names a DCH unit or file. Pinned to d5ec2f70c0 in a scratch clone: status pass, 0 failures |
+
+Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DCH/sweep-p2b/` (`SHA256SUMS` covers every file). No pm-mail, subagent, admission, registry append, Decision Log change, governance artifact edit, landing lock or main push. The worktree is removed after publication.
+
+---
+
+Earlier-round material below is **superseded source lineage**. Its "interim only" timestamp statements and its part 2B item list are closed by this section.
+
+# DCH — Sweep part 2A (guard tables) and part 2B numbers (historical; superseded by part 2B above)
 
 **Branch:** `plans/ea-w2-chat-20261104`. Part 2A start `ac5849d031`. Gated guard-tool merge `798502af2c` (tool `004bdedd63`, eleven files, none edited). Gated NUMRULE number-scope merge `5bbf9b23d0` (`a16f67c1ef` exactly; it brings no main commit; its only conflicts were generated `Plans/_shards/{contracts_v0,storage-plan}` and `Plans/.plan_index` files, resolved by regeneration, never by hand). Implementation head `9cd65b3cda` (`7fab2456fa` plus an adapter-only change to `pm_dch_guard_suites.py`; checker, tables and owner text are byte-identical); the delivery head (this report commit) is in the external `HEAD.txt`. No rebase onto main this round.
 
