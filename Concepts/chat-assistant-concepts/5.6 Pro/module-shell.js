@@ -2014,13 +2014,59 @@
     var first = plainText(sentence).replace(/^\s+/, '').charAt(0);
     return !first || first === '·' || /[a-z]/.test(first) ? ' ' : '<span class="pmx-dock-sep"> · </span>';
   }
+  /* FO-128 (Jared, 2026-11-09, item 9: "it should have the approval buttons right there in the bar to choose from"): a
+     line that asks you something carries its answers. o.ask = { question (HTML, its own row, shown whole), answers:
+     [{ action, attrs, label, hint, quiet, group }], lead (HTML before the answers), extra (HTML that replaces the answers while
+     it is given: the Always chooser), more (HTML under them: the details), label (the answers' accessible name),
+     layout: 'row' (buttons beside or under the question) | 'list' (one numbered row per answer, with its hint) }.
+     Without o.ask the line is the one-row line it always was. The layout defaults to pmxAskLayout(): the prototype
+     switch html[data-pmx-ask] (?fo128=a|b), 'row' when unset. */
+  function pmxAskLayout() {
+    var d = document.documentElement, v = d.getAttribute('data-pmx-ask');
+    if (!v) { try { var m = /[?&]fo128=([ab])\b/.exec(location.search || ''); if (m) { v = m[1] === 'b' ? 'list' : 'row'; d.setAttribute('data-pmx-ask', v); } } catch (e) { /* no location */ } }
+    return v === 'list' ? 'list' : 'row';
+  }
+  function dockAskId(key) { return 'pmxq-' + str(key).replace(/[^A-Za-z0-9_-]+/g, '-'); }
+  function dockAnswers(q, layout, id) {
+    var list = q.answers || [];
+    if (!list.length) return '';
+    var name = ' aria-label="' + esc(q.label || 'Answer') + '"';
+    if (layout === 'list') {
+      return '<div class="pmx-dock-choices" data-k="pmx-dock-choices" role="group"' + name + '>' + list.map(function (b, i) {
+        var n = i + 1;
+        return '<button type="button" class="pmx-dock-choice' + (b.quiet ? ' is-quiet' : '') + '" data-k="ans:' + esc(plainText(b.label)) + '"' + at('data-action', b.action) + raw(b.attrs) +
+          (n < 10 ? ' aria-keyshortcuts="' + n + '"' : '') + '>' + (n < 10 ? '<kbd class="pmx-dock-key" aria-hidden="true">' + n + '</kbd>' : '') +
+          '<span class="pmx-dock-choice-t"><b>' + str(b.label) + '</b>' + (b.hint ? '<small>' + str(b.hint) + '</small>' : '') + '</span></button>';
+      }).join('') + '</div>';
+    }
+    /* consecutive answers that name the same group (a permission's Once, For session and Always) are one segmented
+       control after the group's word, so the ladder reads "Deny  Allow [Once | For session | Always…]" */
+    var html = '', open = null;
+    list.forEach(function (b) {
+      var g = b.group || null;
+      if (open !== g && open != null) html += '</span></span>';
+      if (g != null && open !== g) html += '<span class="pmx-dock-seg" data-k="seg:' + esc(g) + '"><span class="pmx-dock-lead" aria-hidden="true">' + esc(g) + '</span><span class="pmx-dock-seg-in">';
+      open = g;
+      html += '<button type="button" class="' + (b.quiet ? 'text-button' : 'soft-button') + ' pmx-dock-ans" data-k="ans:' + esc(plainText(b.label)) + '"' + at('data-action', b.action) + raw(b.attrs) +
+        (b.hint ? ' title="' + esc(plainText(b.hint)) + '"' : '') + '>' + str(b.label) + '</button>';
+    });
+    if (open != null) html += '</span></span>';
+    return '<div class="pmx-dock-answers" data-k="pmx-dock-answers" role="group"' + name + '>' + str(q.lead) + html + '</div>';
+  }
   function pmxDockLine(o) {
     o = o || {};
     var tone = { live: 1, needs: 1, yourmove: 1, comingup: 1 }[o.tone] ? o.tone : 'live';
-    var a = o.action || {};
-    return '<div class="' + cls('pmx-dock-line', o.cls) + '"' + k(o.key) + ' data-tone="' + tone + '"' + at('data-run', o.runId) + raw(o.attrs) + '>' + str(o.markHtml) +
-      '<p class="pmx-dock-say">' + (nonEmpty(o.kindWord) ? '<b>' + str(o.kindWord) + '</b>' : '') + dockJoin(o.kindWord, o.sentence) + str(o.sentence) + '</p>' + (o.time != null && o.time !== '' ? '<span class="pmx-clock">' + o.time + '</span>' : '') +
-      (a.action ? '<button type="button" class="text-button pmx-dock-act" data-action="' + esc(a.action) + '"' + raw(a.attrs) + '>' + str(a.label || 'Show') + '</button>' : '') + '</div>';
+    var a = o.action || {}, q = o.ask || null;
+    var id = q ? dockAskId(o.key || o.runId) : '';
+    var head = str(o.markHtml) +
+      '<p class="pmx-dock-say"' + (q ? ' id="' + id + '-say"' : '') + '>' + (nonEmpty(o.kindWord) ? '<b>' + str(o.kindWord) + '</b>' : '') + dockJoin(o.kindWord, o.sentence) + str(o.sentence) + '</p>' + (o.time != null && o.time !== '' ? '<span class="pmx-clock">' + o.time + '</span>' : '') +
+      (a.action ? '<button type="button" class="text-button pmx-dock-act" data-action="' + esc(a.action) + '"' + raw(a.attrs) + (a.expanded != null ? ' aria-expanded="' + (a.expanded ? 'true' : 'false') + '"' : '') + '>' + str(a.label || 'Show') + '</button>' : '');
+    if (!q) return '<div class="' + cls('pmx-dock-line', o.cls) + '"' + k(o.key) + ' data-tone="' + tone + '"' + at('data-run', o.runId) + raw(o.attrs) + '>' + head + '</div>';
+    var layout = q.layout === 'list' || q.layout === 'row' ? q.layout : pmxAskLayout();
+    return '<div class="' + cls('pmx-dock-line', o.cls) + '"' + k(o.key) + ' data-tone="' + tone + '" data-ask="' + layout + '"' + at('data-run', o.runId) + raw(o.attrs) +
+      ' role="group" aria-labelledby="' + id + '-say' + (q.question ? ' ' + id + '-q' : '') + '">' + head +
+      '<div class="pmx-dock-body" data-k="pmx-dock-body">' + (q.question ? '<p class="pmx-dock-q" id="' + id + '-q">' + str(q.question) + '</p>' : '') +
+        (nonEmpty(q.extra) ? str(q.extra) : dockAnswers(q, layout, id)) + str(q.more) + '</div></div>';
   }
   function pmxDock(linesHtml, overflowText) {
     return '<div class="pmx-dock" data-k="pmx-dock">' + str(linesHtml) + (overflowText ? '<p class="pmx-dock-more">' + overflowText + '</p>' : '') + '</div>';
@@ -2774,7 +2820,7 @@
     pmxRefusal: pmxRefusal, pmxFoot: pmxFoot, pmxConfirm: pmxConfirm, pmxTabs: pmxTabs,
     pmxRun: pmxRun, pmxRunHead: pmxRunHead, pmxSentence: pmxSentence, pmxStatus: pmxStatus, pmxTrack: pmxTrack, pmxLane: pmxLane, pmxLanes: pmxLanes, pmxDecision: pmxDecision,
     pmxResult: pmxResult, pmxOutput: pmxOutput, pmxCredits: pmxCredits, pmxMeta: pmxMeta, pmxActions: pmxActions, pmxReceipt: pmxReceipt,
-    pmxDockLine: pmxDockLine, pmxDock: pmxDock, pmxFinding: pmxFinding, pmxFindings: pmxFindings, pmxSealed: pmxSealed, pmxSeverity: pmxSeverity, pmxAgree: pmxAgree, pmxVoteBoard: pmxVoteBoard,
+    pmxDockLine: pmxDockLine, pmxAskLayout: pmxAskLayout, pmxDock: pmxDock, pmxFinding: pmxFinding, pmxFindings: pmxFindings, pmxSealed: pmxSealed, pmxSeverity: pmxSeverity, pmxAgree: pmxAgree, pmxVoteBoard: pmxVoteBoard,
     pmxQuote: pmxQuote, pmxWash: pmxWash, pmxNote: pmxNote, pmxTick: pmxTick, pmxDivider: pmxDivider, pmxFilesRow: pmxFilesRow, pmxCodeRow: pmxCodeRow, pmxMd: pmxMd, pmxGuide: pmxGuide,
     pmxView: pmxView, pmxViewSection: pmxViewSection, pmxTimeline: pmxTimeline, pmxTeamRow: pmxTeamRow, pmxParticipant: pmxParticipant,
     pmxInert: inert, pmxLangName: langName,

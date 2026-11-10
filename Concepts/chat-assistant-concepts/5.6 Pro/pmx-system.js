@@ -1106,9 +1106,24 @@
     });
     return shown;
   }
+  /* FO-128, the 'list' layout (module-shell.js pmxAskLayout): one question at a time. The asking line in front shows its
+     numbered answers; every other asking line folds to its head with Answer (pmx-ask-front), which brings it to the
+     front. The front is the line the person last brought there while it still asks, else the first. */
+  var askFront = null;
+  function foldAsks(shown) {
+    if (!SHELL.pmxAskLayout || SHELL.pmxAskLayout() !== 'list') return;
+    var asking = shown.filter(function (it) { return / data-ask="list"/.test(it.html); });
+    var front = asking.filter(function (it) { return dockId(it) === askFront; })[0] || asking[0];
+    asking.forEach(function (it) {
+      if (it === front) return;
+      it.html = it.html.replace(' data-ask="list"', ' data-ask="list" data-folded="true"')
+        .replace('<div class="pmx-dock-body"', '<button type="button" class="text-button pmx-dock-unfold" data-action="pmx-ask-front" data-key="' + escHtml(dockId(it)) + '">Answer</button><div class="pmx-dock-body" hidden');
+    });
+  }
   function dockHtml(c) {
     var shown = collectDock(c);
     if (!shown.length) return '';
+    foldAsks(shown);
     var more = shown.length > 3 ? 'and ' + (shown.length - 3) + ' more · Activity' : '';
     return SHELL.pmxDock ? SHELL.pmxDock(shown.slice(0, 3).map(function (it) { return it.html; }).join(''), more) : '';
   }
@@ -1355,6 +1370,17 @@
   });
   EXT.action('pmx-dock-show', function (c, btn) {
     reveal(btn && btn.getAttribute('data-run'));
+    return true;
+  });
+  EXT.action('pmx-ask-front', function (c, btn) {
+    askFront = btn && btn.getAttribute('data-key');
+    var key = askFront;
+    if (c && c.renderApp) c.renderApp();
+    /* the keyboard follows the question it opened */
+    requestAnimationFrame(function () {
+      var ln = document.querySelector('.composer > .pmx-dock .pmx-dock-line[data-ask]:not([data-folded]) .pmx-dock-choice');
+      if (ln && key) try { ln.focus({ preventScroll: true }); } catch (e) { /* gone */ }
+    });
     return true;
   });
   EXT.chainAction('reset-all', function () {
