@@ -2,9 +2,9 @@
 
 Source: `Plans/storage-plan.md`
 
-Source lines: L28291-L30823
+Source lines: L28291-L30826
 
-Source SHA256: `7d4a2933a3c106e5d8e56e85afcd5515a97631aacf9eecbb666d3c089781b216`
+Source SHA256: `2fe6b112148ca80dd4e36969ffaa1f98e80e4e005385f59b385db71fa299b254`
 
 ---
 
@@ -2485,6 +2485,9 @@ canonical_text: 'Newly authored owner contract for concern.created 1.0.0 under D
   admission, historical rewrite or automatic retention/deletion follows.
 
 
+  Numbers follow CV-1100 and SP-1100 beside the SP-278, SP-286 and CV-339 profile owners: each schema integer slot admits current_integer within its own bounds with no lane-wide cap, Storage sequences are uint64, and the producer route is qualified JCS; a retained original keeps its write-time recipe, whose authenticated selection is SP-1101.
+
+
   SP-340 physical binding: concern_created_operation uses canonical MessagePack in canonical redb, coordination_and_storage
   advisory budget. concern_record preserves its existing canonical-redb/runs_and_goals profile, 16384-byte maximum
   and unchanged group budget. concern_created_checkpoint uses derived redb/event_log hard budget. Each complete
@@ -2499,7 +2502,7 @@ canonical_text: 'Newly authored owner contract for concern.created 1.0.0 under D
   including trailing-LF refusal, with no trimming. Fixtures Plans/concern_created_contracts/concern_created.fixtures.json
   and python3 scripts/pm-concern-created-contracts-check.py cover the exact family. Native source/creator/permission
   authentication, atomic create/commit/CAS, genuine append/receipts, crash recovery, rebuild/withdrawal and coherent
-  backup/deletion remain NOT_RUN. Nothing here admits an event or makes a native writer available. Numbers follow CV-1100 and SP-1100 beside the SP-278, SP-286 and CV-339 profile owners: each schema integer slot admits current_integer within its own bounds with no lane-wide cap, Storage sequences are uint64, and the producer route is qualified JCS; a retained original keeps its write-time recipe, whose authenticated selection is SP-1101.'
+  backup/deletion remain NOT_RUN. Nothing here admits an event or makes a native writer available.'
 gui_related: false
 gui_classification_reason: Event identity, authority, custody and storage contract; existing GUI action model is
   preserved.
