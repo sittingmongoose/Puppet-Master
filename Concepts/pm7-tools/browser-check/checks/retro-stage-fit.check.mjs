@@ -645,7 +645,13 @@ const MOTION = async (ms, probeSource, geometrySource, selftest, force) => {
 				out.validPairs++; if (p.state === 'out') out.leavingPairs++;
 				if (x1 <= x0 || y1 <= y0) continue;
 				out.boxFrames++; out.worstBox = Math.max(out.worstBox, Math.min(x1 - x0, y1 - y0));
-				if (area > out.worst) out.worst = area, out.at = { prop: `${p.spec.kind}:${p.spec.slot || ''}`, t: Math.round(performance.now() - t0), tilt: Math.round(ps.tilt * 100) / 100, th: Math.round(ps.th * 100) / 100, dy: Math.round(ps.dy), state: p.state, opacity: +p.el.getAttribute('opacity'), propA: Math.round(p.a * 100) / 100 };
+				if (area > out.worst) {
+					out.worst = area;
+					out.at = { prop: `${p.spec.kind}:${p.spec.slot || ''}`, t: Math.round(performance.now() - t0), tilt: Math.round(ps.tilt * 100) / 100, th: Math.round(ps.th * 100) / 100, dy: Math.round(ps.dy), state: p.state, opacity: +p.el.getAttribute('opacity'), propA: Math.round(p.a * 100) / 100,
+						restBox:p.restBox||null,paintBox:p.box||null,keepHead:s2.pipKeep||null,
+						restHead:s2.pipHead?s2.pipHead(0,null,true):null,
+						headRect:[hb.left,hb.top,hb.right-hb.left,hb.bottom-hb.top],propRect:[q.left,q.top,q.right-q.left,q.bottom-q.top] };
+				}
 			}
 		} catch (e) { out.geometryError = `${e.message} at frame ${out.n}`; break; }
 	}
@@ -676,11 +682,12 @@ async function awakeMotion(t, mode) {
 			const f = await frameFor(t, mode);
 			await t.emulate({ reducedMotion: 'no-preference' });
 			await stageLook(t, f, look);
-			for (const scr of t.args.screens ? String(t.args.screens).split(',') : MOTION_SCREENS) {
+			for (const scr of (t.args.motionScreens || t.args.screens) ? String(t.args.motionScreens || t.args.screens).split(',') : MOTION_SCREENS) {
 				await f.evaluate((x) => window.O55.ui.open({ fresh: true, screen: x }), scr);
 				const ok = await f.waitForFunction(() => !!O55.pipStage.of(O55.S.root.querySelector('.o55-stage')), null, { timeout: 15000 }).then(() => true, () => false);
 				const tag = `${mode} ${look} ${scr} ${w}x${h} awake`;
 				if (!ok) { await t.check(`${tag}: the screen opens on a stage`, false, 'no stage within 15 s'); continue; }
+				t.mark(tag);
 				// watched from the screen's entrance on, through the wake, the person's input and the idle that follows
 				const watch = f.evaluate(`(${MOTION.toString()})(14000, ${JSON.stringify(INK_OVERLAP.toString())}, ${JSON.stringify(GEOMETRY.toString())}, ${JSON.stringify(t.args.selftest || "")})`);
 				await f.waitForTimeout(250);

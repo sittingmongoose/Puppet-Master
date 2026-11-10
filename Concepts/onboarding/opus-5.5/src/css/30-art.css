@@ -96,6 +96,10 @@
 /* a note needs the room above Pip on a small stage: the bubble steps aside while it is open */
 #pm-o55-onboarding .pst-bubble.pst-hush { opacity: 0; transition: opacity .25s; }
 #pm-o55-onboarding .pst-bt-off { visibility: hidden; }
+/* VT323's fi/ff/fl ligatures occupy one cell instead of two. Typing splits the line into shown/hidden spans;
+   crossing that pair otherwise widens it by one cell for a frame and moves the speech anchor (QA-4).
+   Keep character cells identical before, during and after typing, including the note's same text renderer. */
+#pm-o55-onboarding .pst[data-tube="phosphor"] :is(.pst-bubble, .pst-tip) { font-variant-ligatures: none; }
 @keyframes pstBubble { from { opacity: 0; scale: .6; } to { opacity: 1; scale: 1; } }
 /* The tail comes out of the bubble (Jared, QA round 2, Q10): one triangle in the bubble's fill that starts on the
    bubble's own edge and covers its line where the tail joins, and behind it one triangle a line wider in the bubble's
@@ -106,8 +110,14 @@
 #pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble::before { background: var(--bl, transparent); }
 #pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="down"]::after { left: var(--tx, 30px); top: 100%; width: 14px; height: calc(8px + var(--bw, 0px)); margin-top: calc(-1 * var(--bw, 0px)); translate: -50% 0; clip-path: polygon(0 0, 100% 0, 50% 100%); }
 #pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="down"]::before { left: var(--tx, 30px); top: 100%; width: calc(14px + 2.64 * var(--bw, 0px)); height: calc(8px + 2.54 * var(--bw, 0px)); margin-top: calc(-1 * var(--bw, 0px)); translate: -50% 0; clip-path: polygon(0 0, 100% 0, 50% 100%); }
+#pm-o55-onboarding .pst-bubble[data-side="up"] { transform-origin: 0 0; }
+#pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="up"]::after { left: var(--tx, 30px); bottom: 100%; width: 14px; height: calc(8px + var(--bw, 0px)); margin-bottom: calc(-1 * var(--bw, 0px)); translate: -50% 0; clip-path: polygon(0 100%, 100% 100%, 50% 0); }
+#pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="up"]::before { left: var(--tx, 30px); bottom: 100%; width: calc(14px + 2.64 * var(--bw, 0px)); height: calc(8px + 2.54 * var(--bw, 0px)); margin-bottom: calc(-1 * var(--bw, 0px)); translate: -50% 0; clip-path: polygon(0 100%, 100% 100%, 50% 0); }
 #pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="left"]::after { top: var(--ty, 16px); right: 100%; height: 14px; width: calc(8px + var(--bw, 0px)); margin-right: calc(-1 * var(--bw, 0px)); translate: 0 -50%; clip-path: polygon(100% 0, 100% 100%, 0 50%); }
 #pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="left"]::before { top: var(--ty, 16px); right: 100%; height: calc(14px + 2.64 * var(--bw, 0px)); width: calc(8px + 2.54 * var(--bw, 0px)); margin-right: calc(-1 * var(--bw, 0px)); translate: 0 -50%; clip-path: polygon(100% 0, 100% 100%, 0 50%); }
+#pm-o55-onboarding .pst-bubble[data-side="right"] { transform-origin: 100% 100%; }
+#pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="right"]::after { top: var(--ty, 16px); left: 100%; height: 14px; width: calc(8px + var(--bw, 0px)); margin-left: calc(-1 * var(--bw, 0px)); translate: 0 -50%; clip-path: polygon(0 0, 0 100%, 100% 50%); }
+#pm-o55-onboarding .pst:not([data-fam="nier"]) .pst-bubble[data-side="right"]::before { top: var(--ty, 16px); left: 100%; height: calc(14px + 2.64 * var(--bw, 0px)); width: calc(8px + 2.54 * var(--bw, 0px)); margin-left: calc(-1 * var(--bw, 0px)); translate: 0 -50%; clip-path: polygon(0 0, 0 100%, 100% 50%); }
 #pm-o55-onboarding .pst:not([data-layout="portrait"]) .pst-bubble { font-size: 12px; padding: 6px 10px; max-width: min(56%, 230px); }
 #pm-o55-onboarding .pst[data-layout="compact"] .pst-ntop, #pm-o55-onboarding .pst[data-layout="compact"] .pst-term-top span:last-child { display: none; }
 #pm-o55-onboarding .pst[data-layout="compact"] .pst-nlab { gap: 10px; padding: 3px 6px; }
@@ -212,7 +222,9 @@
 #pm-o55-onboarding .pst[data-tube="teletype"] .pst-bubble { --pst-font: 'IBM Plex Mono', ui-monospace, monospace; --bb: #f4ecdd; --bl: #231e19; --bw: 2px; font-weight: 600; font-size: 11.5px; letter-spacing: .02em; text-transform: uppercase; color: #231e19; background: #f4ecdd; border: 2px solid #231e19; border-radius: 0; box-shadow: 3px 3px 0 #231e19; }
 #pm-o55-onboarding .pst[data-tube] .pst-bubble.on { animation: pstBox .3s steps(4, end); }
 @keyframes pstBox { from { clip-path: inset(0 100% 100% 0); } to { clip-path: inset(0 -20px -20px 0); } }
-#pm-o55-onboarding .pst[data-tube] .pst-bubble.typing .pst-bt-on::after { content: ''; display: inline-block; width: .5em; height: .8em; margin: 0 -.5em 0 0; background: currentColor; vertical-align: -.05em; }
+/* Cursor ink must not introduce an atomic inline break inside the typed/hidden word. Negative margin gave it
+   zero net width but still changed wrapping (Ready: the same full line alternated between two and three lines). */
+#pm-o55-onboarding .pst[data-tube] .pst-bubble.typing .pst-bt-on::after { content: ''; position: absolute; display: inline-block; width: .5em; height: .8em; margin: 0; background: currentColor; vertical-align: -.05em; }
 /* ------------------------------------------------- NieR: the unit HUD */
 #pm-o55-onboarding .pst-hudhtml { position: absolute; inset: 0; }
 #pm-o55-onboarding .pst-nhud { position: absolute; inset: 10px; font: 500 10px/1 'PM NieR Sans', 'Inter', system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; }
@@ -304,7 +316,7 @@
 /* paper changes in steps: its notes and lines appear the way the rest of it moves */
 #pm-o55-onboarding .pst[data-tube="teletype"] :is(.pst-tip, #pm-o55-onboarding .pst-bubble) { transition-timing-function: steps(3, end); }
 #pm-o55-onboarding .pst[data-tube] .pst-tip .pst-tip-k::before { display: none; }
-#pm-o55-onboarding .pst[data-tube] .pst-tip.typing .pst-bt-on::after { content: ''; display: inline-block; width: .5em; height: .8em; margin: 0 -.5em 0 0; background: currentColor; vertical-align: -.05em; }
+#pm-o55-onboarding .pst[data-tube] .pst-tip.typing .pst-bt-on::after { content: ''; position: absolute; display: inline-block; width: .5em; height: .8em; margin: 0; background: currentColor; vertical-align: -.05em; }
 /* NieR: a TIPS box at the top right, opened like its menus */
 #pm-o55-onboarding .pst-ntip { position: absolute; right: 2px; top: 26px; width: 47%; display: grid; border: 1px solid currentColor; background: color-mix(in srgb, var(--np) 88%, transparent); opacity: 0; visibility: hidden; transition: opacity .25s, visibility 0s .25s; text-transform: none; letter-spacing: .03em; pointer-events: none; }
 #pm-o55-onboarding .pst-ntip.on { opacity: 1; visibility: visible; transition: opacity .25s; pointer-events: auto; animation: pstNtip .45s steps(6, end); }

@@ -224,6 +224,8 @@
     const out = { chapter, props, pip: { mood, look: sc.look || tgt, work: !!sc.work && !/^done/.test(lid) && !(O55.review && O55.review.shownDone && id === 'creating' && O55.review.shownDone(S)) },
       say, target: tgt, label, cmd: stg(id, 'cmd', Object.assign({ prop: tgt || '' }, v)) + (h ? ' --preview' : ''), lineId: lid };
     if (sc.power) out.pip.power = O55.ai ? O55.ai.readyIds(S).length : 0;
+    // Creating owns the whole phase plan before any block has finished and entered the stage.
+    if (id === 'creating') out.stackCount = O55.review.phasesFor(S).length;
     /* (Welcome: the stage puts Pip to sleep and wakes it on a real arrival, 59-cheer.js wake; once awake it is lifted) */
     if (id === 'welcome') out.wakeSay = say;
     if (o.oops) {

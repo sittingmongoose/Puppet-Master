@@ -20,6 +20,7 @@
   const O55 = window.O55, PIP = O55.pipStage, H = PIP.h, PW = O55.pipWorlds;
   const { R, clamp, ease, rot, el, div, T } = H;
   const now = H.now;
+  const STACK_OFFSETS = [-3, 4, -2, 3, 0, -3];
   const esc = (s) => String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
   const KIT = () => H.kit();
   const TH = () => KIT().THEMES;
@@ -495,35 +496,124 @@
       // once a block is set down its strings are unhooked: they go slack, lift away and fade
       const off = pr.spec.ground && pr.landed ? clamp((this.t - pr.landT) / .55, 0, 1) : 0;
       const strOp = off ? Math.max(0, 1 - ease(off)) * pr.op : pr.op;
+      /* each string hangs from the anchor of the prop's rest pose (restPose: its destination's ax, scale and dy), the
+         same point on its first frame, through its swing and at rest, and is drawn straight from its tie through that
+         anchor and on above it. Drawn instead from a point 200 above the anchor at this frame's fit offset, the line
+         turned about that far point while the prop swung about the anchor, so where a string met the pane's top slid
+         across it as it swung and whenever fit's offset changed (QA-6: up to 25 units at the top edge) */
+      const rp = this.restPose(pr);
       pr.ties.forEach((t, i) => {
         const v = rot([(t[0] - tieMid[0]) * sc, (t[1] - tieMid[1]) * sc], pr.a), end = [hang[0] + v[0], hang[1] + v[1] - ease(off) * 70];
-        const top = [pr.ax + (pr.dx || 0) + (t[0] - tieMid[0]) * sc, Lay.anchorY - 200];
+        /* the anchor stands over the pivot the prop swings from (pr.ax, with the destination's fit offset): a prop
+           kept from the last screen travels to its new slot on that pivot's spring, and its strings travel with it
+           instead of jumping to the new slot's anchor in one frame (r-pick to r-preview's restore). The painted
+           prop eases its own copy of that offset (aimDx/aimDy); the string stays on this rest suspension, which
+           QA-6 requires the drawn line to pass through. */
+        const anch = [pr.ax + (rp.ax - tg.ax) + (t[0] - tieMid[0]) * rp.sc, Lay.anchorY + rp.dy];
+        const av = [anch[0] - end[0], anch[1] - end[1]], al = Math.hypot(av[0], av[1]);
+        /* The continuation is the ray from the painted tie through the rest anchor. A tie within
+           1 unit used to continue straight up instead, so while aim eased the tie past that
+           neighborhood the line left the anchor by the tie's sideways offset (QA-6, 0.17–0.37u).
+           Straight up remains only when the tie is on the anchor and the ray is undefined. */
+        const top = al > 1e-3 ? [anch[0] + av[0] / al * 200, anch[1] + av[1] / al * 200] : [anch[0], anch[1] - 200];
         pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
         pr.strs[i].setAttribute('opacity', R(strOp));
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
       });
     }
+    /* Room swept by a resting prop's small swing, including the pendulum's travel as well as the rotated drawing.
+       Speech must clear that room, not just the upright box (the 740 Retro vault reached 7 px into the bubble).
+       This reservation is independent of the current angle, so neither destination nor bubble refits during entry. */
+    speechSway(pr, sc, tm, len) {
+      const bb = pr.spaceBB || pr.bb;
+      if (this.still() || !H.part('sway-and-physics') || pr.spec.ground || !bb) return [0, 0];
+      const [x, y, w, h] = bb, pts = [[x, y], [x + w, y], [x, y + h], [x + w, y + h]];
+      const base = pts.map(([x, y]) => [(x - tm[0]) * sc, (y - tm[1]) * sc]);
+      const swept = [-.15, 0, .15].flatMap((a) => base.map((p) => { const q = rot(p, a); return [q[0] + Math.sin(a) * len, q[1] + (Math.cos(a) - 1) * len]; }));
+      const span = (ps, axis) => [Math.min(...ps.map((p) => p[axis])),Math.max(...ps.map((p) => p[axis]))];
+      return [0, 1].map((i) => { const b = span(base, i), q = span(swept, i); return Math.max(b[0] - q[0], q[1] - b[1]); });
+    }
+    /* The shared destination used by the drop, the bubble's occupancy and the strings' suspension. It exists before
+       the first visible frame, independent of entry opacity, spring progress and swing. A scene/layout change refits
+       it; an outgoing prop keeps the place it left. Only preceding props participate, so the order has no cycle. */
+    restPose(pr) {
+      if (pr.state === 'out' && pr.restFit) return pr.restFit;
+      const tg = this.propTarget(pr), tm = [pr.ties.reduce((m, t) => m + t[0], 0) / pr.ties.length, tg.tieY];
+      const preceding = [];
+      for (const [id, q] of this.props) { if (q.state !== 'out') preceding.push([id, q.spec]); if (q === pr) break; }
+      const key = JSON.stringify([this.theme, this.layoutName, this.vis, this.lastScreen, this.spec.pip,
+        this.reduced, !!O55.motion.lowResource, H.part('sway-and-physics'),
+        this.keepOff, this.pipAt, this.pipOff, this.pipBB, pr.bb, pr.spaceBB, preceding]);
+      if (pr.restFit && pr.restFit.key === key) return pr.restFit;
+      const geometry = JSON.stringify([this.theme, this.layoutName, this.vis, this.lastScreen, pr.bb, pr.spaceBB, tg.ax, tg.len, tg.sc, tm]);
+      /* The wire is the slot, not the drawing. A new line redraws the art and moves the speech obstacle,
+         so a key that included the box never matched and the clearance ran again. */
+      const wireKey = JSON.stringify([this.theme, this.layoutName, this.lastScreen]);
+      const kept = pr.restFit && pr.restFit.geometry === geometry ? pr.restFit : null;
+      /* 96c4237762 refits when the slot length changes. Friendly Dark's vault, already on the wire,
+         then jumped its offset about 168px as 388 shortened to 334 and rested there. A shorter slot
+         keeps the offset it had and lets the length spring carry it, which is where 412 rests.
+         The hold lasts while the slot stays that short; a longer slot still refits and eases. */
+      const sameWire = pr.restFit && pr.restFit.wireKey === wireKey;
+      const onWire = sameWire && (pr.restFit.len - tg.len > .5 || (pr.restFit.held && tg.len <= pr.restFit.len + .5)) ? pr.restFit : null;
+      const fit = this.fit(pr, [tg.ax, this.L.anchorY + tg.len], tg.sc, tm, true, pr.spaceBB, kept, onWire);
+      const sc = tg.sc * fit.f, spaceBox = fit.box, bb = pr.bb;
+      const actual = pr.spaceBB && bb ? [tg.ax + fit.dx + (bb[0] - tm[0]) * sc, this.L.anchorY + tg.len + fit.dy + (bb[1] - tm[1]) * sc,
+        tg.ax + fit.dx + (bb[0] + bb[2] - tm[0]) * sc, this.L.anchorY + tg.len + fit.dy + (bb[1] + bb[3] - tm[1]) * sc] : fit.box;
+      pr.restBox = actual;
+      if (pr.spaceBB && bb) {
+        // Preserve this exact fit on exit too: the capacity frame can reach the pane before the smaller drawing does.
+        const room = this.vis.x1 - this.vis.x0 - 16, base = room > 0 ? Math.min(1, room / (bb[2] * tg.sc)) : 1;
+        const lo = tg.ax + (bb[0] - tm[0]) * tg.sc * base, hi = tg.ax + (bb[0] + bb[2] - tm[0]) * tg.sc * base;
+        let edge = hi > this.vis.x1 - 8 ? this.vis.x1 - 8 - hi : 0;
+        if (lo + edge < this.vis.x0 + 8) edge = this.vis.x0 + 8 - lo;
+        pr.restOff = {dx: fit.dx - edge, dy: fit.dy, g: fit.f / base};
+      }
+      const reach = this.speechSway(pr, tg.sc * fit.f, tm, tg.len), b = fit.box;
+      const speechBox = b && [b[0] - reach[0], b[1] - reach[1], b[2] + reach[0], b[3] + reach[1]];
+      return (pr.restFit = Object.assign({ key, geometry, wireKey, len: tg.len, held: !!onWire, speechBox, spaceBox, ax: tg.ax + fit.dx, sc }, fit, {box: actual}));
+    }
     /* how far a prop must move (dx, dy) or shrink (f) for its drawing, at its angle, to sit inside the pane's visible span
        (this.vis, from measure) with a margin, and off a speech box that cannot move out of its way (this.keepOff: NieR's
        fixed box, or a bubble that found no clear place); box is where it is then painted */
-    fit(pr, hang, sc, tm) {
-      const v = this.vis; let bb = pr.bb;
+    fit(pr, hang, sc, tm, destination, shape, kept, onWire) {
+      const v = this.vis; let bb = shape || pr.bb;
       if (!v) return { dx: 0, dy: 0, f: 1, box: null };
       if (!bb || !bb[2]) { bb = pr.bb = this.boxOf(pr.el); if (!bb || !bb[2]) return { dx: 0, dy: 0, f: 1, box: null }; }
-      const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], pr.a));
+      const cs = [[bb[0], bb[1]], [bb[0] + bb[2], bb[1]], [bb[0], bb[1] + bb[3]], [bb[0] + bb[2], bb[1] + bb[3]]].map(([x, y]) => rot([(x - tm[0]) * sc, (y - tm[1]) * sc], destination ? 0 : pr.a));
       let lo = Math.min(...cs.map((c) => c[0])), hi = Math.max(...cs.map((c) => c[0])), tp = Math.min(...cs.map((c) => c[1])), bt = Math.max(...cs.map((c) => c[1])), f = 1;
       const pad = 8, room = v.x1 - v.x0 - pad * 2, hx = hang[0], hy = hang[1];
+      const rest = pr.state !== 'out' && pr.spec.stack == null;
+      if (rest && !destination) {
+        /* Fit the destination, then lower the prop into it on its spring. Fitting the moving pose picked the nearest
+           side of another prop every frame: Recovery Kit > backup list pinned the clipboard above the restore box
+           for 120 ms, then switched below it in one frame (QA-7). The other props' destinations participate too, so
+           their entry opacity or progress cannot change this prop's landing place halfway down. */
+        const fit = this.restPose(pr);
+        lo *= fit.f; hi *= fit.f; tp *= fit.f; bt *= fit.f;
+        /* The destination offset is where the prop will hang, not where it hangs this frame. Painting a newly
+           fitted offset in one frame snaps it while the spring is still at the old length: the head corridor
+           (88f885da8e) lifts Glass Light's house about 170px when its slot lengthens, and that lift was applied
+           as a position. step() eases aimDx/aimDy on the prop spring; this frame keeps the offset already under way. */
+        if (pr.aimDx == null) { pr.aimDx = fit.dx; pr.aimDy = fit.dy; pr.aimDxv = 0; pr.aimDyv = 0; }
+        let dx = pr.aimDx, dy = pr.aimDy;
+        // A swing still stays inside the pane; the incoming prop may pass its top edge on its strings.
+        if (hx + hi + dx > v.x1 - pad) dx = v.x1 - pad - (hx + hi);
+        if (hx + lo + dx < v.x0 + pad) dx = v.x0 + pad - (hx + lo);
+        if (hy + bt + dy > v.y1 - pad) dy = v.y1 - pad - (hy + bt);
+        return { dx, dy, f: fit.f, box: [hx + lo + dx, hy + tp + dy, hx + hi + dx, hy + bt + dy] };
+      }
       if (hi - lo > room && room > 0) { f = room / (hi - lo); lo *= f; hi *= f; tp *= f; bt *= f; }
       let dx = 0, dy = 0;
       if (hx + hi > v.x1 - pad) dx = v.x1 - pad - (hx + hi);
       if (hx + lo + dx < v.x0 + pad) dx = v.x0 + pad - (hx + lo);
       /* (up and down too, for a prop at rest: one coming in or going out passes the top edge on its strings, and Creating's
          blocks stand on the floor) */
-      const rest = pr.state !== 'out' && pr.spec.stack == null, dxEdge = dx;
+      const dxEdge = dx, visible = destination ? 1 : pr.op;
       /* the least move (inside the pane) that clears every box in obs, or drawn a little smaller only when no way does */
       const clear = (obs) => {
         const L0 = lo, H0 = hi, T0 = tp, B0 = bt, f0 = f; let g = 1;
-        for (let it = 0; it < 6 && obs.length; it++) {
+        for (let it = 0; it < (destination ? 12 : 6) && obs.length; it++) {
           const X0 = hx + lo + dx, X1 = hx + hi + dx, Y0 = hy + tp + dy, Y1 = hy + bt + dy;
           const hit = (ax, ay) => obs.find((o) => X0 + ax < o[2] && X1 + ax > o[0] && Y0 + ay < o[3] && Y1 + ay > o[1]);
           const o = hit(0, 0); if (!o) break;
@@ -541,20 +631,65 @@
           }
           if (c) { dx += c[0]; dy += c[1]; break; }
           if (g <= .66) break;
-          g *= .9; f = f0 * g; lo = L0 * g; hi = H0 * g; tp = T0 * g; bt = B0 * g;
+          g = destination ? Math.max(.66, g * .9) : g * .9; f = f0 * g; lo = L0 * g; hi = H0 * g; tp = T0 * g; bt = B0 * g;
         }
         return g;
       };
       if (rest) {
+        /* A shortened slot stays on the offset it already solved. Solving the clearance again
+           lifts the prop off its length in one frame (96c4237762, about 168px). The pane clamps
+           still apply; a longer slot is free to refit, and the aim spring eases that. */
+        if (destination && onWire) {
+          const wf = onWire.f || 1;
+          const uLo = Math.min(...cs.map((c) => c[0])) * wf, uHi = Math.max(...cs.map((c) => c[0])) * wf;
+          const uTp = Math.min(...cs.map((c) => c[1])) * wf, uBt = Math.max(...cs.map((c) => c[1])) * wf;
+          let wdx = onWire.dx, wdy = onWire.dy;
+          if (hx + uHi + wdx > v.x1 - pad) wdx = v.x1 - pad - (hx + uHi);
+          if (hx + uLo + wdx < v.x0 + pad) wdx = v.x0 + pad - (hx + uLo);
+          if (hy + uBt + wdy > v.y1 - pad) wdy = v.y1 - pad - (hy + uBt);
+          if (hy + uTp + wdy < v.y0 + pad) wdy = v.y0 + pad - (hy + uTp);
+          pr.restOff = { dx: wdx - dxEdge, dy: wdy, g: wf / f };
+          return { dx: wdx, dy: wdy, f: wf, box: [hx + uLo + wdx, hy + uTp + wdy, hx + uHi + wdx, hy + uBt + wdy] };
+        }
         if (hy + bt > v.y1 - pad) dy = v.y1 - pad - (hy + bt);
-        if (pr.op > .95 && hy + tp + dy < v.y0 + pad) dy = v.y0 + pad - (hy + tp);
+        if (visible > .95 && hy + tp + dy < v.y0 + pad) dy = v.y0 + pad - (hy + tp);
         /* off what it must not touch: a speech box that cannot move (keepOff) and the props already placed this frame
            (the name's sign and the service's mark at a short window); it moves the least way that clears them all,
            inside the pane, and is drawn a little smaller only when no way does */
-        const obs = []; if (this.keepOff && pr.op > .05) obs.push(this.keepOff);
+        const obs = [];
+        if (this.keepOff && visible > .05) {
+          const o = this.keepOff, reach = destination ? this.speechSway(pr, sc, tm, this.propTarget(pr).len) : [0, 0];
+          obs.push([o[0] - reach[0], o[1] - reach[1], o[2] + reach[0], o[3] + reach[1]]);
+        }
         /* (and off Pip's head where it hangs at rest: Retro's crop pushed a sign in from its cut side over Pip, FO-50) */
-        const pk = this.pipKeep; if (pk && pr.op > .05) obs.push([pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
-        this.props.forEach((q) => { if (q !== pr && q.box && q.placedN === this.renderN && q.op > .05 && q.state !== 'out') obs.push([q.box[0] - 4, q.box[1] - 4, q.box[2] + 4, q.box[3] + 4]); });
+        const pk = destination ? this.pipHead(0, null, true) : this.pipKeep;
+        if (pk && visible > .05) {
+          /* A prop lowered from above must stop above the swept head, or pass beside it. Extending this
+             obstacle below the head tests that whole entry path; extending it ABOVE the head too wrongly
+             removed valid above-head destinations and shrank the 860 Retro sign to an unreadable size. */
+          const reach = destination ? this.speechSway(pr, sc, tm, this.propTarget(pr).len) : [0, 0];
+          obs.push(destination ? [pk[0] - 4 - reach[0], pk[1] - 4 - reach[1], pk[2] + 4 + reach[0], v.y1 + this.L.h]
+            : [pk[0] - 4, pk[1] - 4, pk[2] + 4, pk[3] + 4]);
+        }
+        let before = true;
+        this.props.forEach((q) => {
+          if (q === pr) { before = false; return; }
+          if (q.state === 'out' || (destination ? !before : q.placedN !== this.renderN || q.op <= .05)) return;
+          const pose = destination ? this.restPose(q) : null, b = pose ? pose.spaceBox || pose.box : q.box;
+          if (b) obs.push([b[0] - 4, b[1] - 4, b[2] + 4, b[3] + 4]);
+        });
+        /* Releasing a speech obstacle must not teleport a prop back to its default slot. Its old destination is
+           reusable only for identical art/target geometry, inside today's crop and clear of EVERY current obstacle.
+           A changed shape, slot, layout or colliding obstacle still takes the ordinary fit below. */
+        if (destination && kept) {
+          const b = [hx + Math.min(...cs.map(c => c[0])) * kept.f + kept.dx, hy + Math.min(...cs.map(c => c[1])) * kept.f + kept.dy,
+            hx + Math.max(...cs.map(c => c[0])) * kept.f + kept.dx, hy + Math.max(...cs.map(c => c[1])) * kept.f + kept.dy];
+          if (b[0] >= v.x0 + pad - .5 && b[2] <= v.x1 - pad + .5 && b[1] >= v.y0 + pad - .5 && b[3] <= v.y1 - pad + .5
+            && !obs.some(o => b[0] < o[2] - 1e-7 && b[2] > o[0] + 1e-7 && b[1] < o[3] - 1e-7 && b[3] > o[1] + 1e-7)) {
+            pr.restOff = {dx: kept.dx - dxEdge, dy: kept.dy, g: kept.f / f};
+            return {dx: kept.dx, dy: kept.dy, f: kept.f, box: b};
+          }
+        }
         const g = clear(obs);
         pr.restOff = { dx: dx - dxEdge, dy, g };
       } else if (pr.state === 'out') {
@@ -672,7 +807,7 @@
     }
     /* Pip's head where it hangs at rest from the hand's spot, on the floor it rests on: the box the props keep off (fit);
        swing: the swing's reach, rad (by default the one under way); now: the head as render() draws it this frame */
-    pipHead(swing, now) {
+    pipHead(swing, now, resting) {
       const ps = this.ps, Lay = this.L, s = Lay.s;
       if (!ps || !this.pipReach(ps.tiltT)) return null;
       const box = (cx, cy, ang, th) => {
@@ -683,24 +818,35 @@
         return [x + r[0], y + r[1], x + r[2], y + r[3]];
       };
       const join = (a, c) => [Math.min(a[0], c[0]), Math.min(a[1], c[1]), Math.max(a[2], c[2]), Math.max(a[3], c[3])];
-      let b = box(ps.Ct.x, ps.Ct.y, ps.tiltT);
+      /* A destination reserves Pip's canonical rest pose. A current swing or travelling hand must not change a
+         prop's fixed suspension when a scene is refitted (QA-6); the ordinary collision box still takes their reach. */
+      const pip = this.spec.pip || {}, asleep = resting ? pip.pose === 'asleep' : ps.asleep;
+      const at = resting && this.pipAt ? [this.pipAt[0] + (this.pipOff || [0, 0])[0], this.pipAt[1] + (this.pipOff || [0, 0])[1] + (asleep ? Lay.rope * .72 : 0)] : [ps.Ct.x, ps.Ct.y];
+      let b = box(at[0], at[1], resting ? (pip.tilt != null ? pip.tilt : asleep ? -.2 : 0) : ps.tiltT);
       /* (and, while the hand travels to a new spot, as Pip wakes and rises from the floor, the head where it hangs now:
          the box takes its whole way, so a sign beside where it rises to is not under it as it comes. Retro Dark Name 860
          showed 40 px2 painted as Pip woke, sol-review-retro-1's awake guard. Not within the idle drift, so resting props
          do not shift as Pip sways) */
-      if (Math.hypot(ps.C.x - ps.Ct.x, ps.C.y - ps.Ct.y) > 8) b = join(b, box(ps.C.x, ps.C.y, ps.tilt + ps.th * .9, ps.th));
+      if (!resting && Math.hypot(ps.C.x - ps.Ct.x, ps.C.y - ps.Ct.y) > 8) b = join(b, box(ps.C.x, ps.C.y, ps.tilt + ps.th * .9, ps.th));
       /* (and the room its idle drift takes, awake: a sign beside the resting head was under it as it swayed, Retro Dark 860) */
       const F = this.fam, still = this.reduced || !!O55.motion.lowResource || !H.part('sway-and-physics');
       /* (and the room the swing under way takes, to its next peak either side, the head turned with it as render() turns
          it: a prop lowered in, or swinging back, beside a swinging Pip keeps off its head, as off the resting one) */
-      const A = still ? 0 : swing != null ? swing : this.swingAmp(ps.th, ps.thv, F.w, F.damp);
+      const A = still || resting ? 0 : swing != null ? swing : this.swingAmp(ps.th, ps.thv, F.w, F.damp);
       if (A > .002) [-1, -.5, .5, 1].forEach((q) => { b = join(b, box(ps.Ct.x, ps.Ct.y, ps.tiltT + A * q * .9, A * q)); });
-      const sw = still ? 0 : F.sway * (ps.asleep ? .2 : 1), bob = still || !F.bob ? 0 : F.bob * .6;
+      /* Reserve the same small head motions as speechMotion from the canonical pose. This is a fixed
+         swept band, independent of the head's current angle or wake progress, so prop destinations stay fixed. */
+      if (resting && !still) {
+        const tilt = pip.tilt != null ? pip.tilt : asleep ? -.2 : 0;
+        for (const th of [-.15, 0, .15]) for (const turn of [-.2, 0, .2]) for (const dy of F.noHop ? [0] : [-12, 0, 2])
+          b = join(b, box(at[0], at[1] + dy, tilt + th * .9 + turn, th));
+      }
+      const sw = still ? 0 : F.sway * (asleep ? .2 : 1), bob = still || !F.bob ? 0 : F.bob * .6;
       b = [b[0] - sw, b[1] - bob, b[2] + sw, b[3] + bob];
       /* (and the head where it is drawn now, turned, stretched and lifted as render() draws it: with no room to swing Pip
          wiggled, and the turn took its head 4 units past that box into the forge held at its edge as the forge swung in,
          Glass Light 860, retro-c4) */
-      if (now) {
+      if (now && !resting) {
         const h = this.pipBB.h, c = Math.cos(now.ang), n = Math.sin(now.ang);
         const p = [[h[0], h[1]], [h[0] + h[2], h[1]], [h[0], h[1] + h[3]], [h[0] + h[2], h[1] + h[3]]].map(([x, y]) => {
           const u = (x - 32) * now.sx * s, v = ((y - 59.5) * now.sy + 28) * s;
@@ -715,14 +861,27 @@
        at a narrow window; NieR's box sits over the column): its blocks were cut at the bottom, or under NieR's words */
     stackFit() {
       const Lay = this.L, [x, base, step] = Lay.stack, v = this.vis;
-      if (!v) return { base, step, f: 1 };
+      if (!v) return { x, base, step, f: 1 };
       const pad = 8, half = 34 * Lay.propScale, o = this.keepOff;
-      let bottom = Math.min(base, v.y1 - pad), top = v.y0 + pad;
-      if (o && o[0] < x + half && o[2] > x - half) { if ((o[1] + o[3]) / 2 > (top + bottom) / 2) bottom = Math.min(bottom, o[1] - 4); else top = Math.max(top, o[3] + 4); }
-      let n = 0; this.props.forEach((p) => { if (p.spec.stack != null && p.state !== 'out') n = Math.max(n, p.spec.stack + 1); });
-      const need = Math.max(1, n) * step + 22 * Lay.propScale, room = bottom - top;
+      // Reserve the owner's full phase plan, including the interval before its first block exists.
+      let n = this.spec.stackCount || 0; this.props.forEach((p) => { if (p.spec.stack != null && p.state !== 'out') n = Math.max(n, p.spec.stack + 1, p.spec.params && p.spec.params.count || 0); });
+      const need = Math.max(1, n) * step + 22 * Lay.propScale;
+      const floor = Math.min(base, v.y1 - pad), ceiling = v.y0 + pad;
+      let column = x, bottom = floor, top = ceiling;
+      /* A banner has a separate right-hand column for the stack. Pick it from the fixed crop and head before
+         the first block enters: moving it in response to each speech claim made its string tops travel71 units.
+         NieR's fixed dialogue owns that column, so its stack keeps the existing vertical clearance there. */
+      if (this.layoutName !== 'portrait' && this.famName !== 'nier') {
+        const side = v.x1 - half - pad, head = this.pipHead(0, null, true);
+        if (side - half >= v.x0 + pad && (!head || side - half - 4 >= head[2])) column = side;
+      }
+      if (o && o[0] < column + half && o[2] > column - half) {
+        if ((o[1] + o[3]) / 2 > (top + bottom) / 2) bottom = Math.min(bottom, o[1] - 4); else top = Math.max(top, o[3] + 4);
+      }
+      const room = bottom - top;
       const f = need > room && room > 0 ? Math.max(.45, room / need) : 1;
-      return { base: bottom, step: step * f, f };
+      return { x: column, base: bottom, step: step * f, f,
+        box: n ? [column - half, bottom - (n - 1) * step * f - 44 * Lay.propScale * f, column + half, bottom] : null };
     }
     boxOf(g) { try { const b = g.getBBox(); return [b.x, b.y, b.width, b.height]; } catch (e) { return null; } }
     boxInScene(el, gap) {
@@ -744,6 +903,10 @@
       const d = PW.PROPS[pr.spec.kind](this.pen, pr.spec.params || {});
       pr.el.innerHTML = d.svg;
       pr.ties = d.ties; pr.foot = d.foot; pr.bb = this.boxOf(pr.el);
+      if (d.reserve && pr.bb) {
+        const a = d.reserve, b = pr.bb, x = Math.min(a[0], b[0]), y = Math.min(a[1], b[1]);
+        pr.spaceBB = [x, y, Math.max(a[0] + a[2], b[0] + b[2]) - x, Math.max(a[1] + a[3], b[1] + b[3]) - y];
+      } else pr.spaceBB = null;
       const n = d.ties.length;
       while (pr.strs.length < n) pr.strs.push(el('path', { class: 'pst-pstrl', fill: 'none', opacity: '0' }, this.gPropStr));
       while (pr.strs.length > n) pr.strs.pop().remove();
@@ -755,7 +918,7 @@
     slotXY(spec) {
       if (spec.at) return spec.at;
       const Lay = this.L;
-      if (spec.stack != null) { const [x] = Lay.stack, sf = this.stackFit(); return [x + [-3, 4, -2, 3, 0, -3][spec.stack % 6] * Lay.propScale, sf.base - spec.stack * sf.step - 22 * Lay.propScale * sf.f]; }
+      if (spec.stack != null) { const sf = this.stackFit(); return [sf.x + STACK_OFFSETS[spec.stack % STACK_OFFSETS.length] * Lay.propScale, sf.base - spec.stack * sf.step - 22 * Lay.propScale * sf.f]; }
       return Lay.slots[spec.slot] || Lay.slots.side;
     }
     propTarget(pr) {
@@ -772,6 +935,21 @@
     /* ------------------------------------------------------ direction */
     // spec: { chapter, props:[{id,kind,slot|at|stack,params,preview,scale,ground}], pip:{mood,look,at,pose,work,power,tilt}, say, target, label, cmd }
     direct(spec) {
+      /* a new screen starts with no claimed bubble place, before its props are placed: destinations are fitted
+         around keepOff (restPose's cache key), so a claim left from the last screen — or made only after the props
+         were placed — refitted them mid-scene and the bubble then settled against the shifted boxes (QA-4) */
+      if (this.famName !== 'nier') {
+        if (spec.screen != null && spec.screen !== this.lastScreen) {
+          this.bubbleClaim = null; this.bubbleKeepOff = null; this.keepOff = null; this.bubbleRel = null; this.bubbleRelT = 0; this.speechRoom = null; this.bubbleAnchor = null;
+        } else if (this.speechRoom && this.speechRoom.line === this.saying && this.bubble.classList.contains('on') && !this.bubble.classList.contains('pst-hush')
+          && JSON.stringify(spec.props || []) !== JSON.stringify(this.spec.props || [])) {
+          /* A hover can change its picture while the current question is still being read. The incoming cast
+             fits around that line's occupied room, just as it fits around Pip. placeBubble re-derives and
+             validates this room against the current geometry; a new line or layout discards it below. */
+          this.bubbleRel = this.speechRoom.rel.slice(); this.bubbleClaim = this.speechRoom.rel.slice();
+          this.bubbleKeepOff = this.speechRoom.box.slice(); this.keepOff = this.bubbleKeepOff;
+        }
+      }
       this.spec = spec; this.dirty = true; this.kick();
       if (spec.chapter && spec.chapter !== this.chapter) this.setChapter(spec.chapter);
       const ids = new Set();
@@ -780,10 +958,13 @@
         const pr = this.props.get(ps.id);
         if (!pr || pr.state === 'out') { if (pr) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(ps.id); } this.addProp(ps); }
         else {
-          const moved = JSON.stringify(this.slotXY(ps)) !== JSON.stringify(this.slotXY(pr.spec));
+          const wasTarget = this.propTarget(pr);
           const wasPreview = pr.spec.preview;
           pr.spec = ps; this.drawProp(pr);
-          if (moved || (wasPreview && !ps.preview)) pr.av += (Math.random() > .5 ? 1 : -1) * this.fam.kick;
+          const target = this.propTarget(pr), moved = wasTarget.ax !== target.ax || wasTarget.len !== target.len || wasTarget.sc !== target.sc;
+          /* A retained prop travelling back from a hover preview has a new arrival to make. Keeping its old
+             settled flag called it at rest while both springs were still carrying it through the speech band. */
+          if (moved || (wasPreview && !ps.preview)) { pr.settled = false; pr.av += (Math.random() > .5 ? 1 : -1) * this.fam.kick; }
           if (wasPreview && !ps.preview) { pr.settled = false; this.sfx('lower', { x: pr.ax, len: clamp(pr.len, 0, 400) }); }
         }
       });
@@ -818,6 +999,10 @@
       this.hudTarget(spec.target, spec.label);
       if (this.tube) this.cmd(spec.cmd || null);
       if (this.famName === 'nier' && this.hudEl && spec.label) this.decode(spec.label);
+      /* All targets and outgoing states now belong to this scene. addProp fitted while the old cast still stood;
+         a same-size new line did not wake the bubble's size observer, so a held scene painted that preliminary fit
+         for two frames (c-ready: 4.8 px). Draw the finalized scene now, without advancing its held springs. */
+      this.render();
     }
     setChapter(ch) {
       const prev = this.chapter;
@@ -867,6 +1052,9 @@
     sayNow(text, mood, owner) {
       const b = this.bubble, S = snd();
       if (this.typeT) this.typeT.cancel();
+      /* New words get a fresh clearance decision before paint. bubbleAnchor is only a candidate for that decision:
+         it preserves a valid tail/bottom across a size change, never the old line's claim or its timed step-aside. */
+      if (text !== this.saying) { this.bubbleRel = null; this.bubbleRelT = 0; }
       this.saying = text; this.sayOwner = text ? owner || null : null;
       if (!text) { b.classList.remove('on', 'typing'); if (S && S.hush) S.hush(); return; }
       if (!b.classList.contains('on')) { b.classList.remove('on'); void b.offsetWidth; b.classList.add('on'); }
@@ -1033,8 +1221,8 @@
     headCentre() { const ps = this.ps, H = this.H || this.headAt(ps.C.x, ps.C.y, ps.th, ps.dy); return this.headXf([32, 45], H, this.ang || 0, 1, 1); }
     /* Pip's control bar (the two sticks and the screw eyes under them) as a box in the bubble's pixels, from the kit's own
        geometry and the pose this frame draws it in (ctlXf: the transform render() writes), widened by gap (FO-59) */
-    barBox(gap) {
-      const ps = this.ps; if (!ps || this.famName === 'nier') return null;
+    barBox(gap, pose) {
+      const ps = pose || this.ps; if (!ps || this.famName === 'nier') return null;
       const K = KIT().kit, g = K.GEO.full, st = K.sticks(g), r = g.w / 2, ring = (g.ring || 0) + (g.ringW || 0);
       /* in the kit's units: the sticks' ends with their round caps, and the screw eyes hanging under them */
       const q = st.s1.concat(st.s2).map(([x, y]) => [x - r, y - r, x + r, y + r]).concat((this.barPts || []).map(([x, y]) => [x - ring, y - ring, x + ring, y + ring]));
@@ -1132,7 +1320,10 @@
       this.props.forEach((pr, id) => {
         const tg = this.propTarget(pr);
         if (pr.state === 'out' && !red) this.holdUnder(pr, tg);
-        if (red) { pr.ax = tg.ax; pr.len = tg.len; pr.a = 0; pr.av = 0; pr.op = tg.op; pr.scale = (pr.spec.scale || 1); }
+        if (red) {
+          pr.ax = tg.ax; pr.len = tg.len; pr.a = 0; pr.av = 0; pr.op = tg.op; pr.scale = (pr.spec.scale || 1);
+          if (pr.state !== 'out' && pr.spec.stack == null) { const pose = this.restPose(pr); pr.aimDx = pose.dx; pr.aimDy = pose.dy; pr.aimDxv = 0; pr.aimDyv = 0; }
+        }
         else {
           const axA = F.pk * (tg.ax - pr.ax) - F.pc * pr.axv; pr.axv += axA * dt; pr.ax += pr.axv * dt;
           // a block set on the stack is lowered, not dropped: a softer, critically damped spring, so it slows into
@@ -1149,8 +1340,23 @@
           const qA = -340 * (pr.sq || 0) - 17 * (pr.sqv || 0); pr.sqv = (pr.sqv || 0) + qA * dt; pr.sq = (pr.sq || 0) + pr.sqv * dt;
           const sA = 260 * ((pr.spec.scale || 1) - pr.scale) - 16 * pr.sv; pr.sv += sA * dt; pr.scale += pr.sv * dt;
           pr.op += (tg.op - pr.op) * Math.min(1, dt * 8);
+          /* A refitted destination moves this offset on the same spring as the slot. The painted prop
+             follows aimDx/aimDy, so a target change re-aims instead of teleporting. */
+          if (pr.state !== 'out' && pr.spec.stack == null) {
+            const pose = this.restPose(pr);
+            if (pr.aimDx == null) { pr.aimDx = pose.dx; pr.aimDy = pose.dy; pr.aimDxv = 0; pr.aimDyv = 0; }
+            else {
+              const dxA = F.pk * (pose.dx - pr.aimDx) - F.pc * pr.aimDxv; pr.aimDxv += dxA * dt; pr.aimDx += pr.aimDxv * dt;
+              const dyA = F.pk * (pose.dy - pr.aimDy) - F.pc * pr.aimDyv; pr.aimDyv += dyA * dt; pr.aimDy += pr.aimDyv * dt;
+            }
+          }
         }
-        if (!pr.settled && pr.state !== 'out' && Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30) this.settle(pr);
+        let arrived = Math.abs(pr.len - tg.len) < 2.5 && Math.abs(pr.lenv) < 30 && Math.abs(pr.ax - tg.ax) < 2.5 && Math.abs(pr.axv) < 30;
+        if (arrived && pr.aimDx != null && pr.spec.stack == null) {
+          const pose = this.restPose(pr);
+          arrived = Math.abs(pr.aimDx - pose.dx) < 2.5 && Math.abs(pr.aimDy - pose.dy) < 2.5 && Math.abs(pr.aimDxv) < 30 && Math.abs(pr.aimDyv) < 30;
+        }
+        if (!pr.settled && pr.state !== 'out' && arrived) this.settle(pr);
         if (pr.spec.ground && !pr.landed && (red || (Math.abs(pr.len - tg.len) < 1.6 && Math.abs(pr.lenv) < 22))) { pr.landed = true; pr.landT = this.t; this.touchdown(pr); if (this.onLanded) this.onLanded(pr); }
         if (pr.state === 'out' && (pr.len < 0 || pr.held) && (red || pr.op < .05)) { pr.el.remove(); pr.strs.forEach((s) => s.remove()); this.props.delete(id); }
       });
@@ -1284,72 +1490,163 @@
       if (!this.reduced && this.t - (this.swT || 0) > .07) { this.swT = this.t; this.loopSnd('swing', clamp((Math.abs(ps.thv) - .25) / 1.6, 0, 1)); }
       this.loopSnd('snore', this.sleepZ ? 1 : 0);
     }
+    /* Speech follows the head. Reserve obstacles in that same frame through the head's whole small motion,
+       rather than keeping a pixel edge as a head-relative offset: a wiggle then dragged that offset away from
+       the prop, and its 2.5-second expiry moved the bubble back (QA-4, 4.6–5.7 px residuals). This envelope uses
+       the scene's target pose, not this frame's sway, tilt, hop or bar rock, so it is the same on first paint. */
+    speechMotion(point) {
+      const ps = this.ps, L = this.L, F = this.fam;
+      const key = JSON.stringify([this.theme, this.map, this.vis, this.pipBB, L.s, L.rope, ps.Ct, ps.tiltT, this.rockMax, this.still()]);
+      if (this.speechEnvelope && this.speechEnvelope.key === key) return this.speechEnvelope;
+      const still = this.still(), ths = still ? [0] : [-.15, 0, .15], turns = still ? [0] : [-.2, 0, .2];
+      const hops = still || F.noHop ? [0] : [-12, 0, 2], points = [];
+      for (const th of ths) for (const turn of turns) for (const dy of hops) {
+        const a = ps.tiltT + th * .9 + turn, h = this.headAt(ps.Ct.x, ps.Ct.y, th, dy), reach = this.pipReach(a);
+        h[1] = Math.min(h[1], L.ground - 2 - 28 * L.s, reach && this.vis ? this.vis.y1 - reach[3] : Infinity);
+        points.push(this.toScreen(this.headXf(point, h, a, 1, 1)));
+      }
+      const sway = still ? 0 : F.sway * this.map.k;
+      const lo = [Math.min(...points.map(p => p[0])) - sway, Math.min(...points.map(p => p[1]))];
+      const hi = [Math.max(...points.map(p => p[0])) + sway, Math.max(...points.map(p => p[1]))];
+      // A line can outlive the work it reports. Reserve the bar's full allowed rock throughout that line;
+      // switching to its upright box at work's end re-picked Retro Light Creating's held line by1.4px.
+      const rock = still ? 0 : this.rockMax == null ? .12 : this.rockMax;
+      const bars = [-rock, 0, rock].map(phi => this.barBox(6, { C: ps.Ct, phi })).filter(Boolean);
+      const bar = bars.length ? [Math.min(...bars.map(b => b[0])) - sway, Math.min(...bars.map(b => b[1])), Math.max(...bars.map(b => b[2])) + sway, Math.max(...bars.map(b => b[3]))] : null;
+      return (this.speechEnvelope = { key, lo, hi, bar });
+    }
     placeBubble(H, ang) {
       const tall = this.layoutName === 'portrait';
       const head = this.toScreen(this.headXf([32, 34], H, ang, 1, 1));
       const sp = this.toScreen(this.headXf(tall ? [44, 30] : [58, 44], H, ang, 1, 1));
       const bw = this.bubble.offsetWidth || 160, bh = this.bubble.offsetHeight || 34, bx = this.box ? this.box.width : 400, by = this.box ? this.box.height : 560;
       const pad = this.tube ? 14 : 8, top = this.tube ? (tall ? 44 : 34) : 8, foot = this.tube === 'teletype' ? (tall ? 70 : 48) : this.tube ? (tall ? 44 : 34) : 8;
-      let x = clamp(sp[0] + (tall ? -bw * .3 : 6), pad, bx - bw - pad), y = clamp(tall ? sp[1] - bh - 22 : sp[1] - bh / 2, top, by - bh - foot);
       /* the bubble covers no prop and never Pip's face (FO26: the name's sign on Name; RDA-01: Pip's eyes on Review). Where
          its usual place is taken it moves to the nearest clear place inside the pane, and keeps that side while it stays
          clear, so new words never send it across Pip; if nowhere is clear it still keeps off the face, and the props
          make way for it (keepOff). Its tail still points at Pip. */
       const gap = 6, obs = [], hx0 = head[0], hy0 = head[1];
-      const fc = [[12, 32], [52, 32], [12, 58], [52, 58]].map((q) => this.toScreen(this.headXf(q, H, ang, 1, 1)));
+      const motion = this.speechMotion(tall ? [44, 30] : [58, 44]);
+      const v = this.vis, vs = v ? [this.toScreen([v.x0, v.y0]), this.toScreen([v.x1, v.y1])] : null;
+      const bounds = [Math.max(pad, vs ? vs[0][0] + pad : pad), Math.max(top, vs ? vs[0][1] + 4 : top), Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by)];
+      /* Bounds belong to the same frame as the obstacles. A screen-fixed edge otherwise rejects a kept place as
+         the head moves (nas-signin: x=7.28 against an 8px edge, then a 211px jump). Where the whole head travel
+         cannot fit on an axis, pin that axis to the scene instead and reserve the head's whole face there. */
+      const follows = [bounds[2] - bounds[0] >= motion.hi[0] - motion.lo[0], bounds[3] - bounds[1] >= motion.hi[1] - motion.lo[1]];
+      const origin = sp.map((p, i) => follows[i] ? p : (motion.lo[i] + motion.hi[i]) / 2);
+      const anchorKey = JSON.stringify([this.lastScreen, motion.key, follows]);
+      const frameKey = JSON.stringify([this.lastScreen, this.saying, motion.key, bw, bh, follows]);
+      if (this.bubbleFrame !== frameKey) {
+        const hadBand = this.bubbleKeepOff;
+        this.bubbleFrame = frameKey; this.bubbleRel = null; this.bubbleClaim = null; this.bubbleKeepOff = null;
+        if (hadBand) { this.keepOff = null; this.renderN = (this.renderN || 0) + 1; this.props.forEach((pr) => this.placeProp(pr)); }
+      }
+      const X0 = follows[0] ? sp[0] + bounds[0] - motion.lo[0] : bounds[0], X1 = follows[0] ? sp[0] + bounds[2] - motion.hi[0] : bounds[2];
+      const Y0 = follows[1] ? sp[1] + bounds[1] - motion.lo[1] : bounds[1], Y1 = follows[1] ? sp[1] + bounds[3] - motion.hi[1] : bounds[3];
+      let x = clamp(origin[0] + (tall ? -bw * .3 : 6), X0, X1), y = clamp(tall ? origin[1] - bh - 22 : origin[1] - bh / 2, Y0, Y1);
+      const projected = o => [follows[0] ? sp[0] + o[0] - motion.hi[0] : o[0], follows[1] ? sp[1] + o[1] - motion.hi[1] : o[1], follows[0] ? sp[0] + o[2] - motion.lo[0] : o[2], follows[1] ? sp[1] + o[3] - motion.lo[1] : o[3]];
+      /* the face through the head's whole turn (its rest tilt either way by a swing's reach), each turn read from
+         the speech point at that same turn: at this frame's turn alone, a swing or a wiggle raised a corner of the
+         box into the bubble's margin and the bubble stepped up a few px mid-line, then dropped back when the
+         step-aside was let go (QA-4) */
+      const tiltT = this.ps ? this.ps.tiltT || 0 : 0, spQ = tall ? [44, 30] : [58, 44];
+      const fc = [tiltT - .2, tiltT, tiltT + .2].flatMap((a2) => {
+        const s2 = this.toScreen(this.headXf(spQ, H, a2, 1, 1)), dx = sp[0] - s2[0], dy = sp[1] - s2[1];
+        return [[12, 32], [52, 32], [12, 58], [52, 58]].map((q) => { const c = this.toScreen(this.headXf(q, H, a2, 1, 1)); return [c[0] + dx, c[1] + dy]; });
+      });
       const face = [Math.min(...fc.map((c) => c[0])) - gap, Math.min(...fc.map((c) => c[1])) - gap, Math.max(...fc.map((c) => c[0])) + gap, Math.max(...fc.map((c) => c[1])) + gap];
       /* (its tail too: about 12 px below the bubble when it points down, left of it when it points left) */
       if (tall) face[1] -= 12; else face[2] += 12;
-      /* (a leaving prop too, while it shows: the bubble with the next screen's words moved onto a prop still fading out,
-         FO-34, Basic Light A3) */
-      this.props.forEach((pr) => { if (pr.box && pr.op > .05) { const a = this.toScreen([pr.box[0], pr.box[1]]), c = this.toScreen([pr.box[2], pr.box[3]]); obs.push([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap]); } });
-      const v = this.vis, vs = v ? [this.toScreen([v.x0, v.y0]), this.toScreen([v.x1, v.y1])] : null;
-      const X0 = Math.max(pad, vs ? vs[0][0] + pad : pad), X1 = Math.min(bx - bw - pad, vs ? vs[1][0] - bw - pad : bx), Y0 = Math.max(top, vs ? vs[0][1] + 4 : top), Y1 = Math.min(by - bh - foot, vs ? vs[1][1] - bh - 4 : by);
+      for (let i = 0; i < 2; i++) if (!follows[i]) { face[i] += motion.lo[i] - sp[i]; face[i + 2] += motion.hi[i] - sp[i]; }
+      /* (the bubble no longer steps aside for a leaving prop (FO-34's words-over-a-fading-prop is kept off by
+         holdUnder and band() below, which cap its lift at the bubble's own lower edge) */
+      /* (at the box each prop will REST in (restPose's restBox), read for every prop that is staying, from its first
+         frame: at the box it falls through, the bubble stepped up or aside while a prop was lowered past it and
+         dropped back seconds later once the prop had settled and the step-aside was let go, and a prop not yet faded
+         in was no obstacle at all on the bubble's first frames (QA-4). A leaving prop is no obstacle: holdUnder
+         already caps its lift at the bubble's lower edge and fades it there, and counting its rising box made the
+         bubble step aside for a prop that was already keeping under it) */
+      this.props.forEach((pr) => { if (pr.state === 'out') return; const pose = this.restPose(pr), rb = pose.speechBox || pose.box || pr.box; if (rb) { const a = this.toScreen([rb[0], rb[1]]), c = this.toScreen([rb[2], rb[3]]); obs.push(projected([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap])); } });
+      /* Future phase blocks occupy the same planned column as the first one. Reserve it before any block
+         enters: discovering a later row during a held sentence moved short-layout speech by21px. */
+      const stackBox = this.stackFit().box;
+      if (stackBox) { const a = this.toScreen([stackBox[0], stackBox[1]]), c = this.toScreen([stackBox[2], stackBox[3]]); obs.push(projected([a[0] - gap, a[1] - gap, c[0] + gap, c[1] + gap])); }
       /* (and Pip's control bar: where a prop beside Pip took the usual place, the bubble went up over the sticks Pip hangs
          from, Retro Dark's Look 'Soft and cosy. I like it.', FO-59) */
-      const bar = this.barBox(gap); if (bar) obs.push(bar);
+      /* The control's entire rock is projected through the same head motion as the props. Reading its current
+         rock or the current hop made an ostensibly conservative obstacle change while the line was already up. */
+      const bar = motion.bar && projected(motion.bar); if (bar) obs.push(bar);
       const fx = (face[0] + face[2]) / 2, sideOf = (cx) => (cx + bw / 2 < fx ? 'L' : 'R');
-      const over = (cx, cy, o) => cx < o[2] && cx + bw > o[0] && cy < o[3] && cy + bh > o[1];
+      // A translated exact contact can differ by ~1e-13px; it is not a new overlap on the renderer's .01px grid.
+      const over = (cx, cy, o) => cx < o[2] - 1e-7 && cx + bw > o[0] + 1e-7 && cy < o[3] - 1e-7 && cy + bh > o[1] + 1e-7;
       const fits = (cx, cy) => cx >= X0 - .5 && cx <= X1 + .5 && cy >= Y0 - .5 && cy <= Y1 + .5;
       const clear = (cx, cy) => fits(cx, cy) && !over(cx, cy, face) && !obs.some((o) => over(cx, cy, o));
       /* (a place on Pip's other side counts as far: new words never send the bubble across Pip, it goes above instead) */
       const cost = ([cx, cy]) => Math.hypot(cx - x, cy - y) + (this.bubbleSide && sideOf(cx) !== this.bubbleSide && !(cy + bh <= face[1]) ? 400 : 0);
       const near = (list) => list.filter(([cx, cy]) => clear(cx, cy)).sort((p, q) => cost(p) - cost(q))[0];
-      const prev = this.bubbleRel ? [hx0 + this.bubbleRel[0], hy0 + this.bubbleRel[1]] : null;
+      const candidates = (obstacles) => {
+        const list = [];
+        obstacles.forEach((o) => list.push([o[0] - bw, y], [o[2], y], [x, o[1] - bh], [x, o[3]], [o[0] - bw, o[1] - bh], [o[2], o[1] - bh], [o[0] - bw, o[3]], [o[2], o[3]]));
+        list.push([X0, Y0], [X1, Y0], [X0, Y1], [X1, Y1]);
+        return list.map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]);
+      };
+      /* Kept from the same origin as the usual place: the speech point on an axis with room to follow it, the
+         fixed scene on a cramped axis. A different origin for the kept place made it wander during a wiggle. */
+      const prev = this.bubbleRel ? [origin[0] + this.bubbleRel[0], origin[1] + this.bubbleRel[1]] : null;
+      /* A shorter new line can still fit at the old tail while the usual place is on Pip's other side. Try that
+         full-precision candidate before searching again; the same face, full-motion, prop and bounds checks apply. */
+      const prior = this.bubbleAnchor, pin = (side, w, h) => side === 'up' ? [w * .3, 0] : side === 'down' ? [w * .3, h] : side === 'right' ? [w, h / 2] : [0, h / 2];
+      const oldPin = prior && pin(prior.side, prior.w, prior.h), newPin = prior && pin(prior.side, bw, bh);
+      const priorAt = prior && prior.key === anchorKey && prior.line !== this.saying
+        ? origin.map((p, i) => p + prior.rel[i] + oldPin[i] - newPin[i]) : null;
       let at = null;
-      if (prev && clear(prev[0], prev[1]) && this.t - (this.bubbleRelT || 0) < 2.5) at = prev; /* (the side it moved to, while it stays clear) */
+      if (prev && clear(prev[0], prev[1])) at = prev; /* the current line owns its place while the geometry stays clear */
+      else if (priorAt && clear(priorAt[0], priorAt[1])) at = priorAt;
       else if (clear(x, y) && !(this.bubbleSide && sideOf(x) !== this.bubbleSide && y + bh > face[1])) at = [x, y];
       else {
-        const cand = [];
-        [face].concat(obs).forEach((o) => { cand.push([o[0] - bw, y], [o[2], y], [x, o[1] - bh], [x, o[3]], [o[0] - bw, o[1] - bh], [o[2], o[1] - bh], [o[0] - bw, o[3]], [o[2], o[3]]); });
-        cand.push([X0, Y0], [X1, Y0], [X0, Y1], [X1, Y1]);
-        at = near(cand.map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]));
+        at = near(candidates([face].concat(obs)));
       }
       const talking = this.bubble.classList.contains('on') && !!(this.bubble.textContent || '').trim();
-      const claimed = this.bubbleClaim && talking && at && Math.abs(at[0] - this.bubbleClaim[0]) < 10 && Math.abs(at[1] - this.bubbleClaim[1]) < 10;
+      const claimNear = p => p && this.bubbleClaim && Math.abs(p[0] - origin[0] - this.bubbleClaim[0]) < 10 && Math.abs(p[1] - origin[1] - this.bubbleClaim[1]) < 10;
+      const claimed = talking && claimNear(at), priorBand = this.bubbleKeepOff;
       if (!claimed) this.bubbleKeepOff = null;
       if (!at) {
         /* nowhere clear: off Pip's face at least, nearest its usual place; the props keep off it next frame */
-        const cand = [[x, y], [x, face[1] - bh], [x, face[3]], [face[0] - bw, y], [face[2], y], [X0, Y0], [X1, Y0]].map(([cx, cy]) => [clamp(cx, X0, X1), clamp(cy, Y0, Y1)]).filter(([cx, cy]) => !over(cx, cy, face) && !(bar && over(cx, cy, bar)));
-        at = cand.sort((p, q) => Math.hypot(p[0] - x, p[1] - y) - Math.hypot(q[0] - x, q[1] - y))[0] || [x, y];
-        this.bubbleClaim = talking ? at.slice() : null;
+        const cand = [[x, y]].concat(candidates([face].concat(bar ? [bar] : []))).filter(([cx, cy]) => fits(cx, cy) && !over(cx, cy, face) && !(bar && over(cx, cy, bar)));
+        at = cand.sort((p, q) => cost(p) - cost(q))[0] || [x, y];
+        this.bubbleClaim = talking ? [at[0] - origin[0], at[1] - origin[1]] : null;
       }
       /* (the place it claimed is kept while it stays there and talks: the props stay off it, instead of coming back under it
          as soon as their moving away has made its usual place clear, and going again the next frame) */
-      if ((!claimed && this.bubbleClaim && at && !(Math.abs(at[0] - this.bubbleClaim[0]) < 10 && Math.abs(at[1] - this.bubbleClaim[1]) < 10)) || !talking) this.bubbleClaim = null;
-      if (this.bubbleClaim) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(at[0] - gap, at[1] - gap), a1 = u(at[0] + bw + gap, at[1] + bh + gap); this.bubbleKeepOff = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleKeepOff = null;
+      if ((!claimed && this.bubbleClaim && at && !claimNear(at)) || !talking) this.bubbleClaim = null;
+      /* A claim reserves the bubble through the SAME motion used to test obstacles. Reserving only this frame's
+         box made it fail its own next clearance test (Ready: 16px oscillation). This does not force a placement:
+         the normal candidate search above still decides whether the place is clear. Round the reservation out
+         to the renderer's .01-unit grid so subpixel cancellation cannot churn restPose's geometry cache. */
+      let room = null;
+      if (talking) {
+        const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k];
+        const lo = at.map((p, i) => follows[i] ? motion.lo[i] + p - sp[i] : p), hi = at.map((p, i) => follows[i] ? motion.hi[i] + p - sp[i] : p);
+        const a0 = u(lo[0] - gap, lo[1] - gap), a1 = u(hi[0] + bw + gap, hi[1] + bh + gap);
+        room = a0.map(p => Math.floor((p + 1e-8) * 100) / 100).concat(a1.map(p => Math.ceil((p - 1e-8) * 100) / 100));
+      }
+      this.speechRoom = room ? { line: this.saying, rel: [at[0] - origin[0], at[1] - origin[1]], box: room } : null;
+      this.bubbleKeepOff = this.bubbleClaim ? room : null;
       /* (a new claim moves the props off it in this same frame, before it is painted: on a stepped stage the props learnt of
          it a step later and sat under it for a tenth of a second) */
-      if (this.bubbleKeepOff && !claimed) { this.keepOff = this.bubbleKeepOff; this.renderN = (this.renderN || 0) + 1; this.props.forEach((pr) => this.placeProp(pr)); }
-      if (at[0] !== x || at[1] !== y) { if (!this.bubbleRel || at !== prev) this.bubbleRelT = this.t; this.bubbleRel = [at[0] - hx0, at[1] - hy0]; } else this.bubbleRel = null;
+      if (this.bubbleKeepOff && JSON.stringify(this.bubbleKeepOff) !== JSON.stringify(priorBand)) { this.keepOff = this.bubbleKeepOff; this.renderN = (this.renderN || 0) + 1; this.props.forEach((pr) => this.placeProp(pr)); }
+      if (at[0] !== x || at[1] !== y) { if (!this.bubbleRel || at !== prev) this.bubbleRelT = this.t; this.bubbleRel = [at[0] - origin[0], at[1] - origin[1]]; } else this.bubbleRel = null;
       [x, y] = at;
       this.bubbleSide = talking ? sideOf(x) : null;
+      const dx = Math.max(x - head[0], head[0] - x - bw, 0), dy = Math.max(y - head[1], head[1] - y - bh, 0);
+      const tail = dx > dy ? (head[0] < x ? 'left' : 'right') : (head[1] < y ? 'up' : 'down');
+      this.bubbleAnchor = talking ? { key: anchorKey, line: this.saying, rel: [x - origin[0], y - origin[1]], w: bw, h: bh, side: tail } : null;
       /* where it is, with its tail, for the props that leave under it (holdUnder) */
-      if (talking) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(x - gap - (tall ? 0 : 10), y - gap), a1 = u(x + bw + gap, y + bh + gap + (tall ? 10 : 0)); this.bubbleBox = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleBox = null;
+      if (talking) { const m = this.map || { k: 1, ox: 0, oy: 0 }, u = (px, py) => [(px - m.ox) / m.k, (py - m.oy) / m.k], a0 = u(x - gap - (tail === 'left' ? 10 : 0), y - gap - (tail === 'up' ? 10 : 0)), a1 = u(x + bw + gap + (tail === 'right' ? 10 : 0), y + bh + gap + (tail === 'down' ? 10 : 0)); this.bubbleBox = [a0[0], a0[1], a1[0], a1[1]]; } else this.bubbleBox = null;
       /* (its place as `translate`: its pop's `scale` (30-art.css pstBubble) then grows it from its tail where it stands; a
          `transform` here was scaled with it, so the bubble flew in from the stage's corner, over Pip, FO-44) */
       this.bubble.style.translate = `${R(x)}px ${R(y)}px`;
-      this.bubble.dataset.side = tall ? 'down' : 'left';
+      this.bubble.dataset.side = tail;
       this.bubble.style.setProperty('--tx', R(clamp(head[0] - x, 16, bw - 16)) + 'px');
       this.bubble.style.setProperty('--ty', R(clamp(head[1] - y, 12, bh - 12)) + 'px');
     }
