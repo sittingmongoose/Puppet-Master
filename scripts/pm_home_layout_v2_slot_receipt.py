@@ -120,13 +120,14 @@ STORAGE_UINT64_FIELDS = frozenset((
 
 
 def storage_uint64_fields_ok(value: Any) -> bool:
-    """Every declared Storage uint64 field present in the value is an exact SP-1100 uint64 (or null)."""
+    """Every declared Storage uint64 field holding an integer is within SP-1100's exact 0..2^64-1 (storage_uint64)."""
     pending = [value]
     while pending:
         node = pending.pop()
         if isinstance(node, dict):
             for key, child in node.items():
-                if key in STORAGE_UINT64_FIELDS and child is not None and not isinstance(child, (dict, list)):
+                # Range only: a non-integer value is the schema rows' refusal, not a second one here.
+                if key in STORAGE_UINT64_FIELDS and type(child) is int:
                     try:
                         storage_uint64(child)
                     except Refusal:

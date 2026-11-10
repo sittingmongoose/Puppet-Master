@@ -2733,6 +2733,11 @@
           "op": "replace",
           "path": "/identity_capture_bytes/normalized_request",
           "value": "eyJjb21tYW5kX2lkIjoiY21kLndvcmtzcGFjZV9sYXlvdXQubW92ZV9zdXJmYWNlIiwiY29tbWFuZF9pbnN0YW5jZV9pZCI6ImNvbW1hbmQtaW5zdGFuY2UtZml4dHVyZSIsImRpc3BhdGNoX2ZyYW1lX2lkIjoiaG9tZS1kaXNwYXRjaC1mcmFtZTpvcmlnaW5hbCIsImlkZW1wb3RlbmN5X2tleSI6InJlcXVlc3QtaWRlbXBvdGVuY3ktZml4dHVyZSIsIm9wZXJhdGlvbl9pZCI6Im93bmVyLW9wZXJhdGlvbjpmaXh0dXJlIiwib3duZXJfaWRlbnRpdHkiOnsiYXR0ZW1wdF9pZCI6bnVsbCwiY29tbWFuZF9pbnN0YW5jZV9pZCI6ImNvbW1hbmQtaW5zdGFuY2UtZml4dHVyZSIsImV4ZWN1dGlvbl9lbnZpcm9ubWVudF9pZCI6ImVudi0xIiwiZXhlY3V0aW9uX2hvc3RfaWQiOiJob3N0LTEiLCJnb2FsX2lkIjpudWxsLCJuYW1lZF9wbGFuX2lkIjpudWxsLCJvcGVyYXRpb25fZ2VuZXJhdGlvbiI6MSwib3BlcmF0aW9uX2lkIjoib3duZXItb3BlcmF0aW9uOmZpeHR1cmUiLCJwcm9qZWN0X2hvbWVfc2VydmVyX2lkIjoic3J2LTEiLCJwcm9qZWN0X2lkIjoicHJvamVjdC1maXh0dXJlIiwic2NvcGVfa2luZCI6InByb2plY3QiLCJzZXJ2ZXJfaWQiOiJzcnYtMSIsInNvdXJjZV9sb2NhdGlvbl9pZCI6bnVsbCwidGhyZWFkX2lkIjpudWxsLCJ0b3BvbG9neV9nZW5lcmF0aW9uIjo4fSwicGF5bG9hZF9zaGEyNTYiOiIwMmFhOTNjYTc3YTgyZjI5NmJhZDE1YTE4ZTUyN2Y1NjFmYmIyNzVhY2MyMzFkOTZkYzZjZGMxYjQ2NzI5ZGJhIiwicmVxdWVzdF9yZWYiOiJyZXF1ZXN0OmZpeHR1cmUiLCJ0YXJnZXRfZ2VuZXJhdGlvbiI6OH0="
+        },
+        {
+          "op": "replace",
+          "path": "/identity_capture_bytes_sha256/normalized_request",
+          "value": "c3e08f71281167533e9282b0a32987d9b1f2b5d9cae40fceb5ae4ca65732147c"
         }
       ],
       "rejected_by": "I7",

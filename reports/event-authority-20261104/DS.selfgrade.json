@@ -121,8 +121,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19582,
-              "line_end": 19582,
+              "line_start": 19641,
+              "line_end": 19641,
               "quote": "Storage admits exactly `event-family-context-compaction-completed@1.0.0`",
               "excerpt_sha256": "b54cdf4f5b61bec1d5980f09d2fa2410b7e93724e0c2032883dc689c66b5fbe9",
               "quote_check": "exact"
@@ -219,8 +219,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19584,
-              "line_end": 19584,
+              "line_start": 19643,
+              "line_end": 19643,
               "quote": "Append this EventRecord as `durability_class=barrier` through Case L-2.",
               "excerpt_sha256": "bd4c54f6e83c59f6a3c43c9e0000f7947213b1e472208456138b5362497ff583",
               "quote_check": "exact"
@@ -228,8 +228,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19586,
-              "line_end": 19586,
+              "line_start": 19645,
+              "line_end": 19645,
               "quote": "Never rerun a helper or append a replacement event simply because the caller lacks its AppendReceipt.",
               "excerpt_sha256": "3cdd5667ac24ee067a21a8fb8a65522f32fca1b454807f36737ea490a644bf08",
               "quote_check": "exact"
@@ -335,8 +335,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19588,
-              "line_end": 19588,
+              "line_start": 19647,
+              "line_end": 19647,
               "quote": "Define `idempotency_key = \"compaction:\" + lowerhex(SHA256(RFC8785([project_id, thread_id, operation_id])))`",
               "excerpt_sha256": "291f5c71939aa5baeadb1df2c85dca9dc9df25bffccb2fffa9c8866b4be40e66",
               "quote_check": "exact"
@@ -344,8 +344,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19588,
-              "line_end": 19588,
+              "line_start": 19647,
+              "line_end": 19647,
               "quote": "Define `event_id = \"evt_compaction_\" + lowerhex(SHA256(RFC8785([storage_instance_id, project_id, thread_id, operation_id])))`",
               "excerpt_sha256": "c09acf6c9c28a42b3d51de1887b367fe9a17a4c3e2bd3632c511d4e1d0dda41f",
               "quote_check": "exact"
@@ -353,8 +353,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19613,
-              "line_end": 19613,
+              "line_start": 19672,
+              "line_end": 19672,
               "quote": "The sole new family uses project_only scope",
               "excerpt_sha256": "64415b96a4cc8690ecf27325054a0a72f07be748af5b388c38cae5a1d117b9dc",
               "quote_check": "exact"
@@ -362,8 +362,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "Compaction completion envelope consumer (DL-039 and DL-040)",
-              "line_start": 21620,
-              "line_end": 21620,
+              "line_start": 21743,
+              "line_end": 21743,
               "quote": "The original payload edition remains Project-only with exact payload/envelope Project/thread equality.",
               "excerpt_sha256": "ba91bee14e6624d3daff60477aa0dc425bdef70ecbd08bfc22e378be76238671",
               "quote_check": "exact"
@@ -393,8 +393,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19588,
-              "line_end": 19588,
+              "line_start": 19647,
+              "line_end": 19647,
               "quote": "Use `replay_policy=dedupe_by_idempotency_key` and the existing app-root EventRecord dedupe indexes.",
               "excerpt_sha256": "3c985f03f9b19135da069b9e83f40bb1021af8d609289716e8e6c30f0c5d710c",
               "quote_check": "exact"
@@ -402,8 +402,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19588,
-              "line_end": 19588,
+              "line_start": 19647,
+              "line_end": 19647,
               "quote": "A retry looks up and returns those bytes; it does not regenerate them under a new lease generation.",
               "excerpt_sha256": "cc9ae116a345d6ca45970e3089a5f0be5802dbfcb009a2e37f058362b6b4e0ef",
               "quote_check": "exact"
@@ -411,8 +411,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19586,
-              "line_end": 19586,
+              "line_start": 19645,
+              "line_end": 19645,
               "quote": "reconcile through seglog and return the original completion",
               "excerpt_sha256": "b35aecfb050fcb2cfe5d4c94bb01c75add230fcaec5f31e66e9145f70c910062",
               "quote_check": "exact"
@@ -451,8 +451,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19594,
-              "line_end": 19594,
+              "line_start": 19653,
+              "line_end": 19653,
               "quote": "Retain the completion EventRecord and its identity/dedupe evidence for the app-root lifetime under the exact indefinite policy.",
               "excerpt_sha256": "273d8eea6aa2c8348aed5105fe088b8ffff55e1269af483b4ac408cc49c7d8e2",
               "quote_check": "exact"
@@ -460,8 +460,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19594,
-              "line_end": 19594,
+              "line_start": 19653,
+              "line_end": 19653,
               "quote": "Derived detail/checkpoint retention remains `RP-PROJECTION-3GEN`",
               "excerpt_sha256": "dc9305bb61c1613297cd3153638f6d322993e35fda6bfde984cea51cf6412e1f",
               "quote_check": "exact"
@@ -491,8 +491,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19594,
-              "line_end": 19594,
+              "line_start": 19653,
+              "line_end": 19653,
               "quote": "Before append, apply existing secret/content redaction and ownership checks to every envelope field",
               "excerpt_sha256": "940fe1b8971cbac5f8815a42df9128d6c67617a74a8c20804b3547e09e092955",
               "quote_check": "exact"
@@ -500,8 +500,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19594,
-              "line_end": 19594,
+              "line_start": 19653,
+              "line_end": 19653,
               "quote": "CompactionReceipt references are opaque identifiers, never capabilities",
               "excerpt_sha256": "15c13dbf4c4614a1a4e8c2efe053eba9a1a49678c76525b80501d4055a79102c",
               "quote_check": "exact"
@@ -509,8 +509,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19594,
-              "line_end": 19594,
+              "line_start": 19653,
+              "line_end": 19653,
               "quote": "Audit access remains permission-checked.",
               "excerpt_sha256": "5942acaf555bab800f78ded35a85596d3abf7e440dd09c1499d8bf72c0b28980",
               "quote_check": "exact"
@@ -558,8 +558,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19586,
-              "line_end": 19586,
+              "line_start": 19645,
+              "line_end": 19645,
               "quote": "Precommit failure leaves the prior head authoritative.",
               "excerpt_sha256": "634dc8fbdb72fc312ac201b2180e64ff09ea8cae31a168336a4bdb6a0b0ea12b",
               "quote_check": "exact"
@@ -589,8 +589,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19590,
-              "line_end": 19590,
+              "line_start": 19649,
+              "line_end": 19649,
               "quote": "The exact checkpoint key is `replay_snapshot_checkpoint.v1:{environment_id}:thread_detail:{checkpoint_id}`",
               "excerpt_sha256": "530d0b2b99be79e37ede5387a9cb296866e71b04cdf73324f0e422d4fc8178f7",
               "quote_check": "exact"
@@ -598,8 +598,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19592,
-              "line_end": 19592,
+              "line_start": 19651,
+              "line_end": 19651,
               "quote": "Its owned effect and compaction checkpoint advance commit in one redb transaction.",
               "excerpt_sha256": "98c815ce6a5ab49e06872bedbfb0fedd23ac35e7b29756b35dda726bed2a5906",
               "quote_check": "exact"
@@ -607,8 +607,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19592,
-              "line_end": 19592,
+              "line_start": 19651,
+              "line_end": 19651,
               "quote": "`currentness_ref` must resolve to the Storage survivor-checkpoint evidence",
               "excerpt_sha256": "39b5a6dcd4ae1033f32b740c3db4c70e5868dc2d68e27a45c08d61e0a855e265",
               "quote_check": "exact"
@@ -616,8 +616,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19592,
-              "line_end": 19592,
+              "line_start": 19651,
+              "line_end": 19651,
               "quote": "Missing/corrupt checkpoint rebuilds from authoritative retained events",
               "excerpt_sha256": "6259b78de0f303a3e5c7582cd7332a8c438879ec8c11cfd272163a39b5f4f606",
               "quote_check": "exact"
@@ -674,8 +674,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-259",
-              "line_start": 19596,
-              "line_end": 19596,
+              "line_start": 19655,
+              "line_end": 19655,
               "quote": "StorageMigrationCoordinator remains the only storage migration actor.",
               "excerpt_sha256": "178562c8e3009acc63c63606a0e1e90e25b64d19cf19032c6cdad38e2a833cda",
               "quote_check": "exact"
@@ -714,8 +714,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": null,
-              "line_start": 19596,
-              "line_end": 19596,
+              "line_start": 19655,
+              "line_end": 19655,
               "quote": "Positive oracles require one committed marker",
               "excerpt_sha256": "5799f983dfe027468897c1353f496b31ec937cacab965eb7a072abe1a73aea13",
               "quote_check": "exact"
@@ -895,8 +895,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Case L-5",
-              "line_start": 17707,
-              "line_end": 17707,
+              "line_start": 17708,
+              "line_end": 17708,
               "quote": "### Case L-5. EventRecord persistence, legacy normalization, and dedupe",
               "excerpt_sha256": "9ee76de1c36cdeca7642b5a3c7708c1e930ed76a670d813c322adf7c50a537da",
               "quote_check": "exact"
@@ -1025,8 +1025,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": null,
-              "line_start": 21680,
-              "line_end": 21680,
+              "line_start": 21803,
+              "line_end": 21803,
               "quote": "Individually, browser.workspace.created and browser.workspace.reset adopt the governed EventRecord 3.0.0 inline/reference route",
               "excerpt_sha256": "8f86404aec52d0d8b5a3dbfc734bc4742e3468d98cff16d9fbe52c1172556c43",
               "quote_check": "exact"
@@ -1132,8 +1132,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-332",
-              "line_start": 21690,
-              "line_end": 21690,
+              "line_start": 21813,
+              "line_end": 21813,
               "quote": "App-root-global event_id and scope-partition/event_type/idempotency_key use the existing producer-semantic digest",
               "excerpt_sha256": "335daaa81e2c1cb0da4378fd026a1264c26624267d985742ce156db23f1f5314",
               "quote_check": "exact"
@@ -1181,8 +1181,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20087,
-              "line_end": 20087,
+              "line_start": 20146,
+              "line_end": 20146,
               "quote": "identity are authoritative. Same identity and producer-semantic digest returns",
               "excerpt_sha256": "c7602660c89643a922b1e7bc3c643f583ed75a821fc0c71c2fe405493e6cc1a7",
               "quote_check": "exact"
@@ -1190,8 +1190,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20088,
-              "line_end": 20088,
+              "line_start": 20147,
+              "line_end": 20147,
               "quote": "the original result; changed digest is `idempotency_conflict`, unavailable dedupe",
               "excerpt_sha256": "927e1c04d22d3b744e70cd5210b4fc894ded5e03ad8092ea4b39394ac49f80c9",
               "quote_check": "exact"
@@ -1239,8 +1239,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20102,
-              "line_end": 20102,
+              "line_start": 20161,
+              "line_end": 20161,
               "quote": "The event retains the existing SP-262 **`RP-AUTHORITY-INDEFINITE@1.0.0`** assignment:",
               "excerpt_sha256": "694f9feecaeaa30167343ca514f41741556bc288fec2baac9be7ad0b0bcb2b3e",
               "quote_check": "exact"
@@ -1248,8 +1248,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20107,
-              "line_end": 20107,
+              "line_start": 20166,
+              "line_end": 20166,
               "quote": "**`RP-PROJECTION-3GEN@1.0.0`**: current plus history, terminal-transition anchor,",
               "excerpt_sha256": "b6b55f50e24310360658511c821328f04c833eba510a8e5b9c83623eb547b4c9",
               "quote_check": "exact"
@@ -1257,8 +1257,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20110,
-              "line_end": 20110,
+              "line_start": 20169,
+              "line_end": 20169,
               "quote": "For this checkpoint the terminal transition is first durable withdrawal; set",
               "excerpt_sha256": "59bde621cf3f8953fe1e81a1e72f5ec62b37f3ea72114dcd6ab016da82b27292",
               "quote_check": "exact"
@@ -1306,8 +1306,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20116,
-              "line_end": 20116,
+              "line_start": 20175,
+              "line_end": 20175,
               "quote": "Apply current Project/thread access and deletion tombstones before every normal",
               "excerpt_sha256": "b83c74823aef958731327facbd849ff5fec14789b665ea4ce5cdefe178e411d0",
               "quote_check": "exact"
@@ -1315,8 +1315,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20122,
-              "line_end": 20122,
+              "line_start": 20181,
+              "line_end": 20181,
               "quote": "keeps its own custody and can become unavailable independently.",
               "excerpt_sha256": "f80a66c0b0f17f678e987848784aa854bf61a3bae4a3aad4281be7c110c4a9fd",
               "quote_check": "exact"
@@ -1422,8 +1422,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20180,
-              "line_end": 20180,
+              "line_start": 20239,
+              "line_end": 20239,
               "quote": "digest, physical dataset and complete source selection. Its `index_read_token`",
               "excerpt_sha256": "fb8a695cd5ed261094a931485f365769a0daf5d0afe74e9c0d703965f0b7abc2",
               "quote_check": "exact"
@@ -1431,8 +1431,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20181,
-              "line_end": 20181,
+              "line_start": 20240,
+              "line_end": 20240,
               "quote": "stores exactly those nine fields, as",
               "excerpt_sha256": "ebe40d5aaf20f5890e63d6a892ace171f349c24e4eb0141a512ea22f74e4119d",
               "quote_check": "exact"
@@ -1440,8 +1440,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20199,
-              "line_end": 20199,
+              "line_start": 20258,
+              "line_end": 20258,
               "quote": "filtered writer still commits only its own checkpoint under prior-value CAS and",
               "excerpt_sha256": "8012b5b8d7aa52e1386b773229387201bf72fbdebd61e9e61231a199280b5cae",
               "quote_check": "exact"
@@ -1449,8 +1449,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20281,
-              "line_end": 20281,
+              "line_start": 20340,
+              "line_end": 20340,
               "quote": "**Admission as the current definition \u2014 2026-09-25.**",
               "excerpt_sha256": "4456fbc3d59eccad8e308d2194d076ea70050fe6f2044123f077898c7b7c7452",
               "quote_check": "exact"
@@ -1489,8 +1489,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20090,
-              "line_end": 20090,
+              "line_start": 20149,
+              "line_end": 20149,
               "quote": "replaced by reconstructed owner results. No alias, extension, old candidate",
               "excerpt_sha256": "e16959a2939cc59c2bdf1497d881e2efa6b346f05bfc0704a69bbf17068b46fe",
               "quote_check": "exact"
@@ -1498,8 +1498,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20091,
-              "line_end": 20091,
+              "line_start": 20150,
+              "line_end": 20150,
               "quote": "schema, local receipt backfill or unregistered migration is accepted.",
               "excerpt_sha256": "e08887752797abb788d50db49c0e06fcd3436f2d4336e1867ddc7dfa73c5ae63",
               "quote_check": "exact"
@@ -1507,8 +1507,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20126,
-              "line_end": 20126,
+              "line_start": 20185,
+              "line_end": 20185,
               "quote": "For event-writer withdrawal, stop creation publication at SMPFS-167's barrier",
               "excerpt_sha256": "9f06cde4995468d0fcaba513c640efe77d91121dac103fc0d7f1c38077f3e7d3",
               "quote_check": "exact"
@@ -1516,8 +1516,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20127,
-              "line_end": 20127,
+              "line_start": 20186,
+              "line_end": 20186,
               "quote": "and fence unresolved prepared resources; checkpoint-only withdrawal fences this",
               "excerpt_sha256": "9d7665be4cb918611c3c1ac8eac63852697ea1ce18ac98226a589ea92def7923",
               "quote_check": "exact"
@@ -1525,8 +1525,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-266",
-              "line_start": 20152,
-              "line_end": 20152,
+              "line_start": 20211,
+              "line_end": 20211,
               "quote": "and stored digest meanings remain immutable compatibility custody; an old value",
               "excerpt_sha256": "f31834afcd2eadefc228ff1958803717844f2610e45bb25220ef3ef7c343d279",
               "quote_check": "exact"
@@ -1583,8 +1583,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": null,
-              "line_start": 20333,
-              "line_end": 20333,
+              "line_start": 20392,
+              "line_end": 20392,
               "quote": "python3 scripts/pm_browser_workspace_created_v2.py",
               "excerpt_sha256": "bced34fea77693b6a50cc3570f2c3cf1b47f2b14ecc21421fb5f44ecf7ce7ac1",
               "quote_check": "exact"
@@ -1592,8 +1592,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": null,
-              "line_start": 19692,
-              "line_end": 19692,
+              "line_start": 19751,
+              "line_end": 19751,
               "quote": "tests/test_pm_browser_event_admission.py",
               "excerpt_sha256": "758db6f6d78f6a690b5f50d1bb994a53a7b75ba9b9611f2dc908f1aeb181e0bc",
               "quote_check": "exact"
@@ -1755,8 +1755,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "Case L-5",
-              "line_start": 17707,
-              "line_end": 17707,
+              "line_start": 17708,
+              "line_end": 17708,
               "quote": "### Case L-5. EventRecord persistence, legacy normalization, and dedupe",
               "excerpt_sha256": "9ee76de1c36cdeca7642b5a3c7708c1e930ed76a670d813c322adf7c50a537da",
               "quote_check": "exact"
@@ -1885,8 +1885,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": null,
-              "line_start": 21680,
-              "line_end": 21680,
+              "line_start": 21803,
+              "line_end": 21803,
               "quote": "Individually, browser.workspace.created and browser.workspace.reset adopt the governed EventRecord 3.0.0 inline/reference route",
               "excerpt_sha256": "8f86404aec52d0d8b5a3dbfc734bc4742e3468d98cff16d9fbe52c1172556c43",
               "quote_check": "exact"
@@ -1992,8 +1992,8 @@
             {
               "path": "Plans/Contracts_V0.md",
               "unit": "CV-332",
-              "line_start": 21690,
-              "line_end": 21690,
+              "line_start": 21813,
+              "line_end": 21813,
               "quote": "App-root-global event_id and scope-partition/event_type/idempotency_key use the existing producer-semantic digest",
               "excerpt_sha256": "335daaa81e2c1cb0da4378fd026a1264c26624267d985742ce156db23f1f5314",
               "quote_check": "exact"
@@ -2090,8 +2090,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21611,
-              "line_end": 21611,
+              "line_start": 21671,
+              "line_end": 21671,
               "quote": "The source event retains SP-262's exact `RP-AUTHORITY-INDEFINITE@1.0.0` assignment:",
               "excerpt_sha256": "a779e34810dc737b01a1c7bab5a00907d4beca57742d300f9e66566646636775",
               "quote_check": "exact"
@@ -2099,8 +2099,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21616,
-              "line_end": 21616,
+              "line_start": 21676,
+              "line_end": 21676,
               "quote": "`RP-PROJECTION-3GEN@1.0.0`: current plus history, terminal-transition anchor,",
               "excerpt_sha256": "20f1cc481dd653a9a3abb69c67a628a602cba8b3eafecb71f70769c5b26f9ccb",
               "quote_check": "exact"
@@ -2108,8 +2108,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21620,
-              "line_end": 21620,
+              "line_start": 21680,
+              "line_end": 21680,
               "quote": "For this filtered binding, the terminal anchor is first durable withdrawal; set",
               "excerpt_sha256": "245c7d29b29c2d688434d937f9ffb8e0a194cb093567d7cefc03908b91038ad8",
               "quote_check": "exact"
@@ -2117,8 +2117,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21603,
-              "line_end": 21603,
+              "line_start": 21663,
+              "line_end": 21663,
               "quote": "first withdrawal plus 604800 seconds and requires complete current hold/ref",
               "excerpt_sha256": "b3ab42ccdf85c11b0aba16201af34c9469ecb8510e1d4bb05921e5c95f8c7b48",
               "quote_check": "exact"
@@ -2166,8 +2166,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21630,
-              "line_end": 21630,
+              "line_start": 21690,
+              "line_end": 21690,
               "quote": "Current Project/thread permissions, deletion tombstones and content redaction",
               "excerpt_sha256": "10e61555d02800f6456ef438fec6a2cc3b05018b887ecf1e32601d33559a099e",
               "quote_check": "exact"
@@ -2255,8 +2255,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21462,
-              "line_end": 21462,
+              "line_start": 21522,
+              "line_end": 21522,
               "quote": "`browser_workspace_reset_index_checkpoint.v1:{storage_instance_id}:{scope_partition}`;",
               "excerpt_sha256": "b398c49a1c5347244258015a3e28bc204bad13c53eb64150031db1ddf67583a4",
               "quote_check": "exact"
@@ -2264,8 +2264,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21503,
-              "line_end": 21503,
+              "line_start": 21563,
+              "line_end": 21563,
               "quote": "**2026-09-24 amendment (DL-076).** `index_read_token` stores the nine-field durable",
               "excerpt_sha256": "26bad5b38fc24da1dd8320936aeb35db2f706405a68c6ce579e22a2284eabcc9",
               "quote_check": "exact"
@@ -2273,8 +2273,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21531,
-              "line_end": 21531,
+              "line_start": 21591,
+              "line_end": 21591,
               "quote": "prior-value/cursor CAS. The global root/generation/anchor/frontier/read token,",
               "excerpt_sha256": "a1508ad60e58b7c108e29bf7ccca1f1587be808eb2c808b8f65ee38e93ad1c60",
               "quote_check": "exact"
@@ -2282,8 +2282,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21553,
-              "line_end": 21553,
+              "line_start": 21613,
+              "line_end": 21613,
               "quote": "Rebuild this disposable checkpoint only through StorageMigrationCoordinator from",
               "excerpt_sha256": "c36ff5dac9259a704cb462012b37de8138a27893df08cce78d1453bfb8d7f31f",
               "quote_check": "exact"
@@ -2322,8 +2322,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21556,
-              "line_end": 21556,
+              "line_start": 21616,
+              "line_end": 21616,
               "quote": "invent store-version integers. There is no source-event alias/backfill transform,",
               "excerpt_sha256": "c708f78d5f7bb80f85dd125e5c1514cff19e5ddc639200d47fb0e05fcf82892e",
               "quote_check": "exact"
@@ -2331,8 +2331,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21638,
-              "line_end": 21638,
+              "line_start": 21698,
+              "line_end": 21698,
               "quote": "Writer withdrawal prevents new event-dependent reset publication and fences",
               "excerpt_sha256": "4164cc649bee14f92c3ebed745adf871d12fa8b11a33121427580fa264eaab6a",
               "quote_check": "exact"
@@ -2340,8 +2340,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21640,
-              "line_end": 21640,
+              "line_start": 21700,
+              "line_end": 21700,
               "quote": "Checkpoint-only withdrawal fences this reader without changing the independently",
               "excerpt_sha256": "38fff6b4d12fc5bcc8777a83e9bc192c84d4752ef95fa66f2ca8b25c1e9c9561",
               "quote_check": "exact"
@@ -2349,8 +2349,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": "SP-282",
-              "line_start": 21642,
-              "line_end": 21642,
+              "line_start": 21702,
+              "line_end": 21702,
               "quote": "owner-approved successor/version, install/rebuild through StorageMigrationCoordinator,",
               "excerpt_sha256": "c610d1571940313122d1e51b4179b5a32d9b3bf54f51b7fb73660c0f66295a9b",
               "quote_check": "exact"
@@ -2398,8 +2398,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": null,
-              "line_start": 21672,
-              "line_end": 21672,
+              "line_start": 21732,
+              "line_end": 21732,
               "quote": "tests/test_pm_browser_workspace_reset.py",
               "excerpt_sha256": "7f4b7d52ef5047a37c36aedc90f03a26f16fd7ae62ddc409a495cb57bc9fdaac",
               "quote_check": "exact"
@@ -2407,8 +2407,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": null,
-              "line_start": 21671,
-              "line_end": 21671,
+              "line_start": 21731,
+              "line_end": 21731,
               "quote": "Synthetic schema/codec/oracle passes do not establish native authenticated resolution",
               "excerpt_sha256": "6dd32053e50573bfe8e2503e3d566a44b749aa5dc12c08d65277065d01eedbaf",
               "quote_check": "exact"
@@ -2416,8 +2416,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": null,
-              "line_start": 19692,
-              "line_end": 19692,
+              "line_start": 19751,
+              "line_end": 19751,
               "quote": "tests/test_pm_browser_event_admission.py",
               "excerpt_sha256": "758db6f6d78f6a690b5f50d1bb994a53a7b75ba9b9611f2dc908f1aeb181e0bc",
               "quote_check": "exact"
@@ -2568,8 +2568,8 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "line_start": 23715,
-              "line_end": 23715,
+              "line_start": 23838,
+              "line_end": 23838,
               "quote": "### CV-361 - The workspace.layout_changed 2.0.0 Payload",
               "excerpt_sha256": "0931823bae0267c6935311c56a4a1b1714cbcaa423838909612675d7d695e8a3",
               "quote_check": "exact",
@@ -2618,8 +2618,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": null,
-              "line_start": 21936,
-              "line_end": 21936,
+              "line_start": 21996,
+              "line_end": 21996,
               "quote": "### DL-270 SP-273/Home4 EventRecord body amendment",
               "excerpt_sha256": "5b7f46915503d1146ee4d698df653c57a4acf6f1fb1432efbfccdfe55aac5b7b",
               "quote_check": "exact"
@@ -2657,8 +2657,8 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "line_start": 23715,
-              "line_end": 23715,
+              "line_start": 23838,
+              "line_end": 23838,
               "quote": "### CV-361 - The workspace.layout_changed 2.0.0 Payload",
               "excerpt_sha256": "0931823bae0267c6935311c56a4a1b1714cbcaa423838909612675d7d695e8a3",
               "quote_check": "exact",
@@ -2688,8 +2688,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21930,
-              "line_end": 21930,
+              "line_start": 21990,
+              "line_end": 21990,
               "quote": "Define `operation_digest = lowerhex(SHA256(RFC8785([storage_instance_id,project_id,workspace_tab_id,command_instance_id])))`",
               "excerpt_sha256": "5d249d12acae6510be697278073ddb046a8569ebbbb7ef85e79c0d98af14a1cd",
               "quote_check": "exact",
@@ -2697,8 +2697,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21934,
-              "line_end": 21934,
+              "line_start": 21994,
+              "line_end": 21994,
               "quote": "Envelope project_id equals payload project_id and the actual layout project; scope_kind=project.",
               "excerpt_sha256": "b5bb95b8d2ef5124c20d81a2a99aa9d9a0d75ba94f5b37a551463ee373fc2275",
               "quote_check": "exact",
@@ -2706,8 +2706,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21908,
-              "line_end": 21908,
+              "line_start": 21968,
+              "line_end": 21968,
               "quote": "The custody below (transaction slot, operation receipt, reader checkpoint), the transaction, crash convergence, retention and read rules carry over to v2 writes",
               "excerpt_sha256": "da35b90c0fcb7858e1c6f2fbdae25f5bf0947aeb221bb736cd31e8a886ecea2b",
               "quote_check": "exact",
@@ -2728,8 +2728,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21932,
-              "line_end": 21932,
+              "line_start": 21992,
+              "line_end": 21992,
               "quote": "Keep the actual command idempotency key and the NEW Home domain-request RFC8785 binding digest request_sha256 in the operation receipt.",
               "excerpt_sha256": "98524238eccf0194ba2374044cc32fe48bf7b32da7e085ef7a1a5cf9188c220c",
               "quote_check": "exact",
@@ -2737,8 +2737,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21970,
-              "line_end": 21970,
+              "line_start": 22030,
+              "line_end": 22030,
               "quote": "Crash before candidate write resumes or cancels only the same admitted operation; it cannot invent a new command.",
               "excerpt_sha256": "f22b8867b9d5c757d4c2d89ecb77500117d8acef00508b013036c5366f6375d2",
               "quote_check": "exact",
@@ -2746,8 +2746,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21972,
-              "line_end": 21972,
+              "line_start": 22032,
+              "line_end": 22032,
               "quote": "A missing event for an old layout is never enough to create one.",
               "excerpt_sha256": "1018687de625cc1b31ec146518ca33916c70173d19114b3634e537fd75d2c6cf",
               "quote_check": "exact",
@@ -2777,8 +2777,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21992,
-              "line_end": 21992,
+              "line_start": 22052,
+              "line_end": 22052,
               "quote": "The event remains indefinite metadata under its exact registered policy.",
               "excerpt_sha256": "4e92f2150f3ac396def2d9981c7a971eb6ca37dcc8c891664b41cb2d9d0a8e28",
               "quote_check": "exact",
@@ -2786,8 +2786,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21952,
-              "line_end": 21952,
+              "line_start": 22012,
+              "line_end": 22012,
               "quote": "`home_layout_event_reader_checkpoint`, key `home_layout_event_reader_checkpoint.v1:{storage_instance_id}:{project_id}:{workspace_tab_id}`",
               "excerpt_sha256": "a834ca380ee4080b3ee95d045451424a2af15f56128fe0ffbee7bcab91aebb16",
               "quote_check": "exact",
@@ -2817,8 +2817,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21996,
-              "line_end": 21996,
+              "line_start": 22056,
+              "line_end": 22056,
               "quote": "Apply current project/workspace access, deletion tombstones, quarantine and backup custody before every ref resolution and disclosure.",
               "excerpt_sha256": "b141084eb16992b59e4cbcf1108d93c9d9fa39d355b22ecdffc62caf4f2e8810",
               "quote_check": "exact",
@@ -2826,8 +2826,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21951,
-              "line_end": 21951,
+              "line_start": 22011,
+              "line_end": 22011,
               "quote": "`home_layout_operation_receipt`, key `home_layout_operation_receipt.v1:{project_id}:{workspace_tab_id}:{operation_digest}`",
               "excerpt_sha256": "04e8e20564ad3cb2109e08f236ac69199e01bad1bfc84e7918eddbbe10d4d0c1",
               "quote_check": "exact",
@@ -2835,8 +2835,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 29500,
-              "line_end": 29500,
+              "line_start": 29626,
+              "line_end": 29626,
               "quote": "**The complete value and its reference form (newly authored under DL-045, 2026-11-04).**",
               "excerpt_sha256": "46f312533b6c29a490c200a990fbfa55e857d58f87ce1b1c4727a901ee2565cf",
               "quote_check": "exact",
@@ -2857,8 +2857,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27495,
-              "line_end": 27495,
+              "line_start": 27620,
+              "line_end": 27620,
               "quote": "**Transaction and receipt.** Every committed structural change is one admitted command",
               "excerpt_sha256": "27620b2d1a83399cc632983f7eafff31f840b5f99bfd45b6ccbb76e05197736f",
               "quote_check": "exact",
@@ -2866,8 +2866,8 @@
             },
             {
               "path": "Plans/Contracts_V0.md",
-              "line_start": 23731,
-              "line_end": 23731,
+              "line_start": 23854,
+              "line_end": 23854,
               "quote": "Every committed structural change appends exactly one workspace.layout_changed",
               "excerpt_sha256": "24f2b73d8d1fc84e5c219bc34cdf6aaf20d7b6fd23baabffb9825c18da3a54e3",
               "quote_check": "exact",
@@ -2888,8 +2888,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21984,
-              "line_end": 21984,
+              "line_start": 22044,
+              "line_end": 22044,
               "quote": "Define NEW `home.workspace_layout_event_reader.v1@1.0.0` over existing `event_record_index.v2`",
               "excerpt_sha256": "126c789943ac32273aa50073765951153b23ca1664bdc05a4010a596ef02ac6e",
               "quote_check": "exact",
@@ -2897,8 +2897,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21986,
-              "line_end": 21986,
+              "line_start": 22046,
+              "line_end": 22046,
               "quote": "Three NEW read consumers share the verified token: `home.workspace_layout_home_view.v1`, `home.workspace_layout_editor_routing.v1`, and `home.workspace_layout_terminal_presentation.v1`",
               "excerpt_sha256": "095f2fbc7ee6b9f364dbd0ad5485b61a1bfa7cab07e58d7be531996ae0fc67aa",
               "quote_check": "exact",
@@ -2906,8 +2906,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21952,
-              "line_end": 21952,
+              "line_start": 22012,
+              "line_end": 22012,
               "quote": "`home_layout_event_reader_checkpoint`, key `home_layout_event_reader_checkpoint.v1:{storage_instance_id}:{project_id}:{workspace_tab_id}`",
               "excerpt_sha256": "a834ca380ee4080b3ee95d045451424a2af15f56128fe0ffbee7bcab91aebb16",
               "quote_check": "exact",
@@ -2915,8 +2915,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21988,
-              "line_end": 21988,
+              "line_start": 22048,
+              "line_end": 22048,
               "quote": "In one redb transaction it writes only the filtered checkpoint",
               "excerpt_sha256": "c12c08920c7851f9175ed6e63f84c76a1b2039d552779d0e94d596c539f3ad83",
               "quote_check": "exact",
@@ -2924,8 +2924,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 22031,
-              "line_end": 22031,
+              "line_start": 22091,
+              "line_end": 22091,
               "quote": "Adopt actual canonical SP-278, not an opaque generic-index pointer.",
               "excerpt_sha256": "4d9410bdfa4702ba2ac53109ca1ab3cbec3e963f39e5b3a6aa341949bee48291",
               "quote_check": "exact",
@@ -2933,8 +2933,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 22037,
-              "line_end": 22037,
+              "line_start": 22097,
+              "line_end": 22097,
               "quote": "stores the nine-field durable read token that SP-278 defines on 2026-09-24; `redb_snapshot_id` is not stored.",
               "excerpt_sha256": "136bb848f436edec994929172dd14218b72dff88e2214e24764e00962a5d20a5",
               "quote_check": "exact",
@@ -2942,8 +2942,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21994,
-              "line_end": 21994,
+              "line_start": 22054,
+              "line_end": 22054,
               "quote": "The filtered checkpoint now materializes RP-PROJECTION-3GEN",
               "excerpt_sha256": "3eabc715f9bcff022ea652a7ae315ea730bdad0811501eac2d21ee3f72b0e3d0",
               "quote_check": "exact",
@@ -2951,8 +2951,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21908,
-              "line_end": 21908,
+              "line_start": 21968,
+              "line_end": 21968,
               "quote": "The custody below (transaction slot, operation receipt, reader checkpoint), the transaction, crash convergence, retention and read rules carry over to v2 writes",
               "excerpt_sha256": "da35b90c0fcb7858e1c6f2fbdae25f5bf0947aeb221bb736cd31e8a886ecea2b",
               "quote_check": "exact",
@@ -2973,8 +2973,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21998,
-              "line_end": 21998,
+              "line_start": 22058,
+              "line_end": 22058,
               "quote": "Payload 1.0.0 history is read-only compatibility using actual frozen source contracts where available",
               "excerpt_sha256": "e4db4b89d092fda512596c939fc3ed514ddffffc655e9c4b9b57614bcf7c56c5",
               "quote_check": "exact",
@@ -2982,8 +2982,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 22000,
-              "line_end": 22000,
+              "line_start": 22060,
+              "line_end": 22060,
               "quote": "Withdrawing a read consumer invalidates only its token/publication.",
               "excerpt_sha256": "179920b72747bd221ef66362d9366e2364af6a8bc24e5479ed9d0b440510806d",
               "quote_check": "exact",
@@ -2991,8 +2991,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 21908,
-              "line_end": 21908,
+              "line_start": 21968,
+              "line_end": 21968,
               "quote": "whose compatibility reader keeps 1.1.0 events readable",
               "excerpt_sha256": "fbc3855d005c5ce3070201e581c68ae0862d5cd2a588a30c0f98564858e8dd58",
               "quote_check": "exact",
@@ -3032,8 +3032,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": null,
-              "line_start": 22120,
-              "line_end": 22120,
+              "line_start": 22180,
+              "line_end": 22180,
               "quote": "Amended 2026-11-04 (DL-076): the frozen joined subject is re-frozen as v5",
               "excerpt_sha256": "0993a9656f2736f054823ace8f18363b3433feeed803f98985adb5d6074e5a63",
               "quote_check": "exact"
@@ -3041,8 +3041,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": null,
-              "line_start": 29509,
-              "line_end": 29509,
+              "line_start": 29635,
+              "line_end": 29635,
               "quote": "**Static oracles.** `Plans/home_layout_v2_slot_receipt_fixtures.json` holds 10 valid values",
               "excerpt_sha256": "26810c5da55f7c247c0033786a71f10cd0e141ca671c1d9242d3147430300f2f",
               "quote_check": "exact"
@@ -3113,8 +3113,8 @@
             {
               "path": "Plans/storage-plan.md",
               "unit": null,
-              "line_start": 21936,
-              "line_end": 21936,
+              "line_start": 21996,
+              "line_end": 21996,
               "quote": "### DL-270 SP-273/Home4 EventRecord body amendment",
               "excerpt_sha256": "5b7f46915503d1146ee4d698df653c57a4acf6f1fb1432efbfccdfe55aac5b7b",
               "quote_check": "exact"
@@ -3192,8 +3192,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27048,
-              "line_end": 27048,
+              "line_start": 27173,
+              "line_end": 27173,
               "quote": "DL-449 explicitly removes the obligation to build the new terminal-history view, saved viewing results, saved original-move/results records and obsolete original-move tests.",
               "excerpt_sha256": "157468040cfdadeccab5cf1823962709bfef86199b381bf138604eb5cb37bb48",
               "quote_check": "exact",
@@ -3201,8 +3201,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27040,
-              "line_end": 27040,
+              "line_start": 27165,
+              "line_end": 27165,
               "quote": "Any saved `terminal.workgroup_moved` event retains its exact 1.0.0 meaning, original event identity, idempotency identity, array order and bytes.",
               "excerpt_sha256": "fee83ae2611f70ede70bb45e07c554662cccb52dbc4c70778a643d9a7fdf0ae0",
               "quote_check": "exact",
@@ -3223,8 +3223,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27042,
-              "line_end": 27042,
+              "line_start": 27167,
+              "line_end": 27167,
               "quote": "No producer writes `terminal.workgroup_moved`, including a retry that supplies an old event or idempotency key, recovery of a pre-upgrade pending move, or SP-330's layout conversion.",
               "excerpt_sha256": "f0b2431180b348f267b2add7bb245519ad1d1a35b0b4d2870b9f721e7bfab5dd",
               "quote_check": "exact",
@@ -3267,8 +3267,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27040,
-              "line_end": 27040,
+              "line_start": 27165,
+              "line_end": 27165,
               "quote": "Any saved `terminal.workgroup_moved` event retains its exact 1.0.0 meaning, original event identity, idempotency identity, array order and bytes.",
               "excerpt_sha256": "fee83ae2611f70ede70bb45e07c554662cccb52dbc4c70778a643d9a7fdf0ae0",
               "quote_check": "exact",
@@ -3289,8 +3289,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27042,
-              "line_end": 27042,
+              "line_start": 27167,
+              "line_end": 27167,
               "quote": "No producer writes `terminal.workgroup_moved`, including a retry that supplies an old event or idempotency key, recovery of a pre-upgrade pending move, or SP-330's layout conversion.",
               "excerpt_sha256": "f0b2431180b348f267b2add7bb245519ad1d1a35b0b4d2870b9f721e7bfab5dd",
               "quote_check": "exact",
@@ -3298,8 +3298,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27044,
-              "line_end": 27044,
+              "line_start": 27169,
+              "line_end": 27169,
               "quote": "No consumer operates on this family.",
               "excerpt_sha256": "d7ff13cfca26632e637163bff7c18dcf33787318ba315e96e3ff5316616dd0a2",
               "quote_check": "exact",
@@ -3320,8 +3320,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27046,
-              "line_end": 27046,
+              "line_start": 27171,
+              "line_end": 27171,
               "quote": "The saved event retains `RP-AUTHORITY-INDEFINITE@1.0.0`.",
               "excerpt_sha256": "d1aa8e5215d4ddaf442c57cd033f8fb8d2d7de812d90a7f079c71fa410f12b7f",
               "quote_check": "exact",
@@ -3329,8 +3329,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27046,
-              "line_end": 27046,
+              "line_start": 27171,
+              "line_end": 27171,
               "quote": "Existing source/index/ref custody, coherent backup/restore, holds, Project access/deletion/maintenance fences and `reject_unhandled_secrets` remain owned by their existing Storage contracts.",
               "excerpt_sha256": "9bd97cce30c15c503e7ed99205a952cecb63c02e87c4091ca68de00140739c73",
               "quote_check": "exact",
@@ -3351,8 +3351,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27046,
-              "line_end": 27046,
+              "line_start": 27171,
+              "line_end": 27171,
               "quote": "Existing source/index/ref custody, coherent backup/restore, holds, Project access/deletion/maintenance fences and `reject_unhandled_secrets` remain owned by their existing Storage contracts.",
               "excerpt_sha256": "9bd97cce30c15c503e7ed99205a952cecb63c02e87c4091ca68de00140739c73",
               "quote_check": "exact",
@@ -3373,8 +3373,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27040,
-              "line_end": 27040,
+              "line_start": 27165,
+              "line_end": 27165,
               "quote": "Any saved `terminal.workgroup_moved` event retains its exact 1.0.0 meaning, original event identity, idempotency identity, array order and bytes.",
               "excerpt_sha256": "fee83ae2611f70ede70bb45e07c554662cccb52dbc4c70778a643d9a7fdf0ae0",
               "quote_check": "exact",
@@ -3382,8 +3382,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27042,
-              "line_end": 27042,
+              "line_start": 27167,
+              "line_end": 27167,
               "quote": "No producer writes `terminal.workgroup_moved`, including a retry that supplies an old event or idempotency key, recovery of a pre-upgrade pending move, or SP-330's layout conversion.",
               "excerpt_sha256": "f0b2431180b348f267b2add7bb245519ad1d1a35b0b4d2870b9f721e7bfab5dd",
               "quote_check": "exact",
@@ -3404,8 +3404,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27044,
-              "line_end": 27044,
+              "line_start": 27169,
+              "line_end": 27169,
               "quote": "No consumer operates on this family.",
               "excerpt_sha256": "d7ff13cfca26632e637163bff7c18dcf33787318ba315e96e3ff5316616dd0a2",
               "quote_check": "exact",
@@ -3413,8 +3413,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27044,
-              "line_end": 27044,
+              "line_start": 27169,
+              "line_end": 27169,
               "quote": "The family projector and checkpoint disposition is `none_required`:",
               "excerpt_sha256": "2f9eeb936b265b7816c57ca86de324958e2248b0f04c220ee2a1c2b3d7857cb4",
               "quote_check": "exact",
@@ -3422,8 +3422,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27044,
-              "line_end": 27044,
+              "line_start": 27169,
+              "line_end": 27169,
               "quote": "SP-278's generic EventRecord-index source, projector and checkpoint remain independently mandatory for existing generic Storage access;",
               "excerpt_sha256": "1fdb146225ecfe2398a60827c9cc3c8d0e91f1c248a3637df6de18d00544eca9",
               "quote_check": "exact",
@@ -3431,8 +3431,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27048,
-              "line_end": 27048,
+              "line_start": 27173,
+              "line_end": 27173,
               "quote": "DL-449 explicitly removes the obligation to build the new terminal-history view, saved viewing results, saved original-move/results records and obsolete original-move tests.",
               "excerpt_sha256": "157468040cfdadeccab5cf1823962709bfef86199b381bf138604eb5cb37bb48",
               "quote_check": "exact",
@@ -3453,8 +3453,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27040,
-              "line_end": 27040,
+              "line_start": 27165,
+              "line_end": 27165,
               "quote": "Any saved `terminal.workgroup_moved` event retains its exact 1.0.0 meaning, original event identity, idempotency identity, array order and bytes.",
               "excerpt_sha256": "fee83ae2611f70ede70bb45e07c554662cccb52dbc4c70778a643d9a7fdf0ae0",
               "quote_check": "exact",
@@ -3462,8 +3462,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27042,
-              "line_end": 27042,
+              "line_start": 27167,
+              "line_end": 27167,
               "quote": "No producer writes `terminal.workgroup_moved`, including a retry that supplies an old event or idempotency key, recovery of a pre-upgrade pending move, or SP-330's layout conversion.",
               "excerpt_sha256": "f0b2431180b348f267b2add7bb245519ad1d1a35b0b4d2870b9f721e7bfab5dd",
               "quote_check": "exact",
@@ -3471,8 +3471,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27048,
-              "line_end": 27048,
+              "line_start": 27173,
+              "line_end": 27173,
               "quote": "DL-449 explicitly removes the obligation to build the new terminal-history view, saved viewing results, saved original-move/results records and obsolete original-move tests.",
               "excerpt_sha256": "157468040cfdadeccab5cf1823962709bfef86199b381bf138604eb5cb37bb48",
               "quote_check": "exact",
@@ -3493,8 +3493,8 @@
           "evidence": [
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27052,
-              "line_end": 27052,
+              "line_start": 27177,
+              "line_end": 27177,
               "quote": "Complete guard isolation remains the shared-tool part-2 check.",
               "excerpt_sha256": "227ce203ea717721823cce47d7d918d57b739c50da91ecdb9e54bb079cb741fc",
               "quote_check": "exact",
@@ -3502,8 +3502,8 @@
             },
             {
               "path": "Plans/storage-plan.md",
-              "line_start": 27048,
-              "line_end": 27048,
+              "line_start": 27173,
+              "line_end": 27173,
               "quote": "DL-449 explicitly removes the obligation to build the new terminal-history view, saved viewing results, saved original-move/results records and obsolete original-move tests.",
               "excerpt_sha256": "157468040cfdadeccab5cf1823962709bfef86199b381bf138604eb5cb37bb48",
               "quote_check": "exact",
