@@ -85,7 +85,7 @@ def cases():
     large_ref,large_store=values['ref'],values['store']
     large_inner=h.to_projection(h.decode_canonical_msgpack(large_store.objects[large_ref['value_ref']['blake3_id']][1]))
     body_ref=large_inner['event_semantics']['payload_ref']
-    payload=ds.route.decode_canonical_msgpack(large_store.objects[body_ref['blake3_id']][1])
+    payload=ds.route.decode_storage_value(large_store.objects[body_ref['blake3_id']][1],profile=ds.route.EVENT_VALUE)
     badpayload=copy.deepcopy(payload);badpayload['unexpected_schema_field']=True
     raw=h.canonical_msgpack(badpayload);body_id=h.blake3_hex(raw)
     altered=copy.deepcopy(large_inner)

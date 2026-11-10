@@ -56,6 +56,9 @@ SPEC = {
         H4S03_prior_slot_migration_generation | schema | a prior migration generation validates against its Home4 definition
         H4S04_stored_value_ref | schema | a stored value reference validates against its Home4 definition
     """),
+    'h4_value_codec': ('whole stored value encoding (I10, SP-1100)', H4, """
+        H4L00_stored_encoding | I10 the complete stored value has no canonical MessagePack encoding (SP-1100 integer range) | the complete stored value has a canonical MessagePack encoding
+    """),
     'h4_value_limit': ('whole stored value against its family limit (I10)', H4, """
         H4L01_reference_over_limit | I10 by reference within limit | a value stored by reference is over its family limit
         H4L02_inline_within_limit | I10 inline over limit | a value stored inline is within its family limit
@@ -188,8 +191,9 @@ SPEC = {
     'h4_receipt_owner': ('owner result pointers and hash (I8)', H4, """
         H4O01_outcome_schema_ref | I8 SIR outcome does not point at the Home4 owner result | a present SIR outcome points at the Home4 owner result
         H4O02_outcome_hash | I8 owner result hash is not the CV-333 hash of the Home-owned owner result | a present SIR outcome owner hash is the receipt owner hash
-        H4O03_receipt_hash | I8 owner result hash is not the CV-333 hash of the Home-owned owner result | with a present SIR outcome the receipt owner hash is the CV-333 hash of the owner result
-        H4O04_response_schema_ref | I8 UI response does not point at the Home4 owner result | a present UI response points at no owner result or the Home4 owner result
+        H4O03_owner_result_jcs | I8 owner result is not representable by the CV-333 RFC 8785 hash | with a present SIR outcome the owner result has a qualified RFC 8785 encoding (CV-1100)
+        H4O04_receipt_hash | I8 owner result hash is not the CV-333 hash of the Home-owned owner result | with a present SIR outcome the receipt owner hash is the CV-333 hash of the owner result
+        H4O05_response_schema_ref | I8 UI response does not point at the Home4 owner result | a present UI response points at no owner result or the Home4 owner result
     """),
     'h4_ref_wrapper': ('stored reference wrapper size (I10)', H4, """
         H4F01_wrapper_within_limit | I10 wrapper over limit | the stored reference wrapper is within its family limit
@@ -218,10 +222,12 @@ SPEC = {
         RL01_successor_not_required | envelope_successor_required | a current write of an adopted family uses the 3.0.0 envelope successor
         RL02_no_legacy_ref | legacy_payload_ref_not_reinterpreted | a pre-3.0.0 event carries no payload_ref
         RL03_body_object | payload_schema | the pre-3.0.0 inline body is an object
+        RL03A_body_encodable | payload_representation | a current pre-3.0.0 inline body has an EVENT_VALUE physical encoding (SP-1100)
         RL04_inline_limit | payload_byte_limit | a current pre-3.0.0 inline body is at most 16 KiB encoded
     """),
     'route_inline': ('3.0.0 inline body', ROUTE, """
         RI01_body_object | payload_representation | a 3.0.0 inline body is an object
+        RI01A_body_encodable | payload_representation | a 3.0.0 inline body has an EVENT_VALUE physical encoding (SP-1100)
         RI02_inline_limit | payload_byte_limit | a 3.0.0 inline body is at most 16 KiB encoded
     """),
     'route_reference': ('3.0.0 payload reference availability', ROUTE, """
@@ -268,6 +274,7 @@ SPEC = {
         CE12_event_identity | event_identity | the event id is evt_compaction_ + the Storage-scoped identity digest
         CE13_idempotency_identity | idempotency_identity | the idempotency key is compaction: + the identity digest
         CE14_receipt_identity | receipt_identity | the receipt ref is compaction_receipt: + the Storage-scoped identity digest
+        CE15_producer_jcs | producer_semantic_unavailable | a current event's producer semantic projection has a qualified RFC 8785 encoding (CV-317, CV-1100)
     """),
     'comp_history': ('compaction retained audit reader', ROUND2, """
         CH01_verified | unavailable | the retained source is verified (exactly true)
@@ -294,6 +301,7 @@ SPEC = {
     """),
     'layout_replay': ('layout writer replay policy', ROUND2, """
         LE08_replay_policy | layout_replay_only_not_appendable | a current layout event uses dedupe_by_idempotency_key
+        LE09_producer_jcs | layout_producer_semantic_unavailable | a current layout event's producer semantic projection has a qualified RFC 8785 encoding (SP-273, CV-1100)
     """),
     'cr_checkpoint_entry': ('v1 checkpoint schema and timestamps', CREATED, """
         CC01_schema | checkpoint_schema | the v1 checkpoint validates against its closed bundle
@@ -307,6 +315,7 @@ SPEC = {
         CC07_range_order | checkpoint_range_or_cursor | with a cursor, the first retained sequence is at most the through sequence
         CC08_cursor_through | checkpoint_range_or_cursor | with a cursor, its last sequence is the through sequence
         CC09_withdrawal_order | withdrawal_after_observation | a withdrawal is not after the last observation
+        CC10_storage_uint64 | checkpoint_schema | every Storage sequence/offset/generation field is an SP-1100 uint64 (storage_uint64)
     """),
     'cr_preflight_entry': ('creation preflight witness', CREATED, """
         CR00_witness_object | creation_witness_schema | the creation witness is an object
@@ -367,6 +376,7 @@ SPEC = {
     'cr_create': ('creation append barrier model', CREATED, """
         CO01_admitted | rejected_no_append | the event is admitted (exactly true)
         CO02_preflight | rejected_no_append | the resolved values pass the creation preflight (identity flags excepted)
+        CO02A_producer_jcs | rejected_no_append | the producer semantic projection has a qualified RFC 8785 encoding (CV-317, CV-1100)
         CO03_event_identity | idempotency_conflict | a known event id carries the same producer-semantic digest
         CO04_committed_identity | idempotency_conflict | a committed transition key carries the same producer-semantic digest
         CO05_not_pending | uncertain_original_requires_resolution | no unresolved original append holds the transition key
@@ -473,6 +483,7 @@ SPEC = {
         V2R03_range_order | checkpoint_range_or_cursor | with a cursor, the first retained sequence is at most the through sequence
         V2R04_cursor_through | checkpoint_range_or_cursor | with a cursor, its last sequence is the through sequence
         V2R05_cursor_offsets | checkpoint_range_or_cursor | with a cursor, its byte offset is before its frame end
+        V2R05A_storage_uint64 | checkpoint_core_schema | every Storage sequence/offset/generation field is an SP-1100 uint64 (storage_uint64)
     """),
     'v2_core_times': ('v2 core timestamps', CREATED_V2, """
         V2R06_updated_grammar | checkpoint_timestamp | updated_at_utc matches the RFC 3339 grammar
@@ -702,6 +713,7 @@ SPEC = {
     'rs_reset': ('reset barrier model', RESET, """
         RO01_admitted | rejected_no_reset | the event is admitted (exactly true)
         RO02_preflight | rejected_no_reset | the resolved values pass the reset preflight
+        RO02A_producer_jcs | rejected_no_reset | the producer semantic projection has a qualified RFC 8785 encoding (CV-317, CV-1100)
         RO03_owner_subject | wrong_owner_subject_no_reset | the transition subject is the owner subject
         RO04_event_identity | idempotency_conflict | a known event id carries the same producer-semantic digest
         RO05_prior_digest | idempotency_conflict | a prior attempt of the key carries the same digest
@@ -750,6 +762,7 @@ SPEC = {
         RC03_range_order | checkpoint_range_or_cursor | with a cursor, the first retained sequence is at most the through sequence
         RC04_cursor_through | checkpoint_range_or_cursor | with a cursor, its last sequence is the through sequence
         RC05_cursor_offsets | checkpoint_range_or_cursor | with a cursor, its byte offset is before its frame end
+        RC05A_storage_uint64 | checkpoint_schema | every Storage sequence/offset/generation field is an SP-1100 uint64 (storage_uint64)
     """),
     'rs_core_times': ('reset core timestamps', RESET, """
         RC06_updated_grammar | checkpoint_timestamp | updated_at_utc matches the RFC 3339 grammar
@@ -950,6 +963,7 @@ SPEC = {
     """),
     'gate_candidate_envelope': ('Browser candidate envelope', GATE, """
         GC04_envelope_schema | envelope_schema | the event validates against its 2.0.0 or 3.0.0 EventRecord schema
+        GC04A_sequence_uint64 | envelope_schema | a present Storage sequence_id is an SP-1100 uint64 (storage_uint64)
     """),
     'gate_candidate_payload': ('Browser candidate resolved payload', GATE, """
         GC05_payload_object | payload_schema | the resolved payload is an object
@@ -1012,6 +1026,7 @@ SPEC = {
         GR03_deletion_allows_audit | quarantined_without_checkpoint_advance | deletion allows audit (exactly true)
         GR04_not_withdrawn | quarantined_without_checkpoint_advance | the event is not withdrawn (exactly false)
         GR05_contract | quarantined_without_checkpoint_advance | the event passes the projector's contract check as history
+        GR05A_producer_jcs | quarantined_without_checkpoint_advance | the producer semantic projection has a qualified RFC 8785 encoding, so its dedupe digest exists (CV-317, CV-1100)
         GR06_event_identity | quarantined_without_checkpoint_advance | a known event id carries the same producer-semantic digest
         GR07_transition_identity | quarantined_without_checkpoint_advance | a known transition key carries the same producer-semantic digest
         GR08_sequence_after_checkpoint | quarantined_without_checkpoint_advance | a new event's sequence is after the projector checkpoint

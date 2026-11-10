@@ -11,9 +11,23 @@ from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 from pm_ds_tables import Facts
 from pm_home_layout_v2_slot_receipt import (
-    Home4Validator as StrictValidator, canonical_msgpack, decode_canonical_msgpack,
-    blake3_hex, ref_closure, refuse_remote,
+    Home4Validator as StrictValidator, blake3_hex, producer_jcs_ok, ref_closure, refuse_remote,
+    storage_uint64_fields_ok,
 )
+from pm_event_numbers import EVENT_VALUE, Refusal, decode_storage_value, storage_value_bytes
+
+
+def canonical_msgpack(value):
+    """SP-236/SP-1100 EventRecord physical bytes (the shared EVENT_VALUE profile); raises Refusal."""
+    return storage_value_bytes(value, profile=EVENT_VALUE)
+
+
+def physical_size(value):
+    """Encoded EVENT_VALUE size, or None when the physical route is unavailable for this value."""
+    try:
+        return len(canonical_msgpack(value))
+    except Refusal:
+        return None
 
 INLINE_LIMIT = 16384
 MEDIA = 'application/msgpack'
@@ -58,26 +72,12 @@ def _validator(encoded, root):
     eager(reg, schema)
     return StrictValidator(schema, registry=reg, format_checker=FormatChecker())
 
-def numeric_representation_errors(value):
-    """Current typed values have a single integral representation; never rewrite old bytes."""
-    errors = []
-    if isinstance(value, float) and value.is_integer():
-        errors.append('integral_numeric_representation')
-    if isinstance(value, dict):
-        for child in value.values():
-            errors.extend(numeric_representation_errors(child))
-    elif isinstance(value, list):
-        for child in value:
-            errors.extend(numeric_representation_errors(child))
-    return errors
-
-
 def encode(event, store):
     """Freeze one exact representation before append; store maps BLAKE3 to (media, bytes)."""
     event = copy.deepcopy(event)
     event['schema_version'] = '3.0.0'
-    if numeric_representation_errors(event):
-        raise ValueError('integral_numeric_representation')
+    # Integer slots are admitted by the schema's CV-1100 integer rule before append;
+    # EVENT_VALUE keeps a float's type and bytes (SP-1100). An unencodable body raises Refusal.
     data = canonical_msgpack(event['payload'])
     if len(data) > INLINE_LIMIT:
         ident = blake3_hex(data)
@@ -104,10 +104,11 @@ def resolved_body(event, store=None, *, historical=False):
         for row, check in (
                 ('RL01_successor_not_required', lambda: historical or event.get('event_type') not in ADOPTED),
                 ('RL02_no_legacy_ref', lambda: event.get('payload_ref') is None),
-                ('RL03_body_object', lambda: isinstance(body, dict))):
+                ('RL03_body_object', lambda: isinstance(body, dict)),
+                ('RL03A_body_encodable', lambda: historical or physical_size(body) is not None)):
             if legacy.stop(row, check):
                 return None, [legacy.first_code()]
-        if legacy.stop('RL04_inline_limit', lambda: historical or len(canonical_msgpack(body)) <= INLINE_LIMIT):
+        if legacy.stop('RL04_inline_limit', lambda: historical or physical_size(body) <= INLINE_LIMIT):
             return body, [legacy.first_code()]
         legacy.done()
         return body, []
@@ -116,7 +117,9 @@ def resolved_body(event, store=None, *, historical=False):
         inline = Facts('route_inline', chain=True)
         if inline.stop('RI01_body_object', lambda: isinstance(body, dict)):
             return None, [inline.first_code()]
-        if inline.stop('RI02_inline_limit', lambda: len(canonical_msgpack(body)) <= INLINE_LIMIT):
+        if inline.stop('RI01A_body_encodable', lambda: physical_size(body) is not None):
+            return None, [inline.first_code()]
+        if inline.stop('RI02_inline_limit', lambda: physical_size(body) <= INLINE_LIMIT):
             return body, [inline.first_code()]
         inline.done()
         return body, []
@@ -150,8 +153,8 @@ def resolved_body(event, store=None, *, historical=False):
 
     def canonical():
         try:
-            decoded['body'] = decode_canonical_msgpack(data)
-        except (ValueError, UnicodeError):
+            decoded['body'] = decode_storage_value(data, profile=EVENT_VALUE)
+        except Refusal:
             return False
         return True
 

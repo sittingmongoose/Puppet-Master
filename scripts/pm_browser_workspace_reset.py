@@ -176,6 +176,8 @@ class ResetOracle:
             return f.first_code()
         if f.stop("RO02_preflight", lambda: not reset_preflight_failures(event, request, result, transition, witness, payload_store=payload_store)):
             return f.first_code()
+        if f.stop("RO02A_producer_jcs", lambda: body_route.producer_jcs_ok(event)):
+            return f.first_code()
         if f.stop("RO03_owner_subject", lambda: transition["subject"] == self.subject):
             return f.first_code()
         key = (scope_partition(event["project_id"]), EVENT_TYPE, event["idempotency_key"])
@@ -357,6 +359,7 @@ def checkpoint_core_failures(value):
     relations["RC03_range_order"] = cursor is None or value["first_retained_sequence_id"] <= value["index_through_sequence_id"]
     relations["RC04_cursor_through"] = cursor is None or cursor["last_sequence_id"] == value["index_through_sequence_id"]
     relations["RC05_cursor_offsets"] = cursor is None or cursor["byte_offset"] < cursor["frame_end_offset"]
+    relations["RC05A_storage_uint64"] = body_route.storage_uint64_fields_ok(value)
     errors = relations.codes()
     names = ("updated_at_utc", "withdrawn_at_utc", "published_at_utc")
     grammar = r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})"

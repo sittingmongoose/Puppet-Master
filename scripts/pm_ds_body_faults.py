@@ -92,13 +92,13 @@ def cases():
     add('U115','compaction_envelope_extra',lambda:ds.compaction_event_errors(bad_envelope),['envelope_schema'])
     bad_payload=copy.deepcopy(compaction);del bad_payload['payload']['project_id']
     add('U116','compaction_missing_payload_identity',lambda:ds.compaction_event_errors(bad_payload),['compaction_payload_schema'])
-    for value in (1.0,[1.0],{'nested':[1.0]}):
-        def numeric(value=value):return not route.numeric_representation_errors(value)
-        rows.append(('NEG-U372:numeric_list_recursion:'+repr(value),numeric))
-    bad_numeric=copy.deepcopy(event);bad_numeric['producer_sequence_id']=1.0
-    def encoder():
-        try:route.encode(bad_numeric,{})
-        except ValueError:return False
-        return True
-    rows.append(('NEG-U373:encoder_integral_refusal',encoder))
+    # CV-1100 integer slots, refused by the complete current writer (shared current_integer at the
+    # schema slot), not by a blanket walk over the event or by the SP-1100 physical encoder.
+    for model,base in bases:
+        check=model.creation_preflight_failures if model.EVENT_TYPE.endswith('created') else model.reset_preflight_failures
+        for value in (1.0,-0.0):
+            payload_slot=copy.deepcopy(base);payload_slot['event']['payload']['facts']['workspace_generation']=value
+            rows.append(('NEG-U372:payload_integer_slot:'+model.EVENT_TYPE+':'+repr(value),lambda b=payload_slot,c=check:not c(**b)))
+            envelope_slot=copy.deepcopy(base);envelope_slot['event']['producer_sequence_id']=value
+            rows.append(('NEG-U373:envelope_integer_slot:'+model.EVENT_TYPE+':'+repr(value),lambda b=envelope_slot,c=check:not c(**b)))
     return rows

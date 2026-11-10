@@ -24,6 +24,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from pm_contract_formats import FormatChecker
 import pm_event_payload_route as body_route
 from pm_ds_tables import Facts
+from pm_event_numbers import producer_semantic_digest
 Draft202012Validator = body_route.StrictValidator
 IDENTITIES = ("project_id", "thread_id", "run_id", "node_id", "attempt_id")
 MAX_PAYLOAD_BYTES = 65536
@@ -192,6 +193,16 @@ def authority_binding_failures(row):
     if row["event_type"] == "browser.workspace.created":
         return workspace_created_authority().binding_failures(row, root=ROOT)
     return workspace_reset_authority().binding_failures(row, root=ROOT)
+
+def exact_json_text(value):
+    """Compact JSON text with exact integers of any length (CV-1100 sets no global cap)."""
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        return json.dumps(value, separators=(",", ":"), ensure_ascii=False)
+    finally:
+        sys.set_int_max_str_digits(previous)
+
 
 def load_json(path):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
@@ -462,12 +473,13 @@ def compatibility_history_failures(event, context, original):
             return False
         return True
 
-    from pm_home_layout_v2_slot_receipt import canonical_msgpack
+    from pm_home_layout_v2_slot_receipt import event_value_or_none
     f = Facts("gate_compatibility", chain=True)
     for row, check in (("GH01_source_present", lambda: isinstance(original, dict)),
                        ("GH02_source_normalizes", normalizes),
                        ("GH03_no_rejection_reason", lambda: normalization["value"][1] is None),
-                       ("GH04_normalized_event", lambda: canonical_msgpack(normalization["value"][0]) == canonical_msgpack(event))):
+                       ("GH04_normalized_event", lambda: event_value_or_none(event) is not None and
+                        event_value_or_none(normalization["value"][0]) == event_value_or_none(event))):
         if f.stop(row, check):
             return [f.first_code()]
     f.done()
@@ -490,6 +502,7 @@ def candidate_failures(event, producer_component, context, *, payload_store=None
     selected_envelope = load_json("Plans/event_record_v3.schema.json") if event.get("schema_version") == "3.0.0" else envelope
     shape = Facts("gate_candidate_envelope")
     shape["GC04_envelope_schema"] = not list(body_route.validator(selected_envelope).iter_errors(event))
+    shape["GC04A_sequence_uint64"] = event.get("sequence_id") is None or body_route.storage_uint64_fields_ok({"sequence_id": event["sequence_id"]})
     failures = shape.codes()
     payload, route_errors = body_route.resolved_body(event, payload_store, historical=historical)
     failures.extend(route_errors)
@@ -531,7 +544,7 @@ def candidate_failures(event, producer_component, context, *, payload_store=None
     if historical and (event.get('replay_policy') == 'projector_replay_only' or any(migration.values())):
         failures.extend(compatibility_history_failures(event, context, historical_source))
     size = Facts("gate_candidate_size")
-    size["GC18_total_byte_limit"] = len(json.dumps(payload, separators=(",", ":"), ensure_ascii=False).encode()) <= MAX_PAYLOAD_BYTES
+    size["GC18_total_byte_limit"] = len(exact_json_text(payload).encode()) <= MAX_PAYLOAD_BYTES
     failures += size.codes()
     if "payload_schema" not in failures:
         failures.extend(semantic_failures(payload))
@@ -618,13 +631,14 @@ class ReplayOracle:
                            ("GR02_access_allowed", lambda: access_allowed is True),
                            ("GR03_deletion_allows_audit", lambda: deletion_allows_audit is True),
                            ("GR04_not_withdrawn", lambda: withdrawn is False),
-                           ("GR05_contract", lambda: not self.contract_failures(event, producer, context, payload_store=payload_store, historical=True, historical_source=historical_source))):
+                           ("GR05_contract", lambda: not self.contract_failures(event, producer, context, payload_store=payload_store, historical=True, historical_source=historical_source)),
+                           ("GR05A_producer_jcs", lambda: body_route.producer_jcs_ok(event))):
             if f.stop(row, check):
                 return f.first_code()
         identity = event["event_id"]
         owner = envelope_oracle()
         transition = (owner.scope_partition(event["scope_kind"], event["project_id"]), event["event_type"], event["idempotency_key"])
-        digest = owner.event_producer_semantic_digest(event)
+        digest = producer_semantic_digest(event, type_sensitive_paths={("producer_sequence_id",)})
         if f.stop("GR06_event_identity", lambda: identity not in self.event_ids or self.event_ids[identity] == digest):
             return f.first_code()
         if identity in self.event_ids:

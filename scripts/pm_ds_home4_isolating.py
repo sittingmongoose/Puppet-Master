@@ -8,7 +8,7 @@ import pm_event_authority_ds_round2 as ds
 
 
 def refresh_source(value, which):
-    data = h.canonical_json(value[which + '_layout'])
+    data = h.source_json(value[which + '_layout'])
     value[which + '_layout_source_bytes'] = {'form': 'inline', 'bytes': base64.b64encode(data).decode()}
     value[which + '_layout_sha256'] = h.sha(data)
     if which == 'candidate' and value['readback'] is not None:
@@ -94,7 +94,7 @@ def cases():
             # changed command. The authoritative slot binding stays original.
             source['normalized_request']['command_id']='cmd.workspace_layout.split_panel'
             source['nonterminal_outcome']['command_id']='cmd.workspace_layout.split_panel'
-            custody[key+'_sha256']=h.sha(h.canonical_json(source))
+            custody[key+'_sha256']=h.sha(h.source_json(source))
     add('U016','pending_source_command',slot,pending_command)
     for field, value in [('storage_instance_id', '22222222-2222-4222-8222-222222222222'),
                          ('project_id', 'project-foreign'), ('workspace_tab_id', 'workspace-foreign')]:

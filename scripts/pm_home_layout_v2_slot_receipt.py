@@ -41,6 +41,7 @@ from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
 
 from pm_ds_tables import Facts
+from pm_event_numbers import EVENT_VALUE, Refusal, current_integer, producer_semantic_bytes, qualified_jcs, storage_uint64, storage_value_bytes
 
 SCHEMA = "Plans/home_layout_v2_slot_receipt.schema.json"
 FIXTURES = "Plans/home_layout_v2_slot_receipt_fixtures.json"
@@ -76,8 +77,83 @@ def sha(data: bytes) -> str:
 
 
 def canonical_json(value: Any) -> bytes:
-    """RFC 8785 form for the fixture domain (no floats in hashed owner values)."""
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
+    """RFC 8785 (CV-1100's shared qualified_jcs) for the SP-273 operation digest and the CV-333 owner-result hash.
+
+    An input the JCS route cannot represent raises Refusal; the checkers observe that as
+    a refusal row before any hash comparison.
+    """
+    return qualified_jcs(value)
+
+
+def source_json(value: Any) -> bytes:
+    """The fixtures' synthetic Home source adapter bytes (application/json, sorted keys, exact integers).
+
+    A separately owned synthetic adapter encoding, not an RFC 8785 recipe: it keeps a float's
+    JSON spelling so a decoded source keeps its exact numeric type.
+    """
+    with exact_digits():
+        return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()
+
+
+def jcs_or_none(value: Any) -> bytes | None:
+    try:
+        return qualified_jcs(value)
+    except Refusal:
+        return None
+
+
+def event_value_or_none(value: Any) -> bytes | None:
+    """SP-236/SP-1100 EventRecord physical bytes, or None when the physical route is unavailable."""
+    try:
+        return storage_value_bytes(value, profile=EVENT_VALUE)
+    except Refusal:
+        return None
+
+
+# SP-1100's owner-declared Storage uint64 fields (sequence/generation/offset/count/byte size) that the
+# DS checkpoint and envelope values carry; each stays exact 0..2^64-1 (storage_uint64).
+STORAGE_UINT64_FIELDS = frozenset((
+    "sequence_id", "first_retained_sequence_id", "index_through_sequence_id", "last_sequence_id",
+    "through_sequence_id", "byte_offset", "frame_end_offset", "durable_end_offset", "byte_size",
+    "segment_generation", "selected_segment_generation", "manifest_generation", "recovery_epoch",
+    "publication_revision", "frontier_revision", "retained_event_count"))
+
+
+def storage_uint64_fields_ok(value: Any) -> bool:
+    """Every declared Storage uint64 field present in the value is an exact SP-1100 uint64 (or null)."""
+    pending = [value]
+    while pending:
+        node = pending.pop()
+        if isinstance(node, dict):
+            for key, child in node.items():
+                if key in STORAGE_UINT64_FIELDS and child is not None and not isinstance(child, (dict, list)):
+                    try:
+                        storage_uint64(child)
+                    except Refusal:
+                        return False
+                pending.append(child)
+        elif isinstance(node, list):
+            pending.extend(node)
+    return True
+
+
+def producer_jcs_ok(event: Any) -> bool:
+    """CV-317/CV-1100: the producer semantic projection has a qualified RFC 8785 encoding (shared call)."""
+    try:
+        producer_semantic_bytes(event, type_sensitive_paths={("producer_sequence_id",)})
+    except Refusal:
+        return False
+    return True
+
+
+def exact_json_loads(data: bytes | str) -> Any:
+    """json.loads with exact integers of any length (CV-1100 sets no global cap)."""
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        return json.loads(data)
+    finally:
+        sys.set_int_max_str_digits(previous)
 
 
 # ---------------------------------------------------------------- BLAKE3 (unkeyed hash, 32-byte output)
@@ -312,7 +388,15 @@ def to_projection(value: Any) -> Any:
 
 
 def stored_bytes(definition: str, value: dict[str, Any]) -> bytes:
+    """SP-400's own stored-value codec: canonical MessagePack with contentEncoding base64 fields as bin."""
     return canonical_msgpack(to_stored(definition, value))
+
+
+def msgpack_or_none(value: Any) -> bytes | None:
+    try:
+        return canonical_msgpack(value)
+    except (ValueError, UnicodeEncodeError):
+        return None
 
 
 # ---------------------------------------------------------------- regex dialect and $ref closure
@@ -344,25 +428,85 @@ def _ecma_pattern(validator: Any, pattern: str, instance: Any, schema: dict[str,
         yield ValidationError(f"{instance!r} does not match {pattern!r} (ECMA-262 end of input)")
 
 
-def _exact_numeric_type(validator: Any, expected: Any, instance: Any,
-                        schema: dict[str, Any]) -> Iterator[ValidationError]:
-    """One representation for integral values, before any identity or digest.
+def _current_integer(checker: Any, instance: Any) -> bool:
+    """CV-1100 current integer slot: the shared current_integer (an exact integer, never a bool or runtime float).
 
-    JSON Schema's mathematical integer includes 4.0. The typed storage domain uses
-    an integer for that value. Keep the codec able to read original float bytes;
-    refuse alternate integral forms at admission instead of rewriting history.
+    Applied at every schema integer slot, nested slots included; each slot's own minimum and
+    maximum stay the schema's. A number slot keeps the stock rule: a float keeps its float type.
     """
-    kinds = expected if isinstance(expected, list) else [expected]
-    if isinstance(instance, float) and instance.is_integer() and any(k in kinds for k in ("integer", "number")):
-        yield ValidationError("integral numeric values require the integer representation")
-        return
-    yield from Draft202012Validator.VALIDATORS["type"](validator, expected, instance, schema)
+    try:
+        current_integer(instance)
+    except Refusal:
+        return False
+    return True
 
 
-Home4Validator = validators.extend(Draft202012Validator, {"pattern": _ecma_pattern, "type": _exact_numeric_type})
-# Retained bodies keep their originally admitted numeric domain and exact bytes.
-# This reader class never authorizes a current append or computes replacement pins.
-RetainedBodyValidator = validators.extend(Home4Validator, {"type": Draft202012Validator.VALIDATORS["type"]})
+class exact_digits:
+    """Scoped, restored int_max_str_digits(0): a valid integer of any length (CV-1100 sets no global cap)
+    never crashes a check while jsonschema formats its message; no value changes."""
+
+    def __enter__(self):
+        self.previous = sys.get_int_max_str_digits()
+        sys.set_int_max_str_digits(0)
+
+    def __exit__(self, *exc):
+        sys.set_int_max_str_digits(self.previous)
+        return False
+
+
+class _ExactDigitValidator:
+    """A jsonschema validator whose every validation runs under exact_digits (errors materialized inside)."""
+
+    def __init__(self, inner):
+        self._inner = inner
+
+    def is_valid(self, instance, *args):
+        with exact_digits():
+            return self._inner.is_valid(instance, *args)
+
+    def iter_errors(self, instance, *args):
+        with exact_digits():
+            return iter(list(self._inner.iter_errors(instance, *args)))
+
+    def validate(self, instance, *args):
+        with exact_digits():
+            return self._inner.validate(instance, *args)
+
+    def evolve(self, **changes):
+        return _ExactDigitValidator(self._inner.evolve(**changes))
+
+    def __getattr__(self, name):
+        if name == "_inner" or name.startswith("__"):
+            raise AttributeError(name)
+        return getattr(self._inner, name)
+
+
+class _ExactDigitFactory:
+    """Callable like the validator class; class attributes (check_schema, VALIDATORS, ...) pass through."""
+
+    def __init__(self, cls):
+        self.cls = cls
+
+    def __call__(self, *args, **kwargs):
+        return _ExactDigitValidator(self.cls(*args, **kwargs))
+
+    def check_schema(self, schema):
+        with exact_digits():
+            return self.cls.check_schema(schema)
+
+    def __getattr__(self, name):
+        if name == "cls" or name.startswith("__"):
+            raise AttributeError(name)
+        return getattr(self.cls, name)
+
+
+_Home4Class = validators.extend(Draft202012Validator, {"pattern": _ecma_pattern},
+                                type_checker=Draft202012Validator.TYPE_CHECKER.redefine("integer", _current_integer))
+# Retained bodies keep their originally admitted numeric domain (the stock JSON Schema integer)
+# and exact bytes. This reader class never authorizes a current append or computes replacement pins.
+_RetainedClass = validators.extend(_Home4Class, type_checker=Draft202012Validator.TYPE_CHECKER)
+Home4Validator = _ExactDigitFactory(_Home4Class)
+RetainedBodyValidator = _ExactDigitFactory(_RetainedClass)
 
 
 def ref_closure(registry: Registry, root_uri: str) -> tuple[int, int, list[str]]:
@@ -521,7 +665,21 @@ def storage_instance(definition: str, value: dict[str, Any]) -> str:
 
 
 def value_limit_check(err: list[str], definition: str, value: dict[str, Any], limit: int, by_reference: bool) -> None:
-    size = len(stored_bytes(definition, value))
+    encoded: dict[str, Any] = {}
+
+    def encodable() -> bool:
+        try:
+            encoded["bytes"] = stored_bytes(definition, value)
+        except ValueError:
+            return False
+        return True
+
+    codec = Facts("h4_value_codec", chain=True)
+    if codec.stop("H4L00_stored_encoding", encodable):
+        err.append("I10 the complete stored value has no canonical MessagePack encoding (SP-1100 integer range)")
+        return
+    codec.done()
+    size = len(encoded["bytes"])
     facts = Facts("h4_value_limit")
     facts["H4L01_reference_over_limit"] = not by_reference or size > limit
     facts["H4L02_inline_within_limit"] = by_reference or size <= limit
@@ -552,7 +710,7 @@ def layout_history_context_errors(ev: Any, source: Any, custody: Any) -> list[st
             ("H4H09_recipe_known", lambda: source["payload_validation_recipe"] in (
                 "workspace-layout-v2/original-json-schema", "workspace-layout-v2/typed-integer")),
             ("H4H10_source_commitment", lambda: custody.get("retained_source_sha256") == sha(canonical_msgpack(source))),
-            ("H4H11_source_event", lambda: source["event_bytes"] == canonical_msgpack(ev))):
+            ("H4H11_source_event", lambda: source["event_bytes"] == event_value_or_none(ev))):
         if facts.stop(row, check):
             return [facts.first_code()]
     facts.done()
@@ -649,7 +807,7 @@ def source_bytes_check(err: list[str], name: str, holder: dict[str, Any], layout
     decoded = None
     if media == SOURCE_MEDIA_TYPE:
         try:
-            decoded = json.loads(data.decode("utf-8"))
+            decoded = exact_json_loads(data.decode("utf-8"))
         except (UnicodeDecodeError, json.JSONDecodeError):
             decoded = None
     # The expected layout already passed the exact Home4 schema. Type-first
@@ -673,7 +831,7 @@ def slot_invariants(slot: dict[str, Any], store: PayloadStore = EMPTY_STORE, lim
         data = base64.b64decode(prior["core_bytes"], validate=True)
         key = f"home_layout_transaction_slot.v1:{slot['project_id']}:{slot['workspace_tab_id']}"
         wrapper = Facts("h4_slot_migration")
-        wrapper["H4M01_core_bytes_canonical"] = data == canonical_msgpack(core)
+        wrapper["H4M01_core_bytes_canonical"] = data == msgpack_or_none(core)
         wrapper["H4M02_core_sha"] = prior["core_sha256"] == sha(data)
         wrapper["H4M03_logical_key"] = prior["logical_key"] == key
         wrapper["H4M04_wrapper_storage"] = prior["storage_instance_id"] == slot["storage_instance_id"]
@@ -775,14 +933,16 @@ def receipt_invariants(r: dict[str, Any], store: PayloadStore = EMPTY_STORE, lim
             continue
         data = base64.b64decode(captured, validate=True)
         capture[rows[0]] = True
-        capture[rows[1]] = data == canonical_msgpack(original)
+        capture[rows[1]] = data == msgpack_or_none(original)
         capture[rows[2]] = digest_claim == sha(data)
     err.extend(capture.codes())
     owner = Facts("h4_receipt_owner")
     owner["H4O01_outcome_schema_ref"] = outcome is None or outcome["owner_result_schema_ref"] == OWNER_RESULT_REF
     owner["H4O02_outcome_hash"] = outcome is None or outcome["owner_result_sha256"] == r["original_owner_result_sha256"]
-    owner["H4O03_receipt_hash"] = outcome is None or r["original_owner_result_sha256"] == sha(canonical_json(o))
-    owner["H4O04_response_schema_ref"] = response is None or response.get("owner_result_schema_ref") in (None, OWNER_RESULT_REF)
+    owner_jcs = jcs_or_none(o) if outcome is not None else None
+    owner["H4O03_owner_result_jcs"] = outcome is None or owner_jcs is not None
+    owner["H4O04_receipt_hash"] = outcome is None or owner_jcs is None or r["original_owner_result_sha256"] == sha(owner_jcs)
+    owner["H4O05_response_schema_ref"] = response is None or response.get("owner_result_schema_ref") in (None, OWNER_RESULT_REF)
     err.extend(owner.codes())
     return err
 

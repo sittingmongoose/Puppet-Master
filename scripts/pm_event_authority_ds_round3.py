@@ -32,7 +32,7 @@ def normalized(base):
     legacy={'ts':event['occurred_at_utc'],'seq':event['sequence_id'],'type':event['event_type'],'payload':copy.deepcopy(event['payload'])}
     original={'legacy_envelope':legacy,'source':{'header_sequence_id':legacy['seq'],
         'identity_headers':{k:event[k] for k in ('project_id','thread_id','run_id','node_id','attempt_id','actor_ref','correlation_id')},
-        'bytes_hex':home.canonical_json(legacy).hex(),'segment_generation':1,'segment_name':'segment-00000000000000000001.seg','byte_offset':0}}
+        'bytes_hex':home.source_json(legacy).hex(),'segment_generation':1,'segment_name':'segment-00000000000000000001.seg','byte_offset':0}}
     value,reason,_=owner.normalized_legacy_case(original,ds.load('Plans/event_family_registry.json'),
         payload_validator=lambda p,s,**kw:list(context[-1][event['event_type']].evolve(schema=s).iter_errors(p)))
     assert reason is None,reason
@@ -181,14 +181,14 @@ def build():
     suite.negative('layout:history_forged_source_commitment','layout_history_source_commitment',
         lambda e=event:not ds.layout_event_errors(e,binding=slot['binding'],historical=True,
             historical_source=observation['historical_source'],custody={**custody,'retained_source_sha256':'f'*64}))
+    # CV-1100: producer_sequence_id is a current integer slot, so a runtime float in it is refused by
+    # the complete current writer at the envelope schema (shared current_integer), before any encoding.
+    # The SP-1100 physical encoder itself keeps a float's type and bytes; it is not a number guard.
     for token in ('1.0','1e0','-0.0'):
-        event=copy.deepcopy(values[0][1]['event']);event['producer_sequence_id']=json.loads(token)
-        def encoder_refuses(e=event):
-            try:route.encode(e,{})
-            except ValueError:return True
-            return False
-        suite.positive('encoder_refuses:'+token,encoder_refuses)
-        suite.negative('encoder_numeric_boundary:'+token,'encoder_numeric_representation',lambda e=event:not route.numeric_representation_errors(e))
+        for model,base in values:
+            changed=copy.deepcopy(base);changed['event']['producer_sequence_id']=json.loads(token)
+            check=created.creation_preflight_failures if model is created else reset.reset_preflight_failures
+            suite.negative(model.EVENT_TYPE+':writer_integer_slot:'+token,'envelope_integer_slot',lambda b=changed,check=check:not check(**b))
     return suite
 
 

@@ -80,7 +80,7 @@ def compaction_event_errors(event, *, historical=False):
         return errors
     payload = event['payload']
     identity = [payload['project_id'], payload['thread_id'], payload['operation_id']]
-    sha = lambda x: hashlib.sha256(home.canonical_json(x)).hexdigest()
+    sha = lambda x: hashlib.sha256(home.canonical_json(x)).hexdigest()  # shared RFC 8785 (qualified_jcs); strings only
     digest = sha([fixtures['storage_instance_id']] + identity)
     project_scope = event['scope_kind'] == 'project'
     facts = Facts('comp_event')
@@ -96,6 +96,7 @@ def compaction_event_errors(event, *, historical=False):
     facts['CE12_event_identity'] = event['event_id'] == 'evt_compaction_' + digest
     facts['CE13_idempotency_identity'] = event['idempotency_key'] == 'compaction:' + sha(identity)
     facts['CE14_receipt_identity'] = payload['compaction_receipt_ref'] == 'compaction_receipt:' + digest
+    facts['CE15_producer_jcs'] = historical or home.producer_jcs_ok(event)
     return facts.codes()
 
 def compaction_history(event, *, verified, withdrawn, deleted, live_revision):
@@ -323,12 +324,13 @@ def layout_event_errors(event, store=None, *, binding=None, historical=False, cu
                       historical_source=historical_source,custody=custody)
     replay = Facts('layout_replay')
     replay['LE08_replay_policy'] = historical or event['replay_policy'] == 'dedupe_by_idempotency_key'
+    replay['LE09_producer_jcs'] = historical or home.producer_jcs_ok(event)
     errors.extend(replay.codes())
     return errors
 
 def layout_history_observation(event, recipe='workspace-layout-v2/original-json-schema'):
     """Synthetic authenticated-source observation; never native custody proof."""
-    source={'event_bytes':home.canonical_msgpack(event),'payload_validation_recipe':recipe}
+    source={'event_bytes':route.canonical_msgpack(event),'payload_validation_recipe':recipe}
     custody={k:True for k in ('source_verified','access_allowed','deletion_allows_audit','checkpoint_read_token_valid')}
     custody['retained_source_sha256']=home.sha(home.canonical_msgpack(source))
     return {'historical_source':source,'custody':custody}
@@ -361,7 +363,7 @@ def add_layout_cases(suite):
             tab=copy.deepcopy(template);tab['ref']['path']='src/large_event_%04d.rs'%i;tab.update(mode='kept',pinned=False)
             ident='file:'+tab['ref']['path'];layout['tabs'][ident]=tab;layout['root']['tab_ids'].append(ident)
             if key=='candidate_layout':ids.append(ident)
-        data=home.canonical_json(layout);ident=route.blake3_hex(data);objects[ident]=('application/json',data)
+        data=home.source_json(layout);ident=route.blake3_hex(data);objects[ident]=('application/json',data)
         slot[key+'_sha256']=home.sha(data);slot[key+'_source_bytes']={'form':'payload_ref','blake3_id':ident,'byte_size':len(data),'media_type':'application/json'}
     slot['readback']['layout_sha256']=slot['candidate_layout_sha256']
     large=copy.deepcopy(event);large['payload']['affected_tab_ids']=ids

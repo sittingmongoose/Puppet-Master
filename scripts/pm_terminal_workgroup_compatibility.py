@@ -5,7 +5,7 @@ import argparse
 import copy
 import json
 from pathlib import Path
-from pm_home_layout_v2_slot_receipt import Home4Validator, Registry, Resource, ref_closure, refuse_remote
+from pm_home_layout_v2_slot_receipt import Home4Validator, Registry, Resource, exact_digits, ref_closure, refuse_remote
 from pm_ds_resources import memory_floor
 from pm_ds_tables import Facts
 
@@ -39,7 +39,8 @@ def retained_errors(value, validator):
 
     def json_value():
         try:
-            decoded['payload'] = json.loads(decoded['original'])
+            with exact_digits():
+                decoded['payload'] = json.loads(decoded['original'])
         except (ValueError, UnicodeDecodeError):
             return False
         return True

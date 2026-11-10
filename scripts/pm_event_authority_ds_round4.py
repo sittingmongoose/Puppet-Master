@@ -27,7 +27,7 @@ def source_copy(slot, which, path, value):
     for part in path[:-1]:
         target = target[part]
     target[path[-1]] = value
-    data = home.canonical_json(layout)
+    data = home.source_json(layout)
     changed[source]['bytes'] = base64.b64encode(data).decode()
     changed[which + '_layout_sha256'] = home.sha(data)
     if which == 'candidate' and changed['readback'] is not None:

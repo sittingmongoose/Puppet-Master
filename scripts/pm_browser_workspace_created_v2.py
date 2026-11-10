@@ -103,6 +103,7 @@ def core_relation_failures(value, root=ROOT):
     relations['V2R03_range_order'] = cursor is None or value['first_retained_sequence_id'] <= value['index_through_sequence_id']
     relations['V2R04_cursor_through'] = cursor is None or cursor['last_sequence_id'] == value['index_through_sequence_id']
     relations['V2R05_cursor_offsets'] = cursor is None or cursor['byte_offset'] < cursor['frame_end_offset']
+    relations['V2R05A_storage_uint64'] = body_route.storage_uint64_fields_ok(value)
     errors = relations.codes()
     times = {}
 

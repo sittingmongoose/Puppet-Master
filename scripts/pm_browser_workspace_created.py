@@ -65,8 +65,13 @@ def candidate_gate(root):
 
 
 def digest(value):
-    """Fixture/CAS digest only, not the EventRecord producer-semantic algorithm."""
-    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    """Fixture/CAS digest only, not the EventRecord producer-semantic algorithm (exact integers of any length)."""
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    finally:
+        sys.set_int_max_str_digits(previous)
 
 
 def scope_partition(project_id):
@@ -159,6 +164,7 @@ def checkpoint_failures(value, *, root=ROOT):
     facts["CC07_range_order"] = cursor is None or value["first_retained_sequence_id"] <= value["index_through_sequence_id"]
     facts["CC08_cursor_through"] = cursor is None or cursor["last_sequence_id"] == value["index_through_sequence_id"]
     facts["CC09_withdrawal_order"] = value["withdrawn_at_utc"] is None or instants["withdrawn_at_utc"] <= instants["updated_at_utc"]
+    facts["CC10_storage_uint64"] = body_route.storage_uint64_fields_ok(value)
     return facts.codes()
 
 def expected_storage_family(root=ROOT):
@@ -318,6 +324,8 @@ class CreationOracle:
         if f.stop("CO01_admitted", lambda: admitted is True):
             return f.first_code()
         if f.stop("CO02_preflight", lambda: not creation_preflight_failures(event, request, result, witness, require_new_identity=False, payload_store=payload_store)):
+            return f.first_code()
+        if f.stop("CO02A_producer_jcs", lambda: body_route.producer_jcs_ok(event)):
             return f.first_code()
         semantic = self.semantic_digest(event)
         key = (scope_partition(event["project_id"]), EVENT_TYPE, event["idempotency_key"])
