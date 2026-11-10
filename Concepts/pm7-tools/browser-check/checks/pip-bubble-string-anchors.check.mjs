@@ -20,6 +20,10 @@
 //         through SVG matrices), within the renderer's .01-grid precision. A visible top crossing must be explained
 //         by those two points, with their rounding uncertainty propagated. Retro's intentional 10/20 Hz draws are
 //         not treated as 60 Hz jumps; a line wholly above the pane has no visible top crossing yet.
+//         The far end of the finite segment stays at or above the suspension. Distance along the infinite line
+//         still passed when that end continued down into the pane (61a43604ff, Basic Dark's cloud and the same
+//         shape on every look); a far end more than .05 below the suspension, or inside the pane while the tie
+//         and the suspension are both above it, fails.
 //   QA-4b: no prop's destination (restBox) changes within a scene's full speech state. Queued new words may
 //         release the previous line's clearance; QA-6 still judges the suspension continuously across that change.
 // Route: every onboarding screen (ui.go, a real pointer arrival first so Pip wakes and talks), dwelt on while its
@@ -191,12 +195,21 @@ export function judgeStringFrames(fr, look, screen) {
 				// A rope's top follows the line through its fixed suspension and its painted attachment. Check that
 				// relation, rather than guessing a span from one side's sin(angle), or treating Retro's 100 ms draw
 				// as a 16 ms jump. A line ending above the pane has no painted crossing of its visible top yet.
-				let missing = false, worstTie = 0, worstTop = 0;
+				let missing = false, worstTie = 0, worstTop = 0, belowSusp = 0, intoPane = 0;
 				for (const {x,p} of data) {
 					if (hasHelper && !p.painted) missing=true;
 					const end=p.ends?.[si], tolerance=p.tieTol?.[si];
 					if (!end || tolerance == null) { missing=true; continue; }
 					worstTie=Math.max(worstTie,lineDist(p.lines[si],end)/tolerance);
+					const ln=p.lines[si], a=anchorOf(p);
+					const d0=Math.hypot(ln[0]-end[0], ln[1]-end[1]), d1=Math.hypot(ln[2]-end[0], ln[3]-end[1]);
+					const far=d0>=d1?[ln[0],ln[1]]:[ln[2],ln[3]];
+					// The upward continuation past the suspension is the hanging string. A far end below the
+					// suspension is the ray carried on into the pane; the infinite-line distance does not see it.
+					if (far[1] > a[1] + .05) belowSusp++;
+					const y0=x.visY0 == null ? x.anchorY : x.visY0;
+					const x0=x.vis ? x.vis[0] : -Infinity, x1=x.vis ? x.vis[2] : Infinity;
+					if (a[1] < y0 && end[1] < y0 && far[1] > y0 + .05 && far[0] >= x0 && far[0] <= x1) intoPane++;
 				}
 				for (const {x,p} of visible) {
 					const end=p.ends?.[si]; if(!end) continue;
@@ -208,8 +221,8 @@ export function judgeStringFrames(fr, look, screen) {
 					worstTop=Math.max(worstTop,Math.abs(crossAt(p.lines[si],y)-expected)/tolerance);
 				}
 				const worstD = Math.max(...dists);
-				if (missing || worstD > .05 || offSpan > .05 || hSpan > .05 || worstTie > 1 || worstTop > 1)
-					bad6.push(`${look} ${screen} ${p0.id} (${p0.kind}) string ${si}: anchor error ${worstD.toFixed(3)} u, offset/height span ${offSpan.toFixed(3)}/${hSpan.toFixed(3)} u (each <=.05); painted-tie error ${worstTie.toFixed(2)}x and unexplained top ${worstTop.toFixed(2)}x their render-precision bounds; ${visible.length} visible crossings, span ${Number.isFinite(cSpan)?cSpan.toFixed(1):'none'} u, missing geometry ${missing}`);
+				if (missing || worstD > .05 || offSpan > .05 || hSpan > .05 || worstTie > 1 || worstTop > 1 || belowSusp || intoPane)
+					bad6.push(`${look} ${screen} ${p0.id} (${p0.kind}) string ${si}: anchor error ${worstD.toFixed(3)} u, offset/height span ${offSpan.toFixed(3)}/${hSpan.toFixed(3)} u (each <=.05); painted-tie error ${worstTie.toFixed(2)}x and unexplained top ${worstTop.toFixed(2)}x their render-precision bounds; far end below the suspension on ${belowSusp} frame(s), inside the pane on ${intoPane} frame(s); ${visible.length} visible crossings, span ${Number.isFinite(cSpan)?cSpan.toFixed(1):'none'} u, missing geometry ${missing}`);
 			}
 		}
  return {bad6,badDest,noHelper,strings,dests};

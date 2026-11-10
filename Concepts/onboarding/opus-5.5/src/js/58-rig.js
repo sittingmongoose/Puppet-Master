@@ -511,11 +511,18 @@
            QA-6 requires the drawn line to pass through. */
         const anch = [pr.ax + (rp.ax - tg.ax) + (t[0] - tieMid[0]) * rp.sc, Lay.anchorY + rp.dy];
         const av = [anch[0] - end[0], anch[1] - end[1]], al = Math.hypot(av[0], av[1]);
-        /* The continuation is the ray from the painted tie through the rest anchor. A tie within
-           1 unit used to continue straight up instead, so while aim eased the tie past that
-           neighborhood the line left the anchor by the tie's sideways offset (QA-6, 0.17–0.37u).
-           Straight up remains only when the tie is on the anchor and the ray is undefined. */
-        const top = al > 1e-3 ? [anch[0] + av[0] / al * 200, anch[1] + av[1] / al * 200] : [anch[0], anch[1] - 200];
+        /* The continuation is the ray from the painted tie through the rest anchor, and only
+           upward. Extending it whenever the tie was more than 0.001 away sent the far end
+           downward once the tie sat above the anchor: Basic Dark's cloud drew one frame from
+           the anchor to a point inside the pane, and longer ties (Basic Light's kit) did the
+           same. A tie above or level with the anchor stops at the suspension. Straight up
+           remains only when the tie is on the anchor and the ray is undefined. A tie below
+           the anchor still continues 200 units past it, so the stroke stays on the anchor. */
+        let top = [anch[0], anch[1] - 200];
+        if (al > 1e-3) {
+          top = [anch[0] + av[0] / al * 200, anch[1] + av[1] / al * 200];
+          if (top[1] >= anch[1]) top = [anch[0], anch[1]];
+        }
         pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
         pr.strs[i].setAttribute('opacity', R(strOp));
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
