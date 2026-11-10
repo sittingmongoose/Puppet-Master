@@ -11,17 +11,26 @@ canon bindings stay assertions: they are not product refusals.
 """
 import ast
 import copy
-import datetime
 import hashlib
 import importlib
 import json
-import re
 import sys
 from functools import cache
 from pathlib import Path
 from jsonschema import Draft202012Validator as JsonSchemaValidator, FormatChecker, validators
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
+
+# Sweep part 2B: the gated shared rules (NUMRULE 58c2816ff3). CV-1100 current
+# integers and the qualified producer projection, SP-1100 physical profiles,
+# SP-1101 retained-original dispatch (pm_dg6b_original_custody composes the
+# shared RetainedDispatcher), and CV-1101 date-time profiles. The shared modules
+# are imported unchanged; this checker only composes them.
+from pm_event_numbers import (  # noqa: E402
+    APP_PHYSICAL, EVENT_VALUE, PRODUCER_FIELDS, Refusal, current_integer, loads_current_json, producer_semantic_bytes,
+    producer_semantic_digest, storage_uint64, storage_value_bytes)
+from pm_event_datetime import EVENT_RECORD, STORAGE_UTC_Z, date_time  # noqa: E402
+import pm_dg6b_original_custody as custody_store  # noqa: E402
 
 # Personas section 6, protected core built-ins only. First-party team Personas
 # are explicitly outside this set; source_id may name a protected copy source.
@@ -31,7 +40,7 @@ from pm_dg6b_table_persona_mutation import PROTECTED_PERSONA_IDS  # noqa: E402
 TABLE_PHASES = (
     'json', 'references', 'preparation_a', 'preparation_b',
     'adapter_record', 'adapter_source', 'adapter_history', 'adapter_storage', 'adapter_resolved',
-    'event_record', 'payload_schema', 'envelope_payload_schema', 'payload_types', 'source_scope',
+    'event_record', 'payload_schema', 'envelope_payload_schema', 'number_qualification', 'payload_types', 'source_scope',
     'persona_scope_schema', 'checkpoint_schema', 'owner_io_request', 'owner_io_result', 'selected_result_schema',
     'resolution_schema', 'resolution_storage_schema', 'operation_schema', 'operation_logical_schema',
     'append_policy', 'retry', 'source_grants', 'frozen_source', 'auth_scope', 'partition', 'identity_event',
@@ -39,7 +48,7 @@ TABLE_PHASES = (
     'envelope_a', 'envelope_b', 'payload_transport', 'checkpoint_join',
     'inline_size', 'reference', 'transport_integrity', 'operation_size', 'operation_ref',
     'operation_source', 'resolution_size', 'resolution_ref', 'resolution_source',
-    'history_flags', 'history_storage',
+    'history_flags', 'history_custody', 'history_storage',
     'persona_scope', 'persona_partition', 'persona_home', 'persona_library_home', 'definition_writer',
     'persona_mutation', 'persona_confirmation', 'persona_cas_lease', 'persona_source_trust', 'persona_reach',
     'persona_request_ref', 'persona_request_a', 'persona_request_b', 'persona_result_a', 'persona_result_b',
@@ -127,23 +136,41 @@ def refusal_sites():
 def digest_of(value, side):
     """Canonical identity of one side of an exact typed join.
 
-    SHA-256 of the canonical binding bytes, so bool/int and int/float are never
-    interchangeable. A value with no canonical bytes has no identity: each side
-    gets its own marker, so the join refuses it, as the former same_value()
-    equality did. This computes an observation; the row decides.
+    SHA-256 of the value's SP-236 general typed MessagePack bytes (SP-1100
+    EVENT_VALUE, the shared storage_value_bytes), so bool/int, int/float and the
+    sign of zero are never interchangeable. Sweep part 2B: this replaces the
+    SP-278 binding codec, whose uint64-only domain is the index binding's and not
+    an EventRecord value's; both give the same bytes for every value the binding
+    codec accepts. A value with no canonical bytes has no identity: each side gets
+    its own marker, so the join refuses it. This computes an observation; the
+    row decides.
     """
-    from pm_event_index_binding import binding_bytes
     try:
-        return hashlib.sha256(binding_bytes(value)).hexdigest()
-    except (TypeError, ValueError, UnicodeError):
+        return hashlib.sha256(storage_value_bytes(value, profile=EVENT_VALUE)).hexdigest()
+    except (Refusal, ValueError):
         return 'unencodable:' + side
 
 
 def error_count(definition, value, registry=None, format_checker=None):
+    """Number of schema errors; the verdict is computed with every integer renderable.
+
+    jsonschema writes the instance into each error message it yields (for example
+    "... is less than the minimum of 0"), and Python refuses to render an integer
+    over 4,300 digits (sys.int_info.default_max_str_digits). A 4,400-digit integer
+    below a slot minimum, or at a string slot, then raised ValueError instead of
+    being counted (sweep part 2B, the cross-lane 4,400-digit crash). The limit is
+    lifted only while this verdict is computed and restored after; no value is
+    converted, capped or changed, and the schema decides exactly as before.
+    """
     kwargs = {'format_checker': format_checker}
     if registry is not None:
         kwargs['registry'] = registry
-    return sum(1 for _ in Draft202012Validator(definition, **kwargs).iter_errors(value))
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        return sum(1 for _ in Draft202012Validator(definition, **kwargs).iter_errors(value))
+    finally:
+        sys.set_int_max_str_digits(previous)
 
 
 def project_partition(project_id):
@@ -152,10 +179,24 @@ def project_partition(project_id):
         return None
     return 'project~' + base64.urlsafe_b64encode(project_id.encode()).decode().rstrip('=')
 
-# JSON Schema's mathematical integer includes 1.0. The selected physical codec
-# accepts built-in integers only. Use that same domain at every typed boundary.
+def current_integer_slot(checker, value):
+    """CV-1100 at every schema integer slot: the shared current_integer.
+
+    JSON Schema's mathematical integer includes 1.0. The shared exact-integer
+    check refuses runtime floats, exact decimals, booleans and strings at every
+    slot the validator reaches, including nested and nullable slots. Each
+    slot's own minimum and maximum stay in its owner schema, evaluated by the
+    same validator at the same slot; no lane cap is added.
+    """
+    try:
+        current_integer(value)
+    except Refusal:
+        return False
+    return True
+
+
 Draft202012Validator = validators.extend(JsonSchemaValidator, type_checker=
-    JsonSchemaValidator.TYPE_CHECKER.redefine('integer', lambda checker, value: type(value) is int))
+    JsonSchemaValidator.TYPE_CHECKER.redefine('integer', current_integer_slot))
 
 
 def closed(properties, optional=()):
@@ -258,20 +299,21 @@ def load_plan(path):
 
 
 def strict_json(text):
-    duplicates = []
+    """Raw JSON ingress through the shared current parser (CV-1100, sweep part 2B).
 
-    def unique_pairs(pairs):
-        result = {}
-        for key, value in pairs:
-            if key in result:
-                duplicates.append(key)
-            result[key] = value
-        return result
+    loads_current_json refuses a duplicate key, malformed text, non-finite
+    constants, lone surrogates and every non-canonical integer token (leading
+    zero, negative zero), and turns every integer token into an exact int of any
+    length (never Python's 4,300-digit int() path) and every fractional or
+    exponent token into an exact decimal. A duplicate key is J01; every other
+    refusal of the shared parser is J02.
+    """
     try:
-        value, invalid = json.loads(text, object_pairs_hook=unique_pairs), False
-    except json.JSONDecodeError:
-        value, invalid = None, True
-    require('json', {'duplicate_keys': len(duplicates), 'invalid': invalid})
+        value, refusal = loads_current_json(text), None
+    except Refusal as exc:
+        value, refusal = None, exc.reason
+    require('json', {'duplicate_keys': 1 if refusal == 'duplicate_key' else 0,
+                     'invalid': refusal not in (None, 'duplicate_key')})
     return value
 
 
@@ -341,9 +383,14 @@ def store_operation(logical, force_reference=False):
 
 
 def store_value(logical, routing_keys, force_reference=False):
+    """SP-337 complete-value route of an application storage value.
+
+    The physical bytes are SP-1100 APP_PHYSICAL (CV-366 application MessagePack)
+    through the shared storage_value_bytes, the operation and resolution values'
+    own profile; equal to the former binding bytes for every value they encode.
+    """
     from blake3 import blake3
-    from pm_event_index_binding import binding_bytes
-    body = binding_bytes(logical)
+    body = storage_value_bytes(logical, profile=APP_PHYSICAL)
     if len(body) <= 16384 and not force_reference:
         return copy.deepcopy(logical), None
     digest = blake3(body).hexdigest()
@@ -379,20 +426,27 @@ def resolved_body(resolved):
 
 
 def decoded_body(body):
-    """(decoded, logical, re-encoded digest) of a referenced MessagePack body."""
+    """(decoded, logical, re-encoded digest) of a referenced MessagePack body.
+
+    The re-encoding is the body's own SP-1100 APP_PHYSICAL profile (shared
+    storage_value_bytes), so a canonical application body re-encodes to itself.
+    """
     import msgpack
     try:
         logical = msgpack.unpackb(body, raw=False, strict_map_key=True)
     except (TypeError, ValueError, msgpack.UnpackException):
         return False, None, None
-    return True, logical, digest_of(logical, 'decoded')
+    try:
+        reencoded = hashlib.sha256(storage_value_bytes(logical, profile=APP_PHYSICAL)).hexdigest()
+    except (Refusal, ValueError):
+        reencoded = 'unencodable:decoded'
+    return True, logical, reencoded
 
 
 def operation_contract(name, value, resolved, expected, schema):
-    from pm_event_index_binding import binding_bytes
     definition = schema['$defs'][name.replace('.', '_') + '_operation']
     operation_schema_contract(name, value, schema)
-    operation_value_size(binding_bytes(value))
+    operation_value_size(storage_value_bytes(value, profile=APP_PHYSICAL))
     if 'payload_ref' in value:
         ref = value['payload_ref']
         body = resolved_body(resolved)
@@ -423,9 +477,15 @@ def history_contract(name, case, schema):
     adapter_contract('history', case)
     require('history_flags', {key: case[key] for key in ('retained', 'authentic', 'admitted_when_written',
                                                           'family_withdrawn', 'reader_current', 'access_current', 'body_deleted')})
-    # Frozen source admission is checked at its original boundary. Neither the
-    # current writer policy nor later live state selects a historical reader.
-    digest = record_contract(name, case['original'], schema)
+    # SP-1101 (sweep part 2B): the original's write-time recipe is selected by its
+    # sealed custody through the shared RetainedDispatcher, never by the case; the
+    # frozen verifier recomputes its identity and joins from the sealed bytes.
+    custody, refusal = custody_store.resolve_original(name, case['original'])
+    require('history_custody', {'custody_refusal': refusal})
+    # The selected edition's at-write validation, with its frozen resources (each
+    # family has one edition). Neither the current writer policy nor later live
+    # state selects a historical reader.
+    digest = AT_WRITE_VALIDATORS[custody.recipe](name, case['original'], schema)
     historical_storage_contract(case['original'], case['storage_record'])
     return digest
 
@@ -437,12 +497,13 @@ def historical_storage_contract(original, storage_record):
     frame. It is not a new disk format or a native frame-verification claim.
     Compare complete exact canonical EventRecord bytes: the producer digest
     intentionally excludes Storage sequence/time and cannot prove this join.
+    The bytes are SP-236 general typed MessagePack (SP-1100 EVENT_VALUE, shared
+    storage_value_bytes), not the SP-278 binding codec's narrower domain.
     """
-    from pm_event_index_binding import binding_bytes
     adapter_contract('storage', storage_record)
     try:
-        record_hex = binding_bytes(original['event_record']).hex()
-    except (TypeError, ValueError, UnicodeError):
+        record_hex = storage_value_bytes(original['event_record'], profile=EVENT_VALUE).hex()
+    except (Refusal, ValueError):
         record_hex = None
     require('history_storage', {
         'authenticated': storage_record['authenticated'],
@@ -487,13 +548,52 @@ def semantic(name, payload, scope_key, event_id, original=None, server_id=None):
 
 FORMAT = FormatChecker()
 
-@FORMAT.checks("date-time", raises=(ValueError, TypeError))
-def utc_datetime(value):
-    if type(value) is not str or re.fullmatch(
-            r'[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(?:\.[0-9]+)?Z', value) is None:
-        return False
-    datetime.datetime.fromisoformat(value[:-1] + "+00:00")
-    return True
+
+@FORMAT.checks('date-time', raises=Refusal)
+def event_record_date_time(value):
+    """CV-1101 (sweep part 2B): the shared pm_event_datetime.date_time predicate,
+    EventRecord profile, at every format: date-time this lane validates.
+
+    It replaces the lane's own uppercase-Z grammar (utc_datetime). Covered fields:
+    EventRecord occurred_at_utc, every family payload ts, the device-code
+    expires_at, and their stored-operation copies. Storage-assigned
+    observed_at_utc and persisted_at_utc take CV-253's storage_utc_z profile on
+    top of this (storage_field_errors). As in the shared format_checker, every
+    value the validator treats as a string reaches the predicate (a str subclass
+    refuses, date_time_type) and a non-string is left to type. The string is
+    returned unchanged; nothing is rewritten.
+    """
+    return True if not isinstance(value, str) else date_time(value, profile=EVENT_RECORD) == value
+
+
+STORAGE_TIMESTAMP_FIELDS = ('observed_at_utc', 'persisted_at_utc')
+
+
+def storage_field_errors(event):
+    """The enforced EventRecord validator's Storage-field composition (sweep part 2B).
+
+    CV-1101 / CV-253: Storage-assigned observed_at_utc and persisted_at_utc take
+    date_time(..., profile=STORAGE_UTC_Z): terminal uppercase Z only. SP-1100:
+    Storage sequence_id is an exact uint64 (shared storage_uint64); the envelope
+    schema itself sets only minimum 0. Counted into the EventRecord schema verdict
+    (ER01), beside the schema's own errors; a non-string or non-int value is the
+    schema's own type error.
+    """
+    if type(event) is not dict:
+        return 0
+    errors = 0
+    for field in STORAGE_TIMESTAMP_FIELDS:
+        if isinstance(event.get(field), str):
+            try:
+                date_time(event[field], profile=STORAGE_UTC_Z)
+            except Refusal:
+                errors += 1
+    if type(event.get('sequence_id')) is int:
+        try:
+            storage_uint64(event['sequence_id'])
+        except Refusal:
+            errors += 1
+    return errors
 
 def persona_scope_key(payload):
     scope_schema = workflow_scope_schema()
@@ -641,10 +741,9 @@ def resolution_value_size(body):
 
 
 def resolution_storage_contract(value, resolved, expected, schema):
-    from pm_event_index_binding import binding_bytes
     definition = schema['$defs']['persona_selected_resolution_storage']
     require('resolution_storage_schema', {'errors': error_count(definition, value, format_checker=FORMAT)})
-    resolution_value_size(binding_bytes(value))
+    resolution_value_size(storage_value_bytes(value, profile=APP_PHYSICAL))
     if 'payload_ref' in value:
         ref = value['payload_ref']
         body = resolved_body(resolved)
@@ -769,14 +868,18 @@ def stage_contract(name, case, schema):
     return stages[case['stage']]()  # an unknown fixture stage is a harness KeyError
 
 
+SEMANTIC_FIELDS = ('event_type', 'scope_kind', 'project_id', 'thread_id', 'run_id', 'node_id',
+                   'attempt_id', 'actor_ref', 'requested_account_ref', 'effective_account_ref',
+                   'occurred_at_utc', 'producer_sequence_id', 'correlation_id', 'causation_event_id',
+                   'parent_event_id', 'idempotency_key', 'payload_schema_id', 'payload', 'payload_ref',
+                   'redaction_profile', 'migration')
+# CV-317: the caller-owned semantic body is the shared helper's producer projection, field for field.
+assert SEMANTIC_FIELDS == PRODUCER_FIELDS
+
+
 def semantic_record(record):
     """CV EventRecord caller-owned semantic body; never Storage metadata."""
-    fields = ('event_type', 'scope_kind', 'project_id', 'thread_id', 'run_id', 'node_id',
-              'attempt_id', 'actor_ref', 'requested_account_ref', 'effective_account_ref',
-              'occurred_at_utc', 'producer_sequence_id', 'correlation_id', 'causation_event_id',
-              'parent_event_id', 'idempotency_key', 'payload_schema_id', 'payload', 'payload_ref',
-              'redaction_profile', 'migration')
-    return {key: record[key] for key in fields}
+    return {key: record[key] for key in SEMANTIC_FIELDS}
 
 
 def strict_patterns(value):
@@ -849,21 +952,58 @@ def append_contract(name, case, schema, original=None):
         o = original['event_record']
         require('retry', {'event_id': e['event_id'], 'original_event_id': o['event_id'],
                           'idempotency_key': e['idempotency_key'], 'original_idempotency_key': o['idempotency_key'],
-                          'semantic_digest': digest_of(semantic_record(e), 'candidate'),
-                          'original_semantic_digest': digest_of(semantic_record(o), 'original')})
+                          'semantic_digest': producer_digest(e, 'candidate'),
+                          'original_semantic_digest': producer_digest(o, 'original')})
     return digest
+
+
+def producer_digest(event, side):
+    """CV-317 producer semantic digest through the shared producer_semantic_digest (CV-1100).
+
+    Sweep part 2B: the retry body is the envelope owner's producer projection
+    under its own recipe, qualified RFC 8785 JCS, instead of the former binding
+    digest of the same projection. A projection without exact JCS bytes has no
+    digest: each side gets its own marker, so the join refuses it.
+    """
+    try:
+        return producer_semantic_digest(event)
+    except Refusal:
+        return 'unqualified:' + side
+
+
+def number_qualification(event, payload):
+    """CV-1100 / SP-1100 route qualification before any join or effect (sweep part 2B).
+
+    PQ01: the CV-317 producer projection has exact RFC 8785 JCS bytes (shared
+    producer_semantic_bytes): an integer beyond 2^53, or one whose emitted
+    decimal differs, is an unavailable exact encoding and refuses here, before
+    effects, instead of crashing the digest at the end. PQ02: the logical
+    payload has SP-236 EVENT_VALUE physical bytes (shared storage_value_bytes),
+    which the SP-337 inline or referenced body needs; it is the only part an
+    externalized payload leaves outside the projection.
+    """
+    try:
+        producer_semantic_bytes(event)
+        producer = True
+    except Refusal:
+        producer = False
+    try:
+        storage_value_bytes(payload, profile=EVENT_VALUE)
+        physical = True
+    except (Refusal, ValueError):
+        physical = False
+    require('number_qualification', {'producer_qualified': producer, 'payload_physical': physical})
 
 
 def record_contract(name, case, schema):
     """Immutable envelope, payload and frozen at-write source validation."""
-    import rfc8785
-    from pm_event_index_binding import binding_bytes
     adapter_contract('record', case)
     p, s, e = case['payload'], case['source'], case['event_record']
     event_record_contract(e)
     payload_contract(name, p, schema)
     if e['payload_ref'] is None:
         payload_contract(name, e['payload'], schema, phase='envelope_payload_schema')
+    number_qualification(e, p)
     adapter_contract('source', s, name)
     scope = source_scope(s)
     require('source_grants', {'writer_current': s['writer_current'], 'access_current': s['access_current']})
@@ -893,7 +1033,8 @@ def record_contract(name, case, schema):
         'effective_account_ref': e['effective_account_ref'], 'source_effective_account_ref': s['effective_account_ref'],
         **{field: e[field] for field in ('thread_id', 'run_id', 'node_id', 'attempt_id')},
         **{'lineage_' + field: lineage.get(field) for field in ('thread_id', 'run_id', 'node_id', 'attempt_id')}})
-    body_bytes = binding_bytes(p)  # byte-stage input only, not the SP-278 digest domain
+    # Byte-stage input only: the payload's SP-236 EVENT_VALUE bytes (PQ02 proved they exist).
+    body_bytes = storage_value_bytes(p, profile=EVENT_VALUE)
     transport(body_bytes, e['payload_ref'], case['resolved_payload'])
     require('payload_transport', {'envelope_payload_digest': digest_of(e['payload'], 'envelope'),
                                   'expected_payload_digest': digest_of(p if e['payload_ref'] is None else {}, 'expected')})
@@ -906,12 +1047,19 @@ def record_contract(name, case, schema):
         'selection_storage_instance_id': token['source_selection']['storage_instance_id'],
         'checkpoint_key': token['checkpoint_key'], 'payload_storage_instance_id': p['storage_instance_id'],
         'expected_checkpoint_key': 'event_record_index_checkpoint.v1:' + p['storage_instance_id']})
-    return hashlib.sha256(rfc8785.dumps(semantic_record(e))).hexdigest()
+    # CV-317 producer digest through the shared call (PQ01 qualified it above).
+    return producer_semantic_digest(e)
 
 
 def event_record_contract(event):
+    """The enforced EventRecord validator (CV-1101): the pinned envelope schema with the
+    shared date-time predicate, composed with CV-253 and SP-1100 on the Storage fields."""
     envelope = load_plan('Plans/event_record.schema.json')
-    require('event_record', {'errors': error_count(envelope, event, format_checker=FORMAT)})
+    require('event_record', {'errors': error_count(envelope, event, format_checker=FORMAT) + storage_field_errors(event)})
+
+
+# SP-1101: each family edition's at-write validator, keyed by its frozen recipe tuple.
+AT_WRITE_VALIDATORS = {custody_store.written_tuple(name): record_contract for name in custody_store.FAMILIES}
 
 
 def expect_failure(call, expected, name, label, row=None):
@@ -1070,6 +1218,16 @@ def check_append_contract(row, schema):
         else:
             expect_failure(call, code, name, label, row=target)
     complete['round9_negatives'] = sum(target is not None for _, target, _, _ in round9)
+    # Sweep part 2B witnesses: shared date-time profiles, number rule, corpus and SP-1101 custody.
+    from pm_dg6b_p2b_cases import family_cases as p2b_family_cases
+    p2b = p2b_family_cases(globals(), row, schema)
+    for label, target, code, call in p2b:
+        if target is None:
+            call()
+        else:
+            expect_failure(call, code, name, label, row=target)
+    complete['p2b_negatives'] = sum(target is not None for _, target, _, _ in p2b)
+    complete['p2b_positives'] = sum(target is None for _, target, _, _ in p2b)
     return {**complete, 'positive_envelopes': len(row['append_valid']), 'negative_envelopes': len(row['append_invalid']),
             'replay_only_refused': True, 'transport_boundary_bytes': [16383, 16384, 16385],
             'operation_cases': len(row['operation_cases']), 'history_cases': len(row['history_cases']),
@@ -1107,6 +1265,8 @@ def run(fixtures_path=None, family=None):
     assert not order_errors, ('table_require_order', order_errors)
     assert not sites, ('refusal_outside_guard_table', sites)
     CONTEXT = 'shared'
+    # SP-1101 composition: the frozen recipe map and the committed sealed originals, before any read.
+    custody_store.install_original_custody()
     schema = json.loads((ROOT / 'Plans/dg6b_event_contracts.schema.json').read_text())
     resolved_references = resolve_schema_graph(schema)
     fixtures = strict_json((fixtures_path or ROOT / 'Plans/dg6b_event_contract_fixtures.json').read_text())

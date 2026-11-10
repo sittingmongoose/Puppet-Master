@@ -9,7 +9,13 @@ import hashlib
 import json
 from dataclasses import dataclass
 
-from pm_event_index_binding import binding_bytes
+from pm_event_numbers import APP_PHYSICAL, EVENT_VALUE, storage_value_bytes
+import pm_dg6b_original_custody as custody_store
+
+
+def event_value_bytes(value):
+    """SP-236 general typed MessagePack (SP-1100 EVENT_VALUE), the shared codec (sweep part 2B)."""
+    return storage_value_bytes(value, profile=EVENT_VALUE)
 
 
 def clone(value):
@@ -60,7 +66,7 @@ def rebuild(m, name, case):
     # Recompute transport bytes, including the new semantic defect. All
     # supported test values use the actual production codec here.
     from blake3 import blake3
-    body = binding_bytes(p)
+    body = event_value_bytes(p)
     if len(body) <= 16384:
         e['payload'], e['payload_ref'], c['resolved_payload'] = clone(p), None, None
     else:
@@ -365,7 +371,10 @@ def family_probes(m, row):
     for field in ('requested_account_ref', 'effective_account_ref'):
         bad = clone(hbase)
         bad['original']['event_record'][field] = 'ref:account/foreign'
-        bad['storage_record']['event_record_bytes_hex'] = binding_bytes(bad['original']['event_record']).hex()
+        bad['storage_record']['event_record_bytes_hex'] = event_value_bytes(bad['original']['event_record']).hex()
+        # The writer wrote this original (Storage sealed it, SP-1101), so custody
+        # resolves and the at-write account join alone refuses it.
+        custody_store.seal_original(name, bad['original'])
         add('history_account_custody/' + field, 'envelope_source_join', hbase, bad,
             'original.event_record.' + field, 'history')
     for fields, guard in [(('retained','authentic','admitted_when_written'),'historical_provenance'),
@@ -407,7 +416,7 @@ def family_probes(m, row):
     import msgpack
     from blake3 import blake3
     body=msgpack.packb(logical,use_bin_type=True)
-    assert body!=binding_bytes(logical)
+    assert body!=storage_value_bytes(logical,profile=APP_PHYSICAL)
     bad=clone(opbase);ref={'blake3_id':blake3(body).hexdigest(),'byte_size':len(body),'media_type':'application/msgpack'}
     bad['value']['payload_ref']=clone(ref)
     bad['resolved']={'ref':'ref:payload/'+ref['blake3_id'],**ref,'bytes_hex':body.hex(),'durable':True,'access_current':True}

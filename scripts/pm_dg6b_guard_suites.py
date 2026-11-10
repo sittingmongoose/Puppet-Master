@@ -49,6 +49,8 @@ PROBE_ROWS = {
     'checkpoint_schema': ('CK01',), 'scope': ('AU01', 'SC01', 'SS01', 'PC0', 'PSS01'), 'inline_body_too_large': ('IS01',),
     'original_source_join': ('FS', 'RQ', 'QK', 'RR', 'HC', 'LC01', 'SL'), 'resolution_value_too_large': ('RZ01',),
     'resolution_source_join': ('RJ01',), 'resolution_storage_schema': ('RT01',), 'resolution_schema': ('RS01',),
+    # Sweep part 2B: retained originals Storage never sealed are refused by SP-1101 custody first.
+    'historical_original_recipe': ('HR01',),
 }
 
 

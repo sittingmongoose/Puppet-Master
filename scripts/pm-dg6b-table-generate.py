@@ -83,6 +83,12 @@ phase('payload_schema', 'Schema occurrence: the exact family payload.', [
     schema_row('PS01_payload', '/errors', 'the exact family payload schema reports no error', 'payload_schema')])
 phase('envelope_payload_schema', 'Schema occurrence: the inline EventRecord payload body.', [
     schema_row('EP01_envelope_payload', '/errors', 'the inline envelope payload passes the family payload schema', 'payload_schema')])
+phase('number_qualification', 'CV-1100 / SP-1100 route qualification, before any join or effect (sweep part 2B).', [
+    ('PQ01_producer_jcs', '/event_record', 'the CV-317 producer projection has exact RFC 8785 JCS bytes (CV-1100)',
+     'producer_number_domain', "value['producer_qualified'] is not True"),
+    ('PQ02_payload_physical', '/payload', 'the logical payload has SP-236 EVENT_VALUE bytes (SP-1100; projection qualified)',
+     'payload_number_domain', "value['producer_qualified'] is True and value['payload_physical'] is not True"),
+])
 phase('payload_types', 'Schema occurrence: the family payload type shape at relational helpers.', [
     schema_row('PT01_payload_types', '/errors', 'the family payload type shape reports no error', 'payload_types')])
 phase('source_scope', 'Schema occurrence: the source WorkflowScopeV2 with strict identifier ends.', [
@@ -291,6 +297,10 @@ phase('history_flags', 'Retained-history provenance, withdrawal and access flags
     ('HF05_reader_current', '/reader_current', 'is exactly True', 'historical_withdrawn', "value['reader_current'] is not True"),
     ('HF06_access_current', '/access_current', 'is exactly True', 'historical_access', "value['access_current'] is not True"),
     ('HF07_body_deleted', '/body_deleted', 'is exactly False', 'historical_access', "value['body_deleted'] is not False"),
+])
+phase('history_custody', 'SP-1101 retained-original custody and frozen recipe selection (sweep part 2B).', [
+    ('HR01_original_custody', '/original', 'resolves through SP-1101 sealed custody to a frozen recipe that verifies it',
+     'historical_original_recipe', "value['custody_refusal'] is not None"),
 ])
 phase('history_storage', 'Retained original joined to the authenticated Storage record.', [
     ('HS01_authenticated', '/storage_record/authenticated', 'is exactly True', 'historical_storage_source',
