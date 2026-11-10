@@ -21,6 +21,9 @@ async function look(t, name) {
 	await run(t, (n) => window.PSX.setLook(n), name);
 	await t.root.waitForFunction((n) => { const th = document.documentElement.getAttribute('data-theme') || ''; return /^nier/.test(n) ? th.endsWith(n.slice(4)) && (th.startsWith('nier') || !!(window.PM_NIER && window.PM_NIER.on && window.PM_NIER.on())) : th === n; }, name, { timeout: 8000 }).catch(() => {});
 	await settle(t, 300);
+	const got = await run(t, () => ({ theme: document.documentElement.getAttribute('data-theme') || '', nier: !!(window.PM_NIER && window.PM_NIER.on && window.PM_NIER.on()) }));
+	const [fam, mode] = name.split('-');
+	await t.check(`look ${name} applied`, fam === 'nier' ? (got.nier || got.theme.startsWith('nier')) && got.theme.endsWith('-' + mode) : !got.nier && got.theme === name, JSON.stringify(got));
 	await run(t, () => window.PSX.hideNote());
 }
 async function reset(t) { await run(t, () => window.PSX.command({ cmd: 'reset' })); await settle(t, 700); }
@@ -197,14 +200,16 @@ export default async function (t) {
 			['harbor on Studio Mac with iPhone', { project: 'harbor', on: 'studio', device: 'iphone' }]
 		];
 		for (const lk of looks(t)) {
-			await look(t, lk);
 			for (const [wname, w] of WIDTHS) {
 				await t.viewport(w, w >= 1920 ? 1080 : 900);
 				await reset(t);
+				// a reset brings back the demo's opening look, so the look is set after it
+				await look(t, lk);
 				await page(t, 'models');
+				if (wname === '1920' || wname === '860') await pic(t, `head-own-${lk}-${wname}`, `The header in your own view, ${lk}, ${wname}`, '#pm-settings-root .document-toolbar');
 				const seen = [];
 				for (const [name, ctx] of VIEWS) {
-					if (ctx.cmd) await reset(t); else { await run(t, (c) => window.PSX.setCtx(c), ctx); await settle(t, 600); }
+					if (ctx.cmd) { await reset(t); await look(t, lk); await page(t, 'models'); } else { await run(t, (c) => window.PSX.setCtx(c), ctx); await settle(t, 600); }
 					const h = await run(t, HEAD);
 					seen.push([name, h]);
 					const viewing = /Home NAS|iPhone|Studio Mac/.test(name);
@@ -218,11 +223,8 @@ export default async function (t) {
 					await t.equal(`${lk} · ${wname} · ${name}: Change is where it was`, JSON.stringify(h.change), JSON.stringify(base.change));
 					await t.equal(`${lk} · ${wname} · ${name}: the page under it is where it was`, JSON.stringify(h.first && h.first.slice(1, 2)), JSON.stringify(base.first && base.first.slice(1, 2)));
 				}
-				if (wname === '1920' || wname === '860') {
-					await pic(t, `head-own-${lk}-${wname}`, `The header in your own view, ${lk}, ${wname}`, '#pm-settings-root .document-toolbar');
-					await run(t, () => window.PSX.setCtx({ project: 'harbor', on: 'studio', device: 'iphone' })); await settle(t, 600);
-					await pic(t, `head-viewing-${lk}-${wname}`, `Viewing harbor on Studio Mac with iPhone's screen, ${lk}, ${wname}: same box, framed, Stop viewing`, '#pm-settings-root .document-toolbar');
-				}
+				// the last view is harbor on Studio Mac with iPhone's screen
+				if (wname === '1920' || wname === '860') await pic(t, `head-viewing-${lk}-${wname}`, `Viewing harbor on Studio Mac with iPhone's screen, ${lk}, ${wname}: same box, framed, Stop viewing`, '#pm-settings-root .document-toolbar');
 			}
 		}
 		// Stop viewing goes back, and the keyboard stays on the header
