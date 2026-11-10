@@ -1,5 +1,11 @@
 # Static DR contract-model dependencies; install in an isolated venv.
+# Sweep part 2B: the shared NUMRULE helpers (scripts/pm_event_numbers.py,
+# scripts/pm_event_datetime.py and its inventory gate) run in this same venv;
+# their date-time predicate is in-repo, so no RFC 3339 package is needed.
 jsonschema==4.23.0
+referencing==0.36.2
+attrs==25.4.0
 rfc8785==0.1.4
-blake3==1.0.8
+blake3==1.0.11
 msgpack==1.1.2
+markdown-it-py==3.0.0
