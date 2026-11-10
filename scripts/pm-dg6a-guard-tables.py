@@ -12,7 +12,17 @@ only) refusing row. This runner is unscanned
 adapter code; the tool scans only the table module of the phase under test.
 Credit is copied from the tool's own report; this driver adds none.
 
-Usage: python3 scripts/pm-dg6a-guard-tables.py --out <dir> [--phase <phase>]...
+Generated phases (scripts/pm-dg6a-table-generate.py; dispatched by
+scripts/pm_dg6a_tables.py) are collected in one pass: every complete family
+suite (alert x4, panel x2, concern.created, Card 5 x9) runs its own main()
+under pm_dg6a_tables.RECORDER. A passing phase evaluation is a control; an
+evaluation refused by exactly one row is a negative of that row; one refused
+by two or more rows is reported (not_single_row) and never used as proof.
+The lane matrix checks every distinct negative against every row of its
+table; the tool then runs per table on up to --per-row negatives per row
+(families round-robin) and up to ten controls.
+
+Usage: python3 scripts/pm-dg6a-guard-tables.py --out <dir> [--phase <phase>]... [--generic-only|--handwritten-only]
 With no --phase, every phase runs serially in declaration order.
 """
 import argparse
@@ -38,7 +48,144 @@ import pm_dg6a_table_cursor as cursor_table  # noqa: E402
 import pm_dg6a_table_panel_scope as panel_scope_table  # noqa: E402
 import pm_dg6a_table_concern_scope as concern_scope_table  # noqa: E402
 
+import pm_dg6a_tables as tables  # noqa: E402
+
 RETURN_SOURCE = 'return g.Case(table, check, context)'
+SUITES = (
+    [('pm-alert-event-contracts-check.py', f) for f in ('alert.acknowledged', 'alert.dismissed', 'alert.rule_muted', 'alert.snoozed')]
+    + [('pm-panel-event-contracts-check.py', f) for f in ('panel.redocked', 'panel.undocked')]
+    + [('pm-concern-created-contracts-check.py', 'concern.created')]
+    + [('pm-card5-event-contracts-check.py', f) for f in (
+        'bundle.annotation_state_changed', 'bundle.note_created', 'bundle.note_status_changed', 'concern.assigned',
+        'concern.evidence_linked', 'concern.promoted', 'concern.reopened', 'concern.resolved', 'concern.updated')])
+
+
+def generated_phases():
+    spec = importlib.util.spec_from_file_location('dg6a_table_spec', ROOT / 'scripts/pm-dg6a-table-generate.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return list(module.MODULES)
+
+
+class Collector:
+    """pm_dg6a_tables.RECORDER: dedupes (phase, observation) records as they arrive."""
+
+    def __init__(self):
+        self.slots, self.family, self.records = {}, None, 0
+
+    def append(self, record):
+        phase, observed, refusals = record
+        self.records += 1
+        slot = self.slots.setdefault(phase, dict(controls={}, negatives={}, multi={}, records=0))
+        slot['records'] += 1
+        key = json.dumps(observed, sort_keys=True)
+        if not refusals:
+            entry = slot['controls'].setdefault(key, dict(id=f'control/{phase}/{len(slot["controls"])}', value=observed, families=[]))
+        elif len(refusals) == 1:
+            row, code = refusals[0]
+            entry = slot['negatives'].setdefault(row + key, dict(id=f'negative/{phase}/{len(slot["negatives"])}', value=observed,
+                                                                 target=row, code=code, families=[]))
+        else:
+            entry = slot['multi'].setdefault(key, dict(value=observed, rows=[r for r, _ in refusals], families=[]))
+        if self.family not in entry['families']:
+            entry['families'].append(self.family)
+
+
+def collect_generic():
+    """Run every complete family suite once under the recorder."""
+    import contextlib
+    import io
+    collector = Collector()
+    argv, results = sys.argv, {}
+    try:
+        tables.RECORDER = collector
+        for filename, family in SUITES:
+            name = 'dg6a_generic_' + family.replace('.', '_')
+            checker = load_checker(name, filename)
+            sys.modules[name] = checker  # the alert/panel/concern mains pass sys.modules[__name__] to their drivers
+            collector.family = family
+            sys.argv = [str(ROOT / 'scripts' / filename), '--family', family]
+            out = io.StringIO()
+            try:
+                with contextlib.redirect_stdout(out):
+                    checker.main()
+            finally:
+                sys.modules.pop(name, None)
+            text = out.getvalue()
+            results[family] = json.loads(text[text.index('{'):])['cases'] if '{' in text else None
+    finally:
+        tables.RECORDER = None
+        sys.argv = argv
+    return collector, results
+
+
+def lane_matrix(phase, slot):
+    rows = tables.rows(phase)
+    problems = []
+    for c in slot['controls'].values():
+        failing = [n for n, pred in rows if pred(c['value'], None) is not None]
+        if failing:
+            problems.append(dict(case=c['id'], kind='control_refused', rows=failing))
+    for n in slot['negatives'].values():
+        failing = [name for name, pred in rows if pred(n['value'], None) is not None]
+        if failing != [n['target']]:
+            problems.append(dict(case=n['id'], kind='not_single_row', target=n['target'], rows=failing))
+    return problems
+
+
+def select(items, limit):
+    buckets = {}
+    for item in items:
+        buckets.setdefault(item['families'][0], []).append(item)
+    out, order = [], sorted(buckets)
+    while len(out) < limit and any(buckets.values()):
+        for name in order:
+            if buckets[name] and len(out) < limit:
+                out.append(buckets[name].pop(0))
+    return out
+
+
+def run_generic_phase(phase, slot, out, max_rss, per_row):
+    started = time.monotonic()
+    names = [n for n, _ in tables.rows(phase)]
+    controls = select(list(slot['controls'].values()), 10)
+    single = [n for n in slot['negatives'].values()]
+    negatives = []
+    for row in names:
+        negatives += select([n for n in single if n['target'] == row], per_row)
+    summary = dict(phase=phase, rows=names, records=slot['records'], controls_distinct=len(slot['controls']),
+                   negatives_distinct=len(slot['negatives']), multi_row=[dict(rows=m['rows'], families=m['families'])
+                                                                         for m in slot['multi'].values()],
+                   rows_without_negative=[r for r in names if not any(n['target'] == r for n in single)],
+                   lane_matrix=lane_matrix(phase, slot))
+    if not controls or not negatives:
+        summary.update(tool_status='NOT_RUN', reason='no control' if not controls else 'no negative', proved=[],
+                       unproved=names, seconds=round(time.monotonic() - started, 1))
+        return summary
+    path = 'scripts/' + tables.PREFIX + phase + '.py'
+    module = importlib.import_module(tables.PREFIX + phase)
+    gc = [g.Control(c['id'], copy.deepcopy(c['value']), 'synthetic') for c in controls]
+    gn = [g.Negative(n['id'], copy.deepcopy(n['value']), n['target'], n['code'], gc[0].id,
+                     'checker witness ' + n['id'] + ' (' + ','.join(n['families'][:3]) + ')') for n in negatives]
+    suite = g.Suite('DG6A ' + phase, module.case, gc, gn, (path,), ROOT,
+                    non_guards=[g.NonGuard(path, 'case', 'return', RETURN_SOURCE,
+                                           'Construct the fresh execution Case; this return makes no acceptance or refusal decision.')])
+    if available_gib() < 13.5:
+        raise SystemExit('refusing to start the tool run under 13.5 GiB available')
+    stops = [e for e in g.prescan_sources(ROOT / path) if e['kind'] in g.STATIC_STOP_KINDS]
+    if stops:
+        raise SystemExit('prescan stop kinds: ' + json.dumps(stops, indent=1, default=str))
+    report = g.run(suite, memory=g.MemoryGate(max_rss, 10, 11, 30, 2700))
+    (out / (phase + '.json')).write_text(json.dumps(report, indent=1, sort_keys=True, default=str) + '\n')
+    (out / (phase + '.md')).write_text(g.markdown(report))
+    rows = report.get('rows', [])
+    summary.update(tool_status=report['status'], tool_controls=len(gc), tool_negatives=len(gn),
+                   proved=sorted(r['id'] for r in rows if r.get('proved')),
+                   unproved=sorted(report.get('unproved_guards', [])),
+                   failure_kinds=sorted({f['kind'] for f in report.get('failures', [])}),
+                   evaluations=report.get('evaluations'), seconds=round(time.monotonic() - started, 1),
+                   report_sha256=hashlib.sha256((out / (phase + '.json')).read_bytes()).hexdigest())
+    return summary
 
 
 def load_checker(name, filename):
@@ -373,14 +520,37 @@ def run_phase(phase, out, max_rss):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('--phase', action='append', choices=list(PHASES), dest='phases')
+    generic = generated_phases()
+    parser.add_argument('--phase', action='append', choices=list(PHASES) + generic, dest='phases')
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--max-rss', type=int, default=6144)
+    parser.add_argument('--per-row', type=int, default=5)
+    parser.add_argument('--generic-only', action='store_true')
+    parser.add_argument('--handwritten-only', action='store_true')
+    parser.add_argument('--collect-only', action='store_true', help='collect and lane-check generated phases; no tool run')
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
-    summaries = {phase: run_phase(phase, args.out, args.max_rss) for phase in (args.phases or list(PHASES))}
+    chosen = args.phases or ([] if args.generic_only else list(PHASES)) + ([] if args.handwritten_only else generic)
+    summaries = {phase: run_phase(phase, args.out, args.max_rss) for phase in chosen if phase in PHASES}
+    wanted = [phase for phase in chosen if phase in generic]
+    if wanted:
+        collector, counts = collect_generic()
+        (args.out / 'suite-counts.json').write_text(json.dumps(counts, indent=1) + '\n')
+        for phase in wanted:
+            slot = collector.slots.get(phase, dict(controls={}, negatives={}, multi={}, records=0))
+            if args.collect_only:
+                names = [n for n, _ in tables.rows(phase)]
+                summaries[phase] = dict(phase=phase, records=slot['records'], controls_distinct=len(slot['controls']),
+                                        negatives_distinct=len(slot['negatives']),
+                                        multi_row=[dict(rows=m['rows'], families=m['families']) for m in slot['multi'].values()],
+                                        rows_without_negative=[r for r in names if not any(n['target'] == r for n in slot['negatives'].values())],
+                                        lane_matrix=lane_matrix(phase, slot), tool_status='NOT_RUN')
+            else:
+                summaries[phase] = run_generic_phase(phase, slot, args.out, args.max_rss, args.per_row)
     (args.out / 'summary.json').write_text(json.dumps(summaries, indent=1, sort_keys=True) + '\n')
-    print(json.dumps(summaries, indent=1, sort_keys=True))
+    brief = {p: (s['tool_status'], len(s.get('proved', [])), s.get('unproved'), s.get('rows_without_negative'),
+                 len(s.get('lane_matrix', [])), len(s.get('multi_row', []))) for p, s in summaries.items()}
+    print(json.dumps(brief, indent=1, sort_keys=True))
     return 0 if all(s['tool_status'] == 'PASS' for s in summaries.values()) else 1
 
 

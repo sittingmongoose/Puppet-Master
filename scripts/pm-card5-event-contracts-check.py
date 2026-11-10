@@ -34,6 +34,7 @@ import pm_dg6a_table_decision_citation as _decision_table  # noqa: E402
 import pm_dg6a_table_storage_schema as _storage_table  # noqa: E402
 import pm_dg6a_table_current_header as _current_table  # noqa: E402
 import pm_dg6a_table_current_context as _context_table  # noqa: E402
+import pm_dg6a_tables as tables  # noqa: E402
 
 _DECISION_ROWS = [(name, guard.predicate) for name, guard in _decision_table.case(None).table.guards.items()]
 DECISION_RECORDER = None
@@ -221,15 +222,26 @@ def decision_citation_cases(manifest, family, log):
     return observations
 
 
-def operation_guards(operation, family, schema):
-    if schema_errors(operation, schema):
-        return {'operation_schema': False}
+C5_OPERATION_PHASES = ('c5_core_a', 'c5_core_b', 'c5_phase', 'c5_before', 'c5_note_ids', 'c5_note_state', 'c5_concern_a',
+                       'c5_concern_b', 'c5_outgoing', 'c5_receiving', 'c5_concern_c', 'c5_resolution', 'c5_assessment', 'c5_after')
+
+
+def operation_observation(operation, family):
+    """Facts of the C5_OPERATION_PHASES rows for a schema-accepted operation; derived only.
+
+    This is the pre-table operation_guards body: each require(name, result)
+    now records the fact `result is True` under that row's fact name and
+    decides nothing. A guard the family branch does not reach is absent here
+    and holds in its row. The three branch-specific recorder predicates and
+    the transfer owner predicates have their own fact names (same codes).
+    """
     p, before, after = operation['payload'], operation['before'], operation['after']
     action = operation['original_command']['action']
     event, item = family['event_type'], family['item']
     guards = {}
 
     def require(name, result):
+        assert name not in guards, name
         guards[name] = result is True
 
     require('operation_bytes', len(packed(operation)) <= 16384)
@@ -283,15 +295,15 @@ def operation_guards(operation, family, schema):
         # Worker proposals do not become a record because a worker is assigned.
         require('worker_proposal_only', action['actor_kind'] != 'worker')
         if item == '5.c':
-            require('recorder', action['actor_kind'] in ('user', 'controller'))
+            require('recorder_user_or_controller', action['actor_kind'] in ('user', 'controller'))
         elif item == '5.e':
-            require('recorder', action['actor_ref'] == before['owner_ref'])
+            require('recorder_owner', action['actor_ref'] == before['owner_ref'])
             require('reopen_state', before['state'] in ('resolved', 'dismissed'))
             require('reopen_evidence', action['evidence_changed'])
             require('reopen_terminal', action['prior_terminal_ref'] is not None)
             expected['state'] = 'active'
         else:
-            require('recorder', action['actor_kind'] == 'controller')
+            require('recorder_controller', action['actor_kind'] == 'controller')
         require('recorder_area', action['area_ref'] == before['area_ref'])
         transfer = (before['owner_ref'], before['owner_kind']) != (after['owner_ref'], after['owner_kind'])
         area_changed = before['area_ref'] != after['area_ref']
@@ -309,8 +321,8 @@ def operation_guards(operation, family, schema):
             require('promotion_change', wider)
         if item == '5.b' or (item in ('5.d', '5.f') and transfer):
             if item != '5.b':
-                require('old_owner', action['old_owner_ref'] == before['owner_ref'])
-                require('new_owner', action['new_owner_ref'] == after['owner_ref'])
+                require('transfer_old_owner', action['old_owner_ref'] == before['owner_ref'])
+                require('transfer_new_owner', action['new_owner_ref'] == after['owner_ref'])
             if area_changed:
                 approval, acceptance = action['outgoing_approval'], action['receiving_acceptance']
                 for prefix, confirmation in [('outgoing', approval), ('receiving', acceptance)]:
@@ -383,8 +395,24 @@ def operation_guards(operation, family, schema):
     return guards
 
 
-def failed(guards):
-    return [name for name, valid in guards.items() if not valid]
+def operation_refusals(operation, family, schema):
+    """Refuses only through sch_c5_operation and C5_OPERATION_PHASES rows, in table order.
+
+    Table order is the pre-table require order on every branch. Every fact the
+    derivation records must have a row (a missing row would be a silent pass).
+    """
+    found = schema_errors(operation, schema)
+    code = tables.first('sch_c5_operation', schema_errors=len(found))
+    if code:
+        return [code]
+    facts = operation_observation(operation, family)
+    covered, refused = set(), []
+    for phase in C5_OPERATION_PHASES:
+        names = tables.fields(phase)
+        covered.update(names)
+        refused += tables.every(phase, **{name: facts.get(name, True) for name in names})
+    assert set(facts) <= covered, sorted(set(facts) - covered)
+    return refused
 
 
 def current_header_observation(context, family):
@@ -439,7 +467,7 @@ def current_errors(operation, context, family, schema):
         CURRENT_RECORDER.append((copy.deepcopy(observed), first))
     if first:
         return [first[1]]
-    errors = failed(operation_guards(operation, family, schema))
+    errors = operation_refusals(operation, family, schema)
     if errors:
         return errors
     # The context flags and exact original joins refuse only through
@@ -459,65 +487,78 @@ def current_errors(operation, context, family, schema):
     return errors
 
 
+def history_mapping_refusals(request, expected):
+    """HISTORICAL_ONLY read classification; refuses only through c5_history_mapping_* and c5_mapping* rows."""
+    mapping = request.get('mapping')
+    original = expected.get('mapping_original')
+    code = tables.first('c5_history_mapping_object', mapping_object=type(mapping) is dict, original_object=type(original) is dict)
+    if code:
+        return [code]
+    errors = mapping_errors(mapping, original)
+    if errors:
+        return errors
+    payload = expected['event']['payload']
+    keys = ('original_event_ref', 'bundle_id', 'doc_id', 'annotation_id', 'note_id', 'provenance_ref')
+    facts = {key: exact(original[key], payload[key]) for key in keys}
+    facts['original_event'] = payload['original_event_ref'] == expected['event']['event_ref']
+    snapshots = {}
+    facts['absent_before_ok'] = True
+    after_present = True
+    for phase, revision, state, record in [('before', 'prior_revision', 'previous_state', 'before_record_ref'),
+                                           ('after', 'result_revision', 'state', 'after_record_ref')]:
+        snapshot = original[phase]
+        values = {'revision': payload[revision], 'state': payload[state], 'record_ref': payload[record]}
+        values.update({key: payload[key] for key in ('project_id', 'bundle_id', 'doc_id', 'annotation_id', 'note_id', 'provenance_ref')})
+        if snapshot is None:
+            if phase == 'before':
+                facts['absent_before_ok'] = payload[revision] == 0 and payload[state] is None and payload[record] is None
+            else:
+                after_present = False
+        snapshots[phase] = {key: snapshot is None or exact(snapshot.get(key), value) for key, value in values.items()}
+    errors = tables.every('c5_history_mapping_payload', **facts)
+    errors += tables.every('c5_history_mapping_before', **snapshots['before'])
+    errors += tables.every('c5_history_mapping_after_entailed', after_present=after_present)
+    errors += tables.every('c5_history_mapping_after', **snapshots['after'])
+    return errors
+
+
 def history_page(request, expected, family, payload_schemas, cp_schema):
     if family['disposition'] == 'HISTORICAL_ONLY':
-        mapping = request.get('mapping')
-        original = expected.get('mapping_original')
-        if type(mapping) is not dict or type(original) is not dict:
-            raise shared.HistoryUnavailable(['mapping_shape'])
-        errors = mapping_errors(mapping, original)
-        if errors:
-            raise shared.HistoryUnavailable(errors)
-        payload = expected['event']['payload']
-        for key in ('original_event_ref', 'bundle_id', 'doc_id', 'annotation_id', 'note_id', 'provenance_ref'):
-            if not exact(original[key], payload[key]):
-                errors.append('mapping_payload_' + key)
-        if payload['original_event_ref'] != expected['event']['event_ref']:
-            errors.append('mapping_original_event')
-        for phase, revision, state, record in [('before', 'prior_revision', 'previous_state', 'before_record_ref'),
-                                               ('after', 'result_revision', 'state', 'after_record_ref')]:
-            snapshot = original[phase]
-            values = {'revision': payload[revision], 'state': payload[state], 'record_ref': payload[record]}
-            values.update({key: payload[key] for key in ('project_id', 'bundle_id', 'doc_id', 'annotation_id', 'note_id', 'provenance_ref')})
-            if snapshot is None:
-                if not (phase == 'before' and payload[revision] == 0 and payload[state] is None and payload[record] is None):
-                    errors.append('mapping_absent_before')
-            else:
-                for key, value in values.items():
-                    if not exact(snapshot.get(key), value):
-                        errors.append('mapping_' + phase + '_' + key)
+        errors = history_mapping_refusals(request, expected)
         if errors:
             raise shared.HistoryUnavailable(errors)
     return shared.historical_page(request, expected, payload_schemas, cp_schema, shared.checkpoint_errors, family['event_type'])
 
 
 def mapping_errors(mapping, original):
-    """Deterministic read classification, never a rewritten or re-emitted event."""
+    """Deterministic read classification, never a rewritten or re-emitted event.
+
+    Refuses only through c5_mapping_shape (early return) and c5_mapping rows.
+    """
     mapping_fields = {'original_event_ref', 'bundle_id', 'doc_id', 'annotation_id',
                       'note_id', 'provenance_ref', 'mapped_kind'}
     original_fields = mapping_fields - {'mapped_kind'} | {'proof_verified', 'owner_approved', 'ambiguous', 'before', 'after'}
-    if type(mapping) is not dict or set(mapping) != mapping_fields or type(original) is not dict or set(original) != original_fields:
-        return ['mapping_shape']
-    if (type(original['after']) is not dict or 'state' not in original['after'] or
-            (original['before'] is not None and
-             (type(original['before']) is not dict or 'state' not in original['before']))):
-        return ['mapping_shape']
-    errors = []
-    for key in ('original_event_ref', 'bundle_id', 'doc_id', 'annotation_id', 'note_id', 'provenance_ref'):
-        if not exact(mapping[key], original[key]):
-            errors.append('mapping_' + key)
-    if original['proof_verified'] is not True:
-        errors.append('mapping_proof')
-    if original['owner_approved'] is not True:
-        errors.append('mapping_approval')
-    if original['ambiguous'] is not False:
-        errors.append('mapping_ambiguous')
+    shape = dict.fromkeys(tables.fields('c5_mapping_shape'), False)
+    shape['mapping_object'] = type(mapping) is dict
+    shape['mapping_members'] = shape['mapping_object'] and set(mapping) == mapping_fields
+    shape['original_object'] = type(original) is dict
+    shape['original_members'] = shape['original_object'] and set(original) == original_fields
+    if shape['mapping_members'] and shape['original_members']:
+        shape['after_object'] = type(original['after']) is dict
+        shape['after_state'] = shape['after_object'] and 'state' in original['after']
+        before = original['before']
+        shape['before_object'] = before is None or type(before) is dict
+        shape['before_state'] = before is None or (type(before) is dict and 'state' in before)
+    code = tables.first('c5_mapping_shape', **shape)
+    if code:
+        return [code]
+    facts = {key: exact(mapping[key], original[key]) for key in
+             ('original_event_ref', 'bundle_id', 'doc_id', 'annotation_id', 'note_id', 'provenance_ref')}
     kind = 'creation' if original['before'] is None else 'status_change'
-    if mapping['mapped_kind'] != kind:
-        errors.append('mapping_kind')
-    if kind == 'status_change' and original['before']['state'] == original['after']['state']:
-        errors.append('mapping_no_change')
-    return errors
+    facts.update(proof=original['proof_verified'] is True, approval=original['owner_approved'] is True,
+                 unambiguous=original['ambiguous'] is False, kind=mapping['mapped_kind'] == kind,
+                 change=not (kind == 'status_change' and original['before']['state'] == original['after']['state']))
+    return tables.every('c5_mapping', **facts)
 
 
 def main():
@@ -560,7 +601,7 @@ def main():
                 target = target[part]
             target[patch['path'][-1]] = copy.deepcopy(patch['value'])
         if stage == 'operation':
-            actual = failed(operation_guards(value, family, schemas['operation_schema']))
+            actual = operation_refusals(value, family, schemas['operation_schema'])
         elif stage == 'current':
             actual = current_errors(value['operation'], value['context'], family, schemas.get('operation_schema'))
         elif stage == 'mapping':
@@ -580,14 +621,16 @@ def main():
             else:
                 actual = []
         elif stage == 'payload':
-            actual = ['payload_schema'] if schema_errors(value, schemas['payload_schema']) else []
+            code = tables.first('sch_c5_payload', schema_errors=len(schema_errors(value, schemas['payload_schema'])))
+            actual = [code] if code else []
         elif stage == 'schema':
             actual = ['schema_reference'] if shared.schema_ref_errors(value) else []
         elif stage == 'schema_field':
             node = schemas[value['surface']]
             for part in value['schema_path']:
                 node = node[part]
-            actual = ['schema_field'] if schema_errors(value['input'], node) else []
+            code = tables.first('sch_c5_field', schema_errors=len(schema_errors(value['input'], node)))
+            actual = [code] if code else []
         elif stage == 'failure_exit':
             proc = subprocess.run([sys.executable, str(Path(__file__)), '--family', family['event_type'],
                                    '--failure-exit-probe', str(value)], capture_output=True)

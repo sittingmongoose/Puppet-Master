@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 from urllib.parse import unquote
 from jsonschema import Draft202012Validator, FormatChecker
+from jsonschema.exceptions import SchemaError
 
 ROOT = Path(__file__).resolve().parents[1]
 _spec = importlib.util.spec_from_file_location('pm_dg6a_readiness_codec', ROOT / 'scripts/pm-implementation-readiness.py')
@@ -31,6 +32,7 @@ if str(ROOT / 'scripts') not in sys.path:
 import pm_dg6a_table_profile as _profile_table  # noqa: E402
 import pm_dg6a_table_writer_policy as _writer_table  # noqa: E402
 import pm_dg6a_table_cursor as _cursor_table  # noqa: E402
+import pm_dg6a_tables as tables  # noqa: E402
 
 _PROFILE_ROWS = [(name, guard.predicate) for name, guard in _profile_table.case(None).table.guards.items()]
 PROFILE_RECORDER = None
@@ -42,21 +44,29 @@ CURSOR_RECORDER = None
 def load(path):
     return domain.loads((ROOT / path).read_text())
 
+def payload_observation(payload, guard):
+    """alert_payload FIELDS; derived only (schema-accepted payload, fixture guard).
+
+    The three flags are read with .get, as the pre-table any() never read a
+    later flag after an earlier one failed; a missing flag is the False fact.
+    """
+    return dict(successor=payload['result_revision'] == payload['prior_revision'] + 1,
+                current=guard.get('current') is True, allowed=guard.get('allowed') is True,
+                committed=guard.get('committed') is True,
+                protection_is_bool=type(guard['protected']) is bool,
+                snooze_live=not snooze_expired(payload),
+                interrupting_command=payload['command_id'] in ('cmd.alert.snooze', 'cmd.alert.mute_rule'),
+                protected_truthy=bool(guard['protected']))
+
+
 def errors(payload, schema, guard):
+    """Refuses only through sch_alert_payload, writer_policy and alert_payload rows."""
     found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(payload))
-    found += writer_policy_errors(guard.get('replay_policy', 'dedupe_by_idempotency_key'))
-    if not found:
-        if payload['result_revision'] != payload['prior_revision'] + 1:
-            found.append('non-successor')
-        if any(guard[field] is not True for field in ('current', 'allowed', 'committed')):
-            found.append('uncommitted/stale/refused')
-        if type(guard['protected']) is not bool:
-            found.append('invalid protection proof')
-        if snooze_expired(payload):
-            found.append('expired snooze')
-        if payload['command_id'] in ('cmd.alert.snooze', 'cmd.alert.mute_rule') and guard['protected']:
-            found.append('protected interruption')
-    return found
+    refused = found if tables.first('sch_alert_payload', schema_errors=len(found)) else []
+    refused += writer_policy_errors(guard.get('replay_policy', 'dedupe_by_idempotency_key'))
+    if not refused:
+        refused += tables.every('alert_payload', **payload_observation(payload, guard))
+    return refused
 
 def snooze_expired(payload):
     return 'snooze_until' in payload and domain.instant_le(payload['snooze_until'], payload['ts'])
@@ -65,24 +75,39 @@ def snooze_expired(payload):
 def packed(value):
     return _codec.canonical_messagepack_bytes(value)
 
+def reference_observation(schema, ref):
+    """schema_ref FIELDS for one $ref occurrence; derived only.
+
+    A non-string reference is not local (the pre-table code raised an
+    uncaught AttributeError there); later facts are False once an earlier
+    one fails, and the chained rows ignore them.
+    """
+    local = type(ref) is str and (ref == '#' or ref.startswith('#/'))
+    target, resolves = schema, False
+    if local:
+        resolves = True
+        if ref != '#':
+            try:
+                for part in unquote(ref[2:]).split('/'):
+                    part = part.replace('~1', '/').replace('~0', '~')
+                    target = target[int(part)] if isinstance(target, list) else target[part]
+            except (KeyError, IndexError, TypeError, ValueError):
+                resolves = False
+    return dict(local=local, resolves=resolves, target_schema=resolves and isinstance(target, (dict, bool)))
+
+
 def schema_ref_errors(schema):
-    """Resolve every local reference, including unused definitions and optional leaves."""
+    """Resolve every local reference, including unused definitions and optional leaves.
+
+    Each occurrence refuses only through the schema_ref rows (code + ': ' + ref).
+    """
     found = []
     def visit(node):
         if isinstance(node, dict):
             if '$ref' in node:
-                ref, target = node['$ref'], schema
-                try:
-                    if ref != '#':
-                        if not ref.startswith('#/'):
-                            raise ValueError('unsupported non-local reference')
-                        for part in unquote(ref[2:]).split('/'):
-                            part = part.replace('~1', '/').replace('~0', '~')
-                            target = target[int(part)] if isinstance(target, list) else target[part]
-                    if not isinstance(target, (dict, bool)):
-                        raise ValueError('target is not a schema')
-                except (KeyError, IndexError, TypeError, ValueError):
-                    found.append('unresolved schema reference: ' + str(ref))
+                code = tables.first('schema_ref', **reference_observation(schema, node['$ref']))
+                if code:
+                    found.append(code + ': ' + str(node['$ref']))
             for child in node.values():
                 visit(child)
         elif isinstance(node, list):
@@ -92,64 +117,86 @@ def schema_ref_errors(schema):
     return found
 
 def check_schema(schema):
-    Draft202012Validator.check_schema(schema)
-    assert not schema_ref_errors(schema), schema_ref_errors(schema)
+    """The metaschema refuses through schema_document; references through schema_ref."""
+    try:
+        Draft202012Validator.check_schema(schema)
+        valid = True
+    except SchemaError:
+        valid = False
+    code = tables.first('schema_document', metaschema_valid=valid)
+    assert code is None, code
+    unresolved = schema_ref_errors(schema)
+    assert not unresolved, unresolved
 
-def operation_errors(value, schema):
-    found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(value))
-    if found:
-        return found
-    if len(packed(value)) > 16384:
-        found.append('operation exceeds 16384 encoded bytes')
-    if found:
-        return found
+OPERATION_PHASES = ('alert_operation_identity', 'alert_command_keys_a', 'alert_command_keys_b', 'alert_operation_joins',
+                    'alert_owner_prior', 'alert_owner_candidate', 'alert_candidate_state')
+
+
+def operation_observation(value, schema):
+    """Facts of every OPERATION_PHASES table for one schema- and size-accepted operation.
+
+    Digests and identities are recomputed from their sources. A command field
+    outside a family's schema cannot occur (each original_command schema is
+    closed; main checks the per-field rows cover every declared command field),
+    and a row whose field the family does not have holds (not applicable).
+    """
     payload, command = value['payload'], value['original_command']
     event_type = schema['properties']['schema_id']['const'].removeprefix('pm.storage_value.').removesuffix('_operation.v1').replace('alert_', 'alert.', 1)
     h = hashlib.sha256(packed([value['storage_instance_id'], value['project_id'], event_type,
                                value['idempotency_key']])).hexdigest()
-    if value['operation_digest'] != h:
-        found.append('operation identity digest mismatch')
-    if value['event_id'] != 'evt_' + event_type.replace('.', '_') + '_' + h:
-        found.append('event identity mismatch')
-    if value['request_digest'] != request_digest(command, payload):
-        found.append('frozen command digest mismatch')
     expected_command_fields = {key for key in payload if key not in ('schema_id', 'schema_version') and not key.startswith('result_')}
-    if expected_command_fields - command.keys():
-        found.append('original command/payload field presence')
-    for key in command:
-        if command[key] != payload.get(key):
-            found.append('original command/payload ' + key)
-    for key in ('project_id', 'idempotency_key'):
-        if value[key] != payload[key]:
-            found.append('operation/payload ' + key)
-    if payload['result_revision'] != payload['prior_revision'] + 1:
-        found.append('non-successor')
+    facts = dict(operation_digest_exact=value['operation_digest'] == h,
+                 event_id_exact=value['event_id'] == 'evt_' + event_type.replace('.', '_') + '_' + h,
+                 request_digest_exact=value['request_digest'] == request_digest(command, payload),
+                 command_fields_present=not (expected_command_fields - command.keys()))
+    keys = {key: key not in command or not (command[key] != payload.get(key))
+            for phase in ('alert_command_keys_a', 'alert_command_keys_b') for key in tables.fields(phase)}
+    joins = dict(project_exact=value['project_id'] == payload['project_id'],
+                 key_exact=value['idempotency_key'] == payload['idempotency_key'],
+                 successor=payload['result_revision'] == payload['prior_revision'] + 1)
     prior, candidate = value['prior_owner_state'], value['candidate_owner_state']
     rule = event_type == 'alert.rule_muted'
     subject, source = ('alert_rule_id', 'alert_rule_ref') if rule else ('alert_id', 'alert_record_ref')
     state_key = 'mute_state' if rule else 'acknowledgement_state'
     prefix = 'mute_state' if rule else ('acknowledgement_state' if event_type == 'alert.acknowledged' else 'alert_state')
+    owners = {}
     for name, snapshot, revision, state in [('prior', prior, 'prior_revision', 'prior_' + prefix),
                                              ('candidate', candidate, 'result_revision', 'result_' + prefix)]:
-        for field, expected in [('project_id', payload['project_id']), (subject, payload[subject]),
-                                 ('source_record_ref', payload[source]), ('revision', payload[revision]),
-                                 (state_key, payload[state])]:
-            if snapshot[field] != expected:
-                found.append(name + ' owner ' + field)
+        expected = {'project_id': payload['project_id'], subject: payload[subject], 'source_record_ref': payload[source],
+                    'revision': payload[revision], state_key: payload[state]}
+        owners[name] = {field: field not in expected or not (snapshot[field] != expected[field])
+                        for field in tables.fields('alert_owner_' + name)}
     if rule:
-        if candidate['root_cause_ref'] != prior['root_cause_ref']:
-            found.append('candidate owner root_cause_ref')
-        if candidate['mute_expires_at'] != payload.get('mute_expires_at'):
-            found.append('candidate owner mute_expires_at')
+        state = dict(root_cause_ref=not (candidate['root_cause_ref'] != prior['root_cause_ref']),
+                     mute_expires_at=not (candidate['mute_expires_at'] != payload.get('mute_expires_at')),
+                     unread=True, inbox_visible=True, snooze_until=True)
     else:
         expected_unread = False if event_type == 'alert.acknowledged' else prior['unread']
         expected_visible = prior['inbox_visible'] if event_type == 'alert.acknowledged' else False
         expected_snooze = payload['snooze_until'] if event_type == 'alert.snoozed' else prior['snooze_until']
-        for field, expected in [('unread', expected_unread), ('inbox_visible', expected_visible), ('snooze_until', expected_snooze)]:
-            if candidate[field] != expected:
-                found.append('candidate owner ' + field)
-    if snooze_expired(payload):
-        found.append('expired snooze')
+        state = dict(root_cause_ref=True, mute_expires_at=True,
+                     unread=not (candidate['unread'] != expected_unread),
+                     inbox_visible=not (candidate['inbox_visible'] != expected_visible),
+                     snooze_until=not (candidate['snooze_until'] != expected_snooze))
+    state['snooze_live'] = not snooze_expired(payload)
+    return {'alert_operation_identity': facts, 'alert_command_keys_a': {k: keys[k] for k in tables.fields('alert_command_keys_a')},
+            'alert_command_keys_b': {k: keys[k] for k in tables.fields('alert_command_keys_b')},
+            'alert_operation_joins': joins, 'alert_owner_prior': owners['prior'],
+            'alert_owner_candidate': owners['candidate'], 'alert_candidate_state': state}
+
+
+def operation_errors(value, schema):
+    """Refuses only through sch_alert_operation, alert_operation_size and OPERATION_PHASES rows."""
+    found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(value))
+    if tables.first('sch_alert_operation', schema_errors=len(found)):
+        return found
+    code = tables.first('alert_operation_size', encoded_bytes=len(packed(value)))
+    if code:
+        return [code]
+    facts = operation_observation(value, schema)
+    found = []
+    for phase in OPERATION_PHASES:
+        found += tables.every(phase, **facts[phase])
     return found
 
 
@@ -170,46 +217,74 @@ def isolated_cases(kind, owner, family, fixture):
     return helper.vectors(kind, owner, family, fixture)
 
 
-def retained_retry_digest(command, payload, operation, original_event):
-    """Use the existing exact MessagePack recipe of an independently admitted original.
+RETAINED_RETRY_FACTS = ('admission_evidence', 'edition_known', 'stored_object', 'stored_valid', 'payload_is_stored',
+                        'original_digest_valid', 'body_unchanged')
 
-    Only the six prepared alert/panel editions are handled here. SP-1101's shared
-    dispatch is sweep work. Caller fields never select the edition or the recipe.
-    Append resolution/source custody is also checked by append_result_errors.
+
+def retained_retry_observation(command, payload, operation, original_event):
+    """retry_retained_* FIELDS plus the entailed digest fact; derived only.
+
+    The existing exact MessagePack recipe of an independently admitted original:
+    only the six prepared alert/panel editions are handled here, and caller
+    fields never select the edition or the recipe (SP-1101 dispatch is part 2B).
+    A fact is computed only when every earlier fact holds (otherwise False, which
+    the chained rows ignore), so no read reaches a member an earlier fact refuses.
+    Append resolution/source custody is checked separately by append_result_errors.
     """
-    if type(original_event) is not dict or original_event.get('valid_when_written') is not True:
-        raise ValueError('missing original admission evidence')
+    facts = dict.fromkeys(RETAINED_RETRY_FACTS + ('digest_equal',), False)
+    if not (type(original_event) is dict and original_event.get('valid_when_written') is True):
+        return facts
+    facts['admission_evidence'] = True
     stored = original_event.get('payload')
     schema = None
     for manifest in ('Plans/alert_event_contracts/manifest.json', 'Plans/panel_event_contracts/manifest.json'):
         for family in load(manifest)['families']:
             if family['event_type'] == original_event.get('event_type'):
                 schema = load(family['payload_schema'])
-    if schema is None or type(stored) is not dict or list(Draft202012Validator(schema).iter_errors(stored)):
-        raise ValueError('unknown or invalid original payload edition')
-    if not exact_value(operation['payload'], stored):
-        raise ValueError('foreign original payload')
-    # This is the earlier recipe already owned by the lane, with no new cap,
-    # serializer, coercion, or current-write semantic-number validation.
+    facts['edition_known'] = schema is not None
+    facts['stored_object'] = facts['edition_known'] and type(stored) is dict
+    if not facts['stored_object']:
+        return facts
+    facts['stored_valid'] = not list(Draft202012Validator(schema).iter_errors(stored))
+    facts['payload_is_stored'] = facts['stored_valid'] and exact_value(operation['payload'], stored)
+    if not facts['payload_is_stored']:
+        return facts
+    # The earlier recipe already owned by the lane, with no new cap, serializer,
+    # coercion, or current-write semantic-number validation.
     frozen = dict(original_command=operation['original_command'], candidate_payload=stored)
-    if hashlib.sha256(packed(frozen)).hexdigest() != operation['request_digest']:
-        raise ValueError('invalid original request digest')
-    if not exact_value(command, operation['original_command']) or not exact_value(payload, stored):
-        raise ValueError('changed retained retry body')
-    return hashlib.sha256(packed(dict(original_command=command, candidate_payload=payload))).hexdigest()
+    facts['original_digest_valid'] = hashlib.sha256(packed(frozen)).hexdigest() == operation['request_digest']
+    facts['body_unchanged'] = facts['original_digest_valid'] and exact_value(command, operation['original_command']) and exact_value(payload, stored)
+    if facts['body_unchanged']:
+        facts['digest_equal'] = hashlib.sha256(packed(dict(original_command=command, candidate_payload=payload))).hexdigest() == operation['request_digest']
+    return facts
 
 
-def retry_digest_matches(command, payload, original_digest, operation=None, original_event=None):
+def retry_refusals(caller, command, payload, original_digest, operation=None, original_event=None):
+    """Retry body comparison; refuses only through retry_current_/retry_retained_<caller> rows.
+
+    `original_digest` is always the original operation's request_digest at
+    both call sites (alert and panel protocol_errors), which makes RR08 entailed.
+    """
+    if operation is not None and operation['state'] in ('committed', 'settled'):
+        facts = retained_retry_observation(command, payload, operation, original_event)
+        code = tables.first('retry_retained_' + caller, **{k: facts[k] for k in RETAINED_RETRY_FACTS})
+        if code is None:
+            code = tables.first('retry_retained_' + caller + '_entailed', digest_equal=facts['digest_equal'])
+        return [code] if code else []
     try:
-        if operation is not None and operation['state'] in ('committed', 'settled'):
-            return retained_retry_digest(command, payload, operation, original_event) == original_digest
-        return request_digest(command, payload) == original_digest
+        digest, preimage_ok = request_digest(command, payload), True
     except (KeyError, TypeError, ValueError):
-        return False
+        digest, preimage_ok = None, False
+    code = tables.first('retry_current_' + caller, preimage_ok=preimage_ok, digest_equal=preimage_ok and digest == original_digest)
+    return [code] if code else []
 
 
 def protocol_shape(context, original, kind):
-    """Check navigation containers before any indexing, comparison or hashing."""
+    """Navigation containers before any indexing, comparison or hashing.
+
+    Returns the protocol_shape row's refusal code, or None. Facts that do not
+    apply to the kind hold; facts after a failed earlier fact are not read.
+    """
     common = {'replay_policy', 'receipt_event_id', 'append_resolution', 'append_original'}
     fields = {
         'alert': {'admitted', 'allowed', 'current', 'source_verified', 'retry_command', 'retry_payload'},
@@ -218,28 +293,35 @@ def protocol_shape(context, original, kind):
         'concern': {'admitted', 'authority_verified', 'source_current', 'permission_allowed',
                     'subject_already_active', 'concern_key_exists', 'authority', 'retry_digest', 'retry_body', 'publication_state'},
     }[kind]
-    if type(context) is not dict or not common | fields <= context.keys():
-        return False
-    if kind == 'concern':
+    facts = dict(context_object=type(context) is dict, members=False, retry_command_object=True,
+                 retry_payload_object=True, authority_object=True, authority_members=True)
+    facts['members'] = facts['context_object'] and common | fields <= context.keys()
+    if facts['members'] and kind == 'concern':
         authority = context['authority']
-        return type(authority) is dict and {'actor_ref', 'creator_kind', 'project_id', 'authority_basis_ref',
+        facts['authority_object'] = type(authority) is dict
+        facts['authority_members'] = facts['authority_object'] and {'actor_ref', 'creator_kind', 'project_id', 'authority_basis_ref',
                 'currentness_basis_ref', 'permission_snapshot_ref', 'source_refs'} <= authority.keys()
-    return type(context['retry_command']) is dict and type(context['retry_payload']) is dict
+    elif facts['members']:
+        facts['retry_command_object'] = type(context['retry_command']) is dict
+        facts['retry_payload_object'] = type(context['retry_payload']) is dict
+    return tables.first('protocol_shape', **facts)
 
 
 def protocol_errors(context, original):
-    """Current retry evidence; the retained historical reader never calls this."""
-    if not protocol_shape(context, original, 'alert'):
-        return ['invalid protocol shape']
+    """Current retry evidence; the retained historical reader never calls this.
+
+    Refuses only through protocol_shape, writer_policy, alert_protocol,
+    retry_*_alert and append_result rows.
+    """
+    shape = protocol_shape(context, original, 'alert')
+    if shape:
+        return [shape]
     found = writer_policy_errors(context['replay_policy'])
-    for field in ('admitted', 'allowed', 'current', 'source_verified'):
-        if context[field] is not True:
-            found.append(field)
-    if context['receipt_event_id'] != original['event_id']:
-        found.append('wrong original receipt')
-    if not retry_digest_matches(context['retry_command'], context['retry_payload'], original['request_digest'],
-                                original, context.get('append_original')):
-        found.append('idempotency_conflict')
+    found += tables.every('alert_protocol', admitted=context['admitted'] is True, allowed=context['allowed'] is True,
+                          current=context['current'] is True, source_verified=context['source_verified'] is True,
+                          receipt_exact=context['receipt_event_id'] == original['event_id'])
+    found += retry_refusals('alert', context['retry_command'], context['retry_payload'], original['request_digest'],
+                            original, context.get('append_original'))
     family = original['schema_id'].removeprefix('pm.storage_value.').removesuffix('_operation.v1').replace('_', '.', 1)
     found += append_result_errors(original, context.get('append_resolution'), context.get('append_original'), family)
     return found
@@ -250,27 +332,27 @@ def append_result_errors(operation, resolved, expected, event_type):
 
     The resolver output is an input, not authority. Its complete event, source,
     eleven-field first receipt and four-field result must equal independent evidence.
-    Native authentication of that evidence remains NOT_RUN.
+    Native authentication of that evidence remains NOT_RUN. A prepared operation
+    has no append yet (path selection, not a refusal). Refuses only through the
+    append_result rows.
     """
-    found = []
     if operation['state'] == 'prepared':
-        return found  # No append exists yet; this path cannot return a result.
-    if not exact_value(resolved, expected):
-        found.append('resolved original append evidence mismatch')
+        return []
     bindings = dict(event_type=event_type, event_id=operation['event_id'],
                     storage_instance_id=operation['storage_instance_id'], project_id=operation['project_id'],
                     payload=operation['payload'])
     if 'scope_partition' in operation:
         bindings['scope_partition'] = operation['scope_partition']
-    if not (type(expected) is dict and all(exact_value(expected.get(key), value) for key, value in bindings.items())):
-        found.append('foreign original append family/scope/identity')
-    receipt = expected.get('receipt') if type(expected) is dict else None
-    if operation['state'] == 'settled' and not (type(receipt) is dict and exact_value(
-            operation['original_append_result_ref'], receipt.get('original_append_result_ref'))):
-        found.append('foreign original append-result reference')
-    if operation['state'] == 'committed' and operation['original_append_result_ref'] is not None:
-        found.append('unsettled operation carries append-result reference')
-    return found
+    expected_object = type(expected) is dict
+    facts = dict(resolved_exact=exact_value(resolved, expected), expected_object=expected_object)
+    for key in ('event_type', 'event_id', 'storage_instance_id', 'project_id', 'payload', 'scope_partition'):
+        facts[key] = key not in bindings or (expected_object and exact_value(expected.get(key), bindings[key]))
+    receipt = expected.get('receipt') if expected_object else None
+    facts.update(settled=operation['state'] == 'settled', receipt_object=type(receipt) is dict,
+                 receipt_ref_exact=type(receipt) is dict and exact_value(operation['original_append_result_ref'],
+                                                                          receipt.get('original_append_result_ref')),
+                 committed=operation['state'] == 'committed', append_ref_null=operation['original_append_result_ref'] is None)
+    return tables.every('append_result', **facts)
 
 
 def append_context(fixture, event_type):
@@ -351,21 +433,24 @@ def checkpoint_errors(value, schema, original_context):
     """Join the synthetic checkpoint to independently supplied original-event context.
 
     Internal token agreement alone cannot authenticate its Storage instance. Native
-    source authentication remains a separate NOT_RUN obligation.
+    source authentication remains a separate NOT_RUN obligation. Refuses only
+    through sch_checkpoint, checkpoint_size and checkpoint_token rows; a
+    checkpoint without a token (schema-permitted) has no token joins.
     """
     found = list(Draft202012Validator(schema).iter_errors(value))
-    if found:
+    if tables.first('sch_checkpoint', schema_errors=len(found)):
         return found
-    if len(packed(value)) > 16384:
-        found.append('checkpoint exceeds 16384 encoded bytes')
-    if not found and 'index_read_token' in value:
-        token = value['index_read_token']
-        if not (value['storage_instance_id'] == token['storage_instance_id'] == token['source_selection']['storage_instance_id']):
-            found.append('foreign Storage token')
-        for field in ('storage_instance_id', 'project_id', 'server_id', 'scope_partition'):
-            if field in value and field in original_context and value[field] != original_context[field]:
-                found.append('foreign original-event context: ' + field)
-    return found
+    code = tables.first('checkpoint_size', encoded_bytes=len(packed(value)))
+    if code:
+        return [code]
+    if 'index_read_token' not in value:
+        return []
+    token = value['index_read_token']
+    facts = dict(token_storage=value['storage_instance_id'] == token['storage_instance_id'],
+                 selection_storage=token['storage_instance_id'] == token['source_selection']['storage_instance_id'])
+    for field in ('storage_instance_id', 'project_id', 'server_id', 'scope_partition'):
+        facts[field] = not (field in value and field in original_context) or not (value[field] != original_context[field])
+    return tables.every('checkpoint_token', **facts)
 
 def checkpoint_context_cases(value, schema, original_context, checker=checkpoint_errors):
     count = 0
@@ -541,8 +626,9 @@ def history_page(events, event_type, project_id, after, frontier, publication_id
                     after_sequence_id=cursor, event_refs=refs, complete=cursor == frontier)
     if cursor_errors(after, frontier):
         raise ValueError('invalid cursor/frontier')
-    if len(packed(response([], after))) > 16384:
-        raise ValueError('unpageable metadata or invalid cursor')
+    code = tables.first('history_page_bytes', empty_page_bytes=len(packed(response([], after))))
+    if code:
+        raise ValueError(code)
     result, scanned, cursor = [], 0, after
     for event in events:
         seq = event['sequence_id']
@@ -552,9 +638,11 @@ def history_page(events, event_type, project_id, after, frontier, publication_id
         candidate = result + [event['event_ref']] if match else result
         if scanned == 256 or len(candidate) > 64:
             break
-        if len(packed(response(candidate, seq))) > 16384:
-            if not result:
-                raise ValueError('individually unpageable ref/metadata')
+        fits = len(packed(response(candidate, seq))) <= 16384
+        code = tables.first('history_page_ref', candidate_fits=fits, result_empty=not result)
+        if code:
+            raise ValueError(code)
+        if not fits:
             break
         result, scanned, cursor = candidate, scanned + 1, seq
     return response(result, cursor)
@@ -565,27 +653,34 @@ class HistoryUnavailable(ValueError):
         super().__init__('historical read unavailable: ' + ', '.join(guards))
 
 
-def history_shape(request, expected):
+def history_shape_refusal(request, expected):
     """Only inspect a member after its containing object and presence are proved.
 
-    Leaf values belong to the existing distinct custody/publication guards. This
-    checks the navigation shape, so malformed input has a modeled refusal.
+    Leaf values belong to the distinct custody/publication guards. This checks
+    the navigation shape, so malformed input has a modeled refusal. Returns the
+    history_shape row's code, or None; a fact is read only when every earlier
+    fact holds (otherwise False, which the chained rows ignore).
     """
-    if type(request) is not dict or not {'checkpoint', 'event', 'disclosure', 'after_sequence_id'} <= request.keys():
-        return False
-    for key in ('checkpoint', 'event', 'disclosure'):
-        if type(request[key]) is not dict:
-            return False
-    cp, event, disclosure = request['checkpoint'], request['event'], request['disclosure']
-    if not {'state', 'through_sequence_id', 'publication_id', 'index_read_token'} <= cp.keys():
-        return False
-    if not set(expected['event']) <= event.keys():
-        return False
-    if type(event['payload']) is not dict:
-        return False
-    if not {'permission_allowed', 'membership_allowed', 'source_access_allowed', 'deleted', 'withdrawn'} <= disclosure.keys():
-        return False
-    return True
+    names = tables.fields('history_shape')
+    facts = dict.fromkeys(names, False)
+    facts['request_object'] = type(request) is dict
+    facts['request_members'] = facts['request_object'] and {'checkpoint', 'event', 'disclosure', 'after_sequence_id'} <= request.keys()
+    if facts['request_members']:
+        for key in ('checkpoint', 'event', 'disclosure'):
+            facts[key + '_object'] = type(request[key]) is dict
+    if facts['checkpoint_object'] and facts['event_object'] and facts['disclosure_object']:
+        cp, event, disclosure = request['checkpoint'], request['event'], request['disclosure']
+        facts['checkpoint_members'] = {'state', 'through_sequence_id', 'publication_id', 'index_read_token'} <= cp.keys()
+        facts['event_members'] = set(expected['event']) <= event.keys()
+        facts['payload_object'] = facts['event_members'] and type(event['payload']) is dict
+        facts['disclosure_members'] = {'permission_allowed', 'membership_allowed', 'source_access_allowed', 'deleted',
+                                       'withdrawn'} <= disclosure.keys()
+    return tables.first('history_shape', **facts)
+
+
+def history_shape(request, expected):
+    """Boolean view of history_shape_refusal for the older drivers (no decision here)."""
+    return history_shape_refusal(request, expected) is None
 
 
 def stored_instants_valid(value):
@@ -596,48 +691,75 @@ def stored_instants_valid(value):
     return True
 
 
-def historical_guards(request, expected, payload_schemas, cp_schema, cp_checker):
-    """Synthetic retained-original evidence, independent of current writer predicates.
+HISTORY_PHASES = ('history_checkpoint', 'history_event', 'history_original', 'history_disclosure')
 
+
+def historical_observation(request, expected, payload_schemas, cp_schema, cp_checker):
+    """Facts of every HISTORY_PHASES table for a shape-accepted retained read.
+
+    Synthetic retained-original evidence, independent of current writer predicates.
     Expected event/receipt/source/publication are separately supplied fixture evidence,
     never reconstructed from the candidate being checked. This is not native auth.
-    Each guard owns one distinct binding so its negative can be isolated and killed.
+    The retained edition is selected from original admission evidence, never from
+    the candidate payload; exact original equality still checks both.
     """
-    if not history_shape(request, expected):
-        return {'history_shape': False}
-    cp, event = request['checkpoint'], request['event']
+    cp, event, disclosure = request['checkpoint'], request['event'], request['disclosure']
     original = expected['event']
     publication = {k: v for k, v in cp.items() if k != 'state'}
     expected_publication = {k: v for k, v in expected['checkpoint'].items() if k != 'state'}
     identity_fields = set(original) - {'payload', 'receipt', 'source_selection', 'state', 'valid_when_written'}
     payload = event['payload']
-    # Select the retained edition from original admission evidence, never from
-    # the candidate payload; exact original equality below still checks both.
     schema_key = (original['payload'].get('schema_id'), original['payload'].get('schema_version'))
     schema = payload_schemas.get(schema_key) if all(type(v) is str for v in schema_key) else None
-    payload_valid = schema is not None and not list(
+    checkpoint_valid = not cp_checker(cp, cp_schema, original)
+    members_equal = set(event) == set(original)
+    instants = {k: event[k] for k in ('observed_at_utc', 'persisted_at_utc') if k in event}
+    event_facts = dict(instants_valid=stored_instants_valid(instants), members_equal=members_equal)
+    for field in tables.fields('history_event')[2:]:
+        event_facts[field] = field not in identity_fields or (members_equal and exact_value(event[field], original[field]))
+    edition_known = schema is not None
+    payload_schema_valid = edition_known and not list(
         Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(payload))
     return {
-        'checkpoint_publication': cp['state'] == 'current',
-        'checkpoint_original': not cp_checker(cp, cp_schema, original) and exact_value(publication, expected_publication),
-        'event_publication': event['state'] == 'current',
-        'event_original': stored_instants_valid({k:event[k] for k in ('observed_at_utc','persisted_at_utc') if k in event}) and set(event) == set(original) and all(exact_value(event[k], original[k]) for k in identity_fields),
-        'historical_payload': payload_valid and exact_value(payload, original['payload']),
-        'original_receipt': stored_instants_valid(event['receipt']) and exact_value(event['receipt'], original['receipt']),
-        'original_source': exact_value(event['source_selection'], original['source_selection']),
-        'original_admission': original['valid_when_written'] is True and event['valid_when_written'] is True,
-        'current_permission': all(request['disclosure'][key] is True for key in
-                                  ('permission_allowed', 'membership_allowed', 'source_access_allowed')),
-        'source_retained': request['disclosure']['deleted'] is False,
-        'current_withdrawal': request['disclosure']['withdrawn'] is False,
+        'history_checkpoint': dict(checkpoint_current=cp['state'] == 'current', checkpoint_valid=checkpoint_valid,
+                                   publication_exact=exact_value(publication, expected_publication),
+                                   event_current=event['state'] == 'current'),
+        'history_event': event_facts,
+        'history_original': dict(edition_known=edition_known, payload_schema_valid=payload_schema_valid,
+                                 payload_exact=exact_value(payload, original['payload']),
+                                 receipt_instants_valid=stored_instants_valid(event['receipt']),
+                                 receipt_exact=exact_value(event['receipt'], original['receipt']),
+                                 source_exact=exact_value(event['source_selection'], original['source_selection']),
+                                 original_admitted=original['valid_when_written'] is True,
+                                 event_admitted=event['valid_when_written'] is True),
+        'history_disclosure': dict(permission_allowed=disclosure['permission_allowed'] is True,
+                                   membership_allowed=disclosure['membership_allowed'] is True,
+                                   source_access_allowed=disclosure['source_access_allowed'] is True,
+                                   not_deleted=disclosure['deleted'] is False,
+                                   not_withdrawn=disclosure['withdrawn'] is False),
     }
+
+
+def historical_refusals(request, expected, payload_schemas, cp_schema, cp_checker):
+    """Failed retained-read guard names, only through history_shape and HISTORY_PHASES rows.
+
+    Every name is a row code; each guard of the pre-table dict appears at most
+    once (rows of one guard are chained), in the pre-table guard order.
+    """
+    shape = history_shape_refusal(request, expected)
+    if shape:
+        return [shape]
+    facts = historical_observation(request, expected, payload_schemas, cp_schema, cp_checker)
+    failed = []
+    for phase in HISTORY_PHASES:
+        failed += tables.every(phase, **facts[phase])
+    return failed
 
 
 def historical_page(request, expected, payload_schemas, cp_schema, cp_checker, event_type):
     """Admit the actual checkpoint and original before feeding refs to byte paging."""
     def validate():
-        guards = historical_guards(request, expected, payload_schemas, cp_schema, cp_checker)
-        failed = [name for name, valid in guards.items() if not valid]
+        failed = historical_refusals(request, expected, payload_schemas, cp_schema, cp_checker)
         if failed:
             raise HistoryUnavailable(failed)
     validate()
@@ -752,24 +874,11 @@ def historical_reader_cases(fixture, checkpoint, reader, observations=None):
                 assert error.guards == [case['guard']], (case['name'], error.guards)
             else:
                 raise AssertionError(('historical negative accepted', case['name']))
-            # Deliberately weaken precisely its owning guard, then use the SAME
-            # reader and pagination entry point. Every negative must now disclose.
-            complete_guards = historical_guards
-            def weakened(*args):
-                guards = complete_guards(*args)
-                del guards[case['guard']]
-                return guards
-            try:
-                globals()['historical_guards'] = weakened
-                page = reader(request, expected)
-                assert page['event_refs'] == [request['event']['event_ref']], case['name']
-            finally:
-                globals()['historical_guards'] = complete_guards
-            count += 1
+            # Guard removal is the guard tool's row cut (scripts/pm-dg6a-guard-tables.py),
+            # not an in-checker rewrite of historical_guards.
         if observations is not None:
             observations.append(dict(name=case['name'], valid=case['valid'], changed_leaves=1,
-                                     guard=case.get('guard'), isolated_rejection=not case['valid'],
-                                     weakened_guard_discloses=not case['valid'], passed=True))
+                                     guard=case.get('guard'), isolated_rejection=not case['valid'], passed=True))
         assert checkpoint == before['checkpoint'], 'reader changed persisted checkpoint'
         count += 1
     # Model access/deletion/withdrawal changing while the read helper returns.
@@ -793,22 +902,12 @@ def historical_reader_cases(fixture, checkpoint, reader, observations=None):
             else:
                 raise AssertionError(('disclosed after returning helper revoked access', field))
             assert changed_leaves(base, request) == 1
-            complete_guards = historical_guards
-            def weakened(*args):
-                guards = complete_guards(*args)
-                del guards[guard]
-                return guards
-            try:
-                globals()['historical_guards'] = weakened
-                assert reader(request, expected)['event_refs'] == [original['event_ref']]
-            finally:
-                globals()['historical_guards'] = complete_guards
         finally:
             globals()['history_page'] = byte_pager
         if observations is not None:
             observations.append(dict(name='after_helper_' + section + '_' + field, valid=False, changed_leaves=1, guard=guard,
-                                     isolated_rejection=True, weakened_guard_discloses=True, passed=True))
-        count += 2
+                                     isolated_rejection=True, passed=True))
+        count += 1
     return count
 
 

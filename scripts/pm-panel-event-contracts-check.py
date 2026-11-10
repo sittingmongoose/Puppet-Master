@@ -21,6 +21,7 @@ Draft202012Validator = shared.Draft202012Validator
 if str(ROOT / 'scripts') not in sys.path:
     sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_dg6a_table_panel_scope as _panel_scope_table  # noqa: E402
+import pm_dg6a_tables as tables  # noqa: E402
 
 _PANEL_SCOPE_ROWS = [(name, guard.predicate) for name, guard in _panel_scope_table.case(None).table.guards.items()]
 PANEL_SCOPE_RECORDER = None
@@ -30,22 +31,31 @@ def load(path):
     return shared.domain.loads((ROOT / path).read_text())
 
 
+def payload_observation(value):
+    """panel_payload FIELDS for a schema-accepted payload; derived only.
+
+    Facts that do not apply (the CV-366 key of a project payload, Home context
+    outside home_workspace) hold; the tab fact is read only after the project fact.
+    """
+    project = value['project_id']
+    partition = 'app' if project is None else 'project~' + base64.urlsafe_b64encode(project.encode()).decode().rstrip('=')
+    home = value['origin'] == 'home_workspace'
+    application_key = True
+    if project is None:
+        key = 'application@1:' + value['server_id'].encode().hex() + ':' + value['interaction_transaction_id'].encode().hex()
+        application_key = value['idempotency_key'] == key
+    return dict(scope_exact=value['scope_partition'] == partition, application_key_exact=application_key,
+                home_project=not home or project is not None,
+                home_tab=not home or project is None or value['workspace_tab_id'] is not None,
+                host_successor=value['new_host_revision'] == value['prior_host_revision'] + 1)
+
+
 def payload_errors(value, schema):
+    """Refuses only through sch_panel_payload and panel_payload rows."""
     found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(value))
-    if not found:
-        project = value['project_id']
-        partition = 'app' if project is None else 'project~' + base64.urlsafe_b64encode(project.encode()).decode().rstrip('=')
-        if value['scope_partition'] != partition:
-            found.append('scope mismatch')
-        if project is None:
-            key = 'application@1:' + value['server_id'].encode().hex() + ':' + value['interaction_transaction_id'].encode().hex()
-            if value['idempotency_key'] != key:
-                found.append('CV-366 application idempotency key mismatch')
-        if value['origin'] == 'home_workspace' and (project is None or value['workspace_tab_id'] is None):
-            found.append('missing original Home context')
-        if value['new_host_revision'] != value['prior_host_revision'] + 1:
-            found.append('not host revision successor')
-    return found
+    if tables.first('sch_panel_payload', schema_errors=len(found)):
+        return found
+    return tables.every('panel_payload', **payload_observation(value))
 
 
 def identity(value, event_type):
@@ -100,43 +110,53 @@ def checkpoint_scope_cases(checkpoint, schema, operation):
     return 1 + len(cases)
 
 
-def operation_errors(value, schema, payload_schema, event_type):
-    found = list(Draft202012Validator(schema).iter_errors(value))
-    if found:
-        return found
-    if len(packed(value)) > 16384:
-        found.append('operation too large')
-    if found:
-        return found
-    payload = value['payload']
-    found += payload_errors(payload, payload_schema)
-    command = value['original_command']
-    if value['request_digest'] != request_digest(command, payload):
-        found.append('frozen command digest mismatch')
-    for key in command:
-        if key in payload and command[key] != payload[key]:
-            found.append('frozen command/payload ' + key)
-    if command.get('target_window', command.get('window_id')) != payload['window_id']:
-        found.append('frozen command window mismatch')
-    for key in ('storage_instance_id', 'server_id', 'project_id', 'scope_partition', 'app_session_id', 'idempotency_key'):
-        if value[key] != payload[key]:
-            found.append('operation/payload ' + key)
+PANEL_OPERATION_PHASES = ('panel_request', 'panel_command_keys', 'panel_operation_joins', 'panel_identity',
+                          'panel_host_prior', 'panel_host_candidate', 'panel_result_refs')
+
+
+def operation_observation(value, event_type):
+    """Facts of every PANEL_OPERATION_PHASES table for a schema- and size-accepted operation.
+
+    Each original_command schema is closed (main checks the per-field rows cover
+    every command field the payload also declares). Rows that do not apply hold:
+    a field absent from the command or payload, result refs of a prepared operation.
+    """
+    payload, command = value['payload'], value['original_command']
+    keys = {key: key not in command or key not in payload or not (command[key] != payload[key])
+            for key in tables.fields('panel_command_keys')}
+    joins = {key: not (value[key] != payload[key]) for key in tables.fields('panel_operation_joins')[1:]}
+    joins['window_exact'] = command.get('target_window', command.get('window_id')) == payload['window_id']
     digest = identity(payload, event_type)
-    if value['operation_digest'] != digest or value['event_id'] != 'evt_' + event_type.replace('.', '_') + '_' + digest:
-        found.append('original identity mismatch')
-    for name, host_key, revision_key in [('prior_host_snapshot', 'source_host', 'prior_host_revision'),
-                                         ('candidate_host_snapshot', 'target_host', 'new_host_revision')]:
-        snapshot = value[name]
-        if (snapshot['app_session_id'], snapshot['host'], snapshot['host_revision']) != (
-                payload['app_session_id'], payload[host_key], payload[revision_key]):
-            found.append('original host snapshot mismatch')
-        if snapshot['window_id'] != (payload['window_id'] if snapshot['host'] == 'detached_window' else None):
-            found.append('original window mismatch')
-    if value['state'] in ('committed', 'settled'):
-        for field, payload_field in [('owner_commit_ref', 'owner_commit_ref'), ('result_ref', 'command_result_ref'),
-                                      ('dispatch_receipt_ref', 'dispatch_receipt_ref')]:
-            if value[field] != payload[payload_field]:
-                found.append('original result/receipt mismatch')
+    facts = {'panel_request': dict(request_digest_exact=value['request_digest'] == request_digest(command, payload)),
+             'panel_command_keys': keys, 'panel_operation_joins': joins,
+             'panel_identity': dict(operation_digest_exact=value['operation_digest'] == digest,
+                                    event_id_exact=value['event_id'] == 'evt_' + event_type.replace('.', '_') + '_' + digest)}
+    for name, host_key, revision_key in [('prior', 'source_host', 'prior_host_revision'),
+                                         ('candidate', 'target_host', 'new_host_revision')]:
+        snapshot = value[name + '_host_snapshot']
+        facts['panel_host_' + name] = dict(
+            session_exact=snapshot['app_session_id'] == payload['app_session_id'],
+            host_exact=snapshot['host'] == payload[host_key], revision_exact=snapshot['host_revision'] == payload[revision_key],
+            window_exact=snapshot['window_id'] == (payload['window_id'] if snapshot['host'] == 'detached_window' else None))
+    committed = value['state'] in ('committed', 'settled')
+    facts['panel_result_refs'] = {field: not committed or not (value[field] != payload[payload_field]) for field, payload_field in
+                                  [('owner_commit_ref', 'owner_commit_ref'), ('result_ref', 'command_result_ref'),
+                                   ('dispatch_receipt_ref', 'dispatch_receipt_ref')]}
+    return facts
+
+
+def operation_errors(value, schema, payload_schema, event_type):
+    """Refuses only through sch_panel_operation, panel_operation_size, the payload and PANEL_OPERATION_PHASES rows."""
+    found = list(Draft202012Validator(schema).iter_errors(value))
+    if tables.first('sch_panel_operation', schema_errors=len(found)):
+        return found
+    code = tables.first('panel_operation_size', encoded_bytes=len(packed(value)))
+    if code:
+        return [code]
+    found = payload_errors(value['payload'], payload_schema)
+    facts = operation_observation(value, event_type)
+    for phase in PANEL_OPERATION_PHASES:
+        found += tables.every(phase, **facts[phase])
     return found
 
 
@@ -145,31 +165,29 @@ def request_digest(command, payload):
 
 
 def protocol_errors(context, original_operation):
-    """Synthetic evidence joins; real authority/OS proofs remain native obligations."""
-    if not shared.protocol_shape(context, original_operation, 'panel'):
-        return ['invalid protocol shape']
+    """Synthetic evidence joins; real authority/OS proofs remain native obligations.
+
+    Refuses only through protocol_shape, writer_policy, panel_protocol,
+    retry_*_panel, panel_publication and append_result rows.
+    """
+    shape = shared.protocol_shape(context, original_operation, 'panel')
+    if shape:
+        return [shape]
     original_payload = original_operation['payload']
     errors = []
     errors += shared.writer_policy_errors(context['replay_policy'])
-    if context['admitted'] is not True:
-        errors.append('family absent')
-    if context['desktop'] is not True:
-        errors.append('unsupported web')
-    if context['source_verified'] is not True:
-        errors.append('unverified source')
-    if context['receipt_event_id'] != context['original_event_id']:
-        errors.append('wrong original receipt')
-    if context['original_event_id'] != original_operation['event_id']:
-        errors.append('forged original event identity')
-    if context['session'] != original_payload['app_session_id']:
-        errors.append('prior session cannot act')
-    if context['window'] != original_payload['window_id']:
-        errors.append('wrong window')
-    if not shared.retry_digest_matches(context['retry_command'], context['retry_payload'], original_operation['request_digest'],
-                                       original_operation, context.get('append_original')):
-        errors.append('retry changed')
-    if context['publication_state'] != 'current' or shared.cursor_errors(context['cursor'], context['frontier']):
-        errors.append('unavailable publication/cursor')
+    errors += tables.every('panel_protocol', admitted=context['admitted'] is True, desktop=context['desktop'] is True,
+                           source_verified=context['source_verified'] is True,
+                           receipt_exact=context['receipt_event_id'] == context['original_event_id'],
+                           original_event_exact=context['original_event_id'] == original_operation['event_id'],
+                           session_exact=context['session'] == original_payload['app_session_id'],
+                           window_exact=context['window'] == original_payload['window_id'])
+    errors += shared.retry_refusals('panel', context['retry_command'], context['retry_payload'], original_operation['request_digest'],
+                                    original_operation, context.get('append_original'))
+    publication_current = context['publication_state'] == 'current'
+    # The cursor fact is derived only for a current publication (pre-table `or` order).
+    cursor_valid = publication_current and not shared.cursor_errors(context['cursor'], context['frontier'])
+    errors += tables.every('panel_publication', publication_current=publication_current, cursor_valid=cursor_valid)
     family = original_operation['schema_id'].removeprefix('pm.storage_value.').removesuffix('_operation.v1').replace('_', '.', 1)
     errors += shared.append_result_errors(original_operation, context.get('append_resolution'), context.get('append_original'), family)
     return errors

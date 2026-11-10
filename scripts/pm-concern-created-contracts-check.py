@@ -21,6 +21,7 @@ Draft202012Validator = shared.Draft202012Validator
 if str(ROOT / 'scripts') not in sys.path:
     sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_dg6a_table_concern_scope as _concern_scope_table  # noqa: E402
+import pm_dg6a_tables as tables  # noqa: E402
 
 _CONCERN_SCOPE_ROWS = [(name, guard.predicate) for name, guard in _concern_scope_table.case(None).table.guards.items()]
 CONCERN_SCOPE_RECORDER = None
@@ -47,37 +48,37 @@ def caller_body(command):
 
 
 def payload_errors(value, schema):
-    return list(Draft202012Validator(schema).iter_errors(value))
+    """Refuses only through the sch_concern_payload row."""
+    found = list(Draft202012Validator(schema).iter_errors(value))
+    return found if tables.first('sch_concern_payload', schema_errors=len(found)) else []
 
 
-def operation_errors(value, schema, payload_schema):
-    found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(value))
-    if found:
-        return found
-    if len(packed(value)) > 16384:
-        found.append('operation exceeds 16384 bytes')
-    if found:
-        return found
+CONCERN_OPERATION_PHASES = ('concern_identity', 'concern_command_keys_a', 'concern_command_keys_b', 'concern_operation_joins',
+                            'concern_record_a', 'concern_record_b')
+
+
+def operation_observation(value):
+    """Facts of every CONCERN_OPERATION_PHASES table for a schema- and size-accepted operation.
+
+    The original_command schema is closed (main checks the per-field rows cover
+    every command field the payload also declares); a field absent from the
+    command or the payload holds.
+    """
     payload, command, record = value['payload'], value['original_command'], value['candidate_record']
-    found += list(Draft202012Validator(payload_schema, format_checker=FormatChecker()).iter_errors(payload))
     h = hashlib.sha256(shared.semantic_packed([value['storage_instance_id'], value['project_id'], 'concern.created', value['idempotency_key']])).hexdigest()
     cid = 'concern_' + h
-    if (value['operation_digest'], value['event_id'], payload['concern_id']) != (h, 'evt_concern_created_' + h, cid):
-        found.append('original identity mismatch')
-    if value['request_digest'] != digest(value):
-        found.append('frozen command/payload/record digest mismatch')
-    if value['scope_partition'] != 'project~' + base64.urlsafe_b64encode(value['project_id'].encode()).decode().rstrip('='):
-        found.append('Project partition mismatch')
-    for key in command:
-        if key in payload and command[key] != payload[key]:
-            found.append('original command/payload ' + key)
-    if not (value['project_id'] == payload['project_id'] == record['project_id'] and
-            value['idempotency_key'] == payload['idempotency_key']):
-        found.append('original scope/key mismatch')
-    if payload['actor_ref'] != payload['created_by_ref']:
-        found.append('creator/actor mismatch')
-    if payload['concern_record_ref'] != f"pmref:concern_record:{value['project_id']}/{cid}/r1":
-        found.append('original revision-one record ref mismatch')
+    facts = {'concern_identity': dict(
+        operation_digest_exact=value['operation_digest'] == h, event_id_exact=value['event_id'] == 'evt_concern_created_' + h,
+        concern_id_exact=payload['concern_id'] == cid, request_digest_exact=value['request_digest'] == digest(value),
+        partition_exact=value['scope_partition'] == 'project~' + base64.urlsafe_b64encode(value['project_id'].encode()).decode().rstrip('='))}
+    for part in ('a', 'b'):
+        facts['concern_command_keys_' + part] = {
+            key: key not in command or key not in payload or not (command[key] != payload[key])
+            for key in tables.fields('concern_command_keys_' + part)}
+    facts['concern_operation_joins'] = dict(
+        payload_project=value['project_id'] == payload['project_id'], record_project=payload['project_id'] == record['project_id'],
+        key_exact=value['idempotency_key'] == payload['idempotency_key'], creator_exact=payload['actor_ref'] == payload['created_by_ref'],
+        record_ref_exact=payload['concern_record_ref'] == f"pmref:concern_record:{value['project_id']}/{cid}/r1")
     expected = dict(record_id=cid, concern_id=cid, revision=1, status='active',
                     concern_category=command['category'], severity=command['severity'],
                     owner_kind=command['owner_kind'], owner_ref=command['owner_ref'],
@@ -89,38 +90,54 @@ def operation_errors(value, schema, payload_schema):
                     chatworthy=command['chatworthy'], blocking_effect_ref=command['blocking_effect_ref'],
                     run_ref=command['run_ref'], scope_ref=command['scope_ref'],
                     resolution_kind=None, resolver_ref=None, resolved_at=None)
-    for key, expected_value in expected.items():
-        if record[key] != expected_value:
-            found.append('original candidate record ' + key)
+    for part in ('a', 'b'):
+        facts['concern_record_' + part] = {key: not (record[key] != expected[key]) for key in tables.fields('concern_record_' + part)}
+    return facts
+
+
+def operation_errors(value, schema, payload_schema):
+    """Refuses only through sch_concern_operation, concern_operation_size, sch_concern_operation_payload
+    and CONCERN_OPERATION_PHASES rows."""
+    found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(value))
+    if tables.first('sch_concern_operation', schema_errors=len(found)):
+        return found
+    code = tables.first('concern_operation_size', encoded_bytes=len(packed(value)))
+    if code:
+        return [code]
+    payload_found = list(Draft202012Validator(payload_schema, format_checker=FormatChecker()).iter_errors(value['payload']))
+    found = payload_found if tables.first('sch_concern_operation_payload', schema_errors=len(payload_found)) else []
+    facts = operation_observation(value)
+    for phase in CONCERN_OPERATION_PHASES:
+        found += tables.every(phase, **facts[phase])
     return found
 
 
 def protocol_errors(context, original):
-    """Synthetic authority/source joins only. Native authentication remains NOT_RUN."""
-    if not shared.protocol_shape(context, original, 'concern'):
-        return ['invalid protocol shape']
+    """Synthetic authority/source joins only. Native authentication remains NOT_RUN.
+
+    Refuses only through protocol_shape, writer_policy, concern_protocol_flags,
+    concern_existence, concern_authority, concern_creator and append_result rows.
+    """
+    shape = shared.protocol_shape(context, original, 'concern')
+    if shape:
+        return [shape]
     found = shared.writer_policy_errors(context['replay_policy'])
-    for key in ('admitted', 'authority_verified', 'source_current', 'permission_allowed'):
-        if context[key] is not True:
-            found.append(key)
-    if any(type(context[key]) is not bool for key in ('subject_already_active', 'concern_key_exists')):
-        found.append('invalid concern existence proof')
-    if original['state'] == 'prepared' and (context['subject_already_active'] is not False or context['concern_key_exists'] is not False):
-        found.append('existing concern cannot be recreated')
+    found += tables.every('concern_protocol_flags', **{key: context[key] is True for key in
+                                                       ('admitted', 'authority_verified', 'source_current', 'permission_allowed')})
+    prepared = original['state'] == 'prepared'
+    found += tables.every('concern_existence', subject_bool=type(context['subject_already_active']) is bool,
+                          key_bool=type(context['concern_key_exists']) is bool, prepared=prepared,
+                          subject_absent=context['subject_already_active'] is False, key_absent=context['concern_key_exists'] is False)
     command = original['original_command']
-    for key in ('actor_ref', 'creator_kind', 'project_id', 'authority_basis_ref', 'currentness_basis_ref', 'permission_snapshot_ref', 'source_refs'):
-        if context['authority'][key] != command[key]:
-            found.append('independent authority ' + key)
-    if type(context['authority']['creator_kind']) is not str or context['authority']['creator_kind'] not in CREATORS:
-        found.append('nomination or owner label grants no creation')
-    if context['receipt_event_id'] != original['event_id']:
-        found.append('wrong original receipt')
-    if context['retry_digest'] != original['request_digest']:
-        found.append('idempotency_conflict')
-    if not shared.exact_value(context['retry_body'], caller_body(command)):
-        found.append('changed caller semantic body')
-    if context['publication_state'] != 'current':
-        found.append('withdrawn History')
+    found += tables.every('concern_authority', **{key: not (context['authority'][key] != command[key])
+                                                  for key in tables.fields('concern_authority')})
+    creator = context['authority']['creator_kind']
+    found += tables.every('concern_creator', creator_string=type(creator) is str,
+                          creator_allowed=type(creator) is str and creator in CREATORS,
+                          receipt_exact=context['receipt_event_id'] == original['event_id'],
+                          retry_digest_exact=context['retry_digest'] == original['request_digest'],
+                          caller_body_exact=shared.exact_value(context['retry_body'], caller_body(command)),
+                          publication_current=context['publication_state'] == 'current')
     found += shared.append_result_errors(original, context.get('append_resolution'), context.get('append_original'), 'concern.created')
     return found
 
