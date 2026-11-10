@@ -27,7 +27,7 @@ What made v2 tiring, and what v3 changes:
 | In v2 | In v3 |
 |---|---|
 | Every value was bold and sat at the far right of its plate, a long way from its label. | Each value sits beside its label, left-aligned on one edge per plate. Labels are quiet, values are regular weight, and only a value that says something is wrong keeps weight and colour. |
-| A sentence or a long path wrapped into a narrow right-hand column, three to five lines deep. | A value that would not fit in two lines beside its label goes under the label, the plate wide (`data-v3-long`, set by `c-v3.js` from the plate's width). |
+| A sentence or a long path wrapped into a narrow right-hand column, three to five lines deep. | A value that would need more than two lines beside its label goes under the label, the plate wide (`data-v3-long`). A plate where most values would wrap (Backup, Where work runs at half width) puts every label above its value, so it reads one way (`data-v3-stack`). `c-v3.js` sets both by measuring the text against the plate's own width. |
 | A dashed rule under every row. | Rows are separated by space; a rule is kept for groups. |
 | A list of choices (folders, what happened, likely places) was a stack of bordered boxes. | One ruled list, the chosen row filled with a hairline ring. |
 | The same distance between everything. | More room between plates and between the library's machines than inside them; each machine's group is ruled off. |
@@ -39,8 +39,11 @@ Two things v3 also repairs because they are about reading: on the chosen library
 was dark blue on the blue fill (it now takes the row's ink), and Retro and NieR, which rule their group heads
 themselves, get no second rule.
 
-It was looked at in all ten looks, at 1280, 1024, 860 and 640 px, with 40 projects and on first run, and browser-check's
-audit (overflow, clipped text, covered controls) passes in the same states it passes in v2.
+Its checks are `tools/checks/split-v3.check.mjs` in this folder's kit: the switch on the strip and by key, what
+switching keeps, v2 left exactly as it was, how each plate's facts are set, and browser-check's audit (overflow, clipped
+text, covered controls) on every demo Project, New Project and its moments, and at 1280, 1024, 860 and 640 px. The
+kit's other checks run in v3 unchanged, since the page opens on it; `--set page=file://<dir>/projects-concepts.html?split=v2`
+runs them in v2. It was also looked at in Basic, Friendly, Glass, Retro and NieR, with 40 projects and on first run.
 
 ## Split v2 (pass 2, 2026-11-02): the chosen concept
 
