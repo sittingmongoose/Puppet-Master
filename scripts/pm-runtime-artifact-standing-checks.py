@@ -23,6 +23,7 @@ import types
 
 ROOT = Path(__file__).resolve().parents[1]
 CHECKER = ROOT / 'scripts/pm-runtime-artifact-event-drafts.py'
+ROW_FAMILIES = [r['event_type'] for r in json.loads((ROOT / 'Plans/runtime_artifact_event_drafts.json').read_text())['rows']]
 CANONICAL_CASES = None
 
 
@@ -211,8 +212,8 @@ def main():
         ('S10_reject_retained_history_on_live_change',10,history_rejects_live_change,None),
         ('S10_current_writer_overlay_on_historical_originals',10,None,source.replace('validation=validation','validation=CURRENT_WRITER'),['runtime_artifact.cost_usage','runtime_artifact.tool_llm_trace']),
         ('S11_remove_historical_decoder_selection',11,cut('H05_decoder'),source.replace(
-            'payload = decode(row, event, packs, validation=decoder)', 'payload = decode(row, event, packs, validation=HISTORICAL_V1)').replace(
-            "at(original, 'custody'), validation=decoder)", "at(original, 'custody'), validation=HISTORICAL_V1)"),
+            "edition = custody.recipe.owner_edition if custody is not None else at(source, 'recorded_decoder')",
+            "edition = HISTORICAL_V1"),
             ['runtime_artifact.cost_usage','runtime_artifact.tool_llm_trace']),
         ('S10_ignore_withdrawal',10,cut('H01a_withdrawn'),None),
         ('S10_ignore_forged_source',10,cut('H02a_source_valid','H02b_receipt_valid'),None),
@@ -224,6 +225,17 @@ def main():
                   'wrong_pointer','missing_dataset','wrong_frontier','unverified_source','wrong_live_snapshot'):
         cases.append(('B2_positive_'+fault,7,checkpoint_input(fault),None))
     hash_families = ['runtime_artifact.cost_usage','runtime_artifact.tool_llm_trace']
+    # Sweep part 2B: the shared date-time check, integer slots, JCS route and SP-1101 dispatch.
+    cases.append(('S12_remove_shared_datetime_check',12,cut('S08_date_time'),None))
+    cases.append(('S12_stock_format_checker_skips_date_time',12,lambda m:setattr(m,'shared_datetime_validator',
+                  lambda base, definition: m.Draft202012Validator(dict(base, **{'$ref': '#/$defs/' + definition}) if definition else base,
+                                                                  format_checker=m.FormatChecker())),None))
+    cases.append(('S10_remove_integer_slot_rule',10,cut('N01_integer_slots'),None))
+    cases.append(('S10_remove_producer_jcs_qualification',10,cut('A08_producer_jcs','F14_producer_jcs'),None))
+    cases.append(('S10a_caller_selects_retained_recipe',10,cut('H05c_no_caller_recipe'),None,
+                  [r for r in ROW_FAMILIES if r not in hash_families]))
+    cases.append(('S10a_ignore_authenticated_binding',10,cut('H05b_original_binding'),None,
+                  [r for r in ROW_FAMILIES if r not in hash_families]))
     cases.append(('S5_remove_provider_hash_guard',5,cut('S03_provider_hash_overlay'),None,hash_families))
     cases.append(('earlier_B6_remove_restore_grouping_guard',None,cut('O02_grouping'),None,['runtime_artifact.restore_point']))
     selected = [c for c in cases if not args.case or any(text in c[0] for text in args.case)]
