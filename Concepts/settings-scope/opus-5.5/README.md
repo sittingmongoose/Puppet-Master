@@ -59,7 +59,7 @@ projects-redesign.
 | The end of the row: origin word, Details, Varies, This project, Home NAS, Studio Mac, Each account | rows | 2.3, 2.4, S5 |
 | Changed: the word at 11.5px and a 1px outline on the control | rows | 2.2, S6 |
 | Lines under a row: Limited to 3 on This computer; For safety, Home NAS's Plan only is used; May differ in garden-notes · Home NAS isn't answering | rows | 2.3 |
-| The head line with Change view (another project, computer or device, or No project) | the top of Settings | 3.6 (NEW CANON) |
+| The header: “tastebook on This computer” and Change (another project, look at another computer or another device’s screen, all the differences); the viewing state, framed, with Stop viewing (Jared #11, 2026-11-10) | the top of Settings | 3.6 (NEW CANON for looking at another computer or device; the header’s design is the concept’s) |
 | The panel: Close as a word; Now with where it comes from and one action named for what it does; Where it applies (sentence, groups, only what differs, Change and Same as everywhere per line, + Set for a computer… and + Set for a project… menus with greyed reasons, power actions with previews); Choosing here changes; Recent changes; For experts' Can differ by and Kept on | the Details panel | 3.1 (NEW CANON SSYS-063) |
 | Change it where it comes from, and the one note: "Saved for everywhere. docs-site keeps its own." · Only for tastebook · Undo; the first-change tip | after any change | 3.2, S4 |
 | An everywhere change is checked against every project that follows it, and safety rows are previewed first | Switch when this much is left; Profile in use; FileSafe | 1.7 |
@@ -82,7 +82,7 @@ projects-redesign.
 | `layer/resolve.js` | `PSX.resolve(id, ctx)` and `PSX.selfTest()` (BUILD-SPEC section 5's 16 cases, and 6 more from the fix pass: an AI service's own value, Changed under a limit, an adopted safety row and an adopted limit row) |
 | `layer/guard.js` | The one guarded write path, `PSX.write` (first start, the device in use, the level, the value's type and range, the writer answering, pairing; atomic or a batch that names what it couldn't change), `PSX.simulate` (what a transaction does to every project, deletions included), `PSX.confirm` (each yes-point in Regular and YOLO), and the command list with each command's Plans owner or named gap |
 | `layer/feed.js` | adopts every inventory row; feeds each project's resolved values into `PM_SETTINGS_PROJECT_SNAPSHOTS` and switches project with `PM_ACTIVE_PROJECT_ID` + `PM12_KIMI.reloadProject()`; pushes single values with `PM12_KIMI.setSettingFromHost`; the router that routes a person's change to its level; the note's words; the hold on the engine's own Saved toast |
-| `layer/rows.js`, `rows.css` | the end of the row (five options), the Changed mark (four options), lines under rows, the head line and Change view, the row menu (option D, right-click, long-press), the Projects folder row |
+| `layer/rows.js`, `rows.css` | the end of the row (five options) in a fixed column, the Changed mark (four options), lines under rows, the header and its Change menu, the row menu (option D, right-click, long-press), the Projects folder row |
 | `layer/panel.js`, `panel.css` | the panel's blocks, the 1.7 checks and previews, the inline Change editor, Esc order |
 | `layer/managers.js` | Providers & Accounts, MCP servers, Servers |
 | `layer/copy.js` | the copy-settings sheet, with Split v2's strings (`tools/diff_strings.py` diffs them) |
@@ -133,6 +133,76 @@ batches, the settings home, the editor, the note's keyboard Undo, fresh moments,
 the classification report) and `--set only=yolo` (each yes-point in Regular and in YOLO, Always allow, git push and
 publish).
 `python3 tools/diff_strings.py` reports the copy sheet's strings against Split v2's.
+
+Jared's review fixes have their own check file in this folder, run with the kit's config:
+
+```sh
+browser-check run Concepts/settings-scope/opus-5.5/tools/checks/feedback.check.mjs \
+  --config Concepts/pm7-tools/browser-check/browser-check.config.mjs --set page=$OUT/settings-scope-app.html
+```
+
+`--set only=rows|shake|head|where|copy|always` runs one part. `rows` measures every section's control and end-word x
+on Models and Services for the decided design and every Compare option, at Full (a 2560 window), 1920, 1280, 1024 and
+860, in Basic Dark, Retro Light and NieR Dark. `shake` reads every painted frame while a switch changes (the switch,
+the end word, the row, the next row, the header, the Changed mark, any “?” on screen, and the browser's own layout
+shifts). `head` measures the header's box, Change and the page under it in six views. `where` builds Where it applies
+for every adopted row and opens one panel of each kind. `copy` and `always` cover the guided-flows rows.
+
+## Jared's review fixes (2026-11-10)
+
+Jared reviewed the concept on 2026-11-09 (`/mnt/Cursor/share/puppet-master/2026-11-09-settings-feedback/FEEDBACK.md`,
+items 3, 4, 8 and 11) and the guided-flows check named what this concept must change (`GUIDED-FLOWS-CHECK.md`,
+"Changes for P": Copy settings and Always allow). The report with before and after pictures is
+`CONCEPT-FIX-REPORT-A.md` in that folder. Checks: `tools/checks/feedback.check.mjs` (below).
+
+- **#3, rows line up.** The end of the row is a fixed column (`--psx-end-w`, 124px; 172px while “Show where each setting
+  comes from” is on), so every control in a section ends at the same x whatever its end word says, and a row with no
+  end word keeps the column empty. Lists take one width (`--psx-list-w`, 220px; a wider list keeps its own), so their
+  left edges line up too. End words start at one x. Changed option C (framed row) takes its padding back with a negative
+  margin, so a framed row's control lines up with the rest. Narrow Settings keeps the base page's own narrow layout
+  (copy and end word on the first line, the control under the copy) with the fixed end column.
+- **#4, toggling shook the page.** On bare PMConcept7 a toggle moves nothing. With the layer, the base page redraws a
+  changed row and puts its round “?” back into the end button; the layer's word came back on a later frame, so the
+  control could jump 40px sideways and back, and the base page's Changed mark went on, off (the layer's world had not
+  taken the change yet) and on again. Now: the end column is fixed, the rows a mutation touched are decorated again
+  inside the observer callback (a microtask after the base page's change, before any paint, with no row cap), and
+  while a change is on its way (the base page holds a value the layer hasn't routed yet) Changed stays as the base page
+  drew it. A row never shows Changed twice (the old build showed “Changed · Changed” after a redraw, as in Jared's
+  screen 02).
+- **#8, Where it applies is the same everywhere (Jared chose “Keep per device”).** Every panel has the same three parts
+  in the same order: Everywhere, then Computers (Devices on a screen row), then Projects. A part a row doesn't offer
+  keeps its place with one plain line (“Not per project: it belongs to each computer.”). Screen rows list Devices with
+  one line: “This is about the screen in front of you, so it can differ per device.” (sound and keyboard rows say
+  sound and keyboard). The sentence at the top says only what is in use. An account's or a service's own row (Each
+  account) keeps the base page's list of each one's value and takes the same three parts. Libraries (Your own themes,
+  Start custom themes from, Sound library, Add a sound) were on the device rule and offered “Set for a device”; they
+  are the same everywhere now (`your_library`). Where the base page shows its own scope next to the layer's, the
+  layer's wins: the MCP server panel's “Where it applies” line and the server list's scope word are hidden.
+- **#11, the top of Settings.** One calm header names the Project and the Computer once: “tastebook on This computer”,
+  with Change. Your own view is the open project on the computer that does its work, with your device's screen; Change ›
+  Project opens another project (as the base page's project button did, which is hidden here, with the rail's
+  “Project:” line). Looking at another Computer or another device's screen is the viewing state: the same line in the
+  same box, framed and tinted, with the word Viewing and Stop viewing (before Change, so Change never moves). Nothing
+  says “my view”. The header is one row of 32px in every view, so changing the view never moves the page. YOLO is a
+  word in that row; notices that are not about the view (the settings home not answering, first start, a Member's
+  device) are lines under it.
+- **Copy settings (guided flows 3.02-3.07, 3.12, 3.17).** The kind reads **Notifications & limits** (NEW CANON:
+  Settings_System's P12 label). Keep them fixed adds only rows of the kinds you selected and never a row you unticked;
+  a deselected kind stays deselected when Keep them fixed is turned off and on (NEW CANON: “freezes only eligible
+  selected values”). Advanced lists the fixed rows under their kind, one tick each. A device-bound account gets the
+  real `cannot_move` result, “Can’t be used on Home NAS”, with Split v2's reason, and stays the intended choice (NEW
+  CANON: MA-074 and Settings_System's outcome list); the demo's Copilot seat is tied to This computer. The account
+  lines say only which accounts are copied, never a sign-in, key or token. Copy checks each account on the destination
+  computer again at the moment it copies, and shows the preview again if one changed (NEW CANON: “a different Computer
+  or account invalidates the readiness preview”). About its own files, Keep them fixed and Copy what it gets from its
+  computer still start off. The stronger copy UI (folder, things, accounts, Advanced by kind, setting and thing) is
+  kept.
+- **Always allow (guided flows 8.03-8.04, moment 11.18).** Always allow opens under the step: you choose the exact
+  pattern (three suggestions or your own, `*` matches anything) and its place; nothing is chosen for you, the preview
+  says what the pattern matches and what still asks, and the rule is written only then. Everywhere is hidden, not
+  greyed, for any host-dependent rule (a path, a folder, a script or program by its location), with one line saying
+  why; the run now has a release script to show that. Ordinary YOLO git push and publish still run without asking and
+  never become an Always rule (NEW CANON: Permissions_System's Always and YOLO rules).
 
 ## Fix pass (2026-11-03)
 

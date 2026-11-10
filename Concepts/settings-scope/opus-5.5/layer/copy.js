@@ -56,7 +56,12 @@
     'np.acct.signin': 'Sign in on {computer} after it’s made',
     'np.acct.signinWhy': 'Sign-ins stay with the computer that does the work. You sign in on the device in front of you, and it is kept on {computer}.',
     'np.acct.key': 'Add the key on {computer} after it’s made',
-    'np.acct.expired': 'Expired on {computer}: sign in again after it’s made'
+    'np.acct.expired': 'Expired on {computer}: sign in again after it’s made',
+    'np.acct.keyWhy': 'You paste it once on the device in front of you, and it is kept in {computer}’s password store. Keys are not moved between computers.',
+    'np.acct.install': 'Install {tool} on {computer}',
+    'np.acct.installWhy': 'Puppet Master never installs a tool by itself. Install it there, then sign in.',
+    'np.acct.cannot': 'Can’t be used on {computer}',                                    // cannot_move (guided-flows 3.12)
+    'np.acct.cannotWhy': 'It belongs to one device. It stays this Project’s intended choice, and nothing replaces it.'
   };
   const SETTINGS = { sendKeys: false, usualWord: 'Your usual settings', computerWord: 'computer', copyWrites: 'project', computerLevelTravels: false, variesMark: 'origin-word' };
   const t = (k, v) => String(STR[k] || k).replace(/\{(\w+)\}/g, (_, x) => (v && v[x] != null ? v[x] : ''));
@@ -67,7 +72,7 @@
     ['providers_accounts_models_routing', 'AI accounts and models', 'AI models'], ['planning_goal', 'Planning and Goals', 'planning'],
     ['orchestrator_automation', 'Automation', 'automation'], ['tools_integrations', 'Tools and connections', 'tools'],
     ['testing_browser_devices', 'Testing, browser and devices', 'testing'], ['permissions_security', 'Permissions and safety', 'permissions'],
-    ['memory_retention_history', 'Memory and history', 'memory'], ['notifications_usage_budgets', 'Notifications and limits', 'notifications']
+    ['memory_retention_history', 'Memory and history', 'memory'], ['notifications_usage_budgets', 'Notifications & limits', 'notifications']
   ];
   function kindOf(id) {
     if (/^general\.visual\.|^general\.startup\./.test(id)) return 'appearance_workspace';
@@ -98,12 +103,15 @@
   const accName = (a) => `${a.service} · ${a.name}`;
   function readiness(key, comp, sameComp) {
     const a = PSX.W.things.accounts[key], s = a.on[comp], cn = placeName('computer', comp);
+    /* a sign-in tied to one device's hardware can't be used anywhere else: the account stays the intended choice with
+       the reason, never another account in its place (MA-074, Settings_System cannot_move; guided-flows 3.12) */
+    if (a.bound && a.bound !== comp) return { mark: 'blocked', text: t('np.acct.cannot', { computer: cn }), why: `${t('np.acct.cannotWhy')} Its sign-in is tied to ${placeName('device', a.bound)}.`, outcome: 'cannot_move' };
     if ((s === 'ready' || s === 'checked') && sameComp) return { mark: 'complete', text: t('np.acct.ready', { computer: cn }), why: t('np.acct.readyWhy'), outcome: 'ready_here' };
     if (s === 'ready' || s === 'checked') return { mark: 'reviewing', text: t('np.acct.checked', { computer: cn }), why: t('np.acct.checkedWhy', { computer: cn }), outcome: 'check_there' };
-    if (s === 'missing') return { mark: 'off', text: `Install ${a.tool} on ${cn}`, why: 'Never installed by itself.', outcome: 'not_installed' };
+    if (s === 'missing') return { mark: 'off', text: t('np.acct.install', { tool: a.tool, computer: cn }), why: t('np.acct.installWhy'), outcome: 'not_installed' };
     if (s === 'expired') return { mark: 'warning', text: t('np.acct.expired', { computer: cn }), outcome: 'expired' };
     // a key is Puppet Master's to keep; a tool keeps its own sign-in (SSYS-008, MA-014)
-    if (a.kind === 'key') return { mark: 'waiting', text: t('np.acct.key', { computer: cn }), why: `Keys are not moved between computers. You paste it once on the device in front of you, and Puppet Master keeps it in ${cn}’s secure store.`, outcome: 'key_needed' };
+    if (a.kind === 'key') return { mark: 'waiting', text: t('np.acct.key', { computer: cn }), why: t('np.acct.keyWhy', { computer: cn }), outcome: 'key_needed' };
     return { mark: 'waiting', text: t('np.acct.signin', { computer: cn }), why: `Sign-ins stay with the computer that does the work. The sign-in opens on the device in front of you, and ${a.tool} keeps it on ${cn}.`, outcome: 'sign_in_there' };
   }
   const AI_KIND = 'providers_accounts_models_routing';
@@ -147,14 +155,16 @@
     const mode = o.mode || 'settings';                 // 'settings' (into this project) or 'new' (New Project, recipe-box on Home NAS)
     const c = PSX.ctxFull(S.ctx);
     // with no project open there is no "this project": the destination is chosen, never invented (section 6)
-    const st = { dst: mode === 'new' ? 'recipe-box' : (o.dst || c.project || null), all: false, onlyDiff: true, q: '', pick: {}, things: {}, accts: {}, files: {}, fixed: false, fromComp: false, useAccts: true, step: 'choose', openKinds: {}, advOpen: !!o.advanced, clash: {}, frozen: null, stale: null };
+    /* kindOff: kinds you deselected (a kind's box, or every row in it unticked); pickFixed: fixed rows you unticked one by
+       one. Keep them fixed adds only rows of selected kinds and never one you unticked (guided-flows 3.07) */
+    const st = { dst: mode === 'new' ? 'recipe-box' : (o.dst || c.project || null), all: false, onlyDiff: true, q: '', pick: {}, things: {}, accts: {}, files: {}, kindOff: {}, pickFixed: {}, fixed: false, fromComp: false, useAccts: true, step: 'choose', openKinds: {}, advOpen: !!o.advanced, clash: {}, frozen: null, stale: null };
     // New Project starts on your usual settings unless a source was chosen first (5.2)
     st.src = o.src || (mode === 'new' ? 'usual' : (st.dst === 'tastebook' ? 'harbor' : 'tastebook'));
     const dstComp = () => (mode === 'new' ? (o.comp || 'homenas') : st.dst ? (PSX.projectById(st.dst) || { home: c.on }).home : c.on);
     const dstCtx = () => ({ project: mode === 'new' ? null : st.dst, device: S.ctx.device, on: dstComp() });
     const sources = () => PROJECTS.map((p) => p.id).filter((p) => p !== st.dst);
     const seed = () => {
-      st.pick = {}; st.things = {}; st.accts = {}; st.files = {}; st.clash = {}; st.frozen = null; st.stale = null;
+      st.pick = {}; st.things = {}; st.accts = {}; st.files = {}; st.clash = {}; st.kindOff = {}; st.pickFixed = {}; st.frozen = null; st.stale = null;
       if (st.src === 'usual' || !st.dst) return;
       sourceDiff(st.src, dstCtx()).forEach((x) => { st.pick[x.id] = !x.files && !x.same; st.files[x.id] = false; if (x.dstOwn) st.clash[x.id] = 'keep'; });
       (OWN_THINGS[st.src] || []).concat(REACH_THINGS[st.src] || []).forEach((x) => { st.things[x.id] = true; });
@@ -181,13 +191,20 @@
       let rows = diff.filter((x) => (x.files ? st.files[x.id] : st.pick[x.id]));
       if (!st.useAccts) rows = rows.filter((x) => x.kind !== AI_KIND);
       if (st.fromComp) rows = rows.concat(fromComputer(st.src).filter((x) => !rows.find((y) => y.id === x.id)).map((x) => Object.assign({ usual: PSX.resolve(x.id, dstCtx()).value, dstOwn: mode !== 'new' && PSX.has(PSX.W.project[st.dst], x.id) }, x)));
-      if (st.fixed) { const have = new Set(diff.map((x) => x.id).concat(rows.map((x) => x.id))); rows = rows.concat(fixedRows(st.src, dstCtx(), have).filter((x) => st.useAccts || x.kind !== AI_KIND)); }
+      if (st.fixed) rows = rows.concat(fixedEligible(diff, rows).filter((x) => !st.kindOff[x.kind] && st.pickFixed[x.id] !== false));
       rows.forEach((x) => { if (x.dstOwn && !st.clash[x.id]) st.clash[x.id] = 'keep'; });
       const things = (OWN_THINGS[st.src] || []).concat(REACH_THINGS[st.src] || []).filter((x) => st.things[x.id]);
       const accts = st.useAccts ? uses(st.src).filter((k) => st.accts[k] === 'same') : [];
       const kept = rows.filter((x) => x.dstOwn && st.clash[x.id] === 'keep');
       const copied = rows.filter((x) => !kept.includes(x));
       return { rows, things, accts, copied, kept };
+    }
+    /* every row Keep them fixed could add (before your kind and row choices): settings the destination may own, not
+       already in the copy, and not AI rows when "Use the same AI accounts" is off */
+    function fixedEligible(diff, rows) {
+      diff = diff || sourceDiff(st.src, dstCtx());
+      const have = new Set(diff.map((x) => x.id).concat((rows || []).map((x) => x.id)));
+      return fixedRows(st.src, dstCtx(), have).filter((x) => st.useAccts || x.kind !== AI_KIND);
     }
     function totals() { const p = plan(); return { n: p.copied.length, kept: p.kept.length, things: p.things.length, accts: p.accts.length }; }
     function primaryLabel() {
@@ -223,7 +240,10 @@
         if (f) { f.focus({ preventScroll: true }); if (caret && typeof f.setSelectionRange === 'function') try { f.setSelectionRange(caret[0], caret[1]); } catch (e) { /* not a text field */ } }
       }
     }
-    const snapshot = (p) => ({ rows: p.rows.map((x) => [x.id, JSON.stringify(x.value), !!x.dstOwn && st.clash[x.id] === 'keep']), things: p.things.map((x) => x.id), accts: p.accts.slice(), dst: st.dst, src: st.src });
+    /* what was previewed, including each chosen account's state on the destination computer: Copy checks all of it
+       again at the moment it copies, and shows the preview again if anything moved (guided-flows 3.14) */
+    const acctStates = (p) => { const sameComp = PSX.projectById(st.src) && PSX.projectById(st.src).home === dstComp(); return p.accts.map((k) => [k, readiness(k, dstComp(), sameComp).outcome]); };
+    const snapshot = (p) => ({ rows: p.rows.map((x) => [x.id, JSON.stringify(x.value), !!x.dstOwn && st.clash[x.id] === 'keep']), things: p.things.map((x) => x.id), accts: p.accts.slice(), acctStates: acctStates(p), comp: dstComp(), dst: st.dst, src: st.src });
     function sourceRow(p) {
       const n = ownCount(p);
       const accts = uses(p).map((k) => PSX.W.things.accounts[k].service);
@@ -260,8 +280,8 @@
       const reach = p.things.filter((x) => (REACH_THINGS[st.src] || []).includes(x));
       if (reach.length) h += `<div class="psx-fact">${mark('complete')}<span>${esc(list(reach.map((x) => x.name)))}, from your library, ${reach.length === 1 ? 'becomes' : 'become'} available in ${esc(st.dst)} too.</span></div>`;
       if (accts.length) {
-        h += `<div class="psx-fact">${mark('complete')}<span>${esc(t('np.like.accounts', { accounts: list(accts.map((k) => PSX.W.things.accounts[k].service)) }))}</span></div><ul class="psx-list psx-accts">`;
-        h += accts.map((k) => { const a = PSX.W.things.accounts[k], r = readiness(k, dstComp(), sameComp); return `<li class="psx-li"><span class="psx-li-name">${esc(accName(a))}</span><span class="psx-li-end" data-pm-hover-label="${esc(r.text)}" data-pm-hover-detail="${esc(r.why || '')}">${PSX.st(r.mark, r.text)}</span></li>`; }).join('') + '</ul>';
+        h += `<div class="psx-fact">${mark('complete')}<span>${esc(t('np.like.accounts', { accounts: list([...new Set(accts.map((k) => PSX.W.things.accounts[k].service))]) }))} Only which accounts, in their order: no sign-in, key or token is copied.</span></div><ul class="psx-list psx-accts">`;
+        h += accts.map((k) => { const a = PSX.W.things.accounts[k], r = readiness(k, dstComp(), sameComp); return `<li class="psx-li" data-outcome="${esc(r.outcome)}"><span><span class="psx-li-name">${esc(accName(a))}</span>${r.outcome === 'cannot_move' ? `<span class="psx-li-sub" style="display:block">${esc(r.why)}</span>` : ''}</span><span class="psx-li-end" data-pm-hover-label="${esc(r.text)}" data-pm-hover-detail="${esc(r.why || '')}">${PSX.st(r.mark, r.text)}</span></li>`; }).join('') + '</ul>';
       } else if (!st.useAccts) h += `<div class="psx-fact">${mark('info')}<span>${esc(t('np.like.acctOff'))}</span></div>`;
       h += `<div class="psx-fact">${icon('lock')}<span>Never copied: sign-ins themselves, keys, files, history, Goals and Plans.</span></div>`;
       h += `<p class="psx-p psx-muted" style="margin:8px 0 0">${esc(mode === 'new' ? t('np.like.separate') : `These become ${st.dst}’s own settings. Later changes to ${st.src} won’t follow. To change every project at once, change the setting everywhere.`)}</p></div>`;
@@ -273,14 +293,19 @@
       const all = sourceDiff(st.src, dstCtx());
       const q = q0();
       const settingsRows = all.filter((x) => !x.files);
+      const fixedAll = st.fixed ? fixedEligible(all) : [];
       const kinds = KINDS.map(([kid, name]) => {
-        const rows = settingsRows.filter((x) => x.kind === kid && vis(x));
-        const picked = rows.filter((x) => st.pick[x.id]).length;
+        const diffRows = settingsRows.filter((x) => x.kind === kid && vis(x));
+        const fixedK = fixedAll.filter((x) => x.kind === kid && (!q || label(x.id).toLowerCase().includes(q)));
+        const rows = diffRows.concat(fixedK);
+        const on = (x) => (x.fixed ? !st.kindOff[kid] && st.pickFixed[x.id] !== false : !!st.pick[x.id]);
+        const picked = rows.filter(on).length;
         if (!rows.length) return `<div class="psx-kind" aria-disabled="true"><label class="psx-check" aria-disabled="true"><input type="checkbox" disabled data-k="kind-${kid}"><span>${esc(name)}<small>${esc(t('np.like.kindNone'))}</small></span></label></div>`;
         if (kid === AI_KIND && !st.useAccts) return `<div class="psx-kind" aria-disabled="true"><label class="psx-check" aria-disabled="true"><input type="checkbox" disabled data-k="kind-${kid}"><span>${esc(name)}<small>${esc(t('np.like.singleOff'))}: “${esc(t('np.like.acctSwitch'))}” is off</small></span></label></div>`;
         const openK = !!st.openKinds[kid] || !!q;
-        return `<div class="psx-kind"><div class="psx-kind-head"><label class="psx-check"><input type="checkbox" data-act="kind" data-kind="${kid}" data-k="kind-${kid}"${picked === rows.length ? ' checked' : ''}${picked && picked < rows.length ? ' data-mixed="1" aria-checked="mixed"' : ''}><span>${esc(name)}<small>${picked} of ${rows.length} · ${esc(t('np.like.kindCount', { n: rows.length }))}</small></span></label><button type="button" class="psx-tb" data-act="openkind" data-kind="${kid}" data-k="open-${kid}" aria-expanded="${openK}" aria-label="${openK ? 'Hide' : 'Show'} the ${esc(name)} settings">${openK ? 'Hide settings' : 'Show settings'}</button></div>`
-          + (openK ? `<div class="psx-kind-rows">${rows.map((x) => `<label class="psx-check"><input type="checkbox" data-act="one" data-id="${esc(x.id)}" data-k="one-${esc(x.id)}"${st.pick[x.id] ? ' checked' : ''}><span>${esc(label(x.id))} · ${esc(vt(x.id, x.value))} <span class="psx-muted">(your usual: ${esc(vt(x.id, x.usual))})</span>${st.pick[x.id] ? '' : `<small>${esc(t('np.like.singleOff'))}</small>`}</span></label>`).join('')}</div>` : '') + '</div>';
+        const countTxt = `${picked} of ${rows.length} · ${diffRows.length ? t('np.like.kindCount', { n: diffRows.length }) : t('np.like.kindNone')}${fixedK.length ? ` · ${fixedK.length} kept fixed` : ''}`;
+        return `<div class="psx-kind"><div class="psx-kind-head"><label class="psx-check"><input type="checkbox" data-act="kind" data-kind="${kid}" data-k="kind-${kid}"${picked === rows.length ? ' checked' : ''}${picked && picked < rows.length ? ' data-mixed="1" aria-checked="mixed"' : ''}><span>${esc(name)}<small>${esc(countTxt)}</small></span></label><button type="button" class="psx-tb" data-act="openkind" data-kind="${kid}" data-k="open-${kid}" aria-expanded="${openK}" aria-label="${openK ? 'Hide' : 'Show'} the ${esc(name)} settings">${openK ? 'Hide settings' : 'Show settings'}</button></div>`
+          + (openK ? `<div class="psx-kind-rows">${rows.map((x) => `<label class="psx-check"><input type="checkbox" data-act="${x.fixed ? 'onefixed' : 'one'}" data-kind="${kid}" data-id="${esc(x.id)}" data-k="${x.fixed ? 'fix' : 'one'}-${esc(x.id)}"${on(x) ? ' checked' : ''}><span>${esc(label(x.id))} · ${esc(vt(x.id, x.value))} <span class="psx-muted">${x.fixed ? '(kept fixed as it is today)' : `(your usual: ${esc(vt(x.id, x.usual))})`}</span>${on(x) ? '' : `<small>${esc(t('np.like.singleOff'))}</small>`}</span></label>`).join('')}</div>` : '') + '</div>';
       }).join('');
       const things = (OWN_THINGS[st.src] || []).concat(REACH_THINGS[st.src] || []);
       const thingsHtml = things.length ? things.map((x) => `<label class="psx-check"><input type="checkbox" data-act="thing" data-id="${esc(x.id)}" data-k="thing-${esc(x.id)}"${st.things[x.id] ? ' checked' : ''}><span>${esc(x.name)}${x.kind === 'persona' ? ' (persona)' : ''} · ${esc(x.outcome(st.dst, placeName('computer', dstComp())))}</span></label>`).join('') : `<p class="psx-p psx-muted">${esc(t('np.like.thingNone'))}</p>`;
@@ -317,10 +342,10 @@
       const done = st.step === 'done';
       let h = done
         ? `<h3 class="psx-h" tabindex="-1" data-k="step">${mark('complete')} Copied without asking (YOLO)</h3><p class="psx-p">${esc(receipt(p))} This is the exact preview it applied; YOLO didn’t ask for a yes.</p><ul class="psx-list">`
-        : `<h3 class="psx-h" tabindex="-1" data-k="step">${esc(mode === 'new' ? 'recipe-box will start with' : `${st.dst} gets`)}</h3>${st.stale ? `<p class="psx-p">${mark('warning')} <b>${esc(st.src)} changed since this preview:</b> ${esc(st.stale)}. Look again; Copy uses what is shown now.</p>` : ''}<p class="psx-p">${mark('info')} Nothing changes until you choose ${esc(mode === 'new' ? 'Use these' : 'Copy')}.</p><ul class="psx-list">`;
+        : `<h3 class="psx-h" tabindex="-1" data-k="step">${esc(mode === 'new' ? 'recipe-box will start with' : `${st.dst} gets`)}</h3>${st.stale ? `<p class="psx-p" data-psx-stale="${st.staleAcct ? 'accounts' : 'source'}">${mark('warning')} <b>${esc(st.staleAcct ? `${placeName('computer', dstComp())} changed since this preview:` : `${st.src} changed since this preview:`)}</b> ${esc(st.stale)}. Look again; Copy uses what is shown now.</p>` : ''}<p class="psx-p">${mark('info')} Nothing changes until you choose ${esc(mode === 'new' ? 'Use these' : 'Copy')}.</p><ul class="psx-list">`;
       h += own.map(rowLi).join('');
       h += p.things.map((x) => `<li class="psx-li"><span class="psx-li-name">${esc(x.name)}: ${esc(x.outcome(st.dst, placeName('computer', dstComp())))}.</span></li>`).join('');
-      h += p.accts.map((k) => { const a = PSX.W.things.accounts[k], r = readiness(k, dstComp(), sameComp); return `<li class="psx-li"><span class="psx-li-name">${esc(accName(a))}: chosen for ${esc(st.dst)}.</span><span class="psx-li-end">${PSX.st(r.mark, r.text)}</span></li>`; }).join('');
+      h += p.accts.map((k) => { const a = PSX.W.things.accounts[k], r = readiness(k, dstComp(), sameComp); return `<li class="psx-li" data-outcome="${esc(r.outcome)}"><span class="psx-li-name">${esc(accName(a))}: chosen for ${esc(st.dst)} (the account, not its sign-in).</span><span class="psx-li-end" data-pm-hover-label="${esc(r.text)}" data-pm-hover-detail="${esc(r.why || '')}">${PSX.st(r.mark, r.text)}</span></li>`; }).join('');
       h += `</ul>`;
       if (fixed.length) h += `<details class="psx-adv"><summary data-k="fixedlist"><svg class="psx-chev" viewBox="0 0 12 12" width="12" height="12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Keep them fixed: ${fixed.length} more settings, each as ${esc(st.src)} has it today</span></summary><ul class="psx-list">${fixed.map(rowLi).join('')}</ul></details>`;
       h += `<p class="psx-p psx-muted" style="margin-top:10px">Skipped: sign-ins, keys, files and history (never copied); screen settings (they belong to each device); program and folder settings (they belong to each computer).</p>`;
@@ -338,7 +363,12 @@
       if (st.frozen && JSON.stringify(now) !== JSON.stringify(st.frozen)) {
         const was = new Map(st.frozen.rows.map((r) => [r[0], r[1]]));
         const moved = p.rows.filter((x) => was.has(x.id) && was.get(x.id) !== JSON.stringify(x.value)).map((x) => `${label(x.id)} is now ${vt(x.id, x.value)}`);
-        st.stale = moved.length ? list(moved, 3) : 'what it brings is different now';
+        const sameComp = PSX.projectById(st.src) && PSX.projectById(st.src).home === dstComp();
+        const wasA = new Map((st.frozen.acctStates || []).map((r) => [r[0], r[1]]));
+        const acctMoved = p.accts.filter((k) => wasA.has(k) && wasA.get(k) !== readiness(k, dstComp(), sameComp).outcome).map((k) => `${accName(PSX.W.things.accounts[k])} on ${placeName('computer', dstComp())}: ${readiness(k, dstComp(), sameComp).text}`);
+        if (st.frozen.comp && st.frozen.comp !== dstComp()) acctMoved.unshift(`the work computer is now ${placeName('computer', dstComp())}`);
+        st.stale = moved.length || acctMoved.length ? list(moved.concat(acctMoved), 3) : 'what it brings is different now';
+        st.staleAcct = !!acctMoved.length && !moved.length;
         st.frozen = now; st.step = 'preview'; render({ focus: 'step' });
         return;
       }
@@ -366,8 +396,24 @@
       if (el.name === 'psx-src') { st.src = el.value; seed(); render({ focus: `src-${st.src}` }); return; }
       if (act === 'dst') { st.dst = el.value || null; if (st.src === st.dst) st.src = st.dst === 'tastebook' ? 'harbor' : 'tastebook'; seed(); render({ focus: 'dst' }); return; }
       // a kind's box changes only the rows it shows (the find box and Only what's different filter it too)
-      if (act === 'kind') { const rows = sourceDiff(st.src, dstCtx()).filter((x) => !x.files && x.kind === el.dataset.kind && vis(x)); rows.forEach((x) => { st.pick[x.id] = el.checked; }); render(); return; }
-      if (act === 'one') { st.pick[el.dataset.id] = el.checked; render(); return; }
+      if (act === 'kind') {
+        const kid = el.dataset.kind;
+        const rows = sourceDiff(st.src, dstCtx()).filter((x) => !x.files && x.kind === kid && vis(x)); rows.forEach((x) => { st.pick[x.id] = el.checked; });
+        // the kind itself is selected or not: Keep them fixed follows it, now and if it is turned on later
+        st.kindOff[kid] = !el.checked;
+        if (el.checked) fixedEligible().filter((x) => x.kind === kid).forEach((x) => { delete st.pickFixed[x.id]; });
+        render(); return;
+      }
+      if (act === 'one' || act === 'onefixed') {
+        const kid = el.dataset.kind;
+        if (act === 'one') st.pick[el.dataset.id] = el.checked; else { st.pickFixed[el.dataset.id] = el.checked; if (el.checked) st.kindOff[kid] = false; }
+        // a kind with nothing left ticked is a deselected kind
+        const diffK = sourceDiff(st.src, dstCtx()).filter((x) => !x.files && x.kind === kid);
+        const fixK = st.fixed ? fixedEligible().filter((x) => x.kind === kid) : [];
+        const any = diffK.some((x) => st.pick[x.id]) || (!st.kindOff[kid] && fixK.some((x) => st.pickFixed[x.id] !== false));
+        if (el.checked) st.kindOff[kid] = false; else if (!any) st.kindOff[kid] = true;
+        render(); return;
+      }
       if (act === 'thing') { st.things[el.dataset.id] = el.checked; render(); return; }
       if (act === 'acct') { st.accts[el.dataset.id] = el.value; render(); return; }
       if (act === 'useaccts') { st.useAccts = el.checked; render(); return; }
