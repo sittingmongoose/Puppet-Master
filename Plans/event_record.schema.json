@@ -179,43 +179,6 @@
           }
         }
       }
-    },
-    {
-      "if": {
-        "properties": {
-          "event_type": {
-            "enum": [
-              "bundle.selection_forward_blocked",
-              "bundle.selection_sent_to_chat",
-              "chat.message",
-              "chat.thread_archived",
-              "chat.thread_created",
-              "chat.thread_deleted",
-              "chat.thread_worktree_bound",
-              "chat.thread_worktree_create_failed",
-              "chat.thread_worktree_merge_failed",
-              "chat.thread_worktree_merged",
-              "chat.thread_worktree_pr_created",
-              "chat.thread_worktree_pr_failed",
-              "chat.thread_worktree_pre_merge_test_failed",
-              "chat.thread_worktree_pre_merge_test_passed",
-              "chat.thread_worktree_pre_merge_test_started",
-              "chat.thread_worktree_renamed",
-              "chat.thread_worktree_unbound"
-            ]
-          }
-        },
-        "required": [
-          "event_type"
-        ]
-      },
-      "then": {
-        "properties": {
-          "sequence_id": {
-            "maximum": 18446744073709551615
-          }
-        }
-      }
     }
   ],
   "$defs": {
