@@ -170,6 +170,7 @@ Added after the review. **Run:** two controls in the probe were given `accessibl
 |---|---|
 | Worker quotes of 40 characters or more found verbatim in the files they cite | A 144 of 149 (97%); B 52 of 56 (93%); C 29 of 31 (94%); D 48 of 53 (91%); E 92 of 103 (89%); F 24 of 32 (75%). Misses were paraphrases, quotes with an ellipsis, or the worker's own words in quotation marks. |
 | Plans and tooling passages this report relies on, checked at their lines | 72 of 72 (`plans-citation-check.txt`) |
+| Third recheck, of the last two fixes only | Clean (`reviews/REVIEW-r3-sol-high.md`) |
 | Recheck of the fixes by the same model, blind | Five confirmed fixed; two new findings in the added text, fixed; all 72 citations and all 55 evidence hashes recomputed and matching (`reviews/REVIEW-r2-sol-high.md`) |
 | Blind review by a second model (Sol 6.1 high) | Five real findings, fixed; it sampled 27 Exact links and 30 Plans rows, all passed, and recomputed all 50 evidence hashes (`reviews/REVIEW-r1-sol-high.md`) |
 | Exact passages this report relies on, checked at their lines | 52 of 52 (`exact-citation-check.txt`) |
