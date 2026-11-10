@@ -76,11 +76,13 @@
 #panel-settings .o55-group-help { margin: 3px 0 0; font-size: 12px; line-height: 1.45; color: var(--k3-text-3); max-width: 70ch; }
 #panel-settings .o55-group > .setting-list { --o55-list-inset-l: 18px; --o55-list-inset-r: 14px; padding: 2px 14px 6px 18px; }
 /* FO-124: a hovered row's paint reaches the card's own edge instead of stopping abruptly at the list's side padding.
-   The row carries the list's inline inset itself (negative margin out, same padding in), so labels, controls and the
-   About column keep their exact x, while the hover tint and the row separators span the card under its border. Every
+   The row carries the list's inline inset itself (negative margin out, same padding in). A grouped row already had
+   4px of its own on the right, so that stays on top of the inset and labels, controls and the About column keep
+   their x. An inline row had none. The hover tint and the row separators span the card under its border. Every
    padding regime names its own insets through the two variables; a list that names none keeps its rows inside. */
 #panel-settings .settings-section.o55-group > .setting-list > .setting-row.o55-row,
 #panel-settings .pm51-mgr .pm51-settings-inline .setting-list > .setting-row.o55-row { margin-left: calc(-1 * var(--o55-list-inset-l, 0px)); margin-right: calc(-1 * var(--o55-list-inset-r, 0px)); padding-left: var(--o55-list-inset-l, 0px); padding-right: var(--o55-list-inset-r, 0px); }
+#panel-settings .settings-section.o55-group > .setting-list > .setting-row.o55-row { padding-right: calc(var(--o55-list-inset-r, 0px) + 4px); }
 #panel-settings .pm51-settings-inline { display: flex; flex-direction: column; gap: 14px; }
 #panel-settings .pm51-settings-inline > .settings-section.o55-group + .settings-section.o55-group { margin-top: 0; }
 
