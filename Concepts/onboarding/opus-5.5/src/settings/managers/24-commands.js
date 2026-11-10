@@ -711,7 +711,7 @@ html[data-motion="reduced"] #panel-settings .pm51-dialog-group > summary .icon s
         '$ARGUMENTS is everything typed after the name. $1 $2 are single words. @path pastes a file. !`command` pastes what a command prints.', { icon: 'code' })
         + PM51.panelSection('Description', PM51.field('One line', PM51.input(c.description || '', { action: 'pm51-commands-desc', data: { id: c.id }, placeholder: 'What this command does' }), 'Shown next to the name in chat and in the command palette.'), '', { icon: 'edit' })
         + PM51.panelSection('Where it is available',
-          PM51.field('Scope', PM51.dropdown(c.scope, [{ value: 'Project', label: 'This project', meta: '.puppet-master/commands/' }, { value: 'Global', label: 'Every project', meta: 'Your user folder' }], { action: 'pm51-commands-field', data: { id: c.id, field: 'scope' }, label: 'Where it is available' }))
+          PM51.field('Available in', PM51.dropdown(c.scope, [{ value: 'Project', label: 'This project', meta: '.puppet-master/commands/' }, { value: 'Global', label: 'Every project', meta: 'Your user folder' }], { action: 'pm51-commands-field', data: { id: c.id, field: 'scope' }, label: 'Where it is available' }))
           + `<p class="pm51-ps-help" data-scope-path>Stored as ${h(pathFor(c))}.</p>`,
           'A project command wins when both have the same name.', { icon: 'folder' })
         + PM51.panelSection('Overrides',
