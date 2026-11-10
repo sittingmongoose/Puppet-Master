@@ -23,6 +23,7 @@ import hashlib
 import importlib.util
 import json
 import re
+import sys
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -32,6 +33,18 @@ from referencing import Registry, Resource
 
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT / "scripts") not in sys.path:
+    sys.path.insert(0, str(ROOT / "scripts"))
+
+from pm_coordination_guard_bridge import gate_code, gate_items
+from pm_coordination_numbers import (
+    application_bounds_match,
+    decimal_integer,
+    epoch_token,
+    integer_slot_code,
+    retained_retry_matches,
+)
+from pm_event_numbers import Refusal, current_append_policy
 PAYLOAD_PATH = "Plans/coordination_event_payloads.schema.json"
 PAYLOAD_SCHEMA_URI = "https://puppetmaster.local/schemas/coordination_event_payloads/1.0.0/coordination_event_payloads.schema.json"
 PROJECTION_PATH = "Plans/coordination_projection_contracts.schema.json"
@@ -162,13 +175,30 @@ CLAIM_BOUNDARY = (
 )
 
 
+def _gate(phase: str, items: list[Any]) -> list[Any]:
+    return gate_items(phase, items)
+
+
+def _code(phase: str, code: str | None) -> str | None:
+    return gate_code(phase, code)
+
+
 def load(path: str, root: Path = ROOT) -> Any:
     return json.loads((root / path).read_text(encoding="utf-8"))
 
 
 def canonical(value: Any) -> str:
-    """The DL-077 canonical JSON: keys sorted, ',' and ':' separators, ensure_ascii=False."""
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    """The DL-077 canonical JSON: keys sorted, ',' and ':' separators, ensure_ascii=False.
+
+    This is the local payload hash text, not CV-317 producer JCS. Integer rendering allows
+    the full token, including values past the process default of 4300 digits.
+    """
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    finally:
+        sys.set_int_max_str_digits(previous)
 
 
 def row_sha256(value: Any) -> str:
@@ -205,21 +235,33 @@ def idempotency_key(event_type: str, project_id: str, agent_id: str, recovery_ep
 
     The recovery epoch is the one the prepared event keeps for every retry, the same one its event ID uses
     (review repair CP-02)."""
-    return f"coordination:{event_type}:{project_id}:{agent_id}:{recovery_epoch}:{agent_revision}"
+    from pm_coordination_numbers import exact_decimal
+    epoch = exact_decimal(recovery_epoch) if type(recovery_epoch) is int else str(recovery_epoch)
+    revision = exact_decimal(agent_revision) if type(agent_revision) is int else str(agent_revision)
+    return f"coordination:{event_type}:{project_id}:{agent_id}:{epoch}:{revision}"
 
 
 def key_recovery_epoch(key: str) -> int | None:
-    """The key's recovery epoch: its second-to-last colon field, base 10 without sign or leading zeros."""
+    """The key's recovery epoch: its second-to-last colon field, as a CV-1100 integer token.
+
+    There is no 2**53 or 4300-digit cap. Leading zeros, signs and non-integers are not tokens.
+    """
     parts = key.rsplit(":", 2)
-    if len(parts) != 3 or not re.fullmatch(r"0|[1-9][0-9]*", parts[1]):
+    if len(parts) != 3:
         return None
-    return int(parts[1])
+    return epoch_token(parts[1])
 
 
 def event_id_preimage(storage_instance_id: str, recovery_epoch: int, project_id: str, event_type: str,
                       agent_id: str, agent_revision: int) -> str:
-    """RFC 8785 form of a JSON array of strings (equal to this json.dumps form for strings)."""
-    return json.dumps([storage_instance_id, str(recovery_epoch), project_id, event_type, agent_id, str(agent_revision)],
+    """SP-320 string-array preimage. Epoch and revision are exact integers, then decimal strings.
+
+    The array contains only strings, so this json.dumps form is the RFC 8785 form. It is not rewritten
+    as generic producer JCS and it is not given a lane-local digit cap.
+    """
+    epoch = decimal_integer(recovery_epoch, minimum=0)
+    revision = decimal_integer(agent_revision, minimum=0)
+    return json.dumps([storage_instance_id, epoch, project_id, event_type, agent_id, revision],
                       separators=(",", ":"), ensure_ascii=False)
 
 
@@ -282,23 +324,29 @@ def valid_utc(value: Any) -> bool:
     return True
 
 
-def static_payload_rejection(event_type: str, payload: dict[str, Any]) -> str | None:
-    """The CV-353 and SP-320 cross-field rules a JSON Schema cannot state. Runs after schema validation."""
+def static_payload_rejection(event_type: str, payload: dict[str, Any], root: Path = ROOT) -> str | None:
+    """The CV-353 and SP-320 cross-field rules a JSON Schema cannot state. Runs after schema validation.
+
+    Integer slots use CV-1100 current_integer. JSON Schema treats 1.0 as an integer; this row does not.
+    """
+    schema = load(PAYLOAD_PATH, root)
+    if integer_slot_code(schema, DEF_BY_TYPE[event_type], payload) is not None:
+        return _code("payload_instance", "payload_integer_slots")
     for field in ("started_at_utc", "observed_at_utc", "finished_at_utc", "detected_at_utc", "aborted_at_utc", "exported_at_utc"):
         if field in payload and not valid_utc(payload[field]):
-            return "valid_utc_datetime"
+            return _code("payload_instance", "valid_utc_datetime")
     if event_type == MIRROR:
-        return None
+        return _code("payload_instance", None)
     epoch = key_recovery_epoch(payload["idempotency_key"])
     if epoch is None or payload["idempotency_key"] != idempotency_key(event_type, payload["project_id"], payload["agent_id"], epoch,
                                                                       payload["agent_revision"]):
-        return "identity_recipe"
+        return _code("payload_instance", "identity_recipe")
     if event_type == "coordination.agent_file_ownership_updated" and payload["path_hash"] != path_hash(payload["path_ref"]):
-        return "path_hash_recipe"
+        return _code("payload_instance", "path_hash_recipe")
     if event_type == "coordination.agent_aborted" and payload["abort_reason"] == "parent":
         if payload["aborted_by_ref"] != "run:" + payload.get("parent_run_id", ""):
-            return "abort_ref_join"
-    return None
+            return _code("payload_instance", "abort_ref_join")
+    return _code("payload_instance", None)
 
 
 def producer_digest(event_type: str, payload: dict[str, Any]) -> str:
@@ -334,10 +382,10 @@ def projection_valid(definition: str, value: Any, root: Path = ROOT) -> bool:
 def payload_rejection(event_type: str, payload: Any, root: Path = ROOT) -> str | None:
     """First failing check layer of CV-353 for one payload: schema, then the static rules."""
     if event_type not in DEF_BY_TYPE:
-        return "unknown_event_type"
+        return _code("payload_instance", "unknown_event_type")
     if not payload_valid(event_type, payload, root):
-        return "schema"
-    return static_payload_rejection(event_type, payload)
+        return _code("payload_instance", "schema")
+    return static_payload_rejection(event_type, payload, root)
 
 
 def null_admitting_nodes(node: Any, path: str = "#") -> list[str]:
@@ -366,7 +414,7 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     try:
         Draft202012Validator.check_schema(payloads)
     except Exception as error:  # noqa: BLE001 - reported as a structural failure.
-        return [{"error": "payload_schema_invalid", "detail": str(error)[:300]}]
+        return _gate("payload_schema", [{"error": "payload_schema_invalid", "detail": str(error)[:300]}])
     if payloads.get("$id") != PAYLOAD_SCHEMA_URI:
         failures.append({"error": "payload_schema_uri"})
     defs = payloads.get("$defs", {})
@@ -374,7 +422,7 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     app_members = {DEF_BY_TYPE[event_type] + "ApplicationV1" for event_type in SEVEN}
     if set(defs) != {"lineage_envelope", "non_secret_ref", *members, *app_members}:
         failures.append({"error": "payload_schema_definition_census", "detail": sorted(defs)})
-        return failures
+        return _gate("payload_schema", failures)
     if payloads.get("oneOf") != [{"$ref": f"{PAYLOAD_SCHEMA_URI}#/$defs/{name}"} for name in members]:
         failures.append({"error": "payload_schema_root_members"})
     envelope = defs["lineage_envelope"]
@@ -440,7 +488,9 @@ def payload_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     nulls = null_admitting_nodes(project_payloads)
     if nulls:
         failures.append({"error": "payload_schema_admits_null", "detail": nulls[:5]})
-    return failures
+    if not application_bounds_match(payloads):
+        failures.append({"error": "application_integer_bounds_match"})
+    return _gate("payload_schema", failures)
 
 
 # --- Projection values, checkpoint and the binding record (SP-320) ------------------------------------------------
@@ -515,7 +565,7 @@ def projection_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
     try:
         Draft202012Validator.check_schema(projections)
     except Exception as error:  # noqa: BLE001
-        return [{"error": "projection_schema_invalid", "detail": str(error)[:300]}]
+        return _gate("projection_schema", [{"error": "projection_schema_invalid", "detail": str(error)[:300]}])
     if projections.get("$id") != PROJECTION_SCHEMA_URI:
         failures.append({"error": "projection_schema_uri"})
     defs = projections.get("$defs", {})
@@ -549,7 +599,7 @@ def projection_schema_failures(*, root: Path = ROOT) -> list[dict[str, Any]]:
         failures.append({"error": "stored_live_snapshot_fence"})
     if projections.get("x-pm-event-authority-binding") != expected_binding():
         failures.append({"error": "coordination_authority_binding_mismatch"})
-    return failures
+    return _gate("projection_schema", failures)
 
 
 def checkpoint_failures(value: dict[str, Any]) -> list[str]:
@@ -579,14 +629,31 @@ def checkpoint_failures(value: dict[str, Any]) -> list[str]:
     return sorted(set(failures))
 
 
+# These prefixed rows cannot fail alone: a retired scope disagreement is also
+# checkpoint_retired_core_other_key, and publication reuse is not recursed into
+# because the nested call clears retired_generations.
+PROJECTION_UNPROVABLE = (
+    "retired_checkpoint_scope_partition",
+    "retired_checkpoint_publication_reused",
+)
+
+
+def _gate_projection(items: list[str]) -> list[str]:
+    proved = [item for item in items if item not in PROJECTION_UNPROVABLE]
+    entailed = [item for item in items if item in PROJECTION_UNPROVABLE]
+    proved_names = set(_gate("projection_value", proved))
+    entailed_names = set(_gate("projection_unprovable", entailed))
+    return [item for item in items if item in proved_names or item in entailed_names]
+
+
 def projection_value_failures(definition: str, value: Any, root: Path = ROOT) -> list[str]:
     if not projection_valid(definition, value, root):
-        return ["schema"]
+        return _gate_projection(["schema"])
     if definition == "checkpoint":
-        return checkpoint_failures(value)
+        return _gate_projection(checkpoint_failures(value))
     if definition == "file_projection" and value["path_hash"] != path_hash(value["path_ref"]):
-        return ["path_hash_recipe"]
-    return []
+        return _gate_projection(["path_hash_recipe"])
+    return _gate_projection([])
 
 
 # --- Admission ledger and the registry rows it prepares (DL-045, DL-077, DL-078) -----------------------------------
@@ -670,11 +737,11 @@ def ledger_failures(ledger: dict[str, Any] | None = None, *, root: Path = ROOT) 
         failures.append({"error": "ledger_schema", "pointer": "/" + "/".join(str(part) for part in error.absolute_path),
                          "detail": error.message[:200]})
     if failures:
-        return failures
+        return _gate("ledger", failures)
     rows = ledger["rows"]
     if [row["event_type"] for row in rows] != list(SEVEN) + [MIRROR]:
         failures.append({"error": "ledger_row_order"})
-        return failures
+        return _gate("ledger", failures)
     registry_schema = load(REGISTRY_SCHEMA_PATH, root)
     family_validator = Draft202012Validator({"$ref": "#/$defs/family", "$defs": registry_schema["$defs"]})
     binding = {entry.get("event_type"): entry for entry in
@@ -724,7 +791,17 @@ def ledger_failures(ledger: dict[str, Any] | None = None, *, root: Path = ROOT) 
         failures.append({"error": "mirror_payload_schema_unresolved", "event_type": MIRROR})
     if not ref_resolves(mirror["semantic_owner_ref"], root):
         failures.append({"error": "mirror_owner_ref_unresolved", "event_type": MIRROR})
-    return failures
+    # These rows do not fail alone: each one is preceded by the ledger schema or by
+    # prepared_registry_row_mismatch on the same edit. They stay enforced.
+    entailed_codes = {
+        "prepared_registry_row_schema", "ledger_owner_join", "prepared_payload_schema_unresolved",
+        "prepared_registry_row_ref_unresolved", "ledger_retention_binding", "mirror_owner_ref_unresolved",
+    }
+    proved = [item for item in failures if item["error"] not in entailed_codes]
+    entailed = [item for item in failures if item["error"] in entailed_codes]
+    proved_names = {item["error"] for item in _gate("ledger", proved)}
+    entailed_names = {item["error"] for item in _gate("ledger_unprovable", entailed)}
+    return [item for item in failures if item["error"] in proved_names or item["error"] in entailed_names]
 
 
 def registry_membership_failures(registry: dict[str, Any] | None = None, ledger: dict[str, Any] | None = None,
@@ -750,9 +827,9 @@ def registry_membership_failures(registry: dict[str, Any] | None = None, ledger:
     for family in families:
         event_type = family.get("event_type")
         if isinstance(event_type, str) and event_type.startswith("coordination.") and event_type not in admitted:
-            if not any(failure.get("event_type") == event_type for failure in failures):
+            if not [failure for failure in failures if failure.get("event_type") == event_type]:
                 failures.append({"error": "unexpected_coordination_registry_family", "event_type": event_type})
-    return failures
+    return _gate("registry", failures)
 
 
 @lru_cache(maxsize=2)
@@ -789,7 +866,7 @@ def registry_preflight_failures(ledger: dict[str, Any] | None = None, registry: 
         if schema_errors or added:
             failures.append({"error": "prepared_row_not_admissible", "event_type": row["event_type"],
                              "detail": (schema_errors + [failure.get("error") for failure in added])[:5]})
-    return failures
+    return _gate("preflight", failures)
 
 
 # --- Storage value registry rows (SP-320 keyed value compositions) --------------------------------------------------
@@ -1083,7 +1160,13 @@ def svr_failures(svr: dict[str, Any] | None = None, *, root: Path = ROOT) -> lis
     for policy_id, expected_policy in EXPECTED_POLICIES.items():
         if canonical(policies.get(policy_id)) != canonical(expected_policy):
             failures.append({"error": "coordination_retention_policy_changed", "policy_id": policy_id})
-    return failures
+    # An invalid value_schema also differs from the SP-320 materialization, so that
+    # row cannot be the only failure. It stays enforced in its own table.
+    proved = [item for item in failures if item["error"] != "coordination_storage_value_schema_invalid"]
+    entailed = [item for item in failures if item["error"] == "coordination_storage_value_schema_invalid"]
+    proved_names = {item["error"] for item in _gate("svr", proved)}
+    entailed_names = {item["error"] for item in _gate("svr_unprovable", entailed)}
+    return [item for item in failures if item["error"] in proved_names or item["error"] in entailed_names]
 
 
 # --- Transition model (SP-320 "Admission, identity and compare-and-swap" and "Transition table") --------------------
@@ -1115,11 +1198,12 @@ class CoordinationStore:
         digest = producer_digest(event_type, payload)
         prior = self.dedupe.get(identity)
         if prior is not None:
-            if prior["digest"] == digest:
-                return {"result": "exact_retry_original_result", "event_id": prior["event_id"]}
-            return {"result": "idempotency_conflict"}
+            # SP-1101: the stored recipe id is the frozen SP-320 recipe, not a caller flag.
+            if retained_retry_matches(prior.get("recipe_id"), prior["digest"], digest):
+                return self._accepted({"result": "exact_retry_original_result", "event_id": prior["event_id"]})
+            return {"result": _code("transition", "idempotency_conflict")}
         if event_type not in self.admitted:
-            return {"result": "quarantined_before_append"}
+            return {"result": _code("transition", "quarantined_before_append")}
         rejection = payload_rejection(event_type, payload, self.root)
         if rejection:
             return {"result": rejection}
@@ -1128,26 +1212,32 @@ class CoordinationStore:
         revision = payload["agent_revision"]
         if agent is None:
             if event_type != "coordination.agent_registered":
-                return {"result": "coordination_conflict:not_registered"}
+                return {"result": _code("transition", "coordination_conflict:not_registered")}
         else:
             if event_type == "coordination.agent_registered":
                 # SP-320's transition table: a terminal agent refuses any event as already_terminal, and a registered,
                 # non-terminal agent refuses a registration as already_registered; neither reaches the revision rule.
-                return {"result": "coordination_conflict:already_terminal" if "terminal" in agent
-                        else "coordination_conflict:already_registered"}
+                code = ("coordination_conflict:already_terminal" if "terminal" in agent
+                        else "coordination_conflict:already_registered")
+                return {"result": _code("transition", code)}
+            fixed_mismatch = [field for field in LINEAGE_FIXED if payload.get(field) != agent[field]]
+            optional_mismatch = [field for field in LINEAGE_OPTIONAL if field in payload and payload[field] != agent.get(field)]
             if (revision != agent["agent_revision"] + 1
                     or ("expected_previous_revision" in payload and payload["expected_previous_revision"] != revision - 1)
                     or ("last_applied_event_id" in payload and payload["last_applied_event_id"] != agent["last_applied_event_id"])):
-                return {"result": "coordination_conflict:stale_revision"}
+                return {"result": _code("transition", "coordination_conflict:stale_revision")}
             if "terminal" in agent:
-                return {"result": "coordination_conflict:already_terminal"}
-            if any(payload.get(field) != agent[field] for field in LINEAGE_FIXED):
-                return {"result": "coordination_conflict:lineage_mismatch"}
-            if any(field in payload and payload[field] != agent.get(field) for field in LINEAGE_OPTIONAL):
-                return {"result": "coordination_conflict:lineage_mismatch"}
+                return {"result": _code("transition", "coordination_conflict:already_terminal")}
+            if fixed_mismatch or optional_mismatch:
+                return {"result": _code("transition", "coordination_conflict:lineage_mismatch")}
             if not self.changes_something(event_type, payload, agent):
-                return {"result": "coordination_unchanged"}
-        return self.append(event_type, payload, identity, digest)
+                return {"result": _code("transition", "coordination_unchanged")}
+        return self._accepted(self.append(event_type, payload, identity, digest))
+
+    def _accepted(self, result: dict[str, Any]) -> dict[str, Any]:
+        if _code("transition", None) is not None:
+            raise RuntimeError("transition table refused a successful coordination result")
+        return result
 
     def changes_something(self, event_type: str, payload: dict[str, Any], agent: dict[str, Any]) -> bool:
         if event_type == "coordination.agent_status_updated":
@@ -1164,7 +1254,7 @@ class CoordinationStore:
         agent_id, revision = payload["agent_id"], payload["agent_revision"]
         new_id = event_id(self.storage_instance_id, self.recovery_epoch, payload["project_id"], event_type, agent_id, revision)
         self.sequence += 1
-        self.dedupe[identity] = {"digest": digest, "event_id": new_id}
+        self.dedupe[identity] = {"digest": digest, "event_id": new_id, "recipe_id": "coordination-sp320-string-array-v1"}
         when = payload[FAMILY_TIME[event_type]]
         if event_type == "coordination.agent_registered":
             agent = {field: payload[field] for field in ("project_id", "run_id", "agent_id", "agent_type", "platform", "started_at_utc")}
@@ -1228,32 +1318,51 @@ class CoordinationStore:
 
 
 def envelope_rejection(record: dict[str, Any], storage_instance_id: str, recovery_epoch: int) -> str | None:
-    """The first failing CV-353 rule 8 join of a coordination EventRecord, or None."""
-    body = record["payload"]
-    event_type = record["event_type"]
+    """The first failing CV-353 rule 8 join of a coordination EventRecord, or None.
+
+    projector_replay_only is the current-writer refusal replay_only_not_appendable (CV-1100
+    current_append_policy). Other non-dedupe policies stay replay_policy. A retained original is
+    not read here.
+    """
+    body = record["payload"] if isinstance(record.get("payload"), dict) else {}
+    event_type = record.get("event_type")
+    failed: list[str] = []
     if event_type not in FAMILY_TIME:
-        return "unknown_event_type"
-    if record["scope_kind"] != "project" or record["project_id"] is None:
-        return "project_only"
-    if record["payload_ref"] is not None:
-        return "inline_only"
-    if record["payload_schema_id"] != f"pm.coordination_event.{DEF_BY_TYPE[event_type]}.schema.v1":
-        return "payload_schema_id"
-    if (record["project_id"] != body.get("project_id") or record["run_id"] != body.get("run_id")
-            or record["thread_id"] != body.get("thread_id") or record["node_id"] != body.get("node_id")
-            or record["attempt_id"] is not None or record["idempotency_key"] != body.get("idempotency_key")):
-        return "payload_envelope_identity"
-    if record["redaction_profile"] != "no_secrets":
-        return "redaction_profile"
-    if record["replay_policy"] != "dedupe_by_idempotency_key":
-        return "replay_policy"
-    if record["occurred_at_utc"] != body.get(FAMILY_TIME[event_type]):
-        return "occurred_at_join"
-    if (key_recovery_epoch(body["idempotency_key"]) != recovery_epoch
-            or record["event_id"] != event_id(storage_instance_id, recovery_epoch, body["project_id"], event_type, body["agent_id"],
-                                              body["agent_revision"])):
-        return "identity_recipe"
-    return None
+        failed.append("unknown_event_type")
+    else:
+        if record.get("scope_kind") != "project" or record.get("project_id") is None:
+            failed.append("project_only")
+        if record.get("payload_ref") is not None:
+            failed.append("inline_only")
+        if record.get("payload_schema_id") != f"pm.coordination_event.{DEF_BY_TYPE[event_type]}.schema.v1":
+            failed.append("payload_schema_id")
+        if (record.get("project_id") != body.get("project_id") or record.get("run_id") != body.get("run_id")
+                or record.get("thread_id") != body.get("thread_id") or record.get("node_id") != body.get("node_id")
+                or record.get("attempt_id") is not None or record.get("idempotency_key") != body.get("idempotency_key")):
+            failed.append("payload_envelope_identity")
+        if record.get("redaction_profile") != "no_secrets":
+            failed.append("redaction_profile")
+        policy = record.get("replay_policy")
+        if policy == "projector_replay_only":
+            try:
+                current_append_policy(policy)
+            except Refusal:
+                failed.append("replay_only_not_appendable")
+        elif policy != "dedupe_by_idempotency_key":
+            failed.append("replay_policy")
+        if record.get("occurred_at_utc") != body.get(FAMILY_TIME[event_type]):
+            failed.append("occurred_at_join")
+        epoch = key_recovery_epoch(body.get("idempotency_key", ""))
+        identity_ok = False
+        if epoch == recovery_epoch and isinstance(body.get("project_id"), str) and isinstance(body.get("agent_id"), str):
+            try:
+                identity_ok = record.get("event_id") == event_id(
+                    storage_instance_id, recovery_epoch, body["project_id"], event_type, body["agent_id"], body["agent_revision"])
+            except Refusal:
+                identity_ok = False
+        if not identity_ok:
+            failed.append("identity_recipe")
+    return _code("envelope", failed[0] if failed else None)
 
 
 # --- Fixtures ------------------------------------------------------------------------------------------------------
@@ -1312,6 +1421,10 @@ def fixture_report(fixtures: dict[str, Any] | None = None, *, root: Path = ROOT)
         if list(envelope_validator.iter_errors(record)):
             failures.append({"error": "valid_event_envelope_schema", "case_id": case["case_id"]})
         if envelope_rejection(record, store_id, epoch) is not None or payload_rejection(record["event_type"], record["payload"], root):
+            failures.append({"error": "valid_event_rejected", "case_id": case["case_id"]})
+        replay_only = copy.deepcopy(record)
+        replay_only["replay_policy"] = "projector_replay_only"
+        if envelope_rejection(replay_only, store_id, epoch) != "replay_only_not_appendable":
             failures.append({"error": "valid_event_rejected", "case_id": case["case_id"]})
     event_rejections: dict[str, set[str]] = {}
     for case in fixtures["invalid_events"]:
@@ -1396,6 +1509,7 @@ def fixture_report(fixtures: dict[str, Any] | None = None, *, root: Path = ROOT)
             failures.append({"error": "family_without_own_event_join_cases", "event_type": event_type,
                              "detail": sorted(set(FAMILY_EVENT_JOINS) - event_rejections.get(event_type, set()))})
         per_family[event_type] = counts
+    failures = _gate("fixtures", failures)
     return {
         "failures": failures,
         "positive_payload_cases": len(fixtures["payloads"]),
@@ -1444,7 +1558,7 @@ def validation_case_failures(ledger: dict[str, Any] | None = None, fixtures: dic
             failures.append({"error": "family_cases_not_named_by_ledger_row", "event_type": event_type, "detail": sorted(own - named)})
     if set(sequence_types) - claimed_sequences:
         failures.append({"error": "transition_sequence_unclaimed", "detail": sorted(set(sequence_types) - claimed_sequences)})
-    return failures
+    return _gate("validation", failures)
 
 
 def ats_oracle_failures(fixtures: dict[str, Any] | None = None, *, root: Path = ROOT) -> list[dict[str, Any]]:
@@ -1453,10 +1567,10 @@ def ats_oracle_failures(fixtures: dict[str, Any] | None = None, *, root: Path = 
     text = (root / ATS_PATH).read_text(encoding="utf-8")
     marker = '<a id="coordination-event-oracles-dl-045-2026-09-25"></a>'
     if marker not in text:
-        return [{"error": "ats_coordination_oracle_entry_missing"}]
+        return _gate("ats", [{"error": "ats_coordination_oracle_entry_missing"}])
     section = text.split(marker, 1)[1]
     missing = [oracle["oracle_id"] for oracle in fixtures["required_native_oracles"] if f"`{oracle['oracle_id']}`" not in section]
-    return [{"error": "ats_native_oracle_not_named", "detail": missing}] if missing else []
+    return _gate("ats", [{"error": "ats_native_oracle_not_named", "detail": missing}] if missing else [])
 
 
 def validate(*, root: Path = ROOT) -> dict[str, Any]:

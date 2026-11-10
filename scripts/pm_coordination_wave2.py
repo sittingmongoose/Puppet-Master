@@ -12,32 +12,46 @@ c = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(c)
 
 
-def validate_contracts(fixtures):
+def _vector_shape(vectors, expected):
+    if not isinstance(vectors, list) or len(vectors) != len(expected):
+        return False
+    rows = []
+    for vector in vectors:
+        if not isinstance(vector, dict) or set(vector) != {'age_ms', 'expected'}:
+            return False
+        if type(vector['age_ms']) is not int or type(vector['expected']) is not bool:
+            return False
+        rows.append(vector)
+    return {vector['age_ms']: vector['expected'] for vector in rows} == expected
+
+
+def validate_contracts(fixtures, owner_text=None, storage_text=None):
     failures = []
-    owner = (ROOT / 'Plans/orchestrator-subagent-integration.md').read_text()
+    entailed = []
+    owner = owner_text if owner_text is not None else (ROOT / 'Plans/orchestrator-subagent-integration.md').read_text()
     policy = owner.split('### OSI-650 -', 1)[1].split('```yaml', 1)[0]
-    for literal in ['**300000**', 'strictly greater than 300000', 'equality is insufficient']:
-        if literal not in policy:
-            failures.append('threshold_owner_missing:' + literal)
+    literals = ['**300000**', 'strictly greater than 300000', 'equality is insufficient']
+    if [literal for literal in literals if literal not in policy]:
+        failures.append('threshold_owner_literals')
     # Re-derive the exact boundary from the answered number, not the runtime model.
+    # 300000 is the OSI-650 policy threshold, not an integer-encoding cap.
     vectors = fixtures.get('heartbeat_expiry_vectors')
     expected = {299999: False, 300000: False, 300001: True}
-    if (not isinstance(vectors, list) or len(vectors) != len(expected)
-            or any(not isinstance(v, dict) or set(v) != {'age_ms', 'expected'}
-                   or type(v['age_ms']) is not int or type(v['expected']) is not bool
-                   for v in vectors)
-            or {v['age_ms']: v['expected'] for v in vectors} != expected):
+    if not _vector_shape(vectors, expected):
         failures.append('threshold_oracle_census')
     else:
         for vector in vectors:
             if (vector['age_ms'] > 5 * 60 * 1000) != vector['expected']:
-                failures.append('threshold_oracle:' + str(vector['age_ms']))
-    storage = (ROOT / 'Plans/storage-plan.md').read_text()
+                entailed.append('threshold_oracle_evaluation')
+    storage = storage_text if storage_text is not None else (ROOT / 'Plans/storage-plan.md').read_text()
+    unit_literals = ['SP-278', 'SP-286/CV-339', 'no automatic mirror write', 'RP-COORDINATION-180D@1.0.0', 'RP-PROJECTION-3GEN@1.0.0', 'Membership is ABSENT']
+    missing_unit = False
     for unit in range(540, 546):
         section = storage.split(f'### SP-{unit} -', 1)[1].split('### ', 1)[0]
-        for literal in ['SP-278', 'SP-286/CV-339', 'no automatic mirror write', 'RP-COORDINATION-180D@1.0.0', 'RP-PROJECTION-3GEN@1.0.0', 'Membership is ABSENT']:
-            if literal not in section:
-                failures.append(f'SP-{unit}:' + literal)
+        if [literal for literal in unit_literals if literal not in section]:
+            missing_unit = True
+    if missing_unit:
+        failures.append('sp_unit_literals')
     # Exercise Project payload null rejection and unsupported scope after census repair.
     f = c.load(c.FIXTURE_PATH)
     for event in f['valid_events']:
@@ -48,17 +62,20 @@ def validate_contracts(fixtures):
         probe = copy.deepcopy(payload)
         probe['project_id'] = None
         if not c.payload_rejection(name, probe):
-            failures.append(name + ':project_null_accepted')
+            failures.append('project_null_probe')
         probe = copy.deepcopy(payload)
         probe['unexpected_application_extension'] = {}
         if not c.payload_rejection(name, probe):
-            failures.append(name + ':extension_accepted')
+            failures.append('extension_probe')
     # The registry schema composition must remain exactly the Project edition.
     bundle = c.projections_bundle()
     if any(k.endswith('ApplicationV1') for k in bundle['$defs']):
         failures.append('application_definition_in_project_composition')
     if c.svr_failures():
         failures.append('project_registry_composition_mismatch')
+    failures = c._gate('wave2', failures)
+    entailed = c._gate('wave2_entailed', entailed)
+    failures.extend(entailed)
     return {'status': 'fail' if failures else 'pass', 'failures': failures,
             'native_execution': 'NOT_RUN', 'admission_claimed': False}
 
@@ -86,9 +103,9 @@ def schema_regression_failures():
                               'payload_schema_definition_census' if defect == 'unknown_definition' else
                               'payload_schema_admits_null')
             if expected_error not in {f['error'] for f in c.payload_schema_failures()}:
-                failures.append('schema_mutation_accepted:' + defect)
+                failures.append('schema_mutation_' + defect)
             if c.validate()['status'] != 'fail':
-                failures.append('full_checker_mutation_accepted:' + defect)
+                failures.append('full_checker_mutation_' + defect)
     for name in ['rogue', 'rogueApplicationV1']:
         schema = copy.deepcopy(original_load(c.PROJECTION_PATH))
         schema['$defs'][name] = {'type': 'object', 'additionalProperties': True}
@@ -99,8 +116,8 @@ def schema_regression_failures():
             errors = {f['error'] for f in result['failures']}
             if (result['status'] != 'fail' or 'projection_schema_definition_census' not in errors
                     or 'coordination_storage_family_mismatch' not in errors):
-                failures.append('projection_mutation_accepted:' + name)
-    return failures
+                failures.append('projection_mutation_rogue' if name == 'rogue' else 'projection_mutation_rogue_application')
+    return c._gate('wave2_entailed', failures)
 
 
 def validate():
@@ -109,6 +126,7 @@ def validate():
     report['failures'].extend(schema_regression_failures())
     # Run missing/empty/incomplete/wrong-type boundary artifacts through the same
     # complete checker as the shipped fixture; no recursion or partial check.
+    threshold_probe = []
     for defect in ['missing', 'empty', 'incomplete', 'wrong_expectation', 'integer_boolean']:
         mutated = copy.deepcopy(fixtures)
         if defect == 'missing':
@@ -123,7 +141,8 @@ def validate():
                 {'age_ms': 300001, 'expected': False if defect == 'wrong_expectation' else 1}]
         result = validate_contracts(mutated)
         if result['status'] != 'fail' or 'threshold_oracle_census' not in result['failures']:
-            report['failures'].append('threshold_mutation_accepted:' + defect)
+            threshold_probe.append('threshold_mutation_' + defect)
+    report['failures'].extend(c._gate('wave2_entailed', threshold_probe))
     report['status'] = 'fail' if report['failures'] else 'pass'
     return report
 
