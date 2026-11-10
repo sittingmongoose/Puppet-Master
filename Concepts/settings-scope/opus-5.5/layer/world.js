@@ -174,7 +174,7 @@
       studioJoined: false,
       joined: { office: false },
       /* which AI accounts each project chose (S10 A); a project with none here uses your usual ones [Demo only] */
-      uses: { tastebook: ['work-claude', 'codex', 'openrouter', 'copilot'], experiment: ['personal-claude'], 'lighting-rig': ['personal-claude'] },
+      uses: { tastebook: ['work-claude', 'codex', 'openrouter'], experiment: ['personal-claude'], 'lighting-rig': ['personal-claude'] },
       usualAccounts: ['work-claude'],
       /* rules a project brought from someone else's repository, and what you chose (S15) */
       rules: {},
@@ -296,7 +296,7 @@
   const S = {
     opt: Object.assign({ end: 'origin', changed: 'outline' }, saved.opt || {}),
     ctx: { project: 'tastebook', device: 'here', on: null },
-    actor: 'here',        // the device in use (the strip's You're using); Change view's device is only what you see
+    actor: 'here',        // the device in use (the strip's You're using); the header's Change › another device's screen is only what you see
     runMode: saved.runMode === 'yolo' ? 'yolo' : 'regular',   // the run mode the yes-points follow (Regular or YOLO)
     keys: false,          // the review keys 1 to 4, 0 and C work only while the strip's Compare options is open
     tipShown: !!saved.tipShown,

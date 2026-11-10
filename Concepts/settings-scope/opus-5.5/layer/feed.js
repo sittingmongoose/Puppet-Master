@@ -60,6 +60,10 @@
   function classify(ref, s) {
     const id = ref.id, sc = ref.scope || [];
     if (REVIEWED.thing.includes(id)) return null;
+    /* Jared #8: a row the reference marks only "for a single run" still holds the value each run starts with, so it
+       follows the ladder like every other row; its panel says a run can choose its own (it was off the ladder and showed
+       the base page's own Where it applies) */
+    if (sc.length && sc.every((x) => x === 'run')) { const r = classify(Object.assign({}, ref, { scope: [] }), s); return r ? Object.assign(r, { run: true }) : r; }
     if (sc.length && sc.every((x) => ['account', 'provider', 'persona', 'run'].includes(x))) return null;
     if ((sc.includes('account') || sc.includes('persona')) && !sc.includes('global')) return null;   // a field of one thing
     if (REVIEWED.library.includes(id)) return { home: 'everywhere', reason: 'your_library', reviewed: true };
@@ -115,6 +119,10 @@
     const st = K.getState().settings || {};
     let n = 0;
     Object.keys(PSX.REF).forEach((id) => { if (!DEF[id] && adopt(id, st[id])) n++; });
+    // rows Settings draws that the reference doesn't list (Animation speed, Accent color, Autosave and the rest): the same
+    // rule, decided from the id and the control (Jared #8: none of them may keep a different Where it applies)
+    const placed = (W.PM51 && W.PM51.placement && W.PM51.placement.byId) || {};
+    Object.keys(placed).forEach((id) => { if (DEF[id] || PSX.REF[id]) return; const s0 = W.PM51.setting ? W.PM51.setting(id) : null; if (!s0 || /^(resource|action)$/.test(String(s0.control || ''))) return; if (adopt(id, st[id])) n++; });
     PSX.adopted = n;
     return n;
   }
@@ -124,9 +132,12 @@
   /* ------------------------------------------------------------------ the values one context feeds */
   function engineValues(ctx) {
     const out = {}, changed = {};
+    /* looking at another device's screen (Jared #11): your own screen keeps painting with your own screen values, so
+       nothing on it moves; the rows show that device's values themselves (rows.js, psx-devval) */
+    const actorCtx = ctx && ctx.device && ctx.device !== S.actor ? Object.assign({}, ctx, { device: S.actor }) : null;
     IDS.forEach((id) => {
       if (DEF[id].demoRow) return;
-      const r = PSX.resolve(id, ctx);
+      const r = PSX.resolve(id, actorCtx && DEF[id].screen ? actorCtx : ctx);
       let v = r.notOffered ? DEFAULTS[id] : (r.asked !== undefined ? r.asked : r.value);
       if (id === 'general.visual.theme') { const pair = PSX.themePair(v); Object.assign(out, pair); changed['general.visual.theme'] = r.changed; changed['general.visual.theme-mode'] = r.changed; return; }
       out[id] = clone(v); changed[id] = !!r.changed && !r.notOffered;
@@ -456,5 +467,5 @@
   };
 
   PSX.on('world', () => { if (!feeding) PSX.emit('redraw'); });
-  Object.assign(PSX, { offLadder: { look: SKIP, credential: CRED }, feed: { full, push, verify, writeSnapshots, engineValues, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
+  Object.assign(PSX, { offLadder: { look: SKIP, credential: CRED, thing: REVIEWED.thing }, feed: { full, push, verify, writeSnapshots, engineValues, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
 })(window);

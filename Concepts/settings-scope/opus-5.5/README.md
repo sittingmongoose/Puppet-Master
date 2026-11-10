@@ -38,7 +38,7 @@ NEW CANON.
 | Moments | 11.1 to 11.18 (11.5 with its two variants; 11.18 is What asks you: Always allow, git push and publish), plus Copy settings in Settings and in New Project. Each starts from a fresh demo | `{cmd: 'moment', id}` |
 | Reset demo | A fresh world, the opening context, every sheet closed | `{cmd: 'reset'}` |
 | Project | tastebook, harbor, loom, docs-site, legacy-app, experiment, garden-notes and recipe-app (they work on Home NAS), lighting-rig (Studio Mac), No project | `{cmd: 'ctx', project}` |
-| Runs on | Its own computer, or view the project as if it worked on another (the same as Change view › Another computer) | `{cmd: 'ctx', on}` |
+| Runs on | Its own computer, or view the project as if it worked on another (the same as the header's Change › Look at another computer) | `{cmd: 'ctx', on}` |
 | You're using | This computer, Studio Mac, iPhone, Sam's iPad (a Member's device) | `{cmd: 'ctx', device}` |
 | Home NAS | Answering or Not answering (moment 11.1) | `{cmd: 'ctx', homenas}` |
 | Studio Mac | Answering or Not answering (moment 11.17's Finish) | `{cmd: 'ctx', studio}` |
@@ -177,7 +177,13 @@ items 3, 4, 8 and 11) and the guided-flows check named what this concept must ch
   account) keeps the base page's list of each one's value and takes the same three parts. Libraries (Your own themes,
   Start custom themes from, Sound library, Add a sound) were on the device rule and offered “Set for a device”; they
   are the same everywhere now (`your_library`). Where the base page shows its own scope next to the layer's, the
-  layer's wins: the MCP server panel's “Where it applies” line and the server list's scope word are hidden.
+  layer's wins: the MCP server panel's “Where it applies” line and the server list's scope word are hidden. No row
+  keeps the base page's own sentence any more: rows the reference doesn't list (Animation speed, Accent color,
+  Autosave and the rest) are adopted at start with the same rule; rows the reference marks only “for a single run”
+  follow the ladder for the value each run starts with, and say a run can choose its own; the look's details (Light or
+  dark, the wallpaper, glass, the colour scheme, the chat layout) say they follow Theme, with Open Theme; keys and
+  sign-ins say they stay on the computer where they were entered; a row that belongs to one thing takes the per-thing
+  parts.
 - **#11, the top of Settings.** One calm header names the Project and the Computer once: “tastebook on This computer”,
   with Change. Your own view is the open project on the computer that does its work, with your device's screen; Change ›
   Project opens another project (as the base page's project button did, which is hidden here, with the rail's
@@ -185,13 +191,17 @@ items 3, 4, 8 and 11) and the guided-flows check named what this concept must ch
   same box, framed and tinted, with the word Viewing and Stop viewing (before Change, so Change never moves). Nothing
   says “my view”. The header is one row of 32px in every view, so changing the view never moves the page. YOLO is a
   word in that row; notices that are not about the view (the settings home not answering, first start, a Member's
-  device) are lines under it.
+  device) are lines under it. Looking at another device's screen no longer repaints your own screen with that device's
+  text size and look (the iPhone's 17px used to re-render the whole app): your screen keeps your own screen values, and
+  each screen row shows the other device's value in the control's place, with Change (it opens Where it applies, where
+  that device's line is changed).
 - **Copy settings (guided flows 3.02-3.07, 3.12, 3.17).** The kind reads **Notifications & limits** (NEW CANON:
   Settings_System's P12 label). Keep them fixed adds only rows of the kinds you selected and never a row you unticked;
   a deselected kind stays deselected when Keep them fixed is turned off and on (NEW CANON: “freezes only eligible
   selected values”). Advanced lists the fixed rows under their kind, one tick each. A device-bound account gets the
   real `cannot_move` result, “Can’t be used on Home NAS”, with Split v2's reason, and stays the intended choice (NEW
-  CANON: MA-074 and Settings_System's outcome list); the demo's Copilot seat is tied to This computer. The account
+  CANON: MA-074 and Settings_System's outcome list); in the New Project moment tastebook also uses a Copilot seat tied
+  to This computer, which shows it. The account
   lines say only which accounts are copied, never a sign-in, key or token. Copy checks each account on the destination
   computer again at the moment it copies, and shows the preview again if one changed (NEW CANON: “a different Computer
   or account invalidates the readiness preview”). About its own files, Keep them fixed and Copy what it gets from its
