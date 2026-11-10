@@ -23,6 +23,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from pm_contract_formats import FormatChecker
 import pm_event_payload_route as body_route
+from pm_ds_tables import Facts
 Draft202012Validator = body_route.StrictValidator
 IDENTITIES = ("project_id", "thread_id", "run_id", "node_id", "attempt_id")
 MAX_PAYLOAD_BYTES = 65536
@@ -184,12 +185,13 @@ def workspace_reset_authority():
 def authority_binding_failures(row):
     # Exact individually reviewed bindings only, never prefix/sibling expansion
     # or an arbitrary ref-driven module loader. These are not native proof.
+    f = Facts("gate_authority", chain=True)
+    if f.stop("GA01_reviewed_binding", lambda: row["event_type"] in ("browser.workspace.created", "browser.workspace.reset")):
+        return [f.first_code()]
+    f.done()
     if row["event_type"] == "browser.workspace.created":
         return workspace_created_authority().binding_failures(row, root=ROOT)
-    if row["event_type"] == "browser.workspace.reset":
-        return workspace_reset_authority().binding_failures(row, root=ROOT)
-    return ["complete_browser_authority_binding_missing"]
-
+    return workspace_reset_authority().binding_failures(row, root=ROOT)
 
 def load_json(path):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
@@ -361,86 +363,67 @@ def contract_context():
 
 
 def semantic_failures(payload):
-    failures = []
     context, facts, event = payload["context"], payload["facts"], payload["event_type"]
-    if (context["run_id"] is None) != (context["attempt_id"] is None):
-        failures.append("run_attempt_scope_mismatch")
-    if (context["browser_session_id"] is None) != (context["browser_workspace_id"] is None):
-        failures.append("browser_subject_scope_mismatch")
-    if (context["browser_page_id"] is None) != (context["page_generation"] is None):
-        failures.append("page_generation_scope_mismatch")
-    if context["browser_page_id"] is not None and context["browser_workspace_id"] is None:
-        failures.append("page_without_workspace")
-    if event in {"browser.navigation.generation_changed", "browser.document.generation_changed"}:
-        if facts["prior_page_generation"] is None or facts["prior_page_generation"] >= context["page_generation"]:
-            failures.append("page_generation_not_advanced")
-    if event == "browser.workspace.reset":
-        if facts["prior_workspace_generation"] is None or facts["prior_workspace_generation"] >= facts["workspace_generation"]:
-            failures.append("workspace_generation_not_advanced")
-    if event == "browser.workspace.created" and facts["prior_workspace_generation"] is not None:
-        failures.append("not_new_workspace_identity")
-    if "prior_page_generation" in facts and facts["prior_page_generation"] is not None:
-        if facts["prior_page_generation"] > context["page_generation"]:
-            failures.append("page_generation_regressed")
-    if "coverage" in facts:
-        coverage = facts["coverage"]
-        if facts["base_page_generation"] != context["page_generation"]:
-            failures.append("representation_generation_mismatch")
-        if facts["base_representation_id"] == facts["representation_id"]:
-            failures.append("representation_delta_self_base")
-        if coverage["frames_covered"] > coverage["frames_total"]:
-            failures.append("coverage_bounds")
-        if coverage["status"] == "complete" and (
-            coverage["frames_total"] != coverage["frames_covered"] or coverage["omission_codes"]
-            or coverage["budget_exhausted"] or coverage["synthetic_id_collisions"]
-        ):
-            failures.append("coverage_false_complete")
-        if facts["invalidated"] != (coverage["status"] == "stale_rejected"):
-            failures.append("representation_invalidation_mismatch")
-    if "old_fence" in facts:
-        old, new = facts["old_fence"], facts["new_fence"]
-        if any(new[field] < old[field] for field in ("lease_generation", "lease_epoch", "last_sequence")):
-            failures.append("lease_fence_regressed")
-        if new["page_generation"] != context["page_generation"] or old["page_generation"] != context["page_generation"]:
-            failures.append("lease_page_generation_mismatch")
-        if event.endswith(".renewed") and any(old[field] != new[field] for field in ("lease_id", "holder_id", "lease_epoch", "lease_generation")):
-            failures.append("lease_renew_identity_changed")
-        if event.endswith(".takeover_completed") and (
-            new["lease_epoch"] <= old["lease_epoch"] or new["holder_id"] == old["holder_id"]
-        ):
-            failures.append("lease_takeover_not_fenced")
-        if event.endswith(".takeover_requested") and any(old[field] != new[field] for field in ("lease_id", "holder_id", "lease_epoch", "lease_generation")):
-            failures.append("takeover_request_grants_authority")
-    if "result_workspace_revision" in facts and facts["result_workspace_revision"] < facts["expected_workspace_revision"]:
-        failures.append("workspace_revision_regressed")
-    if event.endswith(".checkpointed") or event in {"browser.program.paused", "browser.program.resumed"}:
-        if not facts.get("checkpoint_ref"):
-            failures.append("checkpoint_required")
-    if "effect_state" in facts:
-        unknown = facts["unknown_effect_action_ids"]
-        completed = facts["completed_action_ids"]
-        terminal = facts.get("terminal_state")
-        if set(unknown) & set(completed):
-            failures.append("action_effect_overlap")
-        if (facts["effect_state"] == "effect_unknown" or unknown) and facts["retry_allowed"]:
-            failures.append("unknown_effect_retry")
-        if facts["effect_state"] == "no_effect" and (unknown or completed):
-            failures.append("no_effect_has_actions")
-        if terminal == "failed_no_effect" and facts["effect_state"] != "no_effect":
-            failures.append("terminal_effect_state_mismatch")
-        if terminal == "timed_out_effect_state_unknown" and facts["effect_state"] != "effect_unknown":
-            failures.append("terminal_effect_state_mismatch")
-        if terminal and terminal != "timed_out_effect_state_unknown" and (unknown or facts["effect_state"] == "effect_unknown"):
-            failures.append("terminal_effect_state_mismatch")
-    if event == "browser.screenshot.model_attachment_selected" and not facts["screenshot_artifact_ref"]:
-        failures.append("selected_screenshot_missing_artifact")
-    if event == "browser.session.reconstructed_on_host":
-        if not facts["source_fenced"]:
-            failures.append("handoff_source_not_fenced")
-        if facts["unknown_effects"]:
-            failures.append("handoff_unknown_effects")
-    return failures
-
+    f = Facts("gate_semantic")
+    f["GS01_run_attempt_paired"] = (context["run_id"] is None) == (context["attempt_id"] is None)
+    f["GS02_session_workspace_paired"] = (context["browser_session_id"] is None) == (context["browser_workspace_id"] is None)
+    f["GS03_page_generation_paired"] = (context["browser_page_id"] is None) == (context["page_generation"] is None)
+    f["GS04_page_has_workspace"] = context["browser_page_id"] is None or context["browser_workspace_id"] is not None
+    generation_event = event in {"browser.navigation.generation_changed", "browser.document.generation_changed"}
+    f["GS05_prior_page_generation_present"] = not generation_event or facts["prior_page_generation"] is not None
+    f["GS06_page_generation_advances"] = not generation_event or facts["prior_page_generation"] is None or facts["prior_page_generation"] < context["page_generation"]
+    reset_event = event == "browser.workspace.reset"
+    f["GS07_prior_workspace_generation_present"] = not reset_event or facts["prior_workspace_generation"] is not None
+    f["GS08_workspace_generation_advances"] = not reset_event or facts["prior_workspace_generation"] is None or facts["prior_workspace_generation"] < facts["workspace_generation"]
+    f["GS09_created_no_prior_generation"] = event != "browser.workspace.created" or facts["prior_workspace_generation"] is None
+    f["GS10_page_generation_not_regressed"] = ("prior_page_generation" not in facts or facts["prior_page_generation"] is None
+                                               or facts["prior_page_generation"] <= context["page_generation"])
+    coverage_event = "coverage" in facts
+    coverage = facts["coverage"] if coverage_event else {}
+    complete = coverage_event and coverage["status"] == "complete"
+    f["GS11_representation_generation"] = not coverage_event or facts["base_page_generation"] == context["page_generation"]
+    f["GS12_representation_not_self_base"] = not coverage_event or facts["base_representation_id"] != facts["representation_id"]
+    f["GS13_coverage_bounds"] = not coverage_event or coverage["frames_covered"] <= coverage["frames_total"]
+    f["GS14_complete_frames"] = not complete or coverage["frames_total"] == coverage["frames_covered"]
+    f["GS15_complete_no_omissions"] = not complete or not coverage["omission_codes"]
+    f["GS16_complete_budget"] = not complete or not coverage["budget_exhausted"]
+    f["GS17_complete_no_collisions"] = not complete or not coverage["synthetic_id_collisions"]
+    f["GS18_invalidation_matches"] = not coverage_event or facts["invalidated"] == (coverage["status"] == "stale_rejected")
+    fence_event = "old_fence" in facts
+    old, new = (facts["old_fence"], facts["new_fence"]) if fence_event else ({}, {})
+    for row, field in (("GS19_lease_generation_not_regressed", "lease_generation"), ("GS20_lease_epoch_not_regressed", "lease_epoch"),
+                       ("GS21_last_sequence_not_regressed", "last_sequence")):
+        f[row] = not fence_event or new[field] >= old[field]
+    f["GS22_new_fence_page_generation"] = not fence_event or new["page_generation"] == context["page_generation"]
+    f["GS23_old_fence_page_generation"] = not fence_event or old["page_generation"] == context["page_generation"]
+    identity = ("lease_id", "holder_id", "lease_epoch", "lease_generation")
+    f["GS24_renew_identity"] = not (fence_event and event.endswith(".renewed")) or [k for k in identity if old[k] != new[k]] == []
+    takeover = fence_event and event.endswith(".takeover_completed")
+    f["GS25_takeover_epoch_advances"] = not takeover or new["lease_epoch"] > old["lease_epoch"]
+    f["GS26_takeover_holder_changes"] = not takeover or new["holder_id"] != old["holder_id"]
+    f["GS27_takeover_request_identity"] = not (fence_event and event.endswith(".takeover_requested")) or [k for k in identity if old[k] != new[k]] == []
+    f["GS28_workspace_revision_not_regressed"] = "result_workspace_revision" not in facts or facts["result_workspace_revision"] >= facts["expected_workspace_revision"]
+    f["GS29_checkpoint_ref"] = not (event.endswith(".checkpointed") or event in {"browser.program.paused", "browser.program.resumed"}) or bool(facts.get("checkpoint_ref"))
+    effect_event = "effect_state" in facts
+    unknown = facts["unknown_effect_action_ids"] if effect_event else []
+    completed = facts["completed_action_ids"] if effect_event else []
+    terminal = facts.get("terminal_state") if effect_event else None
+    state = facts["effect_state"] if effect_event else None
+    f["GS30_no_action_overlap"] = not effect_event or not (set(unknown) & set(completed))
+    f["GS31_unknown_state_no_retry"] = not effect_event or not (state == "effect_unknown" and facts["retry_allowed"])
+    f["GS32_unknown_actions_no_retry"] = not effect_event or not (unknown and facts["retry_allowed"])
+    f["GS33_no_effect_no_unknown"] = not effect_event or not (state == "no_effect" and unknown)
+    f["GS34_no_effect_no_completed"] = not effect_event or not (state == "no_effect" and completed)
+    f["GS35_failed_no_effect_state"] = not effect_event or terminal != "failed_no_effect" or state == "no_effect"
+    f["GS36_timed_out_unknown_state"] = not effect_event or terminal != "timed_out_effect_state_unknown" or state == "effect_unknown"
+    other_terminal = effect_event and bool(terminal) and terminal != "timed_out_effect_state_unknown"
+    f["GS37_terminal_no_unknown_actions"] = not other_terminal or not unknown
+    f["GS38_terminal_known_state"] = not other_terminal or state != "effect_unknown"
+    f["GS39_screenshot_artifact"] = event != "browser.screenshot.model_attachment_selected" or bool(facts["screenshot_artifact_ref"])
+    handoff = event == "browser.session.reconstructed_on_host"
+    f["GS40_handoff_source_fenced"] = not handoff or bool(facts["source_fenced"])
+    f["GS41_handoff_no_unknown_effects"] = not handoff or not facts["unknown_effects"]
+    return f.codes()
 
 def fixture_event(case, ordinal):
     payload = copy.deepcopy(case["payload"])
@@ -459,87 +442,101 @@ def fixture_event(case, ordinal):
     }
 
 
-def compatibility_source_presence_errors(original):
-    errors = []
-    if not isinstance(original, dict):
-        errors.append("browser_compatibility_source_missing")
-    return errors
-
-
 def compatibility_history_failures(event, context, original):
     """Recompute Case-L normalization from the verified original, never live policy.
 
     Custody/access flags are checked by the reader. `original` is its authenticated
     legacy source observation, not caller migration metadata or a claimed digest.
     """
-    presence = compatibility_source_presence_errors(original)
-    if presence:
-        return presence
     def validate_payload(payload, schema, **kwargs):
         selected = context[-1][event['event_type']]
         body_route.eager(selected._registry, schema)
         return list(selected.evolve(schema=schema).iter_errors(payload))
-    try:
-        normalized, reason, _ = envelope_oracle().normalized_legacy_case(
-            original, load_json("Plans/event_family_registry.json"), payload_validator=validate_payload)
-    except (ValueError, TypeError, KeyError):
-        return ["browser_compatibility_source_invalid"]
+    normalization = {}
+
+    def normalizes():
+        try:
+            normalization["value"] = envelope_oracle().normalized_legacy_case(
+                original, load_json("Plans/event_family_registry.json"), payload_validator=validate_payload)
+        except (ValueError, TypeError, KeyError):
+            return False
+        return True
+
     from pm_home_layout_v2_slot_receipt import canonical_msgpack
-    if reason is not None or canonical_msgpack(normalized) != canonical_msgpack(event):
-        return ["browser_compatibility_source_mismatch"]
+    f = Facts("gate_compatibility", chain=True)
+    for row, check in (("GH01_source_present", lambda: isinstance(original, dict)),
+                       ("GH02_source_normalizes", normalizes),
+                       ("GH03_no_rejection_reason", lambda: normalization["value"][1] is None),
+                       ("GH04_normalized_event", lambda: canonical_msgpack(normalization["value"][0]) == canonical_msgpack(event))):
+        if f.stop(row, check):
+            return [f.first_code()]
+    f.done()
     return []
 
 
 def candidate_failures(event, producer_component, context, *, payload_store=None, historical=False, historical_source=None):
     """Check prepared payload semantics without granting EventRecord admission."""
     admission, _, _, envelope, validators = context
-    failures = []
-    if type(historical) is not bool:
-        return ['historical_context_type']
-    if not isinstance(event, dict):
-        return ["envelope_schema"]
+    entry = Facts("gate_candidate_entry", chain=True)
     rows = {row["event_type"]: row for row in admission["rows"]}
-    row = rows.get(event.get("event_type"))
-    if row is None:
-        return ["unknown_browser_event_quarantine"]
+    if entry.stop("GC01_historical_bool", lambda: type(historical) is bool):
+        return [entry.first_code()]
+    if entry.stop("GC02_event_object", lambda: isinstance(event, dict)):
+        return [entry.first_code()]
+    if entry.stop("GC03_known_event", lambda: rows.get(event.get("event_type")) is not None):
+        return [entry.first_code()]
+    entry.done()
+    row = rows[event.get("event_type")]
     selected_envelope = load_json("Plans/event_record_v3.schema.json") if event.get("schema_version") == "3.0.0" else envelope
-    if list(body_route.validator(selected_envelope).iter_errors(event)):
-        failures.append("envelope_schema")
+    shape = Facts("gate_candidate_envelope")
+    shape["GC04_envelope_schema"] = not list(body_route.validator(selected_envelope).iter_errors(event))
+    failures = shape.codes()
     payload, route_errors = body_route.resolved_body(event, payload_store, historical=historical)
     failures.extend(route_errors)
-    if not isinstance(payload, dict):
-        return failures + ["payload_schema"]
+    resolved = Facts("gate_candidate_payload", chain=True)
+    if resolved.stop("GC05_payload_object", lambda: isinstance(payload, dict)):
+        return failures + [resolved.first_code()]
+    resolved.done()
     payload_validator = validators[event['event_type']]
     if historical:
         from pm_home_layout_v2_slot_receipt import RetainedBodyValidator
         payload_validator = RetainedBodyValidator(payload_validator.schema, registry=payload_validator._registry, format_checker=FormatChecker())
-    if list(payload_validator.iter_errors(payload)):
-        failures.append("payload_schema")
-    if producer_component != row["producer_component"]:
-        failures.append("producer_not_authorized")
+    joins = Facts("gate_candidate_joins")
+    joins["GC06_payload_schema"] = not list(payload_validator.iter_errors(payload))
+    joins["GC07_producer_authorized"] = producer_component == row["producer_component"]
+    failures += joins.codes()
     payload_context = payload.get("context", {})
-    if not isinstance(payload_context, dict):
-        return failures + ["payload_schema", "envelope_scope"]
-    if event.get("scope_kind") != "project" or any(
-        event.get(field) != payload_context.get(field) for field in IDENTITIES
-    ):
-        failures.append("envelope_scope")
-    if event.get("payload_schema_id") != row["payload_schema_ref"]["schema_id"] or payload.get("event_type") != event["event_type"]:
-        failures.append("payload_identity_mismatch")
-    if not historical and (event.get("producer_sequence_id") is None or event.get("replay_policy") != "dedupe_by_idempotency_key"):
-        failures.append("browser_replay_contract")
+    scoped = Facts("gate_candidate_context", chain=True)
+    # The payload schema row above has already refused a non-object context.
+    if scoped.stop("GC08_context_object", lambda: isinstance(payload_context, dict)):
+        return failures + [scoped.first_code()]
+    scoped.done()
     migration = event.get('migration')
-    if not isinstance(migration, dict):
-        return failures + ['browser_redaction_or_unadmitted_migration']
-    if event.get("redaction_profile") != "no_secrets" or (not historical and any(migration.values())):
-        failures.append("browser_redaction_or_unadmitted_migration")
+    scope = Facts("gate_candidate_scope")
+    scope["GC09_project_scope_kind"] = event.get("scope_kind") == "project"
+    scope["GC10_identity_projection"] = [field for field in IDENTITIES if event.get(field) != payload_context.get(field)] == []
+    scope["GC11_payload_schema_id"] = event.get("payload_schema_id") == row["payload_schema_ref"]["schema_id"]
+    scope["GC12_payload_event_type"] = payload.get("event_type") == event["event_type"]
+    scope["GC13_producer_sequence"] = historical or event.get("producer_sequence_id") is not None
+    scope["GC14_replay_policy"] = historical or event.get("replay_policy") == "dedupe_by_idempotency_key"
+    failures += scope.codes()
+    present = Facts("gate_candidate_migration", chain=True)
+    if present.stop("GC15_migration_object", lambda: isinstance(migration, dict)):
+        return failures + [present.first_code()]
+    present.done()
+    redaction = Facts("gate_candidate_redaction")
+    redaction["GC16_redaction_profile"] = event.get("redaction_profile") == "no_secrets"
+    redaction["GC17_no_unadmitted_migration"] = historical or not any(migration.values())
+    failures += redaction.codes()
     if historical and (event.get('replay_policy') == 'projector_replay_only' or any(migration.values())):
         failures.extend(compatibility_history_failures(event, context, historical_source))
-    if len(json.dumps(payload, separators=(",", ":"), ensure_ascii=False).encode()) > MAX_PAYLOAD_BYTES:
-        failures.append("payload_total_byte_limit")
+    size = Facts("gate_candidate_size")
+    size["GC18_total_byte_limit"] = len(json.dumps(payload, separators=(",", ":"), ensure_ascii=False).encode()) <= MAX_PAYLOAD_BYTES
+    failures += size.codes()
     if "payload_schema" not in failures:
         failures.extend(semantic_failures(payload))
     return failures
+
 
 
 @lru_cache(maxsize=4)
@@ -550,54 +547,56 @@ def central_family_validator(root):
 
 def central_binding_failures(row, family, row_index):
     """Resolve an exact family; a matching name or sibling is insufficient."""
-    if family is None:
-        return ["central_family_missing"]
-    failures = []
-    if list(central_family_validator(ROOT).iter_errors(family)):
-        failures.append("central_family_schema")
-    for key in ("event_type", "family_id", "family_revision", "payload_schema_ref", "retention_policy_ref"):
-        if family.get(key) != row[key]:
-            failures.append("central_family_binding:" + key)
-    if family.get("scope_policy") != "project_only" or family.get("payload_schema_id") != row["payload_schema_ref"]["schema_id"]:
-        failures.append("central_scope_or_schema_binding")
-    if family.get("semantic_owner_doc") != row["semantic_owner_ref"] or family.get("payload_owner_doc") != "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe":
-        failures.append("central_owner_binding")
+    present = Facts("gate_central_entry", chain=True)
+    if present.stop("GB01_family_present", lambda: family is not None):
+        return [present.first_code()]
+    present.done()
+    legacy = family.get("legacy", {})
     required_refs = {
         f"Plans/browser_event_admission.json#/rows/{row_index}", row["semantic_owner_ref"],
         row["payload_schema_ref"]["path"] + row["payload_schema_ref"]["json_pointer"],
     }
-    if not required_refs <= set(family.get("source_refs", [])):
-        failures.append("central_source_binding")
-    legacy = family.get("legacy", {})
-    if legacy.get("aliases") != [] or legacy.get("admitted_extensions") != [] or legacy.get("referenced_event_id_pointer") is not None or legacy.get("redaction") != {"mode": "reject_unhandled_secrets", "transform_id": None, "transform_version": None}:
-        failures.append("unadmitted_legacy_or_redaction")
-    expected_pointers = {field: ["/payload/context/" + field] for field in IDENTITIES}
-    if legacy.get("identity_json_pointers") != expected_pointers:
-        failures.append("central_identity_pointers")
-    return failures
-
+    f = Facts("gate_central")
+    f["GB02_family_schema"] = not list(central_family_validator(ROOT).iter_errors(family))
+    for number, key in enumerate(("event_type", "family_id", "family_revision", "payload_schema_ref", "retention_policy_ref"), 3):
+        f[f"GB{number:02d}_{key}"] = family.get(key) == row[key]
+    f["GB08_scope_policy"] = family.get("scope_policy") == "project_only"
+    f["GB09_payload_schema_id"] = family.get("payload_schema_id") == row["payload_schema_ref"]["schema_id"]
+    f["GB10_semantic_owner"] = family.get("semantic_owner_doc") == row["semantic_owner_ref"]
+    f["GB11_payload_owner"] = family.get("payload_owner_doc") == "Plans/storage-plan.md#case-l-5-eventrecord-persistence-legacy-normalization-and-dedupe"
+    f["GB12_source_refs"] = required_refs <= set(family.get("source_refs", []))
+    f["GB13_no_aliases"] = legacy.get("aliases") == []
+    f["GB14_no_extensions"] = legacy.get("admitted_extensions") == []
+    f["GB15_no_referenced_pointer"] = legacy.get("referenced_event_id_pointer") is None
+    f["GB16_redaction"] = legacy.get("redaction") == {"mode": "reject_unhandled_secrets", "transform_id": None, "transform_version": None}
+    f["GB17_identity_pointers"] = legacy.get("identity_json_pointers") == {field: ["/payload/context/" + field] for field in IDENTITIES}
+    return f.codes()
 
 def event_failures(event, producer_component, context, *, families=None, payload_store=None, historical=False, historical_source=None):
     """Admission-enforcing check, distinct from candidate shape/semantics."""
     failures = candidate_failures(event, producer_component, context, payload_store=payload_store, historical=historical, historical_source=historical_source)
-    if not isinstance(event, dict):
-        return failures + ["event_not_admitted"]
-    matches = [(index, row) for index, row in enumerate(context[0]["rows"]) if row["event_type"] == event.get("event_type")]
-    if len(matches) != 1:
-        return failures + ["event_not_admitted"]
-    row_index, row = matches[0]
-    if row["admission_status"] != "admitted_static_contract":
-        return failures + ["event_not_admitted"]
-    if families is None:
-        registry_rows = load_json("Plans/event_family_registry.json")["families"]
-        matching_families = [family for family in registry_rows if family["event_type"] == row["event_type"]]
-        if len(matching_families) != 1:
-            return failures + ["central_family_missing_or_duplicate"]
-        family = matching_families[0]
-    else:
-        family = families.get(row["event_type"])
-    return failures + central_binding_failures(row, family, row_index) + authority_binding_failures(row)
+    f = Facts("gate_event", chain=True)
+    found = {}
 
+    def one_row():
+        found["matches"] = [(index, row) for index, row in enumerate(context[0]["rows"]) if row["event_type"] == event.get("event_type")]
+        return len(found["matches"]) == 1
+
+    def one_family():
+        registry_rows = load_json("Plans/event_family_registry.json")["families"]
+        found["families"] = [family for family in registry_rows if family["event_type"] == found["matches"][0][1]["event_type"]]
+        return len(found["families"]) == 1
+
+    for row_name, check in (("GE01_event_object", lambda: isinstance(event, dict)),
+                            ("GE02_one_admission_row", one_row),
+                            ("GE03_row_admitted", lambda: found["matches"][0][1]["admission_status"] == "admitted_static_contract"),
+                            ("GE04_one_registry_family", lambda: families is not None or one_family())):
+        if f.stop(row_name, check):
+            return failures + [f.first_code()]
+    f.done()
+    row_index, row = found["matches"][0]
+    family = found["families"][0] if families is None else families.get(row["event_type"])
+    return failures + central_binding_failures(row, family, row_index) + authority_binding_failures(row)
 
 class ReplayOracle:
     """Admission-enforcing synthetic projector, never durable storage proof."""
@@ -614,21 +613,31 @@ class ReplayOracle:
 
     def consume(self, event, producer, context, *, payload_store=None, historical_source=None,
                 source_verified=True, access_allowed=True, deletion_allows_audit=True, withdrawn=False):
-        if not all(v is True for v in (source_verified, access_allowed, deletion_allows_audit)) or withdrawn is not False:
-            return "quarantined_without_checkpoint_advance"
-        if self.contract_failures(event, producer, context, payload_store=payload_store, historical=True, historical_source=historical_source):
-            return "quarantined_without_checkpoint_advance"
+        f = Facts("gate_replay", chain=True)
+        for row, check in (("GR01_source_verified", lambda: source_verified is True),
+                           ("GR02_access_allowed", lambda: access_allowed is True),
+                           ("GR03_deletion_allows_audit", lambda: deletion_allows_audit is True),
+                           ("GR04_not_withdrawn", lambda: withdrawn is False),
+                           ("GR05_contract", lambda: not self.contract_failures(event, producer, context, payload_store=payload_store, historical=True, historical_source=historical_source))):
+            if f.stop(row, check):
+                return f.first_code()
         identity = event["event_id"]
         owner = envelope_oracle()
         transition = (owner.scope_partition(event["scope_kind"], event["project_id"]), event["event_type"], event["idempotency_key"])
         digest = owner.event_producer_semantic_digest(event)
+        if f.stop("GR06_event_identity", lambda: identity not in self.event_ids or self.event_ids[identity] == digest):
+            return f.first_code()
         if identity in self.event_ids:
-            return "duplicate_no_effect" if self.event_ids[identity] == digest else "quarantined_without_checkpoint_advance"
+            f.done()
+            return "duplicate_no_effect"
+        if f.stop("GR07_transition_identity", lambda: transition not in self.transition_ids or self.event_ids[self.transition_ids[transition]] == digest):
+            return f.first_code()
         if transition in self.transition_ids:
-            original = self.transition_ids[transition]
-            return "duplicate_no_effect" if self.event_ids[original] == digest else "quarantined_without_checkpoint_advance"
-        if event["sequence_id"] <= self.checkpoint:
-            return "quarantined_without_checkpoint_advance"
+            f.done()
+            return "duplicate_no_effect"
+        if f.stop("GR08_sequence_after_checkpoint", lambda: event["sequence_id"] > self.checkpoint):
+            return f.first_code()
+        f.done()
         self.event_ids[identity] = digest
         self.transition_ids[transition] = identity
         self.checkpoint = event["sequence_id"]
@@ -639,7 +648,6 @@ class ReplayOracle:
             key = (subject["project_id"], subject["browser_workspace_id"], subject["browser_page_id"])
             self.page_generations[key] = max(self.page_generations.get(key, -1), subject["page_generation"])
         return "projected_no_effect"
-
 
 class CandidateReplayOracle(ReplayOracle):
     """Payload-only simulation. Its projections never establish admission."""

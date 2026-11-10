@@ -645,4 +645,375 @@ SPEC = {
         V2CL21_tx_committed | cleanup_transaction_join | the transaction status is committed
         V2CL22_survivors_exact | cleanup_changed_survivors | the after-value is the before-value less exactly the cleaned entry
     """),
+
+    # ------------------------------------------------------------------ browser.workspace.reset (SP-282, SMPFS-168)
+    'rs_preflight_entry': ('reset preflight witness', RESET, """
+        RP00_witness_object | reset_witness_missing | the reset witness is an object
+    """),
+    'rs_preflight_schemas': ('reset request, result and transition schemas', RESET, """
+        RP0A_request_schema | browser_command_request_schema | the request validates against browser_command_request
+        RP0B_result_schema | browser_command_result_schema | the result validates against browser_command_result
+        RP0C_transition_schema | resolved_transition_schema | the transition validates against resolved_transition
+    """),
+    'rs_preflight': ('reset resolved-value joins', RESET, """
+        RP01_event_type | wrong_reset_event | the event type is browser.workspace.reset
+        RP02_request_command | reset_command_mismatch | the request command is cmd.browser.workspace.reset
+        RP03_result_command | reset_command_mismatch | the result command is cmd.browser.workspace.reset
+        RP04_request_lineage | reset_lineage_mismatch | the request lineage projection equals the payload context lineage
+        RP05_result_lineage | reset_lineage_mismatch | the result lineage projection equals the payload context lineage
+        RP06_request_subject | reset_subject_mismatch | the request session, workspace and security class equal the payload context
+        RP07_result_subject | reset_subject_mismatch | the result session, workspace and security class equal the payload context
+        RP08_request_optional_subject | reset_optional_subject_mismatch | the request page, page generation, program and program workspace equal the payload context
+        RP09_result_optional_subject | reset_optional_subject_mismatch | the result page, page generation, program and program workspace equal the payload context
+        RP10_request_result_scope | reset_request_result_scope_mismatch | the request scope equals the result scope
+        RP11_transition_subject | reset_resolved_subject_mismatch | the transition subject is the payload context subject projection
+        RP12_transition_node | reset_resolved_subject_mismatch | the transition node is the payload node
+        RP13_transition_context | reset_resolved_context_mismatch | the transition context is the payload context
+        RP14_result_instance | reset_command_instance_mismatch | the result command instance is the request command instance
+        RP15_transition_instance | reset_command_instance_mismatch | the transition command instance is the result command instance
+        RP16_event_idempotency | reset_idempotency_mismatch | the request idempotency key is the event idempotency key
+        RP17_transition_idempotency | reset_idempotency_mismatch | the transition idempotency key is the event idempotency key
+        RP18_result_succeeded | reset_not_successful_reconciled | the result outcome is succeeded
+        RP19_result_reconciled | reset_not_successful_reconciled | the result effect state is effects_reconciled
+        RP20_revision_join | reset_revision_join | the checked workspace revision is the request expected revision
+        RP21_controller_join | reset_controller_join | the transition controller authority is the request's
+        RP22_workspace_state_reset | reset_generation_join | the payload workspace state is reset
+        RP23_prior_generation | reset_generation_join | the payload prior generation is the transition prior generation
+        RP24_generation | reset_generation_join | the payload generation is the transition generation
+        RP25_generation_advances | reset_generation_join | the transition prior generation is below its generation
+        RP26_owner_record_ref | reset_reference_join:owner_record_ref | the resolved transition owner_record_ref is the payload owner_record_ref
+        RP27_transition_receipt_ref | reset_reference_join:transition_receipt_ref | the resolved transition transition_receipt_ref is the payload transition_receipt_ref
+        RP28_permission_snapshot_ref | reset_reference_join:permission_snapshot_ref | the resolved transition permission_snapshot_ref is the payload permission_snapshot_ref
+        RP29_capability_snapshot_ref | reset_reference_join:capability_snapshot_ref | the resolved transition capability_snapshot_ref is the payload capability_snapshot_ref
+        RP30_dispatch_receipt | reset_dispatch_receipt_join | the result dispatch receipt is the transition receipt
+        RP31_permission_join | reset_permission_join | the request permission snapshot is the transition's
+        RP32_filesafe_join | reset_filesafe_join | the request FileSafe decision is the transition's
+        RP33_workspace_result_ref | reset_workspace_result_ref | the transition workspace ref is among the result refs
+        RP34_producer_authenticated | reset_witness:producer_authenticated | witness producer_authenticated is exactly true
+        RP35_original_request_resolved | reset_witness:original_request_resolved | witness original_request_resolved is exactly true
+        RP36_original_result_resolved | reset_witness:original_result_resolved | witness original_result_resolved is exactly true
+        RP37_transition_receipt_resolved | reset_witness:transition_receipt_resolved | witness transition_receipt_resolved is exactly true
+        RP38_permission_valid_at_transition | reset_witness:permission_valid_at_transition | witness permission_valid_at_transition is exactly true
+        RP39_filesafe_allowed_at_transition | reset_witness:filesafe_allowed_at_transition | witness filesafe_allowed_at_transition is exactly true
+        RP40_capability_valid_at_transition | reset_witness:capability_valid_at_transition | witness capability_valid_at_transition is exactly true
+        RP41_controller_valid_at_transition | reset_witness:controller_valid_at_transition | witness controller_valid_at_transition is exactly true
+        RP42_scope_valid_at_transition | reset_witness:scope_valid_at_transition | witness scope_valid_at_transition is exactly true
+    """),
+    'rs_reset': ('reset barrier model', RESET, """
+        RO01_admitted | rejected_no_reset | the event is admitted (exactly true)
+        RO02_preflight | rejected_no_reset | the resolved values pass the reset preflight
+        RO03_owner_subject | wrong_owner_subject_no_reset | the transition subject is the owner subject
+        RO04_event_identity | idempotency_conflict | a known event id carries the same producer-semantic digest
+        RO05_prior_digest | idempotency_conflict | a prior attempt of the key carries the same digest
+        RO06_prior_result | idempotency_conflict | a prior attempt of the key carries the same result
+        RO07_prior_request | idempotency_conflict | a prior attempt of the key carries the same request
+        RO08_prior_not_pending | original_reset_pending_recovery_no_repeat | the prior attempt of the key is not pending recovery
+        RO09_result_access | original_result_access_denied | the original result is currently accessible (exactly true)
+        RO10_no_pending_recovery | owner_recovery_required_no_reset | no other reset awaits recovery
+        RO11_revision_resolved | owner_revision_unresolved_no_reset | the owner workspace revision is resolved
+        RO12_checked_revision | stale_owner_no_reset | the checked revision is the owner revision
+        RO13_prior_generation | stale_owner_no_reset | the transition prior generation is the owner generation
+        RO14_append_outcome | invalid_append_outcome_no_reset | the append outcome is a known outcome
+    """),
+    'rs_resolve_append': ('reset append resolution', RESET, """
+        RX01_pending_entry | original_append_identity_unresolved | a pending entry holds the key
+        RX02_pending_digest | original_append_identity_unresolved | the pending entry carries the same digest
+        RX03_append_outcome | invalid_append_resolution | the resolution outcome is a known committed outcome
+    """),
+    'rs_binding_entry': ('reset authority binding row family', RESET, """
+        RB01_event_type | complete_browser_authority_binding_missing | the admission row is for browser.workspace.reset
+    """),
+    'rs_binding': ('reset authority binding joins', RESET, """
+        RB02_schema_binding | exact_reset_authority_binding_mismatch | the contract binding is the exact expected binding
+        RB03_durable_token | reset_durable_read_token_not_sp278_projection | the contract durable read token is the SP-278 projection
+        RB04_contract_ref | reset_authority_contract_ref_mismatch | the row's authority contract ref is the reset binding
+        RB05_semantic_owner | reset_owner_binding_mismatch | the row's semantic owner is the expected owner
+        RB06_producer | reset_owner_binding_mismatch | the row's producer is the expected producer
+        RB07_payload_schema | reset_payload_binding_mismatch | the row's payload schema ref is the workspace_reset payload
+        RB08_consumer_refs | reset_consumer_refs_missing | the row's consumer refs include the semantic, Storage and SP-278 owners
+        RB09_source_retention | reset_source_retention_binding_mismatch | the row's source retention is RP-AUTHORITY-INDEFINITE@1.0.0
+        RB10_family_unique | reset_checkpoint_family_disposition_mismatch | the Storage registry holds exactly one reset checkpoint family
+        RB11_family_disposition | reset_checkpoint_family_disposition_mismatch | the registered family is exactly the expected family row
+    """),
+    'rs_checkpoint_schema': ('reset checkpoint schema', RESET, """
+        RK01_checkpoint_schema | checkpoint_schema | the checkpoint validates against the reset checkpoint definition
+    """),
+    'rs_history_entry': ('reset retired generation entry', RESET, """
+        RK02_publication_unique | checkpoint_history_identity | the retired publication id is not repeated
+        RK03_publication_not_successor | checkpoint_history_identity | the retired publication id is not its own successor
+        RK04_history_scope | checkpoint_history_identity | the retired core scope is the checkpoint scope
+        RK05_withdrawal_before_successor | history_withdrawal_after_successor | an otherwise valid retired core withdrew no later than the current publication
+    """),
+    'rs_core_relations': ('reset core scope, token and range', RESET, """
+        RC01_scope_partition | checkpoint_scope_partition | the scope partition is the encoded project~ partition of the Project
+        RC02_token_storage | checkpoint_storage_identity | the stored token Storage instance is the core's
+        RC03_range_order | checkpoint_range_or_cursor | with a cursor, the first retained sequence is at most the through sequence
+        RC04_cursor_through | checkpoint_range_or_cursor | with a cursor, its last sequence is the through sequence
+        RC05_cursor_offsets | checkpoint_range_or_cursor | with a cursor, its byte offset is before its frame end
+    """),
+    'rs_core_times': ('reset core timestamps', RESET, """
+        RC06_updated_grammar | checkpoint_timestamp | updated_at_utc matches the RFC 3339 grammar
+        RC07_withdrawn_grammar | checkpoint_timestamp | a present withdrawn_at_utc matches the RFC 3339 grammar
+        RC08_published_grammar | checkpoint_timestamp | published_at_utc matches the RFC 3339 grammar
+        RC09_updated_calendar | checkpoint_timestamp | updated_at_utc is a calendar-valid instant
+        RC10_withdrawn_calendar | checkpoint_timestamp | a present withdrawn_at_utc is a calendar-valid instant
+        RC11_published_calendar | checkpoint_timestamp | published_at_utc is a calendar-valid instant
+    """),
+    'rs_core_order': ('reset core time order', RESET, """
+        RC12_withdrawal_order | withdrawal_after_observation | a withdrawal is not after the last observation
+        RC13_birth_before_update | generation_birth_after_observation_or_withdrawal | publication is not after the last observation
+        RC14_birth_before_withdrawal | generation_birth_after_observation_or_withdrawal | publication is not after a withdrawal
+    """),
+    'rs_generation': ('reset generation admission', RESET, """
+        RG01_transaction_schema | generation_transaction_schema | the generation transaction validates against its definition
+        RG02_tx_before | generation_transaction_join | the transaction before-value is the prior value
+        RG03_tx_after | generation_transaction_join | the transaction after-value is the new value
+        RG04_tx_key | generation_transaction_join | the transaction key is the checkpoint key
+        RG05_tx_publication | generation_transaction_join | the transaction selects the new publication
+        RG06_tx_committed_at | generation_transaction_join | the transaction commit time is the new publication time
+        RG07_generation_transaction_resolved | generation_admission_unproved | observation generation_transaction_resolved is exactly true
+        RG08_coordinator_admitted | generation_admission_unproved | observation coordinator_admitted is exactly true
+        RG09_complete_rebuild_verified | generation_admission_unproved | observation complete_rebuild_verified is exactly true
+        RG10_capacity_reserved | generation_admission_unproved | observation capacity_reserved is exactly true
+        RG11_hold_ref_fence_current | generation_admission_unproved | observation hold_ref_fence_current is exactly true
+        RG12_birth_not_withdrawn | generation_birth_state_or_time | the new generation is not born withdrawn
+        RG13_birth_time | generation_birth_state_or_time | the new generation's last observation is its publication
+        RG14_initial_no_history | initial_generation_has_history | an initial generation has no retired history
+        RG15_replacement_scope | replacement_scope_identity_or_time | a replacement keeps the Storage instance, Project and partition
+        RG16_replacement_publication | replacement_scope_identity_or_time | a replacement publishes a new publication id
+        RG17_replacement_time | replacement_scope_identity_or_time | a replacement is published no earlier than the prior observation
+        RG18_capacity | generation_capacity_requires_eligible_cleanup | the prior value retains fewer than two generations
+        RG19_exact_history | replacement_original_history_changed | the new retired history is the prior history plus the withdrawn prior core
+    """),
+    'rs_token_entry': ('reset SP-278 read token preconditions', RESET, """
+        RT01_durable_token_schema | generic_index_schema | the stored token validates against the durable read token
+        RT02_index_schema | generic_index_schema | the index checkpoint validates against the SP-278 checkpoint
+        RT03_observation_object | generic_source_unproved | the observation is an object
+        RT04_source_verified | generic_source_unproved | the generic source is verified (exactly true)
+        RT05_live_snapshot | generic_live_snapshot_unproved | the stored token joined with the live snapshot id is a complete SP-278 read token
+        RT06_current_node | generic_generation_not_current | the selected current generation exists
+        RT07_node_current | generic_generation_not_current | the selected generation state is current
+        RT08_node_identity | generic_generation_not_current | the selected generation names itself
+        RT09_one_current | generic_generation_not_current | exactly one generation is current
+    """),
+    'rs_token_joins': ('reset SP-278 read token joins', RESET, """
+        RT10_token_fields | generic_read_token_join | the stored token has exactly the nine durable fields
+        RT11_storage_instance_id | generic_read_token_join | the stored token storage_instance_id is the recomputed SP-278 storage_instance_id
+        RT12_checkpoint_key | generic_read_token_join | the stored token checkpoint_key is the recomputed SP-278 checkpoint_key
+        RT13_checkpoint_ref | generic_read_token_join | the stored token checkpoint_ref is the recomputed SP-278 checkpoint_ref
+        RT14_generation_id | generic_read_token_join | the stored token generation_id is the recomputed SP-278 generation_id
+        RT15_generation_anchor_sha256 | generic_read_token_join | the stored token generation_anchor_sha256 is the recomputed SP-278 generation_anchor_sha256
+        RT16_frontier_revision | generic_read_token_join | the stored token frontier_revision is the recomputed SP-278 frontier_revision
+        RT17_frontier_sha256 | generic_read_token_join | the stored token frontier_sha256 is the recomputed SP-278 frontier_sha256
+        RT18_index_dataset_name | generic_read_token_join | the stored token index_dataset_name is the recomputed SP-278 index_dataset_name
+        RT19_source_selection | generic_read_token_join | the stored token source_selection is the recomputed SP-278 source_selection
+        RT20_node_dataset | generic_read_token_join | the generation dataset name is event_record_index.v2@ + generation
+        RT21_current_source | generic_current_source_changed | the observed source selection is the frontier source selection
+        RT22_source_storage | generic_source_storage_mismatch | the frontier source Storage instance is the index's
+    """),
+    'rs_advance': ('reset filtered checkpoint advance', RESET, """
+        RV01_admitted | event_not_admitted_no_advance | the event is admitted (exactly true)
+        RV02_candidate_valid | checkpoint_invalid_no_advance | the candidate checkpoint passes its checks
+        RV03_stored_valid | checkpoint_invalid_no_advance | a stored checkpoint passes its checks
+        RV04_candidate_not_withdrawn | withdrawn_no_advance | the candidate is not withdrawn
+        RV05_stored_not_withdrawn | withdrawn_no_advance | a stored checkpoint is not withdrawn, except under replacement
+        RV06_index_token | generic_index_unavailable_no_advance | the candidate's read token passes the SP-278 join
+        RV07_project_filter_complete | filter_or_fence_unproved_no_advance | observation project_filter_complete is exactly true
+        RV08_reset_sources_validated | filter_or_fence_unproved_no_advance | observation reset_sources_validated is exactly true
+        RV09_source_dedupe_verified | filter_or_fence_unproved_no_advance | observation source_dedupe_verified is exactly true
+        RV10_access_allowed | filter_or_fence_unproved_no_advance | observation access_allowed is exactly true
+        RV11_deletion_allows_audit | filter_or_fence_unproved_no_advance | observation deletion_allows_audit is exactly true
+        RV12_binding_supported | filter_or_fence_unproved_no_advance | observation binding_supported is exactly true
+        RV13_before_commit_fence_current | filter_or_fence_unproved_no_advance | observation before_commit_fence_current is exactly true
+        RV14_filter_complete | filter_incomplete_no_advance | the candidate filter is complete
+        RV15_first_retained | filtered_range_not_global_coverage | the first retained sequence is the generic coverage's
+        RV16_through | filtered_range_not_global_coverage | the through sequence is the generic coverage's
+        RV17_cursor | filtered_range_not_global_coverage | the source cursor is the generic coverage last frame
+        RV18_health | filtered_range_not_global_coverage | the health is the generic coverage health
+        RV19_project | filtered_project_mismatch | the observed Project is the candidate Project
+        RV20_prior_cas | checkpoint_cas_conflict_no_advance | the observed prior checkpoint is the stored checkpoint
+        RV21_generation_admission | generation_admission_invalid_no_advance | an initial or replacement generation passes generation admission
+        RV22_scope_storage_instance_id | checkpoint_scope_change_no_advance | a refresh keeps the stored storage_instance_id
+        RV23_scope_project_id | checkpoint_scope_change_no_advance | a refresh keeps the stored project_id
+        RV24_scope_scope_partition | checkpoint_scope_change_no_advance | a refresh keeps the stored scope_partition
+        RV25_custody_publication_id | generation_identity_or_history_changed_no_advance | a refresh keeps the stored publication_id
+        RV26_custody_published_at_utc | generation_identity_or_history_changed_no_advance | a refresh keeps the stored published_at_utc
+        RV27_custody_hold_refs | generation_identity_or_history_changed_no_advance | a refresh keeps the stored hold_refs
+        RV28_custody_retired_generations | generation_identity_or_history_changed_no_advance | a refresh keeps the stored retired_generations
+        RV29_observation_time | checkpoint_observation_regression | a refresh observation is not earlier than the stored one
+        RV30_cursor_not_regressed | cursor_regression_requires_governed_rebuild | a refresh cursor does not regress below the stored cursor
+    """),
+    'rs_cleanup': ('reset retired generation cleanup', RESET, """
+        RU01_checkpoint_present | cleanup_invalid_or_cas_conflict | a checkpoint is stored
+        RU02_checkpoint_valid | cleanup_invalid_or_cas_conflict | the stored checkpoint passes its checks
+        RU03_prior_cas | cleanup_invalid_or_cas_conflict | the observed prior checkpoint is the stored checkpoint
+        RU04_maintenance_authorized | cleanup_authority_or_hold_unproved | observation maintenance_authorized is exactly true
+        RU05_all_applicable_holds_resolved | cleanup_authority_or_hold_unproved | observation all_applicable_holds_resolved is exactly true
+        RU06_no_applicable_hold_or_live_ref | cleanup_authority_or_hold_unproved | observation no_applicable_hold_or_live_ref is exactly true
+        RU07_hold_ref_fence_current | cleanup_authority_or_hold_unproved | observation hold_ref_fence_current is exactly true
+        RU08_access_allowed | cleanup_authority_or_hold_unproved | observation access_allowed is exactly true
+        RU09_deletion_allows_audit | cleanup_authority_or_hold_unproved | observation deletion_allows_audit is exactly true
+        RU10_retired_selected | cleanup_retired_identity_missing | exactly one retired core has the publication id
+        RU11_cleanup_time | cleanup_invalid_time | the cleanup time parses as an instant
+        RU12_cleanup_time_zone | cleanup_retention_window_open | the cleanup time carries a zone
+        RU13_anchor_time | cleanup_invalid_time | the retired core's first withdrawal parses as an instant
+        RU14_times_comparable | cleanup_invalid_time | the cleanup time and the anchor are comparable instants
+        RU15_retention_elapsed | cleanup_retention_window_open | 604800 seconds have elapsed since the first withdrawal
+    """),
+    'rs_disclose': ('reset checkpoint disclosure', RESET, """
+        RD01_observation_object | read_unavailable_no_disclosure | the observation is an object
+        RD02_checkpoint_present | read_unavailable_no_disclosure | a checkpoint is stored
+        RD03_checkpoint_valid | read_unavailable_no_disclosure | the stored checkpoint passes its checks
+        RD04_not_withdrawn | read_unavailable_no_disclosure | the stored checkpoint is not withdrawn
+        RD05_filter_complete | read_unavailable_no_disclosure | the stored checkpoint filter is complete
+        RD06_project | read_unavailable_no_disclosure | the observed Project is the checkpoint Project
+        RD07_index_token | read_unavailable_no_disclosure | the stored token passes the SP-278 join with the live snapshot
+        RD08_access_allowed | read_unavailable_no_disclosure | observation access_allowed is exactly true
+        RD09_deletion_allows_audit | read_unavailable_no_disclosure | observation deletion_allows_audit is exactly true
+        RD10_disclosure_fence | read_unavailable_no_disclosure | observation disclosure_fence_current is exactly true
+    """),
+    'rs_withdraw': ('reset checkpoint withdrawal', RESET, """
+        RW01_checkpoint_present | checkpoint_unavailable | a checkpoint is stored
+        RW02_checkpoint_valid | checkpoint_unavailable | the stored checkpoint passes its checks
+        RW03_not_withdrawn | already_withdrawn_original_anchor | the stored checkpoint is not already withdrawn
+        RW04_candidate_valid | invalid_withdrawal | the withdrawn candidate passes the checkpoint checks
+        RW05_not_before_observation | invalid_withdrawal | the withdrawal instant is not before the last observation
+    """),
+    'rs_history': ('retained reset fact reader', RESET, """
+        RH01_admitted | read_unavailable | the event is admitted (exactly true)
+        RH02_source_verified | read_unavailable | the retained source is verified (exactly true)
+        RH03_access_allowed | read_unavailable | access is allowed (exactly true)
+        RH04_deletion_allows_audit | read_unavailable | deletion allows audit (exactly true)
+        RH05_read_token_valid | read_unavailable | the checkpoint read token is valid (exactly true)
+        RH06_subject_schema | read_unavailable | the requested subject validates against the reset subject definition
+        RH07_retained_candidate | read_unavailable | the retained event passes the shared Browser candidate check as history
+        RH08_event_type | read_unavailable | the retained event type is browser.workspace.reset
+    """),
+
+    # ------------------------------------------------------------------ shared Browser admission gate (routes the DS Browser families reach)
+    'gate_authority': ('reviewed authority binding dispatch', GATE, """
+        GA01_reviewed_binding | complete_browser_authority_binding_missing | the admission row's event type has an individually reviewed binding (created or reset)
+    """),
+    'gate_semantic': ('Browser payload semantics', GATE, """
+        GS01_run_attempt_paired | run_attempt_scope_mismatch | run and attempt are both present or both absent
+        GS02_session_workspace_paired | browser_subject_scope_mismatch | session and workspace are both present or both absent
+        GS03_page_generation_paired | page_generation_scope_mismatch | page and page generation are both present or both absent
+        GS04_page_has_workspace | page_without_workspace | a page names a workspace
+        GS05_prior_page_generation_present | page_generation_not_advanced | a generation-change event names a prior page generation
+        GS06_page_generation_advances | page_generation_not_advanced | a generation-change event's prior page generation is below the page generation
+        GS07_prior_workspace_generation_present | workspace_generation_not_advanced | a reset names a prior workspace generation
+        GS08_workspace_generation_advances | workspace_generation_not_advanced | a reset's prior workspace generation is below its generation
+        GS09_created_no_prior_generation | not_new_workspace_identity | a creation has no prior workspace generation
+        GS10_page_generation_not_regressed | page_generation_regressed | a present prior page generation is not above the page generation
+        GS11_representation_generation | representation_generation_mismatch | a representation's base page generation is the page generation
+        GS12_representation_not_self_base | representation_delta_self_base | a representation delta is not based on itself
+        GS13_coverage_bounds | coverage_bounds | covered frames do not exceed total frames
+        GS14_complete_frames | coverage_false_complete | complete coverage covers every frame
+        GS15_complete_no_omissions | coverage_false_complete | complete coverage has no omission codes
+        GS16_complete_budget | coverage_false_complete | complete coverage did not exhaust its budget
+        GS17_complete_no_collisions | coverage_false_complete | complete coverage has no synthetic id collisions
+        GS18_invalidation_matches | representation_invalidation_mismatch | invalidated holds exactly when coverage is stale_rejected
+        GS19_lease_generation_not_regressed | lease_fence_regressed | the new lease generation is not below the old
+        GS20_lease_epoch_not_regressed | lease_fence_regressed | the new lease epoch is not below the old
+        GS21_last_sequence_not_regressed | lease_fence_regressed | the new last sequence is not below the old
+        GS22_new_fence_page_generation | lease_page_generation_mismatch | the new fence page generation is the page generation
+        GS23_old_fence_page_generation | lease_page_generation_mismatch | the old fence page generation is the page generation
+        GS24_renew_identity | lease_renew_identity_changed | a renewal keeps lease id, holder, epoch and generation
+        GS25_takeover_epoch_advances | lease_takeover_not_fenced | a completed takeover advances the lease epoch
+        GS26_takeover_holder_changes | lease_takeover_not_fenced | a completed takeover changes the holder
+        GS27_takeover_request_identity | takeover_request_grants_authority | a takeover request keeps lease id, holder, epoch and generation
+        GS28_workspace_revision_not_regressed | workspace_revision_regressed | a result workspace revision is not below the expected revision
+        GS29_checkpoint_ref | checkpoint_required | a checkpointed, paused or resumed event names a checkpoint ref
+        GS30_no_action_overlap | action_effect_overlap | no action is both unknown-effect and completed
+        GS31_unknown_state_no_retry | unknown_effect_retry | an unknown effect state allows no retry
+        GS32_unknown_actions_no_retry | unknown_effect_retry | unknown-effect actions allow no retry
+        GS33_no_effect_no_unknown | no_effect_has_actions | no_effect lists no unknown-effect actions
+        GS34_no_effect_no_completed | no_effect_has_actions | no_effect lists no completed actions
+        GS35_failed_no_effect_state | terminal_effect_state_mismatch | failed_no_effect has effect state no_effect
+        GS36_timed_out_unknown_state | terminal_effect_state_mismatch | a timeout with unknown effect state has effect state effect_unknown
+        GS37_terminal_no_unknown_actions | terminal_effect_state_mismatch | another terminal state lists no unknown-effect actions
+        GS38_terminal_known_state | terminal_effect_state_mismatch | another terminal state has a known effect state
+        GS39_screenshot_artifact | selected_screenshot_missing_artifact | a selected screenshot names its artifact
+        GS40_handoff_source_fenced | handoff_source_not_fenced | a host reconstruction fenced its source
+        GS41_handoff_no_unknown_effects | handoff_unknown_effects | a host reconstruction has no unknown effects
+    """),
+    'gate_compatibility': ('Case-L compatibility history', GATE, """
+        GH01_source_present | browser_compatibility_source_missing | the authenticated legacy source observation is present
+        GH02_source_normalizes | browser_compatibility_source_invalid | the legacy source normalizes under Case L
+        GH03_no_rejection_reason | browser_compatibility_source_mismatch | Case-L normalization gives no rejection reason
+        GH04_normalized_event | browser_compatibility_source_mismatch | the normalized legacy event is canonically the retained event
+    """),
+    'gate_candidate_entry': ('Browser candidate entry', GATE, """
+        GC01_historical_bool | historical_context_type | the historical selector is an exact boolean
+        GC02_event_object | envelope_schema | the event is an object
+        GC03_known_event | unknown_browser_event_quarantine | the event type has a Browser admission row
+    """),
+    'gate_candidate_envelope': ('Browser candidate envelope', GATE, """
+        GC04_envelope_schema | envelope_schema | the event validates against its 2.0.0 or 3.0.0 EventRecord schema
+    """),
+    'gate_candidate_payload': ('Browser candidate resolved payload', GATE, """
+        GC05_payload_object | payload_schema | the resolved payload is an object
+    """),
+    'gate_candidate_joins': ('Browser candidate payload schema and producer', GATE, """
+        GC06_payload_schema | payload_schema | the payload validates against the family payload recipe
+        GC07_producer_authorized | producer_not_authorized | the producer is the row's producer
+    """),
+    'gate_candidate_context': ('Browser candidate payload context', GATE, """
+        GC08_context_object | envelope_scope | the payload context is an object
+    """),
+    'gate_candidate_scope': ('Browser candidate scope and replay', GATE, """
+        GC09_project_scope_kind | envelope_scope | the event scope kind is project
+        GC10_identity_projection | envelope_scope | the envelope Project, thread, run, node and attempt are the payload context's
+        GC11_payload_schema_id | payload_identity_mismatch | the payload schema id is the row's
+        GC12_payload_event_type | payload_identity_mismatch | the payload event type is the event type
+        GC13_producer_sequence | browser_replay_contract | a current write carries a producer sequence id
+        GC14_replay_policy | browser_replay_contract | a current write uses dedupe_by_idempotency_key
+    """),
+    'gate_candidate_migration': ('Browser candidate migration object', GATE, """
+        GC15_migration_object | browser_redaction_or_unadmitted_migration | the migration field is an object
+    """),
+    'gate_candidate_redaction': ('Browser candidate redaction and migration', GATE, """
+        GC16_redaction_profile | browser_redaction_or_unadmitted_migration | the redaction profile is no_secrets
+        GC17_no_unadmitted_migration | browser_redaction_or_unadmitted_migration | a current write carries no migration values
+    """),
+    'gate_candidate_size': ('Browser candidate payload size', GATE, """
+        GC18_total_byte_limit | payload_total_byte_limit | the compact JSON payload is within 65536 bytes
+    """),
+    'gate_central_entry': ('central family presence', GATE, """
+        GB01_family_present | central_family_missing | a central registry family is resolved
+    """),
+    'gate_central': ('central family binding', GATE, """
+        GB02_family_schema | central_family_schema | the family validates against the registry family schema
+        GB03_event_type | central_family_binding:event_type | the registry family event_type is the admission row's
+        GB04_family_id | central_family_binding:family_id | the registry family family_id is the admission row's
+        GB05_family_revision | central_family_binding:family_revision | the registry family family_revision is the admission row's
+        GB06_payload_schema_ref | central_family_binding:payload_schema_ref | the registry family payload_schema_ref is the admission row's
+        GB07_retention_policy_ref | central_family_binding:retention_policy_ref | the registry family retention_policy_ref is the admission row's
+        GB08_scope_policy | central_scope_or_schema_binding | the family scope policy is project_only
+        GB09_payload_schema_id | central_scope_or_schema_binding | the family payload schema id is the row's
+        GB10_semantic_owner | central_owner_binding | the family semantic owner is the row's
+        GB11_payload_owner | central_owner_binding | the family payload owner is the Case-L owner
+        GB12_source_refs | central_source_binding | the family source refs include the row, its semantic owner and its payload definition
+        GB13_no_aliases | unadmitted_legacy_or_redaction | the family admits no legacy aliases
+        GB14_no_extensions | unadmitted_legacy_or_redaction | the family admits no legacy extensions
+        GB15_no_referenced_pointer | unadmitted_legacy_or_redaction | the family has no referenced event pointer
+        GB16_redaction | unadmitted_legacy_or_redaction | the family redaction rejects unhandled secrets with no transform
+        GB17_identity_pointers | central_identity_pointers | the family identity pointers are the payload context identities
+    """),
+    'gate_event': ('admission-enforcing event check', GATE, """
+        GE01_event_object | event_not_admitted | the event is an object
+        GE02_one_admission_row | event_not_admitted | exactly one admission row has the event type
+        GE03_row_admitted | event_not_admitted | the admission row is admitted_static_contract
+        GE04_one_registry_family | central_family_missing_or_duplicate | exactly one registry family has the event type
+    """),
+    'gate_replay': ('admission-enforcing replay projector', GATE, """
+        GR01_source_verified | quarantined_without_checkpoint_advance | the source is verified (exactly true)
+        GR02_access_allowed | quarantined_without_checkpoint_advance | access is allowed (exactly true)
+        GR03_deletion_allows_audit | quarantined_without_checkpoint_advance | deletion allows audit (exactly true)
+        GR04_not_withdrawn | quarantined_without_checkpoint_advance | the event is not withdrawn (exactly false)
+        GR05_contract | quarantined_without_checkpoint_advance | the event passes the projector's contract check as history
+        GR06_event_identity | quarantined_without_checkpoint_advance | a known event id carries the same producer-semantic digest
+        GR07_transition_identity | quarantined_without_checkpoint_advance | a known transition key carries the same producer-semantic digest
+        GR08_sequence_after_checkpoint | quarantined_without_checkpoint_advance | a new event's sequence is after the projector checkpoint
+    """),
 }

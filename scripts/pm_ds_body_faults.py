@@ -42,7 +42,8 @@ def cases():
     for value in (None,False,1,'x',[],(),[route.MEDIA],[route.MEDIA,data,None],
                   [False,data],[1,data],[{},data],[route.MEDIA,'bytes'],[route.MEDIA,bytearray(data)]):
         add('U374','object_tuple_type:'+repr(type(value))+':'+str(len(rows)),
-            lambda v=value:route.reference_metadata_errors(ref,v),['payload_reference_store_type'])
+            lambda v=value:route.resolved_body(large,{ref['blake3_id']:v}),
+            (None,['payload_reference_missing' if value is None else 'payload_reference_store_type']))
         supplied={ref['blake3_id']:value}
         if value is not None:
             add('U125','wrong_available_object:'+str(len(rows)),lambda s=supplied:route.resolved_body(large,s),

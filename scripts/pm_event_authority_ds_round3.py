@@ -152,7 +152,7 @@ def build():
             lambda e=numeric_forgery,g=actualgate,o=original:not g.candidate_failures(e,'BrowserRuntimeService.workspace',g.contract_context(),historical=True,historical_source=o))
         missing=copy.deepcopy(retained)
         suite.negative(family+':legacy_missing_source','compatibility_missing:'+family,
-            lambda g=actualgate:not g.compatibility_source_presence_errors(None))
+            lambda e=missing,g=actualgate:not g.candidate_failures(e,'BrowserRuntimeService.workspace',g.contract_context(),historical=True,historical_source=None))
         suite.positive(family+':legacy_missing_source_refuses_reader',lambda e=missing,m=model:not history(m,e))
     # Well-formed receipt identity: no LF/schema defect masks the recipe.
     bad=copy.deepcopy(comp);bad['payload']['compaction_receipt_ref']='compaction_receipt:'+'a'*64
