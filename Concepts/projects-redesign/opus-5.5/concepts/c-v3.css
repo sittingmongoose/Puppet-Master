@@ -67,6 +67,12 @@ html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factv .pjxc-mid { justify-conten
    wide, instead of wrapping into a narrow column (concepts/c-v3.js marks them from the plate's width) */
 html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-fact[data-v3-long] > .pmu-factl { grid-column: 1 / -1; }
 html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-fact[data-v3-long] > .pmu-factv { grid-column: 1 / -1; margin-top: -7px; max-width: 68ch; }
+/* a plate where most values would wrap (Backup, Where work runs at half width): every label above its value, so the
+   plate reads one way instead of some beside and some under */
+html[data-pjx-read="v3"] #pjxc .pjxc-facts.pmu-facts[data-v3-stack] { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
+html[data-pjx-read="v3"] #pjxc .pjxc-facts[data-v3-stack] .pmu-factl { margin-top: 10px; font-size: 12px; line-height: 16px; }
+html[data-pjx-read="v3"] #pjxc .pjxc-facts[data-v3-stack] .pmu-fact:first-child .pmu-factl { margin-top: 0; }
+html[data-pjx-read="v3"] #pjxc .pjxc-facts[data-v3-stack] .pmu-factv { margin-top: 1px; max-width: 68ch; }
 html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factv .pjxc-code { font-weight: 480; }
 
 /* Now: what it is doing, then the three things that keep it safe */

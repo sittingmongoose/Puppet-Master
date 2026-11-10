@@ -9,10 +9,13 @@
    shows v3 and key 3 goes back to v2, as 1, 2, 3 and 0 pick the concepts. It tells the strip which one shows
    ({ source: 'pjx', type: 'read', read }).
 
-   One thing a stylesheet cannot know is how long a value is. While v3 shows, a fact whose value would not fit in two
-   lines of its plate's value column (a sentence, a long path) is marked data-v3-long, and c-v3.css sets that value
-   under its label, the plate wide, instead of wrapping it into a narrow column. Nothing else in Split's markup is
-   touched, and the marks go when v2 comes back. */
+   One thing a stylesheet cannot know is how long a value is. While v3 shows, each plate's facts are measured against
+   the plate's own width, and marked for c-v3.css:
+   - data-v3-stack on the facts: most of this plate's values would not fit on one line beside their labels (Backup,
+     Where work runs in a half-width plate), so every label goes above its value and the plate reads one way;
+   - data-v3-long on a fact: this one value would need more than two lines beside its label (a sentence, a long path),
+     so it alone goes under its label, the plate wide.
+   Nothing else in Split's markup is touched, and the marks go when v2 comes back. */
 (function (W) {
   'use strict';
   const PJX = W.PJX;
@@ -20,27 +23,41 @@
   const D = W.document, H = D.documentElement;
   const ATTR = 'data-pjx-read';
 
-  /* what a value column holds: about 54% of the plate's facts, two lines, at about 7.2 px a character of 13 px text.
-     The measure is the plate's own width, which stacking does not change, so a mark never flips back and forth. */
-  const SHARE = 0.54, LINES = 2, CHAR = 7.2, UNMEASURED = 60;
+  /* c-v3.css gives the labels a column no wider than LABEL of the facts and a GAP before the values. The measure is
+     the plate's own width, which stacking does not change, so a mark never flips back and forth. */
+  const LABEL = 0.46, GAP = 18, LINES = 2;
   const get = () => (H.getAttribute(ATTR) === 'v3' ? 'v3' : 'v2');
 
-  /* mark the facts whose value is long. Split draws its plates again on every change, so the marks follow the page:
+  /* how wide a piece of text is in an element's own face (each look has its own), without touching the layout */
+  let ctx = null;
+  function widthOf(el) {
+    if (!el) return 0;
+    const text = el.textContent.trim(); if (!text) return 0;
+    const cs = W.getComputedStyle(el);
+    if (!ctx) ctx = D.createElement('canvas').getContext('2d');
+    if (!ctx) return text.length * 7.2;
+    ctx.font = cs.fontStyle + ' ' + cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+    return ctx.measureText(text).width + (parseFloat(cs.letterSpacing) || 0) * text.length;
+  }
+
+  /* mark the plates and facts. Split draws its plates again on every change, so the marks follow the page:
      a MutationObserver on the Projects panel. Its callback runs before the next paint, so a plate is never shown first
      one way and then the other; it writes an attribute only where it differs, and attributes are not observed. The
      pane changing width (the chat dragged wider) moves no markup, so a ResizeObserver asks again. */
   let mo = null, ro = null;
   const facts = () => D.querySelectorAll('#pjxc .pjxc-facts > .pmu-fact');
+  const flag = (el, name, on) => { if (on !== el.hasAttribute(name)) el.toggleAttribute(name, on); };
   function mark() {
     D.querySelectorAll('#pjxc .pjxc-facts').forEach((g) => {
       const w = g.clientWidth;
-      const room = w > 0 ? (w * SHARE * LINES) / CHAR : UNMEASURED;
-      Array.prototype.forEach.call(g.children, (f) => {
-        if (!f.classList.contains('pmu-fact')) return;
-        const v = f.querySelector('.pmu-factv');
-        const long = !!v && v.textContent.trim().length > room;
-        if (long !== f.hasAttribute('data-v3-long')) f.toggleAttribute('data-v3-long', long);
-      });
+      const rows = Array.prototype.filter.call(g.children, (f) => f.classList.contains('pmu-fact'));
+      if (!w || !rows.length) return;   // not laid out (hidden): leave it as it is
+      const label = Math.min(w * LABEL, Math.max.apply(null, rows.map((f) => widthOf(f.querySelector('.pmu-factl')))));
+      const col = Math.max(40, w - label - GAP);
+      const need = rows.map((f) => widthOf(f.querySelector('.pmu-factv')));
+      const stack = rows.length >= 3 && need.filter((n) => n > col).length * 2 > rows.length;
+      flag(g, 'data-v3-stack', stack);
+      rows.forEach((f, i) => flag(f, 'data-v3-long', !stack && need[i] > col * LINES));
     });
   }
   function watch(on) {
@@ -51,7 +68,12 @@
       mo = new W.MutationObserver(mark); mo.observe(pnl, { childList: true, subtree: true, characterData: true });
       if (W.ResizeObserver) { ro = new W.ResizeObserver(mark); ro.observe(pnl); }
       mark();
-    } else if (!on) facts().forEach((f) => f.removeAttribute('data-v3-long'));
+      // a look's own face may arrive after the first measure
+      if (D.fonts && D.fonts.ready) D.fonts.ready.then(() => { if (mo) mark(); });
+    } else if (!on) {
+      facts().forEach((f) => f.removeAttribute('data-v3-long'));
+      D.querySelectorAll('#pjxc .pjxc-facts[data-v3-stack]').forEach((g) => g.removeAttribute('data-v3-stack'));
+    }
   }
   function report() { if (W.parent !== W) { try { W.parent.postMessage({ source: 'pjx', type: 'read', read: get() }, '*'); } catch (e) { /* no parent */ } } }
   function set(v) {
