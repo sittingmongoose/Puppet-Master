@@ -44,12 +44,13 @@
   };
   const SVC_OF = { GitHub: ['github', 'com'], GitLab: ['gitlab', 'com'], 'Azure DevOps': ['azure', 'services'], Bitbucket: ['bitbucket', 'cloud'] };
   const HOME = '/Users/jared';
-  const full = (p) => String(p || '').replace(/^~(?=\/|$)/, HOME);
+  /* ~ means the home of the Computer the path is on, never the viewing Client's (GUIDED-FLOWS 2.39) */
+  const full = (p, c) => String(p || '').replace(/^~(?=\/|$)/, ((ENV.computers.find((x) => x.id === (c || 'here')) || {}).home) || HOME);
   const comp = (id) => ENV.computers.find((c) => c.id === id) || ENV.computers[0];
   const dev = (id) => ENV.devices.concat(ENV.found).find((x) => x.id === id) || null;
   const share = (id) => ENV.shares.find((x) => x.id === id) || null;
   const vol = (id) => ENV.volumes.find((x) => x.id === id) || null;
-  const chatOf = (id) => (ENV.chats || []).find((c) => c.id === id) || null;
+  const chatOf = (id) => (ENV.chats || []).concat((PJX.S.world && PJX.S.world.facts.chats) || []).find((c) => c.id === id) || null;
   const serverOn = () => { const n = ENV.devices.find((x) => x.server === 'homenas'); return !!(n && n.online); };
   const lc = (s) => String(s || '').toLowerCase();
   const uniq = (a) => a.filter((x, i) => a.indexOf(x) === i);
@@ -60,7 +61,7 @@
   const blankDevice = () => ({ method: 'ssh', id: null, typing: false, address: '', port: '22', asked: '', user: '', path: null, share: null, typedShare: '', shareTyping: false, volume: null, smbUser: '', smbDomain: '', idOk: false, key: null, keyDone: false, signin: 'pw', browse: null });
   const blankOnline = (mode) => ({ mode: mode || null, service: 'github', kind: null, address: '', acct: null, owner: null, project: null, visibility: null, name: '', nameTouched: false, description: '', branch: '', branchTouched: false, remoteName: '', linkProject: null, step: null });
   const blankFiles = () => ({ mode: null, parent: '~/Documents', network: null, netUser: '', browse: false, touched: false });
-  const blankLike = (source) => ({ source: source || 'usual', ids: null, sameIds: null, things: null, accounts: true, per: {}, onlyDiff: true, fixed: false, fromComputer: false, ownFiles: {}, q: '', showAll: false });
+  const blankLike = (source) => ({ source: source || 'usual', ids: null, sameIds: null, kinds: null, things: null, accounts: true, per: {}, onlyDiff: true, fixed: false, fromComputer: false, ownFiles: {}, q: '', showAll: false });
   function blank() {
     return {
       way: null, runsOn: 'here', name: '', nameTouched: false,
@@ -70,8 +71,9 @@
       src: { service: 'github', kind: null, address: '', gitAddress: '' },
       find: { tab: null, q: '', anyQ: '', anyAsked: '', project: null, intent: null, forkOwner: null, branch: 'my-change', branchTouched: false, another: false },
       fork: { name: '', nameTouched: false, upstreamName: 'upstream' },
-      restore: { from: null, cloud: 'gdrive', unlocked: false, pick: null },
-      chat: { id: null, files: null },
+      restore: { kit: null, from: null, cloud: 'gdrive', unlocked: false, pick: null, point: null },
+      chat: { id: null, files: null, pick: null },
+      work: { mode: 'auto', allowed: {} },
       files: blankFiles(), folderName: '', folderNameTouched: false,
       like: blankLike(),
       history: 'git', historyTouched: false, filesafe: true,
@@ -92,7 +94,9 @@
     if (opts.chat && d.way === 'chat') d.chat.id = opts.chat;
     if (opts.from && d.way === 'restore') {
       const p = PJX.get(opts.from), src = p && ENV.backups.find((b) => b.where === p.backup.dest);
-      if (src) { d.restore.from = src.id === 'gdrive' ? 'cloud' : src.id; d.restore.cloud = 'gdrive'; if (src.projects.indexOf(p.id) >= 0) d.restore.pick = p.id; }
+      // Restore as new from a Project's own backup: its place is known, so the no-Kit route starts there; it is still reached,
+      // signed in and unlocked before anything is listed
+      if (src) { d.restore.kit = 'none'; d.restore.from = src.id === 'gdrive' ? 'cloud' : src.id; d.restore.cloud = 'gdrive'; if (src.projects.indexOf(p.id) >= 0) s.ui.restoreWant = p.id; }
     }
     if (opts.folder && d.way === 'folder') d.folder.path = opts.folder;
     return s;
@@ -153,9 +157,10 @@
       case 'like.source': { const acc = d.like.accounts; d.like = blankLike(v); d.like.accounts = acc; break; }
       case 'backup.dest': d.backup.sub = null; d.backup.acc = {}; d.backup.leaveOut = {}; dropSecret(s, 'bk'); s.ui.nasDropped = false; break;
       case 'backup.sub': d.backup.acc = {}; dropSecret(s, 'bk'); break;
-      case 'chat.id': case 'chat.files': d.files = blankFiles(); resetOnline(); resetHistory(); break;
-      case 'restore.from': case 'restore.cloud': d.restore.unlocked = false; d.restore.pick = null; dropSecret(s, 'phrase'); resetOnline(); break;
-      case 'restore.pick': resetOnline(); break;
+      case 'chat.id': case 'chat.files': d.chat.pick = null; d.files = blankFiles(); resetOnline(); resetHistory(); break;
+      case 'restore.kit': { const k = (ENV.kits || []).find((x) => x.id === v); d.restore.from = k ? k.from : null; d.restore.unlocked = false; d.restore.pick = null; d.restore.point = null; dropSecret(s, 'phrase'); dropOps(s, 'reach:'); dropOps(s, 'kitopen:'); resetOnline(); break; }
+      case 'restore.from': case 'restore.cloud': d.restore.unlocked = false; d.restore.pick = null; d.restore.point = null; dropSecret(s, 'phrase'); dropOps(s, 'reach:'); resetOnline(); break;
+      case 'restore.pick': d.restore.point = null; resetOnline(); break;
       case 'files.mode': d.files.parent = '~/Documents'; d.files.network = null; d.files.netUser = ''; dropSecret(s, 'net'); d.files.browse = false; d.files.touched = true; break;
       case 'files.network': d.files.netUser = ''; dropSecret(s, 'net'); d.files.touched = true; break;
       case 'history': d.historyTouched = true; break;
@@ -183,8 +188,8 @@
       d.src = { service: 'github', kind: null, address: '', gitAddress: '' };
       d.find = { tab: null, q: '', anyQ: '', anyAsked: '', project: null, intent: null, forkOwner: null, branch: 'my-change', branchTouched: false, another: false };
       d.fork = { name: '', nameTouched: false, upstreamName: 'upstream' };
-      d.restore = { from: null, cloud: 'gdrive', unlocked: false, pick: null }; dropSecret(s, 'phrase');
-      d.chat = { id: way === 'chat' ? ((ENV.chats || [])[0] || {}).id || null : null, files: null };
+      d.restore = { kit: null, from: null, cloud: 'gdrive', unlocked: false, pick: null, point: null }; dropSecret(s, 'phrase');
+      d.chat = { id: way === 'chat' ? ((ENV.chats || [])[0] || {}).id || null : null, files: null, pick: null };
       d.online = blankOnline(); dropSecret(s, 'tok');
       d.history = 'git'; d.historyTouched = false;
       // what it starts with belongs to "Start a new Project": another way leaves it behind (spec 8 rule 11)
@@ -233,9 +238,12 @@
      reached it: the look inside, the holder and the NAS rule all follow the drive (6.10.6) */
   const volOfPath = (p) => { const f = full(p); return f ? ENV.volumes.find((v) => f === v.path || f.indexOf(v.path + '/') === 0) || null : null; };
   /* the look inside (6.2.1): read-only, on the computer that does the work, through the chosen route */
-  function inspectAt(holder, path) {
+  function inspectAt(holder, path, attempt) {
     let r = ENV.inspect[holder + ':' + path], seen = 0;
     while (r && r.alias && seen++ < 4) r = ENV.inspect[r.alias];
+    // (GUIDED-FLOWS 2.38) no observation is never "clean" or "no history": the first look at an unknown folder is partial,
+    // says what it couldn't read, and Look again is what settles it
+    if (!r && !attempt) return { partial: true, history: undefined, branch: null, changed: null, stack: [], size: null, sizeGB: 0.001, reason: w('np.look.partialWhy') };
     r = Object.assign({ history: null, branch: 'main', changed: 0, stack: [], size: '1 MB', sizeGB: 0.001 }, r || {});
     if (!r.known) {
       const k = PJX.all().find((p) => (p.where.path === path || full(p.where.path) === full(path)) && (holder === 'here' ? p.where.kind === 'local' : (dev(holder) && p.where.device === dev(holder).name)));
@@ -249,7 +257,7 @@
     if (d.way === 'folder' && d.folder.path) {
       const v = d.runsOn === 'here' && s.purpose !== 'page' ? volOfPath(d.folder.path) : null;
       if (v) return { holder: v.id, path: full(d.folder.path), route: 'vol@here', label: d.folder.path };
-      return { holder: d.runsOn === 'homenas' ? 'nas' : 'here', path: d.folder.path, route: d.runsOn === 'homenas' ? 'local@homenas' : 'local', label: d.folder.path };
+      return { holder: d.runsOn === 'here' ? 'here' : comp(d.runsOn).device || 'here', path: d.folder.path, route: d.runsOn === 'here' ? 'local' : 'local@' + d.runsOn, label: d.folder.path };
     }
     if (d.way === 'device') {
       const m = d.device.method;
@@ -267,8 +275,9 @@
   }
   function look(s) {
     const t = lookTarget(s); if (!t) return null;
-    const o = op(s, 'look:' + s.d.runsOn + ':' + t.route + ':' + t.holder + ':' + t.path, 950, () => {
-      const r = inspectAt(t.holder, t.path);
+    const n = s.ui.lookAgain || 0;
+    const o = op(s, 'look:' + s.d.runsOn + ':' + t.route + ':' + t.holder + ':' + t.path + (n ? ':' + n : ''), 950, () => {
+      const r = inspectAt(t.holder, t.path, n);
       if (r.fail) return { fail: r.fail, path: t.path };
       return r;
     });
@@ -434,7 +443,7 @@
   const restoreWhere = (s) => { const r = restoreSource(s); return r ? (r.id === 'drive' ? r.path : r.where) : ''; };
   function restoreList(s) {
     const src = restoreSource(s); if (!src) return null;
-    if (src.locked && !s.d.restore.unlocked) return null;
+    if (!reached(s) || !restoreUnlocked(s)) return null;
     return op(s, 'rlist:' + src.id, 800, () => (src.empty || !src.projects.length ? { fail: 'none' } : { projects: src.projects }));
   }
   function unlock(s) {
@@ -444,6 +453,30 @@
     if (src && v === src.phrase) { s.d.restore.unlocked = true; s.ui.phraseBad = false; s.changed(); return { ok: true }; }
     s.ui.phraseBad = true; s.changed(); return { fail: 'wrong' };
   }
+  /* (2.33) the storage is reached and signed in to before anything unlocks: the Kit says where, never that you are signed in */
+  const reachKey = (s) => 'reach:' + s.d.restore.from + ':' + (s.d.restore.from === 'cloud' ? s.d.restore.cloud : '') + ':' + s.d.runsOn;
+  const reachOp = (s) => peek(s, reachKey(s));
+  const reached = (s) => { const o = reachOp(s); return !!(o && o.state === 'done'); };
+  function reach(s) {
+    const r = s.d.restore, cloud = r.from === 'cloud';
+    return op(s, reachKey(s), cloud ? 1300 : 800, () => (s.ui.reachFail ? (s.ui.reachFail = false, { fail: cloud ? 'expired' : 'noAnswer' }) : { ok: true, account: cloud ? (r.cloud === 'gdrive' ? 'jared@gmail.com' : r.cloud === 'onedrive' ? 'jared@outlook.com' : 'key for old-backups') : null }));
+  }
+  /* (2.33) the Kit unlocks only the backup it belongs to, checked against what was reached; without a Kit, the phrase */
+  const kitOf = (s) => (ENV.kits || []).find((k) => k.id === s.d.restore.kit) || null;
+  function kitOpen(s) { const k = kitOf(s); if (!k || !reached(s)) return null; return op(s, 'kitopen:' + k.id + ':' + s.d.restore.from, 800, () => ({ ok: true })); }
+  function restoreUnlocked(s) {
+    const r = s.d.restore, src = restoreSource(s);
+    if (kitOf(s)) { const o = peek(s, 'kitopen:' + r.kit + ':' + r.from); return !!(o && o.state === 'done'); }
+    return !(src && src.locked) || r.unlocked;
+  }
+  /* (2.34) a specific recovery point, and what it covers, chosen after the Project */
+  function restorePoints(s) {
+    const src = restoreSource(s), p = s.d.restore.pick; if (!src || !p) return [];
+    const m = (src.manifest || {})[p] || {};
+    const kind = m.backend === 'jujutsu' ? 'Jujutsu' : m.backend === 'git' ? 'Git' : null;
+    const cover = m.include === 'pm' ? w('np.restore.cover.pm') : kind ? w('np.restore.cover.all', { kind }) : w('np.restore.cover.files');
+    return [{ id: 'p0', when: src.latest || 'the latest', tag: 'Newest', cover }, { id: 'p1', when: 'Yesterday, 3:00 AM', cover }, { id: 'p2', when: 'Oct 26 · kept weekly', cover }, { id: 'p3', when: 'Sep 30 · kept monthly', cover: m.include === 'pm' ? cover : w('np.restore.cover.older', { kind: kind || 'no' }) }];
+  }
   const lineage = (s) => { const src = restoreSource(s), p = s.d.restore.pick; return src && src.lineage && p ? src.lineage[p] || null : null; };
   /* what the chosen backup holds for that Project (its manifest): the history comes back as it was kept, never relabelled */
   const restoredHist = (s) => { const src = restoreSource(s), p = s.d.restore.pick; return src && src.manifest && p ? src.manifest[p] || null : null; };
@@ -451,6 +484,34 @@
 
   /* ------------------------------------------------------------------ chat (spec 12) */
   const chatFiles = (s) => { const c = chatOf(s.d.chat.id); return s.d.chat.files || (c && c.files ? 'move' : 'empty'); };
+  /* only picked content moves (ACD-510, GUIDED-FLOWS 7.05): every file starts picked, each can be left in the chat folder */
+  const chatPicked = (s) => { const c = chatOf(s.d.chat.id), pk = s.d.chat.pick; return c ? (c.fileList || []).filter((f) => !pk || pk[f] !== false) : []; };
+  const waitingApprovals = (c) => (c && c.approvals ? c.approvals.filter((a) => ((F().approvals || {})[a.id] || a.state) === 'waiting') : []);
+  const untilWord = () => { const t = new Date(Date.now() + 7 * 864e5); return t.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ', ' + t.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }); };
+  const nowWord = () => new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  /* the live preview of a conversion, family by family (ACD-510; GUIDED-FLOWS 7.10, 7.11): settings, AI accounts, permissions,
+     active work, online effects and the Undo boundary. dest: { project (an existing one) or name, computer, like, remote } */
+  function convEffects(c, dest) {
+    if (!c) return [];
+    const p = dest.project ? PJX.get(dest.project) : null, pn = p ? p.name : (dest.name || 'the new Project'), cid = dest.computer || (p ? p.home || p.runsOn : 'here'), cn = comp(cid).name;
+    const prefs = [c.prefs.mode + ' mode', c.prefs.persona, c.prefs.model].filter(Boolean).join(', ');
+    const set = [];
+    if (p) { const own = ((ENV.projectSettings[p.id] || {}).own || []).slice(0, 3); if (own.length) own.forEach((r) => set.push({ key: 'info', text: w('cv.set.diff', { label: r[2], value: r[4], project: pn, usual: r[3] }) })); else set.push({ key: 'complete', text: w('cv.set.same', { project: pn }) }); }
+    else set.push({ key: 'info', text: w('cv.set.usual', { like: dest.like ? ' like ' + dest.like : '', prefs }) });
+    const acc = (c.accounts || []).map((id) => { const a = ENV.accounts.find((x) => x.id === id); if (!a) return null; const on = a.on[cid] || 'none'; return on === 'ready' ? { key: 'complete', text: w('cv.acc.ready', { name: a.name, computer: cn }) } : { key: 'waiting', text: w('cv.acc.signin', { name: a.name, computer: cn }) }; }).filter(Boolean);
+    const perms = (c.grants || []).map((g) => ({ key: 'info', text: w('cv.perm.stay', { grant: g, project: pn }) }));
+    const work = [];
+    (c.goals || []).forEach((g) => work.push({ key: 'paused', text: w('cv.work.goal', { goal: g.title, project: pn }) }));
+    (c.schedules || []).forEach((x) => work.push({ key: 'pending', text: w('cv.work.schedule', { what: x.title, when: x.when, project: pn }) }));
+    waitingApprovals(c).forEach((a) => work.push({ key: 'blocked', text: w('cv.work.approval', { what: a.what }) }));
+    if (!work.length) work.push({ key: 'complete', text: w('cv.work.none') });
+    return [
+      { id: 'settings', label: w('cv.fam.settings'), rows: set }, { id: 'accounts', label: w('cv.fam.accounts'), rows: acc.length ? acc : [{ key: 'complete', text: 'None used' }] },
+      { id: 'perms', label: w('cv.fam.perms'), rows: perms.length ? perms : [{ key: 'complete', text: 'It has no permissions of its own.' }] }, { id: 'work', label: w('cv.fam.work'), rows: work },
+      { id: 'remote', label: w('cv.fam.remote'), rows: [{ key: dest.remote ? 'warning' : 'complete', text: dest.remote ? w('cv.remote.make', { service: dest.remote }) : w('cv.remote.none') }] },
+      { id: 'undo', label: w('cv.fam.undo'), rows: [{ key: 'info', text: w('cv.undo', { until: untilWord() }) }] }
+    ];
+  }
 
   /* ------------------------------------------------------------------ the name and where it lives (6.6) */
   function derivedName(s) {
@@ -488,11 +549,11 @@
     const c = s.d.runsOn, out = [];
     if (c === 'here') out.push({ id: 'ssh:nas', route: 'SSH', device: 'nas', title: 'Home NAS · /volume1/projects', sub: 'Over a secure connection (SSH)', root: '/volume1/projects', holder: 'Home NAS', free: '3.1 TB', freeGB: 3100 });
     out.push({ id: 'ssh:studio', route: 'SSH', device: 'studio', title: 'Studio Mac · ~/Developer', sub: c === 'here' ? 'Over a secure connection (SSH)' : 'Not connected from Home NAS yet', root: '~/Developer', holder: 'Studio Mac', free: '640 GB', freeGB: 640, off: c !== 'here' ? 'Connect Studio Mac from Home NAS first, under Files on another computer' : null });
-    out.push({ id: 'smb:smb-nas', route: 'SMB', device: 'nas', title: '//nas.local/projects', sub: 'A shared folder on Home NAS (SMB)', root: '//nas.local/projects', holder: 'Home NAS', free: '3.1 TB', freeGB: 3100 });
-    out.push({ id: 'nfs:nfs-nas', route: 'NFS', device: 'nas', title: 'nas.local:/volume1/projects', sub: 'An NFS share on Home NAS', root: 'nas.local:/volume1/projects', holder: 'Home NAS', free: '3.1 TB', freeGB: 3100 });
+    out.push({ id: 'smb:smb-nas', route: 'SMB', device: 'nas', title: '//home-nas.local/projects', sub: 'A shared folder on Home NAS (SMB)', root: '//home-nas.local/projects', holder: 'Home NAS', free: '3.1 TB', freeGB: 3100 });
+    out.push({ id: 'nfs:nfs-nas', route: 'NFS', device: 'nas', title: 'home-nas.local:/volume1/projects', sub: 'An NFS share on Home NAS', root: 'home-nas.local:/volume1/projects', holder: 'Home NAS', free: '3.1 TB', freeGB: 3100 });
     if (c === 'here') ENV.volumes.forEach((v) => out.push({ id: 'vol:' + v.id, route: 'drive', device: v.device, title: v.path, sub: v.label + ' · ' + v.free + ' free', root: v.path, holder: v.device ? 'Home NAS' : 'This computer', free: v.free, freeGB: v.freeGB }));
-    out.push({ id: 'ssh:media', route: 'SSH', device: 'media', title: 'Media NAS · /mnt/tank/projects', sub: 'Not answering', root: '/mnt/tank/projects', holder: 'Media NAS', off: w('np.device.offlineWhy', { device: 'Media NAS' }) });
-    return out.map((x) => (x.device === 'media' && dev('media').online ? Object.assign(x, { off: null, sub: 'Over a secure connection (SSH)' }) : x));
+    out.push({ id: 'nfs:media', route: 'NFS', device: 'media', title: 'media.local:/mnt/tank/projects', sub: 'An NFS share on Media server · not answering', root: '/mnt/tank/projects', holder: 'Media server', off: w('np.device.offlineWhy', { device: 'Media server' }) });
+    return out.map((x) => (x.device === 'media' && dev('media').online ? Object.assign(x, { off: null, sub: 'An NFS share on Media server' }) : x));
   }
   const netPlace = (s) => networkPlaces(s).find((x) => x.id === s.d.files.network) || null;
   /* the folder that will hold it, and its full path */
@@ -502,17 +563,17 @@
     if (m === 'this_computer') return { root: comp('here').rootFull, holder: 'This computer', free: comp('here').free, freeGB: comp('here').freeGB, short: comp('here').root };
     if (m === 'with_server') return { root: comp('homenas').rootFull, holder: 'Home NAS', free: comp('homenas').free, freeGB: comp('homenas').freeGB, short: comp('homenas').root };
     if (m === 'custom') {
-      const p = String(d.files.parent || '').trim().replace(/\/+$/, ''), v = d.runsOn === 'here' ? volOfPath(p) : null;
+      const p = String(d.files.parent || '').trim().replace(/\/+$/, ''), v = d.runsOn === 'here' ? volOfPath(p) : null, fp0 = full(p, d.runsOn);
       // the free space is the folder's own drive: a connected drive or a Home NAS share has its own room
-      if (v) return { root: full(p), holder: v.device ? 'Home NAS' : 'This computer', free: v.free, freeGB: v.freeGB, custom: p, vol: v };
-      return { root: full(p), holder: c.name, free: c.free, freeGB: c.freeGB, custom: p };
+      if (v) return { root: fp0, holder: v.device ? 'Home NAS' : 'This computer', free: v.free, freeGB: v.freeGB, custom: p, vol: v };
+      return { root: fp0, holder: c.name, free: c.free, freeGB: c.freeGB, custom: p };
     }
     const n = netPlace(s); if (!n) return null;
-    return { root: full(n.root), holder: n.holder, free: n.free, freeGB: n.freeGB, net: n };
+    return { root: full(n.root, n.device === 'studio' ? 'studio' : d.runsOn), holder: n.holder, free: n.free, freeGB: n.freeGB, net: n };
   }
   function fullPath(s) {
     const d = s.d;
-    if (d.way === 'folder') return d.folder.path ? full(d.folder.path) : null;
+    if (d.way === 'folder') return d.folder.path ? full(d.folder.path, d.runsOn) : null;
     if (d.way === 'device') return d.device.path ? d.device.path : null;
     if (d.way === 'chat' && (chatFiles(s) === 'useFolder' || chatFiles(s) === 'worked')) { const t = lookTarget(s); return t ? full(t.path) : null; }
     const r = placeRoot(s); if (!r) return null;
@@ -523,7 +584,7 @@
   /* the computer or share that has the files, which can differ from the computer doing the work */
   function holderName(s) {
     const d = s.d;
-    if (d.way === 'folder') { const v = d.runsOn === 'here' ? volOfPath(d.folder.path) : null; return d.runsOn === 'homenas' || (v && v.device === 'nas') ? 'Home NAS' : 'This computer'; }
+    if (d.way === 'folder') { const v = d.runsOn === 'here' ? volOfPath(d.folder.path) : null; return d.runsOn !== 'here' ? comp(d.runsOn).name : v && v.device === 'nas' ? 'Home NAS' : 'This computer'; }
     if (d.way === 'device') { const m = d.device.method; if (m === 'ssh') return (dev(d.device.id) || {}).name || ''; if (m === 'mounted') { const v = vol(d.device.volume); return v && v.device ? 'Home NAS' : 'This computer'; } const sh = resolveShare(s); return sh ? (dev(sh.device) || {}).name : ''; }
     if (filesStay(s)) return 'This computer';
     const r = placeRoot(s); return r ? r.holder : '';
@@ -601,10 +662,18 @@
     const m = /^[a-z0-9+.-]+:\/\/(?:[^@/]+@)?([^/:?#]+)/i.exec(String(addr || '').trim());
     return m ? m[1].toLowerCase() : '';
   }
+  function bkIdentity(s) {
+    const host = bkHost(s); if (!host) return null;
+    return op(s, 'bkid:' + host, 700, () => {
+      const n = ENV.devices.concat(ENV.found).find((x) => [x.address, x.ip].concat(x.aliases || []).indexOf(host) >= 0);
+      if (n) return { device: n.id, name: n.name };
+      // a local name or a private address that answers as no known device stays unresolved: never taken as independent
+      return /\.local$|^192\.168\.|^10\.|^172\.(1[6-9]|2\d|3[01])\./.test(host) ? { unknown: true } : { device: null, independent: true };
+    });
+  }
   function bkOnNas(s) {
     if (s.d.backup.dest === 'nas') return true;
-    const host = bkHost(s), n = dev('nas'); if (!host || !n) return false;
-    return host === n.address || host === n.ip || host.split('.')[0] === n.address.split('.')[0];
+    const o = bkIdentity(s); return !!(o && o.state === 'done' && o.result.device === 'nas');
   }
 
   /* ------------------------------------------------------------------ like: copy settings (SETTINGS-PROPOSAL 5.1 to 5.4) */
@@ -619,8 +688,9 @@
     const S = settingsOf(p.id), L = s.d.like, rows = L.accounts ? accountRows(s) : [];
     const sel = {
       from: p.id, fixed: !!L.fixed,
-      settings: S.own.filter((r) => picked(L.ids, r[1])).map((r) => r[1]),
-      same: L.fixed ? S.same.filter((r) => picked(L.sameIds, r[1])).map((r) => r[1]) : [],
+      // (GUIDED-FLOWS 3.07) a kind you cleared stays cleared: Keep them fixed adds only values of the kinds and exact ids picked
+      settings: S.own.filter((r) => picked(L.kinds, r[0]) && picked(L.ids, r[1])).map((r) => r[1]),
+      same: L.fixed ? S.same.filter((r) => picked(L.kinds, r[0]) && picked(L.sameIds, r[1])).map((r) => r[1]) : [],
       fromComputer: L.fromComputer ? S.fromComputer : 0,
       things: S.things.filter((t) => picked(L.things, t.id)).map((t) => t.id),
       accounts: rows.filter((r) => r.choice === 'same' && !r.mcp).map((r) => r.id),
@@ -649,6 +719,7 @@
       let out;
       if (choice === 'later') out = { key: 'off', state: 'later', word: w('np.like.acctLaterRow') };
       else if (on === 'expired') out = { key: 'warning', state: 'expired', word: w('np.acct.expired', { computer: cn }) };
+      else if (on === 'deviceBound') out = { key: 'blocked', state: 'cannot_move', word: w('np.acct.cannot', { computer: cn }), why: w('np.acct.cannotWhy') };
       else if (on === 'notInstalled') out = { key: 'off', state: 'not_installed', word: w('np.acct.install', { tool: a.tool || a.name, computer: cn }), why: w('np.acct.installWhy') };
       else if (on === 'ready') out = same ? { key: 'complete', state: 'ready_here', word: w('np.acct.ready', { computer: cn }), why: w('np.acct.readyWhy') } : { key: 'reviewing', state: 'check_there', word: w('np.acct.checked', { computer: cn }), why: w('np.acct.checkedWhy', { computer: cn }) };
       else if (a.kind === 'key') out = SETTINGS.sendKeys && L.sendKeys ? { key: 'info', state: 'key_sent', word: w('np.acct.keySend', { computer: cn }) } : { key: 'waiting', state: 'key_needed', word: w('np.acct.key', { computer: cn }), why: w('np.acct.keyWhy', { computer: cn }) };
@@ -781,6 +852,7 @@
         const o = look(s);
         if (!o || o.state === 'working') return { text: 'Still looking inside the folder', field: 'folder', wait: true };
         if (o.state === 'failed') return { text: w('np.look.fail.' + (o.result.fail || 'read'), { path: d.folder.path }), field: 'folder' };
+        if (o.result.partial) return { text: w('np.look.partialProblem'), field: 'lookagain' };
         if (o.result.known) return { text: w('np.sec.blocked.known', { project: (PJX.get(o.result.known) || {}).name || o.result.known }), field: 'folder', blocked: true };
         return null;
       }
@@ -803,16 +875,23 @@
       }
       case 'find': return findProblem(s);
       case 'restore': {
-        const r = d.restore; if (!r.from) return { text: 'Choose where the backup is', field: 'restore' };
-        const src = restoreSource(s);
-        if (src && src.locked && !r.unlocked) return { text: w('np.restore.phraseFirst'), field: 'phrase' };
+        const r = d.restore;
+        if (!r.kit) return { text: w('np.restore.kitFirst'), field: 'restore:kit' };
+        if (!r.from) return { text: 'Choose where the backup is', field: 'restore' };
+        const src = restoreSource(s), ro = reachOp(s);
+        if (!ro || ro.state !== 'done') return { text: ro && ro.state === 'working' ? w('np.restore.reaching', { where: restoreWhere(s) }) : w('np.restore.reachFirst', { where: restoreWhere(s) }), field: 'reach', wait: !!(ro && ro.state === 'working') };
+        if (kitOf(s) && !restoreUnlocked(s)) return { text: w('np.restore.kitUnlockFirst'), field: 'kitopen' };
+        if (src && src.locked && !restoreUnlocked(s)) return { text: w('np.restore.phraseFirst'), field: 'phrase' };
         const l = restoreList(s); if (!l || l.state === 'working') return { text: w('np.restore.looking', { where: restoreWhere(s) }), field: 'restore', wait: true };
         if (l.state === 'failed') return { text: w('np.restore.none', { where: restoreWhere(s) }), field: 'restore' };
         if (!r.pick) return { text: w('np.restore.pick'), field: 'pick' };
+        if (!r.point) return { text: w('np.restore.pointFirst'), field: 'point' };
         return null;
       }
       case 'chat': {
         if (!chatOf(d.chat.id)) return { text: 'Choose the chat', field: 'chat' };
+        if (waitingApprovals(chatOf(d.chat.id)).length) return { text: w('cv.block.approval', { chat: chatOf(d.chat.id).title }), field: 'chatApproval' };
+        if (chatFiles(s) === 'move' && !chatPicked(s).length) return { text: w('cv.pickZero'), field: 'chatPick' };
         if (/useFolder|worked/.test(chatFiles(s))) { const o = look(s); if (!o || o.state === 'working') return { text: 'Still looking inside the folder', field: 'chatFiles', wait: true }; }
         return null;
       }
@@ -824,7 +903,12 @@
         const b = d.backup;
         if (s.ui.nasDropped && b.dest === 'none') return { text: w('np.bk.nasSame', { nas: 'Home NAS' }), field: 'bkdest', blocked: true };
         if (b.dest === 'nas' && filesOnNas(s)) return { text: w('np.bk.nasSame', { nas: 'Home NAS' }), field: 'bkdest', blocked: true };
-        if (b.dest !== 'nas' && filesOnNas(s) && bkOnNas(s)) return { text: w('np.bk.nasSameAddr', { nas: 'Home NAS', host: bkHost(s) }), field: 'acc-' + (bkFamily(s) === 's3_compatible' ? 'server' : 'address'), blocked: true };
+        if (b.dest !== 'nas' && filesOnNas(s) && bkHost(s)) {
+          const io = bkIdentity(s), fld = 'acc-' + (bkFamily(s) === 's3_compatible' ? 'server' : 'address');
+          if (!io || io.state === 'working') return { text: w('np.bk.idChecking', { host: bkHost(s) }), field: fld, wait: true };
+          if (io.result.device === 'nas') return { text: w('np.bk.nasSameAddr', { nas: 'Home NAS', host: bkHost(s) }), field: fld, blocked: true };
+          if (io.result.unknown) return { text: w('np.bk.idUnknown', { host: bkHost(s), nas: 'Home NAS' }), field: fld };
+        }
         if (b.dest === 'bucket' || b.dest === 'server') { const a = R().accessProblem(bkFamily(s), b.acc); if (a) return { text: a.text, field: 'acc-' + a.field }; }
         if (b.keep === 'custom' && keepBad(b.keepCustom)) return { text: w('np.bk.keep.bad'), field: 'keepCustom' };
         return null;
@@ -862,6 +946,7 @@
     const o = look(s);
     if (!o || o.state === 'working') return { text: 'Still looking inside the folder', field: 'devpath', wait: true };
     if (o.state === 'failed') return { text: w('np.look.fail.' + (o.result.fail || 'read'), { path: d.path, device: holderName(s) }), field: 'devpath' };
+    if (o.result.partial) return { text: w('np.look.partialProblem'), field: 'lookagain' };
     if (o.result.known) return { text: w('np.sec.blocked.known', { project: (PJX.get(o.result.known) || {}).name || o.result.known }), field: 'devpath', blocked: true };
     return null;
   }
@@ -979,7 +1064,7 @@
         return it === 'contribute' ? w('np.sum.find.contribute', { project: p }) : it === 'copy' ? w('np.sum.find.copy', { project: p }) : it === 'offer' ? w('np.sum.find.offer', { project: p }) : it === 'direct' ? w('np.sum.find.direct', { project: p }) : w('np.sum.find.yours', { project: p });
       }
       case 'restore': { const src = restoreSource(s); return d.restore.pick ? w('np.sum.restore', { project: d.restore.pick, where: restoreWhere(s), when: (src && src.latest) || 'the latest' }) : ''; }
-      case 'chat': { const c = chatOf(d.chat.id), f = chatFiles(s); return c ? w('np.sum.chat', { chat: c.title, files: { move: 'move its files', useFolder: 'its folder is the Project', worked: 'use ' + c.workedIn.path, empty: 'start empty' }[f] }) : ''; }
+      case 'chat': { const c = chatOf(d.chat.id), f = chatFiles(s); return c ? w('np.sum.chat', { chat: c.title, files: { move: 'move ' + chatPicked(s).length + ' of ' + (c.fileList || []).length + ' files', useFolder: 'its folder is the Project', worked: 'use ' + (c.workedIn || {}).path, empty: 'start empty' }[f] }) : ''; }
       case 'where': { const fp = fullPath(s); return w('np.sum.where', { name: nameOf(s), path: fp || '', computer: comp(d.runsOn).name }); }
       case 'like': {
         const p = likeSrc(s); if (!p) return w('np.sum.like.usual');
@@ -1043,11 +1128,15 @@
     if (d.way === 'chat' && c) project.push(row(w('np.rv.chat'), w('np.rv.chatLine', { chat: c.title }), 'chat'));
     if (d.way !== 'restore') { const p = likeSrc(s), k = p && likeCounts(s); project.push(row(w('np.rv.like'), p ? 'Like ' + p.name + ': ' + plural(k.own, 'setting') + (k.things ? ', ' + plural(k.things, 'thing') : '') + (k.accounts ? ', ' + plural(k.accounts, 'AI account') : '') + (k.headers ? ', ' + plural(k.headers, 'sign-in header') : '') + (k.files ? ', ' + plural(k.files, 'of its own files', 'of its own files') : '') : w('np.sum.like.usual'), 'like')); }
     if (d.way === 'chat' && c) {
-      project.push(row('Stays behind', w('np.rv.chatStays', { outside: andList(c.outside), folders: andList(c.folders) }).replace(/^Stays behind: /, ''), 'chat'));
-      project.push(row('Undo', w('np.rv.chatUndo'), 'chat'));
+      if (chatFiles(s) === 'move') project.push(row('Files', w('cv.pickN', { k: chatPicked(s).length, n: (c.fileList || []).length }), 'chat', { field: 'chatPick' }));
+      if (c.outside.length || c.folders.length) project.push(row('Stays behind', w('np.rv.chatStays', { outside: andList(c.outside), folders: andList(c.folders) }).replace(/^Stays behind: /, ''), 'chat'));
+      project.push(row('Undo', w('cv.undo', { until: untilWord() }), 'chat'));
     }
     const fp = fullPath(s), r = placeRoot(s);
     const loc = [row(w('np.rv.runsOn'), comp(d.runsOn).name + (d.runsOn === 'here' ? ' (' + comp('here').detail + ')' : ''), 'where', { field: 'runsOn' }),
+      row(w('wk.rv.choice'), PJX.work ? PJX.work.npChoice(s) : 'Auto', 'where', { field: 'wk:np:mode' }),
+      row(w('wk.rv.allowed'), PJX.work ? andList(PJX.work.npAllowed(s).map((x) => comp(x).name)) : null, 'where', { field: 'wk:np:allow' }),
+      row(w('wk.rv.home'), comp(d.runsOn).name, 'where'),
       row(w('np.rv.files'), fp && (named || filesStay(s)) ? fp + (holderName(s) && holderName(s) !== comp(d.runsOn).name ? ' on ' + holderName(s) : '') : null, 'where', { field: 'files', code: true })];
     // the room is the chosen place's: shown once the place is (never beside "Not chosen yet")
     if (!filesStay(s) && r && fp && named) loc.push(row(w('np.rv.room'), r.free ? w('np.loc.free', { free: r.free }) : null, 'where'));
@@ -1085,6 +1174,8 @@
       if (it === 'contribute' && !fork) add('fork', w('np.ph.fork', { service: svcName }), 'cmd.forge.repository.fork', { net: true, remote: true, service: svcName });
       add('clone', w('np.ph.clone', { project: it === 'contribute' ? (fork || forkOwner(s) + '/' + forkName(s)) : (d.src.service === 'git' ? d.src.gitAddress : d.find.project), kind: kind(d.history) }), d.history === 'jujutsu' ? 'cmd.jujutsu.git.clone' : 'cmd.source_control.repository.clone', { net: true, service: svcName });
       if (it === 'contribute') add('upstream', w('np.ph.upstream', { upstream: d.fork.upstreamName }), 'gap:add remote');
+      // (GUIDED-FLOWS 2.28) the look from the service was partial: the copy is looked inside on its Computer before listing
+      add('inspect', w('np.ph.inspect', { computer: comp(d.runsOn).name }), 'cmd.source_control.backend.detect + new:inspection (after the copy)');
       if (it === 'contribute' || it === 'offer') add('branch', w('np.ph.branch', { branch: d.find.branch }), d.history === 'jujutsu' ? 'cmd.jujutsu.bookmark.create' : 'cmd.source_control.branch.create');
     }
     if (d.way === 'folder') add('again', w('np.ph.folderAgain', { path: d.folder.path }), 'cmd.project.source_location.test');
@@ -1096,12 +1187,13 @@
     const newFolder = d.way === 'new' || (d.way === 'chat' && /move|empty/.test(chatFiles(s)));
     if (newFolder) add('local', w('np.ph.newLocal', { path: fp }), 'cmd.project.new_local');
     if (d.way === 'new') { if (d.start === 'basics') add('basics', w('np.ph.basics'), 'new:basics without an online copy'); else if (/^starter:/.test(d.start)) add('starter', w('np.ph.starter', { starter: summary(s, 'start').replace(/ starter$/, '') }), 'cmd.project_template.create_project (gap: file set, G11)'); }
-    if (d.way === 'chat' && chatFiles(s) === 'move') add('chatfiles', w('np.ph.chatFiles', { n: chatOf(d.chat.id).files, path: fp }), 'gap:thread files move');
+    if (d.way === 'chat' && chatFiles(s) === 'move') add('chatfiles', w('np.ph.chatFiles', { n: chatPicked(s).length, path: fp }), 'gap:thread files move');
     const k = k0;
     if (d.way !== 'online' && d.way !== 'restore') add('hist', k ? w('np.ph.histKeep', { kind: kind(k) }) : w('np.ph.histNew', { kind: kind(d.history) }), 'cmd.source_control.backend.select');
     if (d.way === 'restore' && !k) add('hist', w('np.ph.histNew', { kind: kind(d.history) }), 'cmd.source_control.backend.select');
     const p = likeSrc(s);
-    if (p && d.way !== 'restore') { add('settings', w('np.ph.settings', { project: p.name }), 'cmd.settings.transaction.apply'); if (likeCounts(s).things) add('things', w('np.ph.things'), 'gap:each owner’s copy (personas, MCP, commands)'); }
+    // (3.x) the destination is checked again at the moment of the copy, then the picked settings apply
+    if (p && d.way !== 'restore') { add('recheck', w('np.ph.recheck', { computer: comp(d.runsOn).name, project: p.name }), 'cmd.settings.transaction.preview (re-checked at copy time)'); add('settings', w('np.ph.settings', { project: p.name }), 'cmd.settings.transaction.apply'); if (likeCounts(s).things) add('things', w('np.ph.things'), 'gap:each owner’s copy (personas, MCP, commands)'); }
     if (/link_found|again|link/.test(m)) { const t = linkTarget(s); add('link', w('np.ph.link', { project: t ? (t.project || t.address) : '', service: t ? t.service || 'a Git address' : '' }), 'cmd.source_control.repository.bind' + (m === 'link' ? ' + gap:add remote' : ''), { net: true, service: t && t.service }); }
     if (/make|instead/.test(m)) {
       const svc = R().service(d.online.service);
@@ -1125,6 +1217,7 @@
     const already = (x) => s.settled.some((y) => y.key === x.key && y.label === x.label);
     let failAt = -1, failKind = null;
     if (demo.fork) { failAt = list.findIndex((x) => x.key === 'clone'); failKind = 'recovery'; }
+    else if (demo.forkUnknown) { failAt = list.findIndex((x) => x.key === 'fork'); failKind = 'unknown'; }
     else if (demo.taken) { failAt = list.findIndex((x) => x.key === 'create'); failKind = 'taken'; }
     else if (demo.net) { failAt = list.findIndex((x) => x.net && !already(x)); failKind = 'net'; }
     for (let i = 0; i < list.length; i++) {
@@ -1141,6 +1234,17 @@
           const rec = onlineRec(s), owner = ownerOf(s, rec), key = rec.key + ':' + owner.id;
           s.ui.refused[key] = (s.ui.refused[key] || []).concat([lc(onlineName(s))]);
           return { ok: false, fail: { kind: 'taken', text: w('np.fail.taken', { service: R().service(s.d.online.service).name, project: owner.label + '/' + onlineName(s) }) + kept, section: 'online', service: R().service(s.d.online.service).name, kept: local } };
+        }
+        // (GUIDED-FLOWS 6.06) the service didn't answer while making the fork: whether it exists is unknown, so the setup is
+        // kept for recovery and checked on the service before anything is tried again; nothing is deleted
+        if (failKind === 'unknown') {
+          const p = makeProject(s, 'recovery'), svc = list[i].service, fk = forkOwner(s) + '/' + forkName(s);
+          p.recovery = { settled: [], unknown: { label: w('np.fail.forkUnknownStep', { service: svc }), ref: fk, service: svc, step: { label: list[i].label, cmd: list[i].cmd } }, remaining: list.slice(i + 1).map((x) => ({ label: x.label, cmd: x.cmd })) };
+          p.online = Object.assign({}, p.online, { repo: d0fork(s, fk), note: 'Not checked yet' });
+          p.attention = [{ code: 'setup_unfinished', key: 'waiting', title: 'Setup didn’t finish', text: w('np.fail.forkUnknown', { fork: fk, service: svc }), actions: ['resume', 'remove'] }];
+          p.activity = { key: 'waiting', word: 'Setup didn’t finish', text: 'Stopped at step ' + (i + 1) + ' of ' + list.length, at: 'just now', runs: 0 };
+          PJX.ACT.add(p);
+          return { ok: false, project: p, fail: { kind: 'recovery' } };
         }
         if (failKind === 'net' && !made.length) return { ok: false, fail: { kind: 'net', text: (local.length ? w('np.fail.netPart', { service: list[i].service || 'the service' }) : w('np.fail.net', { service: list[i].service || 'the service' })) + kept, section: sections(s)[0], kept: local } };
         // something was made remotely, then a later step failed: listed as recovery, with Continue setup (6.12.4 C)
@@ -1160,16 +1264,18 @@
     }
     const p = makeProject(s, 'listed', demo);
     if (s.d.way === 'online' && intentOf(s) === 'contribute' && !(accessDone(s) || {}).fork) F().forks[s.d.find.project] = p.online.repo;
+    if (s.d.way === 'chat' && s.d.chat.id) { F().converted = F().converted || {}; F().converted[s.d.chat.id] = p.id; }
     PJX.ACT.add(p);
     return { ok: true, project: p };
   }
+  const d0fork = (s, fk) => fk;
   /* the Project the reviewed draft becomes */
   function makeProject(s, lifecycle, demo) {
     const d = s.d, name = String(nameOf(s)).trim(), listed = lifecycle === 'listed', info = lookDone(s), fp = fullPath(s);
     const slugId = R().idSlug(name) || 'project';
     let where;
     const vf = d.way === 'folder' && d.runsOn === 'here' ? volOfPath(d.folder.path) : null;
-    if (d.way === 'folder') where = d.runsOn === 'homenas' ? { kind: 'device', label: 'Home NAS', path: d.folder.path, device: 'Home NAS', via: 'Puppet Master' } : vf && vf.device ? { kind: 'device', label: 'Home NAS', path: full(d.folder.path), device: 'Home NAS', via: 'a connected drive' } : { kind: 'local', label: 'This computer', path: d.folder.path };
+    if (d.way === 'folder') where = d.runsOn !== 'here' ? { kind: 'device', label: comp(d.runsOn).name, path: d.folder.path, device: comp(d.runsOn).name, via: 'Puppet Master' } : vf && vf.device ? { kind: 'device', label: 'Home NAS', path: full(d.folder.path), device: 'Home NAS', via: 'a connected drive' } : { kind: 'local', label: 'This computer', path: d.folder.path };
     else if (d.way === 'device') {
       const hn = holderName(s), via = { ssh: d.runsOn === 'homenas' ? 'SSH from Home NAS' : 'SSH', smb: 'SMB', nfs: 'NFS', mounted: 'a connected drive' }[d.device.method];
       where = hn === 'This computer' ? { kind: 'local', label: 'This computer', path: d.device.path } : { kind: 'device', label: hn, path: d.device.path, device: hn, via };
@@ -1225,6 +1331,7 @@
     const inside0 = d.way === 'online' ? (inside(s) || {}).result || {} : info || {};
     return {
       id: slugId + '-' + PJX.uid('n').split('-').pop(), name, glyph, active: false, lifecycle, order: PJX.all().length, runsOn: d.runsOn,
+      home: d.runsOn, work: { mode: (d.work && d.work.mode) || 'auto', by: d.work && d.work.mode === 'chosen' ? 'Jared' : null, allowed: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn] }, workers: [],
       stack: (info && info.stack) || [], where, opened: 'Just added', openedRank: -0.5,
       activity: listed ? { key: 'idle', word: 'Ready', text: d.way === 'restore' ? 'Restored from a backup · plan or open it' : 'Ready to plan in the Planning Wizard', at: 'just now', runs: 0 } : { key: 'waiting', word: 'Setup didn’t finish', text: '', at: 'just now', runs: 0 },
       history: { backend, branch, defaultBranch: it0 === 'contribute' || it0 === 'offer' ? 'main' : null, worktrees: listed ? 1 : 0, changed: (info && info.changed) || 0, submodules: inside0.submodules || null, lfs: inside0.lfs || null, hooks: inside0.hooks || null, filesafe: d.filesafe },
@@ -1232,7 +1339,8 @@
       online, backup, sync: { devices: listed ? 2 : 0, state: listed ? 'complete' : 'pending' }, attention: [], fresh: true,
       copied: src ? { from: src.name, settings: counts.own, things: counts.things, accounts: counts.accounts, headers: counts.headers, files: counts.files, sel: counts.sel } : null,
       needsSignin: listed ? needsAfter(s) : 0,
-      fromChat: d.way === 'chat' && c ? c.title : null
+      fromChat: d.way === 'chat' && c ? c.title : null,
+      fromChatRec: d.way === 'chat' && c ? { chat: c.id, title: c.title, at: nowWord(), until: untilWord(), ended: null, files: chatFiles(s) === 'move' ? chatPicked(s) : [], held: (c.goals || []).map((g) => g.title).concat((c.schedules || []).map((x) => x.title)) } : null
     };
   }
 
@@ -1256,7 +1364,8 @@
       repository_initialize_readme: /make|instead/.test(m) && d.way === 'new' ? d.start === 'basics' && d.basics.readme : null,
       backup_destination: d.backup.dest === 'none' ? null : bkFamily(s), backup_place: d.backup.dest === 'none' ? null : bkPlace(s),
       backup_include: d.backup.dest === 'none' ? null : d.backup.include, backup_leave_out: d.backup.include === 'some' ? Object.keys(d.backup.leaveOut).filter((k) => d.backup.leaveOut[k]) : [],
-      backup_retention: d.backup.dest === 'none' ? null : d.backup.keep === 'custom' ? Object.assign({ kind: 'custom' }, d.backup.keepCustom) : { kind: 'standard' }, secrets_in_draft: false
+      backup_retention: d.backup.dest === 'none' ? null : d.backup.keep === 'custom' ? Object.assign({ kind: 'custom' }, d.backup.keepCustom) : { kind: 'standard' }, secrets_in_draft: false,
+      work_placement: (d.work && d.work.mode) || 'auto', default_execution_host: d.runsOn, allowed_execution_hosts: PJX.work ? PJX.work.npAllowed(s) : [d.runsOn], records_home: d.runsOn
     };
   }
 
@@ -1322,7 +1431,7 @@
   function moveTargets(m) {
     const q = lc(m.q).trim(), c = moveChat(m);
     return PJX.listed().filter((p) => p.lifecycle !== 'archived' && (!q || lc(p.name).indexOf(q) >= 0 || lc(p.where.label).indexOf(q) >= 0))
-      .map((p) => ({ p, off: moveOff(p), other: (p.runsOn || 'here') !== c.runsOn ? comp(p.runsOn).name : null }));
+      .map((p) => ({ p, off: moveOff(p), other: (p.home || 'here') !== c.runsOn ? comp(p.home || 'here').name : null }));
   }
   const moveMark = (m, f) => ((ENV.projectFiles || {})[m.target] || {})[f] || 'new';
   const moveHist = (m) => { const p = PJX.get(m.target); return !!(p && p.history && (p.history.backend === 'git' || p.history.backend === 'jujutsu')); };
@@ -1339,6 +1448,18 @@
     if (!m.chatOnly && !movePicked(m).length) return { text: w('np.mv.noFiles'), field: 'files' };
     if (!m.chatOnly && movePlace(m) === 'draft') { const b = R().branchProblem(m.branch); if (b) return { text: b, field: 'branch' }; }
     if (!m.chatOnly && (!moveFolder(m) || /[\\:*?"<>|]|\.\./.test(moveFolder(m)))) return { text: w('np.mv.folderBad'), field: 'folder' };
+    return moveBlocker(m);
+  }
+  /* what blocks a move until it is settled (ACD-510; GUIDED-FLOWS 7.09): a waiting approval, unsaved work in the
+     destination, Git without a name on the Computer that saves the draft, and a request to graft another history */
+  function moveBlocker(m) {
+    const c = moveChat(m), p = PJX.get(m.target); if (!p) return null;
+    if (waitingApprovals(c).length) return { text: w('cv.block.approval', { chat: c.title }), field: 'approval', kind: 'approval' };
+    const un = (F().unsaved || {})[p.id] || [];
+    if (!m.chatOnly && un.length) return { text: w('cv.block.unsaved', { files: andList(un), project: p.name }), field: 'unsaved', kind: 'unsaved' };
+    const host = p.runsOn || 'here';
+    if (!m.chatOnly && moveHist(m) && (F().gitId || {})[host] === false) return { text: w('cv.block.gitid', { computer: comp(host).name }), field: 'gitid', kind: 'gitid', computer: host };
+    if (!m.chatOnly && m.graft) return { text: w('cv.block.graft', { n: (c.folderHistory || {}).count || 0, project: p.name }), field: 'graft', kind: 'graft' };
     return null;
   }
   /* the plain statement (7.5): each line only when it applies */
@@ -1354,11 +1475,11 @@
       if (same.length) out.push(w('np.mv.s.same', { list: andList(same), n: same.length }));
       if (conf.length) out.push(w('np.mv.s.conflict.' + m.resolve, { list: andList(conf), example: conf[0] }));
     }
-    if ((p.runsOn || 'here') !== c.runsOn) out.push(w('np.mv.s.computer', { project: p.name, computer: comp(p.runsOn).name }));
+    if ((p.home || 'here') !== c.runsOn) out.push(w('np.mv.s.computer', { project: p.name, computer: comp(p.home || 'here').name, choice: PJX.work ? PJX.work.choiceWord(p) : 'Auto' }));
     const ps = (ENV.projectSettings[p.id] || {}).own || [];
     if (ps.length) out.push(w('np.mv.s.settings', { project: p.name, label: ps[0][2], value: ps[0][4], usual: ps[0][3] }));
     const left = (c.fileList || []).length - picked.length;
-    out.push(w('np.mv.s.stays', { left: left ? plural(left, 'file') + ' you didn’t pick (they stay in the chat folder), ' : '', outside: andList(c.outside), n: c.outside.length, folders: andList(c.folders) }));
+    if (left || c.outside.length || c.folders.length) out.push(w('np.mv.s.stays', { left: left ? plural(left, 'file') + ' you didn’t pick (they stay in the chat folder), ' : '', outside: andList(c.outside), n: c.outside.length, folders: andList(c.folders) }));
     out.push(w('np.mv.s.undo'));
     return out;
   }
@@ -1372,7 +1493,7 @@
       add('check', w('np.mv.ph.check'), 'gap:thread files move (verify)');
       if (pl === 'draft') add('save', w('np.mv.ph.save', { chat: c.title }), p.history.backend === 'jujutsu' ? 'cmd.jujutsu.change.describe' : 'gap:commit in a PM worktree (thread-bound merge wrapper)');
     }
-    if ((p.runsOn || 'here') !== c.runsOn) add('sync', w('np.mv.ph.sync', { computer: comp(p.runsOn).name }), 'gap:chat-sized move through Project Sync (N20, PSB-006)');
+    if ((p.home || 'here') !== c.runsOn) add('sync', w('np.mv.ph.sync', { computer: comp(p.home || 'here').name }), 'gap:chat-sized move through Project Sync (N20, PSB-006)');
     add('chat', w('np.mv.ph.chat', { chat: c.title, project: p.name }), 'gap:thread conversion [Depends: no-project]');
     if (!m.chatOnly && moving.length) add('tidy', w('np.mv.ph.tidy'), 'gap:thread files move (sealed old copy, 7 days)');
     return out;
@@ -1387,7 +1508,10 @@
       if (opts.onPhase) opts.onPhase(i, list, 'complete');
     }
     const c = moveChat(m), p = PJX.get(m.target);
-    const rec = { chat: c.id, title: c.title, into: p.id, files: moveMoving(m), place: movePlace(m), branch: m.branch, folder: moveFolder(m), chatOnly: m.chatOnly, computer: (p.runsOn || 'here') !== c.runsOn ? comp(p.runsOn).name : null, by: opts.yolo ? 'yolo' : 'you' };
+    // a partial result is still a result: what moved, what stayed, what was held and what didn't move (ACD-511, 7.13)
+    const moving = moveMoving(m), failed = m.demoPartial && moving.length > 1 ? [moving.indexOf('label-template.svg') >= 0 ? 'label-template.svg' : moving[moving.length - 1]] : [];
+    const rec = { chat: c.id, title: c.title, into: p.id, files: moving.filter((f) => failed.indexOf(f) < 0), failed, place: movePlace(m), branch: m.branch, folder: moveFolder(m), chatOnly: m.chatOnly, computer: (p.home || 'here') !== c.runsOn ? comp(p.home || 'here').name : null, by: opts.yolo ? 'yolo' : 'you',
+      at: nowWord(), until: untilWord(), ended: null, stayed: (c.fileList || []).length - movePicked(m).length + c.outside.length, held: (c.goals || []).map((g) => g.title).concat((c.schedules || []).map((x) => x.title)) };
     F().moved = F().moved || {}; F().moved[c.id] = rec;
     return { ok: true, project: p, rec };
   }
@@ -1407,11 +1531,11 @@
 
   PJX.np = {
     SETTINGS, WAYS, VERB, SECTIONS, start, set, enforce, chooseWay, wayLoss, startOver, sections, problem, summary, state, enter, open, fold, cont, allDone, firstProblem, firstNotDone,
-    moveStart, moveTargets, moveMark, moveHist, movePlace, movePicked, moveSame, moveConflicts, moveMoving, moveProblem, moveStatement, moveLabel, movePhases, moveCommit, moveUndoStatement, moveUndo, moved,
+    moveStart, moveBlocker, chatPicked, waitingApprovals, convEffects, untilWord, nowWord, moveTargets, moveMark, moveHist, movePlace, movePicked, moveSame, moveConflicts, moveMoving, moveProblem, moveStatement, moveLabel, movePhases, moveCommit, moveUndoStatement, moveUndo, moved,
     volOfPath, netCheck, netSignIn, bkHost, bkOnNas, likeSel, takenFor, forkNameCheck, visWord, restoredHist, kindWord, needsAccount, dropUi, onSettled: null,
     op, peek, retry, look, lookDone, lookTarget, limits, inspectAt, trusted, devicesFor, lookFor, addKey, resolveShare, smbShareKey, nfsShareKey, smbOk, nfsOk, volOk, dev, share, vol, comp, chatOf, chatFiles, serverOn,
     forgeRec, signedIn, signIn, signinOp, serverCheck, addrOk, srcRec, repoOf, findAnyone, access, accessDone, inside, gitAddressCheck, gitAddrValid, intentOf, intentDefault, forkName, forkOwner, knownFor,
-    restoreSource, restoreWhere, restoreList, unlock, lineage, derivedName, nameOf, folderNameOf, nameProblem, filesModes, filesMode, networkPlaces, netPlace, placeRoot, fullPath, filesStay, holderName, filesOnNas,
+    restoreSource, restoreWhere, restoreList, unlock, reach, reachOp, reached, kitOf, kitOpen, restoreUnlocked, restorePoints, lineage, derivedName, nameOf, folderNameOf, nameProblem, filesModes, filesMode, networkPlaces, netPlace, placeRoot, fullPath, filesStay, holderName, filesOnNas,
     likeSrc, settingsOf, likePreview, likeCounts, accountRows, needsAfter, picked, histKeeps, histLimits, jjOn, onlineDefault, onlineMode, onlineRec, onlineKind, owners, ownerOf, projectOf, visOf, onlineName, nameCheck,
     linkTarget, linkRec, linkCheck, bkFamily, bkPlace, bkExisting, bkDestLabel, keepBad, onlineLine, begins, review, phases, commit, makeProject, toPlan, detect, applyDetected, full, andList, plural, fmtGB, HOME
   };

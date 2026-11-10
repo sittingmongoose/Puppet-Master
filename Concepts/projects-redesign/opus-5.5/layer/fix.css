@@ -1,0 +1,109 @@
+/* Projects concepts (Opus 5.5), fix pass 2026-11-10: the no-project chat surfaces inside PMConcept7 (chat.js), Where work
+   runs (work.js), the conversion preview, blockers and reports, and the unfinished-setup rows. Everything takes PMConcept7's
+   own material: Usage's and Home's tokens where the parts are the Projects page's, the chat's own classes and currentColor
+   where they sit in the chat, so every look draws them the way it draws its neighbours. */
+
+/* ------------------------------------------------------------------ the chat: New is a split, No project in History */
+#pmw-chat56 .chat-header .pjx-newsplit { width: 18px; min-width: 18px; margin-left: -6px; padding: 0; }
+.history-flyout .pjx-npg { margin: 6px 0 10px; padding-top: 8px; border-top: 1px solid color-mix(in srgb, currentColor 14%, transparent); }
+.history-flyout .pjx-npg-head { display: flex; align-items: center; gap: 6px; padding: 2px 10px 4px 12px; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .78; }
+.history-flyout .pjx-npg-count { font-weight: 600; opacity: .7; }
+.history-flyout .pjx-npg-head .pjx-grow { flex: 1; }
+.history-flyout .pjx-npg-new { width: 24px; height: 24px; }
+.history-flyout .pjx-npg-empty { padding: 4px 12px; font-size: 12px; opacity: .7; }
+.history-flyout .pjx-npg-item { position: relative; display: flex; align-items: stretch; }
+.history-flyout .pjx-npg-row { flex: 1; min-width: 0; display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; align-items: start; padding: 7px 34px 7px 10px; margin: 1px 4px; border: 0; border-radius: 8px; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.history-flyout .pjx-npg-row:hover, .history-flyout .pjx-npg-row[aria-current="true"] { background: color-mix(in srgb, currentColor 9%, transparent); }
+.history-flyout .pjx-npg-row:focus-visible, .history-flyout .pjx-npg-more:focus-visible { outline: 2px solid var(--accent-primary, #7aa7ff); outline-offset: -2px; }
+.history-flyout .pjx-npg-ico { display: inline-flex; margin-top: 2px; opacity: .8; }
+.history-flyout .pjx-npg-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.history-flyout .pjx-npg-title { font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.history-flyout .pjx-npg-when { opacity: .65; font-size: 11.5px; }
+.history-flyout .pjx-npg-sub { font-size: 11.5px; opacity: .7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.history-flyout .pjx-npg-more { position: absolute; right: 8px; top: 7px; width: 24px; height: 24px; opacity: 0; }
+.history-flyout .pjx-npg-item:hover .pjx-npg-more, .history-flyout .pjx-npg-more:focus-visible, .history-flyout .pjx-npg-more[aria-expanded="true"] { opacity: 1; }
+@media (hover: none) { .history-flyout .pjx-npg-more { opacity: 1; } }
+
+/* ------------------------------------------------------------------ the no-project chat, over the chat stage */
+#pmw-chat56 .chat-stage > .pjx-npc { position: absolute; inset: 0; z-index: 20; display: flex; flex-direction: column; min-height: 0; background: inherit; color: inherit; }
+#pmw-chat56[data-pjx-npc] .chat-stage { background-clip: padding-box; }
+.pjx-npc > .pmu-shell { display: contents !important; }
+.pjx-npc .pjx-npc-head { flex: none; display: flex; align-items: center; gap: 6px; }
+.pjx-npc .pjx-npc-titles { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 0 1 auto; }
+.pjx-npc .pjx-npc-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; outline: none; }
+.pjx-npc .pjx-npc-place { display: inline-flex; align-items: center; gap: 5px; height: 24px; padding: 0 8px; border: 1px solid color-mix(in srgb, currentColor 22%, transparent); border-radius: 999px; background: color-mix(in srgb, currentColor 6%, transparent); color: inherit; font: inherit; font-size: 11.5px; font-weight: 600; white-space: nowrap; cursor: pointer; }
+.pjx-npc .pjx-npc-place:hover { background: color-mix(in srgb, currentColor 11%, transparent); }
+.pjx-npc .pjx-npc-make { height: 28px; padding: 0 10px; font-size: 12px; white-space: nowrap; }
+.pjx-npc .pjx-npc-folder { flex: none; display: flex; align-items: center; gap: 6px; padding: 6px 16px; font-size: 12px; opacity: .82; border-bottom: 1px solid color-mix(in srgb, currentColor 10%, transparent); min-width: 0; }
+.pjx-npc .pjx-npc-folder > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pjx-npc .pjx-npc-tx { flex: 1 1 auto; min-height: 0; overflow: auto; }
+.pjx-npc .pjx-npc-inner { display: flex; flex-direction: column; gap: 14px; padding: 16px 20px 20px; }
+.pjx-npc .pjx-npc-divider { display: flex; align-items: center; gap: 10px; font-size: 11.5px; opacity: .75; }
+.pjx-npc .pjx-npc-divider::before, .pjx-npc .pjx-npc-divider::after { content: ''; flex: 1; height: 1px; background: color-mix(in srgb, currentColor 18%, transparent); }
+.pjx-npc .pjx-npc-approval { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 6px 10px; padding: 10px 12px; border: 1px solid color-mix(in srgb, currentColor 22%, transparent); border-radius: 10px; }
+.pjx-npc .pjx-npc-aptext { display: flex; flex-direction: column; gap: 3px; font-size: 12.5px; min-width: 0; }
+.pjx-npc .pjx-npc-apacts { grid-column: 2; display: flex; gap: 8px; flex-wrap: wrap; }
+.pjx-npc .pjx-npc-empty { display: flex; flex-direction: column; gap: 6px; padding: 28px 8px; text-align: center; font-size: 13px; opacity: .85; }
+.pjx-npc .pjx-npc-comp { flex: none; display: flex; flex-direction: column; gap: 8px; padding: 8px 10px 12px; }
+.pjx-npc .pjx-npc-needs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 11.5px; }
+.pjx-npc .pjx-npc-needcap { opacity: .75; margin-right: 2px; }
+.pjx-npc .pjx-npc-chip { display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 9px; border: 1px solid color-mix(in srgb, currentColor 20%, transparent); border-radius: 999px; background: transparent; color: inherit; font: inherit; font-size: 11.5px; cursor: pointer; }
+.pjx-npc .pjx-npc-chip[aria-pressed="true"] { border-color: var(--accent-primary, currentColor); background: color-mix(in srgb, var(--accent-primary, currentColor) 12%, transparent); }
+.pjx-npc .pjx-npc-needtag { font-size: 10.5px; opacity: .7; }
+.pjx-npc .pjx-npc-notice { margin-top: 6px; }
+.pjx-npc .pjx-npc-notice .pjx-notice-acts { display: flex; flex-wrap: wrap; gap: 8px; grid-column: 2; margin-top: 4px; }
+.pjx-npc .pjx-npc-box { display: flex; flex-direction: column; gap: 6px; border: 1px solid color-mix(in srgb, currentColor 18%, transparent); border-radius: 12px; background: color-mix(in srgb, currentColor 4%, transparent); }
+.pjx-npc .pjx-npc-box:focus-within { border-color: var(--accent-primary, currentColor); }
+.pjx-npc .pjx-npc-field { padding: 10px 12px 0; }
+.pjx-npc .pjx-npc-input { width: 100%; box-sizing: border-box; min-height: 48px; resize: none; border: 0; outline: none; background: transparent; color: inherit; font: inherit; font-size: 13.5px; line-height: 1.45; }
+html[data-theme^="retro"] .pjx-npc .pjx-npc-box, html[data-o55-nier="on"] .pjx-npc .pjx-npc-box { border-radius: 0; }
+.pjx-npc .pjx-npc-tools { display: flex; align-items: center; gap: 8px; padding: 0 6px 6px; }
+.pjx-npc .pjx-npc-hint { flex: 1; font-size: 11.5px; opacity: .72; }
+.pjx-npc .pjx-npc-send { height: 30px; }
+html[data-theme^="retro"] .pjx-npc .pjx-npc-place, html[data-o55-nier="on"] .pjx-npc .pjx-npc-place,
+html[data-theme^="retro"] .pjx-npc .pjx-npc-chip, html[data-o55-nier="on"] .pjx-npc .pjx-npc-chip,
+html[data-theme^="retro"] .pjx-npc .pjx-npc-approval, html[data-o55-nier="on"] .pjx-npc .pjx-npc-approval,
+html[data-theme^="retro"] .history-flyout .pjx-npg-row, html[data-o55-nier="on"] .history-flyout .pjx-npg-row { border-radius: 0; }
+
+/* ------------------------------------------------------------------ Home's board bar: New chat, a split */
+#panel-dashboard .pjx-home-new { display: inline-flex; align-items: center; gap: 4px; margin-right: 6px; }
+#panel-dashboard .pjx-home-new .pmw-act { height: 24px; min-height: 24px; padding: 0 9px; gap: 5px; font-size: 12px; white-space: nowrap; display: inline-flex; align-items: center; }
+#panel-dashboard .pjx-home-new .pmw-act > span:first-child, #panel-dashboard .pjx-home-chev { display: inline-flex; opacity: .85; }
+
+/* ------------------------------------------------------------------ the title-bar switcher's No project row */
+#projectMenu .pjx-tb-noproj { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+#projectMenu .pjx-tb-noproj-s { font-size: 11px; opacity: .65; }
+
+/* ------------------------------------------------------------------ Where work runs (Project page and New Project) */
+.pjx-wk-rows { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; border-top: 1px solid var(--pmu-rule); }
+.pjx-wk-row { display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; grid-template-areas: "m t why" ". w why"; gap: 2px 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--pmu-rule); font-size: 12.5px; }
+.pjx-wk-row > .pjx-st-mark { grid-area: m; }
+.pjx-wk-task { grid-area: t; color: var(--pmu-ink); min-width: 0; overflow-wrap: anywhere; }
+.pjx-wk-where { grid-area: w; color: var(--pmu-ink-2); font-size: 12px; }
+.pjx-wk-to { font-weight: 600; color: var(--pmu-ink); }
+.pjx-wk-row[data-mode="chosen"] .pjx-wk-to { color: var(--pmg-ink-attention, var(--pmu-ink)); }
+.pjx-wk-why { grid-area: why; white-space: nowrap; font-size: 12px; }
+.pjx-wk-allowed { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px 14px; }
+.pjx-wk-np { margin-top: 4px; display: flex; flex-direction: column; gap: 8px; padding: 12px; border: 1px solid var(--pmu-rule); border-radius: min(var(--pmu-r-card, 10px), 10px); }
+.pjx-wk-whybody { display: flex; flex-direction: column; gap: 10px; }
+html[data-theme^="retro"] .pjx-wk-np, html[data-o55-nier="on"] .pjx-wk-np { border-radius: 0; }
+
+/* ------------------------------------------------------------------ conversions: picked files, the preview, blockers, report */
+.pjx-np-filepick { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 4px 12px; max-height: 220px; overflow: auto; padding: 2px; }
+.pjx-np-filepick .pjx-np-check-text span:first-child { font-family: var(--pm-font-code, var(--pmu-mono)); font-size: 12px; overflow-wrap: anywhere; }
+.pjx-np-conv { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px 16px; padding-top: 10px; border-top: 1px solid var(--pmu-rule); }
+.pjx-np-conv > .pjx-np-cap { grid-column: 1 / -1; }
+.pjx-np-convfam { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.pjx-np-convcap { font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--pmu-ink-3); }
+.pjxc-mvblock { padding: 10px 12px; border: 1px solid color-mix(in srgb, var(--pmg-ink-blocked, var(--pmu-ink-error, #e5484d)) 55%, var(--pmu-rule)); border-radius: min(var(--pmu-r-card, 10px), 10px); }
+.pjxc-mvblock .pjxc-mvh { align-items: flex-start; }
+.pjxc-report { grid-column: 2; display: flex; flex-direction: column; gap: 8px; margin-top: 6px; }
+.pjxc-repgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px 16px; }
+.pjxc-repfam { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.pjxc-repcap { font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--pmu-ink-3); }
+.pjxc-undodemo { margin: 0; }
+html[data-theme^="retro"] .pjxc-mvblock, html[data-o55-nier="on"] .pjxc-mvblock { border-radius: 0; }
+
+/* ------------------------------------------------------------------ unfinished setup: a recovery notice, not a Project row */
+.pjxc-row.is-unfinished { border: 1px dashed color-mix(in srgb, var(--pmg-ink-attention, var(--pmu-ink-2)) 60%, transparent); }
+.pjxc-group.is-unfinished .pjxc-ghead { color: var(--pmg-ink-attention, var(--pmu-ink-2)); }

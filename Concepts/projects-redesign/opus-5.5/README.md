@@ -57,6 +57,50 @@ New layer files: `layer/words.js` (every word), `layer/rules.js` (the service an
 engine, no DOM), `layer/np-ui.js` (the section renderers, shared with the Project page's in-place forms) and
 `layer/np.css`. A and B are frozen: they keep pass 1's `layer/flow.js` and still load with no console errors.
 
+## Fix pass 3 (2026-11-10): Jared's #12 and #13, and the guided-flows check
+
+Jared reviewed Split v2 on 2026-11-09 (`/mnt/Cursor/share/puppet-master/2026-11-09-settings-feedback/FEEDBACK.md`), and
+pm7-build checked every guided flow against current onboarding and canon (`GUIDED-FLOWS-CHECK.md` there, "Changes for P").
+The report is `CONCEPT-FIX-REPORT-B.md` in the same folder.
+
+- **#13, chats with no project, inside the app** (ACD-508, ACD-510, ACD-511 on main; the settled N2, N20 and N27 are not
+  reopened). New is a split on Home's board bar and beside the chat's New thread (this Project, With no project, another
+  Project). The title-bar switcher has its fixed No project row. History has a No project group with New chat with no
+  project and each row's More. A no-project chat says "No project · This computer"; its Where chip and its More menu offer
+  **Make a project from this chat** and **Move this chat into a project**, its header **Make this a project…** (the
+  chooser, neither preselected), and the three workflows that still need a project (Planning Wizard, PRD Builder,
+  Orchestrator) say Needs a project with the same two choices. A first message mints a new no-project chat.
+- **Both conversions, complete** (GUIDED-FLOWS 7.02 to 7.05, 7.09 to 7.11, 7.13, 7.15): picked files on the new path, a
+  waiting approval settled first, a live preview family by family (settings, AI accounts, permissions, active work,
+  online, Undo), blockers settled in place (unsaved work in the destination, Git without a name on its Computer, a history
+  graft), a report for every result (moved, stayed, held, didn't move, with Try again), and an Undo that ends at the first
+  new message, work or changed moved file, or 7 days, and says so when it has ended.
+- **#12, where work runs** (SIR-056, F3-668, F3-664, SRV-006 and SSYS-059 on `plans/where-work-runs-20261109`, not on
+  `main` yet): the Project page's **Where work runs** plate names the records home, the work choice (Auto by default, or
+  "Chosen: Studio Mac by Jared"), the default Computer, the allowed Computers and the ones working now; each work row says
+  "Auto → Home NAS" or "Chosen: Studio Mac by Jared" with **Why this computer** (the measures, their age, and why the
+  others were left out or ranked lower). New Project › Where it lives offers the work choice, the default Computer and
+  the allowed set, apart from where the files go. Auto's presets and each Computer's level are linked to Settings, not
+  built. Nothing says "<Project> works on <one Computer>" any more.
+- **Guided flows**: one place world with onboarding (Home NAS is a Synology DS920+ at home-nas.local; Media server is a
+  TrueNAS SCALE with SSH off, reached over NFS; each Computer resolves its own home and Projects folder); NAS pairing
+  instead of SSH, SSH-off guidance by brand, username first and each key's state on the device (works already, locked,
+  needs adding), a changed identity shown side by side, an uncertain key install checked before retrying; partial and
+  unknown looks inside, and a native look after an online copy; an unfinished setup kept out of the Project rows; restore
+  in dependency order (Kit or no Kit, reach and sign in, unlock, Project, recovery point and coverage); Notifications &
+  limits, fixed values that obey the picked kinds, a device-bound account that can't move, and a re-check at copy time;
+  token permissions for making versus reaching a Project per service, each service's code lifetime, Open the page and
+  Copy address, sign-up turned off; Public and Private as the real Forgejo and Gitea choice; README, ignore list and
+  licence in the online copy's Advanced; a backup's time zone, NAS identity checked by the owner, the pairing reused at
+  Protect, a real sign-in or access step there, a protected Kit handoff, and "on" kept apart from a completed backup; an
+  uncertain fork checked before Continue setup, and the original's changes fetched and brought in here before a separate
+  send to your fork.
+
+New files: `layer/chat.js` (the no-project chat surfaces), `layer/work.js` (where work runs), `layer/fix.css`, and
+`tools/checks/` (browser-check: `noproject.check.mjs`, `work.check.mjs`; run them with
+`browser-check run Concepts/projects-redesign/opus-5.5/tools/checks --set page=<dir>/projects-concepts.html` after
+`python3 tools/build_standalone.py <dir>`).
+
 ## The concepts
 
 | | Concept | Idea |
@@ -97,7 +141,7 @@ The strip under PMConcept7 is for reviewing and is not part of the design.
 - **Window width**: full, 1280, 1024, 860 or 640 px.
 - **New Project**, **Folder missing**, **Setup didn't finish**: jump to those moments.
 - **Run mode**: Regular or YOLO (C's yes-points say what YOLO does instead).
-- **More moments (C)**: From a chat (the chooser), From a chat › Move it into a project I have, An agent sets up a
+- **More moments (C)**: A chat with no project (in the chat), Home: New chat with no project, Where work runs (tastebook), From a chat (the chooser), From a chat › Move it into a project I have, An agent sets up a
   Project (Regular asks, YOLO goes ahead), Contribute, Found online copy, Submodules and Git LFS, Jujutsu limits, Same
   online copy as loom, Connect a new device, Backup setup, A fork (photo-sorter), Found not linked (legacy-app), Waiting
   for Media NAS (garden-notes). Disabled for A, B and Today.
@@ -113,7 +157,7 @@ The strip under PMConcept7 is for reviewing and is not part of the design.
 ## How it reaches PMConcept7
 
 `index.html` adds, in order: `layer/core.css`, `layer/np.css`, `layer/core.js`, `layer/words.js`, `layer/rules.js`,
-`layer/flow.js`, `layer/np.js`, `layer/parts.js`, `layer/np-ui.js`, each concept's CSS and JS, and `layer/boot.js`. The page and PMConcept7 talk only by `postMessage` (`{source: 'pjx-host', cmd}` in,
+`layer/flow.js`, `layer/np.js`, `layer/parts.js`, `layer/np-ui.js`, `layer/work.js`, `layer/chat.js`, `layer/fix.css`, each concept's CSS and JS, and `layer/boot.js`. The page and PMConcept7 talk only by `postMessage` (`{source: 'pjx-host', cmd}` in,
 `{source: 'pjx', type, state}` out), so the strip also works in a sandboxed preview.
 
 | File | What |
@@ -127,6 +171,9 @@ The strip under PMConcept7 is for reviewing and is not part of the design.
 | `layer/np.js` | `PJX.np`: the Split v2 engine (no DOM): the draft, sections and their problems, `set()` with the FO-22 clearing, cached simulated owner results, the Review, the steps and the commit, `detect()`, `toPlan()`, and the settings adapter `PJX.np.SETTINGS`. |
 | `layer/np-ui.js` | `PJX.npui`: one renderer per guided section and the parts they share (the look inside, connect a device, sign in, the service cards, copy settings, backup, protect steps), also drawn inside the Project page's plates. |
 | `layer/np.css` | The guided sections and their parts, in Usage's and Home's material. |
+| `layer/work.js` | `PJX.work`: where work runs (records home, work choice, default and allowed Computers, work rows, Why this computer, the change form, New Project's block). |
+| `layer/chat.js` | `PJX.chat`: chats with no project inside PMConcept7 (Home's and the chat's New split, the title-bar row, History's No project group, the no-project chat view) and the hand-off to both conversions. |
+| `layer/fix.css` | The fix pass's parts, in the chat's, Home's and Usage's own material. |
 | `concepts/a|b|c.*` | Each concept's layout (C is Split v2). |
 
 ## What it would touch in Plans

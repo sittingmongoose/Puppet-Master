@@ -78,8 +78,11 @@
     <button type="button" class="pc-btn" data-act="unfinished">Setup didn't finish</button>
     <select id="moment" aria-label="More moments, shown in C (Split)" data-c-only title="Shown in C, Split">
       <option value="">More moments (C)…</option>
+      <option value="nochat">A chat with no project (in the chat, on Home)</option>
+      <option value="homenew">Home: New chat with no project</option>
       <option value="fromchat">From a chat: Make this a project…</option>
       <option value="chatmove">From a chat: Move it into a project I have</option>
+      <option value="work">Where work runs: tastebook (Auto, Why this computer)</option>
       <option value="agent">An agent sets up a Project (try Regular, then YOLO)</option>
       <option value="contribute">Contribute: github.com/maplecraft/plant-journal</option>
       <option value="foundonline">Found online copy: ~/Code/budget-tracker</option>
@@ -90,7 +93,7 @@
       <option value="backupsetup">Backup setup: docs-site</option>
       <option value="photosorter">A fork: photo-sorter (original newer)</option>
       <option value="legacy">Found, not linked: legacy-app</option>
-      <option value="gardennotes">Waiting for Media NAS: garden-notes</option>
+      <option value="gardennotes">Waiting for Media server: garden-notes</option>
     </select>
     <button type="button" class="pc-btn" data-act="reset">Reset demo</button>
     <label class="pc-check"><input type="checkbox" id="reduced"> Reduced motion</label>
@@ -108,7 +111,7 @@
   const base = new URL('./', location.href);
   const STEPS = [
     ['css', 'layer/core.css'], ['css', 'layer/np.css'], ['js', 'layer/core.js'], ['js', 'layer/words.js'], ['js', 'layer/rules.js'],
-    ['js', 'layer/flow.js'], ['js', 'layer/np.js'], ['js', 'layer/parts.js'], ['js', 'layer/np-ui.js'],
+    ['js', 'layer/flow.js'], ['js', 'layer/np.js'], ['js', 'layer/parts.js'], ['js', 'layer/np-ui.js'], ['js', 'layer/work.js'], ['js', 'layer/chat.js'], ['css', 'layer/fix.css'],
     ['css', 'concepts/a.css'], ['js', 'concepts/a.js'],
     ['css', 'concepts/b.css'], ['js', 'concepts/b.js'],
     ['css', 'concepts/c.css'], ['js', 'concepts/c.js'],
