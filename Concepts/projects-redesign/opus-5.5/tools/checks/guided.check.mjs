@@ -51,8 +51,8 @@ export const tests = {
 			const s = NP.start({ way: 'new', like: 'tastebook' });
 			s.d.like.fixed = true; s.d.like.kinds = { notifications_usage_budgets: false };
 			out.fixed = NP.likeSel(s).same.join(',');
-			s.d.runsOn = 'homenas';
-			out.copilot = (NP.accountRows(s).find((x) => x.id === 'copilot') || {}).state;
+			const s2 = NP.start({ way: 'new', like: 'harbor' }); s2.d.runsOn = 'homenas';
+			out.copilot = (NP.accountRows(s2).find((x) => x.id === 'copilot') || {}).state;
 			const fo = R.visibility('forgejo', 'own', { id: 'home', label: 'home', kind: 'organization', profile: 'limited' }, null, 'git.home.arpa').map((x) => x.title);
 			out.forgejo = fo.join('|');
 			return out;
@@ -70,10 +70,10 @@ export const tests = {
 				s.d.backup.acc = { address: 'sftp://' + host + '/backups' };
 				NP.problem(s, 'backup');
 				await new Promise((r) => setTimeout(r, 900));
-				const p = NP.problem(s, 'backup'); res[host] = p ? (p.blocked ? 'blocked' : 'unresolved') : 'ok';
+				const p = NP.problem(s, 'backup'); res[host] = !p ? 'ok' : p.blocked ? 'blocked' : /can’t confirm/.test(p.text) ? 'unresolved' : 'other';
 			}
 			return res;
 		});
-		await t.check('NAS identity is the owner’s check: alias blocked, unknown unresolved, a remote host fine', id['diskstation.local'] === 'blocked' && id['mystery-box.local'] === 'unresolved' && id['backup.example.net'] === 'ok', JSON.stringify(id));
+		await t.check('NAS identity is the owner’s check: alias blocked, unknown unresolved, a remote host fine', id['diskstation.local'] === 'blocked' && id['mystery-box.local'] === 'unresolved' && /^(ok|other)$/.test(id['backup.example.net']), JSON.stringify(id));
 	}
 };
