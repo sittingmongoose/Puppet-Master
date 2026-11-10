@@ -239,7 +239,7 @@ export default async function (t) {
 		await t.root.locator('#pm-settings-root [data-psx-head="view"]').click();
 		await settle(t, 400);
 		const menu = await run(t, () => document.body.innerText);
-		await t.check('Change offers a project, another computer and another device’s screen', /Look at another computer/.test(menu) && /Look at another device’s screen/.test(menu) && /All the differences/.test(menu), 'menu not found');
+		await t.check('Change offers a project, another computer and another device’s screen', /Look at another computer/i.test(menu) && /Look at another device’s screen/i.test(menu) && /All the differences/i.test(menu), 'menu not found');
 		await t.page.keyboard.press('Escape');
 		// YOLO and the settings home away: still one header row; the notice goes under it
 		await run(t, async () => { await window.PSX.command({ cmd: 'runmode', mode: 'yolo' }); }); await settle(t, 500);
@@ -272,6 +272,16 @@ export default async function (t) {
 		});
 		await t.check(`all ${all.n} rows: Everywhere, then ${'Computers or Devices'}, then Projects`, all.n > 800 && all.bad.length === 0, all.bad.slice(0, 6).join(' | '));
 		await t.check(`${all.screen} screen rows list Devices with one plain line, and libraries are not among them`, all.screen > 10 && !all.devices.some((l) => /Your own themes|Sound library|Add a sound|Start custom themes/.test(l)), all.devices.join(', '));
+		const left = await run(t, () => {
+			const P = window.PSX, off = P.offLadder;
+			return Object.keys(window.PM51.placement.byId).filter((id) => {
+				const s = window.PM51.setting(id); if (!s || /^(resource|action)$/.test(String(s.control || ''))) return false;
+				if (P.DEF[id] || off.look.test(id) || off.credential.test(id) || off.thing.includes(id)) return false;
+				const sc = ((P.REF || {})[id] || {}).scope || [];
+				return !(sc.length && sc.some((x) => ['account', 'provider', 'persona'].includes(x)) && !sc.includes('global'));
+			});
+		});
+		await t.check('every Settings row is on the ladder, or is a look detail, a key, or one thing’s own', left.length === 0, left.slice(0, 12).join(', '));
 		await t.check('the four rows Jared named are screen rows', () => run(t, () => ['general.visual.font-size', 'general.visual.theme', 'general.interaction.sound-effects', 'general.visual.reduce-animations'].every((id) => window.PSX.DEF[id].screen)));
 		await t.check('the row menu offers “Set for this screen” only on screen rows', () => run(t, () => {
 			const P = window.PSX; let ok = true;
@@ -329,7 +339,7 @@ export default async function (t) {
 		await reset(t);
 		const c = await run(t, async () => {
 			const P = window.PSX, wait = (ms) => new Promise((r) => setTimeout(r, ms)), out = {};
-			P.copy.open({ mode: 'new', comp: 'homenas', advanced: true, src: 'tastebook' }); await wait(500);
+			await P.command({ cmd: 'moment', id: 'copy-new' }); await wait(700);
 			const sh = () => document.querySelector('.psx-sheet.psx-copy');
 			out.label = /Notifications & limits/.test(sh().innerText) && !/Notifications and limits/.test(sh().innerText);
 			out.cannot = !!sh().querySelector('[data-outcome="cannot_move"]') && /Can’t be used on Home NAS/.test(sh().innerText) && /It belongs to one device\. It stays this Project’s intended choice, and nothing replaces it\./.test(sh().innerText);
@@ -378,8 +388,8 @@ export default async function (t) {
 		await pic(t, 'copy-reshown', 'Copy into garden-notes: Work Claude expired on Home NAS after the preview, so the preview is shown again', '.psx-sheet.psx-copy');
 		await run(t, () => window.PSX.closeSheets());
 		await reset(t);
-		await run(t, () => window.PSX.copy.open({ mode: 'new', comp: 'homenas', advanced: true, src: 'tastebook' }));
-		await settle(t, 600);
+		await run(t, () => window.PSX.command({ cmd: 'moment', id: 'copy-new' }));
+		await settle(t, 900);
 		await pic(t, 'copy-new-homenas', 'New Project › Start like tastebook on Home NAS: Copilot can’t be used there; accounts only, never secrets', '.psx-sheet.psx-copy');
 		await run(t, () => window.PSX.closeSheets());
 	});

@@ -221,7 +221,9 @@
   M['11.18'] = async () => { PSX.setCtx({ project: 'loom' }); approvals(); };
   M.copy = async () => { await go('system', 'settings-transfer'); PSX.copy.open({ mode: 'settings' }); };
   // New Project starts on your usual settings; the moment chooses Like tastebook for you, to show Advanced (the strip says so)
-  M['copy-new'] = async () => { PSX.copy.open({ mode: 'new', comp: 'homenas', advanced: true, src: 'tastebook' }); };
+  /* tastebook also uses a Copilot seat tied to this Mac here, so the copy to Home NAS shows the real cannot_move result
+     (guided flows 3.12): it stays the intended choice and nothing replaces it */
+  M['copy-new'] = async () => { if (!PSX.W.uses.tastebook.includes('copilot')) PSX.W.uses.tastebook = PSX.W.uses.tastebook.concat('copilot'); PSX.copy.open({ mode: 'new', comp: 'homenas', advanced: true, src: 'tastebook' }); };
 
   /* ------------------------------------------------------------------ 11.5 Move where your settings are kept
      An owner choice (7.2): YOLO never moves it. The variants (a change in flight, Home NAS gone for good) are moments of

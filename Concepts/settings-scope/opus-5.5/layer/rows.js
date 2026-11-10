@@ -112,12 +112,18 @@
     let wd = kind === 'scoped' ? { word: perWord(row), here: false, aria: 'each one has its own', sentence: '', mark2: '' } : where(id, r);
     const ln = demo && kind !== 'field' ? lines(id, r) : [];
     const changed = demo ? !!(r && r.changed && !r.notOffered) : null;
-    const sig = JSON.stringify([opt, S.opt.changed, wd.word, wd.here, wd.sentence, wd.mark2, ln, changed, kind]);
+    // looking at another device's screen: a screen row shows that device's value in place of the control (Jared #11)
+    const viewDev = S.ctx.device && S.ctx.device !== S.actor && opt !== 'today' && kind === 'row';
+    let devv = viewDev && demo && DEF[id].screen ? { name: placeName('device', S.ctx.device), text: vt(id, r.asked !== undefined ? r.asked : r.value) } : null;
+    // Light or dark is the second half of Theme: it shows the viewed device's half too
+    if (viewDev && id === 'general.visual.theme-mode') devv = { name: placeName('device', S.ctx.device), text: PSX.themePair(PSX.resolve('general.visual.theme', S.ctx).value)['general.visual.theme-mode'] };
+    const sig = JSON.stringify([opt, S.opt.changed, wd.word, wd.here, wd.sentence, wd.mark2, ln, changed, kind, devv]);
     // the engine's in-place redraw can patch a row back while keeping this attribute: check the drawing is still there
-    if (btn.dataset.psxDone === sig && row.dataset.psxDone === sig && intact(row, btn, opt, wd, ln, sync ? null : changed, kind)) return;
+    if (btn.dataset.psxDone === sig && row.dataset.psxDone === sig && intact(row, btn, opt, wd, ln, sync ? null : changed, kind) && !!row.querySelector(':scope > .setting-control > .psx-devval') === !!devv) return;
     btn.dataset.psxDone = sync ? 'sync' : sig; row.dataset.psxDone = sync ? 'sync' : sig;
     // clear what an earlier option drew
     row.querySelectorAll(':scope .psx-mark2, :scope .psx-line, :scope .psx-risk').forEach((n) => { if (rowOf(n) === row) n.remove(); });
+    drawDevValue(row, btn, devv, id);
     btn.classList.remove('psx-end', 'is-here', 'psx-more', 'is-quiet');
     if (opt === 'today') {
       btn.innerHTML = btn.__psxOrig.html;
@@ -156,6 +162,16 @@
     // and on again (Jared #4)
     if (!sync) syncChanged(row, id, changed, demo);
     drawLines(row, id, ln);
+  }
+  function drawDevValue(row, btn, devv, id) {
+    const ctl = row.querySelector(':scope > .setting-control'); if (!ctl) return;
+    ctl.querySelectorAll(':scope > .psx-devval').forEach((n) => n.remove());
+    row.classList.toggle('psx-devview', !!devv);
+    if (!devv) return;
+    const el = D.createElement('span'); el.className = 'psx-devval'; el.setAttribute('data-o55-foreign', '');
+    el.innerHTML = `<span class="psx-devval-v" title="${esc(devv.name)}’s screen">${esc(devv.text)}</span><button type="button" class="psx-tb" data-psx-devchange="1" aria-label="Change ${esc(label(id))} for ${esc(devv.name)}’s screen">Change</button>`;
+    el.querySelector('button').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); openPanel(btn); });
+    ctl.appendChild(el);
   }
   function intact(row, btn, opt, wd, ln, changed, kind) {
     if (opt === 'today' ? btn.classList.contains('psx-end') : !(btn.classList.contains('psx-end') && btn.querySelector('.psx-end-word'))) return false;
@@ -258,7 +274,7 @@
     const ctxText = `${proj} on ${placeName('computer', c.on)}${v.dev ? `, with ${placeName('device', c.device)}’s screen` : using}`;
     const back = `${proj} on ${placeName('computer', ownOn(c))}`;
     const desc = v.viewing
-      ? `You’re looking at ${proj}’s settings as they apply ${v.comp ? `when its work runs on ${placeName('computer', c.on)}` : `on ${placeName('computer', c.on)}`}${v.dev ? ` and on ${placeName('device', c.device)}’s screen` : ''}. Changes you make here are saved for real. Stop viewing goes back to ${back}${S.actor !== 'here' ? '' : ''}.`
+      ? `You’re looking at ${proj}’s settings as they apply ${v.comp ? `when its work runs on ${placeName('computer', c.on)}` : `on ${placeName('computer', c.on)}`}${v.dev ? ` and on ${placeName('device', c.device)}’s screen` : ''}. Changes you make here are saved for real. Stop viewing goes back to ${back}.`
       : c.project ? `Settings for ${proj}, as they apply on ${placeName('computer', c.on)}, the computer that does its work. Change opens another project, or lets you look at another computer or device.`
         : `Settings for chats with no project, on ${placeName('computer', c.on)}. Changes here apply everywhere or to this computer.`;
     const lines2 = [];
