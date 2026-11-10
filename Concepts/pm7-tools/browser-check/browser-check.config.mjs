@@ -26,12 +26,45 @@ export default (ctx) => {
 	let sandboxArg = ctx.args.sandbox === undefined || ctx.args.sandbox === '' ? null : !/^(0|false|no|off)$/i.test(String(ctx.args.sandbox));
 	// the provider checks' old --set surface=normal|sandbox still means the same, by the new name
 	if (sandboxArg === null && /^(normal|sandbox)$/.test(String(ctx.args.surface || ''))) { sandboxArg = ctx.args.surface === 'sandbox'; ctx.log(`--set surface=${ctx.args.surface} is the old name: use --set sandbox=${sandboxArg ? 1 : 0}`); }
+	// Silent by default: see prepareContext below.
+	const audible = /^(1|true|yes|on)$/i.test(String(ctx.args.audible || ''));
+	const silenced = new WeakSet();
+	const silence = async (context) => {
+		if (audible || !context || silenced.has(context)) return;
+		silenced.add(context);
+		await context.addInitScript(() => {
+				if (window.__bcSilent) return;
+				const silent = window.__bcSilent = { routed: 0 };
+				const AN = window.AudioNode && window.AudioNode.prototype;
+				if (AN && window.AudioDestinationNode) {
+					const connect = AN.connect, quiet = new WeakMap();
+					AN.connect = function (dest, ...rest) {
+						if (dest instanceof window.AudioDestinationNode && dest.context && !(window.OfflineAudioContext && dest.context instanceof window.OfflineAudioContext)) {
+							let g = quiet.get(dest);
+							if (!g) { g = dest.context.createGain(); g.gain.value = 0; connect.call(g, dest); quiet.set(dest, g); }
+							silent.routed++;
+							connect.call(this, g, ...rest);
+							return dest;
+						}
+						return connect.call(this, dest, ...rest);
+					};
+				}
+				const ME = window.HTMLMediaElement && window.HTMLMediaElement.prototype;
+				if (ME) { const play = ME.play; ME.play = function (...a) { this.muted = true; return play.apply(this, a); }; }
+			});
+	};
 	return {
 		name: 'puppetmaster',
 		pageUrl: url,
 		viewport: { width: 1920, height: 1080 },
 		consoleErrors: { fail: true, allow: [] },
 		failedRequests: { fail: false },
+		// Silent by default (Jared, 2026-11-10: test runs on his PC played the onboarding sounds). Every frame of every
+		// context, sandboxed ones included, routes live Web Audio output (not offline renders) through a gain of 0 just before the speakers and
+		// mutes media elements. The audio engine itself still runs: contexts, unlock, logs, taps and analysers ahead of
+		// the destination behave as before, so sound checks keep measuring. `--set audible=1` restores the speakers.
+		prepareContext: async (t, context) => { await silence(context); },
+		beforeEach: async (t) => { await silence(t.context); },
 		helpers: {
 			// Whether this check runs in the sandbox: the switch when it is given, else the check's own default
 			sandboxed(t, own = false) { return sandboxArg === null ? own : sandboxArg; },
