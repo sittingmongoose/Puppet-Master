@@ -406,7 +406,10 @@
   }
   function moveBtn(p, acc, dir, disabled, reason) {
     const label = dir < 0 ? 'Move up' : 'Move down';
-    return `<button type="button" class="icon-btn pm51-icon-btn" data-action="pm51-providers-account-move" data-provider="${a(p.id)}" data-account="${a(acc.id)}" data-dir="${dir}" aria-label="${a(label)}" data-pm-hover-label="${a(label)}"${disabled ? ` aria-disabled="true" data-disabled-reason="${a(reason)}" data-pm-hover-detail="${a(reason)}"` : ''}>${icon(dir < 0 ? 'up' : 'down')}</button>`;
+    /* arrows of their own, never chevrons: the accordion right beside these buttons expands with a chevron, and
+       two of the three chevrons moving the order while the third expanded read as one control doing two things
+       (FO-125); the arrows are the shell's arrowRight turned, as the glyph registry defines arrow-up/-down */
+    return `<button type="button" class="icon-btn pm51-icon-btn" data-action="pm51-providers-account-move" data-provider="${a(p.id)}" data-account="${a(acc.id)}" data-dir="${dir}" aria-label="${a(label)}" data-pm-hover-label="${a(label)}"${disabled ? ` aria-disabled="true" data-disabled-reason="${a(reason)}" data-pm-hover-detail="${a(reason)}"` : ''}>${icon(dir < 0 ? 'arrowUp' : 'arrowDown')}</button>`;
   }
   function priorityControls(p, acc, i, n) {
     if (n < 2) return '';
