@@ -255,9 +255,10 @@ def cases(m, rows, fixtures):
             'first_append_receipt', 'original_segment_ref', 'original_event_value_commitment')})
         if family not in m.PROVIDER_HASH_PATHS:
             source = m.history_source_for(row, full['payload'], original)
+            unknown = dict(source, recorded_decoder='unknown-decoder')
             add('H05', family, 'unknown_decoder',
-                lambda n, r=row, o=original, s=source: n.resolve_history(r, o, s, {}, decoder=n.HISTORICAL_V1),
-                lambda n, r=row, o=original, s=source: n.resolve_history(r, o, s, {}, decoder='unknown-decoder'))
+                lambda n, r=row, o=original, s=source: n.resolve_history(r, o, s, {}),
+                lambda n, r=row, o=original, s=unknown: n.resolve_history(r, o, s, {}))
 
         bundle = fixtures['checkpoint_positives'][family]
 

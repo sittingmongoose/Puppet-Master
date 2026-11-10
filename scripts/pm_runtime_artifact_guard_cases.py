@@ -10,6 +10,7 @@ from pm_runtime_artifact_round6_cases import cases as round6_cases
 from pm_runtime_artifact_round7_cases import cases as round7_cases
 from pm_runtime_artifact_round8_cases import cases as round8_cases, observation_source
 from pm_runtime_artifact_round9_cases import cases as round9_cases
+from pm_runtime_artifact_round10_cases import cases as round10_cases
 
 
 def accepted(action):
@@ -132,8 +133,8 @@ def cases(m, excluded=()):
         source=m.history_source_for(row,full['payload'],original)
         forged=copy.deepcopy(original);forged['custody']['group_digest']='0'*64
         add('H06',family,'authenticated_custody',
-            lambda n,r=row,o=original,s=source:n.resolve_history(r,o,s,{},decoder=n.HISTORICAL_V1),
-            lambda n,r=row,o=forged,s=source:n.resolve_history(r,o,s,{},decoder=n.HISTORICAL_V1))
+            lambda n,r=row,o=original,s=source:n.resolve_history(r,o,s,{}),
+            lambda n,r=row,o=forged,s=source:n.resolve_history(r,o,s,{}))
 
         for guard,name,edit in [('V01','event_extension',lambda e:e.update(extra=True)),
             ('V02','replay',lambda e:e.update(replay_policy='append_once')),
@@ -235,9 +236,11 @@ def cases(m, excluded=()):
                 lambda n,s=schema,p=bad:n.validator(s).is_valid(p))
             case=next(c for c in fixtures['historical_originals']['cases'] if c['event_type']==family and c['route']=='inline')
             source=m.history_source_for(row,case['logical_payload'],case['original'])
+            # SP-1101: the authenticated owner records an edition no frozen verifier is installed for.
+            unknown=dict(source,recorded_decoder='unknown')
             add('H05',family,'decoder_selection',
-                lambda n,r=row,o=case['original'],s=source:n.resolve_history(r,o,s,{},decoder=n.HISTORICAL_V1),
-                lambda n,r=row,o=case['original'],s=source:n.resolve_history(r,o,s,{},decoder='unknown'))
+                lambda n,r=row,o=case['original'],s=source:n.resolve_history(r,o,s,{}),
+                lambda n,r=row,o=case['original'],s=unknown:n.resolve_history(r,o,s,{}))
 
     restore_cases(m,fixtures,rows,add)
     shared_cases(m,rows,add)
@@ -245,6 +248,7 @@ def cases(m, excluded=()):
     result.extend(round7_cases(m,rows,fixtures))
     result.extend(round8_cases(m,rows,fixtures))
     result.extend(round9_cases(m,rows,fixtures))
+    result.extend(round10_cases(m,rows,fixtures))
     return result
 
 

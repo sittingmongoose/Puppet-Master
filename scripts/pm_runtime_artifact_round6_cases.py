@@ -144,14 +144,10 @@ def cases(m, rows, fixtures):
                     good=copy.deepcopy(base);m.set_path(good,number_path,int(value))
                     bad=copy.deepcopy(good);m.set_path(bad,number_path,value)
                     add('N01',family,name+'_'+label,lambda n,v=good,k=validation:getattr(n,k).is_valid(v),lambda n,v=bad,k=validation:getattr(n,k).is_valid(v))
-            # Untyped JSON extension maps cannot bypass the numeric overlay.
-            good_schema={'type':'object','additionalProperties':True}
-            add('N01',family,name+'_open_map',lambda n,s=good_schema,v=int(value):n.validator(s).is_valid({'v':v}),
-                lambda n,s=good_schema,v=value:n.validator(s).is_valid({'v':v}))
-            for route,size in (('inline',0),('packed',17000)):
-                add('N01',family,name+'_storage_form_'+route,
-                    lambda n,v=int(value),size=size:n.storage_form({'number':v,'summary':'x'*size},{}),
-                    lambda n,v=value,size=size:n.storage_form({'number':v,'summary':'x'*size},{}))
+            # Sweep part 2B (CV-1100): an untyped map value and a storage_form
+            # input have no integer slot, so their integral floats are legal and
+            # these two former N01 pairs are acceptance checks in the checker
+            # (numrule_float_*), each recorded with its reason in the report.
         # Every representation that changes the expected JSON type is tested at
         # the full EventRecord boundary. The payload field is schema-defined but
         # absent from every source/copy join, so the type rule is the only defect.
@@ -162,10 +158,9 @@ def cases(m, rows, fixtures):
         for index,value in enumerate(('0','false',None,[],{},True)):
             bad=copy.deepcopy(full);bad['sequence_id']=value
             add('S07',family,'event_number_type_'+str(index),lambda n,e=full:n.EVENT_VALIDATOR.is_valid(e),lambda n,e=bad:n.EVENT_VALIDATOR.is_valid(e))
-        # Integral floats also violate N01, independently of the primitive
-        # scalar type rule. They are covered on every actual flag adapter above
-        # and in O03's named schema/encoded duplicate set, not mislabeled S07.
-        for index,value in enumerate(wrong_flags[:8]):
+        # Sweep part 2B: N01 reads integer slots only, so an integral float in a
+        # boolean slot is a type defect alone (S07), like every other wrong type.
+        for index,value in enumerate(wrong_flags):
             add('S07',family,'boolean_type_'+str(index),lambda n:n.validator({'type':'boolean'}).is_valid(False),
                 lambda n,v=value:n.validator({'type':'boolean'}).is_valid(v))
         if family.endswith('.restore_point'):

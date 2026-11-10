@@ -29,7 +29,7 @@ _SPEC.loader.exec_module(dr)
 
 # Legacy row label -> new row-name prefixes that may hold its first refusal.
 # Forwarded labels name the reused boundary the original forwarded to.
-SCHEMA = ('S07_', 'S02_', 'S04_', 'N01_', 'S03_')
+SCHEMA = ('S07_', 'S08_', 'S02_', 'S04_', 'N01_', 'S03_')
 FULL = ('F0', 'F1', 'V0') + SCHEMA
 AGREE = ('browser_', 'usage_', 'trace_')
 LEGACY = {
@@ -49,6 +49,8 @@ LEGACY = {
     'O07': ('O07',), 'O08': ('O08',), 'O09': ('O09',), 'O10': ('O10',), 'O11': FULL, 'O12': ('O12',), 'O13': ('H0',),
     'S01': ('S01',), 'S02': ('S02',), 'S03': ('S03',), 'S04': ('S04',), 'S05': ('S05',), 'S06': ('S06',), 'S07': ('S07',),
     'I01': ('I01',), 'I02': ('I02',), 'I03': ('I03',), 'N01': ('N01',),
+    # Sweep part 2B rows (shared date-time check, physical codec, JCS route, SP-1101 dispatch).
+    'S08': ('S08',), 'I04': ('I04',), 'I05': ('I05',), 'J01': ('J01',), 'F14': ('F14',), 'A08': ('A08',), 'O14': ('O14',),
 }
 RETURN_SOURCE = 'return g.Case(table, check, context)'
 # Witness pairs kept in the full checker but not used as table-row proof, with the reason.
@@ -70,9 +72,6 @@ EXCLUDED_PATTERNS = [
     ('O11', 'runtime_artifact.restore_point', r'numeric_.*_forged_first_receipt',
      'two rows by construction: a forged predecessor receipt is carried by both supplied copies (result and custody), '
      'so F12 and F13 refuse together; original_result, original_custody and receipt_copy prove each row alone'),
-    ('O03', 'runtime_artifact.restore_point', r'.*_wrong_type_(2|3)',
-     'two rows by construction: 0.0/1.0 where the owner snapshot needs a boolean violate the type row (S07) and the '
-     'number row (N01); the integer, string, null and container variants prove S07 alone (number spelling is part 2B)'),
 ]
 
 
