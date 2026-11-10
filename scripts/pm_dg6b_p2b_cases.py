@@ -216,6 +216,14 @@ def family_cases(m, row, schema):
         paths.append(('event_record', 'payload', 'revision'))
     add('long_integer/revision', 'PQ01_producer_jcs', 'producer_number_domain',
         append_raw(raw_text(base, paths, LONG_POSITIVE)))
+    # A schema error that renders the long integer (a string slot's type, a uint64 slot's maximum) counts as an
+    # error instead of raising (error_count).
+    paths = [('payload', 'subject_ref'), ('source', 'frozen_payload', 'subject_ref')]
+    if base['event_record']['payload_ref'] is None:
+        paths.append(('event_record', 'payload', 'subject_ref'))
+    add('long_integer/string_slot', 'PS01_payload', 'payload_schema', append_raw(raw_text(base, paths, LONG_POSITIVE)))
+    add('long_integer/read_token_frontier_revision', 'CK01_read_token', 'checkpoint_schema',
+        append_raw(raw_text(base, [('durable_read_token', 'frontier_revision')], LONG_POSITIVE)))
     original = clone(base)
     candidate_text = raw_text(base, [('event_record', 'producer_sequence_id')], LONG_POSITIVE)
     add('long_integer/retry_candidate', 'PQ01_producer_jcs', 'producer_number_domain',
@@ -232,6 +240,12 @@ def family_cases(m, row, schema):
             label = f'corpus/{slot}/{index}/' + hashlib.sha256(raw.encode('utf-8', 'surrogatepass')).hexdigest()[:12]
             add(label, None if expected is None else expected[0], None if expected is None else expected[1],
                 append_raw(text))
+
+    # ---- EJ01 on the append path: its former only witness was a retained original with a substituted
+    # event_type, which custody now refuses first (Storage never sealed those bytes).
+    bad = clone(base)
+    bad['event_record']['event_type'] = 'plugin.loaded' if name != 'plugin.loaded' else 'plugin.load_failed'
+    add('envelope/event_type', 'EJ01_event_type', 'envelope_source_join', append(bad))
 
     # ---- SP-1101 custody (HR01) and the Storage record join it no longer masks (HS04).
     forged = retained(lambda original: original['payload'].__setitem__('ts', '2026-11-04T12:00:30Z'))
