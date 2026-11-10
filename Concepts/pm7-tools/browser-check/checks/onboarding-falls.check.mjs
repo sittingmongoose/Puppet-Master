@@ -106,6 +106,15 @@ export default async function(t) {
         if(a.length<4){props.push({id,kind:all[0]?.kind,covered:false,samples:a.length});continue;}
         const y=p=>(p.box[1]+p.box[3])/2,start=y(a[0]),end=y(a.at(-1)),span=end-start;
         const wireStart=a[0].len,wireTravel=a.at(-1).len-wireStart;
+        // 412's first visible sample is not on the wire yet, and a single retro frame can spike the offset
+        // and return. Rest ignores that entry sample and a one-frame spike. A jump that stays, which is how
+        // the vault leaves its wire, remains.
+        const off=p=>y(p)-p.len,kept=[];
+        for(let i=1;i<a.length;i++){
+          if(i<a.length-1){const o=off(a[i]),prev=off(a[i-1]),next=off(a[i+1]);if(Math.abs(o-prev)>20&&Math.abs(o-next)>20&&Math.abs(prev-next)<=20)continue;}
+          kept.push(a[i]);
+        }
+        const restSpan=kept.length>1?y(kept.at(-1))-y(kept[0]):span,restWire=kept.length>1?kept.at(-1).len-kept[0].len:wireTravel;
         let worst=0,stall=0,maxStall=0;
         for(let i=1;i<a.length;i++){
           const p=a[i-1],q=a[i],dt=q.ts-p.ts,progress=(p.len-wireStart)/wireTravel;
@@ -116,7 +125,12 @@ export default async function(t) {
           maxStall=Math.max(maxStall,stall);
         }
         const remaining=a[0].target-a[0].len;
-        props.push({id,kind:a[0].kind,ground:a[0].ground,span,remaining,wireTravel,samples:a.length,covered:span>20&&wireTravel>20,worst,maxStall});
+        const last=a.at(-1);
+        // The rig treats a prop as arrived within 2.5 of its target length. Friendly Light's vault used to pass
+        // with span about 5 and wire about -53 because a short or backward travel was not covered.
+        const arrived=Math.abs(last.target-last.len)<=2.5;
+        const wireGap=restSpan-restWire;
+        props.push({id,kind:a[0].kind,ground:a[0].ground,span,remaining,wireTravel,restSpan,restWire,wireGap,arrived,samples:a.length,covered:span>20&&wireTravel>20,worst,maxStall});
       }
       const effects=new Map();
       for(const r of result.rows)for(const p of r.fx){const key=r.stage+':'+p.id;if(!effects.has(key))effects.set(key,[]);effects.get(key).push({...p,ts:r.t*1000,render:r.render});}
@@ -131,6 +145,12 @@ export default async function(t) {
       await t.check(look+' '+label+': requested rig look painted',result.rows.length>10&&result.rows.every(r=>r.theme===look),JSON.stringify([...new Set(result.rows.map(r=>r.theme))]));
       const bad=props.filter(p=>p.covered&&(p.worst>15||p.maxStall>Math.max(60,300/(look==='retro-light'?10:look==='retro-dark'?20:120))));
       await t.check(look+' '+label+': placement has continuous animation progress',bad.length===0,JSON.stringify(bad));
+      // The act card's length is its banner phase, not a suspension. On the passing 412 wholes the largest
+      // remaining gap is 26px (Windows glass-light backup folder). The hung vault misses by about 58
+      // (Friendly Light, not covered) or about 168 (Friendly Dark). 30 sits between those records.
+      // The continuity rate stays 15.
+      const offWire=props.filter(p=>p.kind!=='act-card'&&(p.covered||p.arrived)&&(Math.abs(p.restSpan)>20||Math.abs(p.restWire)>20)&&Math.abs(p.wireGap)>30);
+      await t.check(look+' '+label+': a settled prop rests on its wire',offWire.length===0,JSON.stringify(offWire));
       await t.check(look+' '+label+': independent particles have no position jumps',bursts.every(p=>p.follow||p.maxSpeed<1600),JSON.stringify(bursts.filter(p=>!p.follow&&p.maxSpeed>=1600)));
       if(entry.effect==='ready'&&!t.args.reduced){const expected=look.startsWith('nier-')?0:60;await t.equal(look+': confetti follows its look policy',bursts.filter(p=>p.kind==='conf').length,expected);}
       if(entry.effect==='banner')await t.check(look+': hanging act card follows its look policy',look.startsWith('nier-')?props.some(p=>p.kind==='act-card'&&p.covered):!props.some(p=>p.kind==='act-card'),JSON.stringify({props:props.filter(p=>p.kind==='act-card'),policy:result.bannerPolicy,timings:result.bannerTimings}));

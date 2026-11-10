@@ -546,8 +546,17 @@
         this.keepOff, this.pipAt, this.pipOff, this.pipBB, pr.bb, pr.spaceBB, preceding]);
       if (pr.restFit && pr.restFit.key === key) return pr.restFit;
       const geometry = JSON.stringify([this.theme, this.layoutName, this.vis, this.lastScreen, pr.bb, pr.spaceBB, tg.ax, tg.len, tg.sc, tm]);
+      /* The wire is the slot, not the drawing. A new line redraws the art and moves the speech obstacle,
+         so a key that included the box never matched and the clearance ran again. */
+      const wireKey = JSON.stringify([this.theme, this.layoutName, this.lastScreen]);
       const kept = pr.restFit && pr.restFit.geometry === geometry ? pr.restFit : null;
-      const fit = this.fit(pr, [tg.ax, this.L.anchorY + tg.len], tg.sc, tm, true, pr.spaceBB, kept);
+      /* 96c4237762 refits when the slot length changes. Friendly Dark's vault, already on the wire,
+         then jumped its offset about 168px as 388 shortened to 334 and rested there. A shorter slot
+         keeps the offset it had and lets the length spring carry it, which is where 412 rests.
+         The hold lasts while the slot stays that short; a longer slot still refits and eases. */
+      const sameWire = pr.restFit && pr.restFit.wireKey === wireKey;
+      const onWire = sameWire && (pr.restFit.len - tg.len > .5 || (pr.restFit.held && tg.len <= pr.restFit.len + .5)) ? pr.restFit : null;
+      const fit = this.fit(pr, [tg.ax, this.L.anchorY + tg.len], tg.sc, tm, true, pr.spaceBB, kept, onWire);
       const sc = tg.sc * fit.f, spaceBox = fit.box, bb = pr.bb;
       const actual = pr.spaceBB && bb ? [tg.ax + fit.dx + (bb[0] - tm[0]) * sc, this.L.anchorY + tg.len + fit.dy + (bb[1] - tm[1]) * sc,
         tg.ax + fit.dx + (bb[0] + bb[2] - tm[0]) * sc, this.L.anchorY + tg.len + fit.dy + (bb[1] + bb[3] - tm[1]) * sc] : fit.box;
@@ -562,12 +571,12 @@
       }
       const reach = this.speechSway(pr, tg.sc * fit.f, tm, tg.len), b = fit.box;
       const speechBox = b && [b[0] - reach[0], b[1] - reach[1], b[2] + reach[0], b[3] + reach[1]];
-      return (pr.restFit = Object.assign({ key, geometry, speechBox, spaceBox, ax: tg.ax + fit.dx, sc }, fit, {box: actual}));
+      return (pr.restFit = Object.assign({ key, geometry, wireKey, len: tg.len, held: !!onWire, speechBox, spaceBox, ax: tg.ax + fit.dx, sc }, fit, {box: actual}));
     }
     /* how far a prop must move (dx, dy) or shrink (f) for its drawing, at its angle, to sit inside the pane's visible span
        (this.vis, from measure) with a margin, and off a speech box that cannot move out of its way (this.keepOff: NieR's
        fixed box, or a bubble that found no clear place); box is where it is then painted */
-    fit(pr, hang, sc, tm, destination, shape, kept) {
+    fit(pr, hang, sc, tm, destination, shape, kept, onWire) {
       const v = this.vis; let bb = shape || pr.bb;
       if (!v) return { dx: 0, dy: 0, f: 1, box: null };
       if (!bb || !bb[2]) { bb = pr.bb = this.boxOf(pr.el); if (!bb || !bb[2]) return { dx: 0, dy: 0, f: 1, box: null }; }
@@ -627,6 +636,21 @@
         return g;
       };
       if (rest) {
+        /* A shortened slot stays on the offset it already solved. Solving the clearance again
+           lifts the prop off its length in one frame (96c4237762, about 168px). The pane clamps
+           still apply; a longer slot is free to refit, and the aim spring eases that. */
+        if (destination && onWire) {
+          const wf = onWire.f || 1;
+          const uLo = Math.min(...cs.map((c) => c[0])) * wf, uHi = Math.max(...cs.map((c) => c[0])) * wf;
+          const uTp = Math.min(...cs.map((c) => c[1])) * wf, uBt = Math.max(...cs.map((c) => c[1])) * wf;
+          let wdx = onWire.dx, wdy = onWire.dy;
+          if (hx + uHi + wdx > v.x1 - pad) wdx = v.x1 - pad - (hx + uHi);
+          if (hx + uLo + wdx < v.x0 + pad) wdx = v.x0 + pad - (hx + uLo);
+          if (hy + uBt + wdy > v.y1 - pad) wdy = v.y1 - pad - (hy + uBt);
+          if (hy + uTp + wdy < v.y0 + pad) wdy = v.y0 + pad - (hy + uTp);
+          pr.restOff = { dx: wdx - dxEdge, dy: wdy, g: wf / f };
+          return { dx: wdx, dy: wdy, f: wf, box: [hx + uLo + wdx, hy + uTp + wdy, hx + uHi + wdx, hy + uBt + wdy] };
+        }
         if (hy + bt > v.y1 - pad) dy = v.y1 - pad - (hy + bt);
         if (visible > .95 && hy + tp + dy < v.y0 + pad) dy = v.y0 + pad - (hy + tp);
         /* off what it must not touch: a speech box that cannot move (keepOff) and the props already placed this frame
