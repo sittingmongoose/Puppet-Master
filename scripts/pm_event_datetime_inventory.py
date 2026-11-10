@@ -18,6 +18,10 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 INVENTORY = "Plans/event_datetime_inventory.json"
 FIELDS = frozenset(("observed_at_utc", "persisted_at_utc"))
+# CV-1101 source fields the enforced validator composes, by inventory classification (fix round 18). Every EventRecord
+# node is an envelope whose occurred_at_utc takes the broad EventRecord profile, retained and copied history included,
+# whatever the original declares; the Storage fields take CV-253's profile through the node's own profile.
+SOURCE_FIELDS = {"EventRecord": ("occurred_at_utc",)}
 
 
 def digest(value):
@@ -124,38 +128,62 @@ def _markdown_fences(text):
             yield line_no, body
 
 
-_JSON_U_ESCAPE = re.compile(r"\\u([0-9a-fA-F]{4})")
+_JSON_ESCAPE = re.compile(r'\\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})')
+# A JSON container's first character, after any whitespace or byte order marks.
+_JSON_SHAPED = re.compile(r'[\s\ufeff]*[\[{"]')
+# Serialized strings decoded inside one container, at most (T164).
+SERIALIZED_DEPTH = 8
 EXCLUSIONS = "scripts/pm_event_datetime_exclusions.json"
 INVENTORY_SCHEMA = "scripts/pm_event_datetime_inventory.schema.json"
 
 
-def mentions_field(body):
-    # Repeated decoding also sees names inside serialized JSON strings.
+def _json_layers(text):
+    """The text, then each JSON-unescaped layer of it, to the fixed point (T163).
+
+    Every JSON escape is decoded at every level, the short ones as well as
+    \\u, so a name, a keyword or a container spelled only through escapes,
+    however many times escaped, is seen. Each layer is shorter than the one
+    before, so the list is finite.
+    """
+    layers, current = [text], text
     while True:
-        decoded = _JSON_U_ESCAPE.sub(lambda m: chr(int(m.group(1), 16)), body)
-        if decoded == body:
-            return any(field in body for field in FIELDS)
-        body = decoded
+        decoded = _JSON_ESCAPE.sub(lambda m: json.loads('"' + m.group(0) + '"'), current)
+        if decoded == current:
+            return layers
+        layers.append(decoded)
+        current = decoded
+
+
+def mentions_field(body):
+    # Every escape layer, so names spelled only through escapes are seen too.
+    return any(field in layer for layer in _json_layers(body) for field in FIELDS)
 
 
 def schema_candidate(body):
     """Wildcard declarations can name these fields without spelling them."""
-    while True:
-        decoded = _JSON_U_ESCAPE.sub(lambda m: chr(int(m.group(1), 16)), body)
-        if decoded == body:
-            return (any(field in body for field in FIELDS) or
-                    "patternProperties" in body or "propertyNames" in body)
-        body = decoded
+    return any(any(field in layer for field in FIELDS) or "patternProperties" in layer or "propertyNames" in layer
+               for layer in _json_layers(body))
+
+
+# Each declaring keyword and the JSON type it must have to be read (T164's class).
+_DECLARING_TYPES = (("properties", dict), ("dependentRequired", dict), ("dependentSchemas", dict),
+                    ("patternProperties", dict), ("propertyNames", (bool, dict)), ("required", list),
+                    ("enum", list))
 
 
 def declarations(node):
     """All supported ways a schema object declares either exact field name.
 
     This is declaration detection, never ownership inference. Invalid regexes
-    fail closed rather than proving that their match set excludes a field.
+    fail closed rather than proving that their match set excludes a field, and
+    so does a declaring keyword of another JSON type that names either field:
+    it is never read as declaring nothing.
     """
     if not isinstance(node, dict):
         return ()
+    for key, kind in _DECLARING_TYPES:
+        if key in node and not isinstance(node[key], kind) and mentions_field(json.dumps(node[key])):
+            raise ValueError("unreadable field declaration keyword: " + key)
     found = set()
     for key in ("properties", "dependentRequired", "dependentSchemas"):
         value = node.get(key, {})
@@ -226,7 +254,8 @@ def _markdown_blocks(text):
         # Inline code is a code container; surrounding Markdown prose is not.
         if token.type == "inline":
             for i, child in enumerate(token.children or []):
-                if child.type in ("code_inline", "html_inline") and "{" in child.content:
+                if child.type in ("code_inline", "html_inline") and any(
+                        "{" in layer for layer in _json_layers(child.content)):
                     yield child.type + ":" + str(token.map[0] + 1) + ":" + str(i), child.content
     authoritative = {t.map[0] + 1 for t in tokens if t.type == "fence" and t.map}
     for line, body in _supplementary_fences(text):
@@ -311,9 +340,14 @@ def _exclusion_schema_paths(root, files):
 def scan(root=ROOT):
     """Bounded universe: all Plans files; JSON/JSONL in UTF-8/16/32,
     Markdown/MDX CommonMark fences, indented code, HTML and inline code,
-    plus recursively serialized JSON objects. Markdown prose is out of scope.
+    plus recursively serialized JSON objects, arrays and strings, up to
+    SERIALIZED_DEPTH strings deep. Markdown prose is out of scope.
     Any mentioning container that cannot yield declarations needs a committed,
     content-pinned exclusion with reason and citation. No suffix skip exists.
+    Decoding is total (T163, T164): a candidate string or key that is JSON is
+    inspected; one that is JSON-shaped but unreadable, that is JSON only once
+    unescaped, that is a key, or that lies past the depth bound refuses with a
+    named code. A candidate is skipped only when no layer of it is JSON-shaped.
     """
     root = Path(root)
     rows, errors, used = [], [], set()
@@ -351,7 +385,7 @@ def scan(root=ROOT):
         else:
             errors.append({"path": path, "origin": origin, "error": reason, "sha256": pin})
 
-    def inspect(value, path, origin):
+    def inspect(value, path, origin, depth=0):
         key = (path, origin)
         pin = hashlib.sha256(json.dumps(value).encode()).hexdigest()
         if key in excluded and excluded[key]["sha256"] == pin:
@@ -372,21 +406,33 @@ def scan(root=ROOT):
                          "resource_sha256": digest(resource), "node_sha256": digest(node)})
             count += 1
         # Serialized strings have their own resource/pointer address space.
+        def serialized(obj, here):
+            try:
+                decoded = json.loads(obj, object_pairs_hook=_unique_object)
+            except ValueError:
+                if _JSON_SHAPED.match(obj):
+                    unsupported(path, here, obj, "unreadable_schema_string_container")
+                elif any(_JSON_SHAPED.match(layer) for layer in _json_layers(obj)[1:]):
+                    # JSON with its quotes stripped: no pointer reaches it.
+                    unsupported(path, here, obj, "escaped_schema_string_container")
+                return
+            if isinstance(decoded, (dict, list, str)):
+                if depth >= SERIALIZED_DEPTH:
+                    unsupported(path, here, obj, "serialized_depth_exceeded")
+                    return
+                inspect(decoded, path, here, depth + 1)
+
         def strings(obj, pointer=""):
             if isinstance(obj, str):
                 if schema_candidate(obj):
-                    try:
-                        decoded = json.loads(obj, object_pairs_hook=_unique_object)
-                    except ValueError:
-                        if obj.lstrip().startswith(("{", "[", '"')):
-                            unsupported(path, origin + ":string:" + pointer, obj,
-                                        "unreadable_schema_string_container")
-                        return
-                    if isinstance(decoded, (dict, list, str)):
-                        inspect(decoded, path, origin + ":string:" + pointer)
+                    serialized(obj, origin + ":string:" + pointer)
             elif isinstance(obj, dict):
                 for key, child in obj.items():
-                    strings(child, pointer + "/" + str(key).replace("~", "~0").replace("/", "~1"))
+                    child_pointer = pointer + "/" + str(key).replace("~", "~0").replace("/", "~1")
+                    # A key has no pointer of its own to address a container.
+                    if schema_candidate(key) and any(_JSON_SHAPED.match(layer) for layer in _json_layers(key)):
+                        unsupported(path, origin + ":key:" + child_pointer, key, "serialized_key_container")
+                    strings(child, child_pointer)
             elif isinstance(obj, list):
                 for i, child in enumerate(obj):
                     strings(child, pointer + "/" + str(i))
@@ -823,6 +869,17 @@ class StorageSelection:
 
     def fields(self, schema):
         return self.admit(schema)
+
+    def classified(self, schema):
+        """(Storage fields, CV-1101 source fields) of one admitted fragment, by its node's classification.
+
+        Fix round 18: the source fields are keyed by the inventory
+        classification, never by a format annotation of the original.
+        """
+        storage = self.admit(schema)
+        if not storage:
+            return (), ()
+        return storage, SOURCE_FIELDS.get(self.nodes[id(schema)][1].get("classification"), ())
 
 
 def main():

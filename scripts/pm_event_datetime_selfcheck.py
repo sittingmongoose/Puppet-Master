@@ -67,6 +67,16 @@ class StrSub(str):
     """A str subclass instance: equal to its text, but not exactly a str."""
 
 
+def _str_enum_member(text):
+    """A stdlib StrEnum member equal to text: a string to JSON Schema, but not exactly a str."""
+    import enum
+    return enum.StrEnum("HostTimestamp", {"VALUE": text}).VALUE
+
+
+# Sol max gate finding 1 (REAL): host string-like values JSON Schema treats as strings.
+HOST_STRINGS = {"str_subclass": StrSub, "str_enum": _str_enum_member}
+
+
 def outcome(function, *args, **kwargs):
     """('accept', value) | ('refuse', reason) | ('exception', type name)."""
     _, _, _, m = _mods()
@@ -337,6 +347,26 @@ def _fc_non_string(context):
     return all(checker.conforms(v, "date-time") for v in (12, None, ["x"], {"a": 1}))
 
 
+@check("datetime_unit_format_checker_str_subclass_runs_predicate")
+def _fc_str_subclass(context):
+    # Sol max gate finding 1 (REAL): a str subclass or StrEnum member is a string to JSON Schema, so the checker runs
+    # the predicate on it, which refuses it (date_time_type) under every profile; it never passes as a non-string.
+    from jsonschema import FormatError
+    dt, _, _, m = _mods()
+    reasons = []
+    for profile in (E, S):
+        checker = dt.format_checker(profile=profile)
+        for make in HOST_STRINGS.values():
+            for text in ("2026-01-01T00:00:00Z", "not-a-dateZ"):
+                try:
+                    checker.check(make(text), "date-time")
+                except FormatError as error:
+                    reasons.append(error.cause.reason if isinstance(error.cause, m.Refusal) else None)
+                else:
+                    reasons.append(None)
+    return reasons == ["date_time_type"] * 8 and dt.format_checker().conforms("2026-01-01T00:00:00Z", "date-time")
+
+
 @check("datetime_unit_format_checker_storage_profile")
 def _fc_storage(context):
     dt, _, _, _ = _mods()
@@ -470,8 +500,7 @@ def _bound(schema, registry=None, selection=None, profile="event_record"):
     dt, _, _, _ = _mods()
     selection = selection or _selection()
     base, registry = dt._closed_datetime_graph(schema, registry, selection=selection)
-    return dt._bound_validator(base)(schema, registry=registry, format_checker=dt.format_checker(profile=profile),
-                                     storage_selection=selection)
+    return dt._bind(base, schema, registry, selection, profile)
 
 
 def _storage_schema():
@@ -663,6 +692,41 @@ def _real_envelope(context):
             not validator.is_valid({"event": dict(event, persisted_at_utc="2026-01-01T00:00:00+00:00")}) and
             not validator.is_valid({"event": dict(event, observed_at_utc="2026-01-01T00:00:00z")}) and
             validator.is_valid({"event": dict(event, occurred_at_utc="2026-01-01t00:00:00+05:30")}))
+
+
+def _eventrecord_host_string(field, kind):
+    """Sol max gate finding 1 (REAL): datetime_validator over the complete committed EventRecord schema refuses a host
+    string-like value (HOST_STRINGS[kind]) at field, the malformed text and base_event's own valid text alike: every
+    error is a format error at that field whose cause is date_time_type. The unchanged base_event stays valid, and the
+    JSON round trip of the malformed value, a plain str, is still refused by its syntax."""
+    def run(context):
+        dt, _, _, m = _mods()
+        schema = json.loads((context.root / "Plans/event_record.schema.json").read_text())
+        event = json.loads((context.root / "Plans/seglog_frame_v2_wire_fixtures.json").read_text())["base_event"]
+        validator = dt.datetime_validator(schema)
+
+        def errors(instance):
+            return sorted({(e.validator, tuple(e.absolute_path),
+                            e.cause.reason if isinstance(e.cause, m.Refusal) else None)
+                           for e in validator.iter_errors(instance)})
+        if errors(event) != []:
+            return False
+        make = HOST_STRINGS[kind]
+        for text in ("not-a-dateZ", event[field]):
+            value = make(text)
+            if type(value) is str or not isinstance(value, str) or value != text:
+                return False
+            if errors(dict(event, **{field: value})) != [("format", (field,), "date_time_type")]:
+                return False
+        plain = json.loads(json.dumps(dict(event, **{field: make("not-a-dateZ")})))
+        return type(plain[field]) is str and errors(plain) == [("format", (field,), "date_time_syntax")]
+    return run
+
+
+for _field in ("occurred_at_utc", "observed_at_utc", "persisted_at_utc"):
+    for _kind in HOST_STRINGS:
+        check("datetime_validator_real_eventrecord_%s_%s_refused" % (_field, _kind), slow=True)(
+            _eventrecord_host_string(_field, _kind))
 
 
 @check("datetime_validator_real_inventory_unclassified_refused", slow=True)
@@ -3150,6 +3214,33 @@ def _detect_orphan(context):
     return any("names no known rule" in p for p in _fresh_problems(context, change))
 
 
+@check("datetime_gate_bar_detects_listed_survivor")
+def _detect_listed_survivor(context):
+    """Fix round 17: a hand-written declared survivor (V04) names its rule and is listed by none; listing it, or a
+    generated declared survivor, is a problem, and so is a witnessed hand-written mutation its rule omits."""
+    spec = _gate_bar().load_spec(context.root)
+    survivor = next(m for m in spec["mutations"] if m.get("survives"))
+    generated = next(k for k, e in spec["generated"]["points"].items() if e.get("survives"))
+
+    def list_hand(spec):
+        next(r for r in spec["rules"] if r["id"] == survivor["rule"])["mutations"].append(survivor["id"])
+
+    def list_generated(spec):
+        spec["rules"][0]["mutations"].append(generated)
+
+    def omit_witnessed(spec):
+        rule = next(r for r in spec["rules"] if r["id"] == "profile.legacy-output")
+        rule["mutations"].remove("hw-fix17-B05-legacy-six-digit-fraction")
+
+    quiet = not [p for p in _fresh_problems(context, lambda spec: None) if "survivor" in p]
+    return (quiet and survivor["id"] == "hw-fix17-V04-automatic-empty-context-only" and
+            any(p.endswith("lists the declared survivor %s; declared survivors are never listed" % survivor["id"])
+                for p in _fresh_problems(context, list_hand)) and
+            any(("lists the declared survivor %s;" % generated) in p for p in _fresh_problems(context, list_generated)) and
+            "mutation hw-fix17-B05-legacy-six-digit-fraction names rule profile.legacy-output, which does not list it"
+            in _fresh_problems(context, omit_witnessed))
+
+
 @check("datetime_gate_bar_detects_unnamed_rule")
 def _detect_unnamed_rule(context):
     def change(spec):
@@ -3208,3 +3299,1638 @@ def _detect_cv1101_unselected(context):
 def _detect_pins_quiet(context):
     return not [p for p in _owner_pin_problems(context, "Plans/Contracts_V0.md", "### CV-1101 - ", "### CV-1101 - ")
                 if "changed" in p]
+
+
+# ---------------------------------------------------------------------------
+# N. Fix round 17 (TOOL-ISSUES T161-T166): each blind survivor's whole class.
+# ---------------------------------------------------------------------------
+
+# N1. T161 (B05): every finite parameter domain the gate checks, for every profile, with cases generated from the
+# owner profile table: every value of the domain and each boundary just outside it. CV-1101: the RFC 3339 grammar
+# is the same under every profile; storage_utc_z, coordination_utc_z and legacy_normalization_output admit only a
+# terminal uppercase Z; legacy_normalization_output admits exactly nine fractional digits. None: the profile adds
+# no restriction to that parameter.
+PROFILE_TABLE = {
+    E: {"zones": None, "fraction_lengths": None},
+    S: {"zones": ("Z",), "fraction_lengths": None},
+    C: {"zones": ("Z",), "fraction_lengths": None},
+    L: {"zones": ("Z",), "fraction_lengths": (9,)},
+}
+# IERS Bulletin C72 insertion days (CV-1101 pins the history through 2016-12-31), the test's own copy.
+C72_LEAP_DAYS = frozenset((
+    "1972-06-30", "1972-12-31", "1973-12-31", "1974-12-31", "1975-12-31", "1976-12-31", "1977-12-31", "1978-12-31",
+    "1979-12-31", "1981-06-30", "1982-06-30", "1983-06-30", "1985-06-30", "1987-12-31", "1989-12-31", "1990-12-31",
+    "1992-06-30", "1993-06-30", "1994-06-30", "1995-12-31", "1997-06-30", "1998-12-31", "2005-12-31", "2008-12-31",
+    "2012-06-30", "2015-06-30", "2016-12-31"))
+FRACTION_LENGTHS = (*range(0, 25), 30, 40)
+ZONE_FORMS = ("Z", "z", "+00:00", "-00:00", "+05:30", "-07:45", "+23:59", "-23:59", "+01:00", "-12:00")
+ZONE_OUTSIDE = ("", "ZZ", "Zz", "UTC", "GMT", "+0000", "+00", "+0:00", "+000:00", "+00:000", "+00:00:00", "00:00",
+                "*00:00", "Z ", " Z", "+00:00Z", "z+00:00", "\u2212" + "05:00")
+SEPARATOR_OUTSIDE = (" ", "_", "x", "", "TT", "Tt", "\t", "\n")
+DAY_YEARS = (2026, 2024, 1900, 2000, 0, 2100)
+_MONTH_DAYS = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+
+
+def _days_in(year, month):
+    leap = year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+    return 29 if month == 2 and leap else _MONTH_DAYS[month - 1]
+
+
+def _stamp(date="2026-01-01", separator="T", time="00:00:00", fraction=".123456789", zone="Z"):
+    # The base, 2026-01-01T00:00:00.123456789Z, is valid under every profile; each case changes one part.
+    return date + separator + time + fraction + zone
+
+
+def _zone_outcome(profile, zone):
+    zones = PROFILE_TABLE[profile]["zones"]
+    return None if zones is None or zone in zones else "date_time_utc_z"
+
+
+def _fraction_outcome(profile, digits):
+    lengths = PROFILE_TABLE[profile]["fraction_lengths"]
+    return None if lengths is None or digits in lengths else "date_time_legacy_fraction"
+
+
+def _two_digit_field(name, maximum, code, place):
+    """(parameter, value, outcome) for a two-digit field: every value of its range, then the boundary above it,
+    99, and one and three digits."""
+    def cases(profile):
+        out = [(n, place("%02d" % n), None) for n in range(0, maximum + 1)]
+        out += [(n, place("%02d" % n), code) for n in (maximum + 1, 99)]
+        out += [(text, place(text), "date_time_syntax") for text in ("0", "000")]
+        return out
+    return cases
+
+
+def _domain_fraction_length(profile):
+    digits = "1234567890" * 4
+    out = [(n, _stamp(fraction="." + digits[:n] if n else ""), _fraction_outcome(profile, n)) for n in FRACTION_LENGTHS]
+    return out + [(".", _stamp(fraction="."), "date_time_syntax"), (".1a", _stamp(fraction=".1a"), "date_time_syntax")]
+
+
+def _domain_zone(profile):
+    return ([(z, _stamp(zone=z), _zone_outcome(profile, z)) for z in ZONE_FORMS] +
+            [(z, _stamp(zone=z), "date_time_syntax") for z in ZONE_OUTSIDE])
+
+
+def _domain_offset_hour(profile):
+    out = [(s + "%02d" % h, _stamp(zone="%s%02d:00" % (s, h)), _zone_outcome(profile, "%s%02d:00" % (s, h)))
+           for s in "+-" for h in range(0, 24)]
+    out += [(s + "%02d" % h, _stamp(zone="%s%02d:00" % (s, h)), "date_time_offset_hour") for s in "+-" for h in (24, 99)]
+    return out + [(t, _stamp(zone="+" + t + ":00"), "date_time_syntax") for t in ("0", "000")]
+
+
+def _domain_offset_minute(profile):
+    out = [(s + "%02d" % m, _stamp(zone="%s00:%02d" % (s, m)), _zone_outcome(profile, "%s00:%02d" % (s, m)))
+           for s in "+-" for m in range(0, 60)]
+    out += [(s + "%02d" % m, _stamp(zone="%s00:%02d" % (s, m)), "date_time_offset_minute") for s in "+-" for m in (60, 99)]
+    return out + [(t, _stamp(zone="+00:" + t), "date_time_syntax") for t in ("0", "000")]
+
+
+def _domain_separator(profile):
+    return ([(s, _stamp(separator=s), None) for s in ("T", "t")] +
+            [(s, _stamp(separator=s), "date_time_syntax") for s in SEPARATOR_OUTSIDE])
+
+
+def _domain_date_time_separators(profile):
+    return ([("date " + s, "2026" + s + "01-01" + "T00:00:00.123456789Z", "date_time_syntax") for s in ("/", ".", "_", "")] +
+            [("date2 " + s, "2026-01" + s + "01" + "T00:00:00.123456789Z", "date_time_syntax") for s in ("/", ".", "_", "")] +
+            [("time " + s, _stamp(time="00" + s + "00:00"), "date_time_syntax") for s in ("-", ".", "_", "")] +
+            [("time2 " + s, _stamp(time="00:00" + s + "00"), "date_time_syntax") for s in ("-", "_", "")])
+
+
+def _domain_year(profile):
+    out = [(y, _stamp(date="%04d-01-01" % y), None) for y in range(0, 10000)]
+    return out + [(t, _stamp(date=t + "-01-01"), "date_time_syntax") for t in ("026", "12026", "+2026", "-2026")]
+
+
+def _domain_month(profile):
+    out = [(m, _stamp(date="2026-%02d-01" % m), None) for m in range(1, 13)]
+    out += [(m, _stamp(date="2026-%02d-01" % m), "date_time_month") for m in (0, 13, 99)]
+    return out + [(t, _stamp(date="2026-" + t + "-01"), "date_time_syntax") for t in ("1", "001")]
+
+
+def _domain_day(profile):
+    out = []
+    for year in DAY_YEARS:
+        for month in range(1, 13):
+            last = _days_in(year, month)
+            out += [((year, month, d), _stamp(date="%04d-%02d-%02d" % (year, month, d)), None) for d in range(1, last + 1)]
+            out += [((year, month, d), _stamp(date="%04d-%02d-%02d" % (year, month, d)), "date_time_day")
+                    for d in (0, last + 1)]
+    return out + [(t, _stamp(date="2026-01-" + t), "date_time_syntax") for t in ("1", "001")]
+
+
+def _domain_second(profile):
+    out = _two_digit_field("second", 59, "date_time_second", lambda t: _stamp(time="00:00:" + t))(profile)
+    # 60 is in range but is a real leap second only at a table instant; 2026-01-01T00:00:60 is not one.
+    return [(n, v, "date_time_leap_second" if n == 60 else c) for n, v, c in out] + \
+        [(61, _stamp(time="00:00:61"), "date_time_second")]
+
+
+def _domain_leap_second(profile):
+    out = []
+    for year in range(1971, 2028):
+        for month in range(1, 13):
+            day = "%04d-%02d-%02d" % (year, month, _days_in(year, month))
+            out.append((day, _stamp(date=day, time="23:59:60"), None if day in C72_LEAP_DAYS else "date_time_leap_second"))
+    return out
+
+
+PROFILE_DOMAINS = {
+    "fraction_length": _domain_fraction_length,
+    "zone": _domain_zone,
+    "offset_hour": _domain_offset_hour,
+    "offset_minute": _domain_offset_minute,
+    "separator": _domain_separator,
+    "date_time_separators": _domain_date_time_separators,
+    "year": _domain_year,
+    "month": _domain_month,
+    "day": _domain_day,
+    "hour": _two_digit_field("hour", 23, "date_time_hour", lambda t: _stamp(time=t + ":00:00")),
+    "minute": _two_digit_field("minute", 59, "date_time_minute", lambda t: _stamp(time="00:" + t + ":00")),
+    "second": _domain_second,
+    "leap_second": _domain_leap_second,
+}
+# The domains the format checker and the bound validator see for each profile, too.
+CHECKER_DOMAINS = ("fraction_length", "zone", "offset_hour", "offset_minute", "separator")
+
+
+def _profile_domain_check(profile, domain):
+    def run(context):
+        dt, _, _, _ = _mods()
+        cases = PROFILE_DOMAINS[domain](profile)
+        for _, value, expected in cases:
+            kind, result = outcome(dt.date_time, value, profile=profile)
+            if (kind, result) != (("accept", value) if expected is None else ("refuse", expected)):
+                return False
+            if expected is None and result is not value:
+                return False
+        return bool(cases)
+    return run
+
+
+def _profile_checker_check(profile):
+    def run(context):
+        dt, _, _, _ = _mods()
+        checker = dt.format_checker(profile=profile)
+        validator = _bound({"format": "date-time"}, profile=profile)
+        count = 0
+        for domain in CHECKER_DOMAINS:
+            for _, value, expected in PROFILE_DOMAINS[domain](profile):
+                count += 1
+                if checker.conforms(value, "date-time") != (expected is None):
+                    return False
+                if validator.is_valid(value) != (expected is None):
+                    return False
+        return count > 0
+    return run
+
+
+for _profile in PROFILE_TABLE:
+    for _domain in PROFILE_DOMAINS:
+        check("datetime_unit_profile_domain_%s_%s" % (_profile, _domain))(_profile_domain_check(_profile, _domain))
+    check("datetime_unit_profile_domain_%s_checker_and_validator" % _profile)(_profile_checker_check(_profile))
+
+
+@check("datetime_unit_profile_domain_table_complete")
+def _profile_domain_complete(context):
+    """The self-test fails when a gate profile has no table row, a profile or domain has no generated check or no
+    case, or a value the table names (and each boundary just outside it) has no case."""
+    dt, _, _, _ = _mods()
+    if tuple(PROFILE_TABLE) != dt.PROFILES:
+        return False
+    for profile, row in PROFILE_TABLE.items():
+        if set(row) != {"zones", "fraction_lengths"}:
+            return False
+        names = ["datetime_unit_profile_domain_%s_%s" % (profile, d) for d in PROFILE_DOMAINS]
+        names.append("datetime_unit_profile_domain_%s_checker_and_validator" % profile)
+        if any(name not in CHECKS for name in names):
+            return False
+        cases = {domain: PROFILE_DOMAINS[domain](profile) for domain in PROFILE_DOMAINS}
+        if any(not c for c in cases.values()):
+            return False
+        lengths = {p for p, _, _ in cases["fraction_length"]}
+        for n in row["fraction_lengths"] or ():
+            if not {n - 1, n, n + 1} <= lengths:
+                return False
+        zones = {p for p, _, _ in cases["zone"]}
+        if not set(row["zones"] or ()) <= zones:
+            return False
+    covered = {p for p, _, _ in PROFILE_DOMAINS["year"](E)}
+    days = {p for p, _, _ in PROFILE_DOMAINS["day"](E)}
+    leap = {p for p, _, e in PROFILE_DOMAINS["leap_second"](E) if e is None}
+    return (set(range(0, 10000)) <= covered and set(range(0, 25)) <= {p for p, _, _ in PROFILE_DOMAINS["fraction_length"](E)}
+            and all((y, m, d) in days for y in DAY_YEARS for m in range(1, 13) for d in range(0, _days_in(y, m) + 2))
+            and leap == C72_LEAP_DAYS and len(dt._LEAP_DAYS) == len(C72_LEAP_DAYS))
+
+
+@check("datetime_unit_profile_domain_dialects")
+def _dialect_domain(context):
+    """Every supported dialect URI, with and without its empty fragment, selects its class; each spelling just
+    outside the domain refuses (datetime_dialect_unsupported)."""
+    from jsonschema import Draft202012Validator, Draft201909Validator, Draft7Validator, Draft6Validator
+    dt, _, _, _ = _mods()
+    supported = {D202012: Draft202012Validator, D201909: Draft201909Validator,
+                 "http://json-schema.org/draft-07/schema": Draft7Validator,
+                 "http://json-schema.org/draft-06/schema": Draft6Validator}
+    for uri, cls in supported.items():
+        for spelling in (uri, uri + "#"):
+            if dt._dialect_validator({"$schema": spelling}) is not cls:
+                return False
+    outside = ("http://json-schema.org/draft-04/schema#", "http://json-schema.org/draft-03/schema#",
+               "https://json-schema.org/draft/next/schema", "http://json-schema.org/draft/2020-12/schema",
+               "https://json-schema.org/draft-07/schema#", D202012 + "/", D202012.upper(), "", " " + D202012,
+               D202012 + "#/", 4, None, [D202012], {"$id": D202012}, True)
+    return all(_admission_reason(dt._dialect_validator, {"$schema": uri}) == "datetime_dialect_unsupported"
+               for uri in outside)
+
+
+@check("datetime_unit_profile_domain_inventory_classification", slow=True)
+def _inventory_profile_domain(context):
+    """Every inventory classification under both inventory profiles: classification_profile_conflict exactly when a
+    Storage class and storage_utc_z disagree; a profile outside the inventory enum fails the inventory schema."""
+    storage_classes = ("EventRecord", "event_record_index", "original_storage_fields", "Storage issued original fields")
+    classes = (*storage_classes, "other_owner_observation", "source_lineage_schema_patch", "wildcard_non_timestamp",
+               "wildcard_non_timestamp_role", "wildcard_review_required")
+    for classification in classes:
+        for profile in ("storage_utc_z", "owner_schema"):
+            rows = [context.row(*(STORAGE if classification in storage_classes else NAMED))]
+            rows[0].update(classification=classification, profile=profile)
+            conflict = "classification_profile_conflict" in _codes(_validate(context, rows))
+            expected = (classification in storage_classes) != (profile == "storage_utc_z") or (
+                "CV-253" in rows[0]["owner"] and profile != "storage_utc_z")
+            if conflict != expected:
+                return False
+    for profile in ("event_record", "coordination_utc_z", "STORAGE_UTC_Z", ""):
+        rows = [context.row(*NAMED)]
+        rows[0]["profile"] = profile
+        if _codes(_validate(context, rows)) != {"inventory_schema"}:
+            return False
+    return True
+
+
+# N2. T162 (B08): each keyword the gate composes on a selected Storage field refuses on its own. The selection's own
+# field schemas are empty ({}), so the composed keyword is the only thing that can refuse; the plain validator over
+# the same schema accepts every one of these values. Both composition hooks: iter_errors at the root, and descend
+# at a referenced resource.
+UNTYPED_STORAGE = {"$schema": D202012, "$id": "urn:pm:scratch:untyped-storage", "type": "object",
+                   "properties": {"observed_at_utc": {}, "persisted_at_utc": {}}}
+COMPOSED_ALONE = {
+    "type": (123, 1.5, None, True, [], {}, ["2026-01-01T00:00:00Z"]),
+    "format": ("not-a-dateZ", "2026-02-30T00:00:00Z", "2015-12-31T23:59:60Z", "2026-01-01 00:00:00Z",
+               "2026-13-01T00:00:00Z"),
+    "pattern": ("2026-01-01T00:00:00+00:00", "2026-01-01T00:00:00-00:00", "2026-01-01T00:00:00z",
+                "2026-01-01T00:00:00+05:30"),
+}
+COMPOSED_GOOD = {"observed_at_utc": "2026-01-01T00:00:00.123456789123Z", "persisted_at_utc": "2016-12-31T23:59:60Z"}
+
+
+def _untyped_validators():
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    schema = copy.deepcopy(UNTYPED_STORAGE)
+    selection = _selection([(schema, {"": _storage_row(schema)})])
+    root = _bound(schema, selection=selection)
+    registry = Registry().with_resource(schema["$id"], Resource.from_contents(schema, default_specification=DRAFT202012))
+    wrapper = {"properties": {"event": {"$ref": schema["$id"]}}}
+    referenced = _bound(wrapper, registry, _selection([(schema, {"": _storage_row(schema)})]))
+    return schema, root, referenced
+
+
+def _composed_alone_check(keyword, hook):
+    def run(context):
+        from jsonschema import Draft202012Validator
+        dt, _, _, _ = _mods()
+        schema, root, referenced = _untyped_validators()
+        plain = Draft202012Validator(schema, format_checker=dt.format_checker())
+        wrap = (lambda v: v) if hook == "root" else (lambda v: {"event": v})
+        validator = root if hook == "root" else referenced
+        if not validator.is_valid(wrap(COMPOSED_GOOD)):
+            return False
+        for field in ("observed_at_utc", "persisted_at_utc"):
+            for value in COMPOSED_ALONE[keyword]:
+                instance = dict(COMPOSED_GOOD, **{field: value})
+                if not plain.is_valid(instance) or validator.is_valid(wrap(instance)):
+                    return False
+                if [e.validator for e in validator.iter_errors(wrap(instance))] != [keyword]:
+                    return False
+        return True
+    return run
+
+
+for _keyword in COMPOSED_ALONE:
+    for _hook in ("root", "through_reference"):
+        check("datetime_unit_composition_%s_alone_%s" % (_keyword, _hook))(_composed_alone_check(_keyword, _hook))
+
+
+# N3. T163 and T164 (I03, I05): the inventory scan decodes closed. Names spelled only through escapes, declarations
+# inside serialized arrays and serialized strings at every depth up to the bound; past the bound, an escaped
+# container, a container key and an unreadable or byte-order-marked string container each refuse by name.
+ESCAPED_NOTE = '{"description": "\\u006fbserved_at_utc"}'
+
+
+def _scan_codes(rows, errors):
+    return ([(r["origin"], r["pointer"], r["fields"]) for r in rows],
+            sorted((e["error"], e.get("origin")) for e in errors))
+
+
+@check("datetime_unit_scan_escaped_mention_fence_unclassified")
+def _scan_escaped_fence(context):
+    root = context.scratch()
+    write(root, "Plans/escaped.md", "# Escaped\n\n```json\n" + ESCAPED_NOTE + "\n```\n")
+    return _scan_codes(*_scan(root)) == ([], [("unclassified_mentioning_container", "fence:3")])
+
+
+@check("datetime_unit_scan_escaped_mention_json_doubly_escaped")
+def _scan_escaped_json(context):
+    root = context.scratch()
+    write(root, "Plans/escaped.json", '{"description": "\\\\u006fbserved_at_utc"}')
+    return _scan_codes(*_scan(root)) == ([], [("unclassified_mentioning_container", "json")])
+
+
+@check("datetime_unit_scan_escaped_mention_every_container")
+def _scan_escaped_containers(context):
+    """The same escaped-only mention, with no declaration, in each other container kind: a JSONL line, an indented
+    code block, inline code, an HTML block, a JSON value escaped three times and a UTF-16 JSON file."""
+    triple = json.dumps({"note": "\\\\\\u006fbserved_at_utc"})
+    cases = (("Plans/a.jsonl", '{"x": 1}\n' + ESCAPED_NOTE + "\n", ("unclassified_mentioning_container", "jsonl:2")),
+             ("Plans/b.md", "Text\n\n    " + ESCAPED_NOTE + "\n", ("unclassified_mentioning_container", "code:3")),
+             ("Plans/c.md", "Text `" + ESCAPED_NOTE + "` here\n", ("unclassified_mentioning_container", "code_inline:1:1")),
+             ("Plans/d.md", "<div>\n" + ESCAPED_NOTE + "\n</div>\n", ("unreadable_mentioning_container", "html:1")),
+             ("Plans/e.json", triple, ("unclassified_mentioning_container", "json")),
+             ("Plans/f.json", ESCAPED_NOTE.encode("utf-16"), ("unclassified_mentioning_container", "json")))
+    for path, body, expected in cases:
+        root = context.scratch()
+        write(root, path, body)
+        if _scan_codes(*_scan(root)) != ([], [expected]):
+            return False
+    return True
+
+
+@check("datetime_unit_scan_serialized_list_declaration")
+def _scan_serialized_list(context):
+    root = context.scratch()
+    hidden = [{"properties": {"persisted_at_utc": {"type": "string"}}}]
+    write(root, "Plans/list.json", {"properties": {"observed_at_utc": {"type": "string"}},
+                                    "examples": [json.dumps(hidden)]})
+    return _scan_codes(*_scan(root)) == ([("json", "", ["observed_at_utc"]),
+                                          ("json:string:/examples/0", "/0", ["persisted_at_utc"])], [])
+
+
+@check("datetime_unit_scan_doubly_serialized_declaration")
+def _scan_doubly_serialized(context):
+    root = context.scratch()
+    hidden = json.dumps(json.dumps({"properties": {"persisted_at_utc": {"type": "string"}}}))
+    write(root, "Plans/double.json", {"properties": {"observed_at_utc": {"type": "string"}}, "x": hidden})
+    rows, errors = _scan(root)
+    return _scan_codes(rows, errors) == ([("json", "", ["observed_at_utc"]),
+                                          ("json:string:/x:string:", "", ["persisted_at_utc"])], [])
+
+
+def _nested(levels):
+    value = {"properties": {"persisted_at_utc": {"type": "string"}}}
+    for _ in range(levels):
+        value = json.dumps(value)
+    return value
+
+
+@check("datetime_unit_scan_serialized_depth_bound")
+def _scan_depth_bound(context):
+    """A declaration SERIALIZED_DEPTH strings deep is found; one more string deep refuses (serialized_depth_exceeded)
+    at the string past the bound, never silently."""
+    _, inv, _, _ = _mods()
+    depth = inv.SERIALIZED_DEPTH
+    at_bound = context.scratch()
+    write(at_bound, "Plans/deep.json", {"x": _nested(depth)})
+    past = context.scratch()
+    write(past, "Plans/deep.json", {"x": _nested(depth + 1)})
+    origin = "json:string:/x" + ":string:" * (depth - 1)
+    return (depth == 8 and _scan_codes(*_scan(at_bound)) == ([(origin, "", ["persisted_at_utc"])], []) and
+            _scan_codes(*_scan(past)) == ([], [("serialized_depth_exceeded", origin + ":string:"),
+                                               ("unclassified_mentioning_container", "json")]))
+
+
+@check("datetime_unit_scan_source_document_at_depth_bound")
+def _scan_depth_source(context):
+    """_source_document reads the row SERIALIZED_DEPTH strings deep back to its node."""
+    _, inv, _, _ = _mods()
+    root = context.scratch()
+    write(root, "Plans/deep.json", {"x": _nested(inv.SERIALIZED_DEPTH)})
+    rows, errors = _scan(root)
+    return (not errors and len(rows) == 1 and
+            inv.at(inv._source_document(root, rows[0], {}), rows[0]["pointer"]) == {
+                "properties": {"persisted_at_utc": {"type": "string"}}})
+
+
+@check("datetime_unit_scan_escaped_string_container_refused")
+def _scan_escaped_container(context):
+    """A string that is a JSON container only once unescaped refuses (escaped_schema_string_container):
+    \\u-escaped braces or brackets, a string literal with escaped quotes, and doubly escaped braces."""
+    body = json.dumps({"properties": {"persisted_at_utc": {}}})
+    values = (body.replace("{", "\\u007b"), "\\u005b" + body + "]", '\\"' + json.dumps(body)[1:-1] + '\\"',
+              body.replace("{", "\\\\u007b"))
+    for value in values:
+        root = context.scratch()
+        write(root, "Plans/a.json", {"properties": {"observed_at_utc": {}}, "x": value})
+        if _scan_codes(*_scan(root)) != ([("json", "", ["observed_at_utc"])],
+                                         [("escaped_schema_string_container", "json:string:/x")]):
+            return False
+    return True
+
+
+@check("datetime_unit_scan_shaped_string_container_refused")
+def _scan_shaped_container(context):
+    """A string that starts like a JSON container after whitespace or byte order marks, and does not parse, refuses
+    (unreadable_schema_string_container); prose that mentions a field is still skipped."""
+    for value in ("\ufeff" + json.dumps({"properties": {"persisted_at_utc": {}}}), "\u00a0[{\"persisted_at_utc\": ",
+                  '\n "persisted_at_utc', "\ufeff\ufeff{\"persisted_at_utc\": 1}",
+                  json.dumps(json.dumps({"properties": {"persisted_at_utc": {}}}))[1:-1]):
+        root = context.scratch()
+        write(root, "Plans/a.json", {"properties": {"observed_at_utc": {}}, "x": value})
+        if _scan_codes(*_scan(root)) != ([("json", "", ["observed_at_utc"])],
+                                         [("unreadable_schema_string_container", "json:string:/x")]):
+            return False
+    root = context.scratch()
+    write(root, "Plans/a.json", {"properties": {"observed_at_utc": {}}, "x": "the persisted_at_utc field, \"quoted\""})
+    return _scan_codes(*_scan(root)) == ([("json", "", ["observed_at_utc"])], [])
+
+
+@check("datetime_unit_scan_serialized_key_refused")
+def _scan_serialized_key(context):
+    """A key that is (or unescapes to) a JSON container has no pointer to address it: it refuses
+    (serialized_key_container); an ordinary key naming a field does not."""
+    body = json.dumps({"properties": {"persisted_at_utc": {}}})
+    for key in (body, body.replace("{", "\\u007b"), " " + body):
+        root = context.scratch()
+        write(root, "Plans/a.json", {"properties": {"observed_at_utc": {}}, "m": {key: 1}})
+        origin = "json:key:/m/" + key.replace("~", "~0").replace("/", "~1")
+        if _scan_codes(*_scan(root)) != ([("json", "", ["observed_at_utc"])], [("serialized_key_container", origin)]):
+            return False
+    return True
+
+
+@check("datetime_unit_scan_inline_code_escaped_brace")
+def _scan_inline_escaped(context):
+    """Inline code whose braces are spelled only through escapes is a code container too."""
+    root = context.scratch()
+    write(root, "Plans/a.md", "Text `\\u007b\"note\": \"observed_at_utc\"}` here\n")
+    return _scan_codes(*_scan(root)) == ([], [("unreadable_mentioning_container", "code_inline:1:1")])
+
+
+def _wrong_type_declaration(keyword, value):
+    def run(context):
+        root = context.scratch()
+        write(root, "Plans/a.json", {"$defs": {"n": {keyword: value}}})
+        rows, errors = _scan(root)
+        return (not rows and [(e["error"], e.get("detail")) for e in errors] ==
+                [("scan_read_failed", "unreadable field declaration keyword: " + keyword)])
+    return run
+
+
+WRONG_TYPE_DECLARATIONS = {
+    "properties": ["observed_at_utc"], "dependentRequired": ["observed_at_utc"],
+    "dependentSchemas": [{"observed_at_utc": {}}], "patternProperties": "^observed_at_utc$",
+    "propertyNames": "observed_at_utc", "required": "observed_at_utc", "enum": "observed_at_utc",
+}
+for _keyword, _value in WRONG_TYPE_DECLARATIONS.items():
+    check("datetime_unit_scan_wrong_type_declaration_%s" % _keyword)(_wrong_type_declaration(_keyword, _value))
+
+
+@check("datetime_unit_scan_wrong_type_without_name_reads_nothing")
+def _scan_wrong_type_quiet(context):
+    """A declaring keyword of another type that names neither field (data such as "required": true) declares
+    nothing and refuses nothing."""
+    root = context.scratch()
+    write(root, "Plans/a.json", {"properties": {"observed_at_utc": {}}, "$defs": {"n": {"required": True,
+                                                                                         "enum": "x", "properties": 3}}})
+    return _scan_codes(*_scan(root)) == ([("json", "", ["observed_at_utc"])], [])
+
+
+@check("datetime_unit_admission_wrong_type_declaration_fails_closed")
+def _admission_wrong_type(context):
+    """Runtime admission reads declarations the same way: a wrong-typed keyword naming a field raises."""
+    dt, inv, _, _ = _mods()
+    try:
+        _bound({"properties": {"x": {"required": "observed_at_utc"}}}).is_valid({"x": {}})
+    except ValueError as error:
+        return not isinstance(error, inv.DatetimeAdmissionError) and \
+            str(error) == "unreadable field declaration keyword: required"
+    return False
+
+
+@check("datetime_unit_scan_json_layers")
+def _scan_json_layers(context):
+    """Every JSON escape decodes at every level, to the fixed point; text without escapes is one layer."""
+    _, inv, _, _ = _mods()
+    return (inv._json_layers("plain") == ["plain"] and
+            inv._json_layers("\\\\u006f") == ["\\\\u006f", "\\u006f", "o"] and
+            inv._json_layers('\\"\\/\\b\\f\\n\\r\\t') == ['\\"\\/\\b\\f\\n\\r\\t', '"/\b\f\n\r\t'] and
+            inv._json_layers("\\x\\u00") == ["\\x\\u00"] and
+            inv.mentions_field("\\\\\\\\u006fbserved_at_utc") and inv.schema_candidate("\\u0070atternProperties") and
+            inv.schema_candidate("pattern\\\\u0050roperties") and not inv.mentions_field("observed\\_at_utc"))
+
+
+# N4. T166: the bound validator's checker, registry, resolver and selection are fixed after construction, and so is
+# the checker's own table. Every route raises the TypeError a format_checker argument to datetime_validator raises.
+def _bound_timestamp():
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    target = {"$id": "urn:pm:scratch:ts", "type": "string", "format": "date-time"}
+    registry = Registry().with_resource(target["$id"], Resource.from_contents(target, default_specification=DRAFT202012))
+    return _bound({"properties": {"t": {"$ref": target["$id"]}}}, registry)
+
+
+def _type_error(build):
+    try:
+        build()
+    except TypeError as error:
+        return str(error)
+    except Exception as error:  # noqa: BLE001
+        return "exception:" + type(error).__name__
+    return None
+
+
+def _still_checks(validator):
+    return (validator.is_valid({"t": "2026-01-01T00:00:00Z"}) and not validator.is_valid({"t": "not-a-dateZ"}) and
+            not validator.is_valid({"t": "2026-02-30T00:00:00Z"}))
+
+
+@check("datetime_unit_bound_construction_format_checker_type_error")
+def _bound_construction(context):
+    """The reference: datetime_validator itself refuses a format_checker, storage_selection or datetime_binding
+    argument with TypeError."""
+    from jsonschema import FormatChecker
+    dt, _, _, _ = _mods()
+    return all(_type_error(lambda k=k, v=v: dt.datetime_validator({}, **{k: v})) is not None for k, v in
+               (("format_checker", None), ("format_checker", FormatChecker()), ("storage_selection", None),
+                ("datetime_binding", None)))
+
+
+def _evolve_refused(change, message):
+    def run(context):
+        validator = _bound_timestamp()
+        return _type_error(lambda: change(validator)) == message and _still_checks(validator)
+    return run
+
+
+def _foreign_resolver():
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    return Registry().with_resource("urn:pm:scratch:ts", Resource.from_contents(
+        {}, default_specification=DRAFT202012)).resolver()
+
+
+def _legacy_resolver():
+    from jsonschema.validators import _RefResolver
+    return _RefResolver.from_schema({})
+
+
+def _stock_checker():
+    from jsonschema import FormatChecker
+    return FormatChecker()
+
+
+EVOLVE_ROUTES = {
+    "format_checker_none": (lambda v: v.evolve(format_checker=None), "format_checker"),
+    "format_checker_stock": (lambda v: v.evolve(format_checker=_stock_checker()), "format_checker"),
+    "format_checker_other_profile": (lambda v: v.evolve(format_checker=_mods()[0].format_checker(profile=S)),
+                                     "format_checker"),
+    "registry": (lambda v: v.evolve(registry=_foreign_resolver()._registry), "registry"),
+    "resolver_legacy": (lambda v: v.evolve(resolver=_legacy_resolver()), "resolver"),
+    "resolver_foreign": (lambda v: v.evolve(_resolver=_foreign_resolver()), "resolver"),
+    "storage_selection": (lambda v: v.evolve(storage_selection=_selection()), "storage_selection"),
+}
+for _name, (_change, _field) in EVOLVE_ROUTES.items():
+    check("datetime_unit_bound_evolve_%s_refused" % _name)(
+        _evolve_refused(_change, "datetime_validator_fixed_" + _field))
+
+
+@check("datetime_unit_bound_evolve_forged_binding_refused")
+def _bound_forged(context):
+    import types
+    validator = _bound_timestamp()
+    binding = validator.datetime_binding
+    forged = types.SimpleNamespace(checker=binding.checker, registry=binding.registry, selection=binding.selection)
+    return (_type_error(lambda: validator.evolve(datetime_binding=forged)) == "datetime_validator_binding_forged" and
+            _type_error(lambda: validator.evolve(datetime_binding=tuple(binding))) == "datetime_validator_binding_forged")
+
+
+@check("datetime_unit_bound_replace_copies_refused")
+def _bound_replace(context):
+    """attrs.evolve and copy.replace build a new instance without the bound evolve: construction still refuses."""
+    import attrs
+    validator = _bound_timestamp()
+    message = "datetime_validator_fixed_format_checker"
+    return (_type_error(lambda: attrs.evolve(validator, format_checker=None)) == message and
+            _type_error(lambda: copy.replace(validator, format_checker=_stock_checker())) == message and
+            _type_error(lambda: attrs.evolve(validator, registry=_foreign_resolver()._registry)) ==
+            "datetime_validator_fixed_registry" and _still_checks(validator))
+
+
+@check("datetime_unit_bound_evolve_schema_only_still_checks")
+def _bound_evolve_control(context):
+    """Control: an evolve that changes only the schema works and still checks timestamps, and so does jsonschema's
+    own evolve through a reference (schema and _resolver)."""
+    validator = _bound_timestamp()
+    evolved = validator.evolve(schema={"properties": {"t": {"$ref": "urn:pm:scratch:ts"}}, "required": ["t"]})
+    return (_still_checks(validator) and _still_checks(evolved) and not evolved.is_valid({}) and
+            evolved.format_checker is validator.format_checker and
+            evolved.datetime_binding is validator.datetime_binding)
+
+
+def _setattr_refused(name, value):
+    def run(context):
+        validator = _bound_timestamp()
+        return (_type_error(lambda: setattr(validator, name, value(validator))) == "datetime_validator_fixed: " + name and
+                _still_checks(validator))
+    return run
+
+
+SETATTR_ROUTES = {
+    "format_checker": lambda v: None,
+    "_registry": lambda v: _foreign_resolver()._registry,
+    "_resolver": lambda v: _foreign_resolver(),
+    "_ref_resolver": lambda v: _legacy_resolver(),
+    "storage_selection": lambda v: _selection(),
+    "datetime_binding": lambda v: None,
+}
+for _name, _value in SETATTR_ROUTES.items():
+    check("datetime_unit_bound_setattr_%s_refused" % _name.lstrip("_"))(_setattr_refused(_name, _value))
+
+
+@check("datetime_unit_bound_deprecated_resolver_refused")
+def _bound_deprecated_resolver(context):
+    """Reading the deprecated .resolver property would install a legacy RefResolver: it raises instead."""
+    import warnings
+    validator = _bound_timestamp()
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
+        message = _type_error(lambda: validator.resolver)
+    return message == "datetime_validator_fixed: _ref_resolver" and validator._ref_resolver is None and \
+        _still_checks(validator)
+
+
+@check("datetime_unit_bound_other_attributes_assignable")
+def _bound_other_attributes(context):
+    """Control: only the fixed attributes are fixed; any other attribute assigns as before."""
+    validator = _bound_timestamp()
+    validator.note = 1
+    return validator.note == 1 and _still_checks(validator)
+
+
+@check("datetime_unit_format_checker_table_fixed")
+def _checker_table_fixed(context):
+    """The gate checker's table is read-only: checks(), item assignment, reassignment and deletion all raise
+    TypeError, and the checker still runs the predicate."""
+    dt, _, _, _ = _mods()
+    checker = dt.format_checker()
+
+    def replace_entry():
+        checker.checkers["date-time"] = (lambda value: True, ())
+
+    results = [_type_error(lambda: checker.checks("date-time")(lambda value: True)), _type_error(replace_entry),
+               _type_error(lambda: setattr(checker, "checkers", {})),
+               _type_error(lambda: delattr(checker, "checkers")),
+               _type_error(lambda: setattr(checker, "_fixed", False))]
+    return (results[2:] == ["datetime_format_checker_fixed: checkers", "datetime_format_checker_fixed: checkers",
+                            "datetime_format_checker_fixed: _fixed"] and None not in results[:2] and
+            not any(r.startswith("exception:") for r in results) and
+            not checker.conforms("not-a-dateZ", "date-time") and checker.conforms("2026-01-01T00:00:00Z", "date-time"))
+
+
+@check("datetime_unit_bound_fixed_routes_in_validator")
+def _bound_fixed_in_validator(context):
+    """A loosened table never reaches a validator: after every refused route the validator still refuses."""
+    validator = _bound_timestamp()
+    for attempt in (lambda: validator.format_checker.checkers.pop("date-time"),
+                    lambda: delattr(validator.format_checker, "checkers"),
+                    lambda: setattr(validator.format_checker, "checkers", {})):
+        try:
+            attempt()
+        except (TypeError, AttributeError):
+            pass
+        else:
+            return False
+    return _still_checks(validator)
+
+
+# ---------------------------------------------------------------------------
+# P. Fix round 18 (Sol max gate r2, findings 1 and 2).
+# P1. Every classified timestamp field of every committed Storage-classified node refuses an invalid string at that
+#     field. The fields come from the node's classification (CV-253, CV-1101), never from a format annotation.
+# P2. The validator's effective configuration is verified at every use against the pins fixed at construction.
+# ---------------------------------------------------------------------------
+
+NODE_CONTROLS = "scripts/pm_event_datetime_node_controls.json"
+NODE_INVENTORY = "Plans/event_datetime_inventory.json"
+NODE_INVALID = "not-a-time"
+# One string per profile that the other profile judges differently: the strict Storage profile refuses a +00:00
+# offset, and the broad EventRecord profile accepts lowercase t and an offset with a long fraction.
+NODE_STORAGE_STRICT = "2026-01-01T00:00:00+00:00"
+NODE_SOURCE_BROAD = "2026-01-01t00:00:00.123456789012345678901+05:30"
+
+
+def _node_name(key):
+    return "datetime_node_" + hashlib.sha256("\0".join(key).encode()).hexdigest()[:12]
+
+
+def _node_fields(row):
+    """The test's own copy of the owner table: a Storage-classified node's declared Storage fields take CV-253's
+    strict profile, and an EventRecord node's source occurred_at_utc takes CV-1101's broad EventRecord profile."""
+    fields = [(field, "storage") for field in row["fields"]] if row["profile"] == "storage_utc_z" else []
+    if row["classification"] == "EventRecord":
+        fields.append(("occurred_at_utc", "source"))
+    return fields
+
+
+def _node_rows(context):
+    if "node_rows" not in context.cache:
+        _, inv, _, _ = _mods()
+        context.cache["node_rows"] = {inv.node_key(r): r for r in context.inventory()["nodes"]
+                                      if r["profile"] == "storage_utc_z"}
+    return context.cache["node_rows"]
+
+
+def _node_controls(context):
+    if "node_controls" not in context.cache:
+        table = json.loads((context.root / NODE_CONTROLS).read_text())
+        context.cache["node_controls"] = (table["objects"],
+                                          {(n["path"], n["origin"], n["pointer"]): n["control"] for n in table["nodes"]},
+                                          table["nodes"])
+    return context.cache["node_controls"]
+
+
+def _node_validator(context, row):
+    """datetime_validator over a neutral reference to the node, its complete committed resource preloaded."""
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    dt, inv, _, _ = _mods()
+    cache = context.cache.setdefault("node_validators", {})
+    key = (row["path"], row["origin"], row["resource_pointer"])
+    if key not in cache:
+        document = inv._source_document(context.root, row, context.cache.setdefault("node_documents", {}))
+        resource = inv.at(document, row["resource_pointer"])
+        uri = resource.get("$id") or "urn:pm:datetime-node:" + inv.digest(resource)
+        registry = Registry().with_resource(uri, Resource.from_contents(resource, default_specification=DRAFT202012))
+        cache[key] = (uri, dt.datetime_validator({"$ref": uri}, registry=registry))
+    uri, validator = cache[key]
+    return validator.evolve(schema={"$ref": uri + "#" + row["pointer"][len(row["resource_pointer"]):]})
+
+
+def _leaves(error):
+    yield error
+    for child in error.context or ():
+        yield from _leaves(child)
+
+
+def _refused_at(validator, instance, field):
+    """Every error and its context, when the instance is refused and every error lies at field; else None."""
+    errors = list(validator.iter_errors(instance))
+    if not errors or any(tuple(e.absolute_path) != (field,) for e in errors):
+        return None
+    return [leaf for error in errors for leaf in _leaves(error)]
+
+
+def _node_check(key):
+    """One committed node: its committed control is valid; each classified field set to an invalid string is
+    refused at that field by the date-time predicate (date_time_syntax); a +00:00 offset is refused at a Storage
+    field, and a lowercase, offset, long-fraction string stays valid at an EventRecord source field."""
+    def run(context):
+        _, _, _, m = _mods()
+        row = _node_rows(context).get(key)
+        objects, controls, _ = _node_controls(context)
+        if row is None or key not in controls:
+            return False
+        control = copy.deepcopy(objects[controls[key]]["value"])
+        validator = _node_validator(context, row)
+        if list(validator.iter_errors(control)):
+            return False
+        for field, kind in _node_fields(row):
+            if field not in control:
+                return False
+            refused = _refused_at(validator, dict(control, **{field: NODE_INVALID}), field)
+            if refused is None or not any(isinstance(e.cause, m.Refusal) and e.cause.reason == "date_time_syntax"
+                                          for e in refused):
+                return False
+            if kind == "storage" and _refused_at(validator, dict(control, **{field: NODE_STORAGE_STRICT}),
+                                                 field) is None:
+                return False
+            if kind == "source" and not validator.is_valid(dict(control, **{field: NODE_SOURCE_BROAD})):
+                return False
+        return True
+    return run
+
+
+def _register_node_checks():
+    """One check per Storage-classified node of the committed inventory, registered at import: a node added to the
+    inventory gets a check at once, and it fails until the node has a committed control."""
+    try:
+        nodes = json.loads((ROOT / NODE_INVENTORY).read_text())["nodes"]
+    except (OSError, ValueError, KeyError):
+        return []
+    keys = [(r["path"], r["origin"], r["pointer"]) for r in nodes if r.get("profile") == "storage_utc_z"]
+    for key in keys:
+        check(_node_name(key), slow=True)(_node_check(key))
+    return keys
+
+
+NODE_KEYS = _register_node_checks()
+
+
+@check("datetime_node_controls_complete", slow=True)
+def _node_controls_complete(context):
+    """Every Storage-classified node of the inventory has exactly one committed control and a registered check, no
+    control names another node, each object is keyed by its own digest and carries every classified field, and the
+    reviewer's twelve source rows are among the checked nodes."""
+    _, inv, _, _ = _mods()
+    rows = _node_rows(context)
+    objects, controls, entries = _node_controls(context)
+    if len(entries) != len(controls) or set(controls) != set(rows) or set(NODE_KEYS) != set(rows):
+        return False
+    if any(inv.digest(item["value"]) != digest for digest, item in objects.items()):
+        return False
+    for key, row in rows.items():
+        value = objects.get(controls[key], {}).get("value")
+        if not isinstance(value, dict) or not _node_fields(row) or any(f not in value for f, _ in _node_fields(row)):
+            return False
+        if _node_name(key) not in CHECKS:
+            return False
+    unformatted = [k for k, r in rows.items() if r["classification"] == "EventRecord" and
+                   _node_property(context, r, "occurred_at_utc") == {"type": "string"}]
+    return len(unformatted) == 12 and all(k[0] == "Plans/restore_point_deleted_read_adapter.schema.json"
+                                          for k in unformatted)
+
+
+def _node_property(context, row, field):
+    _, inv, _, _ = _mods()
+    document = inv._source_document(context.root, row, context.cache.setdefault("node_documents", {}))
+    return inv.at(document, row["pointer"]).get("properties", {}).get(field)
+
+
+# The reviewer's row: Plans/restore_point_deleted_read_adapter.schema.json, the historical admission source event.
+REVIEWER_SOURCE_ROW = ("Plans/restore_point_deleted_read_adapter.schema.json", "json",
+                       "/properties/historical_admission/anyOf/0/properties/source_event")
+
+
+@check("datetime_validator_real_source_row_refused", slow=True)
+def _real_source_row(context):
+    """The gate review's exact input: the committed restore_point.deleted pre-append fixture, with persisted_at_utc
+    and sequence_id added, is valid at the source_event row, and each malformed occurred_at_utc the review listed is
+    refused at that field; the original row alone (plain validator) accepts them, so the refusal is the composition's.
+    Through evolve(schema=row) as well as through the neutral reference."""
+    from jsonschema import Draft202012Validator
+    dt, inv, _, m = _mods()
+    schema = json.loads((context.root / REVIEWER_SOURCE_ROW[0]).read_text())
+    row = inv.at(schema, REVIEWER_SOURCE_ROW[2])
+    fixture = json.loads((context.root / "Plans/restore_point_deleted_contract_fixtures.json").read_text())
+    event = copy.deepcopy(inv.at(fixture, "/value_shape_cases/0/value/frozen_append_input"))
+    event.update(persisted_at_utc=event["observed_at_utc"], sequence_id=1)
+    validators = (dt.datetime_validator(schema).evolve(schema=row),
+                  _node_validator(context, _node_rows(context)[REVIEWER_SOURCE_ROW]))
+    for validator in validators:
+        if not validator.is_valid(event):
+            return False
+        for stamp in ("not-a-time", "2026-02-30T00:00:00Z", "2026-01-01 00:00:00Z", "2026-01-01T00:00:00Z\n"):
+            bad = dict(event, occurred_at_utc=stamp)
+            refused = _refused_at(validator, bad, "occurred_at_utc")
+            if not Draft202012Validator(row).is_valid(bad) or refused is None or not any(
+                    e.validator == "format" and isinstance(e.cause, m.Refusal) for e in refused):
+                return False
+        for stamp in ("2026-01-01T00:00:00+00:00", "2026-01-01t00:00:00.1234567890123456789z",
+                      "2017-01-01T05:29:60+05:30", "0000-02-29T23:59:59Z"):
+            if not validator.is_valid(dict(event, occurred_at_utc=stamp)):
+                return False
+    return True
+
+
+# P1 units: the source composition over a synthetic EventRecord-classified node whose occurred_at_utc is untyped, so
+# the composed type and the composed predicate are each the only thing that can refuse.
+UNTYPED_SOURCE = {"$schema": D202012, "$id": "urn:pm:scratch:untyped-source", "type": "object",
+                  "properties": {"occurred_at_utc": {}, "observed_at_utc": {"type": "string"}}}
+
+
+def _source_row(schema, classification="EventRecord", pointer="", resource=None):
+    _, inv, _, _ = _mods()
+    return {"path": "Plans/scratch.json", "origin": "json", "pointer": pointer, "resource_pointer": "",
+            "fields": ["observed_at_utc"], "profile": "storage_utc_z", "classification": classification,
+            "node_sha256": inv.digest(inv.at(resource or schema, pointer)),
+            "resource_sha256": inv.digest(resource or schema)}
+
+
+def _source_bound(classification="EventRecord", profile="event_record", schema=None):
+    schema = copy.deepcopy(schema or UNTYPED_SOURCE)
+    return _bound(schema, selection=_selection([(schema, {"": _source_row(schema, classification)})]),
+                  profile=profile)
+
+
+def _source_errors(validator, value):
+    _, _, _, m = _mods()
+    return sorted({(e.validator, tuple(e.absolute_path), e.cause.reason if isinstance(e.cause, m.Refusal) else None)
+                   for e in validator.iter_errors({"observed_at_utc": "2026-01-01T00:00:00Z", "occurred_at_utc": value})})
+
+
+@check("datetime_unit_source_composition_type_alone")
+def _source_type_alone(context):
+    """A non-string occurred_at_utc is refused by the composed type alone; the original accepts it."""
+    from jsonschema import Draft202012Validator
+    validator = _source_bound()
+    plain = Draft202012Validator(UNTYPED_SOURCE)
+    return all(plain.is_valid({"occurred_at_utc": v}) and
+               _source_errors(validator, v) == [("type", ("occurred_at_utc",), None)]
+               for v in (5, 1.5, None, True, [], {}, ["2026-01-01T00:00:00Z"]))
+
+
+@check("datetime_unit_source_composition_predicate_alone")
+def _source_predicate_alone(context):
+    """A malformed string is refused by the composed predicate alone, a format error at the field whose cause is the
+    predicate's own refusal code; the original accepts it."""
+    from jsonschema import Draft202012Validator
+    validator = _source_bound()
+    plain = Draft202012Validator(UNTYPED_SOURCE)
+    cases = {"not-a-time": "date_time_syntax", "2026-02-30T00:00:00Z": "date_time_day",
+             "2026-01-01 00:00:00Z": "date_time_syntax", "2026-01-01T00:00:00Z\n": "date_time_syntax",
+             "2026-01-01T00:00:00": "date_time_syntax", "2015-12-31T23:59:60Z": "date_time_leap_second",
+             "2026-01-01T00:00:00+24:00": "date_time_offset_hour"}
+    return all(plain.is_valid({"occurred_at_utc": v}) and
+               _source_errors(validator, v) == [("format", ("occurred_at_utc",), code)] for v, code in cases.items())
+
+
+@check("datetime_unit_source_composition_host_string")
+def _source_host_string(context):
+    """Every value the validator treats as a string reaches the composed predicate: a str subclass or StrEnum member
+    is refused (date_time_type), its valid text included."""
+    validator = _source_bound()
+    return all(_source_errors(validator, make(text)) == [("format", ("occurred_at_utc",), "date_time_type")]
+               for make in HOST_STRINGS.values() for text in ("2026-01-01T00:00:00Z", "not-a-time"))
+
+
+@check("datetime_unit_source_composition_broad_profile_exact")
+def _source_broad_exact(context):
+    """The source field takes the broad EventRecord profile, whatever profile the validator runs: lowercase, offsets,
+    a long fraction and an offset leap second stay valid under the strict profiles too, while the Storage field of
+    the same node stays strict."""
+    for profile in (E, S, C, L):
+        validator = _source_bound(profile=profile)
+        for value in ("2026-01-01t00:00:00z", "2026-01-01T00:00:00+05:30", "2026-01-01T00:00:00-00:00",
+                      "2026-01-01T00:00:00.1234567890123456789012345Z", "2017-01-01T05:29:60+05:30"):
+            if [e for e in _source_errors(validator, value) if e[1] == ("occurred_at_utc",)] != []:
+                return False
+        if [e for e in _source_errors(validator, "not-a-time") if e[1] == ("occurred_at_utc",)] != \
+                [("format", ("occurred_at_utc",), "date_time_syntax")]:
+            return False
+        if validator.is_valid({"observed_at_utc": "2026-01-01T00:00:00+00:00", "occurred_at_utc": "2026-01-01T00:00:00Z"}):
+            return False
+    return True
+
+
+@check("datetime_unit_source_composition_classification_keyed")
+def _source_classification_keyed(context):
+    """Only an EventRecord node composes the source predicate: the same node classified otherwise does not, and a
+    node with the original's own format still refuses (and does not double-count its refusal code)."""
+    others = all(_source_errors(_source_bound(c), "not-a-time") == [] for c in
+                 ("event_record_index", "original_storage_fields", "Storage issued original fields", None))
+    schema = copy.deepcopy(UNTYPED_SOURCE)
+    owner = dict(_source_row(schema, "other_owner_observation"), profile="owner_schema")
+    owned = _bound(schema, selection=_selection([(schema, {"": owner})]))
+    others = others and _source_errors(owned, "not-a-time") == [] and owned.is_valid(
+        {"observed_at_utc": "2026-01-01T00:00:00+05:30", "occurred_at_utc": "not-a-time"})
+    formatted = copy.deepcopy(UNTYPED_SOURCE)
+    formatted["properties"]["occurred_at_utc"] = {"type": "string", "format": "date-time"}
+    return (others and _source_errors(_source_bound(), "not-a-time") ==
+            [("format", ("occurred_at_utc",), "date_time_syntax")] and
+            _source_errors(_source_bound(schema=formatted), "not-a-time") ==
+            [("format", ("occurred_at_utc",), "date_time_syntax")] and
+            _source_errors(_source_bound(schema=formatted), "2026-01-01t00:00:00+05:30") == [])
+
+
+@check("datetime_unit_source_composition_absent_field")
+def _source_absent(context):
+    """The composition constrains a present field only; requiring it stays with the original."""
+    return _source_bound().is_valid({"observed_at_utc": "2026-01-01T00:00:00Z"})
+
+
+@check("datetime_unit_composition_error_path_nested")
+def _composition_path_nested(context):
+    """A composed error carries its fragment's own path when the classified node is reached inline under a property
+    and an array item, and through a reference, for the source field and the Storage field alike."""
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    _, inv, _, _ = _mods()
+    node = {"type": "object", "properties": {"occurred_at_utc": {}, "observed_at_utc": {"type": "string"}}}
+    wrapper = {"$schema": D202012, "$id": "urn:pm:scratch:nested-source", "type": "object",
+               "properties": {"batch": {"type": "array", "items": {"properties": {"event": node}}}}}
+    pointer = "/properties/batch/items/properties/event"
+    inline = _bound(wrapper, selection=_selection([(wrapper, {pointer: _source_row(wrapper, pointer=pointer)})]))
+    registry = Registry().with_resource(wrapper["$id"], Resource.from_contents(wrapper, default_specification=DRAFT202012))
+    referenced = _bound({"properties": {"outer": {"$ref": wrapper["$id"]}}}, registry,
+                        _selection([(wrapper, {pointer: _source_row(wrapper, pointer=pointer)})]))
+    event = {"occurred_at_utc": "not-a-time", "observed_at_utc": "2026-01-01T00:00:00+00:00"}
+    paths = sorted(tuple(e.absolute_path) for e in inline.iter_errors({"batch": [{"event": event}]}))
+    through = sorted(tuple(e.absolute_path) for e in referenced.iter_errors({"outer": {"batch": [{"event": event}]}}))
+    return (paths == [("batch", 0, "event", "observed_at_utc"), ("batch", 0, "event", "occurred_at_utc")] and
+            through == [("outer",) + p for p in paths])
+
+
+# P2. The configuration is verified at use. Each route below leaves construction alone or goes around it, and every
+# one raises at the next use; each check also shows the untouched validator still validates.
+
+def _use_reason(validator, instance=None):
+    """The refusal code a use raises, or None when it validates."""
+    _, inv, _, _ = _mods()
+    instance = {"t": "not-a-dateZ"} if instance is None else instance
+    try:
+        validator.is_valid(instance)
+    except inv.DatetimeAdmissionError as error:
+        return error.reason
+    except Exception as error:  # noqa: BLE001
+        return "exception:" + type(error).__name__
+    return None
+
+
+def _use_refused(change, code, instance=None, *, fresh=_bound_timestamp):
+    """A route: change() edits a fresh bound validator and returns the validator to use; the use must raise code.
+
+    An instance that reaches no reference or property (a non-object, or {}) makes the entry check the only one that
+    can refuse: a resolver's base URI is pushed onto the dynamic scope of every resolver derived from it, and the
+    validator's own first steps are step-checked too, so those later checks would repeat the same code."""
+    def run(context):
+        validator = fresh()
+        if not _still_checks(validator):
+            return False
+        try:
+            target = change(validator)
+        except Exception:  # noqa: BLE001 - a route that cannot be taken proves nothing
+            return False
+        return _use_reason(target, instance) == code
+    return run
+
+
+def _put(validator, name, value):
+    """Assign around the bound __setattr__ (a slot or the instance dictionary), as object.__setattr__ does."""
+    object.__setattr__(validator, name, value)
+    return validator
+
+
+def _resolver_with(validator, **registry_changes):
+    import attrs
+    resolver = validator._resolver
+    return attrs.evolve(resolver, registry=attrs.evolve(resolver._registry, **registry_changes))
+
+
+def _checker_clone(checker):
+    """Another checker object of the gate's class, with the same table object: only its identity differs."""
+    clone = type(checker).__new__(type(checker))
+    object.__setattr__(clone, "checkers", checker.checkers)
+    object.__setattr__(clone, "_fixed", True)
+    return clone
+
+
+def _other_uri_resource():
+    from referencing import Resource
+    from referencing.jsonschema import DRAFT202012
+    return Resource({}, DRAFT202012)
+
+
+USE_ROUTES = {
+    # binding and marker
+    "binding_plain_tuple": (lambda v: v.__dict__.__setitem__("datetime_binding", tuple(v.datetime_binding)) or v,
+                            "datetime_validator_use_binding"),
+    "binding_pins_not_pins": (lambda v: v.__dict__.__setitem__("datetime_binding", _mods()[0]._Binding(
+        *v.datetime_binding[:3], pins=__import__("types").SimpleNamespace(**{
+            k: getattr(v.datetime_binding.pins, k) for k in _mods()[0]._Pins.__slots__ if k != "__weakref__"}))) or v,
+        "datetime_validator_use_binding"),
+    "binding_pins_unissued": (lambda v: v.__dict__.__setitem__("datetime_binding", _mods()[0]._Binding(
+        *v.datetime_binding[:3], pins=_mods()[0]._Pins.__new__(_mods()[0]._Pins))) or v,
+        "datetime_validator_use_binding"),
+    "binding_entry_checker": (lambda v: v.__dict__.__setitem__("datetime_binding", _mods()[0]._Binding(
+        _mods()[0].format_checker(), *v.datetime_binding[1:])) or v, "datetime_validator_use_binding_entries"),
+    "binding_entry_registry": (lambda v: v.__dict__.__setitem__("datetime_binding", _mods()[0]._Binding(
+        v.datetime_binding[0], _foreign_resolver()._registry, *v.datetime_binding[2:])) or v,
+        "datetime_validator_use_binding_entries"),
+    "binding_entry_selection": (lambda v: v.__dict__.__setitem__("datetime_binding", _mods()[0]._Binding(
+        *v.datetime_binding[:2], _selection(), v.datetime_binding[3])) or v, "datetime_validator_use_binding_entries"),
+    "marker_deleted": (lambda v: object.__delattr__(v, "_datetime_fixed") or v, "datetime_validator_use_marker", 5),
+    "marker_false": (lambda v: v.__dict__.__setitem__("_datetime_fixed", False) or v, "datetime_validator_use_marker"),
+    # T189's exact route around the deletion guard: delete the marker, then reassign the checker normally.
+    "t189_marker_then_checker": (lambda v: (object.__delattr__(v, "_datetime_fixed"), setattr(v, "format_checker", None),
+                                            v)[2], "datetime_validator_use_marker"),
+    # dialect and shadowing
+    "dialect_subclass": (lambda v: _put(v, "__class__", type("Sub", (type(v),), {})), "datetime_validator_use_dialect"),
+    "shadow_iter_errors": (lambda v: _put(v, "iter_errors", lambda *a, **k: iter(())), "datetime_validator_use_shadowed"),
+    "shadow_type_checker": (lambda v: _put(v, "TYPE_CHECKER", type(v).TYPE_CHECKER), "datetime_validator_use_shadowed"),
+    # checker
+    "checker_object_setattr": (lambda v: _put(v, "format_checker", _stock_checker()),
+                               "datetime_validator_use_format_checker"),
+    "checker_other_profile": (lambda v: _put(v, "format_checker", _mods()[0].format_checker(profile=S)),
+                              "datetime_validator_use_format_checker"),
+    "checker_class_changed": (lambda v: _put(v.format_checker, "__class__", type(_stock_checker())) and v,
+                              "datetime_validator_use_format_checker"),
+    "checker_check_shadowed": (lambda v: _put(v.format_checker, "check", lambda *a: None) and v,
+                               "datetime_validator_use_format_checker"),
+    "checker_table_replaced": (lambda v: _put(v.format_checker, "checkers", __import__("types").MappingProxyType(
+        dict(v.format_checker.checkers))) and v, "datetime_validator_use_format_checker"),
+    "checker_table_entry_edited": (lambda v: __import__("gc").get_referents(v.format_checker.checkers)[0].__setitem__(
+        "date-time", (lambda value: True, ())) or v, "datetime_validator_use_format_checker"),
+    # resolver and registries
+    "ref_resolver_installed": (lambda v: _put(v, "_ref_resolver", _legacy_resolver()), "datetime_validator_use_ref_resolver"),
+    "registry_substituted": (lambda v: _put(v, "_registry", _foreign_resolver()._registry), "datetime_validator_use_registry"),
+    "closed_registry_retrieval_edited": (lambda v: _put(v._registry, "_retrieve", lambda uri: None) and v,
+                                         "datetime_validator_use_retrieval"),
+    "resolver_not_a_resolver": (lambda v: _put(v, "_resolver", __import__("types").SimpleNamespace(**{
+        "_registry": v._resolver._registry, "_base_uri": v._resolver._base_uri, "_previous": v._resolver._previous})),
+        "datetime_validator_use_resolver"),
+    "resolver_registry_type": (lambda v: _put(v, "_resolver", __import__("attrs").evolve(
+        v._resolver, registry=__import__("types").SimpleNamespace(_retrieve=v._resolver._registry._retrieve))),
+        "datetime_validator_use_registry_type"),
+    "resolver_retrieval": (lambda v: _put(v, "_resolver", _resolver_with(v, retrieve=lambda uri: None)),
+                           "datetime_validator_use_retrieval"),
+    "resolver_uncrawled": (lambda v: _put(v, "_resolver", _resolver_with(
+        v, uncrawled=v._resolver._registry._uncrawled.insert("urn:pm:scratch:ts"))), "datetime_validator_use_uncrawled"),
+    "resolver_resource_removed": (lambda v: _put(v, "_resolver", _resolver_with(
+        v, resources=v._resolver._registry._resources.remove("urn:pm:scratch:ts"))),
+        "datetime_validator_use_resource_map"),
+    "checker_clone_same_table": (lambda v: _put(v, "format_checker", _checker_clone(v.format_checker)),
+                                 "datetime_validator_use_format_checker"),
+    "resolver_resource_added": (lambda v: _put(v, "_resolver", _resolver_with(
+        v, resources=v._resolver._registry._resources.insert("urn:pm:scratch:extra", _other_uri_resource()))),
+        "datetime_validator_use_resource_map"),
+    "resolver_base_unpinned": (lambda v: _put(v, "_resolver", __import__("attrs").evolve(
+        v._resolver, base_uri="urn:pm:scratch:unpinned")), "datetime_resource_not_preloaded", {}),
+    "resolver_scope_unpinned": (lambda v: _put(v, "_resolver", __import__("attrs").evolve(
+        v._resolver, previous=v._resolver._previous.push_front("urn:pm:scratch:unpinned"))),
+        "datetime_resource_not_preloaded"),
+    # selection
+    "selection_substituted": (lambda v: v.__dict__.__setitem__("storage_selection", _selection()) or v,
+                              "datetime_validator_use_selection"),
+    "selection_class_changed": (lambda v: _put(v.storage_selection, "__class__", type(
+        "Sub", (type(v.storage_selection),), {})) and v, "datetime_validator_use_selection"),
+    "selection_uri_pins_edited": (lambda v: v.storage_selection.uri_pins.__setitem__("urn:pm:scratch:extra", "0") or v,
+                                  "datetime_validator_use_selection_pins"),
+    "selection_resource_dropped": (lambda v: v.storage_selection.resources.popitem() and v,
+                                   "datetime_validator_use_selection_resources"),
+}
+
+
+for _name, _route in USE_ROUTES.items():
+    check("datetime_unit_use_%s_refused" % _name)(_use_refused(*_route))
+
+
+def _anchored_bound():
+    """A bound validator whose closed registry holds two resources with two anchors each, so the registry walks have
+    items past their first."""
+    from referencing import Registry, Resource
+    from referencing.jsonschema import DRAFT202012
+    first = {"$id": "urn:pm:scratch:a", "$defs": {"x": {"$anchor": "x", "type": "string", "format": "date-time"},
+                                                    "y": {"$anchor": "y", "type": "string"}}}
+    second = {"$id": "urn:pm:scratch:b", "$defs": {"p": {"$anchor": "p", "type": "string", "format": "date-time"},
+                                                     "q": {"$anchor": "q"}}}
+    registry = Registry().with_resources((s["$id"], Resource.from_contents(s, default_specification=DRAFT202012))
+                                         for s in (first, second))
+    return _bound({"properties": {"t": {"$ref": "urn:pm:scratch:a#x"}, "u": {"$ref": "urn:pm:scratch:b#p"}}}, registry)
+
+
+def _each_entry_refused(entries, change, code):
+    """change(validator, key) edits one entry; every entry, in turn, must be refused with code."""
+    def run(context):
+        count = len(entries(_anchored_bound()))
+        if count < 2:
+            return False
+        for position in range(count):
+            validator = _anchored_bound()
+            if validator.is_valid({"t": "not-a-dateZ"}) or not validator.is_valid({"t": "2026-01-01T00:00:00Z"}):
+                return False
+            key = entries(validator)[position]
+            if _use_reason(change(validator, key), {"t": "2026-01-01T00:00:00Z"}) != code:
+                return False
+        return True
+    return run
+
+
+def _swap_resource(validator, uri, make):
+    resources = validator._resolver._registry._resources
+    return _put(validator, "_resolver", _resolver_with(validator, resources=resources.insert(uri, make(resources[uri]))))
+
+
+def _swap_anchor(validator, key, make):
+    anchors = validator._resolver._registry._anchors
+    return _put(validator, "_resolver", _resolver_with(validator, anchors=anchors.insert(key, make(anchors[key]))))
+
+
+def _renamed_resource(validator, uri):
+    resources = validator._resolver._registry._resources
+    moved = resources.remove(uri).insert(uri + ":moved", resources[uri])
+    return _put(validator, "_resolver", _resolver_with(validator, resources=moved))
+
+
+def _anchor_kind(anchor):
+    from referencing.jsonschema import DynamicAnchor
+    from referencing import Anchor
+    return (Anchor(name=anchor.name, resource=anchor.resource) if type(anchor) is not Anchor else
+            DynamicAnchor(name=anchor.name, resource=anchor.resource))
+
+
+_RESOURCE_URIS = lambda v: sorted(v._resolver._registry._resources)
+_ANCHOR_KEYS = lambda v: sorted(v._resolver._registry._anchors)
+EACH_ROUTES = {
+    "resource_contents": (_RESOURCE_URIS, lambda v, k: _swap_resource(
+        v, k, lambda r: __import__("referencing").Resource(copy.deepcopy(r.contents), r._specification)),
+        "datetime_validator_use_resource_map"),
+    "resource_specification": (_RESOURCE_URIS, lambda v, k: _swap_resource(
+        v, k, lambda r: __import__("referencing").Resource(r.contents, __import__("attrs").evolve(r._specification))),
+        "datetime_validator_use_resource_map"),
+    "resource_renamed": (_RESOURCE_URIS, _renamed_resource, "datetime_validator_use_resource_map"),
+    "anchor_kind": (_ANCHOR_KEYS, lambda v, k: _swap_anchor(v, k, _anchor_kind), "datetime_validator_use_anchors"),
+    "anchor_name": (_ANCHOR_KEYS, lambda v, k: _swap_anchor(v, k, lambda a: __import__("attrs").evolve(
+        a, name=a.name + "-renamed")), "datetime_validator_use_anchors"),
+    "anchor_resource": (_ANCHOR_KEYS, lambda v, k: _swap_anchor(v, k, lambda a: __import__("attrs").evolve(
+        a, resource=__import__("referencing").Resource(copy.deepcopy(a.resource.contents), a.resource._specification))),
+        "datetime_validator_use_anchors"),
+    "anchor_rekeyed": (_ANCHOR_KEYS, lambda v, k: _put(v, "_resolver", _resolver_with(
+        v, anchors=v._resolver._registry._anchors.remove(k).insert((k[0], k[1] + "-rekeyed"),
+                                                                   v._resolver._registry._anchors[k]))),
+        "datetime_validator_use_anchors"),
+    "anchor_added": (lambda v: [None, None], lambda v, k: _put(v, "_resolver", _resolver_with(
+        v, anchors=v._resolver._registry._anchors.insert(("urn:pm:scratch:a", "z"), next(iter(
+            v._resolver._registry._anchors.values()))))), "datetime_validator_use_anchors"),
+    "selection_resource_entry": (lambda v: list(v.storage_selection.resources),  # keys are this validator's ids
+                                 lambda v, k: v.storage_selection.resources.__setitem__(
+                                     k, _copied_pair(v.storage_selection.resources[k])) or v,
+                                 "datetime_validator_use_selection_resources"),
+}
+
+
+def _copied_pair(entry):
+    """An equal entry that is another object."""
+    return entry[0], entry[1]
+for _name, (_entries, _change, _code) in EACH_ROUTES.items():
+    check("datetime_unit_use_each_%s_refused" % _name)(_each_entry_refused(_entries, _change, _code))
+
+
+def _storage_bound():
+    schema = _storage_schema()
+    return schema, _bound(schema, selection=_selection([(schema, {"": _storage_row(schema)})]))
+
+
+def _two_node_bound():
+    """A bound validator whose selection admits two Storage nodes, for the walk over every node entry."""
+    _, inv, _, _ = _mods()
+    schema = {"$schema": D202012, "$id": "urn:pm:scratch:two-nodes", "type": "object",
+              "properties": {"a": {"type": "object", "properties": {"observed_at_utc": {"type": "string"}}},
+                             "b": {"type": "object", "properties": {"observed_at_utc": {"type": "string"},
+                                                                     "persisted_at_utc": {"type": "string"}}}}}
+    rows = {}
+    for name in ("a", "b"):
+        node = schema["properties"][name]
+        rows["/properties/" + name] = dict(_storage_row(schema), pointer="/properties/" + name,
+                                           fields=sorted(f for f in node["properties"]), node_sha256=inv.digest(node))
+    return _bound(schema, selection=_selection([(schema, rows)]))
+
+
+@check("datetime_unit_use_each_selection_node_entry_refused")
+def _use_each_node_entry(context):
+    """Each node entry of the selection, in turn, replaced by an equal entry that is another object, is refused."""
+    keys = list(_two_node_bound().storage_selection.nodes)
+    if len(keys) != 2:
+        return False
+    for position in range(len(keys)):
+        validator = _two_node_bound()
+        if validator.is_valid({"a": {"observed_at_utc": "2026-01-01T00:00:00+00:00"}}):
+            return False
+        nodes = validator.storage_selection.nodes
+        key = list(nodes)[position]
+        nodes[key] = _copied_pair(nodes[key])
+        if _use_reason(validator, {"a": {"observed_at_utc": "2026-01-01T00:00:00Z"}}) != \
+                "datetime_validator_use_selection_nodes":
+            return False
+    return True
+
+
+@check("datetime_unit_use_selection_nodes_refused")
+def _use_selection_nodes(context):
+    """A node entry dropped, or a row whose profile, fields, digest or classification is edited in place, is refused at
+    use: removing the Storage overlay that way cannot reach a validation."""
+    for edit in (lambda row: row.__setitem__("profile", "owner_schema"), lambda row: row.__setitem__("fields", []),
+                 lambda row: row.__setitem__("node_sha256", "0" * 64),
+                 lambda row: row.__setitem__("classification", "EventRecord"), None):
+        _, validator = _storage_bound()
+        nodes = validator.storage_selection.nodes
+        if edit is None:
+            nodes.clear()
+        else:
+            edit(next(iter(nodes.values()))[1])
+        if _use_reason(validator, {"observed_at_utc": "2026-01-01T00:00:00+00:00"}) != \
+                "datetime_validator_use_selection_nodes":
+            return False
+    return True
+
+
+@check("datetime_unit_use_class_tables_refused")
+def _use_class_tables(context):
+    """The bound class's keyword table and type checker are the dialect: editing either is refused at use, and
+    restoring them restores validation."""
+    validator = _bound_timestamp()
+    cls = type(validator)
+    saved_format, saved_checker = cls.VALIDATORS["format"], cls.TYPE_CHECKER
+    try:
+        del cls.VALIDATORS["format"]
+        dropped = _use_reason(validator)
+        cls.VALIDATORS["format"] = saved_format
+        type.__setattr__(cls, "TYPE_CHECKER", saved_checker.redefine("string", lambda checker, instance: True))
+        retyped = _use_reason(validator)
+    finally:
+        cls.VALIDATORS["format"] = saved_format
+        type.__setattr__(cls, "TYPE_CHECKER", saved_checker)
+    return (dropped == retyped == "datetime_validator_use_dialect" and _still_checks(validator))
+
+
+@check("datetime_unit_use_assignment_shadow_refused")
+def _use_assignment_shadow(context):
+    """Ordinary assignment cannot shadow a method or class table either (TypeError), and an ordinary attribute
+    still assigns; is_valid and validate use the class's own iter_errors, so a shadow put in the instance
+    dictionary is refused at use rather than run."""
+    _, inv, _, _ = _mods()
+    validator = _bound_timestamp()
+    names = ("iter_errors", "is_valid", "validate", "descend", "VALIDATORS", "TYPE_CHECKER", "evolve", "schema")
+    if any(_type_error(lambda n=n: setattr(validator, n, None)) != "datetime_validator_fixed: " + n for n in names):
+        return False
+    validator.note = 1
+    shadowed = _put(_bound_timestamp(), "iter_errors", lambda *a, **k: iter(()))
+    try:
+        shadowed.validate({"t": "not-a-dateZ"})
+    except inv.DatetimeAdmissionError as error:
+        validated = error.reason
+    else:
+        validated = None
+    return validator.note == 1 and _still_checks(validator) and validated == "datetime_validator_use_shadowed"
+
+
+# The test's own list of the attributes a bound validator never reassigns or deletes (T166, T189, fix round 18).
+FIXED_NAMES = ("format_checker", "_registry", "_resolver", "_ref_resolver", "storage_selection", "datetime_binding",
+               "_datetime_fixed")
+
+
+@check("datetime_unit_validate_raises_first_error")
+def _validate_raises(context):
+    """validate raises the first error of the class's own iter_errors, and returns None for a valid instance."""
+    from jsonschema import ValidationError
+    validator = _bound_timestamp()
+    try:
+        validator.validate({"t": "not-a-dateZ"})
+    except ValidationError as error:
+        raised = (error.validator, tuple(error.absolute_path))
+    else:
+        raised = None
+    return raised == ("format", ("t",)) and validator.validate({"t": "2026-01-01T00:00:00Z"}) is None
+
+
+@check("datetime_unit_use_deletion_refused")
+def _use_deletion(context):
+    """T189: the marker and each fixed attribute cannot be deleted (TypeError), so the checker stays fixed after an
+    attempt; an ordinary attribute still deletes."""
+    _, inv, _, _ = _mods()
+    validator = _bound_timestamp()
+    validator.note = 1
+    del validator.note
+    if any(_type_error(lambda n=n: delattr(validator, n)) != "datetime_validator_fixed: " + n
+           for n in FIXED_NAMES):
+        return False
+    return (_type_error(lambda: setattr(validator, "format_checker", None)) ==
+            "datetime_validator_fixed: format_checker" and _still_checks(validator))
+
+
+@check("datetime_unit_use_marker_assignment_refused")
+def _use_marker_assignment(context):
+    """The marker cannot be reassigned either."""
+    validator = _bound_timestamp()
+    return (_type_error(lambda: setattr(validator, "_datetime_fixed", False)) == "datetime_validator_fixed: _datetime_fixed"
+            and _still_checks(validator))
+
+
+@check("datetime_unit_use_copy_refused")
+def _use_copy(context):
+    """copy.copy builds an instance without the binding: its use is refused. deepcopy cannot copy the checker table."""
+    validator = _bound_timestamp()
+    return (_use_reason(copy.copy(validator)) == "datetime_validator_use_binding" and
+            _type_error(lambda: copy.deepcopy(validator)) is not None and _still_checks(validator))
+
+
+@check("datetime_unit_use_resumed_run_reverified")
+def _use_resumed(context):
+    """A run that yielded an error re-verifies before it resumes: a checker swapped while it was suspended raises at
+    the next step, and a descend called directly meanwhile is its own entry point and is verified too."""
+    _, inv, _, _ = _mods()
+    validator = _bound_timestamp()
+    run = validator.iter_errors({"t": "not-a-dateZ", "u": 1})
+    first = next(run)
+    saved = validator.format_checker
+    _put(validator, "format_checker", _stock_checker())
+    try:
+        next(run)
+    except inv.DatetimeAdmissionError as error:
+        resumed = error.reason
+    else:
+        resumed = None
+    direct = _admission_reason(lambda: list(validator.descend({"t": "not-a-dateZ"}, validator.schema)))
+    _put(validator, "format_checker", saved)
+    return (first.validator == "format" and resumed == direct == "datetime_validator_use_format_checker" and
+            _still_checks(validator))
+
+
+@check("datetime_unit_use_nested_step_verified")
+def _use_nested_step(context):
+    """Inside a verified run, an evolved validator that carries another checker, a legacy resolver, another registry,
+    another selection, no marker, or an unverified class is refused at its first step."""
+    dt, inv, _, _ = _mods()
+    validator = _bound_timestamp()
+    routes = [("format_checker", _stock_checker(), "datetime_validator_use_step"),
+              ("_ref_resolver", _legacy_resolver(), "datetime_validator_use_step"),
+              ("_registry", _foreign_resolver()._registry, "datetime_validator_use_step"),
+              ("storage_selection", _selection(), "datetime_validator_use_step")]
+    results = []
+    for name, value, code in routes:
+        clone = validator.evolve()
+        _put(clone, name, value) if name != "storage_selection" else clone.__dict__.__setitem__(name, value)
+        results.append(_nested_reason(validator, clone) == code)
+    unmarked = validator.evolve()
+    object.__delattr__(unmarked, "_datetime_fixed")
+    results.append(_nested_reason(validator, unmarked) == "datetime_validator_use_marker")
+    sub = _put(validator.evolve(), "__class__", type("Sub", (type(validator),), {}))
+    results.append(_nested_reason(validator, sub) == "datetime_validator_use_dialect")
+    rescoped = _put(validator.evolve(), "_resolver", __import__("attrs").evolve(
+        validator._resolver, base_uri="urn:pm:scratch:unpinned"))
+    results.append(_nested_reason(validator, rescoped) == "datetime_resource_not_preloaded")
+    from referencing import Registry
+    explicit = _nested_reason(validator, validator.evolve(), resolver=Registry().resolver("urn:pm:scratch:unpinned"))
+    results.append(explicit == "datetime_resource_not_preloaded")
+    rebuilt = _nested_reason(validator, validator.evolve(), resolver=__import__("attrs").evolve(
+        validator._resolver, registry=__import__("attrs").evolve(validator._resolver._registry, retrieve=lambda u: None)))
+    results.append(rebuilt == "datetime_validator_use_retrieval")
+    results.append(_nested_reason(validator, validator.evolve()) is None)
+    return all(results) and _still_checks(validator)
+
+
+def _nested_reason(outer, inner, resolver=None):
+    """The refusal code of inner.descend run as a step of a verified run of outer, or None."""
+    dt, inv, _, _ = _mods()
+    run = dt._verify_use(outer)
+    runs = dt._runs()
+    runs.append(run)
+    try:
+        list(inner.descend({"t": "2026-01-01T00:00:00Z"}, {"type": "object"}, resolver=resolver))
+    except inv.DatetimeAdmissionError as error:
+        return error.reason
+    except Exception as error:  # noqa: BLE001
+        return "exception:" + type(error).__name__
+    finally:
+        runs.pop()
+    return None
+
+
+@check("datetime_unit_use_pins_fixed")
+def _use_pins_fixed(context):
+    """The pins of a binding, and of each of its registries, cannot be assigned or deleted."""
+    validator = _bound_timestamp()
+    pins = validator.datetime_binding.pins
+    return (_type_error(lambda: setattr(pins, "checker", None)) == "datetime_validator_pins_fixed: checker" and
+            _type_error(lambda: delattr(pins, "checker")) == "datetime_validator_pins_fixed: checker" and
+            _type_error(lambda: setattr(pins.closed, "retrieve", None)) == "datetime_validator_pins_fixed: retrieve" and
+            _type_error(lambda: delattr(pins.combined, "resources")) == "datetime_validator_pins_fixed: resources" and
+            _still_checks(validator))
+
+
+@check("datetime_unit_use_forged_pins_refused_at_construction")
+def _use_forged_pins(context):
+    """A binding that pairs genuine pins with another checker, registry or selection, or that carries pins _bind
+    never issued, is refused at construction (datetime_validator_binding_forged)."""
+    dt, _, _, _ = _mods()
+    validator = _bound_timestamp()
+    checker, registry, selection, pins = validator.datetime_binding
+    other = dt.format_checker()
+    foreign = _foreign_resolver()._registry
+    fresh = _selection()
+    message = "datetime_validator_binding_forged"
+    return (_type_error(lambda: validator.evolve(format_checker=other, datetime_binding=dt._Binding(
+                other, registry, selection, pins))) == message and
+            _type_error(lambda: validator.evolve(registry=foreign, datetime_binding=dt._Binding(
+                checker, foreign, selection, pins))) == message and
+            _type_error(lambda: validator.evolve(storage_selection=fresh, datetime_binding=dt._Binding(
+                checker, registry, fresh, pins))) == message and
+            _type_error(lambda: validator.evolve(datetime_binding=dt._Binding(checker, registry, selection))) == message and
+            _type_error(lambda: validator.evolve(datetime_binding=dt._Binding(
+                checker, registry, selection, dt._Pins.__new__(dt._Pins)))) == message and
+            _still_checks(validator))
+
+
+@check("datetime_unit_use_resolver_map_refused_at_construction")
+def _use_resolver_map_construction(context):
+    """A resolver over another registry object that reads a different resource map is refused at construction, for
+    each kind of difference; a crawled copy of the same map is accepted and validates normally."""
+    import attrs
+    validator = _bound_timestamp()
+    registry = validator._resolver._registry
+    variants = {
+        "datetime_validator_use_uncrawled": registry.with_resource("urn:pm:scratch:ts", _other_uri_resource()),
+        "datetime_validator_use_resource_map": attrs.evolve(registry, resources=registry._resources.insert(
+            "urn:pm:scratch:ts", _other_uri_resource())),
+        "datetime_validator_use_anchors": attrs.evolve(registry, anchors=registry._anchors.remove(
+            next(iter(registry._anchors)))),
+    }
+    for code, changed in variants.items():
+        if _type_error(lambda c=changed: validator.evolve(_resolver=attrs.evolve(validator._resolver, registry=c))) != \
+                "datetime_validator_fixed_resolver: " + code:
+            return False
+    crawled = validator.evolve(_resolver=attrs.evolve(validator._resolver, registry=registry.crawl()))
+    return crawled._resolver._registry is not registry and _still_checks(crawled) and _still_checks(validator)
+
+
+EVENT_RECORD_PATH = "Plans/event_record.schema.json"
+
+
+def _committed_eventrecord(context):
+    """datetime_validator over a neutral reference to the committed EventRecord schema, preloaded, and the committed
+    receipt fixture's base_original_event: the gate review's finding 2 setup."""
+    from referencing import Registry, Resource
+    dt, _, _, _ = _mods()
+    schema = json.loads((context.root / EVENT_RECORD_PATH).read_text())
+    fixture = json.loads((context.root / "Plans/event_append_receipt_full_value_fixtures.json").read_text())
+    validator = dt.datetime_validator({"$ref": schema["$id"]},
+                                      registry=Registry().with_resource(schema["$id"], Resource.from_contents(schema)))
+    return schema, validator, fixture["base_original_event"]
+
+
+@check("datetime_validator_real_eventrecord_resolver_map_refused", slow=True)
+def _real_resolver_map(context):
+    """The gate review's finding 2 input, unchanged: a resolver whose registry maps the pinned EventRecord URI to an
+    empty schema, keeping the bound retrieval callback, passed through evolve(_resolver=...), is refused at
+    construction; installed around construction it is refused at use; and the intact validator still accepts the
+    committed event and refuses observed_at_utc="not-a-time"."""
+    import attrs
+    from referencing import Resource
+    from referencing.jsonschema import DRAFT202012
+    _, inv, _, _ = _mods()
+    schema, validator, event = _committed_eventrecord(context)
+    bad = dict(copy.deepcopy(event), observed_at_utc="not-a-time")
+    replacement = validator._registry.with_resource(schema["$id"], Resource({}, DRAFT202012))
+    resolver = attrs.evolve(validator._resolver, registry=replacement)
+    constructed = _type_error(lambda: validator.evolve(_resolver=resolver))
+    around = _put(validator.evolve(), "_resolver", resolver)
+    return (validator.is_valid(event) and not validator.is_valid(bad) and
+            resolver._registry._retrieve is validator._registry._retrieve and
+            constructed is not None and constructed.startswith("datetime_validator_fixed_resolver: ") and
+            _use_reason(around, bad) is not None and _use_reason(around, bad).startswith("datetime_validator_use_") and
+            validator.is_valid(event) and not validator.is_valid(bad))
+
+
+@check("datetime_validator_real_eventrecord_preloaded_controls", slow=True)
+def _real_preloaded_controls(context):
+    """Controls on the committed EventRecord: an ordinarily preloaded resource map validates normally (the committed
+    event valid, each malformed timestamp field refused), and an evolve that changes only the schema still validates
+    and still checks timestamps, through the same pins."""
+    schema, validator, event = _committed_eventrecord(context)
+    evolved = validator.evolve(schema={"$ref": schema["$id"]})
+    for candidate in (validator, evolved):
+        if not candidate.is_valid(event):
+            return False
+        for field in ("occurred_at_utc", "observed_at_utc", "persisted_at_utc"):
+            if candidate.is_valid(dict(event, **{field: "not-a-time"})):
+                return False
+        if candidate.is_valid(dict(event, observed_at_utc="2026-01-01T00:00:00+00:00")):
+            return False
+        if not candidate.is_valid(dict(event, occurred_at_utc="2026-01-01t00:00:00+05:30")):
+            return False
+    return evolved.datetime_binding is validator.datetime_binding and evolved.format_checker is validator.format_checker
+
+
+@check("datetime_validator_real_eventrecord_in_place_edits_refused", slow=True)
+def _real_in_place(context):
+    """In-place edits of the committed EventRecord configuration after construction are refused at use: the bound
+    registry's resource replaced, its schema's date-time definition loosened, the selection's row for the root
+    downgraded to owner_schema, and the selection's URI pins edited. Each validator is fresh; nothing committed is
+    written."""
+    import attrs
+    from referencing import Resource
+    from referencing.jsonschema import DRAFT202012
+    _, inv, _, _ = _mods()
+    results = []
+    schema, validator, event = _committed_eventrecord(context)
+    registry = validator._registry
+    object.__setattr__(registry, "_resources", registry._resources.insert(schema["$id"], Resource({}, DRAFT202012)))
+    results.append(_use_reason(validator, event) == "datetime_validator_use_resource_map")
+    schema, validator, event = _committed_eventrecord(context)
+    validator._registry.contents(schema["$id"])["$defs"]["date_time_string"].pop("format")
+    results.append(_use_reason(validator, dict(event, occurred_at_utc="not-a-time")) ==
+                   "datetime_schema_changed_after_admission")
+    schema, validator, event = _committed_eventrecord(context)
+    node, row = next(entry for entry in validator.storage_selection.nodes.values() if entry[1]["pointer"] == "")
+    saved = row["profile"]
+    try:
+        row["profile"] = "owner_schema"
+        results.append(_use_reason(validator, dict(event, observed_at_utc="2026-01-01T00:00:00+00:00")) ==
+                       "datetime_validator_use_selection_nodes")
+    finally:
+        row["profile"] = saved
+    schema, validator, event = _committed_eventrecord(context)
+    validator.storage_selection.uri_pins.pop(schema["$id"])
+    results.append(_use_reason(validator, event) == "datetime_validator_use_selection_pins")
+    return all(results)
