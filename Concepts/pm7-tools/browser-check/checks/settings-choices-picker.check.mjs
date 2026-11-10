@@ -3,7 +3,10 @@
 // model setting's "Your choices" is one picker (a combobox that opens a listbox: the chat's model selector), not a
 // column of every model; every choice stays reachable through it, by pointer and by keys, in all ten looks, at a
 // standard and a narrow width, with Reduced Motion, on either surface (--set sandbox=0/1). A short list (On/Off) stays
-// a list. Semantics and geometry only (roles, names, states, hit-tests, boxes); no eye.
+// a list. Jared's #1 ("that logo looks terrible", most right-side panels), icon option B: the head tile of the Details
+// panel and of every Settings side panel draws the PM glyph (PMG, data-nx, a glyph PMG.has) in a quiet tile, with no
+// outer glow (every box-shadow layer inset). Semantics and geometry only (roles, names, states, hit-tests, boxes,
+// computed styles); no eye. Tile geometry (square, centred) stays settings-inspector-fit's.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-choices-picker.check.mjs --set page=<build>
 // --set looks=a,b narrows the looks; --set sizes=1390x900,740x900 the sizes; --set setting=<id> another model setting.
 import { LOOKS } from '../browser-check.config.mjs';
@@ -121,6 +124,23 @@ const OPEN = () => {
 	};
 };
 
+/* A head tile: the glyph it draws (a PMG glyph carries data-nx, the registry name) and its shadow layers (an outer
+   layer is any that is not inset: the old accent ring and glow were two). */
+const TILE = (sel) => {
+	const tile = document.querySelector(sel);
+	if (!tile || !tile.getClientRects().length) return { error: `no ${sel}` };
+	const svg = tile.querySelector('svg');
+	const nx = svg ? svg.getAttribute('data-nx') : null;
+	const sh = getComputedStyle(tile).boxShadow || 'none';
+	const layers = sh === 'none' ? [] : sh.split(/,(?![^(]*\))/).map((x) => x.trim());
+	return { nx, pmg: !!(nx && window.PMG && PMG.has(nx)), outer: layers.filter((l) => !/\binset\b/.test(l)), shadow: sh };
+};
+async function judgeTile(t, f, where, sel) {
+	const m = await f.evaluate(TILE, sel);
+	if (m.error) { await t.check(`${where}: the head tile is shown`, false, m.error); return; }
+	await t.check(`${where}: the head tile draws a PM glyph (PMG)`, m.pmg, `data-nx ${m.nx}`);
+	await t.check(`${where}: the head tile has no outer ring or glow`, m.outer.length === 0, m.shadow);
+}
 async function judgeClosed(t, f, where, id) {
 	const b = await f.evaluate(BLOCK, id);
 	await t.check(`${where}: the panel shows "Your choices"`, b.block);
@@ -172,6 +192,7 @@ export const tests = {
 				const where = `${look} ${w}x${h}`;
 				await guardLook(t, f, look, where);
 				const b = await judgeClosed(t, f, where, id);
+				await judgeTile(t, f, `${where} Details`, '#panel-settings .detail-inspector .o55-insp-icon');
 				if (b.combos) {
 					await f.locator('#panel-settings .detail-inspector .o55-insp-block [role="combobox"]').first().click();
 					await t.page.waitForTimeout(450);
@@ -241,6 +262,28 @@ export const tests = {
 		}
 		await closeDetails(t, f);
 		await t.emulate({ reducedMotion: 'no-preference' });
+	},
+
+	/* Every Settings side panel's head (PM51.panel, the one builder they all use: sign-in, Check connection, the
+	   managers' sheets), opened here with the builder itself; the ready tone too, all ten looks. */
+	'FO-127 side panel head tile, all looks': async (t) => {
+		const looks = t.args.looks ? String(t.args.looks).split(',') : LOOKS;
+		const f = await t.app.open();
+		await t.viewport(1390, 900);
+		await f.locator('#tab-settings').click();
+		await t.settle();
+		for (const look of looks) {
+			await setLook(t, f, look);
+			for (const tone of ['', 'ready']) {
+				await f.evaluate((tone) => PM51.panel({ title: 'Check connection', subtitle: 'Claude', icon: 'test', tone, body: PM51.panelSection('What happens', '<p>One short request.</p>'), primaryLabel: 'Check now', onPrimary: () => false }), tone);
+				await f.waitForSelector('#panel-settings .pm51-panel .pm51-hero-icon', { timeout: 8000 });
+				await t.page.waitForTimeout(500);
+				await guardLook(t, f, look, `${look} side panel${tone ? ' ' + tone : ''}`);
+				await judgeTile(t, f, `${look} side panel${tone ? ' ' + tone : ''}`, '#panel-settings .pm51-panel .pm51-hero-icon');
+				await f.locator('#panel-settings .pm51-panel [data-action="close-overlay"]').first().click().catch(() => {});
+				await t.page.waitForTimeout(450);
+			}
+		}
 	},
 
 	/* A short list stays a list: an On/Off setting still shows its two choices as radios, no picker. */
