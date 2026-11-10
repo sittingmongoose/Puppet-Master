@@ -1,0 +1,4 @@
+export const ITEMS = ['search', 'source', 'repository_automation', 'docker', 'testing', 'run', 'agents', 'artifacts', 'files'];
+export const item = (t, id) => t.page.locator(`.activity-bar .icon[data-ab-id="${id}"]`);
+export const state = (t) => t.page.evaluate(() => ({ slot: Math.round(document.getElementById('sidePanelSlot').getBoundingClientRect().width), expanded: Object.fromEntries([...document.querySelectorAll('.activity-bar .icon[data-ab-id][aria-controls]')].map((e) => [e.dataset.abId, e.getAttribute('aria-expanded')])), active: [...document.querySelectorAll('.side-panel-view.active')].map((e) => e.id) }));
+export const settled = async (t) => { await t.settle(); await t.page.waitForFunction(() => { const w = document.getElementById('sidePanelSlot').getBoundingClientRect().width; return w < 1 || w > 200; }, null, { timeout: 5000 }).catch(() => {}); };

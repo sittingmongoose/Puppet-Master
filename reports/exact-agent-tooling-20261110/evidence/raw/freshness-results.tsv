@@ -1,0 +1,4 @@
+1-right-build	expected_exit=0	got_exit=0	receipt_fresh=True	OK	
+2-wrong-build-at-start	expected_exit=1	got_exit=1	receipt_fresh=False	OK	opened the expected build: expected 47af3367aca7, loaded 48125a4eecc4
+3-replaced-then-reload	expected_exit=1	got_exit=1	receipt_fresh=False	OK	reloaded the expected build: expected 47af3367aca7, loaded 48125a4eecc4
+4-raw-navigation-to-another-build	expected_exit=1	got_exit=1	receipt_fresh=False	OK	the loaded page is the build this run expects: expected 47af3367aca7, loaded 48125a4eecc4; 2 of 4 loads did not match

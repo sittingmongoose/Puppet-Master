@@ -1,0 +1,13 @@
+button [activity.chat] "Chat" expanded=true
+button [activity.files] "Files" expanded=true
+button [activity.search] "Search" expanded=false
+button [activity.source] "Source" expanded=false
+button [activity.repository_automation] "Pipelines" expanded=false
+button [activity.docker] "Docker" expanded=false
+button [activity.testing] "Tests" expanded=false
+button [activity.run] "Debug" expanded=false
+button [activity.agents] "Agents" expanded=false
+button [activity.artifacts] "Artifacts" expanded=false
+button [activity.more] "More"
+button [activity.toggle] "Expand or collapse the Activity bar"
+(12 shown with an id; 0 with an id not shown; 0 other controls without an id)

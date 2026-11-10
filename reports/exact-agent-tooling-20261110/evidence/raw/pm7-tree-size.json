@@ -1,0 +1,60 @@
+{
+ "page": "/home/sittingmongoose/PM-Experiments/exact-agent-tooling-20261110/pm7-tree-size/PMConcept7.html",
+ "pageBytes": 33761359,
+ "viewport": "1920x1080",
+ "surface": "Home at rest, default look",
+ "cdpFullAxTree": {
+  "nodes": 3274,
+  "bytesUtf8": 1119665,
+  "chars": 1119432,
+  "ignored": 1203
+ },
+ "playwrightAriaSnapshot": {
+  "bytesUtf8": 15028,
+  "chars": 14982,
+  "lines": 371
+ },
+ "compactControls": {
+  "bytesUtf8": 5704,
+  "chars": 5674,
+  "lines": 150,
+  "total": 1882,
+  "shown": 150,
+  "withId": 28,
+  "withCmd": 2,
+  "withAction": 32,
+  "noName": 0,
+  "dupNamesFull": 42,
+  "dupNamesCutAt48": 42
+ },
+ "scoped": {
+  ".activity-bar": {
+   "bytesUtf8": 397,
+   "chars": 397,
+   "lines": 12,
+   "shown": 12
+  },
+  "main.primary-content": {
+   "bytesUtf8": 1049,
+   "chars": 1047,
+   "lines": 36,
+   "shown": 36
+  },
+  ".chat-column, #chatColumn, [data-chat-column]": {
+   "bytesUtf8": 0,
+   "chars": 0,
+   "lines": 0,
+   "shown": 0
+  }
+ },
+ "screenshot": {
+  "pngBytes": 391894,
+  "tokensPerToolGuide": 2600
+ },
+ "dom": {
+  "elements": 23773,
+  "outerHtmlChars": 35699388,
+  "ids": 621,
+  "commandIdAttrs": 133
+ }
+}

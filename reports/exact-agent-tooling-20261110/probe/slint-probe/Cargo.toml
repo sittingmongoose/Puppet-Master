@@ -1,0 +1,20 @@
+[package]
+name = "slint-probe"
+version = "0.2.0"
+edition = "2021"
+build = "build.rs"
+
+[dependencies]
+slint = { version = "=1.18.1", default-features = false, features = ["std", "compat-1-2", "renderer-software"] }
+# The test layer: an optional dependency, so a build without `--features testkit` does not link it.
+i-slint-backend-testing = { version = "=1.18.1", optional = true }
+
+[build-dependencies]
+sha2 = "0.10"
+
+[features]
+testkit = ["dep:i-slint-backend-testing"]
+
+[[test]]
+name = "focused"
+required-features = ["testkit"]

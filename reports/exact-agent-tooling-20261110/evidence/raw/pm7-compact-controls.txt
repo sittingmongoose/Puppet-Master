@@ -1,0 +1,150 @@
+button #projectMenuBtn [ui.project_switcher.open] "Project: tastebook, 3 items need you" expanded=false
+tab #tab-dashboard "Home" selected
+tab #tab-projects "Projects"
+tab #tab-wizard "Planning Wizard"
+tab #tab-orchestrator "Orchestrator"
+tab #tab-usage "Usage"
+tab #tab-settings "Settings"
+button #pmnStack "Notifications: nothing new" expanded=false
+textbox #tbSearchInput "Search files, commands, settings..."
+button #pm-home-more-btn "Home options" expanded=false
+button #themeSelect "Theme" expanded=false
+button "Chat" expanded=true
+button "Files" expanded=true
+button "Search" expanded=false
+button "Source" expanded=false
+button "Pipelines" expanded=false
+button "Docker" expanded=false
+button "Tests" expanded=false
+button "Debug" expanded=false
+button "Agents" expanded=false
+button "Artifacts" expanded=false
+button #abMoreBtn "More"
+button #activityBarToggle "Expand or collapse the Activity bar"
+button #fmRootBtn "main" expanded=false
+button "Refresh"
+button "Pop out"
+tab "Explorer" selected
+tab "Changed"
+tab "Open"
+button #fmNewFile "New file"
+button #fmNewFolder "New folder"
+button #fmCollapseAll "Collapse / expand all folders"
+button #fmHideIgnored "Hide ignored files"
+button #fmFilterToggle "Filter / type-ahead"
+treeitem "src (folder) · collapsed" expanded=false
+button "New folder here"
+treeitem "migrations (folder) · collapsed" expanded=false
+button "New folder here"
+treeitem "web/src (folder) · expanded" expanded=true
+button "New folder here"
+treeitem "web/src/routes (folder) · expanded" expanded=true
+button "New folder here"
+treeitem "+page.svelte · Svelte component"
+button "Copy relative path"
+button "Open in terminal"
+treeitem "web/src/routes/recipe/[id] (folder) · expanded" expanded=true
+button "New folder here"
+button "Open in terminal"
+treeitem "+page.svelte · Svelte component"
+button "Copy relative path"
+button "Open in terminal"
+treeitem "web/src/lib (folder) · collapsed" expanded=false
+button "New folder here"
+treeitem "node_modules (folder) · collapsed · ignored by ." expanded=false
+button "New folder here"
+treeitem ".github/workflows (folder) · collapsed" expanded=false
+button "New folder here"
+button "Open in terminal"
+treeitem "Cargo.toml · TOML config"
+button "Copy relative path"
+button "Open in terminal"
+treeitem "docker-compose.yml · YAML"
+button "Copy relative path"
+button "Open in terminal"
+treeitem "Dockerfile · Docker file"
+button "Copy relative path"
+button "Open in terminal"
+treeitem "unraid-template.xml · XML"
+button "Copy relative path"
+button "Open in terminal"
+treeitem "README.md · Markdown"
+button "Copy relative path"
+button "Open in terminal"
+treeitem "binary-asset.bin · File · read-only"
+treeitem "build.log · File · ignored by .gitignore"
+tab #pmw-tab-1 "Home, pinned" selected
+tab #pmw-tab-2 "Agents"
+button "New tab or panel"
+button "Panel options"
+button "Move panel (drag, or Enter then arrows)"
+button "Add widget"
+button "Board"
+button "Maximize"
+article "Usage health"
+article "Selected window value"
+article "Active route reset"
+article "Active runs"
+tab #pmw-tab-3 "main.rs" selected
+tab #pmw-tab-4 "recipes.rs"
+tab #pmw-tab-5 "Tenant-scoped analytics read path"
+button "New tab or panel"
+button "Panel options"
+button "Move panel (drag, or Enter then arrows)"
+textbox #pmw-ed-kvtjfwp "main.rs editor"
+button "Ln 1, Col 1"
+button "Changes"
+button "Find (Ctrl+F)"
+button "More"
+tab #pmw-tab-6 "zsh · api" selected
+tab #pmw-tab-7 "cargo · api, working"
+tab #pmw-tab-8 "Output"
+button "New tab or panel"
+button "Panel options"
+button "Move panel (drag, or Enter then arrows)"
+button "Find (Ctrl+Shift+F)"
+button "Split (Ctrl+Shift+5)"
+button "Maximize"
+button "More"
+button "Prompt"
+separator "Resize the panels to the left and right"
+separator "Resize the panels above and below"
+button {toggle-history} "Open thread history"
+button {new-thread} "Start a new thread"
+button {lens-open} "Context Lens"
+button {thread-search} "Search this thread or every thread"
+button {open-menu} "Worktree feature/query-index — Bound · uncommitt"
+button {chat-sound-toggle} "Sound on · click to mute" pressed
+button {context-menu} "Context 64% used"
+button {pm56-column-menu} "Chat options"
+button {att-open} "src/analytics/queries.rs"
+button {att-open} "query-performance-runbook.pdf"
+button {att-open} "src/analytics/"
+button {work-demo-menu} "Demo controls (concept lab only)" expanded=false
+button {orbit-open-phase} "Preparing, completed"
+button {orbit-open-phase} "Thinking, in progress"
+button {orbit-toggle} "Thinking" pressed
+button {orbit-collapse} "Collapse to the compact summary"
+button {open-activity} "Goal activity, V3" expanded=false
+button {open-activity} "Todo activity, 4/12" expanded=false
+button {open-activity} "Subagents activity, 5" expanded=false
+button {open-activity} "Processes activity, 5" expanded=false
+button {open-activity} "Changes activity, 8" expanded=false
+button {open-activity} "Artifacts activity, 8" expanded=false
+button {work-dock-review} "Review"
+button {work-dock-review} "Show"
+button {work-dock-review} "Show"
+textbox "Ask Puppet Master, use natural language, or type"
+button {attach} "Attach files or images"
+button {stop-run} "Stop the current run"
+button {open-menu} "Persona · Product Manager"
+button {open-menu} "Model · Claude Sonnet 4.6"
+button {open-menu} "Mode · Agent"
+button {open-menu} "Permissions · Auto"
+button {open-menu} "Capabilities and Goal Mode"
+button [ui.system_status.open] "Open system status" expanded=false
+button "Agents: 22 running, 2 questions" expanded=false
+button "Processes: 10 running, 1 needs input" expanded=false
+button "Source control"
+button "Snapshot 10m ago"
+button "Concept demo Fresh computer" expanded=false

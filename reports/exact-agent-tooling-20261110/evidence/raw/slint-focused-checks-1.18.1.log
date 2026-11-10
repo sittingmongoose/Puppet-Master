@@ -1,0 +1,42 @@
+   Compiling slint-probe v0.2.0 (/home/sittingmongoose/PM-Experiments/exact-agent-tooling-20261110/slint-probe)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.81s
+     Running tests/focused.rs (target/debug/deps/focused-c700a06aa88d29d9)
+
+running 7 tests
+test c1_canonical_id_targeting ... PROBE c1 {"op":"tap","id":"btn.github.connect","input":"toolkit-pointer","mock_ms":50,"at":[335,110]}
+PROBE c1 handles for one id: adapter walk=1 stock descendant query=7
+ok
+test c2_duplicate_match_is_refused ... PROBE c2 Ambiguous { id: "dup.save", candidates: ["Button \"Save\" at 16,566 []", "Button \"Save\" at 364,566 []"] }
+ok
+test c3_repeated_controls_keep_their_key_across_reordering ... PROBE c3 k-docker y 732 -> 788; row now at k-compose's old y: ["k-new"]
+ok
+test c4_toolkit_pointer_input_on_mock_time ... PROBE c4 {"op":"tap","id":"ui.settings.toggle_panel","input":"toolkit-pointer","mock_ms":50,"at":[167.5,914]} mid=150 end=300 mock_ms_total=350 real_ms_body=25 real_ms_with_setup=75
+PROBE c4 stock single_click: pending_after_press=true pending_without_clock=true ready_after_50ms_mock=true connect_count=1
+ok
+test c5_pointer_and_semantic_action_differ_on_a_covered_control ... PROBE c5 {"op":"tap","id":"btn.github.connect","input":"toolkit-pointer","mock_ms":50,"at":[335,110]} -> control clicks 0, cover hits 1
+PROBE c5 {"op":"activate","id":"btn.github.connect","input":"semantic-action","mock_ms":0,"at":[335,110]} -> control clicks 1, cover hits 1
+ok
+test c6_compact_listing_states_disabled ... PROBE c6 listing before:
+Button [btn.github.connect] <SettingsPage::btn-github-connect> "Connect"
+Button [btn.github.disconnect] <SettingsPage::btn-github-disconnect> "Disconnect" disabled
+TextInput [settings.github.host] <SettingsPage::input-github-host> ""
+TextInput [settings.github.default_branch] <SettingsPage::input-default-branch> "" value="main"
+Switch [settings.github.draft_prs] <SettingsPage::sw-draft-prs> "" checked
+Switch [settings.github.sign_commits] <SettingsPage::sw-sign-commits> ""
+Checkbox [settings.github.auto_fetch] <SettingsPage::cb-auto-fetch> "Every" checked
+Slider [settings.github.fetch_minutes] <SettingsPage::sl-fetch-minutes> "" value="15"
+Combobox [settings.github.merge_method] <SettingsPage::combo-merge-method> "" value="Squash"
+Button [dup.save] <> "Save"
+Button [dup.save] <> "Save"
+Button [files.row.copy_path#k-compose] <> "Copy relative path"
+Button [files.row.copy_path#k-docker] <> "Copy relative path"
+Button [files.row.copy_path#k-unraid] <> "Copy relative path"
+Button [ui.settings.toggle_panel] <SettingsPage::btn-toggle-panel> "Toggle panel"
+PROBE c6 bytes_utf8=1065 lines=15
+ok
+test c7_app_build_identity_is_read_from_the_running_app ... PROBE c7 app_build_id=e86ba3292007ded92f2ba8f65e3be76460322aeec67137d88d7a5744b4854d7a test_file_sha256_is_computed_by_the_runner_script
+ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.71s
+
+test exit 0

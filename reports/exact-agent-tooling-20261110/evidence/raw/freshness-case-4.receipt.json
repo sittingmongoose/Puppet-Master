@@ -1,0 +1,40 @@
+{
+ "schema": "pm7-pilot.receipt.v1",
+ "arm": "A",
+ "app": {
+  "page_path": "/home/sittingmongoose/PM-Experiments/exact-agent-tooling-20261110/pilot/fresh/work/p4.html",
+  "expected_build_id": "47af3367aca72913a486e6743351d19c8076abe30fc5baf0cb1fdcbb1f43a1cc",
+  "page_file_sha256_at_start": "5d67dd2ba5c348f8bfcc8864ce64f65b7db6353a761755430b5f34ab26a11ed6",
+  "loads": [
+   {
+    "why": "document loaded",
+    "url": "file:///home/sittingmongoose/PM-Experiments/exact-agent-tooling-20261110/pilot/fresh/work/p4.html",
+    "loaded_build_id": "47af3367aca72913a486e6743351d19c8076abe30fc5baf0cb1fdcbb1f43a1cc",
+    "ok": true,
+    "at": "2026-11-10T22:34:00.240Z"
+   },
+   {
+    "why": "open",
+    "url": "file:///home/sittingmongoose/PM-Experiments/exact-agent-tooling-20261110/pilot/fresh/work/p4.html",
+    "loaded_build_id": "47af3367aca72913a486e6743351d19c8076abe30fc5baf0cb1fdcbb1f43a1cc",
+    "ok": true,
+    "at": "2026-11-10T22:34:01.404Z"
+   },
+   {
+    "why": "document loaded",
+    "url": "file:///home/sittingmongoose/PM-Experiments/exact-agent-tooling-20261110/pilot/fixtures/v1.html",
+    "loaded_build_id": "48125a4eecc4fd9040af71c8477e5de8b5688714f8eef2b9266e97862d683a90",
+    "ok": false,
+    "at": "2026-11-10T22:34:09.000Z"
+   },
+   {
+    "why": "end of test",
+    "url": "file:///home/sittingmongoose/PM-Experiments/exact-agent-tooling-20261110/pilot/fixtures/v1.html",
+    "loaded_build_id": "48125a4eecc4fd9040af71c8477e5de8b5688714f8eef2b9266e97862d683a90",
+    "ok": false,
+    "at": "2026-11-10T22:34:09.425Z"
+   }
+  ]
+ },
+ "fresh": false
+}

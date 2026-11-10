@@ -78,6 +78,7 @@ Line numbers are exact for one-line ranges and bound the passage for wider ones.
 | P80 | UIW-015, onboarding's fourteen typed local actions | [`Plans/UI_Wiring_Rules.md` L1093](https://github.com/sittingmongoose/Puppet-Master/blob/47d9dc7655d34b07962bf2cb2907e5676c012315/Plans/UI_Wiring_Rules.md#L1093) | "exactly fourteen typed local ui.onboarding.* actions through the closed action-request and action-result envelopes" |
 | P81 | F3-643, terminal effects frame budget | [`Plans/FinalGUISpec.md` L47750](https://github.com/sittingmongoose/Puppet-Master/blob/47d9dc7655d34b07962bf2cb2907e5676c012315/Plans/FinalGUISpec.md#L47750) | "An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware" |
 | P82 | SP-338, first chat page budget | [`Plans/storage-plan.md` L28421](https://github.com/sittingmongoose/Puppet-Master/blob/47d9dc7655d34b07962bf2cb2907e5676c012315/Plans/storage-plan.md#L28421) | "first page within 150 ms at p95, warm or cold, reading at most 2 MiB" |
+| P83 | UIW-045, repeated rows use stable ids | [`Plans/UI_Wiring_Rules.md` L2857](https://github.com/sittingmongoose/Puppet-Master/blob/47d9dc7655d34b07962bf2cb2907e5676c012315/Plans/UI_Wiring_Rules.md#L2857) | "repeated rows use stable IDs, never array positions" |
 
 ## What was looked for and not found
 

@@ -1,0 +1,12 @@
+Button [SettingsPage::btn-github-connect] "Connect"
+Button [SettingsPage::btn-github-disconnect] "Disconnect" disabled
+TextInput [SettingsPage::input-github-host] ""
+TextInput [SettingsPage::input-default-branch] "" value="main"
+Switch [SettingsPage::sw-draft-prs] "" checked
+Switch [SettingsPage::sw-sign-commits] ""
+Checkbox [SettingsPage::cb-auto-fetch] "Every" checked
+Slider [SettingsPage::sl-fetch-minutes] "" value="15"
+Combobox [SettingsPage::combo-merge-method] "" value="Squash"
+Checkbox [SettingsPage::cb-review-reminders] "Remind me"
+TextInput [SettingsPage::input-protected] "" value="main, release/*"
+Button [SettingsPage::btn-toggle-panel] "Toggle panel"

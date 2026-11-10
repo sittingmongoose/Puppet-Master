@@ -1,0 +1,574 @@
+[
+ {
+  "session": "T1A",
+  "task": 1,
+  "arm": "A",
+  "given_page": "meets",
+  "wall_seconds": 253,
+  "turns": 12,
+  "tool_calls": 10,
+  "tokens_total": 917173,
+  "tokens_new": 56859,
+  "tokens": {
+   "input_tokens": 28,
+   "cache_creation_input_tokens": 51320,
+   "cache_read_input_tokens": 860314,
+   "output_tokens": 5511,
+   "total": 917173
+  },
+  "kit_runs": {
+   "task": 1,
+   "scratch": 1,
+   "list": 0,
+   "other": 0
+  },
+  "read_back": {
+   "total_chars": 19710,
+   "listing_chars": 0,
+   "run_output_chars": 4751,
+   "scratch_file_chars": 5406,
+   "kit_docs_chars": 4792,
+   "images": 0,
+   "other_chars": 4761
+  },
+  "stated_verdict": "MEETS",
+  "stated_verdict_correct": true,
+  "outside_session_dir": [],
+  "oracle_class": "correct",
+  "oracle_good_exits": [
+   0,
+   0
+  ],
+  "oracle_bad_exits": [
+   1,
+   1
+  ],
+  "oracle_run_seconds": [
+   114.3,
+   92.4,
+   100.2,
+   98.7
+  ],
+  "oracle_all_loads_matched": true,
+  "check_static": {
+   "lines": 86,
+   "uses_app_open": true,
+   "uses_goto": false,
+   "synthetic_click": false,
+   "dispatchEvent": false,
+   "fixed_sleeps": 0,
+   "uses_ids": false,
+   "reads_page_source": false
+  },
+  "test_identity": {
+   "check_sha256": "0622d38d785e0678d01553ef9621e90031b9c96001ca0309b896bc48ace8f3f1",
+   "config_sha256": "9d93df5a17635cebbe86cee409a1a069fd3f521bbd52f94d0d5faf3d794250ab",
+   "kit_sha256": {
+    "pilotkit.mjs": "b14fec95f950ff2ff414a8f3ba5f9eaac5fdac77839c0f67944c922c4535eacd"
+   },
+   "tool": "2.0.48"
+  },
+  "model": "claude-opus-5-5"
+ },
+ {
+  "session": "T1B",
+  "task": 1,
+  "arm": "B",
+  "given_page": "meets",
+  "wall_seconds": 371,
+  "turns": 13,
+  "tool_calls": 11,
+  "tokens_total": 1062241,
+  "tokens_new": 67336,
+  "tokens": {
+   "input_tokens": 30,
+   "cache_creation_input_tokens": 60815,
+   "cache_read_input_tokens": 994905,
+   "output_tokens": 6491,
+   "total": 1062241
+  },
+  "kit_runs": {
+   "task": 1,
+   "scratch": 1,
+   "list": 1,
+   "other": 0
+  },
+  "read_back": {
+   "total_chars": 36989,
+   "listing_chars": 133,
+   "run_output_chars": 4018,
+   "scratch_file_chars": 15281,
+   "kit_docs_chars": 16312,
+   "images": 0,
+   "other_chars": 1245
+  },
+  "stated_verdict": "MEETS",
+  "stated_verdict_correct": true,
+  "outside_session_dir": [],
+  "oracle_class": "correct",
+  "oracle_good_exits": [
+   0,
+   0
+  ],
+  "oracle_bad_exits": [
+   1,
+   1
+  ],
+  "oracle_run_seconds": [
+   154.4,
+   125.3,
+   135.3,
+   159.8
+  ],
+  "oracle_all_loads_matched": true,
+  "check_static": {
+   "lines": 122,
+   "uses_app_open": true,
+   "uses_goto": false,
+   "synthetic_click": false,
+   "dispatchEvent": false,
+   "fixed_sleeps": 0,
+   "uses_ids": true,
+   "reads_page_source": false
+  },
+  "test_identity": {
+   "check_sha256": "34ed7fe6a361657c5598a84472ad196917c1a3c21e86e9ea6aed5a414f3f2568",
+   "config_sha256": "1fc801fd346132d6c0c673a5ddb1e6e5ae35c4821039faf9f119a76d4de416f9",
+   "kit_sha256": {
+    "idkit.mjs": "c7195e198c21884d195ab9addce91e8c82c284b0d83d306ffe697b06585b93f2",
+    "pilotkit.mjs": "b14fec95f950ff2ff414a8f3ba5f9eaac5fdac77839c0f67944c922c4535eacd"
+   },
+   "tool": "2.0.48"
+  },
+  "model": "claude-opus-5-5"
+ },
+ {
+  "session": "T2A",
+  "task": 2,
+  "arm": "A",
+  "given_page": "defect",
+  "wall_seconds": 256,
+  "turns": 10,
+  "tool_calls": 9,
+  "tokens_total": 818677,
+  "tokens_new": 67132,
+  "tokens": {
+   "input_tokens": 20,
+   "cache_creation_input_tokens": 62071,
+   "cache_read_input_tokens": 751545,
+   "output_tokens": 5041,
+   "total": 818677
+  },
+  "kit_runs": {
+   "task": 1,
+   "scratch": 2,
+   "list": 0,
+   "other": 0
+  },
+  "read_back": {
+   "total_chars": 36948,
+   "listing_chars": 0,
+   "run_output_chars": 5510,
+   "scratch_file_chars": 25456,
+   "kit_docs_chars": 4756,
+   "images": 0,
+   "other_chars": 1226
+  },
+  "stated_verdict": "DOES_NOT_MEET",
+  "stated_verdict_correct": true,
+  "outside_session_dir": [],
+  "oracle_class": "correct",
+  "oracle_good_exits": [
+   0,
+   0
+  ],
+  "oracle_bad_exits": [
+   1,
+   1
+  ],
+  "oracle_run_seconds": [
+   79.8,
+   82.0,
+   75.7,
+   74.6
+  ],
+  "oracle_all_loads_matched": true,
+  "check_static": {
+   "lines": 79,
+   "uses_app_open": true,
+   "uses_goto": false,
+   "synthetic_click": false,
+   "dispatchEvent": false,
+   "fixed_sleeps": 0,
+   "uses_ids": false,
+   "reads_page_source": false
+  },
+  "test_identity": {
+   "check_sha256": "c01134aa7cec67117c8ca0764c1997481c3d09d4dea905192b40ddce79cc5e15",
+   "config_sha256": "9d93df5a17635cebbe86cee409a1a069fd3f521bbd52f94d0d5faf3d794250ab",
+   "kit_sha256": {
+    "pilotkit.mjs": "b14fec95f950ff2ff414a8f3ba5f9eaac5fdac77839c0f67944c922c4535eacd"
+   },
+   "tool": "2.0.48"
+  },
+  "model": "claude-opus-5-5"
+ },
+ {
+  "session": "T2B",
+  "task": 2,
+  "arm": "B",
+  "given_page": "defect",
+  "wall_seconds": 215,
+  "turns": 9,
+  "tool_calls": 8,
+  "tokens_total": 647921,
+  "tokens_new": 47517,
+  "tokens": {
+   "input_tokens": 18,
+   "cache_creation_input_tokens": 44307,
+   "cache_read_input_tokens": 600404,
+   "output_tokens": 3192,
+   "total": 647921
+  },
+  "kit_runs": {
+   "task": 1,
+   "scratch": 1,
+   "list": 1,
+   "other": 0
+  },
+  "read_back": {
+   "total_chars": 10482,
+   "listing_chars": 133,
+   "run_output_chars": 3728,
+   "scratch_file_chars": 0,
+   "kit_docs_chars": 5871,
+   "images": 0,
+   "other_chars": 750
+  },
+  "stated_verdict": "DOES_NOT_MEET",
+  "stated_verdict_correct": true,
+  "outside_session_dir": [],
+  "oracle_class": "correct",
+  "oracle_good_exits": [
+   0,
+   0
+  ],
+  "oracle_bad_exits": [
+   1,
+   1
+  ],
+  "oracle_run_seconds": [
+   70.2,
+   70.7,
+   78.4,
+   72.0
+  ],
+  "oracle_all_loads_matched": true,
+  "check_static": {
+   "lines": 53,
+   "uses_app_open": true,
+   "uses_goto": false,
+   "synthetic_click": false,
+   "dispatchEvent": false,
+   "fixed_sleeps": 0,
+   "uses_ids": true,
+   "reads_page_source": false
+  },
+  "test_identity": {
+   "check_sha256": "c091c6ab9a34ce09ea27ff91c88ee68eb76d785e49137fc8cfc6dbd49235bdcb",
+   "config_sha256": "1fc801fd346132d6c0c673a5ddb1e6e5ae35c4821039faf9f119a76d4de416f9",
+   "kit_sha256": {
+    "idkit.mjs": "c7195e198c21884d195ab9addce91e8c82c284b0d83d306ffe697b06585b93f2",
+    "pilotkit.mjs": "b14fec95f950ff2ff414a8f3ba5f9eaac5fdac77839c0f67944c922c4535eacd"
+   },
+   "tool": "2.0.48"
+  },
+  "model": "claude-opus-5-5"
+ },
+ {
+  "session": "T3A",
+  "task": 3,
+  "arm": "A",
+  "given_page": "meets",
+  "wall_seconds": 263,
+  "turns": 9,
+  "tool_calls": 8,
+  "tokens_total": 678670,
+  "tokens_new": 56258,
+  "tokens": {
+   "input_tokens": 18,
+   "cache_creation_input_tokens": 49739,
+   "cache_read_input_tokens": 622412,
+   "output_tokens": 6501,
+   "total": 678670
+  },
+  "kit_runs": {
+   "task": 1,
+   "scratch": 3,
+   "list": 0,
+   "other": 0
+  },
+  "read_back": {
+   "total_chars": 16591,
+   "listing_chars": 0,
+   "run_output_chars": 6232,
+   "scratch_file_chars": 0,
+   "kit_docs_chars": 4794,
+   "images": 0,
+   "other_chars": 5565
+  },
+  "stated_verdict": "MEETS",
+  "stated_verdict_correct": true,
+  "outside_session_dir": [],
+  "oracle_class": "correct",
+  "oracle_good_exits": [
+   0,
+   0
+  ],
+  "oracle_bad_exits": [
+   1,
+   1
+  ],
+  "oracle_run_seconds": [
+   74.9,
+   69.7,
+   73.3,
+   96.4
+  ],
+  "oracle_all_loads_matched": true,
+  "check_static": {
+   "lines": 74,
+   "uses_app_open": true,
+   "uses_goto": false,
+   "synthetic_click": false,
+   "dispatchEvent": false,
+   "fixed_sleeps": 0,
+   "uses_ids": false,
+   "reads_page_source": false
+  },
+  "test_identity": {
+   "check_sha256": "07b519f143740f3b806c3df590c90a96ebf528805311df995ebccfc19b77d34c",
+   "config_sha256": "9d93df5a17635cebbe86cee409a1a069fd3f521bbd52f94d0d5faf3d794250ab",
+   "kit_sha256": {
+    "pilotkit.mjs": "b14fec95f950ff2ff414a8f3ba5f9eaac5fdac77839c0f67944c922c4535eacd"
+   },
+   "tool": "2.0.48"
+  },
+  "model": "claude-opus-5-5"
+ },
+ {
+  "session": "T3B",
+  "task": 3,
+  "arm": "B",
+  "given_page": "meets",
+  "wall_seconds": 222,
+  "turns": 7,
+  "tool_calls": 6,
+  "tokens_total": 516297,
+  "tokens_new": 52342,
+  "tokens": {
+   "input_tokens": 14,
+   "cache_creation_input_tokens": 47785,
+   "cache_read_input_tokens": 463955,
+   "output_tokens": 4543,
+   "total": 516297
+  },
+  "kit_runs": {
+   "task": 1,
+   "scratch": 1,
+   "list": 1,
+   "other": 0
+  },
+  "read_back": {
+   "total_chars": 16026,
+   "listing_chars": 0,
+   "run_output_chars": 10733,
+   "scratch_file_chars": 0,
+   "kit_docs_chars": 5061,
+   "images": 0,
+   "other_chars": 232
+  },
+  "stated_verdict": "MEETS",
+  "stated_verdict_correct": true,
+  "outside_session_dir": [],
+  "oracle_class": "correct",
+  "oracle_good_exits": [
+   0,
+   0
+  ],
+  "oracle_bad_exits": [
+   1,
+   1
+  ],
+  "oracle_run_seconds": [
+   73.6,
+   95.2,
+   87.0,
+   82.9
+  ],
+  "oracle_all_loads_matched": true,
+  "check_static": {
+   "lines": 91,
+   "uses_app_open": true,
+   "uses_goto": false,
+   "synthetic_click": false,
+   "dispatchEvent": false,
+   "fixed_sleeps": 0,
+   "uses_ids": true,
+   "reads_page_source": false
+  },
+  "test_identity": {
+   "check_sha256": "6d0f099efd315953cac2221c63b9cad479734600cb767eaf344e71eb2f26aef8",
+   "config_sha256": "1fc801fd346132d6c0c673a5ddb1e6e5ae35c4821039faf9f119a76d4de416f9",
+   "kit_sha256": {
+    "idkit.mjs": "c7195e198c21884d195ab9addce91e8c82c284b0d83d306ffe697b06585b93f2",
+    "pilotkit.mjs": "b14fec95f950ff2ff414a8f3ba5f9eaac5fdac77839c0f67944c922c4535eacd"
+   },
+   "tool": "2.0.48"
+  },
+  "model": "claude-opus-5-5"
+ },
+ {
+  "session": "T4A",
+  "task": 4,
+  "arm": "A",
+  "given_page": "defect",
+  "wall_seconds": 176,
+  "turns": 9,
+  "tool_calls": 8,
+  "tokens_total": 765147,
+  "tokens_new": 79468,
+  "tokens": {
+   "input_tokens": 18,
+   "cache_creation_input_tokens": 71290,
+   "cache_read_input_tokens": 685679,
+   "output_tokens": 8160,
+   "total": 765147
+  },
+  "kit_runs": {
+   "task": 1,
+   "scratch": 2,
+   "list": 0,
+   "other": 0
+  },
+  "read_back": {
+   "total_chars": 56488,
+   "listing_chars": 0,
+   "run_output_chars": 23268,
+   "scratch_file_chars": 20761,
+   "kit_docs_chars": 5143,
+   "images": 0,
+   "other_chars": 7316
+  },
+  "stated_verdict": "DOES_NOT_MEET",
+  "stated_verdict_correct": true,
+  "outside_session_dir": [],
+  "oracle_class": "correct",
+  "oracle_good_exits": [
+   0,
+   0
+  ],
+  "oracle_bad_exits": [
+   1,
+   1
+  ],
+  "oracle_run_seconds": [
+   27.8,
+   26.3,
+   18.7,
+   17.9
+  ],
+  "oracle_all_loads_matched": true,
+  "check_static": {
+   "lines": 81,
+   "uses_app_open": true,
+   "uses_goto": false,
+   "synthetic_click": false,
+   "dispatchEvent": false,
+   "fixed_sleeps": 0,
+   "uses_ids": false,
+   "reads_page_source": false
+  },
+  "test_identity": {
+   "check_sha256": "612ec42c28654394aa1ebca0db1f7495d586ad3b22dd8629f5f2e8cab756f1ab",
+   "config_sha256": "9d93df5a17635cebbe86cee409a1a069fd3f521bbd52f94d0d5faf3d794250ab",
+   "kit_sha256": {
+    "pilotkit.mjs": "b14fec95f950ff2ff414a8f3ba5f9eaac5fdac77839c0f67944c922c4535eacd"
+   },
+   "tool": "2.0.48"
+  },
+  "model": "claude-opus-5-5"
+ },
+ {
+  "session": "T4B",
+  "task": 4,
+  "arm": "B",
+  "given_page": "defect",
+  "wall_seconds": 257,
+  "turns": 10,
+  "tool_calls": 9,
+  "tokens_total": 796803,
+  "tokens_new": 64689,
+  "tokens": {
+   "input_tokens": 20,
+   "cache_creation_input_tokens": 57838,
+   "cache_read_input_tokens": 732114,
+   "output_tokens": 6831,
+   "total": 796803
+  },
+  "kit_runs": {
+   "task": 2,
+   "scratch": 2,
+   "list": 1,
+   "other": 0
+  },
+  "read_back": {
+   "total_chars": 35536,
+   "listing_chars": 100,
+   "run_output_chars": 15872,
+   "scratch_file_chars": 0,
+   "kit_docs_chars": 6259,
+   "images": 0,
+   "other_chars": 13305
+  },
+  "stated_verdict": "DOES_NOT_MEET",
+  "stated_verdict_correct": true,
+  "outside_session_dir": [],
+  "oracle_class": "correct",
+  "oracle_good_exits": [
+   0,
+   0
+  ],
+  "oracle_bad_exits": [
+   1,
+   1
+  ],
+  "oracle_run_seconds": [
+   52.0,
+   52.5,
+   36.1,
+   36.1
+  ],
+  "oracle_all_loads_matched": true,
+  "check_static": {
+   "lines": 49,
+   "uses_app_open": true,
+   "uses_goto": false,
+   "synthetic_click": false,
+   "dispatchEvent": false,
+   "fixed_sleeps": 0,
+   "uses_ids": true,
+   "reads_page_source": false
+  },
+  "test_identity": {
+   "check_sha256": "8e3d383ddb6a819f43c030b8c633bd2ae6d89f934c92beef9e24c7336465cc44",
+   "config_sha256": "1fc801fd346132d6c0c673a5ddb1e6e5ae35c4821039faf9f119a76d4de416f9",
+   "kit_sha256": {
+    "idkit.mjs": "c7195e198c21884d195ab9addce91e8c82c284b0d83d306ffe697b06585b93f2",
+    "pilotkit.mjs": "b14fec95f950ff2ff414a8f3ba5f9eaac5fdac77839c0f67944c922c4535eacd"
+   },
+   "tool": "2.0.48"
+  },
+  "model": "claude-opus-5-5"
+ }
+]
