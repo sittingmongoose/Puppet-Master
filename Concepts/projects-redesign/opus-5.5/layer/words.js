@@ -960,6 +960,7 @@
     'pg.rs.reconcile': 'Check on {service}', 'pg.rs.checkFirst': 'Check on {service} first: whether the fork was made is unknown', 'pg.rs.unknownCap': 'Not known yet',
     'np.like.kindFixed': '{n} kept fixed', 'np.ph.recheck': 'Checking {computer} again before copying {project}’s settings',
     'nc.history': 'History', 'nc.historyTip': 'Every chat, with No project among them',
+    'nc.pal': 'Chats with no project',
     'nc.group': 'No project', 'nc.group.new': 'New chat with no project', 'nc.group.newTip': 'Runs on This computer. Nothing is saved until your first message.',
     'nc.group.empty': 'No chats here yet.', 'nc.tb.sub': '{n} chats', 'nc.open': 'Open',
     'nc.makeFrom': 'Make a project from this chat', 'nc.makeFromMeta': 'New Project, filled in from it',
@@ -1040,7 +1041,7 @@
     'cv.demoPartial': 'Concept demo: one file can’t be copied', 'cv.demoGitId': 'Concept demo: Git has no name on Home NAS',
     'cv.rep.title': 'Moved into {project}', 'cv.rep.partial': 'Moved into {project}, except {n} file', 'cv.rep.moved': 'Moved', 'cv.rep.stayed': 'Stayed', 'cv.rep.held': 'Held, then resumed', 'cv.rep.failed': 'Didn’t move',
     'cv.rep.divider': 'In the chat: “Moved from No project to {project} · {when}”', 'cv.rep.retry': 'Try that file again',
-    'cv.rep.notify': '{chat} → {project}: {moved} moved, {stayed} stayed{failed}.',
+    'cv.rep.notify': '“{chat}” and {files} moved into {project}.{failed} {stayed} stayed behind, as the report lists.',
     'cv.undo.until': 'Undo until {until}', 'cv.undo.ended': 'Undo has ended: {reason}', 'cv.undo.newMsg': 'a new message was sent in “{chat}”', 'cv.undo.changed': '{file} was changed in {project}',
     'cv.undo.demoMsg': 'Send a message in it', 'cv.undo.demoChange': 'Change a moved file', 'cv.undo.demo': 'Concept demo, what ends Undo:',
     /* the place world and sign-ins (GUIDED-FLOWS 2.x, 4.x) */

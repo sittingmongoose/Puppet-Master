@@ -79,8 +79,9 @@
   /* the chat panel shows (it can be closed or popped out): PMConcept7's own toggle, when it is hidden */
   function showChat() {
     const r = ROOT(); if (r && r.getBoundingClientRect().width > 40) return;
-    const t = D.querySelector('[data-action="toggle-chat"], #toggleChatBtn, [data-binding-id="shell.chat.toggle"]');
-    if (t) t.click();
+    // PMConcept7's own chat column owner shows it (a narrow window or a look may have folded it away)
+    try { if (W.PMW && W.PMW.chatCol && W.PMW.chatCol.show) W.PMW.chatCol.show(); } catch (e) { /* not there */ }
+    setTimeout(() => paint(), 120);
   }
   function placeWord(c) { return w('nc.place', { computer: comp(c ? c.runsOn : V.comp).name }); }
   function placeMenu(anchor) {
@@ -137,7 +138,7 @@
     return h('div', null, row, h('div.pjx-notice.pjx-npc-notice', { 'data-tone': 'attention', role: 'status' },
       h('span.pjx-notice-mark', { html: PJX.calm('waiting', 16), 'aria-hidden': 'true' }),
       h('div.pjx-notice-title', { text: w('nc.need.title', { what: which }) }),
-      h('div.pjx-notice-text', { text: w('nc.need.text', { chat: c.title, what: which }) }),
+      h('div.pjx-notice-text', { text: w('nc.need.text', { chat: c.title, what: which.charAt(0).toLowerCase() + which.slice(1) }) }),
       h('div.pjx-notice-acts', null, ...acts, not)));
   }
   function send() {
@@ -161,16 +162,21 @@
   function paint() {
     const r = ROOT(), stage = r && r.querySelector('.chat-stage');
     if (!stage) return;
-    let el = stage.querySelector(':scope > .pjx-npc');
+    let el = D.querySelector('.pjx-npc');
     if (!V || (!V.draft && !chatOf(V.id))) { if (el) el.remove(); r.removeAttribute('data-pjx-npc'); V = null; return; }
     const c = V.draft ? null : chatOf(V.id);
     if (c && gone(c)) { V = null; if (el) el.remove(); r.removeAttribute('data-pjx-npc'); return; }
+    // a narrow window folds PMConcept7's chat to a sliver: then the chat opens as a panel over the page's right side
+    const floating = r.getBoundingClientRect().width < 300, host = floating ? D.body : stage;
+    if (el && el.parentElement !== host) { host.appendChild(el); }
+    if (el) el.classList.toggle('is-floating', floating);
     if (!el) {
       // the Projects layer's tokens (Usage's and Home's) reach its buttons and notices here too, as in its dialogs
       el = h('div.pjx-npc.pmw-scope', { role: 'region', 'data-pmu-host': 'no-project-chat' });
       // typing in this chat never reaches PMConcept7's own shortcuts
       el.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !/textarea|input/i.test(e.target.tagName)) { e.stopPropagation(); close(); later(() => { const b = ROOT() && ROOT().querySelector('.chat-header [data-action="toggle-history"]'); if (b) b.focus(); }); return; } e.stopPropagation(); });
-      stage.appendChild(el);
+      el.classList.toggle('is-floating', floating);
+      host.appendChild(el);
     }
     r.setAttribute('data-pjx-npc', V.draft ? 'draft' : 'chat');
     el.setAttribute('aria-label', c ? w('nc.region', { chat: c.title }) : w('nc.draftTitle'));
@@ -187,7 +193,7 @@
     hist.addEventListener('click', () => { const t = ROOT() && ROOT().querySelector('.chat-header [data-action="toggle-history"]'); if (t) t.click(); });
     const kids = [back, hist, h('div.chat-title.pjx-npc-titles', null, h('span.pmx-chat-title.pjx-npc-title', { tabindex: '-1', text: c ? c.title : w('nc.draftTitle') }), place), h('span.chat-head-spacer')];
     if (c) {
-      const make = h('button.pjx-btn.pjx-npc-make', { type: 'button', 'data-c-key': 'npc:make', 'data-cmd': 'ACD-510 chooser (neither preselected)' }, h('span.pjx-np-bico', { html: icon('folder-plus', 14), 'aria-hidden': 'true' }), h('span', { text: w('nc.chooser') }));
+      const make = h('button.pjx-btn.pjx-npc-make', { type: 'button', 'data-c-key': 'npc:make', 'aria-label': w('nc.chooser'), 'data-cmd': 'ACD-510 chooser (neither preselected)' }, h('span.pjx-np-bico', { html: icon('folder-plus', 14), 'aria-hidden': 'true' }), h('span', { text: w('nc.chooser') }));
       tip(make, w('nc.chooser'), w('nc.chooserTip'));
       make.addEventListener('click', () => go('chooser', c.id));
       const more = h('button.icon-button.pjx-npc-more', { type: 'button', 'data-c-key': 'npc:more', 'aria-haspopup': 'menu', html: icon('more', 16) });
@@ -267,7 +273,7 @@
           if (have) have.replaceWith(g); else if (arch) hs.insertBefore(g, arch); else hs.appendChild(g);
         }
       }
-      if (V && r.querySelector('.chat-stage') && !r.querySelector('.chat-stage > .pjx-npc')) paint();
+      if (V && r.querySelector('.chat-stage') && !D.querySelector('.pjx-npc')) paint();
     }
     // Home's board bar: New chat, a split (Home is where you start something)
     const hb = D.querySelector('#panel-dashboard .pmw-hrow-actions');
@@ -291,6 +297,46 @@
       if (sep) pm.insertBefore(row, sep); else pm.appendChild(row);
     } else if (pm) { const s = pm.querySelector('.pjx-tb-noproj-s'); const t = w('nc.tb.sub', { n: list().length }); if (s && s.textContent !== t) s.textContent = t; }
   }
+  /* ------------------------------------------------------------------ the palette (ACD-510 lists it as an entry point): the
+     title bar's search offers the no-project commands when what you type is about a project or a chat */
+  let pal = null, palSel = 0;
+  function palItems(q) {
+    q = String(q || '').toLowerCase().trim(); if (q.length < 3 || !/proj|chat|move|convert/.test(q)) return [];
+    const c = (V && !V.draft && chatOf(V.id)) || list()[0];
+    const out = [{ label: w('nc.group.new'), sub: w('nc.new.noneMeta', { computer: comp('here').name }), run: () => newDraft() }];
+    if (c) out.push({ label: w('nc.makeFrom') + '…', sub: '“' + c.title + '”', run: () => go('new', c.id) }, { label: w('nc.moveInto') + '…', sub: '“' + c.title + '”', run: () => go('move', c.id) });
+    return out.filter((x) => (x.label + ' ' + x.sub).toLowerCase().split(/\W+/).some((wd) => wd && q.split(/\s+/).some((t) => wd.indexOf(t) === 0)) || /project|chat/.test(q));
+  }
+  function palClose() { if (pal) { pal.remove(); pal = null; } const i = D.getElementById('tbSearchInput'); if (i) i.removeAttribute('aria-expanded'); }
+  function palPaint(inp) {
+    const items = palItems(inp.value);
+    if (!items.length) { palClose(); return; }
+    if (!pal) { pal = h('div.pjx-pal.pmw-scope', { role: 'listbox', id: 'pjx-pal', 'aria-label': w('nc.pal') }); D.body.appendChild(pal); }
+    palSel = Math.min(palSel, items.length - 1);
+    const r = inp.getBoundingClientRect();
+    pal.style.left = Math.round(r.left) + 'px'; pal.style.top = Math.round(r.bottom + 6) + 'px'; pal.style.minWidth = Math.round(Math.max(r.width, 300)) + 'px';
+    pal.replaceChildren(h('div.pjx-pal-cap', { text: w('nc.pal') }), ...items.map((it, i) => {
+      const b = h('div.pjx-pal-item', { role: 'option', id: 'pjx-pal-' + i, 'aria-selected': String(i === palSel) }, h('b', { text: it.label }), h('span', { text: it.sub }));
+      b.addEventListener('mousedown', (e) => { e.preventDefault(); palClose(); inp.value = ''; it.run(); });
+      return b;
+    }));
+    inp.setAttribute('aria-expanded', 'true'); inp.setAttribute('aria-controls', 'pjx-pal'); inp.setAttribute('aria-activedescendant', 'pjx-pal-' + palSel);
+    pal._items = items;
+  }
+  function palWire() {
+    const inp = D.getElementById('tbSearchInput'); if (!inp || inp._pjxPal) return; inp._pjxPal = true;
+    inp.addEventListener('input', () => { palSel = 0; palPaint(inp); });
+    inp.addEventListener('focus', () => palPaint(inp));
+    inp.addEventListener('blur', () => setTimeout(palClose, 120));
+    inp.addEventListener('keydown', (e) => {
+      if (!pal) return;
+      const n = (pal._items || []).length;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); palSel = (palSel + (e.key === 'ArrowDown' ? 1 : n - 1)) % n; palPaint(inp); }
+      else if (e.key === 'Enter') { e.preventDefault(); const it = pal._items[palSel]; palClose(); inp.value = ''; if (it) it.run(); }
+      else if (e.key === 'Escape') { palClose(); }
+    });
+  }
+
   let raf = 0;
   const soon = () => { if (raf) return; raf = W.requestAnimationFrame(() => { raf = 0; try { ensure(); } catch (e) { console.error('[pjx chat]', e); } }); };
   function start(n) {
@@ -302,6 +348,9 @@
     // History opens in the chat's overlay layer, outside the chat panel
     const layers = D.getElementById('pm56-layers') || D.getElementById('pmOverlayRoot'); if (layers) mo.observe(layers, { childList: true, subtree: true });
     PJX.on('change', () => { soon(); if (V) paint(); });
+    // the chat column can fold or open after a chat is shown (a narrow window, a page change): dock or float again
+    if (W.ResizeObserver) { let wasNarrow = null; new W.ResizeObserver((ents) => { const nw = ents[0].contentRect.width < 300; if (V && nw !== wasNarrow) paint(); wasNarrow = nw; }).observe(ROOT()); }
+    palWire();
     ensure();
   }
   start(0);

@@ -50,9 +50,9 @@ export const tests = {
 		// History: the No project group and its rows' More
 		await t.app.click(t, f, '.pjx-npc [data-c-key="npc:history"]', { wait: 700 });
 		await t.page.waitForTimeout(600);
-		const grp = await f.evaluate(() => { const g = document.querySelector('#pmw-chat56 .pjx-npg'); return g ? Array.from(g.querySelectorAll('.pjx-npg-title b')).map((b) => b.textContent) : null; });
+		const grp = await f.evaluate(() => { const g = document.querySelector('.history-flyout .pjx-npg'); return g ? Array.from(g.querySelectorAll('.pjx-npg-title b')).map((b) => b.textContent) : null; });
 		await t.check('History has a No project group with its chats', !!grp && grp.indexOf('Fix the printer') >= 0 && grp.indexOf('Plan a weekend in Asheville') >= 0, JSON.stringify(grp));
-		await t.visible(f.locator('#pmw-chat56 .pjx-npg-new'), 'New chat with no project in the No project group');
+		await t.visible(f.locator('.history-flyout .pjx-npg-new'), 'New chat with no project in the No project group');
 		await t.shot('history', 'History sidebar with the No project group (LOOK)');
 		await t.page.keyboard.press('Escape');
 		await f.evaluate(() => window.PJX.chat.close());
@@ -63,6 +63,19 @@ export const tests = {
 		await t.check('the chat’s New is a split too', m4.some((x) => /^With no project/.test(x)), m4.join(' / '));
 		await closeMenu(t);
 		await t.audit('chat-surfaces');
+	},
+	async 'palette: the title bar search offers the no-project commands'(t) {
+		const f = await t.app.open(t);
+		await t.app.page(t, f, 'dashboard');
+		await t.app.click(t, f, '#tbSearchInput');
+		await t.page.keyboard.type('project', { delay: 20 });
+		await t.page.waitForTimeout(250);
+		const items = await f.evaluate(() => Array.from(document.querySelectorAll('#pjx-pal .pjx-pal-item b')).map((b) => b.textContent));
+		await t.check('palette lists New chat with no project and both conversions', items.length === 3 && /Make a project from this chat/.test(items[1]) && /Move this chat into a project/.test(items[2]), items.join(' | '));
+		await t.shot('palette', 'Title-bar search: the no-project commands (LOOK)');
+		await t.page.keyboard.press('ArrowDown'); await t.page.keyboard.press('ArrowDown'); await t.page.keyboard.press('Enter');
+		await t.page.waitForTimeout(700);
+		await t.check('Enter opens Move this chat into a project', await f.evaluate(() => !!document.querySelector('.pjxc-move')));
 	},
 	async 'chooser: both choices, neither preselected'(t) {
 		const f = await t.app.open(t);

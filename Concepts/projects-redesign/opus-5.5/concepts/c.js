@@ -1445,7 +1445,7 @@
         const report = fr && ch0 ? { moved: ['“' + ch0.title + '” · ' + ch0.messages + ' messages and ' + ch0.attachments + ' attachments'].concat(fr.files.length ? [PJX.np.plural(fr.files.length, 'file') + ' · into ' + p.where.path] : []),
           stayed: [].concat((ch0.fileList || []).length - fr.files.length > 0 && files === 'move' ? [PJX.np.plural((ch0.fileList || []).length - fr.files.length, 'file') + ' you left out, in ' + ch0.folder] : []).concat(ch0.outside.length ? [PJX.np.plural(ch0.outside.length, 'file') + ' it changed outside its folder'] : []).concat((ch0.grants || []).map((g) => 'Its permission “' + g + '”')),
           held: fr.held, failed: [] } : null;
-        if (report) PJX.toast(W_('cv.rep.title', { project: p.name }), W_('cv.rep.notify', { chat: ch0.title, project: p.name, moved: report.moved.length, stayed: report.stayed.length, failed: '' }), 'success');
+        if (report) PJX.toast(W_('cv.rep.title', { project: p.name }), W_('cv.rep.notify', { chat: ch0.title, project: p.name, files: PJX.np.plural(fr.files.length, 'file'), stayed: PJX.np.plural(report.stayed.length, 'thing'), failed: '' }), 'success');
         C.flash[p.id] = { report, title: chat ? W_('np.done.chat', { name: p.name, chat }) : W_('np.done.title', { name: p.name }), text: (p.backup && p.backup.setup ? W_('np.done.textBk') : W_('np.done.text')) + remote, plan: true, accounts: p.needsSignin, computer: PJX.np.comp(p.runsOn).name, undoCopy: !!p.copied, chat, files,
           agent: agent ? (agent.yolo ? W_('np.yolo.agentDone') : W_('np.yolo.agentAllowed')) + ': ' + PJX.np.andList(agent.labels) + '.' + (p.backup && p.backup.setup ? ' ' + W_('np.yolo.agentWaits', { where: p.backup.dest }) : '') : null };
       }
@@ -1545,6 +1545,8 @@
     D.documentElement.removeAttribute('data-pjx-roomy');
     C.mv = null; C.mvCommit = null; C.mode = 'project'; C.swap = true;
     C.sel = to || (PJX.get(C.prevSel) ? C.prevSel : C.sel);
+    // the report waits at the top of the Project's page
+    if (to && C.els.scroll) C.els.scroll.scrollTop = 0;
     render(); if (to) focusTitle(); else later(() => (C.els.newBtn.offsetParent ? C.els.newBtn.focus() : focusTitle()), 0);
   }
   function renderHeadMove() {
@@ -1651,7 +1653,7 @@
         stayed: left.map((x) => x.charAt(0).toUpperCase() + x.slice(1)), held: r.held, failed: r.failed.map((f) => f + ' · it was open in another app, so it stayed in the chat folder') };
       const partial = r.failed.length;
       C.flash[p.id] = { report, title: partial ? W_('cv.rep.partial', { project: p.name, n: r.failed.length }) : W_('np.mv.done', { project: p.name }), text: W_('np.mv.doneText', { n: c.messages, a: c.attachments, files: r.files.length ? W_('np.mv.doneFiles', { k: PJX.np.plural(r.files.length, 'file'), folder: r.folder, onDraft: r.place === 'draft' ? W_('np.mv.onDraft', { branch: r.branch }) : '' }) : '', left: left.length ? PJX.np.andList(left) : 'nothing' }) + (r.by === 'yolo' ? ' YOLO didn’t ask for a yes.' : ''), moved: r };
-      PJX.toast(partial ? W_('cv.rep.partial', { project: p.name, n: r.failed.length }) : W_('cv.rep.title', { project: p.name }), W_('cv.rep.notify', { chat: c.title, project: p.name, moved: report.moved.length, stayed: report.stayed.length, failed: partial ? ', ' + r.failed.length + ' didn’t move' : '' }), partial ? 'warn' : 'success');
+      PJX.toast(partial ? W_('cv.rep.partial', { project: p.name, n: r.failed.length }) : W_('cv.rep.title', { project: p.name }), W_('cv.rep.notify', { chat: c.title, project: p.name, files: PJX.np.plural(r.files.length, 'file'), stayed: PJX.np.plural(report.stayed.length, 'thing'), failed: partial ? ' ' + PJX.np.plural(r.failed.length, 'file') + ' didn’t move.' : '' }), partial ? 'warn' : 'success');
       announce(W_('np.mv.done', { project: p.name }));
       closeMove(p.id);
     }
