@@ -63,8 +63,8 @@ html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factl { max-width: none; overflo
 html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factv { min-width: 0; overflow: visible; white-space: normal; overflow-wrap: break-word; text-align: left; text-wrap: pretty; font-size: 13px; line-height: 19px; font-weight: 480; }
 html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-fact[data-tone] .pmu-factv { font-weight: 620; }
 html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factv .pjxc-mid { justify-content: flex-start; }
-/* a value that is a sentence or a long path goes under its label, the plate wide, instead of wrapping into a narrow
-   column (concepts/c-v3.js marks them by length, so the same facts stack at every width) */
+/* a value that would not fit in two lines beside its label (a sentence, a long path) goes under the label, the plate
+   wide, instead of wrapping into a narrow column (concepts/c-v3.js marks them from the plate's width) */
 html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-fact[data-v3-long] > .pmu-factl { grid-column: 1 / -1; }
 html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-fact[data-v3-long] > .pmu-factv { grid-column: 1 / -1; margin-top: -7px; max-width: 68ch; }
 html[data-pjx-read="v3"] #pjxc .pjxc-facts .pmu-factv .pjxc-code { font-weight: 480; }
