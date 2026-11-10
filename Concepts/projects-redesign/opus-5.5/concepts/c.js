@@ -182,7 +182,7 @@
     const sort = C.order === 'name' ? (a, b) => a.name.localeCompare(b.name) : (a, b) => (a.openedRank - b.openedRank) || a.name.localeCompare(b.name);
     // inside a machine's group, what needs you comes first (the most urgent first), then the chosen order
     const pin = (a, b) => (needsYou(b) - needsYou(a)) || (needsYou(a) ? rankOf(a) - rankOf(b) : 0) || sort(a, b);
-    const L = PJX.listed().filter(hit).filter(show);
+    const L = PJX.listed().filter((p) => p.lifecycle !== 'recovery').filter(hit).filter(show);
     const filtering = !!q || C.show !== 'all';
     const byPlace = new Map();
     // while nothing is filtered every machine you have gets its group, even one with nothing on it yet: it says whether
@@ -195,13 +195,14 @@
     return {
       need: L.filter(needsYou),
       places: keys.map((k) => ({ label: k, items: byPlace.get(k).sort(pin), device: PJX.ENV.devices.find((d) => d.name === k) || null })),
-      arch, shown: L.length + arch.length, filtering
+      arch, shown: L.length + arch.length, filtering,
+      unfinished: PJX.listed().filter((p) => p.lifecycle === 'recovery').filter(hit)
     };
   }
   /* the visual order of every Project, for the keyboard and for choosing a neighbour after a removal */
   function visualOrder(g) {
     g = g || grouped();
-    return [].concat(...g.places.map((x) => x.items)).concat(g.arch);
+    return [].concat(g.unfinished || []).concat(...g.places.map((x) => x.items)).concat(g.arch);
   }
   /* a row's second line: what it is doing when that matters, otherwise when it was last opened */
   function rowLine(p) {
@@ -289,9 +290,18 @@
     b.addEventListener('click', () => startNew({}));
     return group('draft', W_('np.draft.row'), [s], { rowFn: () => b, noCount: true });
   }
+  function unfinishedRow(p) {
+    const on = C.mode === 'project' && p.id === C.sel;
+    const b = h('button.pjxc-row.is-unfinished', { type: 'button', 'data-pid': p.id, 'data-c-key': 'row:' + p.id, 'aria-current': on ? 'true' : null, tabindex: '-1' },
+      h('span.pjxc-row-ico', { html: icon('play', 16), 'aria-hidden': 'true' }),
+      h('span.pjxc-row-text', null, h('span.pjxc-row-name', { text: p.name }), h('span.pjxc-row-line', { 'data-tone': 'attention', text: W_('pg.unf.line') })),
+      h('span.pjxc-row-mark', { html: PJX.calm('waiting', 14), 'data-tone': 'attention', 'aria-hidden': 'true' }));
+    b.addEventListener('click', (e) => select(p.id, { from: 'list', focus: e.detail === 0 ? 'page' : null }));
+    return b;
+  }
   function renderLib() {
     const E = C.els, g = grouped(), all = PJX.all().length;
-    E.count.textContent = all ? String(PJX.listed().length) : '';
+    E.count.textContent = all ? String(PJX.listed().filter((p) => p.lifecycle !== 'recovery').length) : '';
     E.filterLabel.textContent = (SHOWS.find((x) => x.id === C.show) || SHOWS[0]).label;
     E.filterBtn.toggleAttribute('data-on', C.show !== 'all' || C.order !== 'recent');
     if (D.activeElement !== E.search) E.search.value = C.q;
@@ -306,6 +316,8 @@
     syncChildren(E.needSlot, [all && (needN || C.show === 'need') ? needLine(needN) : null]);
     const kids = [];
     if (C.s && C.mode !== 'new' && draftWorth()) kids.push(draftRow());
+    // setups that didn't finish wait above the list as recovery notices: they are not Projects yet (2.42, PS §4)
+    if (all && g.unfinished.length) kids.push(group('unfinished', W_('pg.unf.group'), g.unfinished, { rowFn: unfinishedRow }));
     const devices = g.places.filter((x) => x.device);
     if (!all) {
       kids.push(h('div.pjxc-libempty', null, h('span.pjxc-libempty-ico', { html: icon('folder', 22), 'aria-hidden': 'true' }), h('b', { text: 'No projects yet' }),
@@ -464,31 +476,51 @@
   function flashNode(p, fl) {
     const acts = [];
     if (p.lifecycle === 'listed') acts.push(act(W_('np.done.open', { name: p.name }), { cls: 'pmu-textbtn', primary: true, icon: 'open', key: 'f:open', off: p.active ? 'It is the open project' : null, run: () => PJX.ACT.open(p.id) }));
-    if (fl.chat) acts.push(act(W_('np.done.undo'), { cls: 'pmu-textbtn', icon: 'reset', key: 'f:undochat', cmd: 'gap:thread conversion undo [Depends: no-project]', run: () => undoNewFromChat(p, fl) }));
+    const urec = fl.moved || p.fromChatRec;
+    const ended = urec && urec.ended ? W_('cv.undo.ended', { reason: urec.ended }) : null;
+    if (fl.chat) acts.push(act(W_('np.done.undo'), { cls: 'pmu-textbtn', icon: 'reset', key: 'f:undochat', cmd: 'ACD-511 Undo (its own preview; boundary enforced)', off: ended, tip: urec ? W_('cv.undo.until', { until: urec.until }) : null, run: () => undoNewFromChat(p, fl) }));
     if (fl.moved) acts.push(act(W_('np.mv.show'), { cls: 'pmu-textbtn', icon: 'folder', key: 'f:mvshow', run: () => PJX.toast(W_('np.mv.show'), fl.moved.files.length ? fl.moved.files.join(', ') + ' · in ' + fl.moved.folder + '/' + (fl.moved.place === 'draft' ? ' on the draft ' + fl.moved.branch : '') : 'No files moved.', 'info') }));
-    if (fl.moved) acts.push(act(W_('np.mv.undo'), { cls: 'pmu-textbtn', icon: 'reset', key: 'f:mvundo', cmd: 'gap:thread conversion undo [Depends: no-project]', run: () => undoMove(p, fl.moved) }));
+    if (fl.moved) acts.push(act(W_('np.mv.undo'), { cls: 'pmu-textbtn', icon: 'reset', key: 'f:mvundo', cmd: 'ACD-511 Undo (its own preview; boundary enforced)', off: ended, tip: W_('cv.undo.until', { until: fl.moved.until }), run: () => undoMove(p, fl.moved) }));
     if (fl.plan) acts.push(act(W_('np.done.plan'), { cls: 'pmu-textbtn', icon: 'plan', key: 'f:plan', run: () => PJX.ACT.replan(p.id) }));
     if (fl.undoCopy && p.copied) acts.push(act(W_('np.done.undoCopy'), { cls: 'pmu-textbtn', icon: 'reset', key: 'f:undocopy', run: () => PJX.ACT.undoCopied(p.id) }));
     acts.push(act(W_('np.done.ok'), { cls: 'pmu-textbtn', key: 'f:done', run: () => { delete C.flash[p.id]; render(); focusTitle(); } }));
     const more = fl.accounts ? h('div.pjx-notice-text.pjxc-flash-acc', null, h('span', { text: (fl.accounts === 1 ? W_('np.done.accountsOne', { computer: fl.computer }) : W_('np.done.accounts', { n: fl.accounts, computer: fl.computer })) + ' ' }),
       act(W_('np.done.accountsGo'), { cls: 'pjx-link', key: 'f:signin', run: () => { PJX.toast('Settings › Providers', 'Opens Providers with ' + fl.computer + ' chosen, so the sign-ins and keys are kept there.', 'info'); if (W.PM_PAGES) W.PM_PAGES.go('settings'); } })) : null;
-    return h('div.pjx-notice.pjxc-flash', { 'data-tone': 'done', role: 'status' },
-      h('span.pjx-notice-mark', { html: PJX.calm('complete', 16), 'aria-hidden': 'true' }),
-      h('div.pjx-notice-title', { text: fl.title }), h('div.pjx-notice-text', { text: fl.text }), fl.agent ? h('div.pjx-notice-text.pjxc-flash-agent', { text: fl.agent }) : null, more, h('div.pjx-notice-acts', null, ...acts));
+    const partial = fl.report && fl.report.failed && fl.report.failed.length;
+    return h('div.pjx-notice.pjxc-flash', { 'data-tone': partial ? 'attention' : 'done', role: 'status' },
+      h('span.pjx-notice-mark', { html: PJX.calm(partial ? 'warning' : 'complete', 16), 'aria-hidden': 'true' }),
+      h('div.pjx-notice-title', { text: fl.title }), h('div.pjx-notice-text', { text: fl.text }), fl.agent ? h('div.pjx-notice-text.pjxc-flash-agent', { text: fl.agent }) : null, more,
+      fl.report ? reportNode(p, fl, urec) : null, h('div.pjx-notice-acts', null, ...acts));
+  }
+  /* the operation report (ACD-511): every result, partial too, lists what moved, stayed, was held and didn't move, the line
+     the chat shows, and what ends Undo */
+  function reportNode(p, fl, urec) {
+    const r = fl.report, fam = (label, list, key) => (list && list.length ? h('div.pjxc-repfam', null, h('div.pjxc-repcap', { text: label }), PJX.flow.facts(list.map((t) => ({ key, text: t })))) : null);
+    const retry = r.failed && r.failed.length ? act(W_('cv.rep.retry'), { cls: 'pjx-link', key: 'f:retryfile', cmd: 'gap:thread files move (retry, same operation)', run: () => { const m = fl.moved; if (!m) return; const f0 = r.failed.slice(); PJX.run(p.id, 'move', 'Copying ' + f0[0], [{ label: 'Copying ' + f0[0] + ' into ' + m.folder + '/', ms: 700 }], () => { m.files = m.files.concat(f0); r.moved = r.moved.concat(f0.map((f) => f + ' · into ' + m.folder + '/')); r.failed = []; m.failed = []; fl.title = W_('cv.rep.title', { project: p.name }); }); } }) : null;
+    const demo = urec && !urec.ended ? h('p.pjx-np-hint.is-concept.pjxc-undodemo', null, h('span', { text: W_('cv.undo.demo') + ' ' }),
+      act(W_('cv.undo.demoMsg'), { cls: 'pjx-link', key: 'f:enddemo:msg', run: () => { urec.ended = W_('cv.undo.newMsg', { chat: urec.title }); render(); } }),
+      urec.files && urec.files.length ? h('span', { text: ' · ' }) : null,
+      urec.files && urec.files.length ? act(W_('cv.undo.demoChange'), { cls: 'pjx-link', key: 'f:enddemo:file', run: () => { urec.ended = W_('cv.undo.changed', { file: urec.files[0], project: p.name }); render(); } }) : null) : null;
+    return h('div.pjxc-report', null, h('div.pjxc-repgrid', null, fam(W_('cv.rep.moved'), r.moved, 'complete'), fam(W_('cv.rep.stayed'), r.stayed, 'info'), fam(W_('cv.rep.held'), r.held, 'paused'), fam(W_('cv.rep.failed'), r.failed, 'failed')),
+      retry ? h('div.pjx-row', null, retry) : null,
+      textLine(W_('cv.rep.divider', { project: p.name, when: (urec && urec.at) || 'now' }), 'is-hint'),
+      urec ? textLine(urec.ended ? W_('cv.undo.ended', { reason: urec.ended }) : W_('cv.undo', { until: urec.until }), 'is-hint') : null, demo);
   }
   /* Undo a new project made from a chat: its own statement first, by the way its files were used (NOPROJECT 7.7) */
   function undoNewFromChat(p, fl) {
     const mode = fl.files || 'move', c = (PJX.ENV.chats || []).find((x) => x.title === fl.chat) || {};
     const body = h('div', null, PJX.flow.facts([{ key: 'info', text: W_('np.done.undoNew.' + mode, { name: p.name, n: c.files || 0, path: (c.workedIn || {}).path || '' }) }, { key: 'info', text: W_('np.done.undoNew.never') }]));
+    const rec = p.fromChatRec; if (rec && rec.ended) { PJX.toast(W_('cv.undo.ended', { reason: rec.ended }), '', 'info'); return; }
     PJX.yes({ title: W_('np.done.undoNew.title', { name: p.name, chat: fl.chat }), body, okLabel: W_('np.done.undo'),
-      ok: () => PJX.run(p.id, 'remove', 'Undoing', [{ label: 'Moving “' + fl.chat + '” back to No project', ms: 700 }, { label: mode === 'move' ? 'Putting its files back in the chat folder' : 'Taking ' + p.name + ' off your list', ms: 700 }], () => { PJX.S.world.projects = PJX.all().filter((x) => x !== p); delete C.flash[p.id]; }, { cmd: 'gap:thread conversion undo' }).then(() => PJX.toast(W_('np.done.undoNew.done', { chat: fl.chat, name: p.name }), W_('np.done.undoNew.never'), 'success')),
+      ok: () => PJX.run(p.id, 'remove', 'Undoing', [{ label: 'Moving “' + fl.chat + '” back to No project', ms: 700 }, { label: mode === 'move' ? 'Putting its files back in the chat folder' : 'Taking ' + p.name + ' off your list', ms: 700 }], () => { PJX.S.world.projects = PJX.all().filter((x) => x !== p); delete C.flash[p.id]; if (rec) { delete (PJX.S.world.facts.converted || {})[rec.chat]; const ch = PJX.np.chatOf(rec.chat); if (ch) ch.back = 'Back in No project · ' + p.name + ' was undone at ' + PJX.np.nowWord(); } }, { cmd: 'ACD-511 Undo' }).then(() => PJX.toast(W_('np.done.undoNew.done', { chat: fl.chat, name: p.name }), W_('np.done.undoNew.never'), 'success')),
       report: { title: W_('np.done.undoNew.done', { chat: fl.chat, name: p.name }) } });
   }
   /* Undo a move into a project you have: its statement first, then the move back */
   function undoMove(p, rec) {
+    if (rec.ended) { PJX.toast(W_('cv.undo.ended', { reason: rec.ended }), '', 'info'); return; }
     const body = h('div', null, PJX.flow.facts(PJX.np.moveUndoStatement(rec).map((t) => ({ key: 'info', text: t }))));
     PJX.yes({ title: W_('np.mv.u.title', { chat: rec.title }), body, okLabel: W_('np.mv.u.go'),
-      ok: () => PJX.run(p.id, 'move', 'Undoing the move', [{ label: 'Putting the files back in the chat folder', ms: 700 }, { label: 'Moving “' + rec.title + '” back to No project', ms: 700 }], () => { PJX.np.moveUndo(rec.chat); delete C.flash[p.id]; }, { cmd: 'gap:thread conversion undo' }).then(() => PJX.toast(W_('np.mv.u.done', { chat: rec.title }), W_('np.mv.u.never'), 'success')),
+      ok: () => PJX.run(p.id, 'move', 'Undoing the move', [{ label: 'Putting the files back in the chat folder', ms: 700 }, { label: 'Moving “' + rec.title + '” back to No project', ms: 700 }], () => { PJX.np.moveUndo(rec.chat); delete C.flash[p.id]; const ch = PJX.np.chatOf(rec.chat); if (ch) ch.back = 'Back in No project · moved out of ' + p.name + ' at ' + PJX.np.nowWord(); }, { cmd: 'ACD-511 Undo' }).then(() => PJX.toast(W_('np.mv.u.done', { chat: rec.title }), W_('np.mv.u.never'), 'success')),
       report: { title: W_('np.mv.u.done', { chat: rec.title }) } });
   }
   /* Find the folder, in place (PJX.parts.repairBody): the same choices as the shared dialog, on the page that shows the
@@ -553,7 +585,8 @@
       act(W_('pg.rs.check'), { cls: 'pmu-textbtn', icon: 'refresh', key: 'rs:check', cmd: 'cmd.project.resume_creation (preflight)', off: checking ? 'Checking now' : null, run: () => PJX.ACT.checkAgain(p.id) }),
       act(W_('pg.rs.review'), { cls: 'pmu-textbtn', icon: 'list', key: 'rs:review', run: () => reviewSetupDialog(p) }),
       p.online.service ? act('Open on ' + svc, { cls: 'pmu-textbtn', icon: 'globe', key: 'rs:online', cmd: 'cmd.forge.repository.open_in_browser', run: () => PJX.ACT.openOnline(p.id) }) : null,
-      act('Continue setup', { cls: 'pmu-textbtn', primary: true, icon: 'play', key: 'rs:go', cmd: 'cmd.project.resume_creation (Handler pending, G5)', run: () => { R.states = rec.remaining.map(() => 'pending'); PJX.ACT.resume(p.id); } }));
+      rec.unknown ? act(W_('pg.rs.reconcile', { service: rec.unknown.service }), { cls: 'pmu-textbtn', icon: 'search', key: 'rs:reconcile', cmd: 'cmd.project.resume_creation (reconcile)', off: checking ? 'Checking now' : null, run: () => PJX.ACT.reconcile(p.id) }) : null,
+      act('Continue setup', { cls: 'pmu-textbtn', primary: !rec.unknown, icon: 'play', key: 'rs:go', cmd: 'cmd.project.resume_creation (Handler pending, G5)', off: rec.unknown ? W_('pg.rs.checkFirst', { service: rec.unknown.service }) : null, run: () => { R.states = rec.remaining.map(() => 'pending'); PJX.ACT.resume(p.id); } }));
     return plate('resume', {
       // (the head already says "Setup didn't finish": the corner speaks only while it is being finished)
       cls: 'pjxc-resumeplate', icon: 'play', tone: running ? null : 'attention',
@@ -564,6 +597,7 @@
         h('div.pjxc-resume', null,
           // a reference is shown when it is a name (jared/recipe-app); a step's own label is not repeated after it
           flow().group('Already done', flow().facts(rec.settled.map((x) => ({ key: 'complete', text: x.label + (x.ref && !/\s/.test(x.ref) ? ' · ' + x.ref : '') })))),
+          rec.unknown ? flow().group(W_('pg.rs.unknownCap'), flow().facts([{ key: 'warning', text: rec.unknown.label + ' · ' + rec.unknown.ref }])) : null,
           flow().group(running ? 'Doing now' : 'Still to do', flow().phaseList(rec.remaining, R.states))),
         textLine('Continue setup does only what is left. Nothing on ' + svc + ' is made a second time.', 'is-hint'),
         yoloAt(W_('np.yolo.resume')),
@@ -724,9 +758,9 @@
   function openForm(p, kind) {
     // Cancel and Save take the focus back to the button that opened the form
     const a = D.activeElement, opener = a && a.closest && a.closest('[data-c-key]') ? a.closest('[data-c-key]').getAttribute('data-c-key') : null;
-    C.inplace[p.id] = { kind, opener, s: kind === 'computer' || kind === 'contribute' ? null : formSession(p, kind), sel: p.runsOn || 'here', fork: { owner: 'jared', branch: 'my-change', upstream: 'upstream' } };
+    C.inplace[p.id] = { kind, opener, s: kind === 'computer' || kind === 'contribute' || kind === 'work' ? null : formSession(p, kind), sel: p.runsOn || 'here', fork: { owner: 'jared', branch: 'my-change', upstream: 'upstream' } };
     render();
-    const plateKey = /^backup/.test(kind) ? 'backup' : kind === 'computer' ? 'where' : 'online';
+    const plateKey = /^backup/.test(kind) ? 'backup' : kind === 'computer' ? 'where' : kind === 'work' ? 'work' : 'online';
     reveal('[data-plate="' + plateKey + '"]', 'button, input');
   }
   function closeForm(p) {
@@ -956,7 +990,6 @@
       icon: w0.kind === 'local' ? 'desktop' : 'server', title: 'Where it lives', sub: w0.label + (w0.via ? ' · over ' + w0.via : ''),
       meta: cornerSays(st[0]) ? parts().st(st[0], st[1]) : null,
       body: [moving ? working(op) : null, facts([
-        { k: W_('pg.wh.runsOn'), v: comp.name + (comp.id === 'here' ? ' (' + comp.detail + ')' : ' (your Puppet Master server)') },
         { k: W_('pg.wh.folder'), node: midPath(w0.path), tone: w0.missing ? 'crit' : null },
         { k: W_('pg.wh.keptOn'), v: kept, tone: offline ? 'warn' : null },
         { k: W_('pg.wh.reached'), v: reached },
@@ -968,9 +1001,26 @@
           : act('Move or change folder…', { cls: 'pmu-textbtn', icon: 'move', key: 'p:move', cmd: 'cmd.project.source_location.update', off: w0.pending ? 'Setup hasn’t made the folder yet' : moving ? 'Working on it' : null, run: () => PJX.emit('need-repair', { id: p.id, move: true }) }),
         act('Show in file manager', { cls: 'pmu-textbtn', icon: 'folder', key: 'p:reveal', cmd: 'cmd.file.reveal', off: w0.missing ? 'The folder is missing' : offline ? (w0.device || 'The device') + ' isn’t answering' : w0.pending ? 'Setup hasn’t made the folder yet' : null, run: () => PJX.ACT.reveal(p.id) }),
         act('Copy path', { cls: 'pmu-textbtn', icon: 'copy', key: 'p:copy', cmd: 'cmd.file.copy_full_path', run: () => PJX.ACT.copyPath(p.id) }),
-        act(W_('pg.wh.change'), { cls: 'pmu-textbtn', icon: 'server', key: 'p:computer', cmd: 'cmd.project.execution_host.select', off: moving ? 'Working on it' : w0.missing ? 'Find the folder first' : null, run: () => openForm(p, 'computer') }),
         act(W_('pg.wh.move'), { cls: 'pmu-textbtn', icon: 'move', key: 'p:movecomputer', cmd: 'cmd.project.move.preflight', run: () => PJX.ACT.moveComputer(p.id) })
       ]
+    });
+  }
+  /* Where work runs (SIR-056, F3-668): the records home, the work choice, the default Computer, the allowed Computers and
+     the ones working now, kept apart; each work row says Auto → <Computer> or Chosen: <Computer> by <who>, with Why */
+  function workPlate(p) {
+    const WK = PJX.work, ip = C.inplace[p.id], op = opOf(p.id), busy = op && op.kind === 'computer';
+    if (ip && ip.kind === 'work') {
+      const f = WK.form(p, ip, () => render());
+      return plate('work', { icon: 'workflow', title: W_('wk.form.title'), sub: p.name, inplace: true, body: [f.node],
+        footEl: formFoot(p, W_('wk.save'), f.changed(), W_('wk.same'), () => PJX.ACT.setWork(p.id, f.value()), 'cmd.project.execution_policy.set') });
+    }
+    const n = (p.workers || []).length;
+    return plate('work', {
+      icon: 'workflow', title: W_('wk.plate'), sub: WK.choiceWord(p) + (n ? ' · ' + W_(n === 1 ? 'wk.f.task' : 'wk.f.tasks', { n }) + ' running' : ''),
+      meta: busy ? parts().st('working', op.label) : null,
+      body: [busy ? working(op) : null, facts(WK.facts(p)), WK.rows(p)],
+      foot: [act(W_('wk.change'), { cls: 'pmu-textbtn', icon: 'workflow', key: 'p:work', cmd: 'cmd.project.execution_policy.set', off: busy ? 'Working on it' : p.lifecycle === 'archived' ? 'Unarchive it first' : null, run: () => openForm(p, 'work') }),
+        act(W_('wk.settingsLink'), { cls: 'pmu-textbtn', icon: 'settings', key: 'p:worksettings', cmd: 'cmd.settings.open', tip: W_('wk.settingsToast'), run: () => { PJX.toast(W_('wk.settingsToast'), W_('wk.settingsToastText'), 'info'); if (W.PM_PAGES) W.PM_PAGES.go('settings'); } })]
     });
   }
   /* (Project settings is in the head; Rename and New project like this are in More: a plate of three links said less
@@ -1023,7 +1073,7 @@
     syncChildren(band, items);
     if (items.length) kids.push(band);
     const bento = slot('bento', () => h('div.pjxc-bento'));
-    syncChildren(bento, [nowPlate(p), historyPlate(p), onlinePlate(p), backupPlate(p), wherePlate(p), deletePlate(p)]);
+    syncChildren(bento, [nowPlate(p), historyPlate(p), onlinePlate(p), backupPlate(p), wherePlate(p), workPlate(p), deletePlate(p)]);
     kids.push(bento);
     syncChildren(E.body, kids);
     E.body.setAttribute('data-view', 'project');
@@ -1391,7 +1441,12 @@
         p.fromChatFiles = files;
         // what can't be undone is said: an online copy or a fork made here stays there if you Undo
         const remote = p.online && p.online.service && /make|instead/.test(PJX.np.onlineMode(s)) ? ' The online copy on ' + p.online.service + ' can’t be undone from here: delete it there if you don’t want it.' : p.online && p.online.upstream && !((PJX.np.accessDone(s) || {}).fork) && agent ? ' Your fork on ' + p.online.service + ' can’t be undone from here: delete it there if you don’t want it.' : '';
-        C.flash[p.id] = { title: chat ? W_('np.done.chat', { name: p.name, chat }) : W_('np.done.title', { name: p.name }), text: (p.backup && p.backup.setup ? W_('np.done.textBk') : W_('np.done.text')) + remote, plan: true, accounts: p.needsSignin, computer: PJX.np.comp(p.runsOn).name, undoCopy: !!p.copied, chat, files,
+        const fr = p.fromChatRec, ch0 = fr && PJX.np.chatOf(fr.chat);
+        const report = fr && ch0 ? { moved: ['“' + ch0.title + '” · ' + ch0.messages + ' messages and ' + ch0.attachments + ' attachments'].concat(fr.files.length ? [PJX.np.plural(fr.files.length, 'file') + ' · into ' + p.where.path] : []),
+          stayed: [].concat((ch0.fileList || []).length - fr.files.length > 0 && files === 'move' ? [PJX.np.plural((ch0.fileList || []).length - fr.files.length, 'file') + ' you left out, in ' + ch0.folder] : []).concat(ch0.outside.length ? [PJX.np.plural(ch0.outside.length, 'file') + ' it changed outside its folder'] : []).concat((ch0.grants || []).map((g) => 'Its permission “' + g + '”')),
+          held: fr.held, failed: [] } : null;
+        if (report) PJX.toast(W_('cv.rep.title', { project: p.name }), W_('cv.rep.notify', { chat: ch0.title, project: p.name, moved: report.moved.length, stayed: report.stayed.length, failed: '' }), 'success');
+        C.flash[p.id] = { report, title: chat ? W_('np.done.chat', { name: p.name, chat }) : W_('np.done.title', { name: p.name }), text: (p.backup && p.backup.setup ? W_('np.done.textBk') : W_('np.done.text')) + remote, plan: true, accounts: p.needsSignin, computer: PJX.np.comp(p.runsOn).name, undoCopy: !!p.copied, chat, files,
           agent: agent ? (agent.yolo ? W_('np.yolo.agentDone') : W_('np.yolo.agentAllowed')) + ': ' + PJX.np.andList(agent.labels) + '.' + (p.backup && p.backup.setup ? ' ' + W_('np.yolo.agentWaits', { where: p.backup.dest }) : '') : null };
       }
       // the draft became a Project (or a Project whose setup can be continued): it is no longer a draft
@@ -1451,7 +1506,9 @@
   /* ------------------------------------------------------------------ from a chat with no project [Depends: no-project] */
   /* "Make this a project…": both choices in sight, nothing chosen until you click, and PM says what happens next */
   function chooser(chatId) {
-    const c = (PJX.ENV.chats || []).find((x) => x.id === chatId) || (PJX.ENV.chats || [])[0]; if (!c) return;
+    const c = PJX.np.chatOf(chatId) || (PJX.ENV.chats || [])[0]; if (!c) return;
+    const cv = (PJX.S.world.facts.converted || {})[c.id];
+    if (cv && PJX.get(cv)) { PJX.toast(W_('np.chooser.moved', { chat: c.title, project: PJX.get(cv).name }), '', 'info'); select(cv, { focus: 'page' }); return; }
     const mv = PJX.np.moved(c.id);
     if (mv) { const t = PJX.get(mv.into); PJX.toast(W_('np.chooser.moved', { chat: c.title, project: t ? t.name : mv.into }), '', 'info'); if (t) select(t.id, { focus: 'page' }); return; }
     let pick = null;
@@ -1462,8 +1519,7 @@
       fill(body,
         h('p.pjx-q-lead', { text: W_('np.chooser.none') }),
         U.choices('chooser', [{ id: 'new', glyph: 'folder-plus', title: W_('np.chooser.new'), sub: W_('np.chooser.newSub') }, { id: 'existing', glyph: 'move', title: W_('np.chooser.existing'), sub: W_('np.chooser.existingSub') }], pick, (v) => { pick = v; paint(); }, { label: W_('np.chooser.title', { chat: c.title }), cls: 'pjx-choices-grid pjx-np-tiles' }),
-        pick ? U.line('info', pick === 'new' ? W_('np.chooser.saysNew', { chat: c.title, n: c.files }) : W_('np.chooser.saysExisting')) : null,
-        U.hint(W_('np.chooser.pending'), 'is-concept'));
+        pick ? U.line('info', pick === 'new' ? W_('np.chooser.saysNew', { chat: c.title, files: c.files ? ' with its ' + c.files + ' files' : '' }) : W_('np.chooser.saysExisting')) : null);
       if (dlg) dlg.setActions([{ spacer: true }, { label: W_('np.chooser.cancel'), run: () => dlg.close('cancel') },
         { label: pick === 'existing' ? W_('np.chooser.goExisting') : W_('np.chooser.goNew'), primary: true, disabled: pick ? null : 'Choose one first', run: () => { if (!pick) return; dlg.close('ok'); if (pick === 'new') startNew({ way: 'chat', chat: c.id }); else chooserExisting(c); } }]);
       const f = body.querySelector('.pjx-choice[aria-checked="true"]'); if (f) f.focus({ preventScroll: true });
@@ -1531,8 +1587,21 @@
       U.demo([{ label: 'tools/printer', outcome: 'works', run: () => { m.folder = 'tools/printer'; m.changed(); } }, { label: '../outside', outcome: 'refused', run: () => { m.folder = '../outside'; m.changed(); } }], { id: 'mvfolder' }),
       hist ? U.disc(s0, 'mv-adv', W_('np.sec.advanced'), () => [
         U.field(jj ? W_('np.mv.branchJj') : W_('np.mv.branch'), U.input('mv:branch', m.branch, 'chat/fix-printer', (v) => { m.branch = v; m.branchTouched = true; m.changed(); }), W_('np.mv.branchHint'), PJX.rules.branchProblem(m.branch) || ''),
-        U.check('mv:main', W_('np.mv.main'), m.place === 'main', (v) => { m.place = v ? 'main' : 'draft'; m.changed(); }, { sub: W_('np.mv.mainSub', { project: p.name }) })]) : null));
+        U.check('mv:main', W_('np.mv.main'), m.place === 'main', (v) => { m.place = v ? 'main' : 'draft'; m.changed(); }, { sub: W_('np.mv.mainSub', { project: p.name }) }),
+        c.folderHistory ? U.check('mv:graft', W_('cv.graft', { n: c.folderHistory.count }), !!m.graft, (v) => { m.graft = v; m.changed(); }, { sub: W_('cv.graftSub') }) : null]) : null,
+      U.check('mv:demopartial', W_('cv.demoPartial'), !!m.demoPartial, (v) => { m.demoPartial = v; m.changed(); })));
     // 4 conflicts, only when a Different file goes straight in
+    // what has to be settled first, with the way to settle it right here (7.09, ACD-510)
+    const bl = NPx.moveBlocker(m);
+    if (bl) {
+      const F0 = PJX.S.world.facts, host = bl.computer;
+      let fix = null;
+      if (bl.kind === 'approval') { const a = NPx.waitingApprovals(c)[0]; fix = [U.line('waiting', W_('cv.work.approval', { what: a.what })), h('div.pjx-row', null, act(W_('nc.ap.once'), { cls: 'pjx-btn', key: 'mv:ap:once', run: () => { F0.approvals[a.id] = 'allowed'; m.changed(); } }), act(W_('nc.ap.no'), { cls: 'pjx-btn', key: 'mv:ap:no', run: () => { F0.approvals[a.id] = 'denied'; m.changed(); } }))]; }
+      if (bl.kind === 'unsaved') { const un = F0.unsaved[p.id]; fix = [U.line('waiting', W_('cv.block.unsavedSay', { files: NPx.andList(un), project: p.name })), h('div.pjx-row', null, act(W_('cv.block.save'), { cls: 'pjx-btn', key: 'mv:unsaved:save', cmd: 'cmd.editor.save', run: () => { F0.unsaved[p.id] = []; m.changed(); } }), act(W_('cv.block.discard'), { cls: 'pjx-btn', key: 'mv:unsaved:discard', cmd: 'cmd.editor.revert', run: () => { F0.unsaved[p.id] = []; m.changed(); } }))]; }
+      if (bl.kind === 'gitid') { m.gid = m.gid || { name: 'Jared', email: '' }; fix = [U.line('waiting', W_('cv.block.gitidSay', { computer: NPx.comp(host).name })), h('div.pjx-np-pair', null, U.field(W_('cv.block.gitidName'), U.input('mv:gidname', m.gid.name, 'Jared', (v) => { m.gid.name = v; })), U.field(W_('cv.block.gitidEmail'), U.input('mv:gidmail', m.gid.email, 'you@example.com', (v) => { m.gid.email = v; }))), h('div.pjx-row', null, act(W_('cv.block.gitidSet', { computer: NPx.comp(host).name }), { cls: 'pjx-btn', key: 'mv:gid:set', cmd: 'cmd.source_control.identity.set', run: () => { if (!String(m.gid.name).trim() || !/@/.test(m.gid.email)) { PJX.toast('Type a name and an email first', '', 'warn'); return; } F0.gitId[host] = true; m.changed(); } }))]; }
+      if (bl.kind === 'graft') fix = [U.line('blocked', W_('cv.graftSub')), h('div.pjx-row', null, act('Don’t bring them', { cls: 'pjx-btn', key: 'mv:graft:off', run: () => { m.graft = false; m.changed(); } }))];
+      put0(box, h('section.pjxc-mvsec.pjxc-mvblock', { 'aria-labelledby': 'pjxc-mvh-b', 'data-block': bl.kind }, h('h3.pjxc-mvh', { id: 'pjxc-mvh-b', tabindex: '-1' }, h('span.pjx-st-mark', { html: PJX.calm('blocked', 14), 'aria-hidden': 'true' }), h('span', { text: bl.text })), ...(fix || [])));
+    }
     const conf = NPx.moveConflicts(m);
     if (conf.length) put0(box, q(4, W_('np.mv.q4'), conf.join(', '), U.choices('mv:resolve', [{ id: 'both', glyph: 'copy', title: W_('np.mv.r.both'), sub: W_('np.mv.r.bothSub', { example: conf[0] }), tag: W_('np.svc.recommended') }, { id: 'chat', glyph: 'swap', title: W_('np.mv.r.chat'), sub: W_('np.mv.r.chatSub') }, { id: 'skip', glyph: 'slash-circle', title: W_('np.mv.r.skip'), sub: W_('np.mv.r.skipSub') }], m.resolve, (v) => { m.resolve = v; m.changed(); }, { label: W_('np.mv.q4') })));
     void running;
@@ -1556,12 +1625,13 @@
           h('dt', { text: W_('np.mv.pv.first') }), h('dd', { text: '“' + c.first + '”' }),
           h('dt', { text: W_('np.mv.pv.last') }), h('dd', { text: '“' + c.last + '”' }),
           h('dt', { text: W_('np.mv.pv.where', { project: p.name }) }), h('dd', { text: W_('np.mv.pv.whereVal', { chat: c.title }) }))));
+      body.push(U.convPreview(NPx.convEffects(c, { project: p.id })));
     } else body.push(U.hint(W_('np.mv.pick')));
     const why = pr ? (() => { const b = h('button.pjxc-why', { type: 'button', id: 'pjxc-mvwhy', 'data-c-key': 'mv:why' }, h('span.pjx-st-mark', { html: PJX.calm('warning', 13), 'aria-hidden': 'true' }), h('span', { text: pr.text })); b.addEventListener('click', () => { const f = C.root.querySelector(pr.field === 'target' ? '[data-pjx-key="mv:q"]' : pr.field === 'files' ? '[data-c-key="mv:chatonly"]' : '[data-pjx-key="mv:' + pr.field + '"]'); if (f) f.focus(); }); return b; })() : null;
     const go = h('button', { type: 'button', class: ['pmw-act', 'pjxc-btn', 'pjxc-go', !pr && 'is-primary'], 'data-c-key': 'mv:go', 'aria-disabled': pr ? 'true' : null, 'aria-describedby': pr ? 'pjxc-mvwhy' : null, 'data-cmd': p ? NPx.movePhases(m).map((x) => x.cmd).join(' → ') : null },
       h('span.pjxc-bico', { html: icon('move', 15), 'aria-hidden': 'true' }), h('span.pjxc-blabel', { text: NPx.moveLabel(m) }));
     go.addEventListener('click', () => { if (pr) { why && why.click(); return; } doMove(); });
-    const foot = h('div.pjxc-commit', null, why, go, U.yoloLine(W_('np.yolo.chatMove', { project: p ? p.name : 'the project' })), U.hint(W_('np.chat.pending'), 'is-concept'));
+    const foot = h('div.pjxc-commit', null, why, go, U.yoloLine(W_('np.yolo.chatMove', { project: p ? p.name : 'the project' })));
     return plate('mvreview', { tag: 'aside', cls: 'pjxc-review pjxc-mvreview', icon: 'list', title: W_('np.mv.says'), sub: p ? p.name : W_('np.mv.pick'), body, footEl: foot });
   }
   async function doMove() {
@@ -1575,8 +1645,13 @@
       const r = res.rec, c = PJX.np.chatOf(r.chat), p = res.project, left = [];
       const nLeft = (c.fileList || []).length - (r.chatOnly ? 0 : PJX.np.movePicked(m).length);
       if (nLeft) left.push(PJX.np.plural(nLeft, 'file') + ' you didn’t pick');
-      left.push(PJX.np.plural(c.outside.length, 'file') + ' outside the chat folder', '1 folder permission');
-      C.flash[p.id] = { title: W_('np.mv.done', { project: p.name }), text: W_('np.mv.doneText', { n: c.messages, a: c.attachments, files: r.files.length ? W_('np.mv.doneFiles', { k: PJX.np.plural(r.files.length, 'file'), folder: r.folder, onDraft: r.place === 'draft' ? W_('np.mv.onDraft', { branch: r.branch }) : '' }) : '', left: PJX.np.andList(left) }) + (r.by === 'yolo' ? ' YOLO didn’t ask for a yes.' : ''), moved: r };
+      if (c.outside.length) left.push(PJX.np.plural(c.outside.length, 'file') + ' outside the chat folder');
+      (c.grants || []).forEach((g) => left.push('its permission “' + g + '”'));
+      const report = { moved: ['“' + c.title + '” · ' + c.messages + ' messages and ' + c.attachments + ' attachments'].concat(r.files.length ? [PJX.np.plural(r.files.length, 'file') + ' · into ' + r.folder + '/' + (r.place === 'draft' ? ' on the draft ' + r.branch : '')] : []),
+        stayed: left.map((x) => x.charAt(0).toUpperCase() + x.slice(1)), held: r.held, failed: r.failed.map((f) => f + ' · it was open in another app, so it stayed in the chat folder') };
+      const partial = r.failed.length;
+      C.flash[p.id] = { report, title: partial ? W_('cv.rep.partial', { project: p.name, n: r.failed.length }) : W_('np.mv.done', { project: p.name }), text: W_('np.mv.doneText', { n: c.messages, a: c.attachments, files: r.files.length ? W_('np.mv.doneFiles', { k: PJX.np.plural(r.files.length, 'file'), folder: r.folder, onDraft: r.place === 'draft' ? W_('np.mv.onDraft', { branch: r.branch }) : '' }) : '', left: left.length ? PJX.np.andList(left) : 'nothing' }) + (r.by === 'yolo' ? ' YOLO didn’t ask for a yes.' : ''), moved: r };
+      PJX.toast(partial ? W_('cv.rep.partial', { project: p.name, n: r.failed.length }) : W_('cv.rep.title', { project: p.name }), W_('cv.rep.notify', { chat: c.title, project: p.name, moved: report.moved.length, stayed: report.stayed.length, failed: partial ? ', ' + r.failed.length + ' didn’t move' : '' }), partial ? 'warn' : 'success');
       announce(W_('np.mv.done', { project: p.name }));
       closeMove(p.id);
     }
@@ -1790,6 +1865,13 @@
         // the undo strip appears after parts.js has noted the removal, which is after the core's own re-render
         if (e && e.why === 'remove') { render(); later(render, 15300); }
       }));
+      C.offs.push(PJX.on('need-chat', (e) => {
+        if (!C || !e || !e.id) return;
+        if (C.mv && e.kind !== 'move') { C.mv = null; C.mvCommit = null; if (C.mode === 'move') C.mode = 'project'; }
+        if (e.kind === 'chooser') chooser(e.id);
+        else if (e.kind === 'new') startNew({ way: 'chat', chat: e.id, fresh: true });
+        else if (e.kind === 'move') startMove(e.id);
+      }));
       C.offs.push(PJX.on('pjx-show', (e) => {
         if (!C || !e || e.view !== 'archived') return;
         C.archivedOpen = true;
@@ -1839,6 +1921,9 @@
       if (!C) return;
       const M = {
         fromchat: () => chooser('chat-printer'),
+        nochat: () => { if (W.PM_PAGES) W.PM_PAGES.go('dashboard'); later(() => { if (PJX.chat) PJX.chat.openChat('chat-printer'); }, 250); },
+        homenew: () => { if (W.PM_PAGES) W.PM_PAGES.go('dashboard'); later(() => { const b = D.querySelector('#panel-dashboard .pjx-home-newmain'); if (b) { b.focus(); b.click(); } }, 250); },
+        work: () => { if (PJX.get('tastebook')) { select('tastebook', { focus: 'page' }); reveal('[data-plate="work"]', '.pjx-wk-why'); } },
         chatmove: () => startMove('chat-printer'),
         agent: () => { startNew({ text: 'https://github.com/maplecraft/plant-journal', fresh: true }); const s = C.s; if (!s) return; PJX.np.set(s, 'backup.dest', 'gdrive', true); s.ui.agent = { allowed: false }; s.ui.open = null; s.ui.entered = true; s.changed(); },
         contribute: () => startNew({ text: 'https://github.com/maplecraft/plant-journal', fresh: true }),

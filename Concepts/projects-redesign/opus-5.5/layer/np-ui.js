@@ -224,6 +224,11 @@
         h('div.pjx-row', null, btn(w('np.look.retry'), () => NP().retry(s, Object.keys(s.ops).find((k) => s.ops[k] === o)), { key: 'look:retry', cmd: 'cmd.project.source_location.test' }), btn(w('np.look.other'), () => opts.other && opts.other(), { key: 'look:other', quiet: true })));
     }
     const i = o.result, rows = [];
+    if (i.partial) {
+      rows.push(line('pending', w('np.look.unknownHist', { reason: i.reason })), line('pending', w('np.look.unknownRest')));
+      rows.push(h('div.pjx-row', null, btn(w('np.look.again'), () => { s.ui.lookAgain = (s.ui.lookAgain || 0) + 1; s.changed(); }, { key: 'lookagain', cmd: 'cmd.project.source_location.test' })));
+      return h('div.pjx-np-look', { 'data-cmd': 'cmd.source_control.backend.detect + new:inspection', 'data-partial': '' }, cap(w('np.look.title')), lines(rows));
+    }
     if (i.history === 'git') rows.push(line('complete', w('np.look.git', { branch: i.branch })));
     else if (i.history === 'jujutsu') rows.push(line('complete', w('np.look.jj', { bookmark: i.branch })));
     else rows.push(line('off', w('np.look.none')));
@@ -246,7 +251,7 @@
   /* ------------------------------------------------------------------ the computer that does the work */
   function runsOnSeg(s, key) {
     if (!NP().serverOn() && s.d.runsOn === 'here') return null;
-    const items = ENV.computers.map((c) => ({ id: c.id, title: c.name, sub: c.id === 'here' ? c.detail : w('np.loc.serverSub'), off: c.server && !NP().serverOn() ? w('np.loc.serverOff', { server: c.name }) : null }));
+    const items = ENV.computers.map((c) => ({ id: c.id, title: c.name, sub: c.detail, off: c.id === 'homenas' && !NP().serverOn() ? w('np.loc.serverOff', { server: c.name }) : null }));
     return seg(key || 'runsOn', items, s.d.runsOn, (v) => NP().set(s, 'runsOn', v), w('np.loc.runsOn'));
   }
 
@@ -266,13 +271,7 @@
       line(null, w('np.start.what'), { icon: 'info' }),
       line(null, ENV.starters.length ? w('np.start.manage') : w('np.start.noStarters'), { icon: 'settings', after: link(w('np.start.manageLink'), () => PJX.toast('Settings › New projects › Starters', 'A proposal waiting on your decision: the basics’ defaults and your own starters live there, apart from Saved setups.', 'info'), { key: 'start:manage', cmd: 'cmd.settings.open' }) }),
       hint(w('np.start.pending'), 'is-concept')));
-    if (d.start === 'basics') {
-      put(box, disc(s, 'start-adv', w('np.sec.advanced'), () => [
-        sw('start:readme', w('np.start.readme'), w('np.start.readmeSub'), d.basics.readme, (v) => NP().set(s, 'basics.readme', v)),
-        group(w('np.start.ignore'), seg('start:ignore', [['automatic', 'Chosen for you'], ['none', 'None'], ['rust', 'Rust'], ['node', 'Node'], ['python', 'Python'], ['slint', 'Slint']].map(([id, title]) => ({ id, title })), d.basics.ignore, (v) => NP().set(s, 'basics.ignore', v), w('np.start.ignore')), hint(w('np.start.ignoreHint'))),
-        group(w('np.start.license'), seg('start:license', [['none', 'No license'], ['mit', 'MIT'], ['apache_2', 'Apache 2.0'], ['gpl_3', 'GPL 3.0']].map(([id, title]) => ({ id, title })), d.basics.license, (v) => NP().set(s, 'basics.license', v), w('np.start.license')), hint(w('np.start.licenseHint')))
-      ]));
-    }
+    put(box, line(null, w('np.start.filesWhere'), { icon: 'info' }));
     return box;
   }
 
@@ -281,11 +280,12 @@
     const d = s.d, box = h('div.pjx-np-folder'), here = d.runsOn === 'here';
     const ro = runsOnSeg(s, 'folder:runsOn');
     if (ro) put(box, group(w('np.folder.on'), ro, hint(w('np.folder.onHint'))));
-    const list = here ? ENV.recentFolders.map((r) => ({ id: r.path, glyph: 'folder', title: r.name, sub: r.path })) : (ENV.devices.find((x) => x.id === 'nas') || { folders: [] }).folders.map((f) => ({ id: f, glyph: 'folder', title: f.split('/').pop(), sub: f }));
+    const hd = here ? null : NP().comp(d.runsOn).device, hdev = hd ? NP().dev(hd) : null;
+    const list = here ? ENV.recentFolders.map((r) => ({ id: r.path, glyph: 'folder', title: r.name, sub: r.path })) : ((hdev || { folders: [] }).folders || []).map((f) => ({ id: f, glyph: 'folder', title: f.split('/').pop(), sub: f }));
     if (d.folder.path && !list.some((x) => x.id === d.folder.path)) list.push({ id: d.folder.path, glyph: 'folder', title: d.folder.path.split('/').pop(), sub: d.folder.path });
-    put(box, group(here ? w('np.folder.recent') : w('np.folder.recentOn', { computer: 'Home NAS' }), choices('folder:pick', list, d.folder.path, (v) => { d.folder.browse = false; NP().set(s, 'folder.path', v); }, { label: w('np.folder.recent') })));
+    put(box, group(here ? w('np.folder.recent') : w('np.folder.recentOn', { computer: NP().comp(d.runsOn).name }), choices('folder:pick', list, d.folder.path, (v) => { d.folder.browse = false; NP().set(s, 'folder.path', v); }, { label: w('np.folder.recent') })));
     put(box, h('div.pjx-row', null, btn(w('np.folder.browse'), () => { d.folder.browse = !d.folder.browse; s.changed(); }, { key: 'folder:browse', icon: 'folder-search', quiet: true })));
-    if (d.folder.browse) put(box, here ? picker(s, 'folder', ENV.tree, '~', (p) => { d.folder.browse = false; NP().set(s, 'folder.path', p); }) : picker(s, 'folder-nas', ENV.trees.nas, '/volume1', (p) => { d.folder.browse = false; NP().set(s, 'folder.path', p); }));
+    if (d.folder.browse) put(box, here ? picker(s, 'folder', ENV.tree, '~', (p) => { d.folder.browse = false; NP().set(s, 'folder.path', p); }) : picker(s, 'folder-' + hd, ENV.trees[hd] || {}, Object.keys(ENV.trees[hd] || { '~': [] })[0], (p) => { d.folder.browse = false; NP().set(s, 'folder.path', p); }));
     put(box, demo([{ label: '~/Code/budget-tracker', outcome: 'linked on GitHub', run: () => NP().set(s, 'folder.path', '~/Code/budget-tracker') }, { label: '~/Code/game-jam', outcome: 'submodules and Git LFS', run: () => NP().set(s, 'folder.path', '~/Code/game-jam') }, { label: '~/Projects/tastebook', outcome: 'already a Project', run: () => NP().set(s, 'folder.path', '~/Projects/tastebook') }], { id: 'folder', hide: !!d.folder.path || !here }));
     put(box, lookView(s, NP().look(s), { other: () => { NP().set(s, 'folder.path', null); } }));
     return box;
@@ -339,53 +339,118 @@
     }
     const x = NP().dev(dv.id);
     if (!x || x.online === false) return;
-    if (!NP().trusted(s, x.id)) { put(box, connectSteps(s, x)); return; }
+    if (!NP().trusted(s, x.id)) {
+      // (2.07) a device that runs Puppet Master is paired with; (2.11) one whose SSH is off says where to turn it on
+      if (x.pm && !(s.ui.sshInstead || {})[x.id]) { put(box, pairSteps(s, x)); return; }
+      if (x.ssh === false && !(s.ui.sshOn || {})[x.id]) { put(box, sshOffView(s, x)); return; }
+      put(box, connectSteps(s, x)); return;
+    }
     devFolders(s, box, x.folders, ENV.trees[x.id], (ENV.trees[x.id] && Object.keys(ENV.trees[x.id])[0]) || '~', x.name);
   }
-  /* connect a new device: 1 is it yours, 2 a key and your username there, 3 sign in once to add the key (6.3) */
+  /* (GUIDED-FLOWS 2.07) pair with a device that runs Puppet Master: an approval on a device you already use, a code shown on
+     it, or its QR code; SSH stays one press away. Pairing is human-only; the look inside comes after, as on every route */
+  function pairSteps(s, x) {
+    const d = s.d, c = d.runsOn, key = 'pair:' + c + ':' + x.id + ':' + (s.ui.pairTry || 0), o = s.ui.pairing ? NP().peek(s, key) : null;
+    const how = s.ui.pairHow || 'approval';
+    const box = h('div.pjx-np-connect', { 'data-cmd': 'cmd.server.pair (approval, code or QR)' }, cap(w('np.pair.title', { device: x.name })), h('p.pjx-np-say', { text: w('np.pair.lead', { device: x.name }) }));
+    put(box, choices('pair:how', [{ id: 'approval', glyph: 'phone', title: w('np.pair.approval', { approver: x.approver || 'your phone' }), sub: w('np.pair.approvalSub') }, { id: 'code', glyph: 'key', title: w('np.pair.code'), sub: w('np.pair.codeSub', { device: x.name }) }, { id: 'qr', glyph: 'grid', title: w('np.pair.qr'), sub: w('np.pair.qrSub') }], how, (v) => { s.ui.pairHow = v; s.changed(); }, { label: w('np.pair.title', { device: x.name }) }));
+    if (how === 'code') put(box, field(w('np.pair.codeLabel'), input('pairCode', s.ui.pairCode || '', x.code || 'ABCD-1234', (v) => { s.ui.pairCode = v; }), w('np.pair.codeHint', { device: x.name }), s.ui.pairBad ? w('np.pair.codeBad') : '', { real: true }));
+    if (o && o.state === 'working') put(box, working(how === 'approval' ? w('np.pair.waiting', { approver: x.approver || 'your phone' }) : w('np.pair.checking')));
+    else if (o && o.state === 'failed') put(box, line('failed', o.result.fail === 'denied' ? w('np.pair.denied', { approver: x.approver || 'your phone' }) : w('np.pair.expired')));
+    if (!(o && o.state === 'working')) put(box, h('div.pjx-row', null, btn(o && o.state === 'failed' ? w('np.pair.again') : w('np.pair.go'), () => {
+      if (how === 'code' && String(s.ui.pairCode || '').trim().toUpperCase() !== String(x.code || '').toUpperCase()) { s.ui.pairBad = true; s.changed(); return; }
+      s.ui.pairBad = false; s.ui.pairTry = (s.ui.pairTry || 0) + 1; s.ui.pairing = true; const k2 = 'pair:' + c + ':' + x.id + ':' + s.ui.pairTry;
+      NP().op(s, k2, 1200, () => { if (s.ui.pairDeny) { s.ui.pairDeny = false; return { fail: 'denied' }; } PJX.S.world.facts.trusted[c + ':' + x.id] = true; return { ok: true }; });
+      s.changed();
+    }, { key: 'pair:go', primary: true, cmd: 'cmd.server.pair' }), link(w('np.pair.ssh'), () => { s.ui.sshInstead = Object.assign({}, s.ui.sshInstead, { [x.id]: true }); s.changed(); }, { key: 'pair:ssh' })));
+    put(box, demo([{ label: x.code || 'R5N2-C8VD', outcome: 'the code it shows', run: () => { s.ui.pairHow = 'code'; s.ui.pairCode = x.code; s.changed(); } }, { label: 'Declined on the phone', outcome: 'refused, try again', run: () => { s.ui.pairDeny = true; s.changed(); } }], { id: 'pair' }));
+    put(box, yoloLine(w('np.yolo.identity'), { asks: true }));
+    return box;
+  }
+  /* (GUIDED-FLOWS 2.11) SSH is turned off on the device: where its own settings turn it on, Check again, or its shared folder */
+  function sshOffView(s, x) {
+    const c = s.d.runsOn, key = 'sshon:' + c + ':' + x.id + ':' + (s.ui.sshTry || 0), o = s.ui.sshTry ? NP().peek(s, key) : null;
+    const box = h('div.pjx-np-connect', { 'data-cmd': 'cmd.server.discovery.refresh (SSH check)' }, cap(w('np.sshoff.title', { device: x.name })));
+    put(box, line('blocked', w('np.sshoff.lead', { device: x.name })));
+    put(box, line(null, w('np.sshoff.vendor.' + (x.vendor || 'other'), { device: x.name, brand: x.brand }), { icon: 'settings' }));
+    if (o && o.state === 'working') put(box, working(w('np.sshoff.checking', { device: x.name })));
+    else if (o && o.state === 'failed') put(box, line('offline', w('np.sshoff.still', { device: x.name })));
+    put(box, h('div.pjx-row', null, btn(w('np.sshoff.again'), () => { s.ui.sshTry = (s.ui.sshTry || 0) + 1; const k2 = 'sshon:' + c + ':' + x.id + ':' + s.ui.sshTry; NP().op(s, k2, 900, () => { if (!s.ui.sshTurnedOn) return { fail: 'off' }; s.ui.sshOn = Object.assign({}, s.ui.sshOn, { [x.id]: true }); return { ok: true }; }); s.changed(); }, { key: 'sshoff:again', primary: true, cmd: 'cmd.server.discovery.refresh' }),
+      x.smb ? link(w('np.sshoff.share'), () => NP().set(s, 'device.method', 'smb'), { key: 'sshoff:share' }) : null));
+    put(box, demo([{ label: 'I turned SSH on', outcome: 'then Check again works', run: () => { s.ui.sshTurnedOn = true; s.changed(); } }], { id: 'sshoff', hide: !!s.ui.sshTurnedOn }));
+    return box;
+  }
+  /* connect a new device by SSH (6.3; GUIDED-FLOWS 2.13, 2.16): 1 is it yours (a changed identity is shown, never accepted
+     quietly), 2 your username there, then the key, said as it is on that device (works already, locked, needs adding),
+     3 add it once, with an uncertain result checked before anything is tried again */
   function connectSteps(s, x) {
-    const d = s.d, dv = d.device, cn = NP().comp(d.runsOn).name;
+    const d = s.d, dv = d.device, cn = NP().comp(d.runsOn).name, F0 = PJX.S.world.facts;
     const keys = (ENV.sshKeys[d.runsOn] || []).concat([{ id: 'new', name: w('np.connect.key.new'), sub: w('np.connect.key.newSub') }]);
-    const keyName = (k) => (keys.find((x2) => x2.id === k) || {}).name || '';
+    const keyOf = (k) => keys.find((x2) => x2.id === k) || {};
+    const keyName = (k) => keyOf(k).name || '';
+    const works = (k) => (keyOf(k).works || []).indexOf(x.id) >= 0;
+    const locked = (k) => !!keyOf(k).passphrase && !(s.ui.unlocked || {})[k];
+    const changed = !!s.ui.idChanged && !s.ui.idReplaced;
     const step1 = dv.idOk ? 'done' : 'open', step2 = !dv.idOk ? 'later' : dv.keyDone ? 'done' : 'open', step3 = !dv.keyDone ? 'later' : 'open';
-    const box = h('div.pjx-np-connect', { 'data-cmd': 'gap:ssh trust and key install' }, cap(w('np.connect.title', { device: x.name })));
-    const backToKey = () => { dv.keyDone = false; const el = s.secrets.get('devpw'); if (el) el.value = ''; s.secrets.delete('devpw'); s.ui.keyOp = null; Object.keys(s.ops).forEach((k) => { if (/^keyadd:/.test(k)) delete s.ops[k]; }); s.ui.connNeedBoth = false; s.changed(); };
-    put(box, mini({ n: 1, total: 3, key: 'conn1', s, title: w('np.connect.id.title'), state: step1, summary: w('np.connect.id.done', { device: x.name }),
-      change: () => { dv.idOk = false; dv.keyDone = false; const el = s.secrets.get('devpw'); if (el) el.value = ''; s.secrets.delete('devpw'); s.ui.keyOp = null; s.changed(); },
-      esc: () => NP().set(s, 'device.id', null),
-      body: [h('p.pjx-np-say', { text: w('np.connect.id.lead', { device: x.name }) }), h('div.pjx-np-words', { text: x.words, 'data-pmh-tag': 'literal' }),
+    const box = h('div.pjx-np-connect', { 'data-cmd': 'cmd.server.ssh.trust + cmd.server.ssh.key_install (human-only)' }, cap(w('np.connect.title', { device: x.name })));
+    const backToKey = () => { dv.keyDone = false; const el = s.secrets.get('devpw'); if (el) el.value = ''; s.secrets.delete('devpw'); s.ui.keyOp = null; Object.keys(s.ops).forEach((k) => { if (/^keyadd:/.test(k)) delete s.ops[k]; }); s.ui.connNeedBoth = false; s.ui.uncertain = false; s.changed(); };
+    const body1 = changed ? [
+      line('blocked', w('np.connect.changed.lead', { device: x.name, computer: cn })),
+      h('div.pjx-np-pair', null, h('div.pjx-field', null, cap(w('np.connect.changed.was')), code('SHA256:1qP0f9Wm3cXr7LtV2bN8aZ4kY6hS5dJ0uE1oG9iR3Tw')), h('div.pjx-field', null, cap(w('np.connect.changed.now')), code(x.fingerprint))),
+      h('div.pjx-row', null, btn(w('np.connect.changed.replace'), () => { s.ui.idReplaced = true; dv.idOk = true; dv.key = dv.key || 'ed25519'; s.changed(); }, { key: 'conn:replace', cmd: 'cmd.server.ssh.trust (replace, human-only)' }), btn(w('np.connect.id.stop'), () => NP().set(s, 'device.id', null), { key: 'conn:stop', quiet: true })),
+      yoloLine(w('np.yolo.identity'), { asks: true })]
+      : [h('p.pjx-np-say', { text: w('np.connect.id.lead', { device: x.name }) }), h('div.pjx-np-words', { text: x.words, 'data-pmh-tag': 'literal' }),
         h('div.pjx-row', null, btn(w('np.connect.id.yes'), () => { dv.idOk = true; dv.key = dv.key || 'ed25519'; s.changed(); }, { key: 'conn:yes', primary: false }), btn(w('np.connect.id.stop'), () => NP().set(s, 'device.id', null), { key: 'conn:stop', quiet: true })),
-        yoloLine(w('np.yolo.identity'), { asks: true }),
-        hint('The technical fingerprint is under Advanced.')] }));
-    const userBad = dv.user && /@/.test(dv.user) ? w('np.connect.userEmail', { device: x.name }) : s.ui.connUserErr ? w('np.connect.userEmpty', { device: x.name }) : '';
-    put(box, mini({ n: 2, total: 3, key: 'conn2', s, title: w('np.connect.key.title'), state: step2, summary: w('np.connect.key.done', { key: keyName(dv.key), user: dv.user }),
-      // Change reopens the key step, even when the same key stays chosen: the one-time password and step 3 go
-      change: backToKey,
-      esc: () => { dv.idOk = false; s.changed(); },
-      body: [h('p.pjx-np-say', { text: w('np.connect.key.lead', { computer: d.runsOn === 'here' ? 'this computer' : cn }) }),
-        choices('conn:key', keys.map((k) => ({ id: k.id, glyph: 'key', title: k.name, sub: k.weak ? w('np.connect.key.old') : k.sub || (k.where === 'agent' ? w('np.connect.key.agent') : w('np.connect.key.file')) + ' · ' + w('np.connect.key.notAdded', { device: x.name }), disabled: k.weak ? w('np.connect.key.old') : null })), dv.key, (v) => NP().set(s, 'device.key', v), { label: w('np.connect.key.title') }),
-        line(null, w('np.connect.key.reads'), { icon: 'lock' }),
-        field(w('np.connect.user', { device: x.name }), input('devUser', dv.user, 'jared', (v) => { dv.user = v; s.ui.connUserErr = false; s.changed(); }), w('np.connect.userHint', { device: x.name }), userBad, { real: true }),
-        demo([{ label: 'jared', outcome: 'works', run: () => { dv.user = 'jared'; s.changed(); } }, { label: 'jared@example.com', outcome: 'wrong', run: () => { dv.user = 'jared@example.com'; s.changed(); } }], { id: 'user', hide: dv.user === 'jared' }),
-        h('div.pjx-row', null, btn(w('np.sec.continue'), () => { if (!String(dv.user || '').trim()) { s.ui.connUserErr = true; s.changed(); return; } if (/@/.test(dv.user)) return; dv.keyDone = true; s.changed(); }, { key: 'conn:keygo' }))] }));
+        yoloLine(w('np.yolo.identity'), { asks: true }), hint('The technical fingerprint is under Advanced.'),
+        demo([{ label: x.name + '’s identity changed', outcome: 'shown side by side, never accepted quietly', run: () => { s.ui.idChanged = true; s.changed(); } }], { id: 'idchanged' })];
+    put(box, mini({ n: 1, total: 3, key: 'conn1', s, title: changed ? w('np.connect.changed.title', { device: x.name }) : w('np.connect.id.title'), state: step1, summary: s.ui.idReplaced ? w('np.connect.changed.done', { device: x.name }) : w('np.connect.id.done', { device: x.name }),
+      change: () => { dv.idOk = false; dv.keyDone = false; s.ui.idReplaced = false; const el = s.secrets.get('devpw'); if (el) el.value = ''; s.secrets.delete('devpw'); s.ui.keyOp = null; s.changed(); },
+      esc: () => NP().set(s, 'device.id', null), body: body1 }));
+    // step 2: the account first, then each key as it is on that device
+    const user = String(dv.user || '').trim();
+    const userBad = user && /@/.test(user) ? w('np.connect.userEmail', { device: x.name }) : s.ui.connUserErr ? w('np.connect.userEmpty', { device: x.name }) : '';
+    const keyState = (k) => (k.weak ? w('np.connect.key.old') : k.id === 'new' ? k.sub : !user ? w('np.connect.key.userFirst') : works(k.id) ? w('np.connect.key.works', { device: x.name, user }) : locked(k.id) ? w('np.connect.key.locked') : w('np.connect.key.notAdded', { device: x.name }));
+    const sel = keyOf(dv.key);
+    const body2 = [
+      field(w('np.connect.user', { device: x.name }), input('devUser', dv.user, 'jared', (v) => { dv.user = v; s.ui.connUserErr = false; s.changed(); }), w('np.connect.userHint', { device: x.name }), userBad, { real: true }),
+      demo([{ label: 'jared', outcome: 'works', run: () => { dv.user = 'jared'; s.changed(); } }, { label: 'jared@example.com', outcome: 'wrong', run: () => { dv.user = 'jared@example.com'; s.changed(); } }], { id: 'user', hide: dv.user === 'jared' }),
+      h('p.pjx-np-say', { text: w('np.connect.key.lead', { computer: d.runsOn === 'here' ? 'this computer' : cn }) }),
+      choices('conn:key', keys.map((k) => ({ id: k.id, glyph: 'key', title: k.name, sub: (k.where === 'agent' ? w('np.connect.key.agent') : k.where ? w('np.connect.key.file') : '') + (k.where ? ' · ' : '') + keyState(k), disabled: k.weak ? w('np.connect.key.old') : null })), dv.key, (v) => NP().set(s, 'device.key', v), { label: w('np.connect.key.title') }),
+      sel.passphrase && locked(sel.id) && user ? secret(s, 'keypass', w('np.connect.key.pass', { key: sel.name }), w('np.connect.key.passHint'), { problem: s.ui.passBad ? w('np.connect.key.passBad') : '', real: true }) : null,
+      sel.passphrase && locked(sel.id) && user ? demo([{ label: 'blue kettle', outcome: 'unlocks it', run: () => { const el = s.secrets.get('keypass'); if (el) el.value = 'blue kettle'; s.changed(); } }], { id: 'keypass' }) : null,
+      line(null, w('np.connect.key.reads'), { icon: 'lock' }),
+      h('div.pjx-row', null, btn(sel.passphrase && locked(sel.id) && user ? w('np.connect.key.unlock') : w('np.sec.continue'), () => {
+        if (!user) { s.ui.connUserErr = true; s.changed(); return; }
+        if (/@/.test(user)) return;
+        if (sel.passphrase && locked(sel.id)) { const el = s.secrets.get('keypass'), v = el ? el.value : ''; if (el) el.value = ''; if (v !== sel.passphrase) { s.ui.passBad = true; s.changed(); return; } s.ui.passBad = false; s.ui.unlocked = Object.assign({}, s.ui.unlocked, { [sel.id]: true }); }
+        // a key that already works there needs no installing: the device is connected now (2.13)
+        if (works(sel.id)) { F0.trusted[d.runsOn + ':' + x.id] = true; s.changed(); return; }
+        dv.keyDone = true; s.changed();
+      }, { key: 'conn:keygo' }))];
+    put(box, mini({ n: 2, total: 3, key: 'conn2', s, title: w('np.connect.key.titleUser'), state: step2, summary: w('np.connect.key.done', { key: keyName(dv.key), user: dv.user }), change: backToKey, esc: () => { dv.idOk = false; s.changed(); }, body: body2 }));
     let body3 = [];
     if (step3 === 'open') {
       const o = s.ui.keyOp ? NP().peek(s, s.ui.keyOp) : null;
       if (o && o.state === 'working') body3 = [working(w('np.connect.working', { device: x.name }))];
-      else {
-        const fail = o && o.state === 'failed' ? w('np.connect.signin.wrong', { device: x.name }) : s.ui.connNeedBoth ? w('np.connect.signin.needBoth') : '';
+      else if (s.ui.uncertain) {
+        // (2.16) the connection dropped before the device answered: check what happened before anything is tried again
+        const rk = 'keycheck:' + d.runsOn + ':' + x.id + ':' + (s.ui.reconTry || 0), r = s.ui.reconTry ? NP().peek(s, rk) : null;
+        body3 = [line('warning', w('np.connect.uncertain', { device: x.name })),
+          r && r.state === 'working' ? working(w('np.connect.reconciling', { device: x.name })) : h('div.pjx-row', null, btn(w('np.connect.reconcile'), () => { s.ui.reconTry = (s.ui.reconTry || 0) + 1; const k2 = 'keycheck:' + d.runsOn + ':' + x.id + ':' + s.ui.reconTry; NP().op(s, k2, 900, () => { F0.trusted[d.runsOn + ':' + x.id] = true; s.ui.uncertain = false; return { ok: true, was: 'added' }; }); s.changed(); }, { key: 'conn:reconcile', primary: true, cmd: 'cmd.server.ssh.key_install (reconcile, no second install)' })),
+          hint(w('np.connect.uncertainHint'))];
+      } else {
+        const fail = o && o.state === 'failed' && !o.result.uncertain ? w('np.connect.signin.wrong', { device: x.name }) : s.ui.connNeedBoth ? w('np.connect.signin.needBoth') : '';
         body3 = [h('p.pjx-np-say', { text: w('np.connect.signin.lead') }),
           seg('conn:how', [{ id: 'pw', title: 'Sign in once' }, { id: 'self', title: w('np.connect.signin.self') }], dv.signin, (v) => { dv.signin = v; s.changed(); }, 'How to add the key'),
-          dv.signin === 'pw' ? h('div.pjx-np-pair', null,
-            field(w('np.smb.user'), input('devUser3', dv.user, '', (v) => { dv.user = v; }), ''),
-            secret(s, 'devpw', w('np.connect.signin.pw'), w('np.connect.signin.pwHint'), { problem: fail, real: true, enter: () => go() })) : null,
-          dv.signin === 'pw' ? demo([{ label: 'jared · correct horse', outcome: 'works', run: () => { dv.user = 'jared'; const el = s.secrets.get('devpw'); if (el) el.value = 'correct horse'; s.changed(); } }, { label: 'jared · not-the-password', outcome: 'refused', run: () => { dv.user = 'jared'; const el = s.secrets.get('devpw'); if (el) el.value = 'not-the-password'; s.changed(); } }], { id: 'devpw' }) : null,
+          dv.signin === 'pw' ? secret(s, 'devpw', w('np.connect.signin.pwFor', { user, device: x.name }), w('np.connect.signin.pwHint'), { problem: fail, real: true, enter: () => go() }) : null,
+          dv.signin === 'pw' ? demo([{ label: 'correct horse', outcome: 'works', run: () => { const el = s.secrets.get('devpw'); if (el) el.value = 'correct horse'; s.changed(); } }, { label: 'not-the-password', outcome: 'refused', run: () => { const el = s.secrets.get('devpw'); if (el) el.value = 'not-the-password'; s.changed(); } }, { label: 'the connection drops', outcome: 'not sure it was added', run: () => { s.ui.dropNext = true; const el = s.secrets.get('devpw'); if (el) el.value = 'correct horse'; s.changed(); } }], { id: 'devpw' }) : null,
           dv.signin === 'self' ? h('div.pjx-np-say', null, w('np.connect.signin.selfLead', { device: x.name, key: keyName(dv.key) }), h('div.pjx-np-words.is-code', { text: 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPm…q7 jared@puppet-master', 'data-pmh-tag': 'literal' })) : null,
           yoloLine(w('np.yolo.signin'), { asks: true }),
-          h('div.pjx-row', null, btn(dv.signin === 'pw' ? w('np.connect.signin.add') : w('np.connect.signin.selfCheck'), () => go(), { key: 'conn:add', primary: true, cmd: 'gap:ssh key install' }))];
+          h('div.pjx-row', null, btn(dv.signin === 'pw' ? w('np.connect.signin.add') : w('np.connect.signin.selfCheck'), () => go(), { key: 'conn:add', primary: true, cmd: 'cmd.server.ssh.key_install (human-only)' }))];
       }
     }
     function go() {
+      if (s.ui.dropNext) { s.ui.dropNext = false; const el = s.secrets.get('devpw'); if (el) el.value = ''; s.ui.uncertain = true; s.changed(); return; }
       const r = NP().addKey(s, dv.signin);
       s.ui.connNeedBoth = !!(r && r.fail === 'needBoth');
       s.changed();
@@ -422,8 +487,8 @@
     if (dv.share === 'typed') {
       const v = String(dv.typedShare || '').trim(), bad = v && !(smb ? /^(smb:)?\/\/[\w.-]+\/\S+/.test(v) : /^[\w.-]+:\/\S+/.test(v));
       put(box, field(smb ? w('np.smb.typedLabel') : w('np.nfs.typedLabel'), input('typedShare', dv.typedShare, '', (x) => { dv.typedShare = x; dv.path = null; s.changed(); }), smb ? w('np.smb.typedHint') : w('np.nfs.typedHint'), bad ? w(smb ? 'np.smb.typedBad' : 'np.nfs.typedBad') : '', { real: true }));
-      put(box, demo(smb ? [{ label: '//nas.local/projects', outcome: 'works', run: () => { dv.typedShare = '//nas.local/projects'; s.changed(); } }, { label: 'nas.local/projects', outcome: 'wrong', run: () => { dv.typedShare = 'nas.local/projects'; s.changed(); } }]
-        : [{ label: 'nas.local:/volume1/projects', outcome: 'works', run: () => { dv.typedShare = 'nas.local:/volume1/projects'; s.changed(); } }, { label: 'nas.local', outcome: 'wrong', run: () => { dv.typedShare = 'nas.local'; s.changed(); } }], { id: 'share' }));
+      put(box, demo(smb ? [{ label: '//home-nas.local/projects', outcome: 'works', run: () => { dv.typedShare = '//home-nas.local/projects'; s.changed(); } }, { label: 'home-nas.local/projects', outcome: 'wrong', run: () => { dv.typedShare = 'home-nas.local/projects'; s.changed(); } }]
+        : [{ label: 'home-nas.local:/volume1/projects', outcome: 'works', run: () => { dv.typedShare = 'home-nas.local:/volume1/projects'; s.changed(); } }, { label: 'home-nas.local', outcome: 'wrong', run: () => { dv.typedShare = 'home-nas.local'; s.changed(); } }], { id: 'share' }));
     }
     const sh = NP().resolveShare(s);
     if (!dv.share || (dv.share === 'typed' && !sh)) return;
@@ -513,6 +578,9 @@
     if (method === 'token') {
       put(box, h('p.pjx-np-say', { text: w('np.signin.tokenLead', { host: rec.host || svc.name }) }));
       put(box, line(null, w('np.signin.tokenHow.' + (svc.tokenHow || 'gitea'), { host: rec.host }), { icon: 'key' }));
+      // what this token needs for what it is for here: making a new copy, or reaching one that exists (4.10 to 4.14)
+      const purpose = key === 'osign' && /make|instead/.test(NP().onlineMode(s)) ? 'create' : 'existing';
+      put(box, line('info', w('np.signin.perm.' + (svc.tokenHow || 'gitea') + '.' + purpose, { host: rec.host }), { icon: 'check' }));
       put(box, line(null, w('np.signin.reach.' + (svc.tokenHow || 'gitea'), { host: rec.host }), { icon: 'lock' }));
       put(box, secret(s, 'tok:' + key, w('np.signin.token'), w('np.signin.tokenKept', { computer: cn }), { real: true, enter: () => NP().signIn(s, rec, 'token', 'tok:' + key) }));
       put(box, demo([{ label: 'Demo token', outcome: 'works', run: () => { const el = s.secrets.get('tok:' + key); if (el) { el.value = 'Demo token'; el._typed = true; } s.changed(); } }, { label: 'abc', outcome: 'wrong', run: () => { const el = s.secrets.get('tok:' + key); if (el) { el.value = 'abc'; el._typed = true; } s.changed(); } }], { id: key + 'tok' }));
@@ -520,14 +588,21 @@
     } else if (method === 'device') {
       put(box, h('p.pjx-np-say', { text: w('np.signin.codeLead', { url: svc.device || rec.host }) }));
       put(box, h('div.pjx-np-words.is-code', { text: 'WDJB-MJHT', 'data-pmh-tag': 'literal' }));
-      put(box, hint(w('np.signin.codeExpires')));
+      put(box, hint(w('np.signin.codeExpiresMin', { n: svc.codeMin || 15, service: svc.name })));
       put(box, h('div.pjx-row', null, btn('I entered the code', () => { s.ui['another:' + key] = false; NP().signIn(s, rec, 'device'); s.changed(); }, { key: key + ':codego', primary: true, cmd: 'cmd.auth_profile.sign_in' })));
     } else {
       put(box, h('p.pjx-np-say', { text: 'Puppet Master works only on the Project you set up here. ' + svc.name + '’s page shows the access it asks for before you agree. The sign-in is kept on ' + cn + '.' }));
       put(box, h('div.pjx-row', null, btn(si && si.expired ? 'Sign in again' : w('np.signin.signIn'), () => { s.ui['another:' + key] = false; NP().signIn(s, rec, 'browser'); s.changed(); }, { key: key + ':go', primary: true, icon: 'key', cmd: si && si.expired ? 'cmd.forge.connection.reauthorize' : 'cmd.auth_profile.sign_in' }),
         methods.indexOf('device') >= 0 ? link(w('np.signin.noBrowser'), () => { s.ui['method:' + key] = 'device'; s.changed(); }, { key: key + ':nobrowser' }) : null));
+      // a service with no code to type: its own page, opened again or copied to another browser (4.15)
+      if (methods.indexOf('device') < 0) {
+        const url = (rec.address || 'https://' + (rec.host || '')).replace(/\/+$/, '') + '/login/oauth/authorize?client=puppet-master';
+        put(box, line(null, [w('np.signin.pageLead'), code(url)], { icon: 'globe', after: [link(w('np.signin.openPage'), () => PJX.toast(w('np.signin.openPage'), url, 'info'), { key: key + ':openpage', cmd: 'cmd.auth_profile.open_official_page' }), link(w('np.signin.copyPage'), () => { try { W.navigator.clipboard.writeText(url); } catch (e) { /* no clipboard */ } PJX.toast(w('np.signin.copied'), url, 'success'); }, { key: key + ':copypage' })] }));
+      }
     }
-    put(box, h('div.pjx-row', null, link(w('np.signin.signup', { service: svc.name }), () => PJX.toast(svc.name, 'Opens ' + svc.name + '’s own sign-up page in your browser. Come back here to sign in.', 'info'), { key: key + ':signup', cmd: 'cmd.auth_profile.open_official_page' })));
+    // sign-up turned off on this server: no sign-up link, the administrator instead (4.16)
+    if (rec.signup === false) put(box, line('info', w('np.signin.noSignup', { host: rec.host || svc.name })));
+    else put(box, h('div.pjx-row', null, link(w('np.signin.signup', { service: svc.name }), () => PJX.toast(svc.name, 'Opens ' + svc.name + '’s own sign-up page in your browser. Come back here to sign in.', 'info'), { key: key + ':signup', cmd: 'cmd.auth_profile.open_official_page' })));
     put(box, yoloLine(w('np.yolo.signin'), { asks: true }));
     return { done: false, node: box };
   }
@@ -623,7 +698,7 @@
     if (ins && ins.state === 'working') put(box, working(w('np.find.looking', { project: r.id, service: svc.name })));
     else if (ins && ins.state === 'done') {
       const i = ins.result;
-      put(box, h('div.pjx-np-look', null, cap(w('np.find.inside')), lines(
+      put(box, h('div.pjx-np-look', { 'data-partial': '' }, cap(w('np.find.inside')), lines(line('pending', w('np.look.partialOnline', { service: svc.name, computer: cn })),
         i.submodules && i.submodules.length ? line('info', w('np.look.submodules', { n: i.submodules.length, list: i.submodules.join(', ') })) : null,
         i.lfs ? line('info', w('np.look.lfs', { size: i.lfs })) : null,
         line(null, w('np.find.big', { size: i.size, computer: cn }), { icon: 'code' }))));
@@ -634,54 +709,97 @@
 
   /* ------------------------------------------------------------------ section: restore (6.5) */
   function secRestore(s) {
-    const d = s.d, r = d.restore, box = h('div.pjx-np-restore');
-    put(box, choices('restore:from', [
-      { id: 'kit', glyph: 'key', title: w('np.restore.kit'), sub: w('np.restore.kitSub') }, { id: 'drive', glyph: 'folder', title: w('np.restore.folder'), sub: w('np.restore.folderSub') },
-      { id: 'nas', glyph: 'server', title: w('np.restore.nas'), sub: w('np.restore.nasSub') }, { id: 'cloud', glyph: 'cloud', title: w('np.restore.cloud'), sub: w('np.restore.cloudSub') }
-    ], r.from, (v) => NP().set(s, 'restore.from', v), { label: w('np.restore.title') }));
+    const d = s.d, r = d.restore, box = h('div.pjx-np-restore'), NPx = NP();
+    // 1 the Kit file first, or say you have none (2.32)
+    put(box, group(w('np.restore.kitQ'), choices('restore:kit', (ENV.kits || []).map((k) => ({ id: k.id, glyph: 'key', title: k.file, sub: w('np.restore.kitRow', { folder: k.folder, where: k.where }) }))
+      .concat([{ id: 'none', glyph: 'slash-circle', title: w('np.restore.noKit'), sub: w('np.restore.noKitSub') }]), r.kit, (v) => NPx.set(s, 'restore.kit', v), { label: w('np.restore.kitQ') }),
+      h('div.pjx-row', null, link(w('np.restore.kitBrowse'), () => PJX.toast(w('np.restore.kitBrowse'), 'Opens the file picker on this computer. A Kit is a .pdf or .pmkit file.', 'info'), { key: 'restore:kitbrowse', cmd: 'cmd.restore.kit.open' }))));
+    if (!r.kit) return box;
+    const k = NPx.kitOf(s);
+    if (k) put(box, lines(line('complete', w('np.restore.kitSays', { where: k.where })), line('info', w('np.restore.kitMade', { made: k.made }))));
+    else put(box, group(w('np.restore.title'), choices('restore:from', [
+      { id: 'drive', glyph: 'folder', title: w('np.restore.folder'), sub: w('np.restore.folderSub') }, { id: 'nas', glyph: 'server', title: w('np.restore.nas'), sub: w('np.restore.nasSubPm') },
+      { id: 'cloud', glyph: 'cloud', title: w('np.restore.cloud'), sub: w('np.restore.cloudSub') }], r.from, (v) => NPx.set(s, 'restore.from', v), { label: w('np.restore.title') })));
     if (!r.from) return box;
-    const src = NP().restoreSource(s);
-    if (r.from === 'kit') { const k = ENV.backups.find((b) => b.id === 'kit'); put(box, lines(line(null, w('np.restore.kitLooked'), { icon: 'search' }), line('complete', [code(k.file), ' in ' + k.in]), line('complete', w('np.restore.kitReads', { where: 'Home NAS' })))); }
-    if (r.from === 'nas') put(box, line('complete', 'Home NAS · /volume1/backups/puppet-master · ' + w('np.bk.place.nasKey', { nas: 'Home NAS' })));
-    if (r.from === 'drive') put(box, line(null, [code(src.path)], { icon: 'folder' }));
-    if (r.from === 'cloud') {
-      put(box, group(w('np.restore.cloudWhich'), seg('restore:cloud', [{ id: 'gdrive', title: 'Google Drive' }, { id: 'onedrive', title: 'OneDrive' }, { id: 'b2', title: 'A storage bucket' }], r.cloud, (v) => NP().set(s, 'restore.cloud', v), w('np.restore.cloudWhich'))));
-      put(box, line(null, r.cloud === 'gdrive' ? 'Signed in to Google Drive as jared@gmail.com on this computer.' : r.cloud === 'b2' ? 'Backblaze B2 · bucket old-backups, with the access details saved in Settings › Backup & Restore.' : 'OneDrive · jared@outlook.com', { icon: 'cloud' }));
+    if (r.from === 'cloud' && !k) put(box, group(w('np.restore.cloudWhich'), seg('restore:cloud', [{ id: 'gdrive', title: 'Google Drive' }, { id: 'onedrive', title: 'OneDrive' }, { id: 'b2', title: 'A storage bucket' }], r.cloud, (v) => NPx.set(s, 'restore.cloud', v), w('np.restore.cloudWhich'))));
+    // 2 reach and sign in to that exact storage (2.33): nothing is assumed signed in
+    const ro = NPx.reachOp(s), where = NPx.restoreWhere(s);
+    const how = r.from === 'cloud' ? w('np.restore.reach.cloud.' + r.cloud) : r.from === 'nas' ? w('np.restore.reach.nas') : w('np.restore.reach.drive');
+    const g2 = group(w('np.restore.reachQ', { where }), line(null, how, { icon: r.from === 'cloud' ? 'key' : r.from === 'nas' ? 'server' : 'folder' }));
+    if (ro && ro.state === 'working') put(g2, working(w('np.restore.reaching', { where })));
+    else if (ro && ro.state === 'done') put(g2, line('complete', ro.result.account ? w('np.restore.reachedAs', { where, account: ro.result.account }) : w('np.restore.reached', { where })));
+    else {
+      if (ro && ro.state === 'failed') put(g2, line('failed', w('np.restore.reachFail.' + (ro.result.fail || 'noAnswer'), { where })));
+      put(g2, h('div.pjx-row', null, btn(r.from === 'cloud' ? w('np.restore.signIn', { where }) : r.from === 'nas' ? w('np.restore.connect', { where }) : w('np.restore.read', { where }), () => { if (ro) NPx.retry(s, Object.keys(s.ops).find((x) => s.ops[x] === ro)); NPx.reach(s); s.changed(); }, { key: 'reach', primary: true, icon: r.from === 'cloud' ? 'key' : null, cmd: r.from === 'cloud' ? 'cmd.auth_profile.sign_in (that storage)' : 'cmd.backup.destination.test' })),
+        demo([{ label: r.from === 'cloud' ? 'The sign-in expires' : 'No answer', outcome: 'retry', run: () => { s.ui.reachFail = true; s.changed(); } }], { id: 'reach' }), r.from === 'cloud' ? yoloLine(w('np.yolo.signin'), { asks: true }) : null);
     }
-    if (src && src.locked && !r.unlocked) {
+    put(box, g2);
+    if (!NPx.reached(s)) return box;
+    // 3 unlock: the Kit's own key, checked against what was reached; or the recovery phrase
+    const src = NPx.restoreSource(s);
+    if (k) {
+      const ko = NPx.peek(s, 'kitopen:' + k.id + ':' + r.from);
+      if (ko && ko.state === 'done') put(box, line('complete', w('np.restore.kitUnlocked', { where })));
+      else if (ko && ko.state === 'working') put(box, working(w('np.restore.kitChecking')));
+      else put(box, group(w('np.restore.unlock'), line(null, w('np.restore.kitUnlockLead', { file: k.file, where }), { icon: 'lock' }), h('div.pjx-row', null, btn(w('np.restore.kitUnlockBtn'), () => { NPx.kitOpen(s); s.changed(); }, { key: 'kitopen', primary: true, cmd: 'cmd.restore.preview (Kit key, protected)' })), yoloLine(w('np.yolo.kit'), { asks: true })));
+      if (!NPx.restoreUnlocked(s)) return box;
+    } else if (src && src.locked && !r.unlocked) {
       put(box, group(w('np.restore.unlock'), h('p.pjx-np-say', { text: w('np.restore.unlockLead', { where: src.path || src.where }) }),
         secret(s, 'phrase', w('np.restore.phrase'), '', { problem: s.ui.phraseBad ? w('np.restore.phraseWrong') : s.ui.phraseFirst ? w('np.restore.phraseFirst') : '', real: true, enter: () => doUnlock() }),
         demo([{ label: 'river candle orbit maple quiet lantern', outcome: 'works', run: () => { const el = s.secrets.get('phrase'); if (el) el.value = 'river candle orbit maple quiet lantern'; s.changed(); } }, { label: 'river candle orbit', outcome: 'wrong', run: () => { const el = s.secrets.get('phrase'); if (el) el.value = 'river candle orbit'; s.changed(); } }], { id: 'phrase' }),
         h('div.pjx-row', null, btn(w('np.restore.unlockBtn'), () => doUnlock(), { key: 'restore:unlock', primary: true, cmd: 'cmd.restore.preview' }))));
       return box;
-    }
-    function doUnlock() { const res = NP().unlock(s); s.ui.phraseFirst = res.fail === 'first'; s.changed(); }
-    if (src && src.locked && r.unlocked) put(box, line('complete', w('np.restore.unlocked')));
-    const l = NP().restoreList(s);
-    if (!l || l.state === 'working') { put(box, working(w('np.restore.looking', { where: NP().restoreWhere(s) }))); return box; }
-    if (l.state === 'failed') { put(box, lines(line('off', w('np.restore.none', { where: NP().restoreWhere(s) })), h('div.pjx-row', null, link(w('np.restore.elsewhere'), () => NP().set(s, 'restore.from', null), { key: 'restore:elsewhere' })))); return box; }
-    put(box, group(w('np.restore.pick'), choices('restore:pick', l.result.projects.map((p) => ({ id: p, glyph: 'box', title: p, sub: w('np.restore.pickRow', { when: src.latest || 'Oct 28', inList: PJX.get(p) ? w('np.restore.inList') : w('np.restore.notInList') }) })), r.pick, (v) => NP().set(s, 'restore.pick', v), { label: w('np.restore.pick') })));
-    if (r.pick) {
-      const lin = NP().lineage(s);
-      const rh = NP().restoredHist(s);
-      put(box, group(w('np.restore.comes'), lines(line('complete', rh && rh.backend ? w('np.restore.filesKind', { kind: NP().kindWord(rh.backend), ref: rh.branch ? (rh.backend === 'jujutsu' ? 'bookmark ' : 'branch ') + rh.branch : '' }) : w('np.restore.filesOnly')), line('complete', w('np.restore.pm')), line('info', w('np.restore.never')),
-        PJX.get(r.pick) ? line('info', w('np.restore.both', { project: r.pick })) : null, lin ? line('info', w('np.restore.lineage', { service: lin[0], project: lin[1] })) : null)));
-    }
+    } else if (src && src.locked) put(box, line('complete', w('np.restore.unlocked')));
+    function doUnlock() { const res = NPx.unlock(s); s.ui.phraseFirst = res.fail === 'first'; s.changed(); }
+    // 4 the Project, then its recovery point and what that point covers, then a look inside it (2.34)
+    const l = NPx.restoreList(s);
+    if (!l || l.state === 'working') { put(box, working(w('np.restore.looking', { where }))); return box; }
+    if (l.state === 'failed') { put(box, lines(line('off', w('np.restore.none', { where })), h('div.pjx-row', null, link(w('np.restore.elsewhere'), () => NPx.set(s, 'restore.kit', 'none'), { key: 'restore:elsewhere' })))); return box; }
+    if (s.ui.restoreWant && !r.pick && l.result.projects.indexOf(s.ui.restoreWant) >= 0) { r.pick = s.ui.restoreWant; s.ui.restoreWant = null; }
+    put(box, group(w('np.restore.pick'), choices('restore:pick', l.result.projects.map((p) => ({ id: p, glyph: 'box', title: p, sub: w('np.restore.pickRow', { when: src.latest || 'Oct 28', inList: PJX.get(p) ? w('np.restore.inList') : w('np.restore.notInList') }) })), r.pick, (v) => NPx.set(s, 'restore.pick', v), { label: w('np.restore.pick') })));
+    if (!r.pick) return box;
+    const pts = NPx.restorePoints(s);
+    put(box, group(w('np.restore.pointQ'), choices('restore:point', pts.map((x) => ({ id: x.id, glyph: 'history', title: x.when, sub: x.cover, tag: x.tag || null })), r.point, (v) => { r.point = v; s.changed(); }, { label: w('np.restore.pointQ') })));
+    if (!r.point) return box;
+    const lin = NPx.lineage(s), rh = NPx.restoredHist(s);
+    put(box, group(w('np.restore.comes'), lines(line('complete', rh && rh.backend ? w('np.restore.filesKind', { kind: NPx.kindWord(rh.backend), ref: rh.branch ? (rh.backend === 'jujutsu' ? 'bookmark ' : 'branch ') + rh.branch : '' }) : w('np.restore.filesOnly')), line('complete', w('np.restore.pm')), line('info', w('np.restore.never')),
+      line(null, w('np.restore.lookAfter', { computer: NPx.comp(d.runsOn).name }), { icon: 'search' }),
+      PJX.get(r.pick) ? line('info', w('np.restore.both', { project: r.pick })) : null, lin ? line('info', w('np.restore.lineage', { service: lin[0], project: lin[1] })) : null)));
     return box;
   }
 
   /* ------------------------------------------------------------------ section: chat (spec 12) [Depends: no-project] */
   function secChat(s, ctx) {
     const d = s.d, c = NP().chatOf(d.chat.id), box = h('div.pjx-np-chat');
-    if (c) put(box, h('div.pjx-np-making', null, h('span', { text: w('np.chat.making', { chat: c.title }) }), link(w('np.chat.instead'), () => { if (ctx && ctx.onInstead) ctx.onInstead(c); else PJX.toast(w('np.chat.instead'), w('np.chat.insteadToast'), 'info'); }, { key: 'chat:instead', cmd: 'gap:move a chat into a project [Depends: no-project]' })));
-    put(box, hint(w('np.chat.pending'), 'is-concept'));
-    put(box, group(w('np.chat.which'), choices('chat:which', (ENV.chats || []).map((x) => ({ id: x.id, glyph: 'chat', title: x.title, sub: x.files + ' files · ' + x.sample })), d.chat.id, (v) => NP().set(s, 'chat.id', v), { label: w('np.chat.which') })));
+    if (c) put(box, h('div.pjx-np-making', null, h('span', { text: w('np.chat.making', { chat: c.title }) }), link(w('np.chat.instead'), () => { if (ctx && ctx.onInstead) ctx.onInstead(c); else PJX.toast(w('np.chat.instead'), w('np.chat.insteadToast'), 'info'); }, { key: 'chat:instead', cmd: 'ACD-510 Move this chat into a project' })));
+    const chats = (PJX.chat ? PJX.chat.list() : ENV.chats || []).concat(c && PJX.chat && PJX.chat.list().indexOf(c) < 0 ? [c] : []);
+    put(box, group(w('np.chat.which'), choices('chat:which', chats.map((x) => ({ id: x.id, glyph: x.talkOnly ? 'chat' : 'folder', title: x.title, sub: x.files ? x.files + ' files · ' + x.sample : w('nc.talkOnly', { slug: x.slug, computer: NP().comp(x.runsOn).name }) })), d.chat.id, (v) => NP().set(s, 'chat.id', v), { label: w('np.chat.which') })));
     if (!c) return box;
-    const items = [{ id: 'move', glyph: 'move', title: w('np.chat.move', { n: c.files }), sub: w('np.chat.moveSub') }, { id: 'useFolder', glyph: 'folder', title: w('np.chat.useFolder'), sub: w('np.chat.useFolderSub', { path: c.folder }) }];
+    // what is waiting in the chat settles first (ACD-510): answer it here, or in the chat
+    NP().waitingApprovals(c).forEach((a) => put(box, line('blocked', w('cv.work.approval', { what: a.what }), { after: [btn(w('nc.ap.once'), () => { PJX.S.world.facts.approvals[a.id] = 'allowed'; s.changed(); }, { key: 'chat:ap:once' }), btn(w('nc.ap.no'), () => { PJX.S.world.facts.approvals[a.id] = 'denied'; s.changed(); }, { key: 'chat:ap:no', quiet: true })] })));
+    const items = [];
+    if (c.files) items.push({ id: 'move', glyph: 'move', title: w('np.chat.move'), sub: w('np.chat.moveSub', { n: c.files }) });
+    if (c.folder) items.push({ id: 'useFolder', glyph: 'folder', title: w('np.chat.useFolder'), sub: w('np.chat.useFolderSub', { path: c.folder }) });
     if (c.workedIn) items.push({ id: 'worked', glyph: 'folder-search', title: w('np.chat.worked', { path: c.workedIn.path }), sub: w('np.chat.workedSub', { n: c.workedIn.changed }) });
-    items.push({ id: 'empty', glyph: 'seed', title: w('np.chat.empty'), sub: w('np.chat.emptySub') });
+    items.push({ id: 'empty', glyph: 'seed', title: w('np.chat.empty'), sub: c.files ? w('np.chat.emptySub') : w('nc.talkOnly', { slug: c.slug, computer: NP().comp(c.runsOn).name }) });
     put(box, group(w('np.chat.files'), choices('chat:files', items, NP().chatFiles(s), (v) => NP().set(s, 'chat.files', v), { label: w('np.chat.files') })));
-    put(box, lookView(s, NP().look(s), { other: () => NP().set(s, 'chat.files', 'move') }));
+    // only picked content moves (7.05): every file starts picked
+    if (NP().chatFiles(s) === 'move') {
+      const pk = d.chat.pick || {}, picked = NP().chatPicked(s);
+      const all = (v) => { d.chat.pick = {}; (c.fileList || []).forEach((f) => { d.chat.pick[f] = v; }); s.changed(); };
+      const grid = h('div.pjx-np-filepick', { role: 'group', 'aria-label': w('cv.pick'), 'data-np-group': 'chatPick' }, ...(c.fileList || []).map((f) => check('chat:pick:' + f, f, pk[f] !== false, (v) => { d.chat.pick = Object.assign({}, d.chat.pick || {}); d.chat.pick[f] = v; s.changed(); })));
+      put(box, group(w('cv.pick'), h('div.pjx-row', null, st(picked.length ? 'complete' : 'warning', w('cv.pickN', { k: picked.length, n: (c.fileList || []).length })), link(w('cv.pickAll'), () => all(true), { key: 'chat:pickall' }), link(w('cv.pickNone'), () => all(false), { key: 'chat:picknone' })), grid));
+    }
+    put(box, lookView(s, NP().look(s), { other: () => NP().set(s, 'chat.files', c.files ? 'move' : 'empty') }));
+    // the live preview, family by family (7.10, 7.11), for the Project this draft would make
+    const like = NP().likeSrc(s), m = NP().onlineMode(s), svc = /make|instead/.test(m) && R().service(d.online.service) ? R().service(d.online.service).name : null;
+    put(box, convPreview(NP().convEffects(c, { name: NP().nameOf(s), computer: d.runsOn, like: like ? like.name : null, remote: svc })));
+    return box;
+  }
+  /* the conversion preview's families as small groups of facts (shared by both paths) */
+  function convPreview(fams) {
+    const box = h('div.pjx-np-conv', { role: 'group', 'aria-label': w('cv.preview') }, cap(w('cv.preview')));
+    fams.forEach((f) => put(box, h('div.pjx-np-convfam', { 'data-fam': f.id }, h('div.pjx-np-convcap', { text: f.label }), lines(f.rows.map((r) => line(r.key, r.text))))));
     return box;
   }
 
@@ -692,14 +810,10 @@
     const nameIn = input('name', nm, w('np.name.ph'), (v) => { d.name = v; d.nameTouched = true; s.ui.nameShown = true; s.changed(); }, { maxlength: '80' });
     put(box, field(w('np.name.label'), nameIn, np ? w('np.name.hint') : nm ? w('np.name.ok') + ' · ' + w('np.name.hint') : w('np.name.hint'), shown && np ? np : ''));
     if (d.way === 'new' && !d.nameTouched) put(box, h('div.pjx-np-suggest', null, h('span', { text: w('np.name.suggestLead') }), ...['Book club website', 'Family recipes', 'Garden planner'].map((x, i) => [i ? h('span.pjx-np-dot', { text: ' · ', 'aria-hidden': 'true' }) : null, link(x, () => { d.name = x; d.nameTouched = true; s.changed(); }, { key: 'name:sug:' + i })]).flat()));
-    const loc = h('div.pjx-np-loc', { role: 'group', 'aria-label': w('np.loc.title') }, cap(w('np.loc.title')));
+    const loc = h('div.pjx-np-loc', { role: 'group', 'aria-label': w('np.loc.filesTitle') }, cap(w('np.loc.filesTitle')));
     const stay = NPx.filesStay(s);
-    if (stay) {
-      put(loc, line(null, w('np.loc.runsOnFixed', { computer: cn }), { icon: NPx.comp(d.runsOn).glyph, after: link(w('np.loc.change'), () => NPx.open(s, NPx.sections(s)[0]), { key: 'where:runsChange' }) }));
-    } else {
-      const ro = runsOnSeg(s, 'where:runsOn');
-      if (ro) put(loc, h('div.pjx-np-field', null, cap(w('np.loc.runsOn')), ro, hint(d.runsOn === 'here' ? NPx.comp('here').detail : w('np.loc.serverSub'))));
-    }
+    if (stay) put(loc, line(null, w('np.loc.runsOnFixed', { computer: cn }), { icon: NPx.comp(d.runsOn).glyph, after: link(w('np.loc.change'), () => NPx.open(s, NPx.sections(s)[0]), { key: 'where:runsChange' }) }));
+    if (PJX.work) put(box, PJX.work.npBlock(s, { defSeg: stay ? null : runsOnSeg(s, 'where:runsOn') }));
     const ch = d.way === 'chat' ? NPx.chatOf(d.chat.id) : null;
     if (ch && ch.runsOn !== d.runsOn) put(loc, line('info', w('np.loc.chatMove', { chat: ch.title, chatComputer: NPx.comp(ch.runsOn).name, computer: cn })));
     if (stay) {
@@ -817,20 +931,21 @@
       sw('like:onlydiff', w('np.like.onlyDiff'), w('np.like.onlyDiffSub'), L.onlyDiff, (v) => { L.onlyDiff = v; s.changed(); })));
     // settings by kind: the ten selectors (5.3.1), each with its count and its rows
     const kinds = h('div.pjx-np-kinds', { role: 'group', 'aria-label': w('np.like.kindsHead') }, h('div.pjx-np-kindshead', null, cap(w('np.like.kindsHead')), h('span.pjx-grow'),
-      link(w('np.like.kindsAll'), () => { L.ids = null; s.changed(); }, { key: 'like:all' }), h('span.pjx-np-dot', { text: ' · ', 'aria-hidden': 'true' }),
-      link(w('np.like.kindsNone'), () => { L.ids = {}; S.own.forEach((r) => { L.ids[r[1]] = false; }); s.changed(); }, { key: 'like:none' })));
+      link(w('np.like.kindsAll'), () => { L.ids = null; L.kinds = null; s.changed(); }, { key: 'like:all' }), h('span.pjx-np-dot', { text: ' · ', 'aria-hidden': 'true' }),
+      link(w('np.like.kindsNone'), () => { L.ids = {}; L.kinds = {}; S.own.forEach((r) => { L.ids[r[1]] = false; }); ENV.kinds.forEach(([kid]) => { L.kinds[kid] = false; }); s.changed(); }, { key: 'like:none' })));
     ENV.kinds.forEach(([kid, label]) => {
       const own = S.own.filter((r) => r[0] === kid), same = S.same.filter((r) => r[0] === kid);
       const hit = (r) => !q || lc(r[2]).indexOf(q) >= 0;
       const ownShown = own.filter(hit), sameShown = L.onlyDiff ? [] : same.filter(hit);
       if (q && !ownShown.length && !sameShown.length) return;
-      const on = own.filter((r) => NPx.picked(L.ids, r[1])).length;
+      const kOn = NPx.picked(L.kinds, kid), on = kOn ? own.filter((r) => NPx.picked(L.ids, r[1])).length : 0;
       const k = h('div.pjx-np-kind', { 'data-kind': kid });
-      put(k, check('like:kind:' + kid, label, own.length > 0 && on === own.length, (v) => { L.ids = L.ids || {}; own.forEach((r) => { L.ids[r[1]] = v; }); s.changed(); },
-        { disabled: own.length ? null : w('np.like.kindNone'), mixed: on > 0 && on < own.length, sub: own.length ? w('np.like.kindCount', { k: on, n: own.length }) : w('np.like.kindNone') }));
+      // a kind is a selection of its own: clearing it also keeps its values out of Keep them fixed (3.07)
+      put(k, check('like:kind:' + kid, label, own.length ? kOn && on === own.length : kOn && L.fixed && same.length > 0, (v) => { L.kinds = L.kinds || {}; L.kinds[kid] = v; L.ids = L.ids || {}; own.forEach((r) => { L.ids[r[1]] = v; }); s.changed(); },
+        { disabled: own.length || (L.fixed && same.length) ? null : w('np.like.kindNone'), mixed: own.length > 0 && on > 0 && on < own.length, sub: own.length ? w('np.like.kindCount', { k: on, n: own.length }) : same.length && L.fixed ? w('np.like.kindFixed', { n: same.length }) : w('np.like.kindNone') }));
       if (ownShown.length || sameShown.length) put(k, h('div.pjx-np-kindrows', null,
         ...ownShown.map((r) => check('like:id:' + r[1], w('np.like.singleRow', { label: r[2], value: r[4], usual: r[3] }), NPx.picked(L.ids, r[1]), (v) => { L.ids = L.ids || {}; L.ids[r[1]] = v; s.changed(); })),
-        ...sameShown.map((r) => check('like:same:' + r[1], w('np.like.sameRow', { label: r[2], value: r[3] }), L.fixed && NPx.picked(L.sameIds, r[1]), (v) => { L.sameIds = L.sameIds || {}; L.sameIds[r[1]] = v; s.changed(); }, { disabled: L.fixed ? null : w('np.like.sameOff'), sub: L.fixed ? w('np.like.sameOn') : null }))));
+        ...sameShown.map((r) => check('like:same:' + r[1], w('np.like.sameRow', { label: r[2], value: r[3] }), L.fixed && kOn && NPx.picked(L.sameIds, r[1]), (v) => { L.sameIds = L.sameIds || {}; L.sameIds[r[1]] = v; s.changed(); }, { disabled: L.fixed ? null : w('np.like.sameOff'), sub: L.fixed ? w('np.like.sameOn') : null }))));
       put(kinds, k);
     });
     put(kinds, hint(w('np.like.computerOnly', { computer: NPx.comp(p.runsOn || 'here').name })));
@@ -954,7 +1069,14 @@
       field(w('np.details.description'), input('odesc', o.description, '', (x) => { o.description = x; }), ''),
       field(w('np.details.branch'), input('obranch', o.branch || 'main', 'main', (x) => { o.branch = x; s.changed(); }), w('np.details.branchHint'), o.branch && R().branchProblem(o.branch) ? R().branchProblem(o.branch) : ''),
       demo([{ label: 'main', outcome: 'works', run: () => { o.branch = 'main'; s.changed(); } }, { label: 'my branch', outcome: 'wrong', run: () => { o.branch = 'my branch'; s.changed(); } }], { id: 'obranch' }),
-      d.way === 'new' ? line('complete', w('np.details.startNew', { basics: lc(NPx.summary(s, 'start')) }), { after: link(w('np.details.startNewLink'), () => NPx.open(s, 'start'), { key: 'o:start' }) }) : line('info', w('np.details.startExisting')),
+      // (GUIDED-FLOWS 4.18) the README, the ignore list and the licence live here, in the one online-copy Advanced; Start with
+      // keeps only which files it begins with, and a folder that has history makes an empty online copy for it
+      ...(d.way === 'new' ? [
+        line('complete', w('np.details.startNew', { basics: lc(NPx.summary(s, 'start')) }), { after: link(w('np.details.startNewLink'), () => NPx.open(s, 'start'), { key: 'o:start' }) }),
+        sw('o:readme', w('np.start.readme'), w('np.start.readmeSub'), d.basics.readme, (v) => NPx.set(s, 'basics.readme', v)),
+        group(w('np.start.ignore'), seg('o:ignore', [['automatic', 'Chosen for you'], ['none', 'None'], ['rust', 'Rust'], ['node', 'Node'], ['python', 'Python'], ['slint', 'Slint']].map(([id, title]) => ({ id, title })), d.basics.ignore, (v) => NPx.set(s, 'basics.ignore', v), w('np.start.ignore')), hint(w('np.start.ignoreHint'))),
+        group(w('np.start.license'), seg('o:license', [['none', 'No license'], ['mit', 'MIT'], ['apache_2', 'Apache 2.0'], ['gpl_3', 'GPL 3.0']].map(([id, title]) => ({ id, title })), d.basics.license, (v) => NPx.set(s, 'basics.license', v), w('np.start.license')), hint(w('np.start.licenseHint')))
+      ] : [line('info', w('np.details.startExisting'))]),
       NPx.onlineMode(s) === 'instead' ? field(w('np.link.remoteName'), input('remoteName', o.remoteName || o.service, '', (x) => { o.remoteName = x; s.changed(); }), 'The folder’s old link, origin, stays as it is.') : null,
       o.service === 'azure' ? h('div.pjx-row', null, link(w('np.details.teamProjectNew'), () => PJX.toast('Azure DevOps', 'Opens Azure DevOps’ own page to make a team project.', 'info'), { key: 'o:aznew', cmd: 'cmd.auth_profile.open_official_page' })) : null,
       hint(w('np.details.noTopics'))
@@ -1079,6 +1201,10 @@
       for (let i = 0; i < 48; i++) { const hh = Math.floor(i / 2), mm = i % 2 ? '30' : '00', t = ((hh % 12) || 12) + ':' + mm + ' ' + (hh < 12 ? 'AM' : 'PM'); const o = h('option', { value: t, text: t }); if (t === b.time) o.selected = true; put(sel, o); }
       sel.addEventListener('change', () => { b.time = sel.value; s.changed(); });
       out.push(h('div.pjx-field', null, h('label.pjx-field-label', { for: sel.id, text: w('np.bk.when.time') }), sel));
+      const tzc = NPx.comp(d.runsOn), tz = h('select.pjx-input.pjx-np-select', { 'data-pjx-key': 'bk:tz', id: 'pjx-np-bktz-' + s.id });
+      [['', w('np.bk.tz.computer', { computer: tzc.name, tz: tzc.tz })], ['America/New_York', 'America/New_York'], ['America/Chicago', 'America/Chicago'], ['America/Los_Angeles', 'America/Los_Angeles'], ['Europe/London', 'Europe/London'], ['UTC', 'UTC']].forEach(([v, t]) => { const o = h('option', { value: v, text: t }); if ((b.tz || '') === v) o.selected = true; put(tz, o); });
+      tz.addEventListener('change', () => { b.tz = tz.value || null; s.changed(); });
+      out.push(h('div.pjx-field', null, h('label.pjx-field-label', { for: tz.id, text: w('np.bk.tz') }), tz, h('div.pjx-field-hint', { text: w('np.bk.tzHint', { computer: tzc.name }) })));
     }
     // P8 (Jared, 2026-11-03): Standard, or how many to keep, here under Advanced; no More or Fewer presets
     out.push(group(w('np.bk.when.keep'), choices('bk:keep', [{ id: 'standard', glyph: 'history', title: w('np.bk.keep.standard'), tag: w('np.svc.recommended') }, { id: 'custom', glyph: 'sliders', title: w('np.bk.keep.custom'), sub: b.keep === 'custom' ? w('np.bk.keep.customVal', b.keepCustom) : null }], b.keep === 'custom' ? 'custom' : 'standard', (v) => { b.keep = v; s.changed(); }, { label: w('np.bk.when.keep') })));
@@ -1182,7 +1308,8 @@
     if (ph.some((x) => x.net)) boxes.push(check('rv:demo:net', w('np.rv.demo.net'), !!D0.net, (v) => { D0.net = v; if (v) { D0.taken = false; D0.fork = false; } s.changed(); }));
     if (ph.some((x) => x.key === 'create')) boxes.push(check('rv:demo:taken', w('np.rv.demo.taken', { service: (ph.find((x) => x.key === 'create') || {}).service }), !!D0.taken, (v) => { D0.taken = v; if (v) { D0.net = false; D0.fork = false; } s.changed(); }));
     if (d.backup.dest !== 'none') boxes.push(check('rv:demo:bk', w('np.rv.demo.bk'), !!D0.bk, (v) => { D0.bk = v; s.changed(); }));
-    if (fork) boxes.push(check('rv:demo:fork', w('np.rv.demo.fork'), !!D0.fork, (v) => { D0.fork = v; if (v) { D0.net = false; D0.taken = false; } s.changed(); }));
+    if (fork) boxes.push(check('rv:demo:fork', w('np.rv.demo.fork'), !!D0.fork, (v) => { D0.fork = v; if (v) { D0.net = false; D0.taken = false; D0.forkUnknown = false; } s.changed(); }));
+    if (fork) boxes.push(check('rv:demo:forkunknown', w('np.rv.demo.forkUnknown', { service: fork.service }), !!D0.forkUnknown, (v) => { D0.forkUnknown = v; if (v) { D0.net = false; D0.taken = false; D0.fork = false; } s.changed(); }));
     if (boxes.length) put(foot, disc(s, 'rv-demo', w('np.rv.demo'), boxes, { kind: 'review', cls: 'pjxc-demo' }));
     return foot;
   }
@@ -1208,10 +1335,11 @@
   function protectSteps(p) {
     const b = p.backup, stp = b && b.setup; if (!stp) return null;
     const tgt = stp.target != null ? b.more[stp.target] : b, where = tgt.dest, nas = where === 'Home NAS', access = /S3|B2|SFTP|WebDAV|S3-compatible/.test(where);
-    const k = kitUi[p.id] = kitUi[p.id] || { stepUp: false };
+    const k = kitUi[p.id] = kitUi[p.id] || { hand: null, test: null };
+    const cloud = !nas && !access;
     const ACT = PJX.ACT, steps = stp.steps;
     const cur = steps.findIndex((x) => x !== 'done');
-    const LABEL = [nas || access ? w('np.prot.s1Connect', { where }) : w('np.prot.s1', { where }), w('np.prot.s2'), w('np.prot.s3'), w('np.prot.s4'), tgt.mode === 'manual' ? w('np.prot.s5Manual') : w('np.prot.s5')];
+    const LABEL = [nas ? w('np.prot.s1Pair', { where }) : access ? w('np.prot.s1Access', { where }) : w('np.prot.s1', { where }), w('np.prot.s2'), w('np.prot.s3'), w('np.prot.s4'), tgt.mode === 'manual' ? w('np.prot.s5Manual') : w('np.prot.s5')];
     const CMD = ['cmd.auth_profile.sign_in', 'cmd.backup.destination.test', 'cmd.backup.recovery_key.export', 'cmd.backup.recovery_key.test', 'cmd.backup.policy.update'];
     const box = h('div.pjx-np-protect', { role: 'group', 'aria-label': w('np.prot.title') });
     put(box, h('p.pjx-np-say', { text: nas ? w('np.prot.leadNas', { where }) : access ? w('np.prot.leadAccess', { where }) : w('np.prot.lead', { where }) }));
@@ -1223,7 +1351,18 @@
       if (now && state !== 'working') {
         const body = h('div.pjx-np-pbody');
         const run = (bad) => ACT.protectStep(p.id, i, { bad });
-        if (i === 0) put(body, h('div.pjx-row', null, btn(LABEL[0], () => run(), { key: 'prot:0', primary: true, icon: nas ? 'server' : 'key', cmd: CMD[0] })));
+        // (GUIDED-FLOWS 5.17, 5.18) the destination's own connection at this step: the NAS's existing pairing, the cloud
+        // account's sign-in, or the bucket's or server's access details; earlier typed fields are never taken as proof
+        if (i === 0) {
+          if (nas) put(body, line('complete', w('np.prot.s1PairLead', { where })));
+          if (cloud) put(body, line(null, w('np.prot.s1CloudLead', { where, account: tgt.account || (where === 'Google Drive' ? 'jared@gmail.com' : 'jared@outlook.com') }), { icon: 'key' }));
+          if (access) put(body, h('div.pjx-np-pair', null, field(w('np.prot.s1KeyId'), input('prot:keyid:' + p.id, k.keyId || '', '', (v) => { k.keyId = v; }), ''), (() => { const el = h('input.pjx-input', { type: 'password', autocomplete: 'off', 'aria-label': w('np.prot.s1Secret') }); return h('div.pjx-field', null, h('label.pjx-field-label', { text: w('np.prot.s1Secret') }), el, h('div.pjx-field-hint', { text: w('np.prot.s1SecretHint') })); })()));
+          if (state === 'failed') put(body, line('failed', nas ? w('np.prot.s1PairFail', { where }) : w('np.prot.s1Expired', { where })));
+          put(body, h('div.pjx-row', null, btn(state === 'failed' ? w('np.prot.retry') : LABEL[0], () => run(false), { key: 'prot:0', primary: true, icon: nas ? 'server' : 'key', cmd: nas ? 'cmd.server.pair (reuse the existing pairing)' : CMD[0] }),
+            cloud ? link(w('np.signin.another'), () => PJX.toast(w('np.signin.another'), 'Opens ' + where + '’s own sign-in page to choose another account.', 'info'), { key: 'prot:another' }) : null));
+          put(body, demo([{ label: nas ? 'Home NAS doesn’t answer' : 'The sign-in expires', outcome: 'retry', run: () => run(true) }], { id: 'prot0' }));
+          put(body, yoloLine(w('np.yolo.signin'), { asks: true }));
+        }
         if (i === 1) {
           put(body, h('p.pjx-np-say', { text: w('np.prot.s2Lead', { place: tgt.place }) }));
           if (state === 'failed') put(body, line('failed', w('np.prot.s2Fail', { where, reason: w('np.prot.s2Full') })));
@@ -1231,13 +1370,22 @@
         }
         if (i === 2) {
           put(body, h('p.pjx-np-say', { text: w('np.prot.s3Why') }));
-          if (!k.stepUp) put(body, h('div.pjx-row', null, btn(w('np.prot.s3StepUp'), () => { k.stepUp = true; PJX.rerender(); }, { key: 'prot:stepup', primary: true, icon: 'lock' }), h('span.pjx-np-hint', { text: w('np.prot.s3StepUpHint') })));
-          else put(body, h('div.pjx-row', null, btn(w('np.prot.s3Save'), () => run(), { key: 'prot:2', primary: true, icon: 'download', cmd: CMD[2] }), btn(w('np.prot.s3Copy'), () => PJX.toast('Recovery Kit copied', 'Paste it into your password manager.', 'info'), { key: 'prot:copy', cmd: 'cmd.backup.recovery_key.copy' }), btn(w('np.prot.s3Print'), () => PJX.toast('Printing the Recovery Kit', 'Only on this device.', 'info'), { key: 'prot:print', cmd: 'cmd.backup.recovery_key.print' })));
+          // (GUIDED-FLOWS 5.20) a protected handoff on this device, never a local "it's you" switch; its pending, refused and
+          // unavailable answers are said as they are
+          const hand = (state0) => { k.hand = 'pending'; PJX.rerender(); setTimeout(() => { k.hand = state0 || 'ok'; PJX.rerender(); }, PJX.reduced() ? 150 : 900); };
+          if (k.hand === 'pending') put(body, working(w('np.prot.handPending')));
+          else if (k.hand === 'refused' || k.hand === 'unavailable') put(body, line(k.hand === 'refused' ? 'failed' : 'offline', w('np.prot.hand.' + k.hand)));
+          if (k.hand !== 'ok' && k.hand !== 'pending') put(body, h('div.pjx-row', null, btn(k.hand ? w('np.prot.retry') : w('np.prot.s3StepUp'), () => hand(), { key: 'prot:stepup', primary: true, icon: 'lock', cmd: 'protected handoff (this Client, this audience)' }), h('span.pjx-np-hint', { text: w('np.prot.s3StepUpHint') })),
+            demo([{ label: 'Cancel the prompt', outcome: 'refused', run: () => hand('refused') }, { label: 'A browser tab', outcome: 'can’t show it', run: () => hand('unavailable') }], { id: 'hand' }));
+          if (k.hand === 'ok') put(body, line('complete', w('np.prot.handOk')));
+          if (k.hand === 'ok') put(body, h('div.pjx-row', null, btn(w('np.prot.s3Save'), () => run(), { key: 'prot:2', primary: true, icon: 'download', cmd: CMD[2] }), btn(w('np.prot.s3Copy'), () => run(), { key: 'prot:copy', cmd: 'cmd.backup.recovery_key.copy' }), btn(w('np.prot.s3Print'), () => PJX.toast('Printing the Recovery Kit', 'Only on this device.', 'info'), { key: 'prot:print', cmd: 'cmd.backup.recovery_key.print' })));
         }
         if (i === 3) {
           if (steps[2] === 'done') put(body, line(null, w('np.prot.s3Once'), { icon: 'lock' }));
           if (state === 'failed') put(body, line('failed', w('np.prot.s4Fail')));
-          put(body, h('div.pjx-row', null, btn(state === 'failed' ? w('np.prot.retry') : w('np.prot.s4Go'), () => run(false), { key: 'prot:3', primary: true, cmd: CMD[3] }), btn(w('np.prot.s4Other'), () => run(true), { key: 'prot:3bad', quiet: true, cmd: CMD[3] })));
+          // (5.21) the check also needs this device's protected context, and says pending, refused and unavailable as such
+          put(body, line(null, w('np.prot.s4Protected'), { icon: 'lock' }));
+          put(body, h('div.pjx-row', null, btn(state === 'failed' ? w('np.prot.retry') : w('np.prot.s4Go'), () => run(false), { key: 'prot:3', primary: true, icon: 'lock', cmd: CMD[3] + ' (protected)' }), btn(w('np.prot.s4Other'), () => run(true), { key: 'prot:3bad', quiet: true, cmd: CMD[3] })));
           put(body, hint('Try a different kit is a concept demo: that kit is refused.', 'is-concept'));
         }
         if (i === 4) put(body, h('div.pjx-row', null, btn(LABEL[4], () => run(), { key: 'prot:4', primary: true, icon: 'check', cmd: CMD[4] })));
@@ -1250,7 +1398,8 @@
     });
     put(box, ol);
     if (!stp.done) put(box, yoloLine(w('np.yolo.protect')));
-    if (stp.done) put(box, line('complete', tgt.mode === 'manual' ? w('np.prot.doneManual') : w('np.prot.done', { time: tgt.time })));
+    // (5.22) on is a policy, not a backup: scheduled stays apart from a completed, checked backup
+    if (stp.done) put(box, lines(line('complete', tgt.mode === 'manual' ? w('np.prot.doneManual') : w('np.prot.done', { time: tgt.time })), line('pending', w('np.prot.notYet'))));
     return box;
   }
 
@@ -1267,6 +1416,6 @@
     }
   }
 
-  PJX.npui = { line, lines, code, hint, cap, group, btn, link, choices, seg, input, field, secret, sw, check, disc, demo, picker, mini, lookView, gitJjAnswer, signinView, serviceCards, yoloLine, roving,
+  PJX.npui = { line, lines, code, hint, cap, group, btn, link, choices, seg, input, field, secret, sw, check, disc, demo, picker, mini, lookView, gitJjAnswer, signinView, serviceCards, yoloLine, roving, convPreview,
     sections: sectionsView, review: reviewView, reviewFoot, protectSteps, render, RENDER, title, lead, secOnline, secBackup, secWhere };
 })(window);
