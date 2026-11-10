@@ -12,7 +12,8 @@
    PM51.syncInspector replaces the whole body when the number of blocks differs, so the wrap below takes the layer's
    blocks out before the engine patches and puts them back after, and focus is put back by data-psx-key. A
    MutationObserver catches the first open, which goes through the private populateDetailInspector. Per-thing rows
-   ("Each account has its own", .o55-insp-now.is-per) are the engine's alone. */
+   ("Each account has its own", .o55-insp-now.is-per) keep the engine's Now; their Where it applies is the layer's same
+   three parts (perWhere). */
 (function (W) {
   'use strict';
   const PSX = W.PSX; if (!PSX || PSX.panel) return;
@@ -195,9 +196,9 @@
     const keep = o.focusKey || (act && page.contains(act) && act.closest('[data-psx-key]') ? act.closest('[data-psx-key]').dataset.psxKey : null);
     page.dataset.psxDone = sig;
     closeWord(head);
-    if (!DEF[id]) return;
     const now = body.querySelector(':scope > .o55-insp-now');
-    if (now && now.classList.contains('is-per')) return;
+    if (now && now.classList.contains('is-per')) { perWhere(body, now); return; }
+    if (!DEF[id]) { offWhere(body, now, id); return; }
     body.querySelectorAll('[data-psx-block]').forEach((n) => n.remove());
     const r = PSX.resolve(id, S.ctx);
     rewriteNow(now, id, r);
@@ -221,6 +222,56 @@
       const h4 = s.querySelector('h4');
       if (h4 && /^Where it applies$/i.test(h4.textContent.trim()) && !s.hasAttribute('data-psx-block')) { s.hidden = true; s.setAttribute('data-psx-hidden', ''); }
     });
+  }
+
+  /* a row that belongs to one thing (an account's nickname, a service's sign-in way): the base page lists each thing's
+     value in Now; Where it applies takes the same three parts as every other panel (Jared #8) */
+  function perWhere(body, now) {
+    body.querySelectorAll(':scope > [data-psx-block="where"]').forEach((n) => n.remove());
+    const eng = [...body.querySelectorAll(':scope > section.o55-insp-block')].find((x) => /^Where it applies$/i.test(((x.querySelector('h4') || {}).textContent || '').trim()));
+    const m = /Each ([\w ]+?) can have its own/i.exec(eng ? eng.textContent : '') || /Each ([\w ]+?) has its own/i.exec(now.textContent || '');
+    const thing = m ? m[1].toLowerCase().replace(/^ai service$/, 'AI service') : 'one';
+    hideEngineWhere(body);
+    const sec = D.createElement('section');
+    sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where');
+    sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">Each ${esc(thing)} has its own.</p>`;
+    const slot = (title, slotKey, text, bare) => sec.insertAdjacentHTML('beforeend', `<div class="psx-group is-not" role="group" aria-label="${esc(title)}" data-psx-slot="${slotKey}">${bare ? '' : `<div class="psx-ghead">${esc(title)}</div>`}<div class="psx-wnot">${bare ? `<span class="psx-wname">${esc(title)}</span>` : ''}<span class="psx-wnot-why">${esc(text)}</span></div></div>`);
+    slot('Everywhere', 'everywhere', `Not one value for everywhere, because each ${thing} has its own. Each one’s value is listed above.`, true);
+    slot('Computers', 'computer', `Not per computer: it belongs to the ${thing}.`);
+    slot('Projects', 'project', `Not per project: it belongs to the ${thing}.${thing === 'account' ? ' A project chooses which accounts it uses, in its AI accounts.' : ''}`);
+    now.after(sec);
+  }
+
+  /* rows the layer keeps off the ladder still get the same three parts (Jared #8): the look's details (Light or dark,
+     the wallpaper, glass, the colour scheme, the chat layout) go with the look, so they follow where Theme comes from;
+     a key or a sign-in stays on the computer where it was entered. Any other row keeps the base page's sentence. */
+  function offWhere(body, now, id) {
+    const off = PSX.offLadder || {};
+    const look = off.look && off.look.test(id), cred = !look && off.credential && off.credential.test(id);
+    if (!look && !cred) return;
+    body.querySelectorAll(':scope > [data-psx-block="where"]').forEach((n) => n.remove());
+    hideEngineWhere(body);
+    const sec = D.createElement('section');
+    sec.className = 'o55-insp-block psx-where'; sec.setAttribute('data-psx-block', 'where'); sec.setAttribute('data-psx-key', 'where');
+    const slot = (title, slotKey, html, bare) => sec.insertAdjacentHTML('beforeend', `<div class="psx-group is-not" role="group" aria-label="${esc(title)}" data-psx-slot="${slotKey}">${bare ? '' : `<div class="psx-ghead">${esc(title)}</div>`}<div class="psx-wnot">${bare ? `<span class="psx-wname">${esc(title)}</span>` : ''}${html}</div></div>`);
+    const why = (t) => `<span class="psx-wnot-why">${esc(t)}</span>`;
+    if (look) {
+      const r = PSX.resolve('general.visual.theme', S.ctx);
+      const fromTxt = r.from.level === 'project' ? `${r.from.key}’s own look` : r.from.level === 'device' ? `${placeName('device', r.from.key)}’s own look` : 'the same everywhere';
+      sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">It goes with the look and follows Theme, which is ${esc(fromTxt)} here.</p>`;
+      slot('Everywhere', 'everywhere', why('It follows Theme’s everywhere look.'), true);
+      slot('Devices', 'device', `<p class="psx-wwhy">${esc(PSX.REASONS.about_the_screen[0])}</p>` + why('It follows Theme on each device.'));
+      slot('Projects', 'project', why('It follows Theme in a project with its own look.'));
+      const b = D.createElement('div'); b.className = 'psx-power';
+      b.appendChild(btn('Open Theme', 'Open Theme’s Where it applies', 'open-theme', null, () => { try { W.PM51.revealSetting('general.visual.theme', { detail: true }); } catch (e) { /* not drawn */ } }));
+      sec.appendChild(b);
+    } else {
+      sec.innerHTML = `<h4>Where it applies</h4><p class="psx-where-sentence">Kept on the computer that uses it.</p>`;
+      slot('Everywhere', 'everywhere', why('Not one value for everywhere: a key or a sign-in stays on the computer where you entered it.'), true);
+      slot('Computers', 'computer', why('Each computer keeps its own, and it is never copied to another computer.'));
+      slot('Projects', 'project', why('Not per project: a project chooses which account it uses, never the key itself.'));
+    }
+    if (now) now.after(sec); else body.insertBefore(sec, body.firstChild);
   }
 
   /* ------------------------------------------------------------------ Now */
@@ -288,9 +339,9 @@
   /* ------------------------------------------------------------------ Where it applies */
   function sentence(id, r) {
     const def = DEF[id];
-    if (def.home === 'computer') return PSX.REASONS[def.reason][0];
-    if (def.home === 'project') return PSX.REASONS.about_this_project[0];
-    if (def.home === 'everywhere') return PSX.REASONS.same_for_you[0];
+    if (def.home === 'computer') return 'Each computer has its own.';
+    if (def.home === 'project') return 'Each project has its own.';
+    if (def.home === 'everywhere') return 'Same everywhere.';
     const own = r.varies.filter((v) => v.level !== 'provider');
     if (!own.length) return 'Used everywhere.';
     const projs = own.filter((v) => v.level === 'project').map((v) => v.key);
@@ -302,6 +353,43 @@
       parts.push(few || places.length === 1 ? 'on ' + list(places.map((p) => placeName(p.level, p.key))) : `on ${places.length} ${kind}`);
     }
     return `Used everywhere, except ${parts.join(' and ')}.`;
+  }
+  /* Jared #8 (2026-11-09, "Keep per device"): every panel has the same three parts in the same order, Everywhere, then
+     Computers (or Devices on a screen row), then Projects. A part the row doesn't offer stays in its place with one plain
+     line saying why, so no panel looks different from the next. Screen rows (text size, theme, sounds, reduce motion and
+     the rest about the device in front of you) list Devices where every other row lists Computers, with one line saying
+     why. */
+  function deviceWhy(id) {
+    if (/sound|bell/.test(id)) return 'This is about the sound of the device in front of you, so it can differ per device.';
+    if (/key|shortcut|submit-key|text-editing/.test(id)) return 'This is about the keyboard in front of you, so it can differ per device.';
+    if (/tray|minimize|window-state|notification-method|copy-on-select|right-click/.test(id)) return 'This is about the device in front of you, so it can differ per device.';
+    return PSX.REASONS.about_the_screen[0];
+  }
+  PSX.deviceWhy = deviceWhy;
+  function notLine(slot, id) {
+    const def = DEF[id], code = def.reason;
+    if (slot === 'everywhere') {
+      const because = (t) => 'Not one value for everywhere, because ' + String(t).replace(/^.*?because /, '').replace(/that project’s/, 'each project’s');
+      if (def.home === 'computer') return because((PSX.REASONS[code] || PSX.REASONS.names_a_program)[0]);
+      if (def.home === 'project') return because(PSX.REASONS.about_this_project[0]);
+      return 'Not one value for everywhere.';
+    }
+    if (slot === 'computer') {
+      if (def.home === 'project') return 'Not per computer: it’s about each project’s own files.';
+      if (def.home === 'everywhere') return 'Not per computer: ' + (PSX.REASONS[code] || PSX.REASONS.same_for_you)[0].replace(/^Same everywhere\. /, '').replace(/^It/, 'it');
+      return 'Not per computer.';
+    }
+    if (def.screen) return 'Not per project: it’s about the device in front of you, not the work.';
+    if (def.home === 'computer') return 'Not per project: it belongs to each computer.';
+    if (def.home === 'everywhere') return 'Not per project, for the same reason.';
+    if ((def.may || []).length === 1 && def.may[0] === 'computer') return 'Not per project: it’s about the whole computer.';
+    return 'Not per project.';
+  }
+  function notSlot(sec, title, slot, id, bare) {
+    const g = D.createElement('div'); g.className = 'psx-group is-not'; g.setAttribute('role', 'group'); g.setAttribute('aria-label', title); g.setAttribute('data-psx-slot', slot);
+    g.innerHTML = `${bare ? '' : `<div class="psx-ghead">${esc(title)}</div>`}<div class="psx-wnot">${bare ? `<span class="psx-wname">${esc(title)}</span>` : ''}<span class="psx-wnot-why">${esc(notLine(slot, id))}</span></div>`;
+    sec.appendChild(g);
+    return g;
   }
   function editable(id, level, key) { return !blockedWrite({ level, key }); }
   /* one line: a role=group with its name, value, state (mark plus word) and buttons */
@@ -430,7 +518,7 @@
 
     // Everywhere
     if (off.everywhere && def.home !== 'computer') {
-      const g = mkGroup('Everywhere', true);
+      const g = mkGroup('Everywhere', true); g.setAttribute('data-psx-slot', 'everywhere');
       const has = r.everywhere !== undefined;
       const why = blockedWrite({ level: 'everywhere' });
       const states = [];
@@ -439,17 +527,18 @@
       const ln = line(id, r, { level: 'everywhere', key: null, name: 'Everywhere', value: has ? r.everywhere : DEFAULTS[id], valueText: has ? vt(id, r.everywhere) : `${vt(id, DEFAULTS[id])} · the default`, inUse: decides('everywhere'), states });
       if (why && /back/.test(why)) { const ch = ln.querySelector('[data-psx-key$=":change"]'); if (ch) ch.textContent = `Change it when ${PSX.homeName()} is back`; }
       g.appendChild(ln);
-    }
-    // Computers (or Devices)
+    } else notSlot(sec, 'Everywhere', 'everywhere', id, true);
+    // Computers (or Devices on a screen row): always the second part
     const placeLevel = off.device ? 'device' : off.computer ? 'computer' : null;
     if (placeLevel === 'computer' && def.home === 'computer') {
-      const g = mkGroup('Computers');
+      const g = mkGroup('Computers'); g.setAttribute('data-psx-slot', 'computer');
       PSX.computerIds().forEach((k) => {
         g.appendChild(hostLine(id, r, k, false));
         Object.keys(HOSTS).filter((h) => HOSTS[h].parent === k).forEach((h) => g.appendChild(hostLine(id, r, h, true)));
       });
     } else if (placeLevel) {
-      const g = mkGroup(placeLevel === 'device' ? 'Devices' : 'Computers');
+      const g = mkGroup(placeLevel === 'device' ? 'Devices' : 'Computers'); g.setAttribute('data-psx-slot', placeLevel);
+      if (placeLevel === 'device') g.insertAdjacentHTML('beforeend', `<p class="psx-wwhy">${esc(deviceWhy(id))}</p>`);
       const list0 = own(placeLevel).filter((v) => placeLevel === 'device' ? DEVICES[v.key] : COMPUTERS[v.key] && PSX.computerIds().includes(v.key));
       const shown = list0.slice(0, MAX_LINES);
       const pending = editing && editing.id === id && editing.level === placeLevel && !list0.find((v) => v.key === editing.key) ? editing : null;
@@ -470,10 +559,10 @@
       const rest = all.filter((k) => !list0.find((v) => v.key === k) && !(pending && pending.key === k)).map((k) => placeName(placeLevel, k));
       if (rest.length) g.insertAdjacentHTML('beforeend', `<div class="psx-wrest">${esc(list(rest, rest.length <= 3 ? 0 : 2))}: same as everywhere</div>`);
       g.appendChild(addButton(id, placeLevel, r));
-    }
-    // Projects
+    } else notSlot(sec, 'Computers', 'computer', id);
+    // Projects: always the third part
     if (off.project) {
-      const g = mkGroup('Projects');
+      const g = mkGroup('Projects'); g.setAttribute('data-psx-slot', 'project');
       const list0 = own('project');
       const pending = editing && editing.id === id && editing.level === 'project' && !list0.find((v) => v.key === editing.key) ? editing : null;
       list0.slice(0, MAX_LINES).forEach((v) => {
@@ -497,7 +586,7 @@
         if (rest.length) g.insertAdjacentHTML('beforeend', `<div class="psx-wrest">${esc(list(rest, rest.length <= 3 ? 0 : 2))}: same as everywhere</div>`);
       }
       g.appendChild(addButton(id, 'project', r));
-    }
+    } else notSlot(sec, 'Projects', 'project', id);
     // owner rungs (MA-073): AI services, then accounts
     if (def.owner) {
       const g = mkGroup('AI services and accounts');
@@ -507,11 +596,7 @@
       });
       g.insertAdjacentHTML('beforeend', `<div class="psx-wrest">Accounts: none has its own. A service’s own value beats the project and everywhere for that service’s work.</div>`);
     }
-    // the reason sentence where a group isn't offered (never a muted line per level)
-    const why = [];
-    if (!off.project && def.home !== 'computer' && def.screen) why.push(PSX.REASONS.about_the_screen[0]);
-    if (def.home === 'everywhere') why.push('');
-    why.filter(Boolean).forEach((t) => sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule">${esc(t)}</p>`));
+    // how the parts combine (only rows where that matters), always after the three parts
     if (def.safety) sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule">For safety, the more careful of a computer’s and a project’s own choice is used.</p>`);
     if (def.combine === 'computer_ceiling') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule">For limits, a computer’s own value is the most any project there can use.</p>`);
     if (id === 'general.visual.theme') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule">The look and light or dark always come from the same place; a project’s own look beats a device’s.</p>`);
