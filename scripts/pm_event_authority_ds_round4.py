@@ -56,8 +56,6 @@ def build():
     for context in ('false','true',0,1,None,[],{}):
         suite.negative('round4:compaction_historical_type:'+repr(context),'compaction_historical_type',
                        lambda value=context:not ds.compaction_event_errors(compaction,historical=value))
-    suite.weakeners['compaction_historical_type']=lambda:patch.object(ds,'compaction_event_errors',
-        ds.source_without_guard(ds.compaction_event_errors,'type(historical)'))
     slot, event = d3.layout_base()
     checker = home.Checker(ds.ROOT)
     store = home.PayloadStore.from_fixture(ds.load(home.FIXTURES)['payload_store'])
@@ -81,8 +79,6 @@ def build():
                 changed=source_copy(slot,which,path,value)
                 suite.negative('round4:source:'+which+':wrong_type:'+':'.join(path)+':'+repr(value),
                     'home4_typed_source_copy',lambda v=changed:not home_errors(checker,'transaction_slot',v,store))
-    suite.weakeners['home4_typed_source_copy'] = lambda: patch.object(home, 'source_bytes_check',
-        ds.source_without_guard(home.source_bytes_check, 'not same_typed_value'))
 
     # These are original retained bytes; the new writer is deliberately not used
     # to manufacture a record whose original recipe allowed integral floats.
@@ -105,8 +101,6 @@ def build():
     suite.positive('round4:home_event_retained_numeric', home_history)
     suite.negative('round4:layout_numeric_current_writer', 'integral_numeric_type',
                    lambda: not ds.layout_event_errors(retained, objects, binding=binding))
-    suite.weakeners['integral_numeric_type'] = lambda: patch.dict(route.StrictValidator.VALIDATORS,
-        {'type': home.Draft202012Validator.VALIDATORS['type']})
     strict = ds.layout_history_observation(retained, 'workspace-layout-v2/typed-integer')
     suite.positive('round4:strict_recorded_recipe_refuses_float', lambda: not historical(obs=strict))
     for field in ('event_id', 'idempotency_key', 'project_id'):
@@ -124,8 +118,6 @@ def build():
         changed['custody'][flag] = False
         suite.negative('round4:retained_custody:' + flag, 'layout_history_custody',
                        lambda obs=changed: historical(obs=obs))
-    suite.weakeners['layout_history_custody'] = lambda: d3.remove(
-        (home, 'layout_history_context_errors', 'not isinstance(custody'))
     # Foreign *verified* source still cannot join a different binding.
     foreign = copy.deepcopy(large)
     foreign['project_id'] = foreign['payload']['project_id'] = 'project-foreign'

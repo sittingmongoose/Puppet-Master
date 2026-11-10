@@ -18,13 +18,6 @@ import pm_browser_workspace_reset as reset
 
 ROOT=ds.ROOT
 
-@contextmanager
-def remove(*targets):
-    """One predicate, or explicitly named duplicate predicates, restored on exit."""
-    with ExitStack() as stack:
-        for target,name,condition in targets:
-            stack.enter_context(patch.object(target,name,ds.source_without_guard(getattr(target,name),condition)))
-        yield
 
 
 def bases():
@@ -81,7 +74,6 @@ def invalid_external_numeric(event):
 
 def build():
     suite=ds.Suite();gate,context,values=bases()
-    suite.weakeners['integral_numeric_type']=lambda:patch.dict(route.StrictValidator.VALIDATORS,{'type':Draft202012Validator.VALIDATORS['type']})
     comp=ds.load('Plans/context_compaction_completion_contract_fixtures.json')['valid_event']
     slot,event=layout_base();checker=home.Checker(ROOT);store=home.PayloadStore.from_fixture(ds.load(home.FIXTURES)['payload_store'])
     # Each alternative is parsed independently. -0 integer is canonical zero; 01 is invalid JSON.
@@ -144,7 +136,6 @@ def build():
         for flag in ('source_verified','access_allowed','deletion_allows_audit','checkpoint_read_token_valid')+(('admitted',) if model is reset else ()):
             name=family+':history_'+flag
             suite.negative(name,'history_flags:'+family,lambda f=flag,m=model,e=retained,o=original:history(m,e,o,**{f:False}))
-        suite.weakeners['history_flags:'+family]=lambda m=model:remove((m,'workspace_history_fact','not all'))
         actualgate=gate if model is created else reset.sibling('pm-browser-event-admission',ROOT)
         compatibility_targets=[(actualgate,'compatibility_history_failures','reason is not None')]
         # Joined source edits leave the valid retained payload/schema alone.
@@ -159,23 +150,19 @@ def build():
         numeric_forgery['payload']['facts']['workspace_generation']=float(numeric_forgery['payload']['facts']['workspace_generation'])
         suite.negative(family+':legacy_forged_numeric_type','compatibility_source:'+family,
             lambda e=numeric_forgery,g=actualgate,o=original:not g.candidate_failures(e,'BrowserRuntimeService.workspace',g.contract_context(),historical=True,historical_source=o))
-        suite.weakeners['compatibility_source:'+family]=lambda targets=compatibility_targets:remove(*targets)
         missing=copy.deepcopy(retained)
         suite.negative(family+':legacy_missing_source','compatibility_missing:'+family,
             lambda g=actualgate:not g.compatibility_source_presence_errors(None))
         suite.positive(family+':legacy_missing_source_refuses_reader',lambda e=missing,m=model:not history(m,e))
-        suite.weakeners['compatibility_missing:'+family]=lambda g=actualgate:remove((g,'compatibility_source_presence_errors','not isinstance(original'))
     # Well-formed receipt identity: no LF/schema defect masks the recipe.
     bad=copy.deepcopy(comp);bad['payload']['compaction_receipt_ref']='compaction_receipt:'+'a'*64
     suite.negative('compaction:well_formed_false_receipt','compaction_receipt_identity',lambda b=bad:not ds.compaction_event_errors(b))
-    suite.weakeners['compaction_receipt_identity']=lambda:remove((ds,'compaction_event_errors',"payload['compaction_receipt_ref']"))
     for field,value,condition in [('operation_digest','a'*64,"binding['operation_digest']"),('event_id','evt_workspace_layout_'+'a'*64,"ev['event_id']")]:
         bad=copy.deepcopy(slot)
         if field=='operation_digest':bad['binding'][field]=value
         else:bad['event_semantics'][field]=value
         group='home4:operation_digest' if field=='operation_digest' else 'layout_home4_identity'
         suite.negative('home4:well_formed_false_'+field,group,lambda b=bad:not checker.schema_errors('transaction_slot',b) and not checker.semantic('transaction_slot',b,store))
-        suite.weakeners[group]=lambda f=field,c=condition:remove((home,'binding_checks' if f=='operation_digest' else 'event_checks',c))
     for field,value,targets in [
         ('event_type','terminal.workgroup_moved',[(ds,'layout_event_errors',"event['event_type']")]),
         ('payload_schema_id','pm.event.foreign.v1',[(ds,'layout_event_errors',"event['payload_schema_id']")]),
@@ -185,19 +172,15 @@ def build():
         bad=copy.deepcopy(event);bad[field]=value
         group='layout_home4_identity' if field in ('event_id','idempotency_key') else 'layout_join:'+field
         suite.negative('layout:omitted_join_'+field,group,lambda e=bad:not ds.layout_event_errors(e,binding=slot['binding']))
-        suite.weakeners[group]=lambda targets=targets:remove(*targets)
     custody={k:True for k in ('source_verified','access_allowed','deletion_allows_audit','checkpoint_read_token_valid')}
     observation=ds.layout_history_observation(event)
     custody=observation['custody']
     suite.positive('layout:retained_custody',lambda e=event:not ds.layout_event_errors(e,binding=slot['binding'],historical=True,**observation))
     for flag in ('source_verified','access_allowed','deletion_allows_audit','checkpoint_read_token_valid'):
         suite.negative('layout:history_'+flag,'layout_history_custody',lambda f=flag,e=event:not ds.layout_event_errors(e,binding=slot['binding'],historical=True,historical_source=observation['historical_source'],custody={**custody,f:False}))
-    suite.weakeners['layout_history_custody']=lambda:remove((home,'layout_history_context_errors','not isinstance(custody'))
     suite.negative('layout:history_forged_source_commitment','layout_history_source_commitment',
         lambda e=event:not ds.layout_event_errors(e,binding=slot['binding'],historical=True,
             historical_source=observation['historical_source'],custody={**custody,'retained_source_sha256':'f'*64}))
-    suite.weakeners['layout_history_source_commitment']=lambda:remove((home,'layout_history_context_errors',"custody.get('retained_source_sha256')"))
-    suite.weakeners['current_writer_producer_sequence']=lambda:remove(*[(g,'candidate_failures',"not historical and (event.get('producer_sequence_id')") for g in (gate,reset.sibling('pm-browser-event-admission',ROOT))])
     for token in ('1.0','1e0','-0.0'):
         event=copy.deepcopy(values[0][1]['event']);event['producer_sequence_id']=json.loads(token)
         def encoder_refuses(e=event):
@@ -206,7 +189,6 @@ def build():
             return False
         suite.positive('encoder_refuses:'+token,encoder_refuses)
         suite.negative('encoder_numeric_boundary:'+token,'encoder_numeric_representation',lambda e=event:not route.numeric_representation_errors(e))
-    suite.weakeners['encoder_numeric_representation']=lambda:remove((route,'numeric_representation_errors','isinstance(value, float)'))
     return suite
 
 

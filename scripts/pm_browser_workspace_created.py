@@ -25,6 +25,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from pm_contract_formats import FormatChecker
 import pm_event_payload_route as body_route
+from pm_ds_tables import Facts
 Draft202012Validator = body_route.StrictValidator
 CONTRACT_PATH = "Plans/browser_workspace_created_contracts.schema.json"
 FIXTURE_PATH = "Plans/browser_workspace_created_contract_fixtures.json"
@@ -126,31 +127,39 @@ def checkpoint_v2_bundle(root=ROOT):
 
 
 def checkpoint_failures(value, *, root=ROOT):
-    if list(Draft202012Validator(checkpoint_bundle(root), format_checker=FormatChecker()).iter_errors(value)):
-        return ["checkpoint_schema"]
+    entry = Facts("cr_checkpoint_entry", chain=True)
+    if entry.stop("CC01_schema", lambda: not list(Draft202012Validator(checkpoint_bundle(root), format_checker=FormatChecker()).iter_errors(value))):
+        return [entry.first_code()]
     # date-time format support is optional in jsonschema installations. Validate
     # the exact timestamp syntax and calendar ourselves before ordering instants.
-    try:
-        instants = {}
-        for field in ("updated_at_utc", "withdrawn_at_utc"):
-            if value[field] is None:
-                continue
-            if not re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})", value[field]):
-                return ["checkpoint_schema"]
-            instants[field] = datetime.fromisoformat(value[field].replace("Z", "+00:00"))
-    except (TypeError, ValueError):
-        return ["checkpoint_schema"]
-    failures = []
-    if value["scope_partition"] != scope_partition(value["project_id"]):
-        failures.append("checkpoint_scope_partition")
-    cursor = value["source_cursor"]
-    if cursor is not None and (value["first_retained_sequence_id"] > value["index_through_sequence_id"]
-                               or cursor["last_sequence_id"] != value["index_through_sequence_id"]):
-        failures.append("checkpoint_range_or_cursor")
-    if value["withdrawn_at_utc"] is not None and instants["withdrawn_at_utc"] > instants["updated_at_utc"]:
-        failures.append("withdrawal_after_observation")
-    return failures
+    instants = {}
 
+    def grammar(field):
+        return value[field] is None or re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})", value[field]) is not None
+
+    def calendar(field):
+        if value[field] is None:
+            return True
+        try:
+            instants[field] = datetime.fromisoformat(value[field].replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            return False
+        return True
+
+    for row, check in (("CC02_updated_grammar", lambda: grammar("updated_at_utc")),
+                       ("CC03_updated_calendar", lambda: calendar("updated_at_utc")),
+                       ("CC04_withdrawn_grammar", lambda: grammar("withdrawn_at_utc")),
+                       ("CC05_withdrawn_calendar", lambda: calendar("withdrawn_at_utc"))):
+        if entry.stop(row, check):
+            return [entry.first_code()]
+    entry.done()
+    cursor = value["source_cursor"]
+    facts = Facts("cr_checkpoint")
+    facts["CC06_scope_partition"] = value["scope_partition"] == scope_partition(value["project_id"])
+    facts["CC07_range_order"] = cursor is None or value["first_retained_sequence_id"] <= value["index_through_sequence_id"]
+    facts["CC08_cursor_through"] = cursor is None or cursor["last_sequence_id"] == value["index_through_sequence_id"]
+    facts["CC09_withdrawal_order"] = value["withdrawn_at_utc"] is None or instants["withdrawn_at_utc"] <= instants["updated_at_utc"]
+    return facts.codes()
 
 def expected_storage_family(root=ROOT):
     """SP-266's one derived family, whose current definition is the v2 value (authored 2026-09-25).
@@ -206,10 +215,14 @@ def creation_preflight_failures(event, request, result, witness, *, root=ROOT, r
     """Compare resolved-value fixtures; never trust ref text as real resolution."""
     # Reuse the shared Browser envelope/payload validator, without giving this
     # synthetic preflight or an unadmitted candidate EventRecord authority.
-    if not isinstance(witness, dict):
-        return ["creation_witness_schema"]
+    entry = Facts("cr_preflight_entry", chain=True)
+    if entry.stop("CR00_witness_object", lambda: isinstance(witness, dict)):
+        return [entry.first_code()]
+    entry.done()
     gate, context = candidate_gate(root)
     candidate_errors = gate.candidate_failures(event, witness.get("producer_component"), context, payload_store=payload_store)
+    # Shape preconditions of the joins below: the shared candidate rows above have
+    # already refused every input these returns protect (envelope/payload schema).
     if not isinstance(event, dict):
         return candidate_errors
     event, _ = body_route.resolved_event(event, payload_store)
@@ -218,71 +231,71 @@ def creation_preflight_failures(event, request, result, witness, *, root=ROOT, r
     if not isinstance(event["payload"].get("context"), dict) or not isinstance(event["payload"].get("facts"), dict):
         return candidate_errors
     owner = load("Plans/section15_browser_program_contracts.schema.json", root)
-    for kind, value in (("browser_command_request", request), ("browser_command_result", result)):
+    schemas = Facts("cr_preflight_schemas", chain=True)
+    for row, kind, value in (("CR0A_request_schema", "browser_command_request", request),
+                             ("CR0B_result_schema", "browser_command_result", result)):
         schema = {"$ref": "#/$defs/" + kind, "$defs": owner["$defs"]}
-        if list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(value)):
-            return [kind + "_schema"]
+        if schemas.stop(row, lambda: not list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(value))):
+            return [schemas.first_code()]
+    schemas.done()
     payload = event.get("payload", {})
     context = payload.get("context", {})
     facts = payload.get("facts", {})
-    failures = list(candidate_errors)
-    if event.get("event_type") != EVENT_TYPE or payload.get("event_type") != EVENT_TYPE:
-        failures.append("wrong_creation_event")
-    if facts.get("workspace_state") != "created" or facts.get("prior_workspace_generation") is not None:
-        failures.append("not_new_workspace_identity")
-    if any(context.get(field) is None for field in SUBJECT):
-        failures.append("creation_subject_missing")
-    if (context.get("run_id") is None) != (context.get("attempt_id") is None):
-        failures.append("creation_run_attempt_mismatch")
-    for value in (request, result):
-        scope = value["scope"]
-        if scope["command_id"] != "cmd.browser.workspace.create":
-            failures.append("creation_command_mismatch")
-        if any(scope["lineage"].get(field) != context.get(field) for field in LINEAGE):
-            failures.append("creation_lineage_mismatch")
-        if scope["browser_session_id"] != context.get("browser_session_id") or scope["session_security_class"] != "ordinary":
-            failures.append("creation_session_mismatch")
-    if result["scope"].get("browser_workspace_id") != context.get("browser_workspace_id"):
-        failures.append("creation_result_workspace_mismatch")
-    if context.get("node_id") != witness.get("node_id"):
-        failures.append("creation_node_lineage_mismatch")
-    if any(result["scope"].get(field) != value for field, value in request["scope"].items() if field != "browser_workspace_id"):
-        failures.append("creation_request_result_scope_mismatch")
-    if request["scope"].get("browser_workspace_id", context.get("browser_workspace_id")) != context.get("browser_workspace_id"):
-        failures.append("creation_request_workspace_mismatch")
-    if result["command_instance_id"] != request["command_instance_id"] or result["command_instance_id"] != witness.get("command_instance_id"):
-        failures.append("creation_command_instance_mismatch")
-    if request["idempotency_key"] != event.get("idempotency_key") or request["idempotency_key"] != witness.get("idempotency_key"):
-        failures.append("creation_idempotency_mismatch")
-    if result["outcome"] != "succeeded" or result["effect_state"] != "effects_reconciled":
-        failures.append("creation_not_successful_reconciled")
-    refs = (
-        (payload.get("owner_record_ref"), witness.get("owner_record_ref")),
-        (payload.get("transition_receipt_ref"), witness.get("transition_receipt_ref")),
-        (result.get("dispatch_receipt_ref"), witness.get("transition_receipt_ref")),
-        (payload.get("permission_snapshot_ref"), request["permission_snapshot_ref"]),
-        (payload.get("permission_snapshot_ref"), witness.get("permission_snapshot_ref")),
-        (payload.get("capability_snapshot_ref"), witness.get("capability_snapshot_ref")),
-        (request["filesafe_decision_ref"], witness.get("filesafe_decision_ref")),
-        (request["scope"].get("workspace_policy_ref"), witness.get("workspace_policy_ref")),
-        (request["scope"].get("capability_profile_id"), witness.get("capability_profile_id")),
-    )
-    if any(not left or left != right for left, right in refs):
-        failures.append("creation_resolved_reference_mismatch")
-    if not witness.get("workspace_ref") or witness["workspace_ref"] not in result["result_refs"]:
-        failures.append("creation_workspace_result_ref_missing")
-    if witness.get("workspace_id") != context.get("browser_workspace_id") or type(witness.get("workspace_generation")) is not int or witness.get("workspace_generation") != facts.get("workspace_generation"):
-        failures.append("creation_committed_identity_mismatch")
-    if witness.get("producer_component") != "BrowserRuntimeService.workspace":
-        failures.append("creation_producer_mismatch")
-    fields = ["producer_authenticated", "permission_current", "filesafe_allowed", "capability_current", "scope_current"]
-    if require_new_identity:
-        fields.extend(("unused_workspace_identity", "resource_isolated", "resource_unexposed"))
-    for field in fields:
-        if witness.get(field) is not True:
-            failures.append("creation_witness:" + field)
-    return sorted(set(failures))
-
+    rs, xs = request["scope"], result["scope"]
+    generation = witness.get("workspace_generation")
+    f = Facts("cr_preflight")
+    f["CR01_event_type"] = event.get("event_type") == EVENT_TYPE
+    f["CR02_payload_event_type"] = payload.get("event_type") == EVENT_TYPE
+    f["CR03_workspace_state_created"] = facts.get("workspace_state") == "created"
+    f["CR04_no_prior_generation"] = facts.get("prior_workspace_generation") is None
+    f["CR05_subject_present"] = [field for field in SUBJECT if context.get(field) is None] == []
+    f["CR06_run_attempt_paired"] = (context.get("run_id") is None) == (context.get("attempt_id") is None)
+    f["CR07_request_command"] = rs["command_id"] == "cmd.browser.workspace.create"
+    f["CR08_result_command"] = xs["command_id"] == "cmd.browser.workspace.create"
+    f["CR09_request_lineage"] = [field for field in LINEAGE if rs["lineage"].get(field) != context.get(field)] == []
+    f["CR10_result_lineage"] = [field for field in LINEAGE if xs["lineage"].get(field) != context.get(field)] == []
+    f["CR11_request_session"] = rs["browser_session_id"] == context.get("browser_session_id")
+    f["CR12_request_security_class"] = rs["session_security_class"] == "ordinary"
+    f["CR13_result_session"] = xs["browser_session_id"] == context.get("browser_session_id")
+    f["CR14_result_security_class"] = xs["session_security_class"] == "ordinary"
+    f["CR15_result_workspace"] = xs.get("browser_workspace_id") == context.get("browser_workspace_id")
+    f["CR16_node_lineage"] = context.get("node_id") == witness.get("node_id")
+    f["CR17_request_result_scope"] = [field for field, value in rs.items()
+                                      if field != "browser_workspace_id" and xs.get(field) != value] == []
+    f["CR18_request_workspace"] = rs.get("browser_workspace_id", context.get("browser_workspace_id")) == context.get("browser_workspace_id")
+    f["CR19_result_instance"] = result["command_instance_id"] == request["command_instance_id"]
+    f["CR20_witness_instance"] = result["command_instance_id"] == witness.get("command_instance_id")
+    f["CR21_event_idempotency"] = request["idempotency_key"] == event.get("idempotency_key")
+    f["CR22_witness_idempotency"] = request["idempotency_key"] == witness.get("idempotency_key")
+    f["CR23_result_succeeded"] = result["outcome"] == "succeeded"
+    f["CR24_result_reconciled"] = result["effect_state"] == "effects_reconciled"
+    for row, left, right in (
+            ("CR25_owner_record_ref", payload.get("owner_record_ref"), witness.get("owner_record_ref")),
+            ("CR26_transition_receipt_ref", payload.get("transition_receipt_ref"), witness.get("transition_receipt_ref")),
+            ("CR27_dispatch_receipt_ref", result.get("dispatch_receipt_ref"), witness.get("transition_receipt_ref")),
+            ("CR28_request_permission_ref", payload.get("permission_snapshot_ref"), request["permission_snapshot_ref"]),
+            ("CR29_witness_permission_ref", payload.get("permission_snapshot_ref"), witness.get("permission_snapshot_ref")),
+            ("CR30_capability_snapshot_ref", payload.get("capability_snapshot_ref"), witness.get("capability_snapshot_ref")),
+            ("CR31_filesafe_decision_ref", request["filesafe_decision_ref"], witness.get("filesafe_decision_ref")),
+            ("CR32_workspace_policy_ref", rs.get("workspace_policy_ref"), witness.get("workspace_policy_ref")),
+            ("CR33_capability_profile_id", rs.get("capability_profile_id"), witness.get("capability_profile_id"))):
+        f[row] = bool(left) and left == right
+    f["CR34_workspace_ref_present"] = bool(witness.get("workspace_ref"))
+    f["CR35_workspace_ref_result"] = not witness.get("workspace_ref") or witness["workspace_ref"] in result["result_refs"]
+    f["CR36_witness_workspace_id"] = witness.get("workspace_id") == context.get("browser_workspace_id")
+    f["CR37_witness_generation_type"] = type(generation) is int
+    f["CR38_witness_generation"] = type(generation) is not int or generation == facts.get("workspace_generation")
+    f["CR39_producer"] = witness.get("producer_component") == "BrowserRuntimeService.workspace"
+    for row, field, applies in (("CR40_producer_authenticated", "producer_authenticated", True),
+                                ("CR41_permission_current", "permission_current", True),
+                                ("CR42_filesafe_allowed", "filesafe_allowed", True),
+                                ("CR43_capability_current", "capability_current", True),
+                                ("CR44_scope_current", "scope_current", True),
+                                ("CR45_unused_workspace_identity", "unused_workspace_identity", require_new_identity),
+                                ("CR46_resource_isolated", "resource_isolated", require_new_identity),
+                                ("CR47_resource_unexposed", "resource_unexposed", require_new_identity)):
+        f[row] = not applies or witness.get(field) is True
+    return sorted(set(list(candidate_errors) + f.codes()))
 
 class CreationOracle:
     """Synthetic barrier model; append_count counts only known commits.
@@ -301,30 +314,39 @@ class CreationOracle:
         self.published_count = 0
 
     def create(self, event, request, result, witness, append_outcome, *, admitted, payload_store=None):
-        if admitted is not True or creation_preflight_failures(event, request, result, witness, require_new_identity=False, payload_store=payload_store):
-            return "rejected_no_append"
+        f = Facts("cr_create", chain=True)
+        if f.stop("CO01_admitted", lambda: admitted is True):
+            return f.first_code()
+        if f.stop("CO02_preflight", lambda: not creation_preflight_failures(event, request, result, witness, require_new_identity=False, payload_store=payload_store)):
+            return f.first_code()
         semantic = self.semantic_digest(event)
         key = (scope_partition(event["project_id"]), EVENT_TYPE, event["idempotency_key"])
         event_id = event["event_id"]
-        if event_id in self.events and self.events[event_id] != semantic:
-            return "idempotency_conflict"
+        if f.stop("CO03_event_identity", lambda: event_id not in self.events or self.events[event_id] == semantic):
+            return f.first_code()
+        if f.stop("CO04_committed_identity", lambda: key not in self.committed or self.committed[key]["digest"] == semantic):
+            return f.first_code()
         if key in self.committed:
-            return "original_result_no_effect" if self.committed[key]["digest"] == semantic else "idempotency_conflict"
-        if key in self.pending:
-            return "uncertain_original_requires_resolution"
-        if creation_preflight_failures(event, request, result, witness, payload_store=payload_store):
-            return "rejected_no_append"
+            f.done()
+            return "original_result_no_effect"
+        if f.stop("CO05_not_pending", lambda: key not in self.pending):
+            return f.first_code()
+        if f.stop("CO06_preflight_new_identity", lambda: not creation_preflight_failures(event, request, result, witness, payload_store=payload_store)):
+            return f.first_code()
         resolved, _ = body_route.resolved_event(event, payload_store)
         workspace = (event["project_id"], resolved["payload"]["context"]["browser_workspace_id"])
-        if workspace in self.workspace_ids:
-            return "workspace_identity_already_committed"
+        if f.stop("CO07_workspace_unused", lambda: workspace not in self.workspace_ids):
+            return f.first_code()
         if append_outcome == "failed":
+            f.done()
             return "unexposed_resource_disposed_no_append"
         if append_outcome == "unknown":
+            f.done()
             self.pending[key] = {"digest": semantic, "event_id": event_id, "workspace": workspace}
             return "unexposed_resource_fenced_unknown_append"
-        if append_outcome not in ("committed", "committed_ack_lost"):
-            return "invalid_append_outcome"
+        if f.stop("CO08_append_outcome", lambda: append_outcome in ("committed", "committed_ack_lost")):
+            return f.first_code()
+        f.done()
         self.committed[key] = {"digest": semantic, "event_id": event_id, "result": copy.deepcopy(result)}
         self.events[event_id] = semantic
         self.workspace_ids.add(workspace)
@@ -333,7 +355,6 @@ class CreationOracle:
             return "committed_original_ack_lost"
         self.published_count += 1
         return "creation_committed_and_published"
-
 
 class CheckpointOracle:
     """Synthetic filtered checkpoint transaction and separately fenced disclosure."""
@@ -345,74 +366,88 @@ class CheckpointOracle:
         self.runtime_effect_count = 0
 
     def advance(self, candidate, observation):
-        if checkpoint_failures(candidate):
-            return "checkpoint_rejected_without_advance"
-        if self.checkpoint is not None and checkpoint_failures(self.checkpoint):
-            return "checkpoint_invalid_requires_governed_rebuild"
-        if candidate["state"] == "withdrawn" or (self.checkpoint and self.checkpoint["state"] == "withdrawn"):
-            return "withdrawn_without_advance"
-        if not candidate["filter_complete"]:
-            return "filter_incomplete_without_advance"
-        for field in ("index_published", "range_complete", "source_verified", "dedupe_verified",
-                      "access_allowed", "deletion_allows_audit", "binding_supported", "before_commit_fence_current"):
-            if observation.get(field) is not True:
-                return "source_or_fence_unavailable_without_advance"
+        f = Facts("cr_advance", chain=True)
         expected = observation.get("resolved_checkpoint_fields", {})
-        for field in ("storage_instance_id", "project_id", "scope_partition", "index_checkpoint_ref",
-                      "current_selection_sha256", "first_retained_sequence_id", "index_through_sequence_id", "source_cursor", "health"):
-            if field not in expected or candidate[field] != expected[field]:
-                return "source_identity_mismatch_without_advance"
-        if candidate["source_cursor"] is None and observation.get("empty_range_verified") is not True:
-            return "empty_range_unproved_without_advance"
-        if observation.get("prior_checkpoint_sha256") != (digest(self.checkpoint) if self.checkpoint is not None else None):
-            return "checkpoint_cas_conflict_without_advance"
-        if self.checkpoint is not None:
-            prior_cursor, next_cursor = self.checkpoint["source_cursor"], candidate["source_cursor"]
-            if prior_cursor and (not next_cursor or next_cursor["last_sequence_id"] < prior_cursor["last_sequence_id"]):
-                return "cursor_regression_requires_governed_rebuild"
-            if self.checkpoint["storage_instance_id"] != candidate["storage_instance_id"] or self.checkpoint["scope_partition"] != candidate["scope_partition"]:
-                return "checkpoint_scope_change_without_advance"
+        checks = [("CA01_candidate_valid", lambda: not checkpoint_failures(candidate)),
+                  ("CA02_stored_valid", lambda: self.checkpoint is None or not checkpoint_failures(self.checkpoint)),
+                  ("CA03_candidate_not_withdrawn", lambda: candidate["state"] != "withdrawn"),
+                  ("CA04_stored_not_withdrawn", lambda: not (self.checkpoint and self.checkpoint["state"] == "withdrawn")),
+                  ("CA05_filter_complete", lambda: bool(candidate["filter_complete"]))]
+        for number, field in enumerate(("index_published", "range_complete", "source_verified", "dedupe_verified",
+                                        "access_allowed", "deletion_allows_audit", "binding_supported",
+                                        "before_commit_fence_current"), 6):
+            checks.append((f"CA{number:02d}_{field}", lambda field=field: observation.get(field) is True))
+        for number, field in enumerate(("storage_instance_id", "project_id", "scope_partition", "index_checkpoint_ref",
+                                        "current_selection_sha256", "first_retained_sequence_id", "index_through_sequence_id",
+                                        "source_cursor", "health"), 14):
+            checks.append((f"CA{number:02d}_resolved_{field}", lambda field=field: field in expected and candidate[field] == expected[field]))
+        checks += [("CA23_empty_range_verified", lambda: candidate["source_cursor"] is not None or observation.get("empty_range_verified") is True),
+                   ("CA24_prior_cas", lambda: observation.get("prior_checkpoint_sha256") == (digest(self.checkpoint) if self.checkpoint is not None else None)),
+                   ("CA25_cursor_not_regressed", lambda: self.checkpoint is None or not (
+                       self.checkpoint["source_cursor"] and (not candidate["source_cursor"] or
+                       candidate["source_cursor"]["last_sequence_id"] < self.checkpoint["source_cursor"]["last_sequence_id"]))),
+                   ("CA26_storage_unchanged", lambda: self.checkpoint is None or self.checkpoint["storage_instance_id"] == candidate["storage_instance_id"]),
+                   ("CA27_partition_unchanged", lambda: self.checkpoint is None or self.checkpoint["scope_partition"] == candidate["scope_partition"])]
+        for row, check in checks:
+            if f.stop(row, check):
+                return f.first_code()
+        f.done()
         self.checkpoint = copy.deepcopy(candidate)
         self.commit_count += 1
         return "checkpoint_committed_no_runtime_effect"
 
     def disclose(self, expected_checkpoint_digest, *, current_token, access_allowed, deletion_allows_audit):
-        if (self.checkpoint is None or checkpoint_failures(self.checkpoint)
-                or self.checkpoint["state"] == "withdrawn" or not self.checkpoint["filter_complete"]
-                or any(v is not True for v in (current_token, access_allowed, deletion_allows_audit))
-                or expected_checkpoint_digest != digest(self.checkpoint)):
-            return "read_unavailable_no_disclosure"
+        f = Facts("cr_disclose", chain=True)
+        for row, check in (("DI01_checkpoint_present", lambda: self.checkpoint is not None),
+                           ("DI02_checkpoint_valid", lambda: not checkpoint_failures(self.checkpoint)),
+                           ("DI03_not_withdrawn", lambda: self.checkpoint["state"] != "withdrawn"),
+                           ("DI04_filter_complete", lambda: bool(self.checkpoint["filter_complete"])),
+                           ("DI05_current_token", lambda: current_token is True),
+                           ("DI06_access_allowed", lambda: access_allowed is True),
+                           ("DI07_deletion_allows_audit", lambda: deletion_allows_audit is True),
+                           ("DI08_checkpoint_digest", lambda: expected_checkpoint_digest == digest(self.checkpoint))):
+            if f.stop(row, check):
+                return f.first_code()
+        f.done()
         self.disclosure_count += 1
         return "historical_fact_no_runtime_authority"
 
     def withdraw(self, at_utc):
-        if self.checkpoint is None:
-            return "checkpoint_missing_no_withdrawal"
-        if checkpoint_failures(self.checkpoint):
-            return "invalid_withdrawal"
-        if self.checkpoint["state"] == "withdrawn":
-            return "already_withdrawn_original_anchor"
+        f = Facts("cr_withdraw", chain=True)
+        if f.stop("WD01_checkpoint_present", lambda: self.checkpoint is not None):
+            return f.first_code()
+        if f.stop("WD02_checkpoint_valid", lambda: not checkpoint_failures(self.checkpoint)):
+            return f.first_code()
+        if f.stop("WD03_not_withdrawn", lambda: self.checkpoint["state"] != "withdrawn"):
+            return f.first_code()
         candidate = copy.deepcopy(self.checkpoint)
         candidate.update(state="withdrawn", withdrawn_at_utc=at_utc, updated_at_utc=at_utc)
-        if checkpoint_failures(candidate):
-            return "invalid_withdrawal"
-        if datetime.fromisoformat(at_utc.replace("Z", "+00:00")) < datetime.fromisoformat(self.checkpoint["updated_at_utc"].replace("Z", "+00:00")):
-            return "invalid_withdrawal"
+        if f.stop("WD04_candidate_valid", lambda: not checkpoint_failures(candidate)):
+            return f.first_code()
+        if f.stop("WD05_not_before_observation", lambda: datetime.fromisoformat(at_utc.replace("Z", "+00:00")) >= datetime.fromisoformat(self.checkpoint["updated_at_utc"].replace("Z", "+00:00"))):
+            return f.first_code()
+        f.done()
         self.checkpoint = candidate
         return "withdrawn_publication_fenced"
-
 
 def workspace_history_fact(event, subject, *, source_verified, access_allowed,
                            deletion_allows_audit, checkpoint_read_token_valid, root=ROOT, payload_store=None, historical_source=None):
     """One synthetic read join, never whole-range completeness or live state."""
     refused = {"outcome": "read_unavailable", "fact": None, "current_runtime_authority": False}
-    if not all(value is True for value in (source_verified, access_allowed, deletion_allows_audit, checkpoint_read_token_valid)):
-        return refused
-    if not isinstance(subject, dict) or set(subject) != set(SUBJECT) or any(not isinstance(subject[field], str) or not subject[field] for field in SUBJECT):
-        return refused
     gate, context = candidate_gate(root)
-    if gate.candidate_failures(event, "BrowserRuntimeService.workspace", context, payload_store=payload_store, historical=True, historical_source=historical_source) or event["event_type"] != EVENT_TYPE:
-        return refused
+    f = Facts("cr_history", chain=True)
+    for row, check in (("HF01_source_verified", lambda: source_verified is True),
+                       ("HF02_access_allowed", lambda: access_allowed is True),
+                       ("HF03_deletion_allows_audit", lambda: deletion_allows_audit is True),
+                       ("HF04_read_token_valid", lambda: checkpoint_read_token_valid is True),
+                       ("HF05_subject_object", lambda: isinstance(subject, dict)),
+                       ("HF06_subject_fields", lambda: set(subject) == set(SUBJECT)),
+                       ("HF07_subject_values", lambda: [field for field in SUBJECT if not isinstance(subject[field], str) or not subject[field]] == []),
+                       ("HF08_retained_candidate", lambda: not gate.candidate_failures(event, "BrowserRuntimeService.workspace", context, payload_store=payload_store, historical=True, historical_source=historical_source)),
+                       ("HF09_event_type", lambda: event["event_type"] == EVENT_TYPE)):
+        if f.stop(row, check):
+            return refused
+    f.done()
     event, _ = body_route.resolved_event(event, payload_store, historical=True)
     payload = event["payload"]
     actual = {field: payload["context"][field] for field in SUBJECT}
@@ -432,43 +467,43 @@ def binding_failures(row, *, root=ROOT):
     The current binding is the v2 one (SP-266's successor, admitted under DL-046). The v1 binding in
     the v1 contracts schema stays as compatibility custody and no longer authorizes the admission row.
     """
-    if row["event_type"] != EVENT_TYPE:
-        return ["complete_browser_authority_binding_missing"]
+    entry = Facts("cr_binding_entry", chain=True)
+    if entry.stop("BF01_event_type", lambda: row["event_type"] == EVENT_TYPE):
+        return [entry.first_code()]
+    entry.done()
     binding = load(V2_SCHEMA_PATH, root)["x-pm-event-authority-binding"]
     expected = expected_binding(root)
-    failures = []
-    if binding != expected:
-        failures.append("exact_browser_authority_binding_mismatch")
-    if load(V2_SCHEMA_PATH, root).get("x-pm-definition-status") != expected["definition_status"]:
-        failures.append("browser_checkpoint_successor_not_current")
-    if row.get("authority_contract_ref") != V2_SCHEMA_PATH + "#/x-pm-event-authority-binding":
-        failures.append("browser_authority_contract_ref_missing_or_mismatched")
-    if row["semantic_owner_ref"] != expected["semantic_owner_ref"]:
-        failures.append("browser_exact_semantic_owner_ref_mismatch")
-    if row["retention_policy_ref"] != {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-AUTHORITY-INDEFINITE", "policy_version": VERSION}:
-        failures.append("browser_source_retention_binding_mismatch")
-    if not {expected["semantic_owner_ref"], expected["storage_owner_ref"]} <= set(row["consumer_contract_refs"]):
-        failures.append("browser_exact_consumer_owner_refs_missing")
-    if row["producer_component"] != expected["producer_component"] or row["payload_schema_ref"]["schema_id"] != expected["source_payload_schema_id"]:
-        failures.append("browser_authority_source_join_mismatch")
+    f = Facts("cr_binding")
+    f["BF02_schema_binding"] = binding == expected
+    f["BF03_definition_status"] = load(V2_SCHEMA_PATH, root).get("x-pm-definition-status") == expected["definition_status"]
+    f["BF04_contract_ref"] = row.get("authority_contract_ref") == V2_SCHEMA_PATH + "#/x-pm-event-authority-binding"
+    f["BF05_semantic_owner"] = row["semantic_owner_ref"] == expected["semantic_owner_ref"]
+    f["BF06_source_retention"] = row["retention_policy_ref"] == {"registry_schema_id": "pm.storage_value_registry.v2", "policy_id": "RP-AUTHORITY-INDEFINITE", "policy_version": VERSION}
+    f["BF07_consumer_refs"] = {expected["semantic_owner_ref"], expected["storage_owner_ref"]} <= set(row["consumer_contract_refs"])
+    f["BF08_producer"] = row["producer_component"] == expected["producer_component"]
+    f["BF09_payload_schema_id"] = row["payload_schema_ref"]["schema_id"] == expected["source_payload_schema_id"]
+    failures = f.codes()
     registry = load("Plans/storage_value_registry.json", root)
     families = [family for family in registry["families"] if family["family_id"] == CHECKPOINT_FAMILY]
-    if len(families) != 1:
-        return failures + ["browser_checkpoint_family_missing_or_duplicate"]
+    unique = Facts("cr_binding_family", chain=True)
+    if unique.stop("BF10_family_unique", lambda: len(families) == 1):
+        return failures + [unique.first_code()]
+    unique.done()
     family = families[0]
-    if family != expected_storage_family(root):
-        failures.append("browser_checkpoint_family_disposition_mismatch")
-    if (family["value_schema"] != checkpoint_v2_bundle(root)
-            or family["value_schema_ref"] != V2_SCHEMA_PATH + "#/$defs/checkpoint"
-            or family["value_schema_id"] != expected["checkpoint_schema_id"]
-            or family["schema_version"] != VERSION_V2 or family["key_shape"] != expected["checkpoint_key"]
-            or family["producer"] != [PROJECTOR_V2 + "@" + VERSION_V2]
-            or family["consumers"] != [CONSUMER_V2 + "@" + VERSION_V2]
-            or family["owner_doc"] != expected["storage_owner_ref"]
-            or family["retention_policy_ref"] != expected["checkpoint_retention_policy_id"]):
-        failures.append("browser_checkpoint_family_binding_mismatch")
-    return failures
-
+    disposition = Facts("cr_binding_disposition")
+    disposition["BF11_family_disposition"] = family == expected_storage_family(root)
+    failures += disposition.codes()
+    joins = Facts("cr_binding_family_joins")
+    joins["BF12_value_schema"] = family["value_schema"] == checkpoint_v2_bundle(root)
+    joins["BF13_value_schema_ref"] = family["value_schema_ref"] == V2_SCHEMA_PATH + "#/$defs/checkpoint"
+    joins["BF14_value_schema_id"] = family["value_schema_id"] == expected["checkpoint_schema_id"]
+    joins["BF15_schema_version"] = family["schema_version"] == VERSION_V2
+    joins["BF16_key_shape"] = family["key_shape"] == expected["checkpoint_key"]
+    joins["BF17_producer"] = family["producer"] == [PROJECTOR_V2 + "@" + VERSION_V2]
+    joins["BF18_consumers"] = family["consumers"] == [CONSUMER_V2 + "@" + VERSION_V2]
+    joins["BF19_owner_doc"] = family["owner_doc"] == expected["storage_owner_ref"]
+    joins["BF20_retention_policy"] = family["retention_policy_ref"] == expected["checkpoint_retention_policy_id"]
+    return failures + joins.codes()
 
 def validate_fixture_contracts(*, root=ROOT):
     """Run explicit static positive/negative joins, not independent native proof."""

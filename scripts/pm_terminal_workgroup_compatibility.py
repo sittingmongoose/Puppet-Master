@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 from pm_home_layout_v2_slot_receipt import Home4Validator, Registry, Resource, ref_closure, refuse_remote
 from pm_ds_resources import memory_floor
+from pm_ds_tables import Facts
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = 'Plans/event_payloads/terminal_workgroup_moved.schema.json'
@@ -19,54 +20,58 @@ def payload_validator(schema):
     Home4Validator.check_schema(schema)
     registry = Registry(retrieve=refuse_remote).with_resource(schema['$id'], Resource.from_contents(schema))
     _, _, unresolved = ref_closure(registry, schema['$id'])
-    if unresolved:
+    closure = Facts('term_schema', chain=True)
+    if closure.stop('TS01_refs_resolved', lambda: not unresolved):
         raise ValueError('unresolved retained schema reference: ' + repr(unresolved))
+    closure.done()
     return Home4Validator(schema, registry=registry)
-
 
 def retained_errors(value, validator):
     """Compare synthetic before/after saved bytes, without publishing their content."""
-    errors = []
-    if value['payload_schema_id'] != validator.schema['$id']:
-        errors.append('selected_schema_unknown')
-    try:
-        original = bytes.fromhex(value['original_bytes_hex'])
-        retained = bytes.fromhex(value['retained_bytes_hex'])
-        payload = json.loads(original)
-    except (ValueError, UnicodeDecodeError):
-        return errors + ['saved_bytes_invalid']
-    if retained != original:
-        errors.append('retained_bytes_changed')
-    if value['retention_policy'] != POLICY:
-        errors.append('retention_changed')
-    if not validator.is_valid(payload):
-        errors.append('saved_payload_schema')
-    elif payload['source_terminal_section_id'] == payload['target_terminal_section_id']:
-        errors.append('saved_move_sections_not_distinct')
-    return errors
+    decoded = {}
 
+    def hex_bytes(name):
+        try:
+            decoded[name] = bytes.fromhex(value[name + '_bytes_hex'])
+        except ValueError:
+            return False
+        return True
+
+    def json_value():
+        try:
+            decoded['payload'] = json.loads(decoded['original'])
+        except (ValueError, UnicodeDecodeError):
+            return False
+        return True
+
+    facts = Facts('term_retained')
+    facts['TR01_schema_selected'] = value['payload_schema_id'] == validator.schema['$id']
+    readable = hex_bytes('original')
+    facts['TR02_original_hex'] = readable
+    readable = readable and hex_bytes('retained')
+    facts['TR03_retained_hex'] = not facts.values['TR02_original_hex'] or readable
+    parsed = readable and json_value()
+    facts['TR04_original_json'] = not readable or parsed
+    facts['TR05_bytes_unchanged'] = not parsed or decoded['retained'] == decoded['original']
+    facts['TR06_retention_policy'] = not parsed or value['retention_policy'] == POLICY
+    schema_valid = parsed and validator.is_valid(decoded['payload'])
+    facts['TR07_payload_schema'] = not parsed or schema_valid
+    facts['TR08_sections_distinct'] = not schema_valid or (
+        decoded['payload']['source_terminal_section_id'] != decoded['payload']['target_terminal_section_id'])
+    return facts.codes()
 
 def withdrawal_errors(value):
     """Check proposed contract observations; this does not execute a terminal move."""
-    errors = []
-    if EVENT in value['emitted_event_types']:
-        errors.append('withdrawn_event_emitted')
-    if value['dedicated_consumer'] is not None:
-        errors.append('dedicated_consumer_operates')
-    if value['family_projector'] is not None:
-        errors.append('family_projector_operates')
-    if value['family_checkpoint'] != 'none_required':
-        errors.append('family_checkpoint_created')
-    if value['view_required'] is not False:
-        errors.append('new_view_required')
-    if value['view_result_required'] is not False:
-        errors.append('view_result_required')
-    if value['original_move_result_custody_required'] is not False:
-        errors.append('original_move_result_custody_required')
-    if value['obsolete_move_tests_required'] is not False:
-        errors.append('obsolete_move_tests_required')
-    return errors
-
+    facts = Facts('term_withdrawal')
+    facts['TW01_no_emission'] = EVENT not in value['emitted_event_types']
+    facts['TW02_no_consumer'] = value['dedicated_consumer'] is None
+    facts['TW03_no_projector'] = value['family_projector'] is None
+    facts['TW04_no_checkpoint'] = value['family_checkpoint'] == 'none_required'
+    facts['TW05_no_view'] = value['view_required'] is False
+    facts['TW06_no_view_result'] = value['view_result_required'] is False
+    facts['TW07_no_move_custody'] = value['original_move_result_custody_required'] is False
+    facts['TW08_no_move_tests'] = value['obsolete_move_tests_required'] is False
+    return facts.codes()
 
 def run(fixtures, schema):
     validator = payload_validator(schema)

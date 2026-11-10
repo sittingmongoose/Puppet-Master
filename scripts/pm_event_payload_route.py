@@ -9,6 +9,7 @@ from jsonschema import Draft202012Validator
 from pm_contract_formats import FormatChecker
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
+from pm_ds_tables import Facts
 from pm_home_layout_v2_slot_receipt import (
     Home4Validator as StrictValidator, canonical_msgpack, decode_canonical_msgpack,
     blake3_hex, ref_closure, refuse_remote,
@@ -41,8 +42,10 @@ def eager(registry, *schemas):
         Draft202012Validator.check_schema(schema)
         reg = registry.with_resource(schema['$id'], Resource(contents=schema, specification=DRAFT202012)).crawl()
         _, _, unresolved = ref_closure(reg, schema['$id'])
-        if unresolved:
+        closure = Facts('route_schema_closure', chain=True)
+        if closure.stop('RS01_refs_resolved', lambda: not unresolved):
             raise ValueError('unresolved_schema_ref: ' + '; '.join(unresolved))
+        closure.done()
         _eager_done.add(key)
 
 def validator(schema, root=ROOT):
@@ -86,78 +89,79 @@ def encode(event, store):
     return event
 
 
-def reference_presence_errors(entry):
-    """Availability predicate; resolution cannot fabricate bytes when this fails."""
-    errors = []
-    if entry is None:
-        errors.append('payload_reference_missing')
-    return errors
-
-
-def reference_metadata_errors(ref, entry):
-    """Validate only an available object's physical claims, before decoding."""
-    if not isinstance(entry, (tuple, list)) or len(entry) != 2 or type(entry[0]) is not str or type(entry[1]) is not bytes:
-        return ['payload_reference_store_type']
-    media, data = entry
-    errors = []
-    if media != ref['media_type']:
-        errors.append('payload_reference_media')
-    if len(data) != ref['byte_size']:
-        errors.append('payload_reference_size')
-    if blake3_hex(data) != ref['blake3_id']:
-        errors.append('payload_reference_hash')
-    return errors
-
-
 def resolved_body(event, store=None, *, historical=False):
     """No reference text is evidence of object resolution. Does not mutate retained bytes."""
-    errors = []
-    if type(historical) is not bool:
-        return None, ['historical_context_type']
-    if not isinstance(event, dict):
-        return None, ['envelope_schema']
+    entry_facts = Facts('route_entry', chain=True)
+    if entry_facts.stop('RE01_historical_bool', lambda: type(historical) is bool):
+        return None, [entry_facts.first_code()]
+    if entry_facts.stop('RE02_event_object', lambda: isinstance(event, dict)):
+        return None, [entry_facts.first_code()]
+    entry_facts.done()
     version = event.get('schema_version')
     if version != '3.0.0':
-        if not historical and event.get('event_type') in ADOPTED:
-            return None, ['envelope_successor_required']
         body = event.get('payload')
-        if event.get('payload_ref') is not None:
-            return None, ['legacy_payload_ref_not_reinterpreted']
-        if not isinstance(body, dict):
-            return None, ['payload_schema']
-        if not historical and len(canonical_msgpack(body)) > INLINE_LIMIT:
-            errors.append('payload_byte_limit')
-        return body, errors
+        legacy = Facts('route_legacy', chain=True)
+        for row, check in (
+                ('RL01_successor_not_required', lambda: historical or event.get('event_type') not in ADOPTED),
+                ('RL02_no_legacy_ref', lambda: event.get('payload_ref') is None),
+                ('RL03_body_object', lambda: isinstance(body, dict))):
+            if legacy.stop(row, check):
+                return None, [legacy.first_code()]
+        if legacy.stop('RL04_inline_limit', lambda: historical or len(canonical_msgpack(body)) <= INLINE_LIMIT):
+            return body, [legacy.first_code()]
+        legacy.done()
+        return body, []
     body, ref = event.get('payload'), event.get('payload_ref')
     if ref is None:
-        if not isinstance(body, dict):
-            return None, ['payload_representation']
-        if len(canonical_msgpack(body)) > INLINE_LIMIT:
-            errors.append('payload_byte_limit')
-        return body, errors
-    if body is not None or not isinstance(ref, dict):
-        return None, ['payload_representation']
+        inline = Facts('route_inline', chain=True)
+        if inline.stop('RI01_body_object', lambda: isinstance(body, dict)):
+            return None, [inline.first_code()]
+        if inline.stop('RI02_inline_limit', lambda: len(canonical_msgpack(body)) <= INLINE_LIMIT):
+            return body, [inline.first_code()]
+        inline.done()
+        return body, []
     ref_schema = json.loads((ROOT / 'Plans/event_record_v3.schema.json').read_text())['$defs']['payload_store_ref']
-    if not StrictValidator(ref_schema).is_valid(ref):
-        return None, ['payload_reference_schema']
-    if store is not None and not isinstance(store, dict):
-        return None, ['payload_reference_store_type']
-    entry = (store or {}).get(ref['blake3_id'])
-    presence = reference_presence_errors(entry)
-    if presence:
-        return None, presence
-    metadata = reference_metadata_errors(ref, entry)
-    if 'payload_reference_store_type' in metadata:
-        return None, metadata
-    media, data = entry
-    errors.extend(metadata)
-    try:
-        body = decode_canonical_msgpack(data)
-    except (ValueError, UnicodeError):
-        return None, errors + ['payload_reference_encoding']
-    if not isinstance(body, dict):
-        return None, errors + ['payload_schema']
-    return body, errors
+    found = {}
+
+    def present():
+        found['entry'] = (store or {}).get(ref['blake3_id'])
+        return found['entry'] is not None
+
+    reference = Facts('route_reference', chain=True)
+    for row, check in (
+            ('RF01_body_null', lambda: body is None),
+            ('RF02_ref_object', lambda: isinstance(ref, dict)),
+            ('RF03_ref_schema', lambda: StrictValidator(ref_schema).is_valid(ref)),
+            ('RF04_store_mapping', lambda: store is None or isinstance(store, dict)),
+            ('RF05_object_present', present),
+            ('RF06_entry_pair', lambda: isinstance(found['entry'], (tuple, list)) and len(found['entry']) == 2),
+            ('RF07_entry_media_type', lambda: type(found['entry'][0]) is str),
+            ('RF08_entry_bytes_type', lambda: type(found['entry'][1]) is bytes)):
+        if reference.stop(row, check):
+            return None, [reference.first_code()]
+    reference.done()
+    media, data = found['entry']
+    claims = Facts('route_reference_claims')
+    claims['RC01_media'] = media == ref['media_type']
+    claims['RC02_size'] = len(data) == ref['byte_size']
+    claims['RC03_hash'] = blake3_hex(data) == ref['blake3_id']
+    errors = claims.codes()
+    decoded = {}
+
+    def canonical():
+        try:
+            decoded['body'] = decode_canonical_msgpack(data)
+        except (ValueError, UnicodeError):
+            return False
+        return True
+
+    decoding = Facts('route_reference_decode', chain=True)
+    if decoding.stop('RD01_canonical_encoding', canonical):
+        return None, errors + [decoding.first_code()]
+    if decoding.stop('RD02_body_object', lambda: isinstance(decoded['body'], dict)):
+        return None, errors + [decoding.first_code()]
+    decoding.done()
+    return decoded['body'], errors
 
 def resolved_event(event, store=None, *, historical=False):
     body, errors = resolved_body(event, store, historical=historical)

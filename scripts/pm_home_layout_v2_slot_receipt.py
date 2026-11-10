@@ -40,6 +40,8 @@ from referencing import Registry, Resource
 from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
 
+from pm_ds_tables import Facts
+
 SCHEMA = "Plans/home_layout_v2_slot_receipt.schema.json"
 FIXTURES = "Plans/home_layout_v2_slot_receipt_fixtures.json"
 STORAGE_REGISTRY = "Plans/storage_value_registry.json"
@@ -450,24 +452,25 @@ class PayloadStore:
 
     def resolve(self, err: list[str], ref: dict[str, Any], what: str) -> bytes | None:
         ident = ref["blake3_id"]
-        if not isinstance(ident, str) or not HEX64.fullmatch(ident):
+        ids = Facts("h4_store_id", chain=True)
+        if ids.stop("H4P01_id_hex64", lambda: isinstance(ident, str) and HEX64.fullmatch(ident) is not None):
             err.append(f"I11 {what} blake3_id is not exactly 64 lower-case hex characters")
             return None
-        if ident not in self.objects:
+        if ids.stop("H4P02_object_exists", lambda: ident in self.objects):
             err.append(f"I11 {what} names a payload-store object that does not exist")
             return None
+        ids.done()
         media, data = self.objects[ident]
-        ok = True
-        if blake3_hex(data) != ident:
-            err.append(f"I11 {what} object bytes do not hash to its BLAKE3 id")
-            ok = False
-        if len(data) != ref["byte_size"]:
-            err.append(f"I11 {what} byte_size {ref['byte_size']} differs from the object's {len(data)} bytes")
-            ok = False
-        if media != ref["media_type"]:
-            err.append(f"I11 {what} media_type differs from the object's")
-            ok = False
-        return data if ok else None
+        claims = Facts("h4_store_object")
+        claims["H4P03_hash"] = blake3_hex(data) == ident
+        claims["H4P04_size"] = len(data) == ref["byte_size"]
+        claims["H4P05_media"] = media == ref["media_type"]
+        message = {"H4P03_hash": f"I11 {what} object bytes do not hash to its BLAKE3 id",
+                   "H4P04_size": f"I11 {what} byte_size {ref['byte_size']} differs from the object's {len(data)} bytes",
+                   "H4P05_media": f"I11 {what} media_type differs from the object's"}
+        refused = claims.rows()
+        err.extend(message[row] for row in refused)
+        return data if not refused else None
 
 
 EMPTY_STORE = PayloadStore({})
@@ -519,12 +522,15 @@ def storage_instance(definition: str, value: dict[str, Any]) -> str:
 
 def value_limit_check(err: list[str], definition: str, value: dict[str, Any], limit: int, by_reference: bool) -> None:
     size = len(stored_bytes(definition, value))
-    if by_reference and size <= limit:
-        err.append(f"I10 a {size}-byte value is within the {limit}-byte limit and is stored inline, never by reference")
-    if not by_reference and size > limit:
-        err.append(f"I10 the complete stored value is {size} bytes, over the {FAMILY[definition]} limit of {limit}; "
-                   "it is stored only by reference")
-
+    facts = Facts("h4_value_limit")
+    facts["H4L01_reference_over_limit"] = not by_reference or size > limit
+    facts["H4L02_inline_within_limit"] = by_reference or size <= limit
+    for row in facts.rows():
+        if row == "H4L01_reference_over_limit":
+            err.append(f"I10 a {size}-byte value is within the {limit}-byte limit and is stored inline, never by reference")
+        else:
+            err.append(f"I10 the complete stored value is {size} bytes, over the {FAMILY[definition]} limit of {limit}; "
+                       "it is stored only by reference")
 
 def layout_history_context_errors(ev: Any, source: Any, custody: Any) -> list[str]:
     """Check the retained adapter observation; caller metadata selects no recipe.
@@ -533,28 +539,34 @@ def layout_history_context_errors(ev: Any, source: Any, custody: Any) -> list[st
     checkpoint adapter, like its source/access flags. This synthetic oracle does
     not authenticate a native Storage frame or receipt.
     """
-    flags = ('source_verified', 'access_allowed', 'deletion_allows_audit', 'checkpoint_read_token_valid')
-    if not isinstance(custody, dict) or any(custody.get(k) is not True for k in flags):
-        return ['layout_historical_custody']
-    if not isinstance(source, dict) or set(source) != {'event_bytes', 'payload_validation_recipe'}:
-        return ['layout_historical_source_missing']
-    if type(source['event_bytes']) is not bytes or source['payload_validation_recipe'] not in (
-            'workspace-layout-v2/original-json-schema', 'workspace-layout-v2/typed-integer'):
-        return ['layout_historical_recipe']
-    if custody.get('retained_source_sha256') != sha(canonical_msgpack(source)):
-        return ['layout_historical_source_commitment']
-    if source['event_bytes'] != canonical_msgpack(ev):
-        return ['layout_historical_source_mismatch']
+    facts = Facts("h4_history", chain=True)
+    for row, check in (
+            ("H4H01_custody_object", lambda: isinstance(custody, dict)),
+            ("H4H02_source_verified", lambda: custody.get("source_verified") is True),
+            ("H4H03_access_allowed", lambda: custody.get("access_allowed") is True),
+            ("H4H04_deletion_allows_audit", lambda: custody.get("deletion_allows_audit") is True),
+            ("H4H05_read_token_valid", lambda: custody.get("checkpoint_read_token_valid") is True),
+            ("H4H06_source_object", lambda: isinstance(source, dict)),
+            ("H4H07_source_fields", lambda: set(source) == {"event_bytes", "payload_validation_recipe"}),
+            ("H4H08_event_bytes_type", lambda: type(source["event_bytes"]) is bytes),
+            ("H4H09_recipe_known", lambda: source["payload_validation_recipe"] in (
+                "workspace-layout-v2/original-json-schema", "workspace-layout-v2/typed-integer")),
+            ("H4H10_source_commitment", lambda: custody.get("retained_source_sha256") == sha(canonical_msgpack(source))),
+            ("H4H11_source_event", lambda: source["event_bytes"] == canonical_msgpack(ev))):
+        if facts.stop(row, check):
+            return [facts.first_code()]
+    facts.done()
     return []
-
 
 def event_checks(err: list[str], ev: dict[str, Any], binding: dict[str, Any], d: str,
                  store: PayloadStore = EMPTY_STORE, *, historical: bool = False,
                  historical_source: Any = None, custody: Any = None) -> dict[str, Any]:
     import pm_event_payload_route as body_route
-    if type(historical) is not bool:
-        err.append('historical_context_type')
+    context = Facts("h4_event_context", chain=True)
+    if context.stop("H4E01_historical_bool", lambda: type(historical) is bool):
+        err.append(context.first_code())
         return {}
+    context.done()
     if historical:
         history_errors = layout_history_context_errors(ev, historical_source, custody)
         if history_errors:
@@ -571,34 +583,35 @@ def event_checks(err: list[str], ev: dict[str, Any], binding: dict[str, Any], d:
     selected = body_route.validator(schema)
     if historical and historical_source['payload_validation_recipe'] == 'workspace-layout-v2/original-json-schema':
         selected = RetainedBodyValidator(schema, registry=selected._registry, format_checker=FormatChecker())
-    if not selected.is_valid(payload):
-        err.append("I12 resolved event body fails workspace layout payload schema")
+    shape = Facts("h4_event_payload", chain=True)
+    if shape.stop("H4E02_payload_schema", lambda: selected.is_valid(payload)):
+        err.append(shape.first_code())
         return {}
-    if payload["command_id"] != binding["command_id"]:
-        err.append("I1 event payload command_id differs from the binding")
-    if ev["project_id"] != binding["project_id"] or payload["project_id"] != binding["project_id"] \
-            or payload["workspace_tab_id"] != binding["workspace_tab_id"]:
-        err.append("I3 event names another Project or workspace tab")
-    if payload["prior_layout_revision"] != binding["expected_layout_revision"] \
-            or payload["new_layout_revision"] != binding["expected_layout_revision"] + 1 \
-            or ev["producer_sequence_id"] != payload["new_layout_revision"]:
-        err.append("I2 event revision edge is not expected -> expected + 1")
-    if payload["correlation_id"] != binding["correlation_id"] or ev["correlation_id"] != binding["correlation_id"] \
-            or payload["interaction_transaction_id"] != binding["interaction_transaction_id"]:
-        err.append("I4 event correlation or interaction differs from the binding")
-    if ev["event_id"] != "evt_workspace_layout_" + d or ev["idempotency_key"] != "workspace.layout_changed:" + d:
-        err.append("I5 event id or idempotency key is not formed from the operation digest")
-    if ev["actor_ref"] != binding["actor_ref"]:
-        err.append("I4 event actor differs from the binding")
+    shape.done()
+    joins = Facts("h4_event_joins")
+    joins["H4J01_command"] = payload["command_id"] == binding["command_id"]
+    joins["H4J02_event_project"] = ev["project_id"] == binding["project_id"]
+    joins["H4J03_payload_project"] = payload["project_id"] == binding["project_id"]
+    joins["H4J04_payload_tab"] = payload["workspace_tab_id"] == binding["workspace_tab_id"]
+    joins["H4J05_prior_revision"] = payload["prior_layout_revision"] == binding["expected_layout_revision"]
+    joins["H4J06_new_revision"] = payload["new_layout_revision"] == binding["expected_layout_revision"] + 1
+    joins["H4J07_producer_sequence"] = ev["producer_sequence_id"] == payload["new_layout_revision"]
+    joins["H4J08_payload_correlation"] = payload["correlation_id"] == binding["correlation_id"]
+    joins["H4J09_event_correlation"] = ev["correlation_id"] == binding["correlation_id"]
+    joins["H4J10_interaction"] = payload["interaction_transaction_id"] == binding["interaction_transaction_id"]
+    joins["H4J11_event_id"] = ev["event_id"] == "evt_workspace_layout_" + d
+    joins["H4J12_idempotency_key"] = ev["idempotency_key"] == "workspace.layout_changed:" + d
+    joins["H4J13_actor"] = ev["actor_ref"] == binding["actor_ref"]
+    err.extend(joins.codes())
     return payload
-
 
 def binding_checks(err: list[str], binding: dict[str, Any]) -> str:
     d = digest(binding)
-    if binding["operation_digest"] != d or binding["operation_ref"] != "home_layout_operation:" + d:
-        err.append("I5 operation digest or ref is not the SP-273 recipe")
+    facts = Facts("h4_binding")
+    facts["H4B01_operation_digest"] = binding["operation_digest"] == d
+    facts["H4B02_operation_ref"] = binding["operation_ref"] == "home_layout_operation:" + d
+    err.extend(facts.codes())
     return d
-
 
 def same_typed_value(left: Any, right: Any) -> bool:
     """Exact decoded JSON domain, including Boolean/integer/float distinctions."""
@@ -616,20 +629,23 @@ def source_bytes_check(err: list[str], name: str, holder: dict[str, Any], layout
     src = holder[name]
     if src is None:
         return
+    size = Facts("h4_source_size")
     if src["form"] == "inline":
         data = base64.b64decode(src["bytes"], validate=True)
-        if len(data) > INLINE_LIMIT:
-            err.append(f"I6 {name} inline bytes exceed 16 KiB; a payload_ref is required")
+        size["H4SB01_inline_within_limit"] = len(data) <= INLINE_LIMIT
+        size["H4SB02_reference_over_limit"] = True
         media = SOURCE_MEDIA_TYPE
     else:
-        if src["byte_size"] <= INLINE_LIMIT:
-            err.append(f"I6 {name} payload_ref names {src['byte_size']} bytes; bytes within 16 KiB are inline")
+        size["H4SB01_inline_within_limit"] = True
+        size["H4SB02_reference_over_limit"] = src["byte_size"] > INLINE_LIMIT
+    for row in size.rows():
+        err.append(f"I6 {name} inline bytes exceed 16 KiB; a payload_ref is required" if row == "H4SB01_inline_within_limit"
+                   else f"I6 {name} payload_ref names {src['byte_size']} bytes; bytes within 16 KiB are inline")
+    if src["form"] != "inline":
         resolved = store.resolve(err, src, name)
         if resolved is None:
             return
         data, media = resolved, src["media_type"]
-    if sha(data) != layout_sha:
-        err.append(f"I6 {name} SHA-256 differs from the layout hash")
     decoded = None
     if media == SOURCE_MEDIA_TYPE:
         try:
@@ -639,9 +655,12 @@ def source_bytes_check(err: list[str], name: str, holder: dict[str, Any], layout
     # The expected layout already passed the exact Home4 schema. Type-first
     # complete equality checks the source in that same domain, without rewriting
     # either original bytes or their physical hashes.
-    if not same_typed_value(decoded, layout):
-        err.append(f"I6 {name} does not decode to the decoded layout (synthetic adapter)")
-
+    content = Facts("h4_source_content")
+    content["H4SB03_sha_matches_layout"] = sha(data) == layout_sha
+    content["H4SB04_decodes_to_layout"] = same_typed_value(decoded, layout)
+    for row in content.rows():
+        err.append(f"I6 {name} SHA-256 differs from the layout hash" if row == "H4SB03_sha_matches_layout"
+                   else f"I6 {name} does not decode to the decoded layout (synthetic adapter)")
 
 def slot_invariants(slot: dict[str, Any], store: PayloadStore = EMPTY_STORE, limit: int = INLINE_LIMIT,
                     by_reference: bool = False) -> list[str]:
@@ -652,49 +671,51 @@ def slot_invariants(slot: dict[str, Any], store: PayloadStore = EMPTY_STORE, lim
         mg = slot["migration_generation"]
         core = prior["core"]
         data = base64.b64decode(prior["core_bytes"], validate=True)
-        if data != canonical_msgpack(core) or prior["core_sha256"] != sha(data):
-            err.append("I7 core_bytes is not the canonical MessagePack of core, or core_sha256 differs")
         key = f"home_layout_transaction_slot.v1:{slot['project_id']}:{slot['workspace_tab_id']}"
-        joins = (prior["logical_key"] == key and prior["storage_instance_id"] == slot["storage_instance_id"]
-                 and core["storage_instance_id"] == slot["storage_instance_id"]
-                 and core["project_id"] == slot["project_id"] and core["workspace_tab_id"] == slot["workspace_tab_id"]
-                 and prior["successor_generation_id"] == mg["generation_id"]
-                 and prior["successor_migration_id"] == mg["migration_id"]
-                 and prior["successor_migration_completed_at_utc"] == mg["migration_completed_at_utc"]
-                 and prior["successor_migration_receipt_key"] == mg["migration_receipt_key"]
-                 and prior["successor_migration_receipt_sha256"] == mg["migration_receipt_sha256"])
-        if not joins:
-            err.append("I9 prior migration wrapper does not join the slot's scope and current migration")
+        wrapper = Facts("h4_slot_migration")
+        wrapper["H4M01_core_bytes_canonical"] = data == canonical_msgpack(core)
+        wrapper["H4M02_core_sha"] = prior["core_sha256"] == sha(data)
+        wrapper["H4M03_logical_key"] = prior["logical_key"] == key
+        wrapper["H4M04_wrapper_storage"] = prior["storage_instance_id"] == slot["storage_instance_id"]
+        wrapper["H4M05_core_storage"] = core["storage_instance_id"] == slot["storage_instance_id"]
+        wrapper["H4M06_core_project"] = core["project_id"] == slot["project_id"]
+        wrapper["H4M07_core_tab"] = core["workspace_tab_id"] == slot["workspace_tab_id"]
+        wrapper["H4M08_successor_generation"] = prior["successor_generation_id"] == mg["generation_id"]
+        wrapper["H4M09_successor_migration"] = prior["successor_migration_id"] == mg["migration_id"]
+        wrapper["H4M10_successor_completed"] = prior["successor_migration_completed_at_utc"] == mg["migration_completed_at_utc"]
+        wrapper["H4M11_successor_receipt_key"] = prior["successor_migration_receipt_key"] == mg["migration_receipt_key"]
+        wrapper["H4M12_successor_receipt_sha"] = prior["successor_migration_receipt_sha256"] == mg["migration_receipt_sha256"]
+        err.extend(wrapper.codes())
     binding = slot["binding"]
     if binding is None:
         return err
     d = binding_checks(err, binding)
-    if binding["storage_instance_id"] != slot["storage_instance_id"] or binding["project_id"] != slot["project_id"] \
-            or binding["workspace_tab_id"] != slot["workspace_tab_id"]:
-        err.append("I3 binding names another Storage instance, Project or workspace tab")
-    for name in ("prior_layout", "candidate_layout"):
-        layout = slot[name]
-        if layout["project_id"] != slot["project_id"] or layout["workspace_tab_id"] != slot["workspace_tab_id"]:
-            err.append(f"I3 {name} belongs to another Project or workspace tab")
-    if slot["prior_layout"]["revision"] != binding["expected_layout_revision"] \
-            or slot["candidate_layout"]["revision"] != binding["expected_layout_revision"] + 1:
-        err.append("I2 slot layouts are not the expected revision and the next one")
+    scope = Facts("h4_slot_scope")
+    scope["H4X01_binding_storage"] = binding["storage_instance_id"] == slot["storage_instance_id"]
+    scope["H4X02_binding_project"] = binding["project_id"] == slot["project_id"]
+    scope["H4X03_binding_tab"] = binding["workspace_tab_id"] == slot["workspace_tab_id"]
+    scope["H4X04_prior_layout_project"] = slot["prior_layout"]["project_id"] == slot["project_id"]
+    scope["H4X05_prior_layout_tab"] = slot["prior_layout"]["workspace_tab_id"] == slot["workspace_tab_id"]
+    scope["H4X06_candidate_layout_project"] = slot["candidate_layout"]["project_id"] == slot["project_id"]
+    scope["H4X07_candidate_layout_tab"] = slot["candidate_layout"]["workspace_tab_id"] == slot["workspace_tab_id"]
+    scope["H4X08_prior_revision"] = slot["prior_layout"]["revision"] == binding["expected_layout_revision"]
+    scope["H4X09_candidate_revision"] = slot["candidate_layout"]["revision"] == binding["expected_layout_revision"] + 1
+    err.extend(scope.codes())
     source_bytes_check(err, "prior_layout_source_bytes", slot, slot["prior_layout"], slot["prior_layout_sha256"], store)
     source_bytes_check(err, "candidate_layout_source_bytes", slot, slot["candidate_layout"], slot["candidate_layout_sha256"], store)
     custody = slot.get("pending_sir_custody")
-    if custody is not None and custody["original_source"]["normalized_request"]["command_id"] != binding["command_id"]:
-        err.append("I1 pending SIR custody names another command")
     rb = slot["readback"]
-    if rb is not None:
-        if rb["canonical_key"] != layout_key(binding):
-            err.append("I3 readback key is not this Project's v2 layout key")
-        if rb["layout_revision"] != slot["candidate_layout"]["revision"] or rb["layout_sha256"] != slot["candidate_layout_sha256"]:
-            err.append("I2 readback does not certify the candidate")
+    readback = Facts("h4_slot_readback")
+    readback["H4X10_custody_command"] = (custody is None or
+        custody["original_source"]["normalized_request"]["command_id"] == binding["command_id"])
+    readback["H4X11_readback_key"] = rb is None or rb["canonical_key"] == layout_key(binding)
+    readback["H4X12_readback_revision"] = rb is None or rb["layout_revision"] == slot["candidate_layout"]["revision"]
+    readback["H4X13_readback_sha"] = rb is None or rb["layout_sha256"] == slot["candidate_layout_sha256"]
+    err.extend(readback.codes())
     ev = slot["event_semantics"]
     if ev is not None:
         event_checks(err, ev, binding, d, store)
     return err
-
 
 def receipt_invariants(r: dict[str, Any], store: PayloadStore = EMPTY_STORE, limit: int = INLINE_LIMIT,
                        by_reference: bool = False) -> list[str]:
@@ -703,60 +724,67 @@ def receipt_invariants(r: dict[str, Any], store: PayloadStore = EMPTY_STORE, lim
     b = r["binding"]
     d = binding_checks(err, b)
     o, dr = r["owner_result"], r["dispatch_receipt"]
-    commands = {b["command_id"], o["command_id"], r["original_normalized_request"]["command_id"]}
-    for key in ("original_command_outcome", "original_ui_response"):
-        if r[key] is not None:
-            commands.add(r[key]["command_id"])
-    if len(commands) != 1:
-        err.append("I1 binding, owner result and original SIR values name different commands")
-    if not (r["prior_layout_revision"] == b["expected_layout_revision"] == o["prior_layout_revision"]):
-        err.append("I2 prior revision differs from the expected revision")
-    if r["state"] in APPLIED:
-        edge = b["expected_layout_revision"] + 1
-        if not (r["new_layout_revision"] == o["new_layout_revision"] == edge and r["readback"]["layout_revision"] == edge):
-            err.append("I2 applied revision edge is not expected -> expected + 1")
-        if r["readback"]["canonical_key"] != layout_key(b):
-            err.append("I3 readback key is not this Project's v2 layout key")
-        if r["readback"]["layout_sha256"] != r["settled_layout_sha256"] or r["settled_layout_ref"] != "home_layout_settlement:" + d:
-            err.append("I4 settlement does not join the readback or the operation digest")
-    if o["operation_ref"] != b["operation_ref"] or o["result_ref"] != "home_layout_result:" + d \
-            or dr["receipt_ref"] != "home_layout_dispatch_receipt:" + d or dr["operation_ref"] != b["operation_ref"]:
-        err.append("I5 result or receipt ref is not formed from the operation digest")
-    if dr["command_result_ref"] != o["result_ref"] or dr["correlation_id"] != b["correlation_id"] \
-            or dr["dispatch_ref"] != b["dispatch_ref"]:
-        err.append("I4 dispatch receipt does not join the result, correlation or dispatch")
+    outcome, response = r["original_command_outcome"], r["original_ui_response"]
+    applied = r["state"] in APPLIED
+    edge = b["expected_layout_revision"] + 1
+    head = Facts("h4_receipt_head")
+    head["H4RC01_owner_command"] = o["command_id"] == b["command_id"]
+    head["H4RC02_request_command"] = r["original_normalized_request"]["command_id"] == b["command_id"]
+    head["H4RC03_outcome_command"] = outcome is None or outcome["command_id"] == b["command_id"]
+    head["H4RC04_response_command"] = response is None or response["command_id"] == b["command_id"]
+    head["H4RC05_receipt_prior"] = r["prior_layout_revision"] == b["expected_layout_revision"]
+    head["H4RC06_owner_prior"] = o["prior_layout_revision"] == b["expected_layout_revision"]
+    head["H4RC07_receipt_new"] = not applied or r["new_layout_revision"] == edge
+    head["H4RC08_owner_new"] = not applied or o["new_layout_revision"] == edge
+    head["H4RC09_readback_revision"] = not applied or r["readback"]["layout_revision"] == edge
+    head["H4RC10_readback_key"] = not applied or r["readback"]["canonical_key"] == layout_key(b)
+    head["H4RC11_settled_sha"] = not applied or r["readback"]["layout_sha256"] == r["settled_layout_sha256"]
+    head["H4RC12_settled_ref"] = not applied or r["settled_layout_ref"] == "home_layout_settlement:" + d
+    head["H4RC13_owner_operation_ref"] = o["operation_ref"] == b["operation_ref"]
+    head["H4RC14_owner_result_ref"] = o["result_ref"] == "home_layout_result:" + d
+    head["H4RC15_dispatch_receipt_ref"] = dr["receipt_ref"] == "home_layout_dispatch_receipt:" + d
+    head["H4RC16_dispatch_operation_ref"] = dr["operation_ref"] == b["operation_ref"]
+    head["H4RC17_dispatch_result"] = dr["command_result_ref"] == o["result_ref"]
+    head["H4RC18_dispatch_correlation"] = dr["correlation_id"] == b["correlation_id"]
+    head["H4RC19_dispatch_ref"] = dr["dispatch_ref"] == b["dispatch_ref"]
+    err.extend(head.codes())
     ev = r["event_semantics"]
     if ev is not None:
         payload = event_checks(err, ev, b, d, store)
         if not payload:
             return err
-        if payload["command_result_ref"] != o["result_ref"] or payload["receipt_refs"] != [dr["receipt_ref"]] \
-                or payload["settled_layout_ref"] != r["settled_layout_ref"]:
-            err.append("I4 event payload does not join the result, receipt or settlement")
-        if r["state"] == "committed" and (o["event_ref"] != ev["event_id"] or dr["event_ref"] != ev["event_id"]):
-            err.append("I4 committed result and receipt do not name the event")
-    for key, original in (("normalized_request", r["original_normalized_request"]),
-                          ("command_outcome", r["original_command_outcome"]),
-                          ("ui_response", r["original_ui_response"])):
+        committed = r["state"] == "committed"
+        joins = Facts("h4_receipt_event")
+        joins["H4RE01_result_ref"] = payload["command_result_ref"] == o["result_ref"]
+        joins["H4RE02_receipt_refs"] = payload["receipt_refs"] == [dr["receipt_ref"]]
+        joins["H4RE03_settled_ref"] = payload["settled_layout_ref"] == r["settled_layout_ref"]
+        joins["H4RE04_owner_event_ref"] = not committed or o["event_ref"] == ev["event_id"]
+        joins["H4RE05_dispatch_event_ref"] = not committed or dr["event_ref"] == ev["event_id"]
+        err.extend(joins.codes())
+    capture = Facts("h4_receipt_capture")
+    for key, original, rows in (
+            ("normalized_request", r["original_normalized_request"], ("H4IC01_request_presence", "H4IC02_request_canonical", "H4IC03_request_sha")),
+            ("command_outcome", outcome, ("H4IC04_outcome_presence", "H4IC05_outcome_canonical", "H4IC06_outcome_sha")),
+            ("ui_response", response, ("H4IC07_response_presence", "H4IC08_response_canonical", "H4IC09_response_sha"))):
         captured = r["identity_capture_bytes"][key]
+        digest_claim = r["identity_capture_bytes_sha256"][key]
         if original is None or captured is None:
-            if original is not None or captured is not None or r["identity_capture_bytes_sha256"][key] is not None:
-                err.append(f"I7 identity capture {key} presence differs from its original")
+            capture[rows[0]] = original is None and captured is None and digest_claim is None
+            capture[rows[1]] = True
+            capture[rows[2]] = True
             continue
         data = base64.b64decode(captured, validate=True)
-        if data != canonical_msgpack(original) or r["identity_capture_bytes_sha256"][key] != sha(data):
-            err.append(f"I7 identity capture {key} is not the canonical MessagePack of its original")
-    outcome = r["original_command_outcome"]
-    if outcome is not None:
-        if outcome["owner_result_schema_ref"] != OWNER_RESULT_REF:
-            err.append("I8 SIR outcome does not point at the Home4 owner result")
-        if not (outcome["owner_result_sha256"] == r["original_owner_result_sha256"] == sha(canonical_json(o))):
-            err.append("I8 owner result hash is not the CV-333 hash of the Home-owned owner result")
-    response = r["original_ui_response"]
-    if response is not None and response.get("owner_result_schema_ref") not in (None, OWNER_RESULT_REF):
-        err.append("I8 UI response does not point at the Home4 owner result")
+        capture[rows[0]] = True
+        capture[rows[1]] = data == canonical_msgpack(original)
+        capture[rows[2]] = digest_claim == sha(data)
+    err.extend(capture.codes())
+    owner = Facts("h4_receipt_owner")
+    owner["H4O01_outcome_schema_ref"] = outcome is None or outcome["owner_result_schema_ref"] == OWNER_RESULT_REF
+    owner["H4O02_outcome_hash"] = outcome is None or outcome["owner_result_sha256"] == r["original_owner_result_sha256"]
+    owner["H4O03_receipt_hash"] = outcome is None or r["original_owner_result_sha256"] == sha(canonical_json(o))
+    owner["H4O04_response_schema_ref"] = response is None or response.get("owner_result_schema_ref") in (None, OWNER_RESULT_REF)
+    err.extend(owner.codes())
     return err
-
 
 class Checker:
     def __init__(self, root: Path):
@@ -781,8 +809,16 @@ class Checker:
         self.limits = {d: profile["family_profiles"][f]["max_value_bytes"] for d, f in FAMILY.items()}
         self.store_cap = profile["value_limit_bytes"]
 
-    def schema_errors(self, definition: str, value: Any) -> list[str]:
+    def schema_messages(self, definition: str, value: Any) -> list[str]:
+        """Raw validator messages; refusal only through schema_errors or the reference phase."""
         return [e.message[:200] for e in self.validators[definition].iter_errors(value)]
+
+    def schema_errors(self, definition: str, value: Any) -> list[str]:
+        messages = self.schema_messages(definition, value)
+        facts = Facts("h4_schema")
+        for name in ("transaction_slot", "operation_receipt", "prior_slot_migration_generation", "stored_value_ref"):
+            facts["H4S%02d_%s" % (len(facts.values) + 1, name)] = name != definition or not messages
+        return messages if facts.rows() else []
 
     def semantic(self, definition: str, value: Any, store: PayloadStore) -> list[str]:
         if definition == "transaction_slot":
@@ -798,37 +834,58 @@ class Checker:
         definition = DEFINITION_OF[ref["schema_id"]]
         limit = self.limits[definition]
         wrapper = len(canonical_msgpack(ref))
-        if wrapper > limit:
+        size = Facts("h4_ref_wrapper")
+        size["H4F01_wrapper_within_limit"] = wrapper <= limit
+        if size.rows():
             err.append(f"I10 the stored reference is {wrapper} bytes, over the {limit}-byte limit")
         data = store.resolve(err, ref["value_ref"], "value_ref")
         if data is None:
             return err
-        if sha(data) != ref["value_sha256"]:
-            err.append("I11 value_sha256 is not the SHA-256 of the referenced bytes")
-        try:
-            stored = decode_canonical_msgpack(data)
-        except (ValueError, UnicodeDecodeError) as exc:
-            err.append(f"I11 the referenced bytes are not a canonical MessagePack Home4 value: {exc}")
-            return err
-        if not isinstance(stored, dict):
-            err.append("I11 the referenced value is not a map")
-            return err
-        value = to_projection(stored)
-        if stored_bytes(definition, value) != data:
-            err.append("I11 the referenced value carries bin outside its contentEncoding base64 fields")
-            return err
-        shape = self.schema_errors(definition, value)
-        if shape:
-            err.append(f"I11 the referenced value is not a valid Home4 {definition}: {shape[0]}")
-            return err
-        if logical_key(definition, value) != ref["logical_key"] or storage_instance(definition, value) != ref["storage_instance_id"]:
-            err.append("I3 the reference's logical key or Storage instance differs from the referenced value's")
+        digest_facts = Facts("h4_ref_sha")
+        digest_facts["H4F02_value_sha"] = sha(data) == ref["value_sha256"]
+        err.extend(digest_facts.codes())
+        decoded: dict[str, Any] = {}
+
+        def canonical() -> bool:
+            try:
+                decoded["stored"] = decode_canonical_msgpack(data)
+            except (ValueError, UnicodeDecodeError) as exc:
+                decoded["error"] = exc
+                return False
+            return True
+
+        def projection() -> bool:
+            decoded["value"] = to_projection(decoded["stored"])
+            return stored_bytes(definition, decoded["value"]) == data
+
+        def shape() -> bool:
+            decoded["shape"] = self.schema_messages(definition, decoded["value"])
+            return not decoded["shape"]
+
+        steps = Facts("h4_ref_decode", chain=True)
+        for row, check in (("H4F03_canonical_msgpack", canonical),
+                           ("H4F04_map", lambda: isinstance(decoded["stored"], dict)),
+                           ("H4F05_bin_declared", projection),
+                           ("H4F06_schema", shape)):
+            if steps.stop(row, check):
+                if row == "H4F03_canonical_msgpack":
+                    err.append(f"I11 the referenced bytes are not a canonical MessagePack Home4 value: {decoded['error']}")
+                elif row == "H4F06_schema":
+                    err.append(f"I11 the referenced value is not a valid Home4 {definition}: {decoded['shape'][0]}")
+                else:
+                    err.append(steps.first_code())
+                return err
+        steps.done()
+        value = decoded["value"]
+        scope = Facts("h4_ref_scope")
+        scope["H4F07_logical_key"] = logical_key(definition, value) == ref["logical_key"]
+        scope["H4F08_storage_instance"] = storage_instance(definition, value) == ref["storage_instance_id"]
+        err.extend(scope.codes())
         if definition == "transaction_slot":
             err.extend(slot_invariants(value, store, limit, by_reference=True))
         else:
             err.extend(receipt_invariants(value, store, limit, by_reference=True))
         return err
-
 
 def load(root: Path, rel: str) -> Any:
     return json.loads((root / rel).read_text(encoding="utf-8"))
@@ -842,11 +899,17 @@ def run(root: Path, fixtures: dict[str, Any] | None = None) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     counts = {"positive": 0, "schema_negative": 0, "invariant_negative": 0}
     sizes: dict[str, int] = {}
-    if chk.unresolved:
-        failures.append({"id": "$ref", "expected": "every reachable $ref resolves", "errors": chk.unresolved[:5]})
-    for definition, limit in chk.limits.items():
-        if limit > chk.store_cap:
-            failures.append({"id": "limit", "expected": f"{FAMILY[definition]} limit within {chk.store_cap}", "errors": [str(limit)]})
+    registry = Facts("h4_registry")
+    registry["H4R01_refs_resolved"] = not chk.unresolved
+    registry["H4R02_slot_limit"] = chk.limits["transaction_slot"] <= chk.store_cap
+    registry["H4R03_receipt_limit"] = chk.limits["operation_receipt"] <= chk.store_cap
+    for row in registry.rows():
+        if row == "H4R01_refs_resolved":
+            failures.append({"id": "$ref", "expected": "every reachable $ref resolves", "errors": chk.unresolved[:5]})
+        else:
+            definition = "transaction_slot" if row == "H4R02_slot_limit" else "operation_receipt"
+            failures.append({"id": "limit", "expected": f"{FAMILY[definition]} limit within {chk.store_cap}",
+                             "errors": [str(chk.limits[definition])]})
     used: set[str] = set()
 
     def refs_of(value: Any) -> Iterator[str]:
@@ -897,7 +960,9 @@ def run(root: Path, fixtures: dict[str, Any] | None = None) -> dict[str, Any]:
         if not any(e.startswith(case["rejected_by"] + " ") for e in found):
             failures.append({"id": case["id"], "expected": f"{case['rejected_by']} rejection", "errors": found[:5]})
     unused = sorted(set(store.objects) - used)
-    if unused:
+    coverage = Facts("h4_store_coverage")
+    coverage["H4C01_store_objects_used"] = not unused
+    if coverage.rows():
         failures.append({"id": "payload_store", "expected": "every store object is referenced by a case", "errors": unused})
     return {
         "schema_id": "pm.home_layout_v2_slot_receipt.static_report.v1",

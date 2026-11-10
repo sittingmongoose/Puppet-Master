@@ -27,34 +27,13 @@ import pm_home_layout_v2_slot_receipt as home
 import pm_browser_workspace_created as created
 import pm_browser_workspace_created_v2 as created_v2
 import pm_browser_workspace_reset as reset
+from pm_ds_tables import Facts
 
 ROOT = Path(__file__).resolve().parents[1]
 
 def load(path):
     return json.loads((ROOT / path).read_text())
 
-def source_without_guard(fn, text):
-    """Weaken actual production condition(s), in memory only; never filter returned errors."""
-    original=inspect.unwrap(fn)
-    tree = ast.parse(textwrap.dedent(inspect.getsource(original)))
-    tree.body[0].decorator_list=[]
-    matched = []
-    class Weaken(ast.NodeTransformer):
-        def visit_If(self, node):
-            if text in ast.unparse(node.test):
-                matched.append(node.lineno)
-                node.test = ast.Constant(False)
-            return self.generic_visit(node)
-    changed = ast.fix_missing_locations(Weaken().visit(tree))
-    if len(matched) != 1:
-        raise ValueError(f'{fn.__qualname__}: expected one guard matching {text!r}, found {matched}')
-    namespace = dict(original.__globals__)
-    exec(compile(changed, inspect.getsourcefile(fn), 'exec'), namespace)
-    compiled=namespace[fn.__name__]
-    changed=types.FunctionType(compiled.__code__,original.__globals__,fn.__name__,compiled.__defaults__,compiled.__closure__)
-    changed.__kwdefaults__=compiled.__kwdefaults__
-    update_wrapper(changed,original)
-    return contextmanager(changed) if fn is not original and inspect.isgeneratorfunction(original) else changed
 
 def padded(body, target, field):
     """Keep valid identifier refs; solve the *encoded* map boundary, including str headers."""
@@ -78,61 +57,70 @@ def compaction_timestamp_valid(value):
 
 def compaction_payload_errors(payload):
     schema = load('Plans/event_payload_context_compaction_completed.schema.json')
-    errors = []
-    if not route.validator(schema).is_valid(payload):
-        return ['compaction_payload_schema']
-    if not compaction_timestamp_valid(payload['committed_at_utc']):
-        errors.append('valid_utc_datetime')
-    if payload['output_context_revision'] <= payload['input_context_revision']:
-        errors.append('revision_must_increase')
-    if payload['input_tokens'] - payload['output_tokens'] != payload['reclaimed_tokens']:
-        errors.append('gain_equation')
-    return errors
+    shape = Facts('comp_payload_schema', chain=True)
+    if shape.stop('CP01_payload_schema', lambda: route.validator(schema).is_valid(payload)):
+        return [shape.first_code()]
+    shape.done()
+    facts = Facts('comp_payload')
+    facts['CP02_commit_time_valid'] = compaction_timestamp_valid(payload['committed_at_utc'])
+    facts['CP03_revision_increases'] = payload['output_context_revision'] > payload['input_context_revision']
+    facts['CP04_gain_equation'] = payload['input_tokens'] - payload['output_tokens'] == payload['reclaimed_tokens']
+    return facts.codes()
 
 def compaction_event_errors(event, *, historical=False):
-    if type(historical) is not bool:
-        return ['historical_context_type']
+    entry = Facts('comp_event_entry', chain=True)
+    if entry.stop('CE01_historical_bool', lambda: type(historical) is bool):
+        return [entry.first_code()]
     fixtures = load('Plans/context_compaction_completion_contract_fixtures.json')
-    if not route.validator(load('Plans/event_record.schema.json')).is_valid(event):
-        return ['envelope_schema']
+    if entry.stop('CE02_envelope_schema', lambda: route.validator(load('Plans/event_record.schema.json')).is_valid(event)):
+        return [entry.first_code()]
+    entry.done()
     errors = compaction_payload_errors(event['payload'])
     if errors:
         return errors
     payload = event['payload']
-    if event['scope_kind'] != 'project' or event['project_id'] is None:
-        errors.append('project_only')
-    if event['scope_kind'] == 'project' and any(event[k] != payload[k] for k in ('project_id', 'thread_id')):
-        errors.append('payload_envelope_identity')
-    if event['event_type'] != 'context.compaction.completed' or event['payload_schema_id'] != payload['schema_id']:
-        errors.append('family_identity')
-    if event['payload_ref'] is not None:
-        errors.append('inline_only')
-    if event['replay_policy'] != 'dedupe_by_idempotency_key' and not historical:
-        errors.append('replay_policy')
-    if event['occurred_at_utc'] != payload['committed_at_utc']:
-        errors.append('commit_time_equality')
     identity = [payload['project_id'], payload['thread_id'], payload['operation_id']]
     sha = lambda x: hashlib.sha256(home.canonical_json(x)).hexdigest()
     digest = sha([fixtures['storage_instance_id']] + identity)
-    if event['event_id'] != 'evt_compaction_' + digest:
-        errors.append('event_identity')
-    if event['idempotency_key'] != 'compaction:' + sha(identity):
-        errors.append('idempotency_identity')
-    if payload['compaction_receipt_ref'] != 'compaction_receipt:' + digest:
-        errors.append('receipt_identity')
-    return errors
+    project_scope = event['scope_kind'] == 'project'
+    facts = Facts('comp_event')
+    facts['CE03_project_scope_kind'] = project_scope
+    facts['CE04_project_present'] = event['project_id'] is not None
+    facts['CE05_payload_project'] = not project_scope or event['project_id'] == payload['project_id']
+    facts['CE06_payload_thread'] = not project_scope or event['thread_id'] == payload['thread_id']
+    facts['CE07_event_type'] = event['event_type'] == 'context.compaction.completed'
+    facts['CE08_payload_schema_id'] = event['payload_schema_id'] == payload['schema_id']
+    facts['CE09_inline_only'] = event['payload_ref'] is None
+    facts['CE10_replay_policy'] = historical or event['replay_policy'] == 'dedupe_by_idempotency_key'
+    facts['CE11_commit_time_equality'] = event['occurred_at_utc'] == payload['committed_at_utc']
+    facts['CE12_event_identity'] = event['event_id'] == 'evt_compaction_' + digest
+    facts['CE13_idempotency_identity'] = event['idempotency_key'] == 'compaction:' + sha(identity)
+    facts['CE14_receipt_identity'] = payload['compaction_receipt_ref'] == 'compaction_receipt:' + digest
+    return facts.codes()
 
 def compaction_history(event, *, verified, withdrawn, deleted, live_revision):
     # SP-259: historical audit fact neither reconstructs purged content nor rewinds a newer head.
-    if verified is not True or withdrawn is not False or type(deleted) is not bool or compaction_event_errors(event, historical=True):
-        return 'unavailable'
+    facts = Facts('comp_history', chain=True)
+    for row, check in (('CH01_verified', lambda: verified is True),
+                       ('CH02_not_withdrawn', lambda: withdrawn is False),
+                       ('CH03_deleted_bool', lambda: type(deleted) is bool),
+                       ('CH04_retained_event_valid', lambda: not compaction_event_errors(event, historical=True))):
+        if facts.stop(row, check):
+            return facts.first_code()
+    facts.done()
     return 'content_free_deleted_thread_audit' if deleted else 'historical_audit_fact'
 
 class Suite:
+    """Positive and negative witnesses of the complete checkers.
+
+    Guard isolation (check 11) is the shared Method B tool over the DS guard
+    tables (scripts/pm-ds-guard-tables.py); this suite only asserts that every
+    positive accepts and every negative refuses. A raised exception is never
+    counted as a refusal.
+    """
     def __init__(self):
         self.positives = []
         self.negatives = []
-        self.weakeners = {}
 
     def positive(self, name, accepted):
         self.positives.append((name, accepted))
@@ -160,71 +148,19 @@ class Suite:
                 failures.append({'negative': name, 'exception_is_not_rejection_proof': repr(exc)})
             if baseline[name] is not False:
                 failures.append({'negative': name, 'unexpected_acceptance': baseline[name]})
-        table = []
-        for guard, weaken in self.weakeners.items():
-            with weaken():
-                flipped, stayed, exceptions = [], [], []
-                for name, owner, fn in self.negatives:
-                    try:
-                        (flipped if fn() else stayed).append(name)
-                    except Exception as exc:
-                        exceptions.append({'case': name, 'exception': repr(exc)})
-            expected = {name for name, owner, fn in self.negatives if owner == guard}
-            holds = set(flipped) == expected and not exceptions
-            if not holds:
-                failures.append({'guard':guard,'counterfactual_did_not_match_own_negative_cohort':True})
-            table.append({'guard': guard, 'negatives_that_flip': flipped,
-                          'negatives_that_stay_rejected': stayed, 'expected_flips': sorted(expected),
-                          'exceptions': exceptions, 'status': 'pass' if holds else 'partial'})
-        for guard in sorted({g for _,g,_ in self.negatives} - set(self.weakeners)):
-            table.append({'guard':guard, 'negatives_that_flip':[],
-                          'negatives_that_stay_rejected':list(baseline),
-                          'expected_flips':[n for n,g,_ in self.negatives if g==guard],
-                          'status':'partial','reason':'No complete guard-removal witness yet; never promoted by suite success.'})
         return {'schema_id': 'pm.event_authority.ds.round2.static.v1',
                 'status': 'fail' if failures else 'pass', 'native_execution': 'NOT_RUN',
-                'claim': 'Static contract oracles only; whole-lane legacy guard inventory is reported separately.',
+                'claim': 'Static contract oracles only; guard isolation is the shared tool over the DS guard tables (scripts/pm-ds-guard-tables.py).',
                 'positive_count': len(positives), 'negative_count': len(baseline),
                 'positive_results': positives, 'negative_acceptances': baseline,
-                'guard_removal_table': table, 'guard_removal_complete': all(r['status']=='pass' for r in table),
+                'guard_isolation': 'scripts/pm-ds-guard-tables.py',
                 'failures': failures}
 
-@contextmanager
-def no_pattern_guard():
-    def loose(validator, pattern, value, schema):
-        yield from python_pattern(validator, pattern.replace(r'(?![\s\S])', '$'), value, schema)
-    length_guard = route.StrictValidator.VALIDATORS['maxLength']
-    def loose_length(validator, limit, value, schema):
-        if schema.get('pattern','').startswith('^thr_'):
-            return
-        yield from length_guard(validator, limit, value, schema)
-    with patch.dict(route.StrictValidator.VALIDATORS, {'pattern': loose, 'maxLength': loose_length}):
-        yield
-
-@contextmanager
-def no_eager_guard():
-    route._eager_done.clear()
-    try:
-        with patch.object(route, 'eager', source_without_guard(route.eager,'unresolved')):
-            yield
-    finally:
-        route._eager_done.clear()
 
 def build():
     suite = Suite()
     gate, context = created.candidate_gate(ROOT)
-    suite.weakeners['identifier_end_of_input'] = no_pattern_guard
-    suite.weakeners['browser_compatibility_projector_validation']=lambda:patch.object(gate.ReplayOracle,'consume',source_without_guard(gate.ReplayOracle.consume,'self.contract_failures'))
-    suite.weakeners['eager_reference_closure'] = no_eager_guard
-    @contextmanager
-    def no_browser_replay_guard():
-        with ExitStack() as stack:
-            for instance in (gate,reset.sibling('pm-browser-event-admission',ROOT)):
-                stack.enter_context(patch.object(instance,'candidate_failures',source_without_guard(instance.candidate_failures,"not historical and (event.get('producer_sequence_id')")))
-            yield
-    suite.weakeners['browser_writer_replay_policy'] = no_browser_replay_guard
     # Actual helper condition weakened; the total JSON budget stays unchanged.
-    suite.weakeners['inline_encoded_byte_limit'] = lambda: patch.object(route, 'INLINE_LIMIT', 65536)
     cfixture = load(created.FIXTURE_PATH)['creation_fixture']
     cb = next(v for v in gate.load_json('Plans/browser_event_admission_fixtures.json')['valid'] if v['case_id']==cfixture['event_case_id'])
     bases = {'browser.workspace.created': {'event': gate.fixture_event(cb, 1), **{k:copy.deepcopy(cfixture[k]) for k in ('request','result','witness')}},
@@ -256,8 +192,7 @@ def build():
                 store={}; external=copy.deepcopy(value);external['event']=route.encode(value['event'],store);external['payload_store']=store
                 suite.positive(family + ':resolved_reference', lambda b=external, check=check: not check(**b))
                 missing=copy.deepcopy(external);missing['payload_store']={}
-                suite.negative(family + ':missing_reference', 'reference_presence', lambda: not route.reference_presence_errors(None))
-                suite.positive(family+':missing_reference_full_checker',lambda b=missing,check=check:bool(check(**b)))
+                suite.negative(family + ':missing_reference', 'reference_presence', lambda b=missing,check=check: not check(**b))
                 key=external['event']['payload_ref']['blake3_id']
                 for defect in ('hash','size','media','encoding'):
                     bad=copy.deepcopy(external)
@@ -325,23 +260,11 @@ def build():
     suite.negative('compaction:invalid_calendar','compaction_calendar_validation',lambda:not compaction_payload_errors(invalid_date))
     leap_day=copy.deepcopy(comp['valid_event']['payload']);leap_day['committed_at_utc']='2028-02-29T16:00:00Z'
     suite.positive('compaction:valid_leap_day',lambda:not compaction_payload_errors(leap_day))
-    @contextmanager
-    def calendar_duplicate():
-        # The same calendar fact is checked by the schema format and the
-        # original compaction timestamp parser. Remove that named pair only.
-        import pm_contract_formats as formats
-        selected=route.validator(load('Plans/event_payload_context_compaction_completed.schema.json'))
-        changed=source_without_guard(formats.date_time,'not calendar_valid')
-        with patch.dict(selected.format_checker.checkers,{'date-time':(changed,())}), \
-                patch(__name__+'.compaction_payload_errors',source_without_guard(compaction_payload_errors,'not compaction_timestamp_valid')):
-            yield
-    suite.weakeners['compaction_calendar_validation']=calendar_duplicate
     for field in ('project_id','thread_id','operation_id','context_epoch_id'):
         bad=copy.deepcopy(comp['valid_event']['payload']);bad[field]+='\n'
         suite.negative('compaction:'+field+'_LF','identifier_end_of_input',lambda b=bad:not compaction_payload_errors(b))
     bad=copy.deepcopy(comp['valid_event']);bad['replay_policy']='projector_replay_only'
     suite.negative('compaction:replay_only','compaction_writer_replay_policy',lambda:not compaction_event_errors(bad))
-    suite.weakeners['compaction_writer_replay_policy']=lambda:patch(__name__+'.compaction_event_errors',source_without_guard(compaction_event_errors,"event['replay_policy']"))
     broken=load('Plans/event_payload_context_compaction_completed.schema.json');broken.setdefault('$defs',{})['ds_dormant_bad_ref']={'$ref':'#/not_a_schema'}
     def comp_closure():
         try:route.eager(route.schema_registry(),broken)
@@ -352,44 +275,38 @@ def build():
     suite.positive('compaction:deleted_thread_content_free',lambda:compaction_history(comp['valid_event'],verified=True,withdrawn=False,deleted=True,live_revision=999)=='content_free_deleted_thread_audit')
     suite.negative('compaction:forged_source','compaction_historical_authenticity',lambda:compaction_history(comp['valid_event'],verified=False,withdrawn=False,deleted=False,live_revision=999)!='unavailable')
     suite.negative('compaction:withdrawn_history','compaction_historical_authenticity',lambda:compaction_history(comp['valid_event'],verified=True,withdrawn=True,deleted=False,live_revision=999)!='unavailable')
-    suite.weakeners['compaction_historical_authenticity']=lambda:patch(__name__+'.compaction_history',source_without_guard(compaction_history,'verified is not True'))
     add_layout_cases(suite)
-    suite.weakeners['reference_presence']=lambda:patch.object(route,'reference_presence_errors',source_without_guard(route.reference_presence_errors,'entry is None'))
-    for defect,condition in [('hash','blake3_hex(data)'),('size','len(data)'),('media','media !=')]:
-        suite.weakeners['reference_'+defect]=lambda c=condition:patch.object(route,'reference_metadata_errors',source_without_guard(route.reference_metadata_errors,c))
-    @contextmanager
-    def encoding_guard():
-        # Two references to the same decoder function, not unrelated guards.
-        changed=source_without_guard(home.decode_canonical_msgpack,'canonical_msgpack(value) != data')
-        with patch.object(home,'decode_canonical_msgpack',changed),patch.object(route,'decode_canonical_msgpack',changed):yield
-    suite.weakeners['reference_encoding']=encoding_guard
-    for module in (created,reset):
-        suite.weakeners['browser_historical_authenticity:'+module.EVENT_TYPE]=lambda m=module:patch.object(m,'workspace_history_fact',source_without_guard(m.workspace_history_fact,'not all'))
     return suite
 
 
 def layout_event_errors(event, store=None, *, binding=None, historical=False, custody=None, historical_source=None):
-    errors=[]
-    if type(historical) is not bool:
-        return ['historical_context_type']
+    context = Facts('layout_context', chain=True)
+    if context.stop('LE01_historical_bool', lambda: type(historical) is bool):
+        return [context.first_code()]
+    context.done()
+    errors = []
     if historical:
         errors=home.layout_history_context_errors(event,historical_source,custody)
         if errors:
             return errors
     binding_schema=load(home.SCHEMA)
     binding_schema['$ref']='#/$defs/operation_binding'
-    if not route.validator(binding_schema).is_valid(binding):
-        return ['layout_binding_schema']
+    shape = Facts('layout_binding_schema', chain=True)
+    if shape.stop('LE02_binding_schema', lambda: route.validator(binding_schema).is_valid(binding)):
+        return [shape.first_code()]
+    shape.done()
     d=home.binding_checks(errors,binding)
-    if not isinstance(event,dict):
-        return errors+['layout_envelope_schema']
+    envelope = Facts('layout_envelope', chain=True)
+    if envelope.stop('LE03_event_object', lambda: isinstance(event, dict)):
+        return errors+[envelope.first_code()]
     schema = load('Plans/event_record.schema.json' if event.get('schema_version')=='2.0.0' else 'Plans/event_record_v3.schema.json')
-    if not route.validator(schema).is_valid(event):
-        return errors+['layout_envelope_schema']
-    if event['event_type']!='workspace.layout_changed':
-        errors.append('layout_family')
-    if event['payload_schema_id']!='https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0':
-        errors.append('layout_schema_identity')
+    if envelope.stop('LE04_envelope_schema', lambda: route.validator(schema).is_valid(event)):
+        return errors+[envelope.first_code()]
+    envelope.done()
+    family = Facts('layout_family')
+    family['LE05_event_type'] = event['event_type']=='workspace.layout_changed'
+    family['LE06_payload_schema_id'] = event['payload_schema_id']=='https://puppetmaster.local/schemas/event_payloads/workspace_layout_changed/2.0.0'
+    errors.extend(family.codes())
     body, physical = route.resolved_body(event,store,historical=historical)
     errors.extend(physical)
     if body is None:
@@ -398,12 +315,15 @@ def layout_event_errors(event, store=None, *, binding=None, historical=False, cu
     selected=route.validator(payload_schema)
     if historical and historical_source['payload_validation_recipe']=='workspace-layout-v2/original-json-schema':
         selected=home.RetainedBodyValidator(payload_schema,registry=selected._registry,format_checker=FormatChecker())
-    if not selected.is_valid(body):
-        return errors+['layout_payload_schema']
+    payload = Facts('layout_payload', chain=True)
+    if payload.stop('LE07_payload_schema', lambda: selected.is_valid(body)):
+        return errors+[payload.first_code()]
+    payload.done()
     home.event_checks(errors,event,binding,d,home.PayloadStore(store or {}),historical=historical,
                       historical_source=historical_source,custody=custody)
-    if event['replay_policy'] != 'dedupe_by_idempotency_key' and not historical:
-        errors.append('layout_replay_only_not_appendable')
+    replay = Facts('layout_replay')
+    replay['LE08_replay_policy'] = historical or event['replay_policy'] == 'dedupe_by_idempotency_key'
+    errors.extend(replay.codes())
     return errors
 
 def layout_history_observation(event, recipe='workspace-layout-v2/original-json-schema'):
@@ -429,7 +349,7 @@ def add_layout_cases(suite):
             suite.negative('layout:one_byte_over_inline','inline_encoded_byte_limit',lambda e=changed:not layout_event_errors(e,binding=binding))
             objects={};external=route.encode(changed,objects)
             suite.positive('layout:boundary_resolved_reference',lambda e=external,o=objects:not layout_event_errors(e,o,binding=binding))
-            suite.negative('layout:boundary_missing_reference','reference_presence',lambda:not route.reference_presence_errors(None))
+            suite.negative('layout:boundary_missing_reference','reference_presence',lambda e=external:not layout_event_errors(e,{},binding=binding))
             suite.positive('layout:missing_reference_full_checker',lambda e=external:bool(layout_event_errors(e,{},binding=binding)))
             corrupt=copy.deepcopy(objects);ident=external['payload_ref']['blake3_id'];media,data=corrupt[ident];at=data.index(b'xxxxxxxx');corrupt[ident]=(media,data[:at]+b'y'+data[at+1:])
             suite.negative('layout:boundary_corrupt_reference','reference_hash',lambda e=external,o=corrupt:not layout_event_errors(e,o,binding=binding))
@@ -458,8 +378,6 @@ def add_layout_cases(suite):
     suite.positive('layout:retry_preserves_original_pins',lambda:digest(large)==digest(retry) and large['payload_ref']==retry['payload_ref'] and not layout_event_errors(retry,objects,binding=binding))
     bad=copy.deepcopy(large);bad['replay_policy']='projector_replay_only'
     suite.negative('layout:writer_replay_only','layout_writer_replay_policy',lambda:not layout_event_errors(bad,objects,binding=binding))
-    suite.weakeners['governed_envelope_successor']=lambda:patch.object(route,'resolved_body',source_without_guard(route.resolved_body,"event.get('event_type') in ADOPTED"))
-    suite.weakeners['layout_writer_replay_policy']=lambda:patch(__name__+'.layout_event_errors',source_without_guard(layout_event_errors,"event['replay_policy']"))
     old=copy.deepcopy(event);old['schema_version']='2.0.0'
     suite.positive('layout:historical_exact_2_reader',lambda:not layout_event_errors(old,historical=True,binding=binding,**layout_history_observation(old)))
     suite.positive('layout:historical_reference_newer_live_layout',lambda:not layout_event_errors(large,objects,historical=True,binding=binding,**layout_history_observation(large)))
@@ -469,9 +387,9 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--output',type=Path);ap.add_argument('--self-test',action='store_true');ap.add_argument('--inject-invalid-positive',action='store_true');args=ap.parse_args()
     if args.self_test:
         proc=subprocess.run([sys.executable,'-B',__file__,'--inject-invalid-positive'],capture_output=True,text=True)
-        control=Suite();control.negative('nonflipping_negative','claimed_guard',lambda:False);control.weakeners['claimed_guard']=nullcontext
-        nonflip_refused=control.run()['status']=='fail'
-        result={'status':'pass' if proc.returncode==1 and nonflip_refused else 'fail','injected_bad_positive_exit_code':proc.returncode,'nonflipping_guard_control_refused':nonflip_refused}
+        control=Suite();control.negative('accepted_negative','claimed_guard',lambda:True)
+        accepted_refused=control.run()['status']=='fail'
+        result={'status':'pass' if proc.returncode==1 and accepted_refused else 'fail','injected_bad_positive_exit_code':proc.returncode,'accepted_negative_control_refused':accepted_refused}
         print(json.dumps(result));return int(result['status']!='pass')
     suite=build()
     if args.inject_invalid_positive:

@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from pm_ds_resources import memory_floor
 
-COHORTS=('binding_faults','body_faults','boundary_faults','browser_harness_faults',
+COHORTS=('binding_faults','body_faults','browser_harness_faults',
          'browser_isolating','codec_controls','fault_controls','format_controls',
          'home4_isolating','home4_owner_controls','home4_physical','reset_isolating',
          'shared_harness_faults','shared_runtime_controls','structured_inputs','v2_history_controls')
