@@ -7,7 +7,7 @@ there is no fabricated per-frame DOM correlation. Other looks need their own pix
 """
 import argparse, json, math, pathlib, subprocess
 from fractions import Fraction
-from PIL import Image, ImageChops, ImageDraw
+from PIL import Image, ImageChops, ImageDraw, ImageStat
 
 p = argparse.ArgumentParser()
 p.add_argument('film'); p.add_argument('probe'); p.add_argument('--out', required=True)
@@ -82,9 +82,20 @@ while True:
     if ys and seed and 20 <= max(ys)-min(ys) <= 75:
         part = component.crop((0,min(ys),350,max(ys)+1)); bb = part.getbbox()
         if bb and 175 <= bb[2]-bb[0] <= 245:
-            # Near-white excludes the antialiased edge pixel. Use the centre of
-            # its one-cell boundary interval, plus the 1px Basic border.
-            native = [left+bb[0]-1.5,top+min(ys)-1.5,left+bb[2]+1.5,top+max(ys)+2.5]
+            # Near-white selects the fill; it cannot locate its last row on a
+            # compressed film. Nas1 can encode that real row as 250,247,251,
+            # below the 248 cutoff (K22). Locate the painted 1px gray border
+            # instead: its straight middle is darker than both fill and shadow.
+            # Pixel centre plus half the border width gives its outer edge.
+            x0, x1 = bb[0]+16, bb[2]-16
+            fill_level = ImageStat.Stat(box.crop((x0,max(0,max(ys)-3),x1,max(ys)+1)).convert('L')).median[0]
+            profile = [(ImageStat.Stat(box.crop((x0,y,x1,y+1)).convert('L')).median[0],y)
+                       for y in range(max(ys)+1,min(180,max(ys)+7))]
+            if profile:
+                border_level, border_y = min(profile)
+                # An unreadable border is non-coverage, never an invented edge.
+                if fill_level-border_level >= 12:
+                    native = [left+bb[0]-1.5,top+min(ys)-1.5,left+bb[2]+1.5,top+border_y+1]
     data = dict(frame=index,seconds=round(index/fps,4),seq=seq,native=native)
     if seq in rows:
         ep, row = rows[seq]
