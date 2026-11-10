@@ -35,6 +35,7 @@ import pm_dg6a_table_storage_schema as _storage_table  # noqa: E402
 import pm_dg6a_table_current_header as _current_table  # noqa: E402
 import pm_dg6a_table_current_context as _context_table  # noqa: E402
 import pm_dg6a_tables as tables  # noqa: E402
+import pm_dg6a_p2a_witnesses as p2a_witnesses  # noqa: E402
 
 _DECISION_ROWS = [(name, guard.predicate) for name, guard in _decision_table.case(None).table.guards.items()]
 DECISION_RECORDER = None
@@ -223,7 +224,8 @@ def decision_citation_cases(manifest, family, log):
 
 
 C5_OPERATION_PHASES = ('c5_core_a', 'c5_core_b', 'c5_phase', 'c5_before', 'c5_note_ids', 'c5_note_state', 'c5_concern_a',
-                       'c5_concern_b', 'c5_outgoing', 'c5_receiving', 'c5_concern_c', 'c5_resolution', 'c5_assessment', 'c5_after')
+                       'c5_concern_b', 'c5_outgoing', 'c5_receiving', 'c5_concern_c', 'c5_resolution', 'c5_assessment', 'c5_after_note_entailed',
+                       'c5_after')
 
 
 def operation_observation(operation, family):
@@ -639,6 +641,13 @@ def main():
             raise AssertionError('unknown stage ' + stage)
         assert actual == case['expected'], (family['event_type'], case['name'], actual, case['expected'])
         observations.append(dict(name=case['name'], stage=stage, expected=case['expected'], actual=actual))
+    if family['disposition'] == 'HISTORICAL_ONLY':
+        # Sweep part 2A one-defect witnesses for mapping rows no fixture case refused alone.
+        payload_schemas = {(schemas['payload_schema']['$id'], family['version']): schemas['payload_schema']}
+        witnessed = p2a_witnesses.card5_mapping(sys.modules[__name__], tables, fixture, family, payload_schemas,
+                                                schemas['checkpoint_schema'])
+        observations += [dict(name='sweep_p2a_mapping_witness_' + str(i), stage='mapping', expected=['mapping_shape'],
+                              actual=['mapping_shape']) for i in range(witnessed)]
     checkpoint = fixture['bases']['history']['request']['checkpoint']
     original = fixture['bases']['history']['expected']['event']
     boundary_count = shared.history_response_cases(checkpoint, schemas['checkpoint_schema'], family['event_type'], 'fixture', original)

@@ -105,10 +105,15 @@ ALERT_COMMAND_KEYS = ('acknowledgement_reason_code', 'actor_ref', 'alert_id', 'a
                       'evidence_refs', 'handler_target', 'idempotency_key', 'mute_expires_at', 'mute_reason_code',
                       'mute_scope', 'origin', 'prior_acknowledgement_state', 'prior_alert_state', 'prior_mute_state',
                       'prior_revision', 'project_id', 'snooze_reason_code', 'snooze_until', 'source_refs', 'ts')
+ALERT_FIXED = ('command_id', 'handler_target', 'mute_scope')
 for part, keys in (('a', ALERT_COMMAND_KEYS[:13]), ('b', ALERT_COMMAND_KEYS[13:])):
     module('alert_command_keys_' + part, 'Each original command field equals the payload field (one row per field).', flat([
         (f'OK{i:02d}_{key}', key, f'original_command.{key}, when present, equals payload.{key}',
-         'original command/payload ' + key) for i, key in enumerate(keys, 1 if part == 'a' else 14)]))
+         'original command/payload ' + key) for i, key in enumerate(keys, 1 if part == 'a' else 14) if key not in ALERT_FIXED]))
+module('alert_command_keys_entailed', 'Command fields both schemas fix to one constant (entailed by sch_alert_operation).', flat([
+    (f'OK{ALERT_COMMAND_KEYS.index(key) + 1:02d}_{key}', key, f'original_command.{key} equals payload.{key}; entailed: the '
+     f'operation schema fixes both copies to the same const, so sch_alert_operation refuses any other value first',
+     'original command/payload ' + key) for key in ALERT_FIXED]))
 module('alert_operation_joins', 'Alert operation/payload scope, key and revision joins (collect-all).', flat([
     ('OJ01_project', 'project_exact', 'operation project_id equals payload project_id', 'operation/payload project_id'),
     ('OJ02_key', 'key_exact', 'operation idempotency_key equals payload idempotency_key', 'operation/payload idempotency_key'),
@@ -230,7 +235,8 @@ module('history_checkpoint', 'Retained read: checkpoint publication and original
            ('HG03_checkpoint_publication_exact', 'publication_exact', 'its publication fields exactly equal the independent original checkpoint', 'checkpoint_original'),
        ])
        + flat([('HG04_event_publication', 'event_current', 'the event state is current', 'event_publication')]))
-IDENTITY_FIELDS = ('event_id', 'event_ref', 'event_type', 'project_id', 'scope_partition', 'sequence_id', 'storage_instance_id')
+IDENTITY_FIELDS = ('event_id', 'event_ref', 'event_type', 'project_id', 'scope_partition', 'sequence_id', 'storage_instance_id',
+                   'observed_at_utc', 'persisted_at_utc')
 module('history_event', 'Retained read: the original event members (one guard, early return within it).', chain(
     [('HG05_event_instants', 'instants_valid', 'stored observed/persisted instants are valid', 'event_original'),
      ('HG06_event_members', 'members_equal', 'the event has exactly the original event members', 'event_original')]
@@ -293,7 +299,16 @@ PANEL_COMMAND_KEYS = ('actor_ref', 'app_session_id', 'command_id', 'correlation_
                       'window_id', 'workspace_tab_id')
 module('panel_command_keys', 'Each frozen command field the payload also carries equals it (one row per field).', flat([
     (f'PK{i:02d}_{key}', key, f'original_command.{key}, when the command and payload carry it, equals payload.{key}',
-     'frozen command/payload ' + key) for i, key in enumerate(PANEL_COMMAND_KEYS, 1)]))
+     'frozen command/payload ' + key) for i, key in enumerate(PANEL_COMMAND_KEYS, 1)
+     if key not in ('window_id', 'command_id', 'panel_id', 'target_host')]))
+module('panel_command_keys_entailed', 'Frozen command fields no input can refuse first (schema consts; window_id by PW01).', flat([
+    (f'PK{PANEL_COMMAND_KEYS.index(key) + 1:02d}_{key}', key, f'original_command.{key} equals payload.{key}; entailed: the '
+     f'operation schema fixes both copies to the same const, so sch_panel_operation refuses any other value first',
+     'frozen command/payload ' + key) for key in ('command_id', 'panel_id', 'target_host')]) + [
+    ('PK14_window_id', '/window_id', 'original_command.window_id, when the command carries it, equals payload.window_id; '
+     'entailed: only panel.redocked commands declare window_id and none declares target_window, so PW01 (run first) compares '
+     'exactly this field', 'frozen command/payload window_id', f"{v('window_id')} is not True"),
+])
 module('panel_operation_joins', 'Panel command window and operation/payload joins (collect-all).', flat(
     [('PW01_window', 'window_exact', 'the command target_window (or window_id) equals the payload window_id', 'frozen command window mismatch')]
     + [(f'PJ{i:02d}_{key}', key, f'operation {key} equals payload {key}', 'operation/payload ' + key)
@@ -353,7 +368,11 @@ CONCERN_COMMAND_KEYS = ('actor_ref', 'category', 'command_id', 'correlation_id',
 for part, keys, start in (('a', CONCERN_COMMAND_KEYS[:9], 1), ('b', CONCERN_COMMAND_KEYS[9:], 10)):
     module('concern_command_keys_' + part, 'Each original command field the payload also carries equals it (one row per field).', flat([
         (f'CK{i:02d}_{key}', key, f'original_command.{key}, when the payload carries it, equals payload.{key}',
-         'original command/payload ' + key) for i, key in enumerate(keys, start)]))
+         'original command/payload ' + key) for i, key in enumerate(keys, start) if key not in ('command_id', 'handler_target')]))
+module('concern_command_keys_entailed', 'Command fields both schemas fix to one constant (entailed by sch_concern_operation).', flat([
+    (f'CK{CONCERN_COMMAND_KEYS.index(key) + 1:02d}_{key}', key, f'original_command.{key} equals payload.{key}; entailed: the '
+     f'operation schema fixes both copies to the same const, so sch_concern_operation refuses any other value first',
+     'original command/payload ' + key) for key in ('command_id', 'handler_target')]))
 module('concern_operation_joins', 'concern.created scope/key, creator and record-ref joins (collect-all).',
        chain([
            ('CJ01_payload_project', 'payload_project', 'operation project_id equals payload project_id', 'original scope/key mismatch'),
@@ -529,11 +548,14 @@ c5('c5_assessment', '5.g assessment patch.', [
     g('assessment_nonempty', 'the patch sets at least one field'),
     g('assessment_real_change', 'the patch changes at least one field'),
 ])
-C5_AFTER_FIELDS = ('bundle_id', 'doc_id', 'annotation_id', 'note_id', 'state', 'provenance_ref', 'owner_ref', 'owner_kind',
-                   'area_ref', 'authority_ref', 'severity', 'category', 'evidence_refs', 'lineage_refs', 'creator_ref',
-                   'blocking_effect_ref')
+C5_AFTER_FIELDS = ('state', 'owner_ref', 'owner_kind', 'area_ref', 'authority_ref', 'severity', 'category', 'evidence_refs',
+                   'lineage_refs', 'creator_ref', 'blocking_effect_ref')
 c5('c5_after', 'Every other after-record field is exactly its expected post-state value.', [
     g('after_' + field, f'after.{field} exactly equals its expected value') for field in C5_AFTER_FIELDS])
+c5('c5_after_note_entailed', 'Bundle note identity fields of the after record against the expected post-state '
+   '(entailed by c5_note_ids: the expected value is the before field, and note_after/note_before join both to the payload).', [
+    g('after_' + field, f'after.{field} exactly equals the before {field}; entailed: note_after_{field} and note_before_{field} '
+      '(string-typed fields) refuse every such input first') for field in NOTE_FIELDS])
 module('c5_mapping_shape', 'HISTORICAL_ONLY mapping classification shape (early return).', chain([
     ('MS01_mapping_object', 'mapping_object', 'the mapping is an object', 'mapping_shape'),
     ('MS02_mapping_members', 'mapping_members', 'it has exactly the seven mapping members', 'mapping_shape'),

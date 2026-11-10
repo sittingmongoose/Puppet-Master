@@ -33,6 +33,7 @@ import pm_dg6a_table_profile as _profile_table  # noqa: E402
 import pm_dg6a_table_writer_policy as _writer_table  # noqa: E402
 import pm_dg6a_table_cursor as _cursor_table  # noqa: E402
 import pm_dg6a_tables as tables  # noqa: E402
+import pm_dg6a_p2a_witnesses as p2a_witnesses  # noqa: E402
 
 _PROFILE_ROWS = [(name, guard.predicate) for name, guard in _profile_table.case(None).table.guards.items()]
 PROFILE_RECORDER = None
@@ -128,7 +129,8 @@ def check_schema(schema):
     unresolved = schema_ref_errors(schema)
     assert not unresolved, unresolved
 
-OPERATION_PHASES = ('alert_operation_identity', 'alert_command_keys_a', 'alert_command_keys_b', 'alert_operation_joins',
+OPERATION_PHASES = ('alert_operation_identity', 'alert_command_keys_a', 'alert_command_keys_b', 'alert_command_keys_entailed',
+                    'alert_operation_joins',
                     'alert_owner_prior', 'alert_owner_candidate', 'alert_candidate_state')
 
 
@@ -150,7 +152,7 @@ def operation_observation(value, schema):
                  request_digest_exact=value['request_digest'] == request_digest(command, payload),
                  command_fields_present=not (expected_command_fields - command.keys()))
     keys = {key: key not in command or not (command[key] != payload.get(key))
-            for phase in ('alert_command_keys_a', 'alert_command_keys_b') for key in tables.fields(phase)}
+            for phase in ('alert_command_keys_a', 'alert_command_keys_b', 'alert_command_keys_entailed') for key in tables.fields(phase)}
     joins = dict(project_exact=value['project_id'] == payload['project_id'],
                  key_exact=value['idempotency_key'] == payload['idempotency_key'],
                  successor=payload['result_revision'] == payload['prior_revision'] + 1)
@@ -181,6 +183,7 @@ def operation_observation(value, schema):
     state['snooze_live'] = not snooze_expired(payload)
     return {'alert_operation_identity': facts, 'alert_command_keys_a': {k: keys[k] for k in tables.fields('alert_command_keys_a')},
             'alert_command_keys_b': {k: keys[k] for k in tables.fields('alert_command_keys_b')},
+            'alert_command_keys_entailed': {k: keys[k] for k in tables.fields('alert_command_keys_entailed')},
             'alert_operation_joins': joins, 'alert_owner_prior': owners['prior'],
             'alert_owner_candidate': owners['candidate'], 'alert_candidate_state': state}
 
@@ -715,6 +718,8 @@ def historical_observation(request, expected, payload_schemas, cp_schema, cp_che
     members_equal = set(event) == set(original)
     instants = {k: event[k] for k in ('observed_at_utc', 'persisted_at_utc') if k in event}
     event_facts = dict(instants_valid=stored_instants_valid(instants), members_equal=members_equal)
+    # Every original identity member has its own row (a member without one would be a silent pass).
+    assert identity_fields <= set(tables.fields('history_event')[2:]), sorted(identity_fields)
     for field in tables.fields('history_event')[2:]:
         event_facts[field] = field not in identity_fields or (members_equal and exact_value(event[field], original[field]))
     edition_known = schema is not None
@@ -1204,6 +1209,9 @@ def main():
                     assert len(packed(baseline)) < 16384 and 'event_refs' not in baseline
                     count += 1
                 count += history_response_cases(baseline, value_schema, family['event_type'], 'fixture', original_context)
+                # Sweep part 2A one-defect witnesses for rows no earlier case refused alone.
+                op_schema = load(f"Plans/alert_event_contracts/{family['operation']}.schema.json")
+                count += p2a_witnesses.alert_all(sys.modules[__name__], tables, family, fixtures, schema, op_schema, value_schema)
             group = 'event_log' if key == 'checkpoint' else 'coordination_and_storage'
             row = next(x for x in values['families'] if x['family_id'] == family[key])
             check_schema(row['value_schema'])

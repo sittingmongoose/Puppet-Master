@@ -22,6 +22,7 @@ if str(ROOT / 'scripts') not in sys.path:
     sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_dg6a_table_panel_scope as _panel_scope_table  # noqa: E402
 import pm_dg6a_tables as tables  # noqa: E402
+import pm_dg6a_p2a_witnesses as p2a_witnesses  # noqa: E402
 
 _PANEL_SCOPE_ROWS = [(name, guard.predicate) for name, guard in _panel_scope_table.case(None).table.guards.items()]
 PANEL_SCOPE_RECORDER = None
@@ -110,8 +111,8 @@ def checkpoint_scope_cases(checkpoint, schema, operation):
     return 1 + len(cases)
 
 
-PANEL_OPERATION_PHASES = ('panel_request', 'panel_command_keys', 'panel_operation_joins', 'panel_identity',
-                          'panel_host_prior', 'panel_host_candidate', 'panel_result_refs')
+PANEL_OPERATION_PHASES = ('panel_request', 'panel_operation_joins', 'panel_command_keys', 'panel_command_keys_entailed',
+                          'panel_identity', 'panel_host_prior', 'panel_host_candidate', 'panel_result_refs')
 
 
 def operation_observation(value, event_type):
@@ -123,12 +124,14 @@ def operation_observation(value, event_type):
     """
     payload, command = value['payload'], value['original_command']
     keys = {key: key not in command or key not in payload or not (command[key] != payload[key])
-            for key in tables.fields('panel_command_keys')}
+            for key in tables.fields('panel_command_keys') + tables.fields('panel_command_keys_entailed')}
     joins = {key: not (value[key] != payload[key]) for key in tables.fields('panel_operation_joins')[1:]}
     joins['window_exact'] = command.get('target_window', command.get('window_id')) == payload['window_id']
     digest = identity(payload, event_type)
     facts = {'panel_request': dict(request_digest_exact=value['request_digest'] == request_digest(command, payload)),
-             'panel_command_keys': keys, 'panel_operation_joins': joins,
+             'panel_command_keys': {k: keys[k] for k in tables.fields('panel_command_keys')},
+             'panel_command_keys_entailed': {k: keys[k] for k in tables.fields('panel_command_keys_entailed')},
+             'panel_operation_joins': joins,
              'panel_identity': dict(operation_digest_exact=value['operation_digest'] == digest,
                                     event_id_exact=value['event_id'] == 'evt_' + event_type.replace('.', '_') + '_' + digest)}
     for name, host_key, revision_key in [('prior', 'source_host', 'prior_host_revision'),
@@ -303,6 +306,8 @@ def main():
         count += shared.checkpoint_context_cases(checkpoint, cp_schema, operation, checkpoint_errors)
         count += shared.trailing_lf_cases(checkpoint, cp_schema)
         count += shared.history_response_cases(checkpoint, cp_schema, event, payload['project_id'], operation)
+        # Sweep part 2A one-defect witnesses for rows no earlier case refused alone.
+        count += p2a_witnesses.panel_all(sys.modules[__name__], tables, family, fixture, schema, op_schema, cp_schema, context, reader)
         for field, bad_value in [('scope_partition', 'app'), ('storage_instance_id', 'foreign')]:
             altered = copy.deepcopy(checkpoint)
             altered[field] = bad_value

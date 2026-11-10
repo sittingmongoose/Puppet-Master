@@ -170,8 +170,7 @@ def run_generic_phase(phase, slot, out, max_rss, per_row):
     suite = g.Suite('DG6A ' + phase, module.case, gc, gn, (path,), ROOT,
                     non_guards=[g.NonGuard(path, 'case', 'return', RETURN_SOURCE,
                                            'Construct the fresh execution Case; this return makes no acceptance or refusal decision.')])
-    if available_gib() < 13.5:
-        raise SystemExit('refusing to start the tool run under 13.5 GiB available')
+    pause_when_low()
     stops = [e for e in g.prescan_sources(ROOT / path) if e['kind'] in g.STATIC_STOP_KINDS]
     if stops:
         raise SystemExit('prescan stop kinds: ' + json.dumps(stops, indent=1, default=str))
@@ -488,6 +487,15 @@ def available_gib():
     return 0.0
 
 
+def pause_when_low():
+    """Between tables: pause below 10 GiB available and resume at 11 GiB (the start check is 13.5 GiB)."""
+    if available_gib() < 10:
+        print('paused: under 10 GiB available', file=sys.stderr, flush=True)
+        while available_gib() < 11:
+            time.sleep(30)
+        print('resumed', file=sys.stderr, flush=True)
+
+
 def run_phase(phase, out, max_rss):
     table, path, collect = PHASES[phase]
     started = time.monotonic()
@@ -498,8 +506,7 @@ def run_phase(phase, out, max_rss):
     suite = g.Suite('DG6A ' + phase, table.case, gc, gn, (path,), ROOT,
                     non_guards=[g.NonGuard(path, 'case', 'return', RETURN_SOURCE,
                                            'Construct the fresh execution Case; this return makes no acceptance or refusal decision.')])
-    if available_gib() < 13.5:
-        raise SystemExit('refusing to start the tool run under 13.5 GiB available')
+    pause_when_low()
     stops = [e for e in g.prescan_sources(ROOT / path) if e['kind'] in g.STATIC_STOP_KINDS]
     if stops:
         raise SystemExit('prescan stop kinds: ' + json.dumps(stops, indent=1, default=str))
@@ -530,8 +537,17 @@ def main():
     parser.add_argument('--collect-only', action='store_true', help='collect and lane-check generated phases; no tool run')
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
+    if not args.collect_only and available_gib() < 13.5:
+        raise SystemExit('refusing to start the tool run under 13.5 GiB available')
     chosen = args.phases or ([] if args.generic_only else list(PHASES)) + ([] if args.handwritten_only else generic)
-    summaries = {phase: run_phase(phase, args.out, args.max_rss) for phase in chosen if phase in PHASES}
+    summaries = {}
+
+    def save():
+        (args.out / 'summary.json').write_text(json.dumps(summaries, indent=1, sort_keys=True) + '\n')
+    for phase in chosen:
+        if phase in PHASES:
+            summaries[phase] = run_phase(phase, args.out, args.max_rss)
+            save()
     wanted = [phase for phase in chosen if phase in generic]
     if wanted:
         collector, counts = collect_generic()
@@ -547,6 +563,7 @@ def main():
                                         lane_matrix=lane_matrix(phase, slot), tool_status='NOT_RUN')
             else:
                 summaries[phase] = run_generic_phase(phase, slot, args.out, args.max_rss, args.per_row)
+            save()
     (args.out / 'summary.json').write_text(json.dumps(summaries, indent=1, sort_keys=True) + '\n')
     brief = {p: (s['tool_status'], len(s.get('proved', [])), s.get('unproved'), s.get('rows_without_negative'),
                  len(s.get('lane_matrix', [])), len(s.get('multi_row', []))) for p, s in summaries.items()}

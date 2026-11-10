@@ -22,6 +22,7 @@ if str(ROOT / 'scripts') not in sys.path:
     sys.path.insert(0, str(ROOT / 'scripts'))
 import pm_dg6a_table_concern_scope as _concern_scope_table  # noqa: E402
 import pm_dg6a_tables as tables  # noqa: E402
+import pm_dg6a_p2a_witnesses as p2a_witnesses  # noqa: E402
 
 _CONCERN_SCOPE_ROWS = [(name, guard.predicate) for name, guard in _concern_scope_table.case(None).table.guards.items()]
 CONCERN_SCOPE_RECORDER = None
@@ -53,7 +54,8 @@ def payload_errors(value, schema):
     return found if tables.first('sch_concern_payload', schema_errors=len(found)) else []
 
 
-CONCERN_OPERATION_PHASES = ('concern_identity', 'concern_command_keys_a', 'concern_command_keys_b', 'concern_operation_joins',
+CONCERN_OPERATION_PHASES = ('concern_identity', 'concern_command_keys_a', 'concern_command_keys_b', 'concern_command_keys_entailed',
+                            'concern_operation_joins',
                             'concern_record_a', 'concern_record_b')
 
 
@@ -71,7 +73,7 @@ def operation_observation(value):
         operation_digest_exact=value['operation_digest'] == h, event_id_exact=value['event_id'] == 'evt_concern_created_' + h,
         concern_id_exact=payload['concern_id'] == cid, request_digest_exact=value['request_digest'] == digest(value),
         partition_exact=value['scope_partition'] == 'project~' + base64.urlsafe_b64encode(value['project_id'].encode()).decode().rstrip('='))}
-    for part in ('a', 'b'):
+    for part in ('a', 'b', 'entailed'):
         facts['concern_command_keys_' + part] = {
             key: key not in command or key not in payload or not (command[key] != payload[key])
             for key in tables.fields('concern_command_keys_' + part)}
@@ -140,6 +142,26 @@ def protocol_errors(context, original):
                           publication_current=context['publication_state'] == 'current')
     found += shared.append_result_errors(original, context.get('append_resolution'), context.get('append_original'), 'concern.created')
     return found
+
+
+def payload_schema_entailment(op_schema, payload_schema):
+    """sch_concern_operation_payload is entailed: the operation schema embeds this payload schema.
+
+    The embedded payload (and its payload_* $defs) equals the payload schema after the
+    $defs renaming, so sch_concern_operation refuses every payload defect first.
+    """
+    defs = {k[len('payload_'):]: v for k, v in op_schema['$defs'].items() if k.startswith('payload_')}
+    def rename(node):
+        if type(node) is dict:
+            return {k: ('#/$defs/' + v[len('#/$defs/payload_'):] if k == '$ref' and type(v) is str and v.startswith('#/$defs/payload_')
+                        else rename(v)) for k, v in node.items()}
+        if type(node) is list:
+            return [rename(v) for v in node]
+        return node
+    embedded = dict(rename(op_schema['properties']['payload']), **{'$defs': rename(defs)})
+    standalone = {k: v for k, v in payload_schema.items() if k not in ('$schema', '$id')}
+    assert {k: v for k, v in embedded.items() if k not in ('$schema', '$id')} == standalone, 'embedded payload schema drifted'
+    return 1
 
 
 def concern_result(context, original):
@@ -362,6 +384,10 @@ def main():
     assert checkpoint_errors(value, cp_schema, original)
     count += 2
     count += shared.history_response_cases(checkpoint, cp_schema, 'concern.created', 'fixture', original)
+    # Sweep part 2A one-defect witnesses for rows no earlier case refused alone.
+    count += p2a_witnesses.concern_all(sys.modules[__name__], tables, fixture, payload_schema, op_schema, context,
+                                       lambda request, expected: historical_concern_page(request, expected, payload_schema, cp_schema))
+    count += payload_schema_entailment(op_schema, payload_schema)
     value = copy.deepcopy(checkpoint)
     value['index_read_token']['checkpoint_ref'] += 'x' * 16384
     assert checkpoint_errors(value, cp_schema, original)
