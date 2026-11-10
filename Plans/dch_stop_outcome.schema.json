@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "pm.dch_stop.outcome.schema.v1",
-  "description": "DL-406/DL-427; prepared without event admission or runtime durability certification. Existing WorkflowScopeV2 and ID descriptors reused; formats enforced by pm_dch_formats.FormatChecker.",
+  "description": "DL-406/DL-427; prepared without event admission or runtime durability certification. Existing WorkflowScopeV2 and ID descriptors reused; formats enforced by pm_dch_formats.validator (shared CV-1101 date-time check and DCH URI grammar).",
   "oneOf": [
     {
       "$ref": "#/$defs/project"

@@ -2,9 +2,9 @@
 
 Source: `Plans/Automated_Testing_System.md`
 
-Source lines: L6713-L7506
+Source lines: L6713-L7526
 
-Source SHA256: `ea084617ac5544a3f8c1d1d590804c16bcb5a6f5db7c182100bed0b3569a15a1`
+Source SHA256: `68f00e55a113261fc4bbf12a6684d1069a46fac7b5338b8da0dafad78869d560`
 
 ---
 
@@ -555,6 +555,8 @@ Review round 7 requires C7-B1 and sweep S1/S2 in every applicable family. Plans/
 
 Review round 8 replaces the masked oversized-pointer negative with an in-limit exact-reference negative. An exact SP-337 pointer has a fixed 64-hex digest and media type plus at most 20 uint64 decimal size digits; its encoded size is below 16384, so the defensive pointer-size predicate is entailed on exact references, not a duplicate of equality. Keep both predicates. Test each affected Storage field at 2^53, 2^60 and uint64 maximum and refuse overflow, negative, boolean, float and string substitutes independently. Checkpoint primitive admission probes have no stale source copies; full positive publications synchronize all copies. The legacy grouped guard table is historical evidence only: the shared pm_guard_isolation.py tool must replace merged identifiers, shared input/grouped types, compound envelope/access and size/reference removal groups. No lane proof rebuild is required by this round; admission still requires completed isolation evidence.
 
+Sweep part 2B adopts the shared CV-1101 check and SP-1101 dispatch. Every DCH validator is pm_event_datetime.datetime_validator over the complete outer schema (scripts/pm_dch_formats.py composes it with the DCH HTTPS URI grammar); negatives show the shared predicate's own refusal through the validator at occurred_at_utc, observed_at_utc, persisted_at_utc, ts and retired_at_utc. The timestamp battery records per-field expectations: the EventRecord profile for occurred_at_utc, CV-253 storage_utc_z for observed_at_utc and persisted_at_utc, and the registered predicate with the owner-schema terminal-Z pattern for ts and retired_at_utc; year 0000, lowercase t and legitimate leap seconds are owner-valid. Retained strict-v3 originals whose timestamps CV-1101 refuses are owner-invalid and refuse; owner-valid strict-v3 originals and checkpoints (legitimate leap second, lowercase t, long fraction) are retained positives with sealed receipts. Retained reads compose RetainedDispatcher once; an original of a Store outside the sealed custody refuses (RN05) and an unsupported receipt recipe refuses (RN06), each with a single-row witness. Run python3 scripts/pm_event_numbers.py --self-test and python3 scripts/pm_event_datetime_inventory.py and credit exactly what they report; the shared inventory must classify the lane's resources before installation.
+
 ```yaml
 plan_unit_id: ATS-305
 unit_type: requirement
@@ -684,7 +686,22 @@ canonical_text: '### ATS-305 — DCH
   have no stale source copies; full positive publications synchronize all copies. The legacy grouped guard table
   is historical evidence only: the shared pm_guard_isolation.py tool must replace merged identifiers, shared input/grouped
   types, compound envelope/access and size/reference removal groups. No lane proof rebuild is required by this round;
-  admission still requires completed isolation evidence.'
+  admission still requires completed isolation evidence.
+
+
+  Sweep part 2B adopts the shared CV-1101 check and SP-1101 dispatch. Every DCH validator is
+  pm_event_datetime.datetime_validator over the complete outer schema (scripts/pm_dch_formats.py composes it with the
+  DCH HTTPS URI grammar); negatives show the shared predicate''s own refusal through the validator at occurred_at_utc,
+  observed_at_utc, persisted_at_utc, ts and retired_at_utc. The timestamp battery records per-field expectations: the
+  EventRecord profile for occurred_at_utc, CV-253 storage_utc_z for observed_at_utc and persisted_at_utc, and the
+  registered predicate with the owner-schema terminal-Z pattern for ts and retired_at_utc; year 0000, lowercase t and
+  legitimate leap seconds are owner-valid. Retained strict-v3 originals whose timestamps CV-1101 refuses are
+  owner-invalid and refuse; owner-valid strict-v3 originals and checkpoints (legitimate leap second, lowercase t, long
+  fraction) are retained positives with sealed receipts. Retained reads compose RetainedDispatcher once; an original
+  of a Store outside the sealed custody refuses (RN05) and an unsupported receipt recipe refuses (RN06), each with a
+  single-row witness. Run python3 scripts/pm_event_numbers.py --self-test and python3
+  scripts/pm_event_datetime_inventory.py and credit exactly what they report; the shared inventory must classify the
+  lane''s resources before installation.'
 gui_related: false
 gui_classification_reason: Owns event data and persistence contract.
 depends_on: []
@@ -731,7 +748,7 @@ owner_hints:
 
 ### ATS-306 — Stop request, saved outcome and retirement contract oracles
 
-DL-406 and DL-427 govern the exact family chat.response_stop_requested, checked separately by python3 scripts/pm_dch_stop.py. Plans/dch_stop_contract_fixtures.json supplies independent Project/application request, original accepted assistant-turn/work, actual-Store record commitment and cancellation/timeout observations. Plans/dch_stop_request.schema.json and Plans/dch_stop_outcome.schema.json are closed, all references are resolved eagerly, and existing mandatory format validation is enforced. Cases cover schema presence/closure, exact types and LF/format refusals; actual original target/identity/actor/time joins; current replay-only refusal and retained compatibility/history; exact CV-366 application keys and encoded Project partitions; caller-semantic retries excluding Storage metadata; verified full-body/pointer limits and SP-337 custody; actual original Storage metadata; three-second cancellation versus timeout and exact saved outcome time; result CAS/repeat/conflict and restart/recovery model readback; and saved-outcome plus separate-user-action queue barriers. Acknowledgement/display-only success is refused. Every negative starts from a valid case and changes one invariant on the surface being tested; dependent keys, references, copies and commitments remain coherent. Exceptions and successful exits never count as refusal. New real guards need negatives. Every Stop refusal is a named st_* guard-table row (or a reused DCH row), proved by the shared guard-isolation tool through scripts/pm-dch-guard-tables.py; number recipes follow CV-1100/SP-1100 (scripts/pm_event_numbers.py), while shared provenance (SP-1101) and CV-1101 date-time defects stay explicitly PARTIAL sweep items; do not introduce another lane serializer/format grammar.
+DL-406 and DL-427 govern the exact family chat.response_stop_requested, checked separately by python3 scripts/pm_dch_stop.py. Plans/dch_stop_contract_fixtures.json supplies independent Project/application request, original accepted assistant-turn/work, actual-Store record commitment and cancellation/timeout observations. Plans/dch_stop_request.schema.json and Plans/dch_stop_outcome.schema.json are closed, all references are resolved eagerly, and existing mandatory format validation is enforced. Cases cover schema presence/closure, exact types and LF/format refusals; actual original target/identity/actor/time joins; current replay-only refusal and retained compatibility/history; exact CV-366 application keys and encoded Project partitions; caller-semantic retries excluding Storage metadata; verified full-body/pointer limits and SP-337 custody; actual original Storage metadata; three-second cancellation versus timeout and exact saved outcome time; result CAS/repeat/conflict and restart/recovery model readback; and saved-outcome plus separate-user-action queue barriers. Acknowledgement/display-only success is refused. Every negative starts from a valid case and changes one invariant on the surface being tested; dependent keys, references, copies and commitments remain coherent. Exceptions and successful exits never count as refusal. New real guards need negatives. Every Stop refusal is a named st_* guard-table row (or a reused DCH row), proved by the shared guard-isolation tool through scripts/pm-dch-guard-tables.py; number recipes follow CV-1100/SP-1100 (scripts/pm_event_numbers.py) and timestamps the shared CV-1101 check (scripts/pm_event_datetime.py through scripts/pm_dch_formats.py); the Stop contract has one current edition, so SP-1101 dispatch selects no earlier recipe. Witnesses accept a legitimate leap second, lowercase t and year 0000 at ts and outcome_at_utc and show the shared predicate's own refusal for hour 24, a false leap second and trailing LF; do not introduce another lane serializer/format grammar.
 
 Native acceptance remains NOT_RUN and is mandatory before the SP-628 retirement cutoff: stop the real process after original-request receipt, cancellation delivery, result staging, result CAS and acknowledgement loss; restart and recover from a coherent backup; verify exact request/assistant turn/work/result bytes and first receipt, preserve the original deadline, never rerun work, keep unresolved or unsaved outcomes behind the queue barrier, require separate user release and rerun current permission/hold gates. Prove both cancelled and timeout outcomes survive restart and recovery and that a lost result cannot be mistaken for success. The static model does not certify physical sync, redb CAS, authenticated source provenance or these native crash tests. Run each of the seventeen unchanged families separately through pm_dch_events.py --family, then this separate Stop checker; record every exit code. No admission or twelve-PASS claim is implied.
 
@@ -756,8 +773,11 @@ canonical_text: '### ATS-306 — Stop request, saved outcome and retirement cont
   on the surface being tested; dependent keys, references, copies and commitments remain coherent. Exceptions and
   successful exits never count as refusal. New real guards need negatives. Every Stop refusal is a named st_* guard-table
   row (or a reused DCH row), proved by the shared guard-isolation tool through scripts/pm-dch-guard-tables.py; number
-  recipes follow CV-1100/SP-1100 (scripts/pm_event_numbers.py), while shared provenance (SP-1101) and CV-1101 date-time
-  defects stay explicitly PARTIAL sweep items; do not introduce another lane serializer/format grammar.
+  recipes follow CV-1100/SP-1100 (scripts/pm_event_numbers.py) and timestamps the shared CV-1101 check
+  (scripts/pm_event_datetime.py through scripts/pm_dch_formats.py); the Stop contract has one current edition, so
+  SP-1101 dispatch selects no earlier recipe. Witnesses accept a legitimate leap second, lowercase t and year 0000 at
+  ts and outcome_at_utc and show the shared predicate''s own refusal for hour 24, a false leap second and trailing LF;
+  do not introduce another lane serializer/format grammar.
 
 
   Native acceptance remains NOT_RUN and is mandatory before the SP-628 retirement cutoff: stop the real process

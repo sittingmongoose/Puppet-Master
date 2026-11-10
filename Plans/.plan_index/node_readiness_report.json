@@ -12,7 +12,7 @@
     "unblocks_edge_count": 3210,
     "unresolved_reference_count": 0
   },
-  "generated_at_utc": "2026-11-08T01:43:00Z",
+  "generated_at_utc": "2026-11-10T20:57:28Z",
   "gui_related_units": {
     "count": 3832,
     "units": [
@@ -46465,7 +46465,7 @@
       {
         "actual": "ef5cff5b64eccf95726947654e4ee56913824987245f54aa289b4b2f237e5c6d",
         "error": "pnc019_source_hash_stale",
-        "expected": "27afc5524a99fc68f5bf5b45ac99f6022f92927050b64be8faf37c8b694014ed",
+        "expected": "bda87b247d841e058758136731734e515ae947f2261b5f90370015603d3bd353",
         "source_path": "Plans/event_record.schema.json"
       },
       {
@@ -46525,7 +46525,7 @@
       {
         "actual": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
         "error": "pnc019_source_hash_stale",
-        "expected": "ea084617ac5544a3f8c1d1d590804c16bcb5a6f5db7c182100bed0b3569a15a1",
+        "expected": "68f00e55a113261fc4bbf12a6684d1069a46fac7b5338b8da0dafad78869d560",
         "source_path": "Plans/Automated_Testing_System.md"
       },
       {
@@ -46649,10 +46649,6 @@
       {
         "error": "event_authority_currentness_source_drift",
         "source_path": "Plans/chain-wizard-flexibility.md"
-      },
-      {
-        "error": "event_authority_currentness_source_drift",
-        "source_path": "Plans/event_record.schema.json"
       },
       {
         "error": "event_authority_currentness_source_drift",
