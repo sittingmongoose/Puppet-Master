@@ -103,7 +103,7 @@ def operation_errors(value, schema, payload_schema):
     found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(value))
     if tables.first('sch_concern_operation', schema_errors=len(found)):
         return found
-    code = tables.first('concern_operation_size', encoded_bytes=len(packed(value)))
+    code = tables.first('concern_operation_size', encoded_bytes=shared.encoded_size(value))
     if code:
         return [code]
     payload_found = list(Draft202012Validator(payload_schema, format_checker=FormatChecker()).iter_errors(value['payload']))

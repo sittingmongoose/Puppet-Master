@@ -9,7 +9,7 @@ import copy
 import importlib.util
 import json
 from pathlib import Path
-from unittest.mock import patch
+from decimal import Decimal
 
 ROOT = Path(__file__).resolve().parents[1]
 BAD_TYPES = ['false', 'true', '0', None, [], {}, {'nested': False}, True, False, 0, 1, 1.0]
@@ -137,8 +137,12 @@ def run(kind, m, family, fixture):
             if 'integer' in (contract.get('type') if type(contract.get('type')) is list else [contract.get('type')]):
                 nums=[float(good), float(f'{good}e0'), -0.0, 2**53, 2**53+1, 2**64, -(2**53), True, False]
                 for bad in nums:
-                    # u64 Storage fields deliberately accept exact integers > 2^53.
-                    valid = type(bad) is int and contract.get('minimum',-(2**63)) <= bad <= contract.get('maximum',2**64-1) and ('const' not in contract or bad==contract['const'])
+                    # CV-1100: an integer slot admits exact integers within the slot's own
+                    # schema bounds only; there is no lane or default cap (Storage uint64
+                    # fields declare their 0..2^64-1 bounds in the schema itself).
+                    valid = (type(bad) is int and (contract.get('minimum') is None or bad >= contract['minimum'])
+                             and (contract.get('maximum') is None or bad <= contract['maximum'])
+                             and ('const' not in contract or bad == contract['const']))
                     record('number field', reject(leaf,bad) != valid, schema=path, field=field, value=repr(bad))
                     if reject(leaf,bad): negatives.append((bad,list(shared.Draft202012Validator(leaf).iter_errors(bad))))
             if contract.get('format') in ('date-time','uuid'):
@@ -148,47 +152,34 @@ def run(kind, m, family, fixture):
                     negatives.append((bad,list(shared.Draft202012Validator(leaf).iter_errors(bad))))
                 if contract['format']=='date-time':
                     for good_date in GOOD_DATES: record('format positive', not reject(leaf,good_date), schema=path,field=field)
-            # Remove each exercised rule alone, or its named same-field duplicates.
-            # Re-run the entire same-field negative set and preserve the complement.
-            groups={}
-            for bad, errors in negatives:
-                rules=tuple(sorted(set(e.validator for e in errors)))
-                groups.setdefault(rules,[]).append(bad)
-            for rules, own in groups.items():
-                weakened=copy.deepcopy(leaf)
-                for rule in rules: weakened.pop(rule,None)
-                flipped=[]; rejected=[]
-                for i,(bad,_) in enumerate(negatives):
-                    (rejected if reject(weakened,bad) else flipped).append(i)
-                record('schema rule removal', all(not reject(weakened,b) for b in own) and bool(flipped), schema=path,field=field,rules=rules)
-                rows.append(dict(kind='domain', family=family['event_type'], function=path, guard=list(field)+list(rules),
-                                 negative_vectors=[dict(id=i,value=repr(bad),errors=[e.validator for e in errors]) for i,(bad,errors) in enumerate(negatives)],
-                                 duplicate_pairs=list(rules) if len(rules)>1 else [],
-                                 negatives_that_flip=flipped, negatives_that_stay_rejected=rejected, status='pass'))
     # Exact semantic codec domain, not merely schema validation.
-    for bad in (1.0,1e0,-0.0,2**53,2**53+1,2**64, -(2**53)):
+    # CV-1100: one numeric form (exact integers) and no lane cap; integers outside the
+    # canonical MessagePack recipe domain are refused by that recipe.
+    for bad in (1.0,1e0,-0.0,Decimal('1'),2**64,-(2**63)-1):
         try: shared.semantic_packed({'number':bad})
         except ValueError: record('semantic number rejection',True,value=repr(bad))
         else: record('semantic number rejection',False,value=repr(bad))
+    for good in (2**53,2**53+1,-(2**53),2**64-1,-(2**63)):
+        try: shared.semantic_packed({'number':good})
+        except ValueError: record('semantic number admission',False,value=repr(good))
+        else: record('semantic number admission',True,value=repr(good))
     for raw in ('-0','01','-01','NaN','Infinity','-Infinity'):
         try: domain.loads('{"number":'+raw+'}')
         except ValueError: record('lexical number rejection',True,value=raw)
         else: record('lexical number rejection',False,value=raw)
     # Each recursive domain predicate has its own direct guard witness, with
     # an unrelated predicate's complete negative set still rejecting unchanged.
-    number_negatives=[{'number':v} for v in (1.0,1e0,-0.0,2**53,2**53+1,2**64)]
+    number_negatives=[{'number':v} for v in (1.0,1e0,-0.0,Decimal('1'))]
     format_negatives=[{'ts':v} for v in BAD_DATES]
     def predicate_rejects(fn,v):
         try:fn(v)
         except ValueError:return True
         return False
+    # Case generation only: guard removal is the guard tool's row cut, not a patch here.
     for function,own,other,other_fn in [('semantic_numbers',number_negatives,format_negatives,domain.semantic_formats),
                                        ('semantic_formats',format_negatives,number_negatives,domain.semantic_numbers)]:
         record('recursive domain predicate',all(predicate_rejects(getattr(domain,function),v) for v in own))
-        with patch.object(domain,function,lambda v:None):
-            record('recursive domain guard removal',all(not predicate_rejects(getattr(domain,function),v) for v in own) and all(predicate_rejects(other_fn,v) for v in other))
-        rows.append(dict(kind='domain',family=family['event_type'],function=function,guard='recursive exact input domain',duplicate_pairs=[],
-                         negative_vectors=own,negatives_that_flip=list(range(len(own))),negatives_that_stay_rejected=['other predicate:'+str(i) for i in range(len(other))],status='pass'))
+        record('other predicate independent',not any(predicate_rejects(getattr(domain,function),v) for v in other))
     # Same actual composed validators used by the family checker. One leaf changes;
     # schema/domain rejection must happen before comparisons/encoding (no exception).
     op = fixture['operation_cases'][0]['value'] if kind=='alert' else fixture['settled_operation']
@@ -246,7 +237,7 @@ def run(kind, m, family, fixture):
                 except Exception as e: raise AssertionError((name,field,repr(bad))) from e
                 record('composed wrong type classified', bool(result) or (name.startswith('history/') and field[:1]==('live',)) or (name=='protocol' and field[:1]==('append_family',)) or (name.split('/')[0] in ('payload','operation','checkpoint') and not reject({'payload':payload_schema,'operation':op_schema,'checkpoint':cp_schema}[name.split('/')[0]],candidate)),context=name,field=field,rejected=bool(result),value=repr(bad))
             if type(value) is int:
-                for bad in (float(value),float(str(value)+'e0'),-0.0,2**53,2**53+1,2**64):
+                for bad in (float(value),float(str(value)+'e0'),-0.0,Decimal(value),2**64):
                     candidate=changed(original,field,bad)
                     result=checker(candidate)
                     allowed = (name=='protocol' and kind=='panel' and field==('frontier',) and type(bad) is int and proof['cursor']<=bad<=2**64-1) or (name=='checkpoint' and type(bad) is int and bad<=2**64-1) or (name.startswith('history/') and field[:1]==('live',))
@@ -268,10 +259,6 @@ def run(kind, m, family, fixture):
         try:reader(bad,expected)
         except shared.HistoryUnavailable as e:record('history modeled unavailable',e.guards==['history_shape'])
         else:record('history modeled unavailable',False)
-    with patch.object(shared,'history_shape',lambda *args:True):
-        record('navigation guard removal',all(shared.history_shape(bad,expected) for bad in bad_shapes))
-    rows.append(dict(kind='domain',family=family['event_type'],function='history_shape',guard='navigation types/presence',duplicate_pairs=[],
-                     negatives_that_flip=list(range(len(bad_shapes))),negatives_that_stay_rejected=[],status='pass'))
     record('extreme calendar offsets',domain.instant_le('0001-01-01T00:00:00+23:59','0001-01-01T00:00:00Z') and domain.instant_le('9999-12-31T23:59:59Z','9999-12-31T23:59:59-23:59'))
     # Long fractional comparisons keep every digit, including after digit six.
     record('fraction precision', not domain.instant_le('2026-11-04T18:00:00.0000001Z','2026-11-04T18:00:00.0000000Z'))

@@ -366,6 +366,16 @@ def card5_mapping(owner, tables, fixture, family, payload_schemas, cp_schema):
 # ------------------------------------------------------------------ per-checker entry points (called by the mains)
 def alert_all(owner, tables, family, fixtures, payload_schema, op_schema, cp_schema):
     count = alert_operation(owner, tables, family, fixtures, op_schema)
+    count += expect(unencodable(fixtures['operation_cases'][0]['value'], lambda v: owner.operation_errors(v, op_schema),
+                                'operation has no canonical MessagePack encoding'), 1, 'operation_unencodable')
+    # CV-1100 sets no lane cap: coherent current revisions above 2^53 and at the uint64 edge are accepted.
+    for prior in (2 ** 53, 2 ** 64 - 2):
+        value = copy.deepcopy(fixtures['operation_cases'][0]['value'])
+        value['payload']['prior_revision'] = value['original_command']['prior_revision'] = prior
+        value['prior_owner_state']['revision'] = prior
+        value['payload']['result_revision'] = value['candidate_owner_state']['revision'] = prior + 1
+        value['request_digest'] = owner.request_digest(value['original_command'], value['payload'])
+        count += expect(owner.operation_errors(value, op_schema), [], 'large_revision_' + str(prior))
     count += append_witnesses(owner, family, fixtures)
     original_context = fixtures['operation_cases'][0]['value']
     baseline = fixtures['checkpoint_cases'][0]['value']
@@ -392,6 +402,15 @@ def alert_all(owner, tables, family, fixtures, payload_schema, op_schema, cp_sch
 def panel_all(owner, tables, family, fixture, payload_schema, op_schema, cp_schema, context, reader):
     operation = fixture['settled_operation']
     count = panel_operation(owner, tables, family, operation, op_schema, payload_schema)
+    count += expect(unencodable(operation, lambda v: owner.operation_errors(v, op_schema, payload_schema, family['event_type']),
+                                'operation has no canonical MessagePack encoding'), 1, 'operation_unencodable')
+    for prior in (2 ** 53, 2 ** 64 - 2):  # CV-1100: no lane cap on host revisions
+        value = copy.deepcopy(operation)
+        value['payload']['prior_host_revision'] = value['original_command']['prior_host_revision'] = prior
+        value['prior_host_snapshot']['host_revision'] = prior
+        value['payload']['new_host_revision'] = value['candidate_host_snapshot']['host_revision'] = prior + 1
+        value['request_digest'] = owner.request_digest(value['original_command'], value['payload'])
+        count += expect(owner.operation_errors(value, op_schema, payload_schema, family['event_type']), [], 'large_host_revision_' + str(prior))
     count += panel_home_project(owner, fixture['payload_cases'], payload_schema)
     count += checkpoint_witnesses(owner.shared, owner.checkpoint_errors, fixture['checkpoint'], cp_schema, operation, server=True)
     count += protocol_shape_witnesses(owner.protocol_errors, context, operation, 'panel')
@@ -405,7 +424,37 @@ def panel_all(owner, tables, family, fixture, payload_schema, op_schema, cp_sche
 def concern_all(owner, tables, fixture, payload_schema, op_schema, context, reader):
     original = fixture['settled_operation']
     count = concern_operation(owner, tables, original, op_schema, payload_schema)
+    count += expect(unencodable(original, lambda v: owner.operation_errors(v, op_schema, payload_schema),
+                                'operation has no canonical MessagePack encoding'), 1, 'operation_unencodable')
     count += protocol_shape_witnesses(owner.protocol_errors, context, original, 'concern')
     count += concern_creator_type(owner, context, original)
     count += history_witnesses(owner.shared, fixture, fixture['checkpoint'], reader)
     return count
+
+
+def unencodable(value, check, code):
+    """SP-1100 size rows: an integer beyond -2^63..2^64-1 at a schema slot with no upper bound.
+
+    Tries each integer leaf of the valid parent in order; returns 1 when a single change
+    is refused exactly [code], or 0 when every integer slot is schema-bounded inside the
+    recipe domain (the report then proves the row unreachable).
+    """
+    def leaves(node, path):
+        if type(node) is dict:
+            for key, child in node.items():
+                yield from leaves(child, path + [key])
+        elif type(node) is list:
+            for index, child in enumerate(node):
+                yield from leaves(child, path + [index])
+        elif type(node) is int:
+            yield path
+    for path in list(leaves(value, [])):
+        for bad in (2 ** 64, -2 ** 63 - 1):
+            altered = copy.deepcopy(value)
+            parent = altered
+            for key in path[:-1]:
+                parent = parent[key]
+            parent[path[-1]] = bad
+            if check(altered) == [code]:
+                return 1
+    return 0

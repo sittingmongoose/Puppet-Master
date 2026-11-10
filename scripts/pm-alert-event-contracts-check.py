@@ -33,6 +33,7 @@ import pm_dg6a_table_profile as _profile_table  # noqa: E402
 import pm_dg6a_table_writer_policy as _writer_table  # noqa: E402
 import pm_dg6a_table_cursor as _cursor_table  # noqa: E402
 import pm_dg6a_tables as tables  # noqa: E402
+from pm_event_numbers import Refusal, current_integer, producer_semantic_digest  # noqa: E402
 import pm_dg6a_p2a_witnesses as p2a_witnesses  # noqa: E402
 
 _PROFILE_ROWS = [(name, guard.predicate) for name, guard in _profile_table.case(None).table.guards.items()]
@@ -75,6 +76,19 @@ def snooze_expired(payload):
 
 def packed(value):
     return _codec.canonical_messagepack_bytes(value)
+
+
+def encoded_size(value):
+    """Canonical MessagePack size, or None when the recipe cannot encode the value.
+
+    CV-1100 sets no schema integer cap, so an integer outside the recipe's
+    -2^63..2^64-1 domain (or a fractional carrier) reaches the physical route;
+    SP-1100 makes that a route refusal, never a crash.
+    """
+    try:
+        return len(packed(value))
+    except (ValueError, TypeError):
+        return None
 
 def reference_observation(schema, ref):
     """schema_ref FIELDS for one $ref occurrence; derived only.
@@ -193,7 +207,7 @@ def operation_errors(value, schema):
     found = list(Draft202012Validator(schema, format_checker=FormatChecker()).iter_errors(value))
     if tables.first('sch_alert_operation', schema_errors=len(found)):
         return found
-    code = tables.first('alert_operation_size', encoded_bytes=len(packed(value)))
+    code = tables.first('alert_operation_size', encoded_bytes=encoded_size(value))
     if code:
         return [code]
     facts = operation_observation(value, schema)
@@ -443,7 +457,8 @@ def checkpoint_errors(value, schema, original_context):
     found = list(Draft202012Validator(schema).iter_errors(value))
     if tables.first('sch_checkpoint', schema_errors=len(found)):
         return found
-    code = tables.first('checkpoint_size', encoded_bytes=len(packed(value)))
+    size = encoded_size(value)
+    code = tables.first('checkpoint_encoding_entailed', encoded_bytes=size) or tables.first('checkpoint_size', encoded_bytes=size)
     if code:
         return [code]
     if 'index_read_token' not in value:
@@ -565,12 +580,40 @@ def writer_policy_cases():
         assert actual == expected, (name, actual)
     return len(cases)
 
-def producer_digest(record):
-    domain.semantic_numbers(record['payload'])
-    domain.semantic_formats(record['payload'])
-    domain.semantic_numbers(record['producer_sequence_id'])
-    domain.semantic_formats({'occurred_at_utc': record['occurred_at_utc']})
-    return _codec.event_producer_semantic_digest(record)
+def producer_observation(record, integer_paths):
+    """producer_route FIELDS and the digest; derived only (each fact after a failed one is False)."""
+    facts, digest = dict(formats_valid=False, sequence_ok=False, qualified=False), None
+    try:
+        domain.semantic_formats(record['payload'])
+        domain.semantic_formats({'occurred_at_utc': record['occurred_at_utc']})
+        facts['formats_valid'] = True
+    except ValueError:
+        return facts, digest
+    sequence = record['producer_sequence_id']
+    try:
+        facts['sequence_ok'] = sequence is None or current_integer(sequence, minimum=0) == sequence
+    except Refusal:
+        return facts, digest
+    paths = {('producer_sequence_id',)} | {('payload', key) for key in integer_paths}
+    try:
+        digest = producer_semantic_digest(record, type_sensitive_paths=frozenset(paths))
+        facts['qualified'] = True
+    except Refusal:
+        pass
+    return facts, digest
+
+
+def producer_digest(record, integer_paths=()):
+    """The CV-317 producer digest via the shared producer_semantic_digest (CV-1100).
+
+    type_sensitive_paths are the owner integer paths: producer_sequence_id and the
+    payload's integer fields. Refuses only through the producer_route rows.
+    """
+    facts, digest = producer_observation(record, integer_paths)
+    code = tables.first('producer_route', **facts)
+    if code:
+        raise ValueError(code)
+    return digest
 
 
 def producer_cases(fixtures, event_type, payload):
@@ -591,12 +634,16 @@ def producer_cases(fixtures, event_type, payload):
                   idempotency_key=payload['idempotency_key'], payload_schema_id=payload['schema_id'],
                   payload=payload, payload_ref=None, redaction_profile='secret_refs_only', migration=None,
                   sequence_id=1, observed_at_utc='2026-11-04T18:00:00Z', persisted_at_utc='2026-11-04T18:00:00Z')
-    original = producer_digest(record)
+    # The payload's integer fields (schema-accepted fixture payload) are the owner integer paths.
+    integer_paths = tuple(key for key, value in payload.items() if type(value) is int)
+    original = producer_digest(record, integer_paths)
+    # The shared helper's digest is byte-identical to the pre-adoption JCS codec on valid records.
+    assert original == _codec.event_producer_semantic_digest(record)
     for case in fixtures['semantic_digest_cases']:
         retry = copy.deepcopy(record)
         retry.update(case['envelope_changes'])
         retry['payload'].update(case['payload_changes'])
-        assert (original == producer_digest(retry)) == case['same_digest'], case['name']
+        assert (original == producer_digest(retry, integer_paths)) == case['same_digest'], case['name']
         count += 1
     # Exercise the actual producer digest codec, not an independent JSON codec.
     numeric_key = next(key for key, value in payload.items() if type(value) is int)
@@ -610,7 +657,7 @@ def producer_cases(fixtures, event_type, payload):
             candidate['payload'][numeric_key] = number
             if type(number) is float:
                 try:
-                    producer_digest(candidate)
+                    producer_digest(candidate, integer_paths)
                 except ValueError:
                     pass
                 else:
@@ -618,7 +665,23 @@ def producer_cases(fixtures, event_type, payload):
             else:
                 canonical = copy.deepcopy(record)
                 canonical['payload'][numeric_key] = int(number)
-                assert producer_digest(candidate) == producer_digest(canonical)
+                assert producer_digest(candidate, integer_paths) == producer_digest(canonical, integer_paths)
+        count += 1
+    # One-defect producer_route witnesses (sweep part 2A/2B numbers): each refuses at exactly its row.
+    timestamp_key = next(key for key in ('ts', 'settled_at_utc') if key in payload)
+    for name, change, code in (
+            ('payload_timestamp', lambda r: r['payload'].update({timestamp_key: '2026-11-04T25:00:00Z'}), 'invalid semantic timestamp'),
+            ('negative_sequence', lambda r: r.update(producer_sequence_id=-1), 'producer_sequence_id is not a current integer'),
+            ('payload_beyond_binary64', lambda r: r['payload'].update({numeric_key: 2 ** 53 + 1}),
+             'producer projection has no qualified JCS')):
+        candidate = copy.deepcopy(record)
+        change(candidate)
+        try:
+            producer_digest(candidate, integer_paths)
+        except ValueError as error:
+            assert str(error) == code, (name, str(error))
+        else:
+            raise AssertionError(('producer route accepted', name))
         count += 1
     return count
 

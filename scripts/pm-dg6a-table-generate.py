@@ -87,9 +87,10 @@ module('alert_payload', 'Alert payload facts after the schema and writer policy 
 
 # ------------------------------------------------------------------ alert operation (operation_errors)
 verdict('sch_alert_operation', 'the alert operation value', 'sch_alert_operation_schema')
-module('alert_operation_size', 'Alert operation physical size (SP-337 inline limit).', [
+module('alert_operation_size', 'Alert operation physical encoding and size (SP-337 inline limit).', [
+    ('OS00_encodable', '/encoded_bytes', 'the operation has a canonical MessagePack encoding (SP-1100: integers in the recipe domain, no float)', 'operation has no canonical MessagePack encoding', f"{v('encoded_bytes')} is None"),
     ('OS01_inline_size', '/encoded_bytes', 'the canonical MessagePack operation is at most 16384 bytes',
-     'operation exceeds 16384 encoded bytes', f"{v('encoded_bytes')} > 16384"),
+     'operation exceeds 16384 encoded bytes', f"{v('encoded_bytes')} is not None and {v('encoded_bytes')} > 16384"),
 ])
 module('alert_operation_identity', 'Alert operation identity, frozen request digest and command presence (collect-all).', flat([
     ('OI01_operation_digest', 'operation_digest_exact', 'operation_digest is the recomputed identity digest',
@@ -135,9 +136,15 @@ module('alert_candidate_state', 'Candidate owner state transition fields and liv
 
 # ------------------------------------------------------------------ checkpoint (shared by every family)
 verdict('sch_checkpoint', 'the family checkpoint value', 'sch_checkpoint_schema')
+module('checkpoint_encoding_entailed', 'Checkpoint canonical encoding (entailed by sch_checkpoint).', [
+    ('CZ00_encodable', '/encoded_bytes', 'the checkpoint has a canonical MessagePack encoding; entailed: every checkpoint '
+     'integer slot is a Storage sequence bounded 0..2^64-1 (SP-1100) and no slot admits a fractional number, so '
+     'sch_checkpoint refuses every unencodable value first', 'checkpoint has no canonical MessagePack encoding',
+     f"{v('encoded_bytes')} is None"),
+])
 module('checkpoint_size', 'Checkpoint physical size.', [
     ('CZ01_inline_size', '/encoded_bytes', 'the canonical MessagePack checkpoint is at most 16384 bytes',
-     'checkpoint exceeds 16384 encoded bytes', f"{v('encoded_bytes')} > 16384"),
+     'checkpoint exceeds 16384 encoded bytes', f"{v('encoded_bytes')} is not None and {v('encoded_bytes')} > 16384"),
 ])
 module('checkpoint_token', 'Checkpoint Storage token and original-event context joins (collect-all).',
        chain([
@@ -165,6 +172,15 @@ module('protocol_shape', 'Protocol navigation containers, before any indexing (n
      'invalid protocol shape',
      f"{v('context_object')} is True and {v('members')} is True and {v('authority_object')} is True and {v('authority_members')} is not True"),
 ])
+
+module('producer_route', 'EventRecord producer digest route (CV-317 projection, CV-1100 qualified JCS).', chain([
+    ('PD01_timestamps', 'formats_valid', 'the payload and occurred_at_utc timestamps are valid (unchanged lane grammar; '
+     'date-time adoption is part 2B)', 'invalid semantic timestamp'),
+    ('PD02_sequence_integer', 'sequence_ok', 'producer_sequence_id is null or a current_integer of at least 0 (EventRecord owner slot)',
+     'producer_sequence_id is not a current integer'),
+    ('PD03_qualified', 'qualified', 'producer_semantic_digest qualifies the full projection, type-sensitive at every owner '
+     'integer path (producer_sequence_id and the payload integer fields)', 'producer projection has no qualified JCS'),
+]))
 
 # ------------------------------------------------------------------ alert protocol and retry
 module('alert_protocol', 'Alert current retry evidence flags and original receipt (collect-all).', flat([
@@ -287,9 +303,10 @@ module('panel_payload', 'Panel payload scope, CV-366 key, Home context and host 
                 ('PP04_home_tab', 'home_tab', 'a home_workspace interaction carries a workspace tab', 'missing original Home context')])
        + flat([('PP05_host_successor', 'host_successor', 'new_host_revision is prior_host_revision + 1', 'not host revision successor')]))
 verdict('sch_panel_operation', 'the panel operation value', 'sch_panel_operation_schema')
-module('panel_operation_size', 'Panel operation physical size.', [
-    ('PZ01_inline_size', '/encoded_bytes', 'the canonical MessagePack operation is at most 16384 bytes', 'operation too large',
-     f"{v('encoded_bytes')} > 16384"),
+module('panel_operation_size', 'Panel operation physical encoding and size.', [
+    ('PZ00_encodable', '/encoded_bytes', 'the operation has a canonical MessagePack encoding (SP-1100: integers in the recipe domain, no float)', 'operation has no canonical MessagePack encoding', f"{v('encoded_bytes')} is None"),
+    ('PZ01_inline_size', '/encoded_bytes', 'the canonical MessagePack operation is at most 16384 bytes',
+     'operation too large', f"{v('encoded_bytes')} is not None and {v('encoded_bytes')} > 16384"),
 ])
 module('panel_request', 'Panel frozen request digest.', flat([
     ('PQ01_request_digest', 'request_digest_exact', 'request_digest is the recomputed frozen command/payload digest', 'frozen command digest mismatch'),
@@ -347,9 +364,10 @@ module('panel_publication', 'Panel publication and cursor (one guard).', chain([
 verdict('sch_concern_payload', 'the concern.created payload', 'sch_concern_payload_schema')
 verdict('sch_concern_operation', 'the concern.created operation value', 'sch_concern_operation_schema')
 verdict('sch_concern_operation_payload', 'the concern.created operation payload against the payload schema', 'sch_concern_operation_payload_schema')
-module('concern_operation_size', 'concern.created operation physical size.', [
-    ('CZ01_inline_size', '/encoded_bytes', 'the canonical MessagePack operation is at most 16384 bytes', 'operation exceeds 16384 bytes',
-     f"{v('encoded_bytes')} > 16384"),
+module('concern_operation_size', 'concern.created operation physical encoding and size.', [
+    ('QZ00_encodable', '/encoded_bytes', 'the operation has a canonical MessagePack encoding (SP-1100: integers in the recipe domain, no float)', 'operation has no canonical MessagePack encoding', f"{v('encoded_bytes')} is None"),
+    ('QZ01_inline_size', '/encoded_bytes', 'the canonical MessagePack operation is at most 16384 bytes',
+     'operation exceeds 16384 bytes', f"{v('encoded_bytes')} is not None and {v('encoded_bytes')} > 16384"),
 ])
 module('concern_identity', 'concern.created original identity, frozen digest and partition (collect-all).',
        chain([

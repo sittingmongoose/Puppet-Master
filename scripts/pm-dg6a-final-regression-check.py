@@ -143,7 +143,10 @@ def run_suite(output, selected=None, payload_format_only=False):
             for field,number in base_payload.items():
                 if payload_format_only:continue
                 if type(number) is not int:continue
-                for spelling in (str(number)+'.0',str(number)+'e0','-0','-0.0','01',str(2**53),str(2**53+1)):
+                # CV-1100: these spellings are refused by the shared parser/current_integer. Exact
+                # integers above 2^53 are valid at an uncapped slot (no lane cap); the shared corpus
+                # run (scripts/pm-dg6a-number-corpus.py) covers them through every complete checker.
+                for spelling in (str(number)+'.0',str(number)+'e0','-0','-0.0','01'):
                     def numeric(v,field=field):positive_payload(v)[field]='DG6A_RAW_NUMBER'
                     cli(event,'B1',field+'='+spelling,script,path,numeric,args=(),raw_number=spelling)
             domain_checks=module('dg6a_cli_domains_'+kind,'pm-dg6a-domain-check.py')

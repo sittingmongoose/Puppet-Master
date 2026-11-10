@@ -17,7 +17,7 @@
     "schema_version": {"const": "1.0.0"},
     "project_id": {"$ref": "#/$defs/non_empty_id"},
     "concern_id": {"$ref": "#/$defs/non_empty_id"},
-    "concern_revision": {"type": "integer", "const": 1, "maximum": 9007199254740991},
+    "concern_revision": {"type": "integer", "const": 1},
     "concern_record_ref": {"$ref": "#/$defs/non_secret_ref"},
     "actor_ref": {"$ref": "#/$defs/non_secret_ref"},
     "created_by_ref": {"$ref": "#/$defs/non_secret_ref"},

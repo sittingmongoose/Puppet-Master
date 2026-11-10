@@ -1,4 +1,4 @@
-"""DG6A guard table concern_operation_size: concern.created operation physical size.
+"""DG6A guard table concern_operation_size: concern.created operation physical encoding and size.
 
 Method B guard rows (scripts/pm_guard_isolation.py) for the DG6A checkers. Each predicate reads one
 observation the checker derives from the complete boundary input (recomputed digests and identities,
@@ -12,17 +12,23 @@ import pm_guard_isolation as g
 FIELDS = ('encoded_bytes',)
 
 
-def CZ01_inline_size(value, context):
-    return 'operation exceeds 16384 bytes' if value['encoded_bytes'] > 16384 else None
+def QZ00_encodable(value, context):
+    return 'operation has no canonical MessagePack encoding' if value['encoded_bytes'] is None else None
+
+
+def QZ01_inline_size(value, context):
+    return 'operation exceeds 16384 bytes' if value['encoded_bytes'] is not None and value['encoded_bytes'] > 16384 else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('CZ01_inline_size', g.Invariant('/encoded_bytes', 'the canonical MessagePack operation is at most 16384 bytes'), 'operation exceeds 16384 bytes', CZ01_inline_size),
+        g.Guard('QZ00_encodable', g.Invariant('/encoded_bytes', 'the operation has a canonical MessagePack encoding (SP-1100: integers in the recipe domain, no float)'), 'operation has no canonical MessagePack encoding', QZ00_encodable),
+        g.Guard('QZ01_inline_size', g.Invariant('/encoded_bytes', 'the canonical MessagePack operation is at most 16384 bytes'), 'operation exceeds 16384 bytes', QZ01_inline_size),
     ])
 
     def check(value):
-        table.require('CZ01_inline_size', value, context)
+        table.require('QZ00_encodable', value, context)
+        table.require('QZ01_inline_size', value, context)
         return True
     return g.Case(table, check, context)

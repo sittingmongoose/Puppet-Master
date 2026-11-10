@@ -13,7 +13,7 @@ FIELDS = ('encoded_bytes',)
 
 
 def CZ01_inline_size(value, context):
-    return 'checkpoint exceeds 16384 encoded bytes' if value['encoded_bytes'] > 16384 else None
+    return 'checkpoint exceeds 16384 encoded bytes' if value['encoded_bytes'] is not None and value['encoded_bytes'] > 16384 else None
 
 
 def case(value):

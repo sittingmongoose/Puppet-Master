@@ -106,13 +106,11 @@
         },
         "prior_revision": {
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": 1
         },
         "result_revision": {
           "type": "integer",
-          "minimum": 2,
-          "maximum": 9007199254740991
+          "minimum": 2
         },
         "currentness_basis_ref": {
           "$ref": "#/$defs/payload_non_secret_ref"
@@ -232,8 +230,7 @@
         },
         "revision": {
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": 1
         },
         "source_record_ref": {
           "type": "string",
@@ -298,8 +295,7 @@
         },
         "revision": {
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": 1
         },
         "source_record_ref": {
           "type": "string",
@@ -369,8 +365,7 @@
         },
         "prior_revision": {
           "type": "integer",
-          "minimum": 1,
-          "maximum": 9007199254740991
+          "minimum": 1
         },
         "currentness_basis_ref": {
           "$ref": "#/$defs/payload_non_secret_ref"

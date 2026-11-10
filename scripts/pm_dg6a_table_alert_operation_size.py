@@ -1,4 +1,4 @@
-"""DG6A guard table alert_operation_size: Alert operation physical size (SP-337 inline limit).
+"""DG6A guard table alert_operation_size: Alert operation physical encoding and size (SP-337 inline limit).
 
 Method B guard rows (scripts/pm_guard_isolation.py) for the DG6A checkers. Each predicate reads one
 observation the checker derives from the complete boundary input (recomputed digests and identities,
@@ -12,17 +12,23 @@ import pm_guard_isolation as g
 FIELDS = ('encoded_bytes',)
 
 
+def OS00_encodable(value, context):
+    return 'operation has no canonical MessagePack encoding' if value['encoded_bytes'] is None else None
+
+
 def OS01_inline_size(value, context):
-    return 'operation exceeds 16384 encoded bytes' if value['encoded_bytes'] > 16384 else None
+    return 'operation exceeds 16384 encoded bytes' if value['encoded_bytes'] is not None and value['encoded_bytes'] > 16384 else None
 
 
 def case(value):
     context = None
     table = g.GuardTable([
+        g.Guard('OS00_encodable', g.Invariant('/encoded_bytes', 'the operation has a canonical MessagePack encoding (SP-1100: integers in the recipe domain, no float)'), 'operation has no canonical MessagePack encoding', OS00_encodable),
         g.Guard('OS01_inline_size', g.Invariant('/encoded_bytes', 'the canonical MessagePack operation is at most 16384 bytes'), 'operation exceeds 16384 encoded bytes', OS01_inline_size),
     ])
 
     def check(value):
+        table.require('OS00_encodable', value, context)
         table.require('OS01_inline_size', value, context)
         return True
     return g.Case(table, check, context)

@@ -1,10 +1,24 @@
-"""Exact DG6A input domains. No optional format-validation dependencies."""
+"""Exact DG6A input domains. No optional format-validation dependencies.
+
+Numbers follow the shared NUMRULE number scope (CV-1100, SP-1100; helper
+scripts/pm_event_numbers.py, merged at a16f67c1ef): raw JSON is parsed by
+loads_current_json, every schema integer slot is admitted by current_integer
+with the schema's own bounds, and no lane-local integer cap remains. Timestamp
+grammar below is unchanged (the date-time gate is part 2B; this lane's own
+review of its timestamp fields is interim only).
+"""
 import json
 import re
+import sys
+from contextlib import contextmanager
 from datetime import datetime, timezone
+from decimal import Decimal
+from pathlib import Path
 from jsonschema import Draft202012Validator as BaseValidator, FormatChecker, validators
 
-SAFE_INTEGER = 9007199254740991
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pm_event_numbers import Refusal, current_integer, loads_current_json  # noqa: E402
 # RFC3339 spelling with a required zone; calendar validity checked separately.
 # Fractional seconds have one or more decimal digits. Leap seconds are refused.
 INSTANT_PATTERN = r"[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt](?:[01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](?:\.[0-9]+)?(?:[Zz]|[+-](?:[01][0-9]|2[0-3]):[0-5][0-9])"
@@ -28,8 +42,50 @@ def instant(value):
 FORMATS = FormatChecker()
 FORMATS.checks('date-time')(lambda v: type(v) is not str or instant(v))
 FORMATS.checks('uuid')(lambda v: type(v) is not str or re.fullmatch(UUID_PATTERN, v) is not None)
+def current_integer_slot(checker, value):
+    """A schema integer slot admits exactly what the shared current_integer admits.
+
+    The slot's owner bounds stay its own minimum/maximum keywords (CV-1100 sets no
+    global cap); bool, float and Decimal carriers are not integers.
+    """
+    try:
+        current_integer(value)
+    except Refusal:
+        return False
+    return True
+
+
 ExactValidator = validators.extend(BaseValidator, type_checker=BaseValidator.TYPE_CHECKER.redefine(
-    'integer', lambda checker, value: type(value) is int))
+    'integer', current_integer_slot))
+
+
+@contextmanager
+def exact_integer_text():
+    """Render integers exactly while jsonschema formats error messages, then restore.
+
+    CV-1100 sets no global integer cap, so a valid 4,400-digit integer must not make
+    Python's default str() digit limit raise inside a refusal message.
+    """
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        yield
+    finally:
+        sys.set_int_max_str_digits(previous)
+
+
+class ExactSchemaValidator:
+    """The exact-type, enforced-format validator; errors are materialized under exact_integer_text."""
+
+    def __init__(self, inner):
+        self._inner = inner
+
+    def iter_errors(self, instance):
+        with exact_integer_text():
+            return iter(list(self._inner.iter_errors(instance)))
+
+    def is_valid(self, instance):
+        return not list(self.iter_errors(instance))
 
 
 def validator(schema, *args, **kwargs):
@@ -43,30 +99,29 @@ def validator(schema, *args, **kwargs):
         if type(node) is list:
             return [exact_dialect(v) for v in node]
         return node
-    return ExactValidator(exact_dialect(schema), *args, **kwargs)
+    return ExactSchemaValidator(ExactValidator(exact_dialect(schema), *args, **kwargs))
 
 
 validator.check_schema = ExactValidator.check_schema
 
 
-def integer_token(token):
-    if token == '-0':
-        raise ValueError('noncanonical negative-zero integer token')
-    return int(token)
-
-
-def invalid_constant(token):
-    raise ValueError('non-JSON numeric constant: ' + token)
-
-
 def loads(text):
-    return json.loads(text, parse_int=integer_token, parse_constant=invalid_constant)
+    """The shared CV-1100 current parser: -0, 01, nonfinite constants, duplicate keys and
+    lone surrogates refuse (Refusal is a ValueError); fractional tokens stay exact
+    ParsedDecimal carriers, never binary64."""
+    return loads_current_json(text)
 
 
 def semantic_numbers(value):
-    """Safe exact integer semantic domain, before hash/identity/retry encoding."""
-    if type(value) is float or (type(value) is int and abs(value) > SAFE_INTEGER):
-        raise ValueError('noncanonical or unsafe semantic number')
+    """One numeric spelling in a semantic recipe preimage (CV-1100), with no lane cap.
+
+    A request/identity preimage holds exact integers only: a float or Decimal
+    carrier (an integral float would yield a second identity for the same value)
+    refuses. Magnitude is not limited here; an integer the canonical MessagePack
+    recipe cannot encode is refused by that recipe (an existing route refusal).
+    """
+    if type(value) is float or isinstance(value, Decimal):
+        raise Refusal('semantic_number_kind')
     if type(value) is dict:
         for child in value.values():
             semantic_numbers(child)
