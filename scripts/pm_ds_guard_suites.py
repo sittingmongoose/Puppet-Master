@@ -16,6 +16,7 @@ import contextlib
 import copy
 import hashlib
 import importlib
+import importlib.util
 import io
 import json
 import sys
@@ -75,6 +76,28 @@ def sources(include_unit_tests=True):
             out.append((f'cohort/{cohort}/{ident}', call))
     for ident, call in p2a.cases():
         out.append((f'p2a/{ident}', call))
+    comp = json.loads((ROOT / 'Plans/context_compaction_completion_contract_fixtures.json').read_text())
+
+    def compaction_fixtures():
+        valid = {v['name']: v for v in comp['valid']}
+        for v in comp['valid']:
+            round2.compaction_payload_errors(v['payload'])
+        for n in comp['invalid']:
+            changed = copy.deepcopy(valid[n['base_valid']]['payload'])
+            changed.update(n.get('patch', {}))
+            for key in n.get('remove', []):
+                changed.pop(key, None)
+            round2.compaction_payload_errors(changed)
+        round2.compaction_event_errors(comp['valid_event'])
+        for n in comp['invalid_events']:
+            changed = copy.deepcopy(comp['valid_event'])
+            changed.update(n.get('patch', {}))
+            round2.compaction_event_errors(changed)
+    out.append(('compaction/fixtures', compaction_fixtures))
+    gate_spec = importlib.util.spec_from_file_location('ds_suites_admission', ROOT / 'scripts/pm-browser-event-admission.py')
+    gate_module = importlib.util.module_from_spec(gate_spec)
+    gate_spec.loader.exec_module(gate_module)
+    out.append(('admission/validate', gate_module.validate))
     for name in ('pm_browser_workspace_created', 'pm_browser_workspace_reset'):
         module = importlib.import_module(name)
         out.append((f'{name}/validate', module.validate_fixture_contracts))

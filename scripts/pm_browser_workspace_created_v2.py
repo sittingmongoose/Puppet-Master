@@ -103,8 +103,9 @@ def core_relation_failures(value, root=ROOT):
     relations['V2R03_range_order'] = cursor is None or value['first_retained_sequence_id'] <= value['index_through_sequence_id']
     relations['V2R04_cursor_through'] = cursor is None or cursor['last_sequence_id'] == value['index_through_sequence_id']
     relations['V2R05_cursor_offsets'] = cursor is None or cursor['byte_offset'] < cursor['frame_end_offset']
-    relations['V2R05A_storage_uint64'] = body_route.storage_uint64_fields_ok(value)
-    errors = relations.codes()
+    storage = Facts('v2_core_storage_uint64')
+    storage['V2R05A_storage_uint64'] = body_route.storage_uint64_fields_ok(value)
+    errors = relations.codes() + storage.codes()
     times = {}
 
     def calendar(name):
@@ -358,12 +359,13 @@ def advance_failures(before, after, index, observation, root=ROOT, *, replacemen
     f = Facts('v2_advance')
     f['V2A02_prior_cas'] = observation.get('prior_checkpoint') == before
     f['V2A03_not_withdrawn'] = before['state'] != 'withdrawn'
+    partition = Facts('v2_advance_partition')
     for number, field in enumerate((*SCOPE, 'publication_id', 'published_at_utc', 'hold_refs', 'retired_generations'), 4):
-        f[f'V2A{number:02d}_custody_{field}'] = before[field] == after[field]
+        (partition if field == 'scope_partition' else f)[f'V2A{number:02d}_custody_{field}'] = before[field] == after[field]
     f['V2A11_observation_time'] = instant(after['updated_at_utc']) >= instant(before['updated_at_utc'])
     f['V2A12_range_not_regressed'] = before['index_through_sequence_id'] is None or (
         after['index_through_sequence_id'] is not None and after['index_through_sequence_id'] >= before['index_through_sequence_id'])
-    return sorted(set(errors + f.codes()))
+    return sorted(set(errors + f.codes() + partition.codes()))
 
 
 def cleanup_failures(before, after, publication_id, observation, root=ROOT):

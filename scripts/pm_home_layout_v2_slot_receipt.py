@@ -596,10 +596,12 @@ class PayloadStore:
 
     def resolve(self, err: list[str], ref: dict[str, Any], what: str) -> bytes | None:
         ident = ref["blake3_id"]
-        ids = Facts("h4_store_id", chain=True)
-        if ids.stop("H4P01_id_hex64", lambda: isinstance(ident, str) and HEX64.fullmatch(ident) is not None):
+        syntax = Facts("h4_store_id_syntax", chain=True)
+        if syntax.stop("H4P01_id_hex64", lambda: isinstance(ident, str) and HEX64.fullmatch(ident) is not None):
             err.append(f"I11 {what} blake3_id is not exactly 64 lower-case hex characters")
             return None
+        syntax.done()
+        ids = Facts("h4_store_id", chain=True)
         if ids.stop("H4P02_object_exists", lambda: ident in self.objects):
             err.append(f"I11 {what} names a payload-store object that does not exist")
             return None
@@ -788,15 +790,16 @@ def source_bytes_check(err: list[str], name: str, holder: dict[str, Any], layout
     if src is None:
         return
     size = Facts("h4_source_size")
+    reference_size = Facts("h4_source_reference_size")
     if src["form"] == "inline":
         data = base64.b64decode(src["bytes"], validate=True)
         size["H4SB01_inline_within_limit"] = len(data) <= INLINE_LIMIT
-        size["H4SB02_reference_over_limit"] = True
+        reference_size["H4SB02_reference_over_limit"] = True
         media = SOURCE_MEDIA_TYPE
     else:
         size["H4SB01_inline_within_limit"] = True
-        size["H4SB02_reference_over_limit"] = src["byte_size"] > INLINE_LIMIT
-    for row in size.rows():
+        reference_size["H4SB02_reference_over_limit"] = src["byte_size"] > INLINE_LIMIT
+    for row in size.rows() + reference_size.rows():
         err.append(f"I6 {name} inline bytes exceed 16 KiB; a payload_ref is required" if row == "H4SB01_inline_within_limit"
                    else f"I6 {name} payload_ref names {src['byte_size']} bytes; bytes within 16 KiB are inline")
     if src["form"] != "inline":
@@ -920,22 +923,24 @@ def receipt_invariants(r: dict[str, Any], store: PayloadStore = EMPTY_STORE, lim
         joins["H4RE05_dispatch_event_ref"] = not committed or dr["event_ref"] == ev["event_id"]
         err.extend(joins.codes())
     capture = Facts("h4_receipt_capture")
+    request_presence = Facts("h4_receipt_capture_request_presence")
     for key, original, rows in (
             ("normalized_request", r["original_normalized_request"], ("H4IC01_request_presence", "H4IC02_request_canonical", "H4IC03_request_sha")),
             ("command_outcome", outcome, ("H4IC04_outcome_presence", "H4IC05_outcome_canonical", "H4IC06_outcome_sha")),
             ("ui_response", response, ("H4IC07_response_presence", "H4IC08_response_canonical", "H4IC09_response_sha"))):
         captured = r["identity_capture_bytes"][key]
         digest_claim = r["identity_capture_bytes_sha256"][key]
+        presence = request_presence if key == "normalized_request" else capture
         if original is None or captured is None:
-            capture[rows[0]] = original is None and captured is None and digest_claim is None
+            presence[rows[0]] = original is None and captured is None and digest_claim is None
             capture[rows[1]] = True
             capture[rows[2]] = True
             continue
         data = base64.b64decode(captured, validate=True)
-        capture[rows[0]] = True
+        presence[rows[0]] = True
         capture[rows[1]] = data == msgpack_or_none(original)
         capture[rows[2]] = digest_claim == sha(data)
-    err.extend(capture.codes())
+    err.extend(request_presence.codes() + capture.codes())
     owner = Facts("h4_receipt_owner")
     owner["H4O01_outcome_schema_ref"] = outcome is None or outcome["owner_result_schema_ref"] == OWNER_RESULT_REF
     owner["H4O02_outcome_hash"] = outcome is None or outcome["owner_result_sha256"] == r["original_owner_result_sha256"]

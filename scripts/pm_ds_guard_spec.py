@@ -103,6 +103,8 @@ SPEC = {
     """),
     'h4_source_size': ('layout source inline/reference size (I6)', H4, """
         H4SB01_inline_within_limit | I6 inline over limit | inline source bytes are within 16 KiB
+    """),
+    'h4_source_reference_size': ('layout source reference size (I6; schema-entailed)', H4, """
         H4SB02_reference_over_limit | I6 reference within limit | a source payload_ref names more than 16 KiB
     """),
     'h4_source_content': ('layout source content (I6)', H4, """
@@ -110,13 +112,15 @@ SPEC = {
         H4SB04_decodes_to_layout | I6 decode | the source bytes decode to exactly the typed layout
     """),
     'h4_store_id': ('payload-store reference identity (I11)', H4, """
-        H4P01_id_hex64 | I11 id | the BLAKE3 id is exactly 64 lower-case hex characters
         H4P02_object_exists | I11 missing | the payload store holds the named object
     """),
     'h4_store_object': ('payload-store object claims (I11)', H4, """
         H4P03_hash | I11 hash | the object bytes hash to the BLAKE3 id
         H4P04_size | I11 size | the object byte size is the claimed byte_size
         H4P05_media | I11 media | the object media type is the claimed media type
+    """),
+    'h4_store_id_syntax': ('payload-store reference id syntax (I11; schema-entailed)', H4, """
+        H4P01_id_hex64 | I11 id | the BLAKE3 id is exactly 64 lower-case hex characters
     """),
     'h4_slot_migration': ('prior migration wrapper (I7, I9)', H4, """
         H4M01_core_bytes_canonical | I7 core_bytes is not the canonical MessagePack of core, or core_sha256 differs | core_bytes are the canonical MessagePack of core
@@ -178,7 +182,6 @@ SPEC = {
         H4RE05_dispatch_event_ref | I4 committed result and receipt do not name the event | a committed dispatch receipt names the event
     """),
     'h4_receipt_capture': ('identity capture bytes (I7)', H4, """
-        H4IC01_request_presence | I7 identity capture normalized_request presence differs from its original | normalized_request capture, hash and original are present or absent together
         H4IC02_request_canonical | I7 identity capture normalized_request is not the canonical MessagePack of its original | the normalized_request capture is the canonical MessagePack of its original
         H4IC03_request_sha | I7 identity capture normalized_request is not the canonical MessagePack of its original | the normalized_request capture hash is its SHA-256
         H4IC04_outcome_presence | I7 identity capture command_outcome presence differs from its original | command_outcome capture, hash and original are present or absent together
@@ -187,6 +190,9 @@ SPEC = {
         H4IC07_response_presence | I7 identity capture ui_response presence differs from its original | ui_response capture, hash and original are present or absent together
         H4IC08_response_canonical | I7 identity capture ui_response is not the canonical MessagePack of its original | the ui_response capture is the canonical MessagePack of its original
         H4IC09_response_sha | I7 identity capture ui_response is not the canonical MessagePack of its original | the ui_response capture hash is its SHA-256
+    """),
+    'h4_receipt_capture_request_presence': ('normalized request capture presence (I7; schema-entailed)', H4, """
+        H4IC01_request_presence | I7 identity capture normalized_request presence differs from its original | normalized_request capture, hash and original are present or absent together
     """),
     'h4_receipt_owner': ('owner result pointers and hash (I8)', H4, """
         H4O01_outcome_schema_ref | I8 SIR outcome does not point at the Home4 owner result | a present SIR outcome points at the Home4 owner result
@@ -263,7 +269,6 @@ SPEC = {
     """),
     'comp_event': ('compaction event joins', ROUND2, """
         CE03_project_scope_kind | project_only | the event scope kind is project
-        CE04_project_present | project_only | the event names a Project
         CE05_payload_project | payload_envelope_identity | a project-scoped event Project is the payload Project
         CE06_payload_thread | payload_envelope_identity | a project-scoped event thread is the payload thread
         CE07_event_type | family_identity | the event type is context.compaction.completed
@@ -275,6 +280,9 @@ SPEC = {
         CE13_idempotency_identity | idempotency_identity | the idempotency key is compaction: + the identity digest
         CE14_receipt_identity | receipt_identity | the receipt ref is compaction_receipt: + the Storage-scoped identity digest
         CE15_producer_jcs | producer_semantic_unavailable | a current event's producer semantic projection has a qualified RFC 8785 encoding (CV-317, CV-1100)
+    """),
+    'comp_event_project_present': ('compaction event Project presence (entailed by CE03 and the EventRecord scope rule)', ROUND2, """
+        CE04_project_present | project_only | the event names a Project
     """),
     'comp_history': ('compaction retained audit reader', ROUND2, """
         CH01_verified | unavailable | the retained source is verified (exactly true)
@@ -483,6 +491,8 @@ SPEC = {
         V2R03_range_order | checkpoint_range_or_cursor | with a cursor, the first retained sequence is at most the through sequence
         V2R04_cursor_through | checkpoint_range_or_cursor | with a cursor, its last sequence is the through sequence
         V2R05_cursor_offsets | checkpoint_range_or_cursor | with a cursor, its byte offset is before its frame end
+    """),
+    'v2_core_storage_uint64': ('v2 core Storage uint64 fields (entailed by the cursor schema and V2R03/V2R04)', CREATED_V2, """
         V2R05A_storage_uint64 | checkpoint_core_schema | every Storage sequence/offset/generation field is an SP-1100 uint64 (storage_uint64)
     """),
     'v2_core_times': ('v2 core timestamps', CREATED_V2, """
@@ -616,13 +626,15 @@ SPEC = {
         V2A03_not_withdrawn | withdrawn_requires_replacement | the stored value is not withdrawn
         V2A04_custody_storage_instance_id | refresh_changed_custody | a refresh keeps the stored storage_instance_id
         V2A05_custody_project_id | refresh_changed_custody | a refresh keeps the stored project_id
-        V2A06_custody_scope_partition | refresh_changed_custody | a refresh keeps the stored scope_partition
         V2A07_custody_publication_id | refresh_changed_custody | a refresh keeps the stored publication_id
         V2A08_custody_published_at_utc | refresh_changed_custody | a refresh keeps the stored published_at_utc
         V2A09_custody_hold_refs | refresh_changed_custody | a refresh keeps the stored hold_refs
         V2A10_custody_retired_generations | refresh_changed_custody | a refresh keeps the stored retired_generations
         V2A11_observation_time | observation_time_regressed | the new observation is not earlier than the stored one
         V2A12_range_not_regressed | refresh_range_regressed | the through sequence does not regress
+    """),
+    'v2_advance_partition': ('v2 refresh partition (entailed by V2A05 and V2R01)', CREATED_V2, """
+        V2A06_custody_scope_partition | refresh_changed_custody | a refresh keeps the stored scope_partition
     """),
     'v2_cleanup_entry': ('cleanup observation', CREATED_V2, """
         V2CL01_observation_object | cleanup_observation_schema | the cleanup observation is an object
@@ -762,6 +774,8 @@ SPEC = {
         RC03_range_order | checkpoint_range_or_cursor | with a cursor, the first retained sequence is at most the through sequence
         RC04_cursor_through | checkpoint_range_or_cursor | with a cursor, its last sequence is the through sequence
         RC05_cursor_offsets | checkpoint_range_or_cursor | with a cursor, its byte offset is before its frame end
+    """),
+    'rs_core_storage_uint64': ('reset core Storage uint64 fields (entailed by the cursor schema and RC03/RC04)', RESET, """
         RC05A_storage_uint64 | checkpoint_schema | every Storage sequence/offset/generation field is an SP-1100 uint64 (storage_uint64)
     """),
     'rs_core_times': ('reset core timestamps', RESET, """
@@ -848,13 +862,15 @@ SPEC = {
         RV21_generation_admission | generation_admission_invalid_no_advance | an initial or replacement generation passes generation admission
         RV22_scope_storage_instance_id | checkpoint_scope_change_no_advance | a refresh keeps the stored storage_instance_id
         RV23_scope_project_id | checkpoint_scope_change_no_advance | a refresh keeps the stored project_id
-        RV24_scope_scope_partition | checkpoint_scope_change_no_advance | a refresh keeps the stored scope_partition
         RV25_custody_publication_id | generation_identity_or_history_changed_no_advance | a refresh keeps the stored publication_id
         RV26_custody_published_at_utc | generation_identity_or_history_changed_no_advance | a refresh keeps the stored published_at_utc
         RV27_custody_hold_refs | generation_identity_or_history_changed_no_advance | a refresh keeps the stored hold_refs
         RV28_custody_retired_generations | generation_identity_or_history_changed_no_advance | a refresh keeps the stored retired_generations
         RV29_observation_time | checkpoint_observation_regression | a refresh observation is not earlier than the stored one
         RV30_cursor_not_regressed | cursor_regression_requires_governed_rebuild | a refresh cursor does not regress below the stored cursor
+    """),
+    'rs_advance_partition': ('reset refresh partition (entailed by RV23 and RC01)', RESET, """
+        RV24_scope_scope_partition | checkpoint_scope_change_no_advance | a refresh keeps the stored scope_partition
     """),
     'rs_cleanup': ('reset retired generation cleanup', RESET, """
         RU01_checkpoint_present | cleanup_invalid_or_cas_conflict | a checkpoint is stored

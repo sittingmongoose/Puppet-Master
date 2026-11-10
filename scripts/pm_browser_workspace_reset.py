@@ -359,8 +359,9 @@ def checkpoint_core_failures(value):
     relations["RC03_range_order"] = cursor is None or value["first_retained_sequence_id"] <= value["index_through_sequence_id"]
     relations["RC04_cursor_through"] = cursor is None or cursor["last_sequence_id"] == value["index_through_sequence_id"]
     relations["RC05_cursor_offsets"] = cursor is None or cursor["byte_offset"] < cursor["frame_end_offset"]
-    relations["RC05A_storage_uint64"] = body_route.storage_uint64_fields_ok(value)
-    errors = relations.codes()
+    storage = Facts("rs_core_storage_uint64")
+    storage["RC05A_storage_uint64"] = body_route.storage_uint64_fields_ok(value)
+    errors = relations.codes() + storage.codes()
     names = ("updated_at_utc", "withdrawn_at_utc", "published_at_utc")
     grammar = r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})"
     times = {}
@@ -511,7 +512,7 @@ class CheckpointOracle:
                    ("RV21_generation_admission", lambda: not (self.checkpoint is None or _replacement) or
                     not generation_admission_failures(self.checkpoint, candidate, observation))]
         refresh = self.checkpoint is not None and not _replacement
-        for number, field in enumerate(("storage_instance_id", "project_id", "scope_partition"), 22):
+        for number, field in enumerate(("storage_instance_id", "project_id"), 22):
             checks.append((f"RV{number}_scope_{field}", lambda field=field: not refresh or self.checkpoint[field] == candidate[field]))
         for number, field in enumerate(("publication_id", "published_at_utc", "hold_refs", "retired_generations"), 25):
             checks.append((f"RV{number}_custody_{field}", lambda field=field: not refresh or self.checkpoint[field] == candidate[field]))
@@ -522,6 +523,10 @@ class CheckpointOracle:
             if f.stop(row, check):
                 return f.first_code()
         f.done()
+        partition = Facts("rs_advance_partition", chain=True)
+        if partition.stop("RV24_scope_scope_partition", lambda: not refresh or self.checkpoint["scope_partition"] == candidate["scope_partition"]):
+            return partition.first_code()
+        partition.done()
         self.checkpoint = copy.deepcopy(candidate)
         self.commit_count += 1
         return "checkpoint_committed_no_runtime_effect"

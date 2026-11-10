@@ -83,9 +83,10 @@ def compaction_event_errors(event, *, historical=False):
     sha = lambda x: hashlib.sha256(home.canonical_json(x)).hexdigest()  # shared RFC 8785 (qualified_jcs); strings only
     digest = sha([fixtures['storage_instance_id']] + identity)
     project_scope = event['scope_kind'] == 'project'
+    present = Facts('comp_event_project_present')
+    present['CE04_project_present'] = event['project_id'] is not None
     facts = Facts('comp_event')
     facts['CE03_project_scope_kind'] = project_scope
-    facts['CE04_project_present'] = event['project_id'] is not None
     facts['CE05_payload_project'] = not project_scope or event['project_id'] == payload['project_id']
     facts['CE06_payload_thread'] = not project_scope or event['thread_id'] == payload['thread_id']
     facts['CE07_event_type'] = event['event_type'] == 'context.compaction.completed'
@@ -97,7 +98,8 @@ def compaction_event_errors(event, *, historical=False):
     facts['CE13_idempotency_identity'] = event['idempotency_key'] == 'compaction:' + sha(identity)
     facts['CE14_receipt_identity'] = payload['compaction_receipt_ref'] == 'compaction_receipt:' + digest
     facts['CE15_producer_jcs'] = historical or home.producer_jcs_ok(event)
-    return facts.codes()
+    codes = present.codes()
+    return codes + [code for code in facts.codes() if code not in codes]
 
 def compaction_history(event, *, verified, withdrawn, deleted, live_revision):
     # SP-259: historical audit fact neither reconstructs purged content nor rewinds a newer head.
