@@ -47,9 +47,9 @@
  *     (`opin:<uid>` replays the row cascade on a subject change, so a
  *     reader's own scroll of the panel pins its subject: FO-104, by the actions;
  *     `orow:<uid>:<j>` materializes each row exactly once as it streams in).
- *   - Neon icons (step 3C): the live node and the core are dark discs whose
+ *   - Neon icons (step 3C): the live node and the core are dark discs; the ring's
  *     lit glyph acts while the run runs; done and pending glyphs are drawn
- *     still (actSize); the flags and the core's waiting / complete marks come
+ *     still (actSize); the ring's waiting / complete marks come
  *     from the status set (PM56_NEON.status). The look is orbit.css PART 3.
  */
 (function () {
@@ -246,20 +246,27 @@
   }
 
   /* ---- full stage ----------------------------------------------------- */
-  /* The core's face (W4, PC4, PM7 build 2026-10-29): Pip sits in the centre (window.PM56_SHELL.pmxPip, the one kit),
-     with its thinking dots while the run runs, happy when it is done and wondering when it waits for you; the live
-     subject's glyph (or the status mark) rides beside it as a small badge. Pip keeps one constant key, so a phase
-     handover swaps only the badge (its key is the subject's) and Pip never re-enters. Without the kit the core is the
-     glyph alone, as before. Pip here is the reply's one Pip while the work runs: the thinking placeholder's loader
-     hands over to it (turn-stream.js). */
-  function coreFace(c, rec, waiting, w, live) {
-    var esc = c.esc, icon = c.icon, S = window.PM56_SHELL, running = !rec.completed && !waiting && w.running;
-    var badge = '<span class="orbit-core-icon' + (running ? ' is-live' : '') + '" data-k="coreicon:' + esc(live.uid) + '">'
-      + (rec.completed ? statusMark(c, 'complete', 22) : waiting ? statusMark(c, 'waiting', 22) : icon(live.icon, 22)) + '</span>';
+  /* FO-120: Pip occupies the centre alone. The subject/status glyph and all its moving parts live on the ring.
+     Pip keeps its constant key through a handover. data-work-running also owns the thinking-placeholder handoff,
+     independently of whether the person has enabled Pip's thinking dots. */
+  function coreFace(rec, waiting, w) {
+    var S = window.PM56_SHELL, running = !rec.completed && !waiting && w.running;
     var pip = S && S.pmxPip ? S.pmxPip({ mood: rec.completed ? 'happy' : waiting ? 'wonder' : running ? 'working' : 'idle', size: 40, detail: true, cls: 'orbit-core-pip', part: 'working-orbit' }) : '';
-    if (!pip) return badge;
+    if (!pip) return '';
     var dots = running && (!S.pmxPipOn || S.pmxPipOn('thinking-dots'));
-    return '<span class="orbit-core-face' + (dots ? ' is-live' : '') + '" data-k="coreface" data-pip="1">' + pip + badge + '</span>';
+    return '<span class="orbit-core-face' + (dots ? ' is-live' : '') + '" data-k="coreface" data-pip="1" data-work-running="' + (running ? '1' : '0') + '">' + pip + '</span>';
+  }
+  function nodeSymbol(c, it, rec, w) {
+    /* Past subjects keep the ring's original static work glyph and corner flag. Only the live subject takes the
+       former centre status mark; a completed run puts its draw-on on the final focused node. */
+    var status = it.live && it.status === 'waiting' ? 'waiting' : null;
+    if (rec.completed && it.hasFocus) status = 'complete';
+    var acts = it.live && w.running && !status;
+    /* Keep the old centre glyph's complete anatomy (22), including the parts the small-size gate removed.
+       CSS fits that anatomy inside the node. A separate keyed wrapper leaves the node's ring travel, pulse and
+       failure shake untouched; a status change remounts only the mark so complete draws once on arrival. */
+    return '<span class="orbit-node-symbol' + (acts ? ' is-live' : '') + '" data-k="symbol:' + c.esc(it.uid) + ':' + c.esc(status || (acts ? 'working' : 'still')) + '">'
+      + (status ? statusMark(c, status, 22) : c.icon(itemIcon(it), it.live ? 22 : 11)) + '</span>';
   }
   function renderStage(c, ui) {
     var esc = c.esc, icon = c.icon, w = c.ctx;
@@ -318,7 +325,7 @@
         + ' aria-pressed="' + (i === panelI && pinI != null ? 'true' : 'false') + '"'
         + tipAttrs(esc, w.cardId, it.uid, statBit, (it.count > 1 ? it.count + ' subjects' : sx.verb) + ' (' + st + ')')
         + ' aria-label="' + esc(label) + ', ' + st + '">'
-        + icon(itemIcon(it), actSize(it.live && w.running && !it.status)) + '<i class="orbit-node-pip"></i>'
+        + nodeSymbol(c, it, rec, w) + '<i class="orbit-node-pip"></i>'
         + (it.count > 1 ? '<b class="orbit-node-count">' + (it.earlier ? it.count : '×' + it.count) + '</b>' : '')
         /* the flags use the status set: failed is the warning triangle, waiting for the reader is the needs-you bubble */
         + (it.status === 'failed' ? '<i class="orbit-node-flag">' + icon('warning', 8) + '</i>' : it.status === 'waiting' ? '<i class="orbit-node-flag">' + icon('st-waiting', 8) + '</i>' : '')
@@ -348,10 +355,8 @@
       + ' data-k="core" data-action="orbit-toggle" aria-pressed="' + (pinI == null ? 'true' : 'false') + '"'
       + tipAttrs(esc, w.cardId, 'core', coreTitle, pinI != null ? 'Return focus to the live subject' : 'The dial follows the live subject')
       + '>'
-      /* The core is the live subject's dark disc: its glyph acts while the run runs (is-live, orbit.css PART 3); a
-         finished run shows the status set's complete mark (it draws once), a run waiting for the reader the needs-you
-         mark in its own rhythm. */
-      + coreFace(c, rec, waiting, w, live)
+      /* Pip and the live label stay centred; the ring owns the animated subject/status mark. */
+      + coreFace(rec, waiting, w)
       /* CONSTANT key on purpose: a subject key here remounted the label on
          every handover and the pm-materialize entrance blanked the core for
          ~40ms mid-rotation. */
