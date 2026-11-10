@@ -25,8 +25,8 @@ html[data-o55-nier="on"] #panel-settings .psx-ghead { text-transform: uppercase;
 #panel-settings .psx-ghead + .psx-wline, #panel-settings .psx-group > .psx-wline:first-child { border-top: 0; padding-top: 2px; }
 #panel-settings .psx-wline.is-sub { margin-left: 16px; }
 #panel-settings .psx-wtop { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; min-width: 0; }
-#panel-settings .psx-wname { font-size: 12.5px; font-weight: 640; color: var(--k3-text-1); min-width: 0; overflow-wrap: anywhere; }
-#panel-settings .psx-wval { font-size: 12.5px; font-weight: 600; color: var(--k3-text-1); text-align: right; min-width: 0; overflow-wrap: anywhere; }
+#panel-settings .psx-wname { font-size: 12.5px; font-weight: 640; color: var(--k3-text-1); flex: 0 1 auto; min-width: min(100%, 8em); overflow-wrap: break-word; }
+#panel-settings .psx-wval { font-size: 12.5px; font-weight: 600; color: var(--k3-text-1); text-align: right; flex: 1 1 0; min-width: 0; overflow-wrap: anywhere; }
 #panel-settings .psx-wline.is-inuse .psx-wval { color: var(--k3-accent-ink); }
 #panel-settings .psx-wstate { display: flex; align-items: flex-start; gap: 6px; font-size: 11.5px; line-height: 16px; font-weight: 560; color: var(--k3-text-2); }
 #panel-settings .psx-wstate > .pm-status-mark { margin-top: 2px; flex: none; }
