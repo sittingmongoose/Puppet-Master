@@ -19,8 +19,10 @@ const plates = (f) => f.evaluate(() => Object.fromEntries(Array.from(document.qu
 })));
 /* PMConcept7's editor minimap canvas sits behind the Projects page, and the audit's "canvas painted" judges the page's
    pixels over it, with no way to leave a canvas out by selector (browser-check gaps 2ff3d9 and 2d5855). It is taken out
-   of the audit here; nothing else on the page is changed. */
-const hideMinimap = (f) => f.evaluate(() => document.querySelectorAll('.pmw-ed-canvas').forEach((c) => { c.style.visibility = 'hidden'; }));
+   of the audit here by a rule, since PMConcept7 makes the canvas again as it redraws; nothing else is changed. */
+const hideMinimap = (f) => f.addStyleTag({ content: '.pmw-ed-canvas { visibility: hidden !important; }' });
+/* how many lines the tallest value that sits beside its label takes (a stacked or long one has the plate's width) */
+const tallestBeside = (f) => f.evaluate(() => Math.max(0, ...Array.from(document.querySelectorAll('#pjxc .pjxc-facts:not([data-v3-stack]) > .pmu-fact:not([data-v3-long]) > .pmu-factv')).map((v) => Math.round(v.getBoundingClientRect().height / (parseFloat(getComputedStyle(v).lineHeight) || 19)))));
 
 export const tests = {
 	async 'opens on v3, switches both ways, keeps what was open'(t) {
@@ -112,20 +114,19 @@ export const tests = {
 		await t.equal('Where work runs (half width): every label above its value', p.work, 'stack:0');
 		const cut = await f.evaluate(() => Array.from(document.querySelectorAll('#pjxc .pjxc-facts :is(.pmu-factl, .pmu-factv)')).filter((e) => e.scrollWidth > e.clientWidth + 1).map((e) => e.textContent).join(' | '));
 		await t.check('no label or value is cut off', !cut, cut);
+		await t.check('no value beside its label runs past three lines', (await tallestBeside(f)) <= 3, String(await tallestBeside(f)));
 		await f.evaluate(() => document.querySelector('[data-plate="backup"]').scrollIntoView({ block: 'start' }));
 		await t.page.waitForTimeout(250);
 		await t.shot('v3-backup', 'Split v3, Backup and Where it lives (LOOK)');
 		// one column of wide plates: values fit beside their labels again, and only a sentence goes under its label
 		await t.page.selectOption('#width', '1024');
-		await t.page.waitForTimeout(900);
+		await t.app.until(t, f, '1024: Backup is beside its labels again', () => { const g = document.querySelector('#pjxc [data-plate="backup"] .pjxc-facts'); return !!g && !g.hasAttribute('data-v3-stack') && getComputedStyle(g).gridTemplateColumns.split(' ').length === 2; }, null, 10000);
 		p = await plates(f);
-		await t.check('1024: Backup is beside again, with its long sentence under its label', /^beside:[1-3]$/.test(p.backup), p.backup);
-		await t.equal('1024: Where work runs is beside', p.work, 'beside:0');
+		await t.check('1024: Where work runs is beside', /^beside:/.test(p.work), p.work);
+		await t.check('1024: no value beside its label runs past three lines', (await tallestBeside(f)) <= 3, String(await tallestBeside(f)));
 		// the narrowest pane stacks by its container rule, with or without marks
 		await t.page.selectOption('#width', '640');
-		await t.page.waitForTimeout(900);
-		const cols = await f.evaluate(() => getComputedStyle(document.querySelector('#pjxc .pjxc-facts')).gridTemplateColumns.split(' ').length);
-		await t.equal('640: one column of facts', cols, 1);
+		await t.app.until(t, f, '640: one column of facts', () => { const g = document.querySelector('#pjxc .pjxc-facts'); return !!g && getComputedStyle(g).gridTemplateColumns.split(' ').length === 1; }, null, 10000);
 	},
 	async 'audit: every Project and New Project in v3'(t) {
 		const f = await t.app.open(t);

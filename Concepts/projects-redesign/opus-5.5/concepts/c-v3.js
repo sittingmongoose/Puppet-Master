@@ -24,8 +24,9 @@
   const ATTR = 'data-pjx-read';
 
   /* c-v3.css gives the labels a column no wider than LABEL of the facts and a GAP before the values. The measure is
-     the plate's own width, which stacking does not change, so a mark never flips back and forth. */
-  const LABEL = 0.46, GAP = 18, LINES = 2;
+     the plate's own width, which stacking does not change, so a mark never flips back and forth. Text breaks at
+     words, so a line holds a little less than its width: FILL of it. */
+  const LABEL = 0.46, GAP = 18, LINES = 2, FILL = 0.92;
   const get = () => (H.getAttribute(ATTR) === 'v3' ? 'v3' : 'v2');
 
   /* how wide a piece of text is in an element's own face (each look has its own), without touching the layout */
@@ -43,8 +44,9 @@
   /* mark the plates and facts. Split draws its plates again on every change, so the marks follow the page:
      a MutationObserver on the Projects panel. Its callback runs before the next paint, so a plate is never shown first
      one way and then the other; it writes an attribute only where it differs, and attributes are not observed. The
-     pane changing width (the chat dragged wider) moves no markup, so a ResizeObserver asks again. */
-  let mo = null, ro = null;
+     pane changing width (the chat dragged wider, the library folding into its drawer) moves no markup, so a
+     ResizeObserver on the panel and on the page's scroller asks again. */
+  let mo = null, ro = null, watched = null;
   const facts = () => D.querySelectorAll('#pjxc .pjxc-facts > .pmu-fact');
   const flag = (el, name, on) => { if (on !== el.hasAttribute(name)) el.toggleAttribute(name, on); };
   function mark() {
@@ -57,12 +59,16 @@
       const need = rows.map((f) => widthOf(f.querySelector('.pmu-factv')));
       const stack = rows.length >= 3 && need.filter((n) => n > col).length * 2 > rows.length;
       flag(g, 'data-v3-stack', stack);
-      rows.forEach((f, i) => flag(f, 'data-v3-long', !stack && need[i] > col * LINES));
+      rows.forEach((f, i) => flag(f, 'data-v3-long', !stack && need[i] > col * LINES * FILL));
     });
+    // the page's own box: its width is what the plates follow, and nothing marked here changes it
+    const page = D.querySelector('#pjxc .pjxc-scroll');
+    if (ro && page !== watched) { if (watched) ro.unobserve(watched); if (page) ro.observe(page); watched = page; }
   }
   function watch(on) {
     if (mo) { mo.disconnect(); mo = null; }
     if (ro) { ro.disconnect(); ro = null; }
+    watched = null;
     const pnl = D.getElementById('panel-projects');
     if (on && pnl && W.MutationObserver) {
       mo = new W.MutationObserver(mark); mo.observe(pnl, { childList: true, subtree: true, characterData: true });
