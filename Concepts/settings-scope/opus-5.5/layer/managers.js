@@ -145,6 +145,10 @@
       if (el && el.textContent === txt) return;
       if (!el) { el = D.createElement('div'); el.className = 'pm51-item-meta psx-reach'; el.setAttribute('data-psx-reach', ''); el.setAttribute('data-o55-foreign', ''); const copy = item.querySelector('.pm51-item-copy'); if (copy) copy.appendChild(el); }
       el.textContent = txt;
+      // Jared #8: the base page's own scope word in the same line ("This project only", "Managed by Puppet Master")
+      // said where the server applies a second way; the layer's line wins and the base page's word goes
+      const meta = [...item.querySelectorAll('.pm51-item-meta:not([data-psx-reach])')].find((m) => / · (This project only|Managed by Puppet Master|Outside service)$/.test(m.textContent.trim()));
+      if (meta) { const tw = D.createTreeWalker(meta, NodeFilter.SHOW_TEXT); let n; while ((n = tw.nextNode())) { const v = n.data.replace(/ · (This project only|Managed by Puppet Master|Outside service)\s*$/, ''); if (v !== n.data) n.data = v; } }
     });
     // the add-server set-up's "Where it can be used" reads "Where it's available: Only this project / Every project"
     D.querySelectorAll('#pm-settings-portals .o55-mcp-scope, #pm-settings-root .o55-mcp-scope').forEach((sel) => relabelScope(sel));
@@ -164,6 +168,9 @@
     const id = Object.keys(things().mcp).find((k) => things().mcp[k].name === name); if (!id) return;
     const t = things().mcp[id];
     const body = aside.querySelector('.pm51-panel-body'); if (!body) return;
+    // Jared #8: the base page's "Where it applies" line under How it connects is the same question the layer's Where
+    // it's available answers; only the layer's stays
+    body.querySelectorAll('.pm51-kv-row').forEach((r) => { const k = r.firstElementChild; if (k && /^Where it applies$/.test(k.textContent.trim()) && !r.hidden) { r.hidden = true; r.setAttribute('data-psx-hidden', ''); } });
     const c = PSX.ctxFull(S.ctx), proj = S.mcpProject || c.project || 'tastebook';
     const sig = JSON.stringify([PSX.W.rev, t, proj]);
     if (body.dataset.psxDone === sig && body.querySelector('[data-psx-mcp]')) return;

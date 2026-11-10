@@ -42,6 +42,9 @@
       'extensions.commands.command-model', 'extensions.commands.command-persona', 'extensions.commands.command-permissions', 'ai.accounts.gcp-project-id', 'safety.rules.rule-editor', 'safety.rules.per-tool-permissions',
       'safety.protection.web-tool-permissions'],
     computerOnly: ['system.advanced.auto-update', 'system.advanced.update-frequency', 'system.advanced.release-channel', 'system.advanced.catalog-updates'],
+    /* Jared #8: libraries were on the device rule, which offered "Set for a device" on rows that are not about a screen.
+       A library (your own themes, your sounds) is the same everywhere, kept with your settings */
+    library: ['general.visual.manage-custom-themes', 'general.visual.custom-theme-base', 'general.interaction.sound-catalog', 'general.interaction.sound-management'],
     ceiling: ['branching.subagents.provider-concurrency-cap', 'memory.assembly.memory-capsule-budget']
   };
   /* a safety answer's careful order, most careful first, from its choices; a row whose order can't be told keeps the
@@ -59,6 +62,7 @@
     if (REVIEWED.thing.includes(id)) return null;
     if (sc.length && sc.every((x) => ['account', 'provider', 'persona', 'run'].includes(x))) return null;
     if ((sc.includes('account') || sc.includes('persona')) && !sc.includes('global')) return null;   // a field of one thing
+    if (REVIEWED.library.includes(id)) return { home: 'everywhere', reason: 'your_library', reviewed: true };
     if (REVIEWED.device.includes(id)) return { may: ['device'], screen: true, reviewed: true };
     if (REVIEWED.project.includes(id)) return { home: 'project', reason: 'about_this_project', reviewed: true };
     if (REVIEWED.computerOnly.includes(id)) return { may: ['computer'], reviewed: true };
@@ -452,5 +456,5 @@
   };
 
   PSX.on('world', () => { if (!feeding) PSX.emit('redraw'); });
-  Object.assign(PSX, { feed: { full, push, verify, writeSnapshots, engineValues, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
+  Object.assign(PSX, { offLadder: { look: SKIP, credential: CRED }, feed: { full, push, verify, writeSnapshots, engineValues, wrapNotify, watchTitleMenu, hook, captureCurrent, adoptAll, diff, ENGINE_IDS, NONE }, router, route, commit, sayWhere, onlyFor, undoTx, targetFor });
 })(window);

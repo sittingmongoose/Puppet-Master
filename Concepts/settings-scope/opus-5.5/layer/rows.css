@@ -4,15 +4,27 @@
    buttons have a 6px corner and no fill at rest), no side stripes, text at least 11.5px, container queries only.
    html[data-psx-end] picks the end-of-row option, html[data-psx-changed] the Changed mark option. */
 
-/* ---- the grid: the end word takes the room it needs (the "?" column was 30px) ---------------------------------- */
-html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row { grid-template-columns: minmax(0, 1fr) auto auto; }
-html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row.is-wide { grid-template-columns: minmax(0, 1fr) auto; }
+/* ---- the grid (Jared #3, 2026-11-09): the end of the row is a fixed column, so every control in a section ends at the
+   same x whatever its end word says ("Details", "This project", "Each account"), and a word that changes never moves the
+   control (#4). A row with no end word keeps the column empty, so its control lines up too. Lists take one width, so
+   their left edges line up as well; a wider list keeps its own width. */
+html[data-psx-end] { --psx-end-w: 124px; --psx-list-w: 220px; }
+html[data-psx-end][data-psx-scope-labels] { --psx-end-w: 172px; }
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row { grid-template-columns: minmax(0, 1fr) auto var(--psx-end-w); column-gap: 16px; }
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-control { grid-column: 2; grid-row: 1; }
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .o55-about { grid-column: 3; grid-row: 1; justify-self: start; }
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row:not(.is-wide) > .setting-control > .pm51-dd,
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row:not(.is-wide) > .setting-control > .o55-nier-own > .pm51-dd { min-width: var(--psx-list-w); }
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row:not(.is-wide) > .setting-control .pm51-dd > .pm51-dd-trigger { width: 100%; }
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row.is-wide { grid-template-columns: minmax(0, 1fr) var(--psx-end-w); }
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row.is-wide > .setting-control { grid-column: 1; grid-row: 2; }
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row.is-wide > .o55-about { grid-column: 2; grid-row: 1; }
 
 /* ---- the end word (7.1): a quiet text button where the "?" was ------------------------------------------------ */
 html[data-psx-end] #panel-settings .o55-about.icon-btn.psx-end {
-  width: auto; min-width: 0; max-width: 168px; height: auto; min-height: 28px; padding: 3px 6px 3px 8px; display: inline-flex; align-items: center; gap: 4px;
+  width: auto; min-width: 0; max-width: var(--psx-end-w, 168px); height: auto; min-height: 28px; padding: 3px 6px 3px 8px; display: inline-flex; align-items: center; gap: 4px;
   border: 1px solid transparent; border-radius: 6px; background: none; box-shadow: none; opacity: 1;
-  font: inherit; font-size: 12px; font-weight: 600; line-height: 16px; color: var(--k3-text-3); white-space: nowrap; letter-spacing: 0; justify-self: end;
+  font: inherit; font-size: 12px; font-weight: 600; line-height: 16px; color: var(--k3-text-3); white-space: nowrap; letter-spacing: 0; justify-self: start;
   transition: background-color var(--k3-dur-fast, 140ms) var(--k3-ease-out, ease), border-color var(--k3-dur-fast, 140ms), color var(--k3-dur-fast, 140ms);
 }
 html[data-psx-end] #panel-settings .o55-about.psx-end .psx-end-word { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
@@ -57,31 +69,67 @@ html[data-psx-changed="outline"] #panel-settings .setting-row.is-changed > .sett
 html[data-psx-changed="frame"] #panel-settings .setting-row.o55-row.is-changed:not([data-o55-kind="specimen"]) {
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--k3-accent) 45%, transparent);
   background: color-mix(in srgb, var(--k3-accent) 4%, transparent); border-radius: 8px; border-top-color: transparent; padding-left: 10px; padding-right: 8px;
+  /* the frame's left padding is taken back by the margin and its right padding is the row's own, so a framed row's
+     control still lines up with the rest (#3) */
+  margin-left: -10px; padding-right: 4px;
 }
 html[data-psx-changed="frame"] #panel-settings .setting-row.o55-row.is-changed:not([data-o55-kind="specimen"]) + .setting-row.o55-row { border-top-color: transparent; }
 html[data-theme^="retro"][data-psx-changed="frame"] #panel-settings .setting-row.o55-row.is-changed,
 html[data-o55-nier="on"][data-psx-changed="frame"] #panel-settings .setting-row.o55-row.is-changed { border-radius: 0; }
 
-/* ---- the Settings head line (7.7) ------------------------------------------------------------------------------ */
-#panel-settings .document-toolbar > .psx-head { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; padding: 2px 180px 2px 0; box-sizing: border-box; }
-#panel-settings .psx-head-main { display: flex; align-items: center; flex-wrap: wrap; gap: 2px 10px; min-width: 0; }
-#panel-settings .psx-head-ctx { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 2px 6px; min-width: 0; font-size: 12px; line-height: 18px; color: var(--k3-text-2); }
+/* ---- the Settings header (7.7, reworked for Jared #11, 2026-11-09) ----------------------------------------------
+   One calm line that names the Project and the Computer once: "tastebook on This computer". It is one row of a fixed
+   height in every state, so changing the view never moves anything: viewing another Computer or another device's
+   screen keeps the same box and only adds a frame on all four sides, a tint, the word Viewing and Stop viewing. The base
+   page's own project button in this toolbar and the rail's "Project:" line say the same name again, so they are hidden
+   while the header is shown. Notices that are not about the view (the settings home not answering, first start, a
+   Member's device) are lines under it. */
+#panel-settings .document-toolbar > .psx-head { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 6px; padding: 0 56px 0 0; box-sizing: border-box; }
+#panel-settings .psx-head-main { display: flex; align-items: center; gap: 4px; height: 32px; min-width: 0; padding: 0 4px 0 10px; margin-left: -10px; box-sizing: border-box;
+  border: 1px solid transparent; border-radius: 6px; background: transparent; white-space: nowrap;
+  transition: background-color var(--k3-dur-fast, 140ms) var(--k3-ease-out, ease), border-color var(--k3-dur-fast, 140ms); }
+#panel-settings .psx-head-main.is-viewing { border-color: color-mix(in srgb, var(--k3-accent) 50%, var(--k3-line)); background: color-mix(in srgb, var(--k3-accent) 9%, transparent); }
+#panel-settings .psx-head-ctx { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 13px; line-height: 18px; color: var(--k3-text-2); }
 #panel-settings .psx-head-ctx b { font-weight: 680; color: var(--k3-text-1); }
-#panel-settings .psx-head-line { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; font-size: 12px; line-height: 17px; color: var(--k3-text-2); }
+#panel-settings .psx-head-view { flex: none; display: inline-flex; align-items: center; gap: 5px; margin-right: 6px; font-size: 12px; font-weight: 700; letter-spacing: .01em; color: var(--k3-accent-ink); }
+#panel-settings .psx-head-main:not(.is-viewing) .psx-head-view { display: none; }
+#panel-settings .psx-head-gap { flex: 1 1 auto; min-width: 8px; }
+#panel-settings .psx-head-run { flex: none; display: inline-flex; align-items: center; gap: 5px; margin-right: 4px; font-size: 12px; font-weight: 650; color: var(--k3-text-2); }
+#panel-settings .psx-head-main .psx-tb { flex: none; min-height: 28px; font-size: 12px; font-weight: 650; }
+#panel-settings .psx-head-btn .psx-chev { transform: rotate(90deg); }
+#panel-settings .psx-head-line { display: flex; align-items: center; gap: 4px 8px; font-size: 12px; line-height: 17px; color: var(--k3-text-2); }
 #panel-settings .psx-head-line > .pm-status-mark { flex: none; }
 #panel-settings .psx-head-line > span:not(.pm-status-mark) { flex: 1 1 0; min-width: 12em; }
-#panel-settings .psx-head-btn .psx-chev { transform: rotate(90deg); }
 html:not([data-psx-end]) #panel-settings .psx-head { display: none; }
+html[data-psx-end] #pm-settings-root .document-toolbar:has(> .psx-head) > .page-actions > .project-pill,
+html[data-psx-end] #pm-settings-root .domain-rail .rail-project { display: none; }
+html[data-theme^="retro"] #panel-settings .psx-head-main, html[data-o55-nier="on"] #panel-settings .psx-head-main { border-radius: 0; }
+@media (prefers-reduced-motion: reduce) { #panel-settings .psx-head-main { transition: none; } }
+html[data-motion="reduced"] #panel-settings .psx-head-main { transition: none; }
 
 /* ---- the demo Projects folder row ------------------------------------------------------------------------------ */
 #panel-settings .psx-folder-sec { margin-bottom: 14px; }
 
-/* ---- narrow Settings: the end word gets its own line under the control (7.6) ---------------------------------- */
+/* ---- narrow Settings: the copy and the end word on the first line, the control under the copy (the base page's own
+   narrow layout, with the end column kept at its fixed width); under 560px the end word goes under the control (7.6) */
 @container settings-host (max-width: 760px) {
-  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row { grid-template-columns: minmax(0, 1fr) auto; }
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row,
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row.is-wide { grid-template-columns: minmax(0, 1fr) var(--psx-end-w); }
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-control { grid-column: 1; grid-row: 2; justify-content: flex-start; max-width: none; }
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .o55-about { grid-column: 2; grid-row: 1; }
+}
+/* a list of rows narrower than the three columns need (an account's rows beside the services list) stacks the same way,
+   whatever the width of Settings around it: each list is its own size container */
+html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-list { container: psx-rows / inline-size; }
+@container psx-rows (max-width: 600px) {
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row,
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row.is-wide { grid-template-columns: minmax(0, 1fr) var(--psx-end-w); }
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-control { grid-column: 1; grid-row: 2; justify-content: flex-start; max-width: none; }
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .o55-about { grid-column: 2; grid-row: 1; }
 }
 @container settings-host (max-width: 560px) {
-  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row { grid-template-columns: minmax(0, 1fr); }
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row,
+  html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row.is-wide { grid-template-columns: minmax(0, 1fr); }
   html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .o55-about.psx-end { grid-column: 1; grid-row: 3; justify-self: start; margin-left: -8px; }
   html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-control { grid-column: 1; }
 }

@@ -143,9 +143,10 @@
     about_hardware: ['Each computer has its own, because it depends on what that computer can do.', 'Depends on the computer'],
     about_the_network: ['Each computer has its own, because each one reaches the internet its own way.', 'Network differs per computer'],
     about_this_project: ['Each project has its own, because it’s about that project’s own files.', 'Belongs to one project'],
-    about_the_screen: ['This is about the screen in front of you, so it can differ per device, not per project.', 'Follows the device'],
+    about_the_screen: ['This is about the screen in front of you, so it can differ per device.', 'Follows the device'],
     not_about_the_screen: ['This is about the work, not the screen, so devices can’t change it.', 'Not about a screen'],
     same_for_you: ['Same everywhere. It’s about how Puppet Master works for you.', 'Same everywhere'],
+    your_library: ['Same everywhere. It’s your library, kept with your settings.', 'Your library'],
     limited_device: ['This device can change only its own screen settings.', 'This device can change only its own screen settings']
   };
 
@@ -173,7 +174,7 @@
       studioJoined: false,
       joined: { office: false },
       /* which AI accounts each project chose (S10 A); a project with none here uses your usual ones [Demo only] */
-      uses: { tastebook: ['work-claude', 'codex', 'openrouter'], experiment: ['personal-claude'], 'lighting-rig': ['personal-claude'] },
+      uses: { tastebook: ['work-claude', 'codex', 'openrouter', 'copilot'], experiment: ['personal-claude'], 'lighting-rig': ['personal-claude'] },
       usualAccounts: ['work-claude'],
       /* rules a project brought from someone else's repository, and what you chose (S15) */
       rules: {},
@@ -192,7 +193,9 @@
           'work-claude': { name: 'Work Claude', service: 'Claude', tool: 'Claude Code', kind: 'tool', reach: 'every', order: 1, on: { here: 'ready', homenas: 'checked', studio: 'missing' } },
           'personal-claude': { name: 'Personal', service: 'Claude', tool: 'Claude Code', kind: 'tool', reach: 'only', projects: ['experiment', 'lighting-rig'], order: 2, on: { here: 'ready' } },
           codex: { name: 'ChatGPT sign-in', service: 'Codex', tool: 'Codex', kind: 'tool', reach: 'every', on: { here: 'ready' } },
-          openrouter: { name: 'API key', service: 'OpenRouter', kind: 'key', reach: 'every', on: { here: 'ready' } }
+          openrouter: { name: 'API key', service: 'OpenRouter', kind: 'key', reach: 'every', on: { here: 'ready' } },
+          /* a sign-in tied to this computer's hardware: it can't be used on any other computer (cannot_move) [Demo only] */
+          copilot: { name: 'Seat on this Mac', service: 'GitHub Copilot', tool: 'Copilot', kind: 'tool', reach: 'every', bound: 'here', on: { here: 'ready' } }
         },
         personas: { reviewer: { name: 'Reviewer', home: 'library', versions: ['tastebook'] } }
       }
