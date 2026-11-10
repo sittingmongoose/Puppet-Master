@@ -275,3 +275,77 @@ All 24 are **new here and not on `origin/main`**; `origin/main` `6861d332de` val
 ### Grades and other records
 
 Family grades are carried unchanged: 6 of 6 families PASS as prepared, 66 PASS / 6 ABSENT. Membership ABSENT, native NOT_RUN. The self-grade file is unchanged. Part 2 items above are unchanged. No Decision Log entry, registry append, admission, seal, `Spec_Lock`, `.evidence`, `auto_decisions`, `.gitignore` or frozen-validator edit. No pm-mail or subagent.
+
+## Sweep part 2A: findings and responses
+
+Tool merge: `9f115dbf1a` merges gated guard tool `004bdedd632d9463f3535190a6ed5772338cdce1` (its 11 files only; none edited). No rebase. Implementation: `a6ad77775e`.
+
+Each refusal of `scripts/pm_coordination_events.py` and `scripts/pm_coordination_wave2.py` is a named row. The checker records the failing observation and returns only what that row's table refuses. Predicates are one flag each, in `scripts/pm_coordination_table_*.py`. Witnesses are real single-defect edits; `scripts/pm_coordination_guard_run.py` feeds the resulting one-false observation to the gated tool.
+
+### Guard-table result (gated tool `004bdedd63`, credited exactly as reported)
+
+14 tables **PASS**, **116/116 rows proved**, 0 unproved inside those tables. Each row has one real single-defect witness. A cut of that row flips its witness and the other witnesses in the table stay refused. No masked negatives and no unrelated changes.
+
+| Table | Proved |
+|---|---:|
+| payload_schema | 17/17 |
+| payload_instance | 7/7 |
+| projection_schema | 13/13 |
+| projection_value | 11/11 |
+| ledger | 9/9 |
+| registry | 4/4 |
+| preflight | 1/1 |
+| svr | 3/3 |
+| envelope | 10/10 |
+| fixtures | 22/22 |
+| validation | 5/5 |
+| ats | 2/2 |
+| transition | 8/8 |
+| wave2 | 4/4 |
+
+**Rows that cannot be proved alone**, each in its own table, still enforced:
+
+| Row | Why it cannot fail alone |
+|---|---|
+| `retired_checkpoint_scope_partition` | A retired core whose scope is not the partition of its project also differs from the parent scope, so `checkpoint_retired_core_other_key` fails on the same edit. |
+| `retired_checkpoint_publication_reused` | The nested checkpoint call clears `retired_generations`, so a retired core cannot report publication reuse. |
+| `coordination_storage_value_schema_invalid` | An invalid `value_schema` also differs from the SP-320 materialization, so `coordination_storage_family_mismatch` fails too. |
+| `prepared_registry_row_schema` | A family-schema failure also differs from `expected_registry_row`. |
+| `ledger_owner_join` | The ledger schema rejects a different owner ref before the join. |
+| `prepared_payload_schema_unresolved` | Changing the payload pointer moves the prepared row off `expected_registry_row`. |
+| `prepared_registry_row_ref_unresolved` | A bad source ref was observed together with `prepared_registry_row_mismatch`. |
+| `ledger_retention_binding` | Retention edits that were tried fail the ledger schema or the row mismatch first. |
+| `mirror_owner_ref_unresolved` | The ledger schema rejects the alternate mirror owner ref first. |
+| `threshold_oracle_evaluation` | The required map `{299999: false, 300000: false, 300001: true}` is exactly `age > 300000`, so once the census matches, the evaluation cannot fail. |
+| `schema_mutation_*`, `full_checker_mutation_*`, `projection_mutation_*`, `threshold_mutation_*` | These probes fire only when the underlying proved row stops refusing. |
+| `project_null_probe`, `extension_probe`, `application_definition_in_project_composition` | A schema edit that trips them also changes the SP-320 composition, so `project_registry_composition_mismatch` fails too. |
+
+**4,400-digit integer.** Present and fixed in `a6ad77775e`. `key_recovery_epoch` (`scripts/pm_coordination_events.py:244`) and `canonical` (`:190`) were raising Python's 4300-digit conversion limit. Parsing and rendering now allow the full token. A 4,400-digit `agent_revision` on `coordination.agent_status_updated` is accepted (`payload_rejection` returns None). `progress_pct` of `1.0` is refused as `payload_integer_slots` only.
+
+**Verify:** `PYTHONPATH=scripts python3 -B scripts/pm_coordination_guard_run.py` (14 PASS lines, no MISSING rows). `python3 -B scripts/pm_coordination_events.py` and `python3 -B scripts/pm_coordination_wave2.py` exit 0. Unittest `tests.test_pm_coordination_events` is 50 tests, exit 0.
+
+## Sweep part 2B numbers: findings and responses
+
+Number merge: `59a4250e2e` merges `58c2816ff33365384d4039553f5efdb5370930e6`. Its number files match the gated scope `a16f67c1ef21796758f4209ff12c0f4d12b86ce9`. 163 generated conflicts, all under `Plans/_shards/**` and `Plans/.plan_index/**`, were regenerated. No other conflict. NUMRULE files are unedited. Date-time modules are merged and **not adopted**: no `pm_event_datetime.datetime_validator`, `date_time`, or inventory gate is called.
+
+- **Integer slots.** `scripts/pm_coordination_numbers.py:94` (`integer_slot_code`) calls `current_integer` at every integer slot of the payload definition, including `const` integers, with that slot's own minimum and maximum. `1.0` is refused after JSON Schema accepts it. Application-edition bounds must match the Project copy (`application_integer_bounds_match`).
+- **SP-320 preimage.** `event_id_preimage` (`scripts/pm_coordination_events.py:255`) still emits the string array. Epoch and revision are exact integers before decimalization (`decimal_integer`). The heartbeat comparison stays 300000 (`scripts/pm_coordination_wave2.py:39`); it is not a maximum.
+- **Local hash versus producer JCS.** `canonical` / `producer_digest` stay the local payload hash. `producer_semantic_digest` is a separate call on the EventRecord projection. Recipe id `coordination-sp320-string-array-v1`.
+- **Retained recipe.** `retained_retry_matches` (`scripts/pm_coordination_numbers.py:173`) resolves an exact retry through `RetainedDispatcher` and the frozen SP-320 recipe. A forged recipe id is not an exact retry. Current writes do not use this path.
+- **Owner citations.** SP-540..545 identity paragraphs in `Plans/storage-plan.md` cite CV-1100, SP-1100, and SP-1101. OSI-650 (`Plans/orchestrator-subagent-integration.md:3969`) says 300000 is the policy comparison, not a numeric maximum.
+- **Self-test.** `python3 scripts/pm_event_numbers.py --self-test --scope numbers` exits 0 and prints `"status": "pass"`. Credited exactly: number recipes only; CV-1101 stays separately required.
+- **Lane corpus.** `python3 scripts/pm_coordination_number_corpus.py` exits 0, `"status": "pass"`: 16 agreements, 3 coordination-domain refusals, 0 disagreements, 0 crashes. History and date-time corpus cases are skipped.
+
+**Grades:** unchanged, 6 of 6 families **66 PASS / 6 ABSENT**. Membership ABSENT. Native NOT_RUN. The sweep strengthens proof; it does not move a cell. Self-grade quotes were re-found (91/91 still present); 84 line numbers and the file hashes for the two edited owner documents were refreshed. `assessed_tree` is `a6ad77775e974a4e2ac5c55cdd40850dc6fd164a`.
+
+Shards regenerated only for `Plans/storage-plan.md` and `Plans/orchestrator-subagent-integration.md`. Shard check: pass, 3100 shards. `python3 -B scripts/pm-plan-index.py validate` at `origin/main` `b4013202fa50d380621914e9373a183d780f5fb5` exits 1 with 59 findings: 38 `plan_unit_removed_without_ledger_decision` and 21 `plan_unit_removal_ledger_invalid`. None name SP-540..545, OSI-650, `storage-plan.md`, or `orchestrator-subagent-integration.md`. This pass did not rebase; the findings are fork drift of current main against this lane's base, not a DCO removal.
+
+## Part 2B items
+
+Timestamp items only. The timestamp review in this pass is **interim only**.
+
+1. **CV-1101 date-time adoption — OPEN.** `scripts/pm_coordination_events.py:313` (`valid_utc`) and the 15 `"format": "date-time"` fields in `Plans/coordination_event_payloads.schema.json` (`:181`, `:253`, `:337`, `:424`, `:486`, `:569`, `:705`, `:764`, `:916`, `:1017`, `:1135`, `:1240`, `:1318`, `:1411`, `:1494`). Adopt `pm_event_datetime.datetime_validator` / `date_time` and the inventory gate when that adoption is scheduled. Not adopted here.
+2. **SP-1101 timestamp profile on the frozen recipe — OPEN.** Number-recipe selection is frozen as `coordination-sp320-string-array-v1`. Timestamp profile selection joins it only with item 1.
+3. **DO's copy of `pm_coordination_events.py` — OPEN for batch integration.** NUMRULE says DO carries another modified copy. These edits were made once, on this lane. The other consumer is not in this worktree.
+
+No new product question. No new PlanUnit or family id. Ids remain **SP-540..545** and **OSI-650**. No pm-mail, subagent, registry admission, Decision Log edit, governance edit, browser, landing, or main push.
