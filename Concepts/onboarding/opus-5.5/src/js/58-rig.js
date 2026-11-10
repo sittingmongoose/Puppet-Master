@@ -511,7 +511,11 @@
            QA-6 requires the drawn line to pass through. */
         const anch = [pr.ax + (rp.ax - tg.ax) + (t[0] - tieMid[0]) * rp.sc, Lay.anchorY + rp.dy];
         const av = [anch[0] - end[0], anch[1] - end[1]], al = Math.hypot(av[0], av[1]);
-        const top = al > 1 ? [anch[0] + av[0] / al * 200, anch[1] + av[1] / al * 200] : [anch[0], anch[1] - 200];
+        /* The continuation is the ray from the painted tie through the rest anchor. A tie within
+           1 unit used to continue straight up instead, so while aim eased the tie past that
+           neighborhood the line left the anchor by the tie's sideways offset (QA-6, 0.17–0.37u).
+           Straight up remains only when the tie is on the anchor and the ray is undefined. */
+        const top = al > 1e-3 ? [anch[0] + av[0] / al * 200, anch[1] + av[1] / al * 200] : [anch[0], anch[1] - 200];
         pr.strs[i].setAttribute('d', `M${R(top[0])} ${R(top[1])}L${R(end[0])} ${R(end[1])}`);
         pr.strs[i].setAttribute('opacity', R(strOp));
         pr.strs[i].classList.toggle('pst-dash', !!pr.spec.preview);
