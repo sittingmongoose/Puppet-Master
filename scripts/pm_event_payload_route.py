@@ -9,7 +9,7 @@ from jsonschema import Draft202012Validator
 from pm_contract_formats import FormatChecker
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
-from pm_ds_tables import Facts
+from pm_ds_tables import Facts, entry as _ds_entry
 from pm_home_layout_v2_slot_receipt import (
     Home4Validator as StrictValidator, blake3_hex, producer_jcs_ok, ref_closure, refuse_remote,
     storage_uint64_fields_ok,
@@ -48,6 +48,7 @@ def schema_registry(root=ROOT):
 
 _eager_done = set()
 
+@_ds_entry
 def eager(registry, *schemas):
     for schema in schemas:
         key = json.dumps(schema, sort_keys=True)
@@ -89,6 +90,7 @@ def encode(event, store):
     return event
 
 
+@_ds_entry
 def resolved_body(event, store=None, *, historical=False):
     """No reference text is evidence of object resolution. Does not mutate retained bytes."""
     entry_facts = Facts('route_entry', chain=True)

@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from pm_contract_formats import FormatChecker
 import pm_event_payload_route as body_route
-from pm_ds_tables import Facts
+from pm_ds_tables import Facts, entry as _ds_entry
 Draft202012Validator = body_route.StrictValidator
 CONTRACT_PATH = "Plans/browser_workspace_reset_contracts.schema.json"
 FIXTURE_PATH = "Plans/browser_workspace_reset_contract_fixtures.json"
@@ -89,6 +89,7 @@ def scope_partition(project_id):
     return "project~" + base64.urlsafe_b64encode(project_id.encode("utf-8")).decode("ascii").rstrip("=")
 
 
+@_ds_entry
 def reset_preflight_failures(event, request, result, transition, witness, *, root=ROOT, payload_store=None):
     """Check claimed resolved values; witness booleans are NOT native evidence."""
     entry = Facts("rs_preflight_entry", chain=True)
@@ -111,7 +112,6 @@ def reset_preflight_failures(event, request, result, transition, witness, *, roo
     payload = event["payload"]
     context, facts = payload["context"], payload["facts"]
     f = Facts("rs_preflight")
-    f["RP01_event_type"] = event["event_type"] == EVENT_TYPE
     for prefix, (n_cmd, n_lin, n_sub, n_opt), command in (("request", ("RP02", "RP04", "RP06", "RP08"), request),
                                                           ("result", ("RP03", "RP05", "RP07", "RP09"), result)):
         scope = command["scope"]
@@ -123,7 +123,6 @@ def reset_preflight_failures(event, request, result, transition, witness, *, roo
             ("browser_page_id", "browser_page_id"), ("page_generation", "page_generation"),
             ("browser_program_id", "program_id"), ("program_workspace_id", "program_workspace_id"))
             if scope.get(field) != context.get(context_field)] == []
-    f["RP10_request_result_scope"] = request["scope"] == result["scope"]
     f["RP11_transition_subject"] = transition["subject"] == {field: context[field] for field in SUBJECT}
     f["RP12_transition_node"] = transition["node_id"] == context["node_id"]
     f["RP13_transition_context"] = transition["context"] == context
@@ -135,10 +134,8 @@ def reset_preflight_failures(event, request, result, transition, witness, *, roo
     f["RP19_result_reconciled"] = result["effect_state"] == "effects_reconciled"
     f["RP20_revision_join"] = transition["checked_workspace_revision"] == request["scope"].get("expected_workspace_revision")
     f["RP21_controller_join"] = transition["controller_authority"] == request["scope"].get("controller_authority")
-    f["RP22_workspace_state_reset"] = facts.get("workspace_state") == "reset"
     f["RP23_prior_generation"] = facts.get("prior_workspace_generation") == transition["prior_workspace_generation"]
     f["RP24_generation"] = facts.get("workspace_generation") == transition["workspace_generation"]
-    f["RP25_generation_advances"] = transition["prior_workspace_generation"] < transition["workspace_generation"]
     # Revision is intentionally not compared to generation, nor is +1 assumed.
     for row, name in (("RP26_owner_record_ref", "owner_record_ref"), ("RP27_transition_receipt_ref", "transition_receipt_ref"),
                       ("RP28_permission_snapshot_ref", "permission_snapshot_ref"), ("RP29_capability_snapshot_ref", "capability_snapshot_ref")):
@@ -151,7 +148,18 @@ def reset_preflight_failures(event, request, result, transition, witness, *, roo
                                    "transition_receipt_resolved", "permission_valid_at_transition", "filesafe_allowed_at_transition",
                                    "capability_valid_at_transition", "controller_valid_at_transition", "scope_valid_at_transition"), 34):
         f[f"RP{number}_{name}"] = witness.get(name) is True
-    return sorted(set(f.codes()))
+    own = f.codes()
+    # Rows observed after the field joins: whole-scope equality (a changed field refuses first
+    # at its own row), and two rows no input refuses before another row does (tables of their own).
+    scope = Facts("rs_preflight_scope")
+    scope["RP10_request_result_scope"] = request["scope"] == result["scope"]
+    state = Facts("rs_preflight_state")
+    state["RP22_workspace_state_reset"] = facts.get("workspace_state") == "reset"
+    order = Facts("rs_preflight_generation_order")
+    order["RP25_generation_advances"] = transition["prior_workspace_generation"] < transition["workspace_generation"]
+    kind = Facts("rs_preflight_event_type")
+    kind["RP01_event_type"] = event["event_type"] == EVENT_TYPE
+    return sorted(set(own + scope.codes() + state.codes() + order.codes() + kind.codes()))
 
 class ResetOracle:
     """Assumed owner-state/append barrier model, not persisted native state.
@@ -170,6 +178,7 @@ class ResetOracle:
         self.event_ids = {}
         self.reset_count = self.append_count = self.publication_count = 0
 
+    @_ds_entry
     def reset(self, event, request, result, transition, witness, append_outcome, *, admitted=False, payload_store=None):
         f = Facts("rs_reset", chain=True)
         if f.stop("RO01_admitted", lambda: admitted is True):
@@ -217,6 +226,7 @@ class ResetOracle:
             return "reset_effect_committed_event_pending_recovery"
         return self.resolve_append(key, semantic, append_outcome)
 
+    @_ds_entry
     def resolve_append(self, key, semantic, append_outcome):
         f = Facts("rs_resolve_append", chain=True)
         entry = self.pending.get(key)
@@ -306,6 +316,7 @@ def expected_storage_family(root=ROOT):
     }
 
 
+@_ds_entry
 def binding_failures(row, *, root=ROOT):
     entry = Facts("rs_binding_entry", chain=True)
     if entry.stop("RB01_event_type", lambda: row.get("event_type") == EVENT_TYPE):
@@ -326,6 +337,7 @@ def binding_failures(row, *, root=ROOT):
     f["RB11_family_disposition"] = len(families) != 1 or families[0] == expected_storage_family(root)
     return f.codes()
 
+@_ds_entry
 def checkpoint_failures(value, *, root=ROOT):
     shape = Facts("rs_checkpoint_schema", chain=True)
     if shape.stop("RK01_checkpoint_schema", lambda: validators(root)["checkpoint"].is_valid(value)):
@@ -350,6 +362,7 @@ def parse_time(value):
     return datetime.fromisoformat(value.replace("Z", "+00:00"))
 
 
+@_ds_entry
 def checkpoint_core_failures(value):
     # Called only after the closed schema has validated this current/old core.
     cursor = value["source_cursor"]
@@ -392,6 +405,7 @@ def checkpoint_core_failures(value):
     order["RC14_birth_before_withdrawal"] = not withdrawn or times["published_at_utc"] <= times["withdrawn_at_utc"]
     return errors + order.codes()
 
+@_ds_entry
 def generation_admission_failures(before, after, observation, *, root=ROOT):
     """Check claimed same-key transaction; actual authentication is assumed."""
     transaction = observation.get("generation_transaction")
@@ -430,6 +444,7 @@ def generation_admission_failures(before, after, observation, *, root=ROOT):
     f.done()
     return []
 
+@_ds_entry
 def index_token_failures(token, index, observation, *, root=ROOT):
     """Exact SP-278 decoded-value join beneath an assumed verified native read.
 
@@ -466,14 +481,16 @@ def index_token_failures(token, index, observation, *, root=ROOT):
                 "frontier_revision": frontier["publication_revision"], "frontier_sha256": digest(frontier),
                 "index_dataset_name": "event_record_index.v2@" + generation,
                 "source_selection": frontier["source_selection"]}
+    fields = Facts("rs_token_fields")
+    fields["RT10_token_fields"] = set(token) == set(expected)
     joins = Facts("rs_token_joins")
-    joins["RT10_token_fields"] = set(token) == set(expected)
     for number, field in enumerate(expected, 11):
         joins[f"RT{number}_{field}"] = token.get(field) == expected[field]
     joins["RT20_node_dataset"] = node["index_dataset_name"] == expected["index_dataset_name"]
     joins["RT21_current_source"] = observation.get("source_selection") == frontier["source_selection"]
     joins["RT22_source_storage"] = frontier["source_selection"]["storage_instance_id"] == index["storage_instance_id"]
-    return joins.codes()
+    codes = fields.codes()
+    return codes + [code for code in joins.codes() if code not in codes]
 
 class CheckpointOracle:
     """Filtered checkpoint CAS/disclosure model. No native transaction runs."""
@@ -482,6 +499,7 @@ class CheckpointOracle:
         self.checkpoint = copy.deepcopy(checkpoint)
         self.commit_count = self.disclosure_count = self.runtime_effect_count = 0
 
+    @_ds_entry
     def advance(self, candidate, index, observation, *, admitted=False, _replacement=False):
         f = Facts("rs_advance", chain=True)
         checks = [("RV01_admitted", lambda: admitted is True),
@@ -534,6 +552,7 @@ class CheckpointOracle:
     def replace(self, candidate, index, observation, *, admitted=False):
         return self.advance(candidate, index, observation, admitted=admitted, _replacement=True)
 
+    @_ds_entry
     def cleanup(self, publication_id, at_utc, observation):
         """Model serialized eligible cleanup; hold/ref witnesses are assumptions."""
         before = self.checkpoint
@@ -567,20 +586,25 @@ class CheckpointOracle:
 
         checks += [("RU10_retired_selected", one_selected),
                    ("RU11_cleanup_time", lambda: parsed("now", lambda: at_utc)),
-                   ("RU12_cleanup_time_zone", lambda: moment["now"].tzinfo is not None),
-                   ("RU13_anchor_time", lambda: parsed("anchor", lambda: selected[0]["checkpoint_core"]["withdrawn_at_utc"])),
-                   ("RU14_times_comparable", comparable),
-                   ("RU15_retention_elapsed", lambda: not moment["open"])]
+                   ("RU12_cleanup_time_zone", lambda: moment["now"].tzinfo is not None)]
         for row, check in checks:
             if f.stop(row, check):
                 return f.first_code()
         f.done()
+        for phase, row, check in (("rs_cleanup_anchor_time", "RU13_anchor_time", lambda: parsed("anchor", lambda: selected[0]["checkpoint_core"]["withdrawn_at_utc"])),
+                                  ("rs_cleanup_times_comparable", "RU14_times_comparable", comparable),
+                                  ("rs_cleanup_window", "RU15_retention_elapsed", lambda: not moment["open"])):
+            step = Facts(phase, chain=True)
+            if step.stop(row, check):
+                return step.first_code()
+            step.done()
         # The complete original current core and every sibling are preserved.
         self.checkpoint = {**copy.deepcopy(before), "retired_generations": [copy.deepcopy(entry)
                             for entry in before["retired_generations"] if entry is not selected[0]]}
         self.commit_count += 1
         return "eligible_retired_generation_removed"
 
+    @_ds_entry
     def disclose(self, index, observation):
         cp = self.checkpoint
         f = Facts("rs_disclose", chain=True)
@@ -603,6 +627,7 @@ class CheckpointOracle:
         self.disclosure_count += 1
         return "historical_reset_fact_no_runtime_authority"
 
+    @_ds_entry
     def withdraw(self, at_utc):
         f = Facts("rs_withdraw", chain=True)
         if f.stop("RW01_checkpoint_present", lambda: self.checkpoint is not None):
@@ -620,6 +645,7 @@ class CheckpointOracle:
         self.checkpoint = candidate
         return "withdrawn_publication_fenced"
 
+@_ds_entry
 def workspace_history_fact(event, subject, *, admitted=False, source_verified=False,
                            access_allowed=False, deletion_allows_audit=False,
                            checkpoint_read_token_valid=False, root=ROOT, payload_store=None, historical_source=None):

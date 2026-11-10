@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 from pm_home_layout_v2_slot_receipt import Home4Validator, Registry, Resource, exact_digits, ref_closure, refuse_remote
 from pm_ds_resources import memory_floor
-from pm_ds_tables import Facts
+from pm_ds_tables import Facts, entry as _ds_entry
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = 'Plans/event_payloads/terminal_workgroup_moved.schema.json'
@@ -16,6 +16,7 @@ EVENT = 'terminal.workgroup_moved'
 POLICY = 'RP-AUTHORITY-INDEFINITE@1.0.0'
 
 
+@_ds_entry
 def payload_validator(schema):
     Home4Validator.check_schema(schema)
     registry = Registry(retrieve=refuse_remote).with_resource(schema['$id'], Resource.from_contents(schema))
@@ -26,6 +27,7 @@ def payload_validator(schema):
     closure.done()
     return Home4Validator(schema, registry=registry)
 
+@_ds_entry
 def retained_errors(value, validator):
     """Compare synthetic before/after saved bytes, without publishing their content."""
     decoded = {}
@@ -61,6 +63,7 @@ def retained_errors(value, validator):
         decoded['payload']['source_terminal_section_id'] != decoded['payload']['target_terminal_section_id'])
     return facts.codes()
 
+@_ds_entry
 def withdrawal_errors(value):
     """Check proposed contract observations; this does not execute a terminal move."""
     facts = Facts('term_withdrawal')

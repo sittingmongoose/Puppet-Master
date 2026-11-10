@@ -20,16 +20,47 @@ Two evaluation forms keep each checker's original result exactly:
   ``done()`` records an accepted observation (every row holds).
 
 RECORDER is set only by the guard-table suite builder
-(scripts/pm_ds_guard_suites.py). It records (phase, observation, refusing rows)
-and never changes a result.
+(scripts/pm_ds_guard_suites.py). It records (phase, observation, refusing rows,
+call) and never changes a result. ``entry`` marks each checker function that
+evaluates a table; each invocation is one call, so the suite builder can tell
+the first refusing row of a checker call from rows its later tables refuse in
+the same call.
 """
 from __future__ import annotations
 
+import functools
 import importlib
 
 TABLE_PREFIX = 'pm_ds_table_'
 RECORDER = None
 _ROWS = {}
+_STACK = []
+_CALLS = [0]
+
+
+def entry(fn):
+    """Mark a checker function: each invocation is one checker call with its own refusal order.
+
+    A nested marked call (an oracle's own checkpoint check, a preflight's shared candidate
+    check) is a separate call: its tables refuse in its own order, and the caller's row that
+    maps its result is the caller's own refusal.
+    """
+    @functools.wraps(fn)
+    def wrapper(*args, **kwargs):
+        _CALLS[0] += 1
+        _STACK.append(_CALLS[0])
+        try:
+            return fn(*args, **kwargs)
+        finally:
+            _STACK.pop()
+    return wrapper
+
+
+def current_call():
+    if not _STACK:
+        _CALLS[0] += 1
+        return _CALLS[0]
+    return _STACK[-1]
 
 
 def table(phase):
@@ -113,7 +144,7 @@ class Facts:
                 result.append((name, code))
         self._result = result
         if RECORDER is not None:
-            RECORDER.append((self.phase, dict(observed), [name for name, _ in result]))
+            RECORDER.append((self.phase, dict(observed), [name for name, _ in result], current_call()))
         return result
 
     def codes(self):

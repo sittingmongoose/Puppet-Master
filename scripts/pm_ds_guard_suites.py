@@ -8,7 +8,9 @@ observation recorder of scripts/pm_ds_tables.py. An observation where every row
 holds is a control of its table; an observation where exactly one row refuses is
 a single-row negative of that row; an observation where two or more rows refuse
 is reported (it stays refused in the complete checker) and is never given to the
-tool. Nothing here decides a checker result.
+tool. Only the first refusing table of each checker call (pm_ds_tables.entry)
+yields a negative: a table that refuses later in the same call is reported as
+refused later and never credited. Nothing here decides a checker result.
 """
 from __future__ import annotations
 
@@ -135,8 +137,8 @@ def collect(progress=None, include_unit_tests=True, only=None):
     """Run every witness source under the recorder; aggregate per phase."""
     sys.path.insert(0, str(ROOT / 'tests'))
     T.RECORDER = []
-    collected = {phase: {'controls': {}, 'negatives': {}, 'multi': {}} for phase in phases()}
-    counts = {'sources': 0, 'source_exceptions': [], 'records': 0, 'accepted': 0, 'refused': 0}
+    collected = {phase: {'controls': {}, 'negatives': {}, 'multi': {}, 'later': {}} for phase in phases()}
+    counts = {'sources': 0, 'source_exceptions': [], 'records': 0, 'accepted': 0, 'refused': 0, 'refused_later': 0}
     try:
         for label, call in sources(include_unit_tests):
             if only and not any(label.startswith(prefix) for prefix in only):
@@ -148,14 +150,21 @@ def collect(progress=None, include_unit_tests=True, only=None):
                 counts['source_exceptions'].append({'source': label, 'exception': repr(exc),
                                                     'trace': traceback.format_exc()[-1500:]})
             counts['sources'] += 1
-            for phase, observed, refusing in T.RECORDER[start:]:
+            first_refusal = set()
+            for phase, observed, refusing, call in T.RECORDER[start:]:
                 counts['records'] += 1
-                slot = collected.setdefault(phase, {'controls': {}, 'negatives': {}, 'multi': {}})
+                slot = collected.setdefault(phase, {'controls': {}, 'negatives': {}, 'multi': {}, 'later': {}})
                 key = _key(observed)
                 if not refusing:
                     counts['accepted'] += 1
                     entry = slot['controls'].setdefault(key, {'value': observed, 'sources': []})
+                elif call in first_refusal:
+                    # Refused later in a checker call that an earlier table row already refused:
+                    # reported, never credited as a negative.
+                    counts['refused_later'] += 1
+                    entry = slot['later'].setdefault(key, {'value': observed, 'rows': refusing, 'sources': []})
                 else:
+                    first_refusal.add(call)
                     counts['refused'] += 1
                     kind = 'negatives' if len(refusing) == 1 else 'multi'
                     entry = slot[kind].setdefault(key, {'value': observed, 'rows': refusing, 'sources': []})

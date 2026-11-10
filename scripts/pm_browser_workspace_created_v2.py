@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from pm_contract_formats import FormatChecker
 import pm_event_payload_route as body_route
-from pm_ds_tables import Facts
+from pm_ds_tables import Facts, entry as _ds_entry
 Draft202012Validator = body_route.StrictValidator
 SCHEMA = 'Plans/browser_workspace_created_checkpoint_v2.schema.json'
 FIXTURES = 'Plans/browser_workspace_created_checkpoint_v2_fixtures.json'
@@ -78,6 +78,7 @@ def is_v1(value):
     return isinstance(value, dict) and value.get('schema_id') == V1_ID
 
 
+@_ds_entry
 def legacy_failures(value, root=ROOT):
     shape = Facts('v2_legacy_schema', chain=True)
     if shape.stop('LG01_legacy_schema', lambda: validators(root)['v1'].is_valid(value)):
@@ -86,6 +87,7 @@ def legacy_failures(value, root=ROOT):
     return sibling('pm_browser_workspace_created', root).checkpoint_failures(value, root=root)
 
 
+@_ds_entry
 def core_failures(value, root=ROOT):
     shape = Facts('v2_core_schema', chain=True)
     if shape.stop('V2C01_core_schema', lambda: validators(root)['checkpoint_core'].is_valid(value)):
@@ -94,6 +96,7 @@ def core_failures(value, root=ROOT):
     return core_relation_failures(value, root)
 
 
+@_ds_entry
 def core_relation_failures(value, root=ROOT):
     """Decoded scope, stored-token identity, range and time relations of one core."""
     cursor = value['source_cursor']
@@ -135,6 +138,7 @@ def core_relation_failures(value, root=ROOT):
     return errors + order.codes()
 
 
+@_ds_entry
 def index_token_failures(token, index, observation, root=ROOT):
     """Exact SP-278 join of a complete ten-field read token beneath an assumed native read."""
     entry = Facts('v2_token_entry', chain=True)
@@ -166,16 +170,19 @@ def index_token_failures(token, index, observation, root=ROOT):
                 'frontier_revision': frontier['publication_revision'], 'frontier_sha256': binding_digest(frontier, root),
                 'index_dataset_name': 'event_record_index.v2@' + generation,
                 'source_selection': frontier['source_selection'], 'redb_snapshot_id': observation.get('redb_snapshot_id')}
+    fields = Facts('v2_token_fields')
+    fields['TK09_token_fields'] = set(token) == set(expected)
     joins = Facts('v2_token_joins')
-    joins['TK09_token_fields'] = set(token) == set(expected)
     for number, field in enumerate(expected, 10):
         joins[f'TK{number:02d}_{field}'] = token.get(field) == expected[field]
     joins['TK20_node_dataset'] = node['index_dataset_name'] == expected['index_dataset_name']
     joins['TK21_current_source'] = observation.get('source_selection') == frontier['source_selection']
     joins['TK22_source_storage'] = frontier['source_selection']['storage_instance_id'] == index['storage_instance_id']
-    return joins.codes()
+    codes = fields.codes()
+    return codes + [code for code in joins.codes() if code not in codes]
 
 
+@_ds_entry
 def checkpoint_failures(value, root=ROOT):
     shape = Facts('v2_checkpoint_schema', chain=True)
     if shape.stop('V2K01_checkpoint_schema', lambda: validators(root)['checkpoint'].is_valid(value)):
@@ -190,30 +197,33 @@ def checkpoint_failures(value, root=ROOT):
         old = entry.get('checkpoint_core', entry.get('legacy_checkpoint'))
         legacy = 'legacy_checkpoint' in entry
         f = Facts('v2_history_entry')
+        unwithdrawn = Facts('v2_history_legacy_unwithdrawn')
+        custody_order = Facts('v2_history_legacy_custody_order')
         if legacy:
             errors += legacy_failures(old, root)
             publication = entry['publication_id']
             withdrawal = entry['retired_at_utc']
             custody = entry['custody_bound_at_utc']
             f['V2K02_legacy_first_withdrawal'] = old['withdrawn_at_utc'] is None or withdrawal == old['withdrawn_at_utc']
-            f['V2K03_legacy_custody_withdrawal'] = old['withdrawn_at_utc'] is not None or withdrawal == custody
+            unwithdrawn['V2K03_legacy_custody_withdrawal'] = old['withdrawn_at_utc'] is not None or withdrawal == custody
             f['V2K04_legacy_custody_after_update'] = instant(custody) >= instant(old['updated_at_utc'])
-            f['V2K05_legacy_withdrawal_before_custody'] = instant(withdrawal) <= instant(custody)
+            custody_order['V2K05_legacy_withdrawal_before_custody'] = instant(withdrawal) <= instant(custody)
             birth = custody
         else:
             errors += core_failures(old, root)
             publication = old['publication_id']
             withdrawal = old['withdrawn_at_utc']
             birth = old['published_at_utc']
-            for row in ('V2K02_legacy_first_withdrawal', 'V2K03_legacy_custody_withdrawal',
-                        'V2K04_legacy_custody_after_update', 'V2K05_legacy_withdrawal_before_custody'):
+            for row in ('V2K02_legacy_first_withdrawal', 'V2K04_legacy_custody_after_update'):
                 f[row] = True
+            unwithdrawn['V2K03_legacy_custody_withdrawal'] = True
+            custody_order['V2K05_legacy_withdrawal_before_custody'] = True
         f['V2K06_publication_unique'] = publication not in seen
         f['V2K07_publication_not_successor'] = publication != entry['successor_publication_id']
         f['V2K08_history_scope'] = [k for k in SCOPE if old[k] != value[k]] == []
         f['V2K09_withdrawal_before_successor'] = instant(withdrawal) <= instant(value['published_at_utc'])
         f['V2K10_birth_before_successor'] = instant(birth) <= instant(value['published_at_utc'])
-        errors += f.codes()
+        errors += f.codes() + unwithdrawn.codes() + custody_order.codes()
         seen.add(publication)
     # Only one v1 row exists per key, so a lawful handoff leaves one v1 wrapper.
     custody_count = Facts('v2_history_custody')
@@ -222,6 +232,7 @@ def checkpoint_failures(value, root=ROOT):
     return sorted(set(errors))
 
 
+@_ds_entry
 def generation_failures(before, after, observation, root=ROOT):
     """Exact handoff/rotation join beneath assumed native custody and CAS."""
     entry = Facts('v2_gen_entry', chain=True)
@@ -305,6 +316,7 @@ def generation_failures(before, after, observation, root=ROOT):
     return sorted(set(errors))
 
 
+@_ds_entry
 def source_failures(candidate, index, observation, root=ROOT, *, disclosure=False):
     errors = checkpoint_failures(candidate, root)
     if errors:
@@ -342,6 +354,7 @@ def source_failures(candidate, index, observation, root=ROOT, *, disclosure=Fals
     return sorted(set(errors + f.codes()))
 
 
+@_ds_entry
 def advance_failures(before, after, index, observation, root=ROOT, *, replacement=False):
     """An oracle pass is shape/semantic validity of the current definition, never native activation."""
     errors = source_failures(after, index, observation, root)
@@ -368,6 +381,7 @@ def advance_failures(before, after, index, observation, root=ROOT, *, replacemen
     return sorted(set(errors + f.codes() + partition.codes()))
 
 
+@_ds_entry
 def cleanup_failures(before, after, publication_id, observation, root=ROOT):
     """Same-key cleanup needs current resolved holds/refs and original anchor."""
     entry = Facts('v2_cleanup_entry', chain=True)
@@ -416,9 +430,10 @@ def cleanup_failures(before, after, publication_id, observation, root=ROOT):
     joins['V2CL18_tx_key'] = tx.get('checkpoint_key') == key(before)
     joins['V2CL19_tx_publication'] = tx.get('selected_publication_id') == publication_id
     joins['V2CL20_tx_committed_at'] = tx.get('committed_at_utc') == observation.get('now_utc')
-    joins['V2CL21_tx_committed'] = tx.get('status') == 'committed'
+    status = Facts('v2_cleanup_tx_status')
+    status['V2CL21_tx_committed'] = tx.get('status') == 'committed'
     joins['V2CL22_survivors_exact'] = after == expected
-    return sorted(set(errors + joins.codes()))
+    return sorted(set(errors + joins.codes() + status.codes()))
 
 
 def binding_digest(value, root=ROOT):

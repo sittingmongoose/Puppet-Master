@@ -27,7 +27,7 @@ import pm_home_layout_v2_slot_receipt as home
 import pm_browser_workspace_created as created
 import pm_browser_workspace_created_v2 as created_v2
 import pm_browser_workspace_reset as reset
-from pm_ds_tables import Facts
+from pm_ds_tables import Facts, entry as _ds_entry
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -55,6 +55,7 @@ def compaction_timestamp_valid(value):
         return False
     return True
 
+@_ds_entry
 def compaction_payload_errors(payload):
     schema = load('Plans/event_payload_context_compaction_completed.schema.json')
     shape = Facts('comp_payload_schema', chain=True)
@@ -67,6 +68,7 @@ def compaction_payload_errors(payload):
     facts['CP04_gain_equation'] = payload['input_tokens'] - payload['output_tokens'] == payload['reclaimed_tokens']
     return facts.codes()
 
+@_ds_entry
 def compaction_event_errors(event, *, historical=False):
     entry = Facts('comp_event_entry', chain=True)
     if entry.stop('CE01_historical_bool', lambda: type(historical) is bool):
@@ -98,9 +100,10 @@ def compaction_event_errors(event, *, historical=False):
     facts['CE13_idempotency_identity'] = event['idempotency_key'] == 'compaction:' + sha(identity)
     facts['CE14_receipt_identity'] = payload['compaction_receipt_ref'] == 'compaction_receipt:' + digest
     facts['CE15_producer_jcs'] = historical or home.producer_jcs_ok(event)
-    codes = present.codes()
-    return codes + [code for code in facts.codes() if code not in codes]
+    codes = facts.codes()
+    return [code for code in present.codes() if code not in codes] + codes
 
+@_ds_entry
 def compaction_history(event, *, verified, withdrawn, deleted, live_revision):
     # SP-259: historical audit fact neither reconstructs purged content nor rewinds a newer head.
     facts = Facts('comp_history', chain=True)
@@ -282,6 +285,7 @@ def build():
     return suite
 
 
+@_ds_entry
 def layout_event_errors(event, store=None, *, binding=None, historical=False, custody=None, historical_source=None):
     context = Facts('layout_context', chain=True)
     if context.stop('LE01_historical_bool', lambda: type(historical) is bool):

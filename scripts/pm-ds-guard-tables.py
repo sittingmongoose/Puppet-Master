@@ -16,6 +16,7 @@ import time
 from pathlib import Path
 
 import pm_ds_guard_suites as suites
+from pm_ds_guard_spec import ENTAILED
 g = suites.g
 
 
@@ -47,7 +48,7 @@ def main():
     for phase in suites.phases():
         if args.phase and phase not in args.phase:
             continue
-        slot = collected.get(phase, {'controls': {}, 'negatives': {}, 'multi': {}})
+        slot = collected.get(phase, {'controls': {}, 'negatives': {}, 'multi': {}, 'later': {}})
         rows = [name for name, _, _, _ in suites.table_rows(phase)]
         witnessed = sorted({e['rows'][0] for e in slot['negatives'].values()})
         entry = dict(phase=phase, rows=rows, controls=len(slot['controls']), negatives=len(slot['negatives']),
@@ -55,8 +56,14 @@ def main():
                      row_witness_counts={r: sum(e['count'] for e in slot['negatives'].values() if e['rows'][0] == r) for r in rows},
                      row_witness_sources={e['rows'][0]: e['sources'][:4] for e in slot['negatives'].values()},
                      multi=[{'rows': e['rows'], 'count': e['count'], 'sources': e['sources'][:6]} for e in slot['multi'].values()],
+                     refused_later=[{'rows': e['rows'], 'count': e['count'], 'sources': e['sources'][:4]} for e in slot.get('later', {}).values()],
                      lane_matrix=suites.lane_matrix(phase, slot))
-        if not args.collect_only and slot['controls'] and slot['negatives']:
+        if phase in ENTAILED:
+            # A row no input refuses first: it sits alone in this table, carries its written proof
+            # and is never credited, whatever observations the collection recorded for it.
+            entry.update(entailed=ENTAILED[phase], tool_status='not_run_entailed', proved=[], unproved=rows)
+            print(f"{phase} entailed (not run): {rows}", file=sys.stderr, flush=True)
+        elif not args.collect_only and slot['controls'] and slot['negatives']:
             path = root / f'scripts/{suites.T.TABLE_PREFIX}{phase}.py'
             stops = [e for e in g.prescan_sources(path) if e['kind'] in g.STATIC_STOP_KINDS]
             suite = suites.suite_for(phase, slot)
@@ -86,14 +93,15 @@ def main():
         summary['suites'].append(entry)
     summary['seconds'] = round(time.monotonic() - started, 1)
     summary['totals'] = dict(tables=len(summary['suites']), rows=sum(len(s['rows']) for s in summary['suites']),
-                             witnessed=sum(len(s['witnessed']) for s in summary['suites']),
+                             witnessed=sum(len(s['witnessed']) for s in summary['suites'] if 'entailed' not in s),
+                             entailed=sum(len(s['rows']) for s in summary['suites'] if 'entailed' in s),
                              proved=sum(len(s.get('proved', [])) for s in summary['suites']),
                              multi=sum(len(s['multi']) for s in summary['suites']),
                              lane_matrix_problems=sum(len(s['lane_matrix']) for s in summary['suites']))
     (args.out / 'summary.json').write_text(json.dumps(summary, indent=1, sort_keys=True, default=str) + '\n')
     print(json.dumps(dict(counts={k: v for k, v in counts.items() if k != 'source_exceptions'},
                           source_exceptions=len(counts['source_exceptions']), totals=summary['totals'])))
-    return 0 if summary['totals']['proved'] == summary['totals']['rows'] else 1
+    return 0 if summary['totals']['proved'] + summary['totals']['entailed'] == summary['totals']['rows'] else 1
 
 
 if __name__ == '__main__':

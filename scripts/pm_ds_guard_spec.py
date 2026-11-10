@@ -338,18 +338,14 @@ SPEC = {
         CR03_workspace_state_created | not_new_workspace_identity | the workspace state is created
         CR04_no_prior_generation | not_new_workspace_identity | there is no prior workspace generation
         CR05_subject_present | creation_subject_missing | every subject field of the payload context is present
-        CR06_run_attempt_paired | creation_run_attempt_mismatch | run and attempt are both present or both absent
         CR07_request_command | creation_command_mismatch | the request command is cmd.browser.workspace.create
         CR08_result_command | creation_command_mismatch | the result command is cmd.browser.workspace.create
         CR09_request_lineage | creation_lineage_mismatch | the request lineage projection equals the payload context lineage
         CR10_result_lineage | creation_lineage_mismatch | the result lineage projection equals the payload context lineage
         CR11_request_session | creation_session_mismatch | the request Browser session is the payload session
-        CR12_request_security_class | creation_session_mismatch | the request session security class is ordinary
         CR13_result_session | creation_session_mismatch | the result Browser session is the payload session
-        CR14_result_security_class | creation_session_mismatch | the result session security class is ordinary
         CR15_result_workspace | creation_result_workspace_mismatch | the result workspace is the payload workspace
         CR16_node_lineage | creation_node_lineage_mismatch | the payload node is the witness node
-        CR17_request_result_scope | creation_request_result_scope_mismatch | every request scope field except the workspace equals the result scope field
         CR18_request_workspace | creation_request_workspace_mismatch | a request workspace, when present, is the payload workspace
         CR19_result_instance | creation_command_instance_mismatch | the result command instance is the request command instance
         CR20_witness_instance | creation_command_instance_mismatch | the result command instance is the witness command instance
@@ -380,6 +376,18 @@ SPEC = {
         CR45_unused_workspace_identity | creation_witness:unused_workspace_identity | a new identity's witness unused_workspace_identity is exactly true
         CR46_resource_isolated | creation_witness:resource_isolated | a new identity's witness resource_isolated is exactly true
         CR47_resource_unexposed | creation_witness:resource_unexposed | a new identity's witness resource_unexposed is exactly true
+    """),
+    'cr_preflight_run_attempt': ('creation context run/attempt pairing (entailed by the lineage schema and CR09)', CREATED, """
+        CR06_run_attempt_paired | creation_run_attempt_mismatch | run and attempt are both present or both absent
+    """),
+    'cr_preflight_request_security': ('creation request security class (schema-entailed)', CREATED, """
+        CR12_request_security_class | creation_session_mismatch | the request session security class is ordinary
+    """),
+    'cr_preflight_result_security': ('creation result security class (schema-entailed)', CREATED, """
+        CR14_result_security_class | creation_session_mismatch | the result session security class is ordinary
+    """),
+    'cr_preflight_scope': ('creation request/result whole-scope equality', CREATED, """
+        CR17_request_result_scope | creation_request_result_scope_mismatch | every request scope field except the workspace equals the result scope field
     """),
     'cr_create': ('creation append barrier model', CREATED, """
         CO01_admitted | rejected_no_append | the event is admitted (exactly true)
@@ -519,7 +527,6 @@ SPEC = {
         TK08_one_current | generic_generation_not_current | exactly one generation is current
     """),
     'v2_token_joins': ('SP-278 read token joins', CREATED_V2, """
-        TK09_token_fields | generic_read_token_join | the live read token has exactly the ten SP-278 fields
         TK10_storage_instance_id | generic_read_token_join | the live read token storage_instance_id is the recomputed SP-278 storage_instance_id
         TK11_checkpoint_key | generic_read_token_join | the live read token checkpoint_key is the recomputed SP-278 checkpoint_key
         TK12_checkpoint_ref | generic_read_token_join | the live read token checkpoint_ref is the recomputed SP-278 checkpoint_ref
@@ -534,19 +541,26 @@ SPEC = {
         TK21_current_source | generic_current_source_changed | the observed source selection is the frontier source selection
         TK22_source_storage | generic_source_storage_mismatch | the frontier source Storage instance is the index's
     """),
+    'v2_token_fields': ('live read token field set (schema-entailed by TK01)', CREATED_V2, """
+        TK09_token_fields | generic_read_token_join | the live read token has exactly the ten SP-278 fields
+    """),
     'v2_checkpoint_schema': ('v2 checkpoint schema', CREATED_V2, """
         V2K01_checkpoint_schema | checkpoint_schema | the checkpoint validates against the v2 definition
     """),
     'v2_history_entry': ('v2 retired generation entry', CREATED_V2, """
         V2K02_legacy_first_withdrawal | legacy_first_withdrawal_changed | a v1 wrapper of a withdrawn v1 value retires at its first withdrawal
-        V2K03_legacy_custody_withdrawal | legacy_first_withdrawal_changed | a v1 wrapper of an unwithdrawn v1 value retires at custody binding
         V2K04_legacy_custody_after_update | legacy_custody_time | v1 custody is not bound before the v1 value's last observation
-        V2K05_legacy_withdrawal_before_custody | legacy_custody_time | the v1 retirement is not after custody binding
         V2K06_publication_unique | history_identity | the retired publication id is not repeated
         V2K07_publication_not_successor | history_identity | the retired publication id is not its own successor
         V2K08_history_scope | history_scope | the retired generation scope is the checkpoint scope
         V2K09_withdrawal_before_successor | history_time | the retired generation withdrew no later than the current publication
         V2K10_birth_before_successor | history_time | the retired generation was born no later than the current publication
+    """),
+    'v2_history_legacy_custody_order': ('v1 retirement before custody binding (entailed by V2K02/V2K04 and CC09)', CREATED_V2, """
+        V2K05_legacy_withdrawal_before_custody | legacy_custody_time | the v1 retirement is not after custody binding
+    """),
+    'v2_history_legacy_unwithdrawn': ('v1 wrapper of an unwithdrawn v1 value (schema-entailed)', CREATED_V2, """
+        V2K03_legacy_custody_withdrawal | legacy_first_withdrawal_changed | a v1 wrapper of an unwithdrawn v1 value retires at custody binding
     """),
     'v2_history_custody': ('v2 v1 custody count', CREATED_V2, """
         V2K11_one_v1_custody | multiple_v1_custody_entries | at most one v1 custody wrapper is retained
@@ -665,8 +679,10 @@ SPEC = {
         V2CL18_tx_key | cleanup_transaction_join | the transaction key is the checkpoint key
         V2CL19_tx_publication | cleanup_transaction_join | the transaction selects the cleaned publication
         V2CL20_tx_committed_at | cleanup_transaction_join | the transaction commit time is the cleanup time
-        V2CL21_tx_committed | cleanup_transaction_join | the transaction status is committed
         V2CL22_survivors_exact | cleanup_changed_survivors | the after-value is the before-value less exactly the cleaned entry
+    """),
+    'v2_cleanup_tx_status': ('cleanup transaction status (schema-entailed by V2CL14)', CREATED_V2, """
+        V2CL21_tx_committed | cleanup_transaction_join | the transaction status is committed
     """),
 
     # ------------------------------------------------------------------ browser.workspace.reset (SP-282, SMPFS-168)
@@ -679,7 +695,6 @@ SPEC = {
         RP0C_transition_schema | resolved_transition_schema | the transition validates against resolved_transition
     """),
     'rs_preflight': ('reset resolved-value joins', RESET, """
-        RP01_event_type | wrong_reset_event | the event type is browser.workspace.reset
         RP02_request_command | reset_command_mismatch | the request command is cmd.browser.workspace.reset
         RP03_result_command | reset_command_mismatch | the result command is cmd.browser.workspace.reset
         RP04_request_lineage | reset_lineage_mismatch | the request lineage projection equals the payload context lineage
@@ -688,7 +703,6 @@ SPEC = {
         RP07_result_subject | reset_subject_mismatch | the result session, workspace and security class equal the payload context
         RP08_request_optional_subject | reset_optional_subject_mismatch | the request page, page generation, program and program workspace equal the payload context
         RP09_result_optional_subject | reset_optional_subject_mismatch | the result page, page generation, program and program workspace equal the payload context
-        RP10_request_result_scope | reset_request_result_scope_mismatch | the request scope equals the result scope
         RP11_transition_subject | reset_resolved_subject_mismatch | the transition subject is the payload context subject projection
         RP12_transition_node | reset_resolved_subject_mismatch | the transition node is the payload node
         RP13_transition_context | reset_resolved_context_mismatch | the transition context is the payload context
@@ -700,10 +714,8 @@ SPEC = {
         RP19_result_reconciled | reset_not_successful_reconciled | the result effect state is effects_reconciled
         RP20_revision_join | reset_revision_join | the checked workspace revision is the request expected revision
         RP21_controller_join | reset_controller_join | the transition controller authority is the request's
-        RP22_workspace_state_reset | reset_generation_join | the payload workspace state is reset
         RP23_prior_generation | reset_generation_join | the payload prior generation is the transition prior generation
         RP24_generation | reset_generation_join | the payload generation is the transition generation
-        RP25_generation_advances | reset_generation_join | the transition prior generation is below its generation
         RP26_owner_record_ref | reset_reference_join:owner_record_ref | the resolved transition owner_record_ref is the payload owner_record_ref
         RP27_transition_receipt_ref | reset_reference_join:transition_receipt_ref | the resolved transition transition_receipt_ref is the payload transition_receipt_ref
         RP28_permission_snapshot_ref | reset_reference_join:permission_snapshot_ref | the resolved transition permission_snapshot_ref is the payload permission_snapshot_ref
@@ -721,6 +733,18 @@ SPEC = {
         RP40_capability_valid_at_transition | reset_witness:capability_valid_at_transition | witness capability_valid_at_transition is exactly true
         RP41_controller_valid_at_transition | reset_witness:controller_valid_at_transition | witness controller_valid_at_transition is exactly true
         RP42_scope_valid_at_transition | reset_witness:scope_valid_at_transition | witness scope_valid_at_transition is exactly true
+    """),
+    'rs_preflight_scope': ('reset request/result whole-scope equality', RESET, """
+        RP10_request_result_scope | reset_request_result_scope_mismatch | the request scope equals the result scope
+    """),
+    'rs_preflight_state': ('reset payload workspace state (entailed by RP01 and the shared candidate payload schema)', RESET, """
+        RP22_workspace_state_reset | reset_generation_join | the payload workspace state is reset
+    """),
+    'rs_preflight_generation_order': ('reset transition generation order (entailed by GS08 and RP23/RP24)', RESET, """
+        RP25_generation_advances | reset_generation_join | the transition prior generation is below its generation
+    """),
+    'rs_preflight_event_type': ('reset event type (entailed by RP23)', RESET, """
+        RP01_event_type | wrong_reset_event | the event type is browser.workspace.reset
     """),
     'rs_reset': ('reset barrier model', RESET, """
         RO01_admitted | rejected_no_reset | the event is admitted (exactly true)
@@ -824,7 +848,6 @@ SPEC = {
         RT09_one_current | generic_generation_not_current | exactly one generation is current
     """),
     'rs_token_joins': ('reset SP-278 read token joins', RESET, """
-        RT10_token_fields | generic_read_token_join | the stored token has exactly the nine durable fields
         RT11_storage_instance_id | generic_read_token_join | the stored token storage_instance_id is the recomputed SP-278 storage_instance_id
         RT12_checkpoint_key | generic_read_token_join | the stored token checkpoint_key is the recomputed SP-278 checkpoint_key
         RT13_checkpoint_ref | generic_read_token_join | the stored token checkpoint_ref is the recomputed SP-278 checkpoint_ref
@@ -837,6 +860,9 @@ SPEC = {
         RT20_node_dataset | generic_read_token_join | the generation dataset name is event_record_index.v2@ + generation
         RT21_current_source | generic_current_source_changed | the observed source selection is the frontier source selection
         RT22_source_storage | generic_source_storage_mismatch | the frontier source Storage instance is the index's
+    """),
+    'rs_token_fields': ('stored read token field set (schema-entailed by RT01)', RESET, """
+        RT10_token_fields | generic_read_token_join | the stored token has exactly the nine durable fields
     """),
     'rs_advance': ('reset filtered checkpoint advance', RESET, """
         RV01_admitted | event_not_admitted_no_advance | the event is admitted (exactly true)
@@ -885,9 +911,15 @@ SPEC = {
         RU10_retired_selected | cleanup_retired_identity_missing | exactly one retired core has the publication id
         RU11_cleanup_time | cleanup_invalid_time | the cleanup time parses as an instant
         RU12_cleanup_time_zone | cleanup_retention_window_open | the cleanup time carries a zone
-        RU13_anchor_time | cleanup_invalid_time | the retired core's first withdrawal parses as an instant
-        RU14_times_comparable | cleanup_invalid_time | the cleanup time and the anchor are comparable instants
+    """),
+    'rs_cleanup_window': ('cleanup retention window', RESET, """
         RU15_retention_elapsed | cleanup_retention_window_open | 604800 seconds have elapsed since the first withdrawal
+    """),
+    'rs_cleanup_times_comparable': ('cleanup instants comparable (entailed by RU12 and the zone grammar)', RESET, """
+        RU14_times_comparable | cleanup_invalid_time | the cleanup time and the anchor are comparable instants
+    """),
+    'rs_cleanup_anchor_time': ('cleanup anchor instant (entailed by RU02 core timestamp rows)', RESET, """
+        RU13_anchor_time | cleanup_invalid_time | the retired core's first withdrawal parses as an instant
     """),
     'rs_disclose': ('reset checkpoint disclosure', RESET, """
         RD01_observation_object | read_unavailable_no_disclosure | the observation is an object
@@ -1026,9 +1058,11 @@ SPEC = {
         GB12_source_refs | central_source_binding | the family source refs include the row, its semantic owner and its payload definition
         GB13_no_aliases | unadmitted_legacy_or_redaction | the family admits no legacy aliases
         GB14_no_extensions | unadmitted_legacy_or_redaction | the family admits no legacy extensions
-        GB15_no_referenced_pointer | unadmitted_legacy_or_redaction | the family has no referenced event pointer
         GB16_redaction | unadmitted_legacy_or_redaction | the family redaction rejects unhandled secrets with no transform
         GB17_identity_pointers | central_identity_pointers | the family identity pointers are the payload context identities
+    """),
+    'gate_central_referenced_pointer': ('central family referenced event pointer (entailed by the family schema and GB08)', GATE, """
+        GB15_no_referenced_pointer | unadmitted_legacy_or_redaction | the family has no referenced event pointer
     """),
     'gate_event': ('admission-enforcing event check', GATE, """
         GE01_event_object | event_not_admitted | the event is an object
@@ -1047,4 +1081,34 @@ SPEC = {
         GR07_transition_identity | quarantined_without_checkpoint_advance | a known transition key carries the same producer-semantic digest
         GR08_sequence_after_checkpoint | quarantined_without_checkpoint_advance | a new event's sequence is after the projector checkpoint
     """),
+}
+
+
+# Rows that no input refuses first. Each sits alone in its own table, keeps its check, and is
+# never credited by the tool run (scripts/pm-ds-guard-tables.py skips these tables). The proof
+# names the earlier row or schema clause that always refuses first.
+ENTAILED = {
+    'h4_event_context': 'H4E01: the only complete-checker caller that passes a historical selector, layout_event_errors, refuses a non-boolean at LE01 (scripts/pm_event_authority_ds_round2.py:291) before it calls event_checks; slot_invariants and receipt_invariants call event_checks with the default False (scripts/pm_home_layout_v2_slot_receipt.py:885, :922).',
+    'h4_store_id_syntax': 'H4P01: every blake3_id the store resolves has passed the Home4 schema pattern ^[0-9a-f]{64}$ with ECMA end of input (Plans/home_layout_v2_slot_receipt.schema.json:1848, :1855): run() validates the schema before the invariants (scripts/pm_home_layout_v2_slot_receipt.py:1102, :1123), and a referenced value is validated at H4F06 (:1044) before its own slot/receipt invariants.',
+    'h4_source_reference_size': 'H4SB02: a layout source payload_ref has byte_size minimum 16385 in the Home4 schema (Plans/home_layout_v2_slot_receipt.schema.json:871), which the schema rows refuse before the invariants run (scripts/pm_home_layout_v2_slot_receipt.py:1102, :1123).',
+    'h4_receipt_capture_request_presence': 'H4IC01: the receipt schema requires original_normalized_request and a string identity_capture_bytes.normalized_request (Plans/home_layout_pending_receipt.schema.json:3445, :3496), so on a schema-valid receipt neither is null and the presence row always holds; H4S02 refuses first otherwise.',
+    'comp_event_project_present': 'CE04: the EventRecord schema binds scope_kind application to a null project_id and project to a non-empty string (Plans/event_record.schema.json:149), so a null project implies application scope, which CE03 (scripts/pm_event_authority_ds_round2.py:91) refuses first in the same compaction call; CE02 refuses any other null.',
+    'v2_core_storage_uint64': 'V2R05A: the SP-278 cursor and token fields carry maximum 18446744073709551615 (Plans/event_record_index_checkpoint.schema.json:146, last_frame :332) and refuse at V2K01/V2C01 first; the two unbounded fields are tied to them by V2R03 and V2R04 (scripts/pm_browser_workspace_created_v2.py:106, :107), which refuse first in the earlier relations table.',
+    'rs_core_storage_uint64': 'RC05A: as V2R05A, with the reset cursor/token schema maxima (Plans/event_record_index_checkpoint.schema.json:146, :332) refusing at RK01 first and RC03/RC04 (scripts/pm_browser_workspace_reset.py:372, :373) refusing first in the earlier relations table.',
+    'v2_advance_partition': 'V2A06: V2R01 (scripts/pm_browser_workspace_created_v2.py:104) holds for both values, so scope_partition is the injective encoding of project_id; a changed partition is a changed Project, which V2A05 refuses first (the refresh table is observed before this one, :375).',
+    'rs_advance_partition': 'RV24: RC01 (scripts/pm_browser_workspace_reset.py:370) holds for both values, so a changed partition is a changed Project, which RV23 (:533) refuses first in the refresh chain.',
+    'v2_history_legacy_unwithdrawn': 'V2K03: a v1 custody wrapper requires legacy_checkpoint state withdrawn (Plans/browser_workspace_created_checkpoint_v2.schema.json:559), and the v1 contract requires a timestamp withdrawn_at_utc for that state (Plans/browser_workspace_created_contracts.schema.json:89), so the unwithdrawn branch never occurs on a value V2K01 accepts.',
+    'v2_history_legacy_custody_order': 'V2K05: with retired_at equal to the v1 first withdrawal W (V2K02, scripts/pm_browser_workspace_created_v2.py:207), W no later than the v1 last observation U (CC09, scripts/pm_browser_workspace_created.py:167, run first by legacy_failures :203) and custody no earlier than U (V2K04, :209), retired_at <= custody; an input violating V2K05 violates CC09 or V2K02/V2K04 first.',
+    'v2_token_fields': 'TK09: the live read token is validated first at TK01 (scripts/pm_browser_workspace_created_v2.py:152) against the closed SP-278 read_token (additionalProperties false, ten required fields; Plans/event_record_index_checkpoint.schema.json:2570), so its field set is always the expected one.',
+    'rs_token_fields': 'RT10: the stored token is validated first at RT01 (scripts/pm_browser_workspace_reset.py:463) against the closed nine-field durable_read_token (Plans/browser_workspace_reset_contracts.schema.json:715).',
+    'v2_cleanup_tx_status': 'V2CL21: the cleanup transaction schema fixes status to committed (Plans/browser_workspace_created_checkpoint_v2.schema.json:722), which V2CL14 (scripts/pm_browser_workspace_created_v2.py:423) refuses first.',
+    'rs_cleanup_anchor_time': 'RU13: RU02 (scripts/pm_browser_workspace_reset.py:561) first validates every retired core: a retired core is withdrawn (Plans/browser_workspace_reset_contracts.schema.json:640) with a timestamp withdrawn_at_utc that RC06-RC11 (:392-:397) parse, so the anchor always parses.',
+    'rs_cleanup_times_comparable': 'RU14: RU12 (scripts/pm_browser_workspace_reset.py:589) makes the cleanup time zone-aware, and the core timestamp grammar (RC06-RC08, :392) requires Z or an offset, so both instants are aware and comparable.',
+    'rs_preflight_state': 'RP22: reset_preflight_failures returns the shared candidate refusals first (scripts/pm_browser_workspace_reset.py:102); for a reset event that includes the payload schema, which fixes workspace_state to reset (Plans/browser_event_payloads.schema.json:557). Any other admitted type has no integer prior_workspace_generation equal to the transition\'s, so RP23 (:137) refuses first in the earlier join table.',
+    'rs_preflight_generation_order': 'RP25: the shared candidate check refuses payload facts whose prior generation is not below the generation (GS08, scripts/pm-browser-event-admission.py:390) before the reset joins run (scripts/pm_browser_workspace_reset.py:102); with advancing payload facts, a non-advancing transition differs from them, so RP23/RP24 (:137, :138) refuse first.',
+    'rs_preflight_event_type': 'RP01: an admitted non-reset event that passes the shared candidate check has no integer facts.prior_workspace_generation (a creation fixes it to null at GS09, scripts/pm-browser-event-admission.py:391; other types do not carry it), while the transition prior generation is a schema integer, so RP23 (scripts/pm_browser_workspace_reset.py:137) refuses first in the earlier join table.',
+    'cr_preflight_run_attempt': 'CR06: the request and result lineage schema pairs run_id and attempt_id (oneOf, Plans/section15_browser_program_contracts.schema.json:167), refused at CR0A/CR0B (scripts/pm_browser_workspace_created.py:243) first; with a paired request lineage, an unpaired payload context differs from it and CR09 (:262) refuses first in the earlier join table.',
+    'cr_preflight_request_security': 'CR12: the request scope fixes session_security_class to ordinary (Plans/section15_browser_program_contracts.schema.json:234), refused first at CR0A (scripts/pm_browser_workspace_created.py:243).',
+    'cr_preflight_result_security': 'CR14: the result scope fixes session_security_class to ordinary (Plans/section15_browser_program_contracts.schema.json:234), refused first at CR0B (scripts/pm_browser_workspace_created.py:243).',
+    'gate_central_referenced_pointer': 'GB15: the registry family schema fixes referenced_event_id_pointer to null unless scope_policy is inherits_referenced_event (Plans/event_family_registry.schema.json:338); GB02 refuses a schema violation and GB08 (scripts/pm-browser-event-admission.py:581) refuses the other scope policy first in the earlier table.',
 }

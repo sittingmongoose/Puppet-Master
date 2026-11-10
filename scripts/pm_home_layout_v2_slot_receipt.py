@@ -40,7 +40,7 @@ from referencing import Registry, Resource
 from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
 
-from pm_ds_tables import Facts
+from pm_ds_tables import Facts, entry as _ds_entry
 from pm_event_numbers import EVENT_VALUE, Refusal, current_integer, producer_semantic_bytes, qualified_jcs, storage_uint64, storage_value_bytes
 
 SCHEMA = "Plans/home_layout_v2_slot_receipt.schema.json"
@@ -594,6 +594,7 @@ class PayloadStore:
                 raise ValueError(f"unknown payload_store op {op['op']}")
         return PayloadStore(objects)
 
+    @_ds_entry
     def resolve(self, err: list[str], ref: dict[str, Any], what: str) -> bytes | None:
         ident = ref["blake3_id"]
         syntax = Facts("h4_store_id_syntax", chain=True)
@@ -666,6 +667,7 @@ def storage_instance(definition: str, value: dict[str, Any]) -> str:
     return value["storage_instance_id"] if definition == "transaction_slot" else value["binding"]["storage_instance_id"]
 
 
+@_ds_entry
 def value_limit_check(err: list[str], definition: str, value: dict[str, Any], limit: int, by_reference: bool) -> None:
     encoded: dict[str, Any] = {}
 
@@ -692,6 +694,7 @@ def value_limit_check(err: list[str], definition: str, value: dict[str, Any], li
             err.append(f"I10 the complete stored value is {size} bytes, over the {FAMILY[definition]} limit of {limit}; "
                        "it is stored only by reference")
 
+@_ds_entry
 def layout_history_context_errors(ev: Any, source: Any, custody: Any) -> list[str]:
     """Check the retained adapter observation; caller metadata selects no recipe.
 
@@ -718,6 +721,7 @@ def layout_history_context_errors(ev: Any, source: Any, custody: Any) -> list[st
     facts.done()
     return []
 
+@_ds_entry
 def event_checks(err: list[str], ev: dict[str, Any], binding: dict[str, Any], d: str,
                  store: PayloadStore = EMPTY_STORE, *, historical: bool = False,
                  historical_source: Any = None, custody: Any = None) -> dict[str, Any]:
@@ -765,6 +769,7 @@ def event_checks(err: list[str], ev: dict[str, Any], binding: dict[str, Any], d:
     err.extend(joins.codes())
     return payload
 
+@_ds_entry
 def binding_checks(err: list[str], binding: dict[str, Any]) -> str:
     d = digest(binding)
     facts = Facts("h4_binding")
@@ -784,6 +789,7 @@ def same_typed_value(left: Any, right: Any) -> bool:
     return left == right
 
 
+@_ds_entry
 def source_bytes_check(err: list[str], name: str, holder: dict[str, Any], layout: Any, layout_sha: Any,
                        store: PayloadStore) -> None:
     src = holder[name]
@@ -823,6 +829,7 @@ def source_bytes_check(err: list[str], name: str, holder: dict[str, Any], layout
         err.append(f"I6 {name} SHA-256 differs from the layout hash" if row == "H4SB03_sha_matches_layout"
                    else f"I6 {name} does not decode to the decoded layout (synthetic adapter)")
 
+@_ds_entry
 def slot_invariants(slot: dict[str, Any], store: PayloadStore = EMPTY_STORE, limit: int = INLINE_LIMIT,
                     by_reference: bool = False) -> list[str]:
     err: list[str] = []
@@ -878,6 +885,7 @@ def slot_invariants(slot: dict[str, Any], store: PayloadStore = EMPTY_STORE, lim
         event_checks(err, ev, binding, d, store)
     return err
 
+@_ds_entry
 def receipt_invariants(r: dict[str, Any], store: PayloadStore = EMPTY_STORE, limit: int = INLINE_LIMIT,
                        by_reference: bool = False) -> list[str]:
     err: list[str] = []
@@ -978,6 +986,7 @@ class Checker:
         """Raw validator messages; refusal only through schema_errors or the reference phase."""
         return [e.message[:200] for e in self.validators[definition].iter_errors(value)]
 
+    @_ds_entry
     def schema_errors(self, definition: str, value: Any) -> list[str]:
         messages = self.schema_messages(definition, value)
         facts = Facts("h4_schema")
@@ -994,6 +1003,7 @@ class Checker:
             return self.reference_invariants(value, store)
         return []
 
+    @_ds_entry
     def reference_invariants(self, ref: dict[str, Any], store: PayloadStore) -> list[str]:
         err: list[str] = []
         definition = DEFINITION_OF[ref["schema_id"]]

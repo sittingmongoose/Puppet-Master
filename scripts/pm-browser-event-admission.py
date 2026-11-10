@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from pm_contract_formats import FormatChecker
 import pm_event_payload_route as body_route
-from pm_ds_tables import Facts
+from pm_ds_tables import Facts, entry as _ds_entry
 from pm_event_numbers import producer_semantic_digest
 Draft202012Validator = body_route.StrictValidator
 IDENTITIES = ("project_id", "thread_id", "run_id", "node_id", "attempt_id")
@@ -183,6 +183,7 @@ def workspace_reset_authority():
     return module
 
 
+@_ds_entry
 def authority_binding_failures(row):
     # Exact individually reviewed bindings only, never prefix/sibling expansion
     # or an arbitrary ref-driven module loader. These are not native proof.
@@ -373,6 +374,7 @@ def contract_context():
     return admission, payloads, owner, envelope, validators
 
 
+@_ds_entry
 def semantic_failures(payload):
     context, facts, event = payload["context"], payload["facts"], payload["event_type"]
     f = Facts("gate_semantic")
@@ -453,6 +455,7 @@ def fixture_event(case, ordinal):
     }
 
 
+@_ds_entry
 def compatibility_history_failures(event, context, original):
     """Recompute Case-L normalization from the verified original, never live policy.
 
@@ -486,6 +489,7 @@ def compatibility_history_failures(event, context, original):
     return []
 
 
+@_ds_entry
 def candidate_failures(event, producer_component, context, *, payload_store=None, historical=False, historical_source=None):
     """Check prepared payload semantics without granting EventRecord admission."""
     admission, _, _, envelope, validators = context
@@ -558,6 +562,7 @@ def central_family_validator(root):
     return Draft202012Validator({"$ref": "#/$defs/family", "$defs": schema["$defs"]})
 
 
+@_ds_entry
 def central_binding_failures(row, family, row_index):
     """Resolve an exact family; a matching name or sibling is insufficient."""
     present = Facts("gate_central_entry", chain=True)
@@ -580,11 +585,14 @@ def central_binding_failures(row, family, row_index):
     f["GB12_source_refs"] = required_refs <= set(family.get("source_refs", []))
     f["GB13_no_aliases"] = legacy.get("aliases") == []
     f["GB14_no_extensions"] = legacy.get("admitted_extensions") == []
-    f["GB15_no_referenced_pointer"] = legacy.get("referenced_event_id_pointer") is None
     f["GB16_redaction"] = legacy.get("redaction") == {"mode": "reject_unhandled_secrets", "transform_id": None, "transform_version": None}
     f["GB17_identity_pointers"] = legacy.get("identity_json_pointers") == {field: ["/payload/context/" + field] for field in IDENTITIES}
-    return f.codes()
+    codes = f.codes()
+    pointer = Facts("gate_central_referenced_pointer")
+    pointer["GB15_no_referenced_pointer"] = legacy.get("referenced_event_id_pointer") is None
+    return codes + [code for code in pointer.codes() if code not in codes]
 
+@_ds_entry
 def event_failures(event, producer_component, context, *, families=None, payload_store=None, historical=False, historical_source=None):
     """Admission-enforcing check, distinct from candidate shape/semantics."""
     failures = candidate_failures(event, producer_component, context, payload_store=payload_store, historical=historical, historical_source=historical_source)
@@ -624,6 +632,7 @@ class ReplayOracle:
         self.projected_count = 0
         self.executed_effects = 0
 
+    @_ds_entry
     def consume(self, event, producer, context, *, payload_store=None, historical_source=None,
                 source_verified=True, access_allowed=True, deletion_allows_audit=True, withdrawn=False):
         f = Facts("gate_replay", chain=True)

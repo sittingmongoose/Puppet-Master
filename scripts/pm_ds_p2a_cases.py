@@ -14,9 +14,11 @@ usage: python3 scripts/pm_ds_p2a_cases.py --check
 from __future__ import annotations
 
 import argparse
+import atexit
 import base64
 import copy
 import json
+import shutil
 import sys
 import tempfile
 from functools import lru_cache
@@ -122,19 +124,21 @@ def terminal_positive():
 
 @lru_cache(maxsize=None)
 def mirror_root(changes):
-    """A temporary repository root whose Plans files are the real ones except the changed JSON files.
+    """A temporary repository root: the real Plans schema files and fixtures the checkers read, with the changed JSON files.
 
-    ``changes`` is a tuple of (relative path, JSON text). Only files the checker reads change.
+    ``changes`` is a tuple of (relative path, JSON text). Every other file is a symlink to the
+    real file; the root is removed when the process exits.
     """
     tmp = Path(tempfile.mkdtemp(prefix='ds-p2a-root-'))
+    atexit.register(shutil.rmtree, tmp, True)
     plans = ROOT / 'Plans'
-    for path in plans.rglob('*'):
+    wanted = {path for path in plans.rglob('*.schema.json')}
+    wanted |= {ROOT / rel for rel, _ in changes}
+    wanted |= {ROOT / h.FIXTURES, ROOT / 'Plans/storage_value_registry.json', ROOT / created.V2_SCHEMA_PATH}
+    for path in wanted:
         target = tmp / path.relative_to(ROOT)
-        if path.is_dir():
-            target.mkdir(parents=True, exist_ok=True)
-        else:
-            target.parent.mkdir(parents=True, exist_ok=True)
-            target.symlink_to(path)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.symlink_to(path)
     for rel, text in changes:
         target = tmp / rel
         target.unlink()
@@ -291,7 +295,15 @@ def _():
 @case('h4_receipt_owner', 'H4O03_owner_result_jcs')
 def _():
     def mutate(r):
-        r['owner_result']['prior_layout_revision'] = JCS_EDGE
+        # A coherent revision edge whose new revision the CV-333 JCS route cannot represent.
+        prior, new = JCS_EDGE - 1, JCS_EDGE
+        r['binding']['expected_layout_revision'] = prior
+        r['prior_layout_revision'] = r['owner_result']['prior_layout_revision'] = prior
+        r['new_layout_revision'] = r['owner_result']['new_layout_revision'] = new
+        r['readback']['layout_revision'] = new
+        r['event_semantics']['payload']['prior_layout_revision'] = prior
+        r['event_semantics']['payload']['new_layout_revision'] = new
+        r['event_semantics']['producer_sequence_id'] = new
     return receipt_case(mutate)
 
 
@@ -792,6 +804,562 @@ def _():
     return v2.index_token_failures(token, index, observation)
 
 
+
+# ------------------------------------------------------------------ v2 history, generations and cleanup
+T_OLD = '2026-09-11T19:00:00Z'
+T_LATER = '2026-09-11T21:00:00Z'
+
+
+def withdrawn_core(checkpoint, publication, at):
+    core = {k: copy.deepcopy(v) for k, v in checkpoint.items() if k != 'retired_generations'}
+    core.update(state='withdrawn', publication_id=publication, published_at_utc=at, updated_at_utc=at, withdrawn_at_utc=at)
+    return core
+
+
+def v1_entry(legacy, successor, custody=T_OLD):
+    finalized = copy.deepcopy(legacy)
+    finalized.update(state='withdrawn', withdrawn_at_utc=custody, updated_at_utc=custody)
+    return {'identity_origin': 'v1_custody_bound_at_handoff', 'publication_id': 'publication:created-v1-custody',
+            'custody_bound_at_utc': custody, 'retired_at_utc': custody, 'successor_publication_id': successor,
+            'hold_refs': [], 'legacy_checkpoint': finalized}
+
+
+@case('v2_history_entry', 'V2K06_publication_unique')
+def _():
+    c, _, _, _ = v2_values()
+    first = {'checkpoint_core': withdrawn_core(c, 'publication:created-old', '2026-09-11T18:00:00Z'), 'successor_publication_id': 'publication:created-mid'}
+    second = {'checkpoint_core': withdrawn_core(c, 'publication:created-old', T_OLD), 'successor_publication_id': c['publication_id']}
+    c['retired_generations'] = [first, second]
+    return v2.checkpoint_failures(c)
+
+
+@case('v2_history_entry', 'V2K07_publication_not_successor')
+def _():
+    c, _, _, _ = v2_values()
+    c['retired_generations'] = [{'checkpoint_core': withdrawn_core(c, 'publication:created-old', T_OLD),
+                                 'successor_publication_id': 'publication:created-old'}]
+    return v2.checkpoint_failures(c)
+
+
+@case('v2_history_entry', 'V2K09_withdrawal_before_successor')
+def _():
+    c, _, _, _ = v2_values()
+    core = withdrawn_core(c, 'publication:created-old', T_OLD)
+    core.update(updated_at_utc=T_LATER, withdrawn_at_utc=T_LATER)
+    c['retired_generations'] = [{'checkpoint_core': core, 'successor_publication_id': c['publication_id']}]
+    return v2.checkpoint_failures(c)
+
+
+def v2_generation(before, after, index, observation, replacement=True):
+    tx = observation['generation_transaction']
+    tx.update(before=copy.deepcopy(before), after=copy.deepcopy(after), checkpoint_key=v2.key(after),
+              selected_publication_id=after['publication_id'], committed_at_utc=after['published_at_utc'])
+    observation['prior_checkpoint'] = copy.deepcopy(before)
+    return v2.advance_failures(before, after, index, observation, replacement=replacement)
+
+
+def v2_successor(c, publication='publication:created-2', at=T_LATER):
+    after = copy.deepcopy(c)
+    after.update(publication_id=publication, published_at_utc=at, updated_at_utc=at)
+    return after
+
+
+@case('v2_gen_replacement', 'V2G18_replacement_scope')
+def _():
+    c, index, observation, _ = v2_values()
+    before = copy.deepcopy(c)
+    before['storage_instance_id'] = '22222222-2222-4222-8222-222222222222'
+    before['index_read_token']['storage_instance_id'] = before['storage_instance_id']
+    return v2_generation(before, v2_successor(c), index, observation)
+
+
+@case('v2_gen_legacy', 'V2G20_v1_custody_present')
+def _():
+    c, index, observation, legacy = v2_values()
+    observation['generation_transaction']['v1_custody'] = None
+    return v2_generation(legacy, v2_successor(c), index, observation)
+
+
+@case('v2_gen_rotation', 'V2G25_rotation_new_publication')
+def _():
+    c, index, observation, _ = v2_values()
+    return v2_generation(c, v2_successor(c, publication=c['publication_id']), index, observation)
+
+
+def v2_cleanup_parts():
+    c, _, _, _ = v2_values()
+    core = withdrawn_core(c, 'publication:created-old', T_OLD)
+    before = copy.deepcopy(c)
+    before['retired_generations'] = [{'checkpoint_core': core, 'successor_publication_id': c['publication_id']}]
+    after = copy.deepcopy(c)
+    now = '2026-09-19T00:00:00Z'
+    tx = {'schema_id': 'pm.browser_workspace_created_checkpoint_cleanup_transaction.v2', 'transaction_ref': 'transaction:created-v2-cleanup',
+          'status': 'committed', 'checkpoint_key': v2.key(before), 'before': copy.deepcopy(before), 'after': copy.deepcopy(after),
+          'selected_publication_id': 'publication:created-old', 'committed_at_utc': now}
+    observation = {'now_utc': now, 'resolved_hold_refs': [], 'active_hold_refs': [], 'resolved_references': [],
+                   'all_applicable_holds_enumerated': True, 'hold_ref_fence_current': True, 'cleanup_transaction_resolved': True,
+                   'maintenance_authorized': True, 'access_allowed': True, 'deletion_allows_audit': True,
+                   'prior_checkpoint': copy.deepcopy(before), 'cleanup_transaction': tx}
+    return before, after, observation
+
+
+@case('v2_cleanup', 'V2CL04_resolved_holds_list')
+def _():
+    before, after, observation = v2_cleanup_parts()
+    observation['resolved_hold_refs'] = 'hold-refs'
+    return v2.cleanup_failures(before, after, 'publication:created-old', observation)
+
+
+for _row, _key, _value in (('V2CL16_tx_before', 'before', lambda tx: {**tx['before'], 'hold_refs': ['hold:other']}),
+                           ('V2CL17_tx_after', 'after', lambda tx: {**tx['after'], 'hold_refs': ['hold:other']}),
+                           ('V2CL18_tx_key', 'checkpoint_key', lambda tx: tx['checkpoint_key'] + '-other'),
+                           ('V2CL19_tx_publication', 'selected_publication_id', lambda tx: 'publication:created-other')):
+    def _cleanup(key=_key, value=_value):
+        before, after, observation = v2_cleanup_parts()
+        tx = observation['cleanup_transaction']
+        tx[key] = value(tx)
+        return v2.cleanup_failures(before, after, 'publication:created-old', observation)
+    case('v2_cleanup_tx_join', _row)(_cleanup)
+
+
+@case('comp_payload', 'CP02_commit_time_valid')
+def _():
+    payload = compaction_event()['payload']
+    payload['committed_at_utc'] = LEAP
+    return ds.compaction_payload_errors(payload)
+
+
+# ------------------------------------------------------------------ browser.workspace.reset checkpoint and oracles
+def reset_values():
+    return reset.fixture_values()
+
+
+def reset_rotated(c):
+    core = withdrawn_core(c, 'publication:reset-old', T_OLD)
+    rotated = copy.deepcopy(c)
+    rotated['retired_generations'] = [{'checkpoint_core': core, 'successor_publication_id': c['publication_id']}]
+    return rotated
+
+
+@case('rs_core_times', 'RC07_withdrawn_grammar')
+def _():
+    _, c, _, _ = reset_values()
+    c['state'] = 'withdrawn'
+    c['withdrawn_at_utc'] = c['updated_at_utc'].replace('Z', 'z')
+    return reset.checkpoint_failures(c)
+
+
+for _row, _field in (('RC09_updated_calendar', 'updated_at_utc'), ('RC10_withdrawn_calendar', 'withdrawn_at_utc'),
+                     ('RC11_published_calendar', 'published_at_utc')):
+    def _leap(field=_field):
+        _, c, _, _ = reset_values()
+        if field == 'withdrawn_at_utc':
+            c['state'] = 'withdrawn'
+        c[field] = LEAP
+        return reset.checkpoint_failures(c)
+    case('rs_core_times', _row)(_leap)
+
+
+@case('rs_history_entry', 'RK02_publication_unique')
+def _():
+    _, c, _, _ = reset_values()
+    first = {'checkpoint_core': withdrawn_core(c, 'publication:reset-old', '2026-09-11T18:00:00Z'), 'successor_publication_id': 'publication:reset-mid'}
+    second = {'checkpoint_core': withdrawn_core(c, 'publication:reset-old', T_OLD), 'successor_publication_id': c['publication_id']}
+    c['retired_generations'] = [first, second]
+    return reset.checkpoint_failures(c)
+
+
+def reset_oracle(base):
+    gate = browser()[0]
+    t = base['transition']
+    return reset.ResetOracle(t['subject'], t['checked_workspace_revision'], t['prior_workspace_generation'],
+                             gate.envelope_oracle().event_producer_semantic_digest)
+
+
+@case('rs_reset', 'RO02A_producer_jcs')
+def _():
+    base = reset_base()
+    base['event']['producer_sequence_id'] = JCS_EDGE
+    return reset_oracle(base).reset(**base, append_outcome='committed', admitted=True)
+
+
+@case('rs_reset', 'RO05_prior_digest')
+def _():
+    base = reset_base()
+    oracle = reset_oracle(base)
+    oracle.reset(**copy.deepcopy(base), append_outcome='committed', admitted=True)
+    retry = copy.deepcopy(base)
+    retry['event']['event_id'] = retry['event']['event_id'] + '-retry'
+    retry['event']['correlation_id'] = retry['event']['correlation_id'] + '-retry'
+    return oracle.reset(**retry, append_outcome='committed', admitted=True)
+
+
+@case('rs_resolve_append', 'RX01_pending_entry')
+def _():
+    base = reset_base()
+    return reset_oracle(base).resolve_append(('project~x', reset.EVENT_TYPE, 'missing'), '0' * 64, 'committed')
+
+
+@case('rs_token_entry', 'RT03_observation_object')
+def _():
+    _, c, index, _ = reset_values()
+    return reset.index_token_failures(c['index_read_token'], index, 'observation')
+
+
+def reset_advance(stored, candidate, index, observation, replace=False):
+    oracle = reset.CheckpointOracle(stored)
+    call = oracle.replace if replace else oracle.advance
+    return call(candidate, index, observation, admitted=True)
+
+
+@case('rs_advance', 'RV03_stored_valid')
+def _():
+    _, c, index, observation = reset_values()
+    stored = copy.deepcopy(c)
+    stored['scope_partition'] = reset.scope_partition('project-other')
+    return reset_advance(stored, c, index, observation)
+
+
+@case('rs_advance', 'RV04_candidate_not_withdrawn')
+def _():
+    _, c, index, observation = reset_values()
+    c['state'] = 'withdrawn'
+    c['withdrawn_at_utc'] = c['updated_at_utc']
+    return reset_advance(None, c, index, observation)
+
+
+def reset_token(index):
+    generation = index['current_generation_id']
+    node = index['generations'][generation]
+    frontier = node['frontier']
+    key = 'event_record_index_checkpoint.v1:' + index['storage_instance_id']
+    return {'storage_instance_id': index['storage_instance_id'], 'checkpoint_key': key,
+            'checkpoint_ref': key + '#/generations/' + generation, 'generation_id': generation,
+            'generation_anchor_sha256': reset.digest(node['anchor']), 'frontier_revision': frontier['publication_revision'],
+            'frontier_sha256': reset.digest(frontier), 'index_dataset_name': node['index_dataset_name'],
+            'source_selection': copy.deepcopy(frontier['source_selection'])}
+
+
+@case('rs_advance', 'RV22_scope_storage_instance_id')
+def _():
+    _, c, index, observation = reset_values()
+    stored = copy.deepcopy(c)
+    other = '22222222-2222-4222-8222-222222222222'
+    index['storage_instance_id'] = other
+    index['generations'][index['current_generation_id']]['frontier']['source_selection']['storage_instance_id'] = other
+    candidate = copy.deepcopy(c)
+    candidate['storage_instance_id'] = other
+    candidate['index_read_token'] = reset_token(index)
+    candidate['updated_at_utc'] = T_LATER
+    observation['source_selection'] = copy.deepcopy(candidate['index_read_token']['source_selection'])
+    observation['prior_checkpoint'] = copy.deepcopy(stored)
+    return reset_advance(stored, candidate, index, observation)
+
+
+def reset_cleanup(mutate_stored=None, at='2026-09-19T00:00:00Z', stored=True):
+    _, c, _, _ = reset_values()
+    rotated = reset_rotated(c) if stored else None
+    if mutate_stored and rotated is not None:
+        mutate_stored(rotated)
+    observation = {'prior_checkpoint': copy.deepcopy(rotated), 'maintenance_authorized': True, 'all_applicable_holds_resolved': True,
+                   'no_applicable_hold_or_live_ref': True, 'hold_ref_fence_current': True, 'access_allowed': True,
+                   'deletion_allows_audit': True}
+    return reset.CheckpointOracle(rotated).cleanup('publication:reset-old', at, observation)
+
+
+@case('rs_cleanup', 'RU01_checkpoint_present')
+def _():
+    return reset_cleanup(stored=False)
+
+
+@case('rs_cleanup', 'RU02_checkpoint_valid')
+def _():
+    return reset_cleanup(lambda c: c.update(scope_partition=reset.scope_partition('project-other')))
+
+
+@case('rs_cleanup', 'RU11_cleanup_time')
+def _():
+    return reset_cleanup(at='not-a-time')
+
+
+@case('rs_cleanup', 'RU12_cleanup_time_zone')
+def _():
+    return reset_cleanup(at='2026-09-19T00:00:00')
+
+
+def reset_disclose(checkpoint, index, observation):
+    return reset.CheckpointOracle(checkpoint).disclose(index, observation)
+
+
+@case('rs_disclose', 'RD01_observation_object')
+def _():
+    _, c, index, _ = reset_values()
+    return reset_disclose(c, index, 'observation')
+
+
+@case('rs_disclose', 'RD02_checkpoint_present')
+def _():
+    _, _, index, observation = reset_values()
+    return reset_disclose(None, index, observation)
+
+
+@case('rs_disclose', 'RD05_filter_complete')
+def _():
+    _, c, index, observation = reset_values()
+    c['state'] = 'degraded'
+    c['health'] = 'degraded'
+    c['filter_complete'] = False
+    return reset_disclose(c, index, observation)
+
+
+@case('rs_withdraw', 'RW05_not_before_observation')
+def _():
+    _, c, _, _ = reset_values()
+    c['updated_at_utc'] = T_LATER
+    return reset.CheckpointOracle(c).withdraw('2026-09-11T20:30:00Z')
+
+
+def reset_generation(before, after, observation):
+    tx = observation['generation_transaction']
+    tx.update(before=copy.deepcopy(before), after=copy.deepcopy(after),
+              checkpoint_key=reset.CHECKPOINT_FAMILY + '.v1:' + after['storage_instance_id'] + ':' + after['scope_partition'],
+              selected_publication_id=after['publication_id'], committed_at_utc=after['published_at_utc'])
+    return reset.generation_admission_failures(before, after, observation)
+
+
+@case('rs_generation', 'RG03_tx_after')
+def _():
+    _, c, _, observation = reset_values()
+    observation['generation_transaction']['after'] = {**copy.deepcopy(c), 'hold_refs': ['hold:other']}
+    return reset.generation_admission_failures(None, c, observation)
+
+
+@case('rs_generation', 'RG06_tx_committed_at')
+def _():
+    _, c, _, observation = reset_values()
+    observation['generation_transaction']['committed_at_utc'] = T_LATER
+    return reset.generation_admission_failures(None, c, observation)
+
+
+@case('rs_generation', 'RG14_initial_no_history')
+def _():
+    _, c, _, observation = reset_values()
+    return reset_generation(None, reset_rotated(c), observation)
+
+
+@case('rs_generation', 'RG15_replacement_scope')
+def _():
+    _, c, _, observation = reset_values()
+    before = copy.deepcopy(c)
+    before['storage_instance_id'] = '22222222-2222-4222-8222-222222222222'
+    before['index_read_token']['storage_instance_id'] = before['storage_instance_id']
+    after = copy.deepcopy(c)
+    after.update(publication_id='publication:reset-2', published_at_utc=T_LATER, updated_at_utc=T_LATER)
+    return reset_generation(before, after, observation)
+
+
+@case('rs_generation', 'RG16_replacement_publication')
+def _():
+    _, c, _, observation = reset_values()
+    after = copy.deepcopy(c)
+    after.update(published_at_utc=T_LATER, updated_at_utc=T_LATER)
+    return reset_generation(copy.deepcopy(c), after, observation)
+
+
+# ------------------------------------------------------------------ creation preflight (resolved-value joins)
+def created_preflight(mutate):
+    base = created_base()
+    mutate(base, base['event']['payload']['context'], base['request']['scope'], base['result']['scope'], base['witness'])
+    return created.creation_preflight_failures(**base)
+
+
+def other(value):
+    return value + '-other'
+
+
+CREATED_PREFLIGHT = {
+    'CR02_payload_event_type': lambda b, c, rs, xs, w: b['event']['payload'].update(event_type='browser.workspace.reset'),
+    'CR05_subject_present': lambda b, c, rs, xs, w: (c.update(browser_workspace_id=None), xs.pop('browser_workspace_id', None),
+                                                     w.update(workspace_id=None)),
+    'CR07_request_command': lambda b, c, rs, xs, w: rs.update(command_id='cmd.browser.workspace.close', browser_workspace_id=c['browser_workspace_id'],
+                                                              expected_workspace_revision=1, controller_authority=copy.deepcopy(reset_base()['request']['scope']['controller_authority'])),
+    'CR08_result_command': lambda b, c, rs, xs, w: xs.update(command_id='cmd.browser.workspace.close', browser_workspace_id=c['browser_workspace_id'],
+                                                             expected_workspace_revision=1, controller_authority=copy.deepcopy(reset_base()['request']['scope']['controller_authority'])),
+    'CR09_request_lineage': lambda b, c, rs, xs, w: rs['lineage'].update(execution_host_id='host-other'),
+    'CR10_result_lineage': lambda b, c, rs, xs, w: xs['lineage'].update(execution_host_id='host-other'),
+    'CR11_request_session': lambda b, c, rs, xs, w: rs.update(browser_session_id='session-other'),
+    'CR13_result_session': lambda b, c, rs, xs, w: xs.update(browser_session_id='session-other'),
+    'CR19_result_instance': lambda b, c, rs, xs, w: b['request'].update(command_instance_id=other(b['request']['command_instance_id'])),
+    'CR20_witness_instance': lambda b, c, rs, xs, w: w.update(command_instance_id=other(w['command_instance_id'])),
+    'CR21_event_idempotency': lambda b, c, rs, xs, w: b['event'].update(idempotency_key=other(b['event']['idempotency_key'])),
+    'CR22_witness_idempotency': lambda b, c, rs, xs, w: w.update(idempotency_key=other(w['idempotency_key'])),
+    'CR26_transition_receipt_ref': lambda b, c, rs, xs, w: b['event']['payload'].update(transition_receipt_ref=other(b['event']['payload']['transition_receipt_ref'])),
+    'CR27_dispatch_receipt_ref': lambda b, c, rs, xs, w: b['result'].update(dispatch_receipt_ref=other(b['result']['dispatch_receipt_ref'])),
+    'CR28_request_permission_ref': lambda b, c, rs, xs, w: b['request'].update(permission_snapshot_ref=other(b['request']['permission_snapshot_ref'])),
+    'CR34_workspace_ref_present': lambda b, c, rs, xs, w: w.update(workspace_ref=''),
+    'CR36_witness_workspace_id': lambda b, c, rs, xs, w: w.update(workspace_id='workspace-other'),
+    'CR37_witness_generation_type': lambda b, c, rs, xs, w: w.update(workspace_generation=float(w['workspace_generation'])),
+}
+for _row, _mutate in CREATED_PREFLIGHT.items():
+    case('cr_preflight', _row)(lambda m=_mutate: created_preflight(m))
+
+
+@case('cr_preflight_scope', 'CR17_request_result_scope')
+def _():
+    return created_preflight(lambda b, c, rs, xs, w: xs.update(workspace_policy_ref=other(xs['workspace_policy_ref'])))
+
+
+# ------------------------------------------------------------------ reset preflight (resolved-value joins)
+def reset_preflight(mutate):
+    base = reset_base()
+    mutate(base, base['event']['payload'], base['request']['scope'], base['result']['scope'], base['transition'])
+    return reset.reset_preflight_failures(**base)
+
+
+RESET_PREFLIGHT = {
+    'RP02_request_command': lambda b, p, rs, xs, t: rs.update(command_id='cmd.browser.workspace.close'),
+    'RP03_result_command': lambda b, p, rs, xs, t: xs.update(command_id='cmd.browser.workspace.close'),
+    'RP04_request_lineage': lambda b, p, rs, xs, t: rs['lineage'].update(execution_host_id='host-other'),
+    'RP05_result_lineage': lambda b, p, rs, xs, t: xs['lineage'].update(execution_host_id='host-other'),
+    'RP06_request_subject': lambda b, p, rs, xs, t: rs.update(browser_session_id='session-other'),
+    'RP07_result_subject': lambda b, p, rs, xs, t: xs.update(browser_session_id='session-other'),
+    'RP08_request_optional_subject': lambda b, p, rs, xs, t: rs.update(browser_page_id='page-other'),
+    'RP09_result_optional_subject': lambda b, p, rs, xs, t: xs.update(browser_page_id='page-other'),
+    'RP14_result_instance': lambda b, p, rs, xs, t: b['request'].update(command_instance_id=other(b['request']['command_instance_id'])),
+    'RP15_transition_instance': lambda b, p, rs, xs, t: t.update(command_instance_id=other(t['command_instance_id'])),
+    'RP16_event_idempotency': lambda b, p, rs, xs, t: b['request'].update(idempotency_key=other(b['request']['idempotency_key'])),
+    'RP27_transition_receipt_ref': lambda b, p, rs, xs, t: p.update(transition_receipt_ref=other(p['transition_receipt_ref'])),
+    'RP28_permission_snapshot_ref': lambda b, p, rs, xs, t: p.update(permission_snapshot_ref=other(p['permission_snapshot_ref'])),
+}
+for _row, _mutate in RESET_PREFLIGHT.items():
+    case('rs_preflight', _row)(lambda m=_mutate: reset_preflight(m))
+
+
+@case('rs_preflight_scope', 'RP10_request_result_scope')
+def _():
+    return reset_preflight(lambda b, p, rs, xs, t: xs.update(expected_workspace_revision=xs['expected_workspace_revision'] + 1))
+
+
+# ------------------------------------------------------------------ shared Browser admission routes
+@lru_cache(maxsize=1)
+def admission():
+    gate, context, _, _ = browser()
+    fixtures = gate.load_json('Plans/browser_event_admission_fixtures.json')
+    rows = {r['event_type']: r for r in gate.load_json('Plans/browser_event_admission.json')['rows']}
+    return gate, context, {c['event_type']: c for c in fixtures['valid']}, rows
+
+
+def semantic_case(event_type, mutate):
+    gate, context, cases, rows = admission()
+    event = gate.fixture_event(copy.deepcopy(cases[event_type]), 7)
+    payload = event['payload']
+    mutate(payload['context'], payload['facts'])
+    return gate.candidate_failures(event, rows[event_type]['producer_component'], context)
+
+
+GATE_SEMANTIC = {
+    'GS02_session_workspace_paired': ('browser.script.compile_started', lambda c, f: c.update(browser_session_id='browser-session-x', browser_workspace_id=None)),
+    'GS03_page_generation_paired': ('browser.workspace.closed', lambda c, f: c.update(page_generation=1)),
+    'GS04_page_has_workspace': ('browser.script.compile_started', lambda c, f: c.update(browser_page_id='browser-page-x', page_generation=1, browser_workspace_id=None, browser_session_id=None)),
+    'GS05_prior_page_generation_present': ('browser.navigation.generation_changed', lambda c, f: f.update(prior_page_generation=None)),
+    'GS10_page_generation_not_regressed': ('browser.page.activated', lambda c, f: f.update(prior_page_generation=c['page_generation'] + 1)),
+    'GS13_coverage_bounds': ('browser.representation.captured', lambda c, f: f['coverage'].update(status='partial', frames_covered=f['coverage']['frames_total'] + 1)),
+    'GS14_complete_frames': ('browser.representation.captured', lambda c, f: f['coverage'].update(status='complete', frames_covered=max(0, f['coverage']['frames_total'] - 1))),
+    'GS16_complete_budget': ('browser.representation.captured', lambda c, f: f['coverage'].update(status='complete', budget_exhausted=True)),
+    'GS17_complete_no_collisions': ('browser.representation.captured', lambda c, f: f['coverage'].update(status='complete', synthetic_id_collisions=1)),
+    'GS19_lease_generation_not_regressed': ('browser.controller_lease.granted', lambda c, f: f['new_fence'].update(lease_generation=f['old_fence']['lease_generation'] - 1)),
+    'GS20_lease_epoch_not_regressed': ('browser.controller_lease.granted', lambda c, f: f['new_fence'].update(lease_epoch=f['old_fence']['lease_epoch'] - 1)),
+    'GS21_last_sequence_not_regressed': ('browser.controller_lease.granted', lambda c, f: f['new_fence'].update(last_sequence=f['old_fence']['last_sequence'] - 1)),
+    'GS22_new_fence_page_generation': ('browser.controller_lease.granted', lambda c, f: f['new_fence'].update(page_generation=c['page_generation'] + 1)),
+    'GS23_old_fence_page_generation': ('browser.controller_lease.granted', lambda c, f: f['old_fence'].update(page_generation=c['page_generation'] + 1)),
+    'GS26_takeover_holder_changes': ('browser.controller_lease.takeover_completed', lambda c, f: f['new_fence'].update(holder_id=f['old_fence']['holder_id'])),
+    'GS27_takeover_request_identity': ('browser.controller_lease.takeover_requested', lambda c, f: f['new_fence'].update(holder_id=f['new_fence']['holder_id'] + '-other')),
+    'GS30_no_action_overlap': ('browser.program.started', lambda c, f: f.update(completed_action_ids=list(f['completed_action_ids']) + ['action:overlap'], unknown_effect_action_ids=list(f['unknown_effect_action_ids']) + ['action:overlap'])),
+    'GS31_unknown_state_no_retry': ('browser.program.started', lambda c, f: f.update(effect_state='effect_unknown', retry_allowed=True)),
+    'GS32_unknown_actions_no_retry': ('browser.program.started', lambda c, f: f.update(unknown_effect_action_ids=['action:unknown'], retry_allowed=True)),
+    'GS33_no_effect_no_unknown': ('browser.program.started', lambda c, f: f.update(effect_state='no_effect', unknown_effect_action_ids=['action:unknown'], completed_action_ids=[])),
+    'GS35_failed_no_effect_state': ('browser.program.failed', lambda c, f: f.update(terminal_state='failed_no_effect', effect_state='effects_reconciled')),
+    'GS36_timed_out_unknown_state': ('browser.program.segment.timed_out', lambda c, f: f.update(terminal_state='timed_out_effect_state_unknown', effect_state='no_effect', unknown_effect_action_ids=[], completed_action_ids=[])),
+    'GS38_terminal_known_state': ('browser.program.completed', lambda c, f: f.update(effect_state='effect_unknown', unknown_effect_action_ids=[])),
+    'GS18_invalidation_matches': ('browser.representation.invalidated', lambda c, f: f['coverage'].update(status='partial')),
+}
+for _row, (_type, _mutate) in GATE_SEMANTIC.items():
+    case('gate_semantic', _row)(lambda t=_type, m=_mutate: semantic_case(t, m))
+
+
+def central_case(mutate):
+    gate, context, _, rows = admission()
+    base = created_base()
+    family = copy.deepcopy(next(f for f in gate.load_json('Plans/event_family_registry.json')['families'] if f['event_type'] == created.EVENT_TYPE))
+    mutate(family)
+    return gate.event_failures(base['event'], rows[created.EVENT_TYPE]['producer_component'], browser()[1],
+                               families={created.EVENT_TYPE: family})
+
+
+GATE_CENTRAL = {
+    'GB02_family_schema': lambda f: f.update(unexpected_member=True),
+    'GB03_event_type': lambda f: f.update(event_type='browser.workspace.reset'),
+    'GB06_payload_schema_ref': lambda f: f.update(payload_schema_ref={**f['payload_schema_ref'], 'json_pointer': '#/$defs/workspace_reset'}),
+    'GB07_retention_policy_ref': lambda f: f.update(retention_policy_ref={**f['retention_policy_ref'], 'policy_id': 'RP-AUTHORITY-OTHER'}),
+    'GB13_no_aliases': lambda f: f['legacy'].update(aliases=[{'alias_event_type': 'browser.workspace.legacy_created', 'canonical_event_type': created.EVENT_TYPE}]),
+    'GB14_no_extensions': lambda f: f['legacy'].update(admitted_extensions=['legacy_extension']),
+    'GB16_redaction': lambda f: f['legacy'].update(redaction={'mode': 'versioned_transform', 'transform_id': 'transform:x', 'transform_version': '1.0.0'}),
+    'GB17_identity_pointers': lambda f: f['legacy']['identity_json_pointers'].update(project_id=['/payload/project_id']),
+}
+for _row, _mutate in GATE_CENTRAL.items():
+    case('gate_central', _row)(lambda m=_mutate: central_case(m))
+
+
+@case('gate_event', 'GE01_event_object')
+def _():
+    gate, context, _, rows = admission()
+    return gate.event_failures('event', rows[created.EVENT_TYPE]['producer_component'], context)
+
+
+@case('gate_candidate_envelope', 'GC04A_sequence_uint64')
+def _():
+    gate, context, _, rows = admission()
+    event = created_base()['event']
+    event['sequence_id'] = UINT64_OVER
+    return gate.candidate_failures(event, rows[created.EVENT_TYPE]['producer_component'], context)
+
+
+@case('gate_replay', 'GR05A_producer_jcs')
+def _():
+    gate, context, _, _ = admission()
+    event = created_base()['event']
+    event['schema_version'] = '2.0.0'
+    event['producer_sequence_id'] = JCS_EDGE
+    return gate.ReplayOracle().consume(event, 'BrowserRuntimeService.workspace', context)
+
+
+def compatibility_case(mutate_original):
+    gate, context, _, _ = admission()
+    base = created_base()
+    retained = copy.deepcopy(base['event'])
+    retained['schema_version'] = '2.0.0'
+    value, original = d3.normalized({'event': retained})
+    value['replay_policy'] = 'projector_replay_only'
+    original = copy.deepcopy(original)
+    mutate_original(original)
+    return gate.candidate_failures(value, 'BrowserRuntimeService.workspace', context, historical=True, historical_source=original)
+
+
+@case('gate_compatibility', 'GH02_source_normalizes')
+def _():
+    return compatibility_case(lambda o: o['source'].update(bytes_hex='zz'))
+
+
+@case('gate_compatibility', 'GH03_no_rejection_reason')
+def _():
+    return compatibility_case(lambda o: o['legacy_envelope'].update(type='browser.workspace.unknown'))
+
+
+@case('cr_binding_disposition', 'BF11_family_disposition')
+def _():
+    return created_binding_case('tier', lambda v: v + '_other')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument('--check', action='store_true')
@@ -823,7 +1391,12 @@ def check(only=None):
             result['exception'] = repr(exc)[:300]
         records = T.RECORDER
         T.RECORDER = None
-        target = [refusing for p, _, refusing in records if p == phase and refusing]
+        first, target = set(), []
+        for p, _, refusing, call in records:
+            if refusing and call not in first:
+                first.add(call)
+                if p == phase:
+                    target.append(refusing)
         result['target_observations'] = target[:4]
         result['ok'] = 'exception' not in result and [row] in target
         rows.append(result)

@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from pm_contract_formats import FormatChecker
 import pm_event_payload_route as body_route
-from pm_ds_tables import Facts
+from pm_ds_tables import Facts, entry as _ds_entry
 Draft202012Validator = body_route.StrictValidator
 CONTRACT_PATH = "Plans/browser_workspace_created_contracts.schema.json"
 FIXTURE_PATH = "Plans/browser_workspace_created_contract_fixtures.json"
@@ -131,6 +131,7 @@ def checkpoint_v2_bundle(root=ROOT):
     return value
 
 
+@_ds_entry
 def checkpoint_failures(value, *, root=ROOT):
     entry = Facts("cr_checkpoint_entry", chain=True)
     if entry.stop("CC01_schema", lambda: not list(Draft202012Validator(checkpoint_bundle(root), format_checker=FormatChecker()).iter_errors(value))):
@@ -217,6 +218,7 @@ def expected_binding(root=ROOT):
     }
 
 
+@_ds_entry
 def creation_preflight_failures(event, request, result, witness, *, root=ROOT, require_new_identity=True, payload_store=None):
     """Compare resolved-value fixtures; never trust ref text as real resolution."""
     # Reuse the shared Browser envelope/payload validator, without giving this
@@ -255,19 +257,14 @@ def creation_preflight_failures(event, request, result, witness, *, root=ROOT, r
     f["CR03_workspace_state_created"] = facts.get("workspace_state") == "created"
     f["CR04_no_prior_generation"] = facts.get("prior_workspace_generation") is None
     f["CR05_subject_present"] = [field for field in SUBJECT if context.get(field) is None] == []
-    f["CR06_run_attempt_paired"] = (context.get("run_id") is None) == (context.get("attempt_id") is None)
     f["CR07_request_command"] = rs["command_id"] == "cmd.browser.workspace.create"
     f["CR08_result_command"] = xs["command_id"] == "cmd.browser.workspace.create"
     f["CR09_request_lineage"] = [field for field in LINEAGE if rs["lineage"].get(field) != context.get(field)] == []
     f["CR10_result_lineage"] = [field for field in LINEAGE if xs["lineage"].get(field) != context.get(field)] == []
     f["CR11_request_session"] = rs["browser_session_id"] == context.get("browser_session_id")
-    f["CR12_request_security_class"] = rs["session_security_class"] == "ordinary"
     f["CR13_result_session"] = xs["browser_session_id"] == context.get("browser_session_id")
-    f["CR14_result_security_class"] = xs["session_security_class"] == "ordinary"
     f["CR15_result_workspace"] = xs.get("browser_workspace_id") == context.get("browser_workspace_id")
     f["CR16_node_lineage"] = context.get("node_id") == witness.get("node_id")
-    f["CR17_request_result_scope"] = [field for field, value in rs.items()
-                                      if field != "browser_workspace_id" and xs.get(field) != value] == []
     f["CR18_request_workspace"] = rs.get("browser_workspace_id", context.get("browser_workspace_id")) == context.get("browser_workspace_id")
     f["CR19_result_instance"] = result["command_instance_id"] == request["command_instance_id"]
     f["CR20_witness_instance"] = result["command_instance_id"] == witness.get("command_instance_id")
@@ -301,7 +298,20 @@ def creation_preflight_failures(event, request, result, witness, *, root=ROOT, r
                                 ("CR46_resource_isolated", "resource_isolated", require_new_identity),
                                 ("CR47_resource_unexposed", "resource_unexposed", require_new_identity)):
         f[row] = not applies or witness.get(field) is True
-    return sorted(set(list(candidate_errors) + f.codes()))
+    own = f.codes()
+    # Whole-scope equality is observed after the field joins, so a changed command,
+    # lineage or session field refuses first at its own row.
+    entailed = []
+    for phase, row, holds in (("cr_preflight_run_attempt", "CR06_run_attempt_paired", (context.get("run_id") is None) == (context.get("attempt_id") is None)),
+                              ("cr_preflight_request_security", "CR12_request_security_class", rs["session_security_class"] == "ordinary"),
+                              ("cr_preflight_result_security", "CR14_result_security_class", xs["session_security_class"] == "ordinary")):
+        table = Facts(phase)
+        table[row] = holds
+        entailed += table.codes()
+    scope = Facts("cr_preflight_scope")
+    scope["CR17_request_result_scope"] = [field for field, value in rs.items()
+                                          if field != "browser_workspace_id" and xs.get(field) != value] == []
+    return sorted(set(list(candidate_errors) + own + entailed + scope.codes()))
 
 class CreationOracle:
     """Synthetic barrier model; append_count counts only known commits.
@@ -319,6 +329,7 @@ class CreationOracle:
         self.append_count = 0
         self.published_count = 0
 
+    @_ds_entry
     def create(self, event, request, result, witness, append_outcome, *, admitted, payload_store=None):
         f = Facts("cr_create", chain=True)
         if f.stop("CO01_admitted", lambda: admitted is True):
@@ -373,6 +384,7 @@ class CheckpointOracle:
         self.disclosure_count = 0
         self.runtime_effect_count = 0
 
+    @_ds_entry
     def advance(self, candidate, observation):
         f = Facts("cr_advance", chain=True)
         expected = observation.get("resolved_checkpoint_fields", {})
@@ -404,6 +416,7 @@ class CheckpointOracle:
         self.commit_count += 1
         return "checkpoint_committed_no_runtime_effect"
 
+    @_ds_entry
     def disclose(self, expected_checkpoint_digest, *, current_token, access_allowed, deletion_allows_audit):
         f = Facts("cr_disclose", chain=True)
         for row, check in (("DI01_checkpoint_present", lambda: self.checkpoint is not None),
@@ -420,6 +433,7 @@ class CheckpointOracle:
         self.disclosure_count += 1
         return "historical_fact_no_runtime_authority"
 
+    @_ds_entry
     def withdraw(self, at_utc):
         f = Facts("cr_withdraw", chain=True)
         if f.stop("WD01_checkpoint_present", lambda: self.checkpoint is not None):
@@ -438,6 +452,7 @@ class CheckpointOracle:
         self.checkpoint = candidate
         return "withdrawn_publication_fenced"
 
+@_ds_entry
 def workspace_history_fact(event, subject, *, source_verified, access_allowed,
                            deletion_allows_audit, checkpoint_read_token_valid, root=ROOT, payload_store=None, historical_source=None):
     """One synthetic read join, never whole-range completeness or live state."""
@@ -469,6 +484,7 @@ def workspace_history_fact(event, subject, *, source_verified, access_allowed,
     }
 
 
+@_ds_entry
 def binding_failures(row, *, root=ROOT):
     """A prepared sibling or arbitrary path can never manufacture this binding.
 
@@ -498,9 +514,8 @@ def binding_failures(row, *, root=ROOT):
         return failures + [unique.first_code()]
     unique.done()
     family = families[0]
-    disposition = Facts("cr_binding_disposition")
-    disposition["BF11_family_disposition"] = family == expected_storage_family(root)
-    failures += disposition.codes()
+    # The specific family joins are observed before the whole-row disposition, so a changed
+    # bound field refuses first at its own join row; the output keeps the original order.
     joins = Facts("cr_binding_family_joins")
     joins["BF12_value_schema"] = family["value_schema"] == checkpoint_v2_bundle(root)
     joins["BF13_value_schema_ref"] = family["value_schema_ref"] == V2_SCHEMA_PATH + "#/$defs/checkpoint"
@@ -511,7 +526,10 @@ def binding_failures(row, *, root=ROOT):
     joins["BF18_consumers"] = family["consumers"] == [CONSUMER_V2 + "@" + VERSION_V2]
     joins["BF19_owner_doc"] = family["owner_doc"] == expected["storage_owner_ref"]
     joins["BF20_retention_policy"] = family["retention_policy_ref"] == expected["checkpoint_retention_policy_id"]
-    return failures + joins.codes()
+    join_codes = joins.codes()
+    disposition = Facts("cr_binding_disposition")
+    disposition["BF11_family_disposition"] = family == expected_storage_family(root)
+    return failures + disposition.codes() + join_codes
 
 def validate_fixture_contracts(*, root=ROOT):
     """Run explicit static positive/negative joins, not independent native proof."""
