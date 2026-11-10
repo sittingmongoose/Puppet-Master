@@ -271,7 +271,15 @@ def panel_operation(owner, tables, family, operation, op_schema, payload_schema)
                                    lambda key: _node(op_schema, ['original_command', key]), fix,
                                    lambda value: owner.operation_errors(value, op_schema, payload_schema, event),
                                    lambda key: 'frozen command/payload ' + key, skip=PANEL_SCHEMA_FIXED)
-    assert not missing, (event, 'command keys without a witness', missing)
+    assert missing == (['window_id'] if 'window_id' in operation['original_command'] else []), (event, 'command keys without a witness', missing)
+    if missing:
+        # panel.redocked: PW01 (panel_operation_joins) reads the same command field when no target_window
+        # exists, so one changed window_id is refused by PW01 and PK14, each the only row of its own table.
+        value = copy.deepcopy(operation)
+        value['original_command']['window_id'] = UUID_OTHER
+        fix(value, 'window_id')
+        count += expect(owner.operation_errors(value, op_schema, payload_schema, event),
+                        ['frozen command window mismatch', 'frozen command/payload window_id'], 'command_window_id')
     return count
 
 

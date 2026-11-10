@@ -317,15 +317,11 @@ PANEL_COMMAND_KEYS = ('actor_ref', 'app_session_id', 'command_id', 'correlation_
 module('panel_command_keys', 'Each frozen command field the payload also carries equals it (one row per field).', flat([
     (f'PK{i:02d}_{key}', key, f'original_command.{key}, when the command and payload carry it, equals payload.{key}',
      'frozen command/payload ' + key) for i, key in enumerate(PANEL_COMMAND_KEYS, 1)
-     if key not in ('window_id', 'command_id', 'panel_id', 'target_host')]))
-module('panel_command_keys_entailed', 'Frozen command fields no input can refuse first (schema consts; window_id by PW01).', flat([
+     if key not in ('command_id', 'panel_id', 'target_host')]))
+module('panel_command_keys_entailed', 'Frozen command fields both schemas fix to one constant (entailed by sch_panel_operation).', flat([
     (f'PK{PANEL_COMMAND_KEYS.index(key) + 1:02d}_{key}', key, f'original_command.{key} equals payload.{key}; entailed: the '
      f'operation schema fixes both copies to the same const, so sch_panel_operation refuses any other value first',
-     'frozen command/payload ' + key) for key in ('command_id', 'panel_id', 'target_host')]) + [
-    ('PK14_window_id', '/window_id', 'original_command.window_id, when the command carries it, equals payload.window_id; '
-     'entailed: only panel.redocked commands declare window_id and none declares target_window, so PW01 (run first) compares '
-     'exactly this field', 'frozen command/payload window_id', f"{v('window_id')} is not True"),
-])
+     'frozen command/payload ' + key) for key in ('command_id', 'panel_id', 'target_host')]))
 module('panel_operation_joins', 'Panel command window and operation/payload joins (collect-all).', flat(
     [('PW01_window', 'window_exact', 'the command target_window (or window_id) equals the payload window_id', 'frozen command window mismatch')]
     + [(f'PJ{i:02d}_{key}', key, f'operation {key} equals payload {key}', 'operation/payload ' + key)
