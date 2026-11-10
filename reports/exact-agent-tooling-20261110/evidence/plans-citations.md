@@ -73,6 +73,11 @@ Line numbers are exact for one-line ranges and bound the passage for wider ones.
 | P75 | Evidence schema, artifact hash is optional | [`Plans/evidence.schema.json` L658-L660](https://github.com/sittingmongoose/Puppet-Master/blob/47d9dc7655d34b07962bf2cb2907e5676c012315/Plans/evidence.schema.json#L658-L660) | "sha256" |
 | P76 | newtools 14.5, mobile test defaults for user projects | [`Plans/newtools.md` L878-L880](https://github.com/sittingmongoose/Puppet-Master/blob/47d9dc7655d34b07962bf2cb2907e5676c012315/Plans/newtools.md#L878-L880) | "XCUITest" |
 | P77 | Contracts, running_app_version in storage compatibility only | [`Plans/Contracts_V0.md` L20813-L20815](https://github.com/sittingmongoose/Puppet-Master/blob/47d9dc7655d34b07962bf2cb2907e5676c012315/Plans/Contracts_V0.md#L20813-L20815) | "running_app_version" |
+| P78 | UIW-013, a control has a command or a typed local action | [`Plans/UI_Wiring_Rules.md` L918](https://github.com/sittingmongoose/Puppet-Master/blob/47d9dc7655d34b07962bf2cb2907e5676c012315/Plans/UI_Wiring_Rules.md#L918) | "Every touched actionable or focusable control has exactly one canonical command ID or typed local UI action" |
+| P79 | UIW-013, view-only disposition allowed | [`Plans/UI_Wiring_Rules.md` L925](https://github.com/sittingmongoose/Puppet-Master/blob/47d9dc7655d34b07962bf2cb2907e5676c012315/Plans/UI_Wiring_Rules.md#L925) | "Every touched control has exactly one command or typed local action and one owner route or explicit view-only presentation disposition." |
+| P80 | UIW-015, onboarding's fourteen typed local actions | [`Plans/UI_Wiring_Rules.md` L1093](https://github.com/sittingmongoose/Puppet-Master/blob/47d9dc7655d34b07962bf2cb2907e5676c012315/Plans/UI_Wiring_Rules.md#L1093) | "exactly fourteen typed local ui.onboarding.* actions through the closed action-request and action-result envelopes" |
+| P81 | F3-643, terminal effects frame budget | [`Plans/FinalGUISpec.md` L47750](https://github.com/sittingmongoose/Puppet-Master/blob/47d9dc7655d34b07962bf2cb2907e5676c012315/Plans/FinalGUISpec.md#L47750) | "An effects frame takes at most 2 ms of CPU at DPR 2 on P1000-class hardware" |
+| P82 | SP-338, first chat page budget | [`Plans/storage-plan.md` L28421](https://github.com/sittingmongoose/Puppet-Master/blob/47d9dc7655d34b07962bf2cb2907e5676c012315/Plans/storage-plan.md#L28421) | "first page within 150 ms at p95, warm or cold, reading at most 2 MiB" |
 
 ## What was looked for and not found
 
@@ -80,7 +85,7 @@ Reported by the six workers after searching the owner documents (search terms ar
 
 | Topic | Result |
 |---|---|
-| A rule that the running UI carries a control id, test id or automation id | Not found in `Plans/FinalGUISpec.md`. Only accessible names and roles are required (P24, P33). |
+| A rule that the running UI carries a control id, test id or automation id | Not found in `Plans/FinalGUISpec.md`. Only accessible names and roles are required (P24, P33). Slint's `accessible-id` property is not mentioned in any `Plans/*.md`. |
 | A compact tree, an operation list, or a transport for ATS-067 | Not found. ATS-067 lists what is readable and nothing else. |
 | A control-to-source map | Not found. The only source pointer is the handler path in a wiring row (P45). |
 | A check that a build is not older than its sources | Not found. Receipts name a revision (P06, P17); nothing compares. |
@@ -89,7 +94,7 @@ Reported by the six workers after searching the owner documents (search terms ar
 | A rule against fixed sleeps in GUI tests | Not found. The practice exists in the kit and in `reports/onboarding-harness-waits-20261011/`. |
 | Agent cost limits for GUI testing (tokens, context size, calls) | Not found. |
 | An application logging contract (location, levels, scoping, retention) | Not found. Redaction and audit rules exist (P52). |
-| Frame, startup or memory budgets for the GUI as a whole | Not found. A few numeric budgets exist for chat paging, terminal effects and storage. |
+| Frame, startup or memory budgets for the GUI as a whole | Not found. Budgets exist for single parts: terminal effects (P81), the first chat page (P82), storage. |
 | Kotlin or Swift client specification | Two sentences (P58, P59) and one preservation phrase. No toolkit choice, screens, or test rule. |
 | One behavioural suite shared with mobile | Not found. Desktop and web only (P10, P27). |
 | An open question, deferred item or non-goal about any of the above | Not found. The space is unspecified, not parked. |

@@ -109,7 +109,7 @@ A panel animates `x` from 0 to 300 over 300 ms, linear. The test clicks the togg
 
 ## M4. A build without the feature has no test server
 
-**Run:** the same source built with plain `cargo build`, started with `SLINT_MCP_PORT=18475 SLINT_BACKEND=headless`. Raw: `slint/v1.18.1-plain-build.log`.
+**Run:** the same source built with plain `cargo build`, started with `SLINT_MCP_PORT=<port> SLINT_BACKEND=headless`. Run twice; the second run's commands and output are kept. Raw: `slint/r2/m4-absence-check.txt`, `slint/v1.18.1-plain-build.log`.
 
 | Check | With `--features slint/mcp` | Without |
 |---|---|---|
@@ -118,6 +118,7 @@ A panel animates `x` from 0 to 300 over 300 ms, linear. The test clicks the togg
 | Listener on the port | yes | none (connection refused) |
 | Start-up message | `Slint MCP server listening on http://127.0.0.1:…/mcp` | `Could not load rendering backend headless, fallback to default` |
 | Element id strings in the binary | 1 | 1 |
+| `accessible-id` strings in the binary | 1 | 1 |
 
 **What it shows:** the feature gate removes the server. It also shows the second switch: both builds were compiled with `SLINT_EMIT_DEBUG_INFO=1`, so both carry element ids. A release check has to cover both.
 
@@ -147,12 +148,29 @@ Source map for the correct app: 8,535 bytes for 17 nodes; each node has file, li
 
 **Not run:** Exact's driver, its web host, its tests and its stale-build refusal. Those claims rest on its source, pinned by line in [`exact-sources.md`](exact-sources.md).
 
+## M7. A dotted wiring id carried as Slint's `accessible-id`
+
+Added after the review. **Run:** two controls in the probe were given `accessible-id: "btn.github.connect"` and `accessible-id: "settings.github.draft_prs"`; built on Slint 1.18.1; one in-process test and one test-server run. Raw: `slint/r2/`.
+
+| Check | Result |
+|---|---|
+| The `.slint` source compiles with dotted and underscored strings as `accessible-id` | yes |
+| In-process: `ElementHandle::accessible_id()` on the two controls | `btn.github.connect`, `settings.github.draft_prs` |
+| In-process: a control with no `accessible-id` | none |
+| Test server (MCP), `get_element_properties` on the same button | no id field other than `typeNamesAndIds`; the dotted id does not occur anywhere in the tree response |
+| Mock-time test in the same run | pass, 150 then 300, 20 ms real |
+
+**What it shows:** `ui_element_id` can be written into the interface as it is, with no renaming rule. In-process tests read it. The 1.18.1 test server does not send it, so a driver over that server would address by `Component::element-id` or need the field added upstream.
+
+**Not tested:** reading the id from outside the process through the operating system's accessibility tree. The Slint source sets it as the AccessKit author id (see `exact-sources.md`, Slint table), and the headless backend used here has no accessibility adapter.
+
 ## M6. Checks on the evidence itself
 
 | Check | Result |
 |---|---|
-| Worker quotes of 40 characters or more found verbatim in the files they cite | A 144 of 149; B 52 of 56; C 29 of 31; D 48 of 53; E 92 of 103; F 24 of 32. Misses were paraphrases, quotes with an ellipsis, or the worker's own words in quotation marks. |
-| Plans and tooling passages this report relies on, checked at their lines | 67 of 67 (`plans-citation-check.txt`) |
+| Worker quotes of 40 characters or more found verbatim in the files they cite | A 144 of 149 (97%); B 52 of 56 (93%); C 29 of 31 (94%); D 48 of 53 (91%); E 92 of 103 (89%); F 24 of 32 (75%). Misses were paraphrases, quotes with an ellipsis, or the worker's own words in quotation marks. |
+| Plans and tooling passages this report relies on, checked at their lines | 72 of 72 (`plans-citation-check.txt`) |
+| Blind review by a second model (Sol 6.1 high) | Five real findings, fixed; it sampled 27 Exact links and 30 Plans rows, all passed, and recomputed all 50 evidence hashes (`reviews/REVIEW-r1-sol-high.md`) |
 | Exact passages this report relies on, checked at their lines | 52 of 52 (`exact-citation-check.txt`) |
 
 ## Baseline already on record in this repository

@@ -11,7 +11,7 @@ Research report, 2026-11-10. Research and report only: no implementation and no 
 
 Jared, 2026-11-10: Puppet Master will build on the newest Slint and Leptos at build time, and the pins in Plans are stale on purpose. Slint findings below are checked on 1.18.1 and on 1.17.1.
 
-Evidence files: [`evidence/exact-sources.md`](evidence/exact-sources.md) (every Exact claim, commit-pinned), [`evidence/plans-citations.md`](evidence/plans-citations.md) (67 Plans passages, each checked at its line), [`evidence/local-measurements.md`](evidence/local-measurements.md) (what was run here), [`evidence/EVIDENCE-INDEX.md`](evidence/EVIDENCE-INDEX.md) (raw files by path and SHA-256).
+Evidence files: [`evidence/exact-sources.md`](evidence/exact-sources.md) (every Exact claim, commit-pinned), [`evidence/plans-citations.md`](evidence/plans-citations.md) (72 Plans passages, each checked at its line), [`evidence/local-measurements.md`](evidence/local-measurements.md) (what was run here), [`evidence/EVIDENCE-INDEX.md`](evidence/EVIDENCE-INDEX.md) (raw files by path and SHA-256).
 
 ## 1. Summary
 
@@ -19,7 +19,7 @@ Evidence files: [`evidence/exact-sources.md`](evidence/exact-sources.md) (every 
 
 **What Puppet Master has to add is small and specific:**
 
-1. **One id per control, in the running UI.** The wiring matrix already gives every control a stable `ui_element_id`. No rule makes the built interface carry it.
+1. **One id per control, in the running UI.** The wiring matrix already gives every control a stable `ui_element_id`. No rule makes the built interface carry it. Slint has a string property for exactly this, `accessible-id`, which Plans never mention.
 2. **A compact listing.** Slint's raw element tree for the 12-control page is 66.8 KB. The 12 interactive controls fit in 660 bytes.
 3. **The parts of ATS-067 the toolkit does not give:** active screen, focused control, text selection, scroll position, each dispatched command with its result, frame timing, redraws, memory, renderer.
 4. **A build stamp and a refusal.** Receipts must name the revision, but nothing compares the running build with its sources, so a stale build can pass.
@@ -32,7 +32,7 @@ Evidence files: [`evidence/exact-sources.md`](evidence/exact-sources.md) (every 
 - **Demonstrated by Puppet Master's own history:** replacing fixed waits with waits on conditions took the onboarding suite from 3/69 on one machine and 69/69 on another to 69/69 on both, three times.
 - **Assumed:** that these ideas cut agent time, tokens and retries on Puppet Master. Nothing measures that yet. Section 7 proposes the measurement.
 
-Four decisions are needed from Jared before any Plans edit. They are in section 8.
+Five decisions are needed from Jared before any Plans edit. They are in section 8.
 
 ## 2. What exists, what is planned, what is missing
 
@@ -40,12 +40,12 @@ Four decisions are needed from Jared before any Plans edit. They are in section 
 
 | Idea from Exact | Exists today | Planned in Plans | Missing |
 |---|---|---|---|
-| **Stable control and command ids** (E01, E12) | 1,333 wiring rows keyed by `ui_element_id`, 1,180 distinct `cmd.*` ids, a validator (P44). On the concept page 28 of 150 reachable controls have a DOM id and 2 carry a command id (M1). | Every control maps to one command (P41). Control census for Home and terminal. Tab ids are stable (P26). | A rule that the built UI carries `ui_element_id`. 1,037 of the 1,333 rows are generated `catalog.*` rows with no real control behind them yet. No id rule for mobile. |
-| **Compact listing of what is on screen** (E01, E13) | browser-check has a filtered accessibility query; the full dump goes to a file and is never printed. `agent-desktop` and `agent-device` give trees with refs for native apps; a full desktop snapshot is 45–60 KB. | ATS-067 lists what a test agent can read (P01) but names no format, size or addressing. | The listing itself, its size cap, scoping by region. For the desktop: without a hook, a Slint window is a canvas with no tree. |
-| **Act by id through a short fixed list of operations** (E01, E02) | About 48 browser-check helpers plus Playwright's page API; selectors, not ids. | Four dev-preview commands, test builds only (P46). Cases must drive the visible control by pointer and keyboard (P05) and must not substitute an internal API (P07). | An id-addressed act path, and a ruling on which kind of input counts (section 8, question 2). |
+| **Stable control and command ids** (E01, E12) | 1,333 wiring rows keyed by `ui_element_id`, 1,180 distinct `cmd.*` ids, a validator (P44). On the concept page 28 of 150 reachable controls have a DOM id and 2 carry a command id (M1). | Every control has one command id or one typed local action (`ui.*`), or an explicit view-only disposition (P41, P78, P79, P80). Control census for Home and terminal. Tab ids are stable (P26). | A rule that the built UI carries `ui_element_id`, for command, local-action and view-only controls alike. 1,037 of the 1,333 rows are generated `catalog.*` rows with no real control behind them yet. No id rule for mobile. |
+| **Compact listing of what is on screen** (E01, E13) | browser-check has a filtered accessibility query; the full dump goes to a file and is never printed. `agent-desktop` and `agent-device` give trees with refs for native apps; a full desktop snapshot is 45–60 KB. | ATS-067 lists what a test agent can read (P01) but names no format, size or addressing. | The listing itself, its size cap, scoping by region. For the desktop, Slint maps its elements to the operating system's accessibility tree, so `agent-desktop` should be able to read a window; that was not tested here. |
+| **Act by id through a short fixed list of operations** (E01, E02) | About 48 browser-check helpers plus Playwright's page API; selectors, not ids. | Four dev-preview commands, test builds only (P46). Cases must drive the visible control by pointer and keyboard (P05) and must not substitute an internal API (P07). | An id-addressed act path, and a ruling on which kind of input counts (section 8, question 3). |
 | **UI-to-source map** (E05) | None for the concept. | Each wiring row names its handler as a Rust path (P45). The Slint file tree is named (P32). | Control to declaring component and line. Slint's element id is `Component::element-id`, which is already most of this (M2). Leptos needs a decision. |
 | **Structured build diagnostics** (E04, E14) | Plans validators print capped samples (first 50 or 100 failures). | A diagnostic entry shape for user projects: path, line, character, severity, message, source, code (P61), capped for prompts (P62). Output truncation with head, tail, exact size and a file ref (P60). | The same shape for Puppet Master's own builds (cargo, Slint compiler, Gradle, Xcode). All failures in one run. |
-| **Scoped state, layout, logs, performance** (E03, E09, E10) | Kit prints one summary line; images cost about 2,600 tokens each; a page sampler has a cost budget. | ATS-067 names frame timing, redraw activity, memory growth and renderer (P01) and says the output is never acceptance by itself (P03). Startup diagnostics for the renderer (P30). | Scoping and a size cap. No application logging contract. No frame, startup or memory budget for the GUI. |
+| **Scoped state, layout, logs, performance** (E03, E09, E10) | Kit prints one summary line; images cost about 2,600 tokens each; a page sampler has a cost budget. | ATS-067 names frame timing, redraw activity, memory growth and renderer (P01) and says the output is never acceptance by itself (P03). Startup diagnostics for the renderer (P30). | Scoping and a size cap. No application logging contract. No frame, startup or memory budget for the GUI as a whole; budgets exist for single parts, such as 2 ms of CPU per terminal effects frame and 150 ms for the first chat page (P81, P82). |
 | **Evidence tied to the running build** (E06, E07, E08) | The kit tests the committed page unless `--set page=` is given (P73); the build tool prints a hash; nothing in the page says which build it is. | Native receipts name revision, platform, toolkit, renderer (P06, P17). Stale receipts are dimmed when files change (P11). A release binds a build id (P54). | A stamp the running app reports, a comparison with the sources, a refusal when they differ, and a "current or stale" list of past runs. |
 | **Test-controlled time** (E09, E15) | None: waits on conditions, `t.settle()`, Reduced Motion emulation. | None. Capture clocks are calibrated (P63); no injected clock in the application core. | Mock time for behaviour tests, and a single clock in the shared interface model. |
 | **One behavioural test, every client** (E02) | None across clients. | Desktop and web share fixtures and scenarios, each with its own screenshots (P10, P27). | A scenario format, a runner per client, and mobile. Plans say two sentences about the Kotlin and Swift clients (P58, P59). |
@@ -64,7 +64,7 @@ Four decisions are needed from Jared before any Plans edit. They are in section 
 | Round 21, 2026-11-02 | 6.59 | 8.1 | 86 | 5/5 |
 | Astro, same benchmark | 3.62 | 6.6 | 63 | pass |
 
-- **What it shows:** sustained work on guides, diagnostics and tooling cut the cost of one agent building one app by about 60%.
+- **What it shows:** sustained work on guides, diagnostics and tooling cut one agent's cost of building one app: tokens by 61%, time by 47%. These are Exact's own figures and were not reproduced here.
 - **What it does not show:** which change helped. Exact says rounds 18 to 21 moved less than noise, that medians move ±20% between rounds, and that it is still behind Astro on every agent measure because agents already know Astro.
 - **What it does not cover:** testing an existing large interface, flakiness, or a native toolkit. The task is building a small site in a new framework.
 
@@ -88,6 +88,7 @@ These costs are the reason for the limits in section 4: controlled time and prog
 - **What exists in the toolkit** (1.17.1 and 1.18.1): `find_elements_by_id` with ids of the form `Component::element-id`; role, label, value, enabled, checked, position and size per element; simulated click, drag, hover, scroll and keys; an event log; screenshots; `mock_elapsed_time`. Two transports share one introspection layer: a protobuf socket (`system-testing`) and an HTTP MCP server (`mcp`). 1.18.1 has 18 MCP tools; 1.17.1 has 14.
 - **Demonstrated here** (M2, M3): found a button by id, read its label, clicked it in 75 ms, read the result back from another element, took a screenshot with no display. A 300 ms animation stepped to exactly 150 then 300 on mock time in 28 ms of real time.
 - **How it meets the ATS-067 boundary** (P02, P04): the server is compiled only with `--features slint/mcp` on the command line, starts only when `SLINT_MCP_PORT` is set, and element ids are embedded only when `SLINT_EMIT_DEBUG_INFO=1` at build. A build without the feature had no server and no listener (M4). Release needs a check that both switches were off: the plain build still carried element id strings because the debug-info variable was set.
+- **The other route that already exists:** Slint also publishes its elements to the operating system's accessibility tree (through AccessKit), with role, label, value and the `accessible-id`. That is the product's accessibility, which Plans require in every build (P24, P33), not a test hook. An outside tool such as `agent-desktop` can read it and act through accessibility actions or real input. It has no mock time, no event log, no headless run, and none of ATS-067's other items. Reading a Slint window this way was not tested here.
 - **Limits to state plainly:**
   - The testing crate is internal and not under semver, and the headless entry point is marked unstable. Between 1.17.1 and 1.18.1 four tools were added and one enum value was removed. With "newest at build time" the driver needs a re-check on every Slint upgrade, as F3-582's Skia additions already do.
   - The MCP server has no authentication and binds to localhost. On a shared machine any local process can drive the app. Test builds must run on fixture data only (the fixture rule already says so, P20) and on a port per run.
@@ -98,7 +99,9 @@ These costs are the reason for the limits in section 4: controlled time and prog
 ### R2. Make `ui_element_id` the one address for a control, on every client.
 
 - **Why:** the id already exists and is stable by rule (P44). On the concept's Home, names fail: 42 of 150 reachable controls share a role and name with another, such as the repeated "Copy relative path" buttons (M1). Exact reached the same rule after its row-tap incident (E12).
-- **What to decide in the owner documents:** one spelling that is legal as a Slint element id, a web attribute, a Compose `testTag` and an Apple `accessibilityIdentifier`. Slint treats `_` and `-` as the same character in identifiers, and dots are not allowed, so an id such as `home.dashboard_tab.undo_start_from` cannot be copied in as it is. A generated table in the shared interface-model crate would avoid a mangling rule.
+- **How to carry it:** Slint's `accessible-id` takes any string, so `home.dashboard_tab.undo_start_from` can be written as it is (M7). The same string fits a web attribute, a Compose `testTag` and an Apple `accessibilityIdentifier`. No renaming rule is needed. Slint's own element ids (`Component::element-id`) cannot hold a dotted id, and stay useful as the pointer to the source.
+- **Two things to know:** the Slint 1.18.1 test server does not return `accessible-id` (M7); in-process tests and operating-system accessibility clients do see it. And the id then ships in production accessibility metadata, where it is not spoken or shown (section 8, question 2).
+- **Cover every kind of control:** controls bound to a typed local action and view-only controls need an id as much as command controls do (P78, P79, P80). A listing must not invent a command for them.
 - **Refuse, do not guess:** an address that matches no control or more than one is an error that names the candidates.
 
 ### R3. Stamp every build and refuse stale evidence.
@@ -127,7 +130,7 @@ These costs are the reason for the limits in section 4: controlled time and prog
 
 - **Desktop:** Slint's mock time, on the testing backend.
 - **Web:** Playwright's clock (`page.clock`) and Chrome's virtual-time policy exist. Neither is used by browser-check today. Playwright's clock controls script timers and not CSS transitions, so `t.settle()` and Reduced Motion stay. Whether Chrome's virtual time covers CSS animation was not checked.
-- **Application core:** Plans have no injected clock. One clock owned by the shared interface-model crate would let one scenario step time on both clients. This is new canon (section 8, question 3).
+- **Application core:** Plans have no injected clock. One clock owned by the shared interface-model crate would let one scenario step time on both clients. This is new canon (section 8, question 4).
 - **Never:** frame timing, motion evidence, recordings or performance on controlled time. Use a fixed epoch only when no live service is involved.
 
 ### R6. Write behaviour scenarios once, run them at three levels.
@@ -167,7 +170,7 @@ No edits were made. This is where each change would land if approved.
 |---|---|---|
 | Name the desktop transport; add the items the toolkit lacks; size cap and scoping | Slint client, test builds | `Plans/Automated_Testing_System.md` ATS-067; `Plans/FinalGUISpec.md` line 261 and F3-582 (re-check on upgrade) |
 | Say that a toolkit test server in test builds is not the product MCP surface | Wording only | `Plans/Automated_Testing_System.md` ATS-023; `Plans/FinalGUISpec.md` line 261; `Plans/MCP_Integration.md` |
-| The built UI carries `ui_element_id`; spelling rule; generated table | Shared interface-model crate, both clients | `Plans/UI_Wiring_Rules.md` UIW-003 and UIW-006; `Plans/Wiring_Matrix.schema.json`; `Plans/FinalGUISpec.md` F3-583 |
+| The built UI carries `ui_element_id` as its accessibility id, for command, local-action and view-only controls | Both clients | `Plans/UI_Wiring_Rules.md` UIW-003, UIW-006, UIW-013, UIW-015; `Plans/Wiring_Matrix.schema.json`; `Plans/FinalGUISpec.md` section 13.4 and F3-583 |
 | Which input satisfies "drives the visible production control" | Test runners | `Plans/Automated_Testing_System.md` ATS-075, ATS-076 |
 | Build stamp, stale refusal, run record | Build scripts, test driver | `Plans/Automated_Testing_System.md` ATS-026 (receipt fields), ATS-075; `Plans/Release_Supply_Chain.md` RSC-015 |
 | Release check that the test layer and debug info are absent | Release pipeline | `Plans/Release_Supply_Chain.md` RSC-012 or RSC-015; ATS-067 acceptance |
@@ -181,7 +184,7 @@ No edits were made. This is where each change would land if approved.
 
 Each step is useful without the next. Steps 1 and 2 need no application code.
 
-1. **Decide** the four questions in section 8.
+1. **Decide** the five questions in section 8.
 2. **Concept tooling, now.** In the kit: a build stamp in the page and a refusal on mismatch; a scoped compact listing helper with a size cap; `ui_element_id` attributes on the controls of one surface. This is also the pilot's second arm.
 3. **Plans, one ledger.** ATS-067 and the MCP wording; the id rule; the build stamp and the release check; the clock; the input ruling. Prose first, then schema and gate companions, as the repository's ledger rule requires.
 4. **First desktop code.** A test-build cargo profile with the Slint test feature; a thin command-line driver that prints the compact listing and takes ids; the release absence check. The probe in `/mnt/Cursor/PM-Experiments/exact-agent-tooling-20261110/` is a starting point.
@@ -200,7 +203,7 @@ Each step is useful without the next. Steps 1 and 2 need no application code.
 |---|---|---|
 | Tooling | The kit as it is: selectors, screenshots, crops. | The kit plus step 2 above, on one surface (the Activity bar: 12 controls). |
 | Tasks | The same four: fix two seeded defects on that surface; write two new checks for stated behaviour. One task has the page rebuilt halfway through, to test the stamp. |
-| Runs | Five per task per arm, one model at one effort, one after another on the VM. 40 runs. |
+| Runs | Five per task per arm, one model at one effort, one at a time on the VM, in random order across arms and tasks, each in a fresh workspace and a fresh agent session. 40 runs. |
 
 **Measured from each transcript and run folder:**
 
@@ -209,7 +212,9 @@ Each step is useful without the next. Steps 1 and 2 need no application code.
 - **Retries:** kit runs before the first pass; rebuilds; times the agent tested a page that was not the one it built.
 - **Flakiness:** each check the agent wrote, run 20 times on the VM's P1000 and 20 times on Nas1, the pair that gave 3/69 against 69/69. False-fail rate per arm.
 
-**Decision rule, set before running:** adopt if the median of both time and tokens falls by at least 25% in arm B with no rise in false fails. Exact's bench moves ±20% between rounds of five, so a smaller difference cannot be told from noise. Anything else is "not shown", and the tooling stays as it is.
+**Decision rule, set before running:** adopt if the median of both time and tokens falls by at least 25% in arm B with no rise in false fails. Anything else is "not shown", and the tooling stays as it is. The 25% is a chosen practical bar, not a statistical one: Puppet Master has no variance figure of its own yet, and Exact's ±20% comes from a different task and harness. Report the spread per task beside each median, so a result that rests on one task or one long run is visible.
+
+**Scope of the listing in arm B:** every control on the surface, including those that run a typed local action or are view-only, each shown with what it is bound to.
 
 **What the pilot cannot show:** anything about the Slint client, controlled time, or mobile. A second stage on the Slint probe app becomes possible when the first desktop code exists.
 
@@ -217,15 +222,17 @@ Each step is useful without the next. Steps 1 and 2 need no application code.
 
 **The goal:** agents that build and test Puppet Master's interfaces spend their time on the product, not on finding controls, reading megabyte trees, waiting on timers or testing the wrong build. **The gap:** Plans say what a test build shows an agent (ATS-067) but not how, and the toolkit has since shipped most of the how. **The gain:** less design work, and a measurable test before committing to it.
 
-1. **May test builds use Slint's test server (its MCP or socket transport)?** Compiled out of every release, never configurable in production, fixture data only. *Recommended: yes.* Without it the desktop needs a custom hook or pixel input.
-2. **What counts as "drives the visible production control"?** Options: input simulated by the toolkit and aimed by id; or input from the operating system. *Recommended:* toolkit-simulated for behaviour scenarios; operating-system input for the certification matrices' input cases and a sample of the rest. Accessibility actions alone never count.
-3. **One injected clock in the shared interface model?** It is new canon. *Recommended: yes, for model-level and toolkit-level behaviour tests only.*
-4. **Run the pilot in section 7 before any Plans edit?** *Recommended: yes.* It is 40 agent runs and one kit change on 12 controls.
+1. **May test builds use Slint's test server (its MCP or socket transport)?** Compiled out of every release, never configurable in production, fixture data only. *Recommended: yes.* Without it the desktop still has the operating system's accessibility tree and real input, which give ids, roles, values and actions, but no mock time, no headless run and no event log.
+2. **May every build carry `ui_element_id` as the control's accessibility id?** It is how other toolkits name controls for automation, and it is never spoken or shown, so F3-635's rule that no internal id appears as text is kept (P25). *Recommended: yes.* The alternative is ids in test builds only, which makes the accessibility tree useless for addressing.
+3. **What counts as "drives the visible production control"?** Options: input simulated by the toolkit and aimed by id; or input from the operating system. *Recommended:* toolkit-simulated for behaviour scenarios; operating-system input for the certification matrices' input cases and a sample of the rest. Accessibility actions alone never count.
+4. **One injected clock in the shared interface model?** It is new canon. *Recommended: yes, for model-level and toolkit-level behaviour tests only.*
+5. **Run the pilot in section 7 before any Plans edit?** *Recommended: yes.* It is 40 agent runs and one kit change on 12 controls.
 
 ## 9. How this was produced
 
 - **Exact:** cloned at the pinned commit and read directly; its compiler was built and run here for the diagnostic, source-map and symbol samples. Its driver was not run: the claims about it come from its source and documents, pinned by line.
-- **Plans and current tooling:** six read-only Muse Ember workers at maximum effort, one per owner area. Their quotes were checked mechanically against the files (93–97% verbatim); every Plans passage this report relies on was then checked again at its line (67 of 67).
+- **Plans and current tooling:** six read-only Muse Ember workers at maximum effort, one per owner area. Their quotes were checked mechanically against the files (between 75% and 97% verbatim per worker; counts are in the measurements file); every Plans passage this report relies on was then checked again at its line (72 of 72).
 - **Slint:** read at three pinned commits; a probe app built and driven on 1.17.1 and 1.18.1.
 - **Concept page:** one browser-check run of a measurement probe on the committed page.
-- **Not done:** no review by a second model; no Leptos, Kotlin or Swift code was run; the web-clock and mobile API statements come from vendor documentation, not from a run here.
+- **Review:** one blind fact-check by a second model (Sol 6.1 high) found five real problems, all fixed in this version: the accessibility route and `accessible-id` were missing, typed local actions were missing, the pilot's threshold was overstated, one absence claim was too broad, and one percentage range was wrong. Its report is on the evidence share. The two larger reviews in the standing review order were not run.
+- **Not done:** no Leptos, Kotlin or Swift code was run; no Slint window was read through the operating system's accessibility tree; the web-clock and mobile API statements come from vendor documentation, not from a run here.
