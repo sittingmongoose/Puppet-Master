@@ -66,16 +66,21 @@
   const connected = f => f.status === 'active';
   /* every signed-in account of a service, by name (FO-126, Jared 2026-11-09 #10: "shows 2 accounts signed in, but
      I cant see the second one"). The connect wizard keeps the names; the count row and the list are drawn from this
-     one list, so they can never disagree. A saved state from before names were kept (a count above the names it has)
-     keeps its count with placeholder rows, so the rows still match it. */
+     one list, so they can never disagree. A saved state from before names were kept (a count above the names it has,
+     often no accountNames at all) keeps every slot, placeholder names included ("Account 2"), and an add appends
+     after those slots. Reading that state writes the slots back, so a later add cannot drop one or lower the count. */
   const accountList = f => {
     if (!connected(f)) return [];
     const names = (Array.isArray(f.accountNames) ? f.accountNames.filter(Boolean) : []).filter((x, i, arr) => arr.indexOf(x) === i);
-    const known = names.length ? names : [f.defaultAccount].filter(x => x && x !== 'None');
-    const n = Math.max(1, Number(f.accounts) || 0);
-    const out = known.slice(0, n);
+    const known = names.length ? names.slice() : [f.defaultAccount].filter(x => x && x !== 'None');
+    const n = Math.max(1, known.length, Number(f.accounts) || 0);
+    const out = known.slice();
     while (out.length < n) out.push(`Account ${out.length + 1}`);
-    return out;
+    if (Number(f.accounts) !== out.length || names.length !== out.length || names.some((x, i) => x !== out[i])) {
+      f.accountNames = out.slice();
+      f.accounts = out.length;
+    }
+    return out.slice();
   };
   const statusLabel = f => connected(f) ? 'Connected' : f.status === 'needs-signin' ? 'Needs sign-in' : 'Not connected';
   const statusTone = f => connected(f) ? 'ready' : f.status === 'needs-signin' ? 'attention' : 'off';
@@ -565,9 +570,11 @@
         const keyId = d.via === 'ssh' && S ? S.commitKey(d) : '';
         if (d.address) f.instanceUrl = d.address;
         /* FO-126: every signed-in account is kept by name — an add or a reauthorize joins the list, a first connect
-           starts it — and the count is drawn from the list, so the count and the names can never disagree */
-        const names0 = Array.isArray(f.accountNames) ? f.accountNames.filter(Boolean) : (f.defaultAccount && f.defaultAccount !== 'None' ? [f.defaultAccount] : []);
-        const names = on ? (names0.includes(d.account) ? names0 : names0.concat(d.account)) : (d.account ? [d.account] : []);
+           starts it — and the count is drawn from the list, so the count and the names can never disagree.
+           A legacy count (accounts: 2, no accountNames) already shows a placeholder slot; the add starts from
+           those slots and appends. It never replaces them with defaultAccount alone, and never lowers the count. */
+        const prior = on ? accountList(f) : [];
+        const names = !on ? (d.account ? [d.account] : []) : (d.account && !prior.includes(d.account) ? prior.concat(d.account) : prior.slice());
         Object.assign(f, { status: 'active', accountNames: names, accounts: names.length, defaultAccount: on && !reauth ? (names.includes(f.defaultAccount) && f.defaultAccount ? f.defaultAccount : names[0]) : (d.account || f.defaultAccount), scopes: ['Repository', 'Reviews', 'Automation'], ssh: d.via === 'ssh' ? 'Healthy' : 'Not used', lastTest: 'Passed', pushAccess: 'Ready', pushVia: d.via, pushKeyId: keyId, lastCheck: 'Just now' });
         if (!cfg().service || cfg().service === 'None') cfg().service = f.name;
         PM51.setSel(ID, f.id); saveState(); refresh();

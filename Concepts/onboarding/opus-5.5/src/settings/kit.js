@@ -252,6 +252,24 @@ function popoutFrame() {
   }
   return { vw, vh, top, bottom };
 }
+/* The width a menu needs so every item's label and hint are one full line. Children are width:100% and labels
+   ellipsize, so the popout's own scrollWidth stays at the narrow box; each child's scrollWidth is the unclipped text. */
+function menuContentWidth(pop) {
+  let need = 210;
+  pop.querySelectorAll('.pm51-menu-item, .pm51-popout-title').forEach(item => {
+    if (item.classList.contains('pm51-popout-title')) { need = Math.max(need, Math.ceil(item.scrollWidth) + 8); return; }
+    const cs = getComputedStyle(item);
+    const pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    const gap = parseFloat(cs.columnGap || cs.gap) || 0;
+    const kids = [...item.children];
+    const sum = kids.reduce((s, k) => s + Math.ceil(Math.max(k.scrollWidth, k.getBoundingClientRect().width)), 0);
+    need = Math.max(need, Math.ceil(pad + gap * Math.max(0, kids.length - 1) + sum));
+  });
+  const pcs = getComputedStyle(pop);
+  const pad = (parseFloat(pcs.paddingLeft) || 0) + (parseFloat(pcs.paddingRight) || 0);
+  const border = (parseFloat(pcs.borderLeftWidth) || 0) + (parseFloat(pcs.borderRightWidth) || 0);
+  return Math.ceil(need + pad + border + 2);
+}
 function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
   const { vw, vh, top: frameTop, bottom: frameBottom } = popoutFrame();
   const r = anchor && anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : { left: vw - 240, right: vw - 16, top: 16, bottom: 16, width: 224 };
@@ -259,7 +277,17 @@ function positionPopout(pop, anchor, { align = 'left', width = 0 } = {}) {
   /* The stylesheet caps every popout at min(420px, 70vh). Measuring under that cap reports the clamped box, so a
      menu that fits the screen was then given that clamped height back and its last rows stayed cut (FO-123). */
   pop.style.maxHeight = 'none';
-  const w = Math.min(vw - 16, Math.max(width || 0, align === 'right' ? 210 : r.width, 200));
+  /* FO-123, the words (Jared's screen 04): a menu was fixed at 210px, and at most 320px, so "Use the sign-in
+     already on the server" ellipsized. The box follows the text, and stops at the viewport; only a line that
+     cannot fit the viewport wraps, still in full. */
+  const cap = vw - 16;
+  let w;
+  if (pop.classList.contains('pm51-menu') && !width) {
+    const need = menuContentWidth(pop);
+    pop.classList.toggle('is-wrapped', need > cap);
+    w = Math.max(210, Math.min(cap, need));
+    pop.style.maxWidth = cap + 'px';
+  } else w = Math.min(cap, Math.max(width || 0, align === 'right' ? 210 : r.width, 200));
   pop.style.width = w + 'px';
   const ph = pop.offsetHeight;
   let left = align === 'right' ? r.right - w : r.left; left = Math.max(8, Math.min(vw - w - 8, left));

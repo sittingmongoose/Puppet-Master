@@ -386,8 +386,14 @@ html[data-density="compact"] #panel-settings .pm51-all .all-settings-window .set
 .pm51-popout-search svg { width: 13px; height: 13px; color: var(--text-muted, #8f8ab0); flex: 0 0 auto; }
 .pm51-popout-search input { flex: 1 1 auto; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--text-primary, #f4f2ff); font: 600 12px/1.3 var(--body-font, Inter, system-ui, sans-serif); }
 .pm51-popout-empty { padding: 10px; font-size: 11.5px; color: var(--text-muted, #8f8ab0); }
-.pm51-menu { min-width: 210px; max-width: 320px; padding: 4px 0; }
+.pm51-menu { min-width: 210px; max-width: calc(100vw - 16px); padding: 4px 0; }
 .pm51-menu .pm51-popout-item { padding: 8px 12px; font-size: 11px; letter-spacing: .02em; border-radius: 0; }
+/* FO-123: a menu item's own words stay whole. The box grows to the line (kit.js); a line wider than the
+   viewport wraps instead of ellipsizing. Hints follow the same rule so they do not squeeze the label. */
+.pm51-menu .pm51-popout-item .pm51-popout-label,
+.pm51-menu .pm51-popout-item .pm51-popout-meta { flex: 0 0 auto; max-width: none; min-width: max-content; overflow: visible; text-overflow: clip; white-space: nowrap; }
+.pm51-menu.is-wrapped .pm51-popout-item .pm51-popout-label,
+.pm51-menu.is-wrapped .pm51-popout-item .pm51-popout-meta { flex: 1 1 auto; min-width: 0; max-width: 100%; white-space: normal; }
 .pm51-menu .pm51-popout-item.is-danger { color: var(--accent-red, #f27791); }
 .pm51-menu .pm51-popout-item[aria-disabled="true"]:hover { background: transparent; }
 html[data-theme^="glass"] .pm51-popout { background: var(--pm6-glass-plate, var(--surface-elevated, #171b31)); border: 1px solid var(--glass-hairline, rgba(255,255,255,.14)); box-shadow: inset 0 1px 0 var(--glass-edge, rgba(255,255,255,.12)), var(--pm6-glass-drop, var(--elev-3, 0 14px 36px rgba(0,0,0,.25))); border-radius: 12px; }
