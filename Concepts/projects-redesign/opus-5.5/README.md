@@ -27,7 +27,7 @@ What made v2 tiring, and what v3 changes:
 | In v2 | In v3 |
 |---|---|
 | Every value was bold and sat at the far right of its plate, a long way from its label. | Each value sits beside its label, left-aligned on one edge per plate. Labels are quiet, values are regular weight, and only a value that says something is wrong keeps weight and colour. |
-| A sentence or a long path wrapped into a narrow right-hand column, three to five lines deep. | A value of 36 characters or more goes under its label, the plate wide (`data-v3-long`, set by `c-v3.js`). |
+| A sentence or a long path wrapped into a narrow right-hand column, three to five lines deep. | A value that would not fit in two lines beside its label goes under the label, the plate wide (`data-v3-long`, set by `c-v3.js` from the plate's width). |
 | A dashed rule under every row. | Rows are separated by space; a rule is kept for groups. |
 | A list of choices (folders, what happened, likely places) was a stack of bordered boxes. | One ruled list, the chosen row filled with a hairline ring. |
 | The same distance between everything. | More room between plates and between the library's machines than inside them; each machine's group is ruled off. |
