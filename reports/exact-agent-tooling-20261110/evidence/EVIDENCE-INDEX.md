@@ -25,6 +25,7 @@ Raw evidence is outside the repository, as the repository rules require.
 | `pm7/run-summary.json` | `bf46340f9db1bb733ea81bc4aab04bf23cf39d75dfe0988b6a34914efa9044d1` | Concept page measurement |
 | `pm7/tree-size.json` | `ad56c79d2ec214622bd3a19c7317169990d6ae265d14e9ffa8553373e3229b91` | Concept page measurement |
 | `reviews/REVIEW-r1-sol-high.md` | `7d4579c888d3f9346f8fb4551b57a9ab6ce36c8cded16328ebd9a34b98e4b87e` | Blind review report |
+| `reviews/REVIEW-r2-sol-high.md` | `97c002cabe529a37dbb7adb8229dd4a9e843040e00c498e96f26819adbb28db6` | Blind review report |
 | `slint/build-1.17.1.log` | `5d14cb4eb5d6dc67f89b51e58f59a80dfa3c4bdc6bb3ae0aba2aa8d87a9cb14a` | Slint build and test logs |
 | `slint/build-1.18.1.log` | `e27c139c3b9082f2e5a1d8acfe61862ab1e3b7da13e985e802c31b33d55f8a4c` | Slint build and test logs |
 | `slint/mock-time-test-1.17.1.log` | `3c94d7488bc9a8a54edb93a353b8e76ca666a6553b07e9d2dcc3f21e8883e32a` | Slint build and test logs |
