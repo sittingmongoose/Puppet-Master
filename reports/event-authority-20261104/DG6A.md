@@ -1,64 +1,271 @@
-# DG6A: sweep part 2A (in progress, WIP) and part 2B numbers (merge only)
+# DG6A — sweep part 2A (guard tables on the gated tool) and part 2B numbers
 
-Branch `wip/ea-dg6a-20261108` from lane head `2a0ceaa355` (`origin/plans/ea-w2-gui-concerns-20261104`). Technical head for the checks below: `a94c77a6bd`; this report commit is self-inclusive. No rebase. This session is a time-boxed first pass; the lane is not done and this section records exactly where it stopped. Resume notes: `/home/sittingmongoose/pm-scratch/ea-dg6a-resume/RESUME.md`.
+**Branch:** `plans/ea-w2-gui-concerns-20261104`, part 2A start `2a0ceaa355`. Gated guard-tool merge `5ce68412d9` (tool `004bdedd63`, eleven files, none edited). Gated NUMRULE number-scope merge `b789fd717b` (exactly `a16f67c1ef`, never the branch head; it brings no main commit; its 163 conflicts were all in `Plans/_shards/**` and `Plans/.plan_index/**` and were resolved by regeneration, never by hand). Implementation head `e8de3e0b52`; the delivery head (this report commit) is in the external `HEAD.txt`. No rebase onto main this round.
 
-This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
+**All sixteen families keep their grades** (9 PASS / 2 PARTIAL / 1 ABSENT each). Part 2A closes part-2 item 1 (S1): every refusal of all four DG6A checkers — the alert shared library, the panel, concern.created and Card 5 checkers — is one named row of a Method B guard table (**98 tables, 505 rows**: 89 generated from one row spec plus the nine first-pass tables), and the gated tool proves **487 of 505 rows**, every table that has a negative `PASS`, with 0 masked negatives and 0 unrelated changes. The 18 rows it cannot prove are refused first by a schema const or bound, or by an earlier row, by construction; each sits in a table of its own with its proof (below), so the other rows keep their credit. Part 2B numbers closes S2 and its stale expectations with the shared CV-1100/SP-1100 calls; SP-1101 authenticated retained dispatch and CV-1101 date-time stay part 2B. Membership stays ABSENT; native execution is NOT_RUN. **This lane's own review of its timestamp fields is interim only** (pm7-build, 2026-11-05 16:50Z). Sol and Astra review the lane once, after part 2B.
 
 ## Sweep part 2A: findings and responses
 
-| Item | Result | Commit | Where / how to verify |
+| Item | Disposition and change | Where | Verify |
 |---|---|---|---|
-| Gated guard tool merge | **Done, clean.** Exactly the tool's 11 files; none edited. | `5ce68412d9` merges `004bdedd63` | `git show --stat 5ce68412d9` |
-| Refusal-site inventory (step 2) | **Done.** Mechanical AST census plus manual additions (card5 `operation_guards` 77 `require` sites, compounds, per-key loops, 29 schema `iter_errors` sites, importlib loading, drivers to retire). | this commit | [DG6A.refusal-inventory.md](DG6A.refusal-inventory.md); regenerated at `c99ded7de7` by the scratch generator named in its header |
-| Guard table `decision_citation` (5 rows) | **Fixed (this phase only).** `decision_citation_errors` refuses only through rows; the compound type-or-text refusal is split into DC04/DC05, DC05 entailed by DC03/DC04. | `fdca07b70e` | `scripts/pm_dg6a_table_decision_citation.py`, derivation `scripts/pm-card5-event-contracts-check.py:157`, guard `:184`. Tool PASS below. |
-| Guard table `storage_schema` (6 rows) | **Fixed (this phase only).** Each registered surface row refuses only through rows, first code plus `:` + family id, pre-table order; SS02-SS06 entailed in sequence. | `56ee3e6bd9` | `scripts/pm_dg6a_table_storage_schema.py`, derivation `scripts/pm-card5-event-contracts-check.py:70`, guard `:101`. Tool PASS below. |
-| Guard table `current_header` (4 rows) | **Fixed (this phase only).** The disposition/replay-policy/admission opening chain of `current_errors` refuses only through rows; CU02-CU04 entailed in order. Context reads in the derivation use `.get` because the HISTORICAL_ONLY contexts carry no `admitted` key (the first complete-checker run caught a `KeyError` there); every existing case outcome is unchanged. | `c99ded7de7` | `scripts/pm_dg6a_table_current_header.py`, derivation `scripts/pm-card5-event-contracts-check.py:390`, guard `:427`. Tool PASS below. |
-| Guard table `current_context` (11 rows) | **Fixed (this phase only).** The second chain of `current_errors` (four authority flags, three exact action/before/after joins, three original refs, exact retry body) refuses only through rows; every refusing row's code is collected in table order, preserving the pre-table multi-error list. The later append-resolution call earns no credit from this phase. | `1327b3aa41` | `scripts/pm_dg6a_table_current_context.py`, derivation `scripts/pm-card5-event-contracts-check.py:405`, guard `:427`. Tool PASS below. |
-| Guard table `profile` (5 rows, alert shared library) | **Fixed (this phase only).** `profile_errors` refuses only through rows; the compound file-or-group refusal is split PF02/PF03, PF05 entailed on PF04. Rows beyond present/missing had no negative in any suite: new `profile_cases` adds eight one-defect negatives per call site (alert suites 460/463/463/476 -> 488/491/491/504; other twelve unchanged). | `e40cc3350e` | `scripts/pm_dg6a_table_profile.py`, derivation `scripts/pm-alert-event-contracts-check.py:383`, guard `:403`, cases `:417`. Tool PASS below. |
-| Guard table `writer_policy` (2 rows, alert shared library) | **Fixed (this phase only).** `writer_policy_errors` refuses only through rows (WP01 replay-only, WP02 entailed unsupported). No unsupported witness existed through this guard: new `writer_policy_cases` adds unknown/trailing-space/wrong-type negatives (alert suites 488/491/491/504 -> 494/497/497/510; other twelve unchanged). | `ed96e0b168` | `scripts/pm_dg6a_table_writer_policy.py`, derivation `scripts/pm-alert-event-contracts-check.py:439`, guard `:447`, cases `:461`. Tool PASS below. |
-| Guard table `cursor` (5 rows, alert shared library) | **Fixed (this phase only).** `cursor_errors`' compound condition is split into exact-int, nonnegative, order and u64 rows under its one code, comparisons entailed on the exact-int facts. New `cursor_cases` adds boundary and one-defect negatives (alert suites 494/497/497/510 -> 503/506/506/519; other twelve unchanged). | `b6be22bc6a` | `scripts/pm_dg6a_table_cursor.py`, derivation `scripts/pm-alert-event-contracts-check.py:282`, guard `:295`, cases `:312`. Tool PASS below. |
-| Guard table `panel_scope` (1 row, panel checker) | **Fixed (this phase only).** The checkpoint scope tail refuses only through PS01 after the shared checkpoint guard passes. No existing case reached that row (incoherent scope is refused earlier as foreign context): new `checkpoint_scope_cases` adds coherent-scope negatives (panel suites 516 -> 519 each). | `fb350ddbff` | `scripts/pm_dg6a_table_panel_scope.py`, derivation `scripts/pm-panel-event-contracts-check.py:56`, guard `:63`, cases `:81`. Tool PASS below. |
-| Guard table `concern_scope` (1 row, concern checker) | **Fixed (this phase only).** Same scope tail through CS01 with its own code; coherent-scope builder added (concern suite 622 -> 625). | `a94c77a6bd` | `scripts/pm_dg6a_table_concern_scope.py`, derivation `scripts/pm-concern-created-contracts-check.py:139`, guard `:145`, cases `:163`. Tool PASS below. |
-| S1 remainder | **Open.** Everything in the refusal inventory outside the nine phases above, including `operation_guards`, the `current_errors` append-resolution tail, the shared checkpoint schema/size/token phases, the `pm-dg6a-guard-check.py:389` / `:407-413` `history_shape` defect and retirement of `rejection_mutants`/`install`/`restore`/`duplicate_proofs`. Order and exact commands are in the resume notes. | none | [DG6A.refusal-inventory.md](DG6A.refusal-inventory.md) |
+| **Take the gated tool** | Merged `004bdedd63` with `--no-ff` as `5ce68412d9`: exactly the eleven tool files, no conflict, none edited since. | `scripts/pm_guard_isolation*.py`, `scripts/guard-isolation/README.md`, `Plans/guard_isolation_traps.json`, GUARDTOOL reports | `git diff --stat 5ce68412d9^1 5ce68412d9` lists 11 files; `git diff 5ce68412d9 HEAD -- scripts/pm_guard_isolation.py scripts/pm_guard_isolation_traps.py Plans/guard_isolation_traps.json` is empty. |
+| **S1 — first-pass tables** (fixed, `fdca07b70e` … `a94c77a6bd`) | Nine hand-written tables (40 rows): Card 5 `decision_citation`, `storage_schema`, `current_header`, `current_context`; alert `profile`, `writer_policy`, `cursor`; panel and concern checkpoint scope. Unchanged this session and re-proved in the final run. | `scripts/pm_dg6a_table_{decision_citation,storage_schema,current_header,current_context,profile,writer_policy,cursor,panel_scope,concern_scope}.py` | Final run: all nine `PASS`, 40/40. |
+| **S1 — every other refusal** (fixed, `9ae2db3d40`) | All remaining refusals of the four checkers go through 89 generated tables (465 rows) from one row spec, `scripts/pm-dg6a-table-generate.py`, dispatched by `scripts/pm_dg6a_tables.py` (`first` for an early-return chain, `every` for a collect-all site). Derivations recompute digests, identities, sizes and typed joins and decide nothing. Or-chains are one row per predicate (same code kept); per-key loops are one row per key (command/payload fields, owner snapshot fields, candidate-record fields, retained identity fields); a guard required with different predicates on different branches is one row per predicate (Card 5 `recorder` ×3, `old_owner`/`new_owner` ×2). Each schema occurrence is one verdict row, as in DS15, DT, DO, DR and DCH (JSON Schema keyword cuts are not ported). Card 5 `operation_guards` keeps its body as the derivation (`require` records a fact) and asserts every recorded fact has a row. | `scripts/pm_dg6a_tables.py:48` (`first`), `:61` (`every`); `scripts/pm-alert-event-contracts-check.py:64` (`errors`), `:205` (`operation_errors`), `:279` (`retry_refusals`), `:327` (`protocol_errors`), `:347` (`append_result_errors`), `:449` (`checkpoint_errors`), `:712` (`history_page`), `:835` (`historical_refusals`); `scripts/pm-panel-event-contracts-check.py:151`, `:170`; `scripts/pm-concern-created-contracts-check.py:100`, `:117`; `scripts/pm-card5-event-contracts-check.py` `operation_refusals`, `history_mapping_refusals`, `mapping_errors` | `python3 scripts/pm-dg6a-table-generate.py scripts --check` (89 generated tables, 465 rows, no stale or extra module); all sixteen family checkers `pass`. |
+| **S1 — the `history_shape` early-return defect** (fixed, `9ae2db3d40`, retired `e1aa809286`) | `history_shape` is now a nine-row chained table (`HS01`–`HS09`); the reader returns its refusal before deriving any later fact. The guard-check `history_matrix` that popped the early return and bypassed the remaining reader checks is removed. | `scripts/pm-alert-event-contracts-check.py:746` (`history_shape_refusal`); `scripts/pm_dg6a_table_history_shape.py` | Final run: `history_shape` `PASS` 9/9. |
+| **Missing negatives** (fixed, `efd21e5a48`, `874a37002a`, the PK14 commit) | The first collection left 98 generated rows with no single-row negative. `scripts/pm_dg6a_p2a_witnesses.py` builds one-defect witnesses from valid parents of each family, with every observing copy moved (recomputed request digests; the concern candidate-record fields the recipe derives from the command; optional command fields added coherently to command and payload first); each asserts the complete checker's exact result. Rows covered: command/payload per-field joins (alert, panel, concern), append evidence shape/event type/settled receipt, checkpoint token selection and server id, protocol shape containers, retained retry edition/stored/payload, current retry preimage and digest, every `history_shape` row, retained event instants/members/scope/observed/persisted, payload edition, receipt instants, original admission, Card 5 mapping shape and history mapping evidence, concern identity/project/creator kind, producer route, operation encodability. | `scripts/pm_dg6a_p2a_witnesses.py:383` (`alert_all`), `:418` (`panel_all`), `:440` (`concern_all`), `:354` (`card5_mapping`), `:451` (`unencodable`) | Lane matrix 0 problems; final run rows without a negative are exactly the 18 entailed rows. |
+| **Two-row negatives** | The collection never feeds a witness refused by two rows of one table to the tool; it lists them. Two kinds exist, both by construction, and single-row witnesses prove each row of each set (table below). | `scripts/pm-dg6a-guard-tables.py:70` (`Collector`, `multi`) | Final run summary `multi_row`. |
+| **Retired machinery** (`e1aa809286`, `9ae2db3d40`, `874a37002a`) | `pm-dg6a-guard-check.py` keeps only the fixture vector runner the checkers call (`vectors`, `fixture_cases`, `run_case`); `rejection_mutants`, `install`/`restore`, `duplicate_proofs`, `executed_cases`, `history_matrix` and `checkpoint_schema_matrix` are removed. The in-checker `historical_guards` weakening blocks are removed (each history `historical_reader_cases` call loses 31 such runs). `pm-dg6a-domain-check.py` loses its keyword-removal and `patch.object` guard-removal proofs; its case generation stays. No proof credit is claimed from either driver. | `scripts/pm-dg6a-guard-check.py:1-160`; `scripts/pm-dg6a-domain-check.py` | `python3 scripts/pm-dg6a-guard-check.py` prints vector counts and `proof: none`. |
+| **Real crash: 4,400-digit integers** (fixed, `874a37002a`) | The old raw ingress (`json.loads(..., parse_int=int)`) raised `ValueError: Exceeds the limit (4300 digits)` on a valid 4,400-digit integer, and stock jsonschema raises the same while formatting an error message about one. CV-1100 sets no global cap. Raw JSON now goes through the shared `loads_current_json`, and validation messages are formatted under a scoped, restored `int_max_str_digits(0)`. | `scripts/pm-dg6a-domain.py:63` (`exact_integer_text`), `:77` (`ExactSchemaValidator`), `:108` (`loads`) | Number corpus value `token-unbounded` (5,000 digits): payload slot accepted, checkpoint refused, no exception. |
+| **Real crash: unencodable integers** (fixed, `874a37002a`) | With no lane cap, an integer outside the canonical MessagePack recipe domain reached `len(packed(value))` and raised. Physical size phases now refuse it through a row (`OS00`, `PZ00`, `QZ00`; the checkpoint row `CZ00` is entailed, below). | `scripts/pm-alert-event-contracts-check.py:81` (`encoded_size`) | Witness `operation_unencodable` per alert/panel/concern family. |
+| **Card 5 manifest `decision_branch`** | Already closed in sweep part 1: the manifest names the landed `Plans/Decision_Log.md`, and `decision_citation` refuses a retained `decision_branch` (DC rows). | `Plans/card5_event_contracts/manifest.json:4` | `decision_citation` `PASS` 5/5. |
 
-**Guard-table results** (`python3 scripts/pm-dg6a-guard-tables.py --out <dir>` at `a94c77a6bd`; witnesses are the checkers' own one-defect cases collected under their recorders, deduped by observation; credit is copied from the tool):
+**Disputed:** none. **Stopped for Jared:** none. **IDs used:** zero new PlanUnit, Decision Log or admission IDs; CV-680..686 and SP-660..666 change in place.
 
-| Phase | Guards | Proved | Unproved | Collected -> controls/negatives | Evaluations | Tool | Report SHA-256 |
-|---|---|---|---|---|---|---|---|
-| `decision_citation` | DC01-DC05 (5) | 5/5 | none | 72 -> 1 / 5 | 96 | PASS | `26ff25a5c815ae91606de1ef6324a79f52c1931577d3268e1e0157ce6523d183` |
-| `storage_schema` | SS01-SS06 (6) | 6/6 | none | 298 -> 1 / 6 | 133 | PASS | `53ec58d0ad2cc674181809753f64e75f0ca3b41ffee6044174132b01a77e66e2` |
-| `current_header` | CU01-CU04 (4) | 4/4 | none | 378 -> 1 / 5 | 78 | PASS | `64d80bf79a9321b30728fa97138db5af8646facdfd9702f43b477c554f5b3c39` |
-| `current_context` | CC01-CC11 (11) | 11/11 | none | 312 -> 1 / 11 | 408 | PASS | `95fd82bef75f435439cfa797fe61f8326c5d3469fde841b50bd20350892b47bf` |
-| `profile` | PF01-PF05 (5) | 5/5 | none | 90 -> 1 / 5 | 96 | PASS | `862addf8b3805a26499b83d20939da0084bb6acba4c8369845305b942715195d` |
-| `writer_policy` | WP01-WP02 (2) | 2/2 | none | 6 -> 1 / 2 | 21 | PASS | `c891dc798ce25a887078d3df9e74f983d34db217ab0cfab53f2a1af7337fecee` |
-| `cursor` | CR01-CR05 (5) | 5/5 | none | 9 -> 1 / 5 | 96 | PASS | `a16ad0ff17ea2cfd50527e79e6af9d397f79c16ff769399362c89e56fe9d4ae3` |
-| `panel_scope` | PS01 (1) | 1/1 | none | 6 -> 1 / 1 | 8 | PASS | `50c9f9894f998a6d6d32ec7372365faa4ee9912b9bf21f868d5e65aa6cc92787` |
-| `concern_scope` | CS01 (1) | 1/1 | none | 3 -> 1 / 1 | 8 | PASS | `4d4c894ad7f3cb9313732143f70edccf718b0ca20ee424209ff852319a673f77` |
+## Guard-table result
 
-Cut results: every row flips only its own negatives and stays on all others: DC01-DC05, PF01-PF05, CR01-CR05 flips 1/stays 4 each; SS01-SS06 flips 1/stays 5 each; CU01 flips 2/stays 3, CU02-CU04 flips 1/stays 4 each; CC01-CC11 flips 1/stays 10 each; WP01-WP02 flips 1/stays 1 each; PS01/CS01 flips 1/stays 0 each. Two-defect negatives reported by the tool: none (`failure_kinds` empty in all nine suites). Evidence (VM local): `/home/sittingmongoose/pm-scratch/ea-dg6a-runs/guard-final-6/` (`summary.json`, per-phase tool JSON/Markdown).
+The gated tool ran once per table that has a negative (**89 runs, all `PASS`**) over **509 negatives and 142 controls**, drawn from one recorded run of all sixteen complete family suites (generated tables) and the first-pass collectors (hand-written tables). **487 of 505 rows are proved; 18 are unprovable by construction** and sit in the nine tables of their own that have no negative (tool `NOT_RUN`, listed below). Credit is the tool's own `rows[].proved`. Each cut swaps one table row to always-pass; the tool runs every control and negative, checks the guard-call trace against the uncut baseline and runs a fresh restoration. "Own" negatives must be accepted after the cut ("flips"); every other negative must keep its exact refusal ("stays"). 14340 tool evaluations; run at `0380bc0c2b` (long-job `dg6a-p2a-final`, `guard/summary.json`). The one later commit (`e8de3e0b52`) changes only the replacement value of one witness (the same `CT05` observation).
 
-**Checks (serial):** at `b6be22bc6a` all sixteen complete family checkers exit 0 (alert 503/506/506/519, panel 516/516, concern 622, card5 345/954/961/988/967/989/968/1014/968; total 11,842). At `a94c77a6bd` the affected suites were rerun: panel 519/519, concern 625, plus the nine-phase guard run above (complete-family total 11,851 = 11,670 + 172 alert cases + 9 scope cases; every other count unchanged from sweep part 1). Guard runner exits 0 (table above). Shard generate/check and index generate pass for the NUMRULE merge regeneration (below). Not rerun this session, with reasons: `pm-dg6a-domain-check.py` (known S2 failure, next section), `pm-dg6a-guard-check.py` and the family suites of `pm-dg6a-final-regression-check.py` (proof machinery being replaced; no credit is claimed from them here), `pm-plan-index.py validate` and `pm-storage-profile-check.py` (heavy; sweep part 1 records their states). One merge consequence was run and **fails, expected**: `pm-dg6a-final-regression-check.py --audit-grade-only` exits 1, first at `Plans/storage-plan.md` SP-660 line 29596, because the NUMRULE insertions in `Contracts_V0.md`/`storage-plan.md` (and this session's card5 edits) shifted cited lines. Measured at `c99ded7de7`: of 379 structured refs, 221 still resolve, 158 are stale, 0 quotes are missing; CV-680..686 shift uniformly +124, SP-660..663 uniformly +126, the card5 script refs uniformly +48, and SP-664..666 need per-ref section-bounded resolution (no single delta satisfies them). Relocation is sequenced after the part 2B owner-text edits, which shift the same documents again (Part 2B item 6).
+| Checker part | Tables | Rows | Proved | Unproved (own tables, proofs below) | Tool negatives / controls | Cut: own flips | Cut: stays | Masked | Unrelated changes |
+|---|---:|---:|---:|---|---:|---:|---:|---:|---:|
+| Hand-written first-pass tables (Card 5, alert, panel, concern) | 9 | 40 | 40 | none | 41 / 9 | 41 | 217 | 0 | 0 |
+| Schema documents and schema occurrences (verdict rows) | 13 | 15 | 14 | CONCERN_OPERATION_PAYLOAD_schema | 17 / 12 | 17 | 6 | 0 | 0 |
+| Alert payload and operation (shared library) | 11 | 67 | 64 | OK07_command_id, OK12_handler_target, OK16_mute_scope | 73 / 20 | 73 | 472 | 0 | 0 |
+| Checkpoint, producer route, protocol shape, retries and append evidence (shared) | 12 | 48 | 45 | CZ00_encodable, RR08_digest, RR08_digest | 51 / 19 | 51 | 284 | 0 | 0 |
+| Retained-history reader and bounded read-through (shared) | 7 | 39 | 39 | none | 40 / 18 | 40 | 270 | 0 | 0 |
+| Panel (pm-panel-event-contracts-check.py) | 12 | 52 | 49 | PK03_command_id, PK07_panel_id, PK13_target_host | 50 / 20 | 50 | 273 | 0 | 0 |
+| concern.created (pm-concern-created-contracts-check.py) | 12 | 78 | 76 | CK03_command_id, CK07_handler_target | 77 / 24 | 77 | 603 | 0 | 0 |
+| Card 5 operations, mapping and history mapping (pm-card5-event-contracts-check.py) | 22 | 166 | 160 | G_after_bundle_id, G_after_doc_id, G_after_annotation_id, G_after_note_id, G_after_provenance_ref, HN09_after_present | 160 / 20 | 160 | 1334 | 0 | 0 |
+| **Total** | 98 | 505 | 487 | 18 | 509 / 142 | 509 | 3459 | 0 | 0 |
 
-**Family grades before and after: unchanged.** All sixteen families stay 9 PASS / 2 PARTIAL / 1 ABSENT (C1 ABSENT, C7 PARTIAL, C12 PARTIAL). Nine proved phases (four in the card5 checker, three in the alert shared library, one each in the panel and concern checkers; 40 rows total) do not complete check 11 for any family, so no family is re-graded upward and `DG6A.self-grade.json` is unchanged. Native NOT_RUN.
+Lane matrix (uncapped, every distinct negative against every row of its table): **0 problems**. The runner exits 1 only because the nine entailed tables have no negative. Per table:
+
+| Table | Rows | Proved | Tool | Negatives / controls (tool) | Distinct single-row negatives | Flips | Stays | Two-row witnesses excluded | Report SHA-256 (12) |
+|---|---:|---:|---|---:|---:|---:|---:|---:|---|
+| `alert_candidate_state` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 0 | `c4ad1fe6669a` |
+| `alert_command_keys_a` | 11 | 11 | PASS | 11 / 1 | 11 | 11 | 110 | 0 | `6d43f485a6cd` |
+| `alert_command_keys_b` | 12 | 12 | PASS | 12 / 1 | 12 | 12 | 132 | 0 | `fd4d3f6441b4` |
+| `alert_command_keys_entailed` | 3 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `alert_operation_identity` | 4 | 4 | PASS | 4 / 1 | 4 | 4 | 12 | 0 | `02dead9393e1` |
+| `alert_operation_joins` | 3 | 3 | PASS | 3 / 1 | 3 | 3 | 6 | 0 | `89b965180115` |
+| `alert_operation_size` | 2 | 2 | PASS | 6 / 10 | 6 | 6 | 6 | 0 | `9edc706ac90e` |
+| `alert_owner_candidate` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `f220a9448865` |
+| `alert_owner_prior` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `2058e5ba05c7` |
+| `alert_payload` | 7 | 7 | PASS | 12 / 2 | 12 | 12 | 72 | 0 | `3e990ac90e08` |
+| `alert_protocol` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `2b87691ab889` |
+| `append_result` | 11 | 11 | PASS | 13 / 2 | 13 | 13 | 130 | 0 | `7d0b5eddd9c8` |
+| `c5_after` | 11 | 11 | PASS | 11 / 1 | 11 | 11 | 110 | 0 | `532243f60e31` |
+| `c5_after_note_entailed` | 5 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `c5_assessment` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `18649e5c4f60` |
+| `c5_before` | 3 | 3 | PASS | 3 / 1 | 3 | 3 | 6 | 0 | `5e4588b42aec` |
+| `c5_concern_a` | 12 | 12 | PASS | 12 / 1 | 12 | 12 | 132 | 2 | `dead47b6c72b` |
+| `c5_concern_b` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 0 | `a02279b0beb5` |
+| `c5_concern_c` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 0 | `74ee64cdb80d` |
+| `c5_core_a` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `be71c0e6f00b` |
+| `c5_core_b` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `cd85773077a9` |
+| `c5_history_mapping_after` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `fa87bd02f4ff` |
+| `c5_history_mapping_after_entailed` | 1 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `c5_history_mapping_before` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `d52c201769e9` |
+| `c5_history_mapping_object` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `bc9263313df7` |
+| `c5_history_mapping_payload` | 8 | 8 | PASS | 8 / 1 | 8 | 8 | 56 | 0 | `078642383f55` |
+| `c5_mapping` | 11 | 11 | PASS | 11 / 1 | 11 | 11 | 110 | 0 | `154b31121d22` |
+| `c5_mapping_shape` | 8 | 8 | PASS | 8 / 1 | 8 | 8 | 56 | 0 | `8e7cbc0811ef` |
+| `c5_note_ids` | 10 | 10 | PASS | 10 / 1 | 10 | 10 | 90 | 0 | `b88aee1e5210` |
+| `c5_note_state` | 8 | 8 | PASS | 8 / 1 | 8 | 8 | 56 | 0 | `aaeaf8aadba0` |
+| `c5_outgoing` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `9414443378da` |
+| `c5_phase` | 4 | 4 | PASS | 4 / 1 | 4 | 4 | 12 | 0 | `888cf3102807` |
+| `c5_receiving` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `dcc00cf603b1` |
+| `c5_resolution` | 15 | 15 | PASS | 15 / 1 | 15 | 15 | 210 | 0 | `3a3b4245b610` |
+| `checkpoint_encoding_entailed` | 1 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `checkpoint_size` | 1 | 1 | PASS | 5 / 10 | 8 | 5 | 0 | 0 | `ec0812c7cdf7` |
+| `checkpoint_token` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 1 | `c6f98a3169c6` |
+| `concern_authority` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `307850679380` |
+| `concern_command_keys_a` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `446847d42216` |
+| `concern_command_keys_b` | 8 | 8 | PASS | 8 / 1 | 8 | 8 | 56 | 0 | `db44207f73c0` |
+| `concern_command_keys_entailed` | 2 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `concern_creator` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 0 | `41b3396041ec` |
+| `concern_existence` | 4 | 4 | PASS | 5 / 5 | 5 | 5 | 15 | 0 | `67619bf529a1` |
+| `concern_identity` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `3ed0d16bcd8f` |
+| `concern_operation_joins` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `947e30d04292` |
+| `concern_operation_size` | 2 | 2 | PASS | 2 / 10 | 2 | 2 | 2 | 0 | `fdc9ecee3192` |
+| `concern_protocol_flags` | 4 | 4 | PASS | 4 / 1 | 4 | 4 | 12 | 0 | `0deb1f39177a` |
+| `concern_record_a` | 14 | 14 | PASS | 14 / 1 | 14 | 14 | 182 | 0 | `9d927adac76e` |
+| `concern_record_b` | 14 | 14 | PASS | 14 / 1 | 14 | 14 | 182 | 0 | `af1b2bd2bceb` |
+| `concern_scope` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `1e04411bc05b` |
+| `current_context` | 11 | 11 | PASS | 11 / 1 | 11 | 11 | 110 | 0 | `5cef6702ffd0` |
+| `current_header` | 4 | 4 | PASS | 5 / 1 | 5 | 5 | 15 | 0 | `0e3ac06d28c2` |
+| `cursor` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `c59dc4153e4c` |
+| `decision_citation` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `e10cbaf02a73` |
+| `history_checkpoint` | 4 | 4 | PASS | 4 / 1 | 4 | 4 | 12 | 0 | `ba200f939c4c` |
+| `history_disclosure` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `f8cf0942d661` |
+| `history_event` | 11 | 11 | PASS | 11 / 1 | 11 | 11 | 110 | 0 | `3a365fd46162` |
+| `history_original` | 8 | 8 | PASS | 8 / 1 | 8 | 8 | 56 | 0 | `a87be908e79b` |
+| `history_page_bytes` | 1 | 1 | PASS | 2 / 10 | 2 | 2 | 0 | 0 | `e16d00969ed4` |
+| `history_page_ref` | 1 | 1 | PASS | 1 / 3 | 1 | 1 | 0 | 0 | `d233604428a7` |
+| `history_shape` | 9 | 9 | PASS | 9 / 1 | 9 | 9 | 72 | 0 | `f9791f447009` |
+| `panel_command_keys` | 12 | 12 | PASS | 12 / 1 | 12 | 12 | 132 | 0 | `9abab3a31040` |
+| `panel_command_keys_entailed` | 3 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `panel_host_candidate` | 4 | 4 | PASS | 4 / 1 | 4 | 4 | 12 | 0 | `64390993d880` |
+| `panel_host_prior` | 4 | 4 | PASS | 4 / 1 | 4 | 4 | 12 | 0 | `512eb31cd824` |
+| `panel_identity` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `dc489fb11695` |
+| `panel_operation_joins` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `62b7e2a38fb8` |
+| `panel_operation_size` | 2 | 2 | PASS | 3 / 10 | 3 | 3 | 3 | 0 | `6b6ff20d792b` |
+| `panel_payload` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `a343f9822f24` |
+| `panel_protocol` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `0cfaea441415` |
+| `panel_publication` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `3a911e88fbc9` |
+| `panel_request` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `8a6c932c008a` |
+| `panel_result_refs` | 3 | 3 | PASS | 3 / 1 | 3 | 3 | 6 | 0 | `873cb7e7846c` |
+| `panel_scope` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `db02dc1460e3` |
+| `producer_route` | 3 | 3 | PASS | 3 / 1 | 3 | 3 | 6 | 0 | `f2eb935a77b5` |
+| `profile` | 5 | 5 | PASS | 5 / 1 | 5 | 5 | 20 | 0 | `0c71e133b22a` |
+| `protocol_shape` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 0 | `7dc0f4e50aac` |
+| `retry_current_alert` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `7b7b5fed550f` |
+| `retry_current_panel` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `72d8efa40485` |
+| `retry_retained_alert` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `deacf9f2ecea` |
+| `retry_retained_alert_entailed` | 1 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `retry_retained_panel` | 7 | 7 | PASS | 7 / 1 | 7 | 7 | 42 | 0 | `c0df7ed54ae3` |
+| `retry_retained_panel_entailed` | 1 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `sch_alert_operation` | 1 | 1 | PASS | 2 / 1 | 2 | 2 | 0 | 0 | `da316207b5ed` |
+| `sch_alert_payload` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `79783cb4a35d` |
+| `sch_c5_field` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `38ea58a9f886` |
+| `sch_c5_operation` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `23cb4280c011` |
+| `sch_c5_payload` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `c00a545a6f85` |
+| `sch_checkpoint` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `f9eddb1184bf` |
+| `sch_concern_operation` | 1 | 1 | PASS | 2 / 1 | 2 | 2 | 0 | 0 | `0c59cd459e4f` |
+| `sch_concern_operation_payload` | 1 | 0 | NOT_RUN (no negative) | 0 / 0 | 0 | 0 | 0 | 0 | `` |
+| `sch_concern_payload` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `d0788a702040` |
+| `sch_panel_operation` | 1 | 1 | PASS | 2 / 1 | 2 | 2 | 0 | 0 | `cb8152091a9f` |
+| `sch_panel_payload` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `964879c399e0` |
+| `schema_document` | 1 | 1 | PASS | 1 / 1 | 1 | 1 | 0 | 0 | `7914a56306ff` |
+| `schema_ref` | 3 | 3 | PASS | 3 / 1 | 3 | 3 | 6 | 0 | `5e872806bd71` |
+| `storage_schema` | 6 | 6 | PASS | 6 / 1 | 6 | 6 | 30 | 0 | `7e835e4fd7ff` |
+| `writer_policy` | 2 | 2 | PASS | 2 / 1 | 2 | 2 | 2 | 0 | `76d8b58ed80f` |
+
+Per family, generated-table rows refused by that family's own single-row witnesses (rows shared by several families count for each):
+
+| Family | Rows refused by its own single-row witnesses |
+|---|---:|
+| `alert.acknowledged` | 120 |
+| `alert.dismissed` | 120 |
+| `alert.rule_muted` | 121 |
+| `alert.snoozed` | 124 |
+| `bundle.annotation_state_changed` | 72 |
+| `bundle.note_created` | 60 |
+| `bundle.note_status_changed` | 66 |
+| `concern.assigned` | 89 |
+| `concern.created` | 139 |
+| `concern.evidence_linked` | 71 |
+| `concern.promoted` | 91 |
+| `concern.reopened` | 74 |
+| `concern.resolved` | 106 |
+| `concern.updated` | 72 |
+| `panel.redocked` | 124 |
+| `panel.undocked` | 123 |
+
+**Rows unprovable by construction (kept as checks; each in a table of its own, so the other rows keep their credit).** The tool reports these tables `NOT_RUN` (no negative); no input reaches their rows first.
+
+| Table | Row(s) | Why no input can refuse there first |
+|---|---|---|
+| `alert_command_keys_entailed` | OK07 `command_id`, OK12 `handler_target`, OK16 `mute_scope` | the operation schema fixes both copies to the same const, so `sch_alert_operation` refuses any other value first: `Plans/alert_event_contracts/alert_acknowledged_operation.schema.json:136`/`:388` (`command_id`), `:133`/`:385` (`handler_target`); `alert_dismissed_operation.schema.json:138`/`:392`, `:135`/`:389`; `alert_rule_muted_operation.schema.json:145`/`:398`, `:142`/`:395`, `:129`/`:382` (`mute_scope`); `alert_snoozed_operation.schema.json:142`/`:400`, `:139`/`:397` (payload/command) |
+| `panel_command_keys_entailed` | PK03 `command_id`, PK07 `panel_id`, PK13 `target_host` | same: `Plans/panel_event_contracts/panel_redocked_operation.schema.json:192`/`:403`, `:189`/`:406`, `:204`/`:424`; `panel_undocked_operation.schema.json:192`/`:403`, `:189`/`:406` (its command declares no `target_host`) |
+| `concern_command_keys_entailed` | CK03 `command_id`, CK07 `handler_target` | same: `Plans/concern_created_contracts/concern_created_operation.schema.json:106`/`:410`, `:109`/`:407` (command/payload) |
+| `sch_concern_operation_payload` | `CONCERN_OPERATION_PAYLOAD_schema` | the operation schema embeds the payload schema (its `payload_*` `$defs` renamed), so `sch_concern_operation` refuses every payload defect first; `payload_schema_entailment` (`scripts/pm-concern-created-contracts-check.py:147`, called at `:391`) checks the two are equal after renaming on every run |
+| `checkpoint_encoding_entailed` | CZ00 `encodable` | every checkpoint integer slot is a Storage sequence bounded 0..2^64-1 (SP-1100) and no slot admits a fractional number, so `sch_checkpoint` refuses every value the recipe cannot encode; `checkpoint_encoding_entailment` (`scripts/pm-alert-event-contracts-check.py:473`) checks each family's checkpoint schema on every run (alert `:1264`, panel `:307`, concern `:373`, Card 5 `:654`) |
+| `retry_retained_alert_entailed`, `retry_retained_panel_entailed` | RR08 `digest` | RR06 (`scripts/pm-alert-event-contracts-check.py:272`) equates the earlier-recipe digest of the stored body with the operation's `request_digest`, and RR07 (`:273`) makes the retry body exactly that stored body; both call sites pass the original operation's `request_digest` as the comparison digest (`:340`, `scripts/pm-panel-event-contracts-check.py:188`) |
+| `c5_after_note_entailed` | `after_bundle_id`, `after_doc_id`, `after_annotation_id`, `after_note_id`, `after_provenance_ref` | the expected post-state value is the before record's field, and `note_after_<field>` and `note_before_<field>` (`scripts/pm-card5-event-contracts-check.py:279`, `:281`) join both records to the payload field first; the fields are string-typed, so exact and `==` agree (note creation copies the after record, so no mismatch exists there) |
+| `c5_history_mapping_after_entailed` | HN09 `after_present` | `mapping_errors` refuses a non-object `after` first (`MS05_after_object`, `scripts/pm-card5-event-contracts-check.py:549`) |
+
+**Witnesses excluded from the table proof (still refused in the full checker).**
+
+| Table | Rows refused together | Why two rows by construction (single-row witnesses prove each row) |
+|---|---|---|
+| `c5_concern_a` | `worker_proposal_only` with `recorder_controller` (5.b/5.d/5.f/5.g) or `recorder_user_or_controller` (5.c) | an action by a `worker` is both a worker proposal and not a controller/user recorder; the fixture expects both codes (`['worker_proposal_only', 'recorder']`); the recorder-kind and worker-proposal single-row witnesses prove each row |
+| `checkpoint_token` | CT01 `token_storage` with CT03 `storage_instance_id` | a checkpoint of another Storage instance differs from its token and from the original-event context; `checkpoint_context_cases` (token only) and the context witnesses prove each row |
+
+**Cross-table pair.** `PW01_window` (`panel_operation_joins`) and `PK14_window_id` (`panel_command_keys`) read the same panel.redocked command field when the command has no `target_window`; the `command_window_id` witness is refused by exactly those two rows, each the only row of its own table, and each table's cut flips it (`scripts/pm_dg6a_p2a_witnesses.py:271`, `panel_operation`).
+
+**Phase boundary.** Tables are extracted observation boundaries (tool boundary `synthetic`), as in DS15, DR, DX, DC and DCH. The complete path is the full checker, which reaches every refusal through the same rows in the same order. No `NonGuard` other than the `return g.Case(table, check, context)` plumbing return was needed; every table module was prescanned before its run. Witness collection runs every complete family suite once under the recorder (`scripts/pm-dg6a-guard-tables.py:94`); a passing evaluation is a control, a single-row refusal a negative; the tool then runs per table on up to five negatives per row (families round-robin) and up to ten controls, after the uncapped lane matrix checked every distinct negative against every row of its table.
+
+**What Astra keeps finding, probed for part 2A.** (1) Forged identities and digests: recomputed in derivation and compared by rows (OI01–OI03, PI01–PI02, CI01–CI04, c5 `operation_identity`/`event_identity`/`request_digest`); forged copies are the negatives. (2) Storage-assigned metadata: retry comparison covers the caller body only (`retry_refusals`, CC05); receipt and source fields join the independent original (AR01–AR10, HG17–HG19). (3) Historical readers: current-writer rows never run on a retained original (`historical_refusals` calls no protocol/writer table); retained large-revision history reads; withdrawn, forged and foreign originals refuse (HG01–HG26). (4) One field read two ways: typed exact joins at retained/append evidence (`exact_value`), integer slots through `current_integer`. (5) Unresolved references: SR01–SR03 per reference occurrence, unused definitions included. (6) Size: OS/PZ/QZ/CZ rows measure the complete encoded value and refuse an unencodable one. (7) Custody: retry, recovery and return paths run the retained recipe and the append evidence joins. (8) Masked negatives: lane matrix 0 problems; tool 0 masked, 0 unrelated changes. (9) Grades unchanged; C12 stays PARTIAL. (10, 10a) Numbers: below. (11) Exact types: AP05, PH01–PH06, HS01–HS09, MS01–MS08, CC01 with wrong-type negatives. (12) Timestamps: interim only, part 2B.
 
 ## Sweep part 2B numbers: findings and responses
 
-| Item | Result | Commit | Where / how to verify |
+The NUMRULE number scope was merged at exactly `a16f67c1ef` after the guard-tool merge. The date-time code is **not** adopted: `pm_event_datetime` is imported nowhere in the lane, and `datetime_validator`, `date_time` and the inventory gate are not called. Recipe IDs, identity preimages and tuple positions are unchanged.
+
+| Item | Disposition and change | Where | Verify |
 |---|---|---|---|
-| Gated NUMRULE number-scope merge | **Done.** Exact commit `a16f67c1ef21796758f4209ff12c0f4d12b86ce9`, merged after the guard tool. All 163 conflicts were in `Plans/_shards/**` / `Plans/.plan_index/**` and were resolved by full regeneration, never by hand: `pm-shard-plans.py --generate` (99 docs, pass), `pm-plan-index.py generate` (7,526 units, pass), shard `--check` pass; only the `contracts_v0`/`storage-plan` shard trees and the six index files changed. No NUMRULE file edited. | `b789fd717b` | `git show --stat b789fd717b`; regen log `/home/sittingmongoose/pm-scratch/ea-dg6a-runs/regen1.log` |
-| Shared helper self-test | **Pass, credited exactly as reported.** `python3 scripts/pm_event_numbers.py --self-test --scope numbers` exits 0 with `"status": "pass"`, 580/580 cases (304 negatives), `datetime_inventory: NOT_RUN_SEPARATE_SUITE`, `guard_isolation: SWEEP_PENDING`, `native_authority: NOT_RUN`. This credits the merged helper only; no DG6A file calls it yet. | none (merged code) | Log `/home/sittingmongoose/pm-scratch/ea-dg6a-runs/numbers-selftest.log` SHA-256 `12fccc2a17e0492aaa4b7c7dbcd1d912b46cbe06f6c629f93a7aa806ba848359` |
-| Lane number adoption (S2 + stale expectations) | **Not done; next worker.** No date-time code adopted (`pm_event_datetime.datetime_validator`, `date_time`, inventory gate untouched). Exact locations below. | none | Part 2B items 1-3 below |
+| **Merge the gated number scope** | `git merge --no-ff a16f67c1ef` as `b789fd717b`; only NUMRULE's own files and text; 163 conflicts, all generated, resolved by `pm-shard-plans --generate`, `pm-plan-index generate` (currentness edition hash-verified) and `--check`. | merge commit | `git log --format=%P -1 b789fd717b`; `git diff b789fd717b HEAD -- scripts/pm_event_numbers.py scripts/pm_event_numbers_corpus.py Plans/event_number_recipe_corpus.json` is empty. |
+| **S2 — current tokens and integer slots** (fixed, `874a37002a`) | `loads` is the shared `loads_current_json` (`-0`, `01`, nonfinite, duplicate keys and lone surrogates refuse; fractional tokens stay exact carriers). Every schema integer slot is admitted by the shared `current_integer` (the exact type checker of the lane validator) with the slot's own `minimum`/`maximum`; no blanket walk. The `SAFE_INTEGER` cap in `semantic_numbers` is gone: a semantic recipe preimage refuses float/Decimal carriers only (one numeric form), and an integer outside the canonical MessagePack recipe domain is refused by that recipe. | `scripts/pm-dg6a-domain.py:45` (`current_integer_slot`), `:108` (`loads`), `:115` (`semantic_numbers`) | All sixteen suites; number corpus. |
+| **S2 — producer route** (fixed, `874a37002a`) | `producer_digest` uses the shared `producer_semantic_digest`, `type_sensitive_paths` at `producer_sequence_id` and every payload integer field, after the EventRecord `current_integer(minimum=0)` admission of `producer_sequence_id`; it refuses only through `producer_route` (PD01–PD03). Byte-identical to the old JCS codec on every fixture record (asserted on each run). | `scripts/pm-alert-event-contracts-check.py:607` (`producer_observation`), `:630` (`producer_digest`), `:643` (`producer_cases`) | `producer_route` `PASS` 3/3; `semantic_digest_cases` unchanged. |
+| **S2 — embedded operation/state schemas** (fixed, `874a37002a`) | The DG6A operation schemas (alert ×4, panel ×2, concern), the shared alert/rule state schemas and the concern record schema carried `maximum: 9007199254740991` on revisions, repeating the I-JSON safe range; the standalone payload schemas carry none. Under "bound only an actually owner-bounded field" those 37 maxima are removed (minimums stay), also from the ten byte-identical `Plans/storage_value_registry.json` rows and the const `concern_revision` of the concern payload. Current revisions above 2^53 and at the uint64 edge are accepted (new positives); the producer route still refuses beyond binary64 (PD03). | `Plans/{alert_event_contracts,panel_event_contracts,concern_created_contracts}/*.schema.json`; `Plans/storage_value_registry.json`; `Plans/event_payloads/concern/concern_created.schema.json` | `large_revision_*`, `large_host_revision_*` witnesses; registry rows asserted equal to the external files by each main. |
+| **Stale number-boundary expectations** (fixed, `874a37002a`) | `pm-dg6a-domain-check.py` used an invented u64 default maximum and expected 2^53/2^53+1 refusals; it now expects exactly the slot's own bounds (no default cap) and the one-form semantic rule. Final-regression B1 drops the 2^53 and 2^53+1 spellings (valid at an uncapped slot; the corpus covers them). The known sweep-part-1 failure (six alert/panel selections at standalone `prior_revision` 2^64) is gone. | `scripts/pm-dg6a-domain-check.py` (`number field`, `semantic number rejection`/`admission`); `scripts/pm-dg6a-final-regression-check.py` (B1) | Domain-check `pass` for all seven alert/panel/concern families. |
+| **Shared corpus through every complete checker** (`874a37002a`) | `scripts/pm-dg6a-number-corpus.py` writes every number-scope value of the shared corpus (81 values: raw spellings and exact integers, including a 5,000-digit token) as JSON text into a valid input of each of the sixteen families, parses it through the checker's own raw ingress and runs four complete routes: the payload integer slot, the checkpoint `through_sequence_id` (complete `checkpoint_errors`), the read-through cursor/frontier rows and the producer route. The expected outcome is composed from the shared helpers alone; a raise is a disagreement. | `scripts/pm-dg6a-number-corpus.py` | **5,184 route runs, 0 disagreements (1,264 accepted, 3,920 refused)** |
+| **Number self-test** | `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | — | **Exit 0, `"status": "pass"`, **580 of 580** cases (304 negatives).** Credited exactly as reported. |
+| **Owner text** (fixed, `88a9d3810d`, `56d7088be5`) | CV-680..686 no longer repeat "the I-JSON safe range -9007199254740991..9007199254740991": current numbers follow CV-1100 and SP-1100 beside the CV-317, CV-339, SP-278 and SP-286 profile owners (loads_current_json, current_integer within each field's own bounds, no lane-wide cap; retained originals keep their write-time recipe, selected by SP-1101; Storage sequences u64 per SP-1100). Float/Boolean/negative-zero/leading-zero refusals and the timestamp grammar are unchanged. SP-660..666 gain one sentence citing the same owners (SP-666 as its own paragraph, so its cited closing line stays intact). F3-700..714 state no number rule and are unchanged. | `Plans/Contracts_V0.md` (CV-680..686), `Plans/storage-plan.md` (SP-660..666) | Shards and index regenerated; only Contracts_V0, storage-plan and storage value registry outputs and the index changed; shard check pass. |
+
+**Not used, by design:** `RetainedDispatcher` (S-N2, part 2B: SP-1101 selects the frozen CV-1101 date-time profile in the same recipe tuple, so its adoption crosses the ungated date-time scope, as DS15 found), `loads_exact` (no schema-directed `JsonNumber` caller), `qualified_jcs` outside the producer route (DG6A identity and request recipes are canonical MessagePack), `storage_value_bytes`/`decode_storage_value`/`full_value_commitment`/`verify_payload_bytes` (DG6A encodes no stored bytes beyond its own recipe and holds no payload packs). No lane serializer, cap or number grammar was added.
+
+## Timestamp fields — interim only
+
+This lane's own review of its timestamp fields is **interim only** (pm7-build, 2026-11-05 16:50Z); it is not a certification and changes nothing. DG6A enforces its own full-match RFC3339 grammar with a registered `date-time` checker (`scripts/pm-dg6a-domain.py:28` `instant`, `:91` `validator`), compares instants exactly (`instant_key`, `instant_le`) and checks named semantic timestamps in recipe preimages (`semantic_formats`). Part 2A and the number pass change no timestamp field or rule; the producer route keeps the same timestamp check as its first row (PD01).
 
 ## Part 2B items
 
-1. **Number adoption in `scripts/pm-dg6a-domain.py`.** Replace lane-local surrogates with the shared calls at `integer_token` (:52), `loads` (:62), `semantic_numbers` (:66-69, the blanket `SAFE_INTEGER = 9007199254740991` cap at :7) and keep `instant_key` (:78) exact timestamp comparison. Cite CV-1100 instead of repeating safe ceilings; bound only actually owner-bounded fields with `current_integer`; qualify the producer JCS route instead of redefining logical integer domains. Guide: `reports/event-authority-20261105/NUMRULE-ADOPTION.md:199-210`.
-2. **Number adoption in `scripts/pm-alert-event-contracts-check.py`.** `producer_digest` (:344) moves from `domain.semantic_numbers` + `_codec.event_producer_semantic_digest` to `producer_semantic_bytes`/`producer_semantic_digest` with the lane's declared `type_sensitive_paths`, keeping recipe/preimage exactly. `historical_guards` (:463) retains original schema type/format/number validation on history with current guards excluded; add authenticated recipe evidence (`RetainedDispatcher`) plus former-valid integral-float/large-metadata history positives. Owner wording beside CV-680..686, SP-660..666, F3-700..705 (guide :208) and the F3-706..714 codecs; regenerate shards/index after owner edits.
-3. **Stale number-boundary expectations.** `scripts/pm-dg6a-domain-check.py:141-142` invents a u64 default maximum and expects the standalone `prior_revision` leaf (`type integer, minimum 1`, no maximum) to refuse 18446744073709551616 (assertion at :101; six alert/panel selections exit 1, sweep part 1). Align with the shared owner domains during adoption; do not restore lowered schema maxima. Same for the numeric list at `scripts/pm-dg6a-domain-check.py:138,169,179,249` and `scripts/pm-dg6a-final-regression-check.py:144-148`. Shared corpus must run through each complete checker (`pm-ds15-number-corpus.py` / DF `pm-filesafe-number-corpus.py` are the models).
-4. **S1 remainder** (part 2A work, listed here so nothing is dropped): every refusal in [DG6A.refusal-inventory.md](DG6A.refusal-inventory.md) outside the nine proved phases; alert shared-library phases first (panel/concern/card5 complete boundaries depend on them), then `operation_guards` per family branch, schema phases via the tool catalog, history phases (fixing the `history_shape` :389/:407-413 navigation defect), then retire `pm-dg6a-guard-check.py`'s proof machinery.
-5. **Date-time gate.** No date-time code adopted; existing enforced date-time/UUID grammar unchanged. This lane's own review of its timestamp fields is interim only until the shared date-time gate passes.
-6. **Self-grade citation relocation (after items 1-2 owner edits).** `--audit-grade-only` currently exits 1 (measurement above: 158 stale of 379, 0 missing). Relocate each stale ref within its own unit section only (sibling SP/CV units share boilerplate quotes, so a whole-file search is ambiguous for 81 refs), changing only `line_start`/`line_end`, then rerun `--audit-grade-only` to exit 0 before any re-grade. Do this once, after the last Plans edit of the lane.
+Timestamp items and the retained dispatch that selects a date-time profile, each left exactly as it was:
+
+- **S-FMT1 — CV-1101 date-time at every DG6A boundary.** `scripts/pm-dg6a-domain.py:28` (`instant`), `:91` (`validator`, registered `date-time`/`uuid` checkers), `:133` (`instant_key`), `:156` (`semantic_formats`); `scripts/pm-alert-event-contracts-check.py:607` (`producer_observation`, EventRecord `occurred_at_utc`), `:787` (`historical_observation`, Storage `observed_at_utc`/`persisted_at_utc` via `stored_instants_valid`); the `format: date-time` fields of `Plans/event_payloads/attention/*.schema.json`, `Plans/event_payloads/panel_*_v2.schema.json`, `Plans/event_payloads/concern/concern_created.schema.json` and the DG6A operation/checkpoint schemas; the timestamp sentence of CV-680..686. Adopt `datetime_validator` with the EventRecord profile, CV-253 `storage_utc_z` for Storage-assigned `observed_at_utc`/`persisted_at_utc`, and any stricter field-owner profile explicitly; malformed negatives and valid edge positives from the shared battery; rerun the guard tables with the format capability.
+- **S-N2 — SP-1101 authenticated retained dispatch (it selects the frozen CV-1101 date-time profile in the same tuple).** `scripts/pm-alert-event-contracts-check.py:241` (`retained_retry_observation`, edition chosen from the alert/panel manifests by the original's event type), `:787` (`historical_observation`, edition chosen from original admission evidence), `scripts/pm-panel-event-contracts-check.py:199` (`historical_panel_page`, v1/v2 editions), `scripts/pm-concern-created-contracts-check.py:223`, `scripts/pm-card5-event-contracts-check.py` `history` stage (legacy edition map). Compose `RetainedDispatcher` with the authenticated original owner and the frozen recipes, so selection is authenticated rather than taken from supplied evidence; add retained positives written under an older number rule (for example a panel v1 original whose integer slot holds an integral float, if its recipe admitted one) and forged or downgraded-selector negatives.
+- **F3-706..714 C12 wording.** Each still says "C12 remains PARTIAL pending the shared isolation/number-domain sweep"; after part 2B it should name only what is then open. Owner text quoted by the self-grade, so it moves with the next citation relocation.
+
+## Family grades before and after
+
+P=PASS, Q=PARTIAL, A=ABSENT. Before is the sweep part 1 self-grade; after is the self-grade at this head.
+
+| Family | Before → after |
+|---|---|
+| `alert.acknowledged` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `alert.dismissed` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `alert.rule_muted` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `alert.snoozed` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `panel.redocked` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `panel.undocked` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `concern.created` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `bundle.note_created` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `bundle.note_status_changed` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `bundle.annotation_state_changed` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `concern.assigned` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `concern.evidence_linked` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `concern.promoted` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `concern.reopened` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `concern.resolved` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+| `concern.updated` | 9P / 2Q / 1A → 9P / 2Q / 1A |
+
+**144 PASS / 32 PARTIAL / 16 ABSENT → the same totals.** No cell changes. The tool proof closes S1 for all sixteen families and the number pass closes S2, but C12 (positive/negative oracles) stays PARTIAL: S-FMT1 and S-N2 remain open, the timestamp review is interim only, and these cells have not been independently reviewed; I do not upgrade a self-grade on that basis. C7 (retention) stays PARTIAL (PENDING_RETENTION_DECISION); C1 membership stays ABSENT. Self-grade changes (`0380bc0c2b`): 194 citations relocated by line number only, each inside its own unit section; 20 re-pointed to renamed or retired code (`retained_retry_digest` → `retained_retry_observation`, 6; guard-check `duplicate_proofs`/`executed_cases` → `pm-dg6a-guard-tables.py` `run_generic_phase`/`collect_generic`, 14); `remaining_gaps` names part 2B. `--audit-grade-only`: pass, 16 families, 379 citations.
+
+## Commands and evidence
+
+Heavy checks ran one at a time on the VM's local disk, each started at 13.5 GiB or more available (the runner refuses to start below that and pauses below 10 GiB, resuming at 11). Commits: `5ce68412d9` (tool merge), `b789fd717b` (NUMRULE number-scope merge), `fdca07b70e`–`a94c77a6bd` (first-pass tables) with their report commits, `9ae2db3d40` (generated tables), `efd21e5a48` (witnesses, entailed tables), `874a37002a` (numbers), `88a9d3810d` (owner text, shards, index), `e1aa809286` (retired machinery), `56d7088be5` (SP-666 paragraph), `0ba256a612` (PK14), `0380bc0c2b` (self-grade), then the report commit. Evidence: `/mnt/Cursor/PuppetMaster-Evidence/event-authority-20261104/drafts/DG6A/sweep-p2a/` (SHA-256 of every file in `SHA256SUMS`; large files gzipped).
+
+| Command | Exit | Outcome |
+|---|---:|---|
+| `git merge --no-ff 004bdedd63` | 0 | clean; 11 tool files, none edited |
+| `git merge --no-ff a16f67c1ef` | conflicts in generated files only | `Plans/_shards/{contracts_v0,storage-plan}` and `Plans/.plan_index` regenerated (shard generate, index generate, shard check pass), never by hand |
+| `python3 scripts/pm-dg6a-guard-tables.py --out <dir>` (long-job `dg6a-p2a-final`, at `0380bc0c2b`) | 1 | 98 tables: 89 `PASS`, 9 entailed tables `NOT_RUN` (no negative); 487/505 rows proved; 0 masked, 0 unrelated changes; lane matrix 0 problems |
+| `python3 scripts/pm-dg6a-guard-tables.py --phase panel_command_keys --phase panel_command_keys_entailed` (after the PK14 move, before the final run) | 1 | `panel_command_keys` `PASS` 12/12; the entailed table `NOT_RUN` |
+| `python3 scripts/pm-dg6a-table-generate.py scripts --check` | 0 | 89 generated tables, 465 rows (+9 hand-written); no stale or extra module |
+| sixteen family checkers (`pm-alert-event-contracts-check.py --family F` ×4, `pm-panel-event-contracts-check.py --family F` ×2, `pm-concern-created-contracts-check.py`, `pm-card5-event-contracts-check.py --family F` ×9) | 0 each | `pass`: alert 522/525/526/539, panel 504/503, concern.created 639, Card 5 annotation 354, note_created 955, note_status_changed 962, assigned 989, evidence_linked 968, promoted 990, reopened 969, resolved 1015, updated 969 |
+| `python3 scripts/pm-dg6a-guard-check.py` | 0 | fixture vectors: alert 224/224/223/232, panel 223/223, concern 253; `proof: none` |
+| `python3 scripts/pm-dg6a-domain-check.py --family F` (7 families) | 0 each | `pass`; 8,909 / 9,035 / 9,218 / 9,760 / 11,095 / 11,084 / 11,762 observations; no guard-removal rows |
+| `python3 scripts/pm-dg6a-final-regression-check.py --family F` (7 families) | 0 each | `pass`: 128/128/128/153 (alert), 166/166 (panel, rerun after `e8de3e0b52`), 128 (concern) |
+| `python3 scripts/pm-dg6a-number-corpus.py --json ...` | 0 | 5,184 route runs over 81 values and 16 families, 0 disagreements (1,264 accepted, 3,920 refused) |
+| `python3 scripts/pm_event_numbers.py --self-test --scope numbers` | 0 | `pass`, 580 of 580 cases (304 negatives); date-time inventory `NOT_RUN_SEPARATE_SUITE` |
+| `python3 scripts/pm-dg6a-final-regression-check.py --audit-grade-only` | 0 | `pass`, 16 families, 379 citations |
+| `python3 scripts/pm-shard-plans.py --generate --config Plans/sharding_config.json`; `python3 scripts/pm-plan-index.py generate` (currentness edition SHA-256 tree `69e5e402…` matches the shared checkout) | 0 | only `Plans/_shards/{contracts_v0,storage-plan,storage_value_registry}` and the index changed (every registry shard embeds the source SHA-256) |
+| `python3 scripts/pm-shard-plans.py --check --config Plans/sharding_config.json` | 0 | `pass`, 99 documents, 3,190 shards |
+| `python3 scripts/pm-plan-index.py validate` (live origin/main `47d9dc7655`) | 1 | top-level `fail`, 59 failures: 21 `plan_unit_removal_ledger_invalid` in existing ledgers and 38 `plan_unit_removed_without_ledger_decision` for units added on main after this branch's base (`2989975e8f`), e.g. DL-470..472, F3-716..718, ACD-637..640, UCC-230..231, CV-369 (absent at `2a0ceaa355` too); none names a DG6A unit; the integration rebase owns them |
 
 ---
+
+# Earlier reports — historical; the sweep part 2A and 2B numbers report above is current
 
 # DG6A: sweep part 1 (fixture pass)
 
