@@ -156,10 +156,18 @@ def checkpoint_witnesses(owner, checker, checkpoint, cp_schema, original_context
     value['index_read_token']['source_selection']['storage_instance_id'] = UUID_OTHER
     count += expect(checker(value, cp_schema, original_context), ['foreign Storage token'], 'checkpoint_selection_storage')
     if server and 'server_id' in checkpoint and 'server_id' in original_context:
-        value = copy.deepcopy(checkpoint)
-        value['server_id'] = UUID_OTHER
-        count += expect(checker(value, cp_schema, original_context), ['foreign original-event context: server_id'],
-                        'checkpoint_server_id')
+        # A same-length foreign id keeps the encoded size, so a parent at the exact 16 KiB cap
+        # (final-regression A2) still reaches the context row rather than the size row.
+        original = checkpoint['server_id']
+        expected = ['foreign original-event context: server_id']
+        for last in 'abx0':
+            value = copy.deepcopy(checkpoint)
+            value['server_id'] = original[:-1] + last
+            if value['server_id'] != original and checker(value, cp_schema, original_context) == expected:
+                count += 1
+                break
+        else:
+            raise AssertionError(('checkpoint_server_id', 'no same-length witness'))
     return count
 
 
