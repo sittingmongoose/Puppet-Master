@@ -42,6 +42,9 @@ html[data-psx-end] #panel-settings .o55-about.icon-btn.psx-end[aria-expanded="tr
 html[data-psx-end] #panel-settings .o55-about.icon-btn.psx-end:focus-visible { outline: 2px solid var(--k3-accent); outline-offset: 2px; }
 /* compact fields: the same word, smaller, in the head */
 html[data-psx-end] #panel-settings .o55-field .o55-about.icon-btn.psx-end { min-height: 24px; height: auto; width: auto; font-size: 11.5px; padding: 2px 4px 2px 6px; }
+/* a compact field's end word never shrinks: its label wraps instead (review A-r1: Retro cut "Details" in 210px fields) */
+html[data-psx-end] #panel-settings .o55-field-head > .o55-about.psx-end { flex: none; }
+html[data-psx-end] #panel-settings .o55-field-head > :not(.o55-about) { min-width: 0; }
 /* the setting's name opens the panel too */
 html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-copy > .setting-label { cursor: pointer; }
 html[data-psx-end]:not([data-psx-end="today"]) #panel-settings .setting-row.o55-row > .setting-copy > .setting-label :is(.o55-changed, .psx-mark2, .o55-risk) { cursor: default; }

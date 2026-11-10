@@ -226,7 +226,8 @@ A blind review of the branch (`REVIEW-concept-A-r1-opus-high.md` in the share fo
   the word Viewing (the frame, the tint and Stop viewing still say it), then "harbor · Studio Mac · iPhone". It refits
   when the window changes; the box never changes size.
 - **The end column** is sized from the widest end word the concept can show, measured in the current look's own font
-  once per look (Retro's monospace cut "Each AI service" at 124px). Every control in a section still lines up.
+  once per look (Retro's monospace cut "Each AI service" at 124px). Every control in a section still lines up. A
+  compact field's end word (the 210px fields beside a service) never shrinks; its label wraps instead.
 - **Libraries** (Your own themes, Sound library, Add a sound) open a library; they are not values. Their panel says
   "Your library · Kept with your settings", and Where it applies has the three parts with their reasons only, with no
   value line and no Change. "Start custom themes from" has a value and stays same-everywhere.

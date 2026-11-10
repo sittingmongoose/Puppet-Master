@@ -103,6 +103,11 @@ const ROWS = () => {
 		else if (spread(ctl) > 1.5) out.bad.push(`${name}: controls end at ${[...new Set(ctl.map((v) => Math.round(v.x)))].join(', ')}`);
 		if (spread(ends) > 1.5) out.bad.push(`${name}: end words start at ${[...new Set(ends.map((v) => Math.round(v.x)))].join(', ')}`);
 	}
+	// and every other end word in Settings (the compact fields beside a service, a manager's rows): none is cut
+	document.querySelectorAll('#pm-settings-root .o55-field .psx-end-word, #pm-settings-root .pm51-mgr .psx-end-word').forEach((w) => {
+		if (!w.getClientRects().length || w.closest('.setting-row.o55-row')) return;
+		if (w.scrollWidth > w.clientWidth + 0.5) { const f = w.closest('.o55-field, .setting-row'); out.bad.push(`a field’s end word “${w.textContent.trim()}” is cut (${w.scrollWidth} > ${w.clientWidth}px) in ${f ? (f.querySelector('.o55-field-label, .setting-label') || {}).textContent || f.className : 'Settings'}`); }
+	});
 	return out;
 };
 
