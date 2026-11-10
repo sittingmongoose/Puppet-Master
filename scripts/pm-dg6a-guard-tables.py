@@ -157,6 +157,7 @@ def run_generic_phase(phase, slot, out, max_rss, per_row):
                    negatives_distinct=len(slot['negatives']), multi_row=[dict(rows=m['rows'], families=m['families'])
                                                                          for m in slot['multi'].values()],
                    rows_without_negative=[r for r in names if not any(n['target'] == r for n in single)],
+                   row_families={r: sorted({f for n in single if n['target'] == r for f in n['families']}) for r in names},
                    lane_matrix=lane_matrix(phase, slot))
     if not controls or not negatives:
         summary.update(tool_status='NOT_RUN', reason='no control' if not controls else 'no negative', proved=[],
@@ -560,6 +561,8 @@ def main():
                                         negatives_distinct=len(slot['negatives']),
                                         multi_row=[dict(rows=m['rows'], families=m['families']) for m in slot['multi'].values()],
                                         rows_without_negative=[r for r in names if not any(n['target'] == r for n in slot['negatives'].values())],
+                                        row_families={r: sorted({f for n in slot['negatives'].values() if n['target'] == r for f in n['families']})
+                                                      for r in names},
                                         lane_matrix=lane_matrix(phase, slot), tool_status='NOT_RUN')
             else:
                 summaries[phase] = run_generic_phase(phase, slot, args.out, args.max_rss, args.per_row)

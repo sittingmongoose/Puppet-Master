@@ -651,6 +651,7 @@ def main():
     checkpoint = fixture['bases']['history']['request']['checkpoint']
     original = fixture['bases']['history']['expected']['event']
     boundary_count = shared.history_response_cases(checkpoint, schemas['checkpoint_schema'], family['event_type'], 'fixture', original)
+    boundary_count += shared.checkpoint_encoding_entailment(schemas['checkpoint_schema'])
     events = [dict(sequence_id=i + 1, event_type=family['event_type'], project_id='fixture', event_ref='pmref:event:e' + str(i)) for i in range(1000)]
     cursor, refs = 0, []
     while cursor < 1000:

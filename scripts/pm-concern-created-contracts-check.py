@@ -370,6 +370,7 @@ def main():
             assert not protocol_errors(dict(context, **request['live']), original), ('settled retry should return original', case['name'])
             count += 1
     count += shared.checkpoint_context_cases(checkpoint, cp_schema, original, checkpoint_errors)
+    count += shared.checkpoint_encoding_entailment(cp_schema)
     count += shared.trailing_lf_cases(checkpoint, cp_schema)
     for field, bad in [('scope_partition', 'fixture'), ('event_refs', ['event'])]:
         value = copy.deepcopy(checkpoint)

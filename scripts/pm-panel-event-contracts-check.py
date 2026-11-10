@@ -304,6 +304,7 @@ def main():
                 assert protocol_errors(current, operation), ('live writer should refuse', case['name'])
                 count += 1
         count += shared.checkpoint_context_cases(checkpoint, cp_schema, operation, checkpoint_errors)
+        count += shared.checkpoint_encoding_entailment(cp_schema)
         count += shared.trailing_lf_cases(checkpoint, cp_schema)
         count += shared.history_response_cases(checkpoint, cp_schema, event, payload['project_id'], operation)
         # Sweep part 2A one-defect witnesses for rows no earlier case refused alone.

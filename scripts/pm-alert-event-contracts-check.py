@@ -470,6 +470,30 @@ def checkpoint_errors(value, schema, original_context):
         facts[field] = not (field in value and field in original_context) or not (value[field] != original_context[field])
     return tables.every('checkpoint_token', **facts)
 
+def checkpoint_encoding_entailment(schema):
+    """checkpoint_encoding_entailed (CZ00) is unreachable for this checkpoint schema.
+
+    Every integer slot is bounded inside 0..2^64-1 (SP-1100 Storage sequences) or fixed by
+    const/enum, and no slot admits a fractional number, so sch_checkpoint refuses every value
+    the canonical MessagePack recipe cannot encode before the encoding row is reached.
+    """
+    def walk(node):
+        if type(node) is dict:
+            kind = node.get('type')
+            kinds = kind if type(kind) is list else [kind]
+            assert 'number' not in kinds, node
+            if 'integer' in kinds and 'const' not in node and 'enum' not in node:
+                assert node.get('minimum') is not None and node['minimum'] >= 0, node
+                assert node.get('maximum') is not None and node['maximum'] <= 18446744073709551615, node
+            for child in node.values():
+                walk(child)
+        elif type(node) is list:
+            for child in node:
+                walk(child)
+    walk(schema)
+    return 1
+
+
 def checkpoint_context_cases(value, schema, original_context, checker=checkpoint_errors):
     count = 0
     foreign = '00000000-0000-4000-8000-000000000002'
@@ -1237,6 +1261,7 @@ def main():
                         assert errors(original_payload, schema, guard), ('live writer should refuse', case['name'])
                         count += 1
                 count += checkpoint_context_cases(baseline, value_schema, original_context)
+                count += checkpoint_encoding_entailment(value_schema)
                 regression = copy.deepcopy(baseline)
                 regression['event_refs'] = ['event_0']
                 assert len(packed(regression)) < 16384 and checkpoint_errors(regression, value_schema, original_context)
