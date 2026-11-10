@@ -248,7 +248,12 @@
   function offWhere(body, now, id) {
     const off = PSX.offLadder || {};
     const look = off.look && off.look.test(id), cred = !look && off.credential && off.credential.test(id);
-    if (!look && !cred) return;
+    if (!look && !cred) {
+      // a row that belongs to one thing but is drawn as a plain row: the same three parts as an account's own rows
+      const eng = [...body.querySelectorAll(':scope > section.o55-insp-block')].find((x) => /^Where it applies$/i.test(((x.querySelector('h4') || {}).textContent || '').trim()));
+      if (eng && now && /Each [\w ]+? can have its own/i.test(eng.textContent)) perWhere(body, now);
+      return;
+    }
     body.querySelectorAll(':scope > [data-psx-block="where"]').forEach((n) => n.remove());
     hideEngineWhere(body);
     const sec = D.createElement('section');
@@ -597,6 +602,7 @@
       g.insertAdjacentHTML('beforeend', `<div class="psx-wrest">Accounts: none has its own. A service’s own value beats the project and everywhere for that service’s work.</div>`);
     }
     // how the parts combine (only rows where that matters), always after the three parts
+    if (def.run) sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule">This is the value each run starts with. A run can also choose its own, for that run only.</p>`);
     if (def.safety) sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule">For safety, the more careful of a computer’s and a project’s own choice is used.</p>`);
     if (def.combine === 'computer_ceiling') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule">For limits, a computer’s own value is the most any project there can use.</p>`);
     if (id === 'general.visual.theme') sec.insertAdjacentHTML('beforeend', `<p class="psx-wrule">The look and light or dark always come from the same place; a project’s own look beats a device’s.</p>`);

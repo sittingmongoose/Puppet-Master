@@ -5,7 +5,7 @@
    through PSX.write, which admits each part before the world changes:
      first start     nothing is kept before a computer is set up (SETTINGS-PROPOSAL 7.14)
      the device      a Member's device changes only its own screen values: level device, its own key (7.10); viewing
-                     another device in Change view never gives its rights (S.actor is the device in use, S.ctx.device
+                     another device's screen in the header's Change never gives its rights (S.actor is the device in use, S.ctx.device
                      the screen being viewed)
      the level       a row only takes the levels it offers (1.3), and its own type, range and choices
      the writer      the computer that keeps that level must be answering; nothing is queued (7.1, 7.5)
