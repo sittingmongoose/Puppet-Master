@@ -116,8 +116,8 @@
         attention: [{ code: 'signed_out', key: 'waiting', title: 'Sign in to GitLab again', text: 'Merge requests and pipelines need it. Sending changes over SSH still works; 1 change is ready to send.', actions: ['sign_in', 'details'] }]
       },
       {
-        id: 'loom', name: 'loom', glyph: 'layers', active: false, lifecycle: 'listed', order: 2, runsOn: 'studio',
-        home: 'here', work: { mode: 'chosen', by: 'Jared', allowed: ['here', 'studio'] }, workers: [],
+        id: 'loom', name: 'loom', glyph: 'layers', active: false, lifecycle: 'listed', order: 2, runsOn: 'here',
+        home: 'here', work: { mode: 'chosen', chosen: 'studio', by: 'Jared', allowed: ['here', 'studio'] }, workers: [],
         stack: ['Rust', 'Slint'],
         where: { kind: 'local', label: 'This computer', path: '~/Projects/loom' },
         opened: 'Yesterday', openedRank: 2,
@@ -1006,9 +1006,9 @@
       const p = get(id); if (!p || !pol) return;
       const name = (c) => (ENV.computers.find((x) => x.id === c) || { name: c }).name;
       await run(id, 'computer', 'Changing where work runs', [{ label: 'Checking ' + pol.allowed.map(name).join(', '), ms: 700 }, { label: 'Saving the work choice', ms: 500 }], () => {
-        p.runsOn = pol.def; p.work = { mode: pol.mode, by: pol.mode === 'chosen' ? 'Jared' : null, allowed: pol.allowed.slice() };
+        p.runsOn = pol.def; p.work = { mode: pol.mode, chosen: pol.mode === 'chosen' ? pol.chosen : null, by: pol.mode === 'chosen' ? 'Jared' : null, allowed: pol.allowed.slice() };
       }, { cmd: 'cmd.project.execution_policy.set' });
-      toast(p.name + ': ' + (pol.mode === 'auto' ? 'Auto' : 'Chosen: ' + name(pol.def)), (pol.mode === 'auto' ? 'New work goes to the best of ' + pol.allowed.map(name).join(', ') + '. ' : 'New work runs on ' + name(pol.def) + '. ') + 'Running work stays where it is, and no files moved.', 'success');
+      toast(p.name + ': ' + (pol.mode === 'auto' ? 'Auto' : 'Chosen: ' + name(pol.chosen)), (pol.mode === 'auto' ? 'New work goes to the best of ' + pol.allowed.map(name).join(', ') + '. ' : 'New work runs on ' + name(pol.chosen) + '; the default Computer stays ' + name(pol.def) + '. ') + 'Running work stays where it is, and no files moved.', 'success');
     },
     moveComputer(id) { const p = get(id); if (p) toast('Move ' + p.name, 'Opens Move to take ' + p.name + ' to another computer. Its files, history and settings go with it.', 'info'); },
     /* cmd.source_control.repository.bind after the check (6.9.2); a folder with no link needs the add-remote Gap */
@@ -1032,10 +1032,40 @@
     async getOriginal(id) {
       const p = get(id); if (!p || !p.online || !p.online.upstream) return;
       const up = p.online.upstream, jj = p.history && p.history.backend === 'jujutsu', n = up.behind || 0;
+      // (GUIDED-FLOWS 6.07) a change that clashes with yours pauses here for you to settle; nothing is sent or forced
+      if (S.world.facts.syncClash) {
+        const base = p.history.defaultBranch || 'main', files = ['sorter/rules.py'];
+        await run(id, 'sync', 'Getting the latest from the original', [{ label: 'Fetching ' + up.repo + ' (the original)', ms: 700 }, { label: 'Bringing its changes into ' + base + ' here', ms: 800 }], () => {
+          p.online.clash = { files, n, base, jj }; dropAttention(p, 'original_newer');
+          p.attention.push({ code: 'sync_clash', key: 'waiting', title: 'Getting the latest paused', text: up.repo + ' changed ' + files.join(', ') + ' where your ' + base + ' line changed it too. Nothing was sent, and your branch ' + (up.branch || 'my-change') + ' is untouched. Settle it, or put everything back.', actions: ['settle_clash', 'abort_sync'] });
+        }, { cmd: jj ? 'cmd.jujutsu.git.fetch + cmd.jujutsu.change.rebase (conflict recorded in the change)' : 'cmd.source_control.remote.fetch + cmd.source_control.remote.sync (paused on conflict)' });
+        toast('Getting the latest paused', '1 file clashes with your work. Settle it on ' + p.name + '’s page, or put everything back.', 'warn');
+        return;
+      }
       await run(id, 'sync', 'Getting the latest from the original', [{ label: 'Fetching ' + up.repo + ' (the original)', ms: 700 }, { label: 'Bringing its ' + n + ' change' + (n === 1 ? '' : 's') + ' into ' + (p.history.defaultBranch || 'main') + ' here, on this computer', ms: 900 }], () => {
         up.behind = 0; p.online.ahead = (p.online.ahead || 0) + n; p.online.note = n + ' to send to your fork'; p.online.state = 'info'; dropAttention(p, 'original_newer');
       }, { cmd: 'gap:fork sync (' + (jj ? 'cmd.jujutsu.git.fetch + cmd.jujutsu.change.rebase' : 'cmd.source_control.remote.fetch + cmd.source_control.remote.sync') + ')' });
       toast(p.name + ' has the original’s latest, here', up.repo + ' · ' + n + ' change' + (n === 1 ? '' : 's') + ' brought in on this computer. Nothing was sent: your fork ' + p.online.repo + ' changes only when you press Send changes. Your branch ' + (up.branch || 'my-change') + ' is as it was. Had they clashed with your work, it would have paused here for you to settle.', 'success');
+    },
+    /* the owner's resolution path for a paused sync: keep yours, take the original's, or a hand merge in Source Control,
+       then the rest comes in; or put everything back as it was */
+    async settleClash(id, how) {
+      const p = get(id); if (!p || !p.online || !p.online.clash) return;
+      const up = p.online.upstream, cl = p.online.clash, n = cl.n || up.behind || 0;
+      const said = { mine: 'Keeping your version of ' + cl.files[0], theirs: 'Taking the original’s version of ' + cl.files[0], merged: 'Using your hand merge of ' + cl.files[0] }[how];
+      await run(id, 'sync', 'Settling the clash', [{ label: said, ms: 600 }, { label: 'Bringing in the rest of the ' + n + ' changes', ms: 700 }], () => {
+        p.online.clash = null; up.behind = 0; p.online.ahead = (p.online.ahead || 0) + n; p.online.note = n + ' to send to your fork'; p.online.state = 'info'; dropAttention(p, 'sync_clash');
+      }, { cmd: cl.jj ? 'cmd.jujutsu.change.resolve' : 'cmd.source_control.merge.resolve' });
+      toast(p.name + ' has the original’s latest, here', said + '. Nothing was sent: your fork changes only when you press Send changes.', 'success');
+    },
+    async abortSync(id) {
+      const p = get(id); if (!p || !p.online || !p.online.clash) return;
+      const up = p.online.upstream, n = p.online.clash.n;
+      await run(id, 'sync', 'Putting it back', [{ label: 'Putting ' + (p.online.clash.base) + ' back as it was', ms: 600 }], () => {
+        p.online.clash = null; up.behind = n; dropAttention(p, 'sync_clash');
+        p.attention.push({ code: 'original_newer', key: 'info', title: n + ' newer in the original', text: up.repo + ' has ' + n + ' changes your fork doesn’t have yet.', actions: ['get_original'] });
+      }, { cmd: 'cmd.source_control.merge.abort' });
+      toast('Put back as it was', 'Nothing from the original came in, and nothing was sent.', 'info');
     },
     /* cmd.forge.review.create: inside one Project it is canon; from a fork to its original it is a Gap */
     offerChanges(id) {
@@ -1174,6 +1204,8 @@
     remove: { label: 'Remove from list', icon: 'close', run: (id) => ACT.remove(id) },
     /* v2 */
     get_original: { label: 'Get the latest from the original', icon: 'download', run: (id) => ACT.getOriginal(id) },
+    settle_clash: { label: 'Settle it…', icon: 'swap', run: (id) => emit('need-clash', { id }) },
+    abort_sync: { label: 'Put everything back', icon: 'reset', run: (id) => ACT.abortSync(id) },
     finish_backup: { label: 'Finish setting up', icon: 'safe', run: (id) => emit('need-backup', { id, step: 'finish' }) }
   };
 

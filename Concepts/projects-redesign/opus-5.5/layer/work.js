@@ -39,9 +39,11 @@
 
   function policy(p) {
     const wk = p.work || {}, def = p.runsOn || 'here';
-    return { mode: wk.mode === 'chosen' ? 'chosen' : 'auto', by: wk.by || null, def, allowed: uniq([def].concat(wk.allowed || [])) };
+    // the chosen Computer is its own answer: the default Computer only sets the Project up and breaks ties (SIR-056)
+    const chosen = wk.chosen || def;
+    return { mode: wk.mode === 'chosen' ? 'chosen' : 'auto', by: wk.by || null, def, chosen, allowed: uniq([def].concat(wk.allowed || []).concat(wk.mode === 'chosen' ? [chosen] : [])) };
   }
-  const choiceWord = (p) => { const k = policy(p); return k.mode === 'auto' ? w('wk.auto') : w('wk.chosenBy', { computer: cname(k.def), who: k.by || 'Jared' }); };
+  const choiceWord = (p) => { const k = policy(p); return k.mode === 'auto' ? w('wk.auto') : w('wk.chosenBy', { computer: cname(k.chosen), who: k.by || 'Jared' }); };
   const rowWord = (x) => (x.mode === 'chosen' ? w('wk.chosenBy', { computer: cname(x.c), who: x.by || 'Jared' }) : w('wk.autoTo', { computer: cname(x.c) }));
   const workingNow = (p) => uniq((p.workers || []).filter((x) => !x.waiting).map((x) => x.c));
   const homeWord = (p) => { const c = comp(p.home || 'here'); return c ? (c.id === 'here' ? c.name + ' (' + c.short + ')' : c.name) : '—'; };
@@ -52,7 +54,7 @@
     return [
       { k: w('wk.f.home'), v: homeWord(p), tip: w('wk.f.homeTip') },
       { k: w('wk.f.choice'), v: choiceWord(p) },
-      { k: w('wk.f.default'), v: cname(k.def) + (k.mode === 'auto' ? ' · ' + w('wk.f.tie') : '') },
+      { k: w('wk.f.default'), v: cname(k.def) + ' · ' + (k.mode === 'auto' ? w('wk.f.tie') : w('wk.f.tieLater')) },
       { k: w('wk.f.allowed'), v: andList(k.allowed.map(cname)) },
       { k: w('wk.f.now'), v: now.length ? andList(now.map(cname)) + ' · ' + w(n === 1 ? 'wk.f.task' : 'wk.f.tasks', { n }) : w('wk.f.none') }
     ];
@@ -104,6 +106,10 @@
       body.appendChild(fl.group(w('wk.why.others'), fl.facts(others)));
       body.appendChild(u.hint(w('wk.why.tie', { project: p.name, computer: cname(k.def) })));
     }
+    body.appendChild(fl.group(w('wk.why.policyCap'), fl.facts([
+      { key: 'info', text: x.mode === 'chosen' ? w('wk.why.presetPinned') : w('wk.why.preset') },
+      { key: 'info', text: w('wk.why.weights') },
+      { key: 'info', text: w('wk.why.version') }])));
     body.appendChild(u.line(null, w('wk.why.policy'), { icon: 'settings', after: u.link(w('wk.settingsLink'), () => goSettings(), { key: 'wk:whysettings', cmd: 'cmd.settings.open' }) }));
     const dlg = PJX.dialog({ title: w('wk.why.title', { computer: cname(x.c) }), kicker: x.task, body, wide: true, actions: [{ spacer: true }, { label: w('np.done.ok'), primary: true, run: () => dlg.close('ok') }] });
     return dlg;
@@ -117,16 +123,19 @@
      holds the edit: { mode, def, allowed: {id: bool} } */
   function form(p, ip, redraw) {
     const u = U(), k = policy(p);
-    if (!ip.wk) ip.wk = { mode: k.mode, def: k.def, allowed: k.allowed.reduce((a, c) => { a[c] = true; return a; }, {}) };
-    const e = ip.wk, allowedList = () => uniq([e.def].concat(Object.keys(e.allowed).filter((c) => e.allowed[c])));
+    if (!ip.wk) ip.wk = { mode: k.mode, def: k.def, chosen: k.chosen, allowed: k.allowed.reduce((a, c) => { a[c] = true; return a; }, {}) };
+    const e = ip.wk, allowedList = () => uniq([e.def].concat(Object.keys(e.allowed).filter((c) => e.allowed[c])).concat(e.mode === 'chosen' ? [e.chosen] : []));
     const box = h('div.pjxc-form.pjx-wk-form');
     box.appendChild(u.line('info', w('wk.form.lead')));
     box.appendChild(u.group(w('wk.form.choice'), u.choices('wk:mode', [
       { id: 'auto', glyph: 'sparkle', title: w('wk.auto'), sub: w('wk.form.autoSub'), tag: w('np.svc.recommended') },
-      { id: 'chosen', glyph: 'pin', title: w('wk.form.chosen', { computer: cname(e.def) }), sub: w('wk.form.chosenSub', { computer: cname(e.def) }) }
+      { id: 'chosen', glyph: 'pin', title: w('wk.form.chosenPick'), sub: w('wk.form.chosenPickSub') }
     ], e.mode, (v) => { e.mode = v; redraw(); }, { label: w('wk.form.choice') })));
+    // the Computer chosen for the work: its own answer, apart from the default Computer
+    if (e.mode === 'chosen') box.appendChild(u.group(w('wk.form.chosenQ'), u.seg('wk:chosen', ENV.computers.map((c) => ({ id: c.id, title: c.name, sub: c.detail })), e.chosen, (v) => { e.chosen = v; e.allowed[v] = true; redraw(); }, w('wk.form.chosenQ')),
+      u.hint(w('wk.form.chosenSub', { computer: cname(e.chosen) }))));
     box.appendChild(u.group(w('wk.f.default'), u.seg('wk:def', ENV.computers.map((c) => ({ id: c.id, title: c.name, sub: c.detail })), e.def, (v) => { e.def = v; e.allowed[v] = true; redraw(); }, w('wk.f.default')),
-      u.hint(e.mode === 'auto' ? w('wk.form.defAuto') : w('wk.form.defChosen'))));
+      u.hint(e.mode === 'auto' ? w('wk.form.defAuto') : w('wk.form.defChosen', { computer: cname(e.chosen) }))));
     const checks = h('div.pjx-wk-allowed', { role: 'group', 'aria-label': w('wk.form.allowed') });
     ENV.computers.forEach((c) => {
       const isDef = c.id === e.def, has = c.id === p.runsOn || (c.id === 'homenas' && p.where.device === 'Home NAS');
@@ -138,12 +147,13 @@
     box.appendChild(u.line(null, w('wk.form.presets'), { icon: 'settings', after: u.link(w('wk.settingsLink'), () => goSettings(), { key: 'wk:settings', cmd: 'cmd.settings.open' }) }));
     const yl = u.yoloLine(w('wk.yolo'), { asks: false });
     if (yl) box.appendChild(yl);
-    return { node: box, changed: () => e.mode !== k.mode || e.def !== k.def || allowedList().join() !== k.allowed.join(), value: () => ({ mode: e.mode, def: e.def, allowed: allowedList() }) };
+    return { node: box, changed: () => e.mode !== k.mode || e.def !== k.def || (e.mode === 'chosen' && e.chosen !== k.chosen) || allowedList().join() !== k.allowed.join(), value: () => ({ mode: e.mode, def: e.def, chosen: e.mode === 'chosen' ? e.chosen : null, allowed: allowedList() }) };
   }
 
   /* New Project › Where it lives: Auto by default, the default Computer (the draft's runsOn: it sets the Project up and
      breaks ties), and the person's allowed set, which registration must record (SIR-056: never every Computer found) */
-  function npAllowed(s) { const d = s.d, a = (d.work && d.work.allowed) || {}; return uniq([d.runsOn].concat(Object.keys(a).filter((c) => a[c]))); }
+  function npAllowed(s) { const d = s.d, a = (d.work && d.work.allowed) || {}; return uniq([d.runsOn].concat(Object.keys(a).filter((c) => a[c])).concat(d.work && d.work.mode === 'chosen' ? [npChosen(s)] : [])); }
+  const npChosen = (s) => (s.d.work && s.d.work.chosen) || s.d.runsOn;
   function npBlock(s, opts) {
     opts = opts || {};
     const u = U(), d = s.d;
@@ -152,8 +162,9 @@
     box.appendChild(u.cap(w('wk.np.title')));
     box.appendChild(u.choices('wk:np:mode', [
       { id: 'auto', glyph: 'sparkle', title: w('wk.auto'), sub: w('wk.np.autoSub'), tag: w('np.svc.recommended') },
-      { id: 'chosen', glyph: 'pin', title: w('wk.form.chosen', { computer: cname(d.runsOn) }), sub: w('wk.form.chosenSub', { computer: cname(d.runsOn) }) }
+      { id: 'chosen', glyph: 'pin', title: w('wk.form.chosenPick'), sub: w('wk.form.chosenPickSub') }
     ], d.work.mode, (v) => { d.work.mode = v; s.changed(); }, { label: w('wk.np.title') }));
+    if (d.work.mode === 'chosen') box.appendChild(h('div.pjx-np-field', null, u.cap(w('wk.form.chosenQ')), u.seg('wk:np:chosen', ENV.computers.map((c) => ({ id: c.id, title: c.name, sub: c.detail })), npChosen(s), (v) => { d.work.chosen = v; d.work.allowed[v] = true; s.changed(); }, w('wk.form.chosenQ')), u.hint(w('wk.form.chosenSub', { computer: cname(npChosen(s)) }))));
     if (opts.defSeg) box.appendChild(h('div.pjx-np-field', null, u.cap(w('wk.f.default')), opts.defSeg, u.hint(w('wk.np.defHint'))));
     const checks = h('div.pjx-wk-allowed', { role: 'group', 'aria-label': w('wk.form.allowed') });
     ENV.computers.forEach((c) => {
@@ -166,7 +177,7 @@
     box.appendChild(u.line(null, w('wk.form.presets'), { icon: 'settings', after: u.link(w('wk.settingsLink'), () => PJX.toast(w('wk.settingsToast'), w('wk.settingsToastText'), 'info'), { key: 'wk:np:settings', cmd: 'cmd.settings.open' }) }));
     return box;
   }
-  const npChoice = (s) => { const d = s.d, m = (d.work && d.work.mode) || 'auto'; return m === 'auto' ? w('wk.auto') : w('wk.form.chosen', { computer: cname(d.runsOn) }); };
+  const npChoice = (s) => { const d = s.d, m = (d.work && d.work.mode) || 'auto'; return m === 'auto' ? w('wk.auto') : w('wk.form.chosen', { computer: cname(npChosen(s)) }); };
 
-  PJX.work = { OBS, policy, choiceWord, rowWord, workingNow, homeWord, facts, rows, why, form, npBlock, npAllowed, npChoice, comp, cname };
+  PJX.work = { OBS, policy, choiceWord, rowWord, workingNow, homeWord, facts, rows, why, form, npBlock, npAllowed, npChosen, npChoice, comp, cname };
 })(window);

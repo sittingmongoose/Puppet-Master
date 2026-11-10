@@ -96,6 +96,13 @@ The report is `CONCEPT-FIX-REPORT-B.md` in the same folder.
   uncertain fork checked before Continue setup, and the original's changes fetched and brought in here before a separate
   send to your fork.
 
+Fix round B-r1 (review `REVIEW-concept-B-r1-opus-high.md`): History's row More opens its own menu inside the flyout;
+the first no-project message is kept in state, cleared before any redraw and sent once; Chosen has its own Computer,
+apart from the default Computer; another Project switches and opens an empty chat; a message in the moved chat or the
+concept's clock passing the deadline ends Undo; "Get the latest from the original" can pause on a clash with its
+resolution path; Why this computer names the preset, weights and policy version; account rows check every allowed
+Computer.
+
 New files: `layer/chat.js` (the no-project chat surfaces), `layer/work.js` (where work runs), `layer/fix.css`, and
 `tools/checks/` (browser-check: `noproject.check.mjs`, `work.check.mjs`; run them with
 `browser-check run Concepts/projects-redesign/opus-5.5/tools/checks --set page=<dir>/projects-concepts.html` after

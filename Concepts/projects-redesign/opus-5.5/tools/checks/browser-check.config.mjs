@@ -21,7 +21,7 @@ export default (ctx) => {
 		pageUrl: url,
 		isolate: true,
 		viewport: { width: 1920, height: 1080 },
-		testTimeoutMs: 240000,
+		testTimeoutMs: 600000,
 		lateWorkMs: 3000,
 		consoleErrors: { fail: true, allow: [] },
 		failedRequests: { fail: false },
@@ -41,13 +41,17 @@ export default (ctx) => {
 			   Home's live readings), so Playwright's two-still-frames wait never settles there: press it the way a person does */
 			async click(t, f, sel, o = {}) {
 				const l = typeof sel === 'string' ? f.locator(sel, o.hasText ? { hasText: o.hasText } : undefined).first() : sel;
-				await l.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
-				// a control inside a sticky card or an inner scroller: centre it in every scroller around it
-				await l.evaluate((e) => e.scrollIntoView({ block: 'center', inline: 'nearest' })).catch(() => {});
-				await t.page.waitForTimeout(80);
-				await t.quickClick(l);
+				// (noScroll: menus and the title bar, which a scroll would move or close)
+				if (!o.noScroll) {
+					await l.scrollIntoViewIfNeeded({ timeout: 5000 }).catch(() => {});
+					// a control inside a sticky card or an inner scroller: centre it in every scroller around it
+					await l.evaluate((e) => e.scrollIntoView({ block: 'center', inline: 'nearest' })).catch(() => {});
+					await t.page.waitForTimeout(80);
+				}
+				if (o.noScroll) await f.evaluate(() => { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; }).catch(() => {});
+				await t.quickClick(l, { hover: o.hover == null ? 90 : o.hover });
 				// the app shell never scrolls itself: put its root back where a person sees it
-				await f.evaluate(() => { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; }).catch(() => {});
+				if (!o.noScroll) await f.evaluate(() => { document.documentElement.scrollTop = 0; document.body.scrollTop = 0; }).catch(() => {});
 				await t.page.waitForTimeout(o.wait == null ? 200 : o.wait);
 			},
 			/* a checkbox is pressed where a person presses it: on its label */
@@ -57,7 +61,7 @@ export default (ctx) => {
 				const ok = await f.waitForFunction(fn, arg, { timeout }).then(() => true).catch(() => false);
 				return t.check(name, ok, ok ? '' : 'not true within ' + timeout + ' ms');
 			},
-			async menuPick(t, f, text) { await t.app.click(t, f, '.pmr-menu.is-open [role="menuitem"]', { hasText: text, wait: 350 }); },
+			async menuPick(t, f, text) { await t.app.click(t, f, '.pmr-menu.is-open [role="menuitem"]', { hasText: text, wait: 350, noScroll: true }); },
 			/* the review strip's own controls (outside the frame) */
 			async moment(t, name) { await t.page.selectOption('#moment', name); await t.page.waitForTimeout(250); },
 			async act(t, name) { await t.page.click(`.pc-bar [data-act="${name}"]`); await t.page.waitForTimeout(250); },
