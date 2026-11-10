@@ -2363,8 +2363,10 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
   let composerMeasureCache=null;
   function syncComposerCompact(){
     if(measuringCompact) return;
-    const box=document.querySelector('.composer-box');
-    const tools=document.querySelector('.composer-tools');
+    // FO-143: only this chat's own composer (#pmRoot), never another surface's .composer-box on the same page
+    const own=document.getElementById('pmRoot')||document;
+    const box=own.querySelector('.composer-box[data-k="composer-box"]');
+    const tools=own.querySelector('.composer-tools');
     if(!box||!tools) return;
     const slack=8;
     if(box.clientWidth<=320){
@@ -2531,7 +2533,7 @@ write overhead       +4.8%</div><h2>Subgoals</h2><p>1. Measure the current path.
       if(chromeSyncFrame!==null)return;
       chromeSyncFrame=requestAnimationFrame(runChromeSync);
     });
-    const next=new Set(document.querySelectorAll('.composer-box,.composer-tools,.chat-stage>.composer,.decision-host,.activity-wrap,.chat-float,.lens-inline'));
+    const next=new Set((document.getElementById('pmRoot')||document).querySelectorAll('.composer-box,.composer-tools,.chat-stage>.composer,.decision-host,.activity-wrap,.chat-float,.lens-inline'));
     for(const n of chromeObserved)if(!next.has(n))composerRO.unobserve(n);
     for(const n of next)if(!chromeObserved.has(n))composerRO.observe(n);
     chromeObserved=next;
