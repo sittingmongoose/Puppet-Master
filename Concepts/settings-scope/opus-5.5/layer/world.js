@@ -535,6 +535,7 @@
     const m = {
       id: uid('menu'), label: opts.label || 'Actions',
       search: opts.search != null ? opts.search : false,
+      searchPlaceholder: opts.placeholder || undefined,
       groups: gs.map((g) => ({ label: g.label, items: g.items.filter(Boolean).map((it) => { const id = uid('mi'); count++; map.set(id, it); return { id, label: it.label, meta: it.disabled && typeof it.disabled === 'string' ? it.disabled : it.meta, icon: it.icon, disabled: it.disabled || null }; }) }))
     };
     if (opts.search == null && count > 8) m.search = true;

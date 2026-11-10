@@ -3,7 +3,7 @@
    One sheet, two places:
      Settings › Settings Transfer   a primary choice at the top, "Copy settings from another project", into this project
      New Project (a moment)          Split v2's section `like`, "Start like another Project?", for a new project
-                                     recipe-box that will work on Home NAS
+                                     recipe-box whose default computer is Home NAS
    A copy brings what makes the source different (its own values, its own things, its AI account choices), once, with
    no live link afterwards. Advanced (the one disclosure) picks by kind, by setting and by thing, and "Keep them fixed"
    copies everything as the source has it. Sign-ins and keys never move; an account already signed in on the computer
@@ -171,7 +171,7 @@
       uses(st.src).forEach((k) => { st.accts[k] = 'same'; });
     };
     seed();
-    const subFor = () => (mode === 'new' ? `${t('np.like.lead')} recipe-box will work on ${placeName('computer', dstComp())}.` : st.dst ? `Into ${st.dst}${st.dst === c.project ? ' (this project)' : ''}. What makes the other project different becomes ${st.dst}’s own.` : 'No project is open. Choose the project to copy into first.');
+    const subFor = () => (mode === 'new' ? `${t('np.like.lead')} recipe-box’s default computer is ${placeName('computer', dstComp())}.` : st.dst ? `Into ${st.dst}${st.dst === c.project ? ' (this project)' : ''}. What makes the other project different becomes ${st.dst}’s own.` : 'No project is open. Choose the project to copy into first.');
     const sh = PSX.sheet({
       id: 'copy', size: 'wide', cls: 'psx-copy',
       kicker: mode === 'new' ? 'New Project · recipe-box' : 'Settings Transfer',
