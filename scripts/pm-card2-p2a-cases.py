@@ -347,6 +347,31 @@ def orig_pack(raw_fn, key=None, size=None):
     return edit
 
 
+BOUNDARY_RETRY = 'memory.gist_state_changed/project/retry/round3/boundary-16385'
+LONG_TS = '2026-11-04T00:00:00.000000000Z'
+
+
+def near_boundary(c):
+    """Retry control: a 10-byte longer ts and a 5-byte shorter last evidence pointer (pack, descriptor and both
+    records alike), so the inline form of the same payload is 16,390 bytes: still above 16 KiB, and the original
+    equals the candidate."""
+    values = dcn.memory_evidence(c['event'], c)
+    values = values[:-1] + [values[-1][:-5]]
+    descriptor = new_pack(c, dcn.binding_bytes(values))
+    pl(c)['ts'] = LONG_TS
+    pl(c)['evidence_refs'] = descriptor
+    rec(c, 0)['facts']['evidence_refs'] = list(values)
+    rec(c, 1)['facts']['evidence_refs'] = list(values)
+    c['storage']['event'] = copy.deepcopy(c['event'])
+    L.sync_original(c)
+
+
+accept('control/near-16k-retry', BOUNDARY_RETRY, 'retry control: inline form 16,390 bytes with a long ts (pack and records alike); accepted',
+       near_boundary)
+add('orig-pack-route-short-ts', BOUNDARY_RETRY, 'orig_custody_route',
+    'from the near-16k retry control: the Storage original carries the short ts form, so its inline form is 16,380 bytes and '
+    'needs no SP-337 pack, while the candidate still does',
+    lambda c: (near_boundary(c), orig(c)['payload'].__setitem__('ts', '2026-11-04T00:00:00Z'), L.sync_original(c)))
 add('orig-pack-missing', PACK_RETRY, 'orig_custody_row', 'Storage original names a pack the store does not hold',
     O(lambda s, c: s['payload']['evidence_refs'].__setitem__('id', '0' * 64)))
 add('orig-pack-not-msgpack', PACK_RETRY, 'orig_custody_decode', 'Storage original names a pack whose bytes are not MessagePack',

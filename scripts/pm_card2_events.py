@@ -563,7 +563,8 @@ def tr(name, words, applies, holds, entail=None):
 
 
 def changed_proof(field, value_rows, fact_rows, delta_row):
-    rows = ['transition_' + r for r in value_rows] + fact_rows + [delta_row, 'memory_command_manual', 'memory_command_automatic']
+    rows = ['transition_' + r for r in value_rows] + fact_rows + [delta_row, 'memory_command_manual', 'memory_command_automatic'] + \
+        (['memory_delta_nonempty'] if delta_row.startswith('memory') else [])
     return (rows, field + ' missing from changed_fields: when ' + delta_row + ' holds, changed_fields is the exact record delta, '
             'so the before and after records agree on ' + field + '; when the record-join rows (' + ', '.join(fact_rows) + ') hold, '
             'the payload previous and current values equal those records and so each other, which refuses at '
@@ -1387,7 +1388,7 @@ for name in ['verification_override_type', 'verification_support_type', 'verific
 CUSTODY_FIRST = ['memory_fact_evidence_refs', 'custody_id', 'custody_canonical', 'custody_row', 'custody_decode', 'custody_list_type',
                  'custody_list_pattern', 'custody_list_unique']
 for name in ['custody_authentic', 'custody_durable', 'custody_owner_storage_instance_id', 'custody_owner_server_id',
-             'custody_owner_scope_kind', 'custody_owner_project_id', 'custody_owner_thread_id', 'custody_route']:
+             'custody_owner_scope_kind', 'custody_owner_project_id', 'custody_owner_thread_id']:
     orig_entail(name, CUSTODY_FIRST,
                 'An original naming the candidate pack reads the identical pack row and decoded list, which the candidate row accepts. '
                 'An original naming another pack row: that row decodes to the after-record list only if its bytes are the canonical '
