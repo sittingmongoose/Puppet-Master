@@ -1,12 +1,13 @@
 // FO-127 (Jared's settings feedback #2, 2026-11-09): "Shouldnt the your choices list be a drop down rather than listing
-// every model down the page? you could use the model selector from assistant chat." In the Settings Details panel, a
-// model setting's "Your choices" is one picker (a combobox that opens a listbox: the chat's model selector), not a
-// column of every model; every choice stays reachable through it, by pointer and by keys, in all ten looks, at a
-// standard and a narrow width, with Reduced Motion, on either surface (--set sandbox=0/1). A short list (On/Off) stays
-// a list. Jared's #1 ("that logo looks terrible", most right-side panels), icon option B: the head tile of the Details
-// panel and of every Settings side panel draws the PM glyph (PMG, data-nx, a glyph PMG.has) in a quiet tile, with no
-// outer glow (every box-shadow layer inset). Semantics and geometry only (roles, names, states, hit-tests, boxes,
-// computed styles); no eye. Tile geometry (square, centred) stays settings-inspector-fit's.
+// every model down the page? you could use the model selector from assistant chat." His pick (2026-11-10, "option b"):
+// in the Settings Details panel, a model setting's "Your choices" is one picker (a combobox, the chat's model selector)
+// whose listbox unfolds inside the panel under it, with a strip of maker marks that filters it; every choice stays
+// reachable through it, by pointer and by keys, in all ten looks, at a standard and a narrow width, with Reduced
+// Motion, on either surface (--set sandbox=0/1). Every other list stays a list until Jared says which long lists
+// follow (On/Off and Theme are checked). His #1 ("that logo looks terrible", most right-side panels), pick icon B: the
+// head tile of the Details panel and of every Settings side panel draws the PM glyph (PMG: data-nx, a glyph PMG.has)
+// in a quiet tile with no outer glow (every box-shadow layer inset). Semantics and geometry only (roles, names,
+// states, hit-tests, boxes, computed styles); no eye. Tile geometry (square, centred) stays settings-inspector-fit's.
 //   browser-check run Concepts/pm7-tools/browser-check/checks/settings-choices-picker.check.mjs --set page=<build>
 // --set looks=a,b narrows the looks; --set sizes=1390x900,740x900 the sizes; --set setting=<id> another model setting.
 import { LOOKS } from '../browser-check.config.mjs';
@@ -114,7 +115,10 @@ const OPEN = () => {
 	const hb = host.getBoundingClientRect();
 	const search = host.querySelector('input[type="search"]');
 	const act = document.activeElement;
+	const insp = document.querySelector('#panel-settings .detail-inspector');
+	const ib = insp ? insp.getBoundingClientRect() : null;
 	return {
+		inPanel: !!(insp && insp.contains(host)), panel: ib ? { left: ib.left, right: ib.right } : null,
 		open: true, role: list.getAttribute('role'), label: list.getAttribute('aria-label') || '',
 		total: opts.length, labels: opts.map((o) => o.textContent.trim()), selected: opts.filter((o) => o.getAttribute('aria-selected') === 'true').map((o) => o.textContent.trim()),
 		host: { left: hb.left, right: hb.right, top: hb.top, bottom: hb.bottom }, vw: innerWidth, vh: innerHeight, sbTop,
@@ -163,6 +167,7 @@ async function judgeOpen(t, f, where, b, { still = false } = {}) {
 	const cur = (b.choices.find((c) => c.value === b.value) || {}).label || '';
 	await t.check(`${where}: exactly the current choice is selected`, o.selected.length === 1 && o.selected[0].includes(cur.split(' · ')[0]), JSON.stringify(o.selected));
 	await t.check(`${where}: focus is in its search, with an active option named`, o.searchFocused && o.activeExists, `search focused ${o.searchFocused}, active ${o.activeDesc}`);
+	await t.check(`${where}: the list unfolds inside the Details panel`, o.inPanel && !!o.panel && o.host.left >= o.panel.left - 0.5 && o.host.right <= o.panel.right + 0.5, JSON.stringify({ host: o.host, panel: o.panel }));
 	await t.check(`${where}: the open list is inside the window and above the status bar`, o.host.left >= 0 && o.host.right <= o.vw && o.host.top >= 0 && o.host.bottom <= o.sbTop + 0.5, JSON.stringify({ host: o.host, vw: o.vw, sbTop: o.sbTop }));
 	const covered = o.hits.filter((h) => !h.on);
 	await t.check(`${where}: every option in view is on top (${o.hits.length} hit-tested, 3 or more)`, o.hits.length >= 3 && covered.length === 0, covered.slice(0, 3).map((h) => 'under ' + h.under).join(' | '));
@@ -225,6 +230,29 @@ export const tests = {
 		await t.page.waitForTimeout(400);
 		const o = await f.evaluate(OPEN);
 		await t.check('keys: Arrow Down opens the picker with focus in its search', o.open && o.searchFocused, JSON.stringify({ open: o.open, search: o.searchFocused }));
+		/* the maker strip: one mark per maker plus All; a maker leaves only its own section, All brings every row back */
+		const STRIP = () => {
+			const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]');
+			const list = c && document.getElementById(c.getAttribute('aria-controls'));
+			const host = list && (list.closest('.o55-pick-inline') || list.parentElement);
+			const chips = host ? [...host.querySelectorAll('[role="group"] button[aria-pressed]')] : [];
+			const groups = list ? [...list.querySelectorAll('[role="presentation"]')].filter((g) => !g.hidden && g.getClientRects().length).map((g) => g.textContent.trim()) : [];
+			return { chips: chips.map((b) => ({ label: b.getAttribute('aria-label'), pressed: b.getAttribute('aria-pressed') })), groups, shown: list ? [...list.querySelectorAll('[role="option"]')].filter((n) => !n.hidden).length : 0 };
+		};
+		const s0 = await f.evaluate(STRIP);
+		const makers = s0.groups;
+		await t.check(`keys: the maker strip has All and one mark per maker (${makers.length} makers)`, s0.chips.length === makers.length + 1 && s0.chips[0].pressed === 'true' && makers.every((m) => s0.chips.some((c) => c.label === m)), JSON.stringify(s0.chips));
+		const maker = makers[makers.length - 1];
+		const host = '#panel-settings .detail-inspector [role="group"]';
+		await f.locator(`${host} button[aria-label="${maker}"]`).first().click();
+		await t.page.waitForTimeout(200);
+		const s1 = await f.evaluate(STRIP);
+		await t.check(`keys: the ${maker} mark leaves only its section, and says it is pressed`, s1.groups.length === 1 && s1.groups[0] === maker && s1.shown >= 1 && s1.shown < s0.shown && (s1.chips.find((c) => c.label === maker) || {}).pressed === 'true', JSON.stringify(s1));
+		await f.locator(`${host} button[aria-pressed]`).first().click();
+		await t.page.waitForTimeout(200);
+		const s2 = await f.evaluate(STRIP);
+		await t.check('keys: All brings every row back', s2.shown === s0.shown && s2.groups.length === makers.length, JSON.stringify({ shown: s2.shown, before: s0.shown }));
+		await f.locator('#panel-settings .detail-inspector input[type="search"][role="combobox"]').first().focus();
 		await t.page.keyboard.type(word);
 		await t.page.waitForTimeout(250);
 		const shown = await f.evaluate(() => { const c = document.querySelector('#panel-settings .detail-inspector [role="combobox"][aria-expanded="true"]'); const l = c && document.getElementById(c.getAttribute('aria-controls')); return l ? [...l.querySelectorAll('[role="option"]')].filter((n) => !n.hidden).map((n) => n.textContent.trim()) : []; });
@@ -286,8 +314,8 @@ export const tests = {
 		}
 	},
 
-	/* A short list stays a list: an On/Off setting still shows its two choices as radios, no picker. */
-	'FO-127 short lists stay a list': async (t) => {
+	/* Every other list stays a list: an On/Off setting's two radios, and (until Jared answers) Theme's. */
+	'FO-127 other lists stay lists': async (t) => {
 		const f = await t.app.open();
 		await t.viewport(1390, 900);
 		await f.locator('#tab-settings').click();
@@ -295,6 +323,11 @@ export const tests = {
 		if (!(await openDetails(t, f, 'general.interaction.question-cards'))) return;
 		const b = await f.evaluate(BLOCK, 'general.interaction.question-cards');
 		await t.check('On/Off: "Your choices" keeps its two radios and no picker', b.block && b.radios === 2 && b.combos === 0, `radios ${b.radios}, combobox ${b.combos}`);
+		await closeDetails(t, f);
+		/* Theme has 10 choices; it stays a list until Jared says which long lists follow the models */
+		if (!(await openDetails(t, f, 'general.visual.theme'))) return;
+		const th = await f.evaluate(BLOCK, 'general.visual.theme');
+		await t.check(`Theme: "Your choices" stays a list for now (${th.radios} radios)`, th.block && th.radios >= 2 && th.combos === 0, `radios ${th.radios}, combobox ${th.combos}`);
 		await closeDetails(t, f);
 	}
 };

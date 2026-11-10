@@ -54,26 +54,15 @@ function o55ChoicesFor(setting, current) {
   return null;
 }
 /* FO-127 (Jared, 2026-11-09 #2): "Shouldnt the your choices list be a drop down rather than listing every model down
-   the page? you could use the model selector from assistant chat." A model choice, or any single choice with more than
-   O55_PICK_AT choices, is one picker button instead of a list. It is the chat's picker (5.6 Pro): the
-   shared-picker-button trigger (the maker's mark, the name, a small line, the chevron) and the model menu (a search
-   head, the makers rail, a section per maker, one row per model with the maker's mark from PM56_PICKERS.providerMark),
-   drawn through Settings' own popout (kit.js openListPopout's entry, keys, placement and sprout), so it keeps
-   Settings' looks, keyboard and screen-reader rules. Short lists (On/Off, the five themes) stay a list.
-   PROTOTYPE (phase 1, for Jared's pick): html[data-fo127] a = the chat's menu, floating; b = the same rows unfolding
-   in the panel; list = the old list. ?fo127=a|b|list sets it at load. */
-const O55_PICK_AT = 6;
+   the page? you could use the model selector from assistant chat." Jared's pick (2026-11-10, "option b"): a model
+   setting's Your choices is one picker button, the chat's (5.6 Pro shared-picker-button: the maker's mark, the name, a
+   small line, the chevron), and it unfolds the chat model menu's rows inside the panel under itself: a strip of maker
+   marks (the chat menu's rail, laid flat for the narrow panel), a search box, one section per maker, one row per model
+   with the maker's mark (PM56_PICKERS.providerMark), where it runs, the Default/Recommended tags and the tick. Only the
+   13 model settings: every other list stays a list until Jared says which long lists should follow. */
 const O55_BRANDS = { anthropic: 'Anthropic', 'anthropic-api': 'Anthropic', 'claude-code': 'Anthropic', openai: 'OpenAI', 'openai-codex': 'OpenAI', gemini: 'Google', google: 'Google', 'qwen-coding': 'Alibaba', 'qwen-token': 'Alibaba', alibaba: 'Alibaba', 'kimi-coding': 'Moonshot', moonshot: 'Moonshot', 'zai-coding': 'z.ai', zai: 'z.ai', 'cursor-cli': 'Cursor', cursor: 'Cursor', 'free-models': 'Free routes', opencode: 'OpenCode' };
-(() => {
-  try {
-    const q = new URLSearchParams(location.search), r = document.documentElement;
-    if (!r.dataset.fo127) r.dataset.fo127 = ['b', 'list'].includes(q.get('fo127')) ? q.get('fo127') : 'a';
-    if (!r.dataset.fo127Icon) r.dataset.fo127Icon = ['c', 'old'].includes(q.get('fo127icon')) ? q.get('fo127icon') : 'b';
-  } catch (e) { /* no location in a bare harness */ }
-})();
-const o55PickVariant = () => document.documentElement.dataset.fo127 || 'a';
 const o55IsModelChoice = (setting, items) => /^ai\.models\..*-model$/.test(setting.id) || /(^|\.)default-model$/.test(setting.id) || (items.length > 1 && items.every(it => /^[\w.-]+\/[\w.:-]+$/.test(String(it.raw))));
-const o55UsesPicker = (setting, ch) => !!ch && ch.kind === 'single' && o55PickVariant() !== 'list' && (o55IsModelChoice(setting, ch.items) || ch.items.length > O55_PICK_AT);
+const o55UsesPicker = (setting, ch) => !!ch && ch.kind === 'single' && o55IsModelChoice(setting, ch.items);
 /* the chat's maker mark (PM56_PICKERS.providerMark draws its PROVIDER_MARKS; an unknown maker gets the chat's sparkle),
    or the maker's first letter when the chat is not in the page */
 function o55BrandMark(brand, size) {
@@ -137,40 +126,10 @@ function o55PickCommit(id, raw) {
   back(); requestAnimationFrame(() => requestAnimationFrame(back));
 }
 const o55PickOptions = pm => { const o = []; pm.items.forEach(it => { o[it.index] = { value: it.raw, label: it.name, disabled: !!it.why, reason: it.why || '' }; }); return o; };
-const o55PickBrands = (pm, size, cls) => [`<button type="button" class="${cls} is-on" data-brand="" aria-pressed="true" tabindex="-1" aria-label="All makers" data-pm-hover-label="All makers">${icon('users')}</button>`]
-  .concat(pm.brands.map(b => `<button type="button" class="${cls}" data-brand="${a(b)}" aria-pressed="false" tabindex="-1" aria-label="${a(b)}" data-pm-hover-label="${a(b)}">${o55BrandMark(b, size)}</button>`)).join('');
-/* a: the chat's model menu, floating from the trigger (Settings' popout entry: Escape, Tab, outside press, scroll and
-   resize behave as every Settings dropdown does) */
-function o55PickPopOpen(trigger, setting, pm) {
-  if (pmActive && pmActive.trigger === trigger) { popoutClose({ restoreFocus: true }); return; }
-  popoutClose({ restoreFocus: false });
-  const label = PM51.rowLabel(setting), rail = pm.model && pm.brands.length > 1;
-  const pop = document.createElement('div'); pop.className = 'pm51-popout o55-pick-pop' + (rail ? ' has-rail' : ''); pop.id = POP_ID(); pop.dataset.portalDisplay = 'block';
-  const listId = pop.id + '-list';
-  pop.innerHTML = `<div class="o55-pick-grid">${rail ? `<div class="o55-pick-rail" role="group" aria-label="Show models from">${o55PickBrands(pm, 16, 'o55-pick-railbtn')}</div>` : ''}<div class="o55-pick-main"><div class="pm51-popout-search">${icon('search')}<input type="search" role="combobox" aria-autocomplete="list" aria-controls="${listId}" aria-expanded="true" aria-label="${a('Filter ' + label)}" placeholder="${a(pm.model ? 'Search models…' : 'Search choices…')}"/></div><div class="o55-pick-list" role="listbox" id="${listId}" aria-label="${a(label)}">${o55PickItems(pm, pop.id)}</div></div></div>`;
-  document.body.appendChild(pop);
-  const entry = { kind: 'pick', el: pop, trigger, anchor: trigger, options: o55PickOptions(pm), current: pm.current ? pm.current.raw : null, onCommit: value => o55PickCommit(setting.id, value), active: -1, searchInput: pop.querySelector('input'), typeBuf: '', typeAt: 0, returnFocus: trigger, align: 'left', width: Math.max(300, Math.ceil(trigger.getBoundingClientRect().width)), brand: '' };
-  pmActive = entry;
-  positionPopout(pop, trigger, { width: entry.width });
-  sproutOpen(pop, trigger);
-  trigger.setAttribute('aria-expanded', 'true'); trigger.setAttribute('aria-controls', listId);
-  const sel = pm.items.find(x => x.on), first = pm.items.find(x => !x.why);
-  setActiveOption(entry, (sel || first || { index: -1 }).index, true);
-  pop.addEventListener('pointermove', e => { const it = e.target.closest('[role="option"]'); if (it && Number(it.dataset.index) !== entry.active) setActiveOption(entry, Number(it.dataset.index), false); });
-  pop.addEventListener('click', e => {
-    const rb = e.target.closest('.o55-pick-railbtn');
-    if (rb) {
-      e.preventDefault(); entry.brand = rb.dataset.brand || '';
-      pop.querySelectorAll('.o55-pick-railbtn').forEach(b => { const on = b === rb; b.classList.toggle('is-on', on); b.setAttribute('aria-pressed', String(on)); });
-      o55PickFilter(entry, pop); positionPopout(pop, trigger, { width: entry.width }); entry.searchInput.focus({ preventScroll: true }); return;
-    }
-    const it = e.target.closest('[role="option"]'); if (!it) return; e.preventDefault(); commitOption(entry, Number(it.dataset.index));
-  });
-  entry.searchInput.addEventListener('input', () => { o55PickFilter(entry, pop); positionPopout(pop, trigger, { width: entry.width }); });
-  requestAnimationFrame(() => { if (pmActive === entry) entry.searchInput.focus({ preventScroll: true }); });
-}
-/* b: the same rows unfolding in the panel under the trigger, with the makers as a strip (the panel is too narrow for
-   a rail beside the list); its own keys, since it is not a popout: arrows, Page Up/Down, Home/End, Enter, Escape */
+const o55PickBrands = (pm, size) => [`<button type="button" class="o55-pick-chip is-on" data-brand="" aria-pressed="true" aria-label="All makers" data-pm-hover-label="All makers">${icon('users')}</button>`]
+  .concat(pm.brands.map(b => `<button type="button" class="o55-pick-chip" data-brand="${a(b)}" aria-pressed="false" aria-label="${a(b)}" data-pm-hover-label="${a(b)}">${o55BrandMark(b, size)}</button>`)).join('');
+/* The rows unfold in the panel under the trigger, with the makers as a strip (the panel is too narrow for the chat's
+   rail beside the list). Not a popout, so it keeps its own keys: arrows, Page Up/Down, Home/End, Enter; Escape below. */
 let o55Inline = null;
 function o55InlineClose(focusTrigger) {
   const e = o55Inline; if (!e) return; o55Inline = null;
@@ -180,11 +139,10 @@ function o55InlineClose(focusTrigger) {
 }
 function o55InlineOpen(trigger, setting, pm) {
   if (o55Inline && o55Inline.trigger === trigger) { o55InlineClose(true); return; }
-  o55InlineClose(false); popoutClose({ restoreFocus: false });
+  o55InlineClose(false); PM51.closePopouts();
   const label = PM51.rowLabel(setting), id = POP_ID();
   const box = document.createElement('div'); box.className = 'o55-pick-inline';
-  box.innerHTML = `${pm.model && pm.brands.length > 1 ? `<div class="o55-pick-chips" role="group" aria-label="Show models from">${o55PickBrands(pm, 14, 'o55-pick-chip')}</div>` : ''}<div class="pm51-popout-search o55-pick-search">${icon('search')}<input type="search" role="combobox" aria-autocomplete="list" aria-controls="${id}-list" aria-expanded="true" aria-label="${a('Filter ' + label)}" placeholder="${a(pm.model ? 'Search models…' : 'Search choices…')}"/></div><div class="o55-pick-list" role="listbox" id="${id}-list" aria-label="${a(label)}">${o55PickItems(pm, id)}</div>`;
-  box.querySelectorAll('.o55-pick-chip').forEach(b => b.removeAttribute('tabindex'));
+  box.innerHTML = `${pm.model && pm.brands.length > 1 ? `<div class="o55-pick-chips" role="group" aria-label="Show models from">${o55PickBrands(pm, 14)}</div>` : ''}<div class="pm51-popout-search o55-pick-search">${icon('search')}<input type="search" role="combobox" aria-autocomplete="list" aria-controls="${id}-list" aria-expanded="true" aria-label="${a('Filter ' + label)}" placeholder="${a(pm.model ? 'Search models…' : 'Search choices…')}"/></div><div class="o55-pick-list" role="listbox" id="${id}-list" aria-label="${a(label)}">${o55PickItems(pm, id)}</div>`;
   trigger.insertAdjacentElement('afterend', box);
   const list = box.querySelector('.o55-pick-list');
   const entry = { el: list, trigger, options: o55PickOptions(pm), active: -1, searchInput: box.querySelector('input'), brand: '' };
@@ -217,7 +175,7 @@ function o55InlineOpen(trigger, setting, pm) {
   if (!o55Still()) box.classList.add('is-entering');
 }
 document.addEventListener('pointerdown', e => { const p = o55Inline; if (!p) return; if (p.box.contains(e.target) || p.trigger.contains(e.target)) return; o55InlineClose(false); }, true);
-/* Escape folds the unfolded list (b) and nothing else: registered at load, ahead of the Details panel's own Escape
+/* Escape folds the unfolded list and nothing else: registered at load, ahead of the Details panel's own Escape
    (onDetailEsc, a later capture listener), as kit.js's popout keys are */
 document.addEventListener('keydown', e => {
   const p = o55Inline; if (!p || e.key !== 'Escape' || !(p.box.contains(e.target) || p.trigger.contains(e.target))) return;
@@ -238,14 +196,14 @@ function o55ChoicesHtml(setting, ch) {
   if (o55UsesPicker(setting, ch)) return o55PickerHtml(setting, ch);
   return `<section class="o55-insp-block"><h4>${ch.kind === 'multi' ? 'Choose any' : 'Your choices'}</h4><div class="o55-insp-choices" role="${ch.kind === 'multi' ? 'group' : 'radiogroup'}" aria-label="${a(PM51.rowLabel(setting))}">${ch.items.map(it => `<button type="button" class="o55-insp-choice${it.on ? ' is-on' : ''}" role="${ch.kind === 'multi' ? 'checkbox' : 'radio'}" aria-checked="${it.on}" data-action="o55-insp-choose" data-setting="${a(setting.id)}" data-kind="${ch.kind}" data-value="${a(typeof it.raw === 'boolean' ? (it.raw ? '__true' : '__false') : it.raw)}"${it.why ? ` aria-disabled="true" data-disabled-reason="${a(it.why)}"` : ''}><span class="o55-insp-mark">${it.on ? icon('check') : ''}</span>${it.swatch ? `<span class="o55-insp-dot" aria-hidden="true" style="background:${it.swatch}"></span>` : ''}<span class="o55-insp-choice-copy"><span class="o55-insp-choice-label">${h(it.label)}${it.marks.map(m => `<em>${h(m)}</em>`).join('')}</span>${it.why || it.hint ? `<span class="o55-insp-choice-hint">${h(it.why || it.hint)}</span>` : ''}</span></button>`).join('')}</div></section>`;
 }
-/* FO-127 (moved from FO-122, Jared #1: "that logo looks terrible", on most right-side panels): the head tile of the
-   Details panel and of every Settings side panel (PM51.panel's hero). PROTOTYPE (phase 1): html[data-fo127-icon]
-   b = the PM glyph (PMG, the shell's neon set, as the rail draws it) in a quiet tile; c = the settings glyph reweighted
-   in a quiet tile; old = as before. ?fo127icon=b|c|old sets it at load. */
-const O55_PMG_NAMES = { memory: 'database', system: 'server', archive: 'vault', brackets: 'puzzle', test: 'flask', map: 'route', branch: 'branch' };
+/* FO-127 (moved from FO-122, Jared #1: "that logo looks terrible", on most right-side panels; his pick, 2026-11-10:
+   "For the header icons B"): the head tile of the Details panel and of every Settings side panel (PM51.panel's hero)
+   draws the PM glyph (PMG, the shell's neon set the rail and the chat use) in a quiet tile, no accent ring or glow
+   (30-inspector.css). A chapter glyph PMG lacks takes its PMG neighbour; without PMG the settings glyph stays. */
+const O55_PMG_NAMES = { memory: 'database', system: 'server', archive: 'vault', brackets: 'puzzle', test: 'flask', map: 'route' };
 function o55HeadGlyph(name, size) {
   const G = window.PMG;
-  if (document.documentElement.dataset.fo127Icon === 'b' && G && typeof G.icon === 'function' && typeof G.has === 'function') {
+  if (G && typeof G.icon === 'function' && typeof G.has === 'function') {
     const n = [O55_PMG_NAMES[name], name].find(x => x && G.has(x));
     if (n) { try { return `<span class="icon o55-head-pmg">${G.icon(n, size || 20)}</span>`; } catch (e) { /* fall back to the settings glyph */ } }
   }
@@ -381,7 +339,7 @@ dispatchAction = function (action, el, event) {
   if (action === 'o55-insp-pick') {
     const found = findSettingGlobal(el.dataset.setting); if (!found) return;
     const ch = o55ChoicesFor(found.setting, settingValue(found.setting)); if (!ch) return;
-    (o55PickVariant() === 'b' ? o55InlineOpen : o55PickPopOpen)(el, found.setting, o55PickModel(found.setting, ch)); return;
+    o55InlineOpen(el, found.setting, o55PickModel(found.setting, ch)); return;
   }
   if (action === 'reset-setting') {
     const id = el.dataset.setting, found = findSettingGlobal(id); if (!found || !restoreSettingDefault(id)) return;
