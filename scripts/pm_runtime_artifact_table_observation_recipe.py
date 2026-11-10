@@ -10,20 +10,26 @@ FIELDS names every observation the rows read; the checker passes no other.
 """
 import pm_guard_isolation as g
 
-FIELDS = ('decoder',)
+FIELDS = ('dispatch_refusal',)
 
 
 def O12_recorded_recipe(value, context):
-    return 'observation_refused' if value['decoder'] not in ('current-writer', 'historical-v1-before-provider-hash') else None
+    return 'observation_refused' if value['dispatch_refusal'] in ('recipe_unknown', 'recipe_selection') else None
+
+
+def O14_predecessor_binding(value, context):
+    return 'observation_refused' if value['dispatch_refusal'] == 'original_binding' else None
 
 
 def recipe_case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('O12_recorded_recipe', g.Invariant('/recorded_decoder', 'the authenticated write-time recipe is supported'), 'observation_refused', O12_recorded_recipe),
+        g.Guard('O12_recorded_recipe', g.Invariant('/recorded_decoder', 'the authenticated write-time recipe has an installed frozen verifier (SP-1101 RetainedDispatcher)'), 'observation_refused', O12_recorded_recipe),
+        g.Guard('O14_predecessor_binding', g.Invariant('/predecessor_source/authenticated_original', 'the authenticated predecessor binding equals the supplied predecessor (SP-1101 RetainedDispatcher)'), 'observation_refused', O14_predecessor_binding),
     ])
 
     def check(value):
         table.require('O12_recorded_recipe', value, context)
+        table.require('O14_predecessor_binding', value, context)
         return True
     return g.Case(table, check, context)

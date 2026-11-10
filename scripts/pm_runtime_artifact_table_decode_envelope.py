@@ -33,8 +33,12 @@ def D03c_redaction(value, context):
     return 'wrong scope/replay/redaction' if value['redaction_profile'] != 'no_secrets' else None
 
 
+def D04q_inline_jcs(value, context):
+    return 'unqualified JCS payload' if value['route'] == 'inline' and value['inline_size'] is None else None
+
+
 def D04_inline_size(value, context):
-    return 'oversized inline' if value['route'] == 'inline' and (value['inline_size'] is None or value['inline_size'] > 16384) else None
+    return 'oversized inline' if value['route'] == 'inline' and value['inline_size'] is not None and value['inline_size'] > 16384 else None
 
 
 def envelope_case(value):
@@ -45,6 +49,7 @@ def envelope_case(value):
         g.Guard('D03a_scope', g.Invariant('/scope_kind', 'is project'), 'wrong scope/replay/redaction', D03a_scope),
         g.Guard('D03b_replay', g.Invariant('/replay_policy', 'is dedupe_by_idempotency_key'), 'wrong scope/replay/redaction', D03b_replay),
         g.Guard('D03c_redaction', g.Invariant('/redaction_profile', 'is no_secrets'), 'wrong scope/replay/redaction', D03c_redaction),
+        g.Guard('D04q_inline_jcs', g.Invariant('/inline_size', 'an inline payload has a qualified RFC 8785 encoding (CV-1100 qualified_jcs)'), 'unqualified JCS payload', D04q_inline_jcs),
         g.Guard('D04_inline_size', g.Invariant('/inline_size', 'an inline payload has a canonical encoding of at most 16384 bytes'), 'oversized inline', D04_inline_size),
     ])
 
@@ -54,6 +59,7 @@ def envelope_case(value):
         table.require('D03a_scope', value, context)
         table.require('D03b_replay', value, context)
         table.require('D03c_redaction', value, context)
+        table.require('D04q_inline_jcs', value, context)
         table.require('D04_inline_size', value, context)
         return True
     return g.Case(table, check, context)

@@ -8,10 +8,10 @@ import copy
 import argparse
 import ast
 import base64
+from contextlib import contextmanager
 import hashlib
 import importlib
 import json
-import math
 from pathlib import Path
 import re
 import struct
@@ -20,7 +20,6 @@ from types import SimpleNamespace
 from urllib.parse import urldefrag, urljoin
 
 from blake3 import blake3
-import msgpack
 import rfc8785
 from jsonschema import Draft202012Validator, FormatChecker, ValidationError, validators
 from referencing import Registry, Resource
@@ -28,6 +27,12 @@ from referencing.exceptions import Unresolvable
 from referencing.jsonschema import DRAFT202012
 
 from pm_event_index_binding import binding_digest
+# Sweep part 2B: the shared CV-1100/SP-1100/SP-1101 number and recipe calls and
+# the shared CV-1101/CV-253 date-time check replace the lane's own surrogates.
+from pm_event_numbers import (EVENT_VALUE, FrozenRecipe, JsonNumber, OriginalBinding, OriginalCustody, RecipeTuple,
+                              Refusal, RetainedDispatcher, current_integer, decode_storage_value, full_value_commitment,
+                              producer_semantic_digest, qualified_jcs, storage_value_bytes)
+from pm_event_datetime import datetime_validator
 from pm_runtime_artifact_guard_cases import accepted as guard_accepted, cases as guard_cases
 from pm_runtime_artifact_round8_cases import observation_source
 
@@ -273,20 +278,37 @@ def exact_pattern_properties(validator_, patterns, instance, schema):
                         yield ValidationError('identifier key must match the entire value', path=[key])
 
 
-def canonical_numbers(validator, enabled, instance, schema):
-    if not enabled:
-        return
-    def numeric_walk(value, path):
-        if type(value) is float:
-            if not math.isfinite(value) or value.is_integer():
-                yield ValidationError('current numbers require integer form for integral values', path=path)
-        elif type(value) is dict:
-            for key, child in value.items():
-                yield from numeric_walk(child, path + [key])
-        elif type(value) is list:
-            for index, child in enumerate(value):
-                yield from numeric_walk(child, path + [index])
-    yield from numeric_walk(instance, [])
+@contextmanager
+def exact_digits():
+    """Render and parse integers exactly (no 4300-digit limit), restored on exit.
+
+    CV-1100 sets no global cap, so a schema-valid long integer must reach a
+    refusal row instead of a ValueError raised while text is produced.
+    """
+    previous = sys.get_int_max_str_digits()
+    sys.set_int_max_str_digits(0)
+    try:
+        yield
+    finally:
+        sys.set_int_max_str_digits(previous)
+
+
+def integer_refusal(value, **bounds):
+    """The shared CV-1100 current_integer verdict as a refusal reason, or None."""
+    try:
+        current_integer(value, **bounds)
+    except Refusal as refusal:
+        return refusal.reason
+    return None
+
+
+def current_integer_slot(checker, instance):
+    """CV-1100: a current schema integer slot accepts only what current_integer accepts.
+
+    Stock Draft 2020-12 calls an integral float an integer; the shared call
+    refuses runtime floats and booleans. Field bounds stay the schema's own.
+    """
+    return integer_refusal(instance) is None
 
 
 def agreement_sites(payload):
@@ -384,7 +406,55 @@ def agreement_sites(payload):
 LF_VALUE_VALIDATOR = validators.extend(Draft202012Validator, {'pattern': exact_pattern})
 LF_KEY_VALIDATOR = validators.extend(Draft202012Validator, {'patternProperties': exact_pattern_properties})
 LF_BOTH_VALIDATOR = validators.extend(Draft202012Validator, {'pattern': exact_pattern, 'patternProperties': exact_pattern_properties})
-DR_KEYWORDS = ('drCanonicalNumbers', 'drSourceAgreement')
+# Only the integer type changes: every other keyword keeps its Draft 2020-12
+# meaning, so a refusal here (after the stock pass) is the integer-slot rule alone.
+INTEGER_SLOT_VALIDATOR = validators.extend(
+    Draft202012Validator, type_checker=Draft202012Validator.TYPE_CHECKER.redefine('integer', current_integer_slot))
+DR_KEYWORDS = ('drCurrentIntegerSlots', 'drSourceAgreement')
+# Closed, preloaded resource map for the shared date-time validator (CV-1101):
+# every schema an adopted occurrence can reach. Nothing is retrieved on demand.
+DATETIME_RESOURCES = {
+    'https://puppetmaster.local/schemas/event_record/2.0.0/event_record.schema.json': 'Plans/event_record.schema.json',
+    'https://puppetmaster.local/schemas/event_append_receipt_contracts/2.0.0': 'Plans/event_append_receipt_contracts.schema.json',
+    'https://puppetmaster.local/schemas/event_record_index_checkpoint/1.0.0/schema.json': 'Plans/event_record_index_checkpoint.schema.json',
+    'https://puppetmaster.local/Plans/shared_integration_runtime.schema.json': 'Plans/shared_integration_runtime.schema.json',
+}
+_DATETIME_REGISTRY = None
+_DATETIME_VALIDATORS = {}
+
+
+def stock_format_checker():
+    """Every registered format except date-time: S08 alone runs the shared date-time check."""
+    return FormatChecker(formats=[name for name in FormatChecker.checkers if name != 'date-time'])
+
+
+def datetime_registry():
+    global _DATETIME_REGISTRY
+    if _DATETIME_REGISTRY is None:
+        _DATETIME_REGISTRY = Registry().with_resources(
+            (uri, Resource.from_contents(load(path), default_specification=DRAFT202012)) for uri, path in DATETIME_RESOURCES.items())
+    return _DATETIME_REGISTRY
+
+
+def shared_datetime_validator(base, definition):
+    """CV-1101/CV-253 through pm_event_datetime.datetime_validator at the complete outer boundary.
+
+    A definition of a preloaded resource is reached through a neutral $ref
+    wrapper, so the resource bytes stay exactly the registered ones. Built once
+    per schema occurrence (construction only; validation is never cached).
+    """
+    resource = base.get('$id') if isinstance(base, dict) else None
+    if definition and resource in DATETIME_RESOURCES and load(DATETIME_RESOURCES[resource]) == base:
+        root = {'$ref': resource + '#/$defs/' + definition}
+    elif definition:
+        root = dict(base, **{'$ref': '#/$defs/' + definition})
+    else:
+        root = base
+    key = json.dumps(root, sort_keys=True)
+    built = _DATETIME_VALIDATORS.get(key)
+    if built is None:
+        built = _DATETIME_VALIDATORS[key] = datetime_validator(root, registry=datetime_registry())
+    return built
 
 
 def load(path):
@@ -397,11 +467,13 @@ class TableValidator:
     .schema keeps the composed schema of the earlier ExactValidator edition
     (overlays and profile keywords included) for callers that read it.
     """
-    def __init__(self, schema, base, overlaid, validation):
+    def __init__(self, schema, base, overlaid, validation, datetime_base=None, definition=None):
         self.schema = schema
         self.validation = validation
-        checker = FormatChecker()
+        checker = stock_format_checker()
         self.structural = Draft202012Validator(base, format_checker=checker)
+        self.datetime = shared_datetime_validator(base if datetime_base is None else datetime_base, definition)
+        self.integer_slot = INTEGER_SLOT_VALIDATOR(base) if validation == CURRENT_WRITER else None
         self.lf_value = LF_VALUE_VALIDATOR(base, format_checker=checker)
         self.lf_key = LF_KEY_VALIDATOR(base, format_checker=checker)
         self.lf_both = LF_BOTH_VALIDATOR(base, format_checker=checker)
@@ -410,17 +482,18 @@ class TableValidator:
         self.agreement = AGREEMENT_PHASES.get(schema.get('$id'), ()) if validation == CURRENT_WRITER else ()
 
     def refusal(self, instance):
-        structural = sum(1 for _ in self.structural.iter_errors(instance))
-        clean = structural == 0
-        # One combined pass decides that neither overlay refuses; only a
-        # refusal is split into its value and key observations.
-        lf_any = clean and not self.lf_both.is_valid(instance)
-        facts = dict(structural_errors=structural,
-                     lf_rejects=lf_any and not self.lf_value.is_valid(instance),
-                     key_lf_rejects=lf_any and not self.lf_key.is_valid(instance),
-                     number_errors=(sum(1 for _ in canonical_numbers(None, True, instance, {}))
-                                    if self.validation == CURRENT_WRITER else 0),
-                     overlay_rejects=clean and self.overlay is not None and not self.overlay.is_valid(instance))
+        with exact_digits():
+            structural = sum(1 for _ in self.structural.iter_errors(instance))
+            clean = structural == 0
+            # One combined pass decides that neither overlay refuses; only a
+            # refusal is split into its value and key observations.
+            lf_any = clean and not self.lf_both.is_valid(instance)
+            facts = dict(structural_errors=structural,
+                         datetime_rejects=clean and not self.datetime.is_valid(instance),
+                         lf_rejects=lf_any and not self.lf_value.is_valid(instance),
+                         key_lf_rejects=lf_any and not self.lf_key.is_valid(instance),
+                         integer_slot_rejects=clean and self.integer_slot is not None and not self.integer_slot.is_valid(instance),
+                         overlay_rejects=clean and self.overlay is not None and not self.overlay.is_valid(instance))
         for phase in ('schema.case',) + self.overlay_phase:
             refusal = table_refusal(phase, facts)
             if refusal is not None:
@@ -462,6 +535,7 @@ def validator(schema, definition=None, *, validation=CURRENT_WRITER):
     if validation == HISTORICAL_V1:
         schema = {k: v for k, v in schema.items() if k not in DR_KEYWORDS}
     base = {k: v for k, v in schema.items() if k not in DR_KEYWORDS}
+    datetime_base = base
     overlaid = None
     if validation == CURRENT_WRITER and schema.get('$id') in ('pm.runtime_artifact.cost_usage.schema.v1',
                                                              'pm.runtime_artifact.tool_llm_trace.schema.v1'):
@@ -473,10 +547,10 @@ def validator(schema, definition=None, *, validation=CURRENT_WRITER):
         if overlaid is not None:
             overlaid = dict(overlaid, **{'$ref': '#/$defs/' + definition})
     if validation == CURRENT_WRITER:
-        schema = dict(schema, drCanonicalNumbers=True)
+        schema = dict(schema, drCurrentIntegerSlots=True)
         if schema.get('$id') in AGREEMENT_PHASES:
             schema['drSourceAgreement'] = schema['$id']
-    return TableValidator(schema, base, overlaid, validation)
+    return TableValidator(schema, base, overlaid, validation, datetime_base, definition)
 
 
 EVENT_VALIDATOR = validator(load('Plans/event_record.schema.json'))
@@ -490,9 +564,9 @@ def identity(event, payload, revision=None):
     members = [event, payload['project_id'], payload['artifact_id'], payload['schema_id']]
     prefix = 'ra1:'
     if event == 'runtime_artifact.restore_point':
-        require('codec_identity', dict(revision_type=type(revision).__name__,
-                                       revision_negative=type(revision) is int and revision < 0))
-        members.append(str(revision))
+        require('codec_identity', {'revision_refusal': integer_refusal(revision, minimum=0)})
+        with exact_digits():
+            members.append(str(revision))
         prefix = 'ra-observation1:'
     encoded = [v.encode('utf-8', errors='strict') for v in members]
     return prefix + hashlib.sha256(b''.join(struct.pack('>I', len(v)) + v for v in encoded)).hexdigest()
@@ -506,51 +580,32 @@ def grouping_identity(event, payload):
 
 
 def semantic_digest(event):
-    # The exact Contracts §1.2 producer-owned preimage, including required nulls.
-    return hashlib.sha256(rfc8785.dumps({k: event[k] for k in SEMANTIC_FIELDS})).hexdigest()
+    """The exact Contracts §1.2 / CV-317 producer preimage through the shared CV-1100 qualifier.
+
+    None when the JCS route cannot preserve a value (CV-1100: refuse before
+    effects); callers refuse through A08/F14, never with a substitute digest.
+    """
+    try:
+        return producer_semantic_digest(event)
+    except Refusal:
+        return None
 
 
-def codec_observation(value):
-    """Counts the codec rows read: non-finite floats and unsupported values (keys included)."""
-    nonfinite = unsupported = 0
-    stack = [value]
-    while stack:
-        item = stack.pop()
-        kind = type(item)
-        if kind is dict:
-            stack.extend(item.keys())
-            stack.extend(item.values())
-        elif kind is list:
-            stack.extend(item)
-        elif kind is float:
-            nonfinite += not math.isfinite(item)
-        elif kind not in (str, int, bool, type(None)):
-            unsupported += 1
-    return dict(nonfinite_floats=nonfinite, unsupported_values=unsupported)
+def physical_bytes(value):
+    """(bytes, refusal reason) of the SP-1100 EVENT_VALUE canonical MessagePack profile."""
+    try:
+        return storage_value_bytes(value, profile=EVENT_VALUE), None
+    except Refusal as refusal:
+        return None, refusal.reason
 
 
 def value_bytes(value):
-    """Canonical MessagePack fixture codec; shortest lossless floats, UTF-8 maps."""
-    require('codec_value', codec_observation(value))
-    return packed_value(value)
-
-
-def packed_value(value):
-    packer = msgpack.Packer(use_bin_type=True)
-    if type(value) is dict:
-        keys = sorted(value, key=lambda k: k.encode('utf-8', errors='strict'))
-        return packer.pack_map_header(len(keys)) + b''.join(packed_value(k) + packed_value(value[k]) for k in keys)
-    if type(value) is list:
-        return packer.pack_array_header(len(value)) + b''.join(packed_value(v) for v in value)
-    if type(value) is float:
-        try:
-            single = struct.pack('>f', value)
-            if struct.unpack('>f', single)[0] == value:
-                return b'\xca' + single
-        except OverflowError:
-            pass
-        return b'\xcb' + struct.pack('>d', value)
-    return packer.pack(value)
+    """SP-236/SP-1100 EVENT_VALUE bytes (shared storage_value_bytes); refusals are codec rows."""
+    raw, reason = physical_bytes(value)
+    require('codec_value', {'physical_refusal': reason})
+    if raw is None:
+        raise AssertionError('untracked EVENT_VALUE refusal: ' + reason)
+    return raw
 
 
 def value_sha256(value):
@@ -559,18 +614,21 @@ def value_sha256(value):
 
 def commitment(event):
     domain = 'pm.storage.original_event_value_commitment.v1'
-    codec = 'pm.seglog_frame_v2.event_value.canonical_msgpack.v1'
-    preimage = [domain, '1.0.0', codec, event['schema_id'], event['schema_version'], event]
+    codec = EVENT_VALUE
+    value_bytes(event)  # EVENT_VALUE refusals stay codec rows; the shared tuple below repeats no check.
     return dict(schema_id=domain, schema_version='1.0.0', codec=codec, domain=domain,
                 event_schema_id=event['schema_id'], event_schema_version=event['schema_version'],
-                sha256=hashlib.sha256(value_bytes(preimage)).hexdigest())
+                sha256=full_value_commitment(event))
 
 
 def storage_form(payload, packs):
-    # Refuse before JSON can collapse an integral float into an integer. Both
-    # storage routes must apply the same producer-input representation rule.
-    require('codec_storage', {'number_errors': sum(1 for _ in canonical_numbers(None, True, payload, {}))})
-    body = rfc8785.dumps(payload)
+    # CV-1100: the pack body is an actual RFC 8785 preimage, qualified against
+    # each original integer before any effect; an unavailable route refuses.
+    try:
+        body, refusal = qualified_jcs(payload), None
+    except Refusal as error:
+        body, refusal = None, error.reason
+    require('codec_storage', {'jcs_refusal': refusal})
     if len(body) <= INLINE_LIMIT:
         return copy.deepcopy(payload), None
     digest = blake3(body).hexdigest()
@@ -579,9 +637,10 @@ def storage_form(payload, packs):
 
 
 def canonical_size(value):
+    """Bytes of the qualified RFC 8785 encoding (CV-1100), or None when the route is unavailable."""
     try:
-        return len(rfc8785.dumps(value))
-    except (ValueError, TypeError, OverflowError):
+        return len(qualified_jcs(value))
+    except Refusal:
         return None
 
 
@@ -604,14 +663,15 @@ def parse_pack_body(body):
             result[key] = value
         return result
     try:
-        payload = json.loads(text, object_pairs_hook=members)
+        # Integer tokens are read exactly (no binary64, no digit limit).
+        payload = json.loads(text, object_pairs_hook=members, parse_int=lambda t: JsonNumber(t, True).exact())
     except ValueError:
         return facts, None
     facts.update(body_json=True, body_duplicate_member=bool(duplicates))
     if not duplicates:
         try:
-            facts['canonical_sha256'] = hashlib.sha256(rfc8785.dumps(payload)).hexdigest()
-        except (ValueError, TypeError, OverflowError):
+            facts['canonical_sha256'] = hashlib.sha256(qualified_jcs(payload)).hexdigest()
+        except Refusal:
             pass
     return facts, payload
 
@@ -693,6 +753,21 @@ def inspect(row, payload, source):
     return 'metadata_only' if source['body_deleted'] else 'metadata_and_authorized_refs'
 
 
+def codec_refusal_is_false(check):
+    """A codec row refusal inside a join (e.g. an integer past the SP-1100 physical
+    range) is that join's refusal: False, never an escaping exception."""
+    def wrapped(*args, **kwargs):
+        try:
+            return check(*args, **kwargs)
+        except TableRefusal as refusal:
+            if not refusal.phase.startswith('codec_'):
+                raise
+            return False
+    wrapped.__name__, wrapped.__doc__ = check.__name__, check.__doc__
+    return wrapped
+
+
+@codec_refusal_is_false
 def full_value_matches(candidate, original, result, custody, *, validation=CURRENT_WRITER):
     receipt_validator, custody_validator, result_validator = RECEIPT_VALIDATOR, CUSTODY_VALIDATOR, RESULT_VALIDATOR
     if validation != CURRENT_WRITER:
@@ -750,19 +825,121 @@ def stored_event_valid(event, *, validation=CURRENT_WRITER):
     return validator(load(dispatch['payload_schema_ref']), validation=validation).is_valid(event['payload'])
 
 
-def resolve_history(row, original, source, packs, *, decoder):
-    """Explicit historical route over assumed-authentic ORIGINAL custody.
+def frozen_resource_manifest(row):
+    """SHA-256 over the frozen resources a DR edition verifies against.
 
-    No current-writer fallback, new receipt or rehash/rewrite of retained data.
-    Source/receipt authentication is modeled by the source adapter, as in inspect.
+    Modelling assumption (stated in the report): the static model records this
+    head's schema bytes as the frozen resources of each modelled edition.
     """
-    if table_refusal('history', {'decoder': decoder}):
-        return 'unavailable'
+    digest = hashlib.sha256()
+    for path in ('Plans/event_record.schema.json', 'Plans/event_append_receipt_contracts.schema.json', row['payload_schema_ref']):
+        data = (ROOT / path).read_bytes()
+        digest.update(struct.pack('>I', len(path)) + path.encode('utf-8') + struct.pack('>Q', len(data)) + data)
+    return digest.hexdigest()
+
+
+def recipe_tuple(row, edition):
+    """The SP-1101 recipe tuple a DR original records at write time, for one edition."""
+    restore = row['event_type'] == 'runtime_artifact.restore_point'
+    return RecipeTuple(
+        envelope_schema_id='pm.event.v0', envelope_schema_version='2.0.0',
+        payload_schema_id=row['payload_schema_id'], payload_schema_version='1',
+        owner_source_id=row['event_type'], owner_edition=edition, registry_revision='prepared-without-admission',
+        identity_recipe='ra-observation1' if restore else 'ra1', producer_recipe='CV-317 RFC 8785 producer projection',
+        physical_profile=EVENT_VALUE, full_value_profile='pm.storage.original_event_value_commitment.v1',
+        local_source_profile='none', payload_profile='pm.payload_pack.v1 application/json (SP-337)',
+        resource_manifest_sha256=frozen_resource_manifest(row))
+
+
+def original_binding(original):
+    """SP-1101 binding of one original (Storage, scope, Project, family, identity, value commitment), or None.
+
+    The static model has one Server and no native owner operation id, so both
+    fields are fixed constants on the request and the authenticated side alike.
+    """
+    event, custody = at(original, 'event'), at(original, 'custody')
     try:
+        return OriginalBinding(
+            storage_instance_id=at(custody, 'storage_instance_id'), scope_kind=at(event, 'scope_kind'),
+            server_id='dr-static-server', project_id=at(event, 'project_id'), event_type=at(event, 'event_type'),
+            event_id=at(event, 'event_id'), idempotency_key=at(event, 'idempotency_key'),
+            owner_operation_id='dr-static-owner-operation',
+            source_commitment=at(custody, 'original_event_value_commitment', 'sha256'))
+    except Refusal:
+        return None
+
+
+class SourceOwner:
+    """Static original owner: its authenticated read is the frozen source adapter.
+
+    The binding and the write-time recipe come from the adapter's authenticated
+    original and its recorded edition, never from the request, the event, the
+    supplied result or the supplied custody.
+    """
+    def __init__(self, row, source):
+        self.row, self.source = row, source
+
+    def authenticated_original(self, original_ref):
+        original = at(self.source, 'authenticated_original')
+        edition = at(self.source, 'recorded_decoder')
+        recipe = recipe_tuple(self.row, edition) if type(edition) is str and edition else None
+        return OriginalCustody(binding=original_binding(original), recipe=recipe, record_bytes=value_bytes(original),
+                               result_bytes=value_bytes(at(original, 'result')),
+                               receipt_bytes=value_bytes(at(original, 'result', 'first_append_receipt')))
+
+
+def frozen_verifier(row, packs, edition):
+    """The frozen recipe for one edition: verify the authenticated original with that edition's resources.
+
+    It reads only the custody bytes (and the pack store), recomputes the
+    original's dispatch, joins, identity, commitment and digest, and never
+    applies a current-writer or live-state guard to an older edition.
+    """
+    def verify(custody):
+        original = decode_storage_value(custody.record_bytes, profile=EVENT_VALUE)
+        if (custody.result_bytes != value_bytes(at(original, 'result'))
+                or custody.receipt_bytes != value_bytes(at(original, 'result', 'first_append_receipt'))):
+            return False
         event = at(original, 'event')
-        payload = decode(row, event, packs, validation=decoder)
+        decode(row, event, packs, validation=edition)
+        return full_value_matches(event, original, at(original, 'result'), at(original, 'custody'), validation=edition)
+    return FrozenRecipe(verify_original=verify)
+
+
+def dispatch_original(row, requested, source, packs, editions, recipe_override=None):
+    """SP-1101 retained dispatch: (authenticated custody, None) or (None, refusal reason).
+
+    The recipe map is installed from this head's resources for the editions
+    the route supports; the request never selects or overrides a recipe.
+    """
+    recipes = {recipe_tuple(row, edition): frozen_verifier(row, packs, edition) for edition in editions}
+    dispatcher = RetainedDispatcher(SourceOwner(row, source), recipes)
+    try:
+        return dispatcher.resolve('dr-original', original_binding(requested), disclose=lambda binding: True,
+                                  recipe_override=recipe_override), None
+    except Refusal as refusal:
+        return None, refusal.reason
+
+
+def resolve_history(row, original, source, packs, *, recipe_override=None):
+    """Retained route for older (historical v1) originals through the shared SP-1101 dispatcher.
+
+    The authenticated owner selects the recipe; the request cannot. No
+    current-writer fallback, new receipt or rehash/rewrite of retained data.
+    Current disclosure (withdrawal, authorization, source/receipt validity)
+    stays with inspect's rows after the original is verified.
+    """
+    try:
+        custody, reason = dispatch_original(row, original, source, packs, (HISTORICAL_V1,), recipe_override)
+        if table_refusal('history', {'dispatch_refusal': reason}):
+            return 'unavailable'
+        # Only a proof run that cuts a history row reaches here without custody;
+        # it continues with the owner's recorded edition, exactly as before.
+        edition = custody.recipe.owner_edition if custody is not None else at(source, 'recorded_decoder')
+        event = at(original, 'event')
+        payload = decode(row, event, packs, validation=edition)
         if not full_value_matches(event, at(source, 'authenticated_original'), at(original, 'result'),
-                                  at(original, 'custody'), validation=decoder):
+                                  at(original, 'custody'), validation=edition):
             return 'unavailable'
         return inspect(row, payload, source)
     except TableRefusal:
@@ -805,8 +982,12 @@ class AppendModel:
             return scoped
         try:
             decode(self.row, event, self.packs, raw_sources=self.raw_sources)
+            return self.issue(event, key, digest)
         except TableRefusal:
+            # Includes an unavailable physical route (SP-1100): refused before effects.
             return 'invalid'
+
+    def issue(self, event, key, digest):
         receipt = copy.deepcopy(self.receipt)
         receipt.update(event_id=event['event_id'], sequence_id=event['sequence_id'])
         custody = copy.deepcopy(self.custody)
@@ -856,6 +1037,7 @@ def field_code(value, key):
         return None
 
 
+@codec_refusal_is_false
 def checkpoint_matches(row, event, original, bundle):
     """Bounded SP-278 initial-generation join, using its real schema and codec.
 
@@ -1213,7 +1395,7 @@ def standing_oracles(check, row, full, first, fixtures, references):
     historical_source = history_source_for(row,full['payload'],first)
     historical_source['current_live_state'] = {'owner_active':False,'status':'deleted','revision':999}
     original_bytes = value_bytes(first)
-    check(event,'S10_original_custody_full_resolution',resolve_history(row,first,historical_source,{},decoder=HISTORICAL_V1)
+    check(event,'S10_original_custody_full_resolution',resolve_history(row,first,historical_source,{})
           == 'metadata_and_authorized_refs' and value_bytes(first) == original_bytes)
 
     for case in fixtures['historical_originals']['cases'] + fixtures['historical_numeric_originals']['cases']:
@@ -1225,7 +1407,7 @@ def standing_oracles(check, row, full, first, fixtures, references):
         source = history_source_for(row, case['logical_payload'], original)
         source['current_live_state'] = {'owner_active': False, 'status': 'deleted', 'revision': 999}
         label = 'S10_older_original_' + case['route']
-        check(event, label + '_preserved', resolve_history(row, original, source, packs, decoder=HISTORICAL_V1)
+        check(event, label + '_preserved', resolve_history(row, original, source, packs)
               == 'metadata_and_authorized_refs' and value_bytes(original) == before)
         check(event, label + '_full_value', full_value_matches(original['event'], original,
               original['result'], original['custody'], validation=HISTORICAL_V1))
@@ -1233,20 +1415,24 @@ def standing_oracles(check, row, full, first, fixtures, references):
         check(event, label + '_current_write_refused', current.append(original['event'], True) == 'invalid' and not current.scoped)
         for flag in ('withdrawn', 'authorized', 'source_valid', 'receipt_valid'):
             bad_source = copy.deepcopy(source); bad_source[flag] = flag == 'withdrawn'
-            check(event, label + '_' + flag + '_refused', resolve_history(row, original, bad_source, packs,
-                  decoder=HISTORICAL_V1) == 'unavailable')
-        for decoder in ('unknown-decoder', CURRENT_WRITER):
-            check(event, label + '_' + decoder + '_refused', resolve_history(row,original,source,packs,decoder=decoder) == 'unavailable')
+            check(event, label + '_' + flag + '_refused', resolve_history(row, original, bad_source, packs) == 'unavailable')
+        # SP-1101: only the authenticated owner's recorded edition selects the frozen verifier.
+        for decoder in ('unknown-decoder', CURRENT_WRITER, None):
+            check(event, label + '_' + str(decoder) + '_refused',
+                  resolve_history(row, original, dict(source, recorded_decoder=decoder), packs) == 'unavailable')
+        check(event, label + '_caller_recipe_refused', resolve_history(row, original, source, packs, recipe_override=HISTORICAL_V1) == 'unavailable')
+        foreign = copy.deepcopy(source); foreign['authenticated_original']['event']['event_id'] += '-foreign'
+        check(event, label + '_foreign_binding_refused', resolve_history(row, original, foreign, packs) == 'unavailable')
         deleted = dict(source, body_deleted=True)
-        check(event, label + '_body_deleted', resolve_history(row,original,deleted,packs,decoder=HISTORICAL_V1) == 'metadata_only')
+        check(event, label + '_body_deleted', resolve_history(row,original,deleted,packs) == 'metadata_only')
         forged = copy.deepcopy(original); forged['custody']['original_event_value_commitment']['sha256'] = '0'*64
-        check(event, label + '_forged_custody_refused', resolve_history(row,forged,source,packs,decoder=HISTORICAL_V1) == 'unavailable')
+        check(event, label + '_forged_custody_refused', resolve_history(row,forged,source,packs) == 'unavailable')
         forged = copy.deepcopy(original); forged['event']['observed_at_utc'] = '2026-07-03T00:00:00Z'
-        check(event, label + '_forged_event_refused', resolve_history(row,forged,source,packs,decoder=HISTORICAL_V1) == 'unavailable')
+        check(event, label + '_forged_event_refused', resolve_history(row,forged,source,packs) == 'unavailable')
         forged = copy.deepcopy(original); forged['custody']['group_digest'] = '0'*64
-        check(event, label + '_forged_well_formed_custody_refused',resolve_history(row,forged,source,packs,decoder=HISTORICAL_V1) == 'unavailable')
+        check(event, label + '_forged_well_formed_custody_refused',resolve_history(row,forged,source,packs) == 'unavailable')
         forged = copy.deepcopy(original); forged['result']['first_append_receipt']['acknowledged_at_utc'] = '2026-07-03T00:00:00Z'
-        check(event,label + '_forged_well_formed_receipt_refused',resolve_history(row,forged,source,packs,decoder=HISTORICAL_V1) == 'unavailable')
+        check(event,label + '_forged_well_formed_receipt_refused',resolve_history(row,forged,source,packs) == 'unavailable')
 
     if event in PROVIDER_HASH_PATHS:
         path = PROVIDER_HASH_PATHS[event]
@@ -1335,6 +1521,105 @@ def standing_oracles(check, row, full, first, fixtures, references):
             check(event, 'S5_checkpoint_map_key_LF', not valid.is_valid(bad))
 
 
+def untracked(action):
+    """Run one complete route: its result, or 'refused' for a table row; any other exception propagates."""
+    try:
+        return action()
+    except TableRefusal:
+        return 'refused'
+
+
+def reseal(original, event):
+    """Fixture construction only: an authentic original sealed over a changed event."""
+    original = copy.deepcopy(original)
+    original['event'] = copy.deepcopy(event)
+    original['custody']['producer_semantic_digest'] = semantic_digest(event)
+    original['custody']['original_event_value_commitment'] = commitment(event)
+    original['result']['original_event_value_commitment'] = commitment(event)
+    return original
+
+
+def part2b_oracles(check, row, full, fixtures):
+    """Sweep part 2B: CV-1101/CV-253 timestamps and CV-1100/SP-1100/SP-1101 numbers on complete routes."""
+    from pm_runtime_artifact_round10_cases import BROAD_INVALID, BROAD_VALID, STORAGE_INVALID, STORAGE_VALID
+    event = row['event_type']
+    receipt, template = fixtures['first_append_receipts'][event], fixtures['custody_template']
+
+    def append(candidate):
+        return AppendModel(row, {}, receipt, template).append(candidate, True)
+
+    def at_time(field, value):
+        candidate = copy.deepcopy(full)
+        candidate[field] = value
+        if field == 'occurred_at_utc':
+            candidate['payload']['created_at_utc'] = value  # the D15 authored-time copy moves with it
+        return candidate
+    # Owner-valid source spellings are kept exactly; Storage fields take only uppercase-Z UTC.
+    for name, value in BROAD_VALID.items():
+        result = append(at_time('occurred_at_utc', value))
+        check(event, 'S08_route_occurred_at_' + name + '_appends', isinstance(result, dict)
+              and result['event']['occurred_at_utc'] == value)
+    for name, value in BROAD_INVALID.items():
+        check(event, 'S08_route_occurred_at_' + name + '_refused', append(at_time('occurred_at_utc', value)) == 'invalid')
+    for field in ('observed_at_utc', 'persisted_at_utc'):
+        for name, value in STORAGE_VALID.items():
+            result = append(at_time(field, value))
+            check(event, 'S08_route_' + field + '_' + name + '_appends', isinstance(result, dict) and result['event'][field] == value)
+        for name, value in STORAGE_INVALID.items():
+            check(event, 'S08_route_' + field + '_' + name + '_refused', append(at_time(field, value)) == 'invalid')
+    bad_receipt = dict(receipt, acknowledged_at_utc=BROAD_INVALID['hour_24'])
+    check(event, 'S08_route_receipt_hour_24_refused', AppendModel(row, {}, bad_receipt, template).append(copy.deepcopy(full), True) == 'invalid')
+    # SP-1101: an authentic older original keeps an owner-valid offset source time
+    # and its exact spelling; a sealed Storage field with an offset never reads.
+    case = next((c for c in fixtures['historical_originals']['cases'] + fixtures['historical_numeric_originals']['cases']
+                 if c['event_type'] == event and c['route'] == 'inline'), None)
+    if case is not None:
+        for field, value, expected in (('occurred_at_utc', BROAD_VALID['offset'], 'metadata_and_authorized_refs'),
+                                       ('occurred_at_utc', BROAD_VALID['lowercase_separators'], 'metadata_and_authorized_refs'),
+                                       ('observed_at_utc', STORAGE_INVALID['plus_zero_offset'], 'unavailable'),
+                                       ('persisted_at_utc', STORAGE_INVALID['lowercase_z'], 'unavailable'),
+                                       ('occurred_at_utc', BROAD_INVALID['february_30'], 'unavailable')):
+            old = copy.deepcopy(case['original']['event'])
+            old[field] = value
+            payload = copy.deepcopy(case['logical_payload'])
+            if field == 'occurred_at_utc':
+                old['payload']['created_at_utc'] = payload['created_at_utc'] = value
+            original = reseal(case['original'], old)
+            source = history_source_for(row, payload, original)
+            before = value_bytes(original)
+            outcome = untracked(lambda: resolve_history(row, original, source, {}))
+            check(event, 'S08_history_' + field + '_' + value.replace(':', '').replace('+', 'p') + '_' + expected,
+                  outcome == expected and value_bytes(original) == before)
+    # CV-1100 long integers (no global cap): every route refuses through a row, never an exception.
+    long_integer = 10 ** 4399
+    check(event, 'N2_4400_digit_sequence_refused', untracked(lambda: append(dict(full, sequence_id=long_integer))) == 'invalid')
+    if event.endswith('.restore_point'):
+        candidate = dict(full, producer_sequence_id=long_integer)
+        candidate['idempotency_key'] = identity(event, candidate['payload'], long_integer)
+    else:
+        candidate = dict(full, producer_sequence_id=long_integer)
+    check(event, 'N2_4400_digit_producer_sequence_refused', untracked(lambda: append(candidate)) == 'invalid')
+    if not event.endswith('.restore_point'):  # the restore ordinal is the identity revision (O-rows)
+        check(event, 'N2_2_53_producer_sequence_appends', isinstance(append(dict(full, producer_sequence_id=2 ** 53)), dict))
+    check(event, 'N2_uint64_max_sequence_appends', isinstance(append(dict(full, sequence_id=2 ** 64 - 1)), dict))
+    paths = [p for p in integer_slot_paths(full['payload'])]
+    if paths:
+        candidate = copy.deepcopy(full)
+        set_path(candidate['payload'], paths[0], long_integer)
+        check(event, 'N2_4400_digit_payload_integer_refused', untracked(lambda: decode(row, candidate, {})) == 'refused')
+
+
+def integer_slot_paths(value, path=()):
+    if type(value) is int:
+        yield path
+    elif type(value) is dict:
+        for key, child in value.items():
+            yield from integer_slot_paths(child, (*path, key))
+    elif type(value) is list:
+        for index, child in enumerate(value):
+            yield from integer_slot_paths(child, (*path, index))
+
+
 def source_for(row, payload):
     return dict(project_id=payload['project_id'], event_type=row['event_type'], original_payload=copy.deepcopy(payload),
                 authorized=True, source_valid=True, receipt_valid=True, withdrawn=False, body_deleted=False)
@@ -1346,7 +1631,8 @@ def history_source_for(row, payload, authentic_original):
     Caller-supplied candidate/custody is compared to this original, never used
     to authenticate itself. Real authentication/receipt issuance stays NOT_RUN.
     """
-    return dict(source_for(row,payload),authenticated_original=copy.deepcopy(authentic_original))
+    return dict(source_for(row,payload),authenticated_original=copy.deepcopy(authentic_original),
+                recorded_decoder=HISTORICAL_V1)
 
 
 def rejected(action):
@@ -1392,10 +1678,12 @@ def observation_admissible(candidate, previous, row, packs, source):
     # The adapter authenticates the write-time recipe independently of the
     # supplied predecessor/receipt. Never select a profile from event data.
     predecessor_source = at(source, 'predecessor_source')
-    decoder = at(predecessor_source, 'recorded_decoder')
-    if table_refusal('observation_recipe', {'decoder': decoder}):
-        return False
     try:
+        predecessor = dict(event=previous, custody=at(source, 'predecessor_custody'))
+        custody, reason = dispatch_original(row, predecessor, predecessor_source, packs, (CURRENT_WRITER, HISTORICAL_V1))
+        if table_refusal('observation_recipe', {'dispatch_refusal': reason}):
+            return False
+        decoder = custody.recipe.owner_edition if custody is not None else at(predecessor_source, 'recorded_decoder')
         if not full_value_matches(previous, at(predecessor_source, 'authenticated_original'),
                                   at(source, 'predecessor_result'), at(source, 'predecessor_custody'),
                                   validation=decoder):
@@ -1444,6 +1732,23 @@ def main(families=None):
     check('shared', 'rfc8785_known_answer', rfc8785.dumps({'\U0001f600':1, '\ue000':2}) == '{"\U0001f600":1,"\ue000":2}'.encode())
     check('shared', 'all_19_rows', len(document['rows']) == 19 and {r['event_type'] for r in document['rows']} == set(fixtures['positive_payloads']) == set(fixtures['positive_events']) == set(fixtures['checkpoint_positives']) == set(fixtures['first_append_receipts']))
     check('shared', 'inline_limit_exact', INLINE_LIMIT == 16384)
+    # Sweep part 2B (CV-1100): untyped values and storage_form inputs have no
+    # integer slot, so integral floats there are legal. Before this pass the
+    # lane refused them everywhere (N01 blanket walk); each change is reported.
+    for name, value in [('float', 1.0), ('exponent', json.loads('1e0')), ('positive_zero', 0.0), ('negative_zero', json.loads('-0.0'))]:
+        check('shared', 'numrule_float_open_map_' + name + '_accepted',
+              validator({'type': 'object', 'additionalProperties': True}).is_valid({'v': value}))
+        for route, size in (('inline', 0), ('packed', 17000)):
+            check('shared', 'numrule_float_storage_form_' + name + '_' + route + '_accepted',
+                  untracked(lambda: storage_form({'number': value, 'summary': 'x' * size}, {})) != 'refused')
+    # The shared CV-339 tuple and this lane's commitment agree on every positive.
+    fixtures_known = load('Plans/runtime_artifact_event_drafts.fixtures.json')
+    check('shared', 'shared_full_value_commitment_agrees', all(
+        commitment(e)['sha256'] == fixtures_known['known_answers'][f]['full_value_sha256'] == full_value_commitment(e)
+        for f, e in fixtures_known['positive_events'].items()))
+    check('shared', 'shared_producer_digest_agrees', all(
+        semantic_digest(e) == fixtures_known['known_answers'][f]['producer_semantic_digest']
+        for f, e in fixtures_known['positive_events'].items()))
     # Every refusal row is reached in its table's declared order (Method B).
     order_errors = table_order_errors()
     check('shared', 'table_require_order' + (': ' + ', '.join(order_errors) if order_errors else ''), not order_errors)
@@ -1509,6 +1814,7 @@ def main(families=None):
             unresolved_families.add(event)
             continue  # Invalid positive inputs must produce a structured failure, never false success.
         standing_oracles(check, row, full, first, fixtures, references)
+        part2b_oracles(check, row, full, fixtures)
         replay = model.append(copy.deepcopy(full), admission=True)
         check(event, 'lost_ack_exact_result', first is replay and len(model.scoped) == 1)
         alternate = copy.deepcopy(full); alternate['event_id'] += '-other-delivery'

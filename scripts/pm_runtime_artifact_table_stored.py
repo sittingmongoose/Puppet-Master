@@ -33,8 +33,12 @@ def V07_dispatch(value, context):
     return 'stored_invalid' if value['route'] == 'inline' and value['dispatch_found'] is not True else None
 
 
+def V05q_inline_jcs(value, context):
+    return 'stored_invalid' if value['route'] == 'inline' and value['inline_size'] is None else None
+
+
 def V05_inline_size(value, context):
-    return 'stored_invalid' if value['route'] == 'inline' and (value['inline_size'] is None or value['inline_size'] > 16384) else None
+    return 'stored_invalid' if value['route'] == 'inline' and value['inline_size'] is not None and value['inline_size'] > 16384 else None
 
 
 def case(value):
@@ -45,6 +49,7 @@ def case(value):
         g.Guard('V03_ref_grammar', g.Invariant('/ref_grammar', 'a stored payload_ref is a full-match pack reference'), 'stored_invalid', V03_ref_grammar),
         g.Guard('V04_placeholder', g.Invariant('/placeholder', 'a stored packed event has the empty-object placeholder'), 'stored_invalid', V04_placeholder),
         g.Guard('V07_dispatch', g.Invariant('/dispatch_found', 'a stored inline event dispatches to a draft row by family and schema id'), 'stored_invalid', V07_dispatch),
+        g.Guard('V05q_inline_jcs', g.Invariant('/inline_size', 'a stored inline payload has a qualified RFC 8785 encoding (CV-1100 qualified_jcs)'), 'stored_invalid', V05q_inline_jcs),
         g.Guard('V05_inline_size', g.Invariant('/inline_size', 'a stored inline payload has a canonical encoding of at most 16384 bytes'), 'stored_invalid', V05_inline_size),
     ])
 
@@ -54,6 +59,7 @@ def case(value):
         table.require('V03_ref_grammar', value, context)
         table.require('V04_placeholder', value, context)
         table.require('V07_dispatch', value, context)
+        table.require('V05q_inline_jcs', value, context)
         table.require('V05_inline_size', value, context)
         return True
     return g.Case(table, check, context)

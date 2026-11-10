@@ -27,41 +27,47 @@ def module(name, doc, rows, factories):
 
 # ---------------------------------------------------------------- schema
 module('schema', 'Exact schema validator: one adopted schema occurrence per call.', [
-    ('S07_structural', '/structural_errors', 'the closed Draft 2020-12 schema reports no error', 'schema_structural',
+    ('S07_structural', '/structural_errors', 'the closed Draft 2020-12 schema reports no error outside the date-time format', 'schema_structural',
      "value['structural_errors'] != 0"),
+    ('S08_date_time', '/datetime_rejects', 'every timestamp passes the shared CV-1101/CV-253 date-time check at its owner profile', 'schema_date_time',
+     "value['datetime_rejects'] is not False"),
     ('S02_identifier_fullmatch', '/lf_rejects', 'anchored identifier patterns match the entire value', 'schema_identifier_fullmatch',
      "value['lf_rejects'] is not False"),
     ('S04_identifier_key_fullmatch', '/key_lf_rejects', 'anchored identifier keys match the entire key', 'schema_identifier_key_fullmatch',
      "value['key_lf_rejects'] is not False"),
-    ('N01_canonical_numbers', '/number_errors', 'current numbers use integer form for integral values', 'schema_canonical_numbers',
-     "value['number_errors'] != 0"),
+    ('N01_integer_slots', '/integer_slot_rejects', 'every current schema integer slot holds an exact integer (CV-1100 current_integer)', 'schema_integer_slot',
+     "value['integer_slot_rejects'] is not False"),
     ('S03_provider_hash_overlay', '/overlay_rejects', 'current provider hash is null or sha256 digest text', 'schema_provider_hash',
      "value['overlay_rejects'] is not False"),
-], [('case', ['S07_structural', 'S02_identifier_fullmatch', 'S04_identifier_key_fullmatch', 'N01_canonical_numbers']),
+], [('case', ['S07_structural', 'S08_date_time', 'S02_identifier_fullmatch', 'S04_identifier_key_fullmatch', 'N01_integer_slots']),
     ('overlay_case', ['S03_provider_hash_overlay'])])
 
 # ---------------------------------------------------------------- codec
 module('codec', 'Codec, identity, validator-profile, oracle and reference preconditions.', [
-    ('I02_finite_float', '/nonfinite_floats', 'every float in the encoded value is finite', 'nonfinite',
-     "value['nonfinite_floats'] != 0"),
-    ('I03_supported_type', '/unsupported_values', 'every encoded value is dict, list, str, int, float, bool or null', 'unsupported value',
-     "value['unsupported_values'] != 0"),
-    ('I01a_revision_integer', '/revision_type', 'the restore observation revision is an exact int', 'missing original observation revision',
-     "value['revision_type'] != 'int'"),
-    ('I01b_revision_nonnegative', '/revision_negative', 'the restore observation revision is not negative', 'missing original observation revision',
-     "value['revision_negative'] is not False"),
+    ('I02_finite_float', '/physical_refusal', 'every float in the EVENT_VALUE bytes is finite (SP-1100 storage_value_bytes)', 'nonfinite',
+     "value['physical_refusal'] == 'physical_nonfinite'"),
+    ('I03_supported_type', '/physical_refusal', 'every value and map key has an EVENT_VALUE type (SP-1100 storage_value_bytes)', 'unsupported value',
+     "value['physical_refusal'] in ('physical_type', 'physical_key_type')"),
+    ('I04_integer_range', '/physical_refusal', 'every integer is within the SP-1100 physical range -2^63..2^64-1', 'physical integer range',
+     "value['physical_refusal'] == 'physical_integer_range'"),
+    ('I05_unicode_scalar', '/physical_refusal', 'every string and key is Unicode scalar values (SP-1100 storage_value_bytes)', 'invalid unicode',
+     "value['physical_refusal'] == 'unicode_scalar'"),
+    ('I01a_revision_integer', '/revision_refusal', 'the restore observation revision is an exact integer (CV-1100 current_integer)', 'missing original observation revision',
+     "value['revision_refusal'] == 'integer_type'"),
+    ('I01b_revision_nonnegative', '/revision_refusal', 'the restore observation revision is at least 0 (CV-1100 current_integer)', 'missing original observation revision',
+     "value['revision_refusal'] == 'integer_range'"),
     ('S06_validation_profile', '/profile', 'the validation profile is the current writer or historical v1', 'unsupported historical decoder',
      f"value['profile'] not in ({CW}, {HIST})"),
-    ('N01s_storage_numbers', '/number_errors', 'producer storage input uses integer form for integral values', 'noncanonical producer number',
-     "value['number_errors'] != 0"),
+    ('J01s_storage_jcs', '/jcs_refusal', 'the payload has a qualified RFC 8785 encoding before it is stored (CV-1100 qualified_jcs)', 'unqualified JCS payload',
+     "value['jcs_refusal'] is not None"),
     ('S05_failure_oracle', '/raised', 'a failure oracle counts only a raised refusal, never a success', 'success_is_not_failure',
      "value['raised'] is not True"),
     ('S01_references_resolve', '/unresolved_count', 'every schema reference resolves, including unused branches', 'unresolved_schema_reference',
      "value['unresolved_count'] != 0"),
-], [('value_case', ['I02_finite_float', 'I03_supported_type']),
+], [('value_case', ['I02_finite_float', 'I03_supported_type', 'I04_integer_range', 'I05_unicode_scalar']),
     ('identity_case', ['I01a_revision_integer', 'I01b_revision_nonnegative']),
     ('profile_case', ['S06_validation_profile']),
-    ('storage_case', ['N01s_storage_numbers']),
+    ('storage_case', ['J01s_storage_jcs']),
     ('oracle_case', ['S05_failure_oracle']),
     ('references_case', ['S01_references_resolve'])])
 
@@ -74,8 +80,10 @@ decode_rows = [
     ('D03b_replay', '/replay_policy', 'is dedupe_by_idempotency_key', 'wrong scope/replay/redaction',
      "value['replay_policy'] != 'dedupe_by_idempotency_key'"),
     ('D03c_redaction', '/redaction_profile', 'is no_secrets', 'wrong scope/replay/redaction', "value['redaction_profile'] != 'no_secrets'"),
+    ('D04q_inline_jcs', '/inline_size', 'an inline payload has a qualified RFC 8785 encoding (CV-1100 qualified_jcs)', 'unqualified JCS payload',
+     "value['route'] == 'inline' and value['inline_size'] is None"),
     ('D04_inline_size', '/inline_size', 'an inline payload has a canonical encoding of at most 16384 bytes', 'oversized inline',
-     "value['route'] == 'inline' and (value['inline_size'] is None or value['inline_size'] > 16384)"),
+     "value['route'] == 'inline' and value['inline_size'] is not None and value['inline_size'] > 16384"),
     ('D05_ref_grammar', '/ref_grammar', 'payload_ref is a full-match pm.payload_pack.v1 blake3 application/json reference', 'wrong reference/placeholder',
      "value['ref_grammar'] is not True"),
     ('D06_placeholder', '/placeholder', 'a packed event carries the empty-object payload placeholder', 'wrong reference/placeholder',
@@ -119,7 +127,7 @@ decode_rows = [
      "value['point_project_id'] != value['payload_project_id']"),
 ]
 module('decode', 'Full-envelope decode: dispatch, storage route, provider source and joins.', decode_rows, [
-    ('envelope_case', ['D02a_family', 'D02b_payload_schema', 'D03a_scope', 'D03b_replay', 'D03c_redaction', 'D04_inline_size']),
+    ('envelope_case', ['D02a_family', 'D02b_payload_schema', 'D03a_scope', 'D03b_replay', 'D03c_redaction', 'D04q_inline_jcs', 'D04_inline_size']),
     ('pack_ref_case', ['D05_ref_grammar', 'D06_placeholder']),
     ('pack_source_case', ['D07a_pack_present', 'D07b_pack_durable', 'D07c_pack_authorized', 'D08_pack_size', 'D09_pack_digest']),
     ('pack_body_case', ['D10u_body_utf8', 'D10j_body_json', 'D10a_unique_members', 'D10b_canonical_body', 'D11_not_small']),
@@ -139,9 +147,11 @@ module('stored', 'Lexical validation of a stored original EventRecord copy.', [
      "value['route'] == 'packed' and value['placeholder'] != {}"),
     ('V07_dispatch', '/dispatch_found', 'a stored inline event dispatches to a draft row by family and schema id', 'stored_invalid',
      "value['route'] == 'inline' and value['dispatch_found'] is not True"),
+    ('V05q_inline_jcs', '/inline_size', 'a stored inline payload has a qualified RFC 8785 encoding (CV-1100 qualified_jcs)', 'stored_invalid',
+     "value['route'] == 'inline' and value['inline_size'] is None"),
     ('V05_inline_size', '/inline_size', 'a stored inline payload has a canonical encoding of at most 16384 bytes', 'stored_invalid',
-     "value['route'] == 'inline' and (value['inline_size'] is None or value['inline_size'] > 16384)"),
-], [('case', ['V02a_scope', 'V02b_replay', 'V03_ref_grammar', 'V04_placeholder', 'V07_dispatch', 'V05_inline_size'])])
+     "value['route'] == 'inline' and value['inline_size'] is not None and value['inline_size'] > 16384"),
+], [('case', ['V02a_scope', 'V02b_replay', 'V03_ref_grammar', 'V04_placeholder', 'V07_dispatch', 'V05q_inline_jcs', 'V05_inline_size'])])
 
 # ---------------------------------------------------------------- inspect
 module('inspect', 'Authenticated source inspection for retained reads.', [
@@ -186,16 +196,23 @@ module('full_value', 'SP-286/CV-339 complete-value retry and retained-original j
      "value['expected_commitment'] != value['custody_commitment']"),
     ('F08b_result_commitment', '/result_commitment', 'equals the custody commitment', 'full_value_mismatch',
      "value['custody_commitment'] != value['result_commitment']"),
+    ('F14_producer_jcs', '/producer_semantic_digest', 'the candidate producer projection has a qualified JCS digest (CV-1100 producer_semantic_digest)', 'full_value_mismatch',
+     "value['expected_semantic_digest'] is None"),
     ('F09_semantic_digest', '/custody_semantic_digest', 'equals the recomputed producer semantic digest', 'full_value_mismatch',
-     "value['expected_semantic_digest'] != value['custody_semantic_digest']"),
+     "value['expected_semantic_digest'] is not None and value['expected_semantic_digest'] != value['custody_semantic_digest']"),
 ], [('bytes_case', ['F02_candidate_bytes', 'F12_result_bytes', 'F13_custody_bytes', 'F10_receipt_copy']),
     ('ids_case', ['F11a_receipt_event', 'F11b_custody_event', 'F03_partition', 'F04_custody_family', 'F05_custody_key',
-                  'F06_receipt_sequence', 'F07_segment_ref', 'F08a_custody_commitment', 'F08b_result_commitment', 'F09_semantic_digest'])])
+                  'F06_receipt_sequence', 'F07_segment_ref', 'F08a_custody_commitment', 'F08b_result_commitment', 'F14_producer_jcs', 'F09_semantic_digest'])])
 
 # ---------------------------------------------------------------- history / append / policies
-module('history', 'Explicit retained-history decoder selection.', [
-    ('H05_decoder', '/decoder', 'is the supported historical v1 decoder', 'unavailable', f"value['decoder'] != {HIST}"),
-], [('case', ['H05_decoder'])])
+module('history', 'SP-1101 retained-original dispatch: the authenticated write-time recipe selects the frozen verifier.', [
+    ('H05c_no_caller_recipe', '/dispatch_refusal', 'no caller supplies or overrides the retained recipe (SP-1101 RetainedDispatcher)', 'unavailable',
+     "value['dispatch_refusal'] == 'caller_recipe_override'"),
+    ('H05b_original_binding', '/dispatch_refusal', 'the authenticated original binding equals the requested original (SP-1101 RetainedDispatcher)', 'unavailable',
+     "value['dispatch_refusal'] == 'original_binding'"),
+    ('H05_decoder', '/dispatch_refusal', 'the authenticated write-time recipe has an installed frozen historical verifier', 'unavailable',
+     "value['dispatch_refusal'] in ('recipe_unknown', 'recipe_selection')"),
+], [('case', ['H05c_no_caller_recipe', 'H05b_original_binding', 'H05_decoder'])])
 
 module('append', 'Hypothetical admitted append and retry model.', [
     ('A01_admission', '/admission', 'is exactly true', 'withdrawn', "value['admission'] is not True"),
@@ -204,14 +221,16 @@ module('append', 'Hypothetical admitted append and retry model.', [
     ('A03a_replay_only', '/replay_policy', 'is not projector_replay_only', 'replay_only_not_appendable',
      "value['replay_policy'] == 'projector_replay_only'"),
     ('A03b_policy', '/replay_policy', 'is dedupe_by_idempotency_key', 'invalid', "value['replay_policy'] != 'dedupe_by_idempotency_key'"),
+    ('A08_producer_jcs', '/digest', 'the producer projection has a qualified JCS digest (CV-1100 producer_semantic_digest)', 'invalid',
+     "value['digest'] is None"),
     ('A04_global_conflict', '/global_digest', 'a known event_id carries the same semantic digest', 'idempotency_conflict',
-     "value['global_digest'] is not None and value['global_digest'] != value['digest']"),
+     "value['digest'] is not None and value['global_digest'] is not None and value['global_digest'] != value['digest']"),
     ('A05_scoped_conflict', '/scoped_digest', 'a known scoped key carries the same semantic digest', 'idempotency_conflict',
-     "value['scoped_digest'] is not None and value['scoped_digest'] != value['digest']"),
+     "value['digest'] is not None and value['scoped_digest'] is not None and value['scoped_digest'] != value['digest']"),
 ], [('gate_case', ['A01_admission', 'A02a_source', 'A02b_dedupe']),
     ('replay_case', ['A03a_replay_only']),
     ('policy_case', ['A03b_policy']),
-    ('dedupe_case', ['A04_global_conflict', 'A05_scoped_conflict'])])
+    ('dedupe_case', ['A08_producer_jcs', 'A04_global_conflict', 'A05_scoped_conflict'])])
 
 module('policies', 'Index and checkpoint retention policy assignment.', [
     ('P01_index_policy', '/index_retention_policy_ref', 'equals the Storage event_record_index policy', 'policy_mismatch',
@@ -336,7 +355,8 @@ module('observation', 'RAP-113 restore-point observation ordinal, predecessor an
     ob('O03b_owner_snapshot', '/canonical_point', 'canonical bytes of the owner snapshot equal the candidate restore point bytes', "value['point_sha256'] != value['snapshot_sha256']"),
     ob('O04a_first_ordinal', '/producer_sequence_id', 'a first observation has ordinal 0', "value['producer_sequence_id'] != 0"),
     ob('O04b_first_parent', '/parent_event_id', 'a first observation has no parent', "value['parent_event_id'] is not None"),
-    ob('O12_recorded_recipe', '/recorded_decoder', 'the authenticated write-time recipe is supported', "value['decoder'] not in ('current-writer', 'historical-v1-before-provider-hash')"),
+    ob('O12_recorded_recipe', '/recorded_decoder', 'the authenticated write-time recipe has an installed frozen verifier (SP-1101 RetainedDispatcher)', "value['dispatch_refusal'] in ('recipe_unknown', 'recipe_selection')"),
+    ob('O14_predecessor_binding', '/predecessor_source/authenticated_original', 'the authenticated predecessor binding equals the supplied predecessor (SP-1101 RetainedDispatcher)', "value['dispatch_refusal'] == 'original_binding'"),
     ob('O05_artifact', '/artifact_id', 'equals the predecessor artifact_id', "value['artifact_id'] != value['old_artifact_id']"),
     ob('O05_restore_point_id', '/type_payload/restore_point_id', 'equals the predecessor value', "value['restore_point_id'] != value['old_restore_point_id']"),
     ob('O05_project_id', '/type_payload/project_id', 'equals the predecessor value', "value['point_project_id'] != value['old_point_project_id']"),
@@ -354,7 +374,7 @@ module('observation', 'RAP-113 restore-point observation ordinal, predecessor an
     ('group_case', ['O02_grouping']),
     ('snapshot_case', ['O03b_owner_snapshot']),
     ('first_case', ['O04a_first_ordinal', 'O04b_first_parent']),
-    ('recipe_case', ['O12_recorded_recipe']),
+    ('recipe_case', ['O12_recorded_recipe', 'O14_predecessor_binding']),
     ('lineage_case', ['O05_artifact', 'O05_restore_point_id', 'O05_project_id', 'O05_record_ref', 'O05_record_sha256',
                       'O05_source_thread_id', 'O05_source_branch_id', 'O05_source_message_id']),
     ('advance_case', ['O06_changed', 'O07_terminal', 'O08_ordinal', 'O09_parent', 'O10_prior_group'])])
@@ -443,7 +463,7 @@ SPLIT = {
         'browser', 'cost_refs_a', 'cost_refs_b', 'cost_usage_a', 'cost_usage_b', 'trace_refs_a', 'trace_refs_b', 'trace_flags')},
 }
 RESPLIT = {  # factory -> (new factories with row counts) for factories over seven rows
-    ('full_value', 'ids_case'): [('ids_a_case', 5), ('ids_b_case', 5)],
+    ('full_value', 'ids_case'): [('ids_a_case', 5), ('ids_b_case', 6)],
     ('checkpoint', 'node_case'): [('node_a_case', 4), ('node_b_case', 6)],
     ('checkpoint', 'token_case'): [('token_a_case', 4), ('token_b_case', 4)],
     ('checkpoint', 'manifest_case'): [('manifest_a_case', 6), ('manifest_b_case', 6)],

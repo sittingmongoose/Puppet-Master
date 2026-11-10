@@ -29,8 +29,12 @@ def F08b_result_commitment(value, context):
     return 'full_value_mismatch' if value['custody_commitment'] != value['result_commitment'] else None
 
 
+def F14_producer_jcs(value, context):
+    return 'full_value_mismatch' if value['expected_semantic_digest'] is None else None
+
+
 def F09_semantic_digest(value, context):
-    return 'full_value_mismatch' if value['expected_semantic_digest'] != value['custody_semantic_digest'] else None
+    return 'full_value_mismatch' if value['expected_semantic_digest'] is not None and value['expected_semantic_digest'] != value['custody_semantic_digest'] else None
 
 
 def ids_b_case(value):
@@ -40,6 +44,7 @@ def ids_b_case(value):
         g.Guard('F07_segment_ref', g.Invariant('/result_segment_ref', 'equals the custody original_segment_ref'), 'full_value_mismatch', F07_segment_ref),
         g.Guard('F08a_custody_commitment', g.Invariant('/custody_commitment', 'equals the recomputed original event value commitment'), 'full_value_mismatch', F08a_custody_commitment),
         g.Guard('F08b_result_commitment', g.Invariant('/result_commitment', 'equals the custody commitment'), 'full_value_mismatch', F08b_result_commitment),
+        g.Guard('F14_producer_jcs', g.Invariant('/producer_semantic_digest', 'the candidate producer projection has a qualified JCS digest (CV-1100 producer_semantic_digest)'), 'full_value_mismatch', F14_producer_jcs),
         g.Guard('F09_semantic_digest', g.Invariant('/custody_semantic_digest', 'equals the recomputed producer semantic digest'), 'full_value_mismatch', F09_semantic_digest),
     ])
 
@@ -48,6 +53,7 @@ def ids_b_case(value):
         table.require('F07_segment_ref', value, context)
         table.require('F08a_custody_commitment', value, context)
         table.require('F08b_result_commitment', value, context)
+        table.require('F14_producer_jcs', value, context)
         table.require('F09_semantic_digest', value, context)
         return True
     return g.Case(table, check, context)

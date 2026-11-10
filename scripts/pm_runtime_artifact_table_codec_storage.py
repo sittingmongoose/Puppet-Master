@@ -10,20 +10,20 @@ FIELDS names every observation the rows read; the checker passes no other.
 """
 import pm_guard_isolation as g
 
-FIELDS = ('number_errors',)
+FIELDS = ('jcs_refusal',)
 
 
-def N01s_storage_numbers(value, context):
-    return 'noncanonical producer number' if value['number_errors'] != 0 else None
+def J01s_storage_jcs(value, context):
+    return 'unqualified JCS payload' if value['jcs_refusal'] is not None else None
 
 
 def storage_case(value):
     context = None
     table = g.GuardTable([
-        g.Guard('N01s_storage_numbers', g.Invariant('/number_errors', 'producer storage input uses integer form for integral values'), 'noncanonical producer number', N01s_storage_numbers),
+        g.Guard('J01s_storage_jcs', g.Invariant('/jcs_refusal', 'the payload has a qualified RFC 8785 encoding before it is stored (CV-1100 qualified_jcs)'), 'unqualified JCS payload', J01s_storage_jcs),
     ])
 
     def check(value):
-        table.require('N01s_storage_numbers', value, context)
+        table.require('J01s_storage_jcs', value, context)
         return True
     return g.Case(table, check, context)
