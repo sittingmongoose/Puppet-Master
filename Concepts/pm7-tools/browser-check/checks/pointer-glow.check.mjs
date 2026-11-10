@@ -3,10 +3,18 @@
 // The circle was a pseudo-element fill, not a separate DOM node; check both readers as well as old overlay IDs.
 // --set looks=a,b / places=shell,usage,chat,settings,onboarding limits diagnostics only; defaults cover all ten.
 // --set standalone=1 checks the separately built chat. --set film=1 walks two looks for a before/after film.
+// Each look sets 1920x1080 before the page opens. A kit run leaves the previous check's viewport (settings-layout
+// ends at 1024x768), and Friendly Dark Usage has no plain-ground sample there (ASTRA-B10-K3). --set size=WxH
+// measures one other size.
 import { decodePng } from '../../../onboarding/opus-5.5/tools/pm7_parity_png.mjs';
 import { LOOKS } from '../browser-check.config.mjs';
 
 const list = (v, all) => v ? String(v).split(',') : all;
+const viewportOf = (t) => {
+ const m = /^(\d+)x(\d+)$/.exec(String(t.args.size || '1920x1080'));
+ if (!m) throw new Error(`--set size=${t.args.size} must be WxH`);
+ return [Number(m[1]), Number(m[2])];
+};
 const pause = (f, ms = 650) => f.waitForTimeout(ms);
 const png = async (t, clip) => decodePng(await t.unmarked(() => t.page.screenshot({ clip })));
 const delta = (a, b, p) => Math.max(...[0, 1, 2].map(k => Math.abs(a.data[p * 4 + k] - b.data[p * 4 + k])));
@@ -115,6 +123,8 @@ async function edge(t,f,look,selector='#panel-usage .pmu-card:not([data-head="ba
 }
 
 async function film(t){
+ const [w, h] = viewportOf(t);
+ await t.viewport(w, h);
  const f=await t.app.open();
  // The recorder's pink ring could be confused with the removed glow. Use a plain arrow at CDP's real pointer
  // position, and hide the unrelated OS cursor. This witness is film-only, on both builds; no product paint changes.
@@ -126,6 +136,7 @@ async function film(t){
  });
  await t.unmarked(async()=>{
   for(const look of list(t.args.looks,['glass-dark','friendly-light'])){
+   await t.viewport(w, h);
    await t.app.look(look);await f.locator('#tab-projects').click();await pause(f,1600);
    await t.mark(look+' pointer over boxes');
    for(const c of (await f.locator('#panel-projects .pm6-proj-card').all()).slice(0,2)){
@@ -146,8 +157,12 @@ export default async function(t){
  await t.emulate({reducedMotion:'no-preference'});
  if(t.args.film==='1')return film(t);
  const standalone=t.args.standalone==='1';
+ const [vw, vh] = viewportOf(t);
  for(const look of list(t.args.looks,LOOKS)){
+  await t.viewport(vw, vh);
   const f=standalone?await (async()=>{const u=t.args.page; if(t.app.sandboxed())await t.openInSandbox(u);else await t.goto(u);await t.until('standalone ready',()=>!!window.__PM56_BOOT_OK);return t.root;})():await t.app.open();
+  const painted = await f.evaluate(() => [innerWidth, innerHeight]);
+  t.log(`${look} viewport ${painted[0]}x${painted[1]}`);
   if(standalone){await f.evaluate(k=>PM56_DEMO.setTheme(k),look);await pause(f,1800);const applied=await f.evaluate(()=>({theme:PM56_DEMO.getState().theme,body:document.body.dataset.theme,nier:!!window.PM_NIER?.on()}));await t.check(`${look}: standalone look applied`,applied.theme===look&&applied.body===(look.startsWith('nier-')?'basic-'+look.split('-')[1]:look)&&applied.nier===look.startsWith('nier-'),JSON.stringify(applied),{hard:true});}
   else {await t.app.look(look);await pause(f,1000);}
   await f.evaluate(()=>window.PM56_DEMO?.completeWorking());await pause(f,600);

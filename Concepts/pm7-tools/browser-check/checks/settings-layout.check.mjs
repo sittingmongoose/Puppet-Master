@@ -1,11 +1,14 @@
 // FO-124 / FO-129. Settings row paint must reach its clipping list, and one column of controls must share an edge.
-// --set probe=1 logs and passes. --set looks= --set size=1920x1080 limit the matrix. --set domains= filters nav text.
+// Each look is chosen through the Theme and Light or dark rows. A theme painted without saving is reset to the saved
+// pair on the next Settings render (applyPaint; ASTRA-B10-K1). Every measurement reads html[data-theme] and a wrong
+// look fails the cell. NieR is NieR on over a matching-mode base.
+// --set probe=1 logs geometry and still fails a wrong look. --set looks= --set size=1920x1080 limit the matrix.
 import fs from 'node:fs';
 import { LOOKS } from '../browser-check.config.mjs';
 
 const SIZES = [[1920, 1080], [1390, 900], [1024, 768]];
 
-const MEASURE = () => {
+const MEASURE = (look) => {
 	const vis = (el) => {
 		if (!el || !el.getClientRects().length) return false;
 		const cs = getComputedStyle(el);
@@ -143,8 +146,43 @@ const MEASURE = () => {
 	}
 	const scrollers = [...document.querySelectorAll('#panel-settings .document-scroll, #panel-settings .settings-document, #panel-settings .pm51-scroll')]
 		.filter(vis).map((e) => ({ name: String(e.className).split(/\s+/).slice(0, 2).join('.'), hScroll: e.scrollWidth - e.clientWidth }));
-	return { glow, columns, scrollers, lists: lists.length };
+	const theme = document.documentElement.getAttribute('data-theme') || '';
+	const nier = !!(window.PM_NIER && window.PM_NIER.on()) || theme.startsWith('nier');
+	const [family, mode] = String(look || '').split('-');
+	const lookOk = family === 'nier' ? nier && theme.endsWith('-' + mode) : !nier && theme === look;
+	return { glow, columns, scrollers, lists: lists.length, theme, nier, lookOk };
 };
+
+/* The look is set the way a person sets it, through the Theme and Light or dark rows, so the saved pair survives
+   the next Settings render. Same path as settings-inspector-fit (1d86abca96). */
+async function setLookBySetting(t, f, look) {
+	const [family, mode] = look.split('-');
+	const general = f.locator('#pm-settings-root [data-action="navigate-domain"][data-domain="general"]').first();
+	if (await general.count()) {
+		await general.click();
+		await f.waitForTimeout(700);
+	}
+	for (const [setting, value] of [
+		['general.visual.theme', family === 'nier' ? 'NieR' : family[0].toUpperCase() + family.slice(1)],
+		['general.visual.theme-mode', mode === 'light' ? 'Light' : 'Dark'],
+	]) {
+		const trigger = f.locator(`select[data-setting="${setting}"]`).locator('..').locator('.pm51-dd-trigger');
+		const labels = await f.locator(`select[data-setting="${setting}"] option`).allTextContents();
+		const name = labels.includes(value) ? value : `${value} ${mode === 'light' ? 'Light' : 'Dark'}`;
+		await trigger.first().scrollIntoViewIfNeeded();
+		await trigger.first().click();
+		await f.getByRole('option', { name, exact: true }).click({ timeout: 8000 });
+		await f.locator('.pm51-dd-list').waitFor({ state: 'hidden', timeout: 8000 }).catch(() => {});
+		await f.waitForFunction(() => !(window.PM_LOOK_COVERED && PM_LOOK_COVERED()) && !(window.PM_THEME_TRANSITION && PM_THEME_TRANSITION.busy && PM_THEME_TRANSITION.busy()), null, { timeout: 15000 }).catch(() => {});
+		await t.page.waitForTimeout(400);
+	}
+	await f.waitForFunction(([fam, m]) => {
+		const theme = document.documentElement.getAttribute('data-theme') || '';
+		const nier = !!(window.PM_NIER && PM_NIER.on()) || theme.startsWith('nier');
+		return fam === 'nier' ? nier && theme.endsWith('-' + m) : !nier && theme === fam + '-' + m;
+	}, [family, mode], { timeout: 20000 }).catch(() => {});
+	await t.page.waitForTimeout(500);
+}
 
 export default async function (t) {
 	const looks = String(t.args.looks || LOOKS.join(',')).split(',').map((s) => s.trim()).filter(Boolean);
@@ -159,7 +197,7 @@ export default async function (t) {
 				const f = await t.app.open({ settleMs: 400 });
 				await f.locator('#tab-settings').click();
 				await f.waitForTimeout(900);
-				await t.app.look(look);
+				await setLookBySetting(t, f, look);
 				const links = f.locator('#pm-settings-root .domain-link');
 				const n = Math.min(await links.count(), 16);
 				const pages = [];
@@ -167,7 +205,7 @@ export default async function (t) {
 					const row = f.locator('#panel-settings .setting-row.o55-row').first();
 					if (await row.count()) await row.hover().catch(() => {});
 					await f.waitForTimeout(160);
-					pages.push({ name, data: await f.evaluate(MEASURE) });
+					pages.push({ name, data: await f.evaluate(MEASURE, look) });
 				};
 				await visit('open');
 				for (let i = 0; i < n; i++) {
@@ -195,12 +233,14 @@ export default async function (t) {
 						if (c.gapSpread > 1) badGap.push(`${p.name}/${c.title} gap ${c.gapMin}..${c.gapMax}`);
 					}
 				}
-				t.log(`${look} ${w}x${h} pages ${pages.length} lists-short ${glowN} columns ${colN}`);
+				const wrongLook = pages.filter((p) => !p.data.lookOk).map((p) => `${p.name} wanted ${look} painted ${p.data.theme}${p.data.nier ? ' NieR on' : ''}`);
+				t.log(`${look} ${w}x${h} pages ${pages.length} lists-short ${glowN} columns ${colN} theme ${pages.map((p) => `${p.data.theme}${p.data.nier ? ' NieR on' : ''}`).filter((v, i, a) => a.indexOf(v) === i).join(',') || 'none'}`);
 				t.log('glow ' + (badGlow.slice(0, 6).join(' | ') || 'none'));
 				t.log('align ' + (badAlign.slice(0, 6).join(' | ') || 'none'));
 				t.log('gaps ' + (badGap.slice(0, 6).join(' | ') || 'none'));
 				t.log('hScroll ' + (hScroll.join(' | ') || 'none'));
 				if (t.args.dump) fs.writeFileSync(t.args.dump, JSON.stringify(pages.map((p) => ({ name: p.name, glow: p.data.glow.slice(0, 4), columns: p.data.columns.filter((c) => c.rightSpread > 1 || c.leftSpread > 1 || c.gapSpread > 1) })), null, 1));
+				await t.check(`${look} ${w}x${h}: measured under ${look}`, pages.length > 0 && wrongLook.length === 0, wrongLook.slice(0, 3).join(' | ') || 'no page measured');
 				if (probe) {
 					await t.check(`${look} ${w}x${h}: probe`, true);
 					return;
